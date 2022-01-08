@@ -1,0 +1,22 @@
+{
+  "name": "@yalesites/component-library",
+  "version": "0.0.0-development",
+  "description": "YaleSites component library.",
+  "scripts": {
+    "husky:commit-msg": "commitlint --edit $1",
+    "prepare": "husky install",
+    "semantic-release": "semantic-release",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^16.0.1",
+    "@commitlint/config-conventional": "^16.0.0",
+    "@semantic-release/github": "^8.0.2",
+    "@semantic-release/npm": "^8.0.3",
+    "@yalesites/config-commitlint": "file:./config-commitlint",
+    "@yalesites/config-prettier": "file:./config-prettier",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.6",
+    "semantic-release": "^18.0.1"
+  }
+}
