@@ -1,22 +1,31 @@
 {
-  "name": "@yalesites/component-library",
+  "name": "@yalesites/component-library-twig",
   "version": "0.0.0-development",
-  "description": "YaleSites component library.",
+  "description": "YaleSites Twig component library.",
   "scripts": {
     "husky:commit-msg": "commitlint --edit $1",
     "prepare": "husky install",
     "semantic-release": "semantic-release",
+    "storybook": "start-storybook -p 6006",
+    "storybook:build": "build-storybook",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.7",
     "@commitlint/cli": "^16.0.1",
     "@commitlint/config-conventional": "^16.0.0",
     "@semantic-release/github": "^8.0.2",
     "@semantic-release/npm": "^8.0.3",
+    "@storybook/addon-actions": "^6.4.9",
+    "@storybook/addon-essentials": "^6.4.9",
+    "@storybook/addon-links": "^6.4.9",
+    "@storybook/html": "^6.4.9",
     "@yalesites/config-commitlint": "file:./config-commitlint",
     "@yalesites/config-prettier": "file:./config-prettier",
+    "babel-loader": "^8.2.3",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.6",
     "semantic-release": "^18.0.1"
-  }
+  },
+  "dependencies": {}
 }
