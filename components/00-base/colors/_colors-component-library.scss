@@ -26,8 +26,12 @@
 }
 
 // Dynamically set swatch text color based on the lightness of the background color
-@function set-color($color, $text-primary: black-gray, $text-secondary: white) {
-  @if (lightness($color) > 50) {
+@function set-color(
+  $color,
+  $text-primary: black-gray,
+  $text-secondary: gray-light
+) {
+  @if (lightness($color) > 45.5) {
     @return clr($text-primary);
   } @else {
     @return clr($text-secondary);
