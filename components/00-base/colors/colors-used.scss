@@ -25,13 +25,31 @@ $defaultColors: (
 $componentLibraryColors: (
   // These are only defined for the component library.
   // They should not be implemented in components.
-  white: colors-vars.$white,
+  black-gray: colors-vars.$black-gray,
+  gray-dark: colors-vars.$gray-dark,
+  gray-brown: colors-vars.$gray-brown,
   gray: colors-vars.$gray,
-  black: colors-vars.$black,
-  blue: colors-vars.$blue,
+  gray-light: colors-vars.$gray-light,
+  beige: colors-vars.$beige,
+  white: colors-vars.$white,
+  yale-blue: colors-vars.$yale-blue,
+  mid-blue: colors-vars.$mid-blue,
+  light-blue: colors-vars.$light-blue,
   red: colors-vars.$red,
   yellow: colors-vars.$yellow,
   green: colors-vars.$green,
+  // New Haven Green
+  green-leaf: colors-vars.$green-leaf,
+  galliano: colors-vars.$galliano,
+  mimosa: colors-vars.$mimosa,
+  // Blue Stone
+  blue-stone: colors-vars.$blue-stone,
+  west-side: colors-vars.$west-side,
+  aero-blue: colors-vars.$aero-blue,
+  // Muted Elm City
+  roman-coffee: colors-vars.$roman-coffee,
+  tea-green: colors-vars.$tea-green,
+  double-pearl-lusta: colors-vars.$double-pearl-lusta,
 );
 
 $defaultColors: map-merge($defaultColors, $componentLibraryColors);

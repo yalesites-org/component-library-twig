@@ -26,7 +26,7 @@
 }
 
 // Dynamically set swatch text color based on the lightness of the background color
-@function set-color($color, $text-primary: black, $text-secondary: white) {
+@function set-color($color, $text-primary: black-gray, $text-secondary: white) {
   @if (lightness($color) > 50) {
     @return clr($text-primary);
   } @else {
@@ -36,7 +36,10 @@
 
 // Style default color swatches
 @each $name, $color in $componentLibraryColors {
-  .cl-colors__item--yale {
+  .cl-colors__item--yale,
+  .cl-colors__item--new-haven-green,
+  .cl-colors__item--blue-stone,
+  .cl-colors__item--muted-elm-city {
     &-#{'' + $name} {
       background-color: clr($name);
       color: set-color($color);

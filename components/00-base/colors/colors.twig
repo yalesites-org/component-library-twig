@@ -7,7 +7,7 @@
   } %} #}
   <h2 {{ bem('heading', [], colors__base_class) }}>{{ colors__heading }}</h2>
 	{% for palette in palettes %}
-		{% set palette__machine = palette.palette__heading|lower %}
+		{% set palette__machine = palette.palette__heading|lower|replace({' ': '-'}) %}
 		{# {% include "@atoms/text/headings/_heading.twig" with {
       heading_level: 3,
       heading: palette.palette__heading,
