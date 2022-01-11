@@ -29,6 +29,15 @@
     "semantic-release": "^18.0.1"
   },
   "dependencies": {
-    "@storybook/addon-a11y": "^6.4.9"
+    "@storybook/addon-a11y": "^6.4.9",
+    "add-attributes-twig-extension": "^0.1.0",
+    "bem-twig-extension": "^0.1.1",
+    "js-yaml-loader": "^1.2.2",
+    "node-sass-glob-importer": "^5.3.2",
+    "sass": "^1.47.0",
+    "sass-loader": "^10.2.0",
+    "style-loader": "^2.0.0",
+    "twig-loader": "https://github.com/fourkitchens/twig-loader",
+    "webpack": "^4.46.0"
   }
 }

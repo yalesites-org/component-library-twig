@@ -1,0 +1,11 @@
+colors__heading: 'Color palettes:'
+palettes:
+  - palette__heading: 'Yale'
+    colors:
+      - name: 'White'
+      - name: 'Gray'
+      - name: 'Black'
+      - name: 'Blue'
+      - name: 'Yellow'
+      - name: 'Red'
+      - name: 'Green'
