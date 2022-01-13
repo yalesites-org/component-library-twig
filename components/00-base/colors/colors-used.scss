@@ -1,8 +1,9 @@
 @use 'colors-vars';
+@use 'sass:map';
 
 // Color Usage variables - use these (via the `clr` function below)
 // rather than color variables directly.
-$defaultColors: (
+$colors-default: (
   // white: colors-vars.$white,
   // gray: colors-vars.$gray,
   // black: colors-vars.$black,
@@ -13,16 +14,9 @@ $defaultColors: (
 );
 
 // $darkColors: (
-//   white: colors-vars.$white,
-//   gray: colors-vars.$gray,
-//   black: colors-vars.$black,
-//   blue: colors-vars.$blue,
-//   red: colors-vars.$red,
-//   yellow: colors-vars.$yellow,
-//   green: colors-vars.$green,
 // );
 
-$componentLibraryColors: (
+$colors-component-library: (
   // These are only defined for the component library.
   // They should not be implemented in components.
   black-gray: colors-vars.$black-gray,
@@ -49,10 +43,9 @@ $componentLibraryColors: (
   // Muted Elm City
   roman-coffee: colors-vars.$roman-coffee,
   tea-green: colors-vars.$tea-green,
-  double-pearl-lusta: colors-vars.$double-pearl-lusta,
+  double-pearl-lusta: colors-vars.$double-pearl-lusta
 );
-
-$defaultColors: map-merge($defaultColors, $componentLibraryColors);
+$colors-default: map.merge($colors-default, $colors-component-library);
 
 ///////////
 // Usage //
@@ -60,7 +53,7 @@ $defaultColors: map-merge($defaultColors, $componentLibraryColors);
 // This color function makes it easy for you to call a color by it's functional
 // name anywhere you need.
 // E.g. to use the `text` color, you type: `color: clr(text);`
-//
+
 // How it works:
 // This function works in conjunction with the dynamic css custom properties
 // declarations below. The item called in the function is prefixed with
@@ -75,10 +68,10 @@ $defaultColors: map-merge($defaultColors, $componentLibraryColors);
 // This is what powers the built-in OS light/dark mode switching.
 // For each color variable above (e.g. `text` and `background`) a css custom
 // property will be created. (e.g. `--c-text:` and `--c-background:`).
-//
+
 // The first `@each` below will create a custom property for each item in the
-// `$defaultColors` map. So put all of your default colors there.
-//
+// `$colors-default` map. So put all of your default colors there.
+
 // The `prefers-color-scheme: dark` media query below will then create custom
 // properties for each of the colors in the `$darkColors` map only if the
 // browser supports that feature. If there is an exact match (e.g. `text`) in
@@ -86,7 +79,8 @@ $defaultColors: map-merge($defaultColors, $componentLibraryColors);
 // opted to use the 'dark mode' on their OS.
 :root {
   // Create custom properties for default colors
-  @each $name, $color in $defaultColors {
+  @each $name, $color in $colors-default {
+    // stylelint-disable-next-line
     --c-#{'' + $name}: #{$color};
   }
 
@@ -101,7 +95,7 @@ $defaultColors: map-merge($defaultColors, $componentLibraryColors);
   // component library regardless of OS setting.
   // This is required to show the correct colors in the component library at all times
   // [data-theme='default'] {
-  //   @each $name, $color in $defaultColors {
+  //   @each $name, $color in $colors-default {
   //     --c-#{'' + $name}: #{$color};
   //   }
   // }

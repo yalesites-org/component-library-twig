@@ -5,8 +5,10 @@
   "prettier": "@yalesites-org/linting-and-formatting/prettier.config",
   "scripts": {
     "husky:commit-msg": "commitlint --edit $1",
+    "husky:pre-commit": "lint-staged",
     "lint:styles": "stylelint 'components/**/*.scss'",
     "prepare": "husky install",
+    "prettier": "prettier components --ignore-unknown",
     "semantic-release": "semantic-release",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook",
@@ -17,8 +19,8 @@
     "@commitlint/cli": "^16.0.1",
     "@commitlint/config-conventional": "^16.0.0",
     "@semantic-release/github": "^8.0.2",
-    "@storybook/addon-actions": "^6.4.9",
     "@storybook/addon-a11y": "^6.4.9",
+    "@storybook/addon-actions": "^6.4.9",
     "@storybook/addon-essentials": "^6.4.9",
     "@storybook/addon-links": "^6.4.9",
     "@storybook/html": "^6.4.9",
@@ -38,5 +40,13 @@
   "dependencies": {
     "add-attributes-twig-extension": "^0.1.0",
     "bem-twig-extension": "^0.1.1"
+  },
+  "lint-staged": {
+    "components/**/*.scss": [
+      "npm run lint:styles -- --fix"
+    ],
+    "components/**/*.{js,scss,php}": [
+      "npm run prettier -- --write"
+    ]
   }
 }

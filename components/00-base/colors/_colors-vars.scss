@@ -1,15 +1,14 @@
-// Color variables - it is better to use the colors in
-// components/00-base/01-colors/_01-colors-used.scss rather than
-// these colors directly.
+// Color variables - it is better to use the colors in `colors-used.scss` rather
+// than these colors directly.
 
 // Grayscale
-$black-gray: #222222;
+$black-gray: #222;
 $gray-dark: #4a4a4a;
 $gray-brown: #787069;
-$gray: #dddddd;
+$gray: #ddd;
 $gray-light: #f9f9f9;
 $beige: #fcf5eb;
-$white: #ffffff;
+$white: #fff;
 
 // Status
 $yellow: #f9fb93;

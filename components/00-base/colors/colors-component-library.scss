@@ -31,7 +31,7 @@
   $text-primary: black-gray,
   $text-secondary: gray-light
 ) {
-  @if (lightness($color) > 45.5) {
+  @if lightness($color) > 45.5 {
     @return clr($text-primary);
   } @else {
     @return clr($text-secondary);
@@ -39,7 +39,7 @@
 }
 
 // Style default color swatches
-@each $name, $color in $componentLibraryColors {
+@each $name, $color in $colors-component-library {
   .cl-colors__item--yale,
   .cl-colors__item--new-haven-green,
   .cl-colors__item--blue-stone,
