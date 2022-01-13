@@ -1,8 +1,8 @@
 {
-  "name": "@yalesites/component-library-twig",
+  "name": "@yalesites-org/component-library-twig",
   "version": "0.0.0-development",
   "description": "YaleSites Twig component library.",
-  "prettier": "@yalesites/config-prettier",
+  "prettier": "@yalesites-org/linting-and-formatting/prettier.config",
   "scripts": {
     "husky:commit-msg": "commitlint --edit $1",
     "lint:styles": "stylelint 'components/**/*.scss'",
@@ -17,33 +17,26 @@
     "@commitlint/cli": "^16.0.1",
     "@commitlint/config-conventional": "^16.0.0",
     "@semantic-release/github": "^8.0.2",
-    "@semantic-release/npm": "^8.0.3",
     "@storybook/addon-actions": "^6.4.9",
+    "@storybook/addon-a11y": "^6.4.9",
     "@storybook/addon-essentials": "^6.4.9",
     "@storybook/addon-links": "^6.4.9",
     "@storybook/html": "^6.4.9",
-    "@yalesites/config-commitlint": "*",
-    "@yalesites/config-prettier": "*",
+    "@yalesites-org/linting-and-formatting": "^1.0.0",
     "babel-loader": "^8.2.3",
     "husky": "^7.0.4",
-    "lint-staged": "^12.1.6",
-    "semantic-release": "^18.0.1",
-    "stylelint": "^14.2.0",
-    "stylelint-config-prettier": "^9.0.3",
-    "stylelint-config-standard": "^24.0.0",
-    "stylelint-config-standard-scss": "^3.0.0",
-    "stylelint-prettier": "^2.0.0"
-  },
-  "dependencies": {
-    "@storybook/addon-a11y": "^6.4.9",
-    "add-attributes-twig-extension": "^0.1.0",
-    "bem-twig-extension": "^0.1.1",
     "js-yaml-loader": "^1.2.2",
+    "lint-staged": "^12.1.6",
     "node-sass-glob-importer": "^5.3.2",
     "sass": "^1.47.0",
     "sass-loader": "^10.2.0",
+    "semantic-release": "^18.0.1",
     "style-loader": "^2.0.0",
     "twig-loader": "https://github.com/fourkitchens/twig-loader",
     "webpack": "^4.46.0"
+  },
+  "dependencies": {
+    "add-attributes-twig-extension": "^0.1.0",
+    "bem-twig-extension": "^0.1.1"
   }
 }

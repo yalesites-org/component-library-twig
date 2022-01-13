@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['@yalesites/config-prettier/stylelint.config'],
+  extends: ['@yalesites/linting-and-formatting/stylelint.config'],
 };
