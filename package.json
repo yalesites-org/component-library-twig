@@ -2,10 +2,11 @@
   "name": "@yalesites-org/component-library-twig",
   "version": "0.0.0-development",
   "description": "YaleSites Twig component library.",
-  "prettier": "@yalesites-org/linting-and-formatting/prettier.config",
+  "prettier": "@yalesites-org/eslint-config-and-other-formatting/prettier.config",
   "scripts": {
     "husky:commit-msg": "commitlint --edit $1",
     "husky:pre-commit": "lint-staged",
+    "lint:js": "eslint components",
     "lint:styles": "stylelint 'components/**/*.scss'",
     "prepare": "husky install",
     "prettier": "prettier components --ignore-unknown",
@@ -24,7 +25,7 @@
     "@storybook/addon-essentials": "^6.4.9",
     "@storybook/addon-links": "^6.4.9",
     "@storybook/html": "^6.4.9",
-    "@yalesites-org/linting-and-formatting": "^1.0.0",
+    "@yalesites-org/eslint-config-and-other-formatting": "^1.0.0",
     "babel-loader": "^8.2.3",
     "husky": "^7.0.4",
     "js-yaml-loader": "^1.2.2",
@@ -44,6 +45,9 @@
   "lint-staged": {
     "components/**/*.scss": [
       "npm run lint:styles -- --fix"
+    ],
+    "components/**/*.js": [
+      "npm run lint:js -- --fix"
     ],
     "components/**/*.{js,scss,php}": [
       "npm run prettier -- --write"
