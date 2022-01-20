@@ -1,12 +1,11 @@
+import colorsTokens from '@yalesites-org/tokens/build/json/tokens.json';
+
 import colorsTwig from './colors.twig';
 
-import colorsData from './colors.yml';
+const colorsData = { colors: colorsTokens.color };
 
-/**
- * Storybook Definition.
- */
 export default {
-  title: 'Base/Colors',
+  title: 'Tokens/Colors',
 };
 
-export const Palettes = () => colorsTwig(colorsData);
+export const Colors = () => colorsTwig(colorsData);

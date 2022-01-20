@@ -39,6 +39,7 @@
     "webpack": "^4.46.0"
   },
   "dependencies": {
+    "@yalesites-org/tokens": "^1.0.2",
     "add-attributes-twig-extension": "^0.1.0",
     "bem-twig-extension": "^0.1.1"
   },

@@ -1,7 +1,3 @@
-@use 'colors-vars';
-@use 'colors-used' as *;
-
-// These styles only affect the colors "Usage" page in the component library
 .cl-colors {
   padding: 1rem;
 }
@@ -26,30 +22,30 @@
 }
 
 // Dynamically set swatch text color based on the lightness of the background color
-@function set-color(
-  $color,
-  $text-primary: black-gray,
-  $text-secondary: gray-light
-) {
-  @if lightness($color) > 45.5 {
-    @return clr($text-primary);
-  } @else {
-    @return clr($text-secondary);
-  }
-}
+// @function set-color(
+//   $color,
+//   $text-primary: black-gray,
+//   $text-secondary: gray-light
+// ) {
+//   @if lightness($color) > 45.5 {
+//     @return clr($text-primary);
+//   } @else {
+//     @return clr($text-secondary);
+//   }
+// }
 
 // Style default color swatches
-@each $name, $color in $colors-component-library {
-  .cl-colors__item--yale,
-  .cl-colors__item--new-haven-green,
-  .cl-colors__item--blue-stone,
-  .cl-colors__item--muted-elm-city {
-    &-#{'' + $name} {
-      background-color: clr($name);
-      color: set-color($color);
-    }
-  }
-}
+// @each $name, $color in $colors-component-library {
+//   .cl-colors__item--yale,
+//   .cl-colors__item--new-haven-green,
+//   .cl-colors__item--blue-stone,
+//   .cl-colors__item--muted-elm-city {
+//     &-#{'' + $name} {
+//       background-color: clr($name);
+//       color: set-color($color);
+//     }
+//   }
+// }
 
 // // Style dark color swatches
 // @each $name, $color in $darkColors {

@@ -2,6 +2,9 @@
 // @import '~normalize.css/normalize';
 // @import '~breakpoint-sass/stylesheets/breakpoint';
 
+// Tokens
+@import '~@yalesites-org/tokens/build/css/tokens.css';
+
 // Components
 @import '00-base/**/*{!colors-used}';
 
@@ -9,4 +12,4 @@
 // @import '02-molecules/**/*.scss';
 // @import '03-organisms/**/*.scss';
 // @import '04-templates/**/*.scss';
-@import '00-base/colors/colors-used';
+// @import '00-base/colors/colors-used';
