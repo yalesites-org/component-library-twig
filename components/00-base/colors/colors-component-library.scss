@@ -21,6 +21,11 @@
   align-items: flex-end;
 }
 
+.cl-colors__title {
+  background: hsl(0deg 0% 100% / 80%);
+  padding: 0.5rem;
+}
+
 // Dynamically set swatch text color based on the lightness of the background color
 // @function set-color(
 //   $color,
