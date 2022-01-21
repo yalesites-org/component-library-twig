@@ -1,13 +1,16 @@
 {% set spacing__base_class = 'cl-spacing' %}
 
 <div {{ bem(spacing__base_class) }}>
-  <span></span><span>rem</span><span>px</span><span></span>
+  <span {{ bem('header', [], spacing__base_class) }}>variable</span>
+  <span {{ bem('header', [], spacing__base_class) }}>rem</span>
+  <span {{ bem('header', [], spacing__base_class) }}>px</span>
+  <span {{ bem('header', [], spacing__base_class) }}>example</span>
   <span class="cl-spacing__line"></span>
   {% for key, value in _context.spacing_options %}
-    <span>--size-spacing-{{ key }}</span>
+    <span>--{{ prefix }}-{{ key }}</span>
     <span>{{ value|trim('rem') }}</span>
     <span>{{ value * 16 }}</span>
-    <span style="background: var(--color-yale-blue-mid); height: var(--size-spacing-{{key}}); width: var(--size-spacing-{{key}});"></span>
+    <span style="background: var(--color-yale-blue-mid); height: var(--{{ prefix }}-{{key}}); width: var(--{{ prefix }}-{{key}});"></span>
     <span class="cl-spacing__line"></span>
   {% endfor %}
 </div>

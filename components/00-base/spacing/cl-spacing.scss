@@ -1,8 +1,14 @@
 .cl-spacing {
   display: grid;
-  grid-template-columns: repeat(4, minmax(100px, max-content));
-  gap: 1rem;
+  grid-template-columns: repeat(4, minmax(50px, max-content));
+  column-gap: 4rem;
+  row-gap: 1rem;
   align-items: center;
+
+  &__header {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
 
   &__line {
     grid-column: 1 / -1;
