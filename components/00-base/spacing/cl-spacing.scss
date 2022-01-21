@@ -1,0 +1,12 @@
+.cl-spacing {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(100px, max-content));
+  gap: 1rem;
+  align-items: center;
+
+  &__line {
+    grid-column: 1 / -1;
+    height: 1px;
+    background: var(--color-yale-gray-base);
+  }
+}
