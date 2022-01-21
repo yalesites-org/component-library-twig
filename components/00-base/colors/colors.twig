@@ -8,13 +8,13 @@
 				{% if value is iterable %}
 					{% for nested_color, nested_value in value %}
 						<li {{ bem("item", [], colors_base_class) }} style="background: var(--color-{{group}}-{{color}}-{{nested_color}});">
-							<span {{ bem("title", [], colors_base_class) }}>{{ group }}-{{color}}-{{nested_color}}</span>
+							<span {{ bem("title", [], colors_base_class) }}>--color-{{ group }}-{{color}}-{{nested_color}}</span>
 							<br/>
 						</li>
 					{% endfor %}
 				{% else %}
 					<li {{ bem("item", [], colors_base_class) }} style="background: var(--color-{{group}}-{{color}});">
-						<span {{ bem("title", [], colors_base_class) }}>{{ group }}-{{ color }}</span>
+						<span {{ bem("title", [], colors_base_class) }}>--color-{{ group }}-{{ color }}</span>
 						<br/>
 					</li>
 				{% endif %}
