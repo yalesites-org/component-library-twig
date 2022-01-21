@@ -37,3 +37,10 @@ Then you can install the package like any other npm dependency.
 ```bash
 npm install @yalesites-org/component-library-twig
 ```
+
+
+## Releases
+
+Any time something is pushed to the `main` branch on GitHub, a [GitHub Action](.github/workflows/release.yml) is run to determine whether a new release is needed (via semantic-release.)
+
+This is an entirely automated process, so whether changes are pushed directly to `main` or if they go through the preferred PR workflow the release process will be run.
