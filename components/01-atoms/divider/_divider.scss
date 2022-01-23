@@ -1,0 +1,35 @@
+$widths: 100%, 75%, 50%, 25%;
+$thicknesses: 0.5, 1, 2, 4, 6, 8;
+$positions: left, center, right;
+
+.divider__wrapper {
+  display: flex;
+
+  @each $position in $positions {
+    &[data-divider-position='#{$position}'] {
+      @if $position == left {
+        justify-content: flex-start;
+      } @else if $position == center {
+        justify-content: center;
+      } @else if $position == right {
+        justify-content: flex-end;
+      }
+    }
+  }
+}
+
+.divider {
+  background: var(--color-yale-black-gray);
+
+  @each $width in $widths {
+    &[data-divider-width='#{$width}'] {
+      width: #{$width};
+    }
+  }
+
+  @each $thickness in $thicknesses {
+    &[data-divider-thickness='#{$thickness}'] {
+      height: calc(#{$thickness}rem / 16);
+    }
+  }
+}
