@@ -65,20 +65,25 @@
           "description": "Primary style scss file"
         }
       ],
-      "components": [
+      "directories": [
         {
           "name": "colors",
-          "structure": "base",
-          "required": true
+          "path": "./components/00-base/colors",
+          "destinationPath": "./components/00-base/colors",
+          "description": "Contains scss files with global defaults"
         },
         {
           "name": "spacing",
-          "structure": "base",
-          "required": true
-        },
+          "path": "./components/00-base/spacing",
+          "destinationPath": "./components/00-base/spacing",
+          "description": "Contains scss files with global defaults"
+        }
+      ],
+      "components": [
         {
           "name": "divider",
-          "structure": "atoms"
+          "structure": "atoms",
+          "required": true
         }
       ]
     }
