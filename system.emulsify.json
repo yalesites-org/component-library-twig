@@ -67,23 +67,16 @@
       ],
       "directories": [
         {
-          "name": "colors",
-          "path": "./components/00-base/colors",
-          "destinationPath": "./components/00-base/colors",
-          "description": "Contains scss files with global defaults"
-        },
-        {
-          "name": "spacing",
-          "path": "./components/00-base/spacing",
-          "destinationPath": "./components/00-base/spacing",
+          "name": "base",
+          "path": "./components/00-base",
+          "destinationPath": "./components/00-base",
           "description": "Contains scss files with global defaults"
         }
       ],
       "components": [
         {
           "name": "divider",
-          "structure": "atoms",
-          "required": true
+          "structure": "atoms"
         }
       ]
     }
