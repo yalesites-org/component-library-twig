@@ -59,7 +59,7 @@
       ],
       "directories": [
         {
-          "name": "defaults",
+          "name": "base",
           "path": "./components/00-base",
           "destinationPath": "./components/00-base",
           "description": "Contains global styles that apply to all components"
