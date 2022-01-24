@@ -9,7 +9,7 @@
     "lint:js": "eslint components",
     "lint:styles": "stylelint 'components/**/*.scss'",
     "prepare": "husky install",
-    "prettier": "prettier components --ignore-unknown --check",
+    "prettier": "prettier components --ignore-unknown --list-different",
     "semantic-release": "semantic-release",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook -o .out",
