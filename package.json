@@ -12,7 +12,7 @@
     "prettier": "prettier components --ignore-unknown",
     "semantic-release": "semantic-release",
     "storybook": "start-storybook -p 6006",
-    "storybook:build": "build-storybook",
+    "storybook:build": "build-storybook -o .out",
     "storybook:deploy": "storybook-to-ghpages -o .out",
     "test": "npm run lint:js; npm run lint:styles; npm run prettier; npm run storybook:build"
   },
