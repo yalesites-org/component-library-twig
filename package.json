@@ -14,7 +14,7 @@
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook -o .out",
     "storybook:deploy": "storybook-to-ghpages -o .out",
-    "test": "npm run lint:js; npm run lint:styles; npm run prettier; npm run storybook:build"
+    "test": "npm run lint:js && npm run lint:styles && npm run prettier && npm run storybook:build"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
