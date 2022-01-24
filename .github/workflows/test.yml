@@ -1,7 +1,7 @@
 name: Test
 on:
   pull_request:
-    branches: [main, develop]
+    branches: ['main', 'develop', 'emulsify-cli']
 jobs:
   test:
     runs-on: ubuntu-latest
