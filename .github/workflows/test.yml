@@ -1,7 +1,7 @@
 name: Test
 on:
   pull_request:
-    branches: ['main', 'develop', 'dividers']
+    branches: ['main', 'develop']
 jobs:
   test:
     runs-on: ubuntu-latest

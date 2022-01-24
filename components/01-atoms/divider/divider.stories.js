@@ -4,7 +4,7 @@ import dividerTwig from './divider.twig';
 
 const spacingData = {
   spacing_options: tokens.size.spacing,
-  prefix: 'size-spacing'
+  prefix: 'size-spacing',
 };
 
 export default {
