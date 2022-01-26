@@ -1,13 +1,27 @@
 families:
   - name: YaleNew
-    id: yale-new
+    id: 'YaleNew, serif'
     styles:
+      - name: Medium
+        weight: 500
+        style: normal
       - name: Roman
         weight: 400
         style: normal
+  - name: Mallory
+    id: 'Mallory, sans-serif'
+    styles:
+      - name: Bold
+        weight: 700
+        style: normal
       - name: Medium
+        weight: 500
+        style: normal
+      - name: Book
+        weight: 400
+        style: normal
   - name: Mallory Compact
-    id: Mallory Compact
+    id: "'Mallory Compact', sans-serif"
     styles:
       - name: Bold
         weight: 700
