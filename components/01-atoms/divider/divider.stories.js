@@ -29,7 +29,7 @@ export const Dividers = ({ position, thickness, dividerColor }) => `
   ${dividerTwig({ divider__thickness: '6' })}<br />
   ${dividerTwig({ divider__thickness: '8' })}<br /><br />
   <h2>Playground</h2>
-  <p>Use the StoryBook controls to see the dividers below implement the available positions and thicknesses.</p>
+  <p>Use the StoryBook controls to see the dividers below implement the available positions, thicknesses, and colors.</p>
   <style>body {--color-divider: var(--color-${dividerColor})}</style>
   ${dividerTwig({
     divider__width: '25%',
