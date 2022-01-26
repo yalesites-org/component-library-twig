@@ -11,12 +11,17 @@ export default {
     thickness: {
       options: [0.5, 1, 2, 4, 6, 8],
       type: 'select',
-      defaultValue: '0.5',
+      defaultValue: 0.5,
+    },
+    dividerColor: {
+      options: ['gray-500', 'blue-yale', 'accent'],
+      type: 'select',
+      defaultValue: 'gray-500',
     },
   },
 };
 
-export const Dividers = ({ position, thickness }) => `
+export const Dividers = ({ position, thickness, dividerColor }) => `
   ${dividerTwig({ divider__thickness: '0.5' })}<br />
   ${dividerTwig({ divider__thickness: '1' })}<br />
   ${dividerTwig({ divider__thickness: '2' })}<br />
@@ -25,6 +30,7 @@ export const Dividers = ({ position, thickness }) => `
   ${dividerTwig({ divider__thickness: '8' })}<br /><br />
   <h2>Playground</h2>
   <p>Use the StoryBook controls to see the dividers below implement the available positions and thicknesses.</p>
+  <style>body {--color-divider: var(--color-${dividerColor})}</style>
   ${dividerTwig({
     divider__width: '25%',
     divider__thickness: thickness,
