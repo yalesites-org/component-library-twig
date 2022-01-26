@@ -1,8 +1,8 @@
-import colorsTokens from '@yalesites-org/tokens/build/json/tokens.json';
+import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
 import colorsTwig from './colors.twig';
 
-const colorsData = { colors: colorsTokens.color };
+const colorsData = { colors: tokens.color };
 
 export default {
   title: 'Tokens/Colors',
