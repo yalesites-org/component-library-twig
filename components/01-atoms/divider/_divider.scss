@@ -1,18 +1,18 @@
 $widths: 100%, 75%, 50%, 25%;
-$thicknesses: 0.5, 1, 2, 4, 6, 8;
-$positions: left, center, right;
+$thicknesses: 1, 2, 3, 4, 5, 6;
+$positions: (
+  left: flex-start,
+  center: center,
+  right: flex-end,
+);
 
 .divider__wrapper {
   display: flex;
   justify-content: center;
 
-  @each $position in $positions {
+  @each $position, $value in $positions {
     &[data-divider-position='#{$position}'] {
-      @if $position == left {
-        justify-content: flex-start;
-      } @else if $position == right {
-        justify-content: flex-end;
-      }
+      justify-content: #{$value};
     }
   }
 }
@@ -30,7 +30,7 @@ $positions: left, center, right;
 
   @each $thickness in $thicknesses {
     &[data-divider-thickness='#{$thickness}'] {
-      height: calc(#{$thickness}rem / 16);
+      height: var(--size-thickness-#{$thickness});
     }
   }
 }
