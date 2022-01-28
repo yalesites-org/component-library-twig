@@ -1,17 +1,16 @@
 {% set type__base_class = 'cl-type' %}
 
 <ul {{ bem(type__base_class) }}>
-  {% for style, value in font_styles %}
+  {% for style, value in heading_styles %}
     <li {{ bem('item', [], type__base_class) }}>
       <div {{ bem('sample', [], type__base_class) }} style="font: {{ value }}">
-        Heading in
-        {{ style }}
+        Heading in {{ style }}
       </div>
       <details class="cl-info">
         <summary>Font Details</summary>
         <code>
-          variable: --{{ style }}<br />
-          value:	{{ value }}
+          variable: --font-style-heading-{{ style }}<br />
+          value: {{ value }}
         </code>
       </details>
     </li>
