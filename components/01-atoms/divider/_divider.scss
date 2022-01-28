@@ -8,7 +8,6 @@ $positions: (
 
 .divider__wrapper {
   display: flex;
-  justify-content: center;
 
   @each $position, $value in $positions {
     &[data-divider-position='#{$position}'] {
