@@ -13,7 +13,8 @@
     "semantic-release": "semantic-release",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "storybook:deploy": "storybook-to-ghpages -o .out",
+    "test": "npm run lint:js && npm run lint:styles && npm run prettier && npm run storybook:build"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
@@ -39,6 +40,7 @@
     "webpack": "^4.46.0"
   },
   "dependencies": {
+    "@storybook/storybook-deployer": "^2.8.10",
     "@yalesites-org/tokens": "^1.0.2",
     "add-attributes-twig-extension": "^0.1.0",
     "bem-twig-extension": "^0.1.1"

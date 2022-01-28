@@ -1,9 +1,9 @@
-name: Create Release
+name: Test
 on:
-  push:
-    branches: [main]
+  pull_request:
+    branches: ['main', 'develop']
 jobs:
-  release:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -16,8 +16,4 @@ jobs:
         run: npm ci
         env:
           YALESITES_BUILD_TOKEN: ${{ secrets.YALESITES_BUILD_TOKEN }}
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          YALESITES_BUILD_TOKEN: ${{secrets.YALESITES_BUILD_TOKEN}}
-        run: npm run semantic-release
+      - run: npm run test
