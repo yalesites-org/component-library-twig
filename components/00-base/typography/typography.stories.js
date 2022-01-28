@@ -16,7 +16,7 @@ const bodyStyleData = { body_styles: tokens.font.style.body };
 /**
  * Storybook Definition.
  */
-export default { title: 'Base/Typography' };
+export default { title: 'Tokens/Typography' };
 
 export const TypeFaces = () => typeFaces(typeFacesData);
 
