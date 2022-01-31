@@ -12,6 +12,8 @@ import typeFacesData from './type-faces.yml';
 const scaleData = { font_scale: tokens.font.scale };
 const headingStyleData = { heading_styles: tokens.font.style.heading };
 const bodyStyleData = { body_styles: tokens.font.style.body };
+const letterSpacing = { letter_spacing: tokens.font.letterSpacing };
+const textTransforms = { text_transforms: tokens.font.textTransform };
 
 /**
  * Storybook Definition.
@@ -22,6 +24,7 @@ export const TypeFaces = () => typeFaces(typeFacesData);
 
 export const TypeScale = () => typeScale(scaleData);
 
-export const HeadingStyles = () => headingStyles(headingStyleData);
+export const HeadingStyles = () =>
+  headingStyles({ ...headingStyleData, ...letterSpacing, ...textTransforms });
 
 export const BodyStyles = () => bodyStyles(bodyStyleData);

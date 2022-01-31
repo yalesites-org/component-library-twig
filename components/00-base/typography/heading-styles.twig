@@ -3,14 +3,24 @@
 <ul {{ bem(type__base_class) }}>
   {% for style, value in heading_styles %}
     <li {{ bem('item', [], type__base_class) }}>
-      <div {{ bem('sample', [], type__base_class) }} style="font: {{ value }}">
+      <div {{ bem('sample', [], type__base_class) }} style="font: {{ value }};
+        {%- for spacing, spacing_value in letter_spacing %}{% if spacing == style -%}
+          {% set letter_spacing_value = 'letter-spacing: ' ~ spacing_value ~ ';' %}
+          {{ letter_spacing_value }}
+        {%- endif %}{% endfor %}
+        {%- for transform, transform_value in text_transforms %}{% if transform == style -%}
+          {% set text_transform_value = 'text-transform: ' ~ transform_value ~ ';' %}
+          {{ text_transform_value }};
+        {%- endif %}{% endfor %}">
         Heading in {{ style }}
       </div>
       <details class="cl-info">
         <summary>Font Details</summary>
         <code>
           variable: --font-style-heading-{{ style }}<br />
-          value: {{ value }}
+          font: {{ value }}<br />
+          letter-spacing: {{ letter_spacing_value }}
+          text-transform: {{ text_transform_value }}
         </code>
       </details>
     </li>
