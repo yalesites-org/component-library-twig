@@ -6,7 +6,7 @@ import { setupTwig } from './setupTwig';
 // GLOBAL CSS
 import '../components/style.scss';
 import '../components/00-base/colors/cl-colors.scss';
-import '../components/00-base/spacing/cl-spacing.scss';
+import '../components/00-base/base/cl-spacing.scss';
 import '../components/00-base/typography/cl-typography.scss';
 
 // If in a Drupal project, it's recommended to import a symlinked version of drupal.js.
