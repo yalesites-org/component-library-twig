@@ -1,0 +1,14 @@
+{% set spacing__base_class = 'cl-spacing' %}
+
+<div {{ bem(spacing__base_class) }}>
+  <span {{ bem('header', [], spacing__base_class) }}>Breakpoint</span>
+  <span {{ bem('header', [], spacing__base_class) }}>(SCSS) Variable</span>
+  <span {{ bem('header', [], spacing__base_class) }}>Dimensions</span>
+  <span class="cl-spacing__line"></span>
+  {% for breakpoint, value in _context.breakpoints %}
+    <span>{{ breakpoint }}</span>
+    <span>{{ value.variable }}</span>
+    <span>{{ value.dimensions }}</span>
+    <span class="cl-spacing__line"></span>
+  {% endfor %}
+</div>
