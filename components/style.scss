@@ -8,10 +8,20 @@
 // Components
 // stylelint-disable
 @import '_settings/**/*.scss';
-@import '00-base/**/*.scss';
+@import '00-tokens/**/*.scss';
 @import '01-atoms/**/*.scss';
 // @import '02-molecules/**/*.scss';
 // @import '03-organisms/**/*.scss';
 // @import '04-templates/**/*.scss';
 // @import '00-base/colors/colors-used';
 // stylelint-enable
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}

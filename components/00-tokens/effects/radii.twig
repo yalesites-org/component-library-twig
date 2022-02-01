@@ -1,7 +1,7 @@
 {% set radii__base_class = "cl-radii" %}
 
 <div {{ bem(radii__base_class) }}>
-  <ul {{ bem('list', [], radii__base_class) }} data-theme="">
+  <ul {{ bem('list', [], radii__base_class) }}>
   {% for radius, value in _context.radii %}
     {% set variable = prefix ~ radius|lower|replace({' ': '-'}) %}
       <li {{ bem("item", [], radii__base_class) }} style="border-radius: var({{ variable }})">

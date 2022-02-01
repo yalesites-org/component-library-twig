@@ -1,8 +1,11 @@
+@use '~@yalesites-org/tokens/build/scss/tokens.scss' as break;
+
 $effects-gap: var(--size-spacing-6);
 $shadow-levels: 'level-1', 'level-2', 'level-3', 'level-4';
 
 .cl-shadows__list,
-.cl-radii__list {
+.cl-radii__list,
+.cl-borders__list {
   display: flex;
   flex-wrap: wrap;
   margin: 0;
@@ -20,7 +23,7 @@ $shadow-levels: 'level-1', 'level-2', 'level-3', 'level-4';
   flex-direction: column;
   align-items: center;
 
-  @media (min-width: 1000px) {
+  @media (min-width: break.$break-l) {
     flex-basis: 10%;
   }
 }
@@ -45,4 +48,16 @@ $shadow-levels: 'level-1', 'level-2', 'level-3', 'level-4';
 
   background: var(--color-gray-700);
   color: var(--color-basics-white);
+}
+
+.cl-borders__item {
+  @include cl-list-item;
+
+  @media (min-width: break.$break-l) {
+    flex-basis: 25%;
+  }
+
+  @media (min-width: break.$break-xl) {
+    flex-basis: 10%;
+  }
 }
