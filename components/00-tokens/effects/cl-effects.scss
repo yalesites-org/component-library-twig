@@ -1,14 +1,15 @@
 $effects-gap: var(--size-spacing-6);
 $shadow-levels: 'level-1', 'level-2', 'level-3', 'level-4';
 
-.cl-shadows__list {
+.cl-shadows__list,
+.cl-radii__list {
   display: flex;
   flex-wrap: wrap;
   margin: 0;
   padding: 0;
 }
 
-.cl-shadows__item {
+@mixin cl-list-item {
   list-style: none;
   padding: var(--size-spacing-7);
   margin: 0 $effects-gap $effects-gap;
@@ -18,6 +19,15 @@ $shadow-levels: 'level-1', 'level-2', 'level-3', 'level-4';
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (min-width: 1000px) {
+    flex-basis: 10%;
+  }
+}
+
+.cl-shadows__item {
+  @include cl-list-item;
+
   background: var(--color-blue-yale);
   color: var(--color-basics-white);
 
@@ -28,8 +38,11 @@ $shadow-levels: 'level-1', 'level-2', 'level-3', 'level-4';
       }
     }
   }
+}
 
-  @media (min-width: 1000px) {
-    flex-basis: 10%;
-  }
+.cl-radii__item {
+  @include cl-list-item;
+
+  background: var(--color-gray-700);
+  color: var(--color-basics-white);
 }
