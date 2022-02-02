@@ -32,22 +32,22 @@ export const Dividers = ({ position, thickness, dividerColor }) => `
   <p>Use the StoryBook controls to see the dividers below implement the available positions, thicknesses, and colors.</p>
   <style>body {--color-divider: var(--color-${dividerColor})}</style>
   ${dividerTwig({
-    divider__width: '25%',
+    divider__width: '25',
     divider__thickness: thickness,
     divider__position: position,
   })}<br />
   ${dividerTwig({
-    divider__width: '50%',
+    divider__width: '50',
     divider__thickness: thickness,
     divider__position: position,
   })}<br />
   ${dividerTwig({
-    divider__width: '75%',
+    divider__width: '75',
     divider__thickness: thickness,
     divider__position: position,
   })}<br />
   ${dividerTwig({
-    divider__width: '100%',
+    divider__width: '100',
     divider__thickness: thickness,
     divider__position: position,
   })}

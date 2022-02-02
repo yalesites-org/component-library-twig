@@ -1,18 +1,16 @@
-$widths: 100%, 75%, 50%, 25%;
-$thicknesses: 0.5, 1, 2, 4, 6, 8;
-$positions: left, center, right;
+@use '~@yalesites-org/tokens/build/scss/tokens';
+@use '/components/00-base/functions/map';
+
+$widths: map.deep-get(tokens.$tokens, layout, width);
+$thicknesses: map.deep-get(tokens.$tokens, size, thickness);
+$positions: map.deep-get(tokens.$tokens, layout, flex-position);
 
 .divider__wrapper {
   display: flex;
-  justify-content: center;
 
-  @each $position in $positions {
+  @each $position, $value in $positions {
     &[data-divider-position='#{$position}'] {
-      @if $position == left {
-        justify-content: flex-start;
-      } @else if $position == right {
-        justify-content: flex-end;
-      }
+      justify-content: var(--layout-flex-position-#{$position});
     }
   }
 }
@@ -22,15 +20,15 @@ $positions: left, center, right;
   width: 100%;
   height: calc(0.5rem / 16);
 
-  @each $width in $widths {
+  @each $width, $value in $widths {
     &[data-divider-width='#{$width}'] {
-      width: #{$width};
+      width: var(--layout-width-#{$width});
     }
   }
 
-  @each $thickness in $thicknesses {
+  @each $thickness, $value in $thicknesses {
     &[data-divider-thickness='#{$thickness}'] {
-      height: calc(#{$thickness}rem / 16);
+      height: var(--size-thickness-#{$thickness});
     }
   }
 }
