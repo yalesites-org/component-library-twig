@@ -1,5 +1,8 @@
+@use '~@yalesites-org/tokens/build/scss/tokens';
+@use '/components/00-base/functions/map';
+
 $widths: 100%, 75%, 50%, 25%;
-$thicknesses: 0.5, 1, 2, 4, 6, 8;
+$thicknesses: map.deep-get(tokens.$tokens, size, thickness);
 $positions: left, center, right;
 
 .divider__wrapper {
@@ -28,9 +31,9 @@ $positions: left, center, right;
     }
   }
 
-  @each $thickness in $thicknesses {
+  @each $thickness, $value in $thicknesses {
     &[data-divider-thickness='#{$thickness}'] {
-      height: calc(#{$thickness}rem / 16);
+      height: var(--size-thickness-#{$thickness});
     }
   }
 }
