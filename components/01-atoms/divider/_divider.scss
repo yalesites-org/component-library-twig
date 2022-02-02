@@ -1,7 +1,7 @@
 @use '~@yalesites-org/tokens/build/scss/tokens';
 @use '/components/00-base/functions/map';
 
-$widths: 100%, 75%, 50%, 25%;
+$widths: map.deep-get(tokens.$tokens, layout, width);
 $thicknesses: map.deep-get(tokens.$tokens, size, thickness);
 $positions: left, center, right;
 
@@ -25,9 +25,9 @@ $positions: left, center, right;
   width: 100%;
   height: calc(0.5rem / 16);
 
-  @each $width in $widths {
+  @each $width, $value in $widths {
     &[data-divider-width='#{$width}'] {
-      width: #{$width};
+      width: var(--layout-width-#{$width});
     }
   }
 
