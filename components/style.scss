@@ -2,9 +2,11 @@
 // @import '~normalize.css/normalize';
 // @import '~breakpoint-sass/stylesheets/breakpoint';
 
-// Components
 // stylelint-disable
 @use '_settings/config';
+// Tokens
+@import '~@yalesites-org/tokens/build/css/tokens.css';
+// Components
 @import '01-atoms/**/*.scss';
 // @import '02-molecules/**/*.scss';
 // @import '03-organisms/**/*.scss';
