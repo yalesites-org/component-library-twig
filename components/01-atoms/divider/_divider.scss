@@ -3,19 +3,14 @@
 
 $widths: map.deep-get(tokens.$tokens, layout, width);
 $thicknesses: map.deep-get(tokens.$tokens, size, thickness);
-$positions: left, center, right;
+$positions: map.deep-get(tokens.$tokens, layout, flex-position);
 
 .divider__wrapper {
   display: flex;
-  justify-content: center;
 
-  @each $position in $positions {
+  @each $position, $value in $positions {
     &[data-divider-position='#{$position}'] {
-      @if $position == left {
-        justify-content: flex-start;
-      } @else if $position == right {
-        justify-content: flex-end;
-      }
+      justify-content: var(--layout-flex-position-#{$position});
     }
   }
 }
