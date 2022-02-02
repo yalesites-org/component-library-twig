@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@storybook/storybook-deployer": "^2.8.10",
-    "@yalesites-org/tokens": "^1.7.0",
+    "@yalesites-org/tokens": "^1.9.0",
     "add-attributes-twig-extension": "^0.1.0",
     "bem-twig-extension": "^0.1.1"
   },
