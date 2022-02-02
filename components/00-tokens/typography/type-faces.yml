@@ -2,8 +2,8 @@ families:
   - name: YaleNew
     id: 'YaleNew, serif'
     styles:
-      - name: Medium
-        weight: 500
+      - name: Bold
+        weight: 700
         style: normal
       - name: Roman
         weight: 400
