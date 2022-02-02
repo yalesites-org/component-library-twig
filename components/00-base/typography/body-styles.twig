@@ -1,0 +1,18 @@
+{% set type__base_class = 'cl-type' %}
+
+<ul {{ bem(type__base_class) }}>
+  {% for style, value in body_styles %}
+    <li {{ bem('item', [], type__base_class) }}>
+      <div {{ bem('sample', [], type__base_class) }} style="font: {{ value }};">
+        <p><strong>Body {{ style }}</strong><br />Acconvallis volutpat tempus elementum viverra. Eu ultrices laoreet eu nunc, tortor mi porttitor. Scelerisque euismod et nisl, tempor senectus. Vitae mi purus placerat nibh purus faucibus imperdiet quisque diam. Elementum urna feugiat rhoncus purus. Consectetur neque auctor commodo consequat.</p>
+      </div>
+      <details class="cl-info">
+        <summary>Font Details</summary>
+        <code>
+          variable: --font-style-body-{{ style }}<br />
+          value: {{ value }}
+        </code>
+      </details>
+    </li>
+  {% endfor %}
+</ul>
