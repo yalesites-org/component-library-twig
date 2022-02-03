@@ -2,7 +2,6 @@
   "name": "@yalesites-org/component-library-twig",
   "version": "0.0.0-development",
   "description": "YaleSites Twig component library.",
-  "prettier": "@yalesites-org/eslint-config-and-other-formatting/prettier.config",
   "scripts": {
     "develop": "npm run storybook",
     "husky:commit-msg": "commitlint --edit $1",
