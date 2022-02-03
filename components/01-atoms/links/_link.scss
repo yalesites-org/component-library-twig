@@ -1,0 +1,32 @@
+:root {
+  --color-link: var(--color-blue-medium);
+  --color-link-hover: var(--color-basics-black);
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+  background-image: linear-gradient(var(--color-link), var(--color-link));
+  background-size: 100% 0.1em;
+  background-position-y: 100%;
+  background-position-x: 0%;
+  background-repeat: no-repeat;
+  transition-property: color, background-size, background-image;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+
+  &:hover {
+    background-size: 0% 0.1em;
+    color: var(--color-link-hover);
+    background-image: linear-gradient(
+      var(--color-link-hover),
+      var(--color-link-hover)
+    );
+  }
+
+  &:focus {
+    background-size: 0% 0.1em;
+    outline: var(--size-thickness-2) solid;
+    outline-offset: var(--size-thickness-2);
+  }
+}
