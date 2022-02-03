@@ -1,16 +1,18 @@
 {% set spacing__base_class = 'cl-table' %}
 
-<div {{ bem(spacing__base_class) }}>
-  <span {{ bem('header', [], spacing__base_class) }}>variable</span>
-  <span {{ bem('header', [], spacing__base_class) }}>rem</span>
-  <span {{ bem('header', [], spacing__base_class) }}>px</span>
-  <span {{ bem('header', [], spacing__base_class) }}>example</span>
-  <span {{ bem('line', [], spacing__base_class) }}></span>
+<table {{ bem(spacing__base_class) }}>
+  <tr>
+    <th {{ bem('header', [], spacing__base_class) }}>variable</th>
+    <th {{ bem('header', [], spacing__base_class) }}>rem</th>
+    <th {{ bem('header', [], spacing__base_class) }}>px</th>
+    <th {{ bem('header', [], spacing__base_class) }}>example</th>
+  </tr>
   {% for key, value in _context.spacing_options %}
-    <span>--{{ prefix }}-{{ key }}</span>
-    <span>{{ value|trim('rem') }}</span>
-    <span>{{ value * 16 }}</span>
-    <span style="background: var(--color-blue-medium); height: var(--{{ prefix }}-{{key}}); width: var(--{{ prefix }}-{{key}});"></span>
-    <span {{ bem('line', [], spacing__base_class) }}></span>
+    <tr>
+      <td>--{{ prefix }}-{{ key }}</td>
+      <td>{{ value|trim('rem') }}</td>
+      <td>{{ value * 16 }}</td>
+      <td><div style="background: var(--color-blue-medium); height: var(--{{ prefix }}-{{key}}); width: var(--{{ prefix }}-{{key}});"></div></td>
+    </tr>
   {% endfor %}
-</div>
+</table>
