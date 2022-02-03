@@ -17,8 +17,8 @@ $positions: map.deep-get(tokens.$tokens, layout, flex-position);
 
 .divider {
   background: var(--color-divider);
-  width: 100%;
-  height: calc(0.5rem / 16);
+  width: var(--layout-width-100);
+  height: var(--size-thickness-1);
 
   @each $width, $value in $widths {
     &[data-divider-width='#{$width}'] {
