@@ -31,6 +31,8 @@ There may be times when you need to create "hand-crafted" tokens, or pull in upd
 - Once the new tokens are "finalized", they should be pushed up to a new PR against the `tokens` repo, and merged into `main` to publish them as a new version.
 - After that is complete (usually takes a couple minutes), you should run `npm update @yalesites-org/tokens` in the component library to update the lock file to reference the new release of the tokens. If you skip this step, you'll continue to pull the previous tokens package, without the new tokens.
 
+NOTE: Any time you run `npm install` the linked package will be replaced with one actually downloaded via npm. This means if you want to work on the tokens again, you'll need to re-run `npm link @yalesites-org/tokens`
+
 ## Installing this package in another project
 
 <details><summary>Prerequisites</summary>
