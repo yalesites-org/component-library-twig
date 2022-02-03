@@ -1,13 +1,11 @@
-:root {
-  --color-link: var(--color-blue-medium);
-  --color-link-hover: var(--color-basics-black);
-}
-
 a {
+  --color-link: var(--color-blue-medium);
+  --color-link-hover: var(--color-text);
+
   color: var(--color-link);
   text-decoration: none;
   background-image: linear-gradient(var(--color-link), var(--color-link));
-  background-size: 100% 0.1em;
+  background-size: 100% var(--size-thickness-2);
   background-position-y: 100%;
   background-position-x: 0%;
   background-repeat: no-repeat;
@@ -16,7 +14,7 @@ a {
   transition-timing-function: ease-in-out;
 
   &:hover {
-    background-size: 0% 0.1em;
+    background-size: 0% var(--size-thickness-2);
     color: var(--color-link-hover);
     background-image: linear-gradient(
       var(--color-link-hover),
@@ -25,7 +23,7 @@ a {
   }
 
   &:focus {
-    background-size: 0% 0.1em;
+    background-size: 0% var(--size-thickness-2);
     outline: var(--size-thickness-2) solid;
     outline-offset: var(--size-thickness-2);
   }
