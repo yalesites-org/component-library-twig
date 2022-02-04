@@ -5,7 +5,7 @@ import breakpointsTwig from './breakpoints.twig';
 const breakpointsData = { breakpoints: tokens.break };
 
 export default {
-  title: 'Base/breakpoints',
+  title: 'Tokens/Breakpoints',
 };
 
 export const breakpoints = () => breakpointsTwig(breakpointsData);

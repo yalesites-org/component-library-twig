@@ -4,7 +4,7 @@
   "repository": "https://github.com/yalesites-org/component-library-twig.git",
   "structure": [
     {
-      "name": "base",
+      "name": "tokens",
       "description": "Base-level styling that applies to the overall design and affects all components"
     },
     {
@@ -33,8 +33,8 @@
       "platform": "drupal",
       "structureImplementations": [
         {
-          "name": "base",
-          "directory": "./components/00-base"
+          "name": "tokens",
+          "directory": "./components/00-tokens"
         },
         {
           "name": "atoms",
@@ -73,9 +73,9 @@
           "description": "CSS files that define the theme settings"
         },
         {
-          "name": "base",
-          "path": "./components/00-base",
-          "destinationPath": "./components/00-base",
+          "name": "tokens",
+          "path": "./components/00-tokens",
+          "destinationPath": "./components/00-tokens",
           "description": "Contains scss files with global defaults"
         }
       ],

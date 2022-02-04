@@ -1,0 +1,19 @@
+{% set shadows__base_class = "cl-shadows" %}
+
+<div {{ bem(shadows__base_class) }}>
+  <ul {{ bem('list', [], shadows__base_class) }}>
+  {% for shadow, value in _context.shadows %}
+    {% set variable = prefix ~ shadow|lower|replace({' ': '-'}) %}
+      <li {{ bem("item", [], shadows__base_class) }} data-shadow-level={{ shadow|lower|replace({' ': '-'}) }}>
+        <span {{ bem("title", [], shadows__base_class) }}>{{ shadow }}</span><br />
+      <details class="cl-info">
+        <summary>Shadow Details</summary>
+        <code>
+          <strong>variable:</strong> {{ variable }} <br />
+          <strong>value:</strong> {{ value }}
+        </code>
+      </details>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
