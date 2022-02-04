@@ -5,7 +5,10 @@ import { setupTwig } from './setupTwig';
 
 // GLOBAL CSS
 import '../components/style.scss';
-import '../components/00-base/colors/colors-component-library.scss';
+import '../components/00-tokens/colors/cl-colors.scss';
+import '../components/00-tokens/cl-base.scss';
+import '../components/00-tokens/typography/cl-typography.scss';
+import '../components/00-tokens/effects/cl-effects.scss';
 
 // If in a Drupal project, it's recommended to import a symlinked version of drupal.js.
 import './_drupal.js';

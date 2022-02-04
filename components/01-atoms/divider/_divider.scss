@@ -1,0 +1,34 @@
+@use '~@yalesites-org/tokens/build/scss/tokens';
+@use '/components/00-tokens/functions/map';
+
+$widths: map.deep-get(tokens.$tokens, layout, width);
+$thicknesses: map.deep-get(tokens.$tokens, size, thickness);
+$positions: map.deep-get(tokens.$tokens, layout, flex-position);
+
+.divider__wrapper {
+  display: flex;
+
+  @each $position, $value in $positions {
+    &[data-divider-position='#{$position}'] {
+      justify-content: var(--layout-flex-position-#{$position});
+    }
+  }
+}
+
+.divider {
+  background: var(--color-divider);
+  width: 100%;
+  height: calc(0.5rem / 16);
+
+  @each $width, $value in $widths {
+    &[data-divider-width='#{$width}'] {
+      width: var(--layout-width-#{$width});
+    }
+  }
+
+  @each $thickness, $value in $thicknesses {
+    &[data-divider-thickness='#{$thickness}'] {
+      height: var(--size-thickness-#{$thickness});
+    }
+  }
+}

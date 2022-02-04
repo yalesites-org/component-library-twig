@@ -1,0 +1,16 @@
+{#
+ # Available Variables:
+ # - divider__width: available options are 100% (default), 75%, 50%, and 25%
+ # - divider__thickness: available options are 1 (default), 2, 3, 4, 5, and 6
+ # - divider__position: available options are center (default), left, and right
+ #}
+
+{% set divider__base_class = 'divider' %}
+
+{% set divider__width = divider__width|default('100%') %}
+{% set divider__thickness = divider__thickness|default('1') %}
+{% set divider__position = divider__position|default('center') %}
+
+<div {{ bem('wrapper', [], divider__base_class) }} data-divider-position={{ divider__position }}>
+  <div {{ bem(divider__base_class) }} data-divider-width={{ divider__width }} data-divider-thickness={{ divider__thickness }}></div>
+</div>

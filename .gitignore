@@ -1,1 +1,4 @@
 node_modules
+
+# Storybook build directory
+.out
