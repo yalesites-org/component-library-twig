@@ -8,19 +8,21 @@
   'max-width': 'Max-Width',
 } %}
 
-<div {{ bem(breakpoints__base_class) }}>
-  <span {{ bem('header', [], breakpoints__base_class) }}>Breakpoint</span>
-  <span {{ bem('header', [], breakpoints__base_class) }}>(SCSS) Variable</span>
-  <span {{ bem('header', [], breakpoints__base_class) }}>Width</span>
-  <span {{ bem('line', [], breakpoints__base_class) }}></span>
+<table {{ bem(breakpoints__base_class) }}>
+  <tr>
+    <th {{ bem('header', [], breakpoints__base_class) }}>Breakpoint</th>
+    <th {{ bem('header', [], breakpoints__base_class) }}>(SCSS) Variable</th>
+    <th {{ bem('header', [], breakpoints__base_class) }}>Width</th>
+  </tr>
   {% for breakpoint, value in _context.breakpoints %}
-    {% for breakpoint_short, breakpoint_name in breakpoint_names %}
-      {% if breakpoint_short == breakpoint %}
-        <span>{{ breakpoint_name }}</span>
-      {% endif %}
-    {% endfor %}
-    <span>$break-{{ breakpoint }}</span>
-    <span>{{ value }}</span>
-    <span {{ bem('line', [], breakpoints__base_class) }}></span>
+    <tr>
+      {% for breakpoint_short, breakpoint_name in breakpoint_names %}
+        {% if breakpoint_short == breakpoint %}
+          <td>{{ breakpoint_name }}</td>
+        {% endif %}
+      {% endfor %}
+      <td>$break-{{ breakpoint }}</td>
+      <td>{{ value }}</td>
+    </tr>
   {% endfor %}
-</div>
+</table>
