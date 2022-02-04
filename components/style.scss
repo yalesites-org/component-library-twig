@@ -7,6 +7,7 @@
 // Tokens
 @import '~@yalesites-org/tokens/build/css/tokens.css';
 // Components
+@import '00-tokens/index';
 @import '01-atoms/**/*.scss';
 // @import '02-molecules/**/*.scss';
 // @import '03-organisms/**/*.scss';
