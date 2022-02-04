@@ -1,18 +1,16 @@
 .cl-table {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(50px, max-content));
-  column-gap: 4rem;
-  row-gap: 1rem;
-  align-items: center;
+  border-collapse: collapse;
+
+  th,
+  td {
+    border-bottom: 1px solid;
+    padding: var(--size-spacing-5) var(--size-spacing-7) var(--size-spacing-5)
+      var(--size-spacing-4);
+    text-align: left;
+  }
 
   &__header {
     font-weight: bold;
     text-transform: uppercase;
-  }
-
-  &__line {
-    grid-column: 1 / -1;
-    height: 1px;
-    background: var(--color-divider);
   }
 }
