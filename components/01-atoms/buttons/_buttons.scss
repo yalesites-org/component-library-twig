@@ -1,5 +1,4 @@
 $button-radii: (
-  'none': var(--radius-0),
   'soft': var(--button-radius-soft),
   'pill': 100vw,
 );
@@ -16,7 +15,9 @@ $button-outline-weights: (
 .button {
   --color-button-outline: var(--color-button-primary);
 
-  border: var(--border-thickness-2) solid var(--color-button-border);
+  border: var(--border-thickness-button, var(--border-thickness-2)) solid
+    var(--color-button-border);
+  border-radius: var(--border-radius-button, var(--radius-0));
   background: var(--color-button-bg);
   color: var(--color-button-text);
   padding: var(--size-spacing-5) var(--size-spacing-7);
@@ -34,14 +35,14 @@ $button-outline-weights: (
   // Radius options
   @each $radius, $value in $button-radii {
     &[data-button-radius='#{$radius}'] {
-      border-radius: #{$value};
+      --border-radius-button: #{$value};
     }
   }
 
   // Outline weights options
   @each $weight, $value in $button-outline-weights {
     &[data-outline-weight='#{$weight}'] {
-      border-width: #{$value};
+      --border-thickness-button: #{$value};
     }
   }
 
