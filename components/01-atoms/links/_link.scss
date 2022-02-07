@@ -34,13 +34,14 @@ a {
   }
 
   // Animate the decorative bar when the link is hovered
-  &:hover::after {
+  &:hover::after,
+  &:focus::after {
     transform: scale(0, 1);
   }
 
   &:focus {
-    background-size: 0% var(--size-thickness-2);
-    outline: var(--size-thickness-2) solid;
+    outline: var(--size-thickness-2) solid var(--color-link-hover);
+    color: var(--color-link-hover);
     outline-offset: var(--size-thickness-2);
   }
 }
