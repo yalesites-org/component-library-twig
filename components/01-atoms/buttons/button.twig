@@ -3,7 +3,7 @@
  # Reference: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/button_role#associated_aria_roles_states_and_properties
  # - aria_pressed: whether the button is pressed or not
  # - aria_expanded: whether the controlled grouping is expanded or not
- # - aria_controls: id of the grouping element that is controlled
+ # - aria_controls (required if aria_expanded is used): id of the grouping element that is controlled
  #
  # Available variables:
  # - button_content - the content of the button (typically text)
@@ -14,8 +14,11 @@
  #}
 
 {% set button_base_class = button_base_class|default('button') %}
+{% set button_radius = button_radius|default('none') %}
 
-{% set button_attributes = {} %}
+{% set button_attributes = {
+  'data-button-radius': button_radius,
+} %}
 
 {% if aria_pressed %}
   {% set button_attributes = button_attributes|merge({

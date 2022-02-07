@@ -5,10 +5,16 @@ import button from './button.twig';
  */
 export default { title: 'Atoms/Button' };
 
-export const Button = () =>
-  button({
-    button_content: 'This is a button',
-    aria_pressed: 'false',
-    aria_expanded: 'false',
-    aria_controls: '#some-id',
-  });
+export const Button = () => `
+  ${button({
+    button_content: 'Button',
+  })}
+  ${button({
+    button_content: 'Button',
+    button_radius: 'soft',
+  })}
+  ${button({
+    button_content: 'Button',
+    button_radius: 'pill',
+  })}
+`;
