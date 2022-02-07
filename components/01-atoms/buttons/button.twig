@@ -19,18 +19,13 @@
 {% set button_base_class = button_base_class|default('button') %}
 {% set button_radius = button_radius|default('none') %}
 {% set button_style = button_style|default('filled') %}
-{% set button_outline_weight = button_outline_weight|default('1') %}
+{% set button_outline_weight = button_outline_weight|default('2') %}
 
 {% set button_attributes = {
   'data-button-radius': button_radius,
   'data-button-style': button_style,
+  'data-outline-weight': button_outline_weight,
 } %}
-
-{% if button_style == 'outline' %}
-  {% set button_attributes = button_attributes|merge({
-    'data-outline-weight': button_outline_weight,
-  }) %}
-{% endif %}
 
 {% if aria_pressed %}
   {% set button_attributes = button_attributes|merge({

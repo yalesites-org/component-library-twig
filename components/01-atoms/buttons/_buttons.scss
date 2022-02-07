@@ -14,7 +14,7 @@ $button-outline-weights: (
 );
 
 .button {
-  --color-button-outline: var(--color-blue-medium);
+  --color-button-outline: var(--color-button-primary);
 
   border: var(--border-thickness-2) solid var(--color-button-border);
   background: var(--color-button-bg);
@@ -38,28 +38,42 @@ $button-outline-weights: (
     }
   }
 
-  // Styles
-  &[data-button-style='filled'] {
-    --color-button-bg: var(--color-blue-yale);
-    --color-button-bg-hover: transparent;
-    --color-button-border: var(--color-blue-yale);
-    --color-button-text: var(--color-basics-white);
-    --color-button-text-hover: var(--color-button-bg);
-  }
-
-  &[data-button-style='outline'] {
-    --color-button-bg: transparent;
-    --color-button-bg-hover: var(--color-blue-yale);
-    --color-button-border: var(--color-blue-yale);
-    --color-button-text: var(--color-blue-yale);
-    --color-button-text-hover: var(--color-basics-white);
-  }
-
   // Outline weights options
   @each $weight, $value in $button-outline-weights {
     &[data-outline-weight='#{$weight}'] {
       border-width: #{$value};
     }
+  }
+
+  // Styles
+  &[data-button-style='filled'] {
+    --color-button-bg: var(--color-button-primary);
+    --color-button-bg-hover: transparent;
+    --color-button-border: var(--color-button-primary);
+    --color-button-text: var(--color-button-secondary);
+    --color-button-text-hover: var(--color-button-primary);
+  }
+
+  &[data-button-style='outline'] {
+    --color-button-bg: transparent;
+    --color-button-bg-hover: var(--color-button-primary);
+    --color-button-border: var(--color-button-primary);
+    --color-button-text: var(--color-button-primary);
+    --color-button-text-hover: var(--color-button-secondary);
+  }
+
+  // Color schemes
+  [data-component-theme='gray-800'] &,
+  [data-component-theme='gray-700'] &,
+  [data-component-theme='blue-yale'] & {
+    --color-button-primary: var(
+      --color-theme-button-secondary,
+      var(--color-basics-white)
+    );
+    --color-button-secondary: var(
+      --color-theme-button-primary,
+      var(--color-blue-yale)
+    );
   }
 }
 
