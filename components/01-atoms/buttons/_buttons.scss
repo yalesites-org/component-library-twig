@@ -10,6 +10,7 @@ $button-radii: (
   --color-button-border: var(--color-blue-yale);
   --color-button-text: var(--color-basics-white);
   --color-button-text-hover: var(--color-button-bg);
+  --color-button-outline: var(--color-blue-medium);
 
   border: var(--border-thickness-2) solid var(--color-button-border);
   background: var(--color-button-bg);
@@ -21,10 +22,21 @@ $button-radii: (
     color: var(--color-button-text-hover);
   }
 
+  &:focus {
+    outline: var(--size-thickness-2) solid var(--color-button-outline);
+    outline-offset: var(--size-thickness-2);
+  }
+
   // Radius options
   @each $radius, $value in $button-radii {
     &[data-button-radius='#{$radius}'] {
       border-radius: #{$value};
     }
   }
+}
+
+// Temporary place for this
+.button-group {
+  display: flex;
+  gap: var(--size-spacing-5);
 }
