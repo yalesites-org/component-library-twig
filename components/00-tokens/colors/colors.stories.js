@@ -14,5 +14,6 @@ export const Colors = () => colorsTwig(colorsData);
 
 export const ColorPairings = () => `
   <h2>These pairings are selected to support accessibility standards.</h2>
+  <p>This page is useful to check the accessibility of various components against the available background colors.</p>
   ${colorPairingsTwig(colorPairingsData)}
 `;
