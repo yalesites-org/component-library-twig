@@ -3,13 +3,17 @@ $button-radii: (
   'soft': var(--button-radius-soft),
   'pill': 100vw,
 );
+$button-style: (
+  'filled': 1rem,
+  'outline': 2rem,
+);
+$button-outline-weights: (
+  '1': var(--border-thickness-1),
+  '2': var(--border-thickness-2),
+  '4': var(--border-thickness-4),
+);
 
 .button {
-  --color-button-bg: var(--color-blue-yale);
-  --color-button-bg-hover: transparent;
-  --color-button-border: var(--color-blue-yale);
-  --color-button-text: var(--color-basics-white);
-  --color-button-text-hover: var(--color-button-bg);
   --color-button-outline: var(--color-blue-medium);
 
   border: var(--border-thickness-2) solid var(--color-button-border);
@@ -31,6 +35,30 @@ $button-radii: (
   @each $radius, $value in $button-radii {
     &[data-button-radius='#{$radius}'] {
       border-radius: #{$value};
+    }
+  }
+
+  // Styles
+  &[data-button-style='filled'] {
+    --color-button-bg: var(--color-blue-yale);
+    --color-button-bg-hover: transparent;
+    --color-button-border: var(--color-blue-yale);
+    --color-button-text: var(--color-basics-white);
+    --color-button-text-hover: var(--color-button-bg);
+  }
+
+  &[data-button-style='outline'] {
+    --color-button-bg: transparent;
+    --color-button-bg-hover: var(--color-blue-yale);
+    --color-button-border: var(--color-blue-yale);
+    --color-button-text: var(--color-blue-yale);
+    --color-button-text-hover: var(--color-basics-white);
+  }
+
+  // Outline weights options
+  @each $weight, $value in $button-outline-weights {
+    &[data-outline-weight='#{$weight}'] {
+      border-width: #{$value};
     }
   }
 }
