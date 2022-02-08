@@ -9,14 +9,18 @@
   --color-link-hover: var(--color-text);
 
   // Color schemes
-  [data-component-theme='gray-800'],
-  [data-component-theme='gray-700'],
-  [data-component-theme='blue-yale'] {
+  [data-component-theme='gray-800'] &,
+  [data-component-theme='blue-yale'] & {
     --color-link: var(--color-basics-white);
     --color-link-hover: var(--color-blue-light);
   }
 
-  [data-component-theme='gray-200'] {
+  [data-component-theme='gray-700'] & {
+    --color-link: var(--color-basics-white);
+    --color-link-hover: var(--color-gray-300);
+  }
+
+  [data-component-theme='gray-200'] & {
     --color-link: var(--color-blue-yale);
   }
 }
@@ -55,8 +59,7 @@ a {
   }
 
   &:focus {
-    outline: var(--size-thickness-2) solid var(--color-link-hover);
-    color: var(--color-link-hover);
+    outline: var(--size-thickness-2) solid var(--color-link);
     outline-offset: var(--size-thickness-2);
   }
 }
