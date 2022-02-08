@@ -15,10 +15,11 @@
 {% set link_attributes = link_attributes|default({}) %}
 
 {% set link_attributes = link_attributes|merge({
-  class: bem(link_base_class, link_modifiers, link_blockname)
+  class: bem(link_base_class, link_modifiers, link_blockname),
+  href: link_url,
 }) %}
 
-<a {{ add_attributes(link_attributes) }} href="{{ link_url }}">
+<a {{ add_attributes(link_attributes) }}>
   {% block link_content %}
     {{ link_content }}
   {% endblock %}
