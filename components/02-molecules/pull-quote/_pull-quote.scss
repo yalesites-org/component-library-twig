@@ -10,12 +10,12 @@ blockquote {
 
   &[data-pull-quote-style='bar-left'] {
     padding-left: var(--size-spacing-6);
-    border-left: var(--border-thickness-4) solid var(--color-blue-yale);
+    border-left: var(--border-thickness-4) solid var(--color-blockquote-accent);
   }
 
   &[data-pull-quote-style='bar-right'] {
     padding-right: var(--size-spacing-6);
-    border-right: var(--border-thickness-4) solid var(--color-blue-yale);
+    border-right: var(--border-thickness-4) solid var(--color-blockquote-accent);
     text-align: right;
   }
 
@@ -30,6 +30,7 @@ blockquote {
       left: 0;
       font-size: 3.5em;
       line-height: 0.75;
+      color: var(--color-blockquote-accent);
     }
   }
 }
