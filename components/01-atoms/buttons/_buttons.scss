@@ -13,13 +13,14 @@ $button-outline-weights: (
 );
 
 .button {
-  --color-button-outline: var(--color-button-primary);
+  --color-button-outline: var(--color-blue-medium);
 
   border: var(--border-thickness-button, var(--border-thickness-2)) solid
     var(--color-button-border);
   border-radius: var(--border-radius-button, var(--radius-0));
   background: var(--color-button-bg);
   color: var(--color-button-text);
+  font-weight: var(--font-weights-mallory-500);
   padding: var(--size-spacing-5) var(--size-spacing-7);
 
   &:hover {
@@ -81,5 +82,5 @@ $button-outline-weights: (
 // Temporary place for this
 .button-group {
   display: flex;
-  gap: var(--size-spacing-5);
+  gap: var(--size-spacing-7);
 }

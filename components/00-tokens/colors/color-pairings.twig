@@ -4,12 +4,14 @@
   <div {{ bem(color_pairing__base_class) }} data-component-theme={{ theme }}>
     <h2>Component Theme: {{ theme }}</h2>
     <p>Here's a paragraph with some text. And <a href="#">links can go here</a> too. Isn't that cool?</p>
-    {% include "@atoms/buttons/button.twig" with {
-      button_content: 'button',
-    } %}
-    {% include "@atoms/buttons/button.twig" with {
-      button_content: 'outline',
-      button_style: 'outline'
-    } %}
+    <div class="button-group">
+      {% include "@atoms/buttons/button.twig" with {
+        button_content: 'button',
+      } %}
+      {% include "@atoms/buttons/button.twig" with {
+        button_content: 'outline',
+        button_style: 'outline'
+      } %}
+    </div>
   </div>
 {% endfor %}
