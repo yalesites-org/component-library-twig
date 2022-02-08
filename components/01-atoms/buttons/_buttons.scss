@@ -13,7 +13,7 @@ $button-outline-weights: (
 );
 
 .button {
-  --color-button-outline: var(--color-blue-medium);
+  --color-button-outline: var(--color-link);
 
   border: var(--border-thickness-button, var(--border-thickness-2)) solid
     var(--color-button-border);
