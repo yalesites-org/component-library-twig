@@ -1,0 +1,20 @@
+{#
+ # Available Props:
+ # - pull_quote__style: bar-left, bar-right, or quote-left
+ #
+ # Available Variables:
+ # - pull_quote__quote (required)
+ # - pull_quote__attribution
+ #}
+
+{% set pull_quote__base_class = 'pull-quote' %}
+{% set pull_quote__style = pull_quote__style|default('bar-left') %}
+
+<figure {{ bem(pull_quote__base_class) }} data-pull-quote-style="{{ pull_quote__style }}">
+  <blockquote {{ bem('quote', [], pull_quote__base_class) }}>
+    {{ pull_quote__quote}}
+  </blockquote>
+  {% if pull_quote__attribution %}
+    <figcaption {{ bem('attribution', [], pull_quote__base_class) }}>—{{ pull_quote__attribution }}</figcaption>
+  {% endif %}
+</figure>
