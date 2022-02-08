@@ -24,7 +24,7 @@ blockquote {
     padding-left: var(--size-spacing-8);
 
     &::before {
-      content: open-quote;
+      content: '“';
       position: absolute;
       top: 0;
       left: 0;
