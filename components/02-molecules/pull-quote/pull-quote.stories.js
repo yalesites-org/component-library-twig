@@ -1,7 +1,5 @@
 import pullQuoteTwig from './pull-quote.twig';
 
-// import linkData from './link.yml';
-
 /**
  * Storybook Definition.
  */
