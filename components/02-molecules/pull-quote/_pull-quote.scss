@@ -25,11 +25,12 @@ blockquote {
 
     &::before {
       content: '“';
+      font-family: var(--font-families-yalenew);
       position: absolute;
       top: 0;
       left: 0;
-      font-size: 3.5em;
-      line-height: 0.75;
+      font-size: 4em;
+      line-height: 0.8;
       color: var(--color-pull-quote-accent);
     }
   }
