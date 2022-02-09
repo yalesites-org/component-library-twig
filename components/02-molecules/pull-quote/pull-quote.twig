@@ -10,7 +10,16 @@
 {% set pull_quote__base_class = 'pull-quote' %}
 {% set pull_quote__style = pull_quote__style|default('bar-left') %}
 
-<figure {{ bem(pull_quote__base_class) }} data-pull-quote-style="{{ pull_quote__style }}">
+{# If pull_quote__attributes is not defined, set it to an empty object by default #}
+{% set pull_quote__attributes = pull_quote__attributes|default({}) %}
+
+{% set pull_quote__attributes = pull_quote__attributes|merge({
+  class: bem(pull_quote__base_class),
+  'data-pull-quote-style': pull_quote__style,
+}) %}
+
+
+<figure {{ add_attributes(pull_quote__attributes) }}>
   <blockquote {{ bem('quote', [], pull_quote__base_class) }}>
     {{ pull_quote__quote }}
   </blockquote>
