@@ -1,0 +1,63 @@
+@mixin animation-link($property) {
+  transition-property: #{$property};
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+
+a {
+  --color-link: var(--color-blue-medium);
+  --color-link-hover: var(--color-text);
+
+  @include animation-link('color');
+
+  position: relative;
+  color: var(--color-link);
+  text-decoration: none;
+  font-weight: var(--font-weights-mallory-500);
+
+  &:hover {
+    color: var(--color-link-hover);
+  }
+
+  // Add the decorative bar under links
+  &::after {
+    @include animation-link('transform');
+
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--color-link);
+    transform-origin: left center;
+    transform: scale(1, 1);
+  }
+
+  // Animate the decorative bar when the link is hovered
+  &:hover::after,
+  &:focus::after {
+    transform: scale(0, 1);
+  }
+
+  &:focus {
+    outline: var(--size-thickness-2) solid var(--color-link);
+    outline-offset: var(--size-thickness-2);
+  }
+
+  // Color schemes
+  [data-component-theme='gray-800'] &,
+  [data-component-theme='blue-yale'] & {
+    --color-link: var(--color-basics-white);
+    --color-link-hover: var(--color-blue-light);
+  }
+
+  [data-component-theme='gray-700'] & {
+    --color-link: var(--color-basics-white);
+    --color-link-hover: var(--color-gray-300);
+  }
+
+  [data-component-theme='gray-200'] & {
+    --color-link: var(--color-blue-yale);
+  }
+}
