@@ -52,4 +52,4 @@ The `develop` branch also has an auto-deployed component library. This will cont
 
 PRs also have auto-deployed component libraries, which allow reviewers to load the latest state of a PR at any given time without having to fiddle with local tooling. Each PR will have a link posted to the PR comments by the "netlify bot" when the link is ready. See screenshot below.
 
-![PR Preview Link](./.github/docs/pr-preview-link.png)
+![PR preview link is the last link in the Netlify bot comment](./.github/docs/pr-preview-link.png)
