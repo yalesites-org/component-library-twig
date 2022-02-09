@@ -11,7 +11,7 @@
 - [ ] Verify XYZ
 
 ### Design Review
-- [ ] Verify the designs match the [Figma Designs](https://www.figma.com/file/l84dYRVCvA5DbbCkG0yWke/UI-Kit-%5BYaleSites%5D)
+- [ ] Verify the designs match the [Figma Designs](https://www.figma.com/file/OVfmCW5s1gI7xnrM8ibX2y/UI-Kit-Alpha-%5BYaleSites%5D)
 
 ### Accessibility Review
 - [ ] Verify the component meets Accessibility requirements
