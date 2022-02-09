@@ -5,11 +5,13 @@ import link from './link.twig';
  */
 export default { title: 'Atoms/Links' };
 
-export const links = () =>
-  link({
-    link_url: '#',
-    link_content: 'This is a link',
-    link_attributes: {
-      target: '_blank',
-    },
-  });
+export const links = () => `
+  <div class="text-field">
+    ${link({
+      link_url: '#',
+      link_content: 'This is a link',
+      link_attributes: {
+        target: '_blank',
+      },
+    })}
+  </div>`;
