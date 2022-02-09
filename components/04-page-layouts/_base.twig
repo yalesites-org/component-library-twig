@@ -1,0 +1,42 @@
+{% set layout__base_class = 'layout-container' %}
+{% set content__base_class = 'main' %}
+{% set sidebar__base_class = 'sidebar' %}
+{% set main__base_class = 'main-content' %}
+
+<div {{ bem(layout__base_class) }}>
+  {# Page Header #}
+  {% block page__header %}
+    {% include "@page-layouts/placeholder/placeholder.twig" with {
+      placeholder: 'Header',
+    } %}
+  {% endblock %}
+  {# System #}
+  {% block page_system %}{% endblock %}
+  <div {{ bem(content__base_class) }}>
+    <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+    <main {{ bem(main__base_class) }}>
+      {# Main Content #}
+      {% block page_content %}
+        {% include "@page-layouts/placeholder/placeholder.twig" with {
+          placeholder: 'Main Content',
+        } %}
+      {% endblock %}
+    </main>
+    {% if sidebar %}
+      <aside {{ bem(sidebar__base_class) }}>
+        {# Sidebar #}
+        {% block page__sidebar %}
+          {% include "@page-layouts/placeholder/placeholder.twig" with {
+            placeholder: 'Sidebar',
+          } %}
+        {% endblock %}
+      </aside>
+    {% endif %}
+  </div>
+  {# Page Footer #}
+  {% block page__foter %}
+    {% include "@page-layouts/placeholder/placeholder.twig" with {
+      placeholder: 'Footer',
+    } %}
+  {% endblock %}
+</div>
