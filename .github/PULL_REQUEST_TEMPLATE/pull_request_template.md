@@ -4,11 +4,8 @@
 - Adds functionality bullet item
 - Fixes this or that bullet item
 
-### Testing Setup
-- [ ] Checkout this branch
-- [ ] Run `npm ci`
-- [ ] Run `npm run develop`
-- [ ] Navigate to the [Component Story](http://localhost:6006/?path=/story/tokens-colors--color-pairings)
+### Testing Link(s)
+- [ ] Navigate to the [Component Story](https://deploy-preview-XX--dev-component-library-twig.netlify.app/) preview
 
 ### Functional Review Steps
 - [ ] Verify XYZ
