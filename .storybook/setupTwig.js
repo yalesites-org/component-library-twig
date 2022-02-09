@@ -7,7 +7,7 @@ module.exports.namespaces = {
   atoms: resolve(__dirname, '../', 'components/01-atoms'),
   molecules: resolve(__dirname, '../', 'components/02-molecules'),
   organisms: resolve(__dirname, '../', 'components/03-organisms'),
-  templates: resolve(__dirname, '../', 'components/04-templates'),
+  'page-layouts': resolve(__dirname, '../', 'components/04-page-layouts'),
 };
 
 /**

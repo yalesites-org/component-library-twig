@@ -1,0 +1,7 @@
+{% set placeholder__base_class = 'placeholder' %}
+
+<section {{ bem(placeholder__base_class) }}>
+  <div {{ bem('content', placeholder__modifiers, placeholder__base_class) }}>
+    {{ placeholder|default('Placeholder') }}
+  </div>
+</section>
