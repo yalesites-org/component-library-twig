@@ -40,8 +40,8 @@ export const pullQuote = ({ style, accentColor }) => `
     pull_quote__style: 'quote-left',
   })}
   <h2>Playground</h2>
-  <div style="--color-blockquote-accent: var(--color-${accentColor})">
-    <p>Use the StoryBook controls to see the blockquote below implement the available variations and colors.</p>
+  <div style="--color-pull-quote-accent: var(--color-${accentColor})">
+    <p>Use the StoryBook controls to see the pull-quote below implement the available variations and colors.</p>
     ${pullQuoteTwig({
       pull_quote__quote:
         'Yale changed that thinking. It was evident in every class, every conversation, every project, that a business cannot exist in a vacuum, and that a business with the sole purpose of profit, with total disregard for its surroundings, will eventually fizzle out.',
