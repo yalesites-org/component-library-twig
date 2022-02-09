@@ -1,10 +1,6 @@
 $button-radii: (
   'soft': var(--button-radius-soft),
-  'pill': 100vw,
-);
-$button-style: (
-  'filled': 1rem,
-  'outline': 2rem,
+  'pill': 100vmax,
 );
 $button-outline-weights: (
   '1': var(--border-thickness-1),
