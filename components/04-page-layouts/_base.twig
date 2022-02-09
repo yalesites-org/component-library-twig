@@ -22,16 +22,6 @@
         } %}
       {% endblock %}
     </main>
-    {% if sidebar %}
-      <aside {{ bem(sidebar__base_class) }}>
-        {# Sidebar #}
-        {% block page__sidebar %}
-          {% include "@page-layouts/placeholder/placeholder.twig" with {
-            placeholder: 'Sidebar',
-          } %}
-        {% endblock %}
-      </aside>
-    {% endif %}
   </div>
   {# Page Footer #}
   {% block page__foter %}
