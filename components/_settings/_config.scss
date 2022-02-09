@@ -1,4 +1,13 @@
 :root {
   --color-accent: var(--color-theme-accent, var(--color-blue-medium));
   --color-divider: var(--color-gray-500);
+  --color-button-primary: var(
+    --color-theme-button-primary,
+    var(--color-blue-yale)
+  );
+  --color-button-secondary: var(
+    --color-theme-button-secondary,
+    var(--color-basics-white)
+  );
+  --button-radius-soft: var(--radius-4);
 }

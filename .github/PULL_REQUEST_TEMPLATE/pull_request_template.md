@@ -6,7 +6,7 @@
 
 ### Testing Setup
 - [ ] Checkout this branch
-- [ ] Run `npm install`
+- [ ] Run `npm ci`
 - [ ] Run `npm run develop`
 - [ ] Navigate to the [Component Story](http://localhost:6006/?path=/story/tokens-colors--color-pairings)
 
