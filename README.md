@@ -45,3 +45,11 @@ This is an entirely automated process, so whether changes are pushed directly to
 ## Live Component Library
 
 You can view the latest version of the component library at any time by visiting the [Deployed Storybook](https://yalesites-org.github.io/component-library-twig/?path=/story/tokens-colors--colors). All new commits to the `main` branch trigger a rebuild and deploy of the component library, so it will always be up-to-date with the latest released code.
+
+## Development Component Libraries
+
+The `develop` branch also has an auto-deployed component library. This will contain all of the work that will go out in the next release. It is [deployed to netlify](https://dev-component-library-twig.netlify.app).
+
+PRs also have auto-deployed component libraries, which allow reviewers to load the latest state of a PR at any given time without having to fiddle with local tooling. Each PR will have a link posted to the PR comments by the "netlify bot" when the link is ready. See screenshot below.
+
+![PR preview link is the last link in the Netlify bot comment](./.github/docs/pr-preview-link.png)
