@@ -5,7 +5,7 @@
 - Fixes this or that bullet item
 
 ### Testing Link(s)
-- [ ] Navigate to the [Component Story](https://deploy-preview-XX--dev-component-library-twig.netlify.app/) preview
+- [ ] Navigate to the [Component Story](https://deploy-preview-XX--dev-component-library-twig.netlify.app/?path=/story/tokens-breakpoints--breakpoints) preview
 
 ### Functional Review Steps
 - [ ] Verify XYZ
