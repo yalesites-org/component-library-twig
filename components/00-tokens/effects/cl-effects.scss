@@ -31,9 +31,6 @@ $shadow-levels: 'level-1', 'level-2', 'level-3', 'level-4';
 .cl-shadows__item {
   @include cl-list-item;
 
-  background: var(--color-blue-yale);
-  color: var(--color-basics-white);
-
   @each $level in $shadow-levels {
     &[data-shadow-level='#{$level}'] {
       &:hover {
@@ -45,9 +42,6 @@ $shadow-levels: 'level-1', 'level-2', 'level-3', 'level-4';
 
 .cl-radii__item {
   @include cl-list-item;
-
-  background: var(--color-gray-700);
-  color: var(--color-basics-white);
 }
 
 .cl-borders__item {

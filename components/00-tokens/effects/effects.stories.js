@@ -23,7 +23,6 @@ export const Shadows = () => `
 
 export const Radius = () => `
   <h2>Radius selection will affect the appearance of cards and list groups</h2>
-  <p>Radius 3 is available for mobile apps.</p>
   ${radiiTwig(radiiData)}
 `;
 
