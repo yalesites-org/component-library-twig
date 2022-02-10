@@ -1,0 +1,29 @@
+{#
+ # Available Props:
+ # - pull_quote__style: bar-left, bar-right, or quote-left
+ #
+ # Available Variables:
+ # - pull_quote__quote (required)
+ # - pull_quote__attribution
+ #}
+
+{% set pull_quote__base_class = 'pull-quote' %}
+{% set pull_quote__style = pull_quote__style|default('bar-left') %}
+
+{# If pull_quote__attributes is not defined, set it to an empty object by default #}
+{% set pull_quote__attributes = pull_quote__attributes|default({}) %}
+
+{% set pull_quote__attributes = pull_quote__attributes|merge({
+  class: bem(pull_quote__base_class),
+  'data-pull-quote-style': pull_quote__style,
+}) %}
+
+
+<figure {{ add_attributes(pull_quote__attributes) }}>
+  <blockquote {{ bem('quote', [], pull_quote__base_class) }}>
+    {{ pull_quote__quote }}
+  </blockquote>
+  {% if pull_quote__attribution %}
+    <figcaption {{ bem('attribution', [], pull_quote__base_class) }}>—{{ pull_quote__attribution }}</figcaption>
+  {% endif %}
+</figure>
