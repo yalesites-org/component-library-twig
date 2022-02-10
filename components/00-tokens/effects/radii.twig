@@ -6,7 +6,7 @@
     {% set variable = prefix ~ radius|lower|replace({' ': '-'}) %}
     {% set radii_item__attributes = {
       class: bem("item", [], radii__base_class),
-      style: 'border-radius: var({{ variable }})',
+      style: 'border-radius: var(' ~ variable ~ ')',
       'data-component-theme': 'gray-700',
     } %}
       <li {{ add_attributes(radii_item__attributes) }}>
