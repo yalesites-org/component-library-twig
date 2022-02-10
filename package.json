@@ -4,6 +4,7 @@
   "description": "YaleSites Twig component library.",
   "prettier": "@yalesites-org/eslint-config-and-other-formatting/prettier.config",
   "scripts": {
+    "develop": "npm run storybook",
     "husky:commit-msg": "commitlint --edit $1",
     "husky:pre-commit": "lint-staged",
     "lint:js": "eslint components",
@@ -41,9 +42,10 @@
   },
   "dependencies": {
     "@storybook/storybook-deployer": "^2.8.10",
-    "@yalesites-org/tokens": "^1.9.0",
+    "@yalesites-org/tokens": "^1.11.3",
     "add-attributes-twig-extension": "^0.1.0",
-    "bem-twig-extension": "^0.1.1"
+    "bem-twig-extension": "^0.1.1",
+    "normalize.css": "^8.0.1"
   },
   "lint-staged": {
     "components/**/*.scss": [

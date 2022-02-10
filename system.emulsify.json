@@ -83,6 +83,16 @@
         {
           "name": "divider",
           "structure": "atoms"
+        },
+        {
+          "name": "links",
+          "structure": "atoms",
+          "required": true
+        },
+        {
+          "name": "buttons",
+          "structure": "atoms",
+          "required": true
         }
       ]
     }

@@ -16,19 +16,19 @@ $positions: map.deep-get(tokens.$tokens, layout, flex-position);
 }
 
 .divider {
-  background: var(--color-divider);
-  width: 100%;
-  height: calc(0.5rem / 16);
+  background: var(--color-divider, var(--color-gray-500));
+  width: var(--width-divider, var(--layout-width-100));
+  height: var(--thickness-divider, var(--size-thickness-1));
 
   @each $width, $value in $widths {
     &[data-divider-width='#{$width}'] {
-      width: var(--layout-width-#{$width});
+      --width-divider: var(--layout-width-#{$width});
     }
   }
 
   @each $thickness, $value in $thicknesses {
     &[data-divider-thickness='#{$thickness}'] {
-      height: var(--size-thickness-#{$thickness});
+      --thickness-divider: var(--size-thickness-#{$thickness});
     }
   }
 }
