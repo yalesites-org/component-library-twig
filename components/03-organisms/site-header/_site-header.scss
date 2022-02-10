@@ -1,0 +1,17 @@
+.site-header {
+  padding: var(--size-spacing-0) var(--size-spacing-8);
+  border-bottom: var(--border-thickness-4) solid var(--color-blue-yale);
+}
+
+.site-header__secondary {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--size-spacing-4) 0;
+  border-bottom: var(--border-thickness-hairline) solid;
+}
+
+.site-header__primary {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--size-spacing-5) 0;
+}
