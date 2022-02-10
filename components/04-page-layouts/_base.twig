@@ -1,9 +1,4 @@
-{% set layout__base_class = 'layout-container' %}
-{% set content__base_class = 'main' %}
-{% set sidebar__base_class = 'sidebar' %}
-{% set main__base_class = 'main-content' %}
-
-<div {{ bem(layout__base_class) }}>
+<div {{ bem('layout-container') }}>
   {# Page Header #}
   {% block page__header %}
     {% include "@page-layouts/placeholder/placeholder.twig" with {
@@ -12,9 +7,9 @@
   {% endblock %}
   {# System #}
   {% block page_system %}{% endblock %}
-  <div {{ bem(content__base_class) }}>
-    <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
-    <main {{ bem(main__base_class) }}>
+  {# Skip link that points to this id is in html.html.twig #}
+  <div {{ bem('main') }} id="main-content">
+    <main {{ bem('main-content') }}>
       {# Main Content #}
       {% block page_content %}
         {% include "@page-layouts/placeholder/placeholder.twig" with {
