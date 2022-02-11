@@ -1,7 +1,13 @@
 @use '~@yalesites-org/tokens/build/scss/tokens';
-@use '/components/00-tokens/functions/map';
+@use '../../00-tokens/functions/map';
+@use 'sass:map' as sass-map;
 
 $site-header-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
+$site-header-nav-positions: map.deep-get(
+  tokens.$tokens,
+  layout,
+  'flex-position'
+);
 
 .site-header {
   --color-site-header-yale-branding: var(--color-blue-light);
@@ -43,8 +49,31 @@ $site-header-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 
 .site-header__primary {
   display: flex;
-  justify-content: space-between;
+  gap: var(--size-spacing-6);
   padding: var(--size-spacing-6) 0;
+
+  // Primary nav position
+  [data-site-header-nav-position='left'] & {
+    flex-direction: column;
+    justify-content: sass-map.get($site-header-nav-positions, 'left');
+    align-items: sass-map.get($site-header-nav-positions, 'left');
+  }
+
+  [data-site-header-nav-position='center'] & {
+    flex-direction: column;
+    justify-content: sass-map.get($site-header-nav-positions, 'center');
+    align-items: sass-map.get($site-header-nav-positions, 'center');
+  }
+
+  [data-site-header-nav-position='right'] & {
+    justify-content: space-between;
+
+    // flex-direction: column;
+
+    // .site-header__primary-nav {
+    //   align-self: flex-end;
+    // }
+  }
 }
 
 .site-header__yale-branding {

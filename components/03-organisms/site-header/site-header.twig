@@ -2,6 +2,7 @@
  # Available Props:
  # - site_header__theme
  # - site_header__border_thickness
+ # - site_header__nav_position
  #
  # Available Variables
  # - site_name
@@ -14,9 +15,10 @@
 {% set site_header__base_class = 'site-header' %}
 
 {% set site_header__attributes = {
-  class: bem(site_header__base_class),
-  'data-component-theme': site_header__theme|default('white'),
+  'data-site-header-nav-position': site_header__nav_position|default('right'),
   'data-site-header-border-thickness': site_header__border_thickness|default('0'),
+  'data-component-theme': site_header__theme|default('white'),
+  class: bem(site_header__base_class),
 } %}
 
 <header {{ add_attributes(site_header__attributes) }}>
@@ -47,7 +49,7 @@
       <div {{ bem('primary-nav', [], site_header__base_class) }}>
         {% block site_header__primary_nav %}
           {% include "@page-layouts/placeholder/placeholder.twig" with {
-            placeholder: 'Primary Nav',
+            placeholder: 'Primary Nav Item 1 / Primary Nav Item 2 / Primary Nav Item 3 / Primary Nav Item 4',
             placeholder__type: 'element',
           } %}
         {% endblock %}
