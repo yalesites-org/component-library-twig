@@ -1,6 +1,7 @@
 {#
  # Available Props:
- # - site_header__theme: yale-blue, 'gray
+ # - site_header__theme
+ # - site_header__border_thickness
  #
  # Available Variables
  # - site_name
@@ -12,7 +13,13 @@
 
 {% set site_header__base_class = 'site-header' %}
 
-<header {{ bem(site_header__base_class) }} data-component-theme={{ site_header__theme }}>
+{% set site_header__attributes = {
+  class: bem(site_header__base_class),
+  'data-component-theme': site_header__theme|default('white'),
+  'data-site-header-border-thickness': site_header__border_thickness|default('0'),
+} %}
+
+<header {{ add_attributes(site_header__attributes) }}>
   <div {{ bem('inner', [], site_header__base_class) }}>
     {# Secondary #}
     <div {{ bem('secondary', [], site_header__base_class) }}>

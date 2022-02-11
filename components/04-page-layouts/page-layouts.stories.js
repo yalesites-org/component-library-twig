@@ -10,4 +10,5 @@ export default {
   },
 };
 
-export const fullWidth = () => fullWidthTwig();
+export const fullWidth = () =>
+  fullWidthTwig({ site_name: 'Department of Chemistry' });
