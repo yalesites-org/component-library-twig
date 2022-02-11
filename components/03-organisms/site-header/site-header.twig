@@ -1,39 +1,49 @@
+{#
+ # Available Props:
+ # - site_header__theme: yale-blue, 'gray
+ #
+ # Available Variables
+ # - site_name
+ #
+ # Available Blocks
+ # - site_header__utility_nav
+ # - site_header__primary_nav
+ #}
+
 {% set site_header__base_class = 'site-header' %}
 
-<header {{ bem(site_header__base_class) }}>
+<header {{ bem(site_header__base_class) }} data-component-theme={{ site_header__theme }}>
   <div {{ bem('inner', [], site_header__base_class) }}>
     {# Secondary #}
     <div {{ bem('secondary', [], site_header__base_class) }}>
-      {# Logo #}
-      <div {{ bem('yale-logo', [], site_header__base_class) }}>
-        {% include "@page-layouts/placeholder/placeholder.twig" with {
-          placeholder: 'Yale Logo',
-          placeholder__type: 'element',
-        } %}
+      {# Yale Branding #}
+      <div {{ bem('yale-branding', [], site_header__base_class) }}>
+        Yale University
       </div>
       {# Utility Nav #}
       <div {{ bem('utility-nav', [], site_header__base_class) }}>
-        {% include "@page-layouts/placeholder/placeholder.twig" with {
-          placeholder: 'Utility Nav',
-          placeholder__type: 'element',
-        } %}
+        {% block site_header__utility_nav %}
+          {% include "@page-layouts/placeholder/placeholder.twig" with {
+            placeholder: 'Utility Nav',
+            placeholder__type: 'element',
+          } %}
+        {% endblock %}
       </div>
     </div>
     {# Primary #}
     <div {{ bem('primary', [], site_header__base_class) }}>
-      {# Branding #}
-      <div {{ bem('branding', [], site_header__base_class) }}>
-        {% include "@page-layouts/placeholder/placeholder.twig" with {
-          placeholder: 'Branding',
-          placeholder__type: 'element',
-        } %}
+      {# Site Branding #}
+      <div {{ bem('site-branding', [], site_header__base_class) }}>
+        {{ site_name }}
       </div>
       {# Primary Nav #}
       <div {{ bem('primary-nav', [], site_header__base_class) }}>
-        {% include "@page-layouts/placeholder/placeholder.twig" with {
-          placeholder: 'Primary Nav',
-          placeholder__type: 'element',
-        } %}
+        {% block site_header__primary_nav %}
+          {% include "@page-layouts/placeholder/placeholder.twig" with {
+            placeholder: 'Primary Nav',
+            placeholder__type: 'element',
+          } %}
+        {% endblock %}
       </div>
     </div>
   </div>

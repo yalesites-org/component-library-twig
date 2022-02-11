@@ -1,11 +1,28 @@
 .site-header {
+  --color-site-header-yale-branding: var(--color-blue-light);
+  --color-site-header-site-branding: var(--color-blue-yale);
+
   padding: var(--size-spacing-0) var(--size-spacing-8);
   border-bottom: var(--border-thickness-4) solid var(--color-blue-yale);
+
+  &[data-component-theme='gray-200'],
+  &[data-component-theme='gray-100'],
+  &[data-component-theme='beige'],
+  &[data-component-theme='white'] {
+    --color-site-header-yale-branding: var(--color-blue-yale);
+  }
+
+  &[data-component-theme='gray-800'],
+  &[data-component-theme='gray-700'],
+  &[data-component-theme='blue-yale'] {
+    --color-site-header-site-branding: var(--color-basics-white);
+  }
 }
 
 .site-header__secondary {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: var(--size-spacing-4) 0;
   border-bottom: var(--border-thickness-hairline) solid;
 }
@@ -14,4 +31,14 @@
   display: flex;
   justify-content: space-between;
   padding: var(--size-spacing-5) 0;
+}
+
+.site-header__yale-branding {
+  font: var(--font-style-heading-h5-yale-new);
+  color: var(--color-site-header-yale-branding);
+}
+
+.site-header__site-branding {
+  font: var(--font-style-heading-h2-yale-new);
+  color: var(--color-site-header-site-branding);
 }
