@@ -1,9 +1,16 @@
+@use '~@yalesites-org/tokens/build/scss/tokens';
+@use '/components/00-tokens/functions/map';
+
+$site-header-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
+
 .site-header {
   --color-site-header-yale-branding: var(--color-blue-light);
   --color-site-header-site-branding: var(--color-blue-yale);
 
   padding: var(--size-spacing-0) var(--size-spacing-8);
-  border-bottom: var(--border-thickness-4) solid var(--color-blue-yale);
+
+  // prettier-ignore
+  border-bottom: var(--site-header-border-thickness) solid var(--color-blue-yale);
 
   &[data-component-theme='gray-200'],
   &[data-component-theme='gray-100'],
@@ -16,6 +23,13 @@
   &[data-component-theme='gray-700'],
   &[data-component-theme='blue-yale'] {
     --color-site-header-site-branding: var(--color-basics-white);
+  }
+
+  // Border bottom thickness
+  @each $thickness, $value in $site-header-border-thickness {
+    &[data-site-header-border-thickness='#{$thickness}'] {
+      --site-header-border-thickness: var(--border-thickness-#{$thickness});
+    }
   }
 }
 
@@ -30,7 +44,7 @@
 .site-header__primary {
   display: flex;
   justify-content: space-between;
-  padding: var(--size-spacing-5) 0;
+  padding: var(--size-spacing-6) 0;
 }
 
 .site-header__yale-branding {
