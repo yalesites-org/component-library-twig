@@ -36,8 +36,8 @@ export const pullQuote = ({ style, accentColor }) => `
     pull_quote__attribution: 'Annie Nymity',
     pull_quote__style: 'quote-left',
   })}
-  <h2>Playground</h2>
   <div style="--color-pull-quote-accent: var(--color-${accentColor})">
+    <h2>Playground</h2>
     <p>Use the StoryBook controls to see the pull-quote below implement the available variations and colors.</p>
     ${pullQuoteTwig({
       pull_quote__quote:
