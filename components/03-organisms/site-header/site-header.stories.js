@@ -6,6 +6,7 @@ import siteHeaderExamples from './_site-header--examples.twig';
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
+const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 
 /**
  * Storybook Definition.
@@ -26,14 +27,24 @@ export default {
       type: 'select',
       defaultValue: 'right',
     },
+    siteHeaderTheme: {
+      options: siteHeaderThemeOptions,
+      type: 'select',
+      defaultValue: 'white',
+    },
   },
 };
 
-export const header = ({ borderThickness, primaryNavPosition }) =>
+export const Header = ({
+  borderThickness,
+  primaryNavPosition,
+  siteHeaderTheme,
+}) =>
   siteHeaderTwig({
     site_name: 'Department of Chemistry',
     site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
+    site_header__theme: siteHeaderTheme,
   });
 
 export const headerExamples = ({ borderThickness, primaryNavPosition }) =>
