@@ -4,11 +4,7 @@
 
 $site-header-themes: map.deep-get(tokens.$tokens, site-header-themes);
 $site-header-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
-$site-header-nav-positions: map.deep-get(
-  tokens.$tokens,
-  layout,
-  'flex-position'
-);
+$site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
 .site-header {
   padding: var(--size-spacing-0) var(--size-spacing-8);
@@ -46,28 +42,17 @@ $site-header-nav-positions: map.deep-get(
   display: flex;
   gap: var(--size-spacing-6);
   padding: var(--size-spacing-6) 0;
+  flex-direction: column;
+  justify-content: var(--site-header-layout-justify);
+  align-items: var(--site-header-layout-align);
 
   // Primary nav position
-  [data-site-header-nav-position='left'] & {
-    flex-direction: column;
-    justify-content: sass-map.get($site-header-nav-positions, 'left');
-    align-items: sass-map.get($site-header-nav-positions, 'left');
-  }
-
-  [data-site-header-nav-position='center'] & {
-    flex-direction: column;
-    justify-content: sass-map.get($site-header-nav-positions, 'center');
-    align-items: sass-map.get($site-header-nav-positions, 'center');
-  }
-
-  [data-site-header-nav-position='right'] & {
-    justify-content: space-between;
-
-    // flex-direction: column;
-
-    // .site-header__primary-nav {
-    //   align-self: flex-end;
-    // }
+  @each $layout, $value in $site-header-layout {
+    [data-site-header-nav-position='#{$layout}'] & {
+      // prettier-ignore
+      --site-header-layout-justify: var(--site-header-layout-#{$layout}-justify);
+      --site-header-layout-align: var(--site-header-layout-#{$layout}-align);
+    }
   }
 }
 
@@ -79,4 +64,10 @@ $site-header-nav-positions: map.deep-get(
 .site-header__site-branding {
   font: var(--font-style-heading-h2-yale-new);
   color: var(--color-site-header-site-branding);
+}
+
+.site-header__primary-nav {
+  [data-site-header-nav-position='right'] & {
+    align-self: flex-end;
+  }
 }
