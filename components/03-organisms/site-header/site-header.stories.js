@@ -3,7 +3,7 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import siteHeaderTwig from './site-header.twig';
 import siteHeaderExamples from './_site-header--examples.twig';
 
-const colorPairingsData = { themes: tokens['component-themes'] };
+const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
 
@@ -38,7 +38,7 @@ export const header = ({ borderThickness, primaryNavPosition }) =>
 
 export const headerExamples = ({ borderThickness, primaryNavPosition }) =>
   siteHeaderExamples({
-    ...colorPairingsData,
+    ...siteHeaderThemes,
     site_name: 'Department of Chemistry',
     site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
