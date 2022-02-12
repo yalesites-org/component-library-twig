@@ -12,7 +12,7 @@ const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Site',
+  title: 'Organisms/Site/Header',
   parameters: {
     layout: 'fullscreen',
   },

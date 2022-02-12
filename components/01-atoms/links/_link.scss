@@ -25,7 +25,7 @@
   }
 }
 
-.text-field a {
+@mixin link {
   @include animation-link('color');
 
   position: relative;
@@ -62,4 +62,8 @@
     outline: var(--size-thickness-2) solid var(--color-link);
     outline-offset: var(--size-thickness-2);
   }
+}
+
+.text-field a {
+  @include link;
 }

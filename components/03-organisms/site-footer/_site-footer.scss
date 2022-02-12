@@ -1,0 +1,40 @@
+@use '../../00-tokens/typography/typography';
+@use '../../01-atoms/links/link';
+
+.site-footer {
+  padding: var(--size-spacing-7) var(--size-spacing-8);
+  border-top: var(--site-footer-border-thickness) solid var(--color-blue-yale);
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-7);
+}
+
+.site-footer__primary {
+  display: flex;
+  justify-content: space-between;
+}
+
+.site-footer__secondary {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.site-footer__branding {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-3);
+}
+
+.site-footer__meta {
+  @include typography.body-xs;
+
+  // @include link.
+
+  a {
+    @include link.link;
+  }
+}
