@@ -43,8 +43,6 @@ $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 .site-footer__meta {
   @include typography.body-xs;
 
-  // @include link.
-
   a {
     @include link.link;
   }
