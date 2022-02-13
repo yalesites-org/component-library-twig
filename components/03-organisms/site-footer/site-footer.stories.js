@@ -4,9 +4,8 @@ import siteFooterTwig from './site-footer.twig';
 import siteFooterExamples from './_site-footer--examples.twig';
 
 const siteFooterThemes = { themes: tokens['site-footer-themes'] };
-// const borderThicknessOptions = Object.keys(tokens.border.thickness);
-// const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
-// const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
+const borderThicknessOptions = Object.keys(tokens.border.thickness);
+const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
 
 /**
  * Storybook Definition.
@@ -16,25 +15,28 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  // argTypes: {
-  //   borderThickness: {
-  //     options: borderThicknessOptions,
-  //     type: 'select',
-  //     defaultValue: '8',
-  //   },
-  //   primaryNavPosition: {
-  //     options: primaryNavPositions,
-  //     type: 'select',
-  //     defaultValue: 'right',
-  //   },
-  //   siteFooterTheme: {
-  //     options: siteFooterThemeOptions,
-  //     type: 'select',
-  //     defaultValue: 'white',
-  //   },
-  // },
+  argTypes: {
+    borderThickness: {
+      options: borderThicknessOptions,
+      type: 'select',
+      defaultValue: '8',
+    },
+    siteFooterTheme: {
+      options: siteFooterThemeOptions,
+      type: 'select',
+      defaultValue: 'white',
+    },
+  },
 };
 
-export const Footer = () => siteFooterTwig();
+export const Footer = ({ borderThickness, siteFooterTheme }) =>
+  siteFooterTwig({
+    site_footer__border_thickness: borderThickness,
+    site_footer__theme: siteFooterTheme,
+  });
 
-export const footerExamples = () => siteFooterExamples({ ...siteFooterThemes });
+export const FooterExamples = ({ borderThickness }) =>
+  siteFooterExamples({
+    ...siteFooterThemes,
+    site_footer__border_thickness: borderThickness,
+  });

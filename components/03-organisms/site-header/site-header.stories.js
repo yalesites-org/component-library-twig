@@ -47,7 +47,7 @@ export const Header = ({
     site_header__theme: siteHeaderTheme,
   });
 
-export const headerExamples = ({ borderThickness, primaryNavPosition }) =>
+export const HeaderExamples = ({ borderThickness, primaryNavPosition }) =>
   siteHeaderExamples({
     ...siteHeaderThemes,
     site_name: 'Department of Chemistry',
