@@ -1,9 +1,20 @@
+@use '~@yalesites-org/tokens/build/scss/tokens';
+@use '../../00-tokens/functions/map';
 @use '../../00-tokens/typography/typography';
 @use '../../01-atoms/links/link';
+
+$site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 
 .site-footer {
   padding: var(--size-spacing-7) var(--size-spacing-8);
   border-top: var(--site-footer-border-thickness) solid var(--color-blue-yale);
+
+  // Border top thickness
+  @each $thickness, $value in $site-footer-border-thickness {
+    &[data-site-footer-border-thickness='#{$thickness}'] {
+      --site-footer-border-thickness: var(--border-thickness-#{$thickness});
+    }
+  }
 }
 
 .site-footer__inner {
