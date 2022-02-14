@@ -26,9 +26,9 @@
     {# Secondary #}
     <div {{ bem('secondary', [], site_header__base_class) }}>
       {# Yale Branding #}
-      <div {{ bem('yale-branding', [], site_header__base_class) }}>
+      <a href="https://www.yale.edu/" {{ bem('yale-branding', [], site_header__base_class) }}>
         Yale University
-      </div>
+      </a>
       {# Utility Nav #}
       <div {{ bem('utility-nav', [], site_header__base_class) }}>
         {% block site_header__utility_nav %}
@@ -42,9 +42,9 @@
     {# Primary #}
     <div {{ bem('primary', [], site_header__base_class) }}>
       {# Site Branding #}
-      <div {{ bem('site-branding', [], site_header__base_class) }}>
+      <a href="/" {{ bem('site-branding', [], site_header__base_class) }}>
         {{ site_name }}
-      </div>
+      </a>
       {# Primary Nav #}
       <div {{ bem('primary-nav', [], site_header__base_class) }}>
         {% block site_header__primary_nav %}

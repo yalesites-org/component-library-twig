@@ -10,7 +10,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   padding: var(--size-spacing-0) var(--size-spacing-8);
 
   // prettier-ignore
-  border-bottom: var(--site-header-border-thickness) solid var(--color-blue-yale);
+  border-bottom: var(--site-header-border-thickness) solid var(--color-site-header-border-color);
 
   @each $theme, $value in $site-header-themes {
     &[data-component-theme='#{$theme}'] {
@@ -19,6 +19,9 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
       // prettier-ignore
       --color-site-header-site-branding: var(--site-header-themes-#{$theme}-site-branding);
+
+      // prettier-ignore
+      --color-site-header-border-color: var(--site-header-themes-#{$theme}-border-color);
     }
   }
 
@@ -59,11 +62,13 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 .site-header__yale-branding {
   font: var(--font-style-heading-h5-yale-new);
   color: var(--color-site-header-yale-branding);
+  text-decoration: none;
 }
 
 .site-header__site-branding {
   font: var(--font-style-heading-h2-yale-new);
   color: var(--color-site-header-site-branding);
+  text-decoration: none;
 }
 
 .site-header__primary-nav {
