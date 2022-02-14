@@ -43,15 +43,18 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
 .site-header__primary {
   display: flex;
+  flex-flow: var(--site-header-flex-direction) wrap;
   gap: var(--size-spacing-6);
   padding: var(--size-spacing-6) 0;
-  flex-direction: column;
   justify-content: var(--site-header-layout-justify);
   align-items: var(--site-header-layout-align);
 
   // Primary nav position
   @each $layout, $value in $site-header-layout {
     [data-site-header-nav-position='#{$layout}'] & {
+      // prettier-ignore
+      --site-header-flex-direction: var(--site-header-layout-#{$layout}-flex-direction);
+
       // prettier-ignore
       --site-header-layout-justify: var(--site-header-layout-#{$layout}-justify);
       --site-header-layout-align: var(--site-header-layout-#{$layout}-align);
@@ -60,19 +63,19 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 }
 
 .site-header__yale-branding {
-  font: var(--font-style-heading-h5-yale-new);
+  font: var(--font-style-branding-yale);
   color: var(--color-site-header-yale-branding);
   text-decoration: none;
 }
 
 .site-header__site-branding {
-  font: var(--font-style-heading-h2-yale-new);
+  font: var(--font-style-branding-site);
   color: var(--color-site-header-site-branding);
   text-decoration: none;
 }
 
 .site-header__primary-nav {
   [data-site-header-nav-position='right'] & {
-    align-self: flex-end;
+    margin-left: auto;
   }
 }
