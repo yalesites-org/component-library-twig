@@ -9,7 +9,8 @@
 @function deep-get($map, $keys...) {
   $scope: $map;
   $i: 1;
-  @while  meta.type-of($scope) == map) and ($i <= list.length($keys) {
+  // stylelint-disable-next-line
+  @while (meta.type-of($scope) == map) and ($i <= list.length($keys)) {
     $scope: map.get($scope, list.nth($keys, $i));
     $i: $i + 1;
   }
