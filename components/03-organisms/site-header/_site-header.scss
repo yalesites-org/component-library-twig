@@ -12,6 +12,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   // prettier-ignore
   border-bottom: var(--site-header-border-thickness) solid var(--color-site-header-border-color);
 
+  // Component themes
   @each $theme, $value in $site-header-themes {
     &[data-component-theme='#{$theme}'] {
       // prettier-ignore
@@ -22,6 +23,9 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
       // prettier-ignore
       --color-site-header-border-color: var(--site-header-themes-#{$theme}-border-color);
+
+      // prettier-ignore
+      --color-site-header-divider-color: var(--site-header-themes-#{$theme}-divider-color);
     }
   }
 
@@ -38,7 +42,9 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   justify-content: space-between;
   align-items: center;
   padding: var(--size-spacing-4) 0;
-  border-bottom: var(--border-thickness-hairline) solid;
+
+  // prettier-ignore
+  border-bottom: var(--border-thickness-hairline) solid var(--color-site-header-divider-color);
 }
 
 .site-header__primary {
