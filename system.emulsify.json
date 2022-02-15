@@ -93,6 +93,10 @@
           "name": "buttons",
           "structure": "atoms",
           "required": true
+        },
+        {
+          "name": "pull-quote",
+          "structure": "molecules"
         }
       ]
     }
