@@ -25,17 +25,24 @@ $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 
 .site-footer__primary {
   display: flex;
-  flex-wrap: wrap;
+  flex-flow: column wrap;
   gap: var(--size-spacing-6);
   justify-content: space-between;
+
+  @media (min-width: tokens.$break-s) {
+    flex-direction: row;
+  }
 }
 
 .site-footer__secondary {
   display: flex;
-  flex-flow: row-reverse wrap;
+  flex-flow: column wrap;
   gap: var(--size-spacing-6);
   justify-content: space-between;
-  align-items: flex-end;
+
+  @media (min-width: tokens.$break-s) {
+    flex-direction: row-reverse;
+  }
 }
 
 .site-footer__branding {
@@ -46,6 +53,8 @@ $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 
 .site-footer__meta {
   @include typography.body-xs;
+
+  margin-right: auto;
 
   a {
     @include link.link;
