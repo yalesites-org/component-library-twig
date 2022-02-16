@@ -13,6 +13,7 @@
 {% set site_footer__base_class = 'site-footer' %}
 
 {% set site_footer__attributes = {
+  'data-component-width': 'max',
   'data-site-footer-border-thickness': site_footer__border_thickness|default('0'),
   'data-component-theme': site_footer__theme|default('blue-yale'),
   class: bem(site_footer__base_class),
@@ -49,12 +50,6 @@
     </div>
     {# Secondary #}
     <div {{ bem('secondary', [], site_footer__base_class) }}>
-      {# Meta #}
-      <div {{ bem('meta', [], site_footer__base_class) }}>
-        <a href="https://usability.yale.edu/web-accessibility/accessibility-yale">Accessibility at Yale</a> |
-        <a href="https://www.yale.edu/privacy-policy">Privacy Policy</a> |
-        Copyright © {{ 'now'|date('Y') }} Yale University. All rights reserved.
-      </div>
       {# Social #}
       <div {{ bem('social', [], site_footer__base_class) }}>
         {% block site_footer__social %}
@@ -63,6 +58,12 @@
             placeholder__type: 'element',
           } %}
         {% endblock %}
+      </div>
+      {# Meta #}
+      <div {{ bem('meta', [], site_footer__base_class) }}>
+        <a href="https://usability.yale.edu/web-accessibility/accessibility-yale">Accessibility at Yale</a> |
+        <a href="https://www.yale.edu/privacy-policy">Privacy Policy</a> |
+        Copyright © {{ 'now'|date('Y') }} Yale University. All rights reserved.
       </div>
     </div>
   </div>
