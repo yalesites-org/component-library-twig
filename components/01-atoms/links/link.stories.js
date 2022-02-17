@@ -16,6 +16,6 @@ export const links = () => `
   ${link({
     link__url: '#',
     link__content: 'This is a "no-underline" link',
-    link__modifiers: ['no-underline'],
+    link__style: 'no-underline',
   })}
 `;

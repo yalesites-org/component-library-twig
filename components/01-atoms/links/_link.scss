@@ -80,10 +80,12 @@
   @include link;
 }
 
-.link--underline {
-  @include link;
-}
+.link {
+  &[data-link-style='underline'] {
+    @include link;
+  }
 
-.link--no-underline {
-  @include link(no-underline);
+  &[data-link-style='no-underline'] {
+    @include link(no-underline);
+  }
 }

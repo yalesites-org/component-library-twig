@@ -13,9 +13,10 @@
 
 {# If link__attributes is not defined, set it to an empty object by default #}
 {% set link__attributes = link__attributes|default({}) %}
-{% set link__modifiers = link__modifiers|default(['underline']) %}
+{# {% set link__modifiers = link__modifiers|default(['underline']) %} #}
 
 {% set link__attributes = link__attributes|merge({
+  'data-link-style': link__style|default('underline'),
   class: bem(link__base_class, link__modifiers, link__blockname),
   href: link__url,
 }) %}
