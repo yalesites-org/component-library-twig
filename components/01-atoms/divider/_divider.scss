@@ -1,5 +1,5 @@
 @use '~@yalesites-org/tokens/build/scss/tokens';
-@use '/components/00-tokens/functions/map';
+@use '../../00-tokens/functions/map';
 
 $widths: map.deep-get(tokens.$tokens, layout, width);
 $thicknesses: map.deep-get(tokens.$tokens, size, thickness);
