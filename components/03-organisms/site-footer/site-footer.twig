@@ -61,9 +61,19 @@
       </div>
       {# Meta #}
       <div {{ bem('meta', [], site_footer__base_class) }}>
-        <a href="https://usability.yale.edu/web-accessibility/accessibility-yale">Accessibility at Yale</a> |
-        <a href="https://www.yale.edu/privacy-policy">Privacy Policy</a> |
-        Copyright © {{ 'now'|date('Y') }} Yale University. All rights reserved.
+        {% include "@atoms/links/link.twig" with {
+          link__content: 'Accessibility at Yale',
+          link__url: "https://usability.yale.edu/web-accessibility/accessibility-yale",
+          link__modifiers: ['no-underline'],
+        } %}
+        <span {{ bem('divider', [], site_footer__base_class) }}>|</span>
+        {% include "@atoms/links/link.twig" with {
+          link__content: 'Privacy Policy',
+          link__url: "https://www.yale.edu/privacy-policy",
+          link__modifiers: ['no-underline'],
+        } %}
+        <span {{ bem('divider', [], site_footer__base_class) }}>|</span>
+        <span>Copyright © {{ 'now'|date('Y') }} Yale University. All rights reserved.</span>
       </div>
     </div>
   </div>

@@ -55,8 +55,18 @@ $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
   @include typography.body-xs;
 
   margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-3);
 
-  a {
-    @include link.link;
+  @media (min-width: tokens.$break-s) {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+.site-footer__divider {
+  @media (max-width: tokens.$break-s - 0.05) {
+    display: none;
   }
 }

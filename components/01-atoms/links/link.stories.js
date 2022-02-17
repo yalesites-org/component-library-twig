@@ -6,12 +6,16 @@ import link from './link.twig';
 export default { title: 'Atoms/Links' };
 
 export const links = () => `
-  <div class="text-field">
-    ${link({
-      link_url: '#',
-      link_content: 'This is a link',
-      link_attributes: {
-        target: '_blank',
-      },
-    })}
-  </div>`;
+  ${link({
+    link__url: '#',
+    link__content: 'This is a default link',
+    link__attributes: {
+      target: '_blank',
+    },
+  })}<br />
+  ${link({
+    link__url: '#',
+    link__content: 'This is a "no-underline" link',
+    link__modifiers: ['no-underline'],
+  })}
+`;
