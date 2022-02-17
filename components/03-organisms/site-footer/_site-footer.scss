@@ -3,11 +3,23 @@
 @use '../../00-tokens/typography/typography';
 @use '../../01-atoms/links/link';
 
+$break-site-footer: tokens.$break-s;
+$break-site-footer-max: $break-site-footer - 0.05;
+$site-footer-themes: map.deep-get(tokens.$tokens, site-footer-themes);
 $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 
 .site-footer {
   padding: var(--size-spacing-7) var(--size-spacing-8);
-  border-top: var(--site-footer-border-thickness) solid var(--color-blue-yale);
+  border-top: var(--site-footer-border-thickness) solid
+    var(--color-site-footer-border-color);
+
+  // Component themes
+  @each $theme, $value in $site-footer-themes {
+    &[data-component-theme='#{$theme}'] {
+      // prettier-ignore
+      --color-site-footer-border-color: var(--site-footer-themes-#{$theme}-border-color);
+    }
+  }
 
   // Border top thickness
   @each $thickness, $value in $site-footer-border-thickness {
@@ -29,7 +41,7 @@ $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
   gap: var(--size-spacing-6);
   justify-content: space-between;
 
-  @media (min-width: tokens.$break-s) {
+  @media (min-width: $break-site-footer) {
     flex-direction: row;
   }
 }
@@ -40,7 +52,7 @@ $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
   gap: var(--size-spacing-6);
   justify-content: space-between;
 
-  @media (min-width: tokens.$break-s) {
+  @media (min-width: $break-site-footer) {
     flex-direction: row-reverse;
   }
 }
@@ -56,17 +68,17 @@ $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 
   margin-right: auto;
   display: flex;
-  flex-direction: column;
+  flex-flow: column wrap;
   gap: var(--size-spacing-3);
 
-  @media (min-width: tokens.$break-s) {
+  @media (min-width: $break-site-footer) {
     flex-direction: row;
     align-items: flex-end;
   }
 }
 
 .site-footer__divider {
-  @media (max-width: tokens.$break-s - 0.05) {
+  @media (max-width: $break-site-footer-max) {
     display: none;
   }
 }
