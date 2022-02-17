@@ -1,0 +1,87 @@
+@use '~@yalesites-org/tokens/build/scss/tokens';
+@use '../../00-tokens/functions/map';
+@use 'sass:map' as sass-map;
+
+$site-header-themes: map.deep-get(tokens.$tokens, site-header-themes);
+$site-header-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
+$site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
+
+.site-header {
+  padding: var(--size-spacing-0) var(--size-spacing-8);
+
+  // prettier-ignore
+  border-bottom: var(--site-header-border-thickness) solid var(--color-site-header-border-color);
+
+  // Component themes
+  @each $theme, $value in $site-header-themes {
+    &[data-component-theme='#{$theme}'] {
+      // prettier-ignore
+      --color-site-header-yale-branding: var(--site-header-themes-#{$theme}-yale-branding);
+
+      // prettier-ignore
+      --color-site-header-site-branding: var(--site-header-themes-#{$theme}-site-branding);
+
+      // prettier-ignore
+      --color-site-header-border-color: var(--site-header-themes-#{$theme}-border-color);
+
+      // prettier-ignore
+      --color-site-header-divider-color: var(--site-header-themes-#{$theme}-divider-color);
+    }
+  }
+
+  // Border bottom thickness
+  @each $thickness, $value in $site-header-border-thickness {
+    &[data-site-header-border-thickness='#{$thickness}'] {
+      --site-header-border-thickness: var(--border-thickness-#{$thickness});
+    }
+  }
+}
+
+.site-header__secondary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--size-spacing-4) 0;
+
+  // prettier-ignore
+  border-bottom: var(--border-thickness-hairline) solid var(--color-site-header-divider-color);
+}
+
+.site-header__primary {
+  display: flex;
+  flex-flow: var(--site-header-flex-direction) wrap;
+  gap: var(--size-spacing-6);
+  padding: var(--size-spacing-6) 0;
+  justify-content: var(--site-header-layout-justify);
+  align-items: var(--site-header-layout-align);
+
+  // Primary nav position
+  @each $layout, $value in $site-header-layout {
+    [data-site-header-nav-position='#{$layout}'] & {
+      // prettier-ignore
+      --site-header-flex-direction: var(--site-header-layout-#{$layout}-flex-direction);
+
+      // prettier-ignore
+      --site-header-layout-justify: var(--site-header-layout-#{$layout}-justify);
+      --site-header-layout-align: var(--site-header-layout-#{$layout}-align);
+    }
+  }
+}
+
+.site-header__yale-branding {
+  font: var(--font-style-branding-yale);
+  color: var(--color-site-header-yale-branding);
+  text-decoration: none;
+}
+
+.site-header__site-branding {
+  font: var(--font-style-branding-site);
+  color: var(--color-site-header-site-branding);
+  text-decoration: none;
+}
+
+.site-header__primary-nav {
+  [data-site-header-nav-position='right'] & {
+    margin-left: auto;
+  }
+}
