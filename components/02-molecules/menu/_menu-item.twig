@@ -1,0 +1,52 @@
+{% set item__modifiers = item__modifiers|default([]) %}
+
+{% set item__attributes = item__attributes|default({
+  'title': item.title,
+  }) %}
+
+{% if item.in_active_trail == TRUE %}
+  {% set item__modifiers = item__modifiers|merge(['active']) %}
+{% endif %}
+{% if menu__level > 0 %}
+  {% set item__modifiers = item__modifiers|merge(['sub', 'sub-' ~ menu__level]) %}
+{% endif %}
+{% if item.below %}
+  {% set item__modifiers = item__modifiers|merge(['with-sub']) %}
+{% endif %}
+
+{% import "@molecules/menu/menu.twig" as menus %}
+
+{# Set link component as default #}
+{% set list__item %}
+  {% block list__item__content_block %}
+    {% include "@atoms/links/link.twig" with {
+      link__content: item.title,
+      link__url: item.url,
+      link__base_class: 'link',
+      link__blockname: menu__base_class,
+      link__modifiers: item__modifiers,
+      link__attributes: item__attributes
+    } %}
+  {% endblock %}
+{% endset %}
+
+{% embed "@atoms/lists/_list-item.twig" with {
+  li__base_class: item__base_class|default('item'),
+  li__modifiers: item__modifiers,
+  li__blockname: item__blockname,
+}%}
+{% block list__item__content %}
+  {{ list__item }}
+  {% if item.below %}
+    {% if menu__level__toggle %}
+      {% include "@atoms/buttons/button.twig" with {
+        button__content: 'Expand Menu',
+        button__base_class: 'toggle',
+        button__blockname: menu__base_class,
+        aria_expanded: 'false',
+      } %}
+    {% endif %}
+    {{ menus.menu_links(item.below, attributes, menu__level + 1, menu__base_class, menu__modifiers, menu__blockname, menu__toggle, item__base_class, item__blockname) }}
+  {% endif %}
+{% endblock %}
+{% endembed %}
