@@ -12,7 +12,7 @@ const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Site',
+  title: 'Organisms/Site/Header',
   parameters: {
     layout: 'fullscreen',
   },
@@ -47,7 +47,7 @@ export const Header = ({
     site_header__theme: siteHeaderTheme,
   });
 
-export const headerExamples = ({ borderThickness, primaryNavPosition }) =>
+export const HeaderExamples = ({ borderThickness, primaryNavPosition }) =>
   siteHeaderExamples({
     ...siteHeaderThemes,
     site_name: 'Department of Chemistry',
