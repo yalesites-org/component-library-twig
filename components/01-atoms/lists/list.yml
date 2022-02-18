@@ -1,0 +1,4 @@
+list__items:
+  - list_item__content: 'This is the first item in the unordered list.'
+  - list_item__content: "Here's the second item."
+  - list_item__content: "And here's the last item."
