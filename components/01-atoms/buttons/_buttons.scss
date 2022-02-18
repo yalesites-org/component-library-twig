@@ -33,6 +33,15 @@ $button-outline-weights: (
     outline-offset: var(--size-thickness-2);
   }
 
+  &:active {
+    // These are !important to override any hover styles defined by more
+    // specific selectors in the 'Hover styles' section below.
+    background-color: var(--color-gray-700) !important;
+    border-color: var(--color-gray-700);
+    color: var(--color-basics-white) !important;
+    box-shadow: none !important;
+  }
+
   // Radius options
   @each $radius, $value in $button-radii {
     &[data-button-radius='#{$radius}'] {
