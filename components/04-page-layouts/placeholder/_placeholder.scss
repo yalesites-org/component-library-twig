@@ -1,14 +1,23 @@
 .placeholder {
-  color: var(--color-gray-500);
   border: var(--border-thickness-4) dashed;
-  padding: var(--size-spacing-9);
+
+  &[data-placeholder-type='component'] {
+    padding: var(--size-spacing-9);
+  }
+
+  &[data-placeholder-type='element'] {
+    padding: var(--size-spacing-2);
+  }
 
   &__content {
-    font: var(--font-style-heading-h2-mallory-compact-book);
     width: var(--layout-width-100);
     display: flex;
     place-content: var(--layout-flex-position-center);
     text-align: center;
     overflow-wrap: anywhere;
+
+    [data-placeholder-type='component'] & {
+      font: var(--font-style-heading-h2-mallory-compact-book);
+    }
   }
 }

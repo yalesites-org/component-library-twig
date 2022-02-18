@@ -1,9 +1,7 @@
 <div {{ bem('layout-container') }}>
   {# Page Header #}
   {% block page__header %}
-    {% include "@page-layouts/placeholder/placeholder.twig" with {
-      placeholder: 'Header',
-    } %}
+    {% include "@organisms/site-header/site-header.twig" %}
   {% endblock %}
   {# System #}
   {% block page_system %}{% endblock %}
@@ -20,8 +18,6 @@
   </div>
   {# Page Footer #}
   {% block page__foter %}
-    {% include "@page-layouts/placeholder/placeholder.twig" with {
-      placeholder: 'Footer',
-    } %}
+    {% include "@organisms/site-footer/site-footer.twig" %}
   {% endblock %}
 </div>

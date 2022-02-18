@@ -1,22 +1,23 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
-import fullWidthTwig from './full-width.twig';
+import siteHeaderTwig from './site-header.twig';
+import siteHeaderExamples from './_site-header--examples.twig';
 
+const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
-const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
 
 /**
  * Storybook Definition.
  */
 export default {
-  title: 'Page Layouts/Page Layouts',
+  title: 'Organisms/Site/Header',
   parameters: {
     layout: 'fullscreen',
   },
   argTypes: {
-    headerBorderThickness: {
+    borderThickness: {
       options: borderThicknessOptions,
       type: 'select',
       defaultValue: '8',
@@ -31,31 +32,25 @@ export default {
       type: 'select',
       defaultValue: 'white',
     },
-    footerBorderThickness: {
-      options: borderThicknessOptions,
-      type: 'select',
-      defaultValue: '8',
-    },
-    siteFooterTheme: {
-      options: siteFooterThemeOptions,
-      type: 'select',
-      defaultValue: 'blue-yale',
-    },
   },
 };
 
-export const fullWidth = ({
-  headerBorderThickness,
+export const Header = ({
+  borderThickness,
   primaryNavPosition,
   siteHeaderTheme,
-  siteFooterTheme,
-  footerBorderThickness,
 }) =>
-  fullWidthTwig({
+  siteHeaderTwig({
     site_name: 'Department of Chemistry',
-    site_header__border_thickness: headerBorderThickness,
+    site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
-    site_footer__border_thickness: footerBorderThickness,
-    site_footer__theme: siteFooterTheme,
+  });
+
+export const HeaderExamples = ({ borderThickness, primaryNavPosition }) =>
+  siteHeaderExamples({
+    ...siteHeaderThemes,
+    site_name: 'Department of Chemistry',
+    site_header__border_thickness: borderThickness,
+    site_header__nav_position: primaryNavPosition,
   });
