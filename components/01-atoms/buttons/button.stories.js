@@ -68,7 +68,7 @@ export const Button = () => `
       button__content: 'Wipe',
       button__hover_style: 'wipe',
     })}
-  </div><br />
+  </div>
   <div class="button-group">
     ${button({
       button__content: 'Fade',

@@ -94,6 +94,8 @@ $button-outline-weights: (
   }
 
   &[data-button-hover-style='wipe'] {
+    transition-duration: 250ms;
+
     &:hover {
       &[data-button-style='outline'] {
         box-shadow: inset 6.5em 0 0 0 var(--color-button-bg-hover);
@@ -114,4 +116,5 @@ $button-outline-weights: (
 .button-group {
   display: flex;
   gap: var(--size-spacing-7);
+  margin-bottom: var(--size-spacing-7);
 }
