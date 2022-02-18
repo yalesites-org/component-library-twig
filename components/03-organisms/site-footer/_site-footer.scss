@@ -69,6 +69,7 @@ $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
   margin-right: auto;
   display: flex;
   flex-flow: column wrap;
+  align-items: flex-start;
   gap: var(--size-spacing-3);
 
   @media (min-width: $break-site-footer) {
