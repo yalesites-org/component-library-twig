@@ -4,45 +4,43 @@
  # - aria_pressed: whether the button is pressed or not
  # - aria_expanded: whether the controlled grouping is expanded or not
  # - aria_controls (required if aria_expanded is used): id of the grouping element that is controlled
- # - button_radius: none (default), soft, or pill
- # - button_style: filled (defualt) or outline
- # - button_outline_weight: 1 (default), 2, or 4
+ # - button__radius: none (default), soft, or pill
+ # - button__style: filled (defualt) or outline
+ # - button__outline_weight: 1 (default), 2, or 4
  #
  # Available variables:
- # - button_content - the content of the button (typically text)
+ # - button__content - the content of the button (typically text)
  #
  # Available blocks:
- # - button_content - used to replace the content of the button with something other than text
+ # - button__content - used to replace the content of the button with something other than text
  #   for example: to insert an icon
  #}
 
-{% set button_base_class = button_base_class|default('button') %}
-{% set button_radius = button_radius|default('none') %}
-{% set button_style = button_style|default('filled') %}
-{% set button_outline_weight = button_outline_weight|default('2') %}
+{% set button__base_class = button__base_class|default('button') %}
 
-{% set button_attributes = {
-  class: bem(button_base_class, button_modifiers, button_blockname),
-  'data-button-radius': button_radius,
-  'data-button-style': button_style,
-  'data-outline-weight': button_outline_weight,
+{% set button__attributes = {
+  class: bem(button__base_class, button__modifiers, button__blockname),
+  'data-button-hover-style': button__hover_style|default('fade'),
+  'data-button-radius': button__radius|default('none'),
+  'data-button-style': button__style|default('filled'),
+  'data-outline-weight': button__outline_weight|default('2'),
 } %}
 
 {% if aria_pressed %}
-  {% set button_attributes = button_attributes|merge({
+  {% set button__attributes = button__attributes|merge({
     'aria-pressed': aria_pressed,
   }) %}
 {% endif %}
 
 {% if aria_expanded %}
-  {% set button_attributes = button_attributes|merge({
+  {% set button__attributes = button__attributes|merge({
     'aria-expanded': aria_expanded,
     'aira-controls': aria_controls,
   }) %}
 {% endif %}
 
-<button {{ add_attributes(button_attributes) }}>
-  {% block button_content %}
-    {{ button_content }}
+<button {{ add_attributes(button__attributes) }}>
+  {% block button__content %}
+    {{ button__content }}
   {% endblock %}
 </button>

@@ -11,16 +11,20 @@ $button-outline-weights: (
 .button {
   --color-button-outline: var(--color-link);
 
-  border: var(--border-thickness-button, var(--border-thickness-2)) solid
-    var(--color-button-border);
+  // prettier-ignore
+  border: var(--border-thickness-button, var(--border-thickness-2)) solid var(--color-button-border);
   border-radius: var(--border-radius-button, var(--radius-0));
-  background: var(--color-button-bg);
+  background-color: var(--color-button-bg);
   color: var(--color-button-text);
   font-weight: var(--font-weights-mallory-500);
   padding: var(--size-spacing-4) var(--size-spacing-7);
 
+  @media (prefers-reduced-motion: no-preference) {
+    transition: 200ms ease-out;
+  }
+
   &:hover {
-    background: var(--color-button-bg-hover);
+    background-color: var(--color-button-bg-hover);
     color: var(--color-button-text-hover);
   }
 
@@ -64,14 +68,36 @@ $button-outline-weights: (
   [data-component-theme='gray-800'] &,
   [data-component-theme='gray-700'] &,
   [data-component-theme='blue-yale'] & {
-    --color-button-primary: var(
-      --color-theme-button-secondary,
-      var(--color-basics-white)
-    );
-    --color-button-secondary: var(
-      --color-theme-button-primary,
-      var(--color-blue-yale)
-    );
+    // prettier-ignore
+    --color-button-primary: var(--color-theme-button-secondary, var(--color-basics-white));
+
+    // prettier-ignore
+    --color-button-secondary: var(--color-theme-button-primary, var(--color-blue-yale));
+  }
+
+  // Hover styles
+  &[data-button-hover-style='rise'] {
+    &:hover {
+      transform: translateY(-0.25em);
+      color: var(--color-button-text);
+      background-color: var(--color-button-bg);
+    }
+  }
+
+  &[data-button-hover-style='wipe'] {
+    &:hover {
+      &[data-button-style='outline'] {
+        box-shadow: inset 6.5em 0 0 0 var(--color-button-bg-hover);
+      }
+    }
+
+    &[data-button-style='filled'] {
+      box-shadow: inset -6.5em 0 0 0 var(--color-button-bg);
+
+      &:hover {
+        box-shadow: none;
+      }
+    }
   }
 }
 
