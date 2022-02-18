@@ -90,6 +90,7 @@ $button-outline-weights: (
       transform: translateY(-0.25em);
       color: var(--color-button-text);
       background-color: var(--color-button-bg);
+      box-shadow: var(--drop-shadow-level-1);
     }
   }
 
