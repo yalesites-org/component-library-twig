@@ -1,6 +1,9 @@
 // @TODO: These custom property settings seem like they shouldn't need to live
 // here. At some point it'd be nice to get rid of them.
 :root {
+  --color-link: var(--color-blue-medium);
+  --color-link-hover: var(--color-text);
+
   [data-component-theme] {
     --link-styles-underline-bg-color: var(--link-color-base);
     --link-styles-no-underline-bg-color: var(--link-color-hover);
