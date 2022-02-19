@@ -6,7 +6,7 @@
  # - list__item__content - used to replace the content of the list_item with something other than text
  #   for example: to insert the image and/or link components
  #}
-{% set list__item__base_class = list__item__base_class|default('list-item') %}
+{% set list__item__base_class = list__item__base_class|default('item') %}
 
 <li {{ bem(list__item__base_class, list__item__modifiers, list__item__blockname) }}>
   {% block list__item__content %}
