@@ -1,5 +1,10 @@
 @use '../../../01-atoms/lists/list';
 
+.utility-bar {
+  display: flex;
+  gap: var(--size-spacing-7);
+}
+
 .utility-nav {
   display: flex;
   align-items: center;

@@ -78,8 +78,6 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
 .site-header__utility-nav {
   margin-left: auto;
-  display: flex;
-  gap: var(--size-spacing-7);
 }
 
 .site-header__site-branding {

@@ -1,24 +1,26 @@
 {% set utility_nav__base_class = 'utility-nav' %}
 
-{# Menu #}
-{% include "@molecules/menu/menu.twig" with {
-  menu__base_class: utility_nav__base_class,
-  menu__name: 'Utility',
-} %}
-{# Link #}
-{% if utility_nav__link__content %}
-  {% include "@atoms/links/link.twig" with {
-    link__content: utility_nav__link__content,
-    link__url: '#',
-    link__blockname: utility_nav__base_class,
-    link__base_class: 'button',
-    link__attributes: {
-      'data-button-hover-style': button__hover_style|default('fade'),
-      'data-button-radius': button__radius|default('none'),
-      'data-button-style': button__style|default('filled'),
-      'data-outline-weight': button__outline_weight|default('2'),
-    }
+<div {{ bem('utility-bar') }}>
+  {# Menu #}
+  {% include "@molecules/menu/menu.twig" with {
+    menu__base_class: utility_nav__base_class,
+    menu__name: 'Utility',
   } %}
-{% endif %}
+  {# Link #}
+  {% if utility_nav__link__content %}
+    {% include "@atoms/links/link.twig" with {
+      link__content: utility_nav__link__content,
+      link__url: '#',
+      link__blockname: utility_nav__base_class,
+      link__base_class: 'button',
+      link__attributes: {
+        'data-button-hover-style': button__hover_style|default('fade'),
+        'data-button-radius': button__radius|default('none'),
+        'data-button-style': button__style|default('filled'),
+        'data-outline-weight': button__outline_weight|default('2'),
+      }
+    } %}
+  {% endif %}
+</div>
 
 {# @TODO: Would it be worth creating a 'link-button' component that has these attributes and stuff defined by default? #}
