@@ -33,10 +33,7 @@
       {# Utility Nav #}
       <div {{ bem('utility-nav', [], site_header__base_class) }}>
         {% block site_header__utility_nav %}
-          {% include "@page-layouts/placeholder/placeholder.twig" with {
-            placeholder: 'Utility Nav',
-            placeholder__type: 'element',
-          } %}
+          {% include "@organisms/menu/utility-nav/utility-nav.twig" %}
         {% endblock %}
       </div>
     </div>

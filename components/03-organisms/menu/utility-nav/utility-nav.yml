@@ -1,7 +1,8 @@
 items:
-  - title: 'Menu Item 1'
+  - title: 'Utility one'
     url: '#'
-  - title: 'Menu Item 2'
+  - title: 'Utility two'
     url: '#'
-  - title: 'Menu Item 3'
+  - title: 'Utility three'
     url: '#'
+utility_nav__link__content: Utility link

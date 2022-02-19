@@ -28,11 +28,6 @@
 {% set menu__name = menu__name|default([]) %}
 {% set menu__additional_classes = menu__additional_classes|default([]) %}
 
-{% if menu__base_class != 'menu'%}
-  {% set menu__base_class = menu__base_class ~ '-menu' %}
-  {% set menu__additional_classes = menu__additional_classes|merge(['menu']) %}
-{% endif %}
-
 {% if menu__toggle or menu__level__toggle %}
   {% set menu__additional_classes = menu__additional_classes|merge(['menu-with-toggle']) %}
 {% endif %}
@@ -40,8 +35,7 @@
 {% set menu__attributes = menu__attributes|merge({
   'id': menu__base_class,
   'class': bem(menu__base_class, menu__blockname, menu__modifiers, menu__additional_classes),
-  'role': 'navigation',
-  'aria-labelledby': menu__base_class ~ '__label',
+  'aria-label': menu__name,
 }) %}
 
 {#
@@ -63,7 +57,6 @@
 {% import _self as menus %}
 
 <nav {{ add_attributes(menu__attributes) }}>
-  <h2 id="{{ menu__attributes['aria-labelledby'] }}" {{ bem('visually-hidden') }}>{{ menu__name }}</h2>
   {% block menu_prefix %}{% endblock %}
   {{ menus.menu_links(items, attributes, 0, menu__base_class, menu__modifiers, menu__blockname, menu__toggle, menu__level__toggle, item__base_class, item__modifiers, item__blockname) }}
   {# Mobile nav toggle #}

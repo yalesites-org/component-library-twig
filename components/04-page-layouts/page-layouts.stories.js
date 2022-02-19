@@ -2,6 +2,8 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
 import fullWidthTwig from './full-width.twig';
 
+import utilityNavData from '../03-organisms/menu/utility-nav/utility-nav.yml';
+
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
@@ -58,4 +60,5 @@ export const fullWidth = ({
     site_header__theme: siteHeaderTheme,
     site_footer__border_thickness: footerBorderThickness,
     site_footer__theme: siteFooterTheme,
+    ...utilityNavData,
   });

@@ -1,0 +1,27 @@
+@use '../../../01-atoms/lists/list';
+
+.utility-nav {
+  display: flex;
+  align-items: center;
+}
+
+.utility-nav__menu {
+  @include list.reset;
+
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--size-spacing-7);
+}
+
+.utility-nav__link {
+  @include link(no-underline);
+
+  // @TODO: double check this font stuff
+  display: block;
+  font-size: 0.9375rem;
+  line-height: 1.475;
+}
+
+.utility-nav__button {
+  @include button;
+}
