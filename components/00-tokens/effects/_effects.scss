@@ -1,7 +1,10 @@
-@mixin animate($property: all, $duration: 200ms, $function: ease-in-out) {
+@mixin animate(
+  $property: all,
+  $duration: 200ms,
+  $function: ease-in-out,
+  $delay: 0ms
+) {
   @media (prefers-reduced-motion: no-preference) {
-    transition-property: #{$property};
-    transition-duration: #{$duration};
-    transition-timing-function: #{$function};
+    transition: #{$property} #{$duration} #{$function} #{$delay};
   }
 }

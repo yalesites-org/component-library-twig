@@ -13,6 +13,8 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   // prettier-ignore
   --site-header-border-bottom: var(--site-header-border-thickness) solid var(--color-site-header-border-color);
 
+  position: relative;
+  z-index: 1;
   padding: var(--site-header-padding);
   border-bottom: var(--site-header-border-bottom);
 
@@ -58,7 +60,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   flex-direction: column-reverse;
 
   @media (max-width: base.$break-mobile-max) {
-    @include base.animate('max-height, border-top-width', 800ms);
+    @include base.animate(max-height, 800ms);
 
     z-index: 1;
     position: absolute;
@@ -148,5 +150,25 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 .site-header__primary-nav {
   [data-site-header-nav-position='right'] & {
     margin-left: auto;
+  }
+}
+
+.site-header__overlay {
+  // The animate mixin doesn't support multiple transitions.
+  transition: opacity 800ms, height 0ms ease-out 800ms;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 0;
+  width: 100vw;
+  background-color: rgb(0 0 0 / 50%);
+  opacity: 0;
+
+  @media (max-width: base.$break-mobile-max) {
+    [data-main-menu-state='open'] ~ & {
+      transition: opacity 800ms;
+      height: 100vh;
+      opacity: 1;
+    }
   }
 }
