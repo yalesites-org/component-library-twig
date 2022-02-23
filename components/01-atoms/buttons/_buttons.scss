@@ -34,15 +34,6 @@ $button-outline-weights: (
     outline-offset: var(--size-thickness-2);
   }
 
-  &:active {
-    // These are !important to override any hover styles defined by more
-    // specific selectors in the 'Hover styles' section below.
-    background-color: var(--color-gray-700) !important;
-    border-color: var(--color-gray-700);
-    color: var(--color-basics-white) !important;
-    box-shadow: none !important;
-  }
-
   // Radius options
   @each $radius, $value in $button-radii {
     &[data-button-radius='#{$radius}'] {
@@ -96,7 +87,7 @@ $button-outline-weights: (
   }
 
   &[data-button-hover-style='wipe'] {
-    transition-duration: 250ms;
+    transition-duration: 400ms;
 
     &:hover {
       &[data-button-style='outline'] {
@@ -111,6 +102,19 @@ $button-outline-weights: (
         box-shadow: none;
       }
     }
+  }
+
+  &:active {
+    // Don't ever use !important!!!
+    // With that in mind, these are !important because the active styles below
+    // should take precedence over any hover styles regardless of specificity.
+    // We experimented with adding extra specificity to this selector to make it
+    // "naturally" override the nested data attributes above... but that seemed
+    // more hacky than adding a few !importants
+    background-color: var(--color-gray-700) !important;
+    border-color: var(--color-gray-700);
+    color: var(--color-basics-white) !important;
+    box-shadow: none !important;
   }
 }
 
