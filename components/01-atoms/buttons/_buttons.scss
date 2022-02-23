@@ -114,16 +114,22 @@ $button-outline-weights: (
   }
 
   &:active {
+    --color-button-bg-active: var(--color-gray-700);
+    --color-button-border-active: var(--color-gray-700);
+    --color-button-text-active: var(--color-basics-white);
+    --button-box-shadow-active: none;
+
     // Don't ever use !important!!!
-    // With that in mind, these are !important because the active styles below
+    // With that said, these are !important because the active styles below
     // should take precedence over any hover styles regardless of specificity.
     // We experimented with adding extra specificity to this selector to make it
     // "naturally" override the nested data attributes above... but that seemed
-    // more hacky than adding a few !importants
-    background-color: var(--color-gray-700) !important;
-    border-color: var(--color-gray-700);
-    color: var(--color-basics-white) !important;
-    box-shadow: none !important;
+    // more hacky than adding a few !importants. In this case we want the active
+    // state to take precedence over the hover state in any/all situations.
+    background-color: var(--color-button-bg-active) !important;
+    border-color: var(--color-button-border-active);
+    color: var(--color-button-text-active) !important;
+    box-shadow: var(--button-box-shadow-active) !important;
   }
 }
 

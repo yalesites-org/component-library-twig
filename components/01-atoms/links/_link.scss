@@ -5,6 +5,7 @@
   --color-link: var(--color-blue-medium);
   --color-link-hover: var(--color-text);
 
+  // @LINK: https://yaleits.atlassian.net/browse/YALB-350
   // @TODO: These color scheme custom property settings seem like they shouldn't
   // need to live here. At some point it'd be nice to get rid of them.
   [data-component-theme] {
