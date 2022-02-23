@@ -14,7 +14,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   --site-header-border-bottom: var(--site-header-border-thickness) solid var(--color-site-header-border-color);
 
   position: relative;
-  z-index: 1;
+  z-index: 2;
   padding: var(--site-header-padding);
   border-bottom: var(--site-header-border-bottom);
 
@@ -156,7 +156,8 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 .site-header__overlay {
   // The animate mixin doesn't support multiple transitions.
   transition: opacity 800ms, height 0ms ease-out 800ms;
-  position: absolute;
+  position: fixed;
+  z-index: 1;
   left: 0;
   top: 0;
   height: 0;
