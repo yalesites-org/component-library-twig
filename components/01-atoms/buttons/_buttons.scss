@@ -30,6 +30,7 @@ $button-outline-weights: (
   font-weight: var(--font-weights-mallory-500);
   padding: var(--size-spacing-4) var(--size-spacing-7);
   text-decoration: none;
+  text-align: center;
 
   &:hover {
     background-color: var(--color-button-bg-hover);

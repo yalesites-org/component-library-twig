@@ -1,4 +1,4 @@
-@use 'breakpoints/breakpoints';
+@forward 'breakpoints/breakpoints';
 @use 'functions/map';
 @use 'colors/color-pairings';
 @use 'typography/typography';
