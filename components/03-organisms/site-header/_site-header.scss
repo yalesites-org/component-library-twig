@@ -7,6 +7,12 @@ $site-header-themes: map.deep-get(tokens.$tokens, site-header-themes);
 $site-header-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
+// Mixin for the small branding typography.
+@mixin branding-small {
+  font: var(--font-style-branding-yale);
+  color: var(--color-site-header-yale-branding);
+}
+
 .site-header {
   --site-header-padding: var(--size-spacing-0) var(--size-spacing-8);
 
@@ -68,7 +74,8 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
     background: var(--color-background);
     flex-direction: column;
     max-height: 100vh;
-    overflow: scroll;
+    width: 100vw;
+    overflow: auto;
     border-bottom: var(--site-header-border-bottom);
 
     [data-main-menu-state='closed'] & {
@@ -122,14 +129,12 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 }
 
 .site-header__yale-branding {
-  font: var(--font-style-branding-yale);
-  color: var(--color-site-header-yale-branding);
+  @include branding-small;
+
   text-decoration: none;
 
-  &--secondary {
-    @media (max-width: base.$break-mobile-max) {
-      display: none;
-    }
+  @media (max-width: base.$break-mobile-max) {
+    display: none;
   }
 }
 
@@ -145,6 +150,16 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   font: var(--font-style-branding-site);
   color: var(--color-site-header-site-branding);
   text-decoration: none;
+
+  &--primary {
+    @media (max-width: base.$break-mobile-max) {
+      display: none;
+    }
+  }
+
+  &--mobile {
+    @include branding-small;
+  }
 }
 
 .site-header__primary-nav {
