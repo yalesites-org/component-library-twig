@@ -2,7 +2,23 @@
 
 .utility-bar {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--size-spacing-7);
+
+  // @TODO: double check this font stuff
+  font-size: 0.9375rem;
+  line-height: 1.475;
+
+  input {
+    // @TODO: Temporary styles until the search is 'officially' created
+    background: transparent;
+    border: none;
+    color: inherit;
+
+    &::placeholder {
+      color: inherit;
+    }
+  }
 }
 
 .utility-nav {
@@ -14,7 +30,7 @@
   @include list.reset;
 
   display: flex;
-  justify-content: flex-end;
+  flex-wrap: wrap;
   gap: var(--size-spacing-7);
 }
 
@@ -23,8 +39,6 @@
 
   // @TODO: double check this font stuff
   display: block;
-  font-size: 0.9375rem;
-  line-height: 1.475;
 }
 
 .utility-nav__button {

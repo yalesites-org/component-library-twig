@@ -6,19 +6,15 @@
     menu__base_class: utility_nav__base_class,
     menu__name: 'Utility',
   } %}
+  {# Search #}
+  {% if utility_nav__search %}
+    <input type="text" placeholder="Search this site">
+  {% endif %}
   {# Link #}
-  {% if utility_nav__link__content %}
-    {% include "@atoms/links/link.twig" with {
-      link__content: utility_nav__link__content,
-      link__url: '#',
-      link__blockname: utility_nav__base_class,
-      link__base_class: 'button',
-      link__attributes: {
-        'data-button-hover-style': button__hover_style|default('fade'),
-        'data-button-radius': button__radius|default('none'),
-        'data-button-style': button__style|default('filled'),
-        'data-outline-weight': button__outline_weight|default('2'),
-      }
+  {% if utility_nav__link__content and utility_nav__link__url %}
+    {% include "@atoms/buttons/button.twig" with {
+      button__content: utility_nav__link__content,
+      button__href: utility_nav__link__url,
     } %}
   {% endif %}
 </div>
