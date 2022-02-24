@@ -68,11 +68,6 @@
     transform: var(--link-styles-#{$style}-transform-hover);
   }
 
-  &:focus {
-    outline: var(--size-thickness-2) solid var(--link-color-base);
-    outline-offset: var(--size-thickness-2);
-  }
-
   &:focus::after {
     transform: scale(0, 1);
   }

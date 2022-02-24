@@ -20,26 +20,20 @@ $button-outline-weights: (
 }
 
 @mixin button {
-  --color-button-outline: var(--color-link);
-
   // prettier-ignore
   border: var(--border-thickness-button, var(--border-thickness-2)) solid var(--color-button-border);
   border-radius: var(--border-radius-button, var(--radius-0));
   background-color: var(--color-button-bg);
   color: var(--color-button-text);
   font-weight: var(--font-weights-mallory-500);
-  padding: var(--size-spacing-4) var(--size-spacing-7);
+  padding: var(--size-spacing-3) var(--size-spacing-6);
   text-decoration: none;
   text-align: center;
+  min-height: 2.75rem;
 
   &:hover {
     background-color: var(--color-button-bg-hover);
     color: var(--color-button-text-hover);
-  }
-
-  &:focus {
-    outline: var(--size-thickness-2) solid var(--color-button-outline);
-    outline-offset: var(--size-thickness-2);
   }
 
   // Radius options

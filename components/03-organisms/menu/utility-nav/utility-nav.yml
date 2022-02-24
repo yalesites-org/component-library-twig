@@ -5,6 +5,6 @@ items:
     url: '#'
   - title: 'Utility three'
     url: '#'
-utility_nav__link__content: Utility link
+utility_nav__link__content: Utility cta
 utility_nav__link__url: '#'
 utility_nav__search: true

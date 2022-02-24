@@ -124,7 +124,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   }
 
   @media (max-width: base.$break-mobile-max) {
-    padding: var(--size-spacing-3) var(--size-spacing-5);
+    padding: var(--size-spacing-3) var(--size-spacing-6);
   }
 }
 
