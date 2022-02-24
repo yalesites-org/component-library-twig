@@ -93,7 +93,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   padding: var(--size-spacing-4) 0;
 
   @media (max-width: base.$break-mobile-max) {
-    padding-inline: var(--size-spacing-8);
+    padding: var(--size-spacing-6) var(--size-spacing-8);
     border-top: var(--site-header-border-bottom);
   }
 
@@ -124,7 +124,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   }
 
   @media (max-width: base.$break-mobile-max) {
-    padding-inline: var(--size-spacing-8);
+    padding: var(--size-spacing-3) var(--size-spacing-5);
   }
 }
 
@@ -177,7 +177,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   top: 0;
   height: 0;
   width: 100vw;
-  background-color: rgb(0 0 0 / 50%);
+  background-color: rgb(0 0 0 / 70%);
   opacity: 0;
 
   @media (max-width: base.$break-mobile-max) {
