@@ -5,6 +5,8 @@ import siteHeaderExamples from './_site-header--examples.twig';
 
 import utilityNavData from '../menu/utility-nav/utility-nav.yml';
 
+import '../../02-molecules/menu/menu-toggle/menu-toggle';
+
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
