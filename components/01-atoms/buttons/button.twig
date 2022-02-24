@@ -18,13 +18,14 @@
  #}
 
 {% set button__base_class = button__base_class|default('button') %}
+{% set button__element = button__element|default('button') %}
 
 {% set button__attributes = {
   class: bem(button__base_class, button__modifiers, button__blockname),
   'data-button-hover-style': button__hover_style|default('fade'),
   'data-button-radius': button__radius|default('none'),
   'data-button-style': button__style|default('filled'),
-  'data-outline-weight': button__outline_weight|default('2'),
+  'data-button-outline-weight': button__outline_weight|default('2'),
 } %}
 
 {% if aria_pressed %}
@@ -40,8 +41,15 @@
   }) %}
 {% endif %}
 
-<button {{ add_attributes(button__attributes) }}>
+{% if button__href %}
+  {% set button__attributes = button__attributes|merge({
+    href: button__href,
+  }) %}
+  {% set button__element = 'a' %}
+{% endif %}
+
+<{{ button__element }} {{ add_attributes(button__attributes) }}>
   {% block button__content %}
     {{ button__content }}
   {% endblock %}
-</button>
+</{{ button__element }}>

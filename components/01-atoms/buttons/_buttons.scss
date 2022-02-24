@@ -10,6 +10,15 @@ $button-outline-weights: (
   '4': var(--border-thickness-4),
 );
 
+// The button-reset mixin is used to remove browser default styles for button
+// elements that shouldn't look like a traditional "button".
+@mixin button-reset {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
 @mixin button {
   --color-button-outline: var(--color-link);
 
@@ -42,7 +51,7 @@ $button-outline-weights: (
 
   // Outline weights options
   @each $weight, $value in $button-outline-weights {
-    &[data-outline-weight='#{$weight}'] {
+    &[data-button-outline-weight='#{$weight}'] {
       --border-thickness-button: #{$value};
     }
   }

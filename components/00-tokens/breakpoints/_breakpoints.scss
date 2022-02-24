@@ -1,0 +1,9 @@
+@use '~@yalesites-org/tokens/build/scss/tokens.scss' as *;
+
+// The basic breakpoints below are defined as tokens:
+// $break-s, $break-m, $break-l, $break-xl, $break-2xl, $break-max-width
+// The breakpoints defined in this file are utility breakpoints derived from
+// those basic ones, and used to support web development, specifically.
+
+$break-mobile: $break-m;
+$break-mobile-max: $break-m - 0.05;

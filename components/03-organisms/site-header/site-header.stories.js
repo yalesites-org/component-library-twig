@@ -3,6 +3,8 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import siteHeaderTwig from './site-header.twig';
 import siteHeaderExamples from './_site-header--examples.twig';
 
+import '../../02-molecules/menu/menu-toggle/menu-toggle';
+
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const primaryNavPositions = Object.keys(tokens.layout['flex-position']);

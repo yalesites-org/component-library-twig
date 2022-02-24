@@ -1,0 +1,18 @@
+{% set main_menu_toggle__base_class = 'menu-toggle' %}
+
+{% embed "@atoms/buttons/button.twig" with {
+  button__base_class: main_menu_toggle__base_class,
+  button__blockname: main_menu_toggle__blockname,
+  aria_pressed: 'false',
+  aria_expanded: 'false',
+  aria_controls: 'menu-wrapper',
+} %}
+  {% block button__content %}
+    <span {{ bem('text', [], main_menu_toggle__base_class) }}>Menu</span>
+    <span {{ bem('bars', [], main_menu_toggle__base_class) }}>
+      <span {{ bem('bar', [], main_menu_toggle__base_class) }}></span>
+      <span {{ bem('bar', [], main_menu_toggle__base_class) }}></span>
+      <span {{ bem('bar', [], main_menu_toggle__base_class) }}></span>
+    </span>
+  {% endblock %}
+{% endembed %}
