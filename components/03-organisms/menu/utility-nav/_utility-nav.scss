@@ -12,13 +12,11 @@
     --link-styles-no-underline-bg-color: var(--color-blue-medium);
   }
 
+  @include base.body-s;
+
   display: flex;
   flex-wrap: wrap;
   gap: var(--utility-bar-gap);
-
-  // @TODO: double check this font stuff
-  font-size: 0.9375rem;
-  line-height: 1.475;
 
   @media (max-width: base.$break-mobile-max) {
     --utility-bar-gap: var(--size-spacing-6);
@@ -83,7 +81,6 @@
 .utility-nav__link {
   @include link(no-underline);
 
-  // @TODO: double check this font stuff
   display: block;
 }
 

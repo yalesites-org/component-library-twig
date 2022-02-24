@@ -1,7 +1,7 @@
 @forward 'breakpoints/breakpoints';
 @use 'functions/map';
 @use 'colors/color-pairings';
-@use 'typography/typography';
+@forward 'typography/typography';
 @use 'layout/layout';
 @forward 'utility/utility';
 @forward 'effects/effects';
