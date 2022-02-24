@@ -1,3 +1,5 @@
+@use '../../00-tokens/index' as base;
+
 $button-radii: (
   'soft': var(--button-radius-soft),
   'pill': 100vmax,
@@ -19,10 +21,7 @@ $button-outline-weights: (
   font-weight: var(--font-weights-mallory-500);
   padding: var(--size-spacing-4) var(--size-spacing-7);
   text-decoration: none;
-
-  @media (prefers-reduced-motion: no-preference) {
-    transition: 200ms ease-out;
-  }
+  text-align: center;
 
   &:hover {
     background-color: var(--color-button-bg-hover);
@@ -77,7 +76,13 @@ $button-outline-weights: (
   }
 
   // Hover styles
+  &[data-button-hover-style='fade'] {
+    @include base.animate('color, background-color');
+  }
+
   &[data-button-hover-style='rise'] {
+    @include base.animate('transform, box-shadow');
+
     &:hover {
       transform: translateY(-0.25em);
       color: var(--color-button-text);
@@ -87,7 +92,7 @@ $button-outline-weights: (
   }
 
   &[data-button-hover-style='wipe'] {
-    transition-duration: 400ms;
+    @include base.animate($duration: 400ms);
 
     &:hover {
       &[data-button-style='outline'] {
