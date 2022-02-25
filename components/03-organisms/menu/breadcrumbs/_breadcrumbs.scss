@@ -1,0 +1,67 @@
+@use '../../../00-tokens/tokens';
+@use '../../../01-atoms/lists/list';
+
+// @use '../../../01-atoms/links/link';
+@use '../../../01-atoms/buttons/buttons';
+
+.breadcrumbs__wrapper {
+  display: flex;
+}
+
+.breadcrumbs__button {
+  @include buttons.reset;
+
+  display: none;
+  margin-right: var(--size-spacing-3);
+
+  @media (max-width: tokens.$break-mobile-max) {
+    [data-breadcrumbs-overflow='hidden'] & {
+      display: block;
+    }
+  }
+
+  &::before {
+    content: '<';
+  }
+}
+
+.breadcrumbs__menu {
+  @include list.reset;
+
+  display: flex;
+  flex-wrap: wrap;
+  color: var(--color-basics-brown-gray);
+}
+
+.breadcrumbs__item {
+  @include tokens.body-s;
+
+  position: relative;
+  white-space: nowrap;
+
+  &:not(:last-child) {
+    margin-right: var(--size-spacing-5);
+    padding-right: var(--size-spacing-5);
+
+    &::after {
+      content: '|';
+      position: absolute;
+      right: 0;
+      transform: skew(-15deg) translateX(50%);
+    }
+
+    @media (max-width: tokens.$break-mobile-max) {
+      [data-breadcrumbs-overflow='hidden'] & {
+        display: none;
+      }
+    }
+  }
+}
+
+.breadcrumbs__link {
+  // @TODO:
+  // @Question: Should these styles be the "no-underline" link style? Or something custom?
+  // @include link.link(no-underline);
+  color: var(--color-text);
+  text-decoration: none;
+}

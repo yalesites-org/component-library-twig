@@ -28,16 +28,11 @@
   'data-button-outline-weight': button__outline_weight|default('2'),
 } %}
 
-{% if aria_pressed %}
+{% if aria_pressed and aria_expanded and aria_controls %}
   {% set button__attributes = button__attributes|merge({
     'aria-pressed': aria_pressed,
-  }) %}
-{% endif %}
-
-{% if aria_expanded %}
-  {% set button__attributes = button__attributes|merge({
     'aria-expanded': aria_expanded,
-    'aira-controls': aria_controls,
+    'aria-controls': aria_controls,
   }) %}
 {% endif %}
 
@@ -50,6 +45,6 @@
 
 <{{ button__element }} {{ add_attributes(button__attributes) }}>
   {% block button__content %}
-    {{ button__content }}
+    {{- button__content -}}
   {% endblock %}
 </{{ button__element }}>
