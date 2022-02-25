@@ -63,7 +63,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
 .site-header__menu-wrapper {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
 
   @media (max-width: base.$break-mobile-max) {
     @include base.animate(max-height, 800ms);
@@ -72,7 +72,6 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
     position: absolute;
     left: 0;
     background: var(--color-background);
-    flex-direction: column;
     max-height: 100vh;
     width: 100vw;
     overflow: auto;
@@ -80,6 +79,20 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
     [data-main-menu-state='closed'] & {
       max-height: 0;
+    }
+  }
+}
+
+.site-header__menu-inner {
+  &--desktop {
+    @media (max-width: base.$break-mobile-max) {
+      display: none;
+    }
+  }
+
+  &--mobile {
+    @media (min-width: base.$break-mobile) {
+      display: none;
     }
   }
 }
