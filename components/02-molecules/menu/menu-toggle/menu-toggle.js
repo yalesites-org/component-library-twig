@@ -1,23 +1,28 @@
 Drupal.behaviors.menuToggle = {
   attach(context) {
     // Selectors
-    const menuToggle = context.querySelectorAll('.menu-toggle');
+    const menuToggle = context.querySelector('.menu-toggle');
     const header = context.querySelector('.site-header');
     const headerOverlay = context.querySelector('.site-header__overlay');
 
-    // Function to toggle the open/closed state of an element.
+    // Function to toggle the open/closed state of the main menu.
     function toggleMenuState(target, attribute) {
       const menuState =
         target.getAttribute(attribute) === 'closed' ? 'open' : 'closed';
+      const ariaButtonState =
+        target.getAttribute(attribute) === 'closed' ? 'true' : 'false';
 
+      // Set the menu state.
       target.setAttribute(attribute, menuState);
+
+      // Set the button aria properties.
+      menuToggle.setAttribute('aria-pressed', ariaButtonState);
+      menuToggle.setAttribute('aria-expanded', ariaButtonState);
     }
 
     // Show/Hide menu on toggle click.
-    menuToggle.forEach((toggle) => {
-      toggle.addEventListener('click', () => {
-        toggleMenuState(header, 'data-main-menu-state');
-      });
+    menuToggle.addEventListener('click', () => {
+      toggleMenuState(header, 'data-main-menu-state');
     });
 
     // Hide menu on escape key press.
