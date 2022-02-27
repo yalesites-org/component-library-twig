@@ -1,5 +1,3 @@
-// import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 Drupal.behaviors.breadcrumbs = {
   attach(context) {
     // Selectors.

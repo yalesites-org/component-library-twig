@@ -1,6 +1,6 @@
 {% set item__modifiers = item__modifiers|default([]) %}
 
-{% set item__attributes = item__attributes|default({
+{% set link__attributes = link__attributes|default({
   'title': item.title,
   }) %}
 
@@ -19,18 +19,21 @@
 {# Set link component as default #}
 {% set list__item %}
   {% block list__item__content_block %}
-    {% if item.url %}
-      {% include "@atoms/links/link.twig" with {
-        link__content: item.title,
-        link__url: item.url,
-        link__base_class: 'link',
-        link__blockname: menu__base_class,
-        link__modifiers: item__modifiers,
-        link__attributes: item__attributes
-      } %}
-    {% else %}
-      {{ item.title }}
+    {# @TODO: When we build this in Drupal. Verify this works #}
+    {# @LINK: https://yaleits.atlassian.net/browse/YALB-352 #}
+    {% if item.is_active %}
+      {% set link__attributes = link__attributes|merge({
+        'aria-current': 'page',
+      }) %}
     {% endif %}
+    {% include "@atoms/links/link.twig" with {
+      link__content: item.title,
+      link__url: item.url,
+      link__base_class: 'link',
+      link__blockname: menu__base_class,
+      link__modifiers: item__modifiers,
+      link__attributes: link__attributes
+    } %}
   {% endblock %}
 {% endset %}
 

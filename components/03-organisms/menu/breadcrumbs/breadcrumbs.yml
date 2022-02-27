@@ -6,3 +6,5 @@ items:
   - title: 'Parent Item'
     url: '#'
   - title: 'Current Page'
+    url: '#'
+    is_active: true
