@@ -1,0 +1,18 @@
+@use '../../00-tokens/tokens';
+
+@mixin link {
+  @include tokens.animate('color');
+
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: var(--font-weights-mallory-500);
+
+  &:hover {
+    color: var(--link-color-base);
+  }
+
+  &:focus {
+    outline: var(--size-thickness-2) solid var(--link-color-base);
+    outline-offset: var(--size-thickness-2);
+  }
+}

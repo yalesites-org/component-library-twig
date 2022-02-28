@@ -1,6 +1,7 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/lists/list';
 @use '../../../01-atoms/buttons/buttons';
+@use '../../../02-molecules/menu/menu';
 
 .breadcrumbs__wrapper {
   display: flex;
@@ -57,9 +58,5 @@
 }
 
 .breadcrumbs__link {
-  // @TODO:
-  // @Question: Should these styles be the "no-underline" link style? Or something custom?
-  // @include link.link(no-underline);
-  color: var(--color-text);
-  text-decoration: none;
+  @include menu.link;
 }

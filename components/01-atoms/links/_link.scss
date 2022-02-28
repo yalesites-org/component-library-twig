@@ -48,6 +48,11 @@
     color: var(--link-color-hover);
   }
 
+  &:focus {
+    outline: var(--size-thickness-2) solid var(--link-color-base);
+    outline-offset: var(--size-thickness-2);
+  }
+
   // Add the decorative bar under links
   &::after {
     @include base.animate('transform');
@@ -66,11 +71,6 @@
   // Animate the decorative bar when the link is hovered
   &:hover::after {
     transform: var(--link-styles-#{$style}-transform-hover);
-  }
-
-  &:focus {
-    outline: var(--size-thickness-2) solid var(--link-color-base);
-    outline-offset: var(--size-thickness-2);
   }
 
   &:focus::after {
