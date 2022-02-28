@@ -1,9 +1,7 @@
 {#
  # Available props
  # Reference: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/button_role#associated_aria_roles_states_and_properties
- # - aria_pressed: whether the button is pressed or not
  # - aria_expanded: whether the controlled grouping is expanded or not
- # - aria_controls (required if aria_expanded is used): id of the grouping element that is controlled
  # - button__hover_style: fade (default), rise, or swipe
  # - button__radius: none (default), soft, or pill
  # - button__style: filled (defualt) or outline
@@ -28,16 +26,9 @@
   'data-button-outline-weight': button__outline_weight|default('2'),
 } %}
 
-{% if aria_pressed %}
-  {% set button__attributes = button__attributes|merge({
-    'aria-pressed': aria_pressed,
-  }) %}
-{% endif %}
-
 {% if aria_expanded %}
   {% set button__attributes = button__attributes|merge({
     'aria-expanded': aria_expanded,
-    'aira-controls': aria_controls,
   }) %}
 {% endif %}
 
