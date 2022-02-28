@@ -22,7 +22,7 @@
  #   - in_active_trail: TRUE if the link is in the active trail.
  #}
 {% set menu__base_class = menu__base_class|default('menu') %}
-{% set menu__blockname = menu__blockname|default('menu') %}
+{% set menu__blockname = menu__blockname %}
 {% set menu__modifiers = menu__modifiers|default([]) %}
 {% set menu__attributes = menu__attributes|default([]) %}
 {% set menu__name = menu__name|default([]) %}
@@ -34,15 +34,19 @@
 
 {% set menu__attributes = menu__attributes|merge({
   'id': menu__base_class,
-  'class': bem(menu__base_class, menu__blockname, menu__modifiers, menu__additional_classes),
+  'class': bem(menu__base_class, menu__modifiers, menu__blockname, menu__additional_classes),
   'aria-label': menu__name,
 }) %}
+
+{% if breadcrumb %}
+  {% set menu__list__type = 'ol' %}
+{% endif %}
 
 {#
   We call a macro which calls itself to render the full tree.
   @see http://twig.sensiolabs.org/doc/tags/macro.html
 #}
-{% macro menu_links(items, attributes, menu__level, menu__base_class, menu__modifiers, menu__blockname, menu__toggle, menu__level__toggle, item__base_class, item__modifiers, item__blockname) %}
+{% macro menu_links(items, attributes, menu__level, menu__base_class, menu__modifiers, menu__blockname, menu__list__type, menu__toggle, menu__level__toggle, item__base_class, item__modifiers, item__blockname) %}
   {% import _self as menus %}
   {% if items %}
     {% if menu__level > 0 %}
@@ -58,7 +62,7 @@
 
 <nav {{ add_attributes(menu__attributes) }}>
   {% block menu_prefix %}{% endblock %}
-  {{ menus.menu_links(items, attributes, 0, menu__base_class, menu__modifiers, menu__blockname, menu__toggle, menu__level__toggle, item__base_class, item__modifiers, item__blockname) }}
+  {{ menus.menu_links(items, attributes, 0, menu__base_class, menu__modifiers, menu__blockname, menu__list__type, menu__toggle, menu__level__toggle, item__base_class, item__modifiers, item__blockname) }}
   {# Mobile nav toggle #}
   {% if menu__toggle %}
     {% include "@atoms/buttons/button.twig" with {
@@ -66,7 +70,6 @@
       button__base_class: 'toggle',
       button__blockname: menu__base_class,
       aria_expanded: 'false',
-      aria_controls: menu__base_class,
     } %}
   {% endif %}
   {% block menu_suffix %}{% endblock %}

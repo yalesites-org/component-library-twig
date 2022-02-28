@@ -1,4 +1,4 @@
-@use '../../00-tokens/index' as base;
+@use '../../00-tokens/tokens' as base;
 
 $button-radii: (
   'soft': var(--button-radius-soft),
@@ -10,9 +10,9 @@ $button-outline-weights: (
   '4': var(--border-thickness-4),
 );
 
-// The button-reset mixin is used to remove browser default styles for button
+// This reset mixin is used to remove browser default styles for button
 // elements that shouldn't look like a traditional "button".
-@mixin button-reset {
+@mixin reset {
   border: 0;
   background: transparent;
   padding: 0;

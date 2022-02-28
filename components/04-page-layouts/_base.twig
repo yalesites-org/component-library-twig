@@ -4,12 +4,12 @@
     {% include "@organisms/site-header/site-header.twig" %}
   {% endblock %}
   {# System #}
-  {% block page_system %}{% endblock %}
+  {% block page__system %}{% endblock %}
   {# Skip link that points to this id is in html.html.twig #}
   <div {{ bem('main') }} id="main-content">
     <main {{ bem('main-content') }}>
       {# Main Content #}
-      {% block page_content %}
+      {% block page__content %}
         {% include "@page-layouts/placeholder/placeholder.twig" with {
           placeholder: 'Main Content',
         } %}

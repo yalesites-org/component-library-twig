@@ -1,4 +1,4 @@
-@use '../../00-tokens/index' as base;
+@use '../../00-tokens/tokens' as base;
 
 :root {
   // The --color-link and --color-link-hover properties need to be defined here
@@ -46,6 +46,11 @@
 
   &:hover {
     color: var(--link-color-hover);
+  }
+
+  &:focus {
+    outline: var(--size-thickness-2) solid var(--link-color-base);
+    outline-offset: var(--size-thickness-2);
   }
 
   // Add the decorative bar under links
