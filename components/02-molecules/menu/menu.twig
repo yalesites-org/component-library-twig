@@ -38,6 +38,10 @@
   'aria-label': menu__name,
 }) %}
 
+{% if breadcrumb %}
+  {% set menu__list__type = 'ol' %}
+{% endif %}
+
 {#
   We call a macro which calls itself to render the full tree.
   @see http://twig.sensiolabs.org/doc/tags/macro.html

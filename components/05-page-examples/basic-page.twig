@@ -1,4 +1,12 @@
 {% extends "@page-layouts/full-width.twig" %}
   {% block page__content %}
     {% include "@organisms/menu/breadcrumbs/breadcrumbs.twig" %}
+    <div {{ bem('text-field') }}data-component-width="content">
+      <div {{ bem('inner', [], 'example__base_class') }}>
+        <p>Shortly after arriving at Yale, <a href="https://seas.yale.edu/faculty-research/faculty-directory/theodore-kim" target="_blank">Theodore Kim</a> was invited to give a guest lecture on the history of computer-generated imagery (CGI) for a Film and Media Studies class.</p>
+        <p>“While I was assembling the materials, a pattern became clear to me,” he said. That is, the degree of bias that exists in computer graphics technology toward the features of white people. He met with the professor of the course, John MacKay, who confirmed that the pattern was real — and deep-seated in film history.</p>
+        <p>“He introduced me to the book ‘White’ by Richard Dyer, which described how similar biases pervaded film technology in the analog era,” said Kim, associate professor of computer science. “From there, it became clear that there was a whole body of scholarship on this topic, but its coverage of the digital age is still ongoing, especially with movie CGI.”</p>
+        <p>In recent decades, the technology of computer graphics has made remarkable progress. However, when it comes to matters of race, and the means to depict characters of different ethnic backgrounds, the field remains very much in the past. Kim, who co-leads the Yale Computer Graphics Group, is among those who are trying to change that. He’s seen the issue from the perspectives of both the industry and academia. Before coming to Yale, he was a senior research scientist at Pixar, where his work can be seen in such movies as Cars 3, Coco, Incredibles 2, and Toy Story 4.</p>
+      </div>
+    </div>
   {% endblock %}

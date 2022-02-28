@@ -1,9 +1,14 @@
-{% set item__modifiers = item__modifiers|default([]) %}
+{% import "@molecules/menu/menu.twig" as menus %}
 
+{% set item__modifiers = item__modifiers|default([]) %}
+{% set item__attributes = item__attributes|default({}) %}
+
+{# Link attributes #}
 {% set link__attributes = link__attributes|default({
   'title': item.title,
-  }) %}
+}) %}
 
+{# Item Modifiers #}
 {% if item.in_active_trail == TRUE %}
   {% set item__modifiers = item__modifiers|merge(['active']) %}
 {% endif %}
@@ -14,36 +19,44 @@
   {% set item__modifiers = item__modifiers|merge(['with-sub']) %}
 {% endif %}
 
-{% import "@molecules/menu/menu.twig" as menus %}
+{# @TODO: When we build this in Drupal. Verify this works #}
+{# @LINK: https://yaleits.atlassian.net/browse/YALB-352 #}
+{% if item.is_active %}
+  {% if breadcrumb %}
+    {% set item__attributes = item__attributes|merge({
+      'aria-current': 'page',
+    }) %}
+  {% else %}
+    {% set link__attributes = link__attributes|merge({
+      'aria-current': 'page',
+    }) %}
+  {% endif %}
+{% endif %}
 
 {# Set link component as default #}
 {% set list__item %}
-  {% block list__item__content_block %}
-    {# @TODO: When we build this in Drupal. Verify this works #}
-    {# @LINK: https://yaleits.atlassian.net/browse/YALB-352 #}
-    {% if item.is_active %}
-      {% set link__attributes = link__attributes|merge({
-        'aria-current': 'page',
-      }) %}
-    {% endif %}
+  {% if breadcrumb and item.is_active %}
+    {{- item.title -}}
+  {% else %}
     {% include "@atoms/links/link.twig" with {
       link__content: item.title,
       link__url: item.url,
       link__base_class: 'link',
       link__blockname: menu__base_class,
       link__modifiers: item__modifiers,
-      link__attributes: link__attributes
+      link__attributes: link__attributes,
     } %}
-  {% endblock %}
+  {% endif %}
 {% endset %}
 
 {% embed "@atoms/lists/_list-item.twig" with {
   list__item__base_class: item__base_class|default('item'),
   list__item__modifiers: item__modifiers,
   list__item__blockname: item__blockname,
-}%}
+  list__item__attributes: item__attributes,
+} %}
 {% block list__item__content %}
-  {{ list__item }}
+  {{- list__item -}}
   {% if item.below %}
     {% if menu__level__toggle %}
       {% include "@atoms/buttons/button.twig" with {
