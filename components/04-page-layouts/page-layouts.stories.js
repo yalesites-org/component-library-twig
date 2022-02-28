@@ -1,13 +1,8 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
+import argTypes from './page-args';
 
 import fullWidthTwig from './full-width.twig';
 
 import utilityNavData from '../03-organisms/menu/utility-nav/utility-nav.yml';
-
-const borderThicknessOptions = Object.keys(tokens.border.thickness);
-const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
-const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
-const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
 
 /**
  * Storybook Definition.
@@ -17,53 +12,7 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    siteName: {
-      name: 'Site Name',
-      type: 'string',
-      defaultValue: 'Department of Chemistry',
-    },
-    headerBorderThickness: {
-      name: 'Header: Border thickness',
-      options: borderThicknessOptions,
-      type: 'select',
-      defaultValue: '8',
-    },
-    primaryNavPosition: {
-      name: 'Header: Primary nav position',
-      options: primaryNavPositions,
-      type: 'select',
-      defaultValue: 'right',
-    },
-    utilityNavLinkContent: {
-      name: 'Header: Utility nav link text',
-      type: 'string',
-      defaultValue: null,
-    },
-    utilityNavSearch: {
-      name: 'Header: Search',
-      type: 'boolean',
-      defaultValue: false,
-    },
-    siteHeaderTheme: {
-      name: 'Header: Theme',
-      options: siteHeaderThemeOptions,
-      type: 'select',
-      defaultValue: 'white',
-    },
-    footerBorderThickness: {
-      name: 'Footer: Border thickness',
-      options: borderThicknessOptions,
-      type: 'select',
-      defaultValue: '8',
-    },
-    siteFooterTheme: {
-      name: 'Footer: Theme',
-      options: siteFooterThemeOptions,
-      type: 'select',
-      defaultValue: 'blue-yale',
-    },
-  },
+  argTypes,
 };
 
 export const fullWidth = ({
