@@ -29,7 +29,7 @@ $button-outline-weights: (
   padding: var(--size-spacing-3) var(--size-spacing-6);
   text-decoration: none;
   text-align: center;
-  min-height: 2.75rem;
+  min-height: var(--size-click-target-minimum);
 
   &:hover {
     background-color: var(--color-button-bg-hover);

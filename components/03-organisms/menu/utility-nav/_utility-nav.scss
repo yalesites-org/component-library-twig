@@ -48,8 +48,8 @@
     }
 
     @media (max-width: tokens.$break-mobile-max) {
-      border: 2px solid;
-      min-height: 45px;
+      border: var(--border-thickness-2) solid;
+      min-height: var(--size-click-target-minimum);
     }
   }
 }
