@@ -16,7 +16,6 @@ Drupal.behaviors.menuToggle = {
       target.setAttribute(attribute, menuState);
 
       // Set the button aria properties.
-      menuToggle.setAttribute('aria-pressed', ariaButtonState);
       menuToggle.setAttribute('aria-expanded', ariaButtonState);
     }
 
