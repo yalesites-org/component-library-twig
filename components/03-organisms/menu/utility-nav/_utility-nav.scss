@@ -23,6 +23,7 @@
     background: transparent;
     border: none;
     color: inherit;
+    min-height: var(--size-click-target-minimum);
 
     &::placeholder {
       color: inherit;
@@ -49,7 +50,9 @@
 
     @media (max-width: tokens.$break-mobile-max) {
       border: var(--border-thickness-2) solid;
-      min-height: var(--size-click-target-minimum);
+      align-self: center;
+      width: 25rem;
+      max-width: 100%;
     }
   }
 }
@@ -79,4 +82,10 @@
 
 .utility-nav__button {
   @include buttons.button;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    align-self: center;
+    width: 25rem;
+    max-width: 100%;
+  }
 }
