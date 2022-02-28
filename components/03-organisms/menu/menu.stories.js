@@ -1,7 +1,10 @@
+// Markup.
 import breadcrumbsTwig from './breadcrumbs/breadcrumbs.twig';
 
+// Data.
 import breadcrumbsData from './breadcrumbs/breadcrumbs.yml';
 
+// JavaScript.
 import './breadcrumbs/breadcrumbs';
 
 /**
