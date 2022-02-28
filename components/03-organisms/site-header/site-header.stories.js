@@ -49,7 +49,7 @@ export const Header = ({
     site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
-    ...utilityNavData,
+    utility_nav__items: utilityNavData.items,
   });
 
 export const HeaderExamples = ({ borderThickness, primaryNavPosition }) =>
@@ -58,5 +58,5 @@ export const HeaderExamples = ({ borderThickness, primaryNavPosition }) =>
     site_name: 'Department of Chemistry',
     site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
-    ...utilityNavData,
+    utility_nav__items: utilityNavData.items,
   });

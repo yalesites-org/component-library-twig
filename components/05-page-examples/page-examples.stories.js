@@ -33,8 +33,9 @@ export const BasicPage = ({
     site_header__theme: siteHeaderTheme,
     site_footer__border_thickness: footerBorderThickness,
     site_footer__theme: siteFooterTheme,
-    ...utilityNavData,
+    utility_nav__items: utilityNavData.items,
     utility_nav__link__content: utilityNavLinkContent,
+    utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
-    ...breadcrumbData,
+    breadcrumbs__items: breadcrumbData.items,
   });

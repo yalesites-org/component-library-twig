@@ -5,6 +5,7 @@
   {% include "@molecules/menu/menu.twig" with {
     menu__base_class: utility_nav__base_class,
     menu__name: 'Utility',
+    items: utility_nav__items|default(items),
   } %}
   {# Search #}
   {% if utility_nav__search %}
@@ -13,6 +14,7 @@
   {# Link #}
   {% if utility_nav__link__content and utility_nav__link__url %}
     {% include "@atoms/buttons/button.twig" with {
+      button__blockname: utility_nav__base_class,
       button__content: utility_nav__link__content,
       button__href: utility_nav__link__url,
     } %}
