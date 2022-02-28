@@ -1,10 +1,8 @@
 items:
   - title: 'Home'
     url: '#'
-  - title: 'Grandparent Item'
+  - title: 'Academic Programs'
     url: '#'
-  - title: 'Parent Item'
-    url: '#'
-  - title: 'Current Page'
+  - title: 'Undergraduate Chemistry'
     url: '#'
     is_active: true
