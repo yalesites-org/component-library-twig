@@ -6,6 +6,10 @@
   class: bem('wrapper', [], breadcrumbs__base_class),
 } %}
 
+{# Get the parent label for the mobile toggle #}
+{% set parent_count = items.length - 2 %}
+{% set parent_label = items[parent_count].title %}
+
 <div {{ add_attributes(breadcrumbs__attributes) }}>
   {% embed "@atoms/buttons/button.twig" with {
     button__blockname: breadcrumbs__base_class,
@@ -15,6 +19,7 @@
   } %}
     {% block button__content %}
       <span {{ bem('visually-hidden') }}>Show all breadcrumbs</span>
+      <span aria-hidden="true">< {{ parent_label }}</span>
     {% endblock %}
   {% endembed %}
   <div id="breadcrumbs-inner" {{ bem('inner', [], breadcrumbs__base_class) }}>
