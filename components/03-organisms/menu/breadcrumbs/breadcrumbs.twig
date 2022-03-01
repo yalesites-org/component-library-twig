@@ -26,7 +26,8 @@
     {% include "@molecules/menu/menu.twig" with {
       menu__base_class: breadcrumbs__base_class,
       menu__name: 'Breadcrumb',
-      breadcrumb: true,
+      menu__contextual: true,
+      menu__list__type: 'ol',
     } %}
   </div>
 </div>
