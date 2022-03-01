@@ -22,21 +22,15 @@
 {# @TODO: When we build this in Drupal. Verify this works #}
 {# @LINK: https://yaleits.atlassian.net/browse/YALB-352 #}
 {% if item.is_active %}
-  {% if breadcrumb %}
-    {% set item__attributes = item__attributes|merge({
-      'aria-current': 'page',
-    }) %}
-  {% else %}
-    {% set link__attributes = link__attributes|merge({
-      'aria-current': 'page',
-    }) %}
-  {% endif %}
+  {% set link__attributes = link__attributes|merge({
+    'aria-current': 'page',
+  }) %}
 {% endif %}
 
 {# Set link component as default #}
 {% set list__item %}
-  {% if breadcrumb and item.is_active %}
-    {{- item.title -}}
+  {% if menu__contextual and item.is_active %}
+    <span {{ add_attributes(link__attributes) }}>{{- item.title -}}</span>
   {% else %}
     {% include "@atoms/links/link.twig" with {
       link__content: item.title,
