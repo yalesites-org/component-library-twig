@@ -19,7 +19,8 @@
 
   @media (max-width: tokens.$break-mobile-max) {
     [data-breadcrumbs-overflow='hidden'] & {
-      display: block;
+      display: flex;
+      gap: var(--size-spacing-3);
     }
   }
 }
