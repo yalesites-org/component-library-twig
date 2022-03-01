@@ -9,4 +9,5 @@ import textData from './text/text.yml';
  */
 export default { title: 'Atoms/Typography' };
 
-export const TextExamples = () => textExamplesTwig(textData);
+export const TextExamples = () =>
+  `<div class="text-field">${textExamplesTwig(textData)}</div>`;
