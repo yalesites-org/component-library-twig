@@ -1,5 +1,13 @@
-output_image_tag: true
-image__srcset: 'https://placeimg.com/320/180/any 320w, https://placeimg.com/480/270/any 480w, https://placeimg.com/640/360/any 640w, https://placeimg.com/800/450/any 800w, https://placeimg.com/960/540/any 960w, https://placeimg.com/1120/630/any 1120w, https://placeimg.com/1280/720/any 1280w, https://placeimg.com/1440/810/any 1440w, https://placeimg.com/1600/900/any 1600w, https://placeimg.com/1760/990/any 1760w, https://placeimg.com/1920/1080/any 1920w, https://placeimg.com/2080/1170/any 2080w, https://placeimg.com/2240/1260/any 2240w'
-image__sizes: '100vw'
-image__src: 'https://placeimg.com/320/180/any'
-image__alt: 'A 16 by 9 image'
+responsive_images:
+  16x9:
+    output_image_tag: true
+    image__srcset: 'https://picsum.photos/320/180 320w, https://picsum.photos/480/270 480w, https://picsum.photos/640/360 640w, https://picsum.photos/800/450 800w, https://picsum.photos/960/540 960w, https://picsum.photos/1120/630 1120w, https://picsum.photos/1280/720 1280w, https://picsum.photos/1440/810 1440w, https://picsum.photos/1600/900 1600w, https://picsum.photos/1760/990 1760w, https://picsum.photos/1920/1080 1920w, https://picsum.photos/2080/1170 2080w, https://picsum.photos/2240/1260 2240w, https://picsum.photos/2400/1350 2400w'
+    image__sizes: '100vw'
+    image__src: 'https://picsum.photos/320/180'
+    image__alt: 'A 16 by 9 image'
+  3x2:
+    output_image_tag: true
+    image__srcset: 'https://picsum.photos/320/213 320w, https://picsum.photos/480/320 480w, https://picsum.photos/640/427 640w, https://picsum.photos/800/533 800w, https://picsum.photos/960/640 960w, https://picsum.photos/1120/747 1120w, https://picsum.photos/1280/853 1280w, https://picsum.photos/1440/960 1440w, https://picsum.photos/1600/1067 1600w, https://picsum.photos/1760/1173 1760w, https://picsum.photos/1920/1280 1920w, https://picsum.photos/2080/1387 2080w, https://picsum.photos/2240/1493 2240w, https://picsum.photos/2400/1600 2400w'
+    image__sizes: '100vw'
+    image__src: 'https://picsum.photos/320/213'
+    image__alt: 'A 3 by 2 image'

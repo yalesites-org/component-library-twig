@@ -9,6 +9,11 @@ import figureData from './image/figure.yml';
  */
 export default { title: 'Atoms/Images' };
 
-export const images = () => image(imageData);
+export const images = () => `
+  <h2>16:9</h2>
+  ${image(imageData.responsive_images['16x9'])}
+  <h2>3:2</h2>
+  ${image(imageData.responsive_images['3x2'])}
+`;
 
 export const figures = () => figure(figureData);
