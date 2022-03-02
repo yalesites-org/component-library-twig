@@ -1,9 +1,10 @@
 import argTypes from '../04-page-layouts/page-args';
 
-import basicPageTwig from './basic-page.twig';
+import standardPageTwig from './standard-page.twig';
 
 import utilityNavData from '../03-organisms/menu/utility-nav/utility-nav.yml';
 import breadcrumbData from '../03-organisms/menu/breadcrumbs/breadcrumbs.yml';
+import imageData from '../01-atoms/images/image/image.yml';
 
 /**
  * Storybook Definition.
@@ -16,7 +17,7 @@ export default {
   argTypes,
 };
 
-export const BasicPage = ({
+export const StandardPage = ({
   siteName,
   headerBorderThickness,
   primaryNavPosition,
@@ -26,7 +27,7 @@ export const BasicPage = ({
   siteFooterTheme,
   footerBorderThickness,
 }) =>
-  basicPageTwig({
+  standardPageTwig({
     site_name: siteName,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
@@ -38,4 +39,5 @@ export const BasicPage = ({
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
+    ...imageData.responsive_images['16x9'],
   });
