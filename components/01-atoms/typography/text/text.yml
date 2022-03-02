@@ -1,0 +1,13 @@
+text_examples:
+  - name: Paragraph
+    text__element: 'p'
+    text__content: 'Chemistry has been responsible for some of the most significant improvements in our quality of life over the last century. The discovery of antibiotics and other pharmaceuticals, the advent of computers, and the development of industrial methods to produce fertilizer, all have required fundamental advances in chemistry. Chemistry is increasingly playing a central role in the development of alternative-energy vectors to replace fossil fuels, the realization of practical quantum computers, the discovery of new methods to treat and prevent diseases, and the adoption of more sustainable industrial processes.</p><p>The undergraduate program in Chemistry at Yale reflects the position of chemistry as the foundation of all the molecular sciences. Students are equipped with the technical skills to appreciate the scientific basis for previous discoveries and develop the fundamental expertise required to make future breakthroughs. Under the tutelage of world-leading researchers, students are exposed to a broad range of topics in chemistry. The development of technical skills through lecture classes is complemented with hands-on experience in state-of-the-art chemistry laboratories.'
+  - name: Inline Elements
+    text__element: 'div'
+    text__content:
+      '<strong>Strong is used to indicate strong importance</strong><br />
+      <em>This text has added emphasis</em><br />
+      <s>This text has a strike-through</s><br />
+      Superscript<sup>®</sup><br />
+      Subscript for things like H<sub>2</sub>O<br />
+      <code>This is what inline code looks like.</code>'
