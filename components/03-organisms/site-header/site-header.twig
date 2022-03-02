@@ -27,9 +27,13 @@
   <div {{ bem('inner', [], site_header__base_class) }}>
     <div {{ bem('mobile-header', [], site_header__base_class) }}>
       {# Yale Branding #}
-      <a href="https://www.yale.edu/" {{ bem('site-branding', ['mobile'], site_header__base_class) }}>
-        {{ site_name }}
-      </a>
+      {% include "@atoms/links/link.twig" with {
+        link__content: site_name,
+        link__url: '/',
+        link__base_class: 'site-branding',
+        link__modifiers: ['mobile'],
+        link__blockname: site_header__base_class,
+      } %}
       {# Mobile Menu Toggle #}
       {% include "@molecules/menu/menu-toggle/menu-toggle.twig" %}
     </div>
@@ -37,9 +41,13 @@
       {# Primary #}
       <div {{ bem('primary', [], site_header__base_class) }}>
         {# Site Branding #}
-        <a href="/" {{ bem('site-branding', ['primary'], site_header__base_class) }}>
-          {{ site_name }}
-        </a>
+        {% include "@atoms/links/link.twig" with {
+          link__content: site_name,
+          link__url: '/',
+          link__base_class: 'site-branding',
+          link__modifiers: ['primary'],
+          link__blockname: site_header__base_class,
+        } %}
         {# Primary Nav #}
         <div {{ bem('primary-nav', [], site_header__base_class) }}>
           {% block site_header__primary_nav %}
@@ -53,9 +61,12 @@
       {# Secondary #}
       <div {{ bem('secondary', [], site_header__base_class) }}>
         {# Yale Branding #}
-        <a href="https://www.yale.edu/" {{ bem('yale-branding', [], site_header__base_class) }}>
-          Yale University
-        </a>
+        {% include "@atoms/links/link.twig" with {
+          link__content: 'Yale University',
+          link__url: 'https://www.yale.edu',
+          link__base_class: 'yale-branding',
+          link__blockname: site_header__base_class,
+        } %}
         {# Utility Nav #}
         <div {{ bem('utility-nav', [], site_header__base_class) }}>
           {% block site_header__utility_nav %}
