@@ -1,0 +1,63 @@
+@use '../../../00-tokens/tokens';
+@use '../../../01-atoms/lists/list';
+@use '../../../01-atoms/buttons/buttons';
+@use '../../../02-molecules/menu/menu';
+
+.breadcrumbs__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: var(--size-spacing-6) 0 var(--size-spacing-7);
+}
+
+.breadcrumbs__button {
+  @include buttons.reset;
+  @include tokens.body-s;
+  @include menu.link;
+
+  display: none;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    [data-breadcrumbs-overflow='hidden'] & {
+      display: flex;
+      gap: var(--size-spacing-3);
+    }
+  }
+}
+
+.breadcrumbs__menu {
+  @include list.reset;
+
+  display: flex;
+  flex-wrap: wrap;
+  color: var(--color-basics-brown-gray);
+}
+
+.breadcrumbs__item {
+  @include tokens.body-s;
+
+  position: relative;
+  white-space: nowrap;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    [data-breadcrumbs-overflow='hidden'] & {
+      display: none;
+    }
+  }
+
+  &:not(:last-child) {
+    margin-right: var(--size-spacing-5);
+    padding-right: var(--size-spacing-5);
+
+    &::after {
+      content: '|';
+      position: absolute;
+      right: 0;
+      transform: skew(-15deg) translateX(50%);
+    }
+  }
+}
+
+.breadcrumbs__link {
+  @include menu.link;
+}

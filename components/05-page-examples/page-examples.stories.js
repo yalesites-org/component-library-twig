@@ -1,21 +1,22 @@
-import argTypes from './page-args';
+import argTypes from '../04-page-layouts/page-args';
 
-import fullWidthTwig from './full-width.twig';
+import basicPageTwig from './basic-page.twig';
 
 import utilityNavData from '../03-organisms/menu/utility-nav/utility-nav.yml';
+import breadcrumbData from '../03-organisms/menu/breadcrumbs/breadcrumbs.yml';
 
 /**
  * Storybook Definition.
  */
 export default {
-  title: 'Page Layouts/Page Layouts',
+  title: 'Page Examples/Page Examples',
   parameters: {
     layout: 'fullscreen',
   },
   argTypes,
 };
 
-export const fullWidth = ({
+export const BasicPage = ({
   siteName,
   headerBorderThickness,
   primaryNavPosition,
@@ -25,7 +26,7 @@ export const fullWidth = ({
   siteFooterTheme,
   footerBorderThickness,
 }) =>
-  fullWidthTwig({
+  basicPageTwig({
     site_name: siteName,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
@@ -36,4 +37,5 @@ export const fullWidth = ({
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
+    breadcrumbs__items: breadcrumbData.items,
   });

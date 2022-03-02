@@ -1,4 +1,4 @@
-@use '../../00-tokens/index' as base;
+@use '../../00-tokens/tokens' as base;
 
 $button-radii: (
   'soft': var(--button-radius-soft),
@@ -10,9 +10,9 @@ $button-outline-weights: (
   '4': var(--border-thickness-4),
 );
 
-// The button-reset mixin is used to remove browser default styles for button
+// This reset mixin is used to remove browser default styles for button
 // elements that shouldn't look like a traditional "button".
-@mixin button-reset {
+@mixin reset {
   border: 0;
   background: transparent;
   padding: 0;
@@ -20,26 +20,20 @@ $button-outline-weights: (
 }
 
 @mixin button {
-  --color-button-outline: var(--color-link);
-
   // prettier-ignore
   border: var(--border-thickness-button, var(--border-thickness-2)) solid var(--color-button-border);
   border-radius: var(--border-radius-button, var(--radius-0));
   background-color: var(--color-button-bg);
   color: var(--color-button-text);
   font-weight: var(--font-weights-mallory-500);
-  padding: var(--size-spacing-4) var(--size-spacing-7);
+  padding: var(--size-spacing-3) var(--size-spacing-6);
   text-decoration: none;
   text-align: center;
+  min-height: var(--size-click-target-minimum);
 
   &:hover {
     background-color: var(--color-button-bg-hover);
     color: var(--color-button-text-hover);
-  }
-
-  &:focus {
-    outline: var(--size-thickness-2) solid var(--color-button-outline);
-    outline-offset: var(--size-thickness-2);
   }
 
   // Radius options
