@@ -23,6 +23,48 @@
   class: bem(site_header__base_class),
 } %}
 
+{# Primary #}
+{% set site_header__primary %}
+  <div {{ bem('primary', [], site_header__base_class) }}>
+    {# Site Branding #}
+    {% include "@atoms/links/link.twig" with {
+      link__content: site_name,
+      link__url: '/',
+      link__base_class: 'site-branding',
+      link__modifiers: ['primary'],
+      link__blockname: site_header__base_class,
+    } %}
+    {# Primary Nav #}
+    <div {{ bem('primary-nav', [], site_header__base_class) }}>
+      {% block site_header__primary_nav %}
+        {% include "@page-layouts/placeholder/placeholder.twig" with {
+          placeholder: 'Primary Nav Item 1 / Primary Nav Item 2 / Primary Nav Item 3 / Primary Nav Item 4',
+          placeholder__type: 'element',
+        } %}
+      {% endblock %}
+    </div>
+  </div>
+{% endset %}
+
+{# Secondary #}
+{% set site_header__secondary %}
+  <div {{ bem('secondary', [], site_header__base_class) }}>
+    {# Yale Branding #}
+    {% include "@atoms/links/link.twig" with {
+      link__content: 'Yale University',
+      link__url: 'https://www.yale.edu',
+      link__base_class: 'yale-branding',
+      link__blockname: site_header__base_class,
+    } %}
+    {# Utility Nav #}
+    <div {{ bem('utility-nav', [], site_header__base_class) }}>
+      {% block site_header__utility_nav %}
+        {% include "@organisms/menu/utility-nav/utility-nav.twig" %}
+      {% endblock %}
+    </div>
+  </div>
+{% endset %}
+
 <header {{ add_attributes(site_header__attributes) }}>
   <div {{ bem('inner', [], site_header__base_class) }}>
     <div {{ bem('mobile-header', [], site_header__base_class) }}>
@@ -38,44 +80,15 @@
       {% include "@molecules/menu/menu-toggle/menu-toggle.twig" %}
     </div>
     <div {{ bem('menu-wrapper', [], site_header__base_class) }}>
-      {# Primary #}
-      <div {{ bem('primary', [], site_header__base_class) }}>
-        {# Site Branding #}
-        {% include "@atoms/links/link.twig" with {
-          link__content: site_name,
-          link__url: '/',
-          link__base_class: 'site-branding',
-          link__modifiers: ['primary'],
-          link__blockname: site_header__base_class,
-        } %}
-        {# Primary Nav #}
-        <div {{ bem('primary-nav', [], site_header__base_class) }}>
-          {% block site_header__primary_nav %}
-            {% include "@page-layouts/placeholder/placeholder.twig" with {
-              placeholder: 'Primary Nav Item 1 / Primary Nav Item 2 / Primary Nav Item 3 / Primary Nav Item 4',
-              placeholder__type: 'element',
-            } %}
-          {% endblock %}
-        </div>
+      {# Desktop Menu Structure #}
+      <div {{ bem('menu-inner', ['desktop'], site_header__base_class) }}>
+        {{ site_header__secondary }}
+        {{ site_header__primary }}
       </div>
-      {# Secondary #}
-      <div {{ bem('secondary', [], site_header__base_class) }}>
-        {# Yale Branding #}
-        {% include "@atoms/links/link.twig" with {
-          link__content: 'Yale University',
-          link__url: 'https://www.yale.edu',
-          link__base_class: 'yale-branding',
-          link__blockname: site_header__base_class,
-        } %}
-        {# Utility Nav #}
-        <div {{ bem('utility-nav', [], site_header__base_class) }}>
-          {% block site_header__utility_nav %}
-            {% include "@page-layouts/placeholder/placeholder.twig" with {
-              placeholder: 'Utility Nav',
-              placeholder__type: 'element',
-            } %}
-          {% endblock %}
-        </div>
+      {# Mobile Menu Structure #}
+      <div {{ bem('menu-inner', ['mobile'], site_header__base_class) }}>
+        {{ site_header__primary }}
+        {{ site_header__secondary }}
       </div>
     </div>
   </div>

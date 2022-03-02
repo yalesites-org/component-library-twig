@@ -4,9 +4,7 @@
 {% set item__attributes = item__attributes|default({}) %}
 
 {# Link attributes #}
-{% set link__attributes = link__attributes|default({
-  'title': item.title,
-}) %}
+{% set link__attributes = link__attributes|default({}) %}
 
 {# Item Modifiers #}
 {% if item.in_active_trail == TRUE %}
