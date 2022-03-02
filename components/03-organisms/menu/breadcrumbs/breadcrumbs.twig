@@ -21,7 +21,8 @@
   } %}
     {% block button__content %}
       <span {{ bem('visually-hidden') }}>Show all breadcrumbs</span>
-      <span><</span><span aria-hidden="true">{{ parent_label }}</span>
+      <span aria-hidden="true"><</span>
+      <span aria-hidden="true">{{ parent_label }}</span>
     {% endblock %}
   {% endembed %}
   <div id="breadcrumbs-inner" {{ bem('inner', [], breadcrumbs__base_class) }}>
