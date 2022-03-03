@@ -9,6 +9,6 @@
 {% set text__base_class = 'text' %}
 {% set text__element = text__element|default('div') %}
 
-<{{ text__element }} {{ bem(text__base_class) }}>
+<{{ text__element }} {{ bem(text__base_class, [], text__blockname) }}>
   {{- text__content|raw -}}
 </{{ text__element }}>
