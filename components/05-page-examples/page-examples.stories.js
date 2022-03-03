@@ -70,4 +70,8 @@ export const NewsArticle = ({
     image__sizes__1: imageData.responsive_images['4x3'].image__sizes,
     image__alt__1: imageData.responsive_images['4x3'].image__alt,
     image__src__1: imageData.responsive_images['4x3'].image__src,
+    image__srcset__pop_out: imageData.responsive_images['3x2'].image__srcset,
+    image__sizes__pop_out: imageData.responsive_images['3x2'].image__sizes,
+    image__alt__pop_out: imageData.responsive_images['3x2'].image__alt,
+    image__src__pop_out: imageData.responsive_images['3x2'].image__src,
   });
