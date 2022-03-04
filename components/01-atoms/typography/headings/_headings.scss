@@ -1,0 +1,37 @@
+@use '../../../00-tokens/tokens';
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-heading);
+  margin-block: 0;
+}
+
+.text-field {
+  h1 {
+    @include tokens.h1-mallory-compact-medium;
+  }
+
+  h2 {
+    @include tokens.h2-mallory-compact-medium;
+  }
+
+  h3 {
+    @include tokens.h3-mallory-compact-medium;
+  }
+
+  h4 {
+    @include tokens.h4-mallory-compact-medium;
+  }
+
+  h5 {
+    @include tokens.h5-mallory-compact-medium;
+  }
+
+  h6 {
+    @include tokens.h6-mallory-compact-medium;
+  }
+}
