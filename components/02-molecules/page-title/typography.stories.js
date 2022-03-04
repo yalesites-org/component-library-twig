@@ -7,10 +7,19 @@ import pageTitleTwig from './page-title.twig';
 /**
  * Storybook Definition.
  */
-export default { title: 'Molecules/Page Title' };
+export default {
+  title: 'Molecules/Page Title',
+  argTypes: {
+    meta: {
+      name: 'Meta',
+      type: 'string',
+      defaultValue: 'By Charlyn Paradis | January 25, 2022',
+    },
+  },
+};
 
-export const PageTitle = () =>
+export const PageTitle = ({ meta }) =>
   pageTitleTwig({
     page_title__heading: 'Davis Team Project Wins Award for Research',
-    page_title__meta: 'By Charlyn Paradis | January 25, 2022',
+    page_title__meta: meta,
   });

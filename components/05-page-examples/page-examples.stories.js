@@ -20,6 +20,7 @@ export default {
 
 export const StandardPage = ({
   siteName,
+  pageTitle,
   headerBorderThickness,
   primaryNavPosition,
   siteHeaderTheme,
@@ -30,6 +31,8 @@ export const StandardPage = ({
 }) =>
   standardPageTwig({
     site_name: siteName,
+    page_title__heading: pageTitle,
+    page_title__meta: null,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
@@ -45,6 +48,8 @@ export const StandardPage = ({
 
 export const NewsArticle = ({
   siteName,
+  pageTitle,
+  meta,
   headerBorderThickness,
   primaryNavPosition,
   siteHeaderTheme,
@@ -55,6 +60,8 @@ export const NewsArticle = ({
 }) =>
   newsArticleTwig({
     site_name: siteName,
+    page_title__heading: pageTitle,
+    page_title__meta: meta,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
