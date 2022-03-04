@@ -1,0 +1,12 @@
+@use '../../00-tokens/tokens';
+
+.page-title__heading {
+  @include tokens.h1-yale-new;
+}
+
+.page-title__meta {
+  @include tokens.body-default-condensed;
+
+  color: var(--color-gray-600);
+  margin-top: var(--size-spacing-4);
+}

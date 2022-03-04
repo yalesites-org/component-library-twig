@@ -12,26 +12,26 @@ h6 {
 
 .text-field {
   h1 {
-    @include tokens.h1-mallory-compact-medium;
+    @include tokens.h1-yale-new;
   }
 
   h2 {
-    @include tokens.h2-mallory-compact-medium;
+    @include tokens.h2-yale-new;
   }
 
   h3 {
-    @include tokens.h3-mallory-compact-medium;
+    @include tokens.h3-yale-new;
   }
 
   h4 {
-    @include tokens.h4-mallory-compact-medium;
+    @include tokens.h4-yale-new;
   }
 
   h5 {
-    @include tokens.h5-mallory-compact-medium;
+    @include tokens.h5-yale-new;
   }
 
   h6 {
-    @include tokens.h6-mallory-compact-medium;
+    @include tokens.h6-yale-new;
   }
 }
