@@ -14,7 +14,9 @@ $callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
       --color-callouts-background: var(--callout-themes-#{$theme}-background-color);
     }
   }
+}
 
+.callouts__inner {
   @media (min-width: tokens.$break-mobile) {
     display: flex;
     justify-content: center;
@@ -36,14 +38,14 @@ $callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
         top: 0;
         left: var(--size-spacing-8);
         right: var(--size-spacing-8);
-        height: var(--border-thickness-2);
+        height: var(--border-thickness-1);
       }
 
       @media (min-width: tokens.$break-mobile) {
         left: 0;
         top: var(--size-spacing-8);
         bottom: var(--size-spacing-8);
-        width: var(--border-thickness-2);
+        width: var(--border-thickness-1);
       }
     }
   }
