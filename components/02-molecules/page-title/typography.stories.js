@@ -12,5 +12,5 @@ export default { title: 'Molecules/Page Title' };
 export const PageTitle = () =>
   pageTitleTwig({
     page_title__heading: 'Davis Team Project Wins Award for Research',
-    page_title__meta: 'By Author Name and Author Name  |  January 15, 2022',
+    page_title__meta: 'By Charlyn Paradis | January 25, 2022',
   });
