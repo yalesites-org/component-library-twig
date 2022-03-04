@@ -1,0 +1,75 @@
+@use '~@yalesites-org/tokens/build/scss/tokens' as sass-tokens;
+@use '../../00-tokens/tokens';
+@use '../../00-tokens/functions/map';
+
+$callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
+
+.callouts {
+  background-color: var(--color-callouts-background);
+
+  // Component themes
+  @each $theme, $value in $callout-themes {
+    &[data-component-theme='#{$theme}'] {
+      // prettier-ignore
+      --color-callouts-background: var(--callout-themes-#{$theme}-background-color);
+    }
+  }
+
+  @media (min-width: tokens.$break-mobile) {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.callout {
+  position: relative;
+  padding-block: var(--size-spacing-7);
+  flex: 1 1 auto;
+
+  &:nth-child(2) {
+    &::before {
+      position: absolute;
+      content: '';
+      background-color: var(--color-text);
+
+      @media (max-width: tokens.$break-mobile-max) {
+        top: 0;
+        left: var(--size-spacing-8);
+        right: var(--size-spacing-8);
+        height: var(--border-thickness-2);
+      }
+
+      @media (min-width: tokens.$break-mobile) {
+        left: 0;
+        top: var(--size-spacing-8);
+        bottom: var(--size-spacing-8);
+        width: var(--border-thickness-2);
+      }
+    }
+  }
+}
+
+.callout__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  max-width: var(--component-width);
+  width: auto;
+
+  > *:last-child {
+    margin-top: auto;
+  }
+}
+
+.callout__heading {
+  @include tokens.h3-yale-new;
+
+  margin-bottom: var(--size-spacing-4);
+}
+
+.callout__text {
+  @include tokens.body-default-condensed;
+
+  margin-bottom: var(--size-spacing-5);
+}
