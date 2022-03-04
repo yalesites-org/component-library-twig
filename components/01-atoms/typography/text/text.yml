@@ -8,6 +8,6 @@ text_examples:
       '<strong>Strong is used to indicate strong importance</strong><br />
       <em>This text has added emphasis</em><br />
       <s>This text has a strike-through</s><br />
-      Superscript<sup>®</sup><br />
+      Superscript<sup>1 2</sup><br />
       Subscript for things like H<sub>2</sub>O<br />
       <code>This is what inline code looks like.</code>'
