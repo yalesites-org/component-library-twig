@@ -7,5 +7,13 @@ import listData from './list.yml';
  */
 export default { title: 'Atoms/Lists' };
 
-export const UnorderedList = () => listTwig(listData);
-export const OrderedList = () => listTwig({ ...listData, list__type: 'ol' });
+export const UnorderedList = () => `
+  <div class="text-field">
+    ${listTwig({ list__items: listData.unordered__list__items })}
+  </div>
+`;
+export const OrderedList = () => `
+<div class="text-field">
+  ${listTwig({ list__items: listData.ordered__list__items, list__type: 'ol' })}
+</div>
+`;
