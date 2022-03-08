@@ -77,12 +77,28 @@
           "path": "./components/00-tokens",
           "destinationPath": "./components/00-tokens",
           "description": "Contains scss files with global defaults"
+        },
+        {
+          "name": "page-layouts",
+          "path": "./components/04-page-layouts",
+          "destinationPath": "./components/04-page-layouts",
+          "description": "General page layouts"
         }
       ],
       "components": [
         {
+          "name": "buttons",
+          "structure": "atoms",
+          "required": true
+        },
+        {
           "name": "divider",
           "structure": "atoms"
+        },
+        {
+          "name": "images",
+          "structure": "atoms",
+          "required": true
         },
         {
           "name": "links",
@@ -90,13 +106,59 @@
           "required": true
         },
         {
-          "name": "buttons",
+          "name": "lists",
           "structure": "atoms",
           "required": true
         },
         {
+          "name": "typography",
+          "structure": "atoms",
+          "required": true
+        },
+        {
+          "name": "image",
+          "structure": "molecules"
+        },
+        {
+          "name": "menu",
+          "structure": "molecules",
+          "required": true
+        },
+        {
+          "name": "page-title",
+          "structure": "molecules",
+          "required": true
+        },
+        {
+          "name": "pop-out-image",
+          "structure": "molecules"
+        },
+        {
           "name": "pull-quote",
           "structure": "molecules"
+        },
+        {
+          "name": "text",
+          "structure": "molecules",
+          "required": true
+        },
+        {
+          "name": "menu/breadcrumbs",
+          "structure": "organisms"
+        },
+        {
+          "name": "menu/utility-nav",
+          "structure": "organisms"
+        },
+        {
+          "name": "site-footer",
+          "structure": "organisms",
+          "required": true
+        },
+        {
+          "name": "site-header",
+          "structure": "organisms",
+          "required": true
         }
       ]
     }
