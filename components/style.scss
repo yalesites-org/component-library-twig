@@ -23,10 +23,6 @@ html {
   box-sizing: inherit;
 }
 
-figure {
-  margin: 0;
-}
-
 *:focus {
   outline: var(--size-thickness-2) solid var(--link-color-base);
   outline-offset: var(--size-thickness-2);

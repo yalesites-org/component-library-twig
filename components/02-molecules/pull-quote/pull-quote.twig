@@ -14,16 +14,20 @@
 {% set pull_quote__attributes = pull_quote__attributes|default({}) %}
 
 {% set pull_quote__attributes = pull_quote__attributes|merge({
-  class: bem(pull_quote__base_class),
+  'data-component-width': 'content',
   'data-pull-quote-style': pull_quote__style,
+  class: bem(pull_quote__base_class),
 }) %}
 
-
-<figure {{ add_attributes(pull_quote__attributes) }}>
-  <blockquote {{ bem('quote', [], pull_quote__base_class) }}>
-    {{ pull_quote__quote }}
-  </blockquote>
-  {% if pull_quote__attribution %}
-    <figcaption {{ bem('attribution', [], pull_quote__base_class) }}>—{{ pull_quote__attribution }}</figcaption>
-  {% endif %}
-</figure>
+<div {{ add_attributes(pull_quote__attributes) }}>
+  <div {{ bem('inner', [], pull_quote__base_class) }}>
+    <figure {{ bem('figure', [], pull_quote__base_class) }}>
+      <blockquote {{ bem('quote', [], pull_quote__base_class) }}>
+        {{ pull_quote__quote }}
+      </blockquote>
+      {% if pull_quote__attribution %}
+        <figcaption {{ bem('attribution', [], pull_quote__base_class) }}>—{{ pull_quote__attribution }}</figcaption>
+      {% endif %}
+    </figure>
+  </div>
+</div>
