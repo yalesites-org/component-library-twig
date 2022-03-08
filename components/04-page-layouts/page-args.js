@@ -51,6 +51,17 @@ const argTypes = {
     type: 'select',
     defaultValue: 'blue-yale',
   },
+  pageTitle: {
+    name: 'Page Title',
+    type: 'string',
+    defaultValue: 'Davis Team Project Wins Award for Research',
+  },
+  meta: {
+    name: 'Meta',
+    type: 'string',
+    defaultValue:
+      '<span>By Charlyn Paradis</span><span>January 25, 2022</span>',
+  },
 };
 
 export default argTypes;
