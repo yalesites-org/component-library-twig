@@ -1,11 +1,8 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
+import argTypes from './page-args';
 
 import fullWidthTwig from './full-width.twig';
 
-const borderThicknessOptions = Object.keys(tokens.border.thickness);
-const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
-const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
-const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
+import utilityNavData from '../03-organisms/menu/utility-nav/utility-nav.yml';
 
 /**
  * Storybook Definition.
@@ -15,47 +12,28 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    headerBorderThickness: {
-      options: borderThicknessOptions,
-      type: 'select',
-      defaultValue: '8',
-    },
-    primaryNavPosition: {
-      options: primaryNavPositions,
-      type: 'select',
-      defaultValue: 'right',
-    },
-    siteHeaderTheme: {
-      options: siteHeaderThemeOptions,
-      type: 'select',
-      defaultValue: 'white',
-    },
-    footerBorderThickness: {
-      options: borderThicknessOptions,
-      type: 'select',
-      defaultValue: '8',
-    },
-    siteFooterTheme: {
-      options: siteFooterThemeOptions,
-      type: 'select',
-      defaultValue: 'blue-yale',
-    },
-  },
+  argTypes,
 };
 
 export const fullWidth = ({
+  siteName,
   headerBorderThickness,
   primaryNavPosition,
   siteHeaderTheme,
+  utilityNavLinkContent,
+  utilityNavSearch,
   siteFooterTheme,
   footerBorderThickness,
 }) =>
   fullWidthTwig({
-    site_name: 'Department of Chemistry',
+    site_name: siteName,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
     site_footer__border_thickness: footerBorderThickness,
     site_footer__theme: siteFooterTheme,
+    utility_nav__items: utilityNavData.items,
+    utility_nav__link__content: utilityNavLinkContent,
+    utility_nav__link__url: '#',
+    utility_nav__search: utilityNavSearch,
   });

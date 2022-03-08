@@ -1,0 +1,35 @@
+{% set item__blockname = menu__base_class %}
+
+{% set menu__item %}
+  {% block menu__item__content %}
+    {% for item in items %}
+      {% include "@molecules/menu/_menu-item.twig" %}
+    {% endfor %}
+    {# Menu level navigation #}
+    {% if menu__level > 0 and menu__level__toggle %}
+      {% embed "@molecules/menu/_menu-item.twig" with {
+        item__modifiers: 'sub-' ~ menu__level,
+      }%}
+        {% block list__item__content_block %}
+          {% include "@atoms/buttons/button.twig" with {
+            button__content: 'Back',
+            button__base_class: 'toggle',
+            button__blockname: menu__base_class,
+          } %}
+        {% endblock %}
+      {% endembed %}
+    {% endif %}
+  {% endblock %}
+{% endset %}
+
+{# List #}
+{% embed "@atoms/lists/list.twig" with {
+  list__base_class: 'menu',
+  list__blockname: menu__base_class,
+  list__modifiers: menu__modifiers,
+  list__type: menu__list__type,
+}%}
+  {% block list__content %}
+    {{ menu__item }}
+  {% endblock %}
+{% endembed %}

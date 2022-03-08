@@ -1,0 +1,19 @@
+@use '../../../00-tokens/tokens';
+
+img,
+picture {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+figure {
+  margin: 0; /* override normalize */
+}
+
+.caption {
+  @include tokens.body-s-condensed;
+
+  color: var(--color-basics-brown-gray);
+  margin-top: var(--size-spacing-4);
+}

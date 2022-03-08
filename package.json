@@ -8,6 +8,7 @@
     "husky:pre-commit": "lint-staged",
     "lint:js": "eslint components",
     "lint:styles": "stylelint 'components/**/*.scss'",
+    "postinstall": "npx patch-package",
     "prepare": "husky install",
     "prettier": "prettier components --ignore-unknown --list-different",
     "semantic-release": "semantic-release",
@@ -44,7 +45,8 @@
     "@yalesites-org/tokens": "^1.11.3",
     "add-attributes-twig-extension": "^0.1.0",
     "bem-twig-extension": "^0.1.1",
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "twig-drupal-filters": "^3.1.2"
   },
   "lint-staged": {
     "components/**/*.scss": [

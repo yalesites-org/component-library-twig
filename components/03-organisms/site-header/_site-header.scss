@@ -1,16 +1,27 @@
-@use '~@yalesites-org/tokens/build/scss/tokens';
 @use '../../00-tokens/functions/map';
 @use 'sass:map' as sass-map;
+@use '../../00-tokens/tokens';
 
 $site-header-themes: map.deep-get(tokens.$tokens, site-header-themes);
 $site-header-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
+// Mixin for the small branding typography.
+@mixin branding-small {
+  font: var(--font-style-branding-yale);
+  color: var(--color-site-header-yale-branding);
+}
+
 .site-header {
-  padding: var(--size-spacing-0) var(--size-spacing-8);
+  --site-header-padding: var(--size-spacing-0) var(--size-spacing-8);
 
   // prettier-ignore
-  border-bottom: var(--site-header-border-thickness) solid var(--color-site-header-border-color);
+  --site-header-border-bottom: var(--site-header-border-thickness) solid var(--color-site-header-border-color);
+
+  position: relative;
+  z-index: 2;
+  padding: var(--site-header-padding);
+  border-bottom: var(--site-header-border-bottom);
 
   // Component themes
   @each $theme, $value in $site-header-themes {
@@ -37,6 +48,54 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   }
 }
 
+.site-header__mobile-header {
+  display: flex;
+  gap: var(--size-spacing-6);
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--size-spacing-4) 0;
+
+  @media (min-width: tokens.$break-mobile) {
+    display: none;
+  }
+}
+
+.site-header__menu-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    @include tokens.animate(max-height, 800ms);
+
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    background: var(--color-background);
+    max-height: 100vh;
+    width: 100vw;
+    overflow: auto;
+    border-bottom: var(--site-header-border-bottom);
+
+    [data-main-menu-state='closed'] & {
+      max-height: 0;
+    }
+  }
+}
+
+.site-header__menu-inner {
+  &--desktop {
+    @media (max-width: tokens.$break-mobile-max) {
+      display: none;
+    }
+  }
+
+  &--mobile {
+    @media (min-width: tokens.$break-mobile) {
+      display: none;
+    }
+  }
+}
+
 .site-header__secondary {
   display: flex;
   flex-wrap: wrap;
@@ -45,8 +104,15 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   align-items: center;
   padding: var(--size-spacing-4) 0;
 
-  // prettier-ignore
-  border-bottom: var(--border-thickness-hairline) solid var(--color-site-header-divider-color);
+  @media (max-width: tokens.$break-mobile-max) {
+    padding: var(--size-spacing-6) var(--size-spacing-8);
+    border-top: var(--site-header-border-bottom);
+  }
+
+  @media (min-width: tokens.$break-mobile) {
+    // prettier-ignore
+    border-bottom: var(--border-thickness-hairline) solid var(--color-site-header-divider-color);
+  }
 }
 
 .site-header__primary {
@@ -68,26 +134,73 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
       --site-header-layout-align: var(--site-header-layout-#{$layout}-align);
     }
   }
+
+  @media (max-width: tokens.$break-mobile-max) {
+    padding: var(--size-spacing-3) var(--size-spacing-5);
+  }
 }
 
 .site-header__yale-branding {
-  font: var(--font-style-branding-yale);
-  color: var(--color-site-header-yale-branding);
+  @include branding-small;
+
   text-decoration: none;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    display: none;
+  }
 }
 
 .site-header__utility-nav {
   margin-left: auto;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    width: 100%;
+  }
 }
 
 .site-header__site-branding {
   font: var(--font-style-branding-site);
   color: var(--color-site-header-site-branding);
   text-decoration: none;
+
+  &--primary {
+    @media (max-width: tokens.$break-mobile-max) {
+      display: none;
+    }
+  }
+
+  &--mobile {
+    @include branding-small;
+  }
 }
 
 .site-header__primary-nav {
   [data-site-header-nav-position='right'] & {
     margin-left: auto;
+  }
+}
+
+.site-header__overlay {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 0;
+  width: 100vw;
+  background-color: rgb(0 0 0 / 70%);
+  opacity: 0;
+
+  // The animate mixin doesn't support multiple transitions.
+  @media (prefers-reduced-motion: no-preference) {
+    transition: opacity 800ms, height 0ms ease-out 800ms;
+  }
+
+  @media (max-width: tokens.$break-mobile-max) {
+    [data-main-menu-state='open'] ~ & {
+      @include tokens.animate(opacity, 800ms);
+
+      height: 100vh;
+      opacity: 1;
+    }
   }
 }

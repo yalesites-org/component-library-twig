@@ -1,0 +1,10 @@
+@mixin animate(
+  $property: all,
+  $duration: 200ms,
+  $function: ease-in-out,
+  $delay: 0ms
+) {
+  @media (prefers-reduced-motion: no-preference) {
+    transition: #{$property} #{$duration} #{$function} #{$delay};
+  }
+}
