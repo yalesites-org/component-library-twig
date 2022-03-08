@@ -15,6 +15,13 @@
       heading__blockname: callout__base_class,
       heading: callout__heading,
     } %}
+    {% if callout__subheading %}
+      {% include "@atoms/typography/headings/heading.twig" with {
+        heading__level: '3',
+        heading__blockname: callout__base_class,
+        heading: callout__subheading,
+      } %}
+    {% endif %}
     {% include "@atoms/typography/text/text.twig" with {
       text__blockname: callout__base_class,
       text__content: callout__text,

@@ -13,6 +13,11 @@ export default {
       type: 'string',
       defaultValue: calloutData.callout__heading,
     },
+    subheading: {
+      name: 'Subheading',
+      type: 'string',
+      defaultValue: null,
+    },
     text: {
       name: 'Text',
       type: 'string',
@@ -40,6 +45,7 @@ export default {
 
 export const Callout = ({
   heading,
+  subheading,
   text,
   linkText,
   linkType,
@@ -51,6 +57,7 @@ export const Callout = ({
     callouts: [
       {
         callout__heading: heading,
+        callout__subheading: subheading,
         callout__text: text,
         callout__link__content: linkText,
         callout__link__url: calloutData.callout__link__url,
@@ -64,6 +71,7 @@ export const Callout = ({
     callouts: [
       {
         callout__heading: heading,
+        callout__subheading: subheading,
         callout__text: text,
         callout__link__content: linkText,
         callout__link__url: calloutData.callout__link__url,
@@ -71,6 +79,7 @@ export const Callout = ({
       },
       {
         callout__heading: calloutData.callout__heading,
+        callout__subheading: calloutData.callout__subheading,
         callout__text: calloutData.callout__text,
         callout__link__content: calloutData.callout__link__content,
         callout__link__url: calloutData.callout__link__url,
