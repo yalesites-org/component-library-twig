@@ -14,7 +14,7 @@ export default {
       defaultValue: 'This is the caption for the 16:9 image above.',
     },
     width: {
-      name: 'Image Width',
+      name: 'Component Width',
       type: 'select',
       options: ['content', 'feature', 'full', 'max-width'],
       defaultValue: 'content',
