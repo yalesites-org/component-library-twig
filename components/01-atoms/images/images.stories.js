@@ -1,5 +1,4 @@
-import image from './image/responsive-image.twig';
-import figure from './image/figure.twig';
+import image from './image/image.twig';
 
 import imageData from './image/image.yml';
 import figureData from './image/figure.yml';
@@ -38,4 +37,4 @@ export const images = () => `
   </div>
 `;
 
-export const figures = () => figure(figureData);
+export const figures = () => image(figureData);

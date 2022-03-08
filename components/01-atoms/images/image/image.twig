@@ -1,0 +1,5 @@
+{% if figure__caption %}
+  {% embed "@atoms/images/image/_figure.twig" %}{% endembed %}
+{% else %}
+  {% embed "@atoms/images/image/_responsive-image.twig" %}{% endembed %}
+{% endif %}
