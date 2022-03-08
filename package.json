@@ -15,12 +15,15 @@
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook -o .out",
     "storybook:deploy": "storybook-to-ghpages -o .out",
-    "test": "npm run lint:js && npm run lint:styles && npm run prettier && npm run storybook:build"
+    "test": "npm run lint:js && npm run lint:styles && npm run prettier && npm run storybook:build",
+    "visreg:ci": "percy storybook .out"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
     "@commitlint/cli": "^16.0.1",
     "@commitlint/config-conventional": "^16.0.0",
+    "@percy/cli": "^1.0.0-beta.76",
+    "@percy/storybook": "^4.1.0",
     "@semantic-release/github": "^8.0.2",
     "@storybook/addon-a11y": "^6.4.9",
     "@storybook/addon-actions": "^6.4.9",
