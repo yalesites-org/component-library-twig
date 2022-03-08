@@ -18,6 +18,7 @@
     {% if callout__subheading %}
       {% include "@atoms/typography/headings/heading.twig" with {
         heading__level: '3',
+        heading__base_class: "subheading",
         heading__blockname: callout__base_class,
         heading: callout__subheading,
       } %}

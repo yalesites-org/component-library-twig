@@ -70,6 +70,12 @@ $callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
   margin-bottom: var(--size-spacing-4);
 }
 
+.callout__subheading {
+  @include tokens.h5-mallory-compact-book;
+
+  margin-bottom: var(--size-spacing-4);
+}
+
 .callout__text {
   @include tokens.body-default-condensed;
 
