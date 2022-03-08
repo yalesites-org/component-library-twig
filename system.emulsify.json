@@ -143,9 +143,12 @@
           "required": true
         },
         {
-          "name": "menu",
-          "structure": "organisms",
-          "required": true
+          "name": "menu/breadcrumbs",
+          "structure": "organisms"
+        },
+        {
+          "name": "menu/utility-nav",
+          "structure": "organisms"
         },
         {
           "name": "site-footer",
