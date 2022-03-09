@@ -15,41 +15,50 @@
 
 <div {{ bem(text_with_image__base_class) }}>
   <div {{ bem('inner', [], text_with_image__base_class) }}>
-    {# Overline #}
-    {% if text_with_image__overline %}
-      {% include "@atoms/typography/text/text.twig" with {
-        text__content: text_with_image__overline,
-        text__base_class: 'overline',
-        text__blockname: text_with_image__base_class,
-      } %}
-    {% endif %}
-    {# Heading #}
-    {% include "@atoms/typography/headings/heading.twig" with {
-      heading: text_with_image__heading,
-      heading__level: '2',
-      heading__blockname: text_with_image__base_class,
-    } %}
-    {# Subheading #}
-    {% if text_with_image__subheading %}
+    {# Content #}
+    <div {{ bem('content', [], text_with_image__base_class) }}>
+      {# Overline #}
+      {% if text_with_image__overline %}
+        {% include "@atoms/typography/text/text.twig" with {
+          text__content: text_with_image__overline,
+          text__base_class: 'overline',
+          text__blockname: text_with_image__base_class,
+        } %}
+      {% endif %}
+      {# Heading #}
       {% include "@atoms/typography/headings/heading.twig" with {
-        heading: text_with_image__subheading,
-        heading__level: '3',
-        heading__base_class: 'subheading',
+        heading: text_with_image__heading,
+        heading__level: '2',
         heading__blockname: text_with_image__base_class,
       } %}
-    {% endif %}
-    {# Text #}
-    {% include "@atoms/typography/text/text.twig" with {
-      text__content: text_with_image__text,
-      text__blockname: text_with_image__base_class,
-    } %}
-    {# Link #}
-    {% if text_with_image__link__content and text_with_image__link__url %}
-      {% include "@atoms/links/link.twig" with {
-        link__content: text_with_image__link__content,
-        link__url: text_with_image__link__url,
-        link__blockname: text_with_image__base_class,
+      {# Subheading #}
+      {% if text_with_image__subheading %}
+        {% include "@atoms/typography/headings/heading.twig" with {
+          heading: text_with_image__subheading,
+          heading__level: '3',
+          heading__base_class: 'subheading',
+          heading__blockname: text_with_image__base_class,
+        } %}
+      {% endif %}
+      {# Text #}
+      {% include "@atoms/typography/text/text.twig" with {
+        text__content: text_with_image__text,
+        text__blockname: text_with_image__base_class,
       } %}
-    {% endif %}
+      {# Link #}
+      {% if text_with_image__link__content and text_with_image__link__url %}
+        {% include "@atoms/links/link.twig" with {
+          link__content: text_with_image__link__content,
+          link__url: text_with_image__link__url,
+          link__blockname: text_with_image__base_class,
+        } %}
+      {% endif %}
+    </div>
+    {# Image #}
+    <div {{ bem('image', [], text_with_image__base_class) }}>
+      {% block text_with_image__image %}
+        {% include "@atoms/images/image/image.twig" %}
+      {% endblock %}
+    </div>
   </div>
 </div>

@@ -2,6 +2,7 @@
 import textWithImageTwig from './text-with-image.twig';
 
 // Data files
+import imageData from '../../01-atoms/images/image/image.yml';
 import textWithImageData from './text-with-image.yml';
 
 /**
@@ -46,6 +47,7 @@ export const TextWithImage = ({
   linkContent,
 }) =>
   textWithImageTwig({
+    ...imageData.responsive_images['3x2'],
     text_with_image__overline: overline,
     text_with_image__heading: heading,
     text_with_image__subheading: subheading,
