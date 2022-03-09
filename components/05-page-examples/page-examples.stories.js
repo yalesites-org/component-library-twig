@@ -49,6 +49,7 @@ export const StandardPage = ({
   });
 StandardPage.argTypes = {
   introContent: {
+    name: 'Intro Content',
     options: ['none', 'image', 'image--feature', 'image--max', 'pop-out-image'],
     type: 'select',
     defaultValue: 'none',
