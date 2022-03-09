@@ -8,7 +8,6 @@ Drupal.behaviors.breadcrumbs = {
     // Used to show all breadcrumbs on mobile
     breadcrumbsButton.addEventListener('click', () => {
       breadcrumbsWrapper.setAttribute('data-breadcrumbs-overflow', 'visible');
-      breadcrumbsButton.setAttribute('aria-pressed', 'true');
       breadcrumbsButton.setAttribute('aria-expanded', 'true');
     });
   },
