@@ -28,6 +28,7 @@ export const StandardPage = ({
   utilityNavSearch,
   siteFooterTheme,
   footerBorderThickness,
+  introContent,
 }) =>
   standardPageTwig({
     site_name: siteName,
@@ -44,7 +45,15 @@ export const StandardPage = ({
     utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
     ...imageData.responsive_images['16x9'],
+    intro_content: introContent,
   });
+StandardPage.argTypes = {
+  introContent: {
+    options: ['none', 'image', 'image--feature', 'image--max', 'pop-out-image'],
+    type: 'select',
+    defaultValue: 'none',
+  },
+};
 
 export const NewsArticle = ({
   siteName,

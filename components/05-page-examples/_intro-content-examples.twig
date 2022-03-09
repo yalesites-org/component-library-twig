@@ -1,0 +1,13 @@
+{% if intro_content == 'image' %}
+  {% include "@molecules/image/content-image.twig" %}
+{% elseif intro_content =='image--feature' %}
+  {% include "@molecules/image/content-image.twig" with {
+    content_image__width: 'feature',
+  } %}
+{% elseif intro_content =='image--max' %}
+  {% include "@molecules/image/content-image.twig" with {
+    content_image__width: 'max',
+  } %}
+{% elseif intro_content =='pop-out-image' %}
+  {% include "@molecules/pop-out-image/pop-out-image.twig" %}
+{% endif %}
