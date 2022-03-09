@@ -1,6 +1,7 @@
 @use '~@yalesites-org/tokens/build/scss/tokens' as sass-tokens;
 @use '../../00-tokens/tokens';
 @use '../../00-tokens/functions/map';
+@use '../../01-atoms/atoms';
 
 $callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
 
@@ -20,13 +21,20 @@ $callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
   @media (min-width: tokens.$break-mobile) {
     display: flex;
     justify-content: center;
+
+    > *:nth-child(2n) {
+      margin-left: var(--size-spacing-7);
+      padding-left: var(--size-spacing-7);
+    }
   }
 }
 
 .callout {
   position: relative;
-  padding-block: var(--size-spacing-7);
+  padding-top: var(--size-spacing-8);
+  padding-bottom: var(--size-spacing-9);
   flex: 1 1 auto;
+  text-align: center;
 
   &:nth-child(2) {
     &::before {
@@ -55,29 +63,38 @@ $callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: 100%;
-  max-width: var(--component-width);
+  max-width: 40rem;
   width: auto;
+}
 
-  > *:last-child {
-    margin-top: auto;
-  }
+.callout__headings {
+  margin-bottom: var(--size-spacing-4);
 }
 
 .callout__heading {
   @include tokens.h3-yale-new;
-
-  margin-bottom: var(--size-spacing-4);
 }
 
 .callout__subheading {
   @include tokens.h5-mallory-compact-book;
 
-  margin-bottom: var(--size-spacing-4);
+  margin-top: var(--size-spacing-2);
 }
 
 .callout__text {
   @include tokens.body-default-condensed;
+}
 
-  margin-bottom: var(--size-spacing-5);
+.callout__link {
+  @include atoms.link;
+
+  margin-top: var(--size-spacing-4);
+}
+
+.callout__button {
+  @include atoms.button-button;
+
+  margin-top: var(--size-spacing-6);
 }
