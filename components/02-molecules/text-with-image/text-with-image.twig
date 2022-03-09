@@ -1,0 +1,55 @@
+{#
+ # Available Props:
+ # - text_with_image__width
+ #
+ # Available variables:
+ # - text_with_image__overline (optional)
+ # - text_with_image__heading
+ # - text_with_image__subheading (optional)
+ # - text_with_image__text
+ # - text_with_image__link__content (optional)
+ # - text_with_image__link__url (optional)
+ #}
+
+{% set text_with_image__base_class = 'text-with-image' %}
+
+<div {{ bem(text_with_image__base_class) }}>
+  <div {{ bem('inner', [], text_with_image__base_class) }}>
+    {# Overline #}
+    {% if text_with_image__overline %}
+      {% include "@atoms/typography/text/text.twig" with {
+        text__content: text_with_image__overline,
+        text__base_class: 'overline',
+        text__blockname: text_with_image__base_class,
+      } %}
+    {% endif %}
+    {# Heading #}
+    {% include "@atoms/typography/headings/heading.twig" with {
+      heading: text_with_image__heading,
+      heading__level: '2',
+      heading__blockname: text_with_image__base_class,
+    } %}
+    {# Subheading #}
+    {% if text_with_image__subheading %}
+      {% include "@atoms/typography/headings/heading.twig" with {
+        heading: text_with_image__subheading,
+        heading__level: '3',
+        heading__base_class: 'subheading',
+        heading__blockname: text_with_image__base_class,
+      } %}
+    {% endif %}
+    {# Text #}
+    {% include "@atoms/typography/text/text.twig" with {
+      text__content: text_with_image__text,
+      text__blockname: text_with_image__base_class,
+    } %}
+    {# Link #}
+    {% if text_with_image__link__content and text_with_image__link__url %}
+      {% include "@atoms/links/link.twig" with {
+        link__content: text_with_image__link__content,
+        link__url: text_with_image__link__url,
+        link__blockname: text_with_image__base_class,
+      } %}
+    {% endif %}
+  </div>
+</div>

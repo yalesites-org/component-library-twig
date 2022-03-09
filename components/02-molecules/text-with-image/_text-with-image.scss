@@ -1,0 +1,25 @@
+@use '../../00-tokens/tokens';
+
+.text-with-image__inner {
+  > * {
+    margin-bottom: 1rem;
+  }
+}
+
+.text-with-image__overline {
+  @include tokens.h6-mallory-compact-book;
+}
+
+.text-with-image__heading {
+  @include tokens.h3-yale-new;
+}
+
+.text-with-image__subheading {
+  @include tokens.h5-mallory-compact-book;
+}
+
+.text-with-image__text {
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
