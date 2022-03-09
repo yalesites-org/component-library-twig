@@ -33,7 +33,6 @@
 {% endif %}
 
 {% set menu__attributes = menu__attributes|merge({
-  'id': menu__base_class,
   'class': bem(menu__base_class, menu__modifiers, menu__blockname, menu__additional_classes),
   'aria-label': menu__name,
 }) %}
