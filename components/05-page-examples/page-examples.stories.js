@@ -29,6 +29,7 @@ export const StandardPage = ({
   siteFooterTheme,
   footerBorderThickness,
   introContent,
+  calloutBackground,
 }) =>
   standardPageTwig({
     site_name: siteName,
@@ -46,6 +47,7 @@ export const StandardPage = ({
     breadcrumbs__items: breadcrumbData.items,
     ...imageData.responsive_images['16x9'],
     intro_content: introContent,
+    callout__background_color: calloutBackground,
   });
 StandardPage.argTypes = {
   introContent: {
@@ -53,6 +55,12 @@ StandardPage.argTypes = {
     options: ['none', 'image', 'image--feature', 'image--max', 'pop-out-image'],
     type: 'select',
     defaultValue: 'none',
+  },
+  calloutBackground: {
+    name: 'Callout Background Color',
+    type: 'select',
+    options: ['blue-yale', 'gray-700', 'beige'],
+    defaultValue: 'beige',
   },
 };
 
