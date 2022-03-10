@@ -67,24 +67,15 @@ $callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   height: 100%;
   max-width: 40rem;
   width: auto;
 }
 
-.callout__headings {
-  margin-bottom: var(--size-spacing-4);
-}
-
 .callout__heading {
   @include tokens.h3-yale-new;
-}
 
-.callout__subheading {
-  @include tokens.h5-mallory-compact-book;
-
-  margin-top: var(--size-spacing-2);
+  margin-bottom: var(--size-spacing-4);
 }
 
 .callout__text {
