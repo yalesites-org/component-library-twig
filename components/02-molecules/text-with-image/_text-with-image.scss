@@ -1,5 +1,9 @@
 @use '../../00-tokens/tokens';
 
+.text-with-image {
+  margin-bottom: var(--spacing-page-inner);
+}
+
 .text-with-image__inner {
   display: grid;
 

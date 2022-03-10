@@ -6,6 +6,7 @@ import newsArticleTwig from './news-article.twig';
 import utilityNavData from '../03-organisms/menu/utility-nav/utility-nav.yml';
 import breadcrumbData from '../03-organisms/menu/breadcrumbs/breadcrumbs.yml';
 import imageData from '../01-atoms/images/image/image.yml';
+import textWithImageData from '../02-molecules/text-with-image/text-with-image.yml';
 
 /**
  * Storybook Definition.
@@ -46,11 +47,21 @@ export const StandardPage = ({
     breadcrumbs__items: breadcrumbData.items,
     ...imageData.responsive_images['16x9'],
     intro_content: introContent,
+    ...textWithImageData,
   });
 StandardPage.argTypes = {
   introContent: {
     name: 'Intro Content',
-    options: ['none', 'image', 'image--feature', 'image--max', 'pop-out-image'],
+    options: [
+      'none',
+      'image',
+      'image--highlight',
+      'image--feature',
+      'image--max',
+      'pop-out-image',
+      'text-with-image',
+      'text-with-image--highlight',
+    ],
     type: 'select',
     defaultValue: 'none',
   },
