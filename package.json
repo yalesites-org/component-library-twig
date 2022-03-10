@@ -30,6 +30,7 @@
     "@storybook/addon-essentials": "^6.4.9",
     "@storybook/addon-links": "^6.4.9",
     "@storybook/html": "^6.4.9",
+    "@whitespace/storybook-addon-html": "^5.0.0",
     "@yalesites-org/eslint-config-and-other-formatting": "^1.0.0",
     "babel-loader": "^8.2.3",
     "husky": "^7.0.4",
@@ -45,7 +46,7 @@
   },
   "dependencies": {
     "@storybook/storybook-deployer": "^2.8.10",
-    "@yalesites-org/tokens": "^1.11.3",
+    "@yalesites-org/tokens": "^1.15.5",
     "add-attributes-twig-extension": "^0.1.0",
     "bem-twig-extension": "^0.1.1",
     "normalize.css": "^8.0.1",
