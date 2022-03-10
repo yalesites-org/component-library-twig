@@ -1,6 +1,8 @@
 {#
  # Available Props:
- # - text_with_image__width
+ # - text_with_image__width: feature (default) or highlight
+ # - text_with_image__position: image-left (default) or image-right
+ # - text_with_image__focus: equal (default), image, or text
  #
  # Available variables:
  # - text_with_image__overline (optional)
@@ -13,7 +15,14 @@
 
 {% set text_with_image__base_class = 'text-with-image' %}
 
-<div {{ bem(text_with_image__base_class) }}>
+{% set text_with_image__attributes = {
+  'data-component-focus': text_with_image__focus|default('equal'),
+  'data-image-position': text_with_image__position|default('image-left'),
+  'data-component-width': text_with_image__width|default('feature'),
+  class: bem(text_with_image__base_class)
+} %}
+
+<div {{ add_attributes(text_with_image__attributes) }}>
   <div {{ bem('inner', [], text_with_image__base_class) }}>
     {# Content #}
     <div {{ bem('content', [], text_with_image__base_class) }}>
@@ -50,7 +59,6 @@
         {% include "@atoms/links/link.twig" with {
           link__content: text_with_image__link__content,
           link__url: text_with_image__link__url,
-          link__blockname: text_with_image__base_class,
         } %}
       {% endif %}
     </div>

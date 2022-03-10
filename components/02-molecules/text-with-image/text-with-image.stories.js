@@ -11,6 +11,24 @@ import textWithImageData from './text-with-image.yml';
 export default {
   title: 'Molecules/Text With Image',
   argTypes: {
+    width: {
+      name: 'Width',
+      type: 'select',
+      options: ['highlight', 'feature'],
+      defaultValue: 'feature',
+    },
+    position: {
+      name: 'Image Position',
+      type: 'select',
+      options: ['image-left', 'image-right'],
+      defaultValue: 'image-left',
+    },
+    focus: {
+      name: 'Focus',
+      type: 'select',
+      options: ['image', 'equal', 'content'],
+      defaultValue: 'equal',
+    },
     overline: {
       name: 'Overline (optional)',
       type: 'string',
@@ -40,6 +58,9 @@ export default {
 };
 
 export const TextWithImage = ({
+  width,
+  position,
+  focus,
   overline,
   heading,
   subheading,
@@ -48,6 +69,9 @@ export const TextWithImage = ({
 }) =>
   textWithImageTwig({
     ...imageData.responsive_images['3x2'],
+    text_with_image__width: width,
+    text_with_image__position: position,
+    text_with_image__focus: focus,
     text_with_image__overline: overline,
     text_with_image__heading: heading,
     text_with_image__subheading: subheading,
