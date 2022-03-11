@@ -1,91 +1,84 @@
-// @use '../../../00-tokens/tokens';
-// @use '../../../01-atoms/buttons/buttons';
-// @use '../../../01-atoms/lists/list';
-// @use '../../../02-molecules/menu/menu';
+@use '../../../01-atoms/atoms';
 
-// .utility-bar {
-//   --utility-bar-gap: var(--size-spacing-7);
+@mixin primary-nav-item-0 {
+  padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-5);
 
-//   @include tokens.body-s;
+  // Typography should be captured as a token
+  font-size: 1.25rem;
+  line-height: 1.65;
+  font-weight: 700;
+  color: var(--colors-gray-800);
+}
 
+.primary-nav {
+  position: relative;
+}
+
+.primary-nav__menu {
+  @include atoms.list-reset;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  &--level-1 {
+    background-color: red;
+    position: absolute;
+    top: 100%;
+
+    // @TODO: This calculation should maybe subtract a "site-gutter-spacing"
+    // value or something in case the site gutters get adjusted later.
+    width: calc(100vw - calc(var(--size-spacing-8) * 2));
+    max-width: var(--size-component-layout-width-max);
+    column-count: 4;
+
+    [data-site-header-nav-position='right'] & {
+      right: 0;
+    }
+
+    [data-site-header-nav-position='left'] & {
+      left: 0;
+    }
+
+    [data-site-header-nav-position='center'] & {
+      left: 0;
+    }
+
+    [aria-expanded='false'] ~ & {
+      display: none;
+    }
+  }
+
+  &--level-2 {
+    margin-left: var(--size-spacing-6);
+  }
+}
+
+// .primary-nav__item {
 //   display: flex;
-//   flex-wrap: wrap;
-//   gap: var(--utility-bar-gap);
-
-//   @media (max-width: tokens.$break-mobile-max) {
-//     --utility-bar-gap: var(--size-spacing-6);
-
-//     flex-direction: column;
-//   }
-
-//   input {
-//     // @TODO: Temporary styles until the search is 'officially' created
-//     background: transparent;
-//     border: none;
-//     color: inherit;
-//     min-height: var(--size-click-target-minimum);
-
-//     &::placeholder {
-//       color: inherit;
-//       font-weight: var(--font-weights-mallory-500);
-
-//       @media (max-width: tokens.$break-mobile-max) {
-//         text-align: center;
-//       }
-//     }
-
-//     &:hover {
-//       &::placeholder {
-//         color: var(--link-color-hover);
-//       }
-//     }
-
-//     &:focus {
-//       &::placeholder {
-//         color: var(--color-gray-300);
-//         font-style: italic;
-//         font-weight: var(--font-weights-mallory-400);
-//       }
-//     }
-
-//     @media (max-width: tokens.$break-mobile-max) {
-//       border: var(--border-thickness-2) solid;
-//       align-self: center;
-//       width: 25rem;
-//       max-width: 100%;
-//     }
-//   }
+//   flex-direction: column;
 // }
 
-// .utility-nav {
-//   display: flex;
-//   align-items: center;
-// }
+.primary-nav__link {
+  text-decoration: none;
 
-// .utility-nav__menu {
-//   @include list.reset;
+  &--level-0 {
+    @include primary-nav-item-0;
 
-//   display: flex;
-//   flex-wrap: wrap;
-//   gap: var(--utility-bar-gap);
+    display: block;
+  }
 
-//   @media (max-width: tokens.$break-mobile-max) {
-//     width: 100%;
-//     flex-direction: column;
-//     align-items: center;
-//   }
-// }
+  &--with-sub {
+    display: none;
+  }
+}
 
-// .utility-nav__link {
-//   @include menu.link;
-// }
+.primary-nav__toggle {
+  @include atoms.button-reset;
 
-// .utility-nav__button {
-//   @include buttons.button;
+  display: flex;
+  gap: var(--size-spacing-3);
 
-//   @media (max-width: tokens.$break-mobile-max) {
-//     align-self: center;
-//     width: 25rem;
-//     max-width: 100%;
-//   }
-// }
+  &--level-0 {
+    @include primary-nav-item-0;
+  }
+}

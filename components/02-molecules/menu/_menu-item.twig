@@ -1,6 +1,6 @@
 {% import "@molecules/menu/menu.twig" as menus %}
 
-{% set item__modifiers = item__modifiers|default([]) %}
+{% set item__modifiers = item__modifiers|default(['level-' ~ menu__level]) %}
 {% set item__attributes = item__attributes|default({}) %}
 
 {# Link attributes #}
@@ -10,12 +10,13 @@
 {% if item.in_active_trail == TRUE %}
   {% set item__modifiers = item__modifiers|merge(['active']) %}
 {% endif %}
-{% if menu__level > 0 %}
-  {% set item__modifiers = item__modifiers|merge(['sub', 'sub-' ~ menu__level]) %}
-{% endif %}
 {% if item.below %}
   {% set item__modifiers = item__modifiers|merge(['with-sub']) %}
 {% endif %}
+
+{# Button Modifiers #}
+{% set button__modifiers = ['level-' ~ menu__level] %}
+
 
 {# @TODO: When we build this in Drupal. Verify this works #}
 {# @LINK: https://yaleits.atlassian.net/browse/YALB-352 #}
@@ -41,6 +42,12 @@
   {% endif %}
 {% endset %}
 
+{% set menu_item__button__content %}
+  {# @TODO: update this "icon" to an actual icon when we have them. #}
+  {# @lINK: https://yaleits.atlassian.net/browse/YALB-69 #}
+  {{ item.title }}<span {{ bem('toggle-icon', [], item__blockname) }}>^</span>
+{% endset %}
+
 {% embed "@atoms/lists/_list-item.twig" with {
   list__item__base_class: item__base_class|default('item'),
   list__item__modifiers: item__modifiers,
@@ -52,7 +59,7 @@
   {% if item.below %}
     {% if menu__level__toggle %}
       {% include "@atoms/buttons/button.twig" with {
-        button__content: 'Expand Menu',
+        button__content: menu_item__button__content,
         button__base_class: 'toggle',
         button__blockname: menu__base_class,
         aria_expanded: 'false',

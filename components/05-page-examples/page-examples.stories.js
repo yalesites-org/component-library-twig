@@ -4,6 +4,7 @@ import standardPageTwig from './standard-page.twig';
 import newsArticleTwig from './news-article.twig';
 
 import utilityNavData from '../03-organisms/menu/utility-nav/utility-nav.yml';
+import primaryNavData from '../03-organisms/menu/primary-nav/primary-nav.yml';
 import breadcrumbData from '../03-organisms/menu/breadcrumbs/breadcrumbs.yml';
 import imageData from '../01-atoms/images/image/image.yml';
 
@@ -41,6 +42,7 @@ export const StandardPage = ({
     site_footer__border_thickness: footerBorderThickness,
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
+    primary_nav__items: primaryNavData.items,
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
@@ -86,6 +88,7 @@ export const NewsArticle = ({
     site_footer__border_thickness: footerBorderThickness,
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
+    primary_nav__items: primaryNavData.items,
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
