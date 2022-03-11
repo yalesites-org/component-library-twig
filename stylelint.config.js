@@ -3,7 +3,7 @@ module.exports = {
     '@yalesites-org/eslint-config-and-other-formatting/stylelint.config',
   ],
   rules: {
-    // kebab-case that allows curly braces
-    'custom-property-pattern': '^([a-z#/{/}][a-z0-9#/{/}]*)(-[a-z0-9#/{/}]+)*$',
+    // Need to figure out a regex for kebab-case that allows `#`, `{`, and `}`
+    'custom-property-pattern': null,
   },
 };
