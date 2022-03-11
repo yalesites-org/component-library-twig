@@ -5,20 +5,6 @@
     {% for item in items %}
       {% include "@molecules/menu/_menu-item.twig" %}
     {% endfor %}
-    {# Menu level navigation #}
-    {% if menu__level > 0 and menu__level__toggle %}
-      {% embed "@molecules/menu/_menu-item.twig" with {
-        item__modifiers: 'sub-' ~ menu__level,
-      }%}
-        {% block list__item__content_block %}
-          {% include "@atoms/buttons/button.twig" with {
-            button__content: 'Back',
-            button__base_class: 'toggle',
-            button__blockname: menu__base_class,
-          } %}
-        {% endblock %}
-      {% endembed %}
-    {% endif %}
   {% endblock %}
 {% endset %}
 
