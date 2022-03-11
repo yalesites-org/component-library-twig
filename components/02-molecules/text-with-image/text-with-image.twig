@@ -42,11 +42,10 @@
       } %}
       {# Subheading #}
       {% if text_with_image__subheading %}
-        {% include "@atoms/typography/headings/heading.twig" with {
-          heading: text_with_image__subheading,
-          heading__level: '3',
-          heading__base_class: 'subheading',
-          heading__blockname: text_with_image__base_class,
+        {% include "@atoms/typography/text/text.twig" with {
+          text__content: text_with_image__subheading,
+          text__base_class: 'subheading',
+          text__blockname: text_with_image__base_class,
         } %}
       {% endif %}
       {# Text #}
