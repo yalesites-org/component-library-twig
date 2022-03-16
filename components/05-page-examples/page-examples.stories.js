@@ -28,6 +28,7 @@ export const StandardPage = ({
   utilityNavSearch,
   siteFooterTheme,
   footerBorderThickness,
+  introContent,
   calloutBackground,
 }) =>
   standardPageTwig({
@@ -45,9 +46,16 @@ export const StandardPage = ({
     utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
     ...imageData.responsive_images['16x9'],
+    intro_content: introContent,
     callout__background_color: calloutBackground,
   });
 StandardPage.argTypes = {
+  introContent: {
+    name: 'Intro Content',
+    options: ['none', 'image', 'image--feature', 'image--max', 'pop-out-image'],
+    type: 'select',
+    defaultValue: 'none',
+  },
   calloutBackground: {
     name: 'Callout Background Color',
     type: 'select',

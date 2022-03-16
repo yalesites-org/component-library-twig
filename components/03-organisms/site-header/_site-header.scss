@@ -5,6 +5,7 @@
 $site-header-themes: map.deep-get(tokens.$tokens, site-header-themes);
 $site-header-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
+$site-header-animation-speed: 800ms;
 
 // Mixin for the small branding typography.
 @mixin branding-small {
@@ -65,7 +66,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   flex-direction: column;
 
   @media (max-width: tokens.$break-mobile-max) {
-    @include tokens.animate(max-height, 800ms);
+    @include tokens.animate(max-height, $site-header-animation-speed);
 
     z-index: 1;
     position: absolute;
@@ -78,6 +79,22 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
     [data-main-menu-state='closed'] & {
       max-height: 0;
+
+      // This animation is to remove hidden items from screen readers and
+      // keyboard navigation, while maintaining the slow "close" effect.
+      visibility: hidden;
+      animation: $site-header-animation-speed fade-out;
+      animation-fill-mode: forwards;
+
+      @keyframes fade-out {
+        99% {
+          visibility: visible;
+        }
+
+        100% {
+          visibility: hidden;
+        }
+      }
     }
   }
 }
@@ -192,12 +209,13 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
   // The animate mixin doesn't support multiple transitions.
   @media (prefers-reduced-motion: no-preference) {
-    transition: opacity 800ms, height 0ms ease-out 800ms;
+    transition: opacity $site-header-animation-speed,
+      height 0ms ease-out $site-header-animation-speed;
   }
 
   @media (max-width: tokens.$break-mobile-max) {
     [data-main-menu-state='open'] ~ & {
-      @include tokens.animate(opacity, 800ms);
+      @include tokens.animate(opacity, $site-header-animation-speed);
 
       height: 100vh;
       opacity: 1;
