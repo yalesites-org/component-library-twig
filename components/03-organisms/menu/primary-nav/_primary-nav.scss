@@ -1,13 +1,37 @@
+@use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
 
-@mixin primary-nav-item-0 {
+// @TODO: Move these to a token
+:root {
+  --color-muted: var(--color-gray-700);
+}
+
+@mixin primary-nav-item-level-0 {
+  position: relative;
+  z-index: 1;
+  border-bottom: var(--border-thickness-1) solid var(--color-background);
   padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-5);
 
-  // Typography should be captured as a token
+  &:focus {
+    outline-offset: -2px;
+  }
+
+  // @TODO: Typography should be captured as a token
   font-size: 1.25rem;
   line-height: 1.65;
-  font-weight: 700;
-  color: var(--colors-gray-800);
+  color: var(--color-heading);
+}
+
+@mixin primary-nav-item-level-1 {
+  font-size: 1.1875rem;
+  line-height: 1.65;
+  color: var(--color-heading);
+}
+
+@mixin primary-nav-item-level-2 {
+  font-size: 1.0625rem;
+  line-height: 1.18;
+  color: var(--color-text);
 }
 
 .primary-nav {
@@ -17,34 +41,47 @@
 .primary-nav__menu {
   @include atoms.list-reset;
 
-  display: flex;
-  flex-wrap: wrap;
+  &--level-0 {
+    @media (min-width: tokens.$break-mobile) {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
 
   &--level-1 {
-    background-color: red;
-    position: absolute;
-    top: 100%;
+    border: var(--border-thickness-1) solid;
+    border-bottom-width: var(--border-thickness-4);
+    background-color: var(--color-background);
 
-    // @TODO: This calculation should maybe subtract a "site-gutter-spacing"
-    // value or something in case the site gutters get adjusted later.
-    width: calc(100vw - calc(var(--size-spacing-8) * 2));
-    max-width: var(--size-component-layout-width-max);
-    column-count: 4;
+    @media (min-width: tokens.$break-mobile) {
+      position: absolute;
 
-    [data-site-header-nav-position='right'] & {
-      right: 0;
-    }
+      // Subtract enough to place it just behind an "open" toggle and hide the
+      // top border. To give it the "tab" effect.
+      top: calc(100% - var(--border-thickness-1));
+      padding: var(--size-spacing-7) var(--size-spacing-8);
 
-    [data-site-header-nav-position='left'] & {
-      left: 0;
-    }
+      // @TODO: This calculation should maybe subtract a "site-gutter-spacing"
+      // value or something in case the site gutters get adjusted later.
+      width: calc(100vw - calc(var(--size-spacing-8) * 2));
+      max-width: var(--size-component-layout-width-max);
+      column-count: 4;
 
-    [data-site-header-nav-position='center'] & {
-      left: 0;
-    }
+      [data-site-header-nav-position='right'] & {
+        right: 0;
+      }
 
-    [aria-expanded='false'] ~ & {
-      display: none;
+      [data-site-header-nav-position='left'] & {
+        left: 0;
+      }
+
+      [data-site-header-nav-position='center'] & {
+        left: 0;
+      }
+
+      [aria-expanded='false'] ~ & {
+        display: none;
+      }
     }
   }
 
@@ -53,22 +90,32 @@
   }
 }
 
-// .primary-nav__item {
-//   display: flex;
-//   flex-direction: column;
-// }
+.primary-nav__item {
+  &--level-1 {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
 
 .primary-nav__link {
   text-decoration: none;
 
   &--level-0 {
-    @include primary-nav-item-0;
+    @include primary-nav-item-level-0;
 
     display: block;
+
+    &.primary-nav__link--with-sub {
+      display: none;
+    }
   }
 
-  &--with-sub {
-    display: none;
+  &--level-1 {
+    @include primary-nav-item-level-1;
+  }
+
+  &--level-2 {
+    @include primary-nav-item-level-2;
   }
 }
 
@@ -79,6 +126,18 @@
   gap: var(--size-spacing-3);
 
   &--level-0 {
-    @include primary-nav-item-0;
+    @include primary-nav-item-level-0;
+
+    &[aria-expanded='true'] {
+      border-top: var(--border-thickness-1) solid;
+      border-right: var(--border-thickness-1) solid;
+      border-left: var(--border-thickness-1) solid;
+    }
+  }
+}
+
+.primary-nav__toggle-icon {
+  .primary-nav__toggle[aria-expanded='true'] & {
+    transform: rotate(180deg);
   }
 }
