@@ -113,7 +113,7 @@ $site-header-animation-speed: 800ms;
   }
 }
 
-.site-header__menu-inner {
+.site-header__menu-secondary {
   &--desktop {
     @media (max-width: tokens.$break-mobile-max) {
       display: none;
