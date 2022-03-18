@@ -3,7 +3,6 @@ Drupal.behaviors.menuToggle = {
     // Selectors.
     const menuToggle = context.querySelector('.menu-toggle');
     const header = context.querySelector('.site-header');
-    const headerMenu = context.querySelector('.site-header__menu-wrapper');
     const headerOverlay = context.querySelector('.site-header__overlay');
     const body = context.querySelector('body');
     const main = context.querySelector('.main');
@@ -23,10 +22,10 @@ Drupal.behaviors.menuToggle = {
         // Set a padding-top on the main element to accommodate for the "fixed"
         // header when it is taken out of the flow of content.
         main.style.paddingTop = `${headerHeight}px`;
-        // Set the height of the open menu to support scrolling.
-        headerMenu.style.height = `calc(100vh - ${headerHeight}px)`;
       } else {
+        // Enable scrolling of page content.
         body.classList.remove(frozen);
+        // Reset css values.
         main.style.paddingTop = '';
       }
     }
