@@ -4,16 +4,11 @@ Drupal.behaviors.primaryNav = {
     const primaryNavToggles = context.querySelectorAll(
       '.primary-nav__toggle--level-0',
     );
-    // const header = context.querySelector('.site-header');
-    // const headerOverlay = context.querySelector('.site-header__overlay');
 
     // Function to toggle the open/closed state of the main menu.
     function toggleMenuState(target) {
       const ariaButtonState =
         target.getAttribute('aria-expanded') === 'true' ? 'false' : 'true';
-
-      // // Set the menu state.
-      // target.setAttribute(attribute, menuState);
 
       // If opening an item, close all nav items.
       if (ariaButtonState === 'true') {
@@ -32,20 +27,5 @@ Drupal.behaviors.primaryNav = {
         toggleMenuState(button);
       });
     });
-
-    // // Hide menu on escape key press.
-    // document.addEventListener('keyup', (e) => {
-    //   if (e.key === 'Escape') {
-    //     if (header.getAttribute('data-main-menu-state') === 'open') {
-    //       // Close the main menu if open.
-    //       toggleMenuState(header, 'data-main-menu-state');
-    //     }
-    //   }
-    // });
-
-    // // Hide menu on overlay click.
-    // headerOverlay.addEventListener('click', () => {
-    //   toggleMenuState(header, 'data-main-menu-state');
-    // });
   },
 };
