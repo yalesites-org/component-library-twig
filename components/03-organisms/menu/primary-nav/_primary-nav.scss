@@ -9,9 +9,7 @@
 }
 
 @mixin primary-nav-item-level-0 {
-  // @TODO: Typography should be captured as a token
-  font-size: 1.25rem;
-  line-height: 1.65;
+  font: var(--font-style-nav-primary-0);
   color: var(--color-heading);
   text-align: left;
 
@@ -32,14 +30,6 @@
     border-right: var(--border-thickness-1) solid transparent;
     border-left: var(--border-thickness-1) solid transparent;
 
-    .primary-nav__item--level-0:first-child > & {
-      padding-left: 0;
-    }
-
-    .primary-nav__item--level-0:last-child > & {
-      padding-right: 0;
-    }
-
     &[aria-expanded='true'] {
       z-index: 1;
       border-color: var(--color-navigation-border);
@@ -49,21 +39,15 @@
 }
 
 @mixin primary-nav-item-level-1 {
-  padding: var(--size-spacing-2) var(--size-spacing-5);
-
-  // @TODO: Typography should be captured as a token
-  font-size: 1.1875rem;
-  line-height: 1.65;
+  font: var(--font-style-nav-primary-1);
   color: var(--color-heading);
+  padding: var(--size-spacing-2) var(--size-spacing-5);
 }
 
 @mixin primary-nav-item-level-2 {
-  padding: var(--size-spacing-1) var(--size-spacing-5);
-
-  // @TODO: Typography should be captured as a token
-  font-size: 1.0625rem;
-  line-height: 1.18;
+  font: var(--font-style-nav-primary-2);
   color: var(--color-muted);
+  padding: var(--size-spacing-1) var(--size-spacing-5);
 }
 
 .primary-nav {
@@ -107,9 +91,6 @@
       padding: var(--size-spacing-7) var(--size-spacing-site-gutter);
       border: var(--border-thickness-1) solid var(--color-navigation-border);
       border-bottom-width: var(--border-thickness-4);
-
-      // @TODO: This calculation should maybe subtract a "site-gutter-spacing"
-      // value or something in case the site gutters get adjusted later.
       width: calc(100vw - calc(var(--size-spacing-site-gutter) * 2));
       max-width: var(--size-component-layout-width-max);
       column-count: 4;
