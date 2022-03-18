@@ -6,9 +6,37 @@ Drupal.behaviors.menuToggle = {
     const headerOverlay = context.querySelector('.site-header__overlay');
     const body = context.querySelector('body');
     const main = context.querySelector('.main');
+    const focusableElements =
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     // Classes.
     const frozen = 'frozen';
     const mainMenuState = 'data-main-menu-state';
+
+    // Function to trap focus when mobile menu is expanded.
+    function trapKeyboard(menu) {
+      const focusableMenuElements = menu.querySelectorAll(focusableElements);
+      const firstFocusableElement = focusableMenuElements[0];
+      const lastFocusableElement =
+        focusableMenuElements[focusableMenuElements.length - 1];
+
+      menu.addEventListener('keydown', (e) => {
+        const isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+
+        if (!isTabPressed) {
+          return;
+        }
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstFocusableElement) {
+            e.preventDefault();
+            lastFocusableElement.focus();
+          }
+        } else if (document.activeElement === lastFocusableElement) {
+          e.preventDefault();
+          firstFocusableElement.focus();
+        }
+      });
+    }
 
     // Function to toggle "background" content scrolling when the mobile
     // navigation is open.
@@ -50,6 +78,7 @@ Drupal.behaviors.menuToggle = {
     // Show/Hide menu on toggle click.
     menuToggle.addEventListener('click', () => {
       toggleMenuState(header, mainMenuState);
+      trapKeyboard(header);
     });
 
     // Hide menu on escape key press.
