@@ -88,10 +88,12 @@ Drupal.behaviors.menuToggle = {
     }
 
     // Show/Hide menu on toggle click.
-    menuToggle.addEventListener('click', () => {
-      toggleMenuState(header, mainMenuState);
-      trapKeyboard(header);
-    });
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        toggleMenuState(header, mainMenuState);
+        trapKeyboard(header);
+      });
+    }
 
     // Hide menu on escape key press.
     document.addEventListener('keyup', (e) => {
@@ -104,9 +106,11 @@ Drupal.behaviors.menuToggle = {
     });
 
     // Hide menu on overlay click.
-    headerOverlay.addEventListener('click', () => {
-      toggleMenuState(header, mainMenuState);
-    });
+    if (headerOverlay) {
+      headerOverlay.addEventListener('click', () => {
+        toggleMenuState(header, mainMenuState);
+      });
+    }
 
     // Enable scrolling when the window is sized up to "desktop" size.
     mediaQueryList.addEventListener('change', (e) => {

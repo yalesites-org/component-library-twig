@@ -6,9 +6,11 @@ Drupal.behaviors.breadcrumbs = {
 
     // Function to add/remove breadcrumbs-overflow value.
     // Used to show all breadcrumbs on mobile
-    breadcrumbsButton.addEventListener('click', () => {
-      breadcrumbsWrapper.setAttribute('data-breadcrumbs-overflow', 'visible');
-      breadcrumbsButton.setAttribute('aria-expanded', 'true');
-    });
+    if (breadcrumbsButton) {
+      breadcrumbsButton.addEventListener('click', () => {
+        breadcrumbsWrapper.setAttribute('data-breadcrumbs-overflow', 'visible');
+        breadcrumbsButton.setAttribute('aria-expanded', 'true');
+      });
+    }
   },
 };
