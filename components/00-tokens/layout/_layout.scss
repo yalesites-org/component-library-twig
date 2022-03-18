@@ -18,3 +18,7 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
     }
   }
 }
+
+body.frozen {
+  overflow: hidden;
+}

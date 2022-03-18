@@ -1,9 +1,30 @@
 Drupal.behaviors.menuToggle = {
   attach(context) {
-    // Selectors
+    // Selectors.
     const menuToggle = context.querySelector('.menu-toggle');
     const header = context.querySelector('.site-header');
     const headerOverlay = context.querySelector('.site-header__overlay');
+    const body = context.querySelector('body');
+    const main = context.querySelector('.main');
+    // Classes.
+    const frozen = 'frozen';
+    const mainMenuState = 'data-main-menu-state';
+
+    // Function to toggle "background" content scrolling when the mobile
+    // navigation is open.
+    function toggleBgScroll(state) {
+      if (state === 'open') {
+        // Disable scrolling of "background" content.
+        body.classList.add(frozen);
+        // Get the header height
+        const headerHeight =
+          header.offsetHeight + header.getBoundingClientRect().top;
+        main.style.paddingTop = `${headerHeight}px`;
+      } else {
+        body.classList.remove(frozen);
+        main.style.paddingTop = '';
+      }
+    }
 
     // Function to toggle the open/closed state of the main menu.
     function toggleMenuState(target, attribute) {
@@ -17,26 +38,29 @@ Drupal.behaviors.menuToggle = {
 
       // Set the button aria properties.
       menuToggle.setAttribute('aria-expanded', ariaButtonState);
+
+      // Set the Bg scroll state.
+      toggleBgScroll(menuState);
     }
 
     // Show/Hide menu on toggle click.
     menuToggle.addEventListener('click', () => {
-      toggleMenuState(header, 'data-main-menu-state');
+      toggleMenuState(header, mainMenuState);
     });
 
     // Hide menu on escape key press.
     document.addEventListener('keyup', (e) => {
       if (e.key === 'Escape') {
-        if (header.getAttribute('data-main-menu-state') === 'open') {
+        if (header.getAttribute(mainMenuState) === 'open') {
           // Close the main menu if open.
-          toggleMenuState(header, 'data-main-menu-state');
+          toggleMenuState(header, mainMenuState);
         }
       }
     });
 
     // Hide menu on overlay click.
     headerOverlay.addEventListener('click', () => {
-      toggleMenuState(header, 'data-main-menu-state');
+      toggleMenuState(header, mainMenuState);
     });
   },
 };

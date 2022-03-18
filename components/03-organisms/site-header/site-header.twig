@@ -77,6 +77,9 @@
       {% include "@molecules/menu/menu-toggle/menu-toggle.twig" %}
     </div>
     <div {{ bem('menu-wrapper', [], site_header__base_class) }}>
+      {# @TODO: Refactor this so that the primary nav is only printed once. And
+       # the secondary nav is printed twice. That'll keep the "state" of
+       # expanded menu items "in sync" between mobile and desktop. #}
       {# Desktop Menu Structure #}
       <div {{ bem('menu-inner', ['desktop'], site_header__base_class) }}>
         {{ site_header__secondary }}
