@@ -1,6 +1,10 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
 
+.accordion {
+  margin-bottom: var(--spacing-page-inner);
+}
+
 .accordion-item {
   border-bottom: var(--border-thickness-1) solid;
   padding-block: var(--size-spacing-5);
