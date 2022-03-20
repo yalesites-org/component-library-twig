@@ -1,8 +1,13 @@
+@use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
 
 .accordion-item {
   border-bottom: var(--border-thickness-1) solid;
   padding-block: var(--size-spacing-5);
+}
+
+.accordion-item__heading {
+  @include tokens.body-l;
 }
 
 .accordion-item__expand {
@@ -13,6 +18,7 @@
   justify-content: space-between;
   width: 100%;
   padding-right: var(--size-spacing-4);
+  text-align: left;
 
   &[aria-expanded='true'] {
     margin-bottom: var(--size-spacing-5);
@@ -23,4 +29,8 @@
       transform: rotate(180deg);
     }
   }
+}
+
+.accordion-item__content {
+  // padding-inline: var(--size-spacing-11);
 }
