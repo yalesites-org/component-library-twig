@@ -1,0 +1,28 @@
+{% set accordion__item__base_class = 'accordion-item' %}
+
+{% set accordion__item__button__content %}
+  {{ accordion__item__heading }}
+  {# @TODO: add the caret icon here once we have icons #}
+  {# @LINK: https://yaleits.atlassian.net/browse/YALB-69 #}
+  <span>^</span>
+{% endset %}
+
+{% set accordion__item__heading__content %}
+  {% include "@atoms/buttons/button.twig" with {
+    button__content: accordion__item__button__content,
+    button__base_class: 'expand',
+    button__blockname: accordion__item__base_class,
+    aria_expanded: false,
+  } %}
+{% endset %}
+
+<div {{ bem(accordion__item__base_class) }}>
+  {% include "@atoms/typography/headings/heading.twig" with {
+    heading__level: '3',
+    heading__blockname: accordion__item__base_class,
+    heading: accordion__item__heading__content,
+  } %}
+  <div {{ bem('content', [], accordion__item__base_class) }}>
+    {{ accordion__item__content }}
+  </div>
+</div>

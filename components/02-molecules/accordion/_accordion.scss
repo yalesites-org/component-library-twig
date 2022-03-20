@@ -1,0 +1,26 @@
+@use '../../01-atoms/atoms';
+
+.accordion-item {
+  border-bottom: var(--border-thickness-1) solid;
+  padding-block: var(--size-spacing-5);
+}
+
+.accordion-item__expand {
+  @include atoms.button-reset;
+
+  display: flex;
+  gap: var(--size-spacing-5);
+  justify-content: space-between;
+  width: 100%;
+  padding-right: var(--size-spacing-4);
+
+  &[aria-expanded='true'] {
+    margin-bottom: var(--size-spacing-5);
+
+    // @TODO: Temporary until the icons are implemented.
+    // @LINK: https://yaleits.atlassian.net/browse/YALB-69
+    & > span {
+      transform: rotate(180deg);
+    }
+  }
+}
