@@ -5,6 +5,19 @@
   margin-bottom: var(--spacing-page-inner);
 }
 
+.accordion__controls {
+  @include atoms.list-reset;
+  @include tokens.body-s;
+
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--size-spacing-7);
+}
+
+.accordion__toggle-all {
+  all: inherit;
+}
+
 .accordion-item {
   border-bottom: var(--border-thickness-1) solid;
   padding-block: var(--size-spacing-5);
@@ -20,6 +33,7 @@
   display: flex;
   gap: var(--size-spacing-5);
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   padding-right: var(--size-spacing-4);
   text-align: left;

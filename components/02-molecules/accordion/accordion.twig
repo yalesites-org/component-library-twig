@@ -2,6 +2,31 @@
 
 <div {{ bem(accordion__base_class) }} data-component-width="max">
   <div {{ bem('inner', [], accordion__base_class) }}>
+    {% include "@atoms/typography/headings/heading.twig" with {
+      heading__level: '3',
+      heading__blockname: accordion__base_class,
+      heading: accordion__heading,
+    } %}
+    {% embed "@atoms/lists/list.twig" with {
+      list__base_class: 'controls',
+      list__blockname: accordion__base_class,
+      list__attributes: {'aria-labels': 'Section controls'},
+    } %}
+      {% block list__content %}
+        {% include "@atoms/buttons/button.twig" with {
+          button__content: 'Expand all',
+          button__base_class: 'toggle-all',
+          button__modifiers: ['expand'],
+          button__blockname: accordion__base_class,
+        } %}
+        {% include "@atoms/buttons/button.twig" with {
+          button__content: 'Collapse all',
+          button__base_class: 'toggle-all',
+          button__modifiers: ['collapse'],
+          button__blockname: accordion__base_class,
+        } %}
+      {% endblock %}
+    {% endembed %}
     {% for item in accordion__items %}
       {% include "@molecules/accordion/_accordion-item.twig" with {
         accordion__item__heading: item.accordion__item__heading,
