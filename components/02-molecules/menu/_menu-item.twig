@@ -45,7 +45,12 @@
 {% set menu_item__button__content %}
   {# @TODO: update this "icon" to an actual icon when we have them. #}
   {# @lINK: https://yaleits.atlassian.net/browse/YALB-69 #}
-  {{ item.title }}<span {{ bem('toggle-icon', [], item__blockname) }}>^</span>
+  {{ item.title }}
+  {% include "@atoms/images/icons/_icon.twig" with {
+    icon__name: 'angle-down',
+    icon__base_class: 'toggle-icon',
+    icon__blockname: item__blockname,
+  } %}
 {% endset %}
 
 {% embed "@atoms/lists/_list-item.twig" with {
