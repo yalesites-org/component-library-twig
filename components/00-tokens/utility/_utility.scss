@@ -10,3 +10,12 @@
 .visually-hidden {
   @include visually-hidden;
 }
+
+@mixin focus {
+  outline: var(--size-thickness-2) solid var(--link-color-base);
+  outline-offset: var(--size-thickness-2);
+}
+
+*:focus {
+  @include focus;
+}
