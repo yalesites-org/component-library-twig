@@ -3,3 +3,6 @@ node_modules
 
 # Storybook build directory
 .out
+
+# Webpack build directory
+dist
