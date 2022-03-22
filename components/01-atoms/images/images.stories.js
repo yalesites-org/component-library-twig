@@ -14,8 +14,6 @@ svgIcons.keys().forEach((key) => {
   icons.push(icon);
 });
 
-console.log(icons);
-
 /**
  * Storybook Definition.
  */

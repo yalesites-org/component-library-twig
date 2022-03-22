@@ -34,18 +34,18 @@ module.exports = {
   ),
   module: {
     rules: [
-      //       loaders.CSSLoader,
+      loaders.CSSLoader,
       loaders.SVGSpriteLoader,
-      //       loaders.ImageLoader,
-      //       loaders.JSLoader,
+      loaders.ImageLoader,
+      loaders.JSLoader,
     ],
   },
   plugins: [
-    //     plugins.MiniCssExtractPlugin,
-    //     plugins.ImageminPlugin,
+    plugins.MiniCssExtractPlugin,
+    plugins.ImageminPlugin,
     plugins.SpriteLoaderPlugin,
-    //     plugins.ProgressPlugin,
-    //     plugins.CleanWebpackPlugin,
+    plugins.ProgressPlugin,
+    plugins.CleanWebpackPlugin,
   ],
   output: {
     path: distDir,
