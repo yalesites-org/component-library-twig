@@ -10,6 +10,15 @@ import './primary-nav';
 /**
  * Storybook Definition.
  */
-export default { title: 'Organisms/Menu/Primary Nav' };
+export default {
+  title: 'Organisms/Menu/Primary Nav',
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
 
-export const PrimaryNav = () => primaryNavTwig(primaryNavData);
+export const PrimaryNav = () => `
+  <div style="position: relative; padding-top: var(--size-spacing-site-gutter);" data-site-header-nav-position='left' data-component-width="max">
+    ${primaryNavTwig(primaryNavData)}
+  </div>
+`;
