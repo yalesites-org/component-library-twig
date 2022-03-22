@@ -39,14 +39,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       # Sets the branch name as environment variable.
-      - uses: nelonoel/branch-name@v1
+      - shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       # Deploys to Netlify.
       - uses: jsmrcaga/action-netlify-deploy@master
         with:
           node-version: 16.13
           NETLIFY_AUTH_TOKEN: ${{ secrets.YALESITES_BUILD_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          deploy_alias: ${{ env.BRANCH_NAME }}
+          deploy_alias: ${{ env.steps.extract_branch.outputs.branch }}
       # Creates a status check with link to preview.
       - name: Status check
         uses: Sibz/github-status-action@v1
@@ -54,4 +56,4 @@ jobs:
           authToken: ${{ secrets.GITHUB_TOKEN }}
           context: Netlify preview
           state: success
-          target_url: https://${{ env.BRANCH_NAME }}--dev-component-library-twig.netlify.app
+          target_url: https://${{ env.steps.extract_branch.outputs.branch }}--dev-component-library-twig.netlify.app
