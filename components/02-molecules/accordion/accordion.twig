@@ -1,6 +1,6 @@
 {% set accordion__base_class = 'accordion' %}
 
-<div {{ bem(accordion__base_class) }} data-component-width="max">
+<div {{ bem(accordion__base_class) }} data-component-width="content">
   <div {{ bem('inner', [], accordion__base_class) }}>
     {% include "@atoms/typography/headings/heading.twig" with {
       heading__level: '3',
