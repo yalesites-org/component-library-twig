@@ -158,6 +158,7 @@
   @include atoms.button-reset;
 
   display: flex;
+  align-items: center;
   width: 100%;
   gap: var(--size-spacing-3);
 
@@ -171,6 +172,9 @@
 }
 
 .primary-nav__toggle-icon {
+  height: 1em;
+  width: 1em;
+
   .primary-nav__toggle[aria-expanded='true'] > & {
     transform: rotate(180deg);
   }
