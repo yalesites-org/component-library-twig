@@ -8,7 +8,7 @@
     "husky:commit-msg": "commitlint --edit $1",
     "husky:pre-commit": "lint-staged",
     "lint": "npm run lint:js; npm run lint:styles",
-    "lint:js": "eslint webpack components",
+    "lint:js": "eslint components",
     "lint:styles": "stylelint 'components/**/*.scss'",
     "postinstall": "npx patch-package",
     "prepare": "husky install",
@@ -67,7 +67,7 @@
     "components/**/*.scss": [
       "npm run lint:styles -- --fix"
     ],
-    "{components/**/*.js,webpack/*.js}": [
+    "components/**/*.js": [
       "npm run lint:js -- --fix"
     ],
     "components/**/*.{js,scss,php}": [
