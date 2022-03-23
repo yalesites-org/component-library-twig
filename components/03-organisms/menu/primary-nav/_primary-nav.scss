@@ -137,6 +137,10 @@
     outline-offset: -2px;
   }
 
+  &:hover {
+    color: var(--color-link);
+  }
+
   &--level-0 {
     @include primary-nav-item-level-0;
 
@@ -164,6 +168,10 @@
 
   &:focus-visible {
     outline-offset: -2px;
+  }
+
+  &:hover {
+    color: var(--color-link);
   }
 
   &--level-0 {
