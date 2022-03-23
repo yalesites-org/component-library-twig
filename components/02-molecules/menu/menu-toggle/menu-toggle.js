@@ -3,6 +3,7 @@ Drupal.behaviors.menuToggle = {
     // Selectors.
     const menuToggle = context.querySelector('.menu-toggle');
     const header = context.querySelector('.site-header');
+    const headerMobile = context.querySelector('.site-header__menu-wrapper');
     const headerOverlay = context.querySelector('.site-header__overlay');
     const body = context.querySelector('body');
     const main = context.querySelector('.main');
@@ -87,11 +88,20 @@ Drupal.behaviors.menuToggle = {
       toggleBgScroll(newMenuState);
     }
 
+    // Function to set the max-height of the mobile menu so it always fits in
+    // the browser window, and scrolls if necessary.
+    function setMobileMenuHeight() {
+      const headerHeight =
+        header.offsetHeight + header.getBoundingClientRect().top;
+      headerMobile.style.maxHeight = `calc(100vh - ${headerHeight}px)`;
+    }
+
     // Show/Hide menu on toggle click.
     if (menuToggle) {
       menuToggle.addEventListener('click', () => {
         toggleMenuState(header, mainMenuState);
         trapKeyboard(header);
+        setMobileMenuHeight();
       });
     }
 

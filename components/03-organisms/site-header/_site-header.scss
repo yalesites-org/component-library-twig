@@ -17,6 +17,9 @@ $site-header-animation-speed: 800ms;
   // prettier-ignore
   --site-header-border-bottom: var(--site-header-border-thickness) solid var(--color-site-header-border-color);
 
+  // prettier-ignore
+  --site-header-mobile-border-bottom: var(--site-header-mobile-border-thickness, var(--site-header-border-thickness)) solid var(--color-site-header-border-color);
+
   position: relative;
   z-index: 2;
   border-bottom: var(--site-header-border-bottom);
@@ -42,10 +45,19 @@ $site-header-animation-speed: 800ms;
   @each $thickness, $value in $site-header-border-thickness {
     &[data-site-header-border-thickness='#{$thickness}'] {
       --site-header-border-thickness: var(--border-thickness-#{$thickness});
+
+      @if $thickness == '0' {
+        // prettier-ignore
+        --site-header-mobile-border-thickness: var(--border-thickness-hairline);
+      } @else if $thickness == '8' or $thickness == '6' {
+        --site-header-mobile-border-thickness: var(--border-thickness-4);
+      }
     }
   }
 
   @media (max-width: tokens.$break-mobile-max) {
+    // prettier-ignore
+    // --site-header-border-thickness: min(var(--border-thickness-4), var(--site-header-border-thickness)) !important;
     padding: 0;
 
     &[data-main-menu-state='open'] {
@@ -83,7 +95,7 @@ $site-header-animation-speed: 800ms;
     background: var(--color-background);
     width: 100vw;
     overflow: auto;
-    border-bottom: var(--site-header-border-bottom);
+    border-bottom: var(--site-header-mobile-border-bottom);
     transform: translateY(0%);
 
     [data-main-menu-state='closed'] & {
@@ -137,7 +149,7 @@ $site-header-animation-speed: 800ms;
 
   @media (max-width: tokens.$break-mobile-max) {
     padding: var(--size-spacing-6) var(--size-spacing-site-gutter);
-    border-top: var(--site-header-border-bottom);
+    border-top: var(--site-header-mobile-border-bottom);
   }
 
   @media (min-width: tokens.$break-mobile) {
@@ -233,8 +245,9 @@ $site-header-animation-speed: 800ms;
 
   // The animate mixin doesn't support multiple transitions.
   @media (prefers-reduced-motion: no-preference) {
-    transition: opacity $site-header-animation-speed,
-      height 0ms ease-out $site-header-animation-speed;
+    transition: opacity calc($site-header-animation-speed / 2) ease-in-out
+        calc($site-header-animation-speed / 2),
+      height 0ms ease-in-out $site-header-animation-speed;
   }
 
   @media (max-width: tokens.$break-mobile-max) {

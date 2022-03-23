@@ -60,7 +60,7 @@
   gap: var(--size-spacing-3);
 
   &:focus-within {
-    @include tokens.focus;
+    @include tokens.focus-styles;
   }
 
   input {
@@ -85,7 +85,7 @@
       }
     }
 
-    &:focus {
+    &:focus-visible {
       outline: none;
 
       &::placeholder {
