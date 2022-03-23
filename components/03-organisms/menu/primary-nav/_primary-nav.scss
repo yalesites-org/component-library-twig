@@ -133,7 +133,7 @@
   display: block;
   text-decoration: none;
 
-  &:focus {
+  &:focus-visible {
     outline-offset: -2px;
   }
 
@@ -162,7 +162,7 @@
   width: 100%;
   gap: var(--size-spacing-3);
 
-  &:focus {
+  &:focus-visible {
     outline-offset: -2px;
   }
 
