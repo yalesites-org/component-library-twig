@@ -122,10 +122,16 @@
   }
 
   &--level-1 {
+    margin-bottom: var(--size-spacing-3);
+
     @media (min-width: tokens.$break-mobile) {
       display: block;
       break-inside: avoid-column;
     }
+  }
+
+  &--level-2 {
+    margin-bottom: var(--size-spacing-5);
   }
 }
 
@@ -180,6 +186,8 @@
 }
 
 .primary-nav__toggle-icon {
+  @include tokens.animate;
+
   height: 1em;
   width: 1em;
 
