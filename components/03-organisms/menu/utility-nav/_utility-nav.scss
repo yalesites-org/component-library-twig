@@ -17,44 +17,6 @@
 
     flex-direction: column;
   }
-
-  input {
-    // @TODO: Temporary styles until the search is 'officially' created
-    background: transparent;
-    border: none;
-    color: inherit;
-    min-height: var(--size-click-target-minimum);
-
-    &::placeholder {
-      color: inherit;
-      font-weight: var(--font-weights-mallory-500);
-
-      @media (max-width: tokens.$break-mobile-max) {
-        text-align: center;
-      }
-    }
-
-    &:hover {
-      &::placeholder {
-        color: var(--link-color-hover);
-      }
-    }
-
-    &:focus {
-      &::placeholder {
-        color: var(--color-gray-300);
-        font-style: italic;
-        font-weight: var(--font-weights-mallory-400);
-      }
-    }
-
-    @media (max-width: tokens.$break-mobile-max) {
-      border: var(--border-thickness-2) solid;
-      align-self: center;
-      width: 25rem;
-      max-width: 100%;
-    }
-  }
 }
 
 .utility-nav {
@@ -88,4 +50,63 @@
     width: 25rem;
     max-width: 100%;
   }
+}
+
+// @TODO: Temporary styles until the search is 'officially' created
+// @LINK: https://yaleits.atlassian.net/browse/YALB-424.
+.utility-nav__search {
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-3);
+
+  &:focus-within {
+    @include tokens.focus;
+  }
+
+  input {
+    background: transparent;
+    border: none;
+    color: inherit;
+    min-height: var(--size-click-target-minimum);
+    width: 7rem;
+
+    &::placeholder {
+      color: inherit;
+      font-weight: var(--font-weights-mallory-500);
+
+      @media (max-width: tokens.$break-mobile-max) {
+        text-align: center;
+      }
+    }
+
+    &:hover {
+      &::placeholder {
+        color: var(--link-color-hover);
+      }
+    }
+
+    &:focus {
+      outline: none;
+
+      &::placeholder {
+        color: var(--color-gray-300);
+        font-style: italic;
+        font-weight: var(--font-weights-mallory-400);
+      }
+    }
+
+    @media (max-width: tokens.$break-mobile-max) {
+      border: var(--border-thickness-2) solid;
+      align-self: center;
+      width: 25rem;
+      max-width: 100%;
+    }
+  }
+}
+
+// @TODO: Probably temporary? We'll see how the search plays out.
+// @LINK: https://yaleits.atlassian.net/browse/YALB-424.
+.utility-nav__icon--search {
+  height: 1rem;
+  width: 1rem;
 }
