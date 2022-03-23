@@ -233,8 +233,9 @@ $site-header-animation-speed: 800ms;
 
   // The animate mixin doesn't support multiple transitions.
   @media (prefers-reduced-motion: no-preference) {
-    transition: opacity $site-header-animation-speed,
-      height 0ms ease-out $site-header-animation-speed;
+    transition: opacity calc($site-header-animation-speed / 2) ease-in-out
+        calc($site-header-animation-speed / 2),
+      height 0ms ease-in-out $site-header-animation-speed;
   }
 
   @media (max-width: tokens.$break-mobile-max) {
