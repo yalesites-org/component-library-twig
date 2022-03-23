@@ -10,7 +10,7 @@
     {% embed "@atoms/lists/list.twig" with {
       list__base_class: 'controls',
       list__blockname: accordion__base_class,
-      list__attributes: {'aria-labels': 'Section controls'},
+      list__attributes: {'aria-label': 'Section controls'},
     } %}
       {% block list__content %}
         {% include "@atoms/buttons/button.twig" with {
