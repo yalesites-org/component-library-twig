@@ -93,7 +93,7 @@
       border-bottom-width: var(--border-thickness-4);
       width: calc(100vw - calc(var(--size-spacing-site-gutter) * 2));
       max-width: var(--size-component-layout-width-max);
-      column-count: 4;
+      column-count: 3;
 
       [data-site-header-nav-position='right'] & {
         right: 0;
@@ -106,6 +106,10 @@
       [data-site-header-nav-position='center'] & {
         left: 0;
       }
+    }
+
+    @media (min-width: tokens.$break-2xl) {
+      column-count: 4;
     }
   }
 
