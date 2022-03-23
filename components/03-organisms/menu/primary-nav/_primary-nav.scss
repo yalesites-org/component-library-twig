@@ -19,7 +19,7 @@
 
   @media (max-width: tokens.$break-mobile-max) {
     padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2);
-    margin-bottom: var(--size-spacing-4);
+    margin-block: var(--size-spacing-3);
   }
 
   @media (min-width: tokens.$break-mobile) {
