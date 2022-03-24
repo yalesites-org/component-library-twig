@@ -1,1 +1,14 @@
+@use '../00-tokens/tokens';
 @forward './placeholder/placeholder';
+
+body[data-body-frozen] {
+  @media (max-width: tokens.$break-mobile-max) {
+    overflow: hidden;
+  }
+}
+
+.main {
+  [data-body-frozen] & {
+    padding-top: var(--header-height-mobile);
+  }
+}
