@@ -3,18 +3,12 @@ Drupal.behaviors.menuToggle = {
     // Selectors.
     const menuToggle = context.querySelector('.menu-toggle');
     const header = context.querySelector('.site-header');
-    const headerMobile = context.querySelector('.site-header__menu-wrapper');
     const headerOverlay = context.querySelector('.site-header__overlay');
     const body = context.querySelector('body');
-    const main = context.querySelector('.main');
     const focusableElements =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     // Classes.
-    const frozen = 'frozen';
     const mainMenuState = 'data-main-menu-state';
-    // Utilities.
-    const mediaQuery = '(min-width: 992px)';
-    const mediaQueryList = window.matchMedia(mediaQuery);
 
     // Function to trap focus when mobile menu is expanded.
     function trapKeyboard(menu) {
@@ -42,35 +36,6 @@ Drupal.behaviors.menuToggle = {
       });
     }
 
-    // Function to disable scrolling of "background" content.
-    function disablePageScrolling() {
-      body.classList.add(frozen);
-      // Get the header height
-      const headerHeight =
-        header.offsetHeight + header.getBoundingClientRect().top;
-      // Set a padding-top on the main element to accommodate for the "fixed"
-      // header when it is taken out of the flow of content.
-      main.style.paddingTop = `${headerHeight}px`;
-    }
-
-    // Function to enable scrolling of "background" content.
-    function enablePageScrolling() {
-      // Enable scrolling of page content.
-      body.classList.remove(frozen);
-      // Reset css values.
-      main.style.paddingTop = '';
-    }
-
-    // Function to toggle "background" content scrolling when the mobile
-    // navigation is open.
-    function toggleBgScroll(state) {
-      if (state === 'open') {
-        disablePageScrolling();
-      } else {
-        enablePageScrolling();
-      }
-    }
-
     // Function to toggle the open/closed state of the main menu.
     function toggleMenuState(target, attribute) {
       const newMenuState =
@@ -85,15 +50,18 @@ Drupal.behaviors.menuToggle = {
       menuToggle.setAttribute('aria-expanded', ariaButtonState);
 
       // Set the Bg scroll state.
-      toggleBgScroll(newMenuState);
-    }
-
-    // Function to set the max-height of the mobile menu so it always fits in
-    // the browser window, and scrolls if necessary.
-    function setMobileMenuHeight() {
-      const headerHeight =
-        header.offsetHeight + header.getBoundingClientRect().top;
-      headerMobile.style.maxHeight = `calc(100vh - ${headerHeight}px)`;
+      if (newMenuState === 'open') {
+        // Disable scrolling of "background" content.
+        body.setAttribute('data-body-frozen', '');
+        // Set mobile header height for expanded menu sizing.
+        body.style.setProperty(
+          '--header-height-mobile',
+          `${header.offsetHeight + header.getBoundingClientRect().top}px`,
+        );
+      } else {
+        // Enable scrolling of "background" content.
+        body.removeAttribute('data-body-frozen');
+      }
     }
 
     // Show/Hide menu on toggle click.
@@ -101,7 +69,6 @@ Drupal.behaviors.menuToggle = {
       menuToggle.addEventListener('click', () => {
         toggleMenuState(header, mainMenuState);
         trapKeyboard(header);
-        setMobileMenuHeight();
       });
     }
 
@@ -121,15 +88,5 @@ Drupal.behaviors.menuToggle = {
         toggleMenuState(header, mainMenuState);
       });
     }
-
-    // Enable scrolling when the window is sized up to "desktop" size.
-    mediaQueryList.addEventListener('change', (e) => {
-      if (e.matches) {
-        enablePageScrolling();
-      } else {
-        const currentMenuState = header.getAttribute(mainMenuState);
-        toggleBgScroll(currentMenuState);
-      }
-    });
   },
 };

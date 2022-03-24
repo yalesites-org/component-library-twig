@@ -23,6 +23,8 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
   }
 }
 
-body.frozen {
-  overflow: hidden;
+@mixin spacing-page-inner {
+  &:not(.no-page-spacing) {
+    margin-bottom: var(--spacing-page-inner);
+  }
 }

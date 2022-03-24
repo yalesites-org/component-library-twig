@@ -1,3 +1,5 @@
+@use '../../00-tokens/tokens';
+
 .content-image {
-  margin-bottom: var(--spacing-page-inner);
+  @include tokens.spacing-page-inner;
 }
