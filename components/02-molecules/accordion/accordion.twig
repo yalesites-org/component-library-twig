@@ -1,5 +1,21 @@
 {% set accordion__base_class = 'accordion' %}
 
+{% set expand_all__content %}
+  Expand All
+  {% include "@atoms/images/icons/_icon.twig" with {
+    icon__name: 'angle-down',
+    icon__blockname: accordion__base_class,
+  } %}
+{% endset %}
+
+{% set collapse_all__content %}
+  Collapse All
+  {% include "@atoms/images/icons/_icon.twig" with {
+    icon__name: 'angle-down',
+    icon__blockname: accordion__base_class,
+  } %}
+{% endset %}
+
 <div {{ bem(accordion__base_class) }} data-component-width="content">
   <div {{ bem('inner', [], accordion__base_class) }}>
     {% include "@atoms/typography/headings/heading.twig" with {
@@ -14,13 +30,13 @@
     } %}
       {% block list__content %}
         {% include "@atoms/buttons/button.twig" with {
-          button__content: 'Expand all',
+          button__content: expand_all__content,
           button__base_class: 'toggle-all',
           button__modifiers: ['expand'],
           button__blockname: accordion__base_class,
         } %}
         {% include "@atoms/buttons/button.twig" with {
-          button__content: 'Collapse all',
+          button__content: collapse_all__content,
           button__base_class: 'toggle-all',
           button__modifiers: ['collapse'],
           button__blockname: accordion__base_class,

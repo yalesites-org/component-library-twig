@@ -16,6 +16,8 @@
 
 .accordion__toggle-all {
   all: inherit;
+  gap: var(--size-spacing-3);
+  align-items: center;
 
   // This is required because `all: inherit` removes our generic focus styles.
   &:focus {
@@ -24,6 +26,15 @@
 
   &:hover {
     color: var(--color-link);
+  }
+}
+
+.accordion__icon {
+  height: 1em;
+  width: 1em;
+
+  .accordion__toggle-all--collapse & {
+    transform: rotate(180deg);
   }
 }
 
