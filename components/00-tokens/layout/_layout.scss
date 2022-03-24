@@ -18,3 +18,9 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
     }
   }
 }
+
+@mixin spacing-page-inner {
+  &:not(.no-page-spacing) {
+    margin-bottom: var(--spacing-page-inner);
+  }
+}
