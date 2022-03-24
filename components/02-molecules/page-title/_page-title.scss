@@ -1,7 +1,7 @@
 @use '../../00-tokens/tokens';
 
 .page-title {
-  margin-bottom: var(--spacing-page-inner);
+  @include tokens.spacing-page-inner;
 }
 
 .page-title__heading {
