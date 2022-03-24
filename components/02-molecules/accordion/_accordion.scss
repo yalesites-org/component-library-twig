@@ -4,6 +4,7 @@
 // The accordion group.
 .accordion {
   margin-bottom: var(--spacing-page-inner);
+  padding-block: var(--size-spacing-6);
 }
 
 .accordion__controls {
@@ -11,11 +12,18 @@
   @include tokens.body-s;
 
   display: flex;
-  gap: var(--size-spacing-7);
+  margin-bottom: var(--size-spacing-5);
+
+  > *:not(:last-child) {
+    padding-right: var(--size-spacing-5);
+    margin-right: var(--size-spacing-5);
+    border-right: var(--border-thickness-1) solid;
+  }
 }
 
 .accordion__toggle-all {
   all: inherit;
+  margin-bottom: 0;
   gap: var(--size-spacing-3);
   align-items: center;
 
