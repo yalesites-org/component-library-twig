@@ -56,7 +56,7 @@
   @include tokens.body-l;
 }
 
-.accordion-item__expand {
+.accordion-item__toggle {
   @include atoms.button-reset;
 
   display: flex;
@@ -82,7 +82,9 @@
 }
 
 .accordion-item__content {
-  margin-block: var(--size-spacing-6) var(--size-spacing-5);
+  @include tokens.animate(max-height, var(--site-header-animation-speed));
+
+  overflow: hidden;
 
   @media (max-width: tokens.$break-mobile-max) {
     padding-inline: var(--size-spacing-6);
@@ -90,5 +92,15 @@
 
   @media (min-width: tokens.$break-mobile) {
     padding-inline: var(--size-spacing-8);
+  }
+
+  [data-accordion-expanded='true'] & {
+    margin-block: var(--size-spacing-6) var(--size-spacing-5);
+  }
+
+  [data-accordion-expanded='false'] & {
+    @include tokens.animate-hidden(var(--site-header-animation-speed));
+
+    max-height: 0;
   }
 }

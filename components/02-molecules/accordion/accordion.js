@@ -1,33 +1,43 @@
 Drupal.behaviors.accordion = {
   attach(context) {
     // Selectors
-    const accordionContent = context.querySelectorAll(
-      '.accordion-item__content',
-    );
-    const headings = context.querySelectorAll('.accordion-item__heading');
+    const items = context.querySelectorAll('.accordion-item');
     const controls = context.querySelectorAll('.accordion__controls');
+    // Classes
+    const toggleClass = '.accordion-item__toggle';
+    const itemState = 'data-accordion-expanded';
+    const buttonState = 'aria-expanded';
+
+    // Function to expand an accordion item.
+    const expand = (item) => {
+      const toggle = item.querySelector(toggleClass);
+
+      item.setAttribute(itemState, 'true');
+      toggle.setAttribute(buttonState, 'true');
+    };
+
+    // Function to collapse an accordion item.
+    const collapse = (item) => {
+      const toggle = item.querySelector(toggleClass);
+
+      item.setAttribute(itemState, 'false');
+      toggle.setAttribute(buttonState, 'false');
+    };
 
     // Hide all accordion content sections if JavaScript is enabled.
-    accordionContent.forEach((content) => {
-      content.setAttribute('hidden', '');
+    items.forEach((item) => {
+      collapse(item);
     });
 
-    // Expand accordion content when toggle is activated.
-    headings.forEach((heading) => {
-      const toggle = heading.querySelector('.accordion-item__expand');
-      const content = heading.nextElementSibling;
+    // Toggle accordion content when toggle is activated.
+    items.forEach((item) => {
+      const toggle = item.querySelector(toggleClass);
 
       toggle.addEventListener('click', () => {
-        // Set `expanded` to a boolean, equal to the value of the toggle's
-        // `aria-expanded` value.
-        const expanded = toggle.getAttribute('aria-expanded') === 'true';
-
-        // Set `aria-expanded` to the opposite of what it was.
-        toggle.setAttribute('aria-expanded', !expanded);
-        // Set `hidden` on the content section according to the original
-        // expanded value. So if expanded was true, but is now false, add the
-        // `hidden` attribute. Otherwise, remove it.
-        content.hidden = expanded;
+        // Toggle the item's state.
+        return toggle.getAttribute(buttonState) === 'true'
+          ? collapse(item)
+          : expand(item);
       });
     });
 
@@ -44,14 +54,10 @@ Drupal.behaviors.accordion = {
 
         // Iterate over
         allItems.forEach((item) => {
-          const itemContent = item.querySelector('.accordion-item__content');
-          item
-            .querySelector('.accordion-item__expand')
-            .setAttribute('aria-expanded', action);
           if (action === false) {
-            itemContent.setAttribute('hidden', '');
+            collapse(item);
           } else {
-            itemContent.removeAttribute('hidden');
+            expand(item);
           }
         });
       });
