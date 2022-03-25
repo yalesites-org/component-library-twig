@@ -1,0 +1,38 @@
+version: 2
+discovery:
+  disable-cache: true
+snapshot:
+  percy-css: |
+    img {
+      visibility: hidden;
+    }
+storybook:
+  exclude:
+    # What should be excluded?
+    # - Anything that is simply a representation of a base or "primitive" tokens
+    # should be excluded. They will be represented in the larger components that
+    # implement them anyway.
+    # - Anything where the StoryBook display is dynamic (meaning it
+    # automatically updates when new tokens are added upstream) like the colors,
+    # we don't want updates in the tokens repo to flag a regression here unless
+    # it changes an existing molecule/organism etc.
+    - 'Tokens/Breakpoints: Breakpoints'
+    - 'Tokens/Colors: Colors'
+    - 'Tokens/Effects: [a-zA-Z]+' # Effects are dynamically generated.
+    - 'Tokens/Spacing: Spacing'
+    # Type Faces/Scales are used directly and only by Heading/Body Styles. So,
+    # there isn't much need to test them in isolation.
+    - 'Tokens/Typography: \b(Type Faces|Type Scale)\b'
+    # Images are random so we're hiding them with `percy-css`. So, in isolation
+    # The only thing we'd be testing is the documentation around them.
+    # Icons are dynamically generated
+    - 'Atoms/Images: [a-zA-Z]+'
+    # The Footer and Header organisms demo all of their color options in the
+    # respective "Examples" story, so we can skip the base ones with controls.
+    - 'Organisms/Site/Footer: Footer'
+    - 'Organisms/Site/Header: Header'
+    # The Placeholder is a Storybook only component. Not worth testing.
+    - 'Page Layouts/Utility: Place Holder'
+    # The smallest vertical padding change at the top of a page causes apparent
+    # regressions throughout. So, testing full pages isn't very helpful.
+    - 'Page Examples/Page Examples: [a-zA-Z]+'
