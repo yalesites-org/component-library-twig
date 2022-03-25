@@ -18,11 +18,13 @@
 
 <div {{ bem(accordion__base_class) }} data-component-width="content">
   <div {{ bem('inner', [], accordion__base_class) }}>
-    {% include "@atoms/typography/headings/heading.twig" with {
-      heading__level: '3',
-      heading__blockname: accordion__base_class,
-      heading: accordion__heading,
-    } %}
+    {% if accordion__heading %}
+      {% include "@atoms/typography/headings/heading.twig" with {
+        heading__level: '2',
+        heading__blockname: accordion__base_class,
+        heading: accordion__heading,
+      } %}
+    {% endif %}
     {% embed "@atoms/lists/list.twig" with {
       list__base_class: 'controls',
       list__blockname: accordion__base_class,
@@ -47,6 +49,7 @@
       {% include "@molecules/accordion/_accordion-item.twig" with {
         accordion__item__heading: item.accordion__item__heading,
         accordion__item__content: item.accordion__item__content,
+        accordion__item__heading__level: accordion__heading ? '3' : '2',
       } %}
     {% endfor %}
   </div>
