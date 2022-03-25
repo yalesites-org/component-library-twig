@@ -4,21 +4,27 @@ Drupal.behaviors.accordion = {
     const items = context.querySelectorAll('.accordion-item');
     const controls = context.querySelectorAll('.accordion__controls');
     // Classes
-    const toggleClass = '.accordion-item__toggle';
+    const itemToggle = '.accordion-item__toggle';
+    const itemContent = '.accordion-item__content';
     const itemState = 'data-accordion-expanded';
     const buttonState = 'aria-expanded';
 
     // Function to expand an accordion item.
     const expand = (item) => {
-      const toggle = item.querySelector(toggleClass);
+      const toggle = item.querySelector(itemToggle);
+      const content = item.querySelector(itemContent);
 
+      content.style.setProperty(
+        '--accordion-item-height',
+        `${content.scrollHeight}px`,
+      );
       item.setAttribute(itemState, 'true');
       toggle.setAttribute(buttonState, 'true');
     };
 
     // Function to collapse an accordion item.
     const collapse = (item) => {
-      const toggle = item.querySelector(toggleClass);
+      const toggle = item.querySelector(itemToggle);
 
       item.setAttribute(itemState, 'false');
       toggle.setAttribute(buttonState, 'false');
@@ -31,7 +37,7 @@ Drupal.behaviors.accordion = {
 
     // Toggle accordion content when toggle is activated.
     items.forEach((item) => {
-      const toggle = item.querySelector(toggleClass);
+      const toggle = item.querySelector(itemToggle);
 
       toggle.addEventListener('click', () => {
         // Toggle the item's state.

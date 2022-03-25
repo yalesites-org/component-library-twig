@@ -49,11 +49,13 @@
 // Individual accordion items.
 .accordion-item {
   border-bottom: var(--border-thickness-1) solid;
-  padding-block: var(--size-spacing-5);
+  padding-top: var(--size-spacing-5);
 }
 
 .accordion-item__heading {
   @include tokens.body-l;
+
+  margin-bottom: var(--size-spacing-5);
 }
 
 .accordion-item__toggle {
@@ -73,6 +75,8 @@
 }
 
 .accordion-item__icon {
+  @include tokens.animate;
+
   height: 1em;
   width: 1em;
 
@@ -84,6 +88,7 @@
 .accordion-item__content {
   @include tokens.animate(max-height, var(--site-header-animation-speed));
 
+  max-height: var(--accordion-item-height);
   overflow: hidden;
 
   @media (max-width: tokens.$break-mobile-max) {
@@ -95,7 +100,7 @@
   }
 
   [data-accordion-expanded='true'] & {
-    margin-block: var(--size-spacing-6) var(--size-spacing-5);
+    margin-bottom: var(--size-spacing-6);
   }
 
   [data-accordion-expanded='false'] & {
