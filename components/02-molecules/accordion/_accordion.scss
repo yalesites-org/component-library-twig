@@ -9,7 +9,6 @@
 
 .accordion__controls {
   @include atoms.list-reset;
-  @include tokens.body-s;
 
   display: flex;
   margin-bottom: var(--size-spacing-5);
@@ -22,8 +21,10 @@
 }
 
 .accordion__toggle-all {
-  all: inherit;
-  margin-bottom: 0;
+  @include tokens.body-s;
+  @include atoms.button-reset;
+
+  display: flex;
   gap: var(--size-spacing-3);
   align-items: center;
 

@@ -31,18 +31,26 @@
       list__attributes: {'aria-label': 'Section controls'},
     } %}
       {% block list__content %}
-        {% include "@atoms/buttons/button.twig" with {
-          button__content: expand_all__content,
-          button__base_class: 'toggle-all',
-          button__modifiers: ['expand'],
-          button__blockname: accordion__base_class,
-        } %}
-        {% include "@atoms/buttons/button.twig" with {
-          button__content: collapse_all__content,
-          button__base_class: 'toggle-all',
-          button__modifiers: ['collapse'],
-          button__blockname: accordion__base_class,
-        } %}
+        {% embed "@atoms/lists/_list-item.twig" %}
+          {% block list__item__content %}
+            {% include "@atoms/buttons/button.twig" with {
+              button__content: expand_all__content,
+              button__base_class: 'toggle-all',
+              button__modifiers: ['expand'],
+              button__blockname: accordion__base_class,
+            } %}
+          {% endblock %}
+        {% endembed %}
+        {% embed "@atoms/lists/_list-item.twig" %}
+          {% block list__item__content %}
+            {% include "@atoms/buttons/button.twig" with {
+              button__content: collapse_all__content,
+              button__base_class: 'toggle-all',
+              button__modifiers: ['collapse'],
+              button__blockname: accordion__base_class,
+            } %}
+          {% endblock %}
+        {% endembed %}
       {% endblock %}
     {% endembed %}
     {% for item in accordion__items %}
