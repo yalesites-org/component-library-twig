@@ -9,9 +9,10 @@ $site-footer-themes: map.deep-get(tokens.$tokens, site-footer-themes);
 $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 
 .site-footer {
-  padding: var(--size-spacing-7) var(--size-spacing-8);
-  border-top: var(--site-footer-border-thickness) solid
-    var(--color-site-footer-border-color);
+  padding: var(--size-spacing-7) var(--size-spacing-site-gutter);
+
+  // prettier-ignore
+  border-top: var(--site-footer-border-thickness) solid var(--color-site-footer-border-color);
 
   // Component themes
   @each $theme, $value in $site-footer-themes {

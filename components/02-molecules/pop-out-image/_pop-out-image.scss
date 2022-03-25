@@ -1,5 +1,16 @@
 @use '../../00-tokens/tokens';
 
+.pop-out-image {
+  @include tokens.spacing-page-inner;
+
+  // Clear the float in case the next component is an image or something.
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
 .pop-out-image__inner {
   position: relative;
 }

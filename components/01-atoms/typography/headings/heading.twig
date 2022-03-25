@@ -15,7 +15,7 @@
 {% set heading__base_class = heading__base_class|default('heading') %}
 
 <h{{ heading__level }} {{ bem(heading__base_class, heading__modifiers, heading__blockname) }}>
-  {% if heading__url %}
+  {%- if heading__url %}
     {% include "@atoms/links/link.twig" with {
       link__content: heading,
       link__url: heading__url,
@@ -25,6 +25,6 @@
       link__blockname: heading__link__blockname|default(heading__base_class),
     } %}
   {% else %}
-    {{ heading }}
-  {% endif %}
+    {{- heading -}}
+  {% endif -%}
 </h{{ heading__level }}>

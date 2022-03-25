@@ -1,4 +1,4 @@
-@use '~@yalesites-org/tokens/build/scss/tokens';
+@use '../../00-tokens/tokens';
 @use '../../00-tokens/functions/map';
 
 $widths: map.deep-get(tokens.$tokens, layout, width);
@@ -6,10 +6,14 @@ $thicknesses: map.deep-get(tokens.$tokens, size, thickness);
 $positions: map.deep-get(tokens.$tokens, layout, flex-position);
 
 .divider__wrapper {
+  @include tokens.spacing-page-inner;
+}
+
+.divider__inner {
   display: flex;
 
   @each $position, $value in $positions {
-    &[data-divider-position='#{$position}'] {
+    [data-divider-position='#{$position}'] & {
       justify-content: var(--layout-flex-position-#{$position});
     }
   }
