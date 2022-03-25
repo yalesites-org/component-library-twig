@@ -8,3 +8,26 @@
     transition: #{$property} #{$duration} #{$function} #{$delay};
   }
 }
+
+// This animation is to remove hidden items from screen readers and
+// keyboard navigation, while maintaining the slow "close" effect.
+@mixin animate-hidden($speed) {
+  visibility: hidden;
+  animation: #{$speed} fade-out;
+  animation-fill-mode: forwards;
+
+  @keyframes fade-out {
+    // Start visible at 0% to avoid an occasional "flash" when closing.
+    0% {
+      visibility: visible;
+    }
+
+    99% {
+      visibility: visible;
+    }
+
+    100% {
+      visibility: hidden;
+    }
+  }
+}

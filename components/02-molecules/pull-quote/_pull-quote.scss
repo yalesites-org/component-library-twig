@@ -1,3 +1,5 @@
+@use '../../00-tokens/tokens';
+
 blockquote {
   margin: 0;
 }
@@ -6,7 +8,7 @@ blockquote {
   --color-pull-quote-quote: var(--color-gray-800);
   --color-pull-quote-attribution: var(--color-basics-brown-gray);
 
-  margin-bottom: var(--spacing-page-inner);
+  @include tokens.spacing-page-inner;
 }
 
 .pull-quote__figure {

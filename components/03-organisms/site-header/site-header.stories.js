@@ -4,6 +4,7 @@ import siteHeaderTwig from './site-header.twig';
 import siteHeaderExamples from './_site-header--examples.twig';
 
 import utilityNavData from '../menu/utility-nav/utility-nav.yml';
+import primaryNavData from '../menu/primary-nav/primary-nav.yml';
 
 import '../../02-molecules/menu/menu-toggle/menu-toggle';
 
@@ -50,6 +51,7 @@ export const Header = ({
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
     utility_nav__items: utilityNavData.items,
+    primary_nav__items: primaryNavData.items,
   });
 
 export const HeaderExamples = ({ borderThickness, primaryNavPosition }) =>
@@ -59,4 +61,5 @@ export const HeaderExamples = ({ borderThickness, primaryNavPosition }) =>
     site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
     utility_nav__items: utilityNavData.items,
+    primary_nav__items: primaryNavData.items,
   });

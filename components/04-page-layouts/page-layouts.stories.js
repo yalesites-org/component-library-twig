@@ -3,6 +3,7 @@ import argTypes from './page-args';
 import fullWidthTwig from './full-width.twig';
 
 import utilityNavData from '../03-organisms/menu/utility-nav/utility-nav.yml';
+import primaryNavData from '../03-organisms/menu/primary-nav/primary-nav.yml';
 
 /**
  * Storybook Definition.
@@ -36,4 +37,5 @@ export const fullWidth = ({
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
+    primary_nav__items: primaryNavData.items,
   });
