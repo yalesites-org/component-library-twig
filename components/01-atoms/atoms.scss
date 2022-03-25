@@ -1,7 +1,7 @@
 @forward './buttons/buttons' as button-*;
 @forward './divider/divider';
 @forward './images/icons/icons';
-@forward './images/image//image';
+@forward './images/image/image';
 @forward './links/link';
-@forward './lists/list';
+@forward './lists/list' as list-*;
 @forward './typography/headings/headings';
