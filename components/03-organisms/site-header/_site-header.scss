@@ -5,7 +5,10 @@
 $site-header-themes: map.deep-get(tokens.$tokens, site-header-themes);
 $site-header-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
-$site-header-animation-speed: 800ms;
+
+:root {
+  --site-header-animation-speed: 800ms;
+}
 
 // Mixin for the small branding typography.
 @mixin branding-small {
@@ -22,7 +25,6 @@ $site-header-animation-speed: 800ms;
 
   position: relative;
   z-index: 2;
-  border-bottom: var(--site-header-border-bottom);
 
   // Component themes
   @each $theme, $value in $site-header-themes {
@@ -56,9 +58,11 @@ $site-header-animation-speed: 800ms;
   }
 
   @media (max-width: tokens.$break-mobile-max) {
-    // prettier-ignore
-    // --site-header-border-thickness: min(var(--border-thickness-4), var(--site-header-border-thickness)) !important;
     padding: 0;
+  }
+
+  @media (min-width: tokens.$break-mobile) {
+    border-bottom: var(--site-header-border-bottom);
   }
 }
 
@@ -71,6 +75,7 @@ $site-header-animation-speed: 800ms;
   align-items: center;
   padding: var(--size-spacing-4) var(--size-spacing-site-gutter);
   background-color: var(--color-background);
+  border-bottom: var(--site-header-border-bottom);
 
   @media (min-width: tokens.$break-mobile) {
     display: none;
@@ -82,7 +87,7 @@ $site-header-animation-speed: 800ms;
   flex-direction: column;
 
   @media (max-width: tokens.$break-mobile-max) {
-    @include tokens.animate(transform, $site-header-animation-speed);
+    @include tokens.animate(transform, var(--site-header-animation-speed));
 
     position: absolute;
     left: 0;
@@ -94,28 +99,9 @@ $site-header-animation-speed: 800ms;
     transform: translateY(0%);
 
     [data-main-menu-state='closed'] & {
+      @include tokens.animate-hidden(var(--site-header-animation-speed));
+
       transform: translateY(-100%);
-
-      // This animation is to remove hidden items from screen readers and
-      // keyboard navigation, while maintaining the slow "close" effect.
-      visibility: hidden;
-      animation: $site-header-animation-speed fade-out;
-      animation-fill-mode: forwards;
-
-      @keyframes fade-out {
-        // Start visible at 0% to avoid an occasional "flash" when closing.
-        0% {
-          visibility: visible;
-        }
-
-        99% {
-          visibility: visible;
-        }
-
-        100% {
-          visibility: hidden;
-        }
-      }
     }
   }
 }
@@ -240,14 +226,14 @@ $site-header-animation-speed: 800ms;
 
   // The animate mixin doesn't support multiple transitions.
   @media (prefers-reduced-motion: no-preference) {
-    transition: opacity calc($site-header-animation-speed / 2) ease-in-out
-        calc($site-header-animation-speed / 2),
-      height 0ms ease-in-out $site-header-animation-speed;
+    transition: opacity calc(var(--site-header-animation-speed) / 2) ease-in-out
+        calc(var(--site-header-animation-speed) / 2),
+      height 0ms ease-in-out var(--site-header-animation-speed);
   }
 
   @media (max-width: tokens.$break-mobile-max) {
     [data-main-menu-state='open'] ~ & {
-      @include tokens.animate(opacity, $site-header-animation-speed);
+      @include tokens.animate(opacity, var(--site-header-animation-speed));
 
       height: 100vh;
       opacity: 1;

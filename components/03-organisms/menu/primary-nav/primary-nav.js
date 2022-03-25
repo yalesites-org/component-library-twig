@@ -8,7 +8,10 @@ Drupal.behaviors.primaryNav = {
 
     // Function to show a menu.
     const show = (toggle) => {
+      const nav = toggle.nextElementSibling;
+      console.log(nav);
       toggle.setAttribute('aria-expanded', true);
+      nav.style.setProperty('--open-nav-height', `${nav.scrollHeight}px`);
     };
 
     // Function to hide a menu.
