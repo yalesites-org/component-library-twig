@@ -6,9 +6,3 @@ body[data-body-frozen] {
     overflow: hidden;
   }
 }
-
-.main {
-  [data-body-frozen] & {
-    padding-top: var(--header-height-mobile);
-  }
-}
