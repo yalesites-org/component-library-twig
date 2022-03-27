@@ -53,3 +53,35 @@ The `develop` branch also has an auto-deployed component library. This will cont
 PRs also have auto-deployed component libraries, which allow reviewers to load the latest state of a PR at any given time without having to fiddle with local tooling. Each PR will have a link posted to the PR comments by the "netlify bot" when the link is ready. See screenshot below.
 
 ![PR preview link is the last link in the Netlify bot comment](./.github/docs/pr-preview-link.png)
+
+## Visual Regression Testing
+
+This project uses Percy's StoryBook integration to visually test and verify components during Pull Requests in GitHub. By default all new Stories are tested, but stories can be excluded if a test does not provide value in isolation.
+
+In the project root, there is a `.percyrc` file that can be used to modify Percy's configuration, including custom css, and which Stories to skip when testing.
+
+### Percy-specific CSS
+
+For example, we use the following percy-specific css to hide images from screenshots (since we use a random image service, which would otherwise cause regressions on every test that includes an image.)
+
+```css
+img {
+  visibility: hidden;
+}
+```
+
+### Excluding Stories from Testing
+
+Since Percy bills by the screenshot, it's best to only test the Stories that provide value when tested visually. Some reasons stories should be excluded include:
+- Anything that is simply a representation of a base or "primitive" token. These will be represented in the larger components that implement them, so in isolation they don't provide significant value to visual testing.
+- Dynamic stories that automatically update when new tokens are added upstream. e.g. The colors story. Since colors aren't really a concern at this level (they're defined in Figma by a designer) we don't really need to test them in isolation here.
+- "Playground" types of stories. e.g. The site "Header" story. Since there are a number of choices, or props, that can affect how the site header looks, we have a "playground" story that allows a visitor to toggle all of the controls to see what can be generated with the design system options. What SHOULD be tested is one or more examples of the component with various decisions selected. That is why we have a "Header Examples" story that demonstrates the allowed color combinations.
+
+To exclude stories, add an item to the `exclude` array in a regex format. Some examples of what we currently exclude are:
+
+```yml
+storybook:
+  exclude:
+    - 'Tokens/Breakpoints: Breakpoints' # This specific story (must match exactly)
+    - 'Tokens/Effects: [a-zA-Z]+' # Any story in the `Tokens/Effects` section, since they are dynamically generated.
+```
