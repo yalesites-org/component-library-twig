@@ -56,11 +56,33 @@ PRs also have auto-deployed component libraries, which allow reviewers to load t
 
 ## Visual Regression Testing
 
-This project uses Percy's StoryBook integration to visually test and verify components during Pull Requests in GitHub. By default all new Stories are tested, but stories can be excluded if a test does not provide value in isolation.
+This project uses Percy's StoryBook integration to visually test and verify components during Pull Requests in GitHub.
+
+### Running Visreg Tests
+
+Visual regression tests are automatically run on Percy any time a PR is changed from "Draft" state to "Ready for Review". So there are a few things to keep in mind when creating PRs.
+
+- When you initially create a PR that needs visreg tests, click the "Create draft PR" button instead of the "Create Pull Request" button.
+
+![Click the Create draft PR button](./.github/docs/draft-pr.png)
+
+- Then, when the PR is ready for review, you can click the "Ready for Review" button at the bottom of the page. This will trigger the visual regression tests to be run.
+
+![Click the Ready for Review button when the PR is complete](./.gihub/docs/../../.github/docs/ready-for-review.png)
+
+- If you've already created a PR and need forgot to create a draft first, or you need to re-run the visual regression tests after changes were made, you can click the "Convert to draft" link at the bottom of the page.
+
+![Click the Convert to draft button](./.github/docs/convert-to-draft.png)
+
+- Then click the "Ready for Review" button mentioned above to trigger visual regression tests.
+
+### Configuring Percy Tests
+
+By default all new Stories are tested, but stories can be excluded if a test does not provide value in isolation.
 
 In the project root, there is a `.percyrc` file that can be used to modify Percy's configuration, including custom css, and which Stories to skip when testing.
 
-### Percy-specific CSS
+#### Percy-specific CSS
 
 For example, we use the following percy-specific css to hide images from screenshots (since we use a random image service, which would otherwise cause regressions on every test that includes an image.)
 
@@ -70,9 +92,10 @@ img {
 }
 ```
 
-### Excluding Stories from Testing
+#### Excluding Stories from Testing
 
 Since Percy bills by the screenshot, it's best to only test the Stories that provide value when tested visually. Some reasons stories should be excluded include:
+
 - Anything that is simply a representation of a base or "primitive" token. These will be represented in the larger components that implement them, so in isolation they don't provide significant value to visual testing.
 - Dynamic stories that automatically update when new tokens are added upstream. e.g. The colors story. Since colors aren't really a concern at this level (they're defined in Figma by a designer) we don't really need to test them in isolation here.
 - "Playground" types of stories. e.g. The site "Header" story. Since there are a number of choices, or props, that can affect how the site header looks, we have a "playground" story that allows a visitor to toggle all of the controls to see what can be generated with the design system options. What SHOULD be tested is one or more examples of the component with various decisions selected. That is why we have a "Header Examples" story that demonstrates the allowed color combinations.
