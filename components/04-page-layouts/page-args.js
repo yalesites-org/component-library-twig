@@ -9,7 +9,7 @@ const argTypes = {
   siteName: {
     name: 'Site Name',
     type: 'string',
-    defaultValue: 'Department of Chemistry',
+    defaultValue: 'Yale Divinity School',
   },
   headerBorderThickness: {
     name: 'Header: Border thickness',
@@ -54,7 +54,7 @@ const argTypes = {
   pageTitle: {
     name: 'Page Title',
     type: 'string',
-    defaultValue: 'Davis Team Project Wins Award for Research',
+    defaultValue: 'Admissions FAQ',
   },
   meta: {
     name: 'Meta',

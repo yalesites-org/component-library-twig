@@ -1,8 +1,8 @@
 items:
   - title: 'Home'
     url: '#'
-  - title: 'Academic Programs'
+  - title: 'Admissions & Aid'
     url: '#'
-  - title: 'Undergraduate Chemistry'
+  - title: 'Admissions FAQ'
     url: '#'
     is_active: true

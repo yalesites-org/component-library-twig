@@ -46,7 +46,7 @@ export const Header = ({
   siteHeaderTheme,
 }) =>
   siteHeaderTwig({
-    site_name: 'Department of Chemistry',
+    site_name: 'Admissions FAQ',
     site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
@@ -57,7 +57,7 @@ export const Header = ({
 export const HeaderExamples = ({ borderThickness, primaryNavPosition }) =>
   siteHeaderExamples({
     ...siteHeaderThemes,
-    site_name: 'Department of Chemistry',
+    site_name: 'Admissions FAQ',
     site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
     utility_nav__items: utilityNavData.items,
