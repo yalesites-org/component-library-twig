@@ -160,7 +160,8 @@
         },
         {
           "name": "menu/primary-nav",
-          "structure": "organisms"
+          "structure": "organisms",
+          "required": true
         },
         {
           "name": "menu/utility-nav",
