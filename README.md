@@ -78,6 +78,8 @@ Visual regression tests are automatically run on Percy any time a PR is changed 
 
 ### Configuring Percy Tests
 
+Official Docs: https://docs.percy.io/docs/storybook
+
 By default all new Stories are tested, but stories can be excluded if a test does not provide value in isolation.
 
 In the project root, there is a `.percyrc` file that can be used to modify Percy's configuration, including custom css, and which Stories to skip when testing.
