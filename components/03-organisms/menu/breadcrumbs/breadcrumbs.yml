@@ -1,8 +1,10 @@
 items:
   - title: 'Home'
     url: '#'
-  - title: 'Admissions & Aid'
+  - title: 'Offices'
     url: '#'
-  - title: 'Admissions FAQ'
+  - title: "Registrar's Office"
+    url: '#'
+  - title: 'Frequently Asked Questions'
     url: '#'
     is_active: true

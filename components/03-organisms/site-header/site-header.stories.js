@@ -57,7 +57,7 @@ export const Header = ({
 export const HeaderExamples = ({ borderThickness, primaryNavPosition }) =>
   siteHeaderExamples({
     ...siteHeaderThemes,
-    site_name: 'Admissions FAQ',
+    site_name: 'Frequently Asked Questions',
     site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
     utility_nav__items: utilityNavData.items,

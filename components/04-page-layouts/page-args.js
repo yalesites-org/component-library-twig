@@ -54,7 +54,7 @@ const argTypes = {
   pageTitle: {
     name: 'Page Title',
     type: 'string',
-    defaultValue: 'Admissions FAQ',
+    defaultValue: 'Frequently Asked Questions',
   },
   meta: {
     name: 'Meta',
