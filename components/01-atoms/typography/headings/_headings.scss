@@ -7,7 +7,7 @@ h4,
 h5,
 h6 {
   color: var(--color-heading);
-  margin-block: 0;
+  margin-block: 0 0.6em;
 }
 
 .text-field {
@@ -33,5 +33,15 @@ h6 {
 
   h6 {
     @include tokens.h6-yale-new;
+  }
+
+  * + {
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin-top: 1em;
+    }
   }
 }

@@ -1,5 +1,4 @@
 {% for example in text_examples %}
-  <h2>{{ example.name }}</h2>
   {% include "@atoms/typography/text/text.twig" with {
     text__element: example.text__element,
     text__content: example.text__content,
