@@ -1,0 +1,68 @@
+{#
+ # Available Variables:
+ # - alert__type: emergency, announcement (default), marketing
+ # - alert__heading
+ # - alert__content
+ # - alert__link__content
+ # - alert__link__url
+ #}
+
+{% set alert__base_class = 'alert' %}
+{% set alert__type = alert__type|default('announcement') %}
+
+{# Set emergency icons #}
+{% if alert__type == 'emergency' %}
+  {% set alert__icon = 'triangle-exclamation' %}
+  {% set alert__toggle = 'angle-down' %}
+{# Set announcement icons #}
+{% elseif alert__type == 'announcement' %}
+  {% set alert__icon = 'circle-info' %}
+  {% set alert__toggle = 'xmark' %}
+{# Set marketign icon #}
+{% else %}
+  {% set alert__toggle = 'xmark' %}
+{% endif %}
+
+{% set alert__attributes = {
+  'data-alert-state': alert__state|default('expanded'),
+  'data-alert-type': alert__type,
+  class: bem(alert__base_class),
+} %}
+
+<div {{ add_attributes(alert__attributes) }}>
+  {% if alert__icon %}
+    {% include "@atoms/images/icons/_icon.twig" with {
+      icon__name: alert__icon,
+      icon__modifiers: ['type'],
+      icon__blockname: alert__base_class,
+    } %}
+  {% endif %}
+  <div {{ bem('content', [], alert__base_class) }}>
+    <div {{ bem('content-inner', [], alert__base_class) }}>
+      {% include "@atoms/typography/headings/heading.twig" with {
+        heading__level: '2',
+        heading__blockname: alert__base_class,
+        heading: alert__heading,
+      } %}
+      {% if alert__content %}
+        {% include "@atoms/typography/text/text.twig" with {
+          text__element: 'div',
+          text__content: alert__content,
+          text__blockname: alert__base_class,
+        } %}
+      {% endif %}
+    </div>
+    {% if alert__link__content and alert__link__url %}
+      {% include "@atoms/links/link.twig" with {
+        link__content: alert__link__content,
+        link__url: alert__link__url,
+        link__blockname: alert__base_class,
+      } %}
+    {% endif %}
+  </div>
+  {% include "@atoms/images/icons/_icon.twig" with {
+    icon__name: alert__toggle,
+    icon__modifiers: ['toggle'],
+    icon__blockname: alert__base_class,
+  } %}
+</div>
