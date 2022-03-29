@@ -79,8 +79,10 @@ Drupal.behaviors.primaryNav = {
     });
 
     window.addEventListener('click', (e) => {
-      if (!primaryNav.contains(e.target)) {
-        hideAll();
+      if (primaryNav) {
+        if (!primaryNav.contains(e.target)) {
+          hideAll();
+        }
       }
     });
   },

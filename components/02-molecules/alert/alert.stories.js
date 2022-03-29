@@ -1,5 +1,7 @@
 import alertTwig from './alert.twig';
 
+import './alert';
+
 /**
  * Storybook Definition.
  */

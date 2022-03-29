@@ -60,9 +60,15 @@
       } %}
     {% endif %}
   </div>
-  {% include "@atoms/images/icons/_icon.twig" with {
-    icon__name: alert__toggle,
-    icon__modifiers: ['toggle'],
-    icon__blockname: alert__base_class,
+  {% embed "@atoms/buttons/button.twig" with {
+    button__base_class: 'toggle',
+    button__blockname: alert__base_class,
+    aria_expanded: 'true',
   } %}
+    {% block button__content %}
+      {% include "@atoms/images/icons/_icon.twig" with {
+        icon__name: alert__toggle,
+      } %}
+    {% endblock %}
+  {% endembed %}
 </div>

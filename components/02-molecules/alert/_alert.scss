@@ -68,6 +68,10 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, alert-themes);
 .alert__text {
   @include tokens.body-s;
 
+  [data-alert-state='collapsed'] & {
+    display: none;
+  }
+
   > *:last-child {
     margin-bottom: 0;
   }
@@ -81,17 +85,26 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, alert-themes);
   --link-color-hover: currentcolor;
 }
 
-.alert__icon--toggle {
+.alert__toggle {
+  @include atoms.button-reset;
+
   --size-icon: 1.25rem;
 
   flex: 0 0 var(--size-icon);
   height: var(--size-icon);
 
-  @media (min-width: tokens.$break-mobile) {
-    [data-alert-state='expanded'] & {
-      --size-icon: 1.5625rem;
+  [data-alert-state='collapsed'] & {
+    transform: rotate(180deg);
+  }
 
-      margin-left: var(--size-spacing-7);
-    }
+  @media (min-width: tokens.$break-mobile) {
+    --size-icon: 1.5625rem;
+
+    margin-left: var(--size-spacing-7);
+  }
+
+  svg {
+    height: 100%;
+    width: 100%;
   }
 }
