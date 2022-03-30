@@ -20,7 +20,7 @@
     } %}
     {% if callout__link__url and callout__link__content %}
       {% if callout__link__type == 'link' %}
-        {% include "@atoms/links/link.twig" with {
+        {% include "@atoms/controls/text-link/link.twig" with {
           link__url: callout__link__url,
           link__content: callout__link__content,
           link__blockname: callout__base_class,

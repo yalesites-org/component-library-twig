@@ -1,7 +1,7 @@
 @use '~@yalesites-org/tokens/build/scss/tokens';
 @use '../../00-tokens/functions/map';
 @use '../../00-tokens/typography/typography';
-@use '../../01-atoms/links/link';
+@use '../../01-atoms/controls/text-link/link';
 
 $break-site-footer: tokens.$break-s;
 $break-site-footer-max: $break-site-footer - 0.05;
