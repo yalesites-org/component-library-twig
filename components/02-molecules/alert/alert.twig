@@ -1,5 +1,6 @@
 {#
  # Available Variables:
+ # - alert__id: unique id (must be unique to each site)
  # - alert__type: emergency, announcement (default), marketing
  # - alert__heading
  # - alert__content
@@ -14,16 +15,20 @@
 {% if alert__type == 'emergency' %}
   {% set alert__icon = 'triangle-exclamation' %}
   {% set alert__toggle = 'angle-down' %}
+  {% set alert__toggle__text = 'Hide alert details' %}
+  {% set alert__toggle__aria_expanded = 'true' %}
 {# Set announcement icons #}
 {% elseif alert__type == 'announcement' %}
   {% set alert__icon = 'circle-info' %}
   {% set alert__toggle = 'xmark' %}
+  {% set alert__toggle__text = 'Close alert' %}
 {# Set marketign icon #}
 {% else %}
   {% set alert__toggle = 'xmark' %}
 {% endif %}
 
 {% set alert__attributes = {
+  'data-alert-id': 'ys-alert-id-' ~ alert__id,
   'data-alert-state': alert__state|default('expanded'),
   'data-alert-type': alert__type,
   class: bem(alert__base_class),
@@ -63,9 +68,10 @@
   {% embed "@atoms/buttons/button.twig" with {
     button__base_class: 'toggle',
     button__blockname: alert__base_class,
-    aria_expanded: 'true',
+    aria_expanded: alert__toggle__aria_expanded,
   } %}
     {% block button__content %}
+      <span {{ bem('visually-hidden') }}>{{ alert__toggle__text }}</span>
       {% include "@atoms/images/icons/_icon.twig" with {
         icon__name: alert__toggle,
       } %}

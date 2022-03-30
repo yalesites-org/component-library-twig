@@ -19,8 +19,11 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, alert-themes);
   }
 
   @media (min-width: tokens.$break-mobile) {
-    align-items: center;
     padding: var(--size-spacing-5) var(--size-spacing-7);
+  }
+
+  &[data-alert-state='dismissed'] {
+    display: none;
   }
 }
 
@@ -50,7 +53,7 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, alert-themes);
   flex-wrap: wrap;
   gap: var(--size-spacing-5);
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding-right: var(--size-spacing-3);
 
   @media (min-width: tokens.$break-mobile) {
