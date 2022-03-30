@@ -116,6 +116,10 @@
           "required": true
         },
         {
+          "name": "alert",
+          "structure": "molecules"
+        },
+        {
           "name": "image",
           "structure": "molecules"
         },
