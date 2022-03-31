@@ -8,7 +8,7 @@
 - [ ] Navigate to the [Component Story](https://deploy-preview-XX--dev-component-library-twig.netlify.app/?path=/story/tokens-breakpoints--breakpoints)
 
 ### Functional Review Steps
-- [ ] Verify XYZ
+- [ ] Verify you can install the component with the CLI
 
 ### Design Review
 - [ ] Verify the designs match the [Figma Designs](https://www.figma.com/file/OVfmCW5s1gI7xnrM8ibX2y/UI-Kit-Alpha-%5BYaleSites%5D)

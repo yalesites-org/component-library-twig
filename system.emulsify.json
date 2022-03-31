@@ -116,6 +116,14 @@
           "required": true
         },
         {
+          "name": "accordion",
+          "structure": "molecules"
+        },
+        {
+          "name": "callout",
+          "structure": "molecules"
+        },
+        {
           "name": "image",
           "structure": "molecules"
         },
@@ -143,8 +151,17 @@
           "required": true
         },
         {
+          "name": "text-with-image",
+          "structure": "molecules"
+        },
+        {
           "name": "menu/breadcrumbs",
           "structure": "organisms"
+        },
+        {
+          "name": "menu/primary-nav",
+          "structure": "organisms",
+          "required": true
         },
         {
           "name": "menu/utility-nav",
