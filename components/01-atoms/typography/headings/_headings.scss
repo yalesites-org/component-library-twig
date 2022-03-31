@@ -10,38 +10,40 @@ h6 {
   margin-block: 0 0.6em;
 }
 
+@mixin text-field-header-spacing {
+  &:not(:first-child) {
+    margin-top: 1em;
+  }
+}
+
 .text-field {
   h1 {
     @include tokens.h1-yale-new;
+    @include text-field-header-spacing;
   }
 
   h2 {
     @include tokens.h2-yale-new;
+    @include text-field-header-spacing;
   }
 
   h3 {
     @include tokens.h3-yale-new;
+    @include text-field-header-spacing;
   }
 
   h4 {
     @include tokens.h4-yale-new;
+    @include text-field-header-spacing;
   }
 
   h5 {
     @include tokens.h5-yale-new;
+    @include text-field-header-spacing;
   }
 
   h6 {
     @include tokens.h6-yale-new;
-  }
-
-  * + {
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      margin-top: 1em;
-    }
+    @include text-field-header-spacing;
   }
 }
