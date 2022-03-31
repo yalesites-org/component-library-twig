@@ -58,6 +58,8 @@ PRs also have auto-deployed component libraries, which allow reviewers to load t
 
 This project uses Percy's StoryBook integration to visually test and verify components during Pull Requests in GitHub.
 
+View the status of any build here: https://percy.io/95144ff9/component-library-twig
+
 ### Running Visreg Tests
 
 Visual regression tests are automatically run on Percy any time a PR is changed from "Draft" state to "Ready for Review". So there are a few things to keep in mind when creating PRs.
