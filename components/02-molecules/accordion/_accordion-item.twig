@@ -12,7 +12,7 @@
   class: bem(accordion__item__base_class),
 } %}
 
-{% set accordion__item__button__content %}
+{% set accordion__item__cta__content %}
   {{ accordion__item__heading }}
   {% include "@atoms/images/icons/_icon.twig" with {
     icon__name: 'angle-down',
@@ -22,10 +22,10 @@
 {% endset %}
 
 {% set accordion__item__heading__content %}
-  {% include "@atoms/buttons/button.twig" with {
-    button__content: accordion__item__button__content,
-    button__base_class: 'toggle',
-    button__blockname: accordion__item__base_class,
+  {% include "@atoms/controls/cta/cta.twig" with {
+    cta__content: accordion__item__cta__content,
+    cta__base_class: 'toggle',
+    cta__blockname: accordion__item__base_class,
     aria_expanded: 'true',
   } %}
 {% endset %}

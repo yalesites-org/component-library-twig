@@ -1,6 +1,6 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
-@use '../../../02-molecules/menu/menu';
+@use '../../../02-molecules/molecules';
 
 .breadcrumbs__wrapper {
   display: flex;
@@ -12,7 +12,7 @@
 .breadcrumbs__button {
   @include atoms.button-reset;
   @include tokens.body-s;
-  @include menu.link;
+  @include molecules.menu-link;
 
   display: none;
 
@@ -58,5 +58,5 @@
 }
 
 .breadcrumbs__link {
-  @include menu.link;
+  @include molecules.menu-link;
 }

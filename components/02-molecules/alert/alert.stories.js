@@ -1,6 +1,6 @@
 import alertTwig from './alert.twig';
 import textFieldTwig from '../text/text-field.twig';
-import buttonTwig from '../../01-atoms/buttons/button.twig';
+import ctaTwig from '../../01-atoms/controls/cta/cta.twig';
 
 import './alert';
 
@@ -32,13 +32,13 @@ export default {
   },
 };
 
-const buttonResetInstructions = `
-<div class="text-field"><h2>Resetting Alerts in Storybook</h2><p>Once you've closed a dismissible alert, they will not show up again, even after page reloads. In order to see them again, here in storybook, click this reset button, and all alerts will be reset to their initial state.</p>${buttonTwig(
+const alertResetInstructions = `
+<div class="text-field"><h2>Resetting Alerts in Storybook</h2><p>Once you've closed a dismissible alert, they will not show up again, even after page reloads. In order to see them again, here in storybook, click this reset button, and all alerts will be reset to their initial state.</p>${ctaTwig(
   {
-    button__content: 'Reset dismissed alerts',
-    button__attributes: { onClick: 'resetAlerts();' },
+    cta__content: 'Reset dismissed alerts',
+    cta__attributes: { onClick: 'resetAlerts();' },
   },
-)}<button class="button" onclick="resetAlerts();"></button></div>
+)}
 `;
 
 export const Alert = ({ type, heading, content, linkContent }) => `
@@ -62,7 +62,7 @@ ${alertTwig({
   alert__id: '123',
 })}<br />
 ${textFieldTwig({
-  text_field__content: buttonResetInstructions,
+  text_field__content: alertResetInstructions,
 })}`;
 Alert.argTypes = {
   type: {
@@ -110,5 +110,5 @@ ${alertTwig({
   alert__id: '456',
 })}<br />
 ${textFieldTwig({
-  text_field__content: buttonResetInstructions,
+  text_field__content: alertResetInstructions,
 })}`;
