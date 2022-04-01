@@ -22,6 +22,12 @@
 {% endset %}
 
 {% set accordion__item__heading__content %}
+  {# @TODO: This (and other places a `<button>` element is used) doesn't need
+   # any of the extra markup that CTAs have because they shouldn't visually look
+   # like a "CTA". So, we should create a generic `<button>` component that
+   # simply accepts a class and some aria attributes, but none of the
+   # data-attributes that CTAs need to support their styling #}
+  {# @LINK: https://yaleits.atlassian.net/browse/YALB-474 #}
   {% include "@atoms/controls/cta/cta.twig" with {
     cta__content: accordion__item__cta__content,
     cta__base_class: 'toggle',
