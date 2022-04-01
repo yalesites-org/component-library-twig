@@ -24,20 +24,20 @@ export default {
       type: 'string',
       defaultValue: newsCardData.news_card__snippet,
     },
-    variation: {
-      name: 'Variation',
+    featured: {
+      name: 'Featured',
       type: 'select',
-      options: ['featured', 'secondary'],
-      defaultValue: 'featured',
+      options: ['true', 'false'],
+      defaultValue: 'true',
     },
   },
 };
 
-export const NewsCard = ({ date, heading, snippet, variation }) =>
+export const NewsCard = ({ date, heading, snippet, featured }) =>
   newsCardTwig({
     ...imageData.responsive_images['3x2'],
     news_card__date: date,
     news_card__heading: heading,
     news_card__snippet: snippet,
-    news_card__variation: variation,
+    news_card__featured: featured,
   });

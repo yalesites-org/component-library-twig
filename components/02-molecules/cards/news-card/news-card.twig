@@ -1,9 +1,10 @@
 {#
  # Available Variables:
- # - news_card__date
+ # - news_card__date: html datetime. e.g. 2022-03-30 13:00
  # - news_card__heading
  # - news_card__url
  # - news_card__snippet
+ # - news_card__featured: boolean (ish... actually just a string. But should be 'true', or 'false'.)
  #
  # Available Blocks:
  # - news_card__image
@@ -18,7 +19,7 @@
 {% endset %}
 
 {% set news_card__attributes = {
-  'data-card-variation': news_card__variation|default('featured'),
+  'data-card-featured': news_card__featured,
   class: bem(news_card__base_class),
 } %}
 

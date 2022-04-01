@@ -15,21 +15,21 @@
   text-transform: uppercase;
   margin-bottom: var(--size-spacing-3);
 
-  [data-card-variation='secondary'] & {
+  [data-card-featured='false'] & {
     display: none;
   }
 }
 
 .news-card__heading {
-  [data-card-variation='featured'] & {
+  [data-card-featured='true'] & {
     @include tokens.h4-yale-new;
   }
 
-  [data-card-variation='secondary'] & {
+  [data-card-featured='false'] & {
     @include tokens.h5-yale-new;
   }
 
-  [data-card-variation] & {
+  [data-card-featured] & {
     font-weight: var(--font-weights-yalenew-bold);
   }
 }
@@ -37,7 +37,7 @@
 .news-card__snippet {
   margin-top: var(--size-spacing-3);
 
-  [data-card-variation='secondary'] & {
+  [data-card-featured='false'] & {
     @include tokens.body-default-condensed;
   }
 }
