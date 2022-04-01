@@ -39,7 +39,7 @@ const buttonResetInstructions = `
     button__content: 'Reset dismissed alerts',
     button__attributes: { onClick: 'resetAlerts();' },
   },
-)}<button class="button" onclick="resetAlerts();"></button></div>
+)}
 `;
 
 export const Alert = ({ type, heading, content, linkContent }) => `

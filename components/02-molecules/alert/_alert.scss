@@ -7,6 +7,8 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, color, alert);
 
 .alert {
   --size-icon: 1.25rem;
+  --link-color-base: currentcolor;
+  --link-color-hover: currentcolor;
 
   position: relative;
   z-index: 3;
@@ -103,9 +105,6 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, color, alert);
 .alert__link {
   @include atoms.link;
   @include tokens.body-s;
-
-  --link-color-base: currentcolor;
-  --link-color-hover: currentcolor;
 
   margin-bottom: var(--size-spacing-2);
 
