@@ -50,5 +50,5 @@ h6:not([class]) {
 }
 
 .heading__link {
-  @include text-link.link(no-underline, yalenew-bold);
+  @include text-link.link(no-underline);
 }

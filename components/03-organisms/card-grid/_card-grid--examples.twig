@@ -1,0 +1,5 @@
+{% if card_type == 'news' %}
+  {% include "@molecules/cards/news-card/news-card.twig" with {
+    news_card__variation: card_grid__variation,
+  } %}
+{% endif %}

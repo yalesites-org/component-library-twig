@@ -28,6 +28,10 @@
   [data-card-variation='secondary'] & {
     @include tokens.h5-yale-new;
   }
+
+  [data-card-variation] & {
+    font-weight: var(--font-weights-yalenew-bold);
+  }
 }
 
 .news-card__snippet {
