@@ -1,0 +1,25 @@
+@use '../../../00-tokens/tokens';
+
+.news-card {
+  display: flex;
+  flex-flow: column-reverse;
+}
+
+.news-card__image {
+  margin-bottom: var(--size-spacing-4);
+}
+
+.news-card__date {
+  @include tokens.body-xs;
+
+  text-transform: uppercase;
+  margin-bottom: var(--size-spacing-3);
+}
+
+.news-card__heading {
+  @include tokens.h4-yale-new;
+}
+
+.news-card__snippet {
+  margin-top: var(--size-spacing-3);
+}
