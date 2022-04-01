@@ -21,7 +21,11 @@
   } %}
     {% block cta__content %}
       <span {{ bem('visually-hidden') }}>Show all breadcrumbs</span>
-      <span aria-hidden="true"><</span>
+      {% include "@atoms/images/icons/_icon.twig" with {
+        icon__name: 'angle-down',
+        icon__blockname: breadcrumbs__base_class,
+        icon__decorative: true,
+      } %}
       <span aria-hidden="true">{{ parent_label }}</span>
     {% endblock %}
   {% endembed %}

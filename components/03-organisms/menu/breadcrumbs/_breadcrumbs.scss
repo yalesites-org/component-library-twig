@@ -19,9 +19,16 @@
   @media (max-width: tokens.$break-mobile-max) {
     [data-breadcrumbs-overflow='hidden'] & {
       display: flex;
+      align-items: center;
       gap: var(--size-spacing-3);
     }
   }
+}
+
+.breadcrumbs__icon {
+  transform: rotate(90deg);
+  height: 1em;
+  width: 1em;
 }
 
 .breadcrumbs__menu {
