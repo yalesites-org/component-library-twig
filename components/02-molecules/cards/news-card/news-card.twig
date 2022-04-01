@@ -17,7 +17,13 @@
   } %}
 {% endset %}
 
-<div {{ bem(news_card__base_class) }}>
+{% set news_card__attributes = {
+  'data-card-variation': news_card__variation|default('featured'),
+  class: bem(news_card__base_class),
+} %}
+
+
+<div {{ add_attributes(news_card__attributes) }}>
   <div {{ bem('content', [], news_card__base_class) }}>
     {% include "@atoms/typography/text/text.twig" with {
       text__base_class: 'date',

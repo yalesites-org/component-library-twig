@@ -14,12 +14,26 @@
 
   text-transform: uppercase;
   margin-bottom: var(--size-spacing-3);
+
+  [data-card-variation='secondary'] & {
+    display: none;
+  }
 }
 
 .news-card__heading {
-  @include tokens.h4-yale-new;
+  [data-card-variation='featured'] & {
+    @include tokens.h4-yale-new;
+  }
+
+  [data-card-variation='secondary'] & {
+    @include tokens.h5-yale-new;
+  }
 }
 
 .news-card__snippet {
   margin-top: var(--size-spacing-3);
+
+  [data-card-variation='secondary'] & {
+    @include tokens.body-default-condensed;
+  }
 }
