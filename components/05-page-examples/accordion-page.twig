@@ -1,4 +1,8 @@
 {% extends "@page-layouts/full-width.twig" %}
+  {% block page__header %}
+    {% include "@molecules/alert/alert.twig" %}
+    {% include "@organisms/site-header/site-header.twig" %}
+  {% endblock %}
   {% block page__content %}
     {% include "@organisms/menu/breadcrumbs/breadcrumbs.twig" %}
     {% include "@molecules/page-title/page-title.twig" %}

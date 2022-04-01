@@ -13,6 +13,7 @@ import breadcrumbData from '../03-organisms/menu/breadcrumbs/breadcrumbs.yml';
 import imageData from '../01-atoms/images/image/image.yml';
 import textWithImageData from '../02-molecules/text-with-image/text-with-image.yml';
 import accordionData from '../02-molecules/accordion/accordion.yml';
+import alertData from '../02-molecules/alert/alert.yml';
 
 // JavaScript.
 import '../00-tokens/layout/layout';
@@ -114,6 +115,7 @@ export const AccordionPage = ({
     ...imageData.responsive_images['16x9'],
     ...textWithImageData,
     ...accordionData,
+    ...alertData,
   });
 
 export const NewsArticle = ({

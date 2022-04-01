@@ -13,12 +13,12 @@
   // Color schemes
   [data-component-theme='gray-800'],
   [data-component-theme='blue-yale'] {
-    --link-color-base: var(--color-basics-white);
+    --link-color-base: var(--color-basic-white);
     --link-color-hover: var(--color-blue-light);
   }
 
   [data-component-theme='gray-700'] {
-    --link-color-base: var(--color-basics-white);
+    --link-color-base: var(--color-basic-white);
     --link-color-hover: var(--color-gray-300);
   }
 

@@ -63,7 +63,7 @@ $cta-outline-weights: (
   [data-component-theme='gray-700'] &,
   [data-component-theme='blue-yale'] & {
     // prettier-ignore
-    --color-cta-primary: var(--color-theme-cta-secondary, var(--color-basics-white));
+    --color-cta-primary: var(--color-theme-cta-secondary, var(--color-basic-white));
 
     // prettier-ignore
     --color-cta-secondary: var(--color-theme-cta-primary, var(--color-blue-yale));
@@ -108,7 +108,7 @@ $cta-outline-weights: (
   &:active {
     --color-cta-bg-active: var(--color-gray-700);
     --color-cta-border-active: var(--color-gray-700);
-    --color-cta-text-active: var(--color-basics-white);
+    --color-cta-text-active: var(--color-basic-white);
     --cta-box-shadow-active: none;
 
     // Don't ever use !important!!!

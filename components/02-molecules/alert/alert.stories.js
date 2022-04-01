@@ -2,6 +2,8 @@ import alertTwig from './alert.twig';
 import textFieldTwig from '../text/text-field.twig';
 import ctaTwig from '../../01-atoms/controls/cta/cta.twig';
 
+import alertData from './alert.yml';
+
 import './alert';
 
 /**
@@ -16,18 +18,17 @@ export default {
     heading: {
       name: 'Alert Heading',
       type: 'string',
-      defaultValue: 'This is the heading for the alert',
+      defaultValue: alertData.alert__heading,
     },
     content: {
       name: 'Alert Content',
       type: 'string',
-      defaultValue:
-        '<p>This is an optional text for more information if needed.</p>',
+      defaultValue: alertData.alert__content,
     },
     linkContent: {
       name: 'Alert Link Text',
       type: 'string',
-      defaultValue: 'Optional link',
+      defaultValue: alertData.alert__link__content,
     },
   },
 };
@@ -58,7 +59,7 @@ ${alertTwig({
   alert__heading: heading,
   alert__content: content,
   alert__link__content: linkContent,
-  alert__link__url: '#',
+  alert__link__url: alertData.alert__link__url,
   alert__id: '123',
 })}<br />
 ${textFieldTwig({
@@ -90,7 +91,7 @@ ${alertTwig({
   alert__heading: heading,
   alert__content: content,
   alert__link__content: linkContent,
-  alert__link__url: '#',
+  alert__link__url: alertData.alert__link__url,
   alert__id: '234',
 })}
 ${alertTwig({
@@ -98,7 +99,7 @@ ${alertTwig({
   alert__heading: heading,
   alert__content: content,
   alert__link__content: linkContent,
-  alert__link__url: '#',
+  alert__link__url: alertData.alert__link__url,
   alert__id: '345',
 })}
 ${alertTwig({
@@ -106,7 +107,7 @@ ${alertTwig({
   alert__heading: heading,
   alert__content: content,
   alert__link__content: linkContent,
-  alert__link__url: '#',
+  alert__link__url: alertData.alert__link__url,
   alert__id: '456',
 })}<br />
 ${textFieldTwig({
