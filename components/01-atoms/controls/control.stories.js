@@ -1,5 +1,5 @@
 import ctaTwig from './cta/cta.twig';
-import linkTwig from './text-link/link.twig';
+import linkTwig from './text-link/text-link.twig';
 
 /**
  * Storybook Definition.
