@@ -7,10 +7,12 @@ h4,
 h5,
 h6 {
   color: var(--color-heading);
-  margin-block: 0 0.6em;
+  margin: 0;
 }
 
 @mixin text-field-header-spacing {
+  margin-block: 0 0.6em;
+
   &:not(:first-child) {
     margin-top: 1em;
   }

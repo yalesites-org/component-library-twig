@@ -3,23 +3,22 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
 
-$alert-themes: map.deep-get(sass-tokens.$tokens, alert-themes);
+$alert-themes: map.deep-get(sass-tokens.$tokens, color, alert);
 
 .alert {
-  display: flex;
-  padding: var(--size-spacing-4);
+  --size-icon: 1.25rem;
+
+  position: relative;
+  z-index: 3;
   background-color: var(--color-alert-background);
   color: var(--color-alert-text);
 
   @each $theme, $value in $alert-themes {
     &[data-alert-type='#{$theme}'] {
-      --color-alert-background: var(--alert-themes-#{$theme}-background-color);
-      --color-alert-text: var(--alert-themes-#{$theme}-text);
+      --color-alert-background: var(--color-alert-#{$theme}-background-color);
+      --color-alert-text: var(--color-alert-#{$theme}-text);
+      --color-alert-border: var(--color-alert-#{$theme}-border-color);
     }
-  }
-
-  @media (min-width: tokens.$break-mobile) {
-    padding: var(--size-spacing-5) var(--size-spacing-7);
   }
 
   &[data-alert-state='dismissed'] {
@@ -27,9 +26,17 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, alert-themes);
   }
 }
 
-.alert__icon--type {
-  --size-icon: 1.25rem;
+.alert__inner {
+  display: flex;
+  align-items: flex-start;
+  padding-block: var(--size-spacing-5);
 
+  @media (min-width: tokens.$break-mobile) {
+    align-items: center;
+  }
+}
+
+.alert__icon--type {
   margin-right: var(--size-spacing-3);
   flex: 0 0 var(--size-icon);
   height: var(--size-icon);
@@ -51,25 +58,38 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, alert-themes);
   flex: 1 1 auto;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--size-spacing-5);
-  justify-content: space-between;
-  align-items: flex-start;
   padding-right: var(--size-spacing-3);
 
+  @media (max-width: tokens.$break-mobile-max) {
+    gap: var(--size-spacing-3);
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   @media (min-width: tokens.$break-mobile) {
+    gap: var(--size-spacing-5);
+    justify-content: space-between;
+    align-items: center;
     padding-right: var(--size-spacing-7);
-    border-right: var(--border-thickness-1) solid;
+    border-right: var(--border-thickness-1) solid var(--color-alert-border);
+
+    [data-alert-state='collapsed'] & {
+      border: none;
+    }
   }
 }
 
 .alert__heading {
-  @include tokens.body-default;
+  @include tokens.h5-mallory-compact-medium;
 
   color: inherit;
 }
 
 .alert__text {
-  @include tokens.body-s;
+  @include tokens.body-s-condensed;
+
+  margin-top: var(--size-spacing-2);
+  max-width: var(--size-component-layout-width-content);
 
   [data-alert-state='collapsed'] & {
     display: none;
@@ -86,6 +106,12 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, alert-themes);
 
   --link-color-base: currentcolor;
   --link-color-hover: currentcolor;
+
+  margin-bottom: var(--size-spacing-2);
+
+  [data-alert-state='collapsed'] & {
+    display: none;
+  }
 }
 
 .alert__toggle {
@@ -94,7 +120,7 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, alert-themes);
   --size-icon: 1.25rem;
 
   flex: 0 0 var(--size-icon);
-  height: var(--size-icon);
+  display: flex;
 
   [data-alert-state='collapsed'] & {
     transform: rotate(180deg);
@@ -103,11 +129,12 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, alert-themes);
   @media (min-width: tokens.$break-mobile) {
     --size-icon: 1.5625rem;
 
-    margin-left: var(--size-spacing-7);
+    padding: var(--size-spacing-3);
+    margin-left: var(--size-spacing-5);
   }
 
   svg {
-    height: 100%;
-    width: 100%;
+    height: var(--size-icon);
+    width: var(--size-icon);
   }
 }
