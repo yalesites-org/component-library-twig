@@ -26,18 +26,23 @@ export default {
     },
     featured: {
       name: 'Featured',
-      type: 'select',
-      options: ['true', 'false'],
-      defaultValue: 'true',
+      type: 'boolean',
+      defaultValue: true,
+    },
+    withImage: {
+      name: 'With Image',
+      type: 'boolean',
+      defaultValue: true,
     },
   },
 };
 
-export const NewsCard = ({ date, heading, snippet, featured }) =>
+export const NewsCard = ({ date, heading, snippet, featured, withImage }) =>
   newsCardTwig({
     ...imageData.responsive_images['3x2'],
     news_card__date: date,
     news_card__heading: heading,
     news_card__snippet: snippet,
-    news_card__featured: featured,
+    news_card__featured: featured ? 'true' : 'false',
+    news_card__image: withImage,
   });
