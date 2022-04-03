@@ -1,0 +1,37 @@
+{#
+ # Available Props:
+ # - card_collection_type: grid (default) or list
+ # -
+ #
+ # Available Variables:
+ # - card_collection__heading
+ #
+ # Available Blocks:
+ # - card_collection__cards
+ #}
+
+{% set card_collection__base_class = 'card-collection' %}
+
+{% set card_collection__attributes = {
+  'data-collection-type': card_collection_type|default('grid'),
+  class: bem(card_collection__base_class),
+} %}
+
+<div {{ add_attributes(card_collection__attributes) }}>
+  <div {{ bem('inner', [], card_collection__base_class) }}>
+    {% if card_collection__heading %}
+      {% include "@atoms/typography/headings/heading.twig" with {
+        heading__level: '2',
+        heading__blockname: card_collection__base_class,
+        heading: card_collection__heading,
+      } %}
+    {% endif %}
+    <div {{ bem('cards', [], card_collection__base_class) }}>
+      {% block card_collection__cards %}
+        {% for card in card_collection__cards %}
+          {% include "@organisms/card-collection/_card-collection--examples.twig" %}
+        {% endfor %}
+      {% endblock %}
+    </div>
+  </div>
+</div>

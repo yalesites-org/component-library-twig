@@ -1,4 +1,4 @@
-import cardGridTwig from './card-grid.twig';
+import cardCollectionTwig from './card-collection.twig';
 
 import newsCardData from '../../02-molecules/cards/news-card/news-card.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
@@ -7,7 +7,7 @@ import imageData from '../../01-atoms/images/image/image.yml';
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Card Grid',
+  title: 'Organisms/Card Collection',
   argTypes: {
     heading: {
       name: 'Heading',
@@ -18,21 +18,21 @@ export default {
 };
 
 export const NewsGridFeatured = ({ heading }) =>
-  cardGridTwig({
-    card_type: 'news',
-    card_grid__heading: heading,
-    card_grid__variation: 'featured',
-    card_grid__cards: [1, 2, 3],
+  cardCollectionTwig({
+    card_example_type: 'news',
+    card_collection__heading: heading,
+    card_collection__variation: 'featured',
+    card_collection__cards: [1, 2, 3],
     ...newsCardData,
     ...imageData.responsive_images['3x2'],
   });
 
 export const NewsGridSecondary = ({ heading }) =>
-  cardGridTwig({
-    card_type: 'news',
-    card_grid__heading: heading,
-    card_grid__variation: 'secondary',
-    card_grid__cards: [1, 2, 3, 4],
+  cardCollectionTwig({
+    card_example_type: 'news',
+    card_collection__heading: heading,
+    card_collection__variation: 'secondary',
+    card_collection__cards: [1, 2, 3, 4],
     ...newsCardData,
     ...imageData.responsive_images['3x2'],
   });

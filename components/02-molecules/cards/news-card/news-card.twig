@@ -14,6 +14,7 @@
  #}
 
 {% set news_card__base_class = 'news-card' %}
+{% set news_card__image = news_card__image|default('true') %}
 
 {% set news_card__date %}
   {% include "@atoms/date-time/date-time.twig" with {
@@ -22,7 +23,7 @@
 {% endset %}
 
 {% set news_card__attributes = {
-  'data-card-featured': news_card__featured,
+  'data-card-featured': news_card__featured|default('true'),
   class: bem(news_card__base_class),
 } %}
 

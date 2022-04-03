@@ -1,18 +1,18 @@
 @use '../../00-tokens/tokens';
 
-.card-grid {
+.card-collection {
   padding-bottom: var(--size-spacing-10);
   margin-bottom: var(--size-spacing-10);
   border-bottom: var(--border-thickness-1) solid var(--color-divider);
 }
 
-.card-grid__heading {
+.card-collection__heading {
   @include tokens.h2-yale-new;
 
   margin-bottom: var(--size-spacing-10);
 }
 
-.card-grid__cards {
+.card-collection__cards {
   @media (min-width: tokens.$break-mobile) {
     display: flex;
     gap: var(--spacing-component-gutter);
