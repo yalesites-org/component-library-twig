@@ -24,6 +24,12 @@ export default {
       type: 'string',
       defaultValue: newsCardData.news_card__snippet,
     },
+    collectionType: {
+      name: 'Collection Type',
+      type: 'select',
+      options: ['grid', 'list'],
+      defaultValue: 'grid',
+    },
     featured: {
       name: 'Featured',
       type: 'boolean',
@@ -37,12 +43,22 @@ export default {
   },
 };
 
-export const NewsCard = ({ date, heading, snippet, featured, withImage }) =>
-  newsCardTwig({
-    ...imageData.responsive_images['3x2'],
-    news_card__date: date,
-    news_card__heading: heading,
-    news_card__snippet: snippet,
-    news_card__featured: featured ? 'true' : 'false',
-    news_card__image: withImage,
-  });
+export const NewsCard = ({
+  date,
+  heading,
+  snippet,
+  collectionType,
+  featured,
+  withImage,
+}) => `
+<div data-component-width='max' data-collection-type='${collectionType}' data-collection-featured="${featured}">
+${newsCardTwig({
+  ...imageData.responsive_images['3x2'],
+  news_card__date: date,
+  news_card__heading: heading,
+  news_card__snippet: snippet,
+  news_card__featured: featured ? 'true' : 'false',
+  news_card__image: withImage ? 'true' : 'false',
+})}
+</div>
+`;

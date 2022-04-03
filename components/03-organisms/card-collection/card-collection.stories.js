@@ -38,14 +38,17 @@ export const NewsGridFeatured = ({
   collectionType,
   featured,
   withImages,
-}) =>
-  cardCollectionTwig({
+}) => {
+  const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
+
+  return cardCollectionTwig({
     card_example_type: 'news',
     card_collection__type: collectionType,
     card_collection__heading: heading,
     card_collection__featured: featured ? 'true' : 'false',
     card_collection__with_images: withImages ? 'true' : 'false',
-    card_collection__cards: [1, 2, 3],
+    card_collection__cards: items,
     ...newsCardData,
     ...imageData.responsive_images['3x2'],
   });
+};
