@@ -1,7 +1,8 @@
 {#
  # Available Props:
- # - card_collection_type: grid (default) or list
- # -
+ # - card_collection__type: grid (default) or list
+ # - card_collection__featured: boolean (ish... actually just a string. But should be 'true', or 'false')
+ # - card_collection__with_images: boolean used to evaluate whether or not to show the image
  #
  # Available Variables:
  # - card_collection__heading
@@ -13,7 +14,8 @@
 {% set card_collection__base_class = 'card-collection' %}
 
 {% set card_collection__attributes = {
-  'data-collection-type': card_collection_type|default('grid'),
+  'data-collection-featured': card_collection__featured|default('true'),
+  'data-collection-type': card_collection__type|default('grid'),
   class: bem(card_collection__base_class),
 } %}
 

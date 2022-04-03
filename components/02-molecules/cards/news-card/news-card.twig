@@ -1,6 +1,5 @@
 {#
  # Available Props:
- # - news_card__featured: boolean (ish... actually just a string. But should be 'true', or 'false')
  # - news_card__image: boolean used to evaluate whether or not to show the image
  #
  # Available Variables:
@@ -23,7 +22,6 @@
 {% endset %}
 
 {% set news_card__attributes = {
-  'data-card-featured': news_card__featured|default('true'),
   class: bem(news_card__base_class),
 } %}
 
@@ -50,7 +48,7 @@
       } %}
     {% endif %}
   </div>
-  {% if news_card__image %}
+  {% if news_card__image == 'true' %}
     <div {{ bem('image', [], news_card__base_class) }}>
       {% block news_card__image %}
         {% include "@atoms/images/image/_responsive-image.twig" %}

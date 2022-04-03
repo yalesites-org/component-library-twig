@@ -14,7 +14,19 @@
 
 .card-collection__cards {
   @media (min-width: tokens.$break-mobile) {
-    display: flex;
+    display: grid;
     gap: var(--spacing-component-gutter);
+
+    [data-collection-type='list'] & {
+      flex-direction: column;
+    }
+
+    [data-collection-type='grid'][data-collection-featured='true'] & {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    [data-collection-type='grid'][data-collection-featured='false'] & {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
   }
 }

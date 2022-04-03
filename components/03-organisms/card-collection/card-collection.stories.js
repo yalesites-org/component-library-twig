@@ -14,25 +14,38 @@ export default {
       type: 'string',
       defaultValue: 'News Card Grid Heading',
     },
+    collectionType: {
+      name: 'Collection Type',
+      type: 'select',
+      options: ['grid', 'list'],
+      defaultValue: 'grid',
+    },
+    featured: {
+      name: 'Featured',
+      type: 'boolean',
+      defaultValue: true,
+    },
+    withImages: {
+      name: 'With Images',
+      type: 'boolean',
+      defaultValue: true,
+    },
   },
 };
 
-export const NewsGridFeatured = ({ heading }) =>
+export const NewsGridFeatured = ({
+  heading,
+  collectionType,
+  featured,
+  withImages,
+}) =>
   cardCollectionTwig({
     card_example_type: 'news',
+    card_collection__type: collectionType,
     card_collection__heading: heading,
-    card_collection__variation: 'featured',
+    card_collection__featured: featured ? 'true' : 'false',
+    card_collection__with_images: withImages ? 'true' : 'false',
     card_collection__cards: [1, 2, 3],
-    ...newsCardData,
-    ...imageData.responsive_images['3x2'],
-  });
-
-export const NewsGridSecondary = ({ heading }) =>
-  cardCollectionTwig({
-    card_example_type: 'news',
-    card_collection__heading: heading,
-    card_collection__variation: 'secondary',
-    card_collection__cards: [1, 2, 3, 4],
     ...newsCardData,
     ...imageData.responsive_images['3x2'],
   });
