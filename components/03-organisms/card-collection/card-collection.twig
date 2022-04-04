@@ -29,12 +29,12 @@
         heading: card_collection__heading,
       } %}
     {% endif %}
-    <div {{ bem('cards', [], card_collection__base_class) }}>
+    <ul {{ bem('cards', [], card_collection__base_class) }}>
       {% block card_collection__cards %}
         {% for card in card_collection__cards %}
           {% include "@organisms/card-collection/_card-collection--examples.twig" %}
         {% endfor %}
       {% endblock %}
-    </div>
+    </ul>
   </div>
 </div>

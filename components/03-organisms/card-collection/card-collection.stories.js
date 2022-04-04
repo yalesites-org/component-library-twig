@@ -30,6 +30,11 @@ export default {
       type: 'boolean',
       defaultValue: true,
     },
+    withLinks: {
+      name: 'With Links',
+      type: 'boolean',
+      defaultValue: false,
+    },
   },
 };
 
@@ -38,6 +43,7 @@ export const NewsCardCollection = ({
   collectionType,
   featured,
   withImages,
+  withLinks,
 }) => {
   const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
 
@@ -47,6 +53,7 @@ export const NewsCardCollection = ({
     card_collection__heading: heading,
     card_collection__featured: featured ? 'true' : 'false',
     card_collection__with_images: withImages ? 'true' : 'false',
+    card_collection__with_links: withLinks ? '#' : '',
     card_collection__cards: items,
     ...newsCardData,
     ...imageData.responsive_images['3x2'],

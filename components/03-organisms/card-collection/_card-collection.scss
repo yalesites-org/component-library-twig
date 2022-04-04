@@ -1,4 +1,5 @@
 @use '../../00-tokens/tokens';
+@use '../../01-atoms/atoms';
 
 .card-collection {
   padding-bottom: var(--size-spacing-10);
@@ -13,10 +14,12 @@
 }
 
 .card-collection__cards {
-  @media (min-width: tokens.$break-mobile) {
-    display: grid;
-    gap: var(--spacing-component-gutter);
+  @include atoms.list-reset;
 
+  display: grid;
+  gap: var(--spacing-component-gutter);
+
+  @media (min-width: tokens.$break-mobile) {
     [data-collection-type='list'] & {
       flex-direction: column;
     }

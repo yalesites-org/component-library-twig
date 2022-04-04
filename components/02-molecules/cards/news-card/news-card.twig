@@ -25,7 +25,7 @@
   class: bem(news_card__base_class),
 } %}
 
-<div {{ add_attributes(news_card__attributes) }}>
+<li {{ add_attributes(news_card__attributes) }}>
   <div {{ bem('content', [], news_card__base_class) }}>
     {% if news_card__date %}
       {% include "@atoms/typography/text/text.twig" with {
@@ -55,4 +55,4 @@
       {% endblock %}
     </div>
   {% endif %}
-</div>
+</li>
