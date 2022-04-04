@@ -15,7 +15,7 @@
 {% set news_card__base_class = 'news-card' %}
 {% set news_card__image = news_card__image|default('true') %}
 
-{% set news_card__date %}
+{% set news_card__formatted_date %}
   {% include "@atoms/date-time/date-time.twig" with {
     date_time__start: news_card__date,
   } %}
@@ -31,7 +31,7 @@
       {% include "@atoms/typography/text/text.twig" with {
         text__base_class: 'date',
         text__blockname: news_card__base_class,
-        text__content: news_card__date,
+        text__content: news_card__formatted_date,
       } %}
     {% endif %}
     {% include "@atoms/typography/headings/heading.twig" with {
