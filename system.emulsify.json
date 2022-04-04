@@ -120,6 +120,10 @@
           "structure": "molecules"
         },
         {
+          "name": "alert",
+          "structure": "molecules"
+        },
+        {
           "name": "callout",
           "structure": "molecules"
         },

@@ -10,20 +10,15 @@
   // @LINK: https://yaleits.atlassian.net/browse/YALB-350
   // @TODO: These color scheme custom property settings seem like they shouldn't
   // need to live here. At some point it'd be nice to get rid of them.
-  [data-component-theme] {
-    --link-styles-underline-bg-color: var(--link-color-base);
-    --link-styles-no-underline-bg-color: var(--link-color-hover);
-  }
-
   // Color schemes
   [data-component-theme='gray-800'],
   [data-component-theme='blue-yale'] {
-    --link-color-base: var(--color-basics-white);
+    --link-color-base: var(--color-basic-white);
     --link-color-hover: var(--color-blue-light);
   }
 
   [data-component-theme='gray-700'] {
-    --link-color-base: var(--color-basics-white);
+    --link-color-base: var(--color-basic-white);
     --link-color-hover: var(--color-gray-300);
   }
 
@@ -58,7 +53,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background-color: var(--link-styles-#{$style}-bg-color);
+    background-color: currentcolor;
     transform-origin: left center;
     transform: var(--link-styles-#{$style}-transform);
   }
