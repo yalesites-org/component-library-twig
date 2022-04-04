@@ -7,7 +7,7 @@ import imageData from '../../../01-atoms/images/image/image.yml';
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/News Card',
+  title: 'Molecules/Cards',
   argTypes: {
     date: {
       name: 'Date',

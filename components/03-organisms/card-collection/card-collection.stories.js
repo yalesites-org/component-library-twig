@@ -33,7 +33,7 @@ export default {
   },
 };
 
-export const NewsGridFeatured = ({
+export const NewsCardCollection = ({
   heading,
   collectionType,
   featured,
