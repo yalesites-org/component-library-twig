@@ -38,12 +38,12 @@
 <div {{ add_attributes(alert__attributes) }} data-component-width='max'>
   <div {{ bem('inner', [], alert__base_class) }}>
     {% if alert__icon %}
-      {% include "@atoms/images/icons/_icon.twig" with {
-        icon__name: alert__icon,
-        icon__modifiers: ['type'],
-        icon__blockname: alert__base_class,
-        icon__decorative: true,
-      } %}
+      <div {{ bem('icon', ['type'], alert__base_class) }}>
+        {% include "@atoms/images/icons/_icon.twig" with {
+          icon__name: alert__icon,
+          icon__decorative: true,
+        } %}
+      </div>
     {% endif %}
     <div {{ bem('content', [], alert__base_class) }}>
       <div {{ bem('content-inner', [], alert__base_class) }}>

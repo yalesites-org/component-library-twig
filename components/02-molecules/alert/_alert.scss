@@ -38,20 +38,35 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, color, alert);
   }
 }
 
-.alert__icon--type {
+.alert__icon {
+  display: flex;
   margin-right: var(--size-spacing-3);
   flex: 0 0 var(--size-icon);
-  height: var(--size-icon);
+
+  @media (max-width: tokens.$break-mobile-max) {
+    padding-top: var(--size-spacing-1);
+  }
 
   @media (min-width: tokens.$break-mobile) {
     margin-right: var(--size-spacing-5);
 
-    [data-alert-state='collapsed'] & {
-      --size-icon: 1.5625rem;
-    }
-
     [data-alert-state='expanded'] & {
-      --size-icon: 2.125rem;
+      align-self: flex-start;
+    }
+  }
+
+  svg {
+    height: var(--size-icon);
+    width: var(--size-icon);
+
+    @media (min-width: tokens.$break-mobile) {
+      [data-alert-state='collapsed'] & {
+        --size-icon: 1.5625rem;
+      }
+
+      [data-alert-state='expanded'] & {
+        --size-icon: 2.125rem;
+      }
     }
   }
 }
