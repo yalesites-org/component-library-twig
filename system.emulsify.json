@@ -128,6 +128,10 @@
           "structure": "molecules"
         },
         {
+          "name": "cards/news-card",
+          "structure": "molecules"
+        },
+        {
           "name": "image",
           "structure": "molecules"
         },
@@ -157,6 +161,10 @@
         {
           "name": "text-with-image",
           "structure": "molecules"
+        },
+        {
+          "name": "card-collection",
+          "structure": "organisms"
         },
         {
           "name": "menu/breadcrumbs",
