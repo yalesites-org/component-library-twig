@@ -129,7 +129,12 @@ $cta-outline-weights: (
   @include cta;
 }
 
-// Temporary place for this
+a.cta:hover,
+a.cta:focus {
+  text-decoration: underline;
+}
+
+// @TODO: Temporary place for this
 .cta-group {
   display: flex;
   gap: var(--size-spacing-7);

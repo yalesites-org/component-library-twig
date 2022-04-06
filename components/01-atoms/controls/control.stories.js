@@ -13,13 +13,16 @@ export const Cta = () => `
   <div class="cta-group">
     ${ctaTwig({
       cta__content: ctaText,
+      cta__href: '#',
     })}
     ${ctaTwig({
       cta__content: ctaText,
+      cta__href: '#',
       cta__radius: 'soft',
     })}
     ${ctaTwig({
       cta__content: ctaText,
+      cta__href: '#',
       cta__radius: 'pill',
     })}
   </div>
@@ -27,15 +30,18 @@ export const Cta = () => `
   <div class="cta-group">
     ${ctaTwig({
       cta__content: ctaText,
+      cta__href: '#',
       cta__style: 'outline',
     })}
     ${ctaTwig({
       cta__content: ctaText,
+      cta__href: '#',
       cta__radius: 'soft',
       cta__style: 'outline',
     })}
     ${ctaTwig({
       cta__content: ctaText,
+      cta__href: '#',
       cta__radius: 'pill',
       cta__style: 'outline',
     })}
@@ -44,16 +50,19 @@ export const Cta = () => `
   <div class="cta-group">
     ${ctaTwig({
       cta__content: ctaText,
+      cta__href: '#',
       cta__style: 'outline',
       cta__outline_weight: '1',
     })}
     ${ctaTwig({
       cta__content: ctaText,
+      cta__href: '#',
       cta__style: 'outline',
       cta__outline_weight: '2',
     })}
     ${ctaTwig({
       cta__content: ctaText,
+      cta__href: '#',
       cta__style: 'outline',
       cta__outline_weight: '4',
     })}
@@ -62,30 +71,36 @@ export const Cta = () => `
   <div class="cta-group">
     ${ctaTwig({
       cta__content: 'Fade',
+      cta__href: '#',
     })}
     ${ctaTwig({
       cta__content: 'Rise',
       cta__hover_style: 'rise',
+      cta__href: '#',
     })}
     ${ctaTwig({
       cta__content: 'Wipe',
       cta__hover_style: 'wipe',
+      cta__href: '#',
     })}
   </div>
   <div class="cta-group">
     ${ctaTwig({
       cta__content: 'Fade',
       cta__style: 'outline',
+      cta__href: '#',
     })}
     ${ctaTwig({
       cta__content: 'Rise',
       cta__style: 'outline',
       cta__hover_style: 'rise',
+      cta__href: '#',
     })}
     ${ctaTwig({
       cta__content: 'Wipe',
       cta__style: 'outline',
       cta__hover_style: 'wipe',
+      cta__href: '#',
     })}
   </div>
 `;
