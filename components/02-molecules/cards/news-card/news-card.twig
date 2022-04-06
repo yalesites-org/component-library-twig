@@ -21,11 +21,7 @@
   } %}
 {% endset %}
 
-{% set news_card__attributes = {
-  class: bem(news_card__base_class),
-} %}
-
-<li {{ add_attributes(news_card__attributes) }}>
+<li {{ bem(news_card__base_class) }}>
   <div {{ bem('content', [], news_card__base_class) }}>
     {% if news_card__date %}
       {% include "@atoms/typography/text/text.twig" with {
