@@ -129,7 +129,8 @@ $cta-outline-weights: (
   @include cta;
 }
 
-a.cta:hover {
+a.cta:hover,
+a.cta:focus {
   text-decoration: underline;
 }
 
