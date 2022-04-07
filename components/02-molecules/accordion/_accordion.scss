@@ -3,7 +3,8 @@
 
 // The accordion group.
 .accordion {
-  margin-bottom: var(--spacing-page-inner);
+  @include tokens.spacing-page-section;
+
   padding-block: var(--size-spacing-6);
 }
 

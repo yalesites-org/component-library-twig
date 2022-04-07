@@ -1,7 +1,7 @@
 @use '../../00-tokens/tokens';
 
 .text-with-image {
-  @include tokens.spacing-page-inner;
+  @include tokens.spacing-page-section;
 }
 
 .text-with-image__inner {

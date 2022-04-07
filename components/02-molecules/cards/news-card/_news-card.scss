@@ -43,10 +43,6 @@
 
   text-transform: uppercase;
   margin-bottom: var(--size-spacing-3);
-
-  [data-collection-featured='false'] & {
-    display: none;
-  }
 }
 
 .news-card__heading {
