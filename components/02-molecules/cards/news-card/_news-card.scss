@@ -2,8 +2,8 @@
 @use '../../../01-atoms/atoms';
 
 .news-card {
-  @include atoms.component-link;
-  @include atoms.component-image;
+  @include atoms.clickable-component-heading-link;
+  @include atoms.clickable-component-image;
 
   display: flex;
   flex-flow: column-reverse;

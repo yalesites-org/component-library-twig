@@ -71,7 +71,7 @@
 // - The component will likely also need some JS to round out the design and
 // functionality desired. Check `news-card.js` for an example. And/or read the
 // Cards chapter here: https://inclusive-components.design/cards.
-@mixin component-link {
+@mixin clickable-component-heading-link {
   // This sets `$selector` to the relative class, so that later, we can style
   // The `__heading-link` that applies to the appropriate component.
   $selector: &;

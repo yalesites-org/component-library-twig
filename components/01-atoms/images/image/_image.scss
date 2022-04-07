@@ -18,7 +18,7 @@ figure {
   margin-top: var(--size-spacing-4);
 }
 
-@mixin component-image {
+@mixin clickable-component-image {
   $selector: &;
 
   &__image {
