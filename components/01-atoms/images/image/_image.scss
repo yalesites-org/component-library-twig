@@ -14,6 +14,6 @@ figure {
 .caption {
   @include tokens.body-s-condensed;
 
-  color: var(--color-basics-brown-gray);
+  color: var(--color-basic-brown-gray);
   margin-top: var(--size-spacing-4);
 }

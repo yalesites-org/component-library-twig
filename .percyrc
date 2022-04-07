@@ -9,7 +9,7 @@ snapshot:
 storybook:
   exclude:
     # What should be excluded?
-    # - Anything that is simply a representation of a base or "primitive" tokens
+    # - Anything that is simply a representation of a base or "primitive" token
     # should be excluded. They will be represented in the larger components that
     # implement them anyway.
     # - Anything where the StoryBook display is dynamic (meaning it
@@ -27,6 +27,7 @@ storybook:
     # The only thing we'd be testing is the documentation around them.
     # Icons are dynamically generated
     - 'Atoms/Images: [a-zA-Z]+'
+    - 'Molecules/Alert: Alert'
     # The Footer and Header organisms demo all of their color options in the
     # respective "Examples" story, so we can skip the base ones with controls.
     - 'Organisms/Site/Footer: Footer'

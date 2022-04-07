@@ -143,7 +143,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   display: flex;
   flex-flow: var(--site-header-flex-direction) wrap;
   gap: var(--size-spacing-6);
-  padding: var(--size-spacing-6) 0;
+  padding: var(--size-spacing-7) 0 var(--size-spacing-6);
   justify-content: var(--site-header-layout-justify);
   align-items: var(--site-header-layout-align);
 

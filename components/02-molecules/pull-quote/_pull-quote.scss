@@ -6,7 +6,7 @@ blockquote {
 
 .pull-quote {
   --color-pull-quote-quote: var(--color-gray-800);
-  --color-pull-quote-attribution: var(--color-basics-brown-gray);
+  --color-pull-quote-attribution: var(--color-basic-brown-gray);
 
   @include tokens.spacing-page-inner;
 }

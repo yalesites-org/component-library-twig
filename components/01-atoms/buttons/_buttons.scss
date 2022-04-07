@@ -72,7 +72,7 @@ $button-outline-weights: (
   [data-component-theme='gray-700'] &,
   [data-component-theme='blue-yale'] & {
     // prettier-ignore
-    --color-button-primary: var(--color-theme-button-secondary, var(--color-basics-white));
+    --color-button-primary: var(--color-theme-button-secondary, var(--color-basic-white));
 
     // prettier-ignore
     --color-button-secondary: var(--color-theme-button-primary, var(--color-blue-yale));
@@ -115,7 +115,7 @@ $button-outline-weights: (
   &:active {
     --color-button-bg-active: var(--color-gray-700);
     --color-button-border-active: var(--color-gray-700);
-    --color-button-text-active: var(--color-basics-white);
+    --color-button-text-active: var(--color-basic-white);
     --button-box-shadow-active: none;
 
     // Don't ever use !important!!!

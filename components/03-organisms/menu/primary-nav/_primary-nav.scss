@@ -5,7 +5,7 @@
 :root {
   --color-muted: var(--color-gray-600);
   --color-navigation-border: var(--color-blue-yale);
-  --color-navigation-expanded-item: var(--color-basics-brown-gray);
+  --color-navigation-expanded-item: var(--color-basic-brown-gray);
 }
 
 @mixin primary-nav-item-level-0 {
@@ -24,7 +24,7 @@
 
   @media (min-width: tokens.$break-mobile) {
     position: relative;
-    padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-5);
+    padding: var(--size-spacing-5);
     border-bottom: var(--border-thickness-1) solid transparent;
     border-top: var(--border-thickness-1) solid transparent;
     border-right: var(--border-thickness-1) solid transparent;
