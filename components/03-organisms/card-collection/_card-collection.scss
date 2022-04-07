@@ -20,20 +20,23 @@
 
   @include atoms.list-reset;
 
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--card-collection-spacing);
 
   @media (min-width: tokens.$break-mobile) {
+    justify-content: center;
+
     [data-collection-type='list'] & {
       flex-direction: column;
     }
 
-    [data-collection-type='grid'][data-collection-featured='true'] & {
-      grid-template-columns: 1fr 1fr 1fr;
+    [data-collection-type='grid'][data-collection-featured='true'] & > * {
+      flex: 0 1 calc(33.33% - calc(var(--card-collection-spacing) * 2 / 3));
     }
 
-    [data-collection-type='grid'][data-collection-featured='false'] & {
-      grid-template-columns: 1fr 1fr 1fr 1fr;
+    [data-collection-type='grid'][data-collection-featured='false'] & > * {
+      flex: 0 1 calc(25% - calc(var(--card-collection-spacing) * 3 / 4));
     }
   }
 
