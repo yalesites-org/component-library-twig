@@ -1,5 +1,8 @@
 Drupal.behaviors.alert = {
   attach(context) {
+    // Inspiration and reasoning for this JavaScript can be found in the Cards
+    // chapter of the book linked below:
+    // https://inclusive-components.design/cards/#theredundantclickevent
     // Selectors
     const newsCards = context.querySelectorAll('.news-card');
 

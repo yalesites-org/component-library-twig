@@ -1,4 +1,4 @@
-@use '../../../00-tokens/tokens' as base;
+@use '../../../00-tokens/tokens';
 
 :root {
   // @LINK: https://yaleits.atlassian.net/browse/YALB-350
@@ -26,7 +26,7 @@
 // Style options are "underline" or "no-underline".
 // The style name indicates the initial appearance.
 @mixin link($style: underline, $family-weight: 'mallory-medium') {
-  @include base.animate('color');
+  @include tokens.animate('color');
 
   position: relative;
   color: var(--link-color-base);
@@ -35,7 +35,7 @@
 
   // Add the decorative bar under links
   &::after {
-    @include base.animate('transform');
+    @include tokens.animate('transform');
 
     content: '';
     position: absolute;
@@ -57,7 +57,7 @@
     transform: var(--link-styles-#{$style}-transform-hover);
   }
 
-  &:focus::after {
+  &:focus-visible::after {
     transform: scale(0, 1);
   }
 }
@@ -65,15 +65,25 @@
 // This mixin is used to style linked headings in components that should be
 // "fully clickable". e.g. When an entire card is clickable, this applies the
 // appropriate styles to the heading inside the card.
-// NOTE: Apply the mixin to the parent item. e.g.: `.card` and it will affect
+// NOTES:
+// - Apply the mixin to the parent item. e.g.: `.card` and it will affect
 // the `.card__heading-link` element inside.
+// - The component will likely also need some JS to round out the design and
+// functionality desired. Check `news-card.js` for an example. And/or read the
+// Cards chapter here: https://inclusive-components.design/cards.
 @mixin component-link {
   // This sets `$selector` to the relative class, so that later, we can style
   // The `__heading-link` that applies to the appropriate component.
   $selector: &;
 
+  // Style the component when it's heading is focused.
+  &:focus-within {
+    @include tokens.focus-styles;
+  }
+
+  // Style the heading link inside the component.
   #{$selector}__heading-link {
-    @include base.animate('color');
+    @include tokens.animate('color');
 
     position: relative;
     color: currentcolor;
@@ -82,7 +92,7 @@
 
     // Add the decorative bar under links
     &::after {
-      @include base.animate('transform');
+      @include tokens.animate('transform');
 
       content: '';
       position: absolute;
@@ -94,17 +104,29 @@
       transform-origin: left center;
       transform: var(--link-styles-no-underline-transform);
     }
+
+    &:focus {
+      // Setting `outline: none` is generally a huge no-no! In this case,
+      // however, we're visually and functionally making the entire component
+      // "clickable", so we've added focus styles to the component itself using
+      // `:focus-within` above, so we can safely remove this outline, since it
+      // would otherwise be redundant and create confusion as two different
+      // elements would appear to be focused at the same time.
+      outline: none;
+    }
   }
 
+  // Style the heading link when the component is hovered.
   &:hover #{$selector}__heading-link {
     color: var(--link-color-base);
+
+    &::after {
+      transform: var(--link-styles-no-underline-transform-hover);
+    }
   }
 
-  &:hover #{$selector}__heading-link::after {
-    transform: var(--link-styles-no-underline-transform-hover);
-  }
-
-  &:focus #{$selector}__heading-link::after {
+  // Style the heading link when the component is focused.
+  &:focus-visible #{$selector}__heading-link::after {
     transform: scale(0, 1);
   }
 }

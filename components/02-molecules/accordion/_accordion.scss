@@ -28,11 +28,6 @@
   gap: var(--size-spacing-3);
   align-items: center;
 
-  // This is required because `all: inherit` removes our generic focus styles.
-  &:focus {
-    @include tokens.focus;
-  }
-
   &:hover {
     color: var(--color-link);
   }

@@ -2,9 +2,7 @@
 @use '../../01-atoms/atoms';
 
 .card-collection {
-  padding-bottom: var(--size-spacing-10);
   margin-bottom: var(--size-spacing-10);
-  border-bottom: var(--border-thickness-1) solid var(--color-divider);
 }
 
 .card-collection__heading {
@@ -30,6 +28,20 @@
 
     [data-collection-type='grid'][data-collection-featured='false'] & {
       grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+  }
+
+  [data-collection-type='list'] & > * {
+    padding-bottom: var(--size-spacing-9);
+    border-bottom: var(--border-thickness-1) solid var(--color-divider);
+    @include tokens.animate(box-shadow);
+
+    &:hover {
+      // This shadow is hard coded because it has to be adjusted to make it
+      // appear as though it's a shadow on only the border-bottom element.
+      // There isn't currently anything else that looks like this. If there ever
+      // Is, perhaps it should be captured as a token in a new drop-shadow set.
+      box-shadow: 0 8px 6px -6px hsl(0deg 0% 0% / 16%);
     }
   }
 }
