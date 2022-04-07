@@ -1,6 +1,9 @@
 @use '../../../00-tokens/tokens';
+@use '../../../01-atoms/atoms';
 
 .news-card {
+  @include atoms.component-link;
+
   display: flex;
   flex-flow: column-reverse;
   gap: var(--size-spacing-4);
@@ -61,10 +64,6 @@
   [data-collection-type='list'][data-collection-featured='true'] & {
     @include tokens.h3-yale-new;
 
-    font-weight: var(--font-weights-yalenew-bold);
-  }
-
-  a {
     font-weight: var(--font-weights-yalenew-bold);
   }
 }

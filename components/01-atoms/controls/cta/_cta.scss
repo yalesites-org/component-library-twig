@@ -11,6 +11,8 @@ $cta-outline-weights: (
 );
 
 @mixin cta {
+  --link-color-base: var(--color-cta-border);
+
   // prettier-ignore
   border: var(--border-thickness-cta, var(--border-thickness-2)) solid var(--color-cta-border);
   border-radius: var(--border-radius-cta, var(--radius-0));

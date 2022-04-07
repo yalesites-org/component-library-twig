@@ -1,12 +1,6 @@
 @use '../../../00-tokens/tokens' as base;
 
 :root {
-  // The --color-link and --color-link-hover properties need to be defined here
-  // so that other elements can make use of them. Specifically the outline for
-  // Cta focus state.
-  --color-link: var(--color-blue-medium);
-  --color-link-hover: var(--color-text);
-
   // @LINK: https://yaleits.atlassian.net/browse/YALB-350
   // @TODO: These color scheme custom property settings seem like they shouldn't
   // need to live here. At some point it'd be nice to get rid of them.
@@ -39,10 +33,6 @@
   text-decoration: none;
   font-weight: var(--font-weights-#{$family-weight});
 
-  &:hover {
-    color: var(--link-color-hover);
-  }
-
   // Add the decorative bar under links
   &::after {
     @include base.animate('transform');
@@ -58,12 +48,63 @@
     transform: var(--link-styles-#{$style}-transform);
   }
 
+  &:hover {
+    color: var(--link-color-hover);
+  }
+
   // Animate the decorative bar when the link is hovered
   &:hover::after {
     transform: var(--link-styles-#{$style}-transform-hover);
   }
 
   &:focus::after {
+    transform: scale(0, 1);
+  }
+}
+
+// This mixin is used to style linked headings in components that should be
+// "fully clickable". e.g. When an entire card is clickable, this applies the
+// appropriate styles to the heading inside the card.
+// NOTE: Apply the mixin to the parent item. e.g.: `.card` and it will affect
+// the `.card__heading-link` element inside.
+@mixin component-link {
+  // This sets `$selector` to the relative class, so that later, we can style
+  // The `__heading-link` that applies to the appropriate component.
+  $selector: &;
+
+  #{$selector}__heading-link {
+    @include base.animate('color');
+
+    position: relative;
+    color: currentcolor;
+    text-decoration: none;
+    font-weight: var(--font-weights-yalenew-bold);
+
+    // Add the decorative bar under links
+    &::after {
+      @include base.animate('transform');
+
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: currentcolor;
+      transform-origin: left center;
+      transform: var(--link-styles-no-underline-transform);
+    }
+  }
+
+  &:hover #{$selector}__heading-link {
+    color: var(--link-color-base);
+  }
+
+  &:hover #{$selector}__heading-link::after {
+    transform: var(--link-styles-no-underline-transform-hover);
+  }
+
+  &:focus #{$selector}__heading-link::after {
     transform: scale(0, 1);
   }
 }

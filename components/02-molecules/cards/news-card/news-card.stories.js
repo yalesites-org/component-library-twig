@@ -3,6 +3,8 @@ import newsCardTwig from './news-card.twig';
 import newsCardData from './news-card.yml';
 import imageData from '../../../01-atoms/images/image/image.yml';
 
+import './news-card';
+
 /**
  * Storybook Definition.
  */
@@ -57,15 +59,19 @@ export const NewsCard = ({
   withImage,
   withLink,
 }) => `
-<div data-component-width='max' data-collection-type='${collectionType}' data-collection-featured="${featured}">
-${newsCardTwig({
-  ...imageData.responsive_images['3x2'],
-  news_card__date: date,
-  news_card__heading: heading,
-  news_card__snippet: snippet,
-  news_card__url: withLink ? '#' : '',
-  news_card__featured: featured ? 'true' : 'false',
-  news_card__image: withImage ? 'true' : 'false',
-})}
+<div class='card-collection' data-component-width='max' data-collection-type='${collectionType}' data-collection-featured="${featured}">
+  <div class='card-collection__inner'>
+    <ul class='card-collection__cards'>
+      ${newsCardTwig({
+        ...imageData.responsive_images['3x2'],
+        news_card__date: date,
+        news_card__heading: heading,
+        news_card__snippet: snippet,
+        news_card__url: withLink ? '#' : '',
+        news_card__featured: featured ? 'true' : 'false',
+        news_card__image: withImage ? 'true' : 'false',
+      })}
+    </ul>
+  </div>
 </div>
 `;
