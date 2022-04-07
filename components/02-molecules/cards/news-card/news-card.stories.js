@@ -42,11 +42,6 @@ export default {
       type: 'boolean',
       defaultValue: true,
     },
-    withLink: {
-      name: 'With Link',
-      type: 'boolean',
-      defaultValue: false,
-    },
   },
 };
 
@@ -57,7 +52,6 @@ export const NewsCard = ({
   collectionType,
   featured,
   withImage,
-  withLink,
 }) => `
 <div class='card-collection' data-component-width='max' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -67,9 +61,9 @@ export const NewsCard = ({
         news_card__date: date,
         news_card__heading: heading,
         news_card__snippet: snippet,
-        news_card__url: withLink ? '#' : '',
         news_card__featured: featured ? 'true' : 'false',
         news_card__image: withImage ? 'true' : 'false',
+        news_card__url: newsCardData.news_card__url,
       })}
     </ul>
   </div>
