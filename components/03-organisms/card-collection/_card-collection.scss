@@ -12,10 +12,16 @@
 }
 
 .card-collection__cards {
+  --card-collection-spacing: var(--spacing-component-gutter);
+
+  [data-collection-featured='false'] & {
+    --card-collection-spacing: var(--spacing-component-gutter-secondary);
+  }
+
   @include atoms.list-reset;
 
   display: grid;
-  gap: var(--spacing-component-gutter);
+  gap: var(--card-collection-spacing);
 
   @media (min-width: tokens.$break-mobile) {
     [data-collection-type='list'] & {
@@ -32,9 +38,10 @@
   }
 
   [data-collection-type='list'] & > * {
-    padding-bottom: var(--spacing-component-gutter);
-    border-bottom: var(--border-thickness-1) solid var(--color-divider-subtle);
     @include tokens.animate(box-shadow);
+
+    padding-bottom: var(--card-collection-spacing);
+    border-bottom: var(--border-thickness-1) solid var(--color-divider-subtle);
 
     &:hover {
       // This shadow is hard coded because it has to be adjusted to make it
