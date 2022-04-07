@@ -3,6 +3,7 @@
 
 .news-card {
   @include atoms.component-link;
+  @include atoms.component-image;
 
   display: flex;
   flex-flow: column-reverse;
