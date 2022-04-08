@@ -72,17 +72,13 @@
 // functionality desired. Check `news-card.js` for an example. And/or read the
 // Cards chapter here: https://inclusive-components.design/cards.
 @mixin clickable-component-heading-link {
-  // This sets `$selector` to the relative class, so that later, we can style
-  // The `__heading-link` that applies to the appropriate component.
-  $selector: &;
-
   // Style the component when it's heading is focused.
   &:focus-within {
     @include tokens.focus-styles;
   }
 
   // Style the heading link inside the component.
-  #{$selector}__heading-link {
+  [class*='__heading-link'] {
     @include tokens.animate('color');
 
     position: relative;
@@ -117,7 +113,7 @@
   }
 
   // Style the heading link when the component is hovered.
-  &:hover #{$selector}__heading-link {
+  &:hover [class*='__heading-link'] {
     color: var(--link-color-base);
 
     &::after {
@@ -126,7 +122,7 @@
   }
 
   // Style the heading link when the component is focused.
-  &:focus-visible #{$selector}__heading-link::after {
+  &:focus-visible [class*='__heading-link']::after {
     transform: scale(0, 1);
   }
 }
