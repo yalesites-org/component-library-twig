@@ -1,7 +1,7 @@
 {# Variables are documented in the main `callout.twig` file. #}
 
 {% set callout__base_class = 'callout' %}
-{% set callout__link__type = callout__link__type|default('button') %}
+{% set callout__link__type = callout__link__type|default('cta') %}
 
 {% set callout__attributes = {
   class: bem(callout__base_class),
@@ -20,16 +20,16 @@
     } %}
     {% if callout__link__url and callout__link__content %}
       {% if callout__link__type == 'link' %}
-        {% include "@atoms/links/link.twig" with {
+        {% include "@atoms/controls/text-link/text-link.twig" with {
           link__url: callout__link__url,
           link__content: callout__link__content,
           link__blockname: callout__base_class,
         } %}
       {% else %}
-        {% include "@atoms/buttons/button.twig" with {
-          button__content: callout__link__content,
-          button__href: callout__link__url,
-          button__blockname: callout__base_class,
+        {% include "@atoms/controls/cta/cta.twig" with {
+          cta__content: callout__link__content,
+          cta__href: callout__link__url,
+          cta__blockname: callout__base_class,
         } %}
       {% endif %}
     {% endif %}

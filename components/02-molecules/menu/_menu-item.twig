@@ -14,8 +14,8 @@
   {% set item__modifiers = item__modifiers|merge(['with-sub']) %}
 {% endif %}
 
-{# Button Modifiers #}
-{% set button__modifiers = ['level-' ~ menu__level] %}
+{# Cta Modifiers #}
+{% set cta__modifiers = ['level-' ~ menu__level] %}
 
 {# Set aria-current if the link is the current page #}
 {% if item.is_active %}
@@ -32,7 +32,7 @@
     {% if directory %}
       {{ link(item.title, item.url, bem('link', item__modifiers, menu__base_class)|merge(link__attributes)) }}
     {% else %}
-      {% include "@atoms/links/link.twig" with {
+      {% include "@atoms/controls/text-link/text-link.twig" with {
         link__content: item.title,
         link__url: item.url,
         link__base_class: 'link',
@@ -44,7 +44,7 @@
   {% endif %}
 {% endset %}
 
-{% set menu_item__button__content %}
+{% set menu_item__cta__content %}
   {{ item.title }}
   {% include "@atoms/images/icons/_icon.twig" with {
     icon__name: 'angle-down',
@@ -63,10 +63,10 @@
   {{- list__item -}}
   {% if item.below %}
     {% if menu__level == 0 and  menu__level__toggle %}
-      {% include "@atoms/buttons/button.twig" with {
-        button__content: menu_item__button__content,
-        button__base_class: 'toggle',
-        button__blockname: menu__base_class,
+      {% include "@atoms/controls/cta/cta.twig" with {
+        cta__content: menu_item__cta__content,
+        cta__base_class: 'toggle',
+        cta__blockname: menu__base_class,
         aria_expanded: 'false',
       } %}
     {% endif %}

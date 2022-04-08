@@ -61,19 +61,19 @@
         {% endif %}
       </div>
       {% if alert__link__content and alert__link__url %}
-        {% include "@atoms/links/link.twig" with {
+        {% include "@atoms/controls/text-link/text-link.twig" with {
           link__content: alert__link__content,
           link__url: alert__link__url,
           link__blockname: alert__base_class,
         } %}
       {% endif %}
     </div>
-    {% embed "@atoms/buttons/button.twig" with {
-      button__base_class: 'toggle',
-      button__blockname: alert__base_class,
+    {% embed "@atoms/controls/cta/cta.twig" with {
+      cta__base_class: 'toggle',
+      cta__blockname: alert__base_class,
       aria_expanded: alert__toggle__aria_expanded,
     } %}
-      {% block button__content %}
+      {% block cta__content %}
         <span {{ bem('visually-hidden') }}>{{ alert__toggle__text }}</span>
         {% include "@atoms/images/icons/_icon.twig" with {
           icon__name: alert__toggle,
