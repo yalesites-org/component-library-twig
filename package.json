@@ -2,6 +2,9 @@
   "name": "@yalesites-org/component-library-twig",
   "version": "0.0.0-development",
   "description": "YaleSites Twig component library.",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "webpack --config ./webpack/webpack.prod.js",
     "develop": "concurrently --raw 'npm run webpack' 'npm run storybook'",
