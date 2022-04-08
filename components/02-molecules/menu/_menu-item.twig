@@ -17,9 +17,7 @@
 {# Button Modifiers #}
 {% set button__modifiers = ['level-' ~ menu__level] %}
 
-
-{# @TODO: When we build this in Drupal. Verify this works #}
-{# @LINK: https://yaleits.atlassian.net/browse/YALB-352 #}
+{# Set aria-current if the link is the current page #}
 {% if item.is_active %}
   {% set link__attributes = link__attributes|merge({
     'aria-current': 'page',
@@ -32,7 +30,7 @@
     <span {{ add_attributes(link__attributes) }}>{{- item.title -}}</span>
   {% else %}
     {% if directory %}
-      {{ link(item.title, item.url, bem('link', item__modifiers, menu__base_class)) }}
+      {{ link(item.title, item.url, bem('link', item__modifiers, menu__base_class)|merge(link__attributes)) }}
     {% else %}
       {% include "@atoms/links/link.twig" with {
         link__content: item.title,
