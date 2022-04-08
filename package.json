@@ -3,7 +3,8 @@
   "version": "0.0.0-development",
   "description": "YaleSites Twig component library.",
   "files": [
-    "dist"
+    "dist",
+    "components"
   ],
   "scripts": {
     "build": "webpack --config ./webpack/webpack.prod.js",
