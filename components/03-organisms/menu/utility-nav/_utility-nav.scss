@@ -1,7 +1,6 @@
 @use '../../../00-tokens/tokens';
-@use '../../../01-atoms/buttons/buttons';
-@use '../../../01-atoms/lists/list';
-@use '../../../02-molecules/menu/menu';
+@use '../../../01-atoms/atoms';
+@use '../../../02-molecules/molecules';
 
 .utility-bar {
   --utility-bar-gap: var(--size-spacing-7);
@@ -25,7 +24,7 @@
 }
 
 .utility-nav__menu {
-  @include list.reset;
+  @include atoms.list-reset;
 
   display: flex;
   flex-wrap: wrap;
@@ -39,11 +38,11 @@
 }
 
 .utility-nav__link {
-  @include menu.link;
+  @include molecules.menu-link;
 }
 
-.utility-nav__button {
-  @include buttons.button;
+.utility-nav__cta {
+  @include atoms.cta;
 
   @media (max-width: tokens.$break-mobile-max) {
     align-self: center;

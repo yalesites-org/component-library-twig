@@ -12,7 +12,7 @@
   class: bem(accordion__item__base_class),
 } %}
 
-{% set accordion__item__button__content %}
+{% set accordion__item__cta__content %}
   {{ accordion__item__heading }}
   {% include "@atoms/images/icons/_icon.twig" with {
     icon__name: 'angle-down',
@@ -22,10 +22,16 @@
 {% endset %}
 
 {% set accordion__item__heading__content %}
-  {% include "@atoms/buttons/button.twig" with {
-    button__content: accordion__item__button__content,
-    button__base_class: 'toggle',
-    button__blockname: accordion__item__base_class,
+  {# @TODO: This (and other places a `<button>` element is used) doesn't need
+   # any of the extra markup that CTAs have because they shouldn't visually look
+   # like a "CTA". So, we should create a generic `<button>` component that
+   # simply accepts a class and some aria attributes, but none of the
+   # data-attributes that CTAs need to support their styling #}
+  {# @LINK: https://yaleits.atlassian.net/browse/YALB-474 #}
+  {% include "@atoms/controls/cta/cta.twig" with {
+    cta__content: accordion__item__cta__content,
+    cta__base_class: 'toggle',
+    cta__blockname: accordion__item__base_class,
     aria_expanded: 'true',
   } %}
 {% endset %}

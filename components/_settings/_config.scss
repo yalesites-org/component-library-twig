@@ -6,10 +6,10 @@
   --color-divider: var(--color-gray-500);
 
   // prettier-ignore
-  --color-button-primary: var(--color-theme-button-primary, var(--color-blue-yale));
+  --color-cta-primary: var(--color-theme-cta-primary, var(--color-blue-yale));
 
   // prettier-ignore
-  --color-button-secondary: var(--color-theme-button-secondary, var(--color-basic-white));
+  --color-cta-secondary: var(--color-theme-cta-secondary, var(--color-basic-white));
 
   // prettier-ignore
   --color-pull-quote-accent: var(--color-theme-pull-quote-accent, var(--color-blue-yale));
@@ -17,7 +17,7 @@
   ///////////
   // Radii //
   ///////////
-  --button-radius-soft: var(--radius-4);
+  --cta-radius-soft: var(--radius-4);
 
   /////////////
   // Spacing //
