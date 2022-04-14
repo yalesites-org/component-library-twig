@@ -17,9 +17,7 @@
 {# Cta Modifiers #}
 {% set cta__modifiers = ['level-' ~ menu__level] %}
 
-
-{# @TODO: When we build this in Drupal. Verify this works #}
-{# @LINK: https://yaleits.atlassian.net/browse/YALB-352 #}
+{# Set aria-current if the link is the current page #}
 {% if item.is_active %}
   {% set link__attributes = link__attributes|merge({
     'aria-current': 'page',
@@ -33,7 +31,7 @@
   {% else %}
     {% include "@atoms/controls/text-link/text-link.twig" with {
       link__content: item.title,
-      link__url: item.url,
+      link__url: item.url.toString,
       link__base_class: 'link',
       link__blockname: menu__base_class,
       link__modifiers: item__modifiers,
