@@ -3,7 +3,8 @@
 
 // The accordion group.
 .accordion {
-  margin-bottom: var(--spacing-page-inner);
+  @include tokens.spacing-page-section;
+
   padding-block: var(--size-spacing-6);
 }
 
@@ -27,11 +28,6 @@
   display: flex;
   gap: var(--size-spacing-3);
   align-items: center;
-
-  // This is required because `all: inherit` removes our generic focus styles.
-  &:focus {
-    @include tokens.focus;
-  }
 
   &:hover {
     color: var(--color-link);

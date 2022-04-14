@@ -6,6 +6,8 @@
 $callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
 
 .callouts {
+  @include tokens.spacing-page-section;
+
   background-color: var(--color-callouts-background);
 
   // Component themes
@@ -88,8 +90,8 @@ $callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
   margin-top: var(--size-spacing-4);
 }
 
-.callout__button {
-  @include atoms.button-button;
+.callout__cta {
+  @include atoms.cta;
 
   margin-top: var(--size-spacing-6);
 }

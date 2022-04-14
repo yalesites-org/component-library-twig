@@ -43,6 +43,10 @@ blockquote {
 .pull-quote__quote {
   font: var(--font-style-body-l);
   color: var(--color-pull-quote-quote);
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .pull-quote__attribution {

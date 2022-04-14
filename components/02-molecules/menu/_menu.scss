@@ -8,12 +8,12 @@
   }
 }
 
-@mixin link {
+@mixin menu-link {
   @include tokens.animate('color');
 
   color: var(--color-text);
   text-decoration: none;
-  font-weight: var(--font-weights-mallory-500);
+  font-weight: var(--font-weights-mallory-medium);
 
   &:hover {
     color: var(--menu-link-color);

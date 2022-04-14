@@ -31,8 +31,18 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
   }
 }
 
+// The spacing-page-inner mixin should be applied to components that are
+// "content-like." They generally accompany other components within a "section."
 @mixin spacing-page-inner {
   &:not(.no-page-spacing) {
     margin-bottom: var(--spacing-page-inner);
   }
+}
+
+// The spacing-page-section mixin should be applied to components that are
+// intended to "stand out" from the components around them. A callout, or a card
+// grid, for example, may relate to the text around them, but they're not "part"
+// of the text.
+@mixin spacing-page-section {
+  margin-bottom: var(--spacing-page-section);
 }
