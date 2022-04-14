@@ -6,6 +6,8 @@
 $callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
 
 .callouts {
+  @include tokens.spacing-page-section;
+
   background-color: var(--color-callouts-background);
 
   // Component themes
