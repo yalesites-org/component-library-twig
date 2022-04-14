@@ -11,12 +11,14 @@ $cta-outline-weights: (
 );
 
 @mixin cta {
+  --link-color-base: var(--color-cta-border);
+
   // prettier-ignore
   border: var(--border-thickness-cta, var(--border-thickness-2)) solid var(--color-cta-border);
   border-radius: var(--border-radius-cta, var(--radius-0));
   background-color: var(--color-cta-bg);
   color: var(--color-cta-text);
-  font-weight: var(--font-weights-mallory-500);
+  font-weight: var(--font-weights-mallory-medium);
   padding: var(--size-spacing-3) var(--size-spacing-6);
   text-decoration: none;
   text-align: center;
@@ -130,7 +132,7 @@ $cta-outline-weights: (
 }
 
 a.cta:hover,
-a.cta:focus {
+a.cta:focus-visible {
   text-decoration: underline;
 }
 

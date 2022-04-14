@@ -20,9 +20,9 @@
       link__content: heading,
       link__url: heading__url,
       link__attributes: heading__link__attributes,
-      link__base_class: heading__link__base_class,
+      link__base_class: heading__link__base_class|default('heading-link'),
       link__modifiers: heading__link__modifiers,
-      link__blockname: heading__link__blockname|default(heading__base_class),
+      link__blockname: heading__link__blockname|default(heading__blockname),
     } %}
   {% else %}
     {{- heading -}}

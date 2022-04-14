@@ -1,0 +1,14 @@
+{#
+ # Available Variables:
+ # - date_time__start
+ # - date_time__end
+ #}
+
+{# Date/Time formats used in this file #}
+{% set format__date = 'F j, Y' %} {# April 1, 2022 #}
+
+{# Specific Date #}
+{# Expample: April 1, 2022 #}
+{% set date_time = date_time__start|date(format__date) %}
+
+{{ date_time }}

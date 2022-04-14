@@ -6,7 +6,7 @@ $thicknesses: map.deep-get(tokens.$tokens, size, thickness);
 $positions: map.deep-get(tokens.$tokens, layout, flex-position);
 
 .divider__wrapper {
-  @include tokens.spacing-page-inner;
+  @include tokens.spacing-page-section;
 }
 
 .divider__inner {

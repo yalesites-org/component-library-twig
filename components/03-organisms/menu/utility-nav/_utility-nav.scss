@@ -71,7 +71,7 @@
 
     &::placeholder {
       color: inherit;
-      font-weight: var(--font-weights-mallory-500);
+      font-weight: var(--font-weights-mallory-medium);
 
       @media (max-width: tokens.$break-mobile-max) {
         text-align: center;
@@ -90,7 +90,7 @@
       &::placeholder {
         color: var(--color-gray-300);
         font-style: italic;
-        font-weight: var(--font-weights-mallory-400);
+        font-weight: var(--font-weights-mallory-book);
       }
     }
 

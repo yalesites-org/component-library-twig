@@ -34,12 +34,11 @@ export default {
 };
 
 const alertResetInstructions = `
-<div class="text-field"><h2>Resetting Alerts in Storybook</h2><p>Once you've closed a dismissible alert, they will not show up again, even after page reloads. In order to see them again, here in storybook, click this reset button, and all alerts will be reset to their initial state.</p>${ctaTwig(
-  {
-    cta__content: 'Reset dismissed alerts',
-    cta__attributes: { onClick: 'resetAlerts();' },
-  },
-)}
+<h2>Resetting Alerts in Storybook</h2><p>Once you've closed a dismissible alert, they will not show up again, even after page reloads. In order to see them again, here in storybook, click this reset button, and all alerts will be reset to their initial state.</p>
+${ctaTwig({
+  cta__content: 'Reset dismissed alerts',
+  cta__attributes: { onClick: 'resetAlerts();' },
+})}
 `;
 
 export const Alert = ({ type, heading, content, linkContent }) => `

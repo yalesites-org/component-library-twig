@@ -17,3 +17,15 @@ figure {
   color: var(--color-basic-brown-gray);
   margin-top: var(--size-spacing-4);
 }
+
+@mixin clickable-component-image {
+  $selector: &;
+
+  &__image {
+    @include tokens.animate('box-shadow');
+  }
+
+  &:hover #{$selector}__image {
+    box-shadow: var(--drop-shadow-level-1);
+  }
+}
