@@ -29,14 +29,18 @@
   {% if menu__contextual and item.is_active %}
     <span {{ add_attributes(link__attributes) }}>{{- item.title -}}</span>
   {% else %}
-    {% include "@atoms/controls/text-link/text-link.twig" with {
-      link__content: item.title,
-      link__url: item.url.toString,
-      link__base_class: 'link',
-      link__blockname: menu__base_class,
-      link__modifiers: item__modifiers,
-      link__attributes: link__attributes,
-    } %}
+    {% if directory %}
+      {% set link__url = item.url.toString %}
+    {% else %}
+      {% set link__url = item.url %}
+    {% endif %}
+      {% include "@atoms/controls/text-link/text-link.twig" with {
+        link__content: item.title,
+        link__base_class: 'link',
+        link__blockname: menu__base_class,
+        link__modifiers: item__modifiers,
+        link__attributes: link__attributes,
+      } %}
   {% endif %}
 {% endset %}
 
