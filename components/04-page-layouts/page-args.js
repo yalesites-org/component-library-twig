@@ -59,8 +59,7 @@ const argTypes = {
   meta: {
     name: 'Meta',
     type: 'string',
-    defaultValue:
-      '<span>By Charlyn Paradis</span><span>January 25, 2022</span>',
+    defaultValue: `<span>By Charlyn Paradis</span><span class="date-time">January 25, 2022</span>`,
   },
 };
 
