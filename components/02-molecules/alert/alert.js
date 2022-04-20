@@ -28,6 +28,15 @@ Drupal.behaviors.alert = {
       localStorage.setItem(id, 'dismissed');
     };
 
+    // Function to remove old alerts from storage.
+    const resetAlerts = () => {
+      Object.keys(localStorage).forEach((key) => {
+        if (key.substring(0, 12) === 'ys-alert-id-') {
+          localStorage.removeItem(key);
+        }
+      });
+    };
+
     // Function to check whether localStorage is both supported and available.
     // See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#testing_for_availability
     function storageAvailable(type) {
@@ -65,6 +74,11 @@ Drupal.behaviors.alert = {
 
         // Get the alert state if previously interacted with by the user.
         const state = localStorage.getItem(id);
+
+        // If the current alert has no state, clear other values from storage.
+        if (state == null) {
+          resetAlerts();
+        }
 
         // If the alert was dismissed, keep it dismissed.
         if (state === 'dismissed') {
