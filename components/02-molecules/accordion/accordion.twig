@@ -24,7 +24,7 @@
   } %}
 {% endset %}
 
-<div {{ bem(accordion__base_class) }} data-component-width="content">
+<div {{ bem(accordion__base_class) }} data-component-width="content" data-embedded-components>
   <div {{ bem('inner', [], accordion__base_class) }}>
     {% if accordion__heading %}
       {% include "@atoms/typography/headings/heading.twig" with {
