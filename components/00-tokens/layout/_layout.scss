@@ -16,7 +16,9 @@
 $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 
 [data-component-width] {
-  padding-inline: var(--size-spacing-site-gutter);
+  &:not([data-embedded-components] [data-component-width]) {
+    padding-inline: var(--size-spacing-site-gutter);
+  }
 }
 
 [class*='__inner'] {
