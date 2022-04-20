@@ -6,10 +6,14 @@
 
 {% set embed__base_class = 'embed' %}
 
-<div {{ bem(embed__base_class) }}>
+{% set embed__attributes = {
+  'data-component-width': 'max',
+  class: bem(embed__base_class),
+} %}
+
+<div {{ add_attributes(embed__attributes) }}>
   <div {{ bem('inner', [], embed__base_class) }}>
     <iframe {{ bem('iframe', [], embed__base_class) }} title="{{ embed__title }}" src="{{ embed__src }}" height="100%" width="100%" loading="lazy">
-      <p>Your browser does not support iframes.</p>
     </iframe>
   </div>
 </div>

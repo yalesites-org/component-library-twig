@@ -9,6 +9,7 @@ export default {
 
 export const Embed = () =>
   embedTwig({
-    embed__src: 'https://blog.logrocket.com/the-ultimate-guide-to-iframes/',
-    embed__title: 'Blog about embeds',
+    embed__src:
+      'https://yalesurvey.ca1.qualtrics.com/jfe/form/SV_cDezt2JVsNok77o',
+    embed__title: 'Example Qualtrics Form',
   });
