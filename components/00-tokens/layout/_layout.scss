@@ -11,6 +11,10 @@
   @media (min-width: tokens.$break-l) {
     --size-spacing-site-gutter: var(--size-spacing-7);
   }
+
+  @media (min-width: tokens.$break-2xl) {
+    --size-spacing-site-gutter: var(--size-spacing-9);
+  }
 }
 
 $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
