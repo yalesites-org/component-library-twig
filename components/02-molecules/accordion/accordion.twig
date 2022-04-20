@@ -1,3 +1,11 @@
+{#
+ # Available Variables:
+ # - accordion__heading
+ #
+ # Available Blocks:
+ # - accordion__items
+ #}
+
 {% set accordion__base_class = 'accordion' %}
 
 {% set expand_all__content %}
@@ -16,7 +24,7 @@
   } %}
 {% endset %}
 
-<div {{ bem(accordion__base_class) }} data-component-width="content">
+<div {{ bem(accordion__base_class) }} data-component-width="content" data-embedded-components>
   <div {{ bem('inner', [], accordion__base_class) }}>
     {% if accordion__heading %}
       {% include "@atoms/typography/headings/heading.twig" with {
@@ -53,12 +61,14 @@
         {% endembed %}
       {% endblock %}
     {% endembed %}
-    {% for item in accordion__items %}
-      {% include "@molecules/accordion/_accordion-item.twig" with {
-        accordion__item__heading: item.accordion__item__heading,
-        accordion__item__content: item.accordion__item__content,
-        accordion__item__heading__level: accordion__heading ? '3' : '2',
-      } %}
-    {% endfor %}
+    {% block accordion__items %}
+      {% for item in accordion__items %}
+        {% include "@molecules/accordion/_accordion-item.twig" with {
+          accordion__item__heading: item.accordion__item__heading,
+          accordion__item__content: item.accordion__item__content,
+          accordion__item__heading__level: accordion__heading ? '3' : '2',
+        } %}
+      {% endfor %}
+    {% endblock %}
   </div>
 </div>
