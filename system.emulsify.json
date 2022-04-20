@@ -132,6 +132,10 @@
           "structure": "molecules"
         },
         {
+          "name": "embed",
+          "structure": "molecules"
+        },
+        {
           "name": "image",
           "structure": "molecules"
         },
