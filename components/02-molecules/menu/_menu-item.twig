@@ -1,5 +1,3 @@
-{% import "@molecules/menu/menu.twig" as menus %}
-
 {% set item__modifiers = ['level-' ~ menu__level] %}
 {% set item__attributes = item__attributes|default({}) %}
 
@@ -60,6 +58,9 @@
   list__item__attributes: item__attributes,
 } %}
 {% block list__item__content %}
+  {# This import needs to be inside the block for it to work in Drupal #}
+  {% import "@molecules/menu/menu.twig" as menus %}
+
   {{- list__item -}}
   {% if item.below %}
     {% if menu__level == 0 and  menu__level__toggle %}
@@ -70,7 +71,7 @@
         aria_expanded: 'false',
       } %}
     {% endif %}
-    {{ menus.menu_links(item.below, attributes, menu__level + 1, menu__base_class, menu__modifiers, menu__blockname, menu__list__type, menu__level__toggle, item__base_class, item__modifiers, item__blockname) }}
+    {{ menus.menu_links(item.below, attributes, menu__level + 1, menu__base_class, menu__modifiers, menu__blockname, menu__list__type, menu__level__toggle, item__base_class, item__modifiers, item__blockname, directory) }}
   {% endif %}
 {% endblock %}
 {% endembed %}
