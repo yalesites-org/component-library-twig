@@ -10,7 +10,7 @@
 {% set icon__base_class = icon__base_class|default('icon') %}
 {# If `directory` is defined, set the path relative for Drupal.
  # Otherwise, set the path relative to the Component Library. #}
-{% set icon__url = directory ? '/' ~ directory ~ '/dist/' %}
+{% set icon__url = directory ? '/' ~ directory ~ '/node_modules/@yalesites-org/component-library-twig/dist/' %}
 
 {% set unique_name = icon__name ~ '-' ~ random() %}
 
