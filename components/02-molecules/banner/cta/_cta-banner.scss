@@ -53,6 +53,9 @@ $break-cta-banner: tokens.$break-m;
   flex-direction: column;
   align-items: flex-start;
   padding: var(--size-spacing-6) var(--size-spacing-9) var(--size-spacing-7);
+
+  // Override the background to transparent, so we can add an opacity to it via
+  // the `::before` element below.
   background-color: transparent;
 
   [data-banner-content-layout='bottom'] & {
