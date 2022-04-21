@@ -48,15 +48,12 @@ $break-cta-banner: tokens.$break-m;
 }
 
 .cta-banner__content {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: var(--size-spacing-6) var(--size-spacing-9) var(--size-spacing-7);
-
-  @media (min-width: $break-cta-banner) {
-    position: relative;
-    opacity: 0.9;
-  }
+  background-color: transparent;
 
   [data-banner-content-layout='bottom'] & {
     @media (min-width: $break-cta-banner) {
@@ -87,6 +84,21 @@ $break-cta-banner: tokens.$break-m;
       justify-content: center;
       margin-left: auto;
     }
+  }
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    content: '';
+    background-color: var(--color-background);
+    opacity: 0.9;
+  }
+
+  > * {
+    position: relative;
   }
 }
 
