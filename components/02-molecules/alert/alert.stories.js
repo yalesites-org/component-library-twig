@@ -44,11 +44,11 @@ ${ctaTwig({
 export const Alert = ({ type, heading, content, linkContent }) => `
 <script>
   const resetAlerts = () => {
-    for (key in localStorage) {
-      if (key.substring(0, 12) == 'ys-alert-id-') {
+    Object.keys(localStorage).forEach((key) => {
+      if (key.substring(0, 12) === 'ys-alert-id-') {
         localStorage.removeItem(key);
       }
-    }
+    });
 
     location.reload();
   };
@@ -76,11 +76,11 @@ Alert.argTypes = {
 export const AlertExamples = ({ heading, content, linkContent }) => `
 <script>
   const resetAlerts = () => {
-    for (key in localStorage) {
-      if (key.substring(0, 12) == 'ys-alert-id-') {
+    Object.keys(localStorage).forEach((key) => {
+      if (key.substring(0, 12) === 'ys-alert-id-') {
         localStorage.removeItem(key);
       }
-    }
+    });
 
     location.reload();
   };
