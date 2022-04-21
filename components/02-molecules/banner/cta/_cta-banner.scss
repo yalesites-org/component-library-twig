@@ -1,0 +1,64 @@
+@use '../../../00-tokens/tokens';
+
+.cta-banner {
+  padding: 0;
+}
+
+.cta-banner__content-wrapper {
+  position: relative;
+  display: flex;
+  min-height: 33.75rem;
+  max-width: tokens.$break-max-width;
+  margin-inline: auto;
+}
+
+.cta-banner__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.cta-banner__content {
+  position: relative;
+  display: flex;
+  opacity: 0.9;
+
+  [data-banner-content-layout='bottom'] & {
+    flex-basis: 100%;
+    align-self: flex-end;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--size-spacing-5) var(--size-spacing-9);
+  }
+
+  $content-width: clamp(320px, 33%, 500px);
+
+  [data-banner-content-layout='left'] & {
+    flex-direction: column;
+    flex-basis: $content-width;
+    justify-content: center;
+    align-items: flex-start;
+    padding: var(--size-spacing-9);
+  }
+
+  [data-banner-content-layout='right'] & {
+    flex-direction: column;
+    flex-basis: $content-width;
+    justify-content: center;
+    align-items: flex-start;
+    padding: var(--size-spacing-9);
+    margin-left: auto;
+  }
+}
+
+.cta-banner__heading {
+  @include tokens.h2-yale-new;
+}
