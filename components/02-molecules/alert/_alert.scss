@@ -135,9 +135,10 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, color, alert);
 
   flex: 0 0 var(--size-icon);
   display: flex;
+  transform: rotate(180deg);
 
   [data-alert-state='collapsed'] & {
-    transform: rotate(180deg);
+    transform: rotate(0deg);
   }
 
   @media (min-width: tokens.$break-mobile) {
