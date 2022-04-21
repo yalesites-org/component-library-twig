@@ -1,5 +1,6 @@
 // Twig templates
 import pageTitleTwig from './page-title.twig';
+import dateTimeTwig from '../../01-atoms/date-time/date-time.twig';
 
 // Data files
 // import textData from './text/text.yml';
@@ -13,8 +14,9 @@ export default {
     meta: {
       name: 'Meta',
       type: 'string',
-      defaultValue:
-        '<span>By Charlyn Paradis</span><span>January 25, 2022</span>',
+      defaultValue: `<span>By Charlyn Paradis</span>${dateTimeTwig({
+        date_time__start: '2022-01-25',
+      })}`,
     },
   },
 };
