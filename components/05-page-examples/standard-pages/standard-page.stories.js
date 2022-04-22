@@ -28,7 +28,30 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes,
+  argTypes: {
+    ...argTypes,
+    introContent: {
+      name: 'Intro Content',
+      options: [
+        'none',
+        'image',
+        'image--highlight',
+        'image--feature',
+        'image--max',
+        'pop-out-image',
+        'text-with-image',
+        'text-with-image--highlight',
+      ],
+      type: 'select',
+      defaultValue: 'none',
+    },
+    calloutBackground: {
+      name: 'Callout Background Color',
+      type: 'select',
+      options: ['blue-yale', 'gray-700', 'beige'],
+      defaultValue: 'beige',
+    },
+  },
 };
 
 export const Basic = ({
@@ -64,29 +87,6 @@ export const Basic = ({
     callout__background_color: calloutBackground,
     ...textWithImageData,
   });
-Basic.argTypes = {
-  introContent: {
-    name: 'Intro Content',
-    options: [
-      'none',
-      'image',
-      'image--highlight',
-      'image--feature',
-      'image--max',
-      'pop-out-image',
-      'text-with-image',
-      'text-with-image--highlight',
-    ],
-    type: 'select',
-    defaultValue: 'none',
-  },
-  calloutBackground: {
-    name: 'Callout Background Color',
-    type: 'select',
-    options: ['blue-yale', 'gray-700', 'beige'],
-    defaultValue: 'beige',
-  },
-};
 
 export const WithBanner = ({
   siteName,
@@ -98,6 +98,8 @@ export const WithBanner = ({
   utilityNavSearch,
   siteFooterTheme,
   footerBorderThickness,
+  introContent,
+  calloutBackground,
   heading,
   snippet,
   linkContent,
@@ -120,6 +122,8 @@ export const WithBanner = ({
     utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
     ...imageData.responsive_images['16x9'],
+    intro_content: introContent,
+    callout__background_color: calloutBackground,
     ...textWithImageData,
     banner__heading: heading,
     banner__snippet: snippet,
