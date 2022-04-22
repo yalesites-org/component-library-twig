@@ -14,6 +14,7 @@ import breadcrumbData from '../../03-organisms/menu/breadcrumbs/breadcrumbs.yml'
 import imageData from '../../01-atoms/images/image/image.yml';
 import textWithImageData from '../../02-molecules/text-with-image/text-with-image.yml';
 import bannerData from '../../02-molecules/banner/banner.yml';
+import newsCardData from '../../02-molecules/cards/news-card/news-card.yml';
 
 // JavaScript.
 import '../../00-tokens/layout/layout';
@@ -41,6 +42,8 @@ export default {
         'pop-out-image',
         'text-with-image',
         'text-with-image--highlight',
+        'collection-featured',
+        'collection-secondary',
       ],
       type: 'select',
       defaultValue: 'none',
@@ -86,6 +89,7 @@ export const Basic = ({
     intro_content: introContent,
     callout__background_color: calloutBackground,
     ...textWithImageData,
+    ...newsCardData,
   });
 
 export const WithBanner = ({
@@ -125,6 +129,7 @@ export const WithBanner = ({
     intro_content: introContent,
     callout__background_color: calloutBackground,
     ...textWithImageData,
+    ...newsCardData,
     banner__heading: heading,
     banner__snippet: snippet,
     banner__link__content: linkContent,
