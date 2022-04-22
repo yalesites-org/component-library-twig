@@ -128,3 +128,9 @@ $break-cta-banner: tokens.$break-m;
 
   flex: 0 0 auto;
 }
+
+.cta-banner__link {
+  @include atoms.link;
+
+  flex: 0 0 auto;
+}

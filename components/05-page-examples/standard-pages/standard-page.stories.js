@@ -109,6 +109,7 @@ export const WithBanner = ({
   linkContent,
   contentLayout,
   bgColor,
+  linkStyle,
 }) =>
   standardPageBannerTwig({
     site_name: siteName,
@@ -134,6 +135,7 @@ export const WithBanner = ({
     banner__snippet: snippet,
     banner__link__content: linkContent,
     banner__link__url: bannerData.banner__link__url,
+    banner__link__style: linkStyle,
     banner__content__layout: contentLayout,
     banner__content__background: bgColor,
   });
@@ -164,5 +166,11 @@ WithBanner.argTypes = {
     type: 'select',
     options: colorPairingsData,
     defaultValue: 'gray-800',
+  },
+  linkStyle: {
+    name: 'Link Style',
+    type: 'select',
+    options: ['cta', 'text-link'],
+    defaultValue: 'cta',
   },
 };

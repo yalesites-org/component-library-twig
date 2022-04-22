@@ -32,6 +32,12 @@ export default {
       type: 'string',
       defaultValue: bannerData.banner__link__content,
     },
+    linkStyle: {
+      name: 'Link Style',
+      type: 'select',
+      options: ['cta', 'text-link'],
+      defaultValue: 'cta',
+    },
     contentLayout: {
       name: 'Content Layout',
       type: 'select',
@@ -51,6 +57,7 @@ export const banner = ({
   heading,
   snippet,
   linkContent,
+  linkStyle,
   contentLayout,
   bgColor,
 }) =>
@@ -60,6 +67,7 @@ export const banner = ({
     banner__snippet: snippet,
     banner__link__content: linkContent,
     banner__link__url: bannerData.banner__link__url,
+    banner__link__style: linkStyle,
     banner__content__layout: contentLayout,
     banner__content__background: bgColor,
   });
