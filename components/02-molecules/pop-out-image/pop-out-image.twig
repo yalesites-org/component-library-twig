@@ -13,7 +13,7 @@
 
 {% set pop_out_image__attributes = {
   'data-component-width': pop_out_image__width|default('content'),
-  class: bem(pop_out_image__base_class),
+  'class': bem(pop_out_image__base_class),
 } %}
 
 {% set pop_out_image__image %}
@@ -29,7 +29,7 @@
       {% embed "@atoms/images/image/image.twig" with {
         figure__caption: pop_out_image__caption,
       } %}
-        {% block figure__content %}
+        {% block image__image %}
           {{ pop_out_image__image }}
         {% endblock %}
       {% endembed %}
