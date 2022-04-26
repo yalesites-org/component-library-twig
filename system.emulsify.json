@@ -124,6 +124,14 @@
           "structure": "molecules"
         },
         {
+          "name": "banner",
+          "structure": "molecules"
+        },
+        {
+          "name": "banner/cta",
+          "structure": "molecules"
+        },
+        {
           "name": "callout",
           "structure": "molecules"
         },
