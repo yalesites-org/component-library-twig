@@ -1,3 +1,4 @@
+@use 'sass:selector';
 @use '../../../00-tokens/tokens';
 
 $cta-radii: (
@@ -125,15 +126,18 @@ $cta-outline-weights: (
     color: var(--color-cta-text-active) !important;
     box-shadow: var(--cta-box-shadow-active) !important;
   }
+
+  // @at-root docs: https://sass-lang.com/documentation/at-rules/at-root
+  @at-root #{selector.unify(&, a)} {
+    &:hover,
+    &:focus-visible {
+      text-decoration: underline;
+    }
+  }
 }
 
 .cta {
   @include cta;
-}
-
-a.cta:hover,
-a.cta:focus-visible {
-  text-decoration: underline;
 }
 
 // @TODO: Temporary place for this
