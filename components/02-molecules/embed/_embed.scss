@@ -1,3 +1,7 @@
+@use '../../00-tokens/tokens';
+
 .embed__iframe {
+  @include tokens.spacing-page-section;
+
   height: 70vh;
 }
