@@ -124,11 +124,23 @@
           "structure": "molecules"
         },
         {
+          "name": "banner",
+          "structure": "molecules"
+        },
+        {
+          "name": "banner/cta",
+          "structure": "molecules"
+        },
+        {
           "name": "callout",
           "structure": "molecules"
         },
         {
           "name": "cards/news-card",
+          "structure": "molecules"
+        },
+        {
+          "name": "embed",
           "structure": "molecules"
         },
         {

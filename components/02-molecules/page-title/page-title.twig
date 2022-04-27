@@ -8,7 +8,7 @@
 
 {% set page_title__attributes = {
   'data-component-width': 'max',
-  class: bem(page_title__base_class),
+  class: bem(page_title__base_class, [], page_title__blockname, page_title__additional_classes),
 } %}
 
 <div {{ add_attributes(page_title__attributes) }}>
