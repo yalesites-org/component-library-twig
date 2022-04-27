@@ -28,6 +28,7 @@ storybook:
     # Icons are dynamically generated
     - 'Atoms/Images: [a-zA-Z]+'
     - 'Molecules/Alert: Alert'
+    - 'Molecules/Embed: Embed'
     # The Footer and Header organisms demo all of their color options in the
     # respective "Examples" story, so we can skip the base ones with controls.
     - 'Organisms/Site/Footer: Footer'
