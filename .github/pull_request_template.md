@@ -12,6 +12,7 @@
 
 ### Design Review
 - [ ] Verify the designs match the [Figma Designs](https://www.figma.com/file/OVfmCW5s1gI7xnrM8ibX2y/UI-Kit-Alpha-%5BYaleSites%5D)
+- [ ] Review any new [Percy builds](https://percy.io/95144ff9/component-library-twig)
 
 ### Accessibility Review
 - [ ] Verify the component meets Accessibility requirements
