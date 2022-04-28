@@ -1,3 +1,10 @@
+{#
+ # In this file, we're checking `if directory` in order to determine if the
+ # active environment is a Drupal site. We need to do this because Drupal
+ # returns a complex object, and in order to get the path, we use `.toStrong`,
+ # which, unfortunately, breaks environments like Storybook.
+ #}
+
 {% set item__modifiers = ['level-' ~ menu__level] %}
 {% set item__attributes = item__attributes|default({}) %}
 

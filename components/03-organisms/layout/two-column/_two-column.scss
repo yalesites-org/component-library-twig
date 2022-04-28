@@ -1,7 +1,10 @@
 @use '../../../00-tokens/tokens';
 
-.yds-two-column {
-  @media (min-width: tokens.$break-mobile) {
+$break-layout-two-column: tokens.$break-2xl;
+$break-layout-two-column-max: $break-layout-two-column - 0.05;
+
+.yds-two-column__inner {
+  @media (min-width: $break-layout-two-column) {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -9,12 +12,12 @@
 }
 
 .yds-two-column__primary {
-  @media (max-width: tokens.$break-mobile-max) {
+  @media (max-width: $break-layout-two-column-max) {
     margin-bottom: var(--spacing-page-inner);
   }
 
-  @media (min-width: tokens.$break-mobile) {
-    flex: 1 1 auto;
+  @media (min-width: $break-layout-two-column) {
+    flex: 1 0 var(--size-component-layout-width-content);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -22,13 +25,15 @@
 }
 
 .yds-two-column__secondary {
-  @media (max-width: tokens.$break-mobile-max) {
+  @media (max-width: $break-layout-two-column-max) {
     border-top: 1px solid;
     padding-top: var(--spacing-page-inner);
   }
 
-  @media (min-width: tokens.$break-mobile) {
-    flex: 0 1 calc(37.5rem + calc(var(--size-spacing-site-gutter) * 2));
+  @media (min-width: $break-layout-two-column) {
+    flex: 0 1 calc(37.5rem + var(--spacing-component-gutter));
     border-left: 1px solid;
+    margin-left: calc(var(--spacing-component-gutter) * 2);
+    padding-left: var(--spacing-component-gutter);
   }
 }
