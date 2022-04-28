@@ -1,0 +1,22 @@
+{% set two_column__base_class = 'yds-two-column' %}
+
+<div {{ bem(two_column__base_class) }}>
+  {% if directory %}
+    <div {{ region_attributes.primary.addClass('yds-two-column__primary') }}>
+  {% else %}
+    <div {{ bem('primary', [], two_column__base_class) }}>
+  {% endif %}
+    {% block two_column__primary %}
+      {{ content.primary }}
+    {% endblock %}
+  </div>
+  {% if directory %}
+    <div {{ region_attributes.secondary.addClass('yds-two-column__secondary') }}>
+  {% else %}
+    <div {{ bem('secondary', [], two_column__base_class) }}>
+  {% endif %}
+    {% block two_column__secondary %}
+      {{ content.secondary }}
+    {% endblock %}
+  </div>
+</div>
