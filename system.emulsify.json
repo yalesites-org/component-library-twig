@@ -87,7 +87,12 @@
       ],
       "components": [
         {
-          "name": "buttons",
+          "name": "controls",
+          "structure": "atoms",
+          "required": true
+        },
+        {
+          "name": "date-time",
           "structure": "atoms",
           "required": true
         },
