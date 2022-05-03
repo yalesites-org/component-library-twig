@@ -3,6 +3,10 @@
 $break-layout-two-column: tokens.$break-2xl;
 $break-layout-two-column-max: $break-layout-two-column - 0.05;
 
+.yds-two-column {
+  @include tokens.spacing-page-section;
+}
+
 .yds-two-column__inner {
   @media (min-width: $break-layout-two-column) {
     display: flex;
