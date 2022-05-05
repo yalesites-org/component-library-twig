@@ -16,6 +16,10 @@ figure {
 
   color: var(--color-basic-brown-gray);
   margin-top: var(--size-spacing-4);
+
+  > p:last-child {
+    margin-bottom: 0;
+  }
 }
 
 @mixin clickable-component-image {

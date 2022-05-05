@@ -184,6 +184,10 @@
           "structure": "organisms"
         },
         {
+          "name": "layout",
+          "structure": "organisms"
+        },
+        {
           "name": "menu/breadcrumbs",
           "structure": "organisms"
         },

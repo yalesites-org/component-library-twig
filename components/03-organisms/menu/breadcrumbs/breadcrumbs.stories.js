@@ -5,7 +5,6 @@ import breadcrumbsTwig from './breadcrumbs.twig';
 import breadcrumbsData from './breadcrumbs.yml';
 
 // JavaScript.
-// import '../../../02-molecules/menu/menu-toggle/menu-toggle';
 import './breadcrumbs';
 
 /**
