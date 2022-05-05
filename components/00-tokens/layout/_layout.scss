@@ -30,9 +30,9 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 }
 
 [class*='__inner'] {
+  width: var(--component-width);
   max-width: 100%;
   margin-inline: auto;
-  width: var(--component-width);
 
   @each $width, $value in $layout-widths {
     [data-component-width='#{$width}'] & {
