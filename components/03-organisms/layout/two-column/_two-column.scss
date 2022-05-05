@@ -13,6 +13,20 @@ $break-layout-two-column-max: $break-layout-two-column - 0.05;
     justify-content: space-between;
     align-items: flex-start;
   }
+
+  // Flex sets `min-width` of children to `auto` by default... but this breaks
+  // some of our base layout styles (causes horizontal scrolling), so we need to
+  // reset it to `0`.
+  > * {
+    min-width: 0;
+
+    // Then, some of our components that are intended to be "full-page-width"
+    // will expand outside of the layout columns, so we need to set a max-width
+    // on those to keep them contained within the section columns.
+    > * {
+      max-width: 100%;
+    }
+  }
 }
 
 .yds-two-column__primary {
