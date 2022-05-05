@@ -20,13 +20,13 @@
       {% endblock %}
     </div>
     {% if directory %}
-      <div {{ region_attributes.secondary.addClass('yds-two-column__secondary') }}>
+      <aside {{ region_attributes.secondary.addClass('yds-two-column__secondary') }}>
     {% else %}
-      <div {{ bem('secondary', [], two_column__base_class) }}>
+      <aside {{ bem('secondary', [], two_column__base_class) }}>
     {% endif %}
       {% block two_column__secondary %}
         {{ content.secondary }}
       {% endblock %}
-    </div>
+    </aside>
   </div>
 </div>
