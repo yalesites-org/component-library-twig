@@ -10,6 +10,9 @@ import textWithImageData from './text-with-image.yml';
  */
 export default {
   title: 'Molecules/Text With Image',
+  parameters: {
+    layout: 'fullscreen',
+  },
   argTypes: {
     width: {
       name: 'Width',
