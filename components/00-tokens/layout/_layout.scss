@@ -56,7 +56,7 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 @mixin spacing-page-section($flush: false) {
   margin-block: var(--spacing-page-section);
 
-  @if  $flush == true {
+  @if $flush == true {
     &:last-child {
       margin-bottom: 0;
     }

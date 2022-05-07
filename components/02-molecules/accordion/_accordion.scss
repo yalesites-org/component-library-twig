@@ -8,6 +8,12 @@
   padding-block: var(--size-spacing-6);
 }
 
+.accordion__heading {
+  @include tokens.h2-yale-new;
+
+  margin-bottom: var(--size-spacing-5);
+}
+
 .accordion__controls {
   @include atoms.list-reset;
 
@@ -30,7 +36,7 @@
   align-items: center;
 
   &:hover {
-    color: var(--color-link);
+    color: var(--link-color-base);
   }
 }
 
@@ -67,7 +73,7 @@
   text-align: left;
 
   &:hover {
-    color: var(--color-link);
+    color: var(--link-color-base);
   }
 }
 
