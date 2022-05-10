@@ -4,12 +4,23 @@
 :root {
   --size-spacing-site-gutter: var(--size-spacing-5);
 
+  /* The `--spacing-page-section` variable is the larger spacing that is
+   * used between "section" components. Components that are "standalone" content
+   * like a card grid, or a callout should use this. */
+  --spacing-page-section: var(--size-spacing-8);
+
+  /* The `--spacing-page-inner` variable is the smaller spacing that is used
+   * between "content-like" components. It is used between components within a
+   * logical section. */
+  --spacing-page-inner: var(--size-spacing-7);
+
   @media (min-width: tokens.$break-m) {
     --size-spacing-site-gutter: var(--size-spacing-6);
   }
 
   @media (min-width: tokens.$break-l) {
     --size-spacing-site-gutter: var(--size-spacing-7);
+    --spacing-page-section: var(--size-spacing-10);
   }
 
   @media (min-width: tokens.$break-xl) {
