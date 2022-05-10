@@ -53,10 +53,16 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 // intended to "stand out" from the components around them. A callout, or a card
 // grid, for example, may relate to the text around them, but they're not "part"
 // of the text.
-@mixin spacing-page-section($flush: false) {
+@mixin spacing-page-section($flush-bottom: false, $flush-top: false) {
   margin-block: var(--spacing-page-section);
 
-  @if $flush == true {
+  @if $flush-top == true {
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  @if $flush-bottom == true {
     &:last-child {
       margin-bottom: 0;
     }
