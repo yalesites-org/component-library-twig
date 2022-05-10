@@ -17,7 +17,8 @@
 
     {% if figure__caption %}
       <figcaption {{ bem('caption') }}>
-        {{- figure__caption -}}
+        {# We use `|raw` here to accomodate WYSIWYG content #}
+        {{- figure__caption|raw -}}
       </figcaption>
     {% endif %}
   </figure>
