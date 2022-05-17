@@ -25,12 +25,11 @@
 {% endset %}
 
 {% set accordion__attibutes = {
-  'data-embedded-components': '',
   'data-component-width': 'content',
   class: bem(accordion__base_class),
 } %}
 
-<div {{ add_attributes(accordion__attibutes) }}>
+<div {{ add_attributes(accordion__attibutes) }} data-embedded-components>
   <div {{ bem('inner', [], accordion__base_class) }}>
     {% if accordion__heading %}
       {% include "@atoms/typography/headings/heading.twig" with {
