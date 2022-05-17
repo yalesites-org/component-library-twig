@@ -6,7 +6,7 @@
 $callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
 
 .callouts {
-  @include tokens.spacing-page-section;
+  @include tokens.spacing-page-section($flush-bottom: true);
 
   background-color: var(--color-callouts-background);
 

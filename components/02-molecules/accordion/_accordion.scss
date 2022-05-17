@@ -4,8 +4,12 @@
 // The accordion group.
 .accordion {
   @include tokens.spacing-page-section;
+}
 
-  padding-block: var(--size-spacing-6);
+.accordion__heading {
+  @include tokens.h2-yale-new;
+
+  margin-bottom: var(--size-spacing-5);
 }
 
 .accordion__controls {
@@ -30,7 +34,7 @@
   align-items: center;
 
   &:hover {
-    color: var(--color-link);
+    color: var(--link-color-base);
   }
 }
 
@@ -67,7 +71,7 @@
   text-align: left;
 
   &:hover {
-    color: var(--color-link);
+    color: var(--link-color-base);
   }
 }
 
