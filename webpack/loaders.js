@@ -45,7 +45,7 @@ const JSLoader = {
 };
 
 const SVGSpriteLoader = {
-  test: /icons\/.*\.svg$/, // your icons directory
+  test: /icons\/.*\.svg$/,
   loader: 'svg-sprite-loader',
   options: {
     extract: true,
