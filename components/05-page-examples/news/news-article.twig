@@ -1,5 +1,6 @@
 {% extends "@page-layouts/full-width.twig" %}
-  {% block page__content %}
+  {% block page__header %}
+    {% include "@organisms/site-header/site-header.twig" %}
     {% include "@organisms/menu/breadcrumbs/breadcrumbs.twig" with {
       breadcrumbs__items: [
         {title: 'Home', url: '#'},
@@ -7,6 +8,8 @@
         {title: 'Davis Team Project Wins Award for Research', url: '#', is_active: true},
       ],
     } %}
+  {% endblock %}
+  {% block page__content %}
     {% include "@molecules/page-title/page-title.twig" %}
     {% include "@molecules/image/content-image.twig" with {
       content_image__width: 'highlight',
