@@ -37,7 +37,6 @@
     "@storybook/addon-essentials": "^6.5.3",
     "@storybook/addon-links": "^6.5.3",
     "@storybook/html": "^6.5.3",
-    "@whitespace/storybook-addon-html": "^5.0.0",
     "@yalesites-org/eslint-config-and-other-formatting": "^1.0.0",
     "babel-loader": "^8.2.3",
     "concurrently": "^7.0.0",
