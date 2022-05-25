@@ -45,13 +45,13 @@
  ###########}
 {% elseif date_time__format == 'date' %}
   {# If start and end date/time are equal. #}
-  {% if date_time__start|date(format__iso) == date_time__end|date(format__iso) %}
+  {% if date_time__start|date(format__html_date) == date_time__end|date(format__html_date) %}
     {# Specific Date #}
     {# Expample: April 1, 2022 #}
     {% set date_time = date_time__start|date(format__date) %}
   {# If start and end times are different. #}
   {% else %}
-    {% set date_time = date_time__start|date(format__date) ~ date_time__end|date(format__date) %}
+    {% set date_time = date_time__start|date(format__date) ~ '-' ~ date_time__end|date(format__date) %}
   {% endif %}
 {###############
  # DATE AND TIME

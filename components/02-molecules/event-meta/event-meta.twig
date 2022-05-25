@@ -9,6 +9,7 @@
 {% set event_meta__day %}
   {% include "@atoms/date-time/date-time.twig" with {
     date_time__start: event_meta__date_start,
+    date_time__end: event_meta__date_end,
     date_time__format: 'date',
   } %}
 {% endset %}
