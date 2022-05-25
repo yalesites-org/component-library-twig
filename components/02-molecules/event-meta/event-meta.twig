@@ -1,0 +1,40 @@
+{#
+ # Available Variables:
+ # - event_meta__date_start
+ # - event_meta__date_end
+ #}
+
+{% set event_meta__day %}
+  {% include "@atoms/date-time/date-time.twig" with {
+    date_time__start: event_meta__date_start,
+  } %}
+{% endset %}
+
+{% set event_meta__time %}
+  {% include "@atoms/date-time/date-time.twig" with {
+    date_time__start: event_meta__date_start,
+    date_time__end: event_meta__date_end,
+    date_time__format: 'time',
+  } %}
+{% endset %}
+
+{% set event_meta__base_class = 'event-meta' %}
+
+<div {{ bem(event_meta__base_class, [], event_meta__base_class) }}>
+  <div {{ bem('inner', [], event_meta__base_class) }}>
+    {# Date #}
+    <div {{ bem('date', [], event_meta__base_class) }}>
+      {# Day #}
+      <div {{ bem('day', [], event_meta__base_class) }}>{{ event_meta__day }}</div>
+      {# Time #}
+      <div {{ bem('time', [], event_meta__base_class) }}>{{ event_meta__time }}</div>
+    </div>
+
+    {# Event Details #}
+      {# Format #}
+      {# Location #}
+      {# CTAs #}
+        {# Primary CTA #}
+        {# Add to calendar #}
+  </div>
+</div>
