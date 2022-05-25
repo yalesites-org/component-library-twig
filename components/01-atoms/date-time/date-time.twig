@@ -5,15 +5,42 @@
  #}
 
 {# Date/Time formats used in this file #}
-{% set format__html_date = 'Y-m-d' %}
+{% set format__iso = 'c' %} {# 2022-04-01T08:34:42+00:00 #}
+{% set format__html_date = 'Y-m-d' %} {# 2022-04-01 #}
 {% set format__date = 'F j, Y' %} {# April 1, 2022 #}
+{% set format__time__start = 'g-' %} {# 8- #}
+{% set format__time = 'g a T' %} {# 11 pm ET #}
 
-{# Specific Date #}
-{# Expample: April 1, 2022 #}
-{% set date_time = date_time__start|date(format__date) %}
+{# Set the end date to the start date, by default, so that Twig doesn't
+ # erroneously use "today" like it does when no date is provided.
+ # In the logic below we filter for "When start and end are the same, which, in
+ # combination with this, accounts for "no end date provided" as well. #}
+{% set date_time__end = date_time__end|default(date_time__start) %}
+
+{# @TODO accont for when no end date is provided. #}
+{# Determine which date format to use #}
+{% if date_time__format == 'time' %}
+  {# If start and end times are equal #}
+  {% if date_time__start|date(format__iso) == date_time__end|date(format__iso) %}
+    {% set date_time = date_time__start|date(format__time) %}
+  {# If start and end times are different #}
+  {% else %}
+    {% set date_time = date_time__start|date(format__time__start) ~ date_time__end|date(format__time) %}
+  {% endif %}
+{% else %}
+  {# If start and end date/time are equal. #}
+  {% if date_time__start|date(format__iso) == date_time__end|date(format__iso) %}
+    {# Specific Date #}
+    {# Expample: April 1, 2022 #}
+    {% set date_time = date_time__start|date(format__date) %}
+  {# If start and end times are different. #}
+  {% else %}
+    {% set date_time = date_time__start|date(format__date) ~ date_time__end|date(format__date) %}
+  {% endif %}
+{% endif %}
 
 {% set date_time__attribuites = {
-  datetime: date_time__start|date(format__html_date),
+  datetime: date_time__start|date(format__iso),
   class: bem('date-time'),
 } %}
 
