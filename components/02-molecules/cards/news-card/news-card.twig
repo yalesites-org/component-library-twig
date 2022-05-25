@@ -18,6 +18,7 @@
 {% set news_card__formatted_date %}
   {% include "@atoms/date-time/date-time.twig" with {
     date_time__start: news_card__date,
+    date_time__format: 'date',
   } %}
 {% endset %}
 
