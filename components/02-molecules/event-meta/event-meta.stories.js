@@ -1,3 +1,5 @@
+import { eventArgTypes } from '../../04-page-layouts/page-args';
+
 import eventMetaTwig from './event-meta.twig';
 
 /**
@@ -6,33 +8,7 @@ import eventMetaTwig from './event-meta.twig';
 export default {
   title: 'Molecules/Event Meta',
   argTypes: {
-    startDate: {
-      name: 'Start Date/Time',
-      type: 'string',
-      defaultValue: '2022-04-01T08:00',
-    },
-    endDate: {
-      name: 'End Date/Time',
-      type: 'string',
-      defaultValue: '2022-04-01T11:30',
-    },
-    format: {
-      name: 'Format',
-      control: 'check',
-      options: ['In-person', 'Virtual'],
-      defaultValue: 'In-person',
-    },
-    address: {
-      name: 'Address',
-      type: 'string',
-      defaultValue:
-        'Address 1 (Building name)<br />Address 2<br />City, ST ZIP | Map',
-    },
-    ctaText: {
-      name: 'CTA Text',
-      type: 'string',
-      defaultValue: 'CTA for event',
-    },
+    ...eventArgTypes,
   },
 };
 

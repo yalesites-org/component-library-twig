@@ -1,5 +1,5 @@
 // Shared Storybook args.
-import argTypes from '../../04-page-layouts/page-args';
+import argTypes, { eventArgTypes } from '../../04-page-layouts/page-args';
 
 // Twig files.
 import eventPageTwig from './event-page.twig';
@@ -21,7 +21,16 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes,
+  argTypes: {
+    ...argTypes,
+    ...eventArgTypes,
+    eventPageTitle: {
+      name: 'Page Title',
+      type: 'string',
+      defaultValue:
+        'Parlika (2016) film screening + Q&A with film director Sahraa Karimi',
+    },
+  },
 };
 
 export const EventPage = ({
@@ -34,6 +43,11 @@ export const EventPage = ({
   utilityNavSearch,
   siteFooterTheme,
   footerBorderThickness,
+  startDate,
+  endDate,
+  format,
+  address,
+  ctaText,
 }) =>
   eventPageTwig({
     site_name: siteName,
@@ -49,15 +63,15 @@ export const EventPage = ({
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
-    ...imageData.responsive_images['16x9'],
-    image__srcset__1: imageData.responsive_images['4x3'].image__srcset,
-    image__sizes__1: imageData.responsive_images['4x3'].image__sizes,
-    image__alt__1: imageData.responsive_images['4x3'].image__alt,
-    image__src__1: imageData.responsive_images['4x3'].image__src,
-    image__srcset__pop_out: imageData.responsive_images['3x2'].image__srcset,
-    image__sizes__pop_out: imageData.responsive_images['3x2'].image__sizes,
-    image__alt__pop_out: imageData.responsive_images['3x2'].image__alt,
-    image__src__pop_out: imageData.responsive_images['3x2'].image__src,
+    ...imageData.responsive_images['4x3'],
+    event_meta__date_start: startDate,
+    event_meta__date_end: endDate,
+    event_meta__format: format,
+    event_meta__address: address,
+    event_meta__cta_primary__content: ctaText,
+    event_meta__cta_primary__href: '#',
+    event_meta__cta_secondary__content: 'Add to calendar',
+    event_meta__cta_secondary__href: '#',
   });
 EventPage.argTypes = {
   pageTitle: {
@@ -69,11 +83,5 @@ EventPage.argTypes = {
     table: {
       disable: true,
     },
-  },
-  eventPageTitle: {
-    name: 'Page Title',
-    type: 'string',
-    defaultValue:
-      'Parlika (2016) film screening + Q&A with film director Sahraa Karimi',
   },
 };
