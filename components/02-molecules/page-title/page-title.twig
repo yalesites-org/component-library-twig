@@ -18,12 +18,14 @@
       heading: page_title__heading,
       heading__blockname: page_title__base_class,
     } %}
-    {% if page_title__meta %}
-      {% include "@atoms/typography/text/text.twig" with {
-        text__content: page_title__meta,
-        text__base_class: 'meta',
-        text__blockname: page_title__base_class,
-      } %}
-    {% endif %}
+    {% block page_title__meta %}
+      {% if page_title__meta %}
+        {% include "@atoms/typography/text/text.twig" with {
+          text__content: page_title__meta,
+          text__base_class: 'meta',
+          text__blockname: page_title__base_class,
+        } %}
+      {% endif %}
+    {% endblock %}
   </div>
 </div>
