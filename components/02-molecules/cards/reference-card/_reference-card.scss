@@ -1,7 +1,7 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
 
-.news-card {
+.reference-card {
   @include atoms.clickable-component-heading-link;
   @include atoms.clickable-component-image;
 
@@ -17,7 +17,7 @@
   }
 }
 
-.news-card__image {
+.reference-card__image {
   @media (min-width: tokens.$break-mobile) {
     [data-collection-type='list'] & {
       flex: 0 0 33%;
@@ -25,7 +25,7 @@
   }
 }
 
-.news-card__content {
+.reference-card__content {
   [data-collection-type='list'][data-collection-featured='false'] & {
     flex: 1 1 100%;
   }
@@ -38,14 +38,14 @@
   }
 }
 
-.news-card__date {
+.reference-card__date {
   @include tokens.body-xs;
 
   text-transform: uppercase;
   margin-bottom: var(--size-spacing-3);
 }
 
-.news-card__heading {
+.reference-card__heading {
   [data-collection-featured='false'] & {
     @include tokens.h5-yale-new;
 
@@ -65,7 +65,7 @@
   }
 }
 
-.news-card__snippet {
+.reference-card__snippet {
   margin-top: var(--size-spacing-3);
 
   [data-collection-featured='false'] & {

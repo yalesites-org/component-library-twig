@@ -1,6 +1,6 @@
 import cardCollectionTwig from './card-collection.twig';
 
-import newsCardData from '../../02-molecules/cards/news-card/news-card.yml';
+import referenceCardData from '../../02-molecules/cards/reference-card/news-card.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
 /**
@@ -51,7 +51,7 @@ export const NewsCardCollection = ({
     card_collection__featured: featured ? 'true' : 'false',
     card_collection__with_images: withImages ? 'true' : 'false',
     card_collection__cards: items,
-    ...newsCardData,
+    ...referenceCardData,
     ...imageData.responsive_images['3x2'],
   });
 };
