@@ -15,7 +15,7 @@ import breadcrumbData from '../../03-organisms/menu/breadcrumbs/breadcrumbs.yml'
 import imageData from '../../01-atoms/images/image/image.yml';
 import textWithImageData from '../../02-molecules/text-with-image/text-with-image.yml';
 import bannerData from '../../02-molecules/banner/banner.yml';
-import referenceCardData from '../../02-molecules/cards/reference-card/news-card.yml';
+import referenceCardData from '../../02-molecules/cards/reference-card/examples/news-card.yml';
 
 // JavaScript.
 import '../../00-tokens/layout/layout';

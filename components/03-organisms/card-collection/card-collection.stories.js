@@ -1,6 +1,6 @@
 import cardCollectionTwig from './card-collection.twig';
 
-import referenceCardData from '../../02-molecules/cards/reference-card/news-card.yml';
+import referenceCardData from '../../02-molecules/cards/reference-card/examples/news-card.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
 /**

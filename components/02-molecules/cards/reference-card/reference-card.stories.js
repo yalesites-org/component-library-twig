@@ -1,6 +1,6 @@
-import referenceCardTwig from './reference-card.twig';
+import newsCardTwig from './examples/news-card.twig';
 
-import referenceCardData from './news-card.yml';
+import referenceCardData from './examples/news-card.yml';
 import imageData from '../../../01-atoms/images/image/image.yml';
 
 import './reference-card';
@@ -14,11 +14,6 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: {
-    date: {
-      name: 'Date',
-      type: 'string',
-      defaultValue: referenceCardData.reference_card__date,
-    },
     heading: {
       name: 'Heading',
       type: 'string',
@@ -59,9 +54,9 @@ export const NewsCard = ({
 <div class='card-collection' data-component-width='max' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
-      ${referenceCardTwig({
+      ${newsCardTwig({
         ...imageData.responsive_images['3x2'],
-        reference_card__date: date,
+        reference_card__overline: date,
         reference_card__heading: heading,
         reference_card__snippet: snippet,
         reference_card__featured: featured ? 'true' : 'false',
@@ -72,9 +67,16 @@ export const NewsCard = ({
   </div>
 </div>
 `;
+NewsCard.argTypes = {
+  date: {
+    name: 'Date',
+    type: 'string',
+    defaultValue: referenceCardData.reference_card__date,
+  },
+};
 
 export const EventCard = ({
-  date,
+  // date,
   heading,
   snippet,
   collectionType,
@@ -84,9 +86,9 @@ export const EventCard = ({
 <div class='card-collection' data-component-width='max' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
-      ${referenceCardTwig({
+      ${newsCardTwig({
         ...imageData.responsive_images['3x2'],
-        reference_card__date: date,
+        // reference_card__date: date,
         reference_card__heading: heading,
         reference_card__snippet: snippet,
         reference_card__featured: featured ? 'true' : 'false',
