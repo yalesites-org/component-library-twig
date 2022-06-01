@@ -38,7 +38,7 @@
   }
 }
 
-.reference-card__date {
+.reference-card__overline {
   @include tokens.body-xs;
 
   text-transform: uppercase;
@@ -62,6 +62,16 @@
     @include tokens.h3-yale-new;
 
     font-weight: var(--font-weights-yalenew-bold);
+  }
+}
+
+.reference-card__subheading {
+  @include tokens.body-default-condensed;
+
+  > *:not(:first-child) {
+    margin-left: var(--size-spacing-5);
+    padding-left: var(--size-spacing-5);
+    border-left: var(--border-thickness-1) solid;
   }
 }
 

@@ -1,15 +1,29 @@
+{% set reference_card__overline__formatted %}
+  {% include "@atoms/date-time/date-time.twig" with {
+    date_time__start: reference_card__date,
+    date_time__format: 'date',
+  } %}
+{% endset %}
+
 {% if card_example_type == 'news' %}
   {% if card_collection__type == 'list' and card_collection__featured == 'false' %}
     {% set reference_card__snippet = null %}
   {% endif %}
   {% include "@molecules/cards/reference-card/examples/news-card.twig" with {
     reference_card__image: card_collection__with_images,
+    reference_card__overline: reference_card__overline__formatted,
   } %}
 {% elseif card_example_type == 'event' %}
   {% if card_collection__type == 'grid' %}
-    {% set reference_card__format = null %}
+    {% set reference_card__overline = null %}
+    {% set reference_card__subheading %}
+      <span>{{ reference_card__date }}</span><span>{{ reference_card__format }}</span>
+    {% endset %}
+  {% else %}
+    {% set reference_card__overline = reference_card__format %}
   {% endif %}
   {% include "@molecules/cards/reference-card/examples/event-card.twig" with {
     reference_card__image: card_collection__with_images,
+    reference_card__subheading: reference_card__overline__formatted,
   } %}
 {% endif %}
