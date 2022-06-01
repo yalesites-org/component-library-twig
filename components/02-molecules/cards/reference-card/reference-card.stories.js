@@ -1,4 +1,5 @@
 import newsCardTwig from './examples/news-card.twig';
+import eventCardTwig from './examples/event-card.twig';
 
 import referenceCardData from './examples/news-card.yml';
 import imageData from '../../../01-atoms/images/image/image.yml';
@@ -56,7 +57,7 @@ export const NewsCard = ({
     <ul class='card-collection__cards'>
       ${newsCardTwig({
         ...imageData.responsive_images['3x2'],
-        reference_card__overline: date,
+        reference_card__date: date,
         reference_card__heading: heading,
         reference_card__snippet: snippet,
         reference_card__featured: featured ? 'true' : 'false',
@@ -76,7 +77,7 @@ NewsCard.argTypes = {
 };
 
 export const EventCard = ({
-  // date,
+  format,
   heading,
   snippet,
   collectionType,
@@ -86,9 +87,9 @@ export const EventCard = ({
 <div class='card-collection' data-component-width='max' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
-      ${newsCardTwig({
+      ${eventCardTwig({
         ...imageData.responsive_images['3x2'],
-        // reference_card__date: date,
+        reference_card__overline: format,
         reference_card__heading: heading,
         reference_card__snippet: snippet,
         reference_card__featured: featured ? 'true' : 'false',
@@ -99,3 +100,11 @@ export const EventCard = ({
   </div>
 </div>
 `;
+EventCard.argTypes = {
+  format: {
+    name: 'Format',
+    control: 'check',
+    options: ['In-person', 'Online'],
+    defaultValue: 'In-person',
+  },
+};

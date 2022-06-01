@@ -1,10 +1,11 @@
 {% set reference_card__overline__formatted %}
   {% include "@atoms/date-time/date-time.twig" with {
-    date_time__start: reference_card__overline,
+    date_time__start: reference_card__date,
     date_time__format: 'date',
   } %}
 {% endset %}
 
 {% include "@molecules/cards/reference-card/reference-card.twig" with {
   reference_card__image: card_collection__with_images,
+  reference_card__overline: reference_card__overline__formatted,
 } %}

@@ -6,5 +6,10 @@
     reference_card__image: card_collection__with_images,
   } %}
 {% elseif card_example_type == 'event' %}
-  {% if card_collection__type == 'grid' %}{% endif %}
+  {% if card_collection__type == 'grid' %}
+    {% set reference_card__format = null %}
+  {% endif %}
+  {% include "@molecules/cards/reference-card/examples/event-card.twig" with {
+    reference_card__image: card_collection__with_images,
+  } %}
 {% endif %}
