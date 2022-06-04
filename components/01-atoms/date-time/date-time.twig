@@ -1,3 +1,6 @@
+{# Remove white space caused by all of the new lines in this file. #}
+{% apply spaceless %}
+
 {#
  # Logic Variables:
  # - date_time__format: 'time', 'date', or null (default. Returns date and time.)
@@ -66,3 +69,5 @@
 } %}
 
 <time {{ add_attributes(date_time__attribuites) }}>{{ date_time }}</time>
+
+{% endapply %}
