@@ -52,11 +52,11 @@
         {% if event_meta__cta_primary__content and event_meta__cta_primary__href %}
           {% include "@atoms/controls/cta/cta.twig" with {
             cta__content: event_meta__cta_primary__content,
-            cta__href: event_meta__cta_promary__href,
+            cta__href: event_meta__cta_primary__href,
           } %}
         {% endif %}
         {# Add to calendar #}
-        {% if event_meta__cta_secondary__content and event_meta__cta_secondary__href %}
+        {% if event_meta__cta_secondary__content %}
           {% include "@atoms/controls/cta/cta.twig" with {
             cta__content: event_meta__cta_secondary__content,
             cta__href: event_meta__cta_secondary__href,
