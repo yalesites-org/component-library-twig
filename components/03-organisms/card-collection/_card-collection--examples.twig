@@ -6,24 +6,30 @@
 {% endset %}
 
 {% if card_example_type == 'news' %}
+  {% set reference_card__overline = reference_card__overline__formatted %}
+  {# If news, list, and not freatured, hide snippet. #}
   {% if card_collection__type == 'list' and card_collection__featured == 'false' %}
     {% set reference_card__snippet = null %}
   {% endif %}
-  {% include "@molecules/cards/reference-card/examples/news-card.twig" with {
-    reference_card__image: card_collection__with_images,
-    reference_card__overline: reference_card__overline__formatted,
-  } %}
 {% elseif card_example_type == 'event' %}
+  {# If event, and grid, hide overline, and put the format next to the date. #}
   {% if card_collection__type == 'grid' %}
     {% set reference_card__overline = null %}
     {% set reference_card__subheading %}
-      <span>{{ reference_card__date }}</span><span>{{ reference_card__format }}</span>
+      {{ reference_card__overline__formatted }}
+      <span>{{ reference_card__format }}</span>
     {% endset %}
+    {# If event, grid, and not featured, hide snippet. #}
+    {% if card_collection__featured == 'false' %}
+      {% set reference_card__snippet = null %}
+    {% endif %}
   {% else %}
+    {# If event and list put the format in the overline. #}
     {% set reference_card__overline = reference_card__format %}
+    {% set reference_card__subheading = reference_card__overline__formatted %}
   {% endif %}
-  {% include "@molecules/cards/reference-card/examples/event-card.twig" with {
-    reference_card__image: card_collection__with_images,
-    reference_card__subheading: reference_card__overline__formatted,
-  } %}
 {% endif %}
+
+{% include "@molecules/cards/reference-card/reference-card.twig" with {
+  reference_card__image: card_collection__with_images,
+} %}
