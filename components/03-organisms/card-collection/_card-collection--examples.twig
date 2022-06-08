@@ -17,7 +17,9 @@
     {% set reference_card__overline = null %}
     {% set reference_card__subheading %}
       {{ reference_card__overline__formatted }}
-      <span>{{ reference_card__format }}</span>
+      {% include "@molecules/cards/reference-card/event/_event-format.twig" with {
+        format: reference_card__format,
+      } %}
     {% endset %}
     {# If event, grid, and not featured, hide snippet. #}
     {% if card_collection__featured == 'false' %}
