@@ -149,6 +149,10 @@
           "structure": "molecules"
         },
         {
+          "name": "event-meta",
+          "structure": "molecules"
+        },
+        {
           "name": "image",
           "structure": "molecules"
         },
