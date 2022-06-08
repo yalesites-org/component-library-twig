@@ -1,7 +1,7 @@
 {% set reference_card__overline__formatted %}
+  {% set date_time__format = card_example_type == 'news' ? 'date' %}
   {% include "@atoms/date-time/date-time.twig" with {
     date_time__start: reference_card__date,
-    date_time__format: 'date',
   } %}
 {% endset %}
 
