@@ -36,12 +36,16 @@
     {# Event Details #}
     <div {{ bem('details', [], event_meta__base_class) }}>
       {# Location #}
-      {% if event_meta__format or event_meta__address %}
+      {% if event_meta__format.0 or event_meta__address %}
         <div {{ bem('location', [], event_meta__base_class) }}>
           {# Format #}
-          {% if event_meta__format %}
+          {% if event_meta__format.0 %}
             <p {{ bem('format', [], event_meta__base_class) }}>
-              {{ event_meta__format }}
+              {% if event_meta__format.1 %}
+                Hybrid
+              {% else %}
+                {{ event_meta__format }}
+              {% endif %}
             </p>
           {% endif %}
           {# Address #}
