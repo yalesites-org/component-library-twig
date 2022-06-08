@@ -36,16 +36,22 @@
     {# Event Details #}
     <div {{ bem('details', [], event_meta__base_class) }}>
       {# Location #}
-      <div {{ bem('location', [], event_meta__base_class) }}>
-        {# Format #}
-        <p {{ bem('format', [], event_meta__base_class) }}>
-          {{ event_meta__format }}
-        </p>
-        {# Address #}
-        <div {{ bem('address', [], event_meta__base_class) }}>
-          {{ event_meta__address }}
+      {% if event_meta__format or event_meta__address %}
+        <div {{ bem('location', [], event_meta__base_class) }}>
+          {# Format #}
+          {% if event_meta__format %}
+            <p {{ bem('format', [], event_meta__base_class) }}>
+              {{ event_meta__format }}
+            </p>
+          {% endif %}
+          {# Address #}
+          {% if event_meta__address %}
+            <div {{ bem('address', [], event_meta__base_class) }}>
+              {{ event_meta__address }}
+            </div>
+          {% endif %}
         </div>
-      </div>
+      {% endif %}
       {# CTAs #}
       <div {{ bem('ctas', [], event_meta__base_class) }}>
         {# Primary CTA #}
