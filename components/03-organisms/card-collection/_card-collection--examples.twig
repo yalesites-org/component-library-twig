@@ -1,25 +1,29 @@
-{% set reference_card__overline__formatted %}
+{% set reference_card__date__formatted %}
   {% set date_time__format = card_example_type == 'news' ? 'date' %}
   {% include "@atoms/date-time/date-time.twig" with {
     date_time__start: reference_card__date,
   } %}
 {% endset %}
 
+{% set reference_card__time__formatted %}
+  {% include "@atoms/date-time/date-time.twig" with {
+    date_time__start: reference_card__date,
+    date_time__format: 'time',
+  } %}
+{% endset %}
+
 {% if card_example_type == 'news' %}
-  {% set reference_card__overline = reference_card__overline__formatted %}
+  {% set reference_card__overline = reference_card__date__formatted %}
   {# If news, list, and not freatured, hide snippet. #}
   {% if card_collection__type == 'list' and card_collection__featured == 'false' %}
     {% set reference_card__snippet = null %}
   {% endif %}
 {% elseif card_example_type == 'event' %}
+  {% set reference_card__overline = reference_card__format %}
   {# If event, and grid, hide overline, and put the format next to the date. #}
   {% if card_collection__type == 'grid' %}
-    {% set reference_card__overline = null %}
     {% set reference_card__subheading %}
-      {{ reference_card__overline__formatted }}
-      {% include "@molecules/cards/reference-card/event/_event-format.twig" with {
-        format: reference_card__format,
-      } %}
+      {{ reference_card__date__formatted }}
     {% endset %}
     {# If event, grid, and not featured, hide snippet. #}
     {% if card_collection__featured == 'false' %}
@@ -27,8 +31,7 @@
     {% endif %}
   {% else %}
     {# If event and list put the format in the overline. #}
-    {% set reference_card__overline = reference_card__format %}
-    {% set reference_card__subheading = reference_card__overline__formatted %}
+    {% set reference_card__subheading = reference_card__date__formatted ~ reference_card__time__formatted %}
   {% endif %}
 {% endif %}
 
