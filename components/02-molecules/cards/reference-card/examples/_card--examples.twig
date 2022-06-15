@@ -19,7 +19,12 @@
     {% set reference_card__snippet = null %}
   {% endif %}
 {% elseif card_example_type == 'event' %}
-  {% set reference_card__overline = reference_card__format %}
+  {# If a format is provided, put it in the overline #}
+  {% if format %}
+    {% set reference_card__overline %}
+      {% include "@molecules/cards/reference-card/event/_event-format.twig" %}
+    {% endset %}
+  {% endif %}
   {# If event, and grid, hide overline, and put the format next to the date. #}
   {% if card_collection__type == 'grid' %}
     {% set reference_card__subheading %}
@@ -30,11 +35,9 @@
       {% set reference_card__snippet = null %}
     {% endif %}
   {% else %}
-    {# If event and list put the format in the overline. #}
+    {# If event and list put the date and time in the subheading. #}
     {% set reference_card__subheading = reference_card__date__formatted ~ reference_card__time__formatted %}
   {% endif %}
 {% endif %}
 
-{% include "@molecules/cards/reference-card/reference-card.twig" with {
-  reference_card__image: card_collection__with_images,
-} %}
+{% include "@molecules/cards/reference-card/reference-card.twig" %}

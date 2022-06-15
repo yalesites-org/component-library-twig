@@ -1,4 +1,4 @@
-import referenceCardTwig from './reference-card.twig';
+import referenceCardTwig from './examples/_card--examples.twig';
 
 import referenceCardData from './examples/news-card.yml';
 import imageData from '../../../01-atoms/images/image/image.yml';
@@ -55,6 +55,8 @@ export const NewsCard = ({
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${referenceCardTwig({
+        card_example_type: 'news',
+        card_collection__type: collectionType,
         ...imageData.responsive_images['3x2'],
         reference_card__date: date,
         reference_card__heading: heading,
@@ -87,8 +89,10 @@ export const EventCard = ({
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${referenceCardTwig({
+        card_example_type: 'event',
+        card_collection__type: collectionType,
         ...imageData.responsive_images['3x2'],
-        reference_card__overline: format,
+        format,
         reference_card__heading: heading,
         reference_card__snippet: snippet,
         reference_card__featured: featured ? 'true' : 'false',

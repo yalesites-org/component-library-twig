@@ -69,6 +69,7 @@ export const EventCardCollection = ({
 
   return cardCollectionTwig({
     card_example_type: 'event',
+    format: 'Online',
     card_collection__type: collectionType,
     card_collection__heading: heading,
     card_collection__featured: featured ? 'true' : 'false',

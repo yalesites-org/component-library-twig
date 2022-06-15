@@ -1,1 +1,5 @@
-<span {{ bem('event-format') }}>{{ format }}</span>
+{% if format.1 %}
+  Hybrid
+{% else %}
+  {{ format }}
+{% endif %}

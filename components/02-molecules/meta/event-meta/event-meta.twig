@@ -41,11 +41,9 @@
           {# Format #}
           {% if event_meta__format.0 %}
             <p {{ bem('format', [], event_meta__base_class) }}>
-              {% if event_meta__format.1 %}
-                Hybrid
-              {% else %}
-                {{ event_meta__format }}
-              {% endif %}
+              {% include "@molecules/cards/reference-card/event/_event-format.twig" with {
+                format: event_meta__format,
+              } %}
             </p>
           {% endif %}
           {# Address #}
