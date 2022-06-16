@@ -31,11 +31,10 @@
       heading__url: reference_card__url,
     } %}
     {% if reference_card__subheading %}
-      {% include "@atoms/typography/headings/heading.twig" with {
-        heading__level: reference_card__subheading_level|default('3'),
-        heading__base_class: 'subheading',
-        heading__blockname: reference_card__base_class,
-        heading: reference_card__subheading,
+      {% include "@atoms/typography/text/text.twig" with {
+        text__blockname: reference_card__base_class,
+        text__base_class: 'subheading',
+        text__content: reference_card__subheading,
       } %}
     {% endif %}
     {% if reference_card__snippet %}
