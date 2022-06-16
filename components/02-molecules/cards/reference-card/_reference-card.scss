@@ -68,6 +68,8 @@
 .reference-card__subheading {
   @include tokens.body-default-condensed;
 
+  display: flex;
+  flex-wrap: wrap;
   margin-top: var(--size-spacing-3);
 
   > *:not(:first-child) {
