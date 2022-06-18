@@ -77,7 +77,7 @@ export const eventArgTypes = {
   format: {
     name: 'Format',
     control: 'check',
-    options: ['In-person', 'Virtual'],
+    options: ['In-person', 'Online'],
     defaultValue: 'In-person',
   },
   address: {

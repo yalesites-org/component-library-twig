@@ -15,7 +15,7 @@ import breadcrumbData from '../../03-organisms/menu/breadcrumbs/breadcrumbs.yml'
 import imageData from '../../01-atoms/images/image/image.yml';
 import textWithImageData from '../../02-molecules/text-with-image/text-with-image.yml';
 import bannerData from '../../02-molecules/banner/banner.yml';
-import newsCardData from '../../02-molecules/cards/news-card/news-card.yml';
+import referenceCardData from '../../02-molecules/cards/reference-card/examples/news-card.yml';
 
 // JavaScript.
 import '../../00-tokens/layout/layout';
@@ -90,7 +90,7 @@ export const Basic = ({
     intro_content: introContent,
     callout__background_color: calloutBackground,
     ...textWithImageData,
-    ...newsCardData,
+    ...referenceCardData,
   });
 
 export const WithBanner = ({
@@ -131,7 +131,7 @@ export const WithBanner = ({
     intro_content: introContent,
     callout__background_color: calloutBackground,
     ...textWithImageData,
-    ...newsCardData,
+    ...referenceCardData,
     banner__heading: heading,
     banner__snippet: snippet,
     banner__link__content: linkContent,
@@ -208,5 +208,5 @@ export const WithSidebar = ({
     intro_content: introContent,
     callout__background_color: calloutBackground,
     ...textWithImageData,
-    ...newsCardData,
+    ...referenceCardData,
   });

@@ -20,6 +20,8 @@
 {% set format__iso = 'c' %} {# 2022-04-01T08:34:42+00:00 #}
 {% set format__html_date = 'Y-m-d' %} {# 2022-04-01 #}
 {% set format__date = 'F j, Y' %} {# April 1, 2022 #}
+{% set format__day__full__start = 'l, F j to ' %} {# Friday, April 1, 2022 #}
+{% set format__day__full = 'l, F j, Y' %} {# Friday, April 1, 2022 #}
 {# If minutes == ":00" don't show them #}
 {% if date_time__start|date('i') == '00' %}
   {% set format__time__start = 'g-' %} {# 8- #}
@@ -29,12 +31,12 @@
 {% if date_time__end|date('i') == '00' %}
   {% set format__time = 'g a T' %} {# 11 pm ET #}
 {% else %}
-  {% set format__time = 'g:i a T' %} {# 11 pm ET #}
+  {% set format__time = 'g:i a T' %} {# 11:30 pm ET #}
 {% endif %}
 
-{###########
- # TIME ONLY
- ###########}
+{#############
+ # TIME ONLY #
+ #############}
 {% if date_time__format == 'time' %}
   {# If start and end times are equal #}
   {% if date_time__start|date(format__iso) == date_time__end|date(format__iso) %}
@@ -43,9 +45,9 @@
   {% else %}
     {% set date_time = date_time__start|date(format__time__start) ~ date_time__end|date(format__time) %}
   {% endif %}
-{###########
- # DATE ONLY
- ###########}
+{#############
+ # DATE ONLY #
+ #############}
 {% elseif date_time__format == 'date' %}
   {# If start and end date/time are equal. #}
   {% if date_time__start|date(format__html_date) == date_time__end|date(format__html_date) %}
@@ -56,11 +58,19 @@
   {% else %}
     {% set date_time = date_time__start|date(format__date) ~ '-' ~ date_time__end|date(format__date) %}
   {% endif %}
-{###############
- # DATE AND TIME
- ###############}
+{################
+ # DAY AND DATE #
+ ################}
 {% else %}
-  {# @TODO Flesh this out #}
+  {# If start and end date/time are equal. #}
+  {% if date_time__start|date(format__html_date) == date_time__end|date(format__html_date) %}
+    {# Specific Day #}
+    {# Expample: Friday, April 1, 2022 #}
+    {% set date_time = date_time__start|date(format__day__full) %}
+  {# If start and end times are different. #}
+  {% else %}
+    {% set date_time = date_time__start|date(format__day__full__start) ~ date_time__end|date(format__day__full) %}
+  {% endif %}
 {% endif %}
 
 {% set date_time__attribuites = {
