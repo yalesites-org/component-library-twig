@@ -69,7 +69,7 @@
 // - Apply the mixin to the parent item. e.g.: `.card` and it will affect
 // the `.card__heading-link` element inside.
 // - The component will likely also need some JS to round out the design and
-// functionality desired. Check `news-card.js` for an example. And/or read the
+// functionality desired. Check `reference-card.js` for an example. And/or read the
 // Cards chapter here: https://inclusive-components.design/cards.
 @mixin clickable-component-heading-link {
   // Style the component when it's heading is focused.

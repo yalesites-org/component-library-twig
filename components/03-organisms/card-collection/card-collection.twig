@@ -33,7 +33,9 @@
     <ul {{ bem('cards', [], card_collection__base_class) }}>
       {% block card_collection__cards %}
         {% for card in card_collection__cards %}
-          {% include "@organisms/card-collection/_card-collection--examples.twig" %}
+          {% include "@molecules/cards/reference-card/examples/_card--examples.twig" with {
+            reference_card__image: card_collection__with_images,
+          } %}
         {% endfor %}
       {% endblock %}
     </ul>

@@ -4,11 +4,11 @@ Drupal.behaviors.alert = {
     // chapter of the book linked below:
     // https://inclusive-components.design/cards/#theredundantclickevent
     // Selectors
-    const newsCards = context.querySelectorAll('.news-card');
+    const referenceCards = context.querySelectorAll('.reference-card');
 
-    newsCards.forEach((newsCard) => {
-      const card = newsCard;
-      const link = card.querySelector('.news-card__heading-link');
+    referenceCards.forEach((referenceCard) => {
+      const card = referenceCard;
+      const link = card.querySelector('.reference-card__heading-link');
 
       // If the card has a link, make the whole card clickable. However, allow
       // users to select text by only triggering the link if the "click up" is
