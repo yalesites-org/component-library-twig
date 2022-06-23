@@ -4,6 +4,19 @@ All YaleSites projects have access to components in the YaleSites component libr
 
 ## Installation
 
+### Installing the component library locally
+
+If you want to work directly on the component library locally, you can clone this repo and install the dependencies as described below.
+
+1. Clone the repository `git clone git@github.com:yalesites-org/component-library-twig.git`
+2. Change directories into the repo `cd component-library-twig`
+3. Verify you're using the correct version of node `nvm use`
+4. Install dependencies `npm install`
+5. Run the develop script `npm run develop`
+6. Make your changes and commit them!
+
+### Installing the package in another project
+
 <details><summary>Prerequisites</summary>
 
 Each environment that needs to pull @yalesites-org packages from GitHub needs to be authenticated using a "Personal Access Token". This only needs to be done once per-environment.
@@ -19,8 +32,6 @@ Each environment that needs to pull @yalesites-org packages from GitHub needs to
 - Done!
 
 </details>
-
-### Installing the package
 
 There must be a `.npmrc` file in the project root that tells npm to get `@yalesites-org` packages from GitHub rather than npm.
 
