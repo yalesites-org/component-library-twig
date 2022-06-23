@@ -18,6 +18,8 @@ Each environment that needs to pull @yalesites-org packages from GitHub needs to
   - The `value` is the token you created above
 - Done!
 
+- [Here's a stack overflow post showing how to set persistent environment variables for various shells](https://unix.stackexchange.com/questions/117467/how-to-permanently-set-environmental-variables)
+
 </details>
 
 ### Installing the component library locally
