@@ -26,6 +26,7 @@
 
   @media (min-width: tokens.$break-mobile) {
     justify-content: center;
+    align-items: flex-start;
 
     [data-collection-type='list'] & {
       flex-direction: column;
