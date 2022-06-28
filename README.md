@@ -18,9 +18,22 @@ Each environment that needs to pull @yalesites-org packages from GitHub needs to
   - The `value` is the token you created above
 - Done!
 
+- [Here's a stack overflow post showing how to set persistent environment variables for various shells](https://unix.stackexchange.com/questions/117467/how-to-permanently-set-environmental-variables)
+
 </details>
 
-### Installing the package
+### Installing the component library locally
+
+If you want to work directly on the component library locally, you can clone this repo and install the dependencies as described below.
+
+1. Clone the repository `git clone git@github.com:yalesites-org/component-library-twig.git`
+2. Change directories into the repo `cd component-library-twig`
+3. Verify you're using the correct version of node `nvm use`
+4. Install dependencies `npm install`
+5. Run the develop script `npm run develop`
+6. Make your changes and commit them!
+
+### Installing the package in another project
 
 There must be a `.npmrc` file in the project root that tells npm to get `@yalesites-org` packages from GitHub rather than npm.
 
