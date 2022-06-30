@@ -1,16 +1,19 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
 
+// The collection main wrapper.
 .card-collection {
   @include tokens.spacing-page-section;
 }
 
+// The collection heading.
 .card-collection__heading {
   @include tokens.h2-yale-new;
 
   margin-bottom: var(--spacing-page-section);
 }
 
+// The actual collection of cards.
 .card-collection__cards {
   --card-collection-spacing: var(--spacing-component-gutter);
 
@@ -27,20 +30,17 @@
   @media (min-width: tokens.$break-mobile) {
     justify-content: center;
 
-    [data-collection-type='list'] & {
-      flex-direction: column;
-    }
-
-    [data-collection-type='grid'][data-collection-featured='true'] & > * {
-      flex: 0 1 calc(33.33% - calc(var(--card-collection-spacing) * 2 / 3));
-    }
-
-    [data-collection-type='grid'][data-collection-featured='false'] & > * {
-      flex: 0 1 calc(25% - calc(var(--card-collection-spacing) * 3 / 4));
+    [data-collection-type='grid'] & {
+      align-items: flex-start;
     }
   }
+}
 
-  [data-collection-type='list'] & > * {
+// Individual cards in the collection.
+.card-collection__cards > * {
+  flex-basis: 100%;
+
+  [data-collection-type='list'] & {
     @include tokens.animate(box-shadow);
 
     padding-bottom: var(--card-collection-spacing);
@@ -52,6 +52,16 @@
       // There isn't currently anything else that looks like this. If there ever
       // Is, perhaps it should be captured as a token in a new drop-shadow set.
       box-shadow: 0 8px 6px -6px hsl(0deg 0% 0% / 16%);
+    }
+  }
+
+  @media (min-width: tokens.$break-mobile) {
+    [data-collection-type='grid'][data-collection-featured='true'] & {
+      flex: 0 1 calc(33.33% - calc(var(--card-collection-spacing) * 2 / 3));
+    }
+
+    [data-collection-type='grid'][data-collection-featured='false'] & {
+      flex: 0 1 calc(25% - calc(var(--card-collection-spacing) * 3 / 4));
     }
   }
 }

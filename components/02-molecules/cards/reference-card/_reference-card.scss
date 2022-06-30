@@ -19,6 +19,10 @@
 
 .reference-card__image {
   @media (min-width: tokens.$break-mobile) {
+    [data-collection-type='grid'] & {
+      aspect-ratio: 3/2;
+    }
+
     [data-collection-type='list'] & {
       flex: 0 0 33%;
     }

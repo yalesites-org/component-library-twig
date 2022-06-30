@@ -1,4 +1,4 @@
-Drupal.behaviors.alert = {
+Drupal.behaviors.referenceCard = {
   attach(context) {
     // Inspiration and reasoning for this JavaScript can be found in the Cards
     // chapter of the book linked below:

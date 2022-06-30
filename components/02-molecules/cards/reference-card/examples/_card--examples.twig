@@ -12,12 +12,15 @@
   } %}
 {% endset %}
 
+{# News Card #}
 {% if card_example_type == 'news' %}
   {% set reference_card__overline = reference_card__date__formatted %}
   {# If news, list, and not freatured, hide snippet. #}
   {% if card_collection__type == 'list' and card_collection__featured == 'false' %}
     {% set reference_card__snippet = null %}
   {% endif %}
+
+{# Event Card #}
 {% elseif card_example_type == 'event' %}
   {# If a format is provided, put it in the overline #}
   {% if format %}
