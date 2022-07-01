@@ -1,0 +1,39 @@
+@use '../../01-atoms/atoms';
+
+.pager__items {
+  @include atoms.list-reset;
+
+  display: flex;
+}
+
+.pager__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pager__link {
+  display: flex;
+  min-height: var(--size-click-target-minimum);
+  min-width: var(--size-click-target-minimum);
+  align-items: center;
+  justify-content: center;
+  color: var(--color-heading);
+  text-decoration: none;
+  border: var(--size-thickness-2) solid transparent;
+  padding: var(--size-spacing-2) var(--size-spacing-2);
+
+  &:not([class*='--previous']):not([class*='--next']) {
+    border-radius: 100%;
+
+    &:hover {
+      background-color: var(--color-blue-medium);
+      border-color: var(--color-blue-medium);
+      color: white;
+    }
+  }
+
+  &.is-active {
+    border-color: var(--color-text);
+  }
+}
