@@ -1,5 +1,5 @@
 const { resolve } = require('path');
-// const twigDrupal = require('twig-drupal-filters');
+const twigDrupal = require('twig-drupal-filters');
 const twigBEM = require('bem-twig-extension');
 const twigAddAttributes = require('add-attributes-twig-extension');
 
@@ -20,7 +20,7 @@ module.exports.namespaces = {
  */
 module.exports.setupTwig = function setupTwig(twig) {
   twig.cache();
-  // twigDrupal(twig);
+  twigDrupal(twig);
   twigBEM(twig);
   twigAddAttributes(twig);
   return twig;
