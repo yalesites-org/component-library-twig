@@ -31,3 +31,36 @@
     }
   }
 }
+
+@mixin underline-slide-start(
+  $variation: default,
+  $thickness: var(--link-underline-size-default)
+) {
+  // Add the decorative bar under links.
+  background-image: linear-gradient(currentcolor, currentcolor);
+  background-position: bottom left;
+  background-repeat: no-repeat;
+  transition: background-size var(--animation-speed-default) linear,
+    color var(--animation-speed-default) ease-in-out;
+
+  @if  $variation == 'no-underline' {
+    background-size: 0 #{$thickness};
+  } @else {
+    background-size: 100% #{$thickness};
+  }
+}
+
+@mixin underline-slide-end(
+  $variation: default,
+  $thickness: var(--link-underline-size-default)
+) {
+  @if  $variation == 'no-underline' {
+    background-size: 100% #{$thickness};
+  } @else {
+    background-size: 0 #{$thickness};
+  }
+}
+
+@mixin underline-slide-none($thickness: var(--link-underline-size-default)) {
+  background-size: 0 #{$thickness};
+}

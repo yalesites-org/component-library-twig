@@ -3,9 +3,9 @@
 
 .tabs {
   @include tokens.spacing-page-section;
+  @include tokens.animate(height);
 
   overflow: hidden;
-  transition: height 800ms;
 }
 
 .tabs__nav {
@@ -22,10 +22,14 @@
 }
 
 .tabs__link {
+  @include tokens.underline-slide-start(
+    'no-underline',
+    $thickness: var(--size-thickness-8)
+  );
+
   display: block;
   text-decoration: none;
-  padding-bottom: var(--size-thickness-8);
-  border-bottom: var(--size-thickness-8) solid transparent;
+  padding-bottom: var(--size-spacing-5);
   color: var(--color-gray-500);
 
   &:hover {
@@ -33,8 +37,12 @@
   }
 
   &.is-active {
+    @include tokens.underline-slide-end(
+      'no-underline',
+      $thickness: var(--size-thickness-8)
+    );
+
     color: var(--color-blue-yale);
-    border-color: var(--color-blue-yale);
   }
 }
 
