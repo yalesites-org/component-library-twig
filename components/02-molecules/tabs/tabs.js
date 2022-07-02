@@ -1,11 +1,13 @@
 Drupal.behaviors.tabs = {
   attach(context) {
     // Selectors
-    const tabSet = context.querySelectorAll('.tabs');
+    const tabs = context.querySelectorAll('.tabs');
 
-    tabSet.forEach((tabs) => {
-      const tabLinks = tabs.querySelectorAll('.tabs__link');
-      const tabContainers = tabs.querySelectorAll('.tabs__container');
+    tabs.forEach((tabSet) => {
+      const TabSet = tabSet;
+      const tabNav = TabSet.querySelector('.tabs__nav');
+      const tabLinks = TabSet.querySelectorAll('.tabs__link');
+      const tabContainers = TabSet.querySelectorAll('.tabs__container');
       let activeIndex = 0;
 
       /**
@@ -24,6 +26,19 @@ Drupal.behaviors.tabs = {
       }
 
       /**
+       * setHeight
+       * @description Sets the height of the tabs wrapper to support animating
+       *   the height when switching tabs.
+       */
+      function setHeight() {
+        const navHeight = tabNav.offsetHeight;
+        const containerHeight = tabContainers[Number(activeIndex)].offsetHeight;
+        const totalHeight = navHeight + containerHeight;
+
+        TabSet.style.height = `${totalHeight}px`;
+      }
+
+      /**
        * handleClick
        * @description Handles click event listeners on each of the links in the
        *   tab navigation. Returns nothing.
@@ -34,16 +49,18 @@ Drupal.behaviors.tabs = {
         link.addEventListener('click', (e) => {
           e.preventDefault();
           goToTab(index);
+          setHeight();
         });
       }
 
       /**
        * init
        * @description Initializes the component by removing the `no-js` class
-       *   from the component, and attaching event listeners to each of the nav
-       *   items. Returns nothing.
+       *   from the component and setting the height for later animation. Also
+       *   attaches event listeners to each of the nav items. Returns nothing.
        */
-      tabs.classList.remove('no-js');
+      TabSet.classList.remove('no-js');
+      setHeight();
 
       tabLinks.forEach((tab, index) => {
         handleClick(tab, index);

@@ -1,4 +1,12 @@
+@use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
+
+.tabs {
+  @include tokens.spacing-page-section;
+
+  overflow: hidden;
+  transition: height 800ms;
+}
 
 .tabs__nav {
   @include atoms.list-reset;
