@@ -4,6 +4,8 @@
   @include atoms.list-reset;
 
   display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-spacing-3);
 }
 
 .pager__item {
@@ -23,13 +25,24 @@
   border: var(--size-thickness-2) solid transparent;
   padding: var(--size-spacing-2) var(--size-spacing-2);
 
+  &:focus-visible {
+    color: var(--link-color-base);
+  }
+
   &:not([class*='--previous']):not([class*='--next']) {
     border-radius: 100%;
 
     &:hover {
-      background-color: var(--color-blue-medium);
-      border-color: var(--color-blue-medium);
+      background-color: var(--link-color-base);
+      border-color: var(--link-color-base);
       color: white;
+    }
+  }
+
+  &--previous,
+  &--next {
+    &:hover {
+      color: var(--link-color-base);
     }
   }
 
