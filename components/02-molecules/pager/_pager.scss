@@ -1,4 +1,13 @@
+@use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
+
+.pager {
+  @include tokens.spacing-page-section;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .pager__items {
   @include atoms.list-reset;
