@@ -16,6 +16,7 @@ Drupal.behaviors.clPagination = {
         // Remove active class from previously active item.
         activeItem.classList.remove(activeClass);
         activeLink.classList.remove(activeClass);
+        // Add active class to the clicked item.
         item.classList.add(activeClass);
         link.classList.add(activeClass);
       });

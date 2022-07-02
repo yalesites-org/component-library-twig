@@ -124,6 +124,13 @@ export const EventGrid = ({
     reference_card__date: '2022-03-30 13:00',
     format: 'Online',
   });
+EventGrid.argTypes = {
+  meta: {
+    table: {
+      disable: true,
+    },
+  },
+};
 
 export const EventList = ({
   siteName,
@@ -161,3 +168,10 @@ export const EventList = ({
     format: 'Online',
     ...pagerData,
   });
+EventList.argTypes = {
+  meta: {
+    table: {
+      disable: true,
+    },
+  },
+};
