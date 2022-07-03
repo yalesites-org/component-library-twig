@@ -11,7 +11,7 @@
 
 // This animation is to remove hidden items from screen readers and
 // keyboard navigation, while maintaining the slow "close" effect.
-@mixin animate-hidden($speed) {
+@mixin animate-hidden($speed: var(--animation-speed-default)) {
   visibility: hidden;
   animation: #{$speed} fade-out;
   animation-fill-mode: forwards;
@@ -43,7 +43,7 @@
   transition: background-size var(--animation-speed-default) linear,
     color var(--animation-speed-default) ease-in-out;
 
-  @if  $variation == 'no-underline' {
+  @if $variation == 'no-underline' {
     background-size: 0 #{$thickness};
   } @else {
     background-size: 100% #{$thickness};
@@ -54,7 +54,7 @@
   $variation: default,
   $thickness: var(--link-underline-size-default)
 ) {
-  @if  $variation == 'no-underline' {
+  @if $variation == 'no-underline' {
     background-size: 100% #{$thickness};
   } @else {
     background-size: 0 #{$thickness};

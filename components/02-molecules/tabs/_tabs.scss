@@ -6,6 +6,7 @@
   @include tokens.animate(height);
 
   overflow: hidden;
+  position: relative;
 }
 
 .tabs__nav {
@@ -29,11 +30,16 @@
 
   display: block;
   text-decoration: none;
+  padding-inline: var(--size-spacing-3);
   padding-bottom: var(--size-spacing-5);
   color: var(--color-gray-500);
 
   &:hover {
     color: var(--link-color-base);
+  }
+
+  &:focus-visible {
+    outline-offset: -2px;
   }
 
   &.is-active {
@@ -47,9 +53,18 @@
 }
 
 .tabs__container {
+  position: absolute;
   padding-top: var(--size-spacing-9);
 
   &:not(.is-active) {
-    display: none;
+    @include tokens.animate-hidden;
+
+    opacity: 0;
+    transition: opacity 800ms;
+  }
+
+  &.is-active {
+    opacity: 1;
+    transition: opacity 800ms;
   }
 }
