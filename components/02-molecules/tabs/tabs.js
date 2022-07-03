@@ -54,10 +54,24 @@ Drupal.behaviors.tabs = {
       }
 
       /**
+       * debounce
+       * @description Debounce to only run a function at most once every 200ms.
+       * @param {} func The function to be run after the timeout.
+       */
+      function debounce(func) {
+        let timer;
+        return function (event) {
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(func, 200, event);
+        };
+      }
+
+      /**
        * init
        * @description Initializes the component by removing the `no-js` class
-       *   from the component and setting the height for later animation. Also
-       *   attaches event listeners to each of the nav items. Returns nothing.
+       *   from the component and setting the height for later animation.
+       *   Also Attaches event listeners to each of the nav items and adds a
+       *   resize listener to adjust the height when the browser is resized.
        */
       TabSet.classList.remove('no-js');
       setHeight();
@@ -65,6 +79,13 @@ Drupal.behaviors.tabs = {
       tabLinks.forEach((tab, index) => {
         handleClick(tab, index);
       });
+
+      window.addEventListener(
+        'resize',
+        debounce(function () {
+          setHeight();
+        }),
+      );
     });
   },
 };
