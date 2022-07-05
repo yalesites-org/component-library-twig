@@ -7,7 +7,7 @@ $site-header-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
 :root {
-  --site-header-animation-speed: 800ms;
+  --site-header-animation-speed: var(--animation-speed-slow);
 }
 
 // Mixin for the small branding typography.
