@@ -1,6 +1,6 @@
 @mixin animate(
   $property: all,
-  $duration: 200ms,
+  $duration: var(--animation-speed-default),
   $function: ease-in-out,
   $delay: 0ms
 ) {
