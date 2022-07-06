@@ -14,7 +14,7 @@
       {% endif %}
       {# Print first item if we are not on the first page. #}
       {% if items.first %}
-        <li {{ bem('item', ['first'], pager__base_class) }}>
+        <li {{ bem('item', ['desktop', 'first'], pager__base_class) }}>
           <a {{ bem('link', ['first'], pager__base_class) }} href="{{ items.first.href }}" title="{{ 'Go to first page'|t }}"{{ items.first.attributes|without('href', 'title') }}>
             <span {{ bem('visually-hidden') }}>{{ 'First page'|t }}</span>
             <span aria-hidden="true">{{ '1 …' }}</span>
@@ -24,7 +24,7 @@
       {# Now generate the actual pager piece. #}
       {% for key, item in items.pages %}
         {% if current == key %}
-          <li {{ bem('item', [], pager__base_class, ['is-active']) }}>
+          <li {{ bem('item', ['desktop'], pager__base_class, ['is-active']) }}>
             <span {{ bem('link', ['current'], pager__base_class, ['is-active']) }} {{ item.attributes|without('href', 'title') }}>
               <span {{ bem('visually-hidden') }}>{{- 'Current page' -}}</span>
               {{- key -}}
@@ -32,7 +32,7 @@
           </li>
         {% else %}
           {% if item.href %}
-            <li {{ bem('item', [], pager__base_class) }}>
+            <li {{ bem('item', ['desktop'], pager__base_class) }}>
               <a {{ bem('link', [], pager__base_class) }} href="{{ item.href }}" title="{{ 'Go to page '|t ~ key }}" {{ item.attributes|without('href', 'title') }}>
                 <span {{ bem('visually-hidden') }}>{{- 'Page' -}}</span>
                 {{- key -}}
@@ -43,13 +43,17 @@
       {% endfor %}
       {# Print last item if we are not on the last page. #}
       {% if items.last %}
-        <li {{ bem('item', ['last'], pager__base_class) }}>
+        <li {{ bem('item', ['desktop', 'last'], pager__base_class) }}>
           <a {{ bem('link', ['last'], pager__base_class) }} href="{{ items.last.href }}" title="{{ 'Go to last page'|t }}"{{ items.last.attributes|without('href', 'title') }}>
             <span {{ bem('visually-hidden') }}>{{ 'Last page'|t }}</span>
             <span aria-hidden="true">{{ '… ' ~ items.pages|length }}</span>
           </a>
         </li>
       {% endif %}
+      {# Mobile Pager. #}
+      <li {{ bem('item', ['mobile'], pager__base_class) }}>
+        {{- current -}}/{{ items.pages|length }}
+      </li>
       {# Print next item if we are not on the last page. #}
       {% if items.next %}
         <li {{ bem('item', ['next'], pager__base_class) }}>

@@ -21,6 +21,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &--desktop {
+    @media (max-width: tokens.$break-mobile-max) {
+      display: none;
+    }
+  }
+
+  &--mobile {
+    @media (min-width: tokens.$break-mobile) {
+      display: none;
+    }
+  }
+
+  &--previous {
+    margin-right: var(--size-spacing-6);
+  }
+
+  &--next {
+    margin-left: var(--size-spacing-6);
+  }
 }
 
 .pager__link {
