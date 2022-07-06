@@ -41,7 +41,7 @@
   &:not([class*='--previous']):not([class*='--next']) {
     border-radius: 100%;
 
-    &:hover {
+    &:not(.is-active):hover {
       background-color: var(--link-color-base);
       border-color: var(--link-color-base);
       color: white;

@@ -23,17 +23,22 @@
       {% endif %}
       {# Now generate the actual pager piece. #}
       {% for key, item in items.pages %}
-        {% if item.href %}
-          {% set current_class = current == key ? ' is-active' : '' %}
-          <li {{ bem('item', [], pager__base_class, [current_class]) }}>
-            {% set title = current == key ? 'Current page'|t : 'Go to page '|t ~ key %}
-            <a {{ bem('link', [], pager__base_class, [current_class]) }} href="{{ item.href }}" title="{{ title }}" {{ item.attributes|without('href', 'title') }}>
-              <span {{ bem('visually-hidden') }}>
-                {{- current == key ? 'Current page' : 'Page' }}
-              </span>
+        {% if current == key %}
+          <li {{ bem('item', [], pager__base_class, ['is-active']) }}>
+            <span {{ bem('link', ['current'], pager__base_class, ['is-active']) }} {{ item.attributes|without('href', 'title') }}>
+              <span {{ bem('visually-hidden') }}>{{- 'Current page' -}}</span>
               {{- key -}}
-            </a>
+            </span>
           </li>
+        {% else %}
+          {% if item.href %}
+            <li {{ bem('item', [], pager__base_class) }}>
+              <a {{ bem('link', [], pager__base_class) }} href="{{ item.href }}" title="{{ 'Go to page '|t ~ key }}" {{ item.attributes|without('href', 'title') }}>
+                <span {{ bem('visually-hidden') }}>{{- 'Page' -}}</span>
+                {{- key -}}
+              </a>
+            </li>
+          {% endif %}
         {% endif %}
       {% endfor %}
       {# Print last item if we are not on the last page. #}
