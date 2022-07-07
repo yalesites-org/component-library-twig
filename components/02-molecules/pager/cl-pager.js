@@ -10,15 +10,19 @@ Drupal.behaviors.clPagination = {
         e.preventDefault();
 
         const activeItem = context.querySelector('.is-active');
-        const activeLink = activeItem.querySelector('a');
+        const activeLink = activeItem.querySelector('.pager__link');
         const link = item.querySelector('a');
 
         // Remove active class from previously active item.
         activeItem.classList.remove(activeClass);
         activeLink.classList.remove(activeClass);
+        // Simulate the item becoming a link.
+        activeLink.style.cursor = 'pointer';
         // Add active class to the clicked item.
         item.classList.add(activeClass);
         link.classList.add(activeClass);
+        // Simulate the item becoming plain text.
+        link.style.cursor = 'text';
       });
     });
   },
