@@ -62,14 +62,26 @@ $cta-outline-weights: (
   }
 
   // Color schemes
+  // For the filled style:
+  // - Primary is the
+  //    - background
+  //    - border
+  // - Secondary is the
+  //    - text
+  // For the outline style:
+  // - Primary is the
+  //    - text
+  //    - border
+  // Hover states invert the two styles.
+  --color-cta-primary: var(--color-theme-cta-primary);
+  --color-cta-secondary: var(--color-theme-cta-secondary);
+
+  // These color schemes are "inverted"
   [data-component-theme='gray-800'] &,
   [data-component-theme='gray-700'] &,
   [data-component-theme='blue-yale'] & {
-    // prettier-ignore
-    --color-cta-primary: var(--color-theme-cta-secondary, var(--color-basic-white));
-
-    // prettier-ignore
-    --color-cta-secondary: var(--color-theme-cta-primary, var(--color-blue-yale));
+    --color-cta-primary: var(--color-theme-cta-secondary);
+    --color-cta-secondary: var(--color-background);
   }
 
   // Hover styles
