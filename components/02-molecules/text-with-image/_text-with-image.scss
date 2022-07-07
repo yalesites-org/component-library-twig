@@ -8,12 +8,12 @@
   display: grid;
 
   @media (max-width: tokens.$break-mobile-max) {
-    gap: var(--size-spacing-5);
+    gap: var(--size-spacing-6);
   }
 
   @media (min-width: tokens.$break-mobile) {
     grid-template: 'primary secondary';
-    gap: var(--size-spacing-6);
+    gap: var(--size-spacing-8);
 
     // Focus Options
     [data-component-focus='equal'] & {

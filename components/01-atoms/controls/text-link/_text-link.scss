@@ -26,39 +26,27 @@
 // Style options are "underline" or "no-underline".
 // The style name indicates the initial appearance.
 @mixin link($style: underline, $family-weight: 'mallory-medium') {
-  @include tokens.animate('color');
-
-  position: relative;
   color: var(--link-color-base);
   text-decoration: none;
   font-weight: var(--font-weights-#{$family-weight});
 
-  // Add the decorative bar under links
-  &::after {
-    @include tokens.animate('transform');
+  // Add the decorative bar under links.
+  background-image: linear-gradient(currentcolor, currentcolor);
+  background-size: var(--link-styles-#{$style}-size);
+  background-position: bottom left;
+  background-repeat: no-repeat;
+  transition: background-size var(--animation-speed-default) linear,
+    color var(--animation-speed-default) ease-in-out;
 
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: currentcolor;
-    transform-origin: left center;
-    transform: var(--link-styles-#{$style}-transform);
-  }
-
+  // Animate the decorative bar when the link is hovered.
   &:hover {
     color: var(--link-color-hover);
+    background-size: var(--link-styles-#{$style}-size-hover);
   }
 
-  // Animate the decorative bar when the link is hovered
-  &:hover::after {
-    transform: var(--link-styles-#{$style}-transform-hover);
-  }
-
-  &:focus-visible::after {
-    transform: scale(0, 1);
+  // Remove underline when focus is visible.
+  &:focus-visible {
+    background-size: var(--link-styles-no-underline-size-hover);
   }
 }
 
@@ -69,8 +57,8 @@
 // - Apply the mixin to the parent item. e.g.: `.card` and it will affect
 // the `.card__heading-link` element inside.
 // - The component will likely also need some JS to round out the design and
-// functionality desired. Check `reference-card.js` for an example. And/or read the
-// Cards chapter here: https://inclusive-components.design/cards.
+// functionality desired. Check `reference-card.js` for an example. And/or read
+// the Cards chapter here: https://inclusive-components.design/cards.
 @mixin clickable-component-heading-link {
   // Style the component when it's heading is focused.
   &:focus-within {
@@ -79,27 +67,17 @@
 
   // Style the heading link inside the component.
   [class*='__heading-link'] {
-    @include tokens.animate('color');
-
-    position: relative;
     color: currentcolor;
     text-decoration: none;
     font-weight: var(--font-weights-yalenew-bold);
 
-    // Add the decorative bar under links
-    &::after {
-      @include tokens.animate('transform');
-
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background-color: currentcolor;
-      transform-origin: left center;
-      transform: var(--link-styles-no-underline-transform);
-    }
+    // Add the decorative bar under links.
+    background-image: linear-gradient(currentcolor, currentcolor);
+    background-size: var(--link-styles-no-underline-size);
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    transition: background-size var(--animation-speed-default) linear,
+      color var(--animation-speed-default) ease-in-out;
 
     &:focus {
       // Setting `outline: none` is generally a huge no-no! In this case,
@@ -115,15 +93,12 @@
   // Style the heading link when the component is hovered.
   &:hover [class*='__heading-link'] {
     color: var(--link-color-base);
-
-    &::after {
-      transform: var(--link-styles-no-underline-transform-hover);
-    }
+    background-size: var(--link-styles-no-underline-size-hover);
   }
 
   // Style the heading link when the component is focused.
-  &:focus-visible [class*='__heading-link']::after {
-    transform: scale(0, 1);
+  &:focus-visible [class*='__heading-link'] {
+    background-size: var(--link-styles-no-underline-size-hover);
   }
 }
 
