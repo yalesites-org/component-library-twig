@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build": "webpack --config ./webpack/webpack.prod.js",
-    "build-storybook": "storybook:build",
+    "build-storybook": "npm run storybook:build",
     "develop": "concurrently --raw 'npm run webpack' 'npm run storybook'",
     "husky:commit-msg": "commitlint --edit $1",
     "husky:pre-commit": "lint-staged",
