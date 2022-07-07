@@ -11,7 +11,7 @@ import './cl-pager';
 /**
  * Storybook Definition.
  */
-export default { title: 'Molecules/Navigation/Pager' };
+export default { title: 'Molecules/Pager' };
 
 export const Basic = () => pager(pagerData);
 
