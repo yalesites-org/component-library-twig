@@ -2,7 +2,7 @@
 node_modules
 
 # Storybook build directory
-.out
+# .out
 
 # Webpack build directory
 dist
