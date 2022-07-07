@@ -8,7 +8,6 @@
   ],
   "scripts": {
     "build": "webpack --config ./webpack/webpack.prod.js",
-    "build-storybook": "npm run storybook:build",
     "develop": "concurrently --raw 'npm run webpack' 'npm run storybook'",
     "husky:commit-msg": "commitlint --edit $1",
     "husky:pre-commit": "lint-staged",
@@ -21,6 +20,7 @@
     "semantic-release": "semantic-release",
     "storybook": "start-storybook --ci -s dist,images -p 6006",
     "storybook:build": "npm run build && build-storybook -s dist,images -o .out",
+    "build-storybook": "npm run build && build-storybook -s dist,images -o .out",
     "storybook:deploy": "storybook-to-ghpages -o .out",
     "test": "npm run lint:js && npm run lint:styles && npm run prettier && npm run storybook:build",
     "visreg:ci": "percy storybook .out",
