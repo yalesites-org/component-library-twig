@@ -1,6 +1,10 @@
 pager__uid: 0
 current: 3
 items:
+  previous:
+    href: '#'
+  next:
+    href: '#'
   pages:
     1:
       href: '#'

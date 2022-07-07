@@ -80,3 +80,16 @@
     border-color: var(--color-basic-brown-gray);
   }
 }
+
+.pager__icon {
+  height: 1em;
+  width: 1em;
+
+  &--previous {
+    transform: rotate(90deg);
+  }
+
+  &--next {
+    transform: rotate(-90deg);
+  }
+}

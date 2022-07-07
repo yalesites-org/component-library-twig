@@ -8,7 +8,13 @@
         <li {{ bem('item', ['previous'], pager__base_class) }}>
           <a {{ bem('link', ['previous'], pager__base_class) }} href="{{ items.previous.href }}" title="{{ 'Go to previous page'|t }}" rel="prev"{{ items.previous.attributes|without('href', 'title', 'rel') }}>
             <span {{ bem('visually-hidden') }}>{{ 'Previous page'|t }}</span>
-            <span aria-hidden="true">{{ '‹ Previous'|t }}</span>
+            {% include "@atoms/images/icons/_icon.twig" with {
+              icon__name: 'angle-down',
+              icon__decorative: true,
+              icon__blockname: pager__base_class,
+              icon__modifiers: ['previous'],
+            } %}
+            <span aria-hidden="true">{{ 'Back'|t }}</span>
           </a>
         </li>
       {% endif %}
@@ -52,14 +58,20 @@
       {% endif %}
       {# Mobile Pager. #}
       <li {{ bem('item', ['mobile'], pager__base_class) }}>
-        {{- current -}}/{{ items.pages|length }}
+        {{- current }} / {{ items.pages|length -}}
       </li>
       {# Print next item if we are not on the last page. #}
       {% if items.next %}
         <li {{ bem('item', ['next'], pager__base_class) }}>
           <a {{ bem('link', ['next'], pager__base_class) }} href="{{ items.next.href }}" title="{{ 'Go to next page'|t }}" rel="next"{{ items.next.attributes|without('href', 'title', 'rel') }}>
             <span {{ bem('visually-hidden') }}>{{ 'Next page'|t }}</span>
-            <span aria-hidden="true">{{ 'Next ›'|t }}</span>
+            <span aria-hidden="true">{{ 'Next'|t }}</span>
+            {% include "@atoms/images/icons/_icon.twig" with {
+              icon__name: 'angle-down',
+              icon__decorative: true,
+              icon__blockname: pager__base_class,
+              icon__modifiers: ['next'],
+            } %}
           </a>
         </li>
       {% endif %}
