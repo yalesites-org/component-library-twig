@@ -45,6 +45,7 @@
 
 .pager__link {
   display: flex;
+  gap: var(--size-spacing-1);
   min-height: var(--size-click-target-minimum);
   min-width: var(--size-click-target-minimum);
   align-items: center;
@@ -82,8 +83,8 @@
 }
 
 .pager__icon {
-  height: 1em;
-  width: 1em;
+  height: 0.8em;
+  width: 0.8em;
 
   &--previous {
     transform: rotate(90deg);
