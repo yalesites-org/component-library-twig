@@ -1,21 +1,3 @@
-{# Drupal Specific #}
-{# {% if primary %}
-  <h2 class="visually-hidden">{{ 'Primary tabs'|t }}</h2>
-  <ul class="tabs__nav tabs__nav--local-tasks">{{ primary }}</ul>
-{% endif %}
-{% if secondary %}
-  <h2 class="visually-hidden">{{ 'Secondary tabs'|t }}</h2>
-  <ul>{{ secondary }}</ul>
-{% endif %} #}
-
-{#
- # Available Variables:
- # - tabs__id: unique ID to distinguish multiple sets of tabs
- # - tabs: array of tab items, which include:
- #   - label
- #   - content
- #}
-
 {% set tabs__base_class = 'tabs' %}
 {% set tabs__id = tabs__id|default(random()) %}
 
@@ -27,10 +9,11 @@
       {% else %}
         {% set tab_index = 'tabindex="-1"' %}
       {% endif %}
-      {% include "@molecules/tabs/_tab.twig" with {
-        tab__link: "#tab-" ~ tabs__id ~ '-' ~ key,
-        tab__label: tab.tab__label,
-      } %}
+      <li {{ bem('item', [], tabs__base_class) }} role="presentation">
+        <a {{ bem('link', [], tabs__base_class) }} role="tab" {{ tab_index }} {{ aria_selected }} href="{{ "#tab-" ~ tabs__id ~ '-' ~ key }}">
+          {{ tab.tab__label }}
+        </a>
+      </li>
     {% endfor %}
   </ul>
   {% for key, tab in tabs %}
