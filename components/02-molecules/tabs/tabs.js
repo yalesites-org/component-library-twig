@@ -64,7 +64,7 @@ Drupal.behaviors.tabs = {
        */
       function debounce(func) {
         let timer;
-        return function (event) {
+        return function debounceFunction(event) {
           if (timer) clearTimeout(timer);
           timer = setTimeout(func, 200, event);
         };
@@ -98,7 +98,6 @@ Drupal.behaviors.tabs = {
               const activePanel = TabSet.querySelector(
                 '.tabs__container.is-active',
               );
-              console.log(activePanel);
               // Focus on the container.
               activePanel.focus();
             } else if (tabLinks[dir]) {
@@ -126,7 +125,7 @@ Drupal.behaviors.tabs = {
       // Resize tab sets when the window is resized.
       window.addEventListener(
         'resize',
-        debounce(function () {
+        debounce(function runSetHeight() {
           setHeight();
         }),
       );
