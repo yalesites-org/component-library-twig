@@ -175,6 +175,10 @@
           "structure": "molecules"
         },
         {
+          "name": "tabs",
+          "structure": "molecules"
+        },
+        {
           "name": "text",
           "structure": "molecules",
           "required": true
