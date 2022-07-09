@@ -22,6 +22,7 @@
 <div {{ bem(tabs__base_class, [], tabs__blockname, ['no-js']) }}>
   <ul {{ bem('nav', [], tabs__base_class) }}>
     {% for key, tab in tabs %}
+      {% if key == 0 %}{% set active_class = 'is-active' %}{% endif %}
       {% include "@molecules/tabs/_tab.twig" with {
         tab__link: "#tab-" ~ tabs__id ~ '-' ~ key,
         tab__label: tab.tab__label,
@@ -29,8 +30,9 @@
     {% endfor %}
   </ul>
   {% for key, tab in tabs %}
-    <div class="tabs__container{% if key == 0 %} is-active{% endif %}">
-      <div id="tab-{{ tabs__id ~ '-' ~ key }}" class="tabs__content">
+    {% if key == 0 %}{% set active_class = 'is-active' %}{% endif %}
+    <div {{ bem('container', [], tabs__base_class, [active_class]) }}>
+      <div id="tab-{{ tabs__id ~ '-' ~ key }}" {{ bem('content', [], tabs__base_class) }}>
         {{ tab.tab__content }}
       </div>
     </div>

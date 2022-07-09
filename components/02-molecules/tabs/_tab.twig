@@ -30,7 +30,7 @@
   {# {% if attributes %}
     {{ link(link['#title'], link['#url'], { 'class' : link_classes }) }}
   {% else %} #}
-    <a href="{{ tab__link }}" class="tabs__link tabs__link--local-tasks{% if key == 0 %} is-active{% endif %}">{{ tab__label }}</a>
+    <a href="{{ tab__link }}" {{ bem('link', [], tabs__base_class, [active_class]) }}>{{ tab__label }}</a>
   {# {% endif %} #}
 </li>
 {# {% if example %}
