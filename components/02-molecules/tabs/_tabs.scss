@@ -42,7 +42,8 @@
     outline-offset: -2px;
   }
 
-  &.is-active {
+  // Active tab.
+  &[aria-selected='true'] {
     @include tokens.underline-slide-end(
       'no-underline',
       $thickness: var(--size-thickness-8)

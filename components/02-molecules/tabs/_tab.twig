@@ -25,12 +25,20 @@
 {# {% if example %}
 <ul class="tabs__nav">
 {% endif %} #}
-<li {{ bem('item', [], tabs__base_class) }}>
+<li {{ bem('item', [], tabs__base_class) }} role="presentation">
   {# Detect if Drupal #}
   {# {% if attributes %}
     {{ link(link['#title'], link['#url'], { 'class' : link_classes }) }}
   {% else %} #}
-    <a href="{{ tab__link }}" {{ bem('link', [], tabs__base_class, [active_class]) }}>{{ tab__label }}</a>
+    <a
+      href="{{ tab__link }}"
+      {{ bem('link', [], tabs__base_class) }}
+      role="tab"
+      {{ tab_index }}
+      {{ aria_selected }}
+    >
+      {{ tab__label }}
+    </a>
   {# {% endif %} #}
 </li>
 {# {% if example %}
