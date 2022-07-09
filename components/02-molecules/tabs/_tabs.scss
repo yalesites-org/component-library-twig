@@ -23,10 +23,7 @@
 }
 
 .tabs__link {
-  @include tokens.underline-slide-start(
-    'no-underline',
-    $thickness: var(--size-thickness-8)
-  );
+  @include tokens.underline-slide-start('no-underline', $size: 'thick');
 
   display: block;
   text-decoration: none;
@@ -44,10 +41,7 @@
 
   // Active tab.
   &[aria-selected='true'] {
-    @include tokens.underline-slide-end(
-      'no-underline',
-      $thickness: var(--size-thickness-8)
-    );
+    @include tokens.underline-slide-end('no-underline', $size: 'thick');
 
     color: var(--color-blue-yale);
   }
