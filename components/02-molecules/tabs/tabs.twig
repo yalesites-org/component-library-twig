@@ -10,26 +10,28 @@
 
 {#
  # Available Variables:
+ # - tabs__id: unique ID to distinguish multiple sets of tabs
  # - tabs: array of tab items, which include:
  #   - label
  #   - content
  #}
 
 {% set tabs__base_class = 'tabs' %}
+{% set tabs__id = tabs__id|default(random()) %}
 
-<div id="tabs" {{ bem(tabs__base_class, [], tabs__blockname, ['no-js']) }}>
+<div {{ bem(tabs__base_class, [], tabs__blockname, ['no-js']) }}>
   <ul {{ bem('nav', [], tabs__base_class) }}>
     {% for key, tab in tabs %}
       {% include "@molecules/tabs/_tab.twig" with {
-        tab__link: "#tab-" ~ key,
+        tab__link: "#tab-" ~ tabs__id ~ '-' ~ key,
         tab__label: tab.tab__label,
       } %}
     {% endfor %}
   </ul>
   {% for key, tab in tabs %}
     <div class="tabs__container{% if key == 0 %} is-active{% endif %}">
-      <div id="tab-{{ key }}" class="tabs__content">
-        <p>{{ tab.tab__content }}</p>
+      <div id="tab-{{ tabs__id ~ '-' ~ key }}" class="tabs__content">
+        {{ tab.tab__content }}
       </div>
     </div>
   {% endfor %}

@@ -11,5 +11,5 @@ export default { title: 'Molecules/Tabs' };
 
 export const Tabs = () => `
   ${tabs(tabData)}
-  ${tabs(tabData)}
+  ${tabs({ ...tabData, tabs__id: '123' })}
 `;
