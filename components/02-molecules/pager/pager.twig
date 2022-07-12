@@ -1,7 +1,7 @@
 {% set pager__base_class = 'pager' %}
 
 {% if items %}
-  <nav {{ bem(pager__base_class) }} role="navigation" aria-label="{{ heading_id }}">
+  <nav {{ bem(pager__base_class) }} role="navigation" aria-label="Pagination">
     <ul {{ bem('items', [], pager__base_class, ['js-pager__items']) }}>
       {# Print previous item if we are not on the first page. #}
       {% if items.previous %}
@@ -39,8 +39,7 @@
         {% else %}
           {% if item.href %}
             <li {{ bem('item', ['desktop'], pager__base_class) }}>
-              <a {{ bem('link', [], pager__base_class) }} href="{{ item.href }}" title="{{ 'Go to page '|t ~ key }}" {{ item.attributes|without('href', 'title') }}>
-                <span {{ bem('visually-hidden') }}>{{- 'Page' -}}</span>
+              <a {{ bem('link', [], pager__base_class) }} href="{{ item.href }}" aria-label="{{ 'Page '|t ~ key }}" {{ item.attributes|without('href', 'title') }}>
                 {{- key -}}
               </a>
             </li>
