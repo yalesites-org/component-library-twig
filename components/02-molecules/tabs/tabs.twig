@@ -10,7 +10,7 @@
         {% set tab_index = 'tabindex="-1"' %}
       {% endif %}
       <li {{ bem('item', [], tabs__base_class) }} role="presentation">
-        <a {{ bem('link', [], tabs__base_class) }} role="tab" {{ tab_index }} {{ aria_selected }} href="{{ "#tab-" ~ tabs__id ~ '-' ~ key }}">
+        <a {{ bem('link', [], tabs__base_class) }} role="tab" aria-controls="{{ 'tab-' ~ tabs__id ~ '-' ~ key }}" {{ tab_index }} {{ aria_selected }} href={{ '#tab-' ~ tabs__id ~ '-' ~ key }}>
           {{ tab.tab__label }}
         </a>
       </li>
@@ -21,7 +21,7 @@
       {% set active_class = 'is-active' %}
     {% endif %}
     <div {{ bem('container', [], tabs__base_class, [active_class]) }} role="tabpanel">
-      <div id="tab-{{ tabs__id ~ '-' ~ key }}" {{ bem('content', [], tabs__base_class) }}>
+      <div id="{{ 'tab-' ~ tabs__id ~ '-' ~ key }}" {{ bem('content', [], tabs__base_class) }}>
         {{ tab.tab__content }}
       </div>
     </div>
