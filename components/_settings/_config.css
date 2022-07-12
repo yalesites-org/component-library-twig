@@ -5,12 +5,8 @@
   --color-accent: var(--color-theme-accent, var(--color-blue-medium));
   --color-divider: var(--color-gray-500);
   --color-divider-subtle: var(--color-gray-300);
-
-  /* prettier-ignore */
-  --color-cta-primary: var(--color-theme-cta-primary, var(--color-blue-yale));
-
-  /* prettier-ignore */
-  --color-cta-secondary: var(--color-theme-cta-secondary, var(--color-basic-white));
+  --color-theme-cta-primary: var(--color-blue-yale);
+  --color-theme-cta-secondary: var(--color-background);
 
   /* prettier-ignore */
   --color-pull-quote-accent: var(--color-theme-pull-quote-accent, var(--color-blue-yale));
