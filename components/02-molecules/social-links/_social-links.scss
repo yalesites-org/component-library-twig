@@ -1,15 +1,23 @@
 @use '../../01-atoms/atoms';
-@use '../../00-tokens/tokens';
 
 .social-links__list {
   @include atoms.list-reset;
 
   display: flex;
-  gap: var(--size-spacing-6);
+  flex-wrap: wrap;
+  gap: var(--size-spacing-4);
+}
+
+.social-links__link {
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--size-click-target-minimum);
+  min-width: var(--size-click-target-minimum);
 }
 
 .social-links__icon {
-  color: var(--color-blue-yale);
-  height: 1em;
-  width: 1em;
+  height: 1.5rem;
+  width: 1.5rem;
 }
