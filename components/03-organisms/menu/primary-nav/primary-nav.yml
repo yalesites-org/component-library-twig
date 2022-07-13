@@ -13,6 +13,7 @@ items:
         below:
           - title: 'Combating Racism'
             url: '#'
+            is_active: true
           - title: 'Changing Faces of YDS'
             url: '#'
       - title: 'Strategic Plan'
