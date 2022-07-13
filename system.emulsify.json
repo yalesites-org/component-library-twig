@@ -167,6 +167,10 @@
           "required": true
         },
         {
+          "name": "pager",
+          "structure": "molecules"
+        },
+        {
           "name": "pop-out-image",
           "structure": "molecules"
         },
