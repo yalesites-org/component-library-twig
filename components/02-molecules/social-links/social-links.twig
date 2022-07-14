@@ -1,26 +1,23 @@
 {% set social_links__baseclass = 'social-links' %}
 
+{% set social_links__list__content %}
+  {% for icon in icons %}
+    {% embed "@atoms/lists/_list-item.twig" with {
+      list__item__blockname: social_links__baseclass,
+    } %}
+      {% block list__item__content %}
+        {% include "@molecules/social-links/_social-link__content.twig" %}
+      {% endblock %}
+    {% endembed %}
+  {% endfor %}
+{% endset %}
+
 <div {{ bem(social_links__baseclass) }}>
-  {# list <ul> #}
-  {# social-links__list #}
-  <ul {{ bem('list', [], social_links__baseclass) }}>
-    {# For each loop #}
-    {% for icon in icons %}
-      {# list-items <li> #}
-      {# social-links__item #}
-      <li {{ bem('item', [], social_links__baseclass) }}>
-        {# link <a> #}
-        <a href="{{ icon.url }}" {{ bem('link', [], social_links__baseclass) }}>
-          {# Visually hidden service name (Facebook) #}
-          <span class="visually-hidden">{{ icon.name }}</span>
-          {# Visually shown icon #}
-          {% include '@atoms/images/icons/_icon.twig' with {
-            icon__name: icon.icon,
-            icon__decorative: true,
-            icon__blockname: social_links__baseclass,
-          } %}
-        </a>
-      </li>
-    {% endfor %}
-  </ul>
+  {% embed "@atoms/lists/list.twig" with {
+    list__blockname: social_links__baseclass,
+  } %}
+    {% block list__content %}
+      {{ social_links__list__content }}
+    {% endblock %}
+  {% endembed %}
 </div>

@@ -1,0 +1,19 @@
+{% set control__base_class = control__base_class|default('button') %}
+{% set control__element = control__element|default('button') %}
+{% set control__attributes = control__attributes|default({}) %}
+
+{% if control__url %}
+  {% set control__base_class = control__base_class|default('link') %}
+  {% set control__attributes = control__attributes|merge({
+    href: control__url,
+  }) %}
+  {% set control__element = 'a' %}
+{% endif %}
+
+{% set control__attributes = control__attributes|merge({
+  class: bem(control__base_class, control__modifiers, control__blockname),
+}) %}
+
+<{{ control__element }} {{ add_attributes(control__attributes) }}>
+    {{- control__content -}}
+</{{ control__element }}>
