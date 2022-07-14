@@ -1,3 +1,5 @@
+@use '~@yalesites-org/tokens/build/scss/tokens';
+
 @mixin animate(
   $property: all,
   $duration: var(--animation-speed-default),
@@ -32,49 +34,61 @@
   }
 }
 
-@mixin underline-slide-start($variation: default, $size: 'thin') {
-  $thickness: var(--link-underline-size-default);
-  $position: 0 1.15em;
+:root {
+  --underline-thick: var(--size-thickness-4);
 
+  @media (min-width: tokens.$break-mobile) {
+    --underline-thick: var(--size-thickness-8);
+  }
+}
+
+@mixin underline-slide-start($variation: default, $size: 'thin') {
   @if $size == 'thick' {
-    $thickness: var(--size-thickness-8);
-    $position: 0 100%;
+    --thickness: var(--underline-thick);
+    --position: 0 100%;
+
+    // When using the 'thick' variation, add some space between the text and the
+    // underline.
+    padding-bottom: calc(var(--thickness) + var(--size-spacing-3));
+  } @else {
+    --thickness: var(--link-underline-size-default);
+    --position: 0 1.15em;
   }
 
   // Add the decorative bar under links.
   background-image: linear-gradient(currentcolor, currentcolor);
-  background-position: $position;
+  background-position: var(--position);
   background-repeat: no-repeat;
   transition: background-size var(--animation-speed-default) linear,
     color var(--animation-speed-default) ease-in-out;
 
   @if $variation == 'no-underline' {
-    background-size: 0 $thickness;
+    background-size: 0 var(--thickness);
   } @else {
-    background-size: 100% $thickness;
+    background-size: 100% var(--thickness);
   }
 }
 
 @mixin underline-slide-end($variation: default, $size: 'thin') {
-  $thickness: var(--link-underline-size-default);
+  --thickness: var(--link-underline-size-default);
 
   @if $size == 'thick' {
-    $thickness: var(--size-thickness-8);
+    --thickness: var(--underline-thick);
   }
 
   @if $variation == 'no-underline' {
-    background-size: 100% $thickness;
+    background-size: 100% var(--thickness);
   } @else {
-    background-size: 0 $thickness;
+    background-size: 0 var(--thickness);
   }
 }
 
 @mixin underline-slide-none($size: 'thin') {
-  $thickness: var(--link-underline-size-default);
+  --thickness: var(--link-underline-size-default);
 
   @if $size == 'thick' {
-    $thickness: var(--size-thickness-8);
+    --thickness: var(--underline-thick);
   }
 
-  background-size: 0 $thickness;
+  background-size: 0 var(--thickness);
 }
