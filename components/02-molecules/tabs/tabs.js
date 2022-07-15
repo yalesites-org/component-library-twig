@@ -13,11 +13,11 @@ Drupal.behaviors.tabs = {
       let overflow;
 
       /**
-       * getTabsPositions
+       * setOverflow
        * @description Get the positions of the tabs and the tabs__items to
        *   determine whether an overflow situation is in play.
        */
-      function getTabsPositions() {
+      function setOverflow() {
         const tabsLeft = TabSet.getBoundingClientRect().left;
         const tabsRight = TabSet.getBoundingClientRect().right;
         const firstTabLeft = TabSet.querySelector(
@@ -153,7 +153,7 @@ Drupal.behaviors.tabs = {
       tabNav.addEventListener(
         'scroll',
         debounce(function blah() {
-          getTabsPositions();
+          setOverflow();
         }),
       );
       setHeight();
@@ -167,7 +167,7 @@ Drupal.behaviors.tabs = {
         'resize',
         debounce(function runSetHeight() {
           setHeight();
-          getTabsPositions();
+          setOverflow();
         }),
       );
     });
