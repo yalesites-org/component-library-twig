@@ -10,6 +10,40 @@ Drupal.behaviors.tabs = {
       const tabLinks = TabSet.querySelectorAll('.tabs__link');
       const tabContainers = TabSet.querySelectorAll('.tabs__container');
       let activeIndex = 0;
+      let overflow;
+
+      /**
+       * getTabsPositions
+       * @description Get the positions of the tabs and the tabs__items to
+       *   determine whether an overflow situation is in play.
+       */
+      function getTabsPositions() {
+        const tabsLeft = TabSet.getBoundingClientRect().left;
+        const tabsRight = TabSet.getBoundingClientRect().right;
+        const firstTabLeft = TabSet.querySelector(
+          '.tabs__item:first-child',
+        ).getBoundingClientRect().left;
+        const lastTabRight = TabSet.querySelector(
+          '.tabs__item:last-child',
+        ).getBoundingClientRect().right;
+
+        if (firstTabLeft < tabsLeft) {
+          if (lastTabRight > tabsRight) {
+            if (overflow !== 'both') {
+              overflow = 'both';
+              TabSet.setAttribute('data-overflow', 'both');
+            }
+          } else if (overflow !== 'left') {
+            overflow = 'left';
+            TabSet.setAttribute('data-overflow', 'left');
+          }
+        } else if (lastTabRight > tabsRight) {
+          if (overflow !== 'right') {
+            TabSet.setAttribute('data-overflow', 'right');
+            overflow = 'right';
+          }
+        }
+      }
 
       /**
        * setHeight
@@ -116,6 +150,12 @@ Drupal.behaviors.tabs = {
        *   resize listener to adjust the height when the browser is resized.
        */
       TabSet.classList.remove('no-js');
+      tabNav.addEventListener(
+        'scroll',
+        debounce(function blah() {
+          getTabsPositions();
+        }),
+      );
       setHeight();
 
       tabLinks.forEach((tab, index) => {
@@ -127,6 +167,7 @@ Drupal.behaviors.tabs = {
         'resize',
         debounce(function runSetHeight() {
           setHeight();
+          getTabsPositions();
         }),
       );
     });

@@ -1,8 +1,14 @@
 {% set tabs__base_class = 'tabs' %}
 {% set tabs__id = tabs__id|default(random()) %}
 
-<div {{ bem(tabs__base_class, [], tabs__blockname, ['no-js']) }}>
+<div {{ bem(tabs__base_class, [], tabs__blockname, ['no-js']) }} data-overflow="none">
   <div {{ bem('tabs', [], tabs__base_class) }}>
+    {% include "@atoms/images/icons/_icon.twig" with {
+      icon__name: 'angle-down',
+      icon__blockname: tabs__base_class,
+      icon__modifiers: ['left'],
+      icon__decorative: true,
+    } %}
     <ul {{ bem('nav', [], tabs__base_class) }} role="tablist">
       {% for key, tab in tabs %}
         {% if key == 0 %}
@@ -17,6 +23,12 @@
         </li>
       {% endfor %}
     </ul>
+    {% include "@atoms/images/icons/_icon.twig" with {
+      icon__name: 'angle-down',
+      icon__blockname: tabs__base_class,
+      icon__modifiers: ['right'],
+      icon__decorative: true,
+    } %}
   </div>
   {% for key, tab in tabs %}
     {% if key == 0 %}
