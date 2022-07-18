@@ -22,18 +22,17 @@
 {# Cta Modifiers #}
 {% set cta__modifiers = ['level-' ~ menu__level] %}
 
-{# Set aria-current if the link is the current page #}
-{% if item.is_active %}
-  {% set link__attributes = link__attributes|merge({
-    'aria-current': 'page',
-  }) %}
-{% endif %}
-
 {# Set link component as default #}
 {% set list__item %}
   {% if menu__contextual and item.is_active %}
     <span {{ add_attributes(link__attributes) }}>{{- item.title -}}</span>
   {% else %}
+    {# Set aria-current if the link is the current page #}
+    {% if item.is_active %}
+      {% set link__attributes = link__attributes|merge({
+        'aria-current': 'page',
+      }) %}
+    {% endif %}
     {% if directory %}
       {% set link__url = item.url.toString %}
     {% else %}

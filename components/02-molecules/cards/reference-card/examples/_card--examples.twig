@@ -28,7 +28,7 @@
       {% include "@molecules/cards/reference-card/event/_event-format.twig" %}
     {% endset %}
   {% endif %}
-  {# If event, and grid, hide overline, and put the format next to the date. #}
+  {# If event and grid put the date in the subheading. #}
   {% if card_collection__type == 'grid' %}
     {% set reference_card__subheading %}
       {{ reference_card__date__formatted }}
