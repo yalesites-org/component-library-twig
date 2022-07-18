@@ -7,10 +7,14 @@ Drupal.behaviors.tabs = {
     tabs.forEach((tabSet) => {
       const TabSet = tabSet;
       const tabNav = TabSet.querySelector('.tabs__nav');
+      // const tabControls = TabSet.querySelectorAll('.tabs__control');
       const tabLinks = TabSet.querySelectorAll('.tabs__link');
       const tabContainers = TabSet.querySelectorAll('.tabs__container');
+      const tabsLeft = TabSet.getBoundingClientRect().left;
+      const tabsRight = TabSet.getBoundingClientRect().right;
       let activeIndex = 0;
-      let overflow;
+      let overflowDir;
+      // let navDirection;
 
       /**
        * setOverflow
@@ -18,8 +22,6 @@ Drupal.behaviors.tabs = {
        *   determine whether an overflow situation is in play.
        */
       function setOverflow() {
-        const tabsLeft = TabSet.getBoundingClientRect().left;
-        const tabsRight = TabSet.getBoundingClientRect().right;
         const firstTabLeft = TabSet.querySelector(
           '.tabs__item:first-child',
         ).getBoundingClientRect().left;
@@ -29,21 +31,47 @@ Drupal.behaviors.tabs = {
 
         if (firstTabLeft < tabsLeft) {
           if (lastTabRight > tabsRight) {
-            if (overflow !== 'both') {
-              overflow = 'both';
+            if (overflowDir !== 'both') {
+              overflowDir = 'both';
               TabSet.setAttribute('data-overflow', 'both');
             }
-          } else if (overflow !== 'left') {
-            overflow = 'left';
+          } else if (overflowDir !== 'left') {
+            overflowDir = 'left';
             TabSet.setAttribute('data-overflow', 'left');
           }
         } else if (lastTabRight > tabsRight) {
-          if (overflow !== 'right') {
+          if (overflowDir !== 'right') {
+            overflowDir = 'right';
             TabSet.setAttribute('data-overflow', 'right');
-            overflow = 'right';
           }
+        } else {
+          TabSet.setAttribute('data-overflow', 'none');
+          overflowDir = 'none';
         }
       }
+
+      // /**
+      //  * mouseNav
+      //  * @description Support mouse navigation when horizontal scrolling occurs.
+      //  */
+      // function mouseNav(direction) {
+      //   // If right
+      //   if (direction === 'right') {
+      //     navDirection = direction;
+      //   }
+      // }
+
+      // tabControls.forEach((control) => {
+      //   control.addEventListener('click', (e) => {
+      //     e.preventDefault();
+
+      //     if (control.classList.contains('tabs__control--right')) {
+      //       mouseNav('right');
+      //     } else {
+      //       mouseNav('left');
+      //     }
+      //   });
+      // });
 
       /**
        * setHeight
@@ -144,23 +172,21 @@ Drupal.behaviors.tabs = {
 
       /**
        * init
-       * @description Initializes the component by removing the `no-js` class
-       *   from the component and setting the height for later animation.
-       *   Also Attaches event listeners to each of the nav items and adds a
-       *   resize listener to adjust the height when the browser is resized.
+       * @description Initializes the component.
+       *   Set the height for later animation.
+       *   Set overflow properties.
+       *   Add click listener to each tab.
+       *   Add scroll listener to tab nav.
+       *   Add resize listener to adjust the height when the browser is resized.
        */
-      TabSet.classList.remove('no-js');
-      tabNav.addEventListener(
-        'scroll',
-        debounce(function blah() {
-          setOverflow();
-        }),
-      );
       setHeight();
+      setOverflow();
 
       tabLinks.forEach((tab, index) => {
         handleClick(tab, index);
       });
+
+      tabNav.addEventListener('scroll', setOverflow);
 
       // Resize tab sets when the window is resized.
       window.addEventListener(
