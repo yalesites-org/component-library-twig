@@ -26,6 +26,10 @@
       control__base_class: 'control',
       control__blockname: tabs__base_class,
       control__modifiers: ['left'],
+      control__attributes: {
+        'aria-hidden': 'true',
+        'tabindex': '-1',
+        },
     } %}
     <ul {{ bem('nav', [], tabs__base_class) }} role="tablist">
       {% for key, tab in tabs %}
@@ -46,6 +50,10 @@
       control__base_class: 'control',
       control__blockname: tabs__base_class,
       control__modifiers: ['right'],
+      control__attributes: {
+        'aria-hidden': 'true',
+        'tabindex': '-1',
+        },
     } %}
   </div>
   {% for key, tab in tabs %}
