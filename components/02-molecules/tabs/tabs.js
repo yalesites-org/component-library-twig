@@ -10,8 +10,6 @@ Drupal.behaviors.tabs = {
       // const tabControls = TabSet.querySelectorAll('.tabs__control');
       const tabLinks = TabSet.querySelectorAll('.tabs__link');
       const tabContainers = TabSet.querySelectorAll('.tabs__container');
-      const tabsLeft = TabSet.getBoundingClientRect().left;
-      const tabsRight = TabSet.getBoundingClientRect().right;
       let activeIndex = 0;
       let overflowDir;
       // let navDirection;
@@ -22,28 +20,39 @@ Drupal.behaviors.tabs = {
        *   determine whether an overflow situation is in play.
        */
       function setOverflow() {
+        const tabsLeft = TabSet.getBoundingClientRect().left;
+        const tabsRight = TabSet.getBoundingClientRect().right;
         const firstTabLeft = TabSet.querySelector(
           '.tabs__item:first-child',
         ).getBoundingClientRect().left;
-        const lastTabRight = TabSet.querySelector(
-          '.tabs__item:last-child',
-        ).getBoundingClientRect().right;
+        const lastTabRight = Math.floor(
+          TabSet.querySelector('.tabs__item:last-child').getBoundingClientRect()
+            .right,
+        );
 
         if (firstTabLeft < tabsLeft) {
+          // If left side of first tab is < left side of tabs.
+          // And right side of last tab is > right side of tabs.
           if (lastTabRight > tabsRight) {
             if (overflowDir !== 'both') {
               overflowDir = 'both';
               TabSet.setAttribute('data-overflow', 'both');
             }
+            // If left side of first tab is < left side of tabs.
+            // But right side of last tab is <= right side of tabs.
           } else if (overflowDir !== 'left') {
             overflowDir = 'left';
             TabSet.setAttribute('data-overflow', 'left');
           }
+          // If left side of first tab is >= left side of tabs.
+          // And right side of last tab is > right side of tabs.
         } else if (lastTabRight > tabsRight) {
           if (overflowDir !== 'right') {
             overflowDir = 'right';
             TabSet.setAttribute('data-overflow', 'right');
           }
+          // If left side or first tab is >= left side of tabs.
+          // And right side of last tab is <= right side of tabs.
         } else {
           TabSet.setAttribute('data-overflow', 'none');
           overflowDir = 'none';
