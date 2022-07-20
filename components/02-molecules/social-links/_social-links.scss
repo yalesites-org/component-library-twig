@@ -1,0 +1,39 @@
+@use '../../01-atoms/atoms';
+
+.social-links {
+  // Create social-links specific color properties
+  --color-social-links-hover: var(--link-color-base);
+
+  // Create the "inverted" social-links specific color properties
+  [data-component-theme='gray-800'] &,
+  [data-component-theme='gray-700'] &,
+  [data-component-theme='blue-yale'] & {
+    --color-social-links-hover: var(--link-color-hover);
+  }
+}
+
+.social-links__list {
+  @include atoms.list-reset;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-spacing-6);
+}
+
+.social-links__link {
+  align-items: center;
+  color: var(--color-text);
+  display: flex;
+  justify-content: center;
+  min-height: var(--size-click-target-minimum);
+  min-width: var(--size-click-target-minimum);
+
+  &:hover {
+    color: var(--color-social-links-hover);
+  }
+}
+
+.social-links__icon {
+  height: 1.5rem;
+  width: 1.5rem;
+}
