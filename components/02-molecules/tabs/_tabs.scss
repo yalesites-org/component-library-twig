@@ -23,6 +23,7 @@
   display: flex;
   gap: var(--size-spacing-7);
   overflow: auto;
+  scroll-behavior: smooth;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 

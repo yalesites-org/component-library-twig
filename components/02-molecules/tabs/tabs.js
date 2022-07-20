@@ -7,12 +7,56 @@ Drupal.behaviors.tabs = {
     tabs.forEach((tabSet) => {
       const TabSet = tabSet;
       const tabNav = TabSet.querySelector('.tabs__nav');
-      // const tabControls = TabSet.querySelectorAll('.tabs__control');
+      const tabControls = TabSet.querySelectorAll('.tabs__control');
       const tabLinks = TabSet.querySelectorAll('.tabs__link');
       const tabContainers = TabSet.querySelectorAll('.tabs__container');
+      const controlsWidth = TabSet.querySelector(
+        '.tabs__control--left',
+      ).offsetWidth;
       let activeIndex = 0;
       let overflowDir;
-      // let navDirection;
+
+      /**
+       * getFirstVisible
+       * @description Get the first item that is visible (not overflown).
+       * @returns The value of the left edge of the first fully visible item
+       *   plus the width of the controls so that things aren't visually hidden
+       *   by the absolutely positioned elements.
+       */
+      function getFirstVisible() {
+        const tabsLeft = TabSet.getBoundingClientRect().left;
+        const tabsItems = TabSet.querySelectorAll('.tabs__item');
+        const visibleItems = [];
+
+        tabsItems.forEach((item) => {
+          if (item.getBoundingClientRect().right > tabsLeft + controlsWidth) {
+            visibleItems.push(item);
+          }
+        });
+
+        return visibleItems[1].offsetLeft - controlsWidth;
+      }
+
+      /**
+       * getLastHidden
+       * @description Get the last item that is overflown (not visible).
+       * @returns The value of the left edge of the first partially hidden item
+       *   minus the width of the controls so that things aren't visually hidden
+       *   by the absolutely positioned elements.
+       */
+      function getLastHidden() {
+        const tabsLeft = TabSet.getBoundingClientRect().left;
+        const tabsItems = TabSet.querySelectorAll('.tabs__item');
+        const hiddenItems = [];
+
+        tabsItems.forEach((item) => {
+          if (item.getBoundingClientRect().left < tabsLeft) {
+            hiddenItems.push(item);
+          }
+        });
+
+        return hiddenItems[hiddenItems.length - 1].offsetLeft - controlsWidth;
+      }
 
       /**
        * setOverflow
@@ -59,28 +103,18 @@ Drupal.behaviors.tabs = {
         }
       }
 
-      // /**
-      //  * mouseNav
-      //  * @description Support mouse navigation when horizontal scrolling occurs.
-      //  */
-      // function mouseNav(direction) {
-      //   // If right
-      //   if (direction === 'right') {
-      //     navDirection = direction;
-      //   }
-      // }
-
-      // tabControls.forEach((control) => {
-      //   control.addEventListener('click', (e) => {
-      //     e.preventDefault();
-
-      //     if (control.classList.contains('tabs__control--right')) {
-      //       mouseNav('right');
-      //     } else {
-      //       mouseNav('left');
-      //     }
-      //   });
-      // });
+      /**
+       * mouseNav
+       * @description Support mouse navigation when horizontal scrolling occurs.
+       */
+      function mouseNav(direction) {
+        // If right
+        if (direction === 'right') {
+          tabNav.scrollLeft = getFirstVisible();
+        } else {
+          tabNav.scrollLeft = getLastHidden();
+        }
+      }
 
       /**
        * setHeight
@@ -185,6 +219,7 @@ Drupal.behaviors.tabs = {
        *   Set the height for later animation.
        *   Set overflow properties.
        *   Add click listener to each tab.
+       *   Add click listener to overflow controls.
        *   Add scroll listener to tab nav.
        *   Add resize listener to adjust the height when the browser is resized.
        */
@@ -193,6 +228,18 @@ Drupal.behaviors.tabs = {
 
       tabLinks.forEach((tab, index) => {
         handleClick(tab, index);
+      });
+
+      tabControls.forEach((control) => {
+        control.addEventListener('click', (e) => {
+          e.preventDefault();
+
+          if (control.classList.contains('tabs__control--right')) {
+            mouseNav('right');
+          } else {
+            mouseNav('left');
+          }
+        });
       });
 
       tabNav.addEventListener('scroll', setOverflow);
