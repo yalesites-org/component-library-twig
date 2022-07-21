@@ -60,7 +60,7 @@
     {% if key == 0 %}
       {% set active_class = 'is-active' %}
     {% endif %}
-    <div {{ bem('container', [], tabs__base_class, [active_class]) }} role="tabpanel" data-component-width="content" data-embedded-components>
+    <div {{ bem('container', [], tabs__base_class, [active_class]) }} role="tabpanel" data-component-width="content" data-embedded-components tabindex="0">
       <div {{ bem('inner', [], tabs__base_class) }}>
         <div id="{{ 'tab-' ~ tabs__id ~ '-' ~ key }}" {{ bem('content', [], tabs__base_class) }}>
           {{ tab.tab__content }}
