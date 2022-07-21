@@ -74,6 +74,10 @@
     }
   }
 
+  &:hover {
+    color: var(--link-color-base);
+  }
+
   svg {
     height: 1.5em;
     width: 1.5em;
