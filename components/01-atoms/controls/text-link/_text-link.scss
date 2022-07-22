@@ -1,24 +1,16 @@
+@use '~@yalesites-org/tokens/build/scss/tokens' as sass-tokens;
+@use '../../../00-tokens/functions/map';
 @use '../../../00-tokens/tokens';
 
+$link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
+
 :root {
-  // @LINK: https://yaleits.atlassian.net/browse/YALB-350
-  // @TODO: These color scheme custom property settings seem like they shouldn't
-  // need to live here. At some point it'd be nice to get rid of them.
-  // Color schemes
-  [data-component-theme='gray-800'],
-  [data-component-theme='blue-yale'] {
-    --link-color-base: var(--color-basic-white);
-    --link-color-hover: var(--color-blue-light);
-  }
-
-  [data-component-theme='gray-700'] {
-    --link-color-base: var(--color-basic-white);
-    --link-color-hover: var(--color-gray-300);
-  }
-
-  [data-component-theme='gray-200'] {
-    --link-color-base: var(--color-blue-yale);
-    --link-color-hover: var(--color-text);
+  // Component themes
+  @each $theme, $value in $link-themes {
+    [data-component-theme='#{$theme}'] {
+      --color-link-base: var(--color-link-theme-#{$theme}-base);
+      --color-link-hover: var(--color-link-theme-#{$theme}-hover);
+    }
   }
 }
 
@@ -28,7 +20,7 @@
 @mixin link($style: default, $family-weight: 'mallory-medium') {
   @include tokens.underline-slide-start($variation: #{$style});
 
-  color: var(--link-color-base);
+  color: var(--color-link-base);
   text-decoration: none;
   font-weight: var(--font-weights-#{$family-weight});
 
@@ -36,7 +28,7 @@
   &:hover {
     @include tokens.underline-slide-end($variation: #{$style});
 
-    color: var(--link-color-hover);
+    color: var(--color-link-hover);
   }
 
   // Remove underline when focus is visible.
@@ -83,7 +75,7 @@
   &:hover [class*='__heading-link'] {
     @include tokens.underline-slide-end('no-underline');
 
-    color: var(--link-color-base);
+    color: var(--color-link-base);
   }
 
   // Style the heading link when the component is focused.

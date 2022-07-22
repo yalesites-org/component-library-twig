@@ -2,13 +2,13 @@
 
 .social-links {
   // Create social-links specific color properties
-  --color-social-links-hover: var(--link-color-base);
+  --color-social-links-hover: var(--color-link-base);
 
   // Create the "inverted" social-links specific color properties
   [data-component-theme='gray-800'] &,
   [data-component-theme='gray-700'] &,
   [data-component-theme='blue-yale'] & {
-    --color-social-links-hover: var(--link-color-hover);
+    --color-social-links-hover: var(--color-link-hover);
   }
 }
 
