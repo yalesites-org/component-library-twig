@@ -17,21 +17,6 @@
   padding-top: var(--size-spacing-3);
 }
 
-.tabs__nav {
-  @include atoms.list-reset;
-
-  display: flex;
-  gap: var(--size-spacing-7);
-  overflow: auto;
-  scroll-behavior: smooth;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
 .tabs__control {
   @include tokens.animate(opacity);
   @include atoms.button-reset;
@@ -81,6 +66,21 @@
   svg {
     height: 1.5em;
     width: 1.5em;
+  }
+}
+
+.tabs__nav {
+  @include atoms.list-reset;
+
+  display: flex;
+  gap: var(--size-spacing-7);
+  overflow: auto;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
