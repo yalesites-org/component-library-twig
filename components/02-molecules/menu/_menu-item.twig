@@ -48,15 +48,6 @@
   {% endif %}
 {% endset %}
 
-{% set menu_item__cta__content %}
-  {{ item.title }}
-  {% include "@atoms/images/icons/_icon.twig" with {
-    icon__name: 'angle-down',
-    icon__base_class: 'toggle-icon',
-    icon__blockname: item__blockname,
-  } %}
-{% endset %}
-
 {% embed "@atoms/lists/_list-item.twig" with {
   list__item__base_class: item__base_class|default('item'),
   list__item__modifiers: item__modifiers,
@@ -70,10 +61,19 @@
   {{- list__item -}}
   {% if item.below %}
     {% if menu__level == 0 and  menu__level__toggle %}
-      {% include "@atoms/controls/cta/cta.twig" with {
-        cta__content: menu_item__cta__content,
-        cta__base_class: 'toggle',
-        cta__blockname: menu__base_class,
+      {% set menu_item__cta__content %}
+        {{ item.title }}
+        {% include "@atoms/images/icons/_icon.twig" with {
+          icon__name: 'angle-down',
+          icon__base_class: 'toggle-icon',
+          icon__blockname: item__blockname,
+        } %}
+      {% endset %}
+      {% include "@atoms/controls/base/control.twig" with {
+        control__content: menu_item__cta__content,
+        control__base_class: 'toggle',
+        control__modifiers: item__modifiers,
+        control__blockname: menu__base_class,
         aria_expanded: 'false',
       } %}
     {% endif %}
