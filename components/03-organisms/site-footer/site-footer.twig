@@ -20,61 +20,60 @@
 } %}
 
 <footer {{ add_attributes(site_footer__attributes) }}>
-  <div {{ bem('inner', [], site_footer__base_class) }}>
-    {# Primary #}
-    <div {{ bem('primary', [], site_footer__base_class) }}>
-      {# Branding #}
-      <div {{ bem('branding', [], site_footer__base_class) }}>
-        {% block site_footer__logo %}
-          {% include "@page-layouts/placeholder/placeholder.twig" with {
-            placeholder: 'Logo',
-            placeholder__type: 'element',
-          } %}
-        {% endblock %}
-        {% block site_footer__text %}
-          {% include "@page-layouts/placeholder/placeholder.twig" with {
+	<div
+		{{ bem('inner', [], site_footer__base_class) }}>
+		{# Primary #}
+		<div
+			{{ bem('primary', [], site_footer__base_class) }}>
+			{# Branding #}
+			<div {{ bem('branding', [], site_footer__base_class) }}>
+				<div {{ bem('logo', [], site_footer__base_class) }}>
+					&#XF2A2;
+				</div>
+				{% block site_footer__text %}
+					{% include "@page-layouts/placeholder/placeholder.twig" with {
             placeholder: 'Text',
             placeholder__type: 'element',
           } %}
-        {% endblock %}
-      </div>
-      {# Columns #}
-      <div {{ bem('columns', [], site_footer__base_class) }}>
-        {% block site_footer__columns %}
-          {% include "@page-layouts/placeholder/placeholder.twig" with {
+				{% endblock %}
+			</div>
+			{# Columns #}
+			<div {{ bem('columns', [], site_footer__base_class) }}>
+				{% block site_footer__columns %}
+					{% include "@page-layouts/placeholder/placeholder.twig" with {
             placeholder: 'Columns',
             placeholder__type: 'element',
           } %}
-        {% endblock %}
-      </div>
-    </div>
-    {# Secondary #}
-    <div {{ bem('secondary', [], site_footer__base_class) }}>
-      {# Social #}
-      <div {{ bem('social', [], site_footer__base_class) }}>
-        {% block site_footer__social %}
-          {% include "@page-layouts/placeholder/placeholder.twig" with {
-            placeholder: 'Social',
-            placeholder__type: 'element',
-          } %}
-        {% endblock %}
-      </div>
-      {# Meta #}
-      <div {{ bem('meta', [], site_footer__base_class) }}>
-        {% include "@atoms/controls/text-link/text-link.twig" with {
+				{% endblock %}
+			</div>
+		</div>
+		{# Secondary #}
+		<div
+			{{ bem('secondary', [], site_footer__base_class) }}>
+			{# Social #}
+			<div {{ bem('social', [], site_footer__base_class) }}>
+				{% block site_footer__social %}
+					{% include "@molecules/social-links/social-links.twig" %}
+				{% endblock %}
+			</div>
+			{# Meta #}
+			<div {{ bem('meta', [], site_footer__base_class) }}>
+				{% include "@atoms/controls/text-link/text-link.twig" with {
           link__content: 'Accessibility at Yale',
           link__url: "https://usability.yale.edu/web-accessibility/accessibility-yale",
           link__style: ['no-underline'],
         } %}
-        <span {{ bem('divider', [], site_footer__base_class) }}>|</span>
-        {% include "@atoms/controls/text-link/text-link.twig" with {
+				<span {{ bem('divider', [], site_footer__base_class) }}>|</span>
+				{% include "@atoms/controls/text-link/text-link.twig" with {
           link__content: 'Privacy Policy',
           link__url: "https://www.yale.edu/privacy-policy",
           link__style: ['no-underline'],
         } %}
-        <span {{ bem('divider', [], site_footer__base_class) }}>|</span>
-        <span>Copyright © {{ 'now'|date('Y') }} Yale University. All rights reserved.</span>
-      </div>
-    </div>
-  </div>
+				<span {{ bem('divider', [], site_footer__base_class) }}>|</span>
+				<span>Copyright ©
+					{{ 'now'|date('Y') }}
+					Yale University. All rights reserved.</span>
+			</div>
+		</div>
+	</div>
 </footer>
