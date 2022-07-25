@@ -149,6 +149,43 @@ Drupal.behaviors.tabs = {
       }
 
       /**
+       * ensureVisible
+       * @description Ensure the focused tab is fully visible (not overflown).
+       * @param {HTMLElement} item The focused item.
+       */
+      function ensureVisible(item) {
+        const tabsLeft = TabSet.getBoundingClientRect().left;
+        const tabsRight = TabSet.getBoundingClientRect().right;
+
+        // if right side overflows control, set to left + control.
+        if (
+          Math.floor(item.getBoundingClientRect().right) >
+          tabsRight - controlsWidth
+        ) {
+          // If overflow right or both.
+          if (
+            TabSet.getAttribute('data-overflow') === 'right' ||
+            TabSet.getAttribute('data-overflow') === 'both'
+          ) {
+            tabNav.scrollLeft = item.offsetLeft - controlsWidth;
+          }
+        }
+        // if left side overflows control, set to left + control.
+        else if (
+          Math.floor(item.getBoundingClientRect().left) <
+          tabsLeft + controlsWidth
+        ) {
+          // If overflow left or both.
+          if (
+            TabSet.getAttribute('data-overflow') === 'left' ||
+            TabSet.getAttribute('data-overflow') === 'both'
+          ) {
+            tabNav.scrollLeft = item.offsetLeft - controlsWidth;
+          }
+        }
+      }
+
+      /**
        * handleClick
        * @description Handles click event listeners on each of the links in the
        *   tab navigation. Returns nothing.
@@ -176,9 +213,10 @@ Drupal.behaviors.tabs = {
       }
 
       /**
-       * keyboardNav
+       * linksListeners
        * @description Support keyboard navigation using the left, right, and
-       *   down arrow keys.
+       *   down arrow keys through the `keydown` listener.
+       *   Support keyboard and mouse users through the `focus` listener.
        */
       tabLinks.forEach((tab, i) => {
         tab.addEventListener('keydown', (e) => {
@@ -210,6 +248,10 @@ Drupal.behaviors.tabs = {
               goToTab(dir);
             }
           }
+        });
+        // This also applies when clicked.
+        tab.addEventListener('focus', () => {
+          ensureVisible(tab);
         });
       });
 
