@@ -21,22 +21,17 @@
 {% set cta__attributes = cta__attributes|default({}) %}
 
 {% set cta__attributes = cta__attributes|merge({
-  class: bem(cta__base_class, cta__modifiers, cta__blockname),
   'data-cta-hover-style': cta__hover_style|default('fade'),
   'data-cta-radius': cta__radius|default('none'),
   'data-cta-style': cta__style|default('filled'),
   'data-cta-outline-weight': cta__outline_weight|default('2'),
 }) %}
 
-{% if cta__href %}
-  {% set cta__attributes = cta__attributes|merge({
-    href: cta__href,
-  }) %}
-  {% set cta__element = 'a' %}
-{% endif %}
-
-<{{ cta__element }} {{ add_attributes(cta__attributes) }}>
-  {% block cta__content %}
-    {{- cta__content -}}
-  {% endblock %}
-</{{ cta__element }}>
+{% include "@atoms/controls/base/control.twig" with {
+  control__base_class: cta__base_class,
+  control__modifiers: cta__modifiers,
+  control__blockname: cta__blockname,
+  control__attributes: cta__attributes,
+  control__url: cta__href,
+  control__content: cta__content,
+} %}
