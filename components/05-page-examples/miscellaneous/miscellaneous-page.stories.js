@@ -13,6 +13,7 @@ import imageData from '../../01-atoms/images/image/image.yml';
 import textWithImageData from '../../02-molecules/text-with-image/text-with-image.yml';
 import accordionData from '../../02-molecules/accordion/accordion.yml';
 import alertData from '../../02-molecules/alert/alert.yml';
+import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 
 // JavaScript.
 import '../../00-tokens/layout/layout';
@@ -58,6 +59,7 @@ export const AccordionPage = ({
     ...textWithImageData,
     ...accordionData,
     ...alertData,
+    ...socialLinksData,
   });
 
 export const QualtricsPage = ({
@@ -85,4 +87,5 @@ export const QualtricsPage = ({
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
+    ...socialLinksData,
   });
