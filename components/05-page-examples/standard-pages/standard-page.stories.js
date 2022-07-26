@@ -16,6 +16,7 @@ import imageData from '../../01-atoms/images/image/image.yml';
 import textWithImageData from '../../02-molecules/text-with-image/text-with-image.yml';
 import bannerData from '../../02-molecules/banner/banner.yml';
 import referenceCardData from '../../02-molecules/cards/reference-card/examples/news-card.yml';
+import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 
 // JavaScript.
 import '../../00-tokens/layout/layout';
@@ -91,6 +92,7 @@ export const Basic = ({
     callout__background_color: calloutBackground,
     ...textWithImageData,
     ...referenceCardData,
+    ...socialLinksData,
   });
 
 export const WithBanner = ({
@@ -139,6 +141,7 @@ export const WithBanner = ({
     banner__link__style: linkStyle,
     banner__content__layout: contentLayout,
     banner__content__background: bgColor,
+    ...socialLinksData,
   });
 WithBanner.argTypes = {
   heading: {
@@ -209,4 +212,5 @@ export const WithSidebar = ({
     callout__background_color: calloutBackground,
     ...textWithImageData,
     ...referenceCardData,
+    ...socialLinksData,
   });
