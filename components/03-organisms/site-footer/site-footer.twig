@@ -20,11 +20,9 @@
 } %}
 
 <footer {{ add_attributes(site_footer__attributes) }}>
-  <div
-    {{ bem('inner', [], site_footer__base_class) }}>
+  <div {{ bem('inner', [], site_footer__base_class) }}>
     {# Primary #}
-    <div
-      {{ bem('primary', [], site_footer__base_class) }}>
+    <div {{ bem('primary', [], site_footer__base_class) }}>
       {# Branding #}
       <div {{ bem('branding', [], site_footer__base_class) }}>
         <div {{ bem('logo', [], site_footer__base_class) }}>
@@ -48,8 +46,7 @@
       </div>
     </div>
     {# Secondary #}
-    <div
-      {{ bem('secondary', [], site_footer__base_class) }}>
+    <div {{ bem('secondary', [], site_footer__base_class) }}>
       {# Social #}
       <div {{ bem('social', [], site_footer__base_class) }}>
         {% block site_footer__social %}
@@ -70,9 +67,7 @@
           link__style: ['no-underline'],
         } %}
         <span {{ bem('divider', [], site_footer__base_class) }}>|</span>
-        <span>Copyright ©
-          {{ 'now'|date('Y') }}
-          Yale University. All rights reserved.</span>
+        <span>Copyright © {{ 'now'|date('Y') }} Yale University. All rights reserved.</span>
       </div>
     </div>
   </div>
