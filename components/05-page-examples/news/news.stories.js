@@ -9,7 +9,7 @@ import utilityNavData from '../../03-organisms/menu/utility-nav/utility-nav.yml'
 import primaryNavData from '../../03-organisms/menu/primary-nav/primary-nav.yml';
 import breadcrumbData from '../../03-organisms/menu/breadcrumbs/breadcrumbs.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
-
+import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 // JavaScript.
 import '../../00-tokens/layout/layout';
 
@@ -60,4 +60,5 @@ export const NewsArticle = ({
     image__sizes__pop_out: imageData.responsive_images['3x2'].image__sizes,
     image__alt__pop_out: imageData.responsive_images['3x2'].image__alt,
     image__src__pop_out: imageData.responsive_images['3x2'].image__src,
+    ...socialLinksData,
   });
