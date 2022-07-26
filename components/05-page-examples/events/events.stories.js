@@ -12,6 +12,7 @@ import primaryNavData from '../../03-organisms/menu/primary-nav/primary-nav.yml'
 import breadcrumbData from '../../03-organisms/menu/breadcrumbs/breadcrumbs.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 import pagerData from '../../02-molecules/pager/pager-last.yml';
+import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 
 // JavaScript.
 import '../../00-tokens/layout/layout';
@@ -75,6 +76,7 @@ export const EventPage = ({
     event_meta__cta_primary__href: '#',
     event_meta__cta_secondary__content: 'Add to calendar',
     event_meta__cta_secondary__href: '#',
+    ...socialLinksData,
   });
 EventPage.argTypes = {
   pageTitle: {
@@ -123,6 +125,7 @@ export const EventGrid = ({
     reference_card__url: '#',
     reference_card__date: '2022-03-30 13:00',
     format: 'Online',
+    ...socialLinksData,
   });
 EventGrid.argTypes = {
   meta: {
@@ -167,6 +170,7 @@ export const EventList = ({
     reference_card__date: '2022-03-30 13:00',
     format: 'Online',
     ...pagerData,
+    ...socialLinksData,
   });
 EventList.argTypes = {
   meta: {

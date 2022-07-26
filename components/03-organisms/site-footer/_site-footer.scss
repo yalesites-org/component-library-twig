@@ -63,6 +63,16 @@ $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
   gap: var(--size-spacing-3);
 }
 
+.site-footer__logo {
+  font-family: YaleMarks, sans-serif;
+  font-size: 2.5rem;
+  line-height: 1;
+
+  @media (min-width: $break-site-footer) {
+    font-size: 3rem;
+  }
+}
+
 .site-footer__meta {
   @include typography.body-xs;
 
