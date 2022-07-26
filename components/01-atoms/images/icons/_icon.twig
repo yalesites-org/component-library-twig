@@ -14,7 +14,22 @@
 
 {% set unique_name = icon__name ~ '-' ~ random() %}
 
-<svg {{ bem(icon__base_class, icon__modifiers, icon__blockname, icon__extra_class) }} {% if icon__decorative %} aria-hidden="true" role="img" {% elseif icon__role %} role="{{ icon__role }}" {% endif %} {% if icon__title %} aria-labelledby="title-{{ unique_name }}" {% endif %} {% if icon__desc %} aria-describedby="desc-{{ unique_name }}" {% endif %}>
+<svg {{ bem(icon__base_class, icon__modifiers, icon__blockname, icon__extra_class) }}
+
+	{% if icon__decorative %}
+		aria-hidden="true" role="img"
+	{% elseif icon__role %}
+		role="{{ icon__role }}"
+	{% endif %}
+
+	{% if icon__title %}
+		aria-labelledby="title-{{ unique_name }}"
+	{% endif %}
+
+	{% if icon__desc %}
+		aria-describedby="desc-{{ unique_name }}"
+	{% endif %}
+>
 	{% if icon__title %}
 		<title id="title-{{ unique_name }}">{{ icon__title }}</title>
 	{% endif %}
