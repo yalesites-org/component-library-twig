@@ -4,8 +4,6 @@
  # - control__content
  #}
 
-{% set control__base_class = control__base_class|default('button') %}
-{% set control__element = control__element|default('button') %}
 {% set control__attributes = control__attributes|default({}) %}
 
 {% if control__url %}
@@ -14,6 +12,9 @@
     href: control__url,
   }) %}
   {% set control__element = 'a' %}
+{% else %}
+  {% set control__base_class = control__base_class|default('button') %}
+  {% set control__element = control__element|default('button') %}
 {% endif %}
 
 {% if aria_expanded %}
