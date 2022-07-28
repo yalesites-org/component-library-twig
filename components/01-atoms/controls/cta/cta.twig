@@ -10,13 +10,9 @@
  # Available variables:
  # - cta__content - the content of the cta (typically text)
  # - cta__href - the URL the link points to
- #
- # Available blocks:
- # - cta__content - used to replace the content of the cta with something other than text
- #   for example: to insert an icon
  #}
 
-{% set cta__base_class = cta__base_class|default('cta') %}
+{% set cta__base_class = 'cta' %}
 {% set cta__element = cta__element|default('button') %}
 {% set cta__attributes = cta__attributes|default({}) %}
 
