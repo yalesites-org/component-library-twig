@@ -8,19 +8,19 @@
 
 {% if control__url %}
   {% set control__base_class = control__base_class|default('link') %}
+  {% set control__element = 'a' %}
   {% set control__attributes = control__attributes|merge({
     href: control__url,
   }) %}
-  {% set control__element = 'a' %}
 {% else %}
   {% set control__base_class = control__base_class|default('button') %}
   {% set control__element = control__element|default('button') %}
-{% endif %}
 
-{% if aria_expanded %}
-  {% set control__attributes = control__attributes|merge({
-    'aria-expanded': aria_expanded,
-  }) %}
+  {% if aria_expanded %}
+    {% set control__attributes = control__attributes|merge({
+      'aria-expanded': aria_expanded,
+    }) %}
+  {% endif %}
 {% endif %}
 
 {% set control__attributes = control__attributes|merge({
