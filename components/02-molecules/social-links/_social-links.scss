@@ -30,9 +30,9 @@ $social-link-themes: map.deep-get(
 }
 
 .social-links__link {
-  align-items: center;
   color: var(--color-text);
   display: flex;
+  align-items: center;
   justify-content: center;
   min-height: var(--size-click-target-minimum);
   min-width: var(--size-click-target-minimum);

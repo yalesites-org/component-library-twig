@@ -17,17 +17,7 @@
       {# list-items <li> #}
       {# social-links__item #}
       <li {{ bem('item', [], social_links__baseclass) }}>
-        {# link <a> #}
-        <a href="{{ icon.url }}" {{ bem('link', [], social_links__baseclass) }}>
-          {# Visually hidden service name (Facebook) #}
-          <span class="visually-hidden">{{ icon.name }}</span>
-          {# Visually shown icon #}
-          {% include '@atoms/images/icons/_icon.twig' with {
-            icon__name: icon.icon,
-            icon__decorative: true,
-            icon__blockname: social_links__baseclass,
-          } %}
-        </a>
+        {% include "@molecules/social-links/_social-link__content.twig" %}
       </li>
     {% endfor %}
   </ul>

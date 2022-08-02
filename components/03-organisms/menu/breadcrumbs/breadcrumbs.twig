@@ -13,22 +13,20 @@
 {% set parent_label = breadcrumbs__items[parent_count].title %}
 
 <div {{ add_attributes(breadcrumbs__attributes) }}>
-  {% embed "@atoms/controls/cta/cta.twig" with {
-    cta__base_class: 'button',
-    cta__blockname: breadcrumbs__base_class,
+  {% set control__content %}
+    <span {{ bem('visually-hidden') }}>Show all breadcrumbs</span>
+    {% include "@atoms/images/icons/_icon.twig" with {
+      icon__name: 'angle-down',
+      icon__blockname: breadcrumbs__base_class,
+      icon__decorative: true,
+    } %}
+    <span aria-hidden="true">{{ parent_label }}</span>
+  {% endset %}
+  {% include "@atoms/controls/base/control.twig" with {
+    control__blockname: breadcrumbs__base_class,
     aria_expanded: 'false',
     aria_controls: 'breadcrumbs-inner',
   } %}
-    {% block cta__content %}
-      <span {{ bem('visually-hidden') }}>Show all breadcrumbs</span>
-      {% include "@atoms/images/icons/_icon.twig" with {
-        icon__name: 'angle-down',
-        icon__blockname: breadcrumbs__base_class,
-        icon__decorative: true,
-      } %}
-      <span aria-hidden="true">{{ parent_label }}</span>
-    {% endblock %}
-  {% endembed %}
   <div id="breadcrumbs-inner" {{ bem('inner', [], breadcrumbs__base_class) }}>
     {% include "@molecules/menu/menu.twig" with {
       items: breadcrumbs__items,
