@@ -69,18 +69,18 @@
         } %}
       {% endif %}
     </div>
-    {% embed "@atoms/controls/cta/cta.twig" with {
-      cta__base_class: 'toggle',
-      cta__blockname: alert__base_class,
+    {% set alert__control %}
+      <span {{ bem('visually-hidden') }}>{{ alert__toggle__text }}</span>
+      {% include "@atoms/images/icons/_icon.twig" with {
+        icon__name: alert__toggle,
+        icon__decorative: true,
+      } %}
+    {% endset %}
+    {% include "@atoms/controls/base/control.twig" with {
+      control__content: alert__control,
+      control__base_class: 'toggle',
+      control__blockname: alert__base_class,
       aria_expanded: alert__toggle__aria_expanded,
     } %}
-      {% block cta__content %}
-        <span {{ bem('visually-hidden') }}>{{ alert__toggle__text }}</span>
-        {% include "@atoms/images/icons/_icon.twig" with {
-          icon__name: alert__toggle,
-          icon__decorative: true,
-        } %}
-      {% endblock %}
-    {% endembed %}
   </div>
 </div>

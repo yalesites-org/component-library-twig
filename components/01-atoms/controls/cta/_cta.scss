@@ -1,6 +1,9 @@
 @use 'sass:selector';
+@use '~@yalesites-org/tokens/build/scss/tokens' as sass-tokens;
+@use '../../../00-tokens/functions/map';
 @use '../../../00-tokens/tokens';
 
+$cta-themes: map.deep-get(sass-tokens.$tokens, color, cta, theme);
 $cta-radii: (
   'soft': var(--cta-radius-soft),
   'pill': 100vmax,
@@ -12,8 +15,6 @@ $cta-outline-weights: (
 );
 
 @mixin cta {
-  --link-color-base: var(--color-cta-border);
-
   // prettier-ignore
   border: var(--border-thickness-cta, var(--border-thickness-2)) solid var(--color-cta-border);
   border-radius: var(--border-radius-cta, var(--radius-0));
@@ -44,6 +45,14 @@ $cta-outline-weights: (
     }
   }
 
+  // These color schemes are "inverted" from the default ones.
+  @each $theme, $value in $cta-themes {
+    [data-component-theme='#{$theme}'] & {
+      --color-cta-primary: var(--color-theme-cta-secondary);
+      --color-cta-secondary: var(--color-background);
+    }
+  }
+
   // Styles
   &[data-cta-style='filled'] {
     --color-cta-bg: var(--color-cta-primary);
@@ -59,29 +68,6 @@ $cta-outline-weights: (
     --color-cta-border: var(--color-cta-primary);
     --color-cta-text: var(--color-cta-primary);
     --color-cta-text-hover: var(--color-cta-secondary);
-  }
-
-  // Color schemes
-  // For the filled style:
-  // - Primary is the
-  //    - background
-  //    - border
-  // - Secondary is the
-  //    - text
-  // For the outline style:
-  // - Primary is the
-  //    - text
-  //    - border
-  // Hover states invert the two styles.
-  --color-cta-primary: var(--color-theme-cta-primary);
-  --color-cta-secondary: var(--color-theme-cta-secondary);
-
-  // These color schemes are "inverted"
-  [data-component-theme='gray-800'] &,
-  [data-component-theme='gray-700'] &,
-  [data-component-theme='blue-yale'] & {
-    --color-cta-primary: var(--color-theme-cta-secondary);
-    --color-cta-secondary: var(--color-background);
   }
 
   // Hover styles
