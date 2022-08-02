@@ -1,3 +1,4 @@
+/* stylelint-disable comment-empty-line-before */
 :root {
   /***********
   ** Colors **
@@ -5,9 +6,8 @@
   --color-accent: var(--color-theme-accent, var(--color-blue-medium));
   --color-divider: var(--color-gray-500);
   --color-divider-subtle: var(--color-gray-300);
-  --color-theme-cta-primary: var(--color-blue-yale);
-  --color-theme-cta-secondary: var(--color-background);
-
+  /* --color-theme-cta-primary: var(--color-blue-yale); */
+  /* --color-theme-cta-secondary: var(--color-background); */
   /* prettier-ignore */
   --color-pull-quote-accent: var(--color-theme-pull-quote-accent, var(--color-blue-yale));
 
@@ -26,3 +26,4 @@
   --spacing-component-gutter: var(--size-spacing-9);
   --spacing-component-gutter-secondary: var(--size-spacing-7);
 }
+/* stylelint-enable comment-empty-line-before */

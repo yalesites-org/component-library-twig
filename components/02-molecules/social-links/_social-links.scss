@@ -1,14 +1,23 @@
+@use '~@yalesites-org/tokens/build/scss/tokens' as sass-tokens;
+@use '../../00-tokens/functions/map';
 @use '../../01-atoms/atoms';
+
+$social-link-themes: map.deep-get(
+  sass-tokens.$tokens,
+  color,
+  social-links,
+  theme
+);
 
 .social-links {
   // Create social-links specific color properties
-  --color-social-links-hover: var(--link-color-base);
+  --color-social-links-hover: var(--color-link-base);
 
-  // Create the "inverted" social-links specific color properties
-  [data-component-theme='gray-800'] &,
-  [data-component-theme='gray-700'] &,
-  [data-component-theme='blue-yale'] & {
-    --color-social-links-hover: var(--link-color-hover);
+  // Component themes
+  @each $theme, $value in $social-link-themes {
+    [data-component-theme='#{$theme}'] & {
+      --color-social-links-hover: var(--color-link-hover);
+    }
   }
 }
 
