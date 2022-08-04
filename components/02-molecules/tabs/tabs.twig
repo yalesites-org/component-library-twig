@@ -12,7 +12,7 @@
 {% set tabs__id = tabs__id|default(random()) %}
 
 {% set icon_left %}
-{% include "@atoms/images/icons/_icon.twig" with {
+  {% include "@atoms/images/icons/_icon.twig" with {
     icon__name: 'angle-down',
     icon__blockname: tabs__base_class,
     icon__modifiers: ['left'],
@@ -21,12 +21,12 @@
 {% endset %}
 
 {% set icon_right %}
-{% include "@atoms/images/icons/_icon.twig" with {
+  {% include "@atoms/images/icons/_icon.twig" with {
     icon__name: 'angle-down',
     icon__blockname: tabs__base_class,
     icon__modifiers: ['right'],
     icon__decorative: true,
-    } %}
+  } %}
 {% endset %}
 
 {% set tabs__attributes = {
@@ -34,7 +34,8 @@
   'data-overflow': 'none',
 } %}
 
-  <div {{ add_attributes(tabs__attributes) }}> <div {{ bem('tabs', [], tabs__base_class) }}>
+<div {{ add_attributes(tabs__attributes) }}>
+  <div {{ bem('tabs', [], tabs__base_class) }}>
     {% include "@atoms/controls/base/control.twig" with {
       control__content: icon_left,
       control__base_class: 'control',
@@ -43,7 +44,7 @@
       control__attributes: {
         'aria-hidden': 'true',
         'tabindex': '-1',
-        },
+      },
     } %}
     <ul {{ bem('nav', [], tabs__base_class) }} role="tablist">
       {% block tab__label %}
@@ -60,7 +61,7 @@
       control__attributes: {
         'aria-hidden': 'true',
         'tabindex': '-1',
-        },
+      },
     } %}
   </div>
   {# Tab Content #}
