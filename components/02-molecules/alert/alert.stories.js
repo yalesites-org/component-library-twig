@@ -87,8 +87,8 @@ export const AlertExamples = ({ heading, content, linkContent }) => `
 </script>
 ${alertTwig({
   alert__type: 'emergency',
-  alert__heading: heading,
-  alert__content: content,
+  alert__heading: 'emergency heading test',
+  alert__content: 'this a test for emergency alert :)',
   alert__link__content: linkContent,
   alert__link__url: alertData.alert__link__url,
   alert__id: '234',
