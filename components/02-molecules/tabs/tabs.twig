@@ -12,7 +12,7 @@
 {% set tabs__id = tabs__id|default(random()) %}
 
 {% set icon_left %}
-  {% include "@atoms/images/icons/_icon.twig" with {
+{% include "@atoms/images/icons/_icon.twig" with {
     icon__name: 'angle-down',
     icon__blockname: tabs__base_class,
     icon__modifiers: ['left'],
@@ -21,7 +21,7 @@
 {% endset %}
 
 {% set icon_right %}
-  {% include "@atoms/images/icons/_icon.twig" with {
+{% include "@atoms/images/icons/_icon.twig" with {
     icon__name: 'angle-down',
     icon__blockname: tabs__base_class,
     icon__modifiers: ['right'],
@@ -34,8 +34,7 @@
   'data-overflow': 'none',
 } %}
 
-<div {{ add_attributes(tabs__attributes) }}>
-  <div {{ bem('tabs', [], tabs__base_class) }}>
+  <div {{ add_attributes(tabs__attributes) }}> <div {{ bem('tabs', [], tabs__base_class) }}>
     {% include "@atoms/controls/base/control.twig" with {
       control__content: icon_left,
       control__base_class: 'control',
@@ -47,24 +46,11 @@
         },
     } %}
     <ul {{ bem('nav', [], tabs__base_class) }} role="tablist">
-      {% for key, tab in tabs %}
-        {% if key == 0 %}
-          {% set aria_selected = 'aria-selected="true"' %}
-        {% else %}
-          {% set tab_index = 'tabindex="-1"' %}
-        {% endif %}
-        <li {{ bem('item', [], tabs__base_class) }} role="presentation">
-          {% set tabs__link__attributes = {
-            'class': bem('link', [], tabs__base_class),
-            'role': 'tab',
-            'aria-controls': 'tab-' ~ tabs__id ~ '-' ~ key,
-            'href': '#tab-' ~ tabs__id ~ '-' ~ key,
-          } %}
-          <a {{ add_attributes(tabs__link__attributes) }} {{ tab_index }} {{ aria_selected }}>
-            {{ tab.tab__label }}
-          </a>
-        </li>
-      {% endfor %}
+      {% block tab__label %}
+        {% for key, tab in tabs %}
+          {% include "@molecules/tabs/_tab-label.twig" %}
+        {% endfor %}
+      {% endblock %}
     </ul>
     {% include "@atoms/controls/base/control.twig" with {
       control__content: icon_right,
@@ -77,26 +63,10 @@
         },
     } %}
   </div>
-  {% for key, tab in tabs %}
-    {% if key == 0 %}
-      {% set active_class = 'is-active' %}
-    {% endif %}
-    {% set tabs__container__attributes = {
-      'class': bem('container', [], tabs__base_class, [active_class]),
-      'role': 'tabpanel',
-      'data-component-width': 'content',
-      'tabindex': '0',
-    } %}
-    <div {{ add_attributes(tabs__container__attributes) }} data-embedded-components>
-      <div {{ bem('inner', [], tabs__base_class) }}>
-        {% set tabs__content__attributes = {
-          'class': bem('content', [], tabs__base_class),
-          'id': 'tab-' ~ tabs__id ~ '-' ~ key,
-        } %}
-        <div {{ add_attributes(tabs__content__attributes) }}>
-          {{ tab.tab__content }}
-        </div>
-      </div>
-    </div>
-  {% endfor %}
+  {# Tab Content #}
+  {% block tab__content__container %}
+    {% for key, tab in tabs %}
+      {% include "@molecules/tabs/_tab-content.twig" %}
+    {% endfor %}
+  {% endblock %}
 </div>
