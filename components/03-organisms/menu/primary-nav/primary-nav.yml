@@ -1,5 +1,5 @@
 items:
-  - title: 'About YDS'
+  - title: 'About Usability'
     url: '#'
     below:
       - title: "Dean's Office"
@@ -77,7 +77,7 @@ items:
             url: '#'
           - title: 'Who is that bulldog'
             url: '#'
-  - title: 'Life at YDS'
+  - title: 'Blog'
     url: '#'
   - title: 'Faculty & Research'
     url: '#'
