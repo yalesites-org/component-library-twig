@@ -73,7 +73,7 @@ Alert.argTypes = {
   },
 };
 
-export const AlertExamples = ({ heading, content, linkContent }) => `
+export const AlertExamples = () => `
 <script>
   const resetAlerts = () => {
     Object.keys(localStorage).forEach((key) => {
@@ -87,25 +87,28 @@ export const AlertExamples = ({ heading, content, linkContent }) => `
 </script>
 ${alertTwig({
   alert__type: 'emergency',
-  alert__heading: 'emergency heading test',
-  alert__content: 'this a test for emergency alert :)',
-  alert__link__content: linkContent,
+  alert__heading: 'University Office Is Closed',
+  alert__content:
+    'Due to the inclement weather and unsafe road conditions, Yale University will be closed today, August 5th, 2022.',
+  alert__link__content: 'Office Hours',
   alert__link__url: alertData.alert__link__url,
   alert__id: '234',
 })}
 ${alertTwig({
   alert__type: 'announcement',
-  alert__heading: heading,
-  alert__content: content,
-  alert__link__content: linkContent,
+  alert__heading: 'Dr. Smith Conference Information Change',
+  alert__content:
+    'Due to scheduling conflicts, the Dr. Smith conference location this Friday is changed to conference room 204.',
+  alert__link__content: 'Conference Information',
   alert__link__url: alertData.alert__link__url,
   alert__id: '345',
 })}
 ${alertTwig({
   alert__type: 'marketing',
-  alert__heading: heading,
-  alert__content: content,
-  alert__link__content: linkContent,
+  alert__heading: 'Interested In Our Program?',
+  alert__content:
+    'To apply to our program, please visit our program page and fill out an application.',
+  alert__link__content: 'Apply Now',
   alert__link__url: alertData.alert__link__url,
   alert__id: '456',
 })}<br />
