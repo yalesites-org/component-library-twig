@@ -12,6 +12,7 @@
 {% set parent_count = breadcrumbs__items.length - 2 %}
 {% set parent_label = breadcrumbs__items[parent_count].title %}
 
+{% if breadcrumbs__items.2 %}
 <div {{ add_attributes(breadcrumbs__attributes) }}>
   {% set control__content %}
     <span {{ bem('visually-hidden') }}>Show all breadcrumbs</span>
@@ -37,3 +38,4 @@
     } %}
   </div>
 </div>
+{% endif %}
