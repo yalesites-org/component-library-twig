@@ -49,7 +49,7 @@
     <ul {{ bem('nav', [], tabs__base_class) }} role="tablist">
       {% block tab__label %}
         {% for key, tab in tabs %}
-          {% include "@molecules/tabs/_tab-label.twig" %}
+          {% include "@molecules/tabs/_yds-tab-label.twig" %}
         {% endfor %}
       {% endblock %}
     </ul>
@@ -67,7 +67,7 @@
   {# Tab Content #}
   {% block tab__content__container %}
     {% for key, tab in tabs %}
-      {% include "@molecules/tabs/_tab-content.twig" %}
+      {% include "@molecules/tabs/_yds-tab-content.twig" %}
     {% endfor %}
   {% endblock %}
 </div>

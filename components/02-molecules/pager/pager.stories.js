@@ -1,4 +1,4 @@
-import pager from './pager.twig';
+import pager from './yds-pager.twig';
 
 import pagerData from './pager.yml';
 import pagerFirstData from './pager-first.yml';

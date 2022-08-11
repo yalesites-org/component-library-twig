@@ -1,4 +1,4 @@
-import socialLinksTwig from './social-links.twig';
+import socialLinksTwig from './yds-social-links.twig';
 
 import socialLinksData from './social-links.yml';
 

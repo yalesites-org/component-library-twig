@@ -40,7 +40,7 @@
   } %}
   <div {{ bem('content', [], accordion__item__base_class) }}>
     {% block accordion__item__content %}
-      {% include "@molecules/text/text-field.twig" with {
+      {% include "@molecules/text/yds-text-field.twig" with {
         text_field__content: accordion__item__content,
       } %}
     {% endblock %}
