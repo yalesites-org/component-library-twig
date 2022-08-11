@@ -1,5 +1,5 @@
 // Twig templates
-import pageTitleTwig from './page-title.twig';
+import pageTitleTwig from './yds-page-title.twig';
 import dateTimeTwig from '../../01-atoms/date-time/yds-date-time.twig';
 
 // Data files

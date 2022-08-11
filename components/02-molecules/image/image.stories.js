@@ -1,4 +1,4 @@
-import contentImageTwig from './content-image.twig';
+import contentImageTwig from './yds-content-image.twig';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 

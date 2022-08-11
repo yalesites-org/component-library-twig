@@ -1,8 +1,8 @@
-import accordionTwig from './accordion.twig';
+import accordionTwig from './yds-accordion.twig';
 
 import accordionData from './accordion.yml';
 
-import './accordion';
+import './yds-accordion';
 
 /**
  * Storybook Definition.

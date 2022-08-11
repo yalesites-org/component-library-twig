@@ -56,7 +56,7 @@
 } %}
 {% block list__item__content %}
   {# This import needs to be inside the block for it to work in Drupal #}
-  {% import "@molecules/menu/menu.twig" as menus %}
+  {% import "@molecules/menu/yds-menu.twig" as menus %}
 
   {{- list__item -}}
   {% if item.below %}

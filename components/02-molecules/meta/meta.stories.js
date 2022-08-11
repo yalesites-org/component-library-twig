@@ -1,7 +1,7 @@
 import { eventArgTypes } from '../../04-page-layouts/page-args';
 
-import basicMetaTwig from './basic-meta/basic-meta.twig';
-import eventMetaTwig from './event-meta/event-meta.twig';
+import basicMetaTwig from './basic-meta/yds-basic-meta.twig';
+import eventMetaTwig from './event-meta/yds-event-meta.twig';
 import dateTimeTwig from '../../01-atoms/date-time/yds-date-time.twig';
 
 /**

@@ -28,7 +28,7 @@
     aria_controls: 'breadcrumbs-inner',
   } %}
   <div id="breadcrumbs-inner" {{ bem('inner', [], breadcrumbs__base_class) }}>
-    {% include "@molecules/menu/menu.twig" with {
+    {% include "@molecules/menu/yds-menu.twig" with {
       items: breadcrumbs__items,
       menu__base_class: breadcrumbs__base_class,
       menu__name: 'Breadcrumb',

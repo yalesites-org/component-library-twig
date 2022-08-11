@@ -1,15 +1,15 @@
 {% if intro_content == 'image' %}
-  {% include "@molecules/image/content-image.twig" %}
+  {% include "@molecules/image/yds-content-image.twig" %}
 {% elseif intro_content == 'image--highlight' %}
-  {% include "@molecules/image/content-image.twig" with {
+  {% include "@molecules/image/yds-content-image.twig" with {
     content_image__width: 'highlight',
   } %}
 {% elseif intro_content == 'image--feature' %}
-  {% include "@molecules/image/content-image.twig" with {
+  {% include "@molecules/image/yds-content-image.twig" with {
     content_image__width: 'feature',
   } %}
 {% elseif intro_content == 'image--max' %}
-  {% include "@molecules/image/content-image.twig" with {
+  {% include "@molecules/image/yds-content-image.twig" with {
     content_image__width: 'max',
   } %}
 {% elseif intro_content == 'pop-out-image' %}

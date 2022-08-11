@@ -23,7 +23,7 @@
   <div {{ bem('inner', [], callouts__base_class) }}>
     {% block callout__items %}
       {% for callout in callouts %}
-        {% include "@molecules/callout/_callout.twig" with {
+        {% include "@molecules/callout/_yds-callout.twig" with {
           callout__heading: callout.callout__heading,
           callout__text: callout.callout__text,
           callout__link__content: callout.callout__link__content,
