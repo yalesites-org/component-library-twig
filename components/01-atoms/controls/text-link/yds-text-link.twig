@@ -1,4 +1,7 @@
 {#
+ # Available props:
+ # - link__style: underline (default), no-underline
+ #
  # Available variables:
  # - link__content - the content of the link (typically text)
  # - link__url - the url this link should poing to
@@ -10,10 +13,7 @@
  #}
 
 {% set link__base_class = link__base_class|default('link') %}
-
-{# If link__attributes is not defined, set it to an empty object by default #}
 {% set link__attributes = link__attributes|default({}) %}
-{# {% set link__modifiers = link__modifiers|default(['underline']) %} #}
 
 {% set link__attributes = link__attributes|merge({
   'data-link-style': link__style|default('underline'),

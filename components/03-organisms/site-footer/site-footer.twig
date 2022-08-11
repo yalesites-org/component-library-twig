@@ -58,13 +58,13 @@
         {% include "@atoms/controls/text-link/yds-text-link.twig" with {
           link__content: 'Accessibility at Yale',
           link__url: "https://usability.yale.edu/web-accessibility/accessibility-yale",
-          link__style: ['no-underline'],
+          link__style: 'no-underline',
         } %}
         <span {{ bem('divider', [], site_footer__base_class) }}>|</span>
         {% include "@atoms/controls/text-link/yds-text-link.twig" with {
           link__content: 'Privacy Policy',
           link__url: "https://www.yale.edu/privacy-policy",
-          link__style: ['no-underline'],
+          link__style: 'no-underline',
         } %}
         <span {{ bem('divider', [], site_footer__base_class) }}>|</span>
         <span>Copyright © {{ 'now'|date('Y') }} Yale University. All rights reserved.</span>
