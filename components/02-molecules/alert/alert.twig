@@ -62,7 +62,7 @@
         {% endif %}
       </div>
       {% if alert__link__content and alert__link__url %}
-        {% include "@atoms/controls/text-link/text-link.twig" with {
+        {% include "@atoms/controls/text-link/yds-text-link.twig" with {
           link__content: alert__link__content,
           link__url: alert__link__url,
           link__blockname: alert__base_class,
@@ -76,7 +76,7 @@
         icon__decorative: true,
       } %}
     {% endset %}
-    {% include "@atoms/controls/base/control.twig" with {
+    {% include "@atoms/controls/base/yds-control.twig" with {
       control__content: alert__control,
       control__base_class: 'toggle',
       control__blockname: alert__base_class,

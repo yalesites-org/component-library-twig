@@ -44,13 +44,13 @@
       </div>
       {% if banner__link__content and banner__link__url %}
         {% if banner__link__style == 'text-link' %}
-          {% include "@atoms/controls/text-link/text-link.twig" with {
+          {% include "@atoms/controls/text-link/yds-text-link.twig" with {
             link__content: banner__link__content,
             link__url: banner__link__url,
             link__blockname: banner__base_class,
           } %}
         {% else %}
-          {% include "@atoms/controls/cta/cta.twig" with {
+          {% include "@atoms/controls/cta/yds-cta.twig" with {
             cta__content: banner__link__content,
             cta__href: banner__link__url,
             cta__blockname: banner__base_class,

@@ -16,7 +16,7 @@
 
 <h{{ heading__level }} {{ bem(heading__base_class, heading__modifiers, heading__blockname) }}>
   {%- if heading__url %}
-    {% include "@atoms/controls/text-link/text-link.twig" with {
+    {% include "@atoms/controls/text-link/yds-text-link.twig" with {
       link__content: heading,
       link__url: heading__url,
       link__attributes: heading__link__attributes,

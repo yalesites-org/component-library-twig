@@ -36,7 +36,7 @@
 
 <div {{ add_attributes(tabs__attributes) }}>
   <div {{ bem('tabs', [], tabs__base_class) }}>
-    {% include "@atoms/controls/base/control.twig" with {
+    {% include "@atoms/controls/base/yds-control.twig" with {
       control__content: icon_left,
       control__base_class: 'control',
       control__blockname: tabs__base_class,
@@ -53,7 +53,7 @@
         {% endfor %}
       {% endblock %}
     </ul>
-    {% include "@atoms/controls/base/control.twig" with {
+    {% include "@atoms/controls/base/yds-control.twig" with {
       control__content: icon_right,
       control__base_class: 'control',
       control__blockname: tabs__base_class,

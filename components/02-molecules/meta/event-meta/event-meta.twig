@@ -58,14 +58,14 @@
       <div {{ bem('ctas', [], event_meta__base_class) }}>
         {# Primary CTA #}
         {% if event_meta__cta_primary__content and event_meta__cta_primary__href %}
-          {% include "@atoms/controls/cta/cta.twig" with {
+          {% include "@atoms/controls/cta/yds-cta.twig" with {
             cta__content: event_meta__cta_primary__content,
             cta__href: event_meta__cta_primary__href,
           } %}
         {% endif %}
         {# Add to calendar #}
         {% if event_meta__cta_secondary__content %}
-          {% include "@atoms/controls/cta/cta.twig" with {
+          {% include "@atoms/controls/cta/yds-cta.twig" with {
             cta__content: event_meta__cta_secondary__content,
             cta__href: event_meta__cta_secondary__href,
             cta__style: 'outline',

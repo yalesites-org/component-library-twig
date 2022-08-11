@@ -20,13 +20,13 @@
     } %}
     {% if callout__link__url and callout__link__content %}
       {% if callout__link__type == 'link' %}
-        {% include "@atoms/controls/text-link/text-link.twig" with {
+        {% include "@atoms/controls/text-link/yds-text-link.twig" with {
           link__url: callout__link__url,
           link__content: callout__link__content,
           link__blockname: callout__base_class,
         } %}
       {% else %}
-        {% include "@atoms/controls/cta/cta.twig" with {
+        {% include "@atoms/controls/cta/yds-cta.twig" with {
           cta__content: callout__link__content,
           cta__href: callout__link__url,
           cta__blockname: callout__base_class,

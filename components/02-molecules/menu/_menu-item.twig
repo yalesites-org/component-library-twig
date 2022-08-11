@@ -38,7 +38,7 @@
     {% else %}
       {% set link__url = item.url %}
     {% endif %}
-      {% include "@atoms/controls/text-link/text-link.twig" with {
+      {% include "@atoms/controls/text-link/yds-text-link.twig" with {
         link__content: item.title,
         link__base_class: 'link',
         link__blockname: menu__base_class,
@@ -69,7 +69,7 @@
           icon__blockname: item__blockname,
         } %}
       {% endset %}
-      {% include "@atoms/controls/base/control.twig" with {
+      {% include "@atoms/controls/base/yds-control.twig" with {
         control__content: menu_item__cta__content,
         control__base_class: 'toggle',
         control__modifiers: item__modifiers,
