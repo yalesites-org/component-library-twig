@@ -24,7 +24,7 @@
 <div {{ add_attributes(card_collection__attributes) }}>
   <div {{ bem('inner', [], card_collection__base_class) }}>
     {% if card_collection__heading %}
-      {% include "@atoms/typography/headings/heading.twig" with {
+      {% include "@atoms/typography/headings/yds-heading.twig" with {
         heading__level: '2',
         heading__blockname: card_collection__base_class,
         heading: card_collection__heading,

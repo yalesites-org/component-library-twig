@@ -48,7 +48,7 @@
   {% endif %}
 {% endset %}
 
-{% embed "@atoms/lists/_list-item.twig" with {
+{% embed "@atoms/lists//_yds-list-item.twig" with {
   list__item__base_class: item__base_class|default('item'),
   list__item__modifiers: item__modifiers,
   list__item__blockname: item__blockname,
@@ -63,7 +63,7 @@
     {% if menu__level == 0 and  menu__level__toggle %}
       {% set menu_item__cta__content %}
         {{ item.title }}
-        {% include "@atoms/images/icons/_icon.twig" with {
+        {% include "@atoms/images/icons/_yds-icon.twig" with {
           icon__name: 'angle-down',
           icon__base_class: 'toggle-icon',
           icon__blockname: item__blockname,

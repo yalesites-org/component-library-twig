@@ -24,7 +24,7 @@
 
 <div {{ add_attributes(content_image__attributes) }}>
   <div {{ bem('inner', [], content_image__base_class) }}>
-    {% embed "@atoms/images/image/image.twig" with {
+    {% embed "@atoms/images/image/yds-image.twig" with {
       figure__caption: content_image__caption,
     } %}
       {% block image__image %}

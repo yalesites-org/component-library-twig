@@ -16,7 +16,7 @@
 
 <div {{ add_attributes(page_title__attributes) }}>
   <div {{ bem('inner', [], page_title__base_class) }}>
-    {% include "@atoms/typography/headings/heading.twig" with {
+    {% include "@atoms/typography/headings/yds-heading.twig" with {
       heading__level: '1',
       heading: page_title__heading,
       heading__blockname: page_title__base_class,

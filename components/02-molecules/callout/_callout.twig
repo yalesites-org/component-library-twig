@@ -9,12 +9,12 @@
 
 <div {{ add_attributes(callout__attributes) }}>
   <div {{ bem('inner', [], callout__base_class) }}>
-    {% include "@atoms/typography/headings/heading.twig" with {
+    {% include "@atoms/typography/headings/yds-heading.twig" with {
       heading__level: '2',
       heading__blockname: callout__base_class,
       heading: callout__heading,
     } %}
-    {% include "@atoms/typography/text/text.twig" with {
+    {% include "@atoms/typography/text/yds-text.twig" with {
       text__blockname: callout__base_class,
       text__content: callout__text,
     } %}

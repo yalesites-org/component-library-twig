@@ -31,28 +31,28 @@
     <div {{ bem('content', [], text_with_image__base_class) }}>
       {# Overline #}
       {% if text_with_image__overline %}
-        {% include "@atoms/typography/text/text.twig" with {
+        {% include "@atoms/typography/text/yds-text.twig" with {
           text__content: text_with_image__overline,
           text__base_class: 'overline',
           text__blockname: text_with_image__base_class,
         } %}
       {% endif %}
       {# Heading #}
-      {% include "@atoms/typography/headings/heading.twig" with {
+      {% include "@atoms/typography/headings/yds-heading.twig" with {
         heading: text_with_image__heading,
         heading__level: '2',
         heading__blockname: text_with_image__base_class,
       } %}
       {# Subheading #}
       {% if text_with_image__subheading %}
-        {% include "@atoms/typography/text/text.twig" with {
+        {% include "@atoms/typography/text/yds-text.twig" with {
           text__content: text_with_image__subheading,
           text__base_class: 'subheading',
           text__blockname: text_with_image__base_class,
         } %}
       {% endif %}
       {# Text #}
-      {% include "@atoms/typography/text/text.twig" with {
+      {% include "@atoms/typography/text/yds-text.twig" with {
         text__content: text_with_image__text,
         text__blockname: text_with_image__base_class,
       } %}
@@ -67,7 +67,7 @@
     {# Image #}
     <div {{ bem('image', [], text_with_image__base_class) }}>
       {% block text_with_image__image %}
-        {% include "@atoms/images/image/image.twig" %}
+        {% include "@atoms/images/image/yds-image.twig" %}
       {% endblock %}
     </div>
   </div>

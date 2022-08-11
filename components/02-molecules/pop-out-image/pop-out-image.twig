@@ -26,7 +26,7 @@
   <div {{ bem('inner', [], pop_out_image__base_class) }}>
     {# Image #}
     <div {{ bem('image', [], pop_out_image__base_class) }}>
-      {% embed "@atoms/images/image/image.twig" with {
+      {% embed "@atoms/images/image/yds-image.twig" with {
         figure__caption: pop_out_image__caption,
       } %}
         {% block image__image %}
@@ -35,7 +35,7 @@
       {% endembed %}
     </div>
     {# Text #}
-    {% include "@atoms/typography/text/text.twig" with {
+    {% include "@atoms/typography/text/yds-text.twig" with {
       text__content: pop_out_image__content,
       text__blockname: pop_out_image__base_class,
     } %}

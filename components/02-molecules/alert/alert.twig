@@ -40,7 +40,7 @@
   <div {{ bem('inner', [], alert__base_class) }}>
     {% if alert__icon %}
       <div {{ bem('icon', ['type'], alert__base_class) }}>
-        {% include "@atoms/images/icons/_icon.twig" with {
+        {% include "@atoms/images/icons/_yds-icon.twig" with {
           icon__name: alert__icon,
           icon__decorative: true,
         } %}
@@ -48,13 +48,13 @@
     {% endif %}
     <div {{ bem('content', [], alert__base_class) }}>
       <div {{ bem('content-inner', [], alert__base_class) }}>
-        {% include "@atoms/typography/headings/heading.twig" with {
+        {% include "@atoms/typography/headings/yds-heading.twig" with {
           heading__level: '2',
           heading__blockname: alert__base_class,
           heading: alert__heading,
         } %}
         {% if alert__content %}
-          {% include "@atoms/typography/text/text.twig" with {
+          {% include "@atoms/typography/text/yds-text.twig" with {
             text__element: 'div',
             text__content: alert__content,
             text__blockname: alert__base_class,
@@ -71,7 +71,7 @@
     </div>
     {% set alert__control %}
       <span {{ bem('visually-hidden') }}>{{ alert__toggle__text }}</span>
-      {% include "@atoms/images/icons/_icon.twig" with {
+      {% include "@atoms/images/icons/_yds-icon.twig" with {
         icon__name: alert__toggle,
         icon__decorative: true,
       } %}

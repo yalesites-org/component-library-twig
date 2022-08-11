@@ -12,7 +12,7 @@
 
 <div {{ add_attributes(text_field__attributes) }}>
   <div {{ bem('inner', [], text_field__base_class) }}>
-    {% include "@atoms/typography/text/text.twig" with {
+    {% include "@atoms/typography/text/yds-text.twig" with {
       text__content: text_field__content,
     } %}
   </div>

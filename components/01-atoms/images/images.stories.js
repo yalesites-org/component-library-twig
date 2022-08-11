@@ -1,5 +1,5 @@
-import imageTwig from './image/image.twig';
-import iconsTwig from './icons/icons.twig';
+import imageTwig from './image/yds-image.twig';
+import iconsTwig from './icons/yds-icons.twig';
 
 import imageData from './image/image.yml';
 import figureData from './image/figure.yml';

@@ -12,7 +12,7 @@
 {% set tabs__id = tabs__id|default(random()) %}
 
 {% set icon_left %}
-  {% include "@atoms/images/icons/_icon.twig" with {
+  {% include "@atoms/images/icons/_yds-icon.twig" with {
     icon__name: 'angle-down',
     icon__blockname: tabs__base_class,
     icon__modifiers: ['left'],
@@ -21,7 +21,7 @@
 {% endset %}
 
 {% set icon_right %}
-  {% include "@atoms/images/icons/_icon.twig" with {
+  {% include "@atoms/images/icons/_yds-icon.twig" with {
     icon__name: 'angle-down',
     icon__blockname: tabs__base_class,
     icon__modifiers: ['right'],
