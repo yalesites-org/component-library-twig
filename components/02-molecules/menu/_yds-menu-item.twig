@@ -33,18 +33,18 @@
         'aria-current': 'page',
       }) %}
     {% endif %}
-    {% if directory %}
+    {% if directory and not menu__contextual %}
       {% set link__url = item.url.toString %}
     {% else %}
       {% set link__url = item.url %}
     {% endif %}
-      {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-        link__content: item.title,
-        link__base_class: 'link',
-        link__blockname: menu__base_class,
-        link__modifiers: item__modifiers,
-        link__attributes: link__attributes,
-      } %}
+    {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+      link__content: item.title,
+      link__base_class: 'link',
+      link__blockname: menu__base_class,
+      link__modifiers: item__modifiers,
+      link__attributes: link__attributes,
+    } %}
   {% endif %}
 {% endset %}
 
@@ -77,7 +77,7 @@
         aria_expanded: 'false',
       } %}
     {% endif %}
-    {{ menus.menu_links(item.below, attributes, menu__level + 1, menu__base_class, menu__modifiers, menu__blockname, menu__list__type, menu__level__toggle, item__base_class, item__modifiers, item__blockname, directory) }}
+    {{ menus.menu_links(item.below, attributes, menu__level + 1, menu__base_class, menu__modifiers, menu__blockname, menu__list__type, menu__level__toggle, menu__contextual, item__base_class, item__modifiers, item__blockname, directory) }}
   {% endif %}
 {% endblock %}
 {% endembed %}
