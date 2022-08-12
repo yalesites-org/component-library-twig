@@ -1,0 +1,24 @@
+{#
+ # Available Variables:
+ # - quick__links__heading
+ #
+ # Available Blocks:
+ # - quick__links__image
+#}
+
+{% set quick_links__base_class = 'quick-links' %}
+
+<div {{ bem('content', [], quick__links__base_class) }}>
+  <div {{ bem('text', [], quick__links__base_class) }}>
+    {% include "@atoms/typography/headings/heading.twig"  with {
+      heading__level: '1',
+      heading__blockname: quick__links__base_class,
+      heading: quick__links__heading,
+    } %}
+  </div>
+</div>
+<div {{ bem('image', [], quick__links__base_class) }}>
+  {% block quick__links__image %}
+    {% include "@atoms/images/image/_responsive-image.twig" %}
+  {% endblock %}
+</div>
