@@ -1,5 +1,5 @@
 // Shared Storybook args.
-import argTypes from '../../04-page-layouts/page-args';
+import argTypes from '../../04-page-layouts/cl-page-args';
 
 // Twig files.
 import accordionPageTwig from './accordion-page.twig';
@@ -16,7 +16,7 @@ import alertData from '../../02-molecules/alert/alert.yml';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 
 // JavaScript.
-import '../../00-tokens/layout/layout';
+import '../../00-tokens/layout/yds-layout';
 
 /**
  * Storybook Definition.

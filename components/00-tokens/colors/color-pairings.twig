@@ -5,17 +5,17 @@
     <h2>Component Theme: {{ theme }}</h2>
     <p class="text-field">Here's a paragraph with some text. And <a href="#">links can go here</a> too. Isn't that cool?</p>
     <div class="cta-group">
-      {% include "@atoms/controls/cta/cta.twig" with {
+      {% include "@atoms/controls/cta/yds-cta.twig" with {
         cta__content: 'Cta Link',
         cta__href: '#',
       } %}
-      {% include "@atoms/controls/cta/cta.twig" with {
+      {% include "@atoms/controls/cta/yds-cta.twig" with {
         cta__content: 'Outline',
         cta__style: 'outline',
         cta__href: '#',
       } %}
     </div>
-    {% include "@molecules/social-links/social-links.twig" with {
+    {% include "@molecules/social-links/yds-social-links.twig" with {
       icons: {
         1: {
           name: 'Facebook',

@@ -1,12 +1,12 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
-import siteHeaderTwig from './site-header.twig';
+import siteHeaderTwig from './yds-site-header.twig';
 import siteHeaderExamples from './_site-header--examples.twig';
 
 import utilityNavData from '../menu/utility-nav/utility-nav.yml';
 import primaryNavData from '../menu/primary-nav/primary-nav.yml';
 
-import '../../02-molecules/menu/menu-toggle/menu-toggle';
+import '../../02-molecules/menu/menu-toggle/yds-menu-toggle';
 
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);

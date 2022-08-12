@@ -1,4 +1,4 @@
-import calloutTwig from './callout.twig';
+import calloutTwig from './yds-callout.twig';
 
 import calloutData from './callout.yml';
 

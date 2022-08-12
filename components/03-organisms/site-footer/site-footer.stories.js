@@ -1,6 +1,6 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
-import siteFooterTwig from './site-footer.twig';
+import siteFooterTwig from './yds-site-footer.twig';
 import siteFooterExamples from './_site-footer--examples.twig';
 
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
