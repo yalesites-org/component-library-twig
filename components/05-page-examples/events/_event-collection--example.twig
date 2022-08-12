@@ -1,5 +1,5 @@
 {% if variation == 'featured' %}
-  {% include "@organisms/card-collection/card-collection.twig" with {
+  {% include "@organisms/card-collection/yds-card-collection.twig" with {
     card_example_type: 'event',
     card_collection__type: 'grid',
     card_collection__cards: [
@@ -12,7 +12,7 @@
     ]
   } %}
 {% elseif variation == 'secondary' %}
-  {% include "@organisms/card-collection/card-collection.twig" with {
+  {% include "@organisms/card-collection/yds-card-collection.twig" with {
     card_example_type: 'event',
     card_collection__type: 'grid',
     card_collection__featured: 'false',
@@ -24,7 +24,7 @@
     ]
   } %}
 {% elseif variation == 'list' %}
-  {% include "@organisms/card-collection/card-collection.twig" with {
+  {% include "@organisms/card-collection/yds-card-collection.twig" with {
     card_example_type: 'event',
     card_collection__type: 'list',
     card_collection__cards: [

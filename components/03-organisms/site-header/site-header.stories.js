@@ -1,6 +1,6 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
-import siteHeaderTwig from './site-header.twig';
+import siteHeaderTwig from './yds-site-header.twig';
 import siteHeaderExamples from './_site-header--examples.twig';
 
 import utilityNavData from '../menu/utility-nav/utility-nav.yml';

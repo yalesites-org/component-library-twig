@@ -1,8 +1,8 @@
 <div {{ bem('layout-container') }}>
   {# Page Header #}
   {% block page__header %}
-    {% include "@organisms/site-header/site-header.twig" %}
-    {% include "@organisms/menu/breadcrumbs/breadcrumbs.twig" %}
+    {% include "@organisms/site-header/yds-site-header.twig" %}
+    {% include "@organisms/menu/breadcrumbs/yds-breadcrumbs.twig" %}
   {% endblock %}
   {# System #}
   {% block page__system %}{% endblock %}
@@ -19,6 +19,6 @@
   </div>
   {# Page Footer #}
   {% block page__footer %}
-    {% include "@organisms/site-footer/site-footer.twig" %}
+    {% include "@organisms/site-footer/yds-site-footer.twig" %}
   {% endblock %}
 </div>

@@ -1,7 +1,7 @@
 {% extends "@page-layouts/full-width.twig" %}
   {% block page__content %}
     {% include "@molecules/page-title//yds-page-title.twig" %}
-    {% embed "@organisms/layout/two-column/two-column.twig" %}
+    {% embed "@organisms/layout/two-column/yds-two-column.twig" %}
       {% block two_column__primary %}
         {% include "@page-examples/_intro-content-examples.twig" %}
         {% include "@molecules/text/yds-text-field.twig" with {

@@ -15,7 +15,7 @@ import pagerData from '../../02-molecules/pager/pager-last.yml';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 
 // JavaScript.
-import '../../00-tokens/layout/layout';
+import '../../00-tokens/layout/yds-layout';
 
 /**
  * Storybook Definition.

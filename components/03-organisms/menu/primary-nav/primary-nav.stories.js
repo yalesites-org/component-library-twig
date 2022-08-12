@@ -1,13 +1,13 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
 // Markup.
-import primaryNavTwig from './primary-nav.twig';
+import primaryNavTwig from './yds-primary-nav.twig';
 
 // Data.
 import primaryNavData from './primary-nav.yml';
 
 // JavaScript
-import './primary-nav';
+import './yds-primary-nav';
 
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 

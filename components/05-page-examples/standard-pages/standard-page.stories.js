@@ -19,7 +19,7 @@ import referenceCardData from '../../02-molecules/cards/reference-card/examples/
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 
 // JavaScript.
-import '../../00-tokens/layout/layout';
+import '../../00-tokens/layout/yds-layout';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 

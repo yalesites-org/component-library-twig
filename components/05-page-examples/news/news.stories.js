@@ -11,7 +11,7 @@ import breadcrumbData from '../../03-organisms/menu/breadcrumbs/breadcrumbs.yml'
 import imageData from '../../01-atoms/images/image/image.yml';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 // JavaScript.
-import '../../00-tokens/layout/layout';
+import '../../00-tokens/layout/yds-layout';
 
 /**
  * Storybook Definition.

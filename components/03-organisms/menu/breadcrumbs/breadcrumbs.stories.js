@@ -1,11 +1,11 @@
 // Markup.
-import breadcrumbsTwig from './breadcrumbs.twig';
+import breadcrumbsTwig from './yds-breadcrumbs.twig';
 
 // Data.
 import breadcrumbsData from './breadcrumbs.yml';
 
 // JavaScript.
-import './breadcrumbs';
+import './yds-breadcrumbs';
 
 /**
  * Storybook Definition.
