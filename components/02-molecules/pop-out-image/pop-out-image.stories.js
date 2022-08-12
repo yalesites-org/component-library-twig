@@ -1,5 +1,5 @@
-import popOutImageTwig from './pop-out-image.twig';
-import textFieldTwig from '../text/text-field.twig';
+import popOutImageTwig from './yds-pop-out-image.twig';
+import textFieldTwig from '../text/yds-text-field.twig';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 import popOutImageData from './pop-out-image.yml';

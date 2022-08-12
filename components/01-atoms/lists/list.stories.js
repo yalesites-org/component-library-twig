@@ -1,4 +1,4 @@
-import listTwig from './list.twig';
+import listTwig from './yds-list.twig';
 
 import listData from './list.yml';
 

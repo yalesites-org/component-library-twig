@@ -1,4 +1,4 @@
-import placeHolderTwig from './placeholder.twig';
+import placeHolderTwig from './yds-placeholder.twig';
 
 /**
  * Storybook Definition.

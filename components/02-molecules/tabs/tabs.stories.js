@@ -1,8 +1,8 @@
-import tabs from './tabs.twig';
+import tabs from './yds-tabs.twig';
 
 import tabData from './tabs.yml';
 
-import './tabs';
+import './yds-tabs';
 
 /**
  * Storybook Definition.

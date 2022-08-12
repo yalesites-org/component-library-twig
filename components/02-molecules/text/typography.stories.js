@@ -1,5 +1,5 @@
 // Twig templates
-import textFieldTwig from './text-field.twig';
+import textFieldTwig from './yds-text-field.twig';
 
 // Data files
 import textData from './text-field.yml';

@@ -3,7 +3,7 @@ import referenceCardTwig from './examples/_card--examples.twig';
 import referenceCardData from './examples/news-card.yml';
 import imageData from '../../../01-atoms/images/image/image.yml';
 
-import './reference-card';
+import './yds-reference-card';
 
 /**
  * Storybook Definition.

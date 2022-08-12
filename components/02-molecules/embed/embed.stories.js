@@ -1,4 +1,4 @@
-import embedTwig from './embed.twig';
+import embedTwig from './yds-embed.twig';
 
 /**
  * Storybook Definition.

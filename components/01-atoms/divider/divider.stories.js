@@ -1,6 +1,6 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
-import dividerTwig from './divider.twig';
+import dividerTwig from './yds-divider.twig';
 
 const layoutOptions = Object.keys(tokens.layout['flex-position']);
 const thicknessOptions = Object.keys(tokens.border.thickness);

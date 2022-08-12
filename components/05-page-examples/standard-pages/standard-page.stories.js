@@ -1,7 +1,7 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
 // Shared Storybook args.
-import argTypes from '../../04-page-layouts/page-args';
+import argTypes from '../../04-page-layouts/cl-page-args';
 
 // Twig files.
 import standardPageTwig from './standard-page.twig';
@@ -19,7 +19,7 @@ import referenceCardData from '../../02-molecules/cards/reference-card/examples/
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 
 // JavaScript.
-import '../../00-tokens/layout/layout';
+import '../../00-tokens/layout/yds-layout';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 

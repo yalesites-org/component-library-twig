@@ -1,5 +1,5 @@
 // Markup.
-import utilityNavTwig from './utility-nav.twig';
+import utilityNavTwig from './yds-utility-nav.twig';
 
 // Data.
 import utilityNavData from './utility-nav.yml';
