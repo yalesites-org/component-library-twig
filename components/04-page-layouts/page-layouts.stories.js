@@ -1,6 +1,6 @@
-import argTypes from './page-args';
+import argTypes from './cl-page-args';
 
-import fullWidthTwig from './full-width.twig';
+import fullWidthTwig from './yds-full-width.twig';
 
 import utilityNavData from '../03-organisms/menu/utility-nav/utility-nav.yml';
 import primaryNavData from '../03-organisms/menu/primary-nav/primary-nav.yml';

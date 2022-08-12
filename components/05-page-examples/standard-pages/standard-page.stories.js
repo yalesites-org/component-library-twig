@@ -1,7 +1,7 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
 // Shared Storybook args.
-import argTypes from '../../04-page-layouts/page-args';
+import argTypes from '../../04-page-layouts/cl-page-args';
 
 // Twig files.
 import standardPageTwig from './standard-page.twig';

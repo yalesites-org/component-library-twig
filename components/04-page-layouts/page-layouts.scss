@@ -1,5 +1,4 @@
 @use '../00-tokens/tokens';
-@forward './placeholder/placeholder';
 
 body[data-body-frozen] {
   @media (max-width: tokens.$break-mobile-max) {

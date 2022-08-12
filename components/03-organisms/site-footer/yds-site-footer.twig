@@ -29,7 +29,7 @@
           &#XF2A2;
         </div>
         {% block site_footer__text %}
-          {% include "@page-layouts/placeholder/placeholder.twig" with {
+          {% include "@page-layouts/placeholder/yds-placeholder.twig" with {
             placeholder: 'Text',
             placeholder__type: 'element',
           } %}
@@ -38,7 +38,7 @@
       {# Columns #}
       <div {{ bem('columns', [], site_footer__base_class) }}>
         {% block site_footer__columns %}
-          {% include "@page-layouts/placeholder/placeholder.twig" with {
+          {% include "@page-layouts/placeholder/yds-placeholder.twig" with {
             placeholder: 'Columns',
             placeholder__type: 'element',
           } %}

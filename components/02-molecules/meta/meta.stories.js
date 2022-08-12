@@ -1,4 +1,4 @@
-import { eventArgTypes } from '../../04-page-layouts/page-args';
+import { eventArgTypes } from '../../04-page-layouts/cl-page-args';
 
 import basicMetaTwig from './basic-meta/yds-basic-meta.twig';
 import eventMetaTwig from './event-meta/yds-event-meta.twig';

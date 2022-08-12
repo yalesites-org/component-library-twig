@@ -1,5 +1,5 @@
 // Shared Storybook args.
-import argTypes from '../../04-page-layouts/page-args';
+import argTypes from '../../04-page-layouts/cl-page-args';
 
 // Twig files.
 import newsArticleTwig from './news-article.twig';
