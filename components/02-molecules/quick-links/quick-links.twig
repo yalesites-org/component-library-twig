@@ -8,17 +8,33 @@
 
 {% set quick_links__base_class = 'quick-links' %}
 
-<div {{ bem('content', [], quick__links__base_class) }}>
-  <div {{ bem('text', [], quick__links__base_class) }}>
-    {% include "@atoms/typography/headings/heading.twig"  with {
-      heading__level: '1',
-      heading__blockname: quick__links__base_class,
-      heading: quick__links__heading,
+<div {{ bem('content-wrapper', [], quick__links__base_class) }}>
+  <div {{ bem('content', [], quick__links__base_class) }}>
+    <div {{ bem('text', [], quick__links__base_class) }}>
+      {% include "@atoms/typography/headings/heading.twig"  with {
+        heading__level: '1',
+        heading__blockname: quick__links__base_class,
+        heading: quick__links__heading,
+      } %}
+      {% if quick__links__description %}
+        {% include "@atoms/typography/text/text.twig" with {
+          text__base_class: 'description',
+          text__blockname: quick__links__base_class,
+          text__content: quick__links__description,
+        } %}
+      {% endif %}
+    </div>
+  </div>
+  <div>
+    {% include "@atoms/controls/text-link/text-link.twig" with {
+      link__content: quick__links__link__content,
+      link__url: quick__links__link__url,
+      link__blockname: quick__links__base_class,
     } %}
   </div>
-</div>
-<div {{ bem('image', [], quick__links__base_class) }}>
-  {% block quick__links__image %}
-    {% include "@atoms/images/image/_responsive-image.twig" %}
-  {% endblock %}
+  <div {{ bem('image', [], quick__links__base_class) }}>
+    {% block quick__links__image %}
+      {% include "@atoms/images/image/_responsive-image.twig" %}
+    {% endblock %}
+  </div>
 </div>
