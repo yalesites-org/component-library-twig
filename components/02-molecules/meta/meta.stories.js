@@ -18,7 +18,7 @@ Basic.argTypes = {
     type: 'string',
     defaultValue: `<span>By Charlyn Paradis</span>${dateTimeTwig({
       date_time__start: '2022-01-25',
-      date_time__format: 'date',
+      date_time__format: 'day__full',
     })}`,
   },
 };
