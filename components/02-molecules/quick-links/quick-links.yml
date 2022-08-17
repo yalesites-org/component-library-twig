@@ -1,5 +1,4 @@
 quick__links__heading: 'Heading for Quick Links'
-quick__links__description: 'This is a Quick Links description.'
+quick__links__description: '<p>This is a Quick Links description.</p>'
 quick__links__link__url: '#'
 quick__links__link__content: 'This is a link'
-quick__links__image:

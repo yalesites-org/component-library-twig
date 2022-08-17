@@ -1,8 +1,34 @@
-// @use '../../../00-tokens/tokens';
-// @use '../../../01-atoms/atoms';
+@use '../../00-tokens/tokens';
+@use '../../01-atoms/atoms';
 
-// .quick-links__content-wrapper {
-//   position: relative;
-//   display: flex;
-//   flex-direction: row;
-// }
+.quick-links__content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quick-links__content {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: var(--size-spacing-8);
+  margin-left: var(--size-spacing-8);
+}
+
+.quick-links__heading {
+  @include tokens.h2-yale-new;
+}
+
+.quick-links__description {
+  margin-top: var(--size-spacing-3);
+}
+
+.quick-links__cta {
+  @include atoms.cta;
+
+  margin-left: var(--size-spacing-7);
+}
+
+.quick-links__image {
+  position: absolute;
+}

@@ -28,15 +28,21 @@ export default {
       type: 'string',
       defaultValue: quickLinksData.quick__links__link__content,
     },
+    linkStyle: {
+      name: 'Link Style',
+      type: 'select',
+      options: ['cta', 'text-link'],
+      defaultValue: 'cta',
+    },
   },
 };
 
-export const quickLinks = ({ heading, description, linkContent }) =>
+export const quickLinks = ({ heading, description, linkContent, linkStyle }) =>
   quickLinksTwig({
     ...quickLinksData,
     ...imageData.responsive_images['16x9'],
     quick__links__heading: heading,
     quick__links__description: description,
-    quick__links__content: linkContent,
-    quick__links__link__url: quickLinksData.quick__links__link__url,
+    quick__links__link__content: linkContent,
+    quick__links__style: linkStyle,
   });

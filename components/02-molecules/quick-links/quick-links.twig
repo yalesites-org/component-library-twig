@@ -1,14 +1,22 @@
 {#
  # Available Variables:
  # - quick__links__heading
+ # - quick__links__description
+ # - quick__links__link__url
+ # - quick__links__link__content
  #
  # Available Blocks:
  # - quick__links__image
 #}
 
-{% set quick_links__base_class = 'quick-links' %}
+{% set quick__links__base_class = 'quick-links' %}
 
 <div {{ bem('content-wrapper', [], quick__links__base_class) }}>
+  <div {{ bem('image', [], quick__links__base_class) }}>
+      {% block quick__links__image %}
+        {% include "@atoms/images/image/_responsive-image.twig" %}
+      {% endblock %}
+  </div>
   <div {{ bem('content', [], quick__links__base_class) }}>
     <div {{ bem('text', [], quick__links__base_class) }}>
       {% include "@atoms/typography/headings/heading.twig"  with {
@@ -24,17 +32,21 @@
         } %}
       {% endif %}
     </div>
-  </div>
-  <div>
-    {% include "@atoms/controls/text-link/text-link.twig" with {
-      link__content: quick__links__link__content,
-      link__url: quick__links__link__url,
-      link__blockname: quick__links__base_class,
-    } %}
-  </div>
-  <div {{ bem('image', [], quick__links__base_class) }}>
-    {% block quick__links__image %}
-      {% include "@atoms/images/image/_responsive-image.twig" %}
-    {% endblock %}
+    <div>
+    {% if quick__links__content and quick__links__link__url %}
+      {% include "@atoms/controls/text-link/text-link.twig" with {
+        link__content: quick__links__link__content,
+        link__url: quick__links__link__url,
+        link__blockname: quick__links__base_class,
+      } %}
+    {% else %}
+      {% include "@atoms/controls/cta/cta.twig" with {
+        cta__content: quick__links__link__content,
+        cta__href: quick__links__link__url,
+        cta__blockname: quick__links__base_class,
+        cta__attributes: quick__links__link__content,
+      } %}
+    {% endif %}
+    </div>
   </div>
 </div>
