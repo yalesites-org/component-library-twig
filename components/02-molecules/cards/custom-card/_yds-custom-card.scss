@@ -1,0 +1,5 @@
+.custom-card {
+  display: grid;
+  grid-template-columns: 3fr 6fr;
+  column-gap: var(--size-spacing-6);
+}
