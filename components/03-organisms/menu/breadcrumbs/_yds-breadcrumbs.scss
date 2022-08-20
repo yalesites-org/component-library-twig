@@ -35,15 +35,22 @@
   @include atoms.list-reset;
 
   display: flex;
-  flex-wrap: wrap;
   color: var(--color-basic-brown-gray);
+  overflow: auto;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .breadcrumbs__item {
   @include tokens.body-s;
 
   position: relative;
-  white-space: nowrap;
+  flex-shrink: 0;
 
   @media (max-width: tokens.$break-mobile-max) {
     [data-breadcrumbs-overflow='hidden'] & {

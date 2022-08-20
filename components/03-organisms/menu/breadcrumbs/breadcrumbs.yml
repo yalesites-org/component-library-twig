@@ -5,6 +5,12 @@ items:
     url: '#'
   - title: 'Undergraduate Chemistry'
     url: '#'
+  - title: 'Level 3'
+    url: '#'
+  - title: 'Level 4'
+    url: '#'
+  - title: 'Level 5'
+    url: '#'
   - title: 'Davis Team Project Wins Award for Research'
     url: '#'
     is_active: true
