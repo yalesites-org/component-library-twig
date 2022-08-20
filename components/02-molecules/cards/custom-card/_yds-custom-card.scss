@@ -1,5 +1,97 @@
+@use '../../../01-atoms/atoms';
+@use '../../../00-tokens/tokens';
+
 .custom-card {
+  --card-border: 1px solid var(--color-gray-200);
+
+  @include atoms.clickable-component-heading-link;
+}
+
+[data-with-image='true'] {
   display: grid;
   grid-template-columns: 3fr 6fr;
   column-gap: var(--size-spacing-6);
+}
+
+.custom-card:hover {
+  box-shadow: var(--drop-shadow-level-1);
+}
+
+.custom-card__content {
+  padding: var(--size-spacing-5) var(--size-spacing-5) 0;
+  border-top: var(--card-border);
+}
+
+[data-with-image='true'] .custom-card__content {
+  padding: var(--size-spacing-5) 0 0;
+}
+
+.custom-card__heading {
+  margin-bottom: var(--size-spacing-3);
+  font-family: var(--font-families-yalenew);
+}
+
+.custom-card__snippet {
+  @include tokens.body-default-condensed;
+}
+
+.custom-card__top-border {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  height: 0.25rem;
+}
+
+.custom-card__top-border-left {
+  background-color: var(--color-blue-medium);
+}
+
+.custom-card__top-border-right {
+  background-color: var(--color-blue-light);
+}
+
+[data-collection-featured='false'] .custom-card__image {
+  display: none;
+}
+
+[data-collection-featured='false'] .custom-card {
+  display: block;
+}
+
+@media (min-width: tokens.$break-s) {
+  [data-with-image='true'] .custom-card__top-border {
+    display: none;
+  }
+
+  [data-with-image='true'] {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  [data-collection-featured='false'] .custom-card__image {
+    display: inline;
+  }
+
+  [data-collection-featured='false'] .custom-card {
+    display: grid;
+  }
+}
+
+@media (min-width: tokens.$break-m) {
+  [data-with-image='true'] {
+    display: block;
+  }
+
+  .custom-card__content {
+    border-top: 0;
+    border-left: var(--card-border);
+    border-right: var(--card-border);
+    border-bottom: var(--card-border);
+  }
+
+  [data-with-image='true'] .custom-card__content {
+    padding: var(--size-spacing-5) var(--size-spacing-6) 0;
+  }
+
+  .custom-card__top-border {
+    height: 0.375rem;
+  }
 }
