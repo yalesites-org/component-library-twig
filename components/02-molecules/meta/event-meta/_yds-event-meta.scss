@@ -9,12 +9,6 @@
 
 .event-meta__date {
   @include tokens.body-xl;
-
-  .date-time {
-    font-variant: small-caps;
-    font-variant-numeric: oldstyle-nums;
-    text-transform: lowercase;
-  }
 }
 
 .event-meta__details {
