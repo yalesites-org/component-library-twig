@@ -28,7 +28,7 @@
     </div>
   {% endif %}
   <div {{ bem('content', [], custom_card__base_class) }}>
-    <div {{ bem('text', [], custom_card__base_class) }}>
+
       {% include "@atoms/typography/headings/yds-heading.twig" with {
         heading__level: '3',
         heading__blockname: custom_card__base_class,
@@ -42,6 +42,6 @@
           text__content: custom_card__snippet,
         } %}
       {% endif %}
-    </div>
+
   </div>
 </li>

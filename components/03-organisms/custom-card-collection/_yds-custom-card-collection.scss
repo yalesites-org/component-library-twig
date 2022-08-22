@@ -27,6 +27,8 @@
 
   .custom-card-collection__cards > * {
     flex-basis: 100%;
+    display: flex;
+    flex-direction: column;
 
     [data-collection-featured='true'] & {
       flex: 0 1 calc(50% - calc(var(--custom-card-collection-spacing) * 2 / 2));

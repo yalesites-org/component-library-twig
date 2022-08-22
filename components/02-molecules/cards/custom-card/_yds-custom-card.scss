@@ -9,12 +9,18 @@
 
 [data-with-image='true'] {
   display: grid;
-  grid-template-columns: 3fr 6fr;
+  grid-template-columns: 1fr 2fr;
   column-gap: var(--size-spacing-6);
 }
 
-.custom-card:hover {
-  box-shadow: var(--drop-shadow-level-1);
+.custom-card__top-border {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  height: 0.25rem;
+}
+
+[data-with-image='true'] .custom-card__top-border {
+  display: none;
 }
 
 .custom-card__content {
@@ -22,7 +28,9 @@
   border-top: var(--card-border);
 }
 
-[data-with-image='true'] .custom-card__content {
+[data-collection-featured='true']
+  [data-with-image='true']
+  .custom-card__content {
   padding: var(--size-spacing-5) 0 0;
 }
 
@@ -35,12 +43,6 @@
   @include tokens.body-default-condensed;
 }
 
-.custom-card__top-border {
-  display: grid;
-  grid-template-columns: 4fr 1fr;
-  height: 0.25rem;
-}
-
 .custom-card__top-border-left {
   background-color: var(--color-blue-medium);
 }
@@ -49,8 +51,14 @@
   background-color: var(--color-blue-light);
 }
 
-[data-collection-featured='false'] .custom-card__image {
-  display: none;
+[data-collection-featured='false'] {
+  .custom-card__image {
+    display: none;
+  }
+
+  .custom-card__top-border {
+    display: grid;
+  }
 }
 
 [data-collection-featured='false'] .custom-card {
@@ -58,11 +66,15 @@
 }
 
 @media (min-width: tokens.$break-s) {
+  .custom-card:hover {
+    box-shadow: var(--drop-shadow-level-1);
+  }
+
   [data-with-image='true'] .custom-card__top-border {
     display: none;
   }
 
-  [data-with-image='true'] {
+  [data-collection-featured='true'] [data-with-image='true'] {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -72,6 +84,15 @@
 
   [data-collection-featured='false'] .custom-card {
     display: grid;
+  }
+
+  [data-collection-featured='false']
+    [data-with-image='false']
+    .custom-card__content {
+    border-top: 0;
+    border-left: var(--card-border);
+    border-right: var(--card-border);
+    border-bottom: var(--card-border);
   }
 }
 
@@ -85,10 +106,17 @@
     border-left: var(--card-border);
     border-right: var(--card-border);
     border-bottom: var(--card-border);
+    flex: 1;
   }
 
-  [data-with-image='true'] .custom-card__content {
+  [data-collection-featured='true']
+    [data-with-image='true']
+    .custom-card__content {
     padding: var(--size-spacing-5) var(--size-spacing-6) 0;
+  }
+
+  [data-collection-featured='false'] .custom-card {
+    display: block;
   }
 
   .custom-card__top-border {
