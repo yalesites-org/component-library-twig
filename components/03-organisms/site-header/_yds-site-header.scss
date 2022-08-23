@@ -25,6 +25,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
   position: relative;
   z-index: 2;
+  margin-bottom: var(--size-spacing-7);
 
   // Component themes
   @each $theme, $value in $site-header-themes {
