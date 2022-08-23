@@ -14,6 +14,24 @@
 {% set parent_count = breadcrumbs__length - 2 %}
 {% set parent_label = breadcrumbs__items[parent_count].title %}
 
+{% set icon_left %}
+  {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'angle-down',
+    icon__blockname: breadcrumbs__base_class,
+    icon__modifiers: ['left'],
+    icon__decorative: true,
+  } %}
+{% endset %}
+
+{% set icon_right %}
+  {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'angle-down',
+    icon__blockname: breadcrumbs__base_class,
+    icon__modifiers: ['right'],
+    icon__decorative: true,
+  } %}
+{% endset %}
+
 {# Only show breadbrumbs if there are three or more items. #}
 {% if breadcrumbs__items.2 %}
   <div {{ add_attributes(breadcrumbs__attributes) }}>
@@ -31,13 +49,38 @@
       aria_expanded: 'false',
       aria_controls: 'breadcrumbs-inner',
     } %}
-    <div id="breadcrumbs-inner" {{ bem('inner', [], breadcrumbs__base_class) }}>
+    {% set breadcrumbs__inner__attributes = {
+      'class': bem('inner', [], breadcrumbs__base_class),
+      'data-scroll-indicator': 'none',
+      'id': 'breadcrumbs-inner',
+    } %}
+    <div {{ add_attributes(breadcrumbs__inner__attributes) }}>
+      {% include "@atoms/controls/base/yds-control.twig" with {
+        control__content: icon_left,
+        control__base_class: 'control',
+        control__blockname: breadcrumbs__base_class,
+        control__modifiers: ['left'],
+        control__attributes: {
+          'aria-hidden': 'true',
+          'tabindex': '-1',
+        },
+      } %}
       {% include "@molecules/menu/yds-menu.twig" with {
         items: breadcrumbs__items,
         menu__base_class: breadcrumbs__base_class,
         menu__name: 'Breadcrumb',
         menu__contextual: true,
         menu__list__type: 'ol',
+      } %}
+      {% include "@atoms/controls/base/yds-control.twig" with {
+        control__content: icon_right,
+        control__base_class: 'control',
+        control__blockname: breadcrumbs__base_class,
+        control__modifiers: ['right'],
+        control__attributes: {
+          'aria-hidden': 'true',
+          'tabindex': '-1',
+        },
       } %}
     </div>
   </div>
