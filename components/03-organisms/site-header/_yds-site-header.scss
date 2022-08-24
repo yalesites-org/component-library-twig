@@ -64,6 +64,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
   @media (min-width: tokens.$break-mobile) {
     border-bottom: var(--site-header-border-bottom);
+    margin-bottom: var(--size-spacing-7);
   }
 }
 
