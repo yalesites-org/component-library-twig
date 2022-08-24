@@ -1,7 +1,10 @@
+// Custom card collection twig
 import customCardCollectionTwig from './yds-custom-card-collection.twig';
 
+// Custom card default data
 import customCardData from '../../02-molecules/cards/custom-card/custom-card.yml';
 
+// Image atom component - generic images for demo
 import imageData from '../../01-atoms/images/image/image.yml';
 
 /**
