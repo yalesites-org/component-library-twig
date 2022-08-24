@@ -2,17 +2,24 @@
 @use '../../01-atoms/atoms';
 
 .quick-links__content-wrapper {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  overflow: hidden;
 }
 
 .quick-links__content {
   position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: var(--size-spacing-8);
-  margin-left: var(--size-spacing-8);
+  display: grid;
+  width: 100%;
+  padding: var(--size-spacing-9) var(--size-spacing-5);
+
+  @media (min-width: tokens.$break-xl) {
+    grid-template-columns: 1fr 2fr;
+    gap: var(--size-spacing-9);
+    align-items: center;
+  }
 }
 
 .quick-links__heading {
@@ -23,12 +30,45 @@
   margin-top: var(--size-spacing-3);
 }
 
+.quick-links__links {
+  display: grid;
+  row-gap: var(--size-spacing-6);
+
+  @media (min-width: tokens.$break-s) {
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--size-spacing-7);
+  }
+
+  @media (min-width: tokens.$break-m) {
+    gap: var(--size-spacing-7) var(--size-spacing-9);
+  }
+
+  @media (min-width: tokens.$break-l) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (min-width: tokens.$break-xl) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (min-width: tokens.$break-2xl) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.quick-links__link {
+  @include atoms.link;
+}
+
 .quick-links__cta {
   @include atoms.cta;
-
-  margin-left: var(--size-spacing-7);
 }
 
 .quick-links__image {
-  position: absolute;
+  [data-quick-links-variation='promotional'] & {
+    position: absolute;
+    background-blend-mode: multiply;
+    background-color: var(--color-background);
+    opacity: 0.15;
+  }
 }

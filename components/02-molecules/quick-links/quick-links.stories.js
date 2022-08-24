@@ -16,33 +16,27 @@ export default {
     heading: {
       name: 'Heading',
       type: 'string',
-      defaultValue: quickLinksData.quick__links__heading,
+      defaultValue: quickLinksData.quick_links__heading,
     },
     description: {
       name: 'Description',
       type: 'string',
-      defaultValue: quickLinksData.quick__links__description,
+      defaultValue: quickLinksData.quick_links__description,
     },
-    linkContent: {
-      name: 'Link Content',
-      type: 'string',
-      defaultValue: quickLinksData.quick__links__link__content,
-    },
-    linkStyle: {
-      name: 'Link Style',
+    variation: {
+      name: 'Variation',
       type: 'select',
-      options: ['cta', 'text-link'],
-      defaultValue: 'cta',
+      options: ['promotional', 'subtle'],
+      defaultValue: 'promotional',
     },
   },
 };
 
-export const quickLinks = ({ heading, description, linkContent, linkStyle }) =>
+export const quickLinks = ({ heading, description, variation }) =>
   quickLinksTwig({
     ...quickLinksData,
     ...imageData.responsive_images['16x9'],
-    quick__links__heading: heading,
-    quick__links__description: description,
-    quick__links__link__content: linkContent,
-    quick__links__style: linkStyle,
+    quick_links__heading: heading,
+    quick_links__description: description,
+    quick_links__variation: variation,
   });
