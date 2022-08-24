@@ -18,40 +18,46 @@
   justify-content: center;
 
   @include atoms.list-reset;
-}
-
-@media (min-width: tokens.$break-m) {
-  .custom-card-collection__cards {
+  @media (min-width: tokens.$break-m) {
     flex-direction: row;
+
+    > * {
+      flex-basis: 100%;
+      display: flex;
+      flex-direction: column;
+
+      [data-collection-featured='true'] & {
+        flex: 0 1
+          calc(50% - calc(var(--custom-card-collection-spacing) * 2 / 2));
+      }
+
+      [data-collection-featured='false'] & {
+        flex: 0 1
+          calc(33.33% - calc(var(--custom-card-collection-spacing) * 3 / 2));
+      }
+    }
+
+    // This grows the card to full width if there is only one card in the collection
+    &.custom-card-collection__cards--one-card > * {
+      [data-collection-featured='true'] &,
+      [data-collection-featured='false'] & {
+        flex-grow: 1;
+      }
+    }
   }
+  @media (min-width: tokens.$break-l) {
+    > * {
+      flex-basis: 100%;
 
-  .custom-card-collection__cards > * {
-    flex-basis: 100%;
-    display: flex;
-    flex-direction: column;
+      [data-collection-featured='true'] & {
+        flex: 0 1
+          calc(33.33% - calc(var(--custom-card-collection-spacing) * 2 / 3));
+      }
 
-    [data-collection-featured='true'] & {
-      flex: 0 1 calc(50% - calc(var(--custom-card-collection-spacing) * 2 / 2));
-    }
-
-    [data-collection-featured='false'] & {
-      flex: 0 1
-        calc(33.33% - calc(var(--custom-card-collection-spacing) * 3 / 2));
-    }
-  }
-}
-
-@media (min-width: tokens.$break-l) {
-  .custom-card-collection__cards > * {
-    flex-basis: 100%;
-
-    [data-collection-featured='true'] & {
-      flex: 0 1
-        calc(33.33% - calc(var(--custom-card-collection-spacing) * 2 / 3));
-    }
-
-    [data-collection-featured='false'] & {
-      flex: 0 1 calc(25% - calc(var(--custom-card-collection-spacing) * 3 / 4));
+      [data-collection-featured='false'] & {
+        flex: 0 1
+          calc(25% - calc(var(--custom-card-collection-spacing) * 3 / 4));
+      }
     }
   }
 }

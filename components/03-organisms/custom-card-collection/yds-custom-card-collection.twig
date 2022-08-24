@@ -2,6 +2,7 @@
  # Available Props:
  # - custom_card_collection__featured: boolean (ish... actually just a string. But should be 'true', or 'false')
  # - card_collection__width: max or feature, determines how wide the collection is
+ # - num_cards: Calculated number of cards to create class for flex grow if one item
  #
  # Available Variables:
  # - collection_heading
@@ -11,6 +12,7 @@
  #}
 
 {% set custom_card_collection__base_class = 'custom-card-collection' %}
+{% set num_cards = custom_card_collection__cards|length == 1 ? 'one-card' : 'multiple-cards' %}
 
 {% set custom_card_collection__featured = custom_card_collection__featured == 'true' ? 'true' : 'false' %}
 {% set card_collection__width = custom_card_collection__featured == 'true' ? 'feature' : 'max' %}
@@ -30,10 +32,13 @@
         heading: collection_heading,
       } %}
     {% endif %}
-    <ul {{ bem('cards', [], custom_card_collection__base_class) }}>
+    <ul {{ bem('cards', [num_cards], custom_card_collection__base_class) }}>
       {% block card_collection__cards %}
         {% for card in custom_card_collection__cards %}
-          {% include "@molecules/cards/custom-card/yds-custom-card.twig" %}
+          {% include "@molecules/cards/custom-card/yds-custom-card.twig" with {
+            collection_heading: collection_heading
+            }
+          %}
         {% endfor %}
       {% endblock %}
     </ul>

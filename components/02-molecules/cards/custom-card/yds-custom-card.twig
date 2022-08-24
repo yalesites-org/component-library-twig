@@ -31,7 +31,7 @@
   </div>
   <div {{ bem('content', [], custom_card__base_class) }}>
     {% include "@atoms/typography/headings/yds-heading.twig" with {
-      heading__level: '3',
+      heading__level: collection_heading ? '3' : '2',
       heading__blockname: custom_card__base_class,
       heading: custom_card__heading,
       heading__url: custom_card__url,
