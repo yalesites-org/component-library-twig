@@ -3,9 +3,62 @@ Drupal.behaviors.breadcrumbs = {
     // Selectors.
     const breadcrumbs = context.querySelector('.breadcrumbs');
     const breadcrumbsMenu = context.querySelector('.breadcrumbs__menu');
+    const breadcrumbsControls = context.querySelectorAll(
+      '.breadcrumbs__control',
+    );
     const breadcrumbsButton = context.querySelector('.breadcrumbs__button');
     const breadcrumbsInner = context.querySelector('.breadcrumbs__inner');
+    const controlsWidth = context.querySelector(
+      '.breadcrumbs__control--left',
+    ).offsetWidth;
     let scrollIndicatorDir;
+
+    /**
+     * getFirstVisible
+     * @description Get the first item that is visible (not overflown).
+     * @returns The value of the left edge of the first fully visible item plus
+     * the width of the controls so that things aren't visually hidden by the
+     * absolutely positioned elements.
+     */
+    function getFirstVisible() {
+      const breadcrumbsLeft = breadcrumbs.getBoundingClientRect().left;
+      const breadcrumbsItems =
+        breadcrumbs.querySelectorAll('.breadcrumbs__item');
+      const visibleItems = [];
+
+      breadcrumbsItems.forEach((item) => {
+        if (
+          item.getBoundingClientRect().right >
+          breadcrumbsLeft + controlsWidth
+        ) {
+          visibleItems.push(item);
+        }
+      });
+
+      return visibleItems[1].offsetLeft - controlsWidth;
+    }
+
+    /**
+     * getLastHidden
+     * @description Get the last item that is overflown (not visible).
+     * @returns The value of the left edge of the first partially hidden item
+     * minus the width of the controls so that things aren't visually hidden by
+     * the absolutely positioned elements.
+     */
+    function getLastHidden() {
+      const breadcrumbsLeft = breadcrumbs.getBoundingClientRect().left;
+      const breadcrumbsItems =
+        breadcrumbs.querySelectorAll('.breadcrumbs__item');
+      const hiddenItems = [];
+
+      breadcrumbsItems.forEach((item) => {
+        if (item.getBoundingClientRect().left < breadcrumbsLeft) {
+          hiddenItems.push(item);
+        }
+      });
+
+      return hiddenItems[hiddenItems.length - 1].offsetLeft - controlsWidth;
+    }
 
     /**
      * setOverflow
@@ -54,6 +107,19 @@ Drupal.behaviors.breadcrumbs = {
     }
 
     /**
+     * mouseNav
+     * @description Support mouse navigation when horizontal scrolling occurs.
+     */
+    function mouseNav(direction) {
+      // If right.
+      if (direction === 'right') {
+        breadcrumbsMenu.scrollLeft = getFirstVisible();
+      } else {
+        breadcrumbsMenu.scrollLeft = getLastHidden();
+      }
+    }
+
+    /**
      * showAllBreadcrumbs
      * @description remove breadcrumbs-overflow value.
      */
@@ -89,6 +155,18 @@ Drupal.behaviors.breadcrumbs = {
      * init
      */
     setOverflow();
+
+    breadcrumbsControls.forEach((control) => {
+      control.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        if (control.classList.contains('breadcrumbs__control--right')) {
+          mouseNav('right');
+        } else {
+          mouseNav('left');
+        }
+      });
+    });
 
     breadcrumbsMenu.addEventListener('scroll', setOverflow);
 
