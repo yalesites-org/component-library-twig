@@ -16,10 +16,15 @@
 {% set quick_links__base_class = 'quick-links' %}
 
 {% set quick_links__attributes = {
-  'data-component-theme': callout__background_color|default('blue-yale'),
   'data-quick-links-variation': quick_links__variation|default('promotional'),
   'class': bem('content-wrapper', [], quick_links__base_class)
 } %}
+
+{% if quick_links__variation == 'promotional' %}
+  {% set quick_links__attributes = quick_links__attributes|merge({
+    'data-component-theme': callout__background_color|default('blue-yale'),
+  }) %}
+{% endif %}
 
 <div {{ add_attributes(quick_links__attributes) }}>
   <div {{ bem('image', [], quick_links__base_class) }}>
