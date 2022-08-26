@@ -34,7 +34,10 @@
 .breadcrumbs__inner {
   position: relative;
   display: flex;
-  justify-content: center;
+}
+
+.breadcrumbs {
+  max-width: 100%;
 }
 
 .breadcrumbs__control {
@@ -43,7 +46,6 @@
 
   position: absolute;
   top: 0;
-  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -137,4 +139,8 @@
   display: flex;
   align-items: center;
   min-height: var(--size-click-target-minimum);
+
+  &:focus-visible {
+    outline-offset: -2px;
+  }
 }

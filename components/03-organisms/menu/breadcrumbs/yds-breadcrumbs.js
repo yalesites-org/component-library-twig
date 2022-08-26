@@ -1,17 +1,20 @@
 Drupal.behaviors.breadcrumbs = {
   attach(context) {
     // Selectors.
+    const breadcrumbsWrapper = context.querySelector('.breadcrumbs__wrapper');
     const breadcrumbs = context.querySelector('.breadcrumbs');
     const breadcrumbsMenu = context.querySelector('.breadcrumbs__menu');
     const breadcrumbsControls = context.querySelectorAll(
       '.breadcrumbs__control',
     );
+    const breadcrumbsLinks = context.querySelectorAll('.breadcrumbs__link');
     const breadcrumbsButton = context.querySelector('.breadcrumbs__button');
     const breadcrumbsInner = context.querySelector('.breadcrumbs__inner');
     const controlsWidth = context.querySelector(
       '.breadcrumbs__control--left',
     ).offsetWidth;
     let scrollIndicatorDir;
+    const breakMobile = window.matchMedia('(min-width: 992px');
 
     /**
      * getFirstVisible
@@ -77,32 +80,39 @@ Drupal.behaviors.breadcrumbs = {
           .getBoundingClientRect().right,
       );
 
-      if (firstBreadcrumbsLeft < breadcrumbsLeft) {
-        // If left side of first breadcrumb is < left side of breadcrumbs.
-        // And right side of last breadcrumb is > right side of breadcrumbs.
-        if (lastBreadcrumbsRight > breadcrumbsRight) {
-          if (scrollIndicatorDir !== 'both') {
-            scrollIndicatorDir = 'both';
-            breadcrumbsInner.setAttribute('data-scroll-indicator', 'both');
-          }
+      // Only show the indicator if not in "hidden mobile" mode.
+      if (
+        breakMobile.matches ||
+        breadcrumbsWrapper.getAttribute('data-breadcrumbs-overflow') ===
+          'expanded'
+      ) {
+        if (firstBreadcrumbsLeft < breadcrumbsLeft) {
           // If left side of first breadcrumb is < left side of breadcrumbs.
-          // But right side of last breadcrumb is <= right side of breadcrumbs.
-        } else if (scrollIndicatorDir !== 'left') {
-          scrollIndicatorDir = 'left';
-          breadcrumbsInner.setAttribute('data-scroll-indicator', 'left');
+          // And right side of last breadcrumb is > right side of breadcrumbs.
+          if (lastBreadcrumbsRight > breadcrumbsRight) {
+            if (scrollIndicatorDir !== 'both') {
+              scrollIndicatorDir = 'both';
+              breadcrumbsInner.setAttribute('data-scroll-indicator', 'both');
+            }
+            // If left side of first breadcrumb is < left side of breadcrumbs.
+            // But right side of last breadcrumb is <= right side of breadcrumbs.
+          } else if (scrollIndicatorDir !== 'left') {
+            scrollIndicatorDir = 'left';
+            breadcrumbsInner.setAttribute('data-scroll-indicator', 'left');
+          }
+          // If left side of first breadcrumb is >= left side of breadcrumbs.
+          // And right side of last breadcrumb is > right side of breadcrumbs.
+        } else if (lastBreadcrumbsRight > breadcrumbsRight) {
+          if (scrollIndicatorDir !== 'right') {
+            scrollIndicatorDir = 'right';
+            breadcrumbsInner.setAttribute('data-scroll-indicator', 'right');
+          }
+          // If left side of first breadcrumb is >= left side of breadcrumbs.
+          // And right side of last breadcrumb is <= right side of breadcrumbs.
+        } else {
+          scrollIndicatorDir = 'none';
+          breadcrumbsInner.setAttribute('data-scroll-indicator', 'none');
         }
-        // If left side of first breadcrumb is >= left side of breadcrumbs.
-        // And right side of last breadcrumb is > right side of breadcrumbs.
-      } else if (lastBreadcrumbsRight > breadcrumbsRight) {
-        if (scrollIndicatorDir !== 'right') {
-          scrollIndicatorDir = 'right';
-          breadcrumbsInner.setAttribute('data-scroll-indicator', 'right');
-        }
-        // If left side of first breadcrumb is >= left side of breadcrumbs.
-        // And right side of last breadcrumb is <= right side of breadcrumbs.
-      } else {
-        scrollIndicatorDir = 'none';
-        breadcrumbsInner.setAttribute('data-scroll-indicator', 'none');
       }
     }
 
@@ -120,13 +130,50 @@ Drupal.behaviors.breadcrumbs = {
     }
 
     /**
+     * ensureVisible
+     * @description Ensure the focused tab is fully visible (not overflown).
+     * @param {HTMLElement} item The focused item.
+     */
+    function ensureVisible(item) {
+      const breadcrumbsLeft = breadcrumbs.getBoundingClientRect().left;
+      const breadcrumbsRight = breadcrumbs.getBoundingClientRect().right;
+
+      // if right side overflows control, set to left + control.
+      if (
+        Math.floor(item.getBoundingClientRect().right) >
+        breadcrumbsRight - controlsWidth
+      ) {
+        // If overflow right or both.
+        if (
+          breadcrumbsInner.getAttribute('data-scroll-indicator') === 'right' ||
+          breadcrumbsInner.getAttribute('data-scroll-indicator') === 'both'
+        ) {
+          breadcrumbsMenu.scrollLeft =
+            item.parentElement.offsetLeft - controlsWidth;
+        }
+      }
+      // If left side overflows control, set to left + control.
+      else if (
+        Math.floor(item.getBoundingClientRect().left) <
+        breadcrumbsLeft + controlsWidth
+      ) {
+        // If overflow left or both.
+        if (
+          breadcrumbsInner.getAttribute('data-scroll-indicator') === 'left' ||
+          breadcrumbsInner.getAttribute('data-scroll-indicator') === 'both'
+        ) {
+          breadcrumbsMenu.scrollLeft =
+            item.parentElement.offsetLeft - controlsWidth;
+        }
+      }
+    }
+
+    /**
      * showAllBreadcrumbs
      * @description remove breadcrumbs-overflow value.
      */
     function showAllBreadcrumbs() {
-      const breadcrumbsWrapper = context.querySelector('.breadcrumbs__wrapper');
-
-      breadcrumbsWrapper.setAttribute('data-breadcrumbs-overflow', 'visible');
+      breadcrumbsWrapper.setAttribute('data-breadcrumbs-overflow', 'expanded');
       breadcrumbsButton.setAttribute('aria-expanded', 'true');
     }
 
@@ -150,6 +197,16 @@ Drupal.behaviors.breadcrumbs = {
         timer = setTimeout(func, 200, event);
       };
     }
+
+    /**
+     * linksListeners
+     * @description Support focus visualization.
+     */
+    breadcrumbsLinks.forEach((link) => {
+      link.addEventListener('focus', () => {
+        ensureVisible(link);
+      });
+    });
 
     /**
      * init
