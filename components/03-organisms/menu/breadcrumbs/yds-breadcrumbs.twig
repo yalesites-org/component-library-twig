@@ -8,10 +8,8 @@
   class: bem('wrapper', [], breadcrumbs__base_class),
 } %}
 
-{% set breadcrumbs__length = breadcrumbs__items|length %}
-
 {# Get the parent label for the mobile toggle #}
-{% set parent_count = breadcrumbs__length - 2 %}
+{% set parent_count = breadcrumbs__items|length - 2 %}
 {% set parent_label = breadcrumbs__items[parent_count].title %}
 
 {% set icon_left %}
