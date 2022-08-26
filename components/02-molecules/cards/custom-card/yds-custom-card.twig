@@ -21,7 +21,6 @@
 
 <li {{ add_attributes(custom_card__attributes) }}>
   <div {{ bem('image', [], custom_card__base_class) }}>
-    <div {{ bem('top-border', [], custom_card__base_class) }}></div>
     {% if custom_card__image == 'true' %}
       {% block custom_card__image %}
         {% include "@atoms/images/image/_responsive-image.twig" %}
@@ -31,7 +30,7 @@
   </div>
   <div {{ bem('content', [], custom_card__base_class) }}>
     {% include "@atoms/typography/headings/yds-heading.twig" with {
-      heading__level: collection_heading ? '3' : '2',
+      heading__level: custom_card_collection__heading ? '3' : '2',
       heading__blockname: custom_card__base_class,
       heading: custom_card__heading,
       heading__url: custom_card__url,

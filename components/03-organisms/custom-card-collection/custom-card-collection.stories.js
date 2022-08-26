@@ -16,7 +16,7 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: {
-    collectionHeading: {
+    customCardCollectionHeading: {
       name: 'Collection Heading',
       type: 'string',
       defaultValue: 'Custom Card Collection Heading',
@@ -38,14 +38,14 @@ export const customCardCollection = ({
   heading,
   snippet,
   url,
-  collectionHeading,
+  customCardCollectionHeading,
   withImage,
   featured,
 }) => {
   const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
 
   return customCardCollectionTwig({
-    collection_heading: collectionHeading,
+    custom_card_collection__heading: customCardCollectionHeading,
     custom_card__heading: heading,
     custom_card__snippet: snippet,
     custom_card__url: url,
