@@ -17,7 +17,12 @@
     > *:not(:first-child) {
       margin-left: var(--size-spacing-5);
       padding-left: var(--size-spacing-5);
-      border-left: var(--border-thickness-1) solid;
+    }
+
+    .date-time::before {
+      position: relative;
+      content: '|';
+      right: var(--size-spacing-5);
     }
   }
 }
