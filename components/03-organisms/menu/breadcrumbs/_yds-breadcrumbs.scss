@@ -54,6 +54,14 @@
   background-color: var(--color-background);
   opacity: 0;
 
+  // Don't show controls on small screens when the items are hidden behind the
+  // "expand" button.
+  @media (max-width: tokens.$break-mobile-max) {
+    [data-breadcrumbs-overflow='hidden'] & {
+      display: none;
+    }
+  }
+
   &--left {
     left: 0;
 

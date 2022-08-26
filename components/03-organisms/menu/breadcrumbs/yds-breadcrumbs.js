@@ -14,7 +14,6 @@ Drupal.behaviors.breadcrumbs = {
       '.breadcrumbs__control--left',
     ).offsetWidth;
     let scrollIndicatorDir;
-    const breakMobile = window.matchMedia('(min-width: 992px');
 
     /**
      * getFirstVisible
@@ -80,39 +79,32 @@ Drupal.behaviors.breadcrumbs = {
           .getBoundingClientRect().right,
       );
 
-      // Only show the indicator if not in "hidden mobile" mode.
-      if (
-        breakMobile.matches ||
-        breadcrumbsWrapper.getAttribute('data-breadcrumbs-overflow') ===
-          'expanded'
-      ) {
-        if (firstBreadcrumbsLeft < breadcrumbsLeft) {
+      if (firstBreadcrumbsLeft < breadcrumbsLeft) {
+        // If left side of first breadcrumb is < left side of breadcrumbs.
+        // And right side of last breadcrumb is > right side of breadcrumbs.
+        if (lastBreadcrumbsRight > breadcrumbsRight) {
+          if (scrollIndicatorDir !== 'both') {
+            scrollIndicatorDir = 'both';
+            breadcrumbsInner.setAttribute('data-scroll-indicator', 'both');
+          }
           // If left side of first breadcrumb is < left side of breadcrumbs.
-          // And right side of last breadcrumb is > right side of breadcrumbs.
-          if (lastBreadcrumbsRight > breadcrumbsRight) {
-            if (scrollIndicatorDir !== 'both') {
-              scrollIndicatorDir = 'both';
-              breadcrumbsInner.setAttribute('data-scroll-indicator', 'both');
-            }
-            // If left side of first breadcrumb is < left side of breadcrumbs.
-            // But right side of last breadcrumb is <= right side of breadcrumbs.
-          } else if (scrollIndicatorDir !== 'left') {
-            scrollIndicatorDir = 'left';
-            breadcrumbsInner.setAttribute('data-scroll-indicator', 'left');
-          }
-          // If left side of first breadcrumb is >= left side of breadcrumbs.
-          // And right side of last breadcrumb is > right side of breadcrumbs.
-        } else if (lastBreadcrumbsRight > breadcrumbsRight) {
-          if (scrollIndicatorDir !== 'right') {
-            scrollIndicatorDir = 'right';
-            breadcrumbsInner.setAttribute('data-scroll-indicator', 'right');
-          }
-          // If left side of first breadcrumb is >= left side of breadcrumbs.
-          // And right side of last breadcrumb is <= right side of breadcrumbs.
-        } else {
-          scrollIndicatorDir = 'none';
-          breadcrumbsInner.setAttribute('data-scroll-indicator', 'none');
+          // But right side of last breadcrumb is <= right side of breadcrumbs.
+        } else if (scrollIndicatorDir !== 'left') {
+          scrollIndicatorDir = 'left';
+          breadcrumbsInner.setAttribute('data-scroll-indicator', 'left');
         }
+        // If left side of first breadcrumb is >= left side of breadcrumbs.
+        // And right side of last breadcrumb is > right side of breadcrumbs.
+      } else if (lastBreadcrumbsRight > breadcrumbsRight) {
+        if (scrollIndicatorDir !== 'right') {
+          scrollIndicatorDir = 'right';
+          breadcrumbsInner.setAttribute('data-scroll-indicator', 'right');
+        }
+        // If left side of first breadcrumb is >= left side of breadcrumbs.
+        // And right side of last breadcrumb is <= right side of breadcrumbs.
+      } else {
+        scrollIndicatorDir = 'none';
+        breadcrumbsInner.setAttribute('data-scroll-indicator', 'none');
       }
     }
 
