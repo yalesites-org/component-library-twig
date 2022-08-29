@@ -8,6 +8,12 @@
   margin-block: var(--spacing-page-section);
 }
 
+.custom-card-collection__heading {
+  @include tokens.h2-yale-new;
+
+  margin-bottom: var(--spacing-page-section);
+}
+
 .custom-card-collection__cards {
   --custom-card-collection-spacing: var(--spacing-component-gutter);
 
