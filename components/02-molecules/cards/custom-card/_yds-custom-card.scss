@@ -19,6 +19,9 @@
     grid-template-columns: 1fr;
   }
 
+  &:hover {
+    cursor: pointer;
+  }
   @media (min-width: tokens.$break-s) {
     &[data-with-image='true'] {
       [data-collection-featured='true'] & {
