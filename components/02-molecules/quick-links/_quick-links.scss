@@ -15,6 +15,10 @@
   width: 100%;
   padding: var(--size-spacing-9) var(--size-spacing-5);
 
+  [data-description='false'] & {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
   @media (min-width: tokens.$break-xl) {
     grid-template-columns: 1fr 2fr;
     gap: var(--size-spacing-9);

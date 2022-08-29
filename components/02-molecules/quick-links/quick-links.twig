@@ -16,6 +16,7 @@
 {% set quick_links__base_class = 'quick-links' %}
 
 {% set quick_links__attributes = {
+  'data-description': quick_links__description|default('promotional'),
   'data-quick-links-variation': quick_links__variation|default('promotional'),
   'class': bem('content-wrapper', [], quick_links__base_class)
 } %}
