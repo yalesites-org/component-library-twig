@@ -1,6 +1,7 @@
 @use '../../../00-tokens/tokens';
 
 .basic-meta {
+  display: flex;
   color: var(--color-gray-600);
   margin-top: var(--size-spacing-4);
 
@@ -15,14 +16,15 @@
     @include tokens.body-default-condensed;
 
     > *:not(:first-child) {
+      position: relative;
       margin-left: var(--size-spacing-5);
       padding-left: var(--size-spacing-5);
-    }
 
-    .date-time::before {
-      position: relative;
-      content: '|';
-      right: var(--size-spacing-5);
+      &::before {
+        position: absolute;
+        content: '|';
+        left: -0.225rem;
+      }
     }
   }
 }

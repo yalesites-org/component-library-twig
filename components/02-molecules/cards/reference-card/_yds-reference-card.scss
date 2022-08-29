@@ -79,12 +79,12 @@
   > *:not(:first-child) {
     margin-left: var(--size-spacing-5);
     padding-left: var(--size-spacing-5);
-  }
 
-  :not(:first-child)::before {
-    position: relative;
-    content: '|';
-    right: var(--size-spacing-5);
+    &::before {
+      position: relative;
+      content: '|';
+      right: var(--size-spacing-5);
+    }
   }
 }
 
