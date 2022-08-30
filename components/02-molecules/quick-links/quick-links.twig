@@ -1,6 +1,7 @@
 {#
  # Available Props:
  # - quick_links__variation: promotional (default), subtle
+ # - quick_links__layout: stacked (default), fluid
  #
  # Available Variables:
  # - quick_links__heading
@@ -16,14 +17,18 @@
 {% set quick_links__base_class = 'quick-links' %}
 
 {% set quick_links__attributes = {
-  'data-description': quick_links__description|default('promotional'),
   'data-quick-links-variation': quick_links__variation|default('promotional'),
   'class': bem('content-wrapper', [], quick_links__base_class)
 } %}
 
+{% if quick_links__description %}
+  {% set quick_links__layout = 'fluid' %}
+{% endif %}
+
 {% if quick_links__variation == 'promotional' %}
   {% set quick_links__attributes = quick_links__attributes|merge({
     'data-component-theme': callout__background_color|default('blue-yale'),
+    'data-quick-links-layout': quick_links__layout|default('stacked'),
   }) %}
 {% endif %}
 
