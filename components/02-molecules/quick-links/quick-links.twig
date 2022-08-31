@@ -28,8 +28,15 @@
 
 {% if quick_links__variation == 'promotional' %}
   {% set quick_links__attributes = quick_links__attributes|merge({
+    'data-component-width': 'max',
     'data-component-theme': callout__background_color|default('blue-yale'),
     'data-quick-links-layout': quick_links__layout|default('stacked'),
+  }) %}
+{% endif %}
+
+{% if quick_links__variation == 'subtle' %}
+  {% set quick_links__attributes = quick_links__attributes|merge({
+    'data-component-width': 'content',
   }) %}
 {% endif %}
 
