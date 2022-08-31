@@ -8,7 +8,16 @@
 
 .quick-links__inner {
   display: grid;
+  gap: var(--size-spacing-6);
   padding: var(--size-spacing-9) var(--size-spacing-5);
+
+  @media (min-width: tokens.$break-s) {
+    gap: var(--size-spacing-7);
+  }
+
+  @media (min-width: tokens.$break-l) {
+    gap: var(--size-spacing-8);
+  }
 
   @media (min-width: tokens.$break-xl) {
     [data-quick-links-layout='fluid'] & {
@@ -17,6 +26,10 @@
 
     gap: var(--size-spacing-9);
   }
+}
+
+.quick-links__text {
+  z-index: 1;
 }
 
 .quick-links__heading {
@@ -40,9 +53,9 @@
 }
 
 .quick-links__links {
+  position: relative;
   display: grid;
   row-gap: var(--size-spacing-6);
-  margin-top: var(--size-spacing-8);
 
   [data-quick-links-variation='subtle'] & {
     grid-template-columns: 1fr 1fr 1fr;
