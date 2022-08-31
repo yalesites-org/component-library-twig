@@ -2,6 +2,7 @@
  # Available Props:
  # - quick_links__variation: promotional (default), subtle
  # - quick_links__layout: stacked (default), fluid
+ # - quick_links__image: (boolean) false by default
  #
  # Available Variables:
  # - quick_links__heading
@@ -33,11 +34,6 @@
 {% endif %}
 
 <div {{ add_attributes(quick_links__attributes) }}>
-  <div {{ bem('image', [], quick_links__base_class) }}>
-    {% block quick_links__image %}
-      {% include "@atoms/images/image/_responsive-image.twig" %}
-    {% endblock %}
-  </div>
   <div {{ bem('content', [], quick_links__base_class) }}>
     <div {{ bem('text', [], quick_links__base_class) }}>
       {% include "@atoms/typography/headings/heading.twig"  with {
@@ -53,6 +49,13 @@
         } %}
       {% endif %}
     </div>
+    {% if quick_links__image %}
+      <div {{ bem('image', [], quick_links__base_class) }}>
+        {% block quick_links__image %}
+          {% include "@atoms/images/image/_responsive-image.twig" %}
+        {% endblock %}
+      </div>
+    {% endif %}
     <div {{ bem('links', [], quick_links__base_class) }}>
       {% for link in quick_links__links %}
         {% if quick_links__variation == 'subtle' %}

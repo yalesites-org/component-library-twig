@@ -34,6 +34,10 @@
 .quick-links__description {
   margin-bottom: var(--size-spacing-8);
 
+  [data-quick-links-variation='subtle'] & {
+    margin-top: var(--size-spacing-6);
+  }
+
   [data-quick-links-layout='stacked'] & {
     text-align: center;
   }
@@ -43,6 +47,15 @@
   display: grid;
   row-gap: var(--size-spacing-6);
   margin-top: var(--size-spacing-8);
+
+  [data-quick-links-variation='subtle'] & {
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: start;
+
+    @media (max-width: tokens.$break-s) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
 
   @media (min-width: tokens.$break-s) {
     grid-template-columns: 1fr 1fr;
@@ -75,7 +88,9 @@
 }
 
 .quick-links__link {
-  @include atoms.link;
+  [data-quick-links-variation='subtle'] & {
+    @include atoms.link;
+  }
 }
 
 .quick-links__cta {
