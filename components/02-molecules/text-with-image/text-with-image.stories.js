@@ -1,5 +1,5 @@
 // Twig templates
-import textWithImageTwig from './text-with-image.twig';
+import textWithImageTwig from './yds-text-with-image.twig';
 
 // Data files
 import imageData from '../../01-atoms/images/image/image.yml';

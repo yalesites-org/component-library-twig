@@ -1,7 +1,8 @@
-@forward './card-collection/card-collection';
-@forward './layout/two-column//two-column';
-@forward './menu/breadcrumbs/breadcrumbs';
-@forward './menu/primary-nav/primary-nav';
-@forward './menu/utility-nav/utility-nav';
-@forward './site-footer/site-footer';
-@forward './site-header/site-header';
+@forward './card-collection/yds-card-collection';
+@forward './custom-card-collection/yds-custom-card-collection';
+@forward './layout/two-column/yds-two-column';
+@forward './menu/breadcrumbs/yds-breadcrumbs';
+@forward './menu/primary-nav/yds-primary-nav';
+@forward './menu/utility-nav/yds-utility-nav';
+@forward './site-footer/yds-site-footer';
+@forward './site-header/yds-site-header';

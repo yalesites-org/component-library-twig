@@ -1,4 +1,4 @@
-import pullQuoteTwig from './pull-quote.twig';
+import pullQuoteTwig from './yds-pull-quote.twig';
 
 import pullQuoteData from './pull-quote.yml';
 

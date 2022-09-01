@@ -1,4 +1,4 @@
-import quickLinksTwig from './quick-links.twig';
+import quickLinksTwig from './yds-quick-links.twig';
 
 import quickLinksData from './quick-links.yml';
 

@@ -1,4 +1,4 @@
-import cardCollectionTwig from './card-collection.twig';
+import cardCollectionTwig from './yds-card-collection.twig';
 
 import newsCardData from '../../02-molecules/cards/reference-card/examples/news-card.yml';
 import eventCardData from '../../02-molecules/cards/reference-card/examples/event-card.yml';

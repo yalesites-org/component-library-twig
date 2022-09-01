@@ -1,10 +1,10 @@
-import alertTwig from './alert.twig';
-import textFieldTwig from '../text/text-field.twig';
-import ctaTwig from '../../01-atoms/controls/cta/cta.twig';
+import alertTwig from './yds-alert.twig';
+import textFieldTwig from '../text/yds-text-field.twig';
+import ctaTwig from '../../01-atoms/controls/cta/yds-cta.twig';
 
 import alertData from './alert.yml';
 
-import './alert';
+import './yds-alert';
 
 /**
  * Storybook Definition.
