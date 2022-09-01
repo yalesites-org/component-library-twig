@@ -67,7 +67,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding-right: var(--size-spacing-4);
+  padding: var(--size-spacing-3) var(--size-spacing-4) var(--size-spacing-3) 0;
   text-align: left;
 
   &:hover {
