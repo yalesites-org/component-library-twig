@@ -2,6 +2,8 @@
 @use '../../01-atoms/atoms';
 
 .quick-links {
+  @include tokens.spacing-page-section;
+
   position: relative;
   overflow: hidden;
 }
@@ -9,7 +11,7 @@
 .quick-links__inner {
   display: grid;
   gap: var(--size-spacing-6);
-  padding: var(--size-spacing-9) var(--size-spacing-5);
+  align-items: center;
 
   @media (min-width: tokens.$break-s) {
     gap: var(--size-spacing-7);
@@ -21,6 +23,10 @@
 
   @media (min-width: tokens.$break-xl) {
     gap: var(--size-spacing-9);
+  }
+
+  [data-quick-links-variation='promotional'] & {
+    padding-block: var(--size-spacing-9);
   }
 
   [data-quick-links-layout='fluid'] & {
@@ -65,6 +71,7 @@
 .quick-links__links {
   position: relative;
   display: grid;
+  align-items: start;
   row-gap: var(--size-spacing-6);
   column-gap: var(--size-spacing-7);
 
