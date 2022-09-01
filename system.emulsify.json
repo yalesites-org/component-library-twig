@@ -141,6 +141,10 @@
           "structure": "molecules"
         },
         {
+          "name": "cards/custom-card",
+          "structure": "molecules"
+        },
+        {
           "name": "cards/reference-card",
           "structure": "molecules"
         },
@@ -193,6 +197,10 @@
         },
         {
           "name": "card-collection",
+          "structure": "organisms"
+        },
+        {
+          "name": "custom-card-collection",
           "structure": "organisms"
         },
         {
