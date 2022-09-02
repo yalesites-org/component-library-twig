@@ -59,6 +59,10 @@ Drupal.behaviors.breadcrumbs = {
         }
       });
 
+      // @TODO: if the user clicks the left arrow twice quickly when only the
+      // first item is hidden (and before the arrow can disappear), this line
+      // throws a js error. Not a huge deal, but could probably be refactored to
+      // prevent it from happening.
       return hiddenItems[hiddenItems.length - 1].offsetLeft - controlsWidth;
     }
 
@@ -113,12 +117,8 @@ Drupal.behaviors.breadcrumbs = {
      * @description Support mouse navigation when horizontal scrolling occurs.
      */
     function mouseNav(direction) {
-      // If right.
-      if (direction === 'right') {
-        breadcrumbsMenu.scrollLeft = getFirstVisible();
-      } else {
-        breadcrumbsMenu.scrollLeft = getLastHidden();
-      }
+      breadcrumbsMenu.scrollLeft =
+        direction === 'right' ? getFirstVisible() : getLastHidden();
     }
 
     /**
