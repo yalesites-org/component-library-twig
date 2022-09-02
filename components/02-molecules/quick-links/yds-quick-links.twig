@@ -62,23 +62,8 @@
         {% endblock %}
       </div>
     {% endif %}
-    <div {{ bem('links', [], quick_links__base_class) }}>
-      {% for link in quick_links__links %}
-        {% if quick_links__variation == 'subtle' %}
-          {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-            link__content: link.quick_links__link__content,
-            link__url: link.quick_links__link__url,
-            link__blockname: quick_links__base_class,
-          } %}
-        {% else %}
-          {% include "@atoms/controls/cta/yds-cta.twig" with {
-            cta__content: link.quick_links__link__content,
-            cta__href: link.quick_links__link__url,
-            cta__blockname: quick_links__base_class,
-            cta__style: 'outline',
-          } %}
-        {% endif %}
-      {% endfor %}
-    </div>
+    {% block quick_links__links %}
+      {% include "@molecules/quick-links/_yds-quick-links--links.twig" %}
+    {% endblock %}
   </div>
 </div>

@@ -66,9 +66,15 @@
   [data-quick-links-layout='stacked'] & {
     text-align: center;
   }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .quick-links__links {
+  @include atoms.list-reset;
+
   position: relative;
   display: grid;
   align-items: start;
@@ -115,6 +121,10 @@
       grid-template-columns: 1fr 1fr 1fr;
     }
   }
+}
+
+.quick-links__list-item {
+  display: grid;
 }
 
 .quick-links__link {
