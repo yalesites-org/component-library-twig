@@ -53,8 +53,8 @@ export default {
     calloutBackground: {
       name: 'Callout Background Color',
       type: 'select',
-      options: ['blue-yale', 'gray-700', 'beige'],
-      defaultValue: 'beige',
+      options: ['blue-yale', 'gray-700'],
+      defaultValue: 'blue-yale',
     },
   },
 };
