@@ -32,7 +32,7 @@ export default {
     backgroundColor: {
       name: 'Background Color',
       type: 'select',
-      options: ['blue-yale', 'gray-700', 'beige'],
+      options: ['blue-yale', 'gray-700'],
       defaultValue: 'blue-yale',
     },
   },

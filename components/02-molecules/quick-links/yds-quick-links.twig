@@ -15,14 +15,15 @@
  #}
 
 {% set quick_links__base_class = 'quick-links' %}
+{% set quick_links__variation = quick_links__variation|default('promotional') %}
 
 {% if quick_links__description %}
   {% set quick_links__layout = 'fluid' %}
 {% endif %}
 
 {% set quick_links__attributes = {
-  'data-quick-links-variation': quick_links__variation|default('promotional'),
-  'class': bem(quick_links__base_class)
+  'data-quick-links-variation': quick_links__variation,
+  'class': bem(quick_links__base_class),
 } %}
 
 {% if quick_links__variation == 'promotional' %}
@@ -62,8 +63,12 @@
         {% endblock %}
       </div>
     {% endif %}
-    {% block quick_links__links %}
-      {% include "@molecules/quick-links/_yds-quick-links--links.twig" %}
-    {% endblock %}
+    <ul {{ bem('links', [], quick_links__base_class) }}>
+      {% block quick_links__links %}
+        {% for link in quick_links__links %}
+          {% include "@molecules/quick-links/_yds-quick-links--links.twig" %}
+        {% endfor %}
+      {% endblock %}
+    </ul>
   </div>
 </div>
