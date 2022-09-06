@@ -7,6 +7,7 @@ import argTypes from '../../04-page-layouts/cl-page-args';
 import standardPageTwig from './standard-page.twig';
 import standardPageBannerTwig from './standard-page-with-banner.twig';
 import standardPageSidebarTwig from './standard-page-with-sidebar.twig';
+import standardPageQuickLinksTwig from './standard-page-with-quicklinks.twig';
 
 // Data files.
 import utilityNavData from '../../03-organisms/menu/utility-nav/utility-nav.yml';
@@ -17,6 +18,7 @@ import textWithImageData from '../../02-molecules/text-with-image/text-with-imag
 import bannerData from '../../02-molecules/banner/banner.yml';
 import referenceCardData from '../../02-molecules/cards/reference-card/examples/news-card.yml';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
+import quickLinksData from '../../02-molecules/quick-links/quick-links.yml';
 
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
@@ -214,3 +216,66 @@ export const WithSidebar = ({
     ...referenceCardData,
     ...socialLinksData,
   });
+
+export const WithQuickLinks = ({
+  siteName,
+  pageTitle,
+  headerBorderThickness,
+  primaryNavPosition,
+  siteHeaderTheme,
+  utilityNavLinkContent,
+  utilityNavSearch,
+  siteFooterTheme,
+  footerBorderThickness,
+  heading,
+  description,
+  image,
+  variation,
+}) =>
+  standardPageQuickLinksTwig({
+    site_name: siteName,
+    page_title__heading: pageTitle,
+    page_title__meta: null,
+    site_header__border_thickness: headerBorderThickness,
+    site_header__nav_position: primaryNavPosition,
+    site_header__theme: siteHeaderTheme,
+    site_footer__border_thickness: footerBorderThickness,
+    site_footer__theme: siteFooterTheme,
+    utility_nav__items: utilityNavData.items,
+    primary_nav__items: primaryNavData.items,
+    utility_nav__link__content: utilityNavLinkContent,
+    utility_nav__link__url: '#',
+    utility_nav__search: utilityNavSearch,
+    breadcrumbs__items: breadcrumbData.items,
+    ...imageData.responsive_images['16x9'],
+    ...referenceCardData,
+    ...socialLinksData,
+    quick_links__heading: heading,
+    quick_links__description: description,
+    quick_links__image: image,
+    quick_links__variation: variation,
+    quick_links__links: quickLinksData.quick_links__links,
+  });
+WithQuickLinks.argTypes = {
+  heading: {
+    name: 'Quick Links Heading',
+    type: 'string',
+    defaultValue: quickLinksData.quick_links__heading,
+  },
+  description: {
+    name: 'Quick Links Description',
+    type: 'string',
+    defaultValue: quickLinksData.quick_links__description,
+  },
+  image: {
+    name: 'With image',
+    type: 'boolean',
+    defaultValue: true,
+  },
+  variation: {
+    name: 'Quick Links Variation',
+    type: 'select',
+    options: ['promotional', 'subtle'],
+    defaultValue: 'promotional',
+  },
+};
