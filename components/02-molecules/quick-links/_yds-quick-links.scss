@@ -83,8 +83,7 @@
 
   [data-quick-links-variation='subtle'] & {
     grid-template-columns: 1fr 1fr;
-
-    // justify-items: start;
+    justify-items: start;
 
     @media (min-width: tokens.$break-s) {
       grid-template-columns: 1fr 1fr 1fr;
