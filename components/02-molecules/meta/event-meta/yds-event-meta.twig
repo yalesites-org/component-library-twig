@@ -41,7 +41,7 @@
           {# Format #}
           {% if event_meta__format.0 %}
             <p {{ bem('format', [], event_meta__base_class) }}>
-              {% include "@molecules/cards/reference-card/event/_event-format.twig" with {
+              {% include "@molecules/cards/reference-card/event/_yds-event-format.twig" with {
                 format: event_meta__format,
               } %}
             </p>
