@@ -103,7 +103,6 @@
   @include atoms.list-reset;
 
   display: flex;
-  color: var(--color-basic-brown-gray);
   overflow: auto;
   scroll-behavior: smooth;
   -ms-overflow-style: none; /* IE and Edge */
@@ -150,5 +149,9 @@
 
   &:focus-visible {
     outline-offset: -2px;
+  }
+
+  &[aria-current='page'] {
+    color: var(--color-basic-brown-gray);
   }
 }

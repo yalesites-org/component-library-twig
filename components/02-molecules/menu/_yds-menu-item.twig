@@ -24,9 +24,6 @@
 
 {# Set link component as default #}
 {% set list__item %}
-  {% if menu__contextual and item.is_active %}
-    <span {{ add_attributes(link__attributes) }}>{{- item.title -}}</span>
-  {% else %}
     {# Set aria-current if the link is the current page #}
     {% if item.is_active %}
       {% set link__attributes = link__attributes|merge({
@@ -45,7 +42,6 @@
       link__modifiers: item__modifiers,
       link__attributes: link__attributes,
     } %}
-  {% endif %}
 {% endset %}
 
 {% embed "@atoms/lists//_yds-list-item.twig" with {
