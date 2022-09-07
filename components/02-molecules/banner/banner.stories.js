@@ -53,7 +53,7 @@ export default {
   },
 };
 
-export const Action = ({
+export const ActionBanner = ({
   heading,
   snippet,
   linkContent,
