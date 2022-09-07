@@ -1,14 +1,14 @@
 items:
-  - title: 'About Usability'
+  - title: 'Understanding Your User'
     url: '#'
     below:
-      - title: "Dean's Office"
+      - title: 'User Interviews'
         url: '#'
-      - title: 'Virtual Backgrounds'
+      - title: 'Requirements Gathering'
         url: '#'
-      - title: 'Partners on the Quad'
+      - title: 'Stakeholder Interviews'
         url: '#'
-      - title: 'Inclusivity'
+      - title: 'Personas'
         url: '#'
         below:
           - title: 'Combating Racism'
@@ -16,7 +16,7 @@ items:
             is_active: true
           - title: 'Changing Faces of YDS'
             url: '#'
-      - title: 'Strategic Plan'
+      - title: 'Strategic test'
         url: '#'
         below:
           - title: 'Bridging Faith Traditions'
@@ -46,9 +46,9 @@ items:
         url: '#'
       - title: 'Living Village Project'
         url: '#'
-  - title: 'Academics'
+  - title: 'Usability Best Practices'
     url: '#'
-  - title: 'Admission & Aid'
+  - title: 'Usability Evaluation'
     url: '#'
     below:
       - title: 'Strategic Plan'
@@ -77,7 +77,5 @@ items:
             url: '#'
           - title: 'Who is that bulldog'
             url: '#'
-  - title: 'Blog'
-    url: '#'
-  - title: 'Faculty & Research'
+  - title: 'Web Accessibility'
     url: '#'
