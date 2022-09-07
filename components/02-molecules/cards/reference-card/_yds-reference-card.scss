@@ -79,7 +79,13 @@
   > *:not(:first-child) {
     margin-left: var(--size-spacing-5);
     padding-left: var(--size-spacing-5);
-    border-left: var(--border-thickness-1) solid;
+    position: relative;
+
+    &::before {
+      position: absolute;
+      content: '|';
+      left: -0.225rem;
+    }
   }
 }
 
