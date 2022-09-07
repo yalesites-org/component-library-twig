@@ -116,6 +116,10 @@
           "required": true
         },
         {
+          "name": "tables",
+          "structure": "atoms"
+        },
+        {
           "name": "typography",
           "structure": "atoms",
           "required": true
