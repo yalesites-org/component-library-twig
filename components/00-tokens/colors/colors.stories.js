@@ -3,7 +3,13 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import colorsTwig from './colors.twig';
 import colorPairingsTwig from './color-pairings.twig';
 
-const colorsData = { colors: tokens.color };
+const colorsData = {
+  colors: {
+    blue: tokens.color.blue,
+    basic: tokens.color.basic,
+    gray: tokens.color.gray,
+  },
+};
 const colorPairingsData = { themes: tokens['component-themes'] };
 
 export default {
