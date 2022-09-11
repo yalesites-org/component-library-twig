@@ -4,7 +4,7 @@
   ** Colors **
   ***********/
   --color-accent: var(--color-theme-accent, var(--color-blue-medium));
-  --color-divider: var(--color-gray-500);
+  --color-divider: var(--color-theme-divider, var(--color-gray-500));
   --color-divider-subtle: var(--color-gray-300);
   /* --color-theme-cta-primary: var(--color-blue-yale); */
   /* --color-theme-cta-secondary: var(--color-background); */
