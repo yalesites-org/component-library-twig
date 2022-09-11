@@ -9,20 +9,24 @@
 } %}
 
 <table {{ bem(breakpoints__base_class) }}>
-  <tr>
-    <th {{ bem('header', [], breakpoints__base_class) }}>Breakpoint</th>
-    <th {{ bem('header', [], breakpoints__base_class) }}>(SCSS) Variable</th>
-    <th {{ bem('header', [], breakpoints__base_class) }}>Width</th>
-  </tr>
-  {% for breakpoint, value in _context.breakpoints %}
+  <thead>
     <tr>
-      {% for breakpoint_short, breakpoint_name in breakpoint_names %}
-        {% if breakpoint_short == breakpoint %}
-          <td>{{ breakpoint_name }}</td>
-        {% endif %}
-      {% endfor %}
-      <td>$break-{{ breakpoint }}</td>
-      <td>{{ value }}</td>
+      <th {{ bem('header', [], breakpoints__base_class) }}>Breakpoint</th>
+      <th {{ bem('header', [], breakpoints__base_class) }}>(SCSS) Variable</th>
+      <th {{ bem('header', [], breakpoints__base_class) }}>Width</th>
     </tr>
-  {% endfor %}
+  </thead>
+  <tbody>
+    {% for breakpoint, value in _context.breakpoints %}
+      <tr>
+        {% for breakpoint_short, breakpoint_name in breakpoint_names %}
+          {% if breakpoint_short == breakpoint %}
+            <td>{{ breakpoint_name }}</td>
+          {% endif %}
+        {% endfor %}
+        <td>$break-{{ breakpoint }}</td>
+        <td>{{ value }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
 </table>
