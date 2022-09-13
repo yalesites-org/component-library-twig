@@ -8,6 +8,7 @@ import standardPageTwig from './standard-page.twig';
 import standardPageBannerTwig from './standard-page-with-banner.twig';
 import standardPageSidebarTwig from './standard-page-with-sidebar.twig';
 import standardPageQuickLinksTwig from './standard-page-with-quicklinks.twig';
+import standardPageUXTesting from './standard-page-ux.twig';
 
 // Data files.
 import utilityNavData from '../../03-organisms/menu/utility-nav/utility-nav.yml';
@@ -76,6 +77,41 @@ export const Basic = ({
 }) =>
   standardPageTwig({
     site_name: siteName,
+    page_title__heading: pageTitle,
+    page_title__meta: null,
+    site_header__border_thickness: headerBorderThickness,
+    site_header__nav_position: primaryNavPosition,
+    site_header__theme: siteHeaderTheme,
+    site_footer__border_thickness: footerBorderThickness,
+    site_footer__theme: siteFooterTheme,
+    utility_nav__items: utilityNavData.items,
+    primary_nav__items: primaryNavData.items,
+    utility_nav__link__content: utilityNavLinkContent,
+    utility_nav__link__url: '#',
+    utility_nav__search: utilityNavSearch,
+    breadcrumbs__items: breadcrumbData.items,
+    ...imageData.responsive_images['16x9'],
+    intro_content: introContent,
+    callout__background_color: calloutBackground,
+    ...textWithImageData,
+    ...referenceCardData,
+    ...socialLinksData,
+  });
+
+export const UX = ({
+  pageTitle,
+  headerBorderThickness,
+  primaryNavPosition,
+  siteHeaderTheme,
+  utilityNavLinkContent,
+  utilityNavSearch,
+  siteFooterTheme,
+  footerBorderThickness,
+  introContent,
+  calloutBackground,
+}) =>
+  standardPageUXTesting({
+    site_name: 'Usability and Web Accessibilty',
     page_title__heading: pageTitle,
     page_title__meta: null,
     site_header__border_thickness: headerBorderThickness,
