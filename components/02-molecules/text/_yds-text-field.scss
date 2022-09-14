@@ -2,4 +2,8 @@
 
 .text-field {
   @include tokens.spacing-page-inner;
+
+  .text {
+    overflow-x: auto;
+  }
 }
