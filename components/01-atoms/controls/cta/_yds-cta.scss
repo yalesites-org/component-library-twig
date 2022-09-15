@@ -48,25 +48,25 @@ $cta-outline-weights: (
   // These color schemes are "inverted" from the default ones.
   @each $theme, $value in $cta-themes {
     [data-component-theme='#{$theme}'] & {
-      --color-cta-primary: var(--color-theme-cta-secondary);
+      --color-action: var(--color-text);
       --color-cta-secondary: var(--color-background);
     }
   }
 
   // Styles
   &[data-cta-style='filled'] {
-    --color-cta-bg: var(--color-cta-primary);
+    --color-cta-bg: var(--color-action);
     --color-cta-bg-hover: transparent;
-    --color-cta-border: var(--color-cta-primary);
+    --color-cta-border: var(--color-action);
     --color-cta-text: var(--color-cta-secondary);
-    --color-cta-text-hover: var(--color-cta-primary);
+    --color-cta-text-hover: var(--color-action);
   }
 
   &[data-cta-style='outline'] {
     --color-cta-bg: transparent;
-    --color-cta-bg-hover: var(--color-cta-primary);
-    --color-cta-border: var(--color-cta-primary);
-    --color-cta-text: var(--color-cta-primary);
+    --color-cta-bg-hover: var(--color-action);
+    --color-cta-border: var(--color-action);
+    --color-cta-text: var(--color-action);
     --color-cta-text-hover: var(--color-cta-secondary);
   }
 
