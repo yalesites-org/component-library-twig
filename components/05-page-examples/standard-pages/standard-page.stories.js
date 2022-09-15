@@ -111,7 +111,7 @@ export const UX = ({
   calloutBackground,
 }) =>
   standardPageUXTesting({
-    site_name: 'Usability and Web Accessibilty',
+    site_name: 'Usability & Web Accessibility',
     page_title__heading: pageTitle,
     page_title__meta: null,
     site_header__border_thickness: headerBorderThickness,

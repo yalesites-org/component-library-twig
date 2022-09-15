@@ -1,28 +1,35 @@
 {% extends "@page-layouts/yds-full-width.twig" %}
   {% block page__content %}
-    {% include "@molecules/banner/cta/yds-cta-banner.twig" %}
+    {# {% include "@molecules/banner/cta/yds-cta-banner.twig" %} #}
     {% include "@page-examples/_intro-content-examples.twig" %}
     {% include "@molecules/text/yds-text-field.twig" with {
-      text_field__content: '<p>Chemistry has been responsible for some of the most significant improvements in our quality of life over the last century.</p><p>The discovery of antibiotics and other pharmaceuticals, the advent of computers, and the development of industrial methods to produce fertilizer, all have required fundamental advances in chemistry. Chemistry is increasingly playing a central role in the development of alternative-energy vectors to replace fossil fuels, the realization of practical quantum computers, the discovery of new methods to treat and prevent diseases, and the adoption of more sustainable industrial processes.</p>',
+      text_field__content: '
+        <h2>Usability Evaluation</h2>
+        <p>Usability evaluation can take place at any point in a site’s lifecycle. One common time to evaluate accessibility is on a live product when considering whether a redesign is necessary, or have already decided to do a redesign. In that case, the evaluation can serve as a benchmark to see whether the redesign is successful. Evaluating competitors can also be helpful for the same reasons. Another common time is while a site is being designed, to ensure that designs will lead to a successful product before development, when changes become more costly.
+A variety of methods exist for evaluating usability and the method used will depend on which phase of the project you are in. Not all testing is the same and each will provide different insight. See below on suggested methods of testing per design phase.
+</p>',
     } %}
     {% include "@molecules/tabs/yds-tabs.twig" with {
       tabs: [
         {
-          tab__label: 'Before Project',
-          tab__content: 'test 1',
+          tab__label: 'Before Starting The Project',
+          tab__content: 'A period of discovery is always recommended before starting your project. Time invested in discovering end user goals, needs, and tasks both ensures that end products will deliver value and mitigates many risks, including making sure that features are prioritized and built correctly. <h4>Interviews </h4> Interviews give insights into what users think about a site, an application, a product, or a process. They can point out what site content is memorable, what people feel is important on the site, and what ideas for improvement they may have. <h4>Competitive Analysis </h4> Early in a design process, it can be helpful to conduct an analysis of potential peer or competitor websites. What counts as a peer or competitor may depend on the project: an academic department may benefit from considering a different department at the same institution, the same department at a different institution, or both. But, keeping a small set of peers in mind as a benchmark can be helpful.',
         },
         {
-          tab__label: 'During Project',
-          tab__content: 'test 2',
+          tab__label: 'Planning Phase',
+          tab__content: 'During the planning phase you should be reviewing the content that will live on your website based on what matches your users needs. Not only that, but you should also think about the organization of this content. <h4>Card Sorting </h4> Participants group individual labels written on notecards according to criteria that make sense to them.  This method uncovers how the target audience’s domain knowledge is structured, and it serves to create an information architecture that matches users’ expectations. <h4>Tree Testing </h4> A tree test evaluates a hierarchical category structure, or tree, by having users find the locations in the tree where specific tasks can be completed. Tree testing is incredibly useful as a follow-up to card sorting because it evaluates a hierarchy according to how it performs in a real-world scenario, using tasks similar to a usability test; and can be conducted well in advance of designing page layouts or navigation menus, allowing inexpensive exploration and refinement of the menu categories and labels.',
         },
         {
-          tab__label: 'After Project',
-          tab__content: 'test 3',
+          tab__label: 'Design Phase',
+          tab__content: 'The most varied types of testing will exist in this phase of the project. Here you can test conceptual designs all the way through to finalized designs and prototypes. <h4>Five Second Test </h4> With this type of test, you show the stimulus for 5 seconds (or for another short period of time). This approach is best for accurately capturing people’s ‘gut reaction.’ 5 seconds of viewing time is too short for reading copy or for noticing details like specific fonts or colors, but it is enough for forming an impression which accurately reflects the visual style. <h4>Impression Test </h4> A slightly more structured approach to assessing user perceptions is to ask test participants to list several words which describe the design. This format ensures you get at least some specific feedback, while still keeping the question open-ended to discover factors you may not have considered, but which are significant to your audience. You may get a wide range of descriptors back, and will need to analyze them carefully to identify meaningful themes. A good approach for this analysis is to categorize terms as generally positive, negative, or neutral, then group terms with similar meanings, and evaluate whether they match your target brand attributes. <h4>Usability Testing</h4> In a usability-testing session, a researcher (called a “facilitator” or a “moderator”) asks a participant to perform tasks, usually using one or more specific user interfaces. While the participant completes each task, the researcher observes the participant’s behavior and listens for feedback.
+Usability testing can be conducted on draft designs all the way to finalized designs, and should be done as often as the project allows to uncover problems early on.',
+        },
+        {
+          tab__label: 'Launch',
+          tab__content: 'The same type of studies conducted on earlier phases should be conducted post launch and periodically to ensure that users can still achieve their goals while maintaining usability.
+In addition, make it easy to send in comments, bug reports, and questions. Analyze incoming feedback channels periodically for top usability issues and trouble areas. Look for clues about what people can’t find, their misunderstandings, and any unintended effects.',
         },
       ],
-    } %}
-    {% include "@molecules/text/yds-text-field.twig" with {
-      text_field__content: '<p>The undergraduate program in Chemistry at Yale reflects the position of chemistry as the foundation of all the molecular sciences. Students are equipped with the technical skills to appreciate the scientific basis for previous discoveries and develop the fundamental expertise required to make future breakthroughs. Under the tutelage of world-leading researchers, students are exposed to a broad range of topics in chemistry. The development of technical skills through lecture classes is complemented with hands-on experience in state-of-the-art chemistry laboratories.</p><p>Many students also perform independent laboratory research under the guidance of a faculty mentor. This rigorous training prepares students for professional careers in a diverse array of fields by teaching them how to apply the scientific method, providing them with skills in quantitative reasoning, and exposing them to scientific research.</p><p>After graduation, students with a B.A. or B.S. degree often pursue work or further studies in chemistry, biochemistry, or health-related disciplines, but also find their broad scientific training beneficial in energy research, policy, environment, business management, and law. As the problems of contemporary society involve ever more complex scientific issues, degree programs in the sciences become increasingly appropriate for students wishing to pursue careers in public policy, government, or public service.</p>',
     } %}
     
   {% endblock %}
