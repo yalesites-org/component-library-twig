@@ -64,9 +64,11 @@ export default {
 export const Basic = ({
   siteName,
   pageTitle,
-  headerBorderThickness,
-  primaryNavPosition,
-  siteHeaderTheme,
+  headerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-header-border-thickness',
+  ),
+  primaryNavPosition = localStorage.getItem('yds-cl-twig-primary-nav-position'),
+  siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
   siteFooterTheme,
@@ -89,7 +91,7 @@ export const Basic = ({
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
-    ...imageData.responsive_images['16x9'],
+    ...imageData.responsive_images['4x3'],
     intro_content: introContent,
     callout__background_color: calloutBackground,
     ...textWithImageData,

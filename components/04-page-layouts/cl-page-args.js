@@ -1,8 +1,6 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
-const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
-const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
 
 const argTypes = {
@@ -10,18 +8,6 @@ const argTypes = {
     name: 'Site Name',
     type: 'string',
     defaultValue: 'Department of Chemistry',
-  },
-  headerBorderThickness: {
-    name: 'Header: Border thickness',
-    options: borderThicknessOptions,
-    type: 'select',
-    defaultValue: '8',
-  },
-  primaryNavPosition: {
-    name: 'Header: Primary nav position',
-    options: primaryNavPositions,
-    type: 'select',
-    defaultValue: 'right',
   },
   utilityNavLinkContent: {
     name: 'Header: Utility nav link text',
@@ -32,12 +18,6 @@ const argTypes = {
     name: 'Header: Search',
     type: 'boolean',
     defaultValue: false,
-  },
-  siteHeaderTheme: {
-    name: 'Header: Theme',
-    options: siteHeaderThemeOptions,
-    type: 'select',
-    defaultValue: 'white',
   },
   footerBorderThickness: {
     name: 'Footer: Border thickness',
