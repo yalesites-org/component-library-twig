@@ -108,7 +108,7 @@
   &[aria-selected='true'] {
     @include tokens.underline-slide-end('no-underline', $size: 'thick');
 
-    color: var(--color-cta-primary);
+    color: var(--color-action);
   }
 }
 
