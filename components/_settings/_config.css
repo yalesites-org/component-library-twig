@@ -19,11 +19,32 @@
   /************
   ** Spacing **
   ************/
-
   /* The `--spacing-component-gutter` variable is used by components like the
    * card grid where there are multiple sub-components that should be evenly
    * spaced. */
   --spacing-component-gutter: var(--size-spacing-9);
   --spacing-component-gutter-secondary: var(--size-spacing-7);
+  /* `--spacing-page-inner` is used between "body text-like" components. While
+   * `--spacing-page outer` is  */
+  --spacing-page-inner: var(--size-spacing-7);
+  --spacing-page-outer: var(--size-spacing-10);
+
+  /**************
+  ** Thickness **
+  **************/
+  --thickness-divider-thick: var(--size-thickness-2);
+  --thickness-divider-thin: var(--size-thickness-1);
+  /* prettier-ignore */
+  --thickness-divider: var(--thickness-theme-divider, var(--thickness-divider-thin));
+
+  /*************
+  ** Position **
+  *************/
+  --position-divider: var(--position-theme-divider, center);
+
+  /**********
+  ** Width **
+  **********/
+  --width-divider: var(--width-theme-divider, var(--layout-width-100));
 }
 /* stylelint-enable comment-empty-line-before */
