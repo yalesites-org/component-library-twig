@@ -14,6 +14,7 @@ const thicknessOptions = Object.keys(tokens.border.thickness);
 const widths = Object.keys(tokens.layout.width);
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
+const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
 
 export default {
   title: 'Config',
@@ -69,6 +70,18 @@ export default {
       type: 'select',
       defaultValue: localStorage.getItem('yds-cl-twig-header-border-thickness'),
     },
+    siteFooterTheme: {
+      name: 'Footer: Theme',
+      options: siteFooterThemeOptions,
+      type: 'select',
+      defaultValue: localStorage.getItem('yds-cl-twig-site-footer-theme'),
+    },
+    footerBorderThickness: {
+      name: 'Footer: Border thickness',
+      options: borderThicknessOptions,
+      type: 'select',
+      defaultValue: localStorage.getItem('yds-cl-twig-footer-border-thickness'),
+    },
   },
 };
 
@@ -89,6 +102,8 @@ export const GlobalConfig = ({
   primaryNavPosition,
   siteHeaderTheme,
   headerBorderThickness,
+  siteFooterTheme,
+  footerBorderThickness,
 }) => {
   const root = document.documentElement;
   const customProperties = {
@@ -102,6 +117,8 @@ export const GlobalConfig = ({
     'yds-cl-twig-primary-nav-position': primaryNavPosition,
     'yds-cl-twig-site-header-theme': siteHeaderTheme,
     'yds-cl-twig-header-border-thickness': headerBorderThickness,
+    'yds-cl-twig-site-footer-theme': siteFooterTheme,
+    'yds-cl-twig-footer-border-thickness': footerBorderThickness,
   };
 
   // Set properties that are stored as custom properties to the root element.
@@ -133,6 +150,8 @@ export const GlobalConfig = ({
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
+    site_footer__border_thickness: footerBorderThickness,
+    site_footer__theme: siteFooterTheme,
     ...tabsData,
   })}
   `;

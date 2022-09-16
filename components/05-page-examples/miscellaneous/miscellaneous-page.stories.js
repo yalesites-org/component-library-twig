@@ -32,13 +32,17 @@ export default {
 export const AccordionPage = ({
   siteName,
   pageTitle,
-  headerBorderThickness,
-  primaryNavPosition,
-  siteHeaderTheme,
+  headerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-header-border-thickness',
+  ),
+  primaryNavPosition = localStorage.getItem('yds-cl-twig-primary-nav-position'),
+  siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
-  siteFooterTheme,
-  footerBorderThickness,
+  siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
+  footerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-footer-border-thickness',
+  ),
 }) =>
   accordionPageTwig({
     site_name: siteName,
@@ -64,13 +68,17 @@ export const AccordionPage = ({
 
 export const QualtricsPage = ({
   siteName,
-  headerBorderThickness,
-  primaryNavPosition,
-  siteHeaderTheme,
+  headerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-header-border-thickness',
+  ),
+  primaryNavPosition = localStorage.getItem('yds-cl-twig-primary-nav-position'),
+  siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
-  siteFooterTheme,
-  footerBorderThickness,
+  siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
+  footerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-footer-border-thickness',
+  ),
 }) =>
   qualtricsPageTwig({
     site_name: siteName,

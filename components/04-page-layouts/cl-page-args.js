@@ -1,8 +1,3 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
-const borderThicknessOptions = Object.keys(tokens.border.thickness);
-const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
-
 const argTypes = {
   siteName: {
     name: 'Site Name',
@@ -18,18 +13,6 @@ const argTypes = {
     name: 'Header: Search',
     type: 'boolean',
     defaultValue: false,
-  },
-  footerBorderThickness: {
-    name: 'Footer: Border thickness',
-    options: borderThicknessOptions,
-    type: 'select',
-    defaultValue: '8',
-  },
-  siteFooterTheme: {
-    name: 'Footer: Theme',
-    options: siteFooterThemeOptions,
-    type: 'select',
-    defaultValue: 'blue-yale',
   },
   pageTitle: {
     name: 'Page Title',

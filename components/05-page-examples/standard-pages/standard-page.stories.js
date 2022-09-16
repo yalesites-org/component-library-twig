@@ -71,8 +71,10 @@ export const Basic = ({
   siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
-  siteFooterTheme,
-  footerBorderThickness,
+  siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
+  footerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-footer-border-thickness',
+  ),
   introContent,
   calloutBackground,
 }) =>
@@ -102,13 +104,17 @@ export const Basic = ({
 export const WithBanner = ({
   siteName,
   pageTitle,
-  headerBorderThickness,
-  primaryNavPosition,
-  siteHeaderTheme,
+  headerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-header-border-thickness',
+  ),
+  primaryNavPosition = localStorage.getItem('yds-cl-twig-primary-nav-position'),
+  siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
-  siteFooterTheme,
-  footerBorderThickness,
+  siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
+  footerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-footer-border-thickness',
+  ),
   introContent,
   calloutBackground,
   heading,
@@ -186,13 +192,17 @@ WithBanner.argTypes = {
 export const WithSidebar = ({
   siteName,
   pageTitle,
-  headerBorderThickness,
-  primaryNavPosition,
-  siteHeaderTheme,
+  headerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-header-border-thickness',
+  ),
+  primaryNavPosition = localStorage.getItem('yds-cl-twig-primary-nav-position'),
+  siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
-  siteFooterTheme,
-  footerBorderThickness,
+  siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
+  footerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-footer-border-thickness',
+  ),
   introContent,
   calloutBackground,
 }) =>
@@ -222,13 +232,17 @@ export const WithSidebar = ({
 export const WithQuickLinks = ({
   siteName,
   pageTitle,
-  headerBorderThickness,
-  primaryNavPosition,
-  siteHeaderTheme,
+  headerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-header-border-thickness',
+  ),
+  primaryNavPosition = localStorage.getItem('yds-cl-twig-primary-nav-position'),
+  siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
-  siteFooterTheme,
-  footerBorderThickness,
+  siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
+  footerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-footer-border-thickness',
+  ),
   heading,
   description,
   image,
