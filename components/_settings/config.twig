@@ -1,6 +1,8 @@
 {% extends "@page-layouts/yds-full-width.twig" %}
   {% block page__content %}
-    {% include "@molecules/page-title//yds-page-title.twig" %}
+    {% include "@molecules/page-title//yds-page-title.twig" with {
+      page_title__heading: 'How to Use Global Settings',
+    } %}
     {% include "@molecules/text/yds-text-field.twig" with {
       text_field__content: config_page__intro,
     } %}

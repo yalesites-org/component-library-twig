@@ -86,7 +86,7 @@ export default {
 };
 
 const intro = `
-<h2>How to use this page</h2><p>The controls on this page will affect various components across the component library, and represented on some stories, like example pages. For example, the "Line thickness" option affects the "Divider", "Tabs", and "Two Column" components, and may affect more in the future.</p>
+<p>The controls on this page will affect various components across the component library, and are represented on various stories, like example pages. For example, the "Line thickness" option affects the "Divider" and the "Two Column" components, and may affect more in the future.</p>
 ${ctaTwig({
   cta__content: 'Reset attributes',
   cta__attributes: { onClick: 'resetAttributes();' },
@@ -122,6 +122,8 @@ export const GlobalConfig = ({
   };
 
   // Set properties that are stored as custom properties to the root element.
+  // @TODO: Ideally these would also live in local storage so that they persist
+  // page refreshes.
   Object.entries(customProperties).forEach((entry) => {
     const [key, value] = entry;
     root.style.setProperty(key, value);
