@@ -1,0 +1,8 @@
+@use '../../00-tokens/tokens';
+
+.text-with-video__heading {
+  @include tokens.h5-mallory-compact-book;
+
+  margin-top: var(--size-spacing-3);
+  margin-bottom: var(--size-spacing-1);
+}
