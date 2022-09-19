@@ -55,7 +55,7 @@
     {% import "@molecules/menu/yds-menu.twig" as menus %}
 
     {{- list__item -}}
-    {% if item.below %}
+    {% if item.below and menu__level < 3 %}
       {% if menu__level == 0 and menu__level__toggle %}
         {% set menu_item__cta__content %}
           {{ item.title }}
