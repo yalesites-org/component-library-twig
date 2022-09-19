@@ -1,0 +1,39 @@
+{#
+ # Available variables:
+ # - text_with_video__heading
+ # - text_with_video__text
+ #
+ # Available blocks:
+ # - text_with_video__video
+ #}
+
+{% set text_with_video__base_class = 'video' %}
+
+<div {{ bem(text_with_video__base_class) }} data-component-width="content">
+  <div {{ bem('inner', [], text_with_video__base_class) }}>
+    <div {{ bem('video', [], text_with_video__base_class) }}>
+      {% block text_with_video__video %}
+        {% include "@atoms/video/video-embed.twig" %}
+      {% endblock %}
+    </div>
+    {% if text_with_video__heading or text_with_video__text %}
+      <div {{ bem ('content', [], text_with_video__base_class)}}>
+        {# Heading #}
+        {% if text_with_video__heading %}
+          {% include "@atoms/typography/headings/yds-heading.twig" with {
+            heading: text_with_video__heading,
+            heading__level: '2',
+            heading__blockname: text_with_video__base_class,
+          } %}
+        {% endif %}
+        {# Text #}
+        {% if text_with_video__text %}
+          {% include "@atoms/typography/text/yds-text.twig" with {
+            text__content: text_with_video__text,
+            text__blockname: text_with_video__base_class,
+          } %}
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>

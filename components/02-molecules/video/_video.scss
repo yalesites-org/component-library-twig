@@ -1,0 +1,22 @@
+@use '../../00-tokens/tokens';
+
+.video {
+  @include tokens.spacing-page-section;
+}
+
+.video__inner {
+  display: grid;
+  gap: var(--size-spacing-3);
+}
+
+.video__heading {
+  @include tokens.h5-mallory-compact-book;
+
+  margin-bottom: var(--size-spacing-1);
+}
+
+.video__text {
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
