@@ -1,0 +1,30 @@
+@use '../../00-tokens/tokens';
+@use '../../01-atoms/atoms';
+
+.gallery {
+  @include tokens.spacing-page-section;
+}
+
+.gallery__heading {
+  @include tokens.h2-yale-new;
+
+  margin-bottom: var(--spacing-page-section);
+}
+
+.gallery__items {
+  @include atoms.list-reset;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-component-gutter-secondary);
+  justify-content: center;
+}
+
+.gallery__items > * {
+  flex-basis: 100%;
+
+  @media (min-width: tokens.$break-mobile) {
+    flex: 0 1
+      calc(25% - calc(var(--spacing-component-gutter-secondary) * 3 / 4));
+  }
+}
