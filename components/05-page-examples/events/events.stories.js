@@ -40,13 +40,17 @@ export default {
 export const EventPage = ({
   siteName,
   eventPageTitle,
-  headerBorderThickness,
-  primaryNavPosition,
-  siteHeaderTheme,
+  headerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-header-border-thickness',
+  ),
+  primaryNavPosition = localStorage.getItem('yds-cl-twig-primary-nav-position'),
+  siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
-  siteFooterTheme,
-  footerBorderThickness,
+  siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
+  footerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-footer-border-thickness',
+  ),
   startDate,
   endDate,
   format,
@@ -94,13 +98,17 @@ EventPage.argTypes = {
 export const EventGrid = ({
   siteName,
   pageTitle,
-  headerBorderThickness,
-  primaryNavPosition,
-  siteHeaderTheme,
+  headerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-header-border-thickness',
+  ),
+  primaryNavPosition = localStorage.getItem('yds-cl-twig-primary-nav-position'),
+  siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
-  siteFooterTheme,
-  footerBorderThickness,
+  siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
+  footerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-footer-border-thickness',
+  ),
 }) =>
   eventGridPageTwig({
     site_name: siteName,
@@ -138,13 +146,17 @@ EventGrid.argTypes = {
 export const EventList = ({
   siteName,
   pageTitle,
-  headerBorderThickness,
-  primaryNavPosition,
-  siteHeaderTheme,
+  headerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-header-border-thickness',
+  ),
+  primaryNavPosition = localStorage.getItem('yds-cl-twig-primary-nav-position'),
+  siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
-  siteFooterTheme,
-  footerBorderThickness,
+  siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
+  footerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-footer-border-thickness',
+  ),
 }) =>
   eventListPageTwig({
     site_name: siteName,

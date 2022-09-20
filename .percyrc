@@ -16,6 +16,7 @@ storybook:
     # automatically updates when new tokens are added upstream) like the colors,
     # we don't want updates in the tokens repo to flag a regression here unless
     # it changes an existing molecule/organism etc.
+    - 'Config: [a-zA-Z]+'
     - 'Tokens/Breakpoints: Breakpoints'
     - 'Tokens/Colors: Colors'
     - 'Tokens/Effects: [a-zA-Z]+' # Effects are dynamically generated.
