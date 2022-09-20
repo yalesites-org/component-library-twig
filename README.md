@@ -57,7 +57,7 @@ This is an entirely automated process, so whether changes are pushed directly to
 
 ## Live Component Library
 
-You can view the latest version of the component library at any time by visiting the [Deployed Storybook](https://yalesites-org.github.io/component-library-twig/?path=/story/tokens-colors--colors). All new commits to the `main` branch trigger a rebuild and deploy of the component library, so it will always be up-to-date with the latest released code.
+You can view the latest version of the component library at any time by visiting the [Deployed Storybook](https://yalesites-org.github.io/component-library-twig). All new commits to the `main` branch trigger a rebuild and deploy of the component library, so it will always be up-to-date with the latest released code.
 
 ## Development Component Libraries
 

@@ -44,13 +44,13 @@ $break-layout-two-column-max: $break-layout-two-column - 0.05;
 
 .yds-two-column__secondary {
   @media (max-width: $break-layout-two-column-max) {
-    border-top: 1px solid;
+    border-top: var(--thickness-divider) solid var(--color-divider);
     padding-top: var(--spacing-page-inner);
   }
 
   @media (min-width: $break-layout-two-column) {
     flex: 0 1 calc(37.5rem + var(--spacing-component-gutter));
-    border-left: 1px solid;
+    border-left: var(--thickness-divider) solid var(--color-divider);
     margin-left: calc(var(--spacing-component-gutter) * 2);
     padding-left: var(--spacing-component-gutter);
   }
