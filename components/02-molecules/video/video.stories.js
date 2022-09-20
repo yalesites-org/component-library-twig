@@ -16,12 +16,12 @@ export default {
     heading: {
       name: 'Heading',
       type: 'string',
-      defaultValue: videoData.text_with_video__heading,
+      defaultValue: videoData.video__heading,
     },
     text: {
       name: 'Text',
       type: 'string',
-      defaultValue: videoData.text_with_video__text,
+      defaultValue: videoData.video__text,
     },
   },
 };
@@ -29,6 +29,6 @@ export default {
 export const video = ({ heading, text }) =>
   videoTwig({
     ...videoData,
-    text_with_video__heading: heading,
-    text_with_video__text: text,
+    video__heading: heading,
+    video__text: text,
   });

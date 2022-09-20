@@ -314,18 +314,18 @@ export const withVideo = ({
     ...referenceCardData,
     ...socialLinksData,
     ...videoData,
-    text_with_video__heading: videoHeading,
-    text_with_video__text: videoCaption,
+    video__heading: videoHeading,
+    video__text: videoCaption,
   });
 withVideo.argTypes = {
   videoHeading: {
     name: 'Video Heading',
     type: 'string',
-    defaultValue: videoData.text_with_video__heading,
+    defaultValue: videoData.video__heading,
   },
   videoCaption: {
-    name: 'Video',
+    name: 'Video Caption',
     type: 'string',
-    defaultValue: videoData.text_with_video__text,
+    defaultValue: videoData.video__text,
   },
 };
