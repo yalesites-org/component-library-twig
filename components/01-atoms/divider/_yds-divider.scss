@@ -1,9 +1,4 @@
 @use '../../00-tokens/tokens';
-@use '../../00-tokens/functions/map';
-
-$widths: map.deep-get(tokens.$tokens, layout, width);
-$thicknesses: map.deep-get(tokens.$tokens, size, thickness);
-$positions: map.deep-get(tokens.$tokens, layout, flex-position);
 
 .divider__wrapper {
   @include tokens.spacing-page-section;
@@ -11,28 +6,11 @@ $positions: map.deep-get(tokens.$tokens, layout, flex-position);
 
 .divider__inner {
   display: flex;
-
-  @each $position, $value in $positions {
-    [data-divider-position='#{$position}'] & {
-      justify-content: var(--layout-flex-position-#{$position});
-    }
-  }
+  justify-content: var(--position-divider);
 }
 
 .divider {
-  background: var(--color-divider, var(--color-gray-500));
-  width: var(--width-divider, var(--layout-width-100));
-  height: var(--thickness-divider, var(--size-thickness-1));
-
-  @each $width, $value in $widths {
-    &[data-divider-width='#{$width}'] {
-      --width-divider: var(--layout-width-#{$width});
-    }
-  }
-
-  @each $thickness, $value in $thicknesses {
-    &[data-divider-thickness='#{$thickness}'] {
-      --thickness-divider: var(--size-thickness-#{$thickness});
-    }
-  }
+  background: var(--color-divider);
+  width: var(--width-divider);
+  height: var(--thickness-divider);
 }

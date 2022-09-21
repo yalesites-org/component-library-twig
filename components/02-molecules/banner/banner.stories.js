@@ -1,6 +1,6 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
-import bannerTwig from './cta/yds-cta-banner.twig';
+import bannerTwig from './action/yds-action-banner.twig';
 
 import bannerData from './banner.yml';
 
@@ -53,7 +53,7 @@ export default {
   },
 };
 
-export const banner = ({
+export const ActionBanner = ({
   heading,
   snippet,
   linkContent,
