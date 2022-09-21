@@ -208,6 +208,10 @@
           "structure": "organisms"
         },
         {
+          "name": "galleries/grid",
+          "structure": "organisms"
+        },
+        {
           "name": "layout",
           "structure": "organisms"
         },
