@@ -11,11 +11,29 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
+  argTypes: {
+    galleryHeading: {
+      name: 'Gallery heading',
+      type: 'string',
+      defaultValue: galleryData.gallery__heading,
+    },
+    items: {
+      name: 'Number of images',
+      type: 'number',
+      defaultValue: 3,
+    },
+  },
 };
 
-export const ImageGrid = () => {
+export const ImageGrid = ({ items, galleryHeading }) => {
+  const Items = [];
+  for (let i = 0; i < items; i += 1) {
+    Items.push(i);
+  }
+
   return galleryTwig({
-    ...galleryData,
+    gallery__heading: galleryHeading,
+    gallery__items: Items,
     ...imageData.responsive_images['3x2'],
   });
 };
