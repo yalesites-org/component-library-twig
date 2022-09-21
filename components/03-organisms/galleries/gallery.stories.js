@@ -1,6 +1,6 @@
-import galleryTwig from './yds-gallery.twig';
+import galleryTwig from './grid/yds-grid.twig';
 
-import galleryData from './gallery.yml';
+import galleryData from './grid/grid.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
 /**
@@ -13,7 +13,7 @@ export default {
   },
 };
 
-export const ImageGallery = () => {
+export const ImageGrid = () => {
   return galleryTwig({
     ...galleryData,
     ...imageData.responsive_images['3x2'],
