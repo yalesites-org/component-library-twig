@@ -10,12 +10,12 @@
 }
 
 .video__heading {
-  @include tokens.h5-mallory-compact-book;
-
   margin-bottom: var(--size-spacing-1);
 }
 
 .video__text {
+  font: var(--font-style-body-s);
+
   > *:last-child {
     margin-bottom: 0;
   }
