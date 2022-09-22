@@ -1,6 +1,6 @@
-import galleryTwig from './grid/yds-grid.twig';
+import mediaGridTwig from './media-grid/yds-media-grid.twig';
 
-import galleryData from './grid/grid.yml';
+import mediaGridData from './media-grid/media-grid.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
 /**
@@ -12,10 +12,10 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: {
-    galleryHeading: {
+    gridHeading: {
       name: 'Gallery heading',
       type: 'string',
-      defaultValue: galleryData.gallery__heading,
+      defaultValue: mediaGridData.media_grid__heading,
     },
     items: {
       name: 'Number of images',
@@ -25,15 +25,29 @@ export default {
   },
 };
 
-export const ImageGrid = ({ items, galleryHeading }) => {
+export const ImageGrid = ({ items, gridHeading }) => {
   const Items = [];
   for (let i = 0; i < items; i += 1) {
     Items.push(i);
   }
 
-  return galleryTwig({
-    gallery__heading: galleryHeading,
-    gallery__items: Items,
+  return mediaGridTwig({
+    media_grid__heading: gridHeading,
+    media_grid__items: Items,
+    ...imageData.responsive_images['3x2'],
+  });
+};
+
+export const InteractiveGrid = ({ items, gridHeading }) => {
+  const Items = [];
+  for (let i = 0; i < items; i += 1) {
+    Items.push(i);
+  }
+
+  return mediaGridTwig({
+    media_grid__variation: 'interactive',
+    media_grid__heading: gridHeading,
+    media_grid__items: Items,
     ...imageData.responsive_images['3x2'],
   });
 };

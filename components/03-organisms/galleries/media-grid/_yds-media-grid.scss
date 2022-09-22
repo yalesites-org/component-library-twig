@@ -1,17 +1,17 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
 
-.gallery {
+.media-grid {
   @include tokens.spacing-page-section;
 }
 
-.gallery__heading {
+.media-grid__heading {
   @include tokens.h2-yale-new;
 
-  margin-bottom: var(--spacing-page-section);
+  margin-bottom: var(--spacing-page-inner);
 }
 
-.gallery__items {
+.media-grid__items {
   @include atoms.list-reset;
 
   display: flex;
@@ -20,7 +20,7 @@
   justify-content: center;
 }
 
-.gallery__items > * {
+.media-grid__items > * {
   flex-basis: 100%;
 
   @media (min-width: tokens.$break-mobile) {
