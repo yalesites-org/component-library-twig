@@ -1,5 +1,5 @@
-@use '../../00-tokens/tokens';
-@use '../../01-atoms/atoms';
+@use '../../../00-tokens/tokens';
+@use '../../../01-atoms/atoms';
 
 .gallery {
   @include tokens.spacing-page-section;
