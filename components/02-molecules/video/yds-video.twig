@@ -13,7 +13,7 @@
   <div {{ bem('inner', [], video__base_class) }}>
     <div {{ bem('video', [], video__base_class) }}>
       {% block video__video %}
-        {% include "@atoms/video/video-embed.twig" %}
+        {% include "@atoms/video-embed/yds-video-embed.twig" %}
       {% endblock %}
     </div>
     {% if video__heading or video__text %}

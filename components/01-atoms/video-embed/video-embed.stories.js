@@ -1,4 +1,4 @@
-import videoEmbedTwig from './video-embed.twig';
+import videoEmbedTwig from './yds-video-embed.twig';
 
 import videoEmbedData from './video-embed.yml';
 

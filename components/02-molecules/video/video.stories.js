@@ -1,5 +1,5 @@
 // Twig templates
-import videoTwig from './video.twig';
+import videoTwig from './yds-video.twig';
 
 // Data files
 import videoData from './video.yml';
