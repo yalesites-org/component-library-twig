@@ -14,7 +14,7 @@
 }
 
 .video__text {
-  font: var(--font-style-body-s);
+  @include tokens.body-s;
 
   > *:last-child {
     margin-bottom: 0;
