@@ -12,7 +12,7 @@
 .video__heading {
   @include tokens.body-default-condensed;
 
-  margin-bottom: var(--size-spacing-1);
+  margin-bottom: var(--size-spacing-2);
 }
 
 .video__text {
