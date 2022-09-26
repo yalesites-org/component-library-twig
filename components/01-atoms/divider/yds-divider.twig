@@ -9,18 +9,11 @@
 
 {% set divider__wrapper__attributes = {
   'data-component-width': 'max',
-  'data-divider-position': divider__position|default('center'),
   class: bem('wrapper', [], divider__base_class),
-} %}
-
-{% set divider__attributes = {
-  'data-divider-thickness': divider__thickness|default('1'),
-  'data-divider-width': divider__width|default('100%'),
-  class: bem(divider__base_class),
 } %}
 
 <div {{ add_attributes(divider__wrapper__attributes) }}>
   <div {{ bem('inner', [], divider__base_class) }}>
-    <div {{ add_attributes(divider__attributes) }}></div>
+    <div {{ bem(divider__base_class) }}></div>
   </div>
 </div>

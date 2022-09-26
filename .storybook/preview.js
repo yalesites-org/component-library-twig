@@ -6,7 +6,6 @@ import { setupTwig } from './setupTwig';
 // GLOBAL CSS
 import '../components/style.scss';
 import '../components/00-tokens/colors/cl-colors.scss';
-import '../components/00-tokens/cl-base.scss';
 import '../components/00-tokens/typography/cl-typography.scss';
 import '../components/00-tokens/effects/cl-effects.scss';
 import '../components/04-page-layouts/placeholder/cl-placeholder.scss';

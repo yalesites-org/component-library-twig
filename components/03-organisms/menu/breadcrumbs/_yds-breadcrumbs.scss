@@ -153,5 +153,6 @@
 
   &[aria-current='page'] {
     color: var(--color-basic-brown-gray);
+    cursor: default;
   }
 }
