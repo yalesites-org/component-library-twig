@@ -2,21 +2,22 @@
 
 <div {{ bem('utility-bar') }}>
   {# Menu #}
-  {% include "@molecules/menu/yds-menu.twig" with {
-    menu__base_class: utility_nav__base_class,
-    menu__name: 'Utility',
-    items: utility_nav__items|default(items),
-  } %}
+  {% block utility_nav__menu %}
+    {% include "@organisms/menu/utility-nav/_utility-nav--menu.twig" %}
+  {% endblock %}
   {# Search #}
+  {% set utility_nav__search = true %}
   {% if utility_nav__search %}
     <div {{ bem('search', [], utility_nav__base_class) }}>
-      {% include "@atoms/images/icons/_yds-icon.twig" with {
-        icon__name: 'magnifying-glass',
-        icon__blockname: utility_nav__base_class,
-        icon__modifiers: ['search'],
-        icon__decorative: true,
-      } %}
-      <input type="text" placeholder="Search this site">
+      {% block site_header__search %}
+        {% include "@atoms/images/icons/_yds-icon.twig" with {
+          icon__name: 'magnifying-glass',
+          icon__blockname: utility_nav__base_class,
+          icon__modifiers: ['search'],
+          icon__decorative: true,
+        } %}
+        <input type="text" placeholder="Search this site">
+      {% endblock %}
     </div>
   {% endif %}
   {# Link #}
