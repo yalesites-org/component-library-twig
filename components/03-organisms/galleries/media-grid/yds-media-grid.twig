@@ -12,9 +12,10 @@
 {% set media_grid__attributes = {
   'data-component-width': 'feature',
   'data-media-grid-variation': media_grid__variation|default('basic'),
+  'class': bem(media_grid__base_class),
 } %}
 
-<div {{ bem(media_grid__base_class) }} {{ add_attributes(media_grid__attributes) }}>
+<div {{ add_attributes(media_grid__attributes) }}>
   <div {{ bem('inner', [], media_grid__base_class) }}>
     {% if media_grid__heading %}
       {% include "@atoms/typography/headings/yds-heading.twig" with {

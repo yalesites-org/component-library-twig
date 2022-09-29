@@ -1,5 +1,5 @@
 @use '../../../00-tokens/tokens';
-@use '../../../01-atoms/atoms';
+@use '../../grid-mixins' as grid;
 
 .media-grid {
   @include tokens.spacing-page-section;
@@ -12,19 +12,5 @@
 }
 
 .media-grid__items {
-  @include atoms.list-reset;
-
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-component-gutter-secondary);
-  justify-content: center;
-}
-
-.media-grid__items > * {
-  flex-basis: 100%;
-
-  @media (min-width: tokens.$break-mobile) {
-    flex: 0 1
-      calc(25% - calc(var(--spacing-component-gutter-secondary) * 3 / 4));
-  }
+  @include grid.secondary;
 }

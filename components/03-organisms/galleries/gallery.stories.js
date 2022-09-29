@@ -20,7 +20,7 @@ export default {
     items: {
       name: 'Number of images',
       type: 'number',
-      defaultValue: 3,
+      defaultValue: 11,
     },
   },
 };
