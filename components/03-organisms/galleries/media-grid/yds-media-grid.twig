@@ -15,6 +15,12 @@
   'class': bem(media_grid__base_class),
 } %}
 
+{% if media_grid__variation == 'interactive' %}
+  {% set media_grid__attributes = media_grid__attributes|merge({
+    'data-media-grid-modal-state': 'inactive',
+  }) %}
+{% endif %}
+
 <div {{ add_attributes(media_grid__attributes) }}>
   <div {{ bem('inner', [], media_grid__base_class) }}>
     {% if media_grid__heading %}
@@ -31,5 +37,11 @@
         {% endfor %}
       {% endblock %}
     </ul>
+  </div>
+  <div {{ bem('modal', [], media_grid__base_class) }}>
+    <div {{ bem('modal-backdrop', [], media_grid__base_class) }}></div>
+    {% block media_grid__modal %}
+      <span style="color: white">This is a test</span>
+    {% endblock %}
   </div>
 </div>

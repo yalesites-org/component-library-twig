@@ -1,7 +1,12 @@
+// Twig templates.
 import mediaGridTwig from './media-grid/yds-media-grid.twig';
 
+// Data files.
 import mediaGridData from './media-grid/media-grid.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
+
+// JS.
+import './media-grid/yds-media-grid-interactive';
 
 /**
  * Storybook Definition.

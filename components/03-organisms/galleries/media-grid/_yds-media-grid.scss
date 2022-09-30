@@ -20,18 +20,18 @@
     position: relative;
     background-color: var(--color-basic-black);
 
-    img {
-      opacity: 1;
-      transition: opacity var(--animation-speed-default) ease-in-out;
-    }
-
     &:hover {
       cursor: pointer;
-
-      img {
-        opacity: 0.8;
-      }
     }
+  }
+}
+
+.media-grid__image {
+  opacity: 1;
+  transition: opacity var(--animation-speed-default) ease-in-out;
+
+  [data-media-grid-variation='interactive'] .media-grid__item:hover & {
+    opacity: 0.8;
   }
 }
 
