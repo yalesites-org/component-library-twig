@@ -125,6 +125,10 @@
           "required": true
         },
         {
+          "name": "video-embed",
+          "structure": "atoms"
+        },
+        {
           "name": "accordion",
           "structure": "molecules"
         },
@@ -187,6 +191,14 @@
           "structure": "molecules"
         },
         {
+          "name": "quick-links",
+          "structure": "molecules"
+        },
+        {
+          "name": "social-links",
+          "structure": "molecules"
+        },
+        {
           "name": "tabs",
           "structure": "molecules"
         },
@@ -197,6 +209,10 @@
         },
         {
           "name": "text-with-image",
+          "structure": "molecules"
+        },
+        {
+          "name": "video",
           "structure": "molecules"
         },
         {

@@ -8,6 +8,7 @@ import standardPageTwig from './standard-page.twig';
 import standardPageBannerTwig from './standard-page-with-banner.twig';
 import standardPageSidebarTwig from './standard-page-with-sidebar.twig';
 import standardPageQuickLinksTwig from './standard-page-with-quicklinks.twig';
+import standardPageVideoTwig from './standard-page-with-video.twig';
 
 // Data files.
 import utilityNavData from '../../03-organisms/menu/utility-nav/utility-nav.yml';
@@ -19,6 +20,7 @@ import bannerData from '../../02-molecules/banner/banner.yml';
 import referenceCardData from '../../02-molecules/cards/reference-card/examples/news-card.yml';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 import quickLinksData from '../../02-molecules/quick-links/quick-links.yml';
+import videoData from '../../02-molecules/video/video.yml';
 
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
@@ -293,5 +295,53 @@ WithQuickLinks.argTypes = {
     type: 'select',
     options: ['promotional', 'subtle'],
     defaultValue: 'promotional',
+  },
+};
+
+export const withVideo = ({
+  siteName,
+  pageTitle,
+  headerBorderThickness,
+  primaryNavPosition,
+  siteHeaderTheme,
+  utilityNavLinkContent,
+  utilityNavSearch,
+  siteFooterTheme,
+  footerBorderThickness,
+  videoHeading,
+  videoCaption,
+}) =>
+  standardPageVideoTwig({
+    site_name: siteName,
+    page_title__heading: pageTitle,
+    page_title__meta: null,
+    site_header__border_thickness: headerBorderThickness,
+    site_header__nav_position: primaryNavPosition,
+    site_header__theme: siteHeaderTheme,
+    site_footer__border_thickness: footerBorderThickness,
+    site_footer__theme: siteFooterTheme,
+    utility_nav__items: utilityNavData.items,
+    primary_nav__items: primaryNavData.items,
+    utility_nav__link__content: utilityNavLinkContent,
+    utility_nav__link__url: '#',
+    utility_nav__search: utilityNavSearch,
+    breadcrumbs__items: breadcrumbData.items,
+    ...imageData.responsive_images['16x9'],
+    ...referenceCardData,
+    ...socialLinksData,
+    ...videoData,
+    video__heading: videoHeading,
+    video__text: videoCaption,
+  });
+withVideo.argTypes = {
+  videoHeading: {
+    name: 'Video Heading',
+    type: 'string',
+    defaultValue: videoData.video__heading,
+  },
+  videoCaption: {
+    name: 'Video Caption',
+    type: 'string',
+    defaultValue: videoData.video__text,
   },
 };
