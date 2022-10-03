@@ -50,6 +50,7 @@ export const InteractiveGrid = ({ items, gridHeading }) => {
   }
 
   return mediaGridTwig({
+    ...mediaGridData,
     media_grid__variation: 'interactive',
     media_grid__heading: gridHeading,
     media_grid__items: Items,

@@ -1,1 +1,4 @@
 media_grid__heading: 'Optional Gallery Heading'
+
+media_grid__modal__heading: 'This is the modal heading'
+media_grid__modal__text: '<p>This is the modal text</p>'
