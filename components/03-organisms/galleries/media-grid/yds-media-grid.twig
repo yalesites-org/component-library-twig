@@ -38,10 +38,9 @@
       {% endblock %}
     </ul>
   </div>
-  <div {{ bem('modal', [], media_grid__base_class) }}>
-    <div {{ bem('modal-backdrop', [], media_grid__base_class) }}></div>
+  <div {{ bem('modal', [], media_grid__base_class) }} data-component-theme="gray-800">
     {% block media_grid__modal %}
-      <span style="color: white">This is a test</span>
+      {% include "@organisms/galleries/media-grid/_yds-media-grid-modal-item.twig" %}
     {% endblock %}
   </div>
 </div>

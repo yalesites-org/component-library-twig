@@ -1,3 +1,5 @@
+@use '../../../01-atoms/atoms';
+
 .media-grid__modal {
   display: none;
   position: fixed;
@@ -5,23 +7,87 @@
   left: 0;
   height: 100%;
   width: 100%;
+  background: transparent;
 
   [data-media-grid-modal-state='active'] & {
     display: grid;
     place-content: center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: var(--color-background);
+      opacity: 0.7;
+    }
+  }
+
+  > * {
+    position: relative;
+  }
+
+  svg {
+    max-width: 100%;
+    max-height: 100%;
   }
 }
 
-.media-grid__modal-backdrop {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: var(--color-basic-black);
-  opacity: 0.7;
+.media-grid__modal-item {
+  display: grid;
+  grid-template-columns:
+    10vw var(--size-click-target-minimum) 1fr var(--size-click-target-minimum)
+    10vw;
+  grid-template-areas: 'space-start controls-start content controls-end space-end';
+  gap: var(--size-spacing-8);
+}
 
-  + * {
-    position: relative;
+.media-grid__controls {
+  display: grid;
+  grid-template-rows: var(--size-click-target-minimum) 1fr var(
+      --size-click-target-minimum
+    );
+  grid-template-areas:
+    'close'
+    'nav'
+    'space';
+  align-items: center;
+
+  &--start {
+    grid-area: controls-start;
   }
+
+  &--end {
+    grid-area: controls-end;
+  }
+}
+
+.media-grid__control {
+  @include atoms.button-reset;
+
+  max-width: 100%;
+  display: grid;
+  height: var(--size-click-target-minimum);
+
+  &--previous {
+    grid-area: nav;
+    transform: rotate(90deg);
+  }
+
+  &--next {
+    grid-area: nav;
+    transform: rotate(-90deg);
+  }
+
+  &--close {
+    grid-area: close;
+    border: var(--size-thickness-1) solid;
+    padding: var(--size-spacing-3);
+  }
+}
+
+.media-grid__modal-image {
+  grid-area: content;
 }
