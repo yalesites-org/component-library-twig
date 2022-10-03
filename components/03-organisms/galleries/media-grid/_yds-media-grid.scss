@@ -12,7 +12,7 @@
 }
 
 .media-grid__items {
-  @include grid.secondary;
+  @include grid.secondary(true);
 }
 
 [data-media-grid-variation='interactive'] {
