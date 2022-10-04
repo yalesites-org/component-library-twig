@@ -1,0 +1,61 @@
+@use '../../../00-tokens/tokens';
+@use '../../grid-mixins' as grid;
+
+.media-grid {
+  @include tokens.spacing-page-section;
+}
+
+.media-grid__heading {
+  @include tokens.h2-yale-new;
+
+  margin-bottom: var(--spacing-page-inner);
+}
+
+.media-grid__items {
+  @include grid.secondary($media-only: true);
+}
+
+.media-grid__item {
+  [data-media-grid-variation='interactive'] & {
+    position: relative;
+    background-color: var(--color-basic-black);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.media-grid__image {
+  opacity: 1;
+  transition: opacity var(--animation-speed-default) ease-in-out;
+
+  [data-media-grid-variation='interactive'] .media-grid__item:hover & {
+    opacity: 0.8;
+  }
+}
+
+.media-grid__maximize {
+  --size-icon: 0.75rem;
+
+  position: absolute;
+  right: var(--size-spacing-4);
+  bottom: var(--size-spacing-4);
+  background: var(--color-basic-white);
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 100%;
+  display: grid;
+  place-content: center;
+  transform-origin: bottom right;
+  transition: transform var(--animation-speed-default) ease-in-out;
+
+  .media-grid__item:hover & {
+    transform: scale(1.5833);
+  }
+
+  svg {
+    height: var(--size-icon);
+    width: var(--size-icon);
+  }
+}
