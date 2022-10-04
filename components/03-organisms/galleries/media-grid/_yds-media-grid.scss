@@ -12,7 +12,7 @@
 }
 
 .media-grid__items {
-  @include grid.secondary(true);
+  @include grid.secondary($media-only: true);
 }
 
 .media-grid__item {
