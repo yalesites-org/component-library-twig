@@ -15,8 +15,8 @@
   @include grid.secondary(true);
 }
 
-[data-media-grid-variation='interactive'] {
-  .media-grid__item {
+.media-grid__item {
+  [data-media-grid-variation='interactive'] & {
     position: relative;
     background-color: var(--color-basic-black);
 
@@ -36,6 +36,8 @@
 }
 
 .media-grid__maximize {
+  --size-icon: 0.75rem;
+
   position: absolute;
   right: var(--size-spacing-4);
   bottom: var(--size-spacing-4);
@@ -51,9 +53,9 @@
   .media-grid__item:hover & {
     transform: scale(1.5833);
   }
-}
 
-.media-grid__icon {
-  height: 0.75rem;
-  width: 0.75rem;
+  svg {
+    height: var(--size-icon);
+    width: var(--size-icon);
+  }
 }
