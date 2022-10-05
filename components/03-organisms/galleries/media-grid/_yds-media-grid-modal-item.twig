@@ -1,4 +1,4 @@
-{% set media_grid__base_class = 'media-grid-modal' %}
+{% set media_grid__modal__base_class = 'media-grid-modal' %}
 
 {% set control_nav %}
   {% include "@atoms/images/icons/_yds-icon.twig" with {
@@ -12,48 +12,44 @@
   } %}
 {% endset %}
 
-<div {{ bem('item', [], media_grid__base_class) }} data-component-width="feature">
-  <div {{ bem('inner', [], media_grid__base_class) }}>
-    <div {{ bem('controls', ['start'], media_grid__base_class) }}>
-      {% include "@atoms/controls/base/yds-control.twig" with {
-        control__blockname: media_grid__base_class,
-        control__base_class: 'control',
-        control__modifiers: ['previous'],
-        control__content: control_nav,
-      } %}
-    </div>
-    <div {{ bem('content', [], media_grid__base_class) }} data-embedded-components>
+<div {{ bem('item', [], media_grid__modal__base_class) }} data-component-width="feature">
+  <div {{ bem('inner', [], media_grid__modal__base_class) }}>
+    {% include "@atoms/controls/base/yds-control.twig" with {
+      control__blockname: media_grid__modal__base_class,
+      control__base_class: 'control',
+      control__modifiers: ['previous'],
+      control__content: control_nav,
+    } %}
+    <div {{ bem('media', [], media_grid__modal__base_class) }}>
       {% block media_grid__modal__media %}
         {% include "@atoms/images/image/_responsive-image.twig" %}
       {% endblock %}
-      {# {% if media_grid__modal__heading %} #}
-        {% include "@atoms/typography/headings/yds-heading.twig" with {
-          heading__level: '2',
-          heading: media_grid__modal__heading,
-          heading__blockname: media_grid__base_class,
-        } %}
-      {# {% endif %} #}
+    </div>
+    <div {{ bem('content', [], media_grid__modal__base_class) }} data-embedded-components>
+      {% include "@atoms/typography/headings/yds-heading.twig" with {
+        heading__level: '2',
+        heading: media_grid__modal__heading,
+        heading__blockname: media_grid__modal__base_class,
+      } %}
       {% if media_grid__modal__text %}
-        {% block media_grid__modal__text %}
+        <div {{ bem('text', [], media_grid__modal__base_class) }}>
           {% include "@molecules/text/yds-text-field.twig" with {
             text_field__content: media_grid__modal__text,
           } %}
-        {% endblock %}
+        </div>
       {% endif %}
     </div>
-    <div {{ bem('controls', ['end'], media_grid__base_class) }}>
-      {% include "@atoms/controls/base/yds-control.twig" with {
-        control__blockname: media_grid__base_class,
-        control__base_class: 'control',
-        control__modifiers: ['close'],
-        control__content: control_close,
-      } %}
-      {% include "@atoms/controls/base/yds-control.twig" with {
-        control__blockname: media_grid__base_class,
-        control__base_class: 'control',
-        control__modifiers: ['next'],
-        control__content: control_nav,
-      } %}
-    </div>
+    {% include "@atoms/controls/base/yds-control.twig" with {
+      control__blockname: media_grid__modal__base_class,
+      control__base_class: 'control',
+      control__modifiers: ['close'],
+      control__content: control_close,
+    } %}
+    {% include "@atoms/controls/base/yds-control.twig" with {
+      control__blockname: media_grid__modal__base_class,
+      control__base_class: 'control',
+      control__modifiers: ['next'],
+      control__content: control_nav,
+    } %}
   </div>
 </div>

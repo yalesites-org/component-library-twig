@@ -9,9 +9,11 @@
   width: 100%;
   background: transparent;
 
+  // Show the modal and backdrop when active.
   [data-media-grid-modal-state='active'] & {
-    display: grid;
-    place-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &::before {
       content: '';
@@ -25,6 +27,7 @@
     }
   }
 
+  // Position modal content relative, to "place it on top of the backdrop".
   > * {
     position: relative;
   }
@@ -35,33 +38,42 @@
   }
 }
 
-.media-grid-modal__inner {
-  display: grid;
-  grid-template-columns:
-    var(--size-click-target-minimum) minmax(0, 1fr)
-    var(--size-click-target-minimum);
-  grid-template-areas: 'controls-start content controls-end';
-  gap: var(--spacing-component-gutter-secondary);
+.media-grid-modal__item {
+  width: 100%;
+  height: 100%;
 }
 
-.media-grid-modal__controls {
+.media-grid-modal__inner {
   display: grid;
-  grid-template-rows: var(--size-click-target-minimum) 1fr var(
+  grid-template:
+    'controls-start-top media controls-end-top' var(--size-click-target-minimum)
+    'controls-start-center media controls-end-center' minmax(0, 1fr)
+    'controls-start-bottom content controls-end-bottom' minmax(0, 1fr) / var(
       --size-click-target-minimum
-    );
-  grid-template-areas:
-    'start'
-    'nav'
-    'end';
+    )
+    minmax(0, 1fr)
+    var(--size-click-target-minimum);
+  gap: var(--spacing-component-gutter-secondary);
   align-items: center;
+  max-height: 100%;
+}
 
-  &--start {
-    grid-area: controls-start;
-  }
+.media-grid-modal__media {
+  grid-area: media;
+  height: 100%;
+  width: 100%;
 
-  &--end {
-    grid-area: controls-end;
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
   }
+}
+
+.media-grid-modal__content {
+  grid-area: content;
+  overflow: auto;
+  max-height: 100%;
 }
 
 .media-grid-modal__control {
@@ -72,22 +84,18 @@
   height: var(--size-click-target-minimum);
 
   &--previous {
-    grid-area: nav;
+    grid-area: controls-start-center;
     transform: rotate(90deg);
   }
 
   &--next {
-    grid-area: nav;
+    grid-area: controls-end-center;
     transform: rotate(-90deg);
   }
 
   &--close {
-    grid-area: start;
+    grid-area: controls-end-top;
     border: var(--size-thickness-1) solid;
     padding: var(--size-spacing-3);
   }
-}
-
-.media-grid-modal__content {
-  grid-area: content;
 }
