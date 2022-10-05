@@ -24,7 +24,7 @@
       height: 100%;
       width: 100%;
       background-color: var(--color-background);
-      opacity: 0.7;
+      opacity: 0.9;
     }
   }
 
@@ -95,6 +95,10 @@
   height: 100%;
   display: flex;
   align-items: center;
+
+  &:hover {
+    color: var(--color-link-hover);
+  }
 
   svg {
     height: var(--size-click-target-minimum);

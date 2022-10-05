@@ -73,6 +73,9 @@ Drupal.behaviors.mediaGridInteractive = {
       const modalState = grid.getAttribute('data-media-grid-modal-state');
       const items = grid.querySelectorAll('.media-grid__image');
       const modal = grid.querySelector('.media-grid__modal');
+      const closeButton = grid.querySelector(
+        '.media-grid-modal__control--close',
+      );
 
       items.forEach((item) => {
         item.addEventListener('click', () => {
@@ -83,6 +86,13 @@ Drupal.behaviors.mediaGridInteractive = {
           showSelectedItem(grid, item.closest('[data-media-grid-item]'));
           trapKeyboard(modal);
         });
+      });
+
+      closeButton.addEventListener('click', () => {
+        grid.setAttribute(
+          'data-media-grid-modal-state',
+          toggleModalState('active'),
+        );
       });
     });
 

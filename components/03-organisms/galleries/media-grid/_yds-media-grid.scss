@@ -17,6 +17,8 @@
 }
 
 .media-grid__item {
+  display: flex;
+
   [data-media-grid-variation='interactive'] & {
     position: relative;
     background-color: var(--color-basic-black);
