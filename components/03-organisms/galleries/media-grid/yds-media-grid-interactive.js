@@ -77,6 +77,7 @@ Drupal.behaviors.mediaGridInteractive = {
         '.media-grid-modal__control--close',
       );
 
+      // Show modal when an item is clicked.
       items.forEach((item) => {
         item.addEventListener('click', () => {
           grid.setAttribute(
@@ -88,11 +89,34 @@ Drupal.behaviors.mediaGridInteractive = {
         });
       });
 
+      // Navigate modal when "previous" or "next" buttons are clicked.
+      // @TODO:
+
+      // Close modal when the "close" button is clicked.
       closeButton.addEventListener('click', () => {
         grid.setAttribute(
           'data-media-grid-modal-state',
           toggleModalState('active'),
         );
+      });
+
+      // Close modal when the "backdrop" is clicked.
+      window.addEventListener('click', (e) => {
+        const classesToCheck = [
+          'media-grid-modal__inner',
+          'media-grid-modal__item',
+        ];
+
+        if (
+          classesToCheck.some((className) =>
+            e.target.classList.contains(className),
+          )
+        ) {
+          grid.setAttribute(
+            'data-media-grid-modal-state',
+            toggleModalState('active'),
+          );
+        }
       });
     });
 
