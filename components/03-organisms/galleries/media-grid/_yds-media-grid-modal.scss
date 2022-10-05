@@ -1,3 +1,4 @@
+@use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
 
 .media-grid__modal {
@@ -74,6 +75,16 @@
   grid-area: content;
   overflow: auto;
   max-height: 100%;
+  display: grid;
+  gap: var(--size-spacing-3);
+}
+
+.media-grid-modal__heading {
+  @include tokens.body-l;
+}
+
+.media-grid-modal__text {
+  @include tokens.body-default-condensed;
 }
 
 .media-grid-modal__control {
