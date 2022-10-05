@@ -1,6 +1,6 @@
 {% set media_grid__base_class = 'media-grid' %}
 
-<li {{ bem('item', [], media_grid__base_class) }}>
+<li {{ bem('item', [], media_grid__base_class) }} data-media-grid-item={{ loop.index }}>
   <button {{ bem('image', [], media_grid__base_class) }}>
     {% include "@atoms/images/image/_responsive-image.twig" %}
   </button>

@@ -7,7 +7,7 @@ Drupal.behaviors.mediaGridInteractive = {
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
     // Function to trap focus when modal is active.
-    function trapKeyboard(modal) {
+    const trapKeyboard = (modal) => {
       const focusableModalElements = modal.querySelectorAll(focusableElements);
       const firstFocusableElement = focusableModalElements[0];
       const lastFocusableElement =
@@ -35,14 +35,38 @@ Drupal.behaviors.mediaGridInteractive = {
           firstFocusableElement.focus();
         }
       });
-    }
+    };
 
     /**
      * toggleModalState
-     * @function toggleModalState toggles modal state
+     * @description toggleModalState toggles modal state.
      */
     const toggleModalState = (state) => {
       return state === 'inactive' ? 'active' : 'inactive';
+    };
+
+    /**
+     * showSelectedItem
+     * @description showSelectedItem makes the selected item visible in the modal.
+     * @param {HTMLElement} grid the relevant grid.
+     * @param {HTMLElement} item the selected item.
+     */
+    const showSelectedItem = (grid, item) => {
+      const index = item.getAttribute('data-media-grid-item');
+      const modalItems = grid.querySelectorAll('[data-media-grid-modal-item]');
+      const activeModalItem = grid.querySelectorAll(
+        `[data-media-grid-modal-item="${index}"]`,
+      );
+
+      // Hide inactive items.
+      modalItems.forEach((modalItem) => {
+        modalItem.removeAttribute('data-media-grid-modal-item-active');
+      });
+
+      // Show active item.
+      activeModalItem.forEach((activeItem) => {
+        activeItem.setAttribute('data-media-grid-modal-item-active', true);
+      });
     };
 
     mediaGrids.forEach((grid) => {
@@ -56,12 +80,13 @@ Drupal.behaviors.mediaGridInteractive = {
             'data-media-grid-modal-state',
             toggleModalState(modalState),
           );
+          showSelectedItem(grid, item.closest('[data-media-grid-item]'));
           trapKeyboard(modal);
         });
       });
     });
 
-    // Close modal on escape key press
+    // Close modal on escape key press.
     document.addEventListener('keyup', (e) => {
       if (e.key === 'Escape') {
         const activeModals = context.querySelectorAll(

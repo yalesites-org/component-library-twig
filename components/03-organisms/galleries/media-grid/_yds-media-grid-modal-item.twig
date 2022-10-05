@@ -26,25 +26,27 @@
       control__modifiers: ['previous'],
       control__content: control_nav,
     } %}
-    <div {{ bem('media', [], media_grid__modal__base_class) }}>
-      {% block media_grid__modal__media %}
-        {% include "@atoms/images/image/_responsive-image.twig" %}
-      {% endblock %}
-    </div>
-    <div {{ bem('content', [], media_grid__modal__base_class) }} data-embedded-components>
-      {% include "@atoms/typography/headings/yds-heading.twig" with {
-        heading__level: '2',
-        heading: media_grid__modal__heading,
-        heading__blockname: media_grid__modal__base_class,
-      } %}
-      {% if media_grid__modal__text %}
-        <div {{ bem('text', [], media_grid__modal__base_class) }}>
-          {% include "@molecules/text/yds-text-field.twig" with {
-            text_field__content: media_grid__modal__text,
-          } %}
-        </div>
-      {% endif %}
-    </div>
+    {% for item in media_grid__items %}
+      <div {{ bem('media', [], media_grid__modal__base_class) }} data-media-grid-modal-item={{ loop.index }}>
+        {% block media_grid__modal__media %}
+          {% include "@atoms/images/image/_responsive-image.twig" %}
+        {% endblock %}
+      </div>
+      <div {{ bem('content', [], media_grid__modal__base_class) }} data-embedded-components data-media-grid-modal-item={{ loop.index }}>
+        {% include "@atoms/typography/headings/yds-heading.twig" with {
+          heading__level: '2',
+          heading: item.media_grid__modal__heading,
+          heading__blockname: media_grid__modal__base_class,
+        } %}
+        {% if item.media_grid__modal__text %}
+          <div {{ bem('text', [], media_grid__modal__base_class) }} data-media-grid-modal-item={{ loop.index }}>
+            {% include "@molecules/text/yds-text-field.twig" with {
+              text_field__content: item.media_grid__modal__text,
+            } %}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
     {% include "@atoms/controls/base/yds-control.twig" with {
       control__blockname: media_grid__modal__base_class,
       control__base_class: 'control',

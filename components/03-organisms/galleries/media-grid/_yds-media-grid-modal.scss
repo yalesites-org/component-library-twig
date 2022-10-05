@@ -122,3 +122,9 @@
     padding: var(--size-spacing-2);
   }
 }
+
+// Hide all modal items, by default.
+[data-media-grid-modal-item]:not([data-media-grid-modal-item-active]) {
+  // @TODO: See if `display: none` or `visibility: hidden` is better here.
+  display: none;
+}
