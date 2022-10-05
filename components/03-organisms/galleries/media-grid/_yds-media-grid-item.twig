@@ -1,9 +1,9 @@
 {% set media_grid__base_class = 'media-grid' %}
 
 <li {{ bem('item', [], media_grid__base_class) }}>
-  <div {{ bem('image', [], media_grid__base_class) }}>
+  <button {{ bem('image', [], media_grid__base_class) }}>
     {% include "@atoms/images/image/_responsive-image.twig" %}
-  </div>
+  </button>
   {% if media_grid__variation == 'interactive' %}
     <div {{ bem('maximize', [], media_grid__base_class) }}>
       {% include "@atoms/images/icons/_yds-icon.twig" with {
