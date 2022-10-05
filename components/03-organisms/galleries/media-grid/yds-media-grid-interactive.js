@@ -6,7 +6,11 @@ Drupal.behaviors.mediaGridInteractive = {
     const focusableElements =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
-    // Function to trap focus when modal is active.
+    /**
+     * trapKeyboard
+     * @description traps keyboard focus when modal is active.
+     * @param {HTMLElement} modal the active modal.
+     */
     const trapKeyboard = (modal) => {
       const focusableModalElements = modal.querySelectorAll(focusableElements);
       const firstFocusableElement = focusableModalElements[0];
@@ -40,9 +44,13 @@ Drupal.behaviors.mediaGridInteractive = {
     /**
      * toggleModalState
      * @description toggleModalState toggles modal state.
+     * @param {HTMLElement} grid the relative grid.
+     * @param {Enumerator} currentState the current state the modal is in.
      */
-    const toggleModalState = (state) => {
-      return state === 'inactive' ? 'active' : 'inactive';
+    const toggleModalState = (grid, currentState) => {
+      const newState = currentState === 'inactive' ? 'active' : 'inactive';
+
+      grid.setAttribute('data-media-grid-modal-state', newState);
     };
 
     /**
@@ -80,10 +88,7 @@ Drupal.behaviors.mediaGridInteractive = {
       // Show modal when an item is clicked.
       items.forEach((item) => {
         item.addEventListener('click', () => {
-          grid.setAttribute(
-            'data-media-grid-modal-state',
-            toggleModalState(modalState),
-          );
+          toggleModalState(grid, modalState);
           showSelectedItem(grid, item.closest('[data-media-grid-item]'));
           trapKeyboard(modal);
         });
@@ -92,12 +97,12 @@ Drupal.behaviors.mediaGridInteractive = {
       // Navigate modal when "previous" or "next" buttons are clicked.
       // @TODO:
 
+      // Navigate modal when left and right arrows are pressed.
+      // @TODO:
+
       // Close modal when the "close" button is clicked.
       closeButton.addEventListener('click', () => {
-        grid.setAttribute(
-          'data-media-grid-modal-state',
-          toggleModalState('active'),
-        );
+        toggleModalState(grid, 'active');
       });
 
       // Close modal when the "backdrop" is clicked.
@@ -112,27 +117,16 @@ Drupal.behaviors.mediaGridInteractive = {
             e.target.classList.contains(className),
           )
         ) {
-          grid.setAttribute(
-            'data-media-grid-modal-state',
-            toggleModalState('active'),
-          );
+          toggleModalState(grid, 'active');
         }
       });
-    });
 
-    // Close modal on escape key press.
-    document.addEventListener('keyup', (e) => {
-      if (e.key === 'Escape') {
-        const activeModals = context.querySelectorAll(
-          '[data-media-grid-modal-state="active"',
-        );
-        activeModals.forEach((modal) => {
-          modal.setAttribute(
-            'data-media-grid-modal-state',
-            toggleModalState('active'),
-          );
-        });
-      }
+      // Close modal on escape key press.
+      document.addEventListener('keyup', (e) => {
+        if (e.key === 'Escape') {
+          toggleModalState(grid, 'active');
+        }
+      });
     });
   },
 };
