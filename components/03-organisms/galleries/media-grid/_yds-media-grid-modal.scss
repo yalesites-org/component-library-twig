@@ -40,6 +40,7 @@
 }
 
 .media-grid-modal__item {
+  padding-block: var(--size-spacing-site-gutter);
   width: 100%;
   height: 100%;
 }
@@ -75,7 +76,8 @@
   grid-area: content;
   overflow: auto;
   max-height: 100%;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: var(--size-spacing-3);
 }
 
@@ -90,23 +92,33 @@
 .media-grid-modal__control {
   @include atoms.button-reset;
 
-  max-width: 100%;
-  display: grid;
-  height: var(--size-click-target-minimum);
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  svg {
+    height: var(--size-click-target-minimum);
+  }
 
   &--previous {
     grid-area: controls-start-center;
-    transform: rotate(90deg);
+
+    svg {
+      transform: rotate(90deg);
+    }
   }
 
   &--next {
     grid-area: controls-end-center;
-    transform: rotate(-90deg);
+
+    svg {
+      transform: rotate(-90deg);
+    }
   }
 
   &--close {
     grid-area: controls-end-top;
     border: var(--size-thickness-1) solid;
-    padding: var(--size-spacing-3);
+    padding: var(--size-spacing-2);
   }
 }

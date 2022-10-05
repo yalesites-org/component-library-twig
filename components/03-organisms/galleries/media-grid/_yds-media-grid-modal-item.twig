@@ -17,6 +17,12 @@
     {% include "@atoms/controls/base/yds-control.twig" with {
       control__blockname: media_grid__modal__base_class,
       control__base_class: 'control',
+      control__modifiers: ['close'],
+      control__content: control_close,
+    } %}
+    {% include "@atoms/controls/base/yds-control.twig" with {
+      control__blockname: media_grid__modal__base_class,
+      control__base_class: 'control',
       control__modifiers: ['previous'],
       control__content: control_nav,
     } %}
@@ -39,12 +45,6 @@
         </div>
       {% endif %}
     </div>
-    {% include "@atoms/controls/base/yds-control.twig" with {
-      control__blockname: media_grid__modal__base_class,
-      control__base_class: 'control',
-      control__modifiers: ['close'],
-      control__content: control_close,
-    } %}
     {% include "@atoms/controls/base/yds-control.twig" with {
       control__blockname: media_grid__modal__base_class,
       control__base_class: 'control',
