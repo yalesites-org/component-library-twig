@@ -81,9 +81,7 @@ Drupal.behaviors.mediaGridInteractive = {
       const modalState = grid.getAttribute('data-media-grid-modal-state');
       const items = grid.querySelectorAll('.media-grid__image');
       const modal = grid.querySelector('.media-grid__modal');
-      const closeButton = grid.querySelector(
-        '.media-grid-modal__control--close',
-      );
+      const controls = grid.querySelectorAll('.media-grid-modal__control');
 
       // Show modal when an item is clicked.
       items.forEach((item) => {
@@ -94,16 +92,43 @@ Drupal.behaviors.mediaGridInteractive = {
         });
       });
 
-      // Navigate modal when "previous" or "next" buttons are clicked.
-      // @TODO:
+      // Handle modal control clicks.
+      controls.forEach((control) => {
+        control.addEventListener('click', () => {
+          const activeIndex = grid
+            .querySelectorAll('[data-media-grid-modal-item-active]')[0]
+            .getAttribute('data-media-grid-modal-item');
+          const nextItem = grid.querySelector(
+            `[data-media-grid-item="${+activeIndex + 1}"]`,
+          );
+          const previousItem = grid.querySelector(
+            `[data-media-grid-item="${+activeIndex - 1}"]`,
+          );
 
-      // Navigate modal when left and right arrows are pressed.
-      // @TODO:
-
-      // Close modal when the "close" button is clicked.
-      closeButton.addEventListener('click', () => {
-        toggleModalState(grid, 'active');
+          switch (true) {
+            // Navigate to the next item.
+            // @TODO:
+            case /--next/.test(control.className):
+              showSelectedItem(grid, nextItem);
+              break;
+            // Navigate to the previous item.
+            // @TODO:
+            case /--previous/.test(control.className):
+              showSelectedItem(grid, previousItem);
+              break;
+            // Close modal when the "close" button is clicked.
+            case /--close/.test(control.className):
+              toggleModalState(grid, 'active');
+              break;
+            default:
+              break;
+          }
+        });
       });
+
+      // controlClose.addEventListener('click', () => {
+      //   toggleModalState(grid, 'active');
+      // });
 
       // Close modal when the "backdrop" is clicked.
       window.addEventListener('click', (e) => {
@@ -121,11 +146,14 @@ Drupal.behaviors.mediaGridInteractive = {
         }
       });
 
-      // Close modal on escape key press.
+      // Handle key presses.
       document.addEventListener('keyup', (e) => {
+        // Close modal on escape key press.
         if (e.key === 'Escape') {
           toggleModalState(grid, 'active');
         }
+        // Navigate modal when left and right arrows are pressed.
+        // @TODO:
       });
     });
   },
