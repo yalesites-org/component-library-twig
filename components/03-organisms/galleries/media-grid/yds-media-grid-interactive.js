@@ -95,26 +95,41 @@ Drupal.behaviors.mediaGridInteractive = {
       // Handle modal control clicks.
       controls.forEach((control) => {
         control.addEventListener('click', () => {
-          const activeIndex = grid
-            .querySelectorAll('[data-media-grid-modal-item-active]')[0]
-            .getAttribute('data-media-grid-modal-item');
+          const activeIndex = Number(
+            grid
+              .querySelectorAll('[data-media-grid-modal-item-active]')[0]
+              .getAttribute('data-media-grid-modal-item'),
+          );
           const nextItem = grid.querySelector(
             `[data-media-grid-item="${+activeIndex + 1}"]`,
           );
           const previousItem = grid.querySelector(
             `[data-media-grid-item="${+activeIndex - 1}"]`,
           );
+          const itemCount = grid.querySelectorAll(
+            '[data-media-grid-item]',
+          ).length;
+          const firstItem = grid.querySelector(`[data-media-grid-item="1"]`);
+          const lastItem = grid.querySelector(
+            `[data-media-grid-item="${itemCount}"]`,
+          );
 
           switch (true) {
             // Navigate to the next item.
-            // @TODO:
             case /--next/.test(control.className):
-              showSelectedItem(grid, nextItem);
+              if (activeIndex === itemCount) {
+                showSelectedItem(grid, firstItem);
+              } else {
+                showSelectedItem(grid, nextItem);
+              }
               break;
             // Navigate to the previous item.
-            // @TODO:
             case /--previous/.test(control.className):
-              showSelectedItem(grid, previousItem);
+              if (activeIndex === 1) {
+                showSelectedItem(grid, lastItem);
+              } else {
+                showSelectedItem(grid, previousItem);
+              }
               break;
             // Close modal when the "close" button is clicked.
             case /--close/.test(control.className):
@@ -125,10 +140,6 @@ Drupal.behaviors.mediaGridInteractive = {
           }
         });
       });
-
-      // controlClose.addEventListener('click', () => {
-      //   toggleModalState(grid, 'active');
-      // });
 
       // Close modal when the "backdrop" is clicked.
       window.addEventListener('click', (e) => {
