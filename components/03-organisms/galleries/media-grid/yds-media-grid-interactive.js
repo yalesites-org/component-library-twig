@@ -1,5 +1,3 @@
-// @TODO: Place focus on the active item when the modal is closed.
-
 Drupal.behaviors.mediaGridInteractive = {
   attach(context) {
     const mediaGrids = context.querySelectorAll('.media-grid');
@@ -58,6 +56,14 @@ Drupal.behaviors.mediaGridInteractive = {
         const newState = currentState === 'inactive' ? 'active' : 'inactive';
 
         grid.setAttribute('data-media-grid-modal-state', newState);
+
+        // On close, set focus on the grid item that was just open in the modal.
+        if (newState === 'inactive') {
+          grid
+            .querySelector(`[data-media-grid-item="${activeIndex}"`)
+            .querySelector('button')
+            .focus();
+        }
       };
 
       /**
