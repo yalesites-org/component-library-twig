@@ -1,3 +1,8 @@
+// @TODO: Fade in/out when navigating.
+// @TODO: Move the navigation arrows inline with pager on mobile.
+// @TODO: Disable background scrolling.
+// @TODO: Figure out why control outlines are getting cut off.
+
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
 
@@ -47,16 +52,32 @@
 
 .media-grid-modal__inner {
   display: grid;
+  /* stylelint-disable scss/operator-no-newline-before */
   grid-template:
-    'controls-start-top media controls-end-top' var(--size-click-target-minimum)
-    'controls-start-center media controls-end-center' minmax(0, 2fr)
-    'controls-start-bottom content controls-end-bottom' minmax(0, 1fr) / var(
-      --size-click-target-minimum
+    '. . control-close' var(--size-click-target-minimum)
+    'media media media' minmax(auto, 1fr)
+    'control-previous content control-next' minmax(
+      var(--size-click-target-minimum),
+      1fr
     )
+    / var(--size-click-target-minimum)
     minmax(0, 1fr)
     var(--size-click-target-minimum);
+  /* stylelint-enable scss/operator-no-newline-before */
   gap: var(--spacing-component-gutter-secondary);
   max-height: 100%;
+  overflow: auto;
+
+  @media (min-width: tokens.$break-s) {
+    grid-template:
+      '. media control-close' var(--size-click-target-minimum)
+      'control-previous media control-next' minmax(auto, 2fr)
+      '. content .' minmax(var(--size-click-target-minimum), 1fr) / var(
+        --size-click-target-minimum
+      )
+      minmax(0, 1fr)
+      var(--size-click-target-minimum);
+  }
 }
 
 .media-grid-modal__media {
@@ -104,7 +125,7 @@
   }
 
   &--previous {
-    grid-area: controls-start-center;
+    grid-area: control-previous;
 
     svg {
       transform: rotate(90deg);
@@ -112,7 +133,7 @@
   }
 
   &--next {
-    grid-area: controls-end-center;
+    grid-area: control-next;
 
     svg {
       transform: rotate(-90deg);
@@ -120,7 +141,7 @@
   }
 
   &--close {
-    grid-area: controls-end-top;
+    grid-area: control-close;
     border: var(--size-thickness-1) solid;
     padding: var(--size-spacing-2);
   }
