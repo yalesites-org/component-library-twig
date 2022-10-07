@@ -142,7 +142,7 @@ Drupal.behaviors.mediaGridInteractive = {
       });
 
       // Close modal when the "backdrop" is clicked.
-      window.addEventListener('click', (e) => {
+      grid.addEventListener('click', (e) => {
         const classesToCheck = [
           'media-grid-modal__inner',
           'media-grid-modal__item',
@@ -158,14 +158,37 @@ Drupal.behaviors.mediaGridInteractive = {
       });
 
       // Handle key presses.
-      document.addEventListener('keyup', (e) => {
-        // Close modal on escape key press.
-        if (e.key === 'Escape') {
-          toggleModalState(grid, 'active');
-        }
-        // Navigate modal when left and right arrows are pressed.
-        // @TODO:
-      });
+      grid.addEventListener(
+        'keydown',
+        (e) => {
+          if (e.defaultPrevented) {
+            return;
+          }
+
+          switch (e.key) {
+            case 'Esc':
+            case 'Escape':
+              // Close modal on escape key press.
+              toggleModalState(grid, 'active');
+              break;
+            case 'Left':
+            case 'ArrowLeft':
+              // Previous
+              console.log('prev');
+              break;
+            case 'Right':
+            case 'ArrowRight':
+              // Next
+              console.log('next');
+              break;
+            default:
+              return;
+          }
+
+          e.preventDefault();
+        },
+        true,
+      );
     });
   },
 };
