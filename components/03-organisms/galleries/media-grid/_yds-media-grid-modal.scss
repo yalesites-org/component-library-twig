@@ -1,3 +1,5 @@
+// @TODO: verify prefers reduced motion
+
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
 
@@ -79,6 +81,7 @@ $modal-speed: var(--animation-speed-slow);
     grid-template:
       '. media control-close' var(--size-click-target-minimum)
       'control-previous media control-next' minmax(auto, 2fr)
+      'control-previous pager control-next' var(--size-click-target-minimum)
       '. content .' minmax(var(--size-click-target-minimum), 1fr) / var(
         --size-click-target-minimum
       )
@@ -96,6 +99,38 @@ $modal-speed: var(--animation-speed-slow);
     height: 100%;
     width: 100%;
     object-fit: contain;
+  }
+}
+
+.media-grid-modal__pager {
+  grid-area: pager;
+  display: flex;
+  gap: var(--size-spacing-4);
+  justify-content: center;
+  overflow: auto;
+}
+
+.media-grid-modal__pager-item {
+  @include atoms.button-reset;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--size-click-target-minimum);
+  min-width: var(--size-click-target-minimum);
+
+  // Fix to keep the focus indicator visible. Needed because of the
+  // `overflow: auto` above, which would otherwise cut off the outline.
+  outline-offset: calc(var(--size-thickness-2) * -1);
+
+  &:hover {
+    color: var(--color-link-hover);
+  }
+}
+
+.media-grid-modal__pager-item-content {
+  [data-media-grid-modal-item-active] > & {
+    transform: scale(1.45);
   }
 }
 

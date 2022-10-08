@@ -1,3 +1,4 @@
+// @TODO: support clicking on the "maximize icon"
 // @TODO: support swipe!
 
 Drupal.behaviors.mediaGridInteractive = {
@@ -7,48 +8,49 @@ Drupal.behaviors.mediaGridInteractive = {
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     const body = document.querySelector('body');
 
-    /**
-     * trapKeyboard
-     * @description traps keyboard focus when modal is active.
-     * @param {HTMLElement} modal the active modal.
-     */
-    const trapKeyboard = (modal) => {
-      const focusableModalElements = modal.querySelectorAll(focusableElements);
-      const firstFocusableElement = focusableModalElements[0];
-      const lastFocusableElement =
-        focusableModalElements[focusableModalElements.length - 1];
-
-      // Set initial focus inside modal when opened.
-      firstFocusableElement.focus();
-
-      modal.addEventListener('keydown', (e) => {
-        const isTabPressed = e.key === 'Tab' || e.keyCode === 9;
-
-        if (!isTabPressed) {
-          return;
-        }
-
-        if (e.shiftKey) {
-          if (document.activeElement === firstFocusableElement) {
-            e.preventDefault();
-
-            lastFocusableElement.focus();
-          }
-        } else if (document.activeElement === lastFocusableElement) {
-          e.preventDefault();
-
-          firstFocusableElement.focus();
-        }
-      });
-    };
-
     mediaGrids.forEach((grid) => {
       const modalState = grid.getAttribute('data-media-grid-modal-state');
       const items = grid.querySelectorAll('.media-grid__image');
       const modal = grid.querySelector('.media-grid__modal');
       const controls = grid.querySelectorAll('.media-grid-modal__control');
       const itemCount = grid.querySelectorAll('[data-media-grid-item]').length;
+      const pagerItems = grid.querySelectorAll('.media-grid-modal__pager-item');
       let activeIndex;
+
+      /**
+       * trapKeyboard
+       * @description traps keyboard focus when modal is active.
+       */
+      const trapKeyboard = () => {
+        const focusableModalElements =
+          modal.querySelectorAll(focusableElements);
+        const firstFocusableElement = focusableModalElements[0];
+        const lastFocusableElement =
+          focusableModalElements[focusableModalElements.length - 1];
+
+        // Set initial focus inside modal when opened.
+        firstFocusableElement.focus();
+
+        modal.addEventListener('keydown', (e) => {
+          const isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+
+          if (!isTabPressed) {
+            return;
+          }
+
+          if (e.shiftKey) {
+            if (document.activeElement === firstFocusableElement) {
+              e.preventDefault();
+
+              lastFocusableElement.focus();
+            }
+          } else if (document.activeElement === lastFocusableElement) {
+            e.preventDefault();
+
+            firstFocusableElement.focus();
+          }
+        });
+      };
 
       /**
        * toggleModalState
@@ -68,8 +70,23 @@ Drupal.behaviors.mediaGridInteractive = {
             .focus();
           body.removeAttribute('data-modal-active');
         } else if (newState === 'active') {
+          trapKeyboard();
           body.setAttribute('data-modal-active', 'true');
         }
+      };
+
+      /**
+       * indicateActivePager
+       * @description visually indicate active pager item.
+       */
+      const indicateActivePager = (index) => {
+        pagerItems.forEach((pagerItem, itemIndex) => {
+          pagerItem.removeAttribute('data-media-grid-modal-item-active');
+
+          if (index === itemIndex) {
+            pagerItem.setAttribute('data-media-grid-modal-item-active', true);
+          }
+        });
       };
 
       /**
@@ -96,6 +113,17 @@ Drupal.behaviors.mediaGridInteractive = {
         activeModalItem.forEach((activeItem) => {
           activeItem.setAttribute('data-media-grid-modal-item-active', true);
         });
+
+        // Indicate active pager item.
+        indicateActivePager(activeIndex);
+      };
+
+      /**
+       * handlePagerClick
+       * @description Supports pager navigation.
+       */
+      const handlePagerClick = (index) => {
+        showSelectedItem(index);
       };
 
       // Show modal when an item is clicked.
@@ -108,7 +136,13 @@ Drupal.behaviors.mediaGridInteractive = {
           );
           toggleModalState(modalState);
           showSelectedItem(index);
-          trapKeyboard(modal);
+        });
+      });
+
+      // Navigate to selected pager item.
+      pagerItems.forEach((pagerItem, index) => {
+        pagerItem.addEventListener('click', () => {
+          handlePagerClick(index);
         });
       });
 

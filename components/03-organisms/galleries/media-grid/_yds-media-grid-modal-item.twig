@@ -14,12 +14,14 @@
 
 <div {{ bem('item', [], media_grid__modal__base_class) }} data-component-width="feature">
   <div {{ bem('inner', [], media_grid__modal__base_class) }}>
+    {# "Close" control #}
     {% include "@atoms/controls/base/yds-control.twig" with {
       control__blockname: media_grid__modal__base_class,
       control__base_class: 'control',
       control__modifiers: ['close'],
       control__content: control_close,
     } %}
+    {# "Previous" control #}
     {% include "@atoms/controls/base/yds-control.twig" with {
       control__blockname: media_grid__modal__base_class,
       control__base_class: 'control',
@@ -27,6 +29,7 @@
       control__content: control_nav,
     } %}
     {% for item in media_grid__items %}
+      {# Media #}
       <div {{ bem('media', [], media_grid__modal__base_class) }} data-media-grid-modal-item={{ loop.index }}>
         {% block media_grid__modal__media %}
           {% include "@atoms/images/image/_responsive-image.twig" with {
@@ -38,14 +41,32 @@
           } %}
         {% endblock %}
       </div>
-      {# @TODO: Add pager here. #}
+    {% endfor %}
+    {# Pager #}
+    <div {{ bem('pager', [], media_grid__modal__base_class) }}>
+      {% for item in media_grid__items %}
+        {% set pager_item__content %}
+          <span {{ bem('pager-item-content', [], media_grid__modal__base_class) }}>
+            {{ loop.index }}
+          </span>
+        {% endset %}
+        {% include "@atoms/controls/base/yds-control.twig" with {
+          control__blockname: media_grid__modal__base_class,
+          control__base_class: 'pager-item',
+          control__content: pager_item__content,
+        } %}
+      {% endfor %}
+    </div>
+    {% for item in media_grid__items %}
       <div {{ bem('content', [], media_grid__modal__base_class) }} data-embedded-components data-media-grid-modal-item={{ loop.index }}>
+        {# Content Heading #}
         {% include "@atoms/typography/headings/yds-heading.twig" with {
           heading__level: '2',
           heading: item.media_grid__modal__heading,
           heading__blockname: media_grid__modal__base_class,
         } %}
         {% if item.media_grid__modal__text %}
+          {# Content Text #}
           <div {{ bem('text', [], media_grid__modal__base_class) }} data-media-grid-modal-item={{ loop.index }}>
             {% include "@molecules/text/yds-text-field.twig" with {
               text_field__content: item.media_grid__modal__text,
@@ -54,6 +75,7 @@
         {% endif %}
       </div>
     {% endfor %}
+    {# "Next" control #}
     {% include "@atoms/controls/base/yds-control.twig" with {
       control__blockname: media_grid__modal__base_class,
       control__base_class: 'control',
