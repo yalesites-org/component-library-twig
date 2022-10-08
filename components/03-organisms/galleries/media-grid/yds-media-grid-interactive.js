@@ -101,9 +101,11 @@ Drupal.behaviors.mediaGridInteractive = {
       // Show modal when an item is clicked.
       items.forEach((item) => {
         item.addEventListener('click', () => {
-          const index = item
-            .closest('[data-media-grid-item]')
-            .getAttribute('data-media-grid-item');
+          const index = Number(
+            item
+              .closest('[data-media-grid-item]')
+              .getAttribute('data-media-grid-item'),
+          );
           toggleModalState(modalState);
           showSelectedItem(index);
           trapKeyboard(modal);
@@ -119,7 +121,7 @@ Drupal.behaviors.mediaGridInteractive = {
               if (activeIndex === 1) {
                 showSelectedItem(itemCount);
               } else {
-                showSelectedItem(+activeIndex - 1);
+                showSelectedItem(activeIndex - 1);
               }
               break;
             // Navigate to the next item.
@@ -127,7 +129,7 @@ Drupal.behaviors.mediaGridInteractive = {
               if (activeIndex === itemCount) {
                 showSelectedItem(1);
               } else {
-                showSelectedItem(+activeIndex + 1);
+                showSelectedItem(activeIndex + 1);
               }
               break;
             // Close modal when the "close" button is clicked.
@@ -176,7 +178,7 @@ Drupal.behaviors.mediaGridInteractive = {
               if (activeIndex === 1) {
                 showSelectedItem(itemCount);
               } else {
-                showSelectedItem(+activeIndex - 1);
+                showSelectedItem(activeIndex - 1);
               }
               break;
             case 'Right':
@@ -185,7 +187,7 @@ Drupal.behaviors.mediaGridInteractive = {
               if (activeIndex === itemCount) {
                 showSelectedItem(1);
               } else {
-                showSelectedItem(+activeIndex + 1);
+                showSelectedItem(activeIndex + 1);
               }
               break;
             default:
