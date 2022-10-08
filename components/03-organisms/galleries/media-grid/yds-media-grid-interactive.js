@@ -1,3 +1,5 @@
+// @TODO: support swipe!
+
 Drupal.behaviors.mediaGridInteractive = {
   attach(context) {
     const mediaGrids = context.querySelectorAll('.media-grid');

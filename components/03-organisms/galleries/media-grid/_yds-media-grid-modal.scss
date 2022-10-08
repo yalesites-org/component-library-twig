@@ -6,8 +6,9 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
 
+$modal-speed: var(--animation-speed-slow);
+
 .media-grid__modal {
-  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -15,22 +16,31 @@
   width: 100%;
   background: transparent;
 
+  [data-media-grid-modal-state='inactive'] & {
+    @include tokens.animate-hidden($modal-speed);
+
+    opacity: 0;
+    transition: opacity $modal-speed;
+  }
+
   // Show the modal and backdrop when active.
   [data-media-grid-modal-state='active'] & {
+    opacity: 1;
+    transition: opacity $modal-speed;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
 
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background-color: var(--color-background);
-      opacity: 0.9;
-    }
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--color-background);
+    opacity: 0.9;
   }
 
   // Position modal content relative, to "place it on top of the backdrop".
@@ -52,10 +62,14 @@
 
 .media-grid-modal__inner {
   display: grid;
+
+  // Stylelint is mis-interpreting the `/` below as a division operator, rather
+  // than as a part of the grid-template sizing stuff. So, we need to disable
+  // that check for this chunk of code.
   /* stylelint-disable scss/operator-no-newline-before */
   grid-template:
     '. . control-close' var(--size-click-target-minimum)
-    'media media media' minmax(auto, 1fr)
+    'media media media' minmax(auto, 50vh)
     'control-previous content control-next' minmax(
       var(--size-click-target-minimum),
       1fr
@@ -69,6 +83,9 @@
   overflow: auto;
 
   @media (min-width: tokens.$break-s) {
+    // @TODO: It would be really nice if instead of being `2fr` the `media` part
+    // would only grow as large as the height of the image. The 2 to 1 ratio is
+    // causing some weird jumping when the content length varies dramatically.
     grid-template:
       '. media control-close' var(--size-click-target-minimum)
       'control-previous media control-next' minmax(auto, 2fr)
@@ -147,8 +164,9 @@
   }
 }
 
-// Hide all modal items, by default.
+// Hide all modal items, by default, but maintain their physical space. This
+// keeps the modal "sections" consistent sizes, and provides a smoother
+// navigation experience.
 [data-media-grid-modal-item]:not([data-media-grid-modal-item-active]) {
-  // @TODO: See if `display: none` or `visibility: hidden` is better here.
-  display: none;
+  visibility: hidden;
 }

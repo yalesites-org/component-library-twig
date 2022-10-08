@@ -13,7 +13,8 @@
 
 // This animation is to remove hidden items from screen readers and
 // keyboard navigation, while maintaining the slow "close" effect.
-// Apply this mixin to a selector that indicates to the "hidden" state.
+// Apply this mixin to a selector that indicates the "hidden" state (not just.
+// the element base class. It must specifically indicate "hidden".)
 @mixin animate-hidden($speed: var(--animation-speed-default)) {
   visibility: hidden;
   animation: #{$speed} fade-out;

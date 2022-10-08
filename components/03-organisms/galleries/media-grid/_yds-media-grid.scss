@@ -18,6 +18,8 @@
 
 .media-grid__item {
   display: flex;
+  aspect-ratio: 3/2;
+  overflow: hidden;
 
   [data-media-grid-variation='interactive'] & {
     position: relative;

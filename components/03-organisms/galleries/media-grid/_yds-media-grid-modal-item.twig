@@ -29,9 +29,16 @@
     {% for item in media_grid__items %}
       <div {{ bem('media', [], media_grid__modal__base_class) }} data-media-grid-modal-item={{ loop.index }}>
         {% block media_grid__modal__media %}
-          {% include "@atoms/images/image/_responsive-image.twig" %}
+          {% include "@atoms/images/image/_responsive-image.twig" with {
+            output_image_tag: item.output_image_tag,
+            image__srcset: item.image__srcset,
+            image__sizes: item.image__sizes,
+            image__src: item.image__src,
+            image__alt: item.image__alt,
+          } %}
         {% endblock %}
       </div>
+      {# @TODO: Add pager here. #}
       <div {{ bem('content', [], media_grid__modal__base_class) }} data-embedded-components data-media-grid-modal-item={{ loop.index }}>
         {% include "@atoms/typography/headings/yds-heading.twig" with {
           heading__level: '2',

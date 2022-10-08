@@ -2,7 +2,13 @@
 
 <li {{ bem('item', [], media_grid__base_class) }} data-media-grid-item={{ loop.index }}>
   <button {{ bem('image', [], media_grid__base_class) }}>
-    {% include "@atoms/images/image/_responsive-image.twig" %}
+    {% include "@atoms/images/image/_responsive-image.twig" with {
+      output_image_tag: item.output_image_tag,
+      image__srcset: item.image__srcset,
+      image__sizes: item.image__sizes,
+      image__src: item.image__src,
+      image__alt: item.image__alt,
+    } %}
   </button>
   {% if media_grid__variation == 'interactive' %}
     <div {{ bem('maximize', [], media_grid__base_class) }}>

@@ -53,6 +53,5 @@ export const InteractiveGrid = ({ items, gridHeading }) => {
     ...mediaGridData,
     media_grid__variation: 'interactive',
     media_grid__heading: gridHeading,
-    ...imageData.responsive_images['3x2'],
   });
 };
