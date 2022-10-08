@@ -1,6 +1,5 @@
 // @TODO: Move the navigation arrows inline with pager on mobile.
 // @TODO: Disable background scrolling.
-// @TODO: Figure out why control outlines are getting cut off.
 
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
@@ -70,10 +69,8 @@ $modal-speed: var(--animation-speed-slow);
   grid-template:
     '. . control-close' var(--size-click-target-minimum)
     'media media media' minmax(auto, 50vh)
-    'control-previous content control-next' minmax(
-      var(--size-click-target-minimum),
-      1fr
-    )
+    'control-previous pager control-next' var(--size-click-target-minimum)
+    'content content content' minmax(var(--size-click-target-minimum), 1fr)
     / var(--size-click-target-minimum)
     minmax(0, 1fr)
     var(--size-click-target-minimum);
