@@ -58,6 +58,7 @@ $modal-speed: var(--animation-speed-slow);
   padding-block: var(--size-spacing-site-gutter);
   width: 100%;
   height: 100%;
+  overflow: auto;
 }
 
 .media-grid-modal__inner {
@@ -80,12 +81,8 @@ $modal-speed: var(--animation-speed-slow);
   /* stylelint-enable scss/operator-no-newline-before */
   gap: var(--spacing-component-gutter-secondary);
   max-height: 100%;
-  overflow: auto;
 
   @media (min-width: tokens.$break-s) {
-    // @TODO: It would be really nice if instead of being `2fr` the `media` part
-    // would only grow as large as the height of the image. The 2 to 1 ratio is
-    // causing some weird jumping when the content length varies dramatically.
     grid-template:
       '. media control-close' var(--size-click-target-minimum)
       'control-previous media control-next' minmax(auto, 2fr)
