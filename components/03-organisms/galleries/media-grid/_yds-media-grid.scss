@@ -37,6 +37,7 @@
   opacity: 1;
   transition: opacity var(--animation-speed-default) ease-in-out;
 
+  [data-media-grid-variation='interactive'] &:focus-visible,
   [data-media-grid-variation='interactive'] .media-grid__item:hover & {
     opacity: 0.8;
   }
@@ -57,7 +58,8 @@
   transform-origin: bottom right;
   transition: transform var(--animation-speed-default) ease-in-out;
 
-  .media-grid__item:hover & {
+  .media-grid__item:hover &,
+  .media-grid__image:focus-visible + & {
     transform: scale(1.5833);
   }
 
