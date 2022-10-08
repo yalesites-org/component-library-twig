@@ -5,6 +5,7 @@ Drupal.behaviors.mediaGridInteractive = {
     const mediaGrids = context.querySelectorAll('.media-grid');
     const focusableElements =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    const body = document.querySelector('body');
 
     /**
      * trapKeyboard
@@ -65,6 +66,9 @@ Drupal.behaviors.mediaGridInteractive = {
             .querySelector(`[data-media-grid-item="${activeIndex}"`)
             .querySelector('button')
             .focus();
+          body.removeAttribute('data-modal-active');
+        } else if (newState === 'active') {
+          body.setAttribute('data-modal-active', 'true');
         }
       };
 
