@@ -1,4 +1,3 @@
-// @TODO: Fade in/out when navigating.
 // @TODO: Move the navigation arrows inline with pager on mobile.
 // @TODO: Disable background scrolling.
 // @TODO: Figure out why control outlines are getting cut off.
@@ -161,9 +160,14 @@ $modal-speed: var(--animation-speed-slow);
   }
 }
 
-// Hide all modal items, by default, but maintain their physical space. This
-// keeps the modal "sections" consistent sizes, and provides a smoother
-// navigation experience.
 [data-media-grid-modal-item]:not([data-media-grid-modal-item-active]) {
-  visibility: hidden;
+  @include tokens.animate-hidden($modal-speed);
+
+  opacity: 0;
+  transition: opacity $modal-speed;
+}
+
+[data-media-grid-modal-item-active] {
+  opacity: 1;
+  transition: opacity $modal-speed;
 }
