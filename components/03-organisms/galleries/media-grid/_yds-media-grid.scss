@@ -34,10 +34,10 @@
 
 .media-grid__image {
   @include atoms.button-reset;
+  @include tokens.animate(opacity, var(--animation-speed-default));
 
   overflow: hidden;
   opacity: 1;
-  transition: opacity var(--animation-speed-default) ease-in-out;
 
   [data-media-grid-variation='interactive'] &:focus-visible,
   [data-media-grid-variation='interactive'] .media-grid__item:hover & {
@@ -47,6 +47,8 @@
 
 .media-grid__maximize {
   --size-icon: 0.75rem;
+
+  @include tokens.animate(transform, var(--animation-speed-default));
 
   position: absolute;
   right: var(--size-spacing-4);
@@ -58,7 +60,6 @@
   display: grid;
   place-content: center;
   transform-origin: bottom right;
-  transition: transform var(--animation-speed-default) ease-in-out;
 
   .media-grid__item:hover &,
   .media-grid__image:focus-visible + & {

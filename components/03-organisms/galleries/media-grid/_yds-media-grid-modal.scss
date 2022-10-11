@@ -1,9 +1,11 @@
-// @TODO: verify prefers reduced motion
-
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
 
 $modal-speed: var(--animation-speed-slow);
+
+@mixin media-grid-modal-transition {
+  @include tokens.animate(opacity, $modal-speed);
+}
 
 .media-grid__modal {
   position: fixed;
@@ -15,15 +17,16 @@ $modal-speed: var(--animation-speed-slow);
 
   [data-media-grid-modal-state='inactive'] & {
     @include tokens.animate-hidden($modal-speed);
+    @include media-grid-modal-transition;
 
     opacity: 0;
-    transition: opacity $modal-speed;
   }
 
   // Show the modal and backdrop when active.
   [data-media-grid-modal-state='active'] & {
+    @include media-grid-modal-transition;
+
     opacity: 1;
-    transition: opacity $modal-speed;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -191,12 +194,13 @@ $modal-speed: var(--animation-speed-slow);
 
 [data-media-grid-modal-item]:not([data-media-grid-modal-item-active]) {
   @include tokens.animate-hidden($modal-speed);
+  @include media-grid-modal-transition;
 
   opacity: 0;
-  transition: opacity $modal-speed;
 }
 
 [data-media-grid-modal-item-active] {
+  @include media-grid-modal-transition;
+
   opacity: 1;
-  transition: opacity $modal-speed;
 }
