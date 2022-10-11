@@ -11,12 +11,13 @@ Drupal.behaviors.mediaGridInteractive = {
       const items = grid.querySelectorAll('.media-grid__image');
       const maximizeIcons = grid.querySelectorAll('.media-grid__maximize');
       const modal = grid.querySelector('.media-grid__modal');
+      const modalMedia = grid.querySelectorAll('.media-grid-modal__media');
       const controls = grid.querySelectorAll('.media-grid-modal__control');
       const itemCount = grid.querySelectorAll('[data-media-grid-item]').length;
       const pagerItems = grid.querySelectorAll('.media-grid-modal__pager-item');
       let activeIndex;
-      let touchStartX;
-      let touchEndX;
+      let swipeStartX;
+      let swipeEndX;
 
       /**
        * trapKeyboard
@@ -178,20 +179,45 @@ Drupal.behaviors.mediaGridInteractive = {
        * @description Support swiping modal items.
        */
       const handleSwipe = () => {
-        if (touchEndX < touchStartX) {
+        // If swipe left, navigate to the next item.
+        if (swipeEndX < swipeStartX) {
           navigateNext();
-        } else if (touchEndX > touchStartX) {
+          // If swipe right, navigate to the previous item.
+        } else if (swipeEndX > swipeStartX) {
           navigatePrevious();
         }
       };
 
+      // Capture the touch start position for the handleSwipe function.
       modal.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
+        swipeStartX = e.changedTouches[0].screenX;
       });
 
+      // Capture the touch end position for the handleSwipe function.
       modal.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
+        swipeEndX = e.changedTouches[0].screenX;
         handleSwipe();
+      });
+
+      // Click and drag (with a mouse) support.
+      modalMedia.forEach((media) => {
+        const Media = media;
+
+        // Capture the mousedown position for the handleSwipe function.
+        media.addEventListener('mousedown', (e) => {
+          swipeStartX = e.clientX;
+        });
+
+        // Capture the mouseup position for the handleSwipe function.
+        media.addEventListener('mouseup', (e) => {
+          swipeEndX = e.clientX;
+          handleSwipe();
+        });
+
+        // Disable browser default behaviors that apply to dragging images.
+        Media.ondragstart = () => {
+          return false;
+        };
       });
 
       // Show modal when an item's image is clicked.
