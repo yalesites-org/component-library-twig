@@ -1,4 +1,5 @@
-// @TODO: Remove cursor: pointer?
+// @TODO: Limit size of pager on small screens.
+// Probably also enable scrolling... just in case.
 
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
@@ -26,7 +27,7 @@
     position: relative;
     background-color: var(--color-basic-black);
 
-    &:hover {
+    &:hover > * {
       cursor: pointer;
     }
   }
