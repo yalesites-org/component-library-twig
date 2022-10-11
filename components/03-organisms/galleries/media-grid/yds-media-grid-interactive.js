@@ -1,4 +1,3 @@
-// @TODO: support clicking on the "maximize icon"
 // @TODO: support swipe!
 
 Drupal.behaviors.mediaGridInteractive = {
@@ -9,13 +8,15 @@ Drupal.behaviors.mediaGridInteractive = {
     const body = document.querySelector('body');
 
     mediaGrids.forEach((grid) => {
-      const modalState = grid.getAttribute('data-media-grid-modal-state');
       const items = grid.querySelectorAll('.media-grid__image');
+      const maximizeIcons = grid.querySelectorAll('.media-grid__maximize');
       const modal = grid.querySelector('.media-grid__modal');
       const controls = grid.querySelectorAll('.media-grid-modal__control');
       const itemCount = grid.querySelectorAll('[data-media-grid-item]').length;
       const pagerItems = grid.querySelectorAll('.media-grid-modal__pager-item');
       let activeIndex;
+      let touchStartX;
+      let touchEndX;
 
       /**
        * trapKeyboard
@@ -83,7 +84,7 @@ Drupal.behaviors.mediaGridInteractive = {
         pagerItems.forEach((pagerItem, itemIndex) => {
           pagerItem.removeAttribute('data-media-grid-modal-item-active');
 
-          if (index === itemIndex) {
+          if (index - 1 === itemIndex) {
             pagerItem.setAttribute('data-media-grid-modal-item-active', true);
           }
         });
@@ -126,16 +127,84 @@ Drupal.behaviors.mediaGridInteractive = {
         showSelectedItem(index);
       };
 
-      // Show modal when an item is clicked.
+      /**
+       * handleItemClick
+       * @description Active modal on item click.
+       */
+      const handleItemClick = (item) => {
+        const index = Number(
+          item
+            .closest('[data-media-grid-item]')
+            .getAttribute('data-media-grid-item'),
+        );
+        toggleModalState('inactive');
+        showSelectedItem(index);
+      };
+
+      /**
+       * closeModal
+       * @description Close the active modal.
+       */
+      const closeModal = () => {
+        toggleModalState('active');
+      };
+
+      /**
+       * navigateNext
+       * @description Navigate to the next item;
+       */
+      const navigateNext = () => {
+        if (activeIndex === itemCount) {
+          showSelectedItem(1);
+        } else {
+          showSelectedItem(activeIndex + 1);
+        }
+      };
+
+      /**
+       * navigatePrevious
+       * @description Navigate to the next item;
+       */
+      const navigatePrevious = () => {
+        if (activeIndex === 1) {
+          showSelectedItem(itemCount);
+        } else {
+          showSelectedItem(activeIndex - 1);
+        }
+      };
+
+      /**
+       * handleSwipe
+       * @description Support swiping modal items.
+       */
+      const handleSwipe = () => {
+        if (touchEndX < touchStartX) {
+          navigateNext();
+        } else if (touchEndX > touchStartX) {
+          navigatePrevious();
+        }
+      };
+
+      modal.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+
+      modal.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      });
+
+      // Show modal when an item's image is clicked.
       items.forEach((item) => {
         item.addEventListener('click', () => {
-          const index = Number(
-            item
-              .closest('[data-media-grid-item]')
-              .getAttribute('data-media-grid-item'),
-          );
-          toggleModalState(modalState);
-          showSelectedItem(index);
+          handleItemClick(item);
+        });
+      });
+
+      // Show modal when an item's maximize icon is clicked.
+      maximizeIcons.forEach((icon) => {
+        icon.addEventListener('click', () => {
+          handleItemClick(icon);
         });
       });
 
@@ -150,25 +219,17 @@ Drupal.behaviors.mediaGridInteractive = {
       controls.forEach((control) => {
         control.addEventListener('click', () => {
           switch (true) {
+            // Close modal when the "close" button is clicked.
+            case /--close/.test(control.className):
+              closeModal();
+              break;
             // Navigate to the previous item.
             case /--previous/.test(control.className):
-              if (activeIndex === 1) {
-                showSelectedItem(itemCount);
-              } else {
-                showSelectedItem(activeIndex - 1);
-              }
+              navigatePrevious();
               break;
             // Navigate to the next item.
             case /--next/.test(control.className):
-              if (activeIndex === itemCount) {
-                showSelectedItem(1);
-              } else {
-                showSelectedItem(activeIndex + 1);
-              }
-              break;
-            // Close modal when the "close" button is clicked.
-            case /--close/.test(control.className):
-              toggleModalState('active');
+              navigateNext();
               break;
             default:
               break;
@@ -188,7 +249,7 @@ Drupal.behaviors.mediaGridInteractive = {
             e.target.classList.contains(className),
           )
         ) {
-          toggleModalState('active');
+          closeModal();
         }
       });
 
@@ -204,25 +265,17 @@ Drupal.behaviors.mediaGridInteractive = {
             case 'Esc':
             case 'Escape':
               // Close modal on escape key press.
-              toggleModalState('active');
+              closeModal();
               break;
             case 'Left':
             case 'ArrowLeft':
-              // Previous
-              if (activeIndex === 1) {
-                showSelectedItem(itemCount);
-              } else {
-                showSelectedItem(activeIndex - 1);
-              }
+              // Navigate to the previous item.
+              navigatePrevious();
               break;
             case 'Right':
             case 'ArrowRight':
-              // Next
-              if (activeIndex === itemCount) {
-                showSelectedItem(1);
-              } else {
-                showSelectedItem(activeIndex + 1);
-              }
+              // Navigate to the next item.
+              navigateNext();
               break;
             default:
               return;
