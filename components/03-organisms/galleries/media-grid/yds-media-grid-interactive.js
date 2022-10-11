@@ -1,5 +1,3 @@
-// @TODO: support swipe!
-
 Drupal.behaviors.mediaGridInteractive = {
   attach(context) {
     const mediaGrids = context.querySelectorAll('.media-grid');
@@ -14,7 +12,9 @@ Drupal.behaviors.mediaGridInteractive = {
       const modalMedia = grid.querySelectorAll('.media-grid-modal__media');
       const controls = grid.querySelectorAll('.media-grid-modal__control');
       const itemCount = grid.querySelectorAll('[data-media-grid-item]').length;
-      const pagerItems = grid.querySelectorAll('.media-grid-modal__pager-item');
+      const pagerItems = grid.querySelectorAll(
+        '.media-grid-modal__pager-item:not(.media-grid-modal__pager-item--total)',
+      );
       let activeIndex;
       let swipeStartX;
       let swipeEndX;

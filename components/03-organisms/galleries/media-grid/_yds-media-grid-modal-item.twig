@@ -56,6 +56,19 @@
           control__content: pager_item__content,
         } %}
       {% endfor %}
+      {# {% set pager_item__total__content %} #}
+      <div {{ bem('pager-item', ['total'], media_grid__modal__base_class) }}>
+        <span {{ bem('pager-item-content', [], media_grid__modal__base_class) }}>
+          {{ media_grid__items.length }}
+        </span>
+      </div>
+      {# {% endset %} #}
+      {# {% include "@atoms/controls/base/yds-control.twig" with {
+          control__blockname: media_grid__modal__base_class,
+          control__base_class: 'pager-item',
+          control__modifiers: ['total'],
+          control__content: pager_item__total__content,
+        } %} #}
     </div>
     {% for item in media_grid__items %}
       <div {{ bem('content', [], media_grid__modal__base_class) }} data-embedded-components data-media-grid-modal-item={{ loop.index }}>

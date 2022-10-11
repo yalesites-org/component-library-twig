@@ -127,13 +127,39 @@ $modal-speed: var(--animation-speed-slow);
   outline-offset: calc(var(--size-thickness-2) * -1);
 
   &:hover {
-    color: var(--color-link-hover);
+    @media (min-width: tokens.$break-s) {
+      color: var(--color-link-hover);
+    }
+  }
+
+  @media (max-width: tokens.$break-s - 0.05) {
+    &:not(.media-grid-modal__pager-item--total):not([data-media-grid-modal-item-active='true']) {
+      display: none;
+    }
+
+    &[data-media-grid-modal-item-active='true'] {
+      position: relative;
+
+      &::after {
+        content: '/';
+        position: absolute;
+        right: calc(calc(var(--spacing-component-gutter-secondary) / 4) * -1);
+      }
+    }
+  }
+
+  @media (min-width: tokens.$break-s) {
+    &.media-grid-modal__pager-item--total {
+      display: none;
+    }
   }
 }
 
 .media-grid-modal__pager-item-content {
   [data-media-grid-modal-item-active] > & {
-    transform: scale(1.45);
+    @media (min-width: tokens.$break-s) {
+      transform: scale(1.45);
+    }
   }
 }
 
