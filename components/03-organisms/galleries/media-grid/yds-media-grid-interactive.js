@@ -142,7 +142,7 @@ Drupal.behaviors.mediaGridInteractive = {
       // Navigate to selected pager item.
       pagerItems.forEach((pagerItem, index) => {
         pagerItem.addEventListener('click', () => {
-          handlePagerClick(index);
+          handlePagerClick(index + 1);
         });
       });
 
