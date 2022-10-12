@@ -44,7 +44,7 @@
 }
 
 .media-grid__maximize {
-  --size-icon: 0.75rem;
+  --size-icon: 60%;
 
   @include tokens.animate(transform, var(--animation-speed-default));
 
@@ -52,20 +52,21 @@
   right: var(--size-spacing-4);
   bottom: var(--size-spacing-4);
   background: var(--color-basic-white);
-  height: 1.5rem;
-  width: 1.5rem;
+  width: clamp(1rem, 7.69%, 3rem);
+  aspect-ratio: 1 / 1;
   border-radius: 100%;
   display: grid;
-  place-content: center;
+  align-items: center;
+  justify-content: center;
   transform-origin: bottom right;
 
   .media-grid__item:hover &,
   .media-grid__image:focus-visible + & {
-    transform: scale(1.5833);
+    transform: scale(1.45);
   }
 
   svg {
     height: var(--size-icon);
-    width: var(--size-icon);
+    aspect-ratio: 1 / 1;
   }
 }

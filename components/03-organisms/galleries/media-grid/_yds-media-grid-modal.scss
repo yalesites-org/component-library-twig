@@ -108,7 +108,7 @@ $modal-speed: var(--animation-speed-slow);
 .media-grid-modal__pager {
   grid-area: pager;
   display: flex;
-  gap: var(--size-spacing-4);
+  gap: var(--size-spacing-1);
   justify-content: center;
   overflow: auto;
 }
