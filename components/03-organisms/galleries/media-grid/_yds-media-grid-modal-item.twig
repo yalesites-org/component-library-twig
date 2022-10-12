@@ -21,7 +21,7 @@
   } %}
 {% endset %}
 
-<div {{ bem('item', [], media_grid__modal__base_class) }} data-component-width="feature">
+<div {{ bem('item', [], media_grid__modal__base_class) }} data-component-width="highlight">
   <div {{ bem('inner', [], media_grid__modal__base_class) }}>
     {# "Close" control #}
     {% include "@atoms/controls/base/yds-control.twig" with {
@@ -73,20 +73,27 @@
       </div>
     </div>
     {% for item in media_grid__items %}
-      <div {{ bem('content', [], media_grid__modal__base_class) }} data-embedded-components data-media-grid-modal-item={{ loop.index }}>
-        {# Content Heading #}
-        {% include "@atoms/typography/headings/yds-heading.twig" with {
-          heading__level: '2',
-          heading: item.media_grid__modal__heading,
-          heading__blockname: media_grid__modal__base_class,
-        } %}
-        {% if item.media_grid__modal__text %}
-          {# Content Text #}
-          <div {{ bem('text', [], media_grid__modal__base_class) }} data-media-grid-modal-item={{ loop.index }}>
+      <div {{ bem('content', [], media_grid__modal__base_class) }} data-component-width="content" data-embedded-components data-media-grid-modal-item={{ loop.index }}>
+        {% if item.media_grid__modal__heading or item.media_grid__modal__text %}
+          {% set media_grid__item__content %}
+            {# Content Heading #}
+            {% if item.media_grid__modal__heading %}
+              {% include "@atoms/typography/headings/yds-heading.twig" with {
+                heading__level: '2',
+                heading: item.media_grid__modal__heading,
+                heading__blockname: media_grid__modal__base_class,
+              } %}
+            {% endif %}
+            {# Content Text #}
+            {% if item.media_grid__modal__text %}
+              <div {{ bem('text', [], media_grid__modal__base_class) }}>
+                {{ item.media_grid__modal__text }}
+              </div>
+            {% endif %}
+          {% endset %}
             {% include "@molecules/text/yds-text-field.twig" with {
-              text_field__content: item.media_grid__modal__text,
+              text_field__content: media_grid__item__content,
             } %}
-          </div>
         {% endif %}
       </div>
     {% endfor %}

@@ -83,7 +83,7 @@ $modal-speed: var(--animation-speed-slow);
   @media (min-width: tokens.$break-s) {
     grid-template:
       '. media control-close' var(--size-click-target-minimum)
-      'control-previous media control-next' minmax(auto, 2fr)
+      'control-previous media control-next' minmax(auto, 4fr)
       'control-previous pager control-next' fit-content(100%)
       '. content .' minmax(var(--size-click-target-minimum), 1fr) / var(
         --size-click-target-minimum
@@ -167,9 +167,12 @@ $modal-speed: var(--animation-speed-slow);
   grid-area: content;
   overflow: auto;
   max-height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: var(--size-spacing-3);
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-spacing-3);
+  }
 }
 
 .media-grid-modal__heading {
