@@ -84,7 +84,7 @@ $modal-speed: var(--animation-speed-slow);
     grid-template:
       '. media control-close' var(--size-click-target-minimum)
       'control-previous media control-next' minmax(auto, 2fr)
-      'control-previous pager control-next' var(--size-click-target-minimum)
+      'control-previous pager control-next' fit-content(100%)
       '. content .' minmax(var(--size-click-target-minimum), 1fr) / var(
         --size-click-target-minimum
       )
