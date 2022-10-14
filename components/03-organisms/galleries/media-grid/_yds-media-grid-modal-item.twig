@@ -1,7 +1,5 @@
 {#
  # Available Variables:
- # - media_grid__heading (optional)
- # - media_grid__variation: basic (default), interactive
  # - media_grid__items: array of items for the modal. Including the following
  #   - media_grid__modal__heading
  #   - media_grid__modal__text
@@ -68,35 +66,15 @@
       {# Total pager count. Used for small screens. #}
       <div {{ bem('pager-item', ['total'], media_grid__modal__base_class) }}>
         <span {{ bem('pager-item-content', [], media_grid__modal__base_class) }}>
-          {{ media_grid__items.length }}
+          {{ media_grid__items|length }}
         </span>
       </div>
     </div>
-    {% for item in media_grid__items %}
-      <div {{ bem('content', [], media_grid__modal__base_class) }} data-component-width="content" data-embedded-components data-media-grid-modal-item={{ loop.index }}>
-        {% if item.media_grid__modal__heading or item.media_grid__modal__text %}
-          {% set media_grid__item__content %}
-            {# Content Heading #}
-            {% if item.media_grid__modal__heading %}
-              {% include "@atoms/typography/headings/yds-heading.twig" with {
-                heading__level: '2',
-                heading: item.media_grid__modal__heading,
-                heading__blockname: media_grid__modal__base_class,
-              } %}
-            {% endif %}
-            {# Content Text #}
-            {% if item.media_grid__modal__text %}
-              <div {{ bem('text', [], media_grid__modal__base_class) }}>
-                {{ item.media_grid__modal__text }}
-              </div>
-            {% endif %}
-          {% endset %}
-            {% include "@molecules/text/yds-text-field.twig" with {
-              text_field__content: media_grid__item__content,
-            } %}
-        {% endif %}
-      </div>
-    {% endfor %}
+    {% block media_grid__modal__content %}
+      {% for item in media_grid__items %}
+        {% include "@organisms/galleries/media-grid/_yds-media-grid-modal-item--content.twig" %}
+      {% endfor %}
+    {% endblock %}
     {# "Next" control #}
     {% include "@atoms/controls/base/yds-control.twig" with {
       control__blockname: media_grid__modal__base_class,

@@ -13,6 +13,9 @@ $modal-speed: var(--animation-speed-slow);
   left: 0;
   height: 100%;
   width: 100%;
+
+  // This z-index is crazy high to ensure it shows above admin toolbars.
+  z-index: 600;
   background: transparent;
 
   [data-media-grid-modal-state='inactive'] & {
