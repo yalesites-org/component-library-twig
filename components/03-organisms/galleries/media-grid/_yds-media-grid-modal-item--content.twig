@@ -2,7 +2,6 @@
 {% set modal_item__content = modal_item__content|default(item.media_grid__modal__text) %}
 {% set media_grid__modal__base_class = 'media-grid-modal' %}
 
-<div {{ bem('content', [], media_grid__modal__base_class) }} data-component-width="content" data-embedded-components data-media-grid-modal-item={{ loop.index }}>
   {% if modal_item__heading or modal_item__content %}
     {% set media_grid__item__content %}
       {# Content Heading #}
@@ -24,4 +23,3 @@
       text_field__content: media_grid__item__content,
     } %}
   {% endif %}
-</div>

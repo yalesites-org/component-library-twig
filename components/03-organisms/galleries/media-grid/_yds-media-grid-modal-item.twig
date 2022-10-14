@@ -70,11 +70,13 @@
         </span>
       </div>
     </div>
-    {% block media_grid__modal__content %}
-      {% for item in media_grid__items %}
-        {% include "@organisms/galleries/media-grid/_yds-media-grid-modal-item--content.twig" %}
-      {% endfor %}
-    {% endblock %}
+    {% for item in media_grid__items %}
+      <div {{ bem('content', [], media_grid__modal__base_class) }} data-component-width="content" data-embedded-components data-media-grid-modal-item={{ loop.index }}>
+        {% block media_grid__modal__content %}
+          {% include "@organisms/galleries/media-grid/_yds-media-grid-modal-item--content.twig" %}
+        {% endblock %}
+      </div>
+    {% endfor %}
     {# "Next" control #}
     {% include "@atoms/controls/base/yds-control.twig" with {
       control__blockname: media_grid__modal__base_class,
