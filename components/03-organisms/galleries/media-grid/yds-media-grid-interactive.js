@@ -106,12 +106,6 @@ Drupal.behaviors.mediaGridInteractive = {
         const activeModalItem = grid.querySelectorAll(
           `[data-media-grid-modal-item="${index}"]`,
         );
-        const modalItemContent = grid.querySelectorAll(
-          `.media-grid-modal__content`,
-        );
-        const activeItemContent = grid.querySelectorAll(
-          `[data-media-grid-modal-item="${index}"].media-grid-modal__content`,
-        )[0];
 
         // Hide inactive items.
         modalItems.forEach((modalItem) => {
@@ -122,14 +116,6 @@ Drupal.behaviors.mediaGridInteractive = {
         activeModalItem.forEach((activeItem) => {
           activeItem.setAttribute(activeItemIndicator, true);
         });
-
-        // Remove any added tabindex from non-active items.
-        modalItemContent.forEach((content) => {
-          content.removeAttribute('tabindex');
-        });
-
-        // Enable keyboard focus for active item content.
-        activeItemContent.setAttribute('tabindex', '0');
 
         // Indicate active pager item.
         indicateActivePager(activeIndex);

@@ -80,7 +80,7 @@
       </div>
     </div>
     {% for item in media_grid__items %}
-      <div {{ bem('content', [], media_grid__modal__base_class) }} data-component-width="content" data-embedded-components data-media-grid-modal-item={{ loop.index }}>
+      <div {{ bem('content', [], media_grid__modal__base_class) }} data-component-width="content" data-embedded-components data-media-grid-modal-item={{ loop.index }} tabindex='0'>
         {% block media_grid__modal__content %}
           {% include "@organisms/galleries/media-grid/_yds-media-grid-modal-item--content.twig" %}
         {% endblock %}
