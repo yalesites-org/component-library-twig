@@ -4,6 +4,7 @@ Drupal.behaviors.mediaGridInteractive = {
     const focusableElements =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     const body = document.querySelector('body');
+    const activeItemIndicator = 'data-media-grid-modal-item-active';
 
     mediaGrids.forEach((grid) => {
       const items = grid.querySelectorAll('.media-grid__image');
@@ -83,10 +84,10 @@ Drupal.behaviors.mediaGridInteractive = {
        */
       const indicateActivePager = (index) => {
         pagerItems.forEach((pagerItem, itemIndex) => {
-          pagerItem.removeAttribute('data-media-grid-modal-item-active');
+          pagerItem.removeAttribute(activeItemIndicator);
 
           if (index - 1 === itemIndex) {
-            pagerItem.setAttribute('data-media-grid-modal-item-active', true);
+            pagerItem.setAttribute(activeItemIndicator, true);
           }
         });
       };
@@ -105,16 +106,30 @@ Drupal.behaviors.mediaGridInteractive = {
         const activeModalItem = grid.querySelectorAll(
           `[data-media-grid-modal-item="${index}"]`,
         );
+        const modalItemContent = grid.querySelectorAll(
+          `.media-grid-modal__content`,
+        );
+        const activeItemContent = grid.querySelectorAll(
+          `[data-media-grid-modal-item="${index}"].media-grid-modal__content`,
+        )[0];
 
         // Hide inactive items.
         modalItems.forEach((modalItem) => {
-          modalItem.removeAttribute('data-media-grid-modal-item-active');
+          modalItem.removeAttribute(activeItemIndicator);
         });
 
         // Show active item.
         activeModalItem.forEach((activeItem) => {
-          activeItem.setAttribute('data-media-grid-modal-item-active', true);
+          activeItem.setAttribute(activeItemIndicator, true);
         });
+
+        // Remove any added tabindex from non-active items.
+        modalItemContent.forEach((content) => {
+          content.removeAttribute('tabindex');
+        });
+
+        // Enable keyboard focus for active item content.
+        activeItemContent.setAttribute('tabindex', '0');
 
         // Indicate active pager item.
         indicateActivePager(activeIndex);
