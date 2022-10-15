@@ -7,13 +7,22 @@
 
 {% set media_grid__modal__base_class = 'media-grid-modal' %}
 
-{% set control_nav %}
+{% set control_prev %}
+  <span class="visually-hidden">Previous item</span>
+  {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'angle-down',
+  } %}
+{% endset %}
+
+{% set control_next %}
+  <span class="visually-hidden">Previous item</span>
   {% include "@atoms/images/icons/_yds-icon.twig" with {
     icon__name: 'angle-down',
   } %}
 {% endset %}
 
 {% set control_close %}
+  <span class="visually-hidden">Close Gallery</span>
   {% include "@atoms/images/icons/_yds-icon.twig" with {
     icon__name: 'xmark',
   } %}
@@ -33,7 +42,7 @@
       control__blockname: media_grid__modal__base_class,
       control__base_class: 'control',
       control__modifiers: ['previous'],
-      control__content: control_nav,
+      control__content: control_prev,
     } %}
     {% for item in media_grid__items %}
       {# Media #}
@@ -82,7 +91,7 @@
       control__blockname: media_grid__modal__base_class,
       control__base_class: 'control',
       control__modifiers: ['next'],
-      control__content: control_nav,
+      control__content: control_next,
     } %}
   </div>
 </div>
