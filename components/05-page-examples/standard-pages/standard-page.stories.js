@@ -45,7 +45,7 @@ export default {
         'image--highlight',
         'image--feature',
         'image--max',
-        'pop-out-image',
+        'wrapped-image',
         'text-with-image',
         'text-with-image--highlight',
         'collection-featured',

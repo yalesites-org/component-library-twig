@@ -1,14 +1,14 @@
-import popOutImageTwig from './yds-pop-out-image.twig';
+import wrappedImageTwig from './yds-wrapped-image.twig';
 import textFieldTwig from '../text/yds-text-field.twig';
 
 import imageData from '../../01-atoms/images/image/image.yml';
-import popOutImageData from './pop-out-image.yml';
+import WrappedImageData from './wrapped-image.yml';
 
 /**
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Pop Out Image',
+  title: 'Molecules/Wrapped Image',
   parameters: {
     layout: 'fullscreen',
   },
@@ -21,13 +21,13 @@ export default {
   },
 };
 
-export const PopOutImage = ({ caption }) => `
+export const WrappedImage = ({ caption }) => `
   ${textFieldTwig({
-    text_field__content: popOutImageData.text_one,
+    text_field__content: WrappedImageData.text_one,
   })}
-  ${popOutImageTwig({
+  ${wrappedImageTwig({
     ...imageData.responsive_images['3x2'],
-    pop_out_image__caption: caption,
-    pop_out_image__content: popOutImageData.text_two,
+    wrapped_image__caption: caption,
+    wrapped_image__content: WrappedImageData.text_two,
   })}
 `;
