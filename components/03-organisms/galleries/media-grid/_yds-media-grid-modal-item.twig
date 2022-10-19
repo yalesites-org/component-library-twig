@@ -63,6 +63,7 @@
       {% for item in media_grid__items %}
         {% set pager_item__content %}
           <span {{ bem('pager-item-content', [], media_grid__modal__base_class) }}>
+            <span {{ bem('visually-hidden') }}>View item</span>
             {{ loop.index }}
           </span>
         {% endset %}

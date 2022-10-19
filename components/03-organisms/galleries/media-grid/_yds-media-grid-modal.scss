@@ -157,7 +157,7 @@ $modal-speed: var(--animation-speed-slow);
 }
 
 .media-grid-modal__pager-item-content {
-  [data-media-grid-modal-item-active] > & {
+  [aria-current='true'] > & {
     @media (min-width: tokens.$break-s) {
       transform: scale(1.45);
     }

@@ -5,6 +5,7 @@ Drupal.behaviors.mediaGridInteractive = {
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     const body = document.querySelector('body');
     const activeItemIndicator = 'data-media-grid-modal-item-active';
+    const ariaCurrent = 'aria-current';
 
     mediaGrids.forEach((grid) => {
       const items = grid.querySelectorAll('.media-grid__image');
@@ -84,10 +85,10 @@ Drupal.behaviors.mediaGridInteractive = {
        */
       const indicateActivePager = (index) => {
         pagerItems.forEach((pagerItem, itemIndex) => {
-          pagerItem.removeAttribute(activeItemIndicator);
+          pagerItem.removeAttribute(ariaCurrent);
 
           if (index - 1 === itemIndex) {
-            pagerItem.setAttribute(activeItemIndicator, true);
+            pagerItem.setAttribute(ariaCurrent, true);
           }
         });
       };
