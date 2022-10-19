@@ -55,7 +55,7 @@
   width: clamp(1rem, 7.69%, 3rem);
   aspect-ratio: 1 / 1;
   border-radius: 100%;
-  display: grid;
+  display: flex;
   align-items: center;
   justify-content: center;
   transform-origin: bottom right;
