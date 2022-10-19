@@ -1,3 +1,9 @@
+{#
+ # Available Variables:
+ # - modal_item__heading
+ # - modal_item__content
+ #}
+
 {% set modal_item__heading = modal_item__heading|default(item.media_grid__modal__heading) %}
 {% set modal_item__content = modal_item__content|default(item.media_grid__modal__text) %}
 {% set media_grid__modal__base_class = 'media-grid-modal' %}
