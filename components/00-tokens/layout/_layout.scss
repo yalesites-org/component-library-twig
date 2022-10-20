@@ -32,6 +32,11 @@
   }
 }
 
+// "Freeze" the body when a modal is open to prevent background scrolling.
+body[data-modal-active='true'] {
+  overflow: hidden;
+}
+
 $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 
 [data-component-width] {
