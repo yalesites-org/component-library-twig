@@ -183,7 +183,7 @@
           "structure": "molecules"
         },
         {
-          "name": "pop-out-image",
+          "name": "wrapped-image",
           "structure": "molecules"
         },
         {
@@ -224,7 +224,7 @@
           "structure": "organisms"
         },
         {
-          "name": "galleries/grid",
+          "name": "galleries/media-grid",
           "structure": "organisms"
         },
         {

@@ -1,6 +1,6 @@
 @use '../../00-tokens/tokens';
 
-.pop-out-image {
+.wrapped-image {
   @include tokens.spacing-page-inner;
 
   // Clear the float in case the next component is an image or something.
@@ -11,11 +11,11 @@
   }
 }
 
-.pop-out-image__inner {
+.wrapped-image__inner {
   position: relative;
 }
 
-.pop-out-image__image {
+.wrapped-image__image {
   margin-bottom: var(--size-spacing-7);
 
   @media (min-width: tokens.$break-l) {
