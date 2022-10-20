@@ -2,6 +2,9 @@ Drupal.behaviors.breadcrumbs = {
   attach(context) {
     // Selectors.
     const breadcrumbsWrapper = context.querySelector('.breadcrumbs__wrapper');
+    if (!breadcrumbsWrapper) {
+      return;
+    }
     const breadcrumbs = context.querySelector('.breadcrumbs');
     const breadcrumbsMenu = context.querySelector('.breadcrumbs__menu');
     const breadcrumbsControls = context.querySelectorAll(
