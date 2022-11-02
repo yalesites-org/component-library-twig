@@ -74,13 +74,38 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 
   @if $flush-top == true {
     &:first-child {
-      margin-top: 0;
+      --main-content-top-margin: 0;
     }
   }
 
   @if $flush-bottom == true {
     &:last-child {
-      margin-bottom: 0;
+      --main-content-bottom-margin: 0;
     }
   }
+}
+
+// The first item inside the `.main-content` area should have some space between
+// it and the site header (size-spacing-7 and 9 below) - unless it is designated
+// as `$flush-top` above. Then it will have no top-margin separating it from the
+// site header.
+.main-content > *:first-child {
+  --main-content-top-margin-default: var(--size-spacing-7);
+
+  margin-top: var(
+    --main-content-top-margin,
+    var(--main-content-top-margin-default)
+  );
+
+  @media (min-width: tokens.$break-mobile) {
+    --main-content-top-margin-default: var(--size-spacing-9);
+  }
+}
+
+// The last item inside the `.main-content` area should have some space between
+// it and the site footer (size-spacing-12 below) - unless it is designated as
+// `$flush-bottom` above. Then it will have no bottom-margin separating it from
+// the site footer.
+.main-content > *:last-child {
+  margin-bottom: var(--main-content-bottom-margin, var(--size-spacing-12));
 }
