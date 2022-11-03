@@ -214,3 +214,9 @@
     transform: rotate(180deg);
   }
 }
+
+.primary-nav__link--level-0:last-child {
+  @media (min-width: tokens.$break-mobile) {
+    padding-right: 0;
+  }
+}
