@@ -6,6 +6,7 @@
  # - date_time__format: 'time', 'date', or null (default. Returns date and time.)
  #
  # Available Variables:
+ # - date_time__all_day
  # - date_time__start
  # - date_time__end
  #}
@@ -34,10 +35,13 @@
   {% set format__time = 'g:i a T' %} {# 11:30 pm ET #}
 {% endif %}
 
+
+{% if date_time__all_day == true %}
+  All Day
 {#############
  # TIME ONLY #
  #############}
-{% if date_time__format == 'time' %}
+{% elseif date_time__format == 'time' %}
   {# If start and end times are equal #}
   {% if date_time__start|date(format__iso) == date_time__end|date(format__iso) %}
     {% set date_time = date_time__start|date(format__time) %}
