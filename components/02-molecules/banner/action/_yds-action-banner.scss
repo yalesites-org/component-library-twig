@@ -4,7 +4,7 @@
 $break-cta-banner: tokens.$break-m;
 
 .cta-banner {
-  @include tokens.spacing-page-section($flush-top: true);
+  @include tokens.spacing-page-section($flush-top: true, $flush-bottom: true);
 
   padding: 0;
 }
