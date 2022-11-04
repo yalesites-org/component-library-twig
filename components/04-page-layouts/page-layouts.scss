@@ -24,14 +24,7 @@ body[data-body-frozen] {
 // as `$flush-top` above. Then it will have no top-margin separating it from the
 // site header.
 .main-content > *:first-child {
-  --main-content-top-margin-default: var(--size-spacing-7);
-
-  // prettier-ignore
-  margin-top: var(--main-content-top-margin, var(--main-content-top-margin-default));
-
-  @media (min-width: tokens.$break-mobile) {
-    --main-content-top-margin-default: var(--size-spacing-9);
-  }
+  margin-top: var(--main-content-top-margin, var(--size-spacing-7));
 }
 
 // The last item inside the `.main-content` area should have some space between
