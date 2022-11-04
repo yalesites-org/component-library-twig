@@ -67,6 +67,9 @@ Drupal.behaviors.alert = {
     }
 
     if (storageAvailable('localStorage')) {
+      const alertCount = alerts.length;
+      let newAlerts = 0;
+
       alerts.forEach((alert) => {
         const id = alert.getAttribute(alertId);
         const type = alert.getAttribute('data-alert-type');
@@ -77,7 +80,7 @@ Drupal.behaviors.alert = {
 
         // If the current alert has no state, clear other values from storage.
         if (state == null) {
-          resetAlerts();
+          newAlerts += 1;
         }
 
         // If the alert was dismissed, keep it dismissed.
@@ -101,6 +104,10 @@ Drupal.behaviors.alert = {
           return dismiss(alert, id);
         });
       });
+
+      if (alertCount === newAlerts) {
+        resetAlerts();
+      }
     }
   },
 };
