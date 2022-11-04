@@ -14,10 +14,12 @@
       heading__blockname: callout__base_class,
       heading: callout__heading,
     } %}
-    {% include "@atoms/typography/text/yds-text.twig" with {
-      text__blockname: callout__base_class,
-      text__content: callout__text,
-    } %}
+    {% if callout__text %}
+      {% include "@atoms/typography/text/yds-text.twig" with {
+        text__blockname: callout__base_class,
+        text__content: callout__text,
+      } %}
+    {% endif %}
     {% if callout__link__url and callout__link__content %}
       {% if callout__link__type == 'link' %}
         {% include "@atoms/controls/text-link/yds-text-link.twig" with {
