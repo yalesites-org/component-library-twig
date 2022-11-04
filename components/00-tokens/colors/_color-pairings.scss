@@ -1,7 +1,7 @@
 @use '~@yalesites-org/tokens/build/scss/tokens';
-@use 'sass:map';
+@use '../functions/map';
 
-$themes: map.get(tokens.$tokens, 'component-themes');
+$themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 @each $theme, $value in $themes {
   [data-component-theme='#{$theme}'] {

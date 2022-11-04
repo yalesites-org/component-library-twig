@@ -1,5 +1,4 @@
 @use '../../00-tokens/functions/map';
-@use 'sass:map' as sass-map;
 @use '../../00-tokens/tokens';
 
 $site-header-themes: map.deep-get(tokens.$tokens, site-header-themes);
@@ -25,7 +24,6 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
   position: relative;
   z-index: 2;
-  margin-bottom: var(--size-spacing-7);
 
   // Component themes
   @each $theme, $value in $site-header-themes {
@@ -64,7 +62,6 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
   @media (min-width: tokens.$break-mobile) {
     border-bottom: var(--site-header-border-bottom);
-    margin-bottom: var(--size-spacing-9);
   }
 }
 
