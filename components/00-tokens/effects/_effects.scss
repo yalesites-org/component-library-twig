@@ -36,6 +36,31 @@
   }
 }
 
+@mixin animate-fade-to-hidden($speed: var(--animation-speed-default)) {
+  visibility: hidden;
+  animation: #{$speed} fade-out-hidden;
+  animation-fill-mode: forwards;
+
+  @keyframes fade-out-hidden {
+    // Start visible at 0% to avoid an occasional "flash" when closing.
+    0% {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    50% {
+      visibility: visible;
+      opacity: 0.5;
+    }
+
+    100% {
+      visibility: hidden;
+      opacity: 0;
+      height: 0;
+    }
+  }
+}
+
 :root {
   --underline-thick: var(--size-thickness-4);
 

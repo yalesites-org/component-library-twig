@@ -4,6 +4,7 @@
 @use '../../01-atoms/atoms';
 
 $alert-themes: map.deep-get(sass-tokens.$tokens, color, alert);
+$alert-fade-speed: var(--animation-speed-slow);
 
 .alert {
   --size-icon: 1.25rem;
@@ -24,7 +25,7 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, color, alert);
   }
 
   &[data-alert-state='dismissed'] {
-    display: none;
+    @include tokens.animate-fade-to-hidden($alert-fade-speed);
   }
 }
 
@@ -53,6 +54,11 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, color, alert);
     [data-alert-state='expanded'] & {
       align-self: flex-start;
     }
+
+    // fix icon alignment shift
+    [data-alert-state='dismissed'] & {
+      align-self: flex-start;
+    }
   }
 
   svg {
@@ -65,6 +71,11 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, color, alert);
       }
 
       [data-alert-state='expanded'] & {
+        --size-icon: 2.125rem;
+      }
+
+      // fix icon resize when dismisse
+      [data-alert-state='dismissed'] & {
         --size-icon: 2.125rem;
       }
     }
