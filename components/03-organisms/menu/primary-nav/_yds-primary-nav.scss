@@ -41,6 +41,14 @@
       border-color: var(--color-navigation-border);
       border-bottom-color: var(--color-background);
     }
+
+    .primary-nav__item--level-0:first-child & {
+      padding-left: 0;
+    }
+
+    .primary-nav__item--level-0:last-child & {
+      padding-right: 0;
+    }
   }
 }
 
@@ -212,11 +220,5 @@
 
   .primary-nav__toggle[aria-expanded='true'] > & {
     transform: rotate(180deg);
-  }
-}
-
-.primary-nav__link--level-0:last-child {
-  @media (min-width: tokens.$break-mobile) {
-    padding-right: 0;
   }
 }
