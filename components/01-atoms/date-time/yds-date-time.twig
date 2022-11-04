@@ -21,7 +21,7 @@
 {% set format__iso = 'c' %} {# 2022-04-01T08:34:42+00:00 #}
 {% set format__html_date = 'Y-m-d' %} {# 2022-04-01 #}
 {% set format__date = 'F j, Y' %} {# April 1, 2022 #}
-{% set format__day__full__start = 'l, F j to ' %} {# Friday, April 1, 2022 to #}
+{% set format__day__full__start = 'l, F j' %} {# Friday, April 1 #}
 {% set format__day__full = 'l, F j, Y' %} {# Friday, April 1, 2022 #}
 {# If minutes == ":00" don't show them #}
 {% if date_time__start|date('i') == '00' %}
@@ -73,7 +73,7 @@
     {% set date_time = date_time__start|date(format__day__full) %}
   {# If start and end times are different. #}
   {% else %}
-    {% set date_time = date_time__start|date(format__day__full__start) ~ date_time__end|date(format__day__full) %}
+    {% set date_time = date_time__start|date(format__day__full__start) ~ ' to ' ~ date_time__end|date(format__day__full) %}
   {% endif %}
 {% endif %}
 
