@@ -2,6 +2,7 @@
 @use '../../../01-atoms/atoms';
 
 $break-cta-banner: tokens.$break-m;
+$break-cta-banner-max: $break-cta-banner - 0.05;
 
 .cta-banner {
   @include tokens.spacing-page-section($flush-top: true, $flush-bottom: true);
@@ -104,6 +105,12 @@ $break-cta-banner: tokens.$break-m;
 
   > * {
     position: relative;
+  }
+
+  &[data-component-theme='white'] {
+    @media (max-width: $break-cta-banner-max) {
+      border-bottom: var(--size-thickness-1) solid var(--color-gray-200);
+    }
   }
 }
 
