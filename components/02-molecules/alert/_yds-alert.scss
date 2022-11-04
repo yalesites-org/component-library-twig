@@ -15,6 +15,7 @@ $alert-fade-speed: var(--animation-speed-slow);
   z-index: 3;
   background-color: var(--color-alert-background);
   color: var(--color-alert-text);
+  opacity: 1;
 
   @each $theme, $value in $alert-themes {
     &[data-alert-type='#{$theme}'] {
@@ -25,7 +26,10 @@ $alert-fade-speed: var(--animation-speed-slow);
   }
 
   &[data-alert-state='dismissed'] {
-    @include tokens.animate-fade-to-hidden($alert-fade-speed);
+    @include tokens.animate(opacity);
+    @include tokens.animate-hidden($alert-fade-speed);
+
+    opacity: 0;
   }
 }
 
