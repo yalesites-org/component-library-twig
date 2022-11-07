@@ -5,7 +5,6 @@
 
 $alert-themes: map.deep-get(sass-tokens.$tokens, color, alert);
 $alert-fade-speed: var(--animation-speed-slow);
-$alert-inner-height-speed: var(--animation-speed-default);
 
 .alert {
   --size-icon: 1.25rem;
@@ -46,7 +45,7 @@ $alert-inner-height-speed: var(--animation-speed-default);
   }
 
   [data-alert-state='dismissed'] & {
-    @include tokens.animate(all, $alert-inner-height-speed);
+    @include tokens.animate(all, $alert-fade-speed);
 
     opacity: 0;
     max-height: 0;
