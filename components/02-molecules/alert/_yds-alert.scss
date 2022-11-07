@@ -5,6 +5,7 @@
 
 $alert-themes: map.deep-get(sass-tokens.$tokens, color, alert);
 $alert-fade-speed: var(--animation-speed-slow);
+$alert-inner-height-speed: var(--animation-speed-default);
 
 .alert {
   --size-icon: 1.25rem;
@@ -26,8 +27,7 @@ $alert-fade-speed: var(--animation-speed-slow);
   }
 
   &[data-alert-state='dismissed'] {
-    @include tokens.animate(opacity);
-    @include tokens.animate-hidden($alert-fade-speed);
+    @include tokens.animate(opacity, $alert-fade-speed);
 
     opacity: 0;
   }
@@ -37,9 +37,20 @@ $alert-fade-speed: var(--animation-speed-slow);
   display: flex;
   align-items: flex-start;
   padding-block: var(--size-spacing-5);
+  height: 100%;
+  max-height: 7rem;
+  opacity: 1;
 
   @media (min-width: tokens.$break-mobile) {
     align-items: center;
+  }
+
+  [data-alert-state='dismissed'] & {
+    @include tokens.animate(all, $alert-inner-height-speed);
+
+    opacity: 0;
+    max-height: 0;
+    padding: 0;
   }
 }
 
@@ -55,10 +66,7 @@ $alert-fade-speed: var(--animation-speed-slow);
   @media (min-width: tokens.$break-mobile) {
     margin-right: var(--size-spacing-5);
 
-    [data-alert-state='expanded'] & {
-      align-self: flex-start;
-    }
-
+    [data-alert-state='expanded'] &,
     // fix icon alignment shift
     [data-alert-state='dismissed'] & {
       align-self: flex-start;
@@ -74,11 +82,8 @@ $alert-fade-speed: var(--animation-speed-slow);
         --size-icon: 1.5625rem;
       }
 
-      [data-alert-state='expanded'] & {
-        --size-icon: 2.125rem;
-      }
-
-      // fix icon resize when dismisse
+      [data-alert-state='expanded'] &,
+      // fix icon resize when dismissed
       [data-alert-state='dismissed'] & {
         --size-icon: 2.125rem;
       }
