@@ -31,6 +31,8 @@ $alert-fade-speed: var(--animation-speed-slow);
   }
 
   &[data-alert-state='dismissed'] {
+    @include tokens.animate-hidden($alert-fade-speed);
+
     opacity: 0;
     max-height: 0;
     padding: 0;
