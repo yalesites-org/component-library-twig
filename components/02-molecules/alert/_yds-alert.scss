@@ -17,6 +17,8 @@ $alert-fade-speed: var(--animation-speed-slow);
   color: var(--color-alert-text);
   opacity: 1;
 
+  @include tokens.animate(opacity, $alert-fade-speed);
+
   @each $theme, $value in $alert-themes {
     &[data-alert-type='#{$theme}'] {
       --color-alert-background: var(--color-alert-#{$theme}-background-color);
@@ -26,8 +28,6 @@ $alert-fade-speed: var(--animation-speed-slow);
   }
 
   &[data-alert-state='dismissed'] {
-    @include tokens.animate(opacity, $alert-fade-speed);
-
     opacity: 0;
   }
 }
@@ -40,13 +40,13 @@ $alert-fade-speed: var(--animation-speed-slow);
   max-height: 7rem;
   opacity: 1;
 
+  @include tokens.animate(all, $duration: $alert-fade-speed);
+
   @media (min-width: tokens.$break-mobile) {
     align-items: center;
   }
 
   [data-alert-state='dismissed'] & {
-    @include tokens.animate(all, $alert-fade-speed);
-
     opacity: 0;
     max-height: 0;
     padding: 0;
