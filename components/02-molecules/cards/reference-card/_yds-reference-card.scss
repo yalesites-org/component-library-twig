@@ -45,8 +45,8 @@
 .reference-card__overline {
   @include tokens.body-xs;
 
-  text-transform: uppercase;
   margin-bottom: var(--size-spacing-3);
+  color: var(--color-gray-500);
 }
 
 .reference-card__heading {
