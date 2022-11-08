@@ -21,9 +21,34 @@
   @media (min-width: tokens.$break-l) {
     top: 0;
     width: 50%;
-    float: left;
-    transform: translateX(-20%);
-    margin-right: -5%;
     margin-bottom: var(--size-spacing-7);
+
+    // floated
+    [data-component-image-style='floated'][data-component-image-alignment='left']
+      & {
+      float: left;
+      margin-right: 5%;
+    }
+
+    [data-component-image-style='floated'][data-component-image-alignment='right']
+      & {
+      float: right;
+      margin-left: 5%;
+    }
+
+    // offset
+    [data-component-image-style='offset'][data-component-image-alignment='left']
+      & {
+      float: left;
+      transform: translateX(-20%);
+      margin-right: -5%;
+    }
+
+    [data-component-image-style='offset'][data-component-image-alignment='right']
+      & {
+      float: right;
+      transform: translateX(20%);
+      margin-left: -5%;
+    }
   }
 }
