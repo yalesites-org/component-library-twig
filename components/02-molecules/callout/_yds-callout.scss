@@ -82,6 +82,10 @@ $callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
 
 .callout__text {
   @include tokens.body-default-condensed;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .callout__link {

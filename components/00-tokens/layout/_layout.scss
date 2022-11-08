@@ -32,11 +32,6 @@
   }
 }
 
-// "Freeze" the body when a modal is open to prevent background scrolling.
-body[data-modal-active='true'] {
-  overflow: hidden;
-}
-
 $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 
 [data-component-width] {
@@ -74,13 +69,13 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 
   @if $flush-top == true {
     &:first-child {
-      margin-top: 0;
+      --main-content-top-margin: 0;
     }
   }
 
   @if $flush-bottom == true {
     &:last-child {
-      margin-bottom: 0;
+      --main-content-bottom-margin: 0;
     }
   }
 }
