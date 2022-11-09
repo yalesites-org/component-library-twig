@@ -40,6 +40,22 @@
       z-index: 1;
       border-color: var(--color-navigation-border);
       border-bottom-color: var(--color-background);
+
+      .primary-nav__item--level-0:first-child & {
+        padding-left: var(--size-spacing-5);
+      }
+
+      .primary-nav__item--level-0:last-child & {
+        padding-right: var(--size-spacing-5);
+      }
+    }
+
+    .primary-nav__item--level-0:first-child & {
+      padding-left: 0;
+    }
+
+    .primary-nav__item--level-0:last-child & {
+      padding-right: 0;
     }
   }
 }
