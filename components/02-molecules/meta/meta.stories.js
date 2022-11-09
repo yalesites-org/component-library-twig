@@ -23,7 +23,14 @@ Basic.argTypes = {
   },
 };
 
-export const Event = ({ startDate, endDate, format, address, ctaText }) =>
+export const Event = ({
+  startDate,
+  endDate,
+  format,
+  address,
+  ctaText,
+  allDay,
+}) =>
   eventMetaTwig({
     event_meta__date_start: startDate,
     event_meta__date_end: endDate,
@@ -32,6 +39,7 @@ export const Event = ({ startDate, endDate, format, address, ctaText }) =>
     event_meta__cta_primary__content: ctaText,
     event_meta__cta_primary__href: '#',
     event_meta__cta_secondary__content: 'Add to calendar',
+    event_meta__all_day: allDay,
   });
 Event.argTypes = {
   ...eventArgTypes,
