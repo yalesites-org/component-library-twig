@@ -4,6 +4,7 @@
 @use '../../01-atoms/atoms';
 
 $alert-themes: map.deep-get(sass-tokens.$tokens, color, alert);
+$alert-fade-speed: var(--animation-speed-slow);
 
 .alert {
   --size-icon: 1.25rem;
@@ -14,6 +15,12 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, color, alert);
   z-index: 3;
   background-color: var(--color-alert-background);
   color: var(--color-alert-text);
+  height: 100%;
+  max-height: 7rem;
+  opacity: 1;
+  overflow: hidden;
+
+  @include tokens.animate($duration: $alert-fade-speed);
 
   @each $theme, $value in $alert-themes {
     &[data-alert-type='#{$theme}'] {
@@ -24,7 +31,10 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, color, alert);
   }
 
   &[data-alert-state='dismissed'] {
-    display: none;
+    @include tokens.animate-hidden($alert-fade-speed);
+
+    opacity: 0;
+    max-height: 0;
   }
 }
 
@@ -50,7 +60,9 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, color, alert);
   @media (min-width: tokens.$break-mobile) {
     margin-right: var(--size-spacing-5);
 
-    [data-alert-state='expanded'] & {
+    [data-alert-state='expanded'] &,
+    // fix icon alignment shift
+    [data-alert-state='dismissed'] & {
       align-self: flex-start;
     }
   }
@@ -64,7 +76,9 @@ $alert-themes: map.deep-get(sass-tokens.$tokens, color, alert);
         --size-icon: 1.5625rem;
       }
 
-      [data-alert-state='expanded'] & {
+      [data-alert-state='expanded'] &,
+      // fix icon resize when dismissed
+      [data-alert-state='dismissed'] & {
         --size-icon: 2.125rem;
       }
     }

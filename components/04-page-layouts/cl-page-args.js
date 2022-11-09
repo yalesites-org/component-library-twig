@@ -54,6 +54,11 @@ export const eventArgTypes = {
     type: 'string',
     defaultValue: 'CTA for event',
   },
+  allDay: {
+    name: 'All Day',
+    type: 'boolean',
+    defaultValue: true,
+  },
 };
 
 export default argTypes;
