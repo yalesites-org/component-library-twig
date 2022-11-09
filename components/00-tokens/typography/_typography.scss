@@ -23,83 +23,101 @@ code {
 // Heading mixins
 @mixin h1-yale-new {
   font: var(--font-style-heading-h1-yale-new);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h2-yale-new {
   font: var(--font-style-heading-h2-yale-new);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h3-yale-new {
   font: var(--font-style-heading-h3-yale-new);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h4-yale-new {
   font: var(--font-style-heading-h4-yale-new);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h5-yale-new {
   font: var(--font-style-heading-h5-yale-new);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h6-yale-new {
   font: var(--font-style-heading-h6-yale-new);
   text-transform: var(--font-text-transform-h6-yale-new);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h1-mallory-compact-medium {
   font: var(--font-style-heading-h1-mallory-compact-medium);
   letter-spacing: var(--font-letter-spacing-h1-mallory-compact-medium);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h2-mallory-compact-medium {
   font: var(--font-style-heading-h2-mallory-compact-medium);
   letter-spacing: var(--font-letter-spacing-h2-mallory-compact-medium);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h3-mallory-compact-medium {
   font: var(--font-style-heading-h3-mallory-compact-medium);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h4-mallory-compact-medium {
   font: var(--font-style-heading-h4-mallory-compact-medium);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h5-mallory-compact-medium {
   font: var(--font-style-heading-h5-mallory-compact-medium);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h6-mallory-compact-medium {
   font: var(--font-style-heading-h6-mallory-compact-medium);
   letter-spacing: var(--font-letter-spacing-h6-mallory-compact-medium);
   text-transform: var(--font-text-transform-h6-mallory-compact-medium);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h1-mallory-compact-book {
   font: var(--font-style-heading-h1-mallory-compact-book);
   letter-spacing: var(--font-letter-spacing-h1-mallory-compact-book);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h2-mallory-compact-book {
   font: var(--font-style-heading-h2-mallory-compact-book);
   letter-spacing: var(--font-letter-spacing-h2-mallory-compact-book);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h3-mallory-compact-book {
   font: var(--font-style-heading-h3-mallory-compact-book);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h4-mallory-compact-book {
   font: var(--font-style-heading-h4-mallory-compact-book);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h5-mallory-compact-book {
   font: var(--font-style-heading-h5-mallory-compact-book);
+  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h6-mallory-compact-book {
   font: var(--font-style-heading-h6-mallory-compact-book);
   letter-spacing: var(--font-letter-spacing-h6-mallory-compact-book);
   text-transform: var(--font-text-transform-h6-mallory-compact-book);
+  font-variant-numeric: oldstyle-nums;
 }
 
 // Body mixins
