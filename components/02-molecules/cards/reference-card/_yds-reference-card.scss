@@ -43,10 +43,14 @@
 }
 
 .reference-card__overline {
-  @include tokens.body-xs;
+  @include tokens.body-s;
 
-  text-transform: uppercase;
   margin-bottom: var(--size-spacing-3);
+  color: var(--color-gray-500);
+  font-variant-caps: small-caps;
+  font-variant-numeric: oldstyle-nums;
+  text-transform: lowercase;
+  letter-spacing: 0.5px;
 }
 
 .reference-card__heading {
