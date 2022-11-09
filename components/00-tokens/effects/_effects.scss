@@ -61,8 +61,11 @@
   background-image: linear-gradient(currentcolor, currentcolor);
   background-position: var(--position);
   background-repeat: no-repeat;
-  transition: background-size var(--animation-speed-default) linear,
-    color var(--animation-speed-default) ease-in-out;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: background-size var(--animation-speed-default) linear,
+      color var(--animation-speed-default) ease-in-out;
+  }
 
   @if $variation == 'no-underline' {
     background-size: 0 var(--thickness);
