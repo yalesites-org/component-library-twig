@@ -24,27 +24,26 @@
     margin-bottom: var(--size-spacing-7);
 
     // floated
-    [data-component-image-style='floated'][data-component-image-alignment='left']
+    [data-wrapped-image-style='floated'][data-wrapped-image-alignment='left']
       & {
       float: left;
       margin-right: 5%;
     }
 
-    [data-component-image-style='floated'][data-component-image-alignment='right']
+    [data-wrapped-image-style='floated'][data-wrapped-image-alignment='right']
       & {
       float: right;
       margin-left: 5%;
     }
 
     // offset
-    [data-component-image-style='offset'][data-component-image-alignment='left']
-      & {
+    [data-wrapped-image-style='offset'][data-wrapped-image-alignment='left'] & {
       float: left;
       transform: translateX(-20%);
       margin-right: -5%;
     }
 
-    [data-component-image-style='offset'][data-component-image-alignment='right']
+    [data-wrapped-image-style='offset'][data-wrapped-image-alignment='right']
       & {
       float: right;
       transform: translateX(20%);
