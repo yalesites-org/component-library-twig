@@ -74,6 +74,8 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
   @if $flush-top == true {
     &:first-child {
       --main-content-top-margin: 0;
+
+      margin-bottom: var(--size-spacing-7);
     }
   }
 

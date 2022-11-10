@@ -88,7 +88,7 @@
 }
 
 .accordion-item__content {
-  @include tokens.animate(max-height, var(--site-header-animation-speed));
+  @include tokens.animate(max-height, var(--animation-speed-slow));
 
   max-height: var(--accordion-item-height);
   overflow: hidden;
@@ -106,7 +106,7 @@
   }
 
   [data-accordion-expanded='false'] & {
-    @include tokens.animate-hidden(var(--site-header-animation-speed));
+    @include tokens.animate-hidden(var(--animation-speed-slow));
 
     max-height: 0;
   }
