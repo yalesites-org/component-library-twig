@@ -31,15 +31,23 @@
   @media (min-width: tokens.$break-mobile) {
     position: relative;
     padding: var(--size-spacing-5);
-    border-bottom: var(--border-thickness-1) solid transparent;
-    border-top: var(--border-thickness-1) solid transparent;
-    border-right: var(--border-thickness-1) solid transparent;
-    border-left: var(--border-thickness-1) solid transparent;
+
+    [data-menu-variation='mega'] & {
+      border-bottom: var(--border-thickness-1) solid transparent;
+      border-top: var(--border-thickness-1) solid transparent;
+      border-right: var(--border-thickness-1) solid transparent;
+      border-left: var(--border-thickness-1) solid transparent;
+    }
 
     &[aria-expanded='true'] {
       z-index: 1;
       border-color: var(--color-navigation-border);
       border-bottom-color: var(--color-background);
+
+      [data-menu-variation='basic'] & {
+        border-left: var(--border-thickness-2) solid
+          var(--color-navigation-border);
+      }
 
       .primary-nav__item--level-0:first-child & {
         padding-left: var(--size-spacing-5);
@@ -108,12 +116,22 @@
       // Subtract enough to place it just behind an "open" toggle and hide the
       // top border. To give it the "tab" effect.
       top: calc(100% - var(--border-thickness-1));
-      padding: var(--size-spacing-7) var(--size-spacing-site-gutter);
-      border: var(--border-thickness-1) solid var(--color-navigation-border);
-      border-bottom-width: var(--border-thickness-4);
-      width: calc(100vw - calc(var(--size-spacing-site-gutter) * 2));
-      max-width: var(--size-component-layout-width-max);
-      column-count: 3;
+
+      [data-menu-variation='mega'] & {
+        border: var(--border-thickness-1) solid var(--color-navigation-border);
+        border-bottom-width: var(--border-thickness-4);
+        padding: var(--size-spacing-7) var(--size-spacing-site-gutter);
+        width: calc(100vw - calc(var(--size-spacing-site-gutter) * 2));
+        max-width: var(--size-component-layout-width-max);
+        column-count: 3;
+      }
+
+      [data-menu-variation='basic'] & {
+        border-left: var(--border-thickness-2) solid
+          var(--color-navigation-border);
+        box-shadow: var(--drop-shadow-level-1);
+        column-count: 1;
+      }
 
       [aria-expanded='false'] ~ & {
         visibility: hidden;
@@ -133,7 +151,9 @@
     }
 
     @media (min-width: tokens.$break-2xl) {
-      column-count: 4;
+      [data-menu-variation='mega'] & {
+        column-count: 4;
+      }
     }
   }
 
@@ -184,8 +204,26 @@
   &--level-1 {
     font: var(--font-style-nav-primary-1);
     color: var(--color-heading);
-    padding: var(--size-spacing-2) var(--size-spacing-5);
     margin-bottom: var(--size-spacing-3);
+
+    [data-menu-variation='basic'] & {
+      padding: var(--size-spacing-2) var(--size-spacing-6);
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: var(--size-spacing-6);
+        right: var(--size-spacing-6);
+        height: var(--border-thickness-1);
+        background-color: var(--color-gray-200);
+      }
+    }
+
+    [data-menu-variation='mega'] & {
+      padding: var(--size-spacing-2) var(--size-spacing-5);
+    }
 
     .primary-nav__item--level-1:first-child & {
       padding-top: 0;

@@ -26,11 +26,17 @@ export default {
       type: 'select',
       defaultValue: 'white',
     },
+    menuVariation: {
+      name: 'Menu Variation',
+      options: ['basic', 'mega'],
+      type: 'select',
+      defaultValue: 'basic',
+    },
   },
 };
 
-export const PrimaryNav = ({ siteHeaderTheme }) => `
-  <div style="position: relative; padding-top: var(--size-spacing-site-gutter);" data-site-header-nav-position='left' data-component-width="max" data-component-theme="${siteHeaderTheme}">
+export const PrimaryNav = ({ siteHeaderTheme, menuVariation }) => `
+  <div style="position: relative; padding-top: var(--size-spacing-site-gutter);" data-site-header-nav-position='left' data-component-width="max" data-component-theme="${siteHeaderTheme}" data-menu-variation="${menuVariation}">
     ${primaryNavTwig(primaryNavData)}
   </div>
 `;
