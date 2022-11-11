@@ -146,7 +146,7 @@
       [data-menu-variation='basic'] & {
         border-left: var(--border-thickness-4) solid
           var(--color-navigation-border);
-        box-shadow: var(--drop-shadow-level-1);
+        box-shadow: 0 15px 10px -15px #00000029;
         column-count: 1;
       }
 
