@@ -221,7 +221,7 @@
     margin-bottom: var(--size-spacing-3);
 
     [data-menu-variation='basic'] & {
-      padding: var(--size-spacing-2) var(--size-spacing-6);
+      padding: var(--size-spacing-2) var(--size-spacing-6) var(--size-spacing-4);
       position: relative;
 
       // basic menu items have a bottom border
