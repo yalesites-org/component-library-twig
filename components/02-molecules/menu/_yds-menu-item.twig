@@ -7,6 +7,7 @@
 
 {% set item__modifiers = ['level-' ~ menu__level] %}
 {% set item__attributes = item__attributes|default({}) %}
+{% set menu__variation = menu__variation %}
 
 {# Link attributes #}
 {% set link__attributes = link__attributes|default({}) %}
@@ -44,7 +45,7 @@
     } %}
 {% endset %}
 
-{% embed "@atoms/lists//_yds-list-item.twig" with {
+{% embed "@atoms/lists/_yds-list-item.twig" with {
   list__item__base_class: item__base_class|default('item'),
   list__item__modifiers: item__modifiers,
   list__item__blockname: item__blockname,
@@ -53,9 +54,8 @@
   {% block list__item__content %}
     {# This import needs to be inside the block for it to work in Drupal #}
     {% import "@molecules/menu/yds-menu.twig" as menus %}
-
+    {% set levels = menu__variation == 'mega' ? 2 : 1 %}
     {{- list__item -}}
-    {% set levels = (menu__variation == 'basic') ? 2 : 3 %}
     {% if item.below and menu__level < levels %}
       {% if menu__level == 0 and menu__level__toggle %}
         {% set menu_item__cta__content %}

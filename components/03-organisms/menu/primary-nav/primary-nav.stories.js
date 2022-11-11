@@ -36,7 +36,7 @@ export default {
 };
 
 export const PrimaryNav = ({ siteHeaderTheme, menuVariation }) => `
-  <div style="position: relative; padding-top: var(--size-spacing-site-gutter);" data-site-header-nav-position='left' data-component-width="max" data-component-theme="${siteHeaderTheme}" data-menu-variation="${menuVariation}">
-    ${primaryNavTwig(primaryNavData)}
+  <div style="position: relative; padding-top: var(--size-spacing-site-gutter);" data-site-header-nav-position='left' data-component-width="max" data-component-theme="${siteHeaderTheme}">
+    ${primaryNavTwig({ ...primaryNavData, menu__variation: menuVariation })}
   </div>
 `;

@@ -146,23 +146,30 @@
       [data-menu-variation='basic'] & {
         border-left: var(--border-thickness-4) solid
           var(--color-navigation-border);
-        box-shadow: 0 15px 10px -15px #00000029;
         column-count: 1;
+
+        // @TODO: Temporary styles until we create a token
+        // This shadow is hard coded because it has to be adjusted to make it
+        // appear as though it's a shadow on only the border-bottom element.
+        // There isn't currently anything else that looks like this. If there ever
+        // Is, perhaps it should be captured as a token in a new drop-shadow set.
+        // @LINK: https://yaleits.atlassian.net/browse/YALB-844.
+        box-shadow: 0 8px 6px -6px hsl(0deg 0% 0% / 16%);
       }
 
       [aria-expanded='false'] ~ & {
         visibility: hidden;
       }
 
-      [data-menu-variation='mega'][data-site-header-nav-position='right'] & {
+      [data-site-header-nav-position='right'] [data-menu-variation='mega'] & {
         right: 0;
       }
 
-      [data-menu-variation='mega'][data-site-header-nav-position='left'] & {
+      [data-site-header-nav-position='left'] [data-menu-variation='mega'] & {
         left: 0;
       }
 
-      [data-menu-variation='mega'][data-site-header-nav-position='center'] & {
+      [data-site-header-nav-position='center'] [data-menu-variation='mega'] & {
         left: 0;
       }
     }
