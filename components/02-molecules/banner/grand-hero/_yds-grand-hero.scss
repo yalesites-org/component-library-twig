@@ -14,10 +14,19 @@ $break-grand-hero-banner: tokens.$break-m;
   overflow: hidden;
   min-height: 30rem;
   display: grid;
-  align-items: center;
+  align-items: end;
+
+  @media (min-width: $break-grand-hero-banner) {
+    align-items: center;
+  }
 
   [data-grand-hero-overlay-variation='contained'] & {
     justify-content: start;
+    padding-bottom: var(--size-spacing-6);
+
+    @media (min-width: $break-grand-hero-banner) {
+      padding-bottom: 0;
+    }
   }
 }
 
@@ -43,8 +52,10 @@ $break-grand-hero-banner: tokens.$break-m;
   padding: var(--size-spacing-5) var(--size-spacing-7);
 
   [data-grand-hero-overlay-variation='contained'] & {
-    max-width: var(--size-component-layout-width-content);
-    margin: var(--size-spacing-site-gutter);
+    @media (min-width: $break-grand-hero-banner) {
+      max-width: var(--size-component-layout-width-content);
+      margin: var(--size-spacing-site-gutter);
+    }
   }
 
   [data-grand-hero-overlay-variation='full'] & {
