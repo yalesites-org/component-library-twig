@@ -13,6 +13,8 @@
 
 {% set wrapped_image__attributes = {
   'data-component-width': wrapped_image__width|default('content'),
+  'data-wrapped-image-style': wrapped_image__style|default('floated'),
+  'data-wrapped-image-alignment': wrapped_image__alignment|default('left'),
   'class': bem(wrapped_image__base_class),
 } %}
 
