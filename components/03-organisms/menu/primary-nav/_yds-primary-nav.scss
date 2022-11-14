@@ -57,11 +57,6 @@
       border-color: var(--color-navigation-border);
       border-bottom-color: var(--color-background);
 
-      [data-menu-variation='basic'] & {
-        border-left: var(--border-thickness-4) solid
-          var(--color-navigation-border);
-      }
-
       [data-menu-variation='mega'] & {
         .primary-nav__item--level-0:first-child & {
           padding-left: var(--size-spacing-5);
@@ -102,18 +97,9 @@
     @media (max-width: tokens.$break-mobile-max) {
       // prettier-ignore
       max-height: var(--open-nav-height);
-
-      [data-menu-variation='basic'] & {
-        border-left: var(--border-thickness-4) solid
-          var(--color-navigation-border);
-        margin-left: var(--size-spacing-6);
-      }
-
-      [data-menu-variation='mega'] & {
-        border-left: var(--border-thickness-1) solid
-          var(--color-navigation-border);
-        margin-left: var(--size-spacing-6);
-      }
+      border-left: var(--border-thickness-1) solid
+        var(--color-navigation-border);
+      margin-left: var(--size-spacing-6);
 
       [aria-expanded='true'] ~ & {
         margin-bottom: var(--size-spacing-6);
