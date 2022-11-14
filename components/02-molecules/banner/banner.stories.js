@@ -92,7 +92,7 @@ export const GrandHeroBanner = ({
     banner__heading: heading,
     banner__snippet: snippet,
     banner__link__content: linkContent,
-    banner__link__url: bannerData.grand_hero__link__url,
+    banner__link__url: bannerData.banner__link__url,
     grand_hero__content__background: bgColor,
     grand_hero__overlay_variation: overlayVariation,
   });
