@@ -4,7 +4,7 @@ import bannerTwig from './action/yds-action-banner.twig';
 import grandHeroTwig from './grand-hero/yds-grand-hero.twig';
 
 import bannerData from './banner.yml';
-// import grandHeroData from './grand-hero.yml';
+import grandHeroData from './grand-hero.yml';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 
@@ -34,29 +34,11 @@ export default {
       type: 'string',
       defaultValue: bannerData.banner__link__content,
     },
-    linkStyle: {
-      name: 'Link Style',
-      type: 'select',
-      options: ['cta', 'text-link'],
-      defaultValue: 'cta',
-    },
-    contentLayout: {
-      name: 'Content Layout',
-      type: 'select',
-      options: ['bottom', 'left', 'right'],
-      defaultValue: 'bottom',
-    },
     bgColor: {
       name: 'Content Background Color',
       type: 'select',
       options: colorPairingsData,
       defaultValue: 'gray-800',
-    },
-    overlayVariation: {
-      name: 'Content Overlay',
-      type: 'select',
-      options: ['contained', 'full'],
-      defaultValue: 'contained',
     },
   },
 };
@@ -79,6 +61,20 @@ export const ActionBanner = ({
     banner__content__layout: contentLayout,
     banner__content__background: bgColor,
   });
+ActionBanner.argTypes = {
+  linkStyle: {
+    name: 'Link Style',
+    type: 'select',
+    options: ['cta', 'text-link'],
+    defaultValue: 'cta',
+  },
+  contentLayout: {
+    name: 'Content Layout',
+    type: 'select',
+    options: ['bottom', 'left', 'right'],
+    defaultValue: 'bottom',
+  },
+};
 
 export const GrandHeroBanner = ({
   heading,
@@ -89,10 +85,18 @@ export const GrandHeroBanner = ({
 }) =>
   grandHeroTwig({
     ...imageData.responsive_images['16x9'],
-    banner__heading: heading,
-    banner__snippet: snippet,
-    banner__link__content: linkContent,
-    banner__link__url: bannerData.banner__link__url,
+    grand_hero__heading: heading,
+    grand_hero__snippet: snippet,
+    grand_hero__link__content: linkContent,
+    grand_hero__link__url: grandHeroData.grand_hero__link__url,
     grand_hero__content__background: bgColor,
     grand_hero__overlay_variation: overlayVariation,
   });
+GrandHeroBanner.argTypes = {
+  overlayVariation: {
+    name: 'Content Overlay',
+    type: 'select',
+    options: ['contained', 'full'],
+    defaultValue: 'contained',
+  },
+};
