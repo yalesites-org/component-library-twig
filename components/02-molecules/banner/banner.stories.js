@@ -1,8 +1,10 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
 import bannerTwig from './action/yds-action-banner.twig';
+import grandHeroTwig from './grand-hero/yds-grand-hero.twig';
 
 import bannerData from './banner.yml';
+// import grandHeroData from './grand-hero.yml';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 
@@ -50,6 +52,12 @@ export default {
       options: colorPairingsData,
       defaultValue: 'gray-800',
     },
+    overlayVariation: {
+      name: 'Content Overlay',
+      type: 'select',
+      options: ['contained', 'full'],
+      defaultValue: 'contained',
+    },
   },
 };
 
@@ -70,4 +78,21 @@ export const ActionBanner = ({
     banner__link__style: linkStyle,
     banner__content__layout: contentLayout,
     banner__content__background: bgColor,
+  });
+
+export const GrandHeroBanner = ({
+  heading,
+  snippet,
+  linkContent,
+  bgColor,
+  overlayVariation,
+}) =>
+  grandHeroTwig({
+    ...imageData.responsive_images['16x9'],
+    banner__heading: heading,
+    banner__snippet: snippet,
+    banner__link__content: linkContent,
+    banner__link__url: bannerData.grand_hero__link__url,
+    grand_hero__content__background: bgColor,
+    grand_hero__overlay_variation: overlayVariation,
   });
