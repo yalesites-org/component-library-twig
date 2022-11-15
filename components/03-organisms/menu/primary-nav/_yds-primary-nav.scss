@@ -38,10 +38,7 @@
     }
 
     [data-menu-variation='mega'] & {
-      border-bottom: var(--border-thickness-1) solid transparent;
-      border-top: var(--border-thickness-1) solid transparent;
-      border-right: var(--border-thickness-1) solid transparent;
-      border-left: var(--border-thickness-1) solid transparent;
+      border: var(--border-thickness-1) solid transparent;
 
       .primary-nav__item--level-0:first-child & {
         padding-left: 0;
@@ -96,9 +93,8 @@
 
     @media (max-width: tokens.$break-mobile-max) {
       // prettier-ignore
+      border-left: var(--border-thickness-1) solid var(--color-navigation-border);
       max-height: var(--open-nav-height);
-      border-left: var(--border-thickness-1) solid
-        var(--color-navigation-border);
       margin-left: var(--size-spacing-6);
 
       [aria-expanded='true'] ~ & {
@@ -130,8 +126,8 @@
       }
 
       [data-menu-variation='basic'] & {
-        border-left: var(--border-thickness-4) solid
-          var(--color-navigation-border);
+        // prettier-ignore
+        border-left: var(--border-thickness-4) solid var(--color-navigation-border);
         column-count: 1;
 
         // @TODO: Temporary styles until we create a token
