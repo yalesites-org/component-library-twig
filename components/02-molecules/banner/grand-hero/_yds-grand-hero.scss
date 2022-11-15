@@ -47,8 +47,6 @@ $break-grand-hero-banner: tokens.$break-m;
 .grand-hero-banner__content {
   position: relative;
   opacity: 0.6;
-
-  // prettier-ignore
   padding: var(--size-spacing-5) var(--size-spacing-7);
 
   [data-grand-hero-overlay-variation='contained'] & {
