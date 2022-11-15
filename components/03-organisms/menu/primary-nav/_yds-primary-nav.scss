@@ -116,29 +116,6 @@
       // top border. To give it the "tab" effect.
       top: calc(100% - var(--border-thickness-1));
 
-      [data-menu-variation='mega'] & {
-        border: var(--border-thickness-1) solid var(--color-navigation-border);
-        border-bottom-width: var(--border-thickness-4);
-        padding: var(--size-spacing-7) var(--size-spacing-site-gutter);
-        width: calc(100vw - calc(var(--size-spacing-site-gutter) * 2));
-        max-width: var(--size-component-layout-width-max);
-        column-count: 3;
-      }
-
-      [data-menu-variation='basic'] & {
-        // prettier-ignore
-        border-left: var(--border-thickness-4) solid var(--color-navigation-border);
-        column-count: 1;
-
-        // @TODO: Temporary styles until we create a token
-        // This shadow is hard coded because it has to be adjusted to make it
-        // appear as though it's a shadow on only the border-bottom element.
-        // There isn't currently anything else that looks like this. If there ever
-        // Is, perhaps it should be captured as a token in a new drop-shadow set.
-        // @LINK: https://yaleits.atlassian.net/browse/YALB-844.
-        box-shadow: 0 8px 6px -6px hsl(0deg 0% 0% / 16%);
-      }
-
       [aria-expanded='false'] ~ & {
         visibility: hidden;
       }
@@ -156,9 +133,34 @@
       }
     }
 
-    @media (min-width: tokens.$break-2xl) {
-      [data-menu-variation='mega'] & {
+    [data-menu-variation='mega'] & {
+      @media (min-width: tokens.$break-mobile) {
+        border: var(--border-thickness-1) solid var(--color-navigation-border);
+        border-bottom-width: var(--border-thickness-4);
+        padding: var(--size-spacing-7) var(--size-spacing-site-gutter);
+        width: calc(100vw - calc(var(--size-spacing-site-gutter) * 2));
+        max-width: var(--size-component-layout-width-max);
+        column-count: 3;
+      }
+
+      @media (min-width: tokens.$break-2xl) {
         column-count: 4;
+      }
+    }
+
+    [data-menu-variation='basic'] & {
+      @media (min-width: tokens.$break-mobile) {
+        // prettier-ignore
+        border-left: var(--border-thickness-4) solid var(--color-navigation-border);
+        column-count: 1;
+
+        // @TODO: Temporary styles until we create a token
+        // This shadow is hard coded because it has to be adjusted to make it
+        // appear as though it's a shadow on only the border-bottom element.
+        // There isn't currently anything else that looks like this. If there ever
+        // Is, perhaps it should be captured as a token in a new drop-shadow set.
+        // @LINK: https://yaleits.atlassian.net/browse/YALB-844.
+        box-shadow: 0 8px 6px -6px hsl(0deg 0% 0% / 16%);
       }
     }
   }
