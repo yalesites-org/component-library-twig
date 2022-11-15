@@ -55,6 +55,10 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 // The spacing-page-inner mixin should be applied to components that are
 // "content-like." They generally accompany other components within a "section."
 @mixin spacing-page-inner {
+  .no-page-spacing + & {
+    margin-top: var(--font-spacing-paragraph);
+  }
+
   &:not(.no-page-spacing) {
     margin-bottom: var(--spacing-page-inner);
   }

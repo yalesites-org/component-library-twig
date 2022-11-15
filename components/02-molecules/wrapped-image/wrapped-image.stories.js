@@ -18,16 +18,30 @@ export default {
       type: 'string',
       defaultValue: 'This is the caption for the 16:9 image above.',
     },
+    imageAlignment: {
+      name: 'Image Alignment',
+      type: 'select',
+      options: ['left', 'right'],
+      defaultValue: 'left',
+    },
+    imageStyle: {
+      name: 'Image Style',
+      type: 'select',
+      options: ['floated', 'offset'],
+      defaultValue: 'floated',
+    },
   },
 };
 
-export const WrappedImage = ({ caption }) => `
+export const WrappedImage = ({ caption, imageAlignment, imageStyle }) => `
   ${textFieldTwig({
     text_field__content: WrappedImageData.text_one,
   })}
   ${wrappedImageTwig({
     ...imageData.responsive_images['3x2'],
     wrapped_image__caption: caption,
+    wrapped_image__alignment: imageAlignment,
+    wrapped_image__style: imageStyle,
     wrapped_image__content: WrappedImageData.text_two,
   })}
 `;
