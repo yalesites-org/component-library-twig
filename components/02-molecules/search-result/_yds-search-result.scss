@@ -1,3 +1,18 @@
-.search-result .breadcrumbs__wrapper {
-  padding-inline: 0;
+@use '../../00-tokens/tokens';
+
+.search-result {
+  .breadcrumbs__wrapper {
+    &[data-component-width]:not([data-embedded-components]
+        [data-component-width]) {
+      padding-inline: 0;
+      margin-bottom: 0;
+    }
+
+    [class*='__inner'] {
+      margin-inline: 0;
+    }
+  }
+  @media (min-width: tokens.$break-mobile-max) {
+    max-width: 50%;
+  }
 }

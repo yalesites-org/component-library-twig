@@ -28,5 +28,12 @@
         text__content: search_result__highlighted,
       } %}
     {% endif %}
+    {% if search_result__teaser %}
+      {% include "@atoms/typography/text/yds-text.twig" with {
+        text__base_class: 'teaser',
+        text__blockname: search_result__base_class,
+        text__content: search_result__teaser,
+      } %}
+    {% endif %}
   </div>
 </div>

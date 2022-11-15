@@ -16,12 +16,23 @@ export default {
       type: 'string',
       defaultValue: searchResultData.search_result__title,
     },
+    highlighted: {
+      name: 'Search Results Highlighted',
+      type: 'string',
+      defaultValue: searchResultData.search_result__highlighted,
+    },
+    teaser: {
+      name: 'Search Results Teaser',
+      type: 'string',
+      defaultValue: searchResultData.search_result__teaser,
+    },
   },
 };
 
-export const SearchResult = ({ heading }) =>
+export const SearchResult = ({ heading, highlighted, teaser }) =>
   searchResultTwig({
-    searchResultData,
+    search_result__teaser: teaser,
     search_result__title: heading,
+    search_result__highlighted: highlighted,
     breadcrumbs__items: breadcrumbData.items,
   });
