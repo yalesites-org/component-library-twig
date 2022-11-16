@@ -13,7 +13,7 @@
 } %}
 
 <div {{ add_attributes(search_result__attributes) }}>
-  <div {{ bem('content', [], search_result__base_class) }}>
+  <div {{ bem('content', [], search_result__base_class) }} data-embedded-components>
     {% include "@atoms/typography/headings/yds-heading.twig" with {
       heading__level: '2',
       heading__blockname: search_result__base_class,

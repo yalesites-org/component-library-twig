@@ -7,6 +7,10 @@
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: var(--size-spacing-7);
+
+  [data-embedded-components] & {
+    margin-bottom: 0;
+  }
 }
 
 .breadcrumbs__button {
