@@ -1,6 +1,8 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
 
+$break-card-collection-max: tokens.$break-m - 0.05;
+
 .reference-card {
   @include atoms.clickable-component-heading-link;
   @include atoms.clickable-component-image;
@@ -9,8 +11,31 @@
   flex-flow: column-reverse;
   gap: var(--size-spacing-4);
 
-  @media (min-width: tokens.$break-mobile) {
-    [data-collection-type='list'] & {
+  @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
+    [data-collection-type='grid'] & {
+      &[data-with-image='true'] {
+        display: grid;
+        column-gap: var(--size-spacing-6);
+        grid-template-areas: 'image content';
+      }
+    }
+
+    [data-collection-type='grid'][data-collection-featured='true'] & {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    [data-collection-type='grid'][data-collection-featured='false'] & {
+      grid-template-columns: 1fr 2fr;
+      grid-template-areas: 'image content';
+    }
+  }
+
+  [data-collection-type='list'] & {
+    @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
+      flex-basis: 100%;
+    }
+
+    @media (min-width: tokens.$break-mobile) {
       flex-flow: row-reverse nowrap;
       gap: var(--size-spacing-8);
     }
@@ -18,6 +43,16 @@
 }
 
 .reference-card__image {
+  @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
+    [data-collection-type='list'] & {
+      max-width: 50%;
+    }
+
+    [data-collection-type='grid'] [data-with-image='true'] & {
+      grid-area: image;
+    }
+  }
+
   @media (min-width: tokens.$break-mobile) {
     [data-collection-type='grid'] & {
       aspect-ratio: 3/2;
@@ -32,6 +67,12 @@
 .reference-card__content {
   [data-collection-type='list'][data-collection-featured='false'] & {
     flex: 1 1 100%;
+  }
+
+  @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
+    [data-collection-type='grid'] [data-with-image='true'] & {
+      grid-area: content;
+    }
   }
 
   @media (min-width: tokens.$break-mobile) {

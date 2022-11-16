@@ -43,7 +43,7 @@
       // Grids with content (like the news cards) start one-up, and go to two-up
       // at this breakpoint.
       @media (min-width: tokens.$break-s) {
-        flex: 0 1 calc(50% - calc(var(--grid-gutter) / 2));
+        flex-basis: 100%;
       }
     }
 
