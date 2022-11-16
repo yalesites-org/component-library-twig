@@ -13,20 +13,8 @@ $break-card-collection-max: tokens.$break-m - 0.05;
 
   @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
     [data-collection-type='grid'] & {
-      &[data-with-image='true'] {
-        display: grid;
-        column-gap: var(--size-spacing-6);
-        grid-template-areas: 'image content';
-      }
-    }
-
-    [data-collection-type='grid'][data-collection-featured='true'] & {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    [data-collection-type='grid'][data-collection-featured='false'] & {
-      grid-template-columns: 1fr 2fr;
-      grid-template-areas: 'image content';
+      flex-flow: row-reverse nowrap;
+      gap: var(--size-spacing-6);
     }
   }
 
@@ -35,7 +23,7 @@ $break-card-collection-max: tokens.$break-m - 0.05;
       flex-basis: 100%;
     }
 
-    @media (min-width: tokens.$break-mobile) {
+    @media (min-width: tokens.$break-m) {
       flex-flow: row-reverse nowrap;
       gap: var(--size-spacing-8);
     }
@@ -48,8 +36,12 @@ $break-card-collection-max: tokens.$break-m - 0.05;
       max-width: 50%;
     }
 
-    [data-collection-type='grid'] [data-with-image='true'] & {
-      grid-area: image;
+    [data-collection-type='grid'][data-collection-featured='false'] & {
+      flex: 0 33%;
+    }
+
+    [data-collection-type='grid'][data-collection-featured='true'] & {
+      flex: 0 50%;
     }
   }
 
@@ -70,12 +62,16 @@ $break-card-collection-max: tokens.$break-m - 0.05;
   }
 
   @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
-    [data-collection-type='grid'] [data-with-image='true'] & {
-      grid-area: content;
+    [data-collection-type='grid'][data-collection-featured='true'] & {
+      flex: 0 0 50%;
+    }
+
+    [data-collection-type='grid'][data-collection-featured='false'] & {
+      flex: 0 0 66%;
     }
   }
 
-  @media (min-width: tokens.$break-mobile) {
+  @media (min-width: tokens.$break-m) {
     [data-collection-type='list'][data-collection-featured='true'] & {
       flex: 0 1 71%;
       margin-inline: auto;
