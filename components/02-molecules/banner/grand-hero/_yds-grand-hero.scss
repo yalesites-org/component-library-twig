@@ -17,36 +17,34 @@ $break-grand-hero-banner: tokens.$break-m;
   [data-grand-hero-overlay-variation='contained'] & {
     justify-content: start;
     padding-bottom: var(--size-spacing-6);
-
-    @media (min-width: $break-grand-hero-banner) {
-      padding-bottom: 0;
-    }
   }
 }
 
 .grand-hero-banner__image {
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  position: absolute;
 
   img {
-    object-fit: cover;
-    height: 100%;
     width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 
 .grand-hero-banner__content {
   position: relative;
-  opacity: 0.6;
   padding: var(--size-spacing-5) var(--size-spacing-7);
+  background: transparent;
 
   [data-grand-hero-overlay-variation='contained'] & {
+    margin-bottom: var(--size-spacing-6);
+
     @media (min-width: $break-grand-hero-banner) {
-      max-width: var(--size-component-layout-width-content);
       margin: var(--size-spacing-site-gutter);
+      max-width: var(--size-component-layout-width-content);
     }
   }
 
@@ -55,11 +53,24 @@ $break-grand-hero-banner: tokens.$break-m;
     display: flex;
     align-items: center;
   }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--color-background);
+    opacity: 0.6;
+  }
 }
 
 .grand-hero-banner__content-inner {
+  position: relative;
   display: grid;
   gap: var(--size-spacing-3);
+  max-width: var(--size-component-layout-width-content);
 }
 
 .grand-hero-banner__snippet {
