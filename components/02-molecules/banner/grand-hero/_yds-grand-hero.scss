@@ -83,6 +83,10 @@ $break-grand-hero-banner: tokens.$break-m;
   @media (min-width: $break-grand-hero-banner) {
     max-width: var(--size-component-layout-width-content);
   }
+
+  [data-grand-hero-overlay-variation='full'] & {
+    padding-left: var(--size-spacing-8);
+  }
 }
 
 .grand-hero-banner__snippet {
