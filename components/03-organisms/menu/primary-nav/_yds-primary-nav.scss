@@ -56,11 +56,11 @@ $menu-sub-max-width: 300px;
       border-bottom-color: var(--color-background);
 
       [data-menu-variation='mega'] & {
-        .primary-nav__item--level-0:first-child & {
+        :first-child > & {
           padding-left: var(--size-spacing-5);
         }
 
-        .primary-nav__item--level-0:last-child & {
+        :last-child > & {
           padding-right: var(--size-spacing-5);
         }
       }
@@ -179,44 +179,39 @@ $menu-sub-max-width: 300px;
   }
 }
 
-// Breaking this out to better target active and inactive borders
-[data-menu-variation='basic'] {
-  @media (min-width: tokens.$break-mobile) {
-    .primary-nav__item.primary-nav__item--level-0.primary-nav__item--with-sub {
-      &:not(:last-child) {
-        .primary-nav__toggle--with-sub {
-          border-left: var(--border-thickness-4) solid transparent;
+// basic: border variation
+@media (min-width: tokens.$break-mobile) {
+  .primary-nav__toggle {
+    [data-menu-variation='basic'] :not(:last-child) > & {
+      border-left: var(--border-thickness-4) solid transparent;
 
-          &[aria-expanded='true'] {
-            border-left: var(--border-thickness-4) solid
-              var(--color-navigation-border);
-          }
-        }
-
-        .primary-nav__menu--level-1 {
-          border-left: var(--border-thickness-4) solid
-            var(--color-navigation-border);
-        }
+      &[aria-expanded='true'] {
+        // prettier-ignore
+        border-left: var(--border-thickness-4) solid var(--color-navigation-border);
       }
+    }
 
-      &:last-child {
-        .primary-nav__toggle--with-sub {
-          border-right: var(--border-thickness-4) solid transparent;
+    [data-menu-variation='basic'] :last-child > & {
+      border-right: var(--border-thickness-4) solid transparent;
 
-          &[aria-expanded='true'] {
-            border-right: var(--border-thickness-4) solid
-              var(--color-navigation-border);
-          }
-        }
-
-        // position last li with a ul level-1 to the right
-        .primary-nav__menu--level-1 {
-          right: 0;
-
-          // prettier-ignore
-          border-right: var(--border-thickness-4) solid var(--color-navigation-border);
-        }
+      &[aria-expanded='true'] {
+        border-right: var(--border-thickness-4) solid
+          var(--color-navigation-border);
       }
+    }
+  }
+
+  .primary-nav__menu--level-1 {
+    [data-menu-variation='basic'] :not(:last-child) > & {
+      // prettier-ignore
+      border-left: var(--border-thickness-4) solid var(--color-navigation-border);
+    }
+
+    [data-menu-variation='basic'] :last-child > & {
+      right: 0;
+
+      // prettier-ignore
+      border-right: var(--border-thickness-4) solid var(--color-navigation-border);
     }
   }
 }
@@ -285,15 +280,13 @@ $menu-sub-max-width: 300px;
       padding: var(--size-spacing-2) var(--size-spacing-5);
     }
 
-    .primary-nav__item--level-1:first-child & {
+    :first-child > & {
       padding-top: 0;
     }
 
     // remove last child's bottom border
-    [data-menu-variation='basic'] .primary-nav__item--level-1:last-child & {
-      &::after {
-        content: unset;
-      }
+    [data-menu-variation='basic'] :last-child > &::after {
+      content: unset;
     }
   }
 
