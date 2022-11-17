@@ -14,7 +14,9 @@ $break-grand-hero-banner: tokens.$break-m;
   align-items: end;
 
   &[data-grand-hero-overlay-variation='contained'] {
-    justify-content: start;
+    @media (min-width: $break-grand-hero-banner) {
+      justify-content: start;
+    }
   }
 
   @media (min-width: $break-grand-hero-banner) {
