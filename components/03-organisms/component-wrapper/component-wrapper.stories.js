@@ -8,8 +8,18 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
+  argTypes: {
+    componentWidth: {
+      name: 'Component Width',
+      type: 'select',
+      options: ['content', 'highlight', 'feature', 'max'],
+      defaultValue: 'content',
+    },
+  },
 };
 
-export const ComponentWrapper = () => {
-  return componentWrapperTwig({});
+export const ComponentWrapper = ({ componentWidth }) => {
+  return componentWrapperTwig({
+    component_width: componentWidth,
+  });
 };
