@@ -180,40 +180,43 @@ $menu-sub-max-width: 300px;
 }
 
 // Breaking this out to better target active and inactive borders
-[data-menu-variation='basic']
-  .primary-nav__item.primary-nav__item--level-0.primary-nav__item--with-sub {
-  &:not(:last-child) {
-    .primary-nav__toggle--with-sub {
-      border-left: var(--border-thickness-4) solid transparent;
+[data-menu-variation='basic'] {
+  @media (min-width: tokens.$break-mobile) {
+    .primary-nav__item.primary-nav__item--level-0.primary-nav__item--with-sub {
+      &:not(:last-child) {
+        .primary-nav__toggle--with-sub {
+          border-left: var(--border-thickness-4) solid transparent;
 
-      &[aria-expanded='true'] {
-        border-left: var(--border-thickness-4) solid
-          var(--color-navigation-border);
+          &[aria-expanded='true'] {
+            border-left: var(--border-thickness-4) solid
+              var(--color-navigation-border);
+          }
+        }
+
+        .primary-nav__menu--level-1 {
+          border-left: var(--border-thickness-4) solid
+            var(--color-navigation-border);
+        }
       }
-    }
 
-    .primary-nav__menu--level-1 {
-      border-left: var(--border-thickness-4) solid
-        var(--color-navigation-border);
-    }
-  }
+      &:last-child {
+        .primary-nav__toggle--with-sub {
+          border-right: var(--border-thickness-4) solid transparent;
 
-  &:last-child {
-    .primary-nav__toggle--with-sub {
-      border-right: var(--border-thickness-4) solid transparent;
+          &[aria-expanded='true'] {
+            border-right: var(--border-thickness-4) solid
+              var(--color-navigation-border);
+          }
+        }
 
-      &[aria-expanded='true'] {
-        border-right: var(--border-thickness-4) solid
-          var(--color-navigation-border);
+        // position last li with a ul level-1 to the right
+        .primary-nav__menu--level-1 {
+          right: 0;
+
+          // prettier-ignore
+          border-right: var(--border-thickness-4) solid var(--color-navigation-border);
+        }
       }
-    }
-
-    // position last li with a ul level-1 to the right
-    .primary-nav__menu--level-1 {
-      right: 0;
-
-      // prettier-ignore
-      border-right: var(--border-thickness-4) solid var(--color-navigation-border);
     }
   }
 }
