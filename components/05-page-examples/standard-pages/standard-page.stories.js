@@ -195,7 +195,7 @@ WithBanner.argTypes = {
     name: 'Banner Type',
     type: 'select',
     options: ['action', 'grand-hero'],
-    default: 'action',
+    defaultValue: 'action',
   },
 };
 
