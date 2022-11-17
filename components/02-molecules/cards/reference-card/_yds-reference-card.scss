@@ -41,13 +41,17 @@ $break-card-collection-max: tokens.$break-m - 0.05;
     }
 
     [data-collection-type='grid'][data-collection-featured='true'] & {
-      flex: 0 50%;
+      flex: 0 1 50%;
     }
   }
 
   @media (min-width: tokens.$break-m) {
+    [data-collection-type='list'][data-collection-featured='false'] & {
+      flex: 0 1 40%;
+    }
+
     [data-collection-type='list'][data-collection-featured='true'] & {
-      flex: 0 1 60%;
+      flex: 0 1 50%;
     }
   }
 
@@ -69,17 +73,17 @@ $break-card-collection-max: tokens.$break-m - 0.05;
 
   @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
     [data-collection-type='grid'][data-collection-featured='true'] & {
-      flex: 0 0 50%;
+      flex: 1 0 50%;
     }
 
     [data-collection-type='grid'][data-collection-featured='false'] & {
-      flex: 0 0 66%;
+      flex: 1 0 66%;
     }
   }
 
   @media (min-width: tokens.$break-m) {
     [data-collection-type='list'][data-collection-featured='true'] & {
-      flex: 0 1 40%;
+      flex: 1 0 50%;
       margin-inline: auto;
     }
   }
