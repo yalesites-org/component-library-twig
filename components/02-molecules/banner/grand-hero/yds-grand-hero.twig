@@ -16,9 +16,11 @@
 {% set grand_hero__base_class = 'grand-hero-banner' %}
 {% set grand_hero__content__background = grand_hero__content__background|default('gray-800') %}
 {% set grand_hero__overlay_variation = grand_hero__overlay_variation|default('contained') %}
+{% set grand_hero__size = grand_hero__size|default('full') %}
 
 {% set grand_hero__attributes = {
   'data-grand-hero-overlay-variation': grand_hero__overlay_variation,
+  'data-grand-hero-size' : grand_hero__size, 
   class: bem(grand_hero__base_class),
 } %}
 
