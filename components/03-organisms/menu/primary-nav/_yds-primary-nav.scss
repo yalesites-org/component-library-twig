@@ -179,7 +179,7 @@ $menu-sub-max-width: 300px;
   }
 }
 
-// target active and inactive borders
+// Breaking this out to better target active and inactive borders
 [data-menu-variation='basic']
   .primary-nav__item.primary-nav__item--level-0.primary-nav__item--with-sub {
   &:not(:last-child) {
@@ -208,11 +208,12 @@ $menu-sub-max-width: 300px;
       }
     }
 
-    // position last li ul level-1 to the right
+    // position last li with a ul level-1 to the right
     .primary-nav__menu--level-1 {
       right: 0;
-      border-right: var(--border-thickness-4) solid
-        var(--color-navigation-border);
+
+      // prettier-ignore
+      border-right: var(--border-thickness-4) solid var(--color-navigation-border);
     }
   }
 }
