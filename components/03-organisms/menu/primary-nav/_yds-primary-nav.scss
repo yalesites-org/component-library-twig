@@ -92,6 +92,7 @@ $menu-sub-max-width: 19rem;
     @media (min-width: tokens.$break-mobile) {
       display: flex;
       flex-wrap: wrap;
+      position: relative;
     }
   }
 
