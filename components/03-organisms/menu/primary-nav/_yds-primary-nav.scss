@@ -8,6 +8,8 @@
   --color-navigation-expanded-item: var(--color-basic-brown-gray);
 }
 
+$menu-sub-max-width: 300px;
+
 [data-component-theme='blue-yale'] {
   --color-muted: var(--color-gray-300);
   --color-navigation-border: var(--color-gray-300);
@@ -34,7 +36,6 @@
 
     [data-menu-variation='basic'] & {
       padding-top: var(--size-spacing-2);
-      border-left: var(--border-thickness-4) solid transparent;
     }
 
     [data-menu-variation='mega'] & {
@@ -74,6 +75,14 @@
     display: flex;
     place-content: center;
   }
+
+  [data-site-header-nav-position='left'] & {
+    margin-left: calc(var(--size-spacing-5) * -1);
+  }
+
+  [data-site-header-nav-position='right'] & {
+    margin-right: calc(var(--size-spacing-5) * -1);
+  }
 }
 
 .primary-nav__menu {
@@ -89,6 +98,8 @@
   &--level-1 {
     @include tokens.animate(max-height, var(--site-header-animation-speed));
 
+    width: 100%;
+    max-width: $menu-sub-max-width;
     overflow: hidden;
 
     @media (max-width: tokens.$break-mobile-max) {
@@ -150,8 +161,6 @@
 
     [data-menu-variation='basic'] & {
       @media (min-width: tokens.$break-mobile) {
-        // prettier-ignore
-        border-left: var(--border-thickness-4) solid var(--color-navigation-border);
         column-count: 1;
 
         // @TODO: Temporary styles until we create a token
