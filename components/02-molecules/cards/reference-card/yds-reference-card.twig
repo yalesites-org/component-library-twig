@@ -16,11 +16,7 @@
 {% set reference_card__base_class = 'reference-card' %}
 {% set reference_card__image = reference_card__image|default('true') %}
 
-{% set reference_card__attributes = {
-  'class': bem(reference_card__base_class),
-} %}
-
-<li {{ add_attributes(reference_card__attributes) }}>
+<li {{ bem(reference_card__base_class) }}>
   <div {{ bem('content', [], reference_card__base_class) }}>
     {% if reference_card__overline %}
       {% include "@atoms/typography/text/yds-text.twig" with {
