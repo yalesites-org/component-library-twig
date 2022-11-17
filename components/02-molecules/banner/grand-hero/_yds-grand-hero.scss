@@ -4,19 +4,29 @@
 $break-grand-hero-banner: tokens.$break-m;
 
 .grand-hero-banner {
+  --site-header-height: 77px;
+
+  @include tokens.spacing-page-section($flush-top: true, $flush-bottom: true);
+
   position: relative;
   overflow: hidden;
-  min-height: 30rem;
   display: grid;
   align-items: end;
+
+  &[data-grand-hero-overlay-variation='contained'] {
+    justify-content: start;
+  }
 
   @media (min-width: $break-grand-hero-banner) {
     align-items: center;
   }
 
-  [data-grand-hero-overlay-variation='contained'] & {
-    justify-content: start;
-    padding-bottom: var(--size-spacing-6);
+  &[data-grand-hero-size='reduced'] {
+    min-height: 28rem;
+  }
+
+  &[data-grand-hero-size='full'] {
+    min-height: calc(95vh - var(--site-header-height));
   }
 }
 
@@ -44,7 +54,6 @@ $break-grand-hero-banner: tokens.$break-m;
 
     @media (min-width: $break-grand-hero-banner) {
       margin: var(--size-spacing-site-gutter);
-      max-width: var(--size-component-layout-width-content);
     }
   }
 
@@ -70,7 +79,10 @@ $break-grand-hero-banner: tokens.$break-m;
   position: relative;
   display: grid;
   gap: var(--size-spacing-3);
-  max-width: var(--size-component-layout-width-content);
+
+  @media (min-width: $break-grand-hero-banner) {
+    max-width: var(--size-component-layout-width-content);
+  }
 }
 
 .grand-hero-banner__snippet {
