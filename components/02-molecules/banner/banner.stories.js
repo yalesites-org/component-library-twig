@@ -82,6 +82,7 @@ export const GrandHeroBanner = ({
   linkContent,
   bgColor,
   overlayVariation,
+  size,
 }) =>
   grandHeroTwig({
     ...imageData.responsive_images['16x9'],
@@ -91,6 +92,7 @@ export const GrandHeroBanner = ({
     grand_hero__link__url: grandHeroData.grand_hero__link__url,
     grand_hero__content__background: bgColor,
     grand_hero__overlay_variation: overlayVariation,
+    grand_hero__size: size,
   });
 GrandHeroBanner.argTypes = {
   overlayVariation: {
@@ -98,5 +100,11 @@ GrandHeroBanner.argTypes = {
     type: 'select',
     options: ['contained', 'full'],
     defaultValue: 'contained',
+  },
+  size: {
+    name: 'Content Size',
+    type: 'select',
+    options: ['reduced', 'full'],
+    defaultValue: 'full',
   },
 };
