@@ -184,7 +184,7 @@ $menu-sub-max-width-mobile: 36rem;
   }
 }
 
-// basic: border variation
+// basic menu variation: border application
 @media (min-width: tokens.$break-mobile) {
   .primary-nav__toggle {
     [data-menu-variation='basic'] :not(:last-child) > & {
