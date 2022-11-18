@@ -9,7 +9,6 @@
 }
 
 $menu-sub-max-width: 19rem;
-$menu-sub-max-width-mobile: 36rem;
 
 [data-component-theme='blue-yale'] {
   --color-muted: var(--color-gray-300);
@@ -110,7 +109,7 @@ $menu-sub-max-width-mobile: 36rem;
       border-left: var(--border-thickness-1) solid var(--color-navigation-border);
       max-height: var(--open-nav-height);
       margin-left: var(--size-spacing-6);
-      max-width: $menu-sub-max-width-mobile;
+      max-width: calc(100% - var(--size-spacing-6));
 
       [aria-expanded='true'] ~ & {
         margin-bottom: var(--size-spacing-6);
