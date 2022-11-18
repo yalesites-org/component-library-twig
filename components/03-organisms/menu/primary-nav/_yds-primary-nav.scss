@@ -9,6 +9,7 @@
 }
 
 $menu-sub-max-width: 19rem;
+$menu-sub-max-width-mobile: 36rem;
 
 [data-component-theme='blue-yale'] {
   --color-muted: var(--color-gray-300);
@@ -76,12 +77,14 @@ $menu-sub-max-width: 19rem;
     place-content: center;
   }
 
-  [data-site-header-nav-position='left'] & {
-    margin-left: calc(var(--size-spacing-5) * -1);
-  }
+  @media (max-width: tokens.$break-mobile-max) {
+    [data-site-header-nav-position='left'] & {
+      margin-left: calc(var(--size-spacing-5) * -1);
+    }
 
-  [data-site-header-nav-position='right'] & {
-    margin-right: calc(var(--size-spacing-5) * -1);
+    [data-site-header-nav-position='right'] & {
+      margin-right: calc(var(--size-spacing-5) * -1);
+    }
   }
 }
 
@@ -100,7 +103,6 @@ $menu-sub-max-width: 19rem;
     @include tokens.animate(max-height, var(--site-header-animation-speed));
 
     width: 100%;
-    max-width: $menu-sub-max-width;
     overflow: hidden;
 
     @media (max-width: tokens.$break-mobile-max) {
@@ -108,6 +110,7 @@ $menu-sub-max-width: 19rem;
       border-left: var(--border-thickness-1) solid var(--color-navigation-border);
       max-height: var(--open-nav-height);
       margin-left: var(--size-spacing-6);
+      max-width: $menu-sub-max-width-mobile;
 
       [aria-expanded='true'] ~ & {
         margin-bottom: var(--size-spacing-6);
@@ -123,6 +126,7 @@ $menu-sub-max-width: 19rem;
     @media (min-width: tokens.$break-mobile) {
       position: absolute;
       background-color: var(--color-background);
+      max-width: $menu-sub-max-width;
 
       // Subtract enough to place it just behind an "open" toggle and hide the
       // top border. To give it the "tab" effect.
@@ -279,6 +283,10 @@ $menu-sub-max-width: 19rem;
 
     [data-menu-variation='mega'] & {
       padding: var(--size-spacing-2) var(--size-spacing-5);
+    }
+
+    :last-child > & {
+      margin-bottom: 0;
     }
 
     :first-child > & {
