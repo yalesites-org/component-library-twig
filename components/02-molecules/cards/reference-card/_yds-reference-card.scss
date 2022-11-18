@@ -11,18 +11,17 @@ $break-card-collection-max: tokens.$break-m - 0.05;
   flex-flow: column-reverse;
   gap: var(--size-spacing-4);
 
-  [data-collection-type='grid'] & {
+  // from small to media, both grid and list render using a horizontal layout.
+  [data-collection-type='grid'] &,
+  [data-collection-type='list'] & {
     @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
       flex-flow: row-reverse nowrap;
       gap: var(--size-spacing-6);
+      align-items: flex-start;
     }
   }
 
   [data-collection-type='list'] & {
-    @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
-      flex-basis: 100%;
-    }
-
     @media (min-width: tokens.$break-m) {
       flex-flow: row-reverse nowrap;
       gap: var(--size-spacing-8);
@@ -31,11 +30,13 @@ $break-card-collection-max: tokens.$break-m - 0.05;
 }
 
 .reference-card__image {
-  @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
+  @media (max-width: $break-card-collection-max) {
     [data-collection-type='list'] & {
       max-width: 50%;
     }
+  }
 
+  @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
     [data-collection-type='grid'][data-collection-featured='false'] & {
       flex: 0 33%;
     }
