@@ -32,7 +32,8 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
 
 .reference-card__image {
   @media (max-width: $break-card-collection-list-image-max) {
-    [data-collection-type='list'] & {
+    [data-collection-type='list'] &,
+    [data-collection-type='grid'][data-collection-featured='false'] & {
       max-width: 50%;
     }
   }
