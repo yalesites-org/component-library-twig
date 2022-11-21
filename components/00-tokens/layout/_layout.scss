@@ -36,7 +36,9 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 
 [data-component-width] {
   &:not([data-embedded-components] [data-component-width]) {
-    padding-inline: var(--size-spacing-site-gutter);
+    @media (min-width: tokens.$break-l) {
+      padding-inline: var(--size-spacing-site-gutter);
+    }
   }
 }
 
