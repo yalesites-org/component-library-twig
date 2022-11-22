@@ -47,15 +47,16 @@ $break-text-with-image-max: tokens.$break-l - 0.05;
     }
   }
 
-  [data-image-position='image-right'] & {
-    @media (max-width: $break-text-with-image-max) {
-      justify-self: end;
-    }
-  }
-
   [data-component-focus='image'] & {
     @media (max-width: $break-text-with-image-max) {
       max-width: 85%;
+    }
+  }
+
+  [data-image-position='image-right'][data-component-focus='equal'] &,
+  [data-image-position='image-right'][data-component-focus='content'] & {
+    @media (max-width: $break-text-with-image-max) {
+      justify-self: end;
     }
   }
 
