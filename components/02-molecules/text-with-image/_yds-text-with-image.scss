@@ -35,26 +35,20 @@ $break-text-with-image-max: tokens.$break-l - 0.05;
 }
 
 .text-with-image__image {
-  [data-component-focus='content'] & {
-    @media (max-width: $break-text-with-image-max) {
+  @media (max-width: $break-text-with-image-max) {
+    [data-component-focus='content'] & {
       max-width: 50%;
     }
-  }
 
-  [data-component-focus='equal'] & {
-    @media (max-width: $break-text-with-image-max) {
+    [data-component-focus='equal'] & {
       max-width: 75%;
     }
-  }
 
-  [data-component-focus='image'] & {
-    @media (max-width: $break-text-with-image-max) {
+    [data-component-focus='image'] & {
       max-width: 85%;
     }
-  }
 
-  [data-image-position='image-right'] & {
-    @media (max-width: $break-text-with-image-max) {
+    [data-image-position='image-right'] & {
       justify-self: end;
     }
   }
@@ -72,33 +66,25 @@ $break-text-with-image-max: tokens.$break-l - 0.05;
 }
 
 .text-with-image__content {
-  [data-component-focus='image'] & {
-    @media (max-width: $break-text-with-image-max) {
+  @media (max-width: $break-text-with-image-max) {
+    [data-component-focus='image'] & {
       max-width: 85%;
     }
-  }
 
-  [data-component-focus='content'][data-image-position='image-left'] & {
-    @media (max-width: $break-text-with-image-max) {
+    [data-component-focus='content'][data-image-position='image-left'] & {
       margin-left: 20%;
     }
-  }
 
-  [data-component-focus='equal'][data-image-position='image-left'] & {
-    @media (max-width: $break-text-with-image-max) {
+    [data-component-focus='equal'][data-image-position='image-left'] & {
       margin-left: 20%;
     }
-  }
 
-  [data-component-focus='image'][data-image-position='image-left'] & {
-    @media (max-width: $break-text-with-image-max) {
+    [data-component-focus='image'][data-image-position='image-left'] & {
       justify-self: end;
     }
-  }
 
-  [data-component-focus='content'][data-image-position='image-right'] &,
-  [data-component-focus='equal'][data-image-position='image-right'] & {
-    @media (max-width: $break-text-with-image-max) {
+    [data-component-focus='content'][data-image-position='image-right'] &,
+    [data-component-focus='equal'][data-image-position='image-right'] & {
       max-width: 75%;
     }
   }
