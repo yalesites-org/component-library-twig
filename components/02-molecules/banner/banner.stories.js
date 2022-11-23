@@ -8,9 +8,6 @@ import grandHeroData from './grand-hero.yml';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 
-// JavaScript to handle grand-hero size
-import './grand-hero/yds-grand-hero';
-
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
 /**

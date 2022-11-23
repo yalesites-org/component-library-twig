@@ -4,8 +4,6 @@
 $break-grand-hero-banner: tokens.$break-m;
 
 .grand-hero-banner {
-  --site-header-height: 77px;
-
   @include tokens.spacing-page-section($flush-top: true, $flush-bottom: true);
 
   position: relative;
@@ -106,4 +104,6 @@ $break-grand-hero-banner: tokens.$break-m;
   @include atoms.link;
 
   width: fit-content;
+
+  // line-height: normal;
 }
