@@ -20,7 +20,9 @@
       heading: search_result__title,
       heading__url: search_result__url,
     } %}
-    {% include "@organisms/menu/breadcrumbs/yds-breadcrumbs.twig" %}
+    {% include "@organisms/menu/breadcrumbs/yds-breadcrumbs.twig" with {
+      breadcrumbs__modifiers: search_result__base_class
+    } %}
     {% if search_result__highlighted %}
       {% include "@atoms/typography/text/yds-text.twig" with {
         text__base_class: 'highlighted',
