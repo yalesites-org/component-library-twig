@@ -25,6 +25,7 @@ export const fullWidth = ({
   utilityNavSearch,
   siteFooterTheme,
   footerBorderThickness,
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
 }) =>
   fullWidthTwig({
     site_name: siteName,
@@ -38,4 +39,5 @@ export const fullWidth = ({
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
     primary_nav__items: primaryNavData.items,
+    menu__variation: menuVariation,
   });

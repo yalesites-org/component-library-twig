@@ -4,7 +4,7 @@ items:
     below:
       - title: "Dean's Office"
         url: '#'
-      - title: 'Virtual Backgrounds'
+      - title: 'Virtual Backgrounds with a lot more text entered to test max-width'
         url: '#'
       - title: 'Partners on the Quad'
         url: '#'
