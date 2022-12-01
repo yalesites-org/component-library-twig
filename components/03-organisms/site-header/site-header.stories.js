@@ -37,6 +37,12 @@ export default {
       type: 'select',
       defaultValue: 'white',
     },
+    menuVariation: {
+      name: 'Menu Variation',
+      options: ['basic', 'mega'],
+      type: 'select',
+      defaultValue: 'basic',
+    },
   },
 };
 
@@ -44,22 +50,29 @@ export const Header = ({
   borderThickness,
   primaryNavPosition,
   siteHeaderTheme,
+  menuVariation,
 }) =>
   siteHeaderTwig({
     site_name: 'Department of Chemistry',
     site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
+    site_header__menu__variation: menuVariation,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
   });
 
-export const HeaderExamples = ({ borderThickness, primaryNavPosition }) =>
+export const HeaderExamples = ({
+  borderThickness,
+  primaryNavPosition,
+  menuVariation,
+}) =>
   siteHeaderExamples({
     ...siteHeaderThemes,
     site_name: 'Department of Chemistry',
     site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
+    site_header__menu__variation: menuVariation,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
   });

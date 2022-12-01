@@ -8,6 +8,8 @@
   --color-navigation-expanded-item: var(--color-basic-brown-gray);
 }
 
+$menu-sub-max-width: 19rem;
+
 [data-component-theme='blue-yale'] {
   --color-muted: var(--color-gray-300);
   --color-navigation-border: var(--color-gray-300);
@@ -31,31 +33,37 @@
   @media (min-width: tokens.$break-mobile) {
     position: relative;
     padding: var(--size-spacing-5);
-    border-bottom: var(--border-thickness-1) solid transparent;
-    border-top: var(--border-thickness-1) solid transparent;
-    border-right: var(--border-thickness-1) solid transparent;
-    border-left: var(--border-thickness-1) solid transparent;
+
+    [data-menu-variation='basic'] & {
+      padding-top: var(--size-spacing-2);
+    }
+
+    [data-menu-variation='mega'] & {
+      border: var(--border-thickness-1) solid transparent;
+
+      .primary-nav__item--level-0:first-child & {
+        padding-left: 0;
+      }
+
+      .primary-nav__item--level-0:last-child & {
+        padding-right: 0;
+      }
+    }
 
     &[aria-expanded='true'] {
       z-index: 1;
       border-color: var(--color-navigation-border);
       border-bottom-color: var(--color-background);
 
-      .primary-nav__item--level-0:first-child & {
-        padding-left: var(--size-spacing-5);
+      [data-menu-variation='mega'] & {
+        :first-child > & {
+          padding-left: var(--size-spacing-5);
+        }
+
+        :last-child > & {
+          padding-right: var(--size-spacing-5);
+        }
       }
-
-      .primary-nav__item--level-0:last-child & {
-        padding-right: var(--size-spacing-5);
-      }
-    }
-
-    .primary-nav__item--level-0:first-child & {
-      padding-left: 0;
-    }
-
-    .primary-nav__item--level-0:last-child & {
-      padding-right: 0;
     }
   }
 }
@@ -67,6 +75,16 @@
     display: flex;
     place-content: center;
   }
+
+  @media (max-width: tokens.$break-mobile-max) {
+    [data-site-header-nav-position='left'] & {
+      margin-left: calc(var(--size-spacing-5) * -1);
+    }
+
+    [data-site-header-nav-position='right'] & {
+      margin-right: calc(var(--size-spacing-5) * -1);
+    }
+  }
 }
 
 .primary-nav__menu {
@@ -76,19 +94,22 @@
     @media (min-width: tokens.$break-mobile) {
       display: flex;
       flex-wrap: wrap;
+      position: relative;
     }
   }
 
   &--level-1 {
     @include tokens.animate(max-height, var(--site-header-animation-speed));
 
+    width: 100%;
     overflow: hidden;
 
     @media (max-width: tokens.$break-mobile-max) {
       // prettier-ignore
       border-left: var(--border-thickness-1) solid var(--color-navigation-border);
-      margin-left: var(--size-spacing-6);
       max-height: var(--open-nav-height);
+      margin-left: var(--size-spacing-6);
+      max-width: calc(100% - var(--size-spacing-6));
 
       [aria-expanded='true'] ~ & {
         margin-bottom: var(--size-spacing-6);
@@ -104,41 +125,98 @@
     @media (min-width: tokens.$break-mobile) {
       position: absolute;
       background-color: var(--color-background);
+      max-width: $menu-sub-max-width;
 
       // Subtract enough to place it just behind an "open" toggle and hide the
       // top border. To give it the "tab" effect.
       top: calc(100% - var(--border-thickness-1));
-      padding: var(--size-spacing-7) var(--size-spacing-site-gutter);
-      border: var(--border-thickness-1) solid var(--color-navigation-border);
-      border-bottom-width: var(--border-thickness-4);
-      width: calc(100vw - calc(var(--size-spacing-site-gutter) * 2));
-      max-width: var(--size-component-layout-width-max);
-      column-count: 3;
 
       [aria-expanded='false'] ~ & {
         visibility: hidden;
       }
 
-      [data-site-header-nav-position='right'] & {
+      [data-site-header-nav-position='right'] [data-menu-variation='mega'] & {
         right: 0;
       }
 
-      [data-site-header-nav-position='left'] & {
+      [data-site-header-nav-position='left'] [data-menu-variation='mega'] & {
         left: 0;
       }
 
-      [data-site-header-nav-position='center'] & {
+      [data-site-header-nav-position='center'] [data-menu-variation='mega'] & {
         left: 0;
       }
     }
 
-    @media (min-width: tokens.$break-2xl) {
-      column-count: 4;
+    [data-menu-variation='mega'] & {
+      @media (min-width: tokens.$break-mobile) {
+        border: var(--border-thickness-1) solid var(--color-navigation-border);
+        border-bottom-width: var(--border-thickness-4);
+        padding: var(--size-spacing-7) var(--size-spacing-site-gutter);
+        width: calc(100vw - calc(var(--size-spacing-site-gutter) * 2));
+        max-width: var(--size-component-layout-width-max);
+        column-count: 3;
+      }
+
+      @media (min-width: tokens.$break-2xl) {
+        column-count: 4;
+      }
+    }
+
+    [data-menu-variation='basic'] & {
+      @media (min-width: tokens.$break-mobile) {
+        column-count: 1;
+
+        // @TODO: Temporary styles until we create a token
+        // This shadow is hard coded because it has to be adjusted to make it
+        // appear as though it's a shadow on only the border-bottom element.
+        // There isn't currently anything else that looks like this. If there ever
+        // Is, perhaps it should be captured as a token in a new drop-shadow set.
+        // @LINK: https://yaleits.atlassian.net/browse/YALB-844.
+        box-shadow: 0 8px 6px -6px hsl(0deg 0% 0% / 16%);
+      }
     }
   }
 
   &--level-2 {
     margin-left: var(--size-spacing-6);
+  }
+}
+
+// basic menu variation: border application
+@media (min-width: tokens.$break-mobile) {
+  .primary-nav__toggle {
+    [data-menu-variation='basic'] :not(:last-child) > & {
+      border-left: var(--border-thickness-4) solid transparent;
+
+      &[aria-expanded='true'] {
+        // prettier-ignore
+        border-left: var(--border-thickness-4) solid var(--color-navigation-border);
+      }
+    }
+
+    [data-menu-variation='basic'] :last-child > & {
+      border-right: var(--border-thickness-4) solid transparent;
+
+      &[aria-expanded='true'] {
+        border-right: var(--border-thickness-4) solid
+          var(--color-navigation-border);
+      }
+    }
+  }
+
+  .primary-nav__menu--level-1 {
+    [data-menu-variation='basic'] :not(:last-child) > & {
+      // prettier-ignore
+      border-left: var(--border-thickness-4) solid var(--color-navigation-border);
+    }
+
+    [data-menu-variation='basic'] :last-child > & {
+      right: 0;
+
+      // prettier-ignore
+      border-right: var(--border-thickness-4) solid var(--color-navigation-border);
+    }
   }
 }
 
@@ -184,11 +262,39 @@
   &--level-1 {
     font: var(--font-style-nav-primary-1);
     color: var(--color-heading);
-    padding: var(--size-spacing-2) var(--size-spacing-5);
     margin-bottom: var(--size-spacing-3);
 
-    .primary-nav__item--level-1:first-child & {
+    [data-menu-variation='basic'] & {
+      padding: var(--size-spacing-2) var(--size-spacing-6) var(--size-spacing-4);
+      position: relative;
+
+      // basic menu items have a bottom border
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: var(--size-spacing-5);
+        right: var(--size-spacing-5);
+        height: var(--border-thickness-1);
+        background-color: var(--color-gray-200);
+      }
+    }
+
+    [data-menu-variation='mega'] & {
+      padding: var(--size-spacing-2) var(--size-spacing-5);
+    }
+
+    :last-child > & {
+      margin-bottom: 0;
+    }
+
+    :first-child > & {
       padding-top: 0;
+    }
+
+    // remove last child's bottom border
+    [data-menu-variation='basic'] :last-child > &::after {
+      content: unset;
     }
   }
 

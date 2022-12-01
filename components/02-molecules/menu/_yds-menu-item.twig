@@ -44,7 +44,7 @@
     } %}
 {% endset %}
 
-{% embed "@atoms/lists//_yds-list-item.twig" with {
+{% embed "@atoms/lists/_yds-list-item.twig" with {
   list__item__base_class: item__base_class|default('item'),
   list__item__modifiers: item__modifiers,
   list__item__blockname: item__blockname,
@@ -53,9 +53,9 @@
   {% block list__item__content %}
     {# This import needs to be inside the block for it to work in Drupal #}
     {% import "@molecules/menu/yds-menu.twig" as menus %}
-
+    {% set levels = menu__variation == 'mega' ? 2 : 1 %}
     {{- list__item -}}
-    {% if item.below and menu__level < 3 %}
+    {% if item.below and menu__level < levels %}
       {% if menu__level == 0 and menu__level__toggle %}
         {% set menu_item__cta__content %}
           {{ item.title }}
@@ -73,7 +73,7 @@
           aria_expanded: 'false',
         } %}
       {% endif %}
-      {{ menus.menu_links(item.below, attributes, menu__level + 1, menu__base_class, menu__modifiers, menu__blockname, menu__list__type, menu__level__toggle, menu__contextual, item__base_class, item__modifiers, item__blockname, directory) }}
+      {{ menus.menu_links(item.below, attributes, menu__level + 1, menu__base_class, menu__modifiers, menu__blockname, menu__list__type, menu__level__toggle, menu__contextual, item__base_class, item__modifiers, item__blockname, directory, menu__variation) }}
     {% endif %}
   {% endblock %}
 {% endembed %}
