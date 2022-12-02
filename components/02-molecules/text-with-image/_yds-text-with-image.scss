@@ -35,53 +35,65 @@ $break-text-with-image-max: tokens.$break-l - 0.05;
 }
 
 .text-with-image__image {
-  @media (max-width: $break-text-with-image-max) {
-    [data-component-focus='content'] & {
+  [data-component-focus='content'] & {
+    @media (max-width: $break-text-with-image-max) {
       max-width: 50%;
-    }
-
-    [data-component-focus='equal'] & {
-      max-width: 75%;
-    }
-
-    [data-component-focus='image'] & {
-      max-width: 85%;
-    }
-
-    [data-image-position='image-right'] & {
-      justify-self: end;
     }
   }
 
-  @media (min-width: tokens.$break-mobile) {
-    // Layout Options
-    [data-image-position='image-left'] & {
+  [data-component-focus='equal'] & {
+    @media (max-width: $break-text-with-image-max) {
+      max-width: 75%;
+    }
+  }
+
+  [data-component-focus='image'] & {
+    @media (max-width: $break-text-with-image-max) {
+      max-width: 85%;
+    }
+  }
+
+  // Layout Options
+  [data-image-position='image-left'] & {
+    @media (min-width: tokens.$break-mobile) {
       grid-area: primary;
     }
+  }
 
-    [data-image-position='image-right'] & {
+  [data-image-position='image-right'] & {
+    @media (max-width: $break-text-with-image-max) {
+      justify-self: end;
+    }
+
+    @media (min-width: tokens.$break-mobile) {
       grid-area: secondary;
     }
   }
 }
 
 .text-with-image__content {
-  @media (max-width: $break-text-with-image-max) {
-    [data-component-focus='image'] & {
+  [data-component-focus='image'] & {
+    @media (max-width: $break-text-with-image-max) {
       max-width: 85%;
     }
+  }
 
-    [data-component-focus='content'][data-image-position='image-left'] &,
-    [data-component-focus='equal'][data-image-position='image-left'] & {
+  [data-component-focus='content'][data-image-position='image-left'] &,
+  [data-component-focus='equal'][data-image-position='image-left'] & {
+    @media (max-width: $break-text-with-image-max) {
       margin-left: 20%;
     }
+  }
 
-    [data-component-focus='image'][data-image-position='image-left'] & {
+  [data-component-focus='image'][data-image-position='image-left'] & {
+    @media (max-width: $break-text-with-image-max) {
       justify-self: end;
     }
+  }
 
-    [data-component-focus='content'][data-image-position='image-right'] &,
-    [data-component-focus='equal'][data-image-position='image-right'] & {
+  [data-component-focus='content'][data-image-position='image-right'] &,
+  [data-component-focus='equal'][data-image-position='image-right'] & {
+    @media (max-width: $break-text-with-image-max) {
       max-width: 75%;
     }
   }
