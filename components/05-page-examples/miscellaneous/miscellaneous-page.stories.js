@@ -43,6 +43,7 @@ export const AccordionPage = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
 }) =>
   accordionPageTwig({
     site_name: siteName,
@@ -55,6 +56,7 @@ export const AccordionPage = ({
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
+    menu__variation: menuVariation,
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
@@ -79,6 +81,7 @@ export const QualtricsPage = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
 }) =>
   qualtricsPageTwig({
     site_name: siteName,
@@ -91,6 +94,7 @@ export const QualtricsPage = ({
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
+    menu__variation: menuVariation,
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
