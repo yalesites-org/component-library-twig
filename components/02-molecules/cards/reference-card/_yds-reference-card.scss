@@ -1,6 +1,9 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
 
+$break-card-collection-max: tokens.$break-m - 0.05;
+$break-card-collection-list-image-max: tokens.$break-s - 0.05;
+
 .reference-card {
   @include atoms.clickable-component-heading-link;
   @include atoms.clickable-component-image;
@@ -9,8 +12,18 @@
   flex-flow: column-reverse;
   gap: var(--size-spacing-4);
 
-  @media (min-width: tokens.$break-mobile) {
-    [data-collection-type='list'] & {
+  // from small to media, both grid and list render using a horizontal layout.
+  [data-collection-type='grid'] &,
+  [data-collection-type='list'] & {
+    @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
+      flex-flow: row-reverse nowrap;
+      gap: var(--size-spacing-6);
+      align-items: flex-start;
+    }
+  }
+
+  [data-collection-type='list'] & {
+    @media (min-width: tokens.$break-m) {
       flex-flow: row-reverse nowrap;
       gap: var(--size-spacing-8);
     }
@@ -18,6 +31,35 @@
 }
 
 .reference-card__image {
+  @media (max-width: $break-card-collection-list-image-max) {
+    [data-collection-type='list'] &,
+    [data-collection-type='grid'][data-collection-featured='false'] & {
+      max-width: 50%;
+    }
+  }
+
+  @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
+    [data-collection-type='grid'][data-collection-featured='false'] &,
+    [data-collection-type='list'][data-collection-featured='false'] & {
+      flex: 0 33%;
+    }
+
+    [data-collection-type='grid'][data-collection-featured='true'] &,
+    [data-collection-type='list'][data-collection-featured='true'] & {
+      flex: 0 1 50%;
+    }
+  }
+
+  @media (min-width: tokens.$break-m) {
+    [data-collection-type='list'][data-collection-featured='false'] & {
+      flex: 0 1 40%;
+    }
+
+    [data-collection-type='list'][data-collection-featured='true'] & {
+      flex: 0 1 50%;
+    }
+  }
+
   @media (min-width: tokens.$break-mobile) {
     [data-collection-type='grid'] & {
       aspect-ratio: 3/2;
@@ -32,6 +74,25 @@
 .reference-card__content {
   [data-collection-type='list'][data-collection-featured='false'] & {
     flex: 1 1 100%;
+  }
+
+  @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
+    [data-collection-type='grid'][data-collection-featured='true'] &,
+    [data-collection-type='list'][data-collection-featured='true'] & {
+      flex: 1 0 50%;
+    }
+
+    [data-collection-type='grid'][data-collection-featured='false'] &,
+    [data-collection-type='list'][data-collection-featured='false'] & {
+      flex: 1 0 66%;
+    }
+  }
+
+  @media (min-width: tokens.$break-m) {
+    [data-collection-type='list'][data-collection-featured='true'] & {
+      flex: 1 0 50%;
+      margin-inline: auto;
+    }
   }
 
   @media (min-width: tokens.$break-mobile) {

@@ -77,6 +77,7 @@ export const Basic = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   introContent,
   calloutBackground,
 }) =>
@@ -91,6 +92,7 @@ export const Basic = ({
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
+    menu__variation: menuVariation,
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
@@ -117,6 +119,7 @@ export const WithBanner = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   introContent,
   calloutBackground,
   heading,
@@ -138,6 +141,7 @@ export const WithBanner = ({
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
+    menu__variation: menuVariation,
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
@@ -213,6 +217,7 @@ export const WithSidebar = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   introContent,
   calloutBackground,
 }) =>
@@ -227,6 +232,7 @@ export const WithSidebar = ({
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
+    menu__variation: menuVariation,
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
@@ -253,6 +259,7 @@ export const WithQuickLinks = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   heading,
   description,
   image,
@@ -269,6 +276,7 @@ export const WithQuickLinks = ({
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
+    menu__variation: menuVariation,
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
@@ -318,6 +326,7 @@ export const withVideo = ({
   footerBorderThickness,
   videoHeading,
   videoCaption,
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
 }) =>
   standardPageVideoTwig({
     site_name: siteName,
@@ -330,6 +339,7 @@ export const withVideo = ({
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
+    menu__variation: menuVariation,
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
