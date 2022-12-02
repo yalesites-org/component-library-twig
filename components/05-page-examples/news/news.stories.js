@@ -39,6 +39,7 @@ export const NewsArticle = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
 }) =>
   newsArticleTwig({
     site_name: siteName,
@@ -51,6 +52,7 @@ export const NewsArticle = ({
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
+    menu__variation: menuVariation,
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,

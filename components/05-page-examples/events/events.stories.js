@@ -51,6 +51,7 @@ export const EventPage = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   startDate,
   endDate,
   format,
@@ -67,6 +68,7 @@ export const EventPage = ({
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
+    menu__variation: menuVariation,
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
@@ -109,6 +111,7 @@ export const EventGrid = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
 }) =>
   eventGridPageTwig({
     site_name: siteName,
@@ -121,6 +124,7 @@ export const EventGrid = ({
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
+    menu__variation: menuVariation,
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
@@ -157,6 +161,7 @@ export const EventList = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
 }) =>
   eventListPageTwig({
     site_name: siteName,
@@ -169,6 +174,7 @@ export const EventList = ({
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
+    menu__variation: menuVariation,
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
