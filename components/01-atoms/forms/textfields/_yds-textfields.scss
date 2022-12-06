@@ -8,7 +8,7 @@ $form-item-max-width: 25rem;
   --color-form-item-placeholder: var(--color-gray-500);
   --color-form-item-error: var(--color-alert-emergency-background-color);
 
-  margin-bottom: var(--size-spacing-4);
+  margin-bottom: var(--size-spacing-6);
   max-width: $form-item-max-width;
   clear: both;
 }
@@ -51,15 +51,24 @@ $form-item-max-width: 25rem;
   &--error {
     border-width: var(--border-thickness-2);
     border-color: var(--color-form-item-error);
-    background-image: url('../dist/icons.svg#circle-exclamation');
-    background-size: 30rem;
-    background-repeat: no-repeat;
-    background-position: 90% center;
 
     &:focus {
       border-color: var(--color-form-item-error);
     }
   }
+}
+
+.form-item--with-icon {
+  position: relative;
+}
+
+.form-item__error_icon__icon {
+  position: absolute;
+  top: var(--size-spacing-4);
+  right: var(--size-spacing-4);
+  fill: var(--color-alert-emergency-background-color);
+  width: 2rem;
+  height: 2rem;
 }
 
 .form-item__description {

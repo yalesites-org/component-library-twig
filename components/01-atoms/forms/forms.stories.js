@@ -2,6 +2,7 @@ import checkbox from './checkbox/yds-checkbox.twig';
 import radio from './radio/yds-radio.twig';
 import select from './select/yds-select.twig';
 import textfields from './textfields/yds-textfields.twig';
+import formExample from './contact-form-example.twig';
 
 import checkboxData from './checkbox/checkbox.yml';
 import radioData from './radio/radio.yml';
@@ -19,3 +20,5 @@ export const radioButtons = () => radio(radioData);
 export const selectDropdowns = () => select(selectOptionsData);
 
 export const textfieldsExamples = () => textfields();
+
+export const exampleForm = () => formExample();

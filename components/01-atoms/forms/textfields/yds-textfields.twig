@@ -11,9 +11,17 @@
   </div>
 </div>
 
-<div class="form-item">
+<div class="form-item form-item--with-error">
   <label for="edit-name" class="form-item__label form-item__label--textfield">Textfield with error</label>
-  <input id="edit-name" autocorrect="none" autocapitalize="none" spellcheck="false" type="text" name="name" value="" size="60" maxlength="60" class="form-item__textfield form-item__textfield--error" aria-invalid="true" aria-describedby="error" placeholder="error">
+  <div class="form-item form-item--with-icon">
+    <input id="edit-name" autocorrect="none" autocapitalize="none" spellcheck="false" type="text" name="name" value="" size="60" maxlength="60" class="form-item__textfield form-item__textfield--error" aria-invalid="true" aria-describedby="error" placeholder="error">
+      {% include "@atoms/images/icons/_yds-icon.twig" with {
+          icon__name: 'circle-exclamation',
+          icon__blockname: 'form-item__error_icon',
+          icon__decorative: true,
+        } 
+      %}
+  </div>
   <div class="form-item__description">
     Help text if more content is needed.
   </div>
