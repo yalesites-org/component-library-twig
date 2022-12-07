@@ -1,20 +1,52 @@
 @use '../../../00-tokens/tokens';
 
 $form-item-max-width: 25rem;
+$form-item-icon-size: 1.7rem;
+
+@mixin button-primary {
+  transition: color,
+    background-color var(--animation-speed-default) ease-in-out 0ms;
+
+  --color-cta-bg: var(--color-action);
+  --color-cta-bg-hover: transparent;
+  --color-cta-border: var(--color-action);
+  --color-cta-text: var(--color-cta-secondary);
+  --color-cta-text-hover: var(--color-action);
+  --border-thickness-cta: var(--border-thickness-2);
+  --border-radius-cta: 100vmax;
+
+  border: var(--border-thickness-cta, var(--border-thickness-2)) solid
+    var(--color-cta-border);
+  border-radius: var(--border-radius-cta, var(--radius-0));
+  background-color: var(--color-cta-bg);
+  color: var(--color-cta-text);
+  font-weight: var(--font-weights-mallory-medium);
+  padding: var(--size-spacing-3) var(--size-spacing-6);
+  text-decoration: none;
+  text-align: center;
+  min-height: var(--size-click-target-minimum);
+  width: auto;
+
+  &:hover {
+    background-color: var(--color-cta-bg-hover);
+    color: var(--color-cta-text-hover);
+  }
+}
 
 .form-item {
   --color-form-item-border: var(--color-gray-400);
-  --color-form-item-border-focus: var(--color-gray-500);
+  --color-form-item-border-focus: var(--color-gray-800);
   --color-form-item-placeholder: var(--color-gray-500);
   --color-form-item-error: var(--color-alert-emergency-background-color);
 
-  margin-bottom: var(--size-spacing-6);
+  margin-bottom: var(--size-spacing-7);
   max-width: $form-item-max-width;
   clear: both;
 }
 
 .form-item__label {
   display: block;
+  margin-bottom: var(--size-spacing-1);
 
   @media (max-width: tokens.$break-mobile-max) {
     display: block;
@@ -27,25 +59,26 @@ $form-item-max-width: 25rem;
   }
 
   &--required::after {
+    color: var(--color-gray-600);
     margin: calc(var(--size-spacing-4) * 1) 0 0 0.2em;
     content: '*';
-    color: var(--color-gray-600);
   }
 }
 
 .form-item__textfield {
   border: var(--border-thickness-1) solid var(--color-form-item-border);
   padding: var(--size-spacing-4);
+  width: 100%;
   max-width: 100%;
-
-  &:focus {
-    border-width: var(--border-thickness-2);
-    border-color: var(--color-form-item-border-focus);
-  }
 
   &::placeholder {
     color: var(--color-form-item-placeholder);
     font-style: italic;
+    opacity: 1;
+  }
+
+  &:focus {
+    border-color: var(--color-form-item-border-focus);
   }
 
   &--error {
@@ -67,8 +100,8 @@ $form-item-max-width: 25rem;
   top: var(--size-spacing-4);
   right: var(--size-spacing-4);
   fill: var(--color-alert-emergency-background-color);
-  width: 2rem;
-  height: 2rem;
+  width: 1.7rem;
+  height: 1.7rem;
 }
 
 .form-item__description {
@@ -92,4 +125,11 @@ $form-item-max-width: 25rem;
   @include tokens.body-s-condensed;
 
   color: var(--color-form-item-error);
+}
+
+.form-actions {
+  // emulate yds-button without the HTML attributes
+  .webform-button--submit {
+    @include button-primary;
+  }
 }
