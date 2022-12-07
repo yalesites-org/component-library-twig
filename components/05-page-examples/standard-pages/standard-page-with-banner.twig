@@ -1,6 +1,15 @@
 {% extends "@page-layouts/yds-full-width.twig" %}
   {% block page__content %}
-    {% include "@molecules/banner/action/yds-action-banner.twig" %}
+    {% if banner_type == 'action' %}
+      {% include "@molecules/banner/action/yds-action-banner.twig" %}
+    {% else %}
+      {% include "@molecules/banner/grand-hero/yds-grand-hero.twig" with {
+        grand_hero__heading: banner__heading,
+        grand_hero__snippet: banner__snippet,
+        grand_hero__link__content: banner__link__content,
+        grand_hero__link__url: banner__link__url,
+      } %}
+    {% endif %}
     {% include "@organisms/menu/breadcrumbs/yds-breadcrumbs.twig" %}
     {% include "@molecules/page-title//yds-page-title.twig" %}
     {% include "@page-examples/_intro-content-examples.twig" %}

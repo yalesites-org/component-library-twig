@@ -75,6 +75,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   padding: var(--size-spacing-4) var(--size-spacing-site-gutter);
   background-color: var(--color-background);
   border-bottom: var(--site-header-border-bottom);
+  margin-inline: calc(var(--size-spacing-site-gutter) * -1);
 
   @media (min-width: tokens.$break-mobile) {
     display: none;
