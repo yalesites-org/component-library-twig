@@ -3,6 +3,7 @@
 $form-item-max-width: 25rem;
 $form-item-icon-size: 1.7rem;
 
+// button-primary mixin to emulate yds-button without the HTML attributes
 @mixin button-primary {
   transition: color,
     background-color var(--animation-speed-default) ease-in-out 0ms;
@@ -84,6 +85,7 @@ $form-item-icon-size: 1.7rem;
   &--error {
     border-width: var(--border-thickness-2);
     border-color: var(--color-form-item-error);
+    padding-right: calc(var(--size-spacing-4) + $form-item-icon-size);
 
     &:focus {
       border-color: var(--color-form-item-error);
@@ -91,17 +93,19 @@ $form-item-icon-size: 1.7rem;
   }
 }
 
-.form-item--with-icon {
+.form-item__inner--with-icon {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .form-item__error_icon__icon {
   position: absolute;
-  top: var(--size-spacing-4);
+  top: auto;
   right: var(--size-spacing-4);
   fill: var(--color-alert-emergency-background-color);
-  width: 1.7rem;
-  height: 1.7rem;
+  width: $form-item-icon-size;
+  height: $form-item-icon-size;
 }
 
 .form-item__description {
@@ -128,7 +132,6 @@ $form-item-icon-size: 1.7rem;
 }
 
 .form-actions {
-  // emulate yds-button without the HTML attributes
   .webform-button--submit {
     @include button-primary;
   }
