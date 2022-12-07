@@ -8,6 +8,9 @@ import primaryNavData from '../menu/primary-nav/primary-nav.yml';
 
 import '../../02-molecules/menu/menu-toggle/yds-menu-toggle';
 
+// JavaScript to handle size
+import './yds-site-header';
+
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
