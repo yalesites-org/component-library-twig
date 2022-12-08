@@ -3,9 +3,7 @@
 @forward './controls/text-link/yds-text-link';
 @forward './date-time/yds-date-time';
 @forward './divider/yds-divider';
-@forward './forms/checkbox/yds-checkbox';
-@forward './forms/radio/yds-radio';
-@forward './forms/select/yds-select';
+@forward './forms/yds-form' as forms-*;
 @forward './forms/textfields/yds-textfields';
 @forward './images/icons/yds-icons';
 @forward './images/image/yds-image';

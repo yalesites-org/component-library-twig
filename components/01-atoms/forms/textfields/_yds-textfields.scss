@@ -1,38 +1,8 @@
 @use '../../../00-tokens/tokens';
+@use '../yds-form' as forms;
 
 $form-item-max-width: 25rem;
 $form-item-icon-size: 1.7rem;
-
-// button-primary mixin to emulate yds-button without the HTML attributes
-@mixin button-primary {
-  transition: color,
-    background-color var(--animation-speed-default) ease-in-out 0ms;
-
-  --color-button-bg: var(--color-action);
-  --color-button-bg-hover: transparent;
-  --color-button-border: var(--color-action);
-  --color-button-text: var(--color-cta-secondary);
-  --color-button-text-hover: var(--color-action);
-  --border-thickness-button: var(--border-thickness-2);
-  --border-radius-button: 100vmax;
-
-  border: var(--border-thickness-button, var(--border-thickness-2)) solid
-    var(--color-button-border);
-  border-radius: var(--border-radius-button, var(--radius-0));
-  background-color: var(--color-button-bg);
-  color: var(--color-button-text);
-  font-weight: var(--font-weights-mallory-medium);
-  padding: var(--size-spacing-3) var(--size-spacing-6);
-  text-decoration: none;
-  text-align: center;
-  min-height: var(--size-click-target-minimum);
-  width: auto;
-
-  &:hover {
-    background-color: var(--color-button-bg-hover);
-    color: var(--color-button-text-hover);
-  }
-}
 
 .form-item {
   --color-form-item-border: var(--color-gray-400);
@@ -133,6 +103,6 @@ $form-item-icon-size: 1.7rem;
 
 .form-actions {
   .webform-button--submit {
-    @include button-primary;
+    @include forms.button-submit;
   }
 }
