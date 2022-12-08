@@ -8,19 +8,19 @@ $form-item-icon-size: 1.7rem;
   transition: color,
     background-color var(--animation-speed-default) ease-in-out 0ms;
 
-  --color-cta-bg: var(--color-action);
-  --color-cta-bg-hover: transparent;
-  --color-cta-border: var(--color-action);
-  --color-cta-text: var(--color-cta-secondary);
-  --color-cta-text-hover: var(--color-action);
-  --border-thickness-cta: var(--border-thickness-2);
-  --border-radius-cta: 100vmax;
+  --color-button-bg: var(--color-action);
+  --color-button-bg-hover: transparent;
+  --color-button-border: var(--color-action);
+  --color-button-text: var(--color-cta-secondary);
+  --color-button-text-hover: var(--color-action);
+  --border-thickness-button: var(--border-thickness-2);
+  --border-radius-button: 100vmax;
 
-  border: var(--border-thickness-cta, var(--border-thickness-2)) solid
-    var(--color-cta-border);
-  border-radius: var(--border-radius-cta, var(--radius-0));
-  background-color: var(--color-cta-bg);
-  color: var(--color-cta-text);
+  border: var(--border-thickness-button, var(--border-thickness-2)) solid
+    var(--color-button-border);
+  border-radius: var(--border-radius-button, var(--radius-0));
+  background-color: var(--color-button-bg);
+  color: var(--color-button-text);
   font-weight: var(--font-weights-mallory-medium);
   padding: var(--size-spacing-3) var(--size-spacing-6);
   text-decoration: none;
@@ -29,8 +29,8 @@ $form-item-icon-size: 1.7rem;
   width: auto;
 
   &:hover {
-    background-color: var(--color-cta-bg-hover);
-    color: var(--color-cta-text-hover);
+    background-color: var(--color-button-bg-hover);
+    color: var(--color-button-text-hover);
   }
 }
 
