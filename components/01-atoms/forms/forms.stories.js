@@ -1,3 +1,5 @@
+// Checkbox, radio and select elements are commented out because we
+// may use these soon, but not yet.
 // import checkbox from './checkbox/yds-checkbox.twig';
 // import radio from './radio/yds-radio.twig';
 // import select from './select/yds-select.twig';
