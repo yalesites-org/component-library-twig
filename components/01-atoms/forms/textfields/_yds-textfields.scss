@@ -9,6 +9,7 @@ $form-item-icon-size: 1.7rem;
   --color-form-item-border-focus: var(--color-gray-800);
   --color-form-item-placeholder: var(--color-gray-500);
   --color-form-item-error: var(--color-alert-emergency-background-color);
+  --color-form-item-description: var(--color-gray-500);
 
   margin-bottom: var(--size-spacing-7);
   max-width: $form-item-max-width;
@@ -81,6 +82,7 @@ $form-item-icon-size: 1.7rem;
 .form-item__description {
   @include tokens.body-xs;
 
+  color: var(--color-form-item-description);
   padding-block: var(--size-spacing-2) 0;
 }
 
