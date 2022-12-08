@@ -20,12 +20,6 @@ $form-item-icon-size: 1.7rem;
   display: block;
   margin-bottom: var(--size-spacing-1);
 
-  @media (max-width: tokens.$break-mobile-max) {
-    display: block;
-    margin-right: 2%;
-    padding: var(--size-spacing-4) 0;
-  }
-
   &--required {
     font-weight: 500;
   }
@@ -42,6 +36,9 @@ $form-item-icon-size: 1.7rem;
   padding: var(--size-spacing-4);
   width: 100%;
   max-width: 100%;
+
+  // TODO: change this to token style, when tokens update is merged.
+  line-height: 1.4;
 
   &::placeholder {
     color: var(--color-form-item-placeholder);
