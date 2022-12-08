@@ -2,10 +2,12 @@
 
 {% set breadcrumbs__items = breadcrumbs__items|default(items) %}
 
+{% set breadcrumbs__modifiers = breadcrumbs__modifiers|default('collapsible') %}
+
 {% set breadcrumbs__attributes = {
   'data-breadcrumbs-overflow': 'hidden',
   'data-component-width': 'max',
-  class: bem('wrapper', [], breadcrumbs__base_class),
+  class: bem('wrapper', [breadcrumbs__modifiers], breadcrumbs__base_class),
 } %}
 
 {# Get the parent label for the mobile toggle #}
@@ -59,6 +61,7 @@
         menu__name: 'Breadcrumb',
         menu__contextual: true,
         menu__list__type: 'ol',
+        menu__modifiers: [breadcrumbs__modifiers]
       } %}
       {% include "@atoms/controls/base/yds-control.twig" with {
         control__content: icon_left,
