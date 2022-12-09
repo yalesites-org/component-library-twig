@@ -1,0 +1,50 @@
+$video-background-icon-size: 3rem;
+
+.video-background {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  video {
+    width: 100%;
+  }
+}
+
+.video-background__control {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: var(--size-spacing-7);
+  right: var(--size-spacing-7);
+  border: 0;
+  background: transparent;
+  padding: var(--size-spacing-2);
+  color: inherit;
+  background-color: white;
+  border-radius: 100vw;
+
+  svg {
+    width: $video-background-icon-size;
+    height: $video-background-icon-size;
+  }
+}
+
+.video-background__control--play {
+  [is-playing='false'] & {
+    display: flex;
+  }
+
+  [is-playing='true'] & {
+    display: none;
+  }
+}
+
+.video-background__control--pause {
+  [is-playing='false'] & {
+    display: none;
+  }
+
+  [is-playing='true'] & {
+    display: flex;
+  }
+}

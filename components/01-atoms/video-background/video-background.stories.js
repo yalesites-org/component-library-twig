@@ -2,6 +2,8 @@ import videoBackgroundTwig from './yds-video-background.twig';
 
 import videoBackgroundData from './video-background.yml';
 
+import './yds-video-background';
+
 /**
  * Storybook Definition.
  */

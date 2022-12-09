@@ -1,2 +1,1 @@
-video_background__content: <video width="100%" autoplay loop muted><source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4"></video>
-
+video_background__content: <video muted><source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4"></video>
