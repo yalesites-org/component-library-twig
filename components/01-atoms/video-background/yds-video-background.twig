@@ -13,7 +13,9 @@
 
 <div {{ bem(video_background__base_class, video_background__modifiers, video_background__blockname) }}>
   {% block video_background__content %}
-    {{ video_background__content|raw }}
+    <video muted>
+      <source src="{{ video_background__content }}" type="video/mp4">
+    </video>
   {% endblock %}
   <button {{ bem('control', ['play'], video_background__base_class) }}>
     <span {{ bem('visually-hidden') }}>{{ 'Play the Video'|t }}</span>
