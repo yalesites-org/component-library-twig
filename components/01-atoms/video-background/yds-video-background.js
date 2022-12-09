@@ -2,34 +2,39 @@ Drupal.behaviors.videoBG = {
   attach(context) {
     // Selectors
     const items = context.querySelectorAll('.video-background');
-    const videos = context.getElementsByTagName('video')[0];
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     // Classes
     const pauseControl = '.video-background__control--pause';
     const playControl = '.video-background__control--play';
 
-    if (videos && reduceMotion.matches === true) {
-      videos.closest('.video-background').setAttribute('is-playing', false);
-    } else {
-      videos.setAttribute('autoplay', true);
-      videos.setAttribute('loop', true);
-      videos.closest('.video-background').setAttribute('is-playing', true);
-    }
-
     items.forEach((item) => {
+      const video = item.querySelector('video');
       const pauseVideo = item.querySelector(pauseControl);
       const playVideo = item.querySelector(playControl);
+      const allowAutoPlay = video.play();
 
+      // set the background video to autoplay if reduceMotion (os-level) is false
+      // and if the browser's built-in autoplay is undefined
+      if (allowAutoPlay !== undefined && reduceMotion.matches === false) {
+        video.setAttribute('autoplay', '');
+        video.setAttribute('loop', '');
+        item.setAttribute('is-playing', true);
+      } else {
+        video.pause();
+        item.setAttribute('is-playing', false);
+      }
+
+      // manaully control the video
       pauseVideo.addEventListener('click', () => {
-        videos.pause();
+        video.pause();
         pauseVideo
           .closest('.video-background')
           .setAttribute('is-playing', false);
       });
 
       playVideo.addEventListener('click', () => {
-        videos.play();
+        video.play();
         pauseVideo
           .closest('.video-background')
           .setAttribute('is-playing', true);

@@ -1,3 +1,5 @@
+@use '../../00-tokens/tokens';
+
 $video-background-icon-size: 3rem;
 
 .video-background {
@@ -20,12 +22,25 @@ $video-background-icon-size: 3rem;
   background: transparent;
   padding: var(--size-spacing-2);
   color: inherit;
-  background-color: white;
   border-radius: 100vw;
+  z-index: 10;
 
   svg {
+    fill: var(--color-basic-white);
     width: $video-background-icon-size;
     height: $video-background-icon-size;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--color-gray-800);
+    opacity: 0.6;
+    z-index: -1;
   }
 }
 
@@ -40,6 +55,8 @@ $video-background-icon-size: 3rem;
 }
 
 .video-background__control--pause {
+  display: none;
+
   [is-playing='false'] & {
     display: none;
   }

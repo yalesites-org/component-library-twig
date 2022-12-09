@@ -18,7 +18,7 @@
   <button {{ bem('control', ['play'], video_background__base_class) }}>
     <span {{ bem('visually-hidden') }}>{{ 'Play the Video'|t }}</span>
     {% include "@atoms/images/icons/_yds-icon.twig" with {
-      icon__name: 'circle-play',
+      icon__name: 'play',
       icon__decorative: true,
       icon__blockname: video_background__base_class,
       icon__modifiers: ['play'],
@@ -27,7 +27,7 @@
     <button {{ bem('control', ['pause'], video_background__base_class) }}>
     <span {{ bem('visually-hidden') }}>{{ 'Pause the Video'|t }}</span>
     {% include "@atoms/images/icons/_yds-icon.twig" with {
-      icon__name: 'circle-pause',
+      icon__name: 'pause',
       icon__decorative: true,
       icon__blockname: video_background__base_class,
       icon__modifiers: ['pause'],
