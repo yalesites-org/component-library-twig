@@ -76,9 +76,9 @@ $break-grand-hero-banner: tokens.$break-m;
     opacity: 0.6;
   }
 
-  &[data-component-theme='gray-100'],
-  &[data-component-theme='gray-200'],
-  &[data-component-theme='white'] {
+  [data-component-theme='gray-100'] &,
+  [data-component-theme='gray-200'] &,
+  [data-component-theme='white'] & {
     color: var(--color-gray-800);
 
     a {

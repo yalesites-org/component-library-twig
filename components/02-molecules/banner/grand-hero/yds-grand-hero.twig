@@ -24,7 +24,7 @@
   class: bem(grand_hero__base_class),
 } %}
 
-<div {{ add_attributes(grand_hero__attributes) }}>
+<div {{ add_attributes(grand_hero__attributes) }} data-component-theme={{ grand_hero__content__background }}>
   {% if grand_hero__video == 'true' %}
   <div {{ bem('video', [], grand_hero__base_class) }}>
     {% block grand_hero__video %}
@@ -41,7 +41,7 @@
     </div>
   {% endif %}
   {% if grand_hero__heading or grand_hero__snippet or grand_hero__link__content and grand_hero__link__url %}
-    <div {{ bem('content', [], grand_hero__base_class) }} data-component-theme={{ grand_hero__content__background }}>
+    <div {{ bem('content', [], grand_hero__base_class) }}>
       <div {{ bem('content-inner', [], grand_hero__base_class) }}>
         {% if grand_hero__heading %}
           {% include "@atoms/typography/headings/yds-heading.twig" with {

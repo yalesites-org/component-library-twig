@@ -20,14 +20,14 @@
   class: bem(banner__base_class),
 } %}
 
-<div {{ add_attributes(banner__attributes) }}>
+<div {{ add_attributes(banner__attributes) }} data-component-theme={{ banner__content__background }}>
   <div {{ bem('content-wrapper', [], banner__base_class) }}>
     <div {{ bem('image', [], banner__base_class) }}>
       {% block banner__image %}
         {% include "@atoms/images/image/_responsive-image.twig" %}
       {% endblock %}
     </div>
-    <div {{ bem('content', [], banner__base_class) }} data-component-theme={{ banner__content__background }}>
+    <div {{ bem('content', [], banner__base_class) }}>
       <div {{ bem('text', [], banner__base_class) }}>
         {% include "@atoms/typography/headings/yds-heading.twig" with {
           heading__level: '2',
