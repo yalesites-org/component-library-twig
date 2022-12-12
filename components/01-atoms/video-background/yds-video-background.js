@@ -34,7 +34,7 @@ Drupal.behaviors.videoBG = {
       }
 
       // manaully control the video
-      // pause, remove play attributes
+      // pause/play by adding and removing autoplay/loop attributes
       pauseVideo.addEventListener('click', () => {
         video.pause();
         video.removeAttribute('autoplay', '');
