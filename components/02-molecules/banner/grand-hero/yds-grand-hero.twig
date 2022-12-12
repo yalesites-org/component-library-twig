@@ -17,6 +17,7 @@
 {% set grand_hero__content__background = grand_hero__content__background|default('gray-800') %}
 {% set grand_hero__overlay_variation = grand_hero__overlay_variation|default('contained') %}
 {% set grand_hero__size = grand_hero__size|default('full') %}
+{% set video_background__button__background_color = grand_hero__content__background|default('gray-800') %}
 
 {% set grand_hero__attributes = {
   'data-grand-hero-overlay-variation': grand_hero__overlay_variation,
@@ -24,7 +25,7 @@
   class: bem(grand_hero__base_class),
 } %}
 
-<div {{ add_attributes(grand_hero__attributes) }} data-component-theme={{ grand_hero__content__background }}>
+<div {{ add_attributes(grand_hero__attributes) }}>
   {% if grand_hero__video == 'true' %}
   <div {{ bem('video', [], grand_hero__base_class) }}>
     {% block grand_hero__video %}
@@ -41,7 +42,7 @@
     </div>
   {% endif %}
   {% if grand_hero__heading or grand_hero__snippet or grand_hero__link__content and grand_hero__link__url %}
-    <div {{ bem('content', [], grand_hero__base_class) }}>
+    <div {{ bem('content', [], grand_hero__base_class) }} data-component-theme={{ grand_hero__content__background }}>
       <div {{ bem('content-inner', [], grand_hero__base_class) }}>
         {% if grand_hero__heading %}
           {% include "@atoms/typography/headings/yds-heading.twig" with {

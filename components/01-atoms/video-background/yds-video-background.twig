@@ -10,8 +10,9 @@
 #}
 
 {% set video_background__base_class = video_background__base_class|default('video-background') %}
+{% set video_background__button__background_color = video_background__button__background_color|default('gray-800') %}
 
-<div {{ bem(video_background__base_class, video_background__modifiers, video_background__blockname) }}>
+<div {{ bem(video_background__base_class, video_background__modifiers, video_background__blockname) }} data-component-theme={{ video_background__button__background_color }}>
   {% block video_background__content %}
     <video muted>
       <source src="{{ video_background__content }}" type="video/mp4">
