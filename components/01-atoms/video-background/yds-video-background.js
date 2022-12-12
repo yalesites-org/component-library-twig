@@ -15,7 +15,7 @@ Drupal.behaviors.videoBG = {
       const allowAutoPlay = video.play();
 
       // set the background video to autoplay if reduceMotion (os-level) is false
-      // and if the browser's built-in autoplay is undefined
+      // AND if the browser's built-in autoplay is undefined
       if (allowAutoPlay !== undefined && reduceMotion.matches === false) {
         allowAutoPlay
           .then(() => {
