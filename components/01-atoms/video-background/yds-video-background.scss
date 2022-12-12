@@ -1,6 +1,8 @@
 @use '../../00-tokens/tokens';
 
 $video-background-icon-size: 2rem;
+$break-video-banner: tokens.$break-m;
+$break-video-banner-max: $break-video-banner - 0.05;
 
 .video-background {
   width: 100%;
@@ -16,8 +18,8 @@ $video-background-icon-size: 2rem;
   display: flex;
   align-items: center;
   position: absolute;
-  bottom: var(--size-spacing-7);
-  right: var(--size-spacing-7);
+  bottom: var(--size-spacing-4);
+  right: var(--size-spacing-4);
   border: 0;
   background: transparent;
   padding: var(--size-spacing-3);
@@ -47,6 +49,11 @@ $video-background-icon-size: 2rem;
     background-color: var(--color-background);
     opacity: 0.6;
     z-index: -1;
+  }
+
+  @media (min-width: $break-video-banner) {
+    bottom: var(--size-spacing-7);
+    right: var(--size-spacing-7);
   }
 }
 
