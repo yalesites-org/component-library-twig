@@ -107,7 +107,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     position: relative;
   }
 
-  &[data-component-theme='white'] {
+  [data-component-theme='white'] & {
     @media (max-width: $break-cta-banner-max) {
       &::after {
         content: '';
