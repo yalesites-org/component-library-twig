@@ -1,6 +1,6 @@
 @use '../../00-tokens/tokens';
 
-$video-background-icon-size: 3rem;
+$video-background-icon-size: 2rem;
 
 .video-background {
   width: 100%;
@@ -20,7 +20,7 @@ $video-background-icon-size: 3rem;
   right: var(--size-spacing-7);
   border: 0;
   background: transparent;
-  padding: var(--size-spacing-2);
+  padding: var(--size-spacing-3);
   color: inherit;
   border-radius: 100vw;
   z-index: 10;
