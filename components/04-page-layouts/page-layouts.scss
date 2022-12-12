@@ -34,3 +34,7 @@ body[data-body-frozen] {
 .main-content > *:last-child {
   margin-bottom: var(--main-content-bottom-margin, var(--size-spacing-12));
 }
+
+body {
+  --site-header-height: 4.8125rem; // 77px / 16
+}
