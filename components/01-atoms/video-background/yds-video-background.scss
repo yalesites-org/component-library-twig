@@ -33,8 +33,9 @@ $break-video-banner-max: $break-video-banner - 0.05;
 
   [data-grand-hero-overlay-variation='contained'] & {
     @media (max-width: $break-video-banner-max) {
-      bottom: var(--size-spacing-6);
-      right: 0;
+      top: var(--size-spacing-6);
+      right: var(--size-spacing-6);
+      bottom: unset;
     }
   }
 
