@@ -54,6 +54,10 @@ $break-video-banner-max: $break-video-banner - 0.05;
     @media (min-width: $break-video-banner) {
       width: $video-background-icon-size;
       height: $video-background-icon-size;
+
+      &.video-background__icon--play {
+        padding-inline: var(--size-spacing-3);
+      }
     }
   }
 
