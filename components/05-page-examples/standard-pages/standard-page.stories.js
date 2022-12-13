@@ -382,6 +382,12 @@ export const withTextWithImage = ({
   menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   introContent,
   calloutBackground,
+  imageWidth1,
+  imageFocus1,
+  imagePosition1,
+  imageWidth2,
+  imageFocus2,
+  imagePosition2,
 }) =>
   standardPageTextWithImageTwig({
     site_name: siteName,
@@ -402,7 +408,51 @@ export const withTextWithImage = ({
     ...imageData.responsive_images['4x3'],
     intro_content: introContent,
     callout__background_color: calloutBackground,
+    text_with_image__focus_one: imageFocus1,
+    text_with_image__width_one: imageWidth1,
+    text_with_image__position_one: imagePosition1,
+    text_with_image__focus_two: imageFocus2,
+    text_with_image__width_two: imageWidth2,
+    text_with_image__position_two: imagePosition2,
     ...textWithImageData,
     ...referenceCardData,
     ...socialLinksData,
   });
+withTextWithImage.argTypes = {
+  imageWidth1: {
+    name: 'Text with Image One - Width',
+    type: 'select',
+    options: ['highlight', 'feature'],
+    defaultValue: textWithImageData.text_with_image__width_one,
+  },
+  imagePosition1: {
+    name: 'Text with Image One - Image Position',
+    type: 'select',
+    options: ['image-left', 'image-right'],
+    defaultValue: textWithImageData.text_with_image__position_one,
+  },
+  imageFocus1: {
+    name: 'Text with Image One - focus',
+    type: 'select',
+    options: ['image', 'equal', 'content'],
+    defaultValue: textWithImageData.text_with_image__focus_one,
+  },
+  imageWidth2: {
+    name: 'Text with Image Two - Width',
+    type: 'select',
+    options: ['highlight', 'feature'],
+    defaultValue: textWithImageData.text_with_image__width_two,
+  },
+  imagePosition2: {
+    name: 'Text with Image Two - Image Position',
+    type: 'select',
+    options: ['image-left', 'image-right'],
+    defaultValue: textWithImageData.text_with_image__position_two,
+  },
+  imageFocus2: {
+    name: 'Text with Image Two - focus',
+    type: 'select',
+    options: ['image', 'equal', 'content'],
+    defaultValue: textWithImageData.text_with_image__focus_two,
+  },
+};
