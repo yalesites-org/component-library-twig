@@ -8,6 +8,7 @@
  # - grand_hero__snippet
  # - grand_hero__link__content
  # - grand_hero__link__url
+ # - video_background__button__background_color
  #
  # Available Blocks:
  # - grand_hero__media
@@ -17,7 +18,6 @@
 {% set grand_hero__content__background = grand_hero__content__background|default('gray-800') %}
 {% set grand_hero__overlay_variation = grand_hero__overlay_variation|default('contained') %}
 {% set grand_hero__size = grand_hero__size|default('full') %}
-{% set video_background__button__background_color = grand_hero__content__background|default('gray-800') %}
 
 {% set grand_hero__attributes = {
   'data-grand-hero-overlay-variation': grand_hero__overlay_variation,
@@ -30,7 +30,8 @@
   <div {{ bem('video', [], grand_hero__base_class) }}>
     {% block grand_hero__video %}
       {% include "@atoms/video-background/yds-video-background.twig" with {
-        video_background__content: video_background__content|default('https://ia800301.us.archive.org/17/items/VjmorphVjLoops4/SequinSparkle02.mp4')
+        video_background__content: video_background__content|default('https://ia800301.us.archive.org/17/items/VjmorphVjLoops4/SequinSparkle02.mp4'),
+        video_background__button__background_color: grand_hero__content__background,
       }%}
     {% endblock %}
   </div>
