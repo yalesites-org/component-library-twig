@@ -25,7 +25,6 @@ $break-video-banner-max: $break-video-banner - 0.05;
   background: transparent;
   padding: var(--size-spacing-3);
   color: inherit;
-  border-radius: 100vw;
   z-index: 10;
 
   [data-grand-hero-overlay-variation='contained'] & {
