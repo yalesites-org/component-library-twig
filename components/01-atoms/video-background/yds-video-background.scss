@@ -27,6 +27,10 @@ $break-video-banner-max: $break-video-banner - 0.05;
   color: inherit;
   z-index: 10;
 
+  &:focus-visible {
+    @include tokens.focus-styles;
+  }
+
   [data-grand-hero-overlay-variation='contained'] & {
     @media (max-width: $break-video-banner-max) {
       bottom: var(--size-spacing-6);
