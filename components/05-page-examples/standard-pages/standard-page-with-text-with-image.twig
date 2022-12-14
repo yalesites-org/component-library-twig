@@ -9,13 +9,19 @@
     } %}
 
     {% include "@molecules/text/yds-text-field.twig" with {
-      text_field__content: '<p>Chemistry has been responsible for some of the most significant improvements in our quality of life over the last century.</p><p>The discovery of antibiotics and other pharmaceuticals, the advent of computers, and the development of industrial methods to produce fertilizer, all have required fundamental advances in chemistry. Chemistry is increasingly playing a central role in the development of alternative-energy vectors to replace fossil fuels, the realization of practical quantum computers, the discovery of new methods to treat and prevent diseases, and the adoption of more sustainable industrial processes.</p>',
+      text_field__content: '<p>Chemistry has been responsible for some of the most significant improvements in our quality of life over the last century. The discovery of antibiotics and other pharmaceuticals, the advent of computers, and the development of industrial methods to produce fertilizer, all have required fundamental advances in chemistry. Chemistry is increasingly playing a central role in the development of alternative-energy vectors to replace fossil fuels, the realization of practical quantum computers, the discovery of new methods to treat and prevent diseases, and the adoption of more sustainable industrial processes.</p>',
     } %}
 
-    {% include "@page-examples/events/_event-collection--example.twig" with {
-      variation: 'featured',
+    {% include "@organisms/card-collection/yds-card-collection.twig" with {
+      card_example_type: 'event',
+      card_collection__heading: 'Department Events',
+      card_collection__type: 'grid',
+      card_collection__cards: [
+        {},
+        {},
+        {},
+      ]
     } %}
-    
     {% include "@atoms/divider/yds-divider.twig" %}
 
     {% include "@molecules/text-with-image/yds-text-with-image.twig" with {
@@ -24,9 +30,6 @@
       text_with_image__position: text_with_image__position_one,
     }%}
     
-
-    {% include "@atoms/divider/yds-divider.twig" %}
-
     {% include "@molecules/text-with-image/yds-text-with-image.twig" with {
       text_with_image__focus: text_with_image__focus_two,
       text_with_image__width: text_with_image__width_two,
