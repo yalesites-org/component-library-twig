@@ -14,7 +14,6 @@
 
     {% include "@organisms/card-collection/yds-card-collection.twig" with {
       card_example_type: 'event',
-      card_collection__heading: 'Department Events',
       card_collection__type: 'grid',
       card_collection__cards: [
         {},
@@ -39,6 +38,7 @@
     {% include "@atoms/divider/yds-divider.twig" %}
 
     {% include "@page-examples/events/_event-collection--example.twig" with {
+      card_collection__heading: 'Department Events',
       variation: 'list',
     } %}
     {% include "@molecules/callout/yds-callout.twig" with {
