@@ -79,15 +79,10 @@ $break-text-with-image-max: tokens.$break-l - 0.05;
   }
 
   [data-component-focus='content'][data-image-position='image-left'] &,
-  [data-component-focus='equal'][data-image-position='image-left'] & {
-    @media (max-width: $break-text-with-image-max) {
-      margin-left: 20%;
-    }
-  }
-
+  [data-component-focus='equal'][data-image-position='image-left'] &,
   [data-component-focus='image'][data-image-position='image-left'] & {
     @media (max-width: $break-text-with-image-max) {
-      justify-self: end;
+      margin-left: 25%;
     }
   }
 
