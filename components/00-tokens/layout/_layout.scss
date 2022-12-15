@@ -9,6 +9,13 @@
    * like a card grid, or a callout should use this. */
   --spacing-page-section: var(--size-spacing-8);
 
+  /* The `--spacing-page-section-spacious` variable is the largest spacing that is
+   * used between select "section" components. These are standalone components 
+   * that require even more spacing than others to visually separate it from 
+   * surrounding content.
+   * Examples: banners, callouts, quicklinks, text-with-image should use this. */
+  --spacing-page-section-spacious: var(--size-spacing-10);
+
   /* The `--spacing-page-inner` variable is the smaller spacing that is used
    * between "content-like" components. It is used between components within a
    * logical section. */
@@ -21,6 +28,7 @@
   @media (min-width: tokens.$break-l) {
     --size-spacing-site-gutter: var(--size-spacing-7);
     --spacing-page-section: var(--size-spacing-10);
+    --spacing-page-section-spacious: var(--size-spacing-12);
   }
 
   @media (min-width: tokens.$break-xl) {
@@ -70,6 +78,27 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 // of the text.
 @mixin spacing-page-section($flush-bottom: false, $flush-top: false) {
   margin-block: var(--spacing-page-section);
+
+  @if $flush-top == true {
+    &:first-child {
+      --main-content-top-margin: 0;
+
+      margin-bottom: var(--size-spacing-7);
+    }
+  }
+
+  @if $flush-bottom == true {
+    &:last-child {
+      --main-content-bottom-margin: 0;
+    }
+  }
+}
+
+// The spacing-page-section-spacious mixin should be applied to components that are
+// intended to "stand out" a bit more from the components around them.
+// Examples: banners, callouts, quicklinks, text-with-image
+@mixin spacing-page-section-spacious($flush-bottom: false, $flush-top: false) {
+  margin-block: var(--spacing-page-section-spacious);
 
   @if $flush-top == true {
     &:first-child {

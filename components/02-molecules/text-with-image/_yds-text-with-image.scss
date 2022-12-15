@@ -3,7 +3,7 @@
 $break-text-with-image-max: tokens.$break-l - 0.05;
 
 .text-with-image {
-  @include tokens.spacing-page-section;
+  @include tokens.spacing-page-section-spacious;
 }
 
 .text-with-image__inner {
