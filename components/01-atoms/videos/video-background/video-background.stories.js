@@ -7,6 +7,6 @@ import './yds-video-background';
 /**
  * Storybook Definition.
  */
-export default { title: 'Atoms/Video Background' };
+export default { title: 'Atoms/Videos/Video Background' };
 
 export const videoBackground = () => videoBackgroundTwig(videoBackgroundData);
