@@ -5,6 +5,6 @@ import videoEmbedData from './video-embed.yml';
 /**
  * Storybook Definition.
  */
-export default { title: 'Atoms/Video Embed' };
+export default { title: 'Atoms/Videos/Video Embed' };
 
 export const videoEmbed = () => videoEmbedTwig(videoEmbedData);
