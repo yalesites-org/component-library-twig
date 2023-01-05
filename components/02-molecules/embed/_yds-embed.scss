@@ -1,6 +1,6 @@
 @use '../../00-tokens/tokens';
 
-.embed__iframe {
+.embed iframe {
   @include tokens.spacing-page-section;
 
   display: block;
