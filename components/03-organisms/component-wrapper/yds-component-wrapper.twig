@@ -1,6 +1,21 @@
+{% if not component_heading_level %}
+  {% set component_heading_level = 2 %}
+  {% else %}
+  {% set component_heading_level = component_heading_level %}
+{% endif %}
+
 <div data-component-width={{ component_width|default('max') }}>
   <div {{ bem('inner', [], 'component-wrapper') }}>
-    {% block compontent_wrapper__component %}
+      {% if component_label %}
+      {% include "@atoms/typography/headings/yds-heading.twig" with {
+        heading__level: component_heading_level,
+        heading: component_label,
+        heading__blockname: component_heading__blockname|default(component_base_class),
+        heading__modifiers: component_label__modifiers,
+      } %}
+    {% endif %}
+
+    {% block component_wrapper_inner %}
       {% include "@page-layouts/placeholder/yds-placeholder.twig" %}
     {% endblock %}
   </div>
