@@ -136,6 +136,10 @@ $cta-outline-weights: (
 
 .cta {
   @include cta;
+
+  .form--inline & {
+    height: 100%;
+  }
 }
 
 // @TODO: Temporary place for this
