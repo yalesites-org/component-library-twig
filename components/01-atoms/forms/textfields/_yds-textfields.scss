@@ -14,6 +14,10 @@ $form-item-icon-size: 1.7rem;
   margin-bottom: var(--size-spacing-7);
   max-width: $form-item-max-width;
   clear: both;
+
+  .site-header__utility-nav & {
+    margin-bottom: unset;
+  }
 }
 
 .form-item__label {
