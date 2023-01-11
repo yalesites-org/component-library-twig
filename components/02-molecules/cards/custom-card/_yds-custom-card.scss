@@ -88,11 +88,7 @@
   }
 
   a {
-    color: var(--color-text);
-  }
-
-  a:hover {
-    text-decoration: none;
+    @include atoms.link;
   }
 }
 
