@@ -83,6 +83,14 @@ $callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
 .callout__text {
   @include tokens.body-default-condensed;
 
+  a {
+    color: var(--color-text);
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+
   p:last-child {
     margin-bottom: 0;
   }

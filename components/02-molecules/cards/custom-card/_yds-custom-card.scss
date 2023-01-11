@@ -86,6 +86,14 @@
   > *:last-child {
     margin-bottom: 0;
   }
+
+  a {
+    color: var(--color-text);
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
 }
 
 .custom-card__image {
