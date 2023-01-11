@@ -13,7 +13,9 @@
 
 <div {{ add_attributes(embed__attributes) }}>
   <div {{ bem('inner', [], embed__base_class) }}>
-    <iframe {{ bem('iframe', [], embed__base_class) }} title="{{ embed__title }}" src="{{ embed__src }}" height="100%" width="100%" loading="lazy">
-    </iframe>
+    {% block embed__block %}
+      <iframe {{ bem('iframe', [], embed__base_class) }} title="{{ embed__title }}" src="{{ embed__src }}" height="100%" width="100%" loading="lazy">
+      </iframe>
+    {% endblock %}
   </div>
 </div>

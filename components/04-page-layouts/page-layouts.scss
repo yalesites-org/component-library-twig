@@ -20,11 +20,11 @@ body[data-body-frozen] {
 }
 
 // The first item inside the `.main-content` area should have some space between
-// it and the site header (size-spacing-7 and 9 below) - unless it is designated
+// it and the site header (size-spacing-6 and 9 below) - unless it is designated
 // as `$flush-top` above. Then it will have no top-margin separating it from the
 // site header.
 .main-content > *:first-child {
-  margin-top: var(--main-content-top-margin, var(--size-spacing-7));
+  margin-top: var(--main-content-top-margin, var(--size-spacing-6));
 }
 
 // The last item inside the `.main-content` area should have some space between
