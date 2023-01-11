@@ -1,14 +1,10 @@
 {% set component__base_class = 'component-wrapper' %}
 
-{% if not component_heading__level %}
-  {% set component_heading__level = 2 %}
-  {% else %}
-  {% set component_heading__level = component_heading__level %}
-{% endif %}
-
 <div {{ bem(component__base_class, component__modifiers, component__blockname, component__extra_classes) }} data-component-width={{ component_width|default('max') }}>
   <div {{ bem('inner', [], 'component-wrapper') }}>
     {% if component_label %}
+    {% set component_heading__level = 2 %}
+
       {% include "@atoms/typography/headings/yds-heading.twig" with {
         heading__level: component_heading__level,
         heading: component_label,
