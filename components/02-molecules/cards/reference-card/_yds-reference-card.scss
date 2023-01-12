@@ -119,21 +119,18 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
     @include tokens.h5-yale-new;
 
     font-weight: var(--font-weights-yalenew-bold);
-    letter-spacing: var(--font-letter-spacing-yalenew-bold);
   }
 
   [data-collection-type='grid'][data-collection-featured='true'] & {
     @include tokens.h4-yale-new;
 
     font-weight: var(--font-weights-yalenew-bold);
-    letter-spacing: var(--font-letter-spacing-yalenew-bold);
   }
 
   [data-collection-type='list'][data-collection-featured='true'] & {
     @include tokens.h3-yale-new;
 
     font-weight: var(--font-weights-yalenew-bold);
-    letter-spacing: var(--font-letter-spacing-yalenew-bold);
   }
 }
 
