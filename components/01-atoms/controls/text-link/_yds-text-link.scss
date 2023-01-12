@@ -24,6 +24,13 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
   text-decoration: none;
   font-weight: var(--font-weights-#{$family-weight});
   line-height: normal;
+  text-shadow: 0.03em 0 var(--color-basic-white),
+    -0.03em 0 var(--color-basic-white), 0 0.03em var(--color-basic-white),
+    0 -0.03em var(--color-basic-white), 0.06em 0 var(--color-basic-white),
+    -0.06em 0 var(--color-basic-white), 0.09em 0 var(--color-basic-white),
+    -0.09em 0 var(--color-basic-white), 0.12em 0 var(--color-basic-white),
+    -0.12em 0 var(--color-basic-white), 0.15em 0 var(--color-basic-white),
+    -0.15em 0 var(--color-basic-white);
 
   // Animate the decorative bar when the link is hovered.
   &:hover {
