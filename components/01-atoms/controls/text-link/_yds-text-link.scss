@@ -72,6 +72,7 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
     color: currentcolor;
     text-decoration: none;
     font-weight: var(--font-weights-yalenew-bold);
+    letter-spacing: var(--font-letter-spacing-yalenew-bold);
 
     // adjust position so the text-shadow aligns nicely with the text.
     --position: 0 1.05em;
