@@ -60,6 +60,7 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
     color: currentcolor;
     text-decoration: none;
     font-weight: var(--font-weights-yalenew-bold);
+    letter-spacing: var(--font-letter-spacing-yalenew-bold);
 
     &:focus {
       // Setting `outline: none` is generally a huge no-no! In this case,
