@@ -24,6 +24,11 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
   text-decoration: none;
   font-weight: var(--font-weights-#{$family-weight});
   line-height: normal;
+
+  // This text shadow will make the animated underline appear to avoid
+  // descenders in content.
+  // inspired by:
+  // https://github.com/adamschwartz/magic-of-css/commit/35fa2f5ab36aa8c81f053f5a8c7b67b60c79ae5b
   text-shadow: 0.03em 0 var(--color-basic-white),
     -0.03em 0 var(--color-basic-white), 0 0.03em var(--color-basic-white),
     0 -0.03em var(--color-basic-white), 0.06em 0 var(--color-basic-white),
@@ -67,6 +72,21 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
     color: currentcolor;
     text-decoration: none;
     font-weight: var(--font-weights-yalenew-bold);
+
+    // adjust position so the text-shadow aligns nicely with the text.
+    --position: 0 1.05em;
+
+    // This text shadow will make the animated underline appear to avoid
+    // descenders in content.
+    // inspired by:
+    // https://github.com/adamschwartz/magic-of-css/commit/35fa2f5ab36aa8c81f053f5a8c7b67b60c79ae5b
+    text-shadow: 0.03em 0 var(--color-basic-white),
+      -0.03em 0 var(--color-basic-white), 0 0.03em var(--color-basic-white),
+      0 -0.03em var(--color-basic-white), 0.06em 0 var(--color-basic-white),
+      -0.06em 0 var(--color-basic-white), 0.09em 0 var(--color-basic-white),
+      -0.09em 0 var(--color-basic-white), 0.12em 0 var(--color-basic-white),
+      -0.12em 0 var(--color-basic-white), 0.15em 0 var(--color-basic-white),
+      -0.15em 0 var(--color-basic-white);
 
     &:focus {
       // Setting `outline: none` is generally a huge no-no! In this case,
