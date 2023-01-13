@@ -26,7 +26,13 @@
       {# Branding #}
       <div {{ bem('branding', [], site_footer__base_class) }}>
         <div {{ bem('logo', [], site_footer__base_class) }}>
-          &#XF2A2;
+          {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+            link__content: '&#XF2A2',
+            link__url: ' http://yale.edu',
+            link__base_class: 'site-branding',
+            link__modifiers: ['primary'],
+            link__blockname: site_footer__base_class,
+          } %}
         </div>
         {% block site_footer__text %}
           {% include "@page-layouts/placeholder/yds-placeholder.twig" with {
@@ -63,7 +69,7 @@
         <span {{ bem('divider', [], site_footer__base_class) }}>|</span>
         {% include "@atoms/controls/text-link/yds-text-link.twig" with {
           link__content: 'Privacy Policy',
-          link__url: "https://www.yale.edu/privacy-policy",
+          link__url: "https://privacy.yale.edu/resources/privacy-statement",
           link__style: 'no-underline',
         } %}
         <span {{ bem('divider', [], site_footer__base_class) }}>|</span>
