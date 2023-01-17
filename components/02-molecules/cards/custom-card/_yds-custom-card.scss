@@ -86,6 +86,10 @@
   > *:last-child {
     margin-bottom: 0;
   }
+
+  a {
+    @include atoms.link;
+  }
 }
 
 .custom-card__image {
