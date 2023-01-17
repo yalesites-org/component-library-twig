@@ -27,6 +27,7 @@ $alert-fade-speed: var(--animation-speed-slow);
       --color-alert-background: var(--color-alert-#{$theme}-background-color);
       --color-alert-text: var(--color-alert-#{$theme}-text);
       --color-alert-border: var(--color-alert-#{$theme}-border-color);
+      --color-text-shadow: var(--color-alert-#{$theme}-background-color);
     }
   }
 

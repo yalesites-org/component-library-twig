@@ -10,6 +10,7 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
     [data-component-theme='#{$theme}'] {
       --color-link-base: var(--color-link-theme-#{$theme}-base);
       --color-link-hover: var(--color-link-theme-#{$theme}-hover);
+      --color-text-shadow: var(--color-background-#{$theme}-background-color);
     }
   }
 }
@@ -29,13 +30,14 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
   // descenders in content.
   // inspired by:
   // https://github.com/adamschwartz/magic-of-css/commit/35fa2f5ab36aa8c81f053f5a8c7b67b60c79ae5b
-  text-shadow: 0.03em 0 var(--color-basic-white),
-    -0.03em 0 var(--color-basic-white), 0 0.03em var(--color-basic-white),
-    0 -0.03em var(--color-basic-white), 0.06em 0 var(--color-basic-white),
-    -0.06em 0 var(--color-basic-white), 0.09em 0 var(--color-basic-white),
-    -0.09em 0 var(--color-basic-white), 0.12em 0 var(--color-basic-white),
-    -0.12em 0 var(--color-basic-white), 0.15em 0 var(--color-basic-white),
-    -0.15em 0 var(--color-basic-white);
+
+  text-shadow: 0.03em 0 var(--color-text-shadow),
+    -0.03em 0 var(--color-text-shadow), 0 0.03em var(--color-text-shadow),
+    0 -0.03em var(--color-text-shadow), 0.06em 0 var(--color-text-shadow),
+    -0.06em 0 var(--color-text-shadow), 0.09em 0 var(--color-text-shadow),
+    -0.09em 0 var(--color-text-shadow), 0.12em 0 var(--color-text-shadow),
+    -0.12em 0 var(--color-text-shadow), 0.15em 0 var(--color-text-shadow),
+    -0.15em 0 var(--color-text-shadow);
 
   // Animate the decorative bar when the link is hovered.
   &:hover {
@@ -81,13 +83,14 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
     // descenders in content.
     // inspired by:
     // https://github.com/adamschwartz/magic-of-css/commit/35fa2f5ab36aa8c81f053f5a8c7b67b60c79ae5b
-    text-shadow: 0.03em 0 var(--color-basic-white),
-      -0.03em 0 var(--color-basic-white), 0 0.03em var(--color-basic-white),
-      0 -0.03em var(--color-basic-white), 0.06em 0 var(--color-basic-white),
-      -0.06em 0 var(--color-basic-white), 0.09em 0 var(--color-basic-white),
-      -0.09em 0 var(--color-basic-white), 0.12em 0 var(--color-basic-white),
-      -0.12em 0 var(--color-basic-white), 0.15em 0 var(--color-basic-white),
-      -0.15em 0 var(--color-basic-white);
+
+    text-shadow: 0.03em 0 var(--color-text-shadow),
+      -0.03em 0 var(--color-text-shadow), 0 0.03em var(--color-text-shadow),
+      0 -0.03em var(--color-text-shadow), 0.06em 0 var(--color-text-shadow),
+      -0.06em 0 var(--color-text-shadow), 0.09em 0 var(--color-text-shadow),
+      -0.09em 0 var(--color-text-shadow), 0.12em 0 var(--color-text-shadow),
+      -0.12em 0 var(--color-text-shadow), 0.15em 0 var(--color-text-shadow),
+      -0.15em 0 var(--color-text-shadow);
 
     &:focus {
       // Setting `outline: none` is generally a huge no-no! In this case,
