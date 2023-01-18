@@ -15,6 +15,7 @@ $callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
     &[data-component-theme='#{$theme}'] {
       // prettier-ignore
       --color-callouts-background: var(--callout-themes-#{$theme}-background-color);
+      --color-text-shadow: var(--callout-themes-#{$theme}-background-color);
     }
   }
 }
