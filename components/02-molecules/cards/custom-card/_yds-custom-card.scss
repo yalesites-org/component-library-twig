@@ -5,6 +5,7 @@
   @include atoms.clickable-component-heading-link;
 
   --card-border: 1px solid var(--color-gray-200);
+  --color-text-shadow: var(--color-basic-white);
 
   display: grid;
   grid-template-columns: 1fr 2fr;
