@@ -117,5 +117,16 @@ export const textLink = () => `
     link__url: '#',
     link__content: 'This is a "no-underline" link',
     link__style: 'no-underline',
+    link__type: 'normal',
+  })}<br />
+  ${linkTwig({
+    link__url: '#',
+    link__content: 'This is an "external" link',
+    link__type: 'external',
+  })}<br />
+  ${linkTwig({
+    link__url: '#',
+    link__content: 'This is a "new target" link',
+    link__type: 'new-target',
   })}
 `;

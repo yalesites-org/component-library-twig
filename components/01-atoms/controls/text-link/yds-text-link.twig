@@ -1,6 +1,7 @@
 {#
  # Available props:
  # - link__style: underline (default), no-underline
+ # - link__type: normal (default), external, new target
  #
  # Available variables:
  # - link__content - the content of the link (typically text)
@@ -17,9 +18,16 @@
 
 {% set link__attributes = link__attributes|merge({
   'data-link-style': link__style|default('underline'),
+  'data-link-type': link__type|default('normal'),
   class: bem(link__base_class, link__modifiers, link__blockname),
   href: link__url,
 }) %}
+
+{% if link__type == 'new-target' %}
+  {% set link__attributes = link__attributes|merge({
+  'target': '_blank',
+  }) %}
+{% endif %}
 
 <a {{ add_attributes(link__attributes) }}>
   {% block link__content %}
