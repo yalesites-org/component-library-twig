@@ -52,7 +52,8 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
   }
 }
 
-// This mixin is primarily used in instances in which the link mixin doesn't work.
+// This mixin is primarily used in instances in which the link mixin
+// (and underline-slide-start) doesn't work.
 // Specifically, in instances where we want a plain text link with an underline
 // decoration but also want to control the thickness of the underline.
 // Currently used in: components/02-molecules/banner/grand-hero/_yds-grand-hero.scss
