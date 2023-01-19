@@ -16,7 +16,7 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
 }
 
 // Mixin for generic links.
-// Style options are "default" or "no-underline".
+// Style options are "default" or "no-underline" or "no-animation".
 // The style name indicates the initial appearance.
 @mixin link($style: default, $family-weight: 'mallory-medium') {
   @include tokens.underline-slide-start($variation: #{$style});
@@ -49,6 +49,21 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
   // Remove underline when focus is visible.
   &:focus-visible {
     @include tokens.underline-slide-none;
+  }
+}
+
+@mixin plain-link {
+  @include tokens.animate;
+
+  color: var(--color-link-base);
+  text-decoration: underline;
+  text-decoration-thickness: 0.15em;
+  font-weight: var(--mallory-medium);
+  line-height: normal;
+
+  &:hover {
+    color: var(--color-link-hover);
+    text-decoration-thickness: 0.25em;
   }
 }
 
@@ -127,5 +142,9 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
 
   &[data-link-style='no-underline'] {
     @include link(no-underline);
+  }
+
+  &[data-link-style='no-animation'] {
+    @include plain-link;
   }
 }

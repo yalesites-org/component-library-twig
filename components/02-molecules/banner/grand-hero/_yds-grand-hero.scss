@@ -133,9 +133,7 @@ $break-grand-hero-banner: tokens.$break-m;
 }
 
 .grand-hero-banner__link {
-  @include atoms.link;
-
-  --color-text-shadow: var(--color-background);
+  @include atoms.plain-link;
 
   width: fit-content;
 }
