@@ -3,6 +3,7 @@
 @use '../../../00-tokens/tokens';
 
 $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
+$text-link-icon-size: 0.75rem;
 
 :root {
   // Component themes
@@ -97,5 +98,15 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
 
   &[data-link-style='no-underline'] {
     @include link(no-underline);
+  }
+
+  svg {
+    width: $text-link-icon-size;
+    height: $text-link-icon-size;
+    fill: var(--color-link-base);
+  }
+
+  &:hover svg {
+    fill: var(--color-link-hover);
   }
 }

@@ -127,6 +127,6 @@ export const textLink = () => `
   ${linkTwig({
     link__url: '#',
     link__content: 'This is a "new target" link',
-    link__type: 'new-target',
+    link__type: 'target-blank',
   })}
 `;

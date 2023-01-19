@@ -1,7 +1,7 @@
 {#
  # Available props:
  # - link__style: underline (default), no-underline
- # - link__type: normal (default), external, new target
+ # - link__type: normal (default), external (adds icon), target-blank (adds icon + opens in new window/tab)
  #
  # Available variables:
  # - link__content - the content of the link (typically text)
@@ -23,7 +23,8 @@
   href: link__url,
 }) %}
 
-{% if link__type == 'new-target' %}
+{# if link__type is target-blank add target="_blank" attribute #}
+{% if link__type == 'target-blank' %}
   {% set link__attributes = link__attributes|merge({
   'target': '_blank',
   }) %}
@@ -33,4 +34,22 @@
   {% block link__content %}
     {{- link__content -}}
   {% endblock %}
+
+  {# if link__type is external or target-blank we add icons #}
+  {% if link__type == 'external' %}
+    {% include "@atoms/images/icons/_yds-icon.twig" with {
+        icon__name: 'external-link',
+        icon__blockname: 'external-link',
+        icon__decorative: true,
+      } 
+    %}
+  {% endif %}
+  {% if link__type == 'target-blank' %}
+    {% include "@atoms/images/icons/_yds-icon.twig" with {
+        icon__name: 'new-target-link',
+        icon__blockname: 'new-target-link',
+        icon__decorative: true,
+      } 
+    %}
+  {% endif %}
 </a>
