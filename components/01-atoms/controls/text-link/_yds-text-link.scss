@@ -58,7 +58,7 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
   color: var(--color-link-base);
   text-decoration: underline;
   text-decoration-thickness: 0.1em;
-  font-weight: var(--mallory-medium);
+  font-weight: var(--font-weights-mallory-medium);
   line-height: normal;
 
   &:hover {
