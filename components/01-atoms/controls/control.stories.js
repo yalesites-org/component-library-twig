@@ -121,6 +121,6 @@ export const textLink = () => `
   ${linkTwig({
     link__url: '#',
     link__content: 'This is a long link without animated underlines',
-    link__style: 'no-animation',
+    link__style: 'no-underline-animation',
   })}
 `;
