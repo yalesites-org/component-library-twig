@@ -23,12 +23,19 @@
 {% set link__attributes = link__attributes|merge({
   'data-link-style': link__style|default('underline'),
   'data-link-type': link__type|default('normal'),
-  class: bem(link__base_class, link__modifiers, link__blockname),
+  class: bem(link__base_class, link__modifiers, link__blockname, link__extra_class),
   href: link__url,
 }) %}
 
 {# if link__type is target-blank add target="_blank" attribute #}
-{% if link__type == 'target-blank' %}
+{# {% if link__type == 'target-blank' %}
+  {% set link__attributes = link__attributes|merge({
+  'target': '_blank',
+  }) %}
+{% endif %} #}
+
+
+{% if 'link-target-blank' in link__extra_class %}
   {% set link__attributes = link__attributes|merge({
   'target': '_blank',
   }) %}
@@ -40,7 +47,7 @@
   {% endblock %}
 
   {# if link__type is external or target-blank we add icons #}
-  {% if link__type == 'external' %}
+  {% if 'link-external' in link__extra_class %}
     {% include "@atoms/images/icons/_yds-icon.twig" with {
         icon__name: 'link-external',
         icon__blockname: 'link-external',
@@ -48,7 +55,7 @@
       } 
     %}
   {% endif %}
-  {% if link__type == 'target-blank' %}
+  {% if 'link-target-blank' in link__extra_class %}
     {% include "@atoms/images/icons/_yds-icon.twig" with {
         icon__name: 'link-target-blank',
         icon__blockname: 'link-target-blank',
@@ -56,7 +63,7 @@
       } 
     %}
   {% endif %}
-  {% if link__type == 'download' %}
+  {% if 'link-download' in link__extra_class %}
     {% include "@atoms/images/icons/_yds-icon.twig" with {
         icon__name: 'circle-down',
         icon__blockname: 'circle-down',
@@ -64,7 +71,7 @@
       } 
     %}
   {% endif %}
-    {% if link__type == 'with-chevron' %}
+  {% if 'link-with-chevron' in link__extra_class %}
     {% include "@atoms/images/icons/_yds-icon.twig" with {
         icon__name: 'angle-down',
         icon__blockname: 'angle-down',
