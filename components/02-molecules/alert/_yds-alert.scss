@@ -136,6 +136,8 @@ $alert-fade-speed: var(--animation-speed-slow);
   @include atoms.link;
   @include tokens.body-s;
 
+  --position: 0 1.3em;
+
   margin-bottom: var(--size-spacing-2);
 
   [data-alert-state='collapsed'] & {
