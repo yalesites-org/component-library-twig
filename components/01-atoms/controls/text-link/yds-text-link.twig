@@ -1,7 +1,11 @@
 {#
  # Available props:
  # - link__style: underline (default), no-underline
- # - link__type: normal (default), external (adds icon), target-blank (adds icon + opens in new window/tab)
+ # - link__type: 
+ #   - normal (default), 
+ #   - download
+ #   - external (adds icon), 
+ #   - target-blank (adds icon + opens in new window/tab),
  #
  # Available variables:
  # - link__content - the content of the link (typically text)
@@ -38,16 +42,24 @@
   {# if link__type is external or target-blank we add icons #}
   {% if link__type == 'external' %}
     {% include "@atoms/images/icons/_yds-icon.twig" with {
-        icon__name: 'external-link',
-        icon__blockname: 'external-link',
+        icon__name: 'link-external',
+        icon__blockname: 'link-external',
         icon__decorative: true,
       } 
     %}
   {% endif %}
   {% if link__type == 'target-blank' %}
     {% include "@atoms/images/icons/_yds-icon.twig" with {
-        icon__name: 'new-target-link',
-        icon__blockname: 'new-target-link',
+        icon__name: 'link-target-blank',
+        icon__blockname: 'link-target-blank',
+        icon__decorative: true,
+      } 
+    %}
+  {% endif %}
+  {% if link__type == 'download' %}
+    {% include "@atoms/images/icons/_yds-icon.twig" with {
+        icon__name: 'circle-down',
+        icon__blockname: 'circle-down',
         icon__decorative: true,
       } 
     %}
