@@ -64,4 +64,12 @@
       } 
     %}
   {% endif %}
+    {% if link__type == 'with-chevron' %}
+    {% include "@atoms/images/icons/_yds-icon.twig" with {
+        icon__name: 'angle-down',
+        icon__blockname: 'angle-down',
+        icon__modifiers: ['right'],
+      } 
+    %}
+  {% endif %}
 </a>

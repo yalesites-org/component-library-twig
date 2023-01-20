@@ -109,4 +109,8 @@ $text-link-icon-size: 0.75rem;
   &:hover svg {
     fill: var(--color-link-hover);
   }
+
+  .angle-down__icon--right {
+    transform: rotate(-90deg);
+  }
 }

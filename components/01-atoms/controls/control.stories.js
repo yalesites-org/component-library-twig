@@ -133,5 +133,10 @@ export const textLink = () => `
     link__url: '#',
     link__content: 'This is a "download" link',
     link__type: 'download',
+  })}<br />
+  ${linkTwig({
+    link__url: '#',
+    link__content: 'This is a link with chevron',
+    link__type: 'with-chevron',
   })}
 `;
