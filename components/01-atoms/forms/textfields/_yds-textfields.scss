@@ -14,6 +14,10 @@ $form-item-icon-size: 1.7rem;
   margin-bottom: var(--size-spacing-7);
   max-width: $form-item-max-width;
   clear: both;
+
+  .form--inline & {
+    margin-bottom: unset;
+  }
 }
 
 .form-item__label {
@@ -36,6 +40,10 @@ $form-item-icon-size: 1.7rem;
   padding: var(--size-spacing-4);
   width: 100%;
   max-width: 100%;
+
+  .form--inline & {
+    height: 100%;
+  }
 
   // TODO: change this to token style, when tokens update is merged.
   line-height: 1.4;

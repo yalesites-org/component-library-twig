@@ -73,6 +73,11 @@ $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
   }
 }
 
+.site-footer__site-branding {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
 .site-footer__meta {
   @include typography.body-xs;
 
