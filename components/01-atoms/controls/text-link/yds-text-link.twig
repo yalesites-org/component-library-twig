@@ -6,6 +6,7 @@
  #   - download
  #   - external (adds icon), 
  #   - target-blank (adds icon + opens in new window/tab),
+ #   - with-chevron
  #
  # Available variables:
  # - link__content - the content of the link (typically text)
@@ -46,8 +47,8 @@
     {{- link__content -}}
   {% endblock %}
 
-  {# if link__type is external or target-blank we add icons #}
-  {% if 'link-external' in link__extra_class %}
+  {# if link__type is external, target-blank, download, or with-chevron we add icons #}
+  {% if link__type == 'external' %} 
     {% include "@atoms/images/icons/_yds-icon.twig" with {
         icon__name: 'link-external',
         icon__blockname: 'link-external',
@@ -55,7 +56,7 @@
       } 
     %}
   {% endif %}
-  {% if 'link-target-blank' in link__extra_class %}
+  {% if link__type == 'target-blank' %} 
     {% include "@atoms/images/icons/_yds-icon.twig" with {
         icon__name: 'link-target-blank',
         icon__blockname: 'link-target-blank',
@@ -63,7 +64,7 @@
       } 
     %}
   {% endif %}
-  {% if 'link-download' in link__extra_class %}
+  {% if link__type == 'download' %} 
     {% include "@atoms/images/icons/_yds-icon.twig" with {
         icon__name: 'circle-down',
         icon__blockname: 'circle-down',
@@ -71,7 +72,7 @@
       } 
     %}
   {% endif %}
-  {% if 'link-with-chevron' in link__extra_class %}
+  {% if link__type == 'with-chevron' %} 
     {% include "@atoms/images/icons/_yds-icon.twig" with {
         icon__name: 'angle-down',
         icon__blockname: 'angle-down',

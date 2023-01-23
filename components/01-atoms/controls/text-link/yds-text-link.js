@@ -17,7 +17,6 @@ Drupal.behaviors.textLink = {
 
       if (linkHref !== currentURL) {
         console.log(`${linkHref} does not match ${currentURL}!`);
-        link.setAttribute('data-link-type', 'external');
         link.classList.add('external-link');
       }
     });
