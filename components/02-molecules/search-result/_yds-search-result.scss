@@ -24,13 +24,7 @@
   }
 
   &:hover {
-    // @TODO: Temporary styles until we create a token
-    // This shadow is hard coded because it has to be adjusted to make it
-    // appear as though it's a shadow on only the border-bottom element.
-    // There isn't currently anything else that looks like this. If there ever
-    // Is, perhaps it should be captured as a token in a new drop-shadow set.
-    // @LINK: https://yaleits.atlassian.net/browse/YALB-844.
-    box-shadow: 0 8px 6px -6px hsl(0deg 0% 0% / 16%);
+    box-shadow: var(--drop-shadow-level-1-bottom-shadow-only);
   }
 }
 
