@@ -4,10 +4,17 @@
 <div {{ bem(shadows__base_class) }}>
   <ul {{ bem('list', [], shadows__base_class) }}>
   {% for shadow, value in _context.shadows %}
-    {% set variable = prefix ~ shadow|lower|replace({' ': '-'}) %}
+
+    {% set tempShadowVariable = shadow|lower|replace({' ': '-'}) %}
+
+    {# For those variables with names in this way: "Level Number - Variant" #}
+    {% set shadowVariable = tempShadowVariable|replace({'---': '-'}) %}
+
+    {% set variable =  prefix ~ shadowVariable %}
+
     {% set shadow_item__attributes = {
       class: bem("item", [], shadows__base_class),
-      'data-shadow-level': shadow|lower|replace({' ': '-'}),
+      'data-shadow-level': shadowVariable,
       'data-component-theme': 'blue-yale',
     } %}
       <li {{ add_attributes(shadow_item__attributes) }}>
