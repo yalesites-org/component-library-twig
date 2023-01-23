@@ -2,7 +2,7 @@ Drupal.behaviors.textLink = {
   attach(context) {
     // Selectors
     const currentURL = window.location.host;
-    const links = document.querySelectorAll('a');
+    const links = context.querySelectorAll('a');
     const linkReport = [];
     links.forEach(function (link) {
       const linkHref = link.getAttribute('href');
@@ -18,24 +18,25 @@ Drupal.behaviors.textLink = {
       if (linkHref !== currentURL) {
         console.log(`${linkHref} does not match ${currentURL}!`);
         link.setAttribute('data-link-type', 'external');
+        link.classList.add('external-link');
       }
     });
     console.table(linkReport);
     console.log(currentURL);
 
-    const pageLinks = context.querySelectorAll('.text');
+    // const pageLinks = context.querySelectorAll('.text');
 
-    pageLinks.forEach((pageLink) => {
-      const pageLinkValues = pageLink.getElementsByTagName('a');
-      console.log(pageLinkValues);
+    // pageLinks.forEach((pageLink) => {
+    //   const pageLinkValues = pageLink.getElementsByTagName('a');
+    //   console.log(pageLinkValues);
 
-      pageLinkValues.forEach((pageLinkValue) => {
-        console.log(pageLinkValue);
+    //   pageLinkValues.forEach((pageLinkValue) => {
+    //     console.log(pageLinkValue);
 
-        if (pageLinkValue !== currentURL) {
-          console.log(`The urls don't match`);
-        }
-      });
-    });
+    //     if (pageLinkValue !== currentURL) {
+    //       console.log(`The urls don't match`);
+    //     }
+    //   });
+    // });
   },
 };
