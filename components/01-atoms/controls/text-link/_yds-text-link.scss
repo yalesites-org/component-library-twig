@@ -15,11 +15,9 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
 }
 
 // Mixin for svgs in text-links
-
 @mixin with-icon($text-link-icon-size: 1rem) {
   width: $text-link-icon-size;
   height: $text-link-icon-size;
-  fill: var(--color-link-base);
 }
 
 // Mixin for generic links.
@@ -109,6 +107,8 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
 
   svg {
     @include with-icon;
+
+    fill: var(--color-link-base);
   }
 
   &:hover {
@@ -119,8 +119,9 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
 
   &[data-link-type='with-chevron'] {
     svg {
-      @include with-icon(1.2rem);
+      @include with-icon;
 
+      fill: var(--color-link-base);
       transform: rotate(-90deg);
     }
 

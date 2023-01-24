@@ -136,4 +136,19 @@ $break-grand-hero-banner: tokens.$break-m;
   @include atoms.link;
 
   width: fit-content;
+
+  &[data-link-type='with-chevron'] {
+    svg {
+      @include atoms.with-icon;
+
+      fill: var(--color-link-base);
+      transform: rotate(-90deg);
+    }
+
+    &:hover {
+      svg {
+        fill: var(--color-link-hover);
+      }
+    }
+  }
 }
