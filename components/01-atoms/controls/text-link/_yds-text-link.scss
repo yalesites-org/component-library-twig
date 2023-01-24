@@ -3,7 +3,6 @@
 @use '../../../00-tokens/tokens';
 
 $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
-$text-link-icon-size: 0.75rem;
 
 :root {
   // Component themes
@@ -13,6 +12,14 @@ $text-link-icon-size: 0.75rem;
       --color-link-hover: var(--color-link-theme-#{$theme}-hover);
     }
   }
+}
+
+// Mixin for svgs in text-links
+
+@mixin with-icon($text-link-icon-size: 1rem) {
+  width: $text-link-icon-size;
+  height: $text-link-icon-size;
+  fill: var(--color-link-base);
 }
 
 // Mixin for generic links.
@@ -101,16 +108,26 @@ $text-link-icon-size: 0.75rem;
   }
 
   svg {
-    width: $text-link-icon-size;
-    height: $text-link-icon-size;
-    fill: var(--color-link-base);
+    @include with-icon;
   }
 
-  &:hover svg {
-    fill: var(--color-link-hover);
+  &:hover {
+    svg {
+      fill: var(--color-link-hover);
+    }
   }
 
-  .angle-down__icon--right {
-    transform: rotate(-90deg);
+  &[data-link-type='with-chevron'] {
+    svg {
+      @include with-icon(1.2rem);
+
+      transform: rotate(-90deg);
+    }
+
+    &:hover {
+      svg {
+        fill: var(--color-link-hover);
+      }
+    }
   }
 }
