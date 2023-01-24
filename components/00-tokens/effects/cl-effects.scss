@@ -1,7 +1,8 @@
 @use '~@yalesites-org/tokens/build/scss/tokens.scss' as break;
 
 $effects-gap: var(--size-spacing-6);
-$shadow-levels: 'level-1', 'level-2', 'level-3', 'level-4';
+$shadow-levels: 'level-1', 'level-1-bottom-shadow-only', 'level-2', 'level-3',
+  'level-4';
 
 .cl-shadows__list,
 .cl-radii__list,
@@ -22,14 +23,19 @@ $shadow-levels: 'level-1', 'level-2', 'level-3', 'level-4';
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 
   @media (min-width: break.$break-l) {
-    flex-basis: 10%;
+    flex-basis: 20%;
   }
 }
 
 .cl-shadows__item {
   @include cl-list-item;
+
+  &:last-child {
+    max-width: 20%;
+  }
 
   @each $level in $shadow-levels {
     &[data-shadow-level='#{$level}'] {

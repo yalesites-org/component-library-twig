@@ -17,7 +17,7 @@ export default {
 
 export const Shadows = () => `
   <h2>Shadows should only be used as hover or interaction effect</h2>
-  <p>The four levels are displayed below. Hover over each box to see the shadow effect.</p>
+  <p>The five levels are displayed below. Hover over each box to see the shadow effect.</p>
   ${shadowsTwig(shadowsData)}
 `;
 
