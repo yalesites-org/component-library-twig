@@ -16,6 +16,8 @@
 .search-result {
   @include atoms.clickable-component-heading-link;
 
+  --color-text-shadow: var(--color-basic-white);
+
   padding: var(--size-spacing-5) 0;
   border-bottom: 1px solid var(--color-gray-300);
 

@@ -2,6 +2,8 @@
 
 .text-with-image {
   @include tokens.spacing-page-section;
+
+  --color-text-shadow: var(--color-basic-white);
 }
 
 .text-with-image__inner {

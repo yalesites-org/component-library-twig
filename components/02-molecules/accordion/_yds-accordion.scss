@@ -4,6 +4,8 @@
 // The accordion group.
 .accordion {
   @include tokens.spacing-page-section;
+
+  --color-text-shadow: var(--color-basic-white);
 }
 
 .accordion__heading {
