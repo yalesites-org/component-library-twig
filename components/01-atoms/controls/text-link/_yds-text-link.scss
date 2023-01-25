@@ -10,6 +10,7 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
     [data-component-theme='#{$theme}'] {
       --color-link-base: var(--color-link-theme-#{$theme}-base);
       --color-link-hover: var(--color-link-theme-#{$theme}-hover);
+      --color-text-shadow: var(--color-background-#{$theme}-background-color);
     }
   }
 }
@@ -21,7 +22,7 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
 }
 
 // Mixin for generic links.
-// Style options are "default" or "no-underline".
+// Style options are "default" or "no-underline" or "no-animation".
 // The style name indicates the initial appearance.
 @mixin link($style: default, $family-weight: 'mallory-medium') {
   @include tokens.underline-slide-start($variation: #{$style});
@@ -30,6 +31,19 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
   text-decoration: none;
   font-weight: var(--font-weights-#{$family-weight});
   line-height: normal;
+
+  // This text shadow will make the animated underline appear to avoid
+  // descenders in content.
+  // inspired by:
+  // https://github.com/adamschwartz/magic-of-css/commit/35fa2f5ab36aa8c81f053f5a8c7b67b60c79ae5b
+
+  text-shadow: 0.03em 0 var(--color-text-shadow),
+    -0.03em 0 var(--color-text-shadow), 0 0.03em var(--color-text-shadow),
+    0 -0.03em var(--color-text-shadow), 0.06em 0 var(--color-text-shadow),
+    -0.06em 0 var(--color-text-shadow), 0.09em 0 var(--color-text-shadow),
+    -0.09em 0 var(--color-text-shadow), 0.12em 0 var(--color-text-shadow),
+    -0.12em 0 var(--color-text-shadow), 0.15em 0 var(--color-text-shadow),
+    -0.15em 0 var(--color-text-shadow);
 
   // Animate the decorative bar when the link is hovered.
   &:hover {
@@ -41,6 +55,28 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
   // Remove underline when focus is visible.
   &:focus-visible {
     @include tokens.underline-slide-none;
+  }
+}
+
+// This mixin is primarily used in instances in which the link mixin
+// (and underline-slide-start) doesn't work.
+// Specifically, in instances where we want a plain text link with an underline
+// decoration but also want to control the thickness of the underline.
+// Currently used in: components/02-molecules/banner/grand-hero/_yds-grand-hero.scss
+// and directly referenced at the bottom of this file in:
+// &[data-link-style='no-underline-animation']
+@mixin plain-link {
+  @include tokens.animate;
+
+  color: var(--color-link-base);
+  text-decoration: underline;
+  text-decoration-thickness: 0.1em;
+  font-weight: var(--font-weights-mallory-medium);
+  line-height: normal;
+
+  &:hover {
+    text-decoration: none;
+    color: var(--color-link-hover);
   }
 }
 
@@ -67,6 +103,22 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
     text-decoration: none;
     font-weight: var(--font-weights-yalenew-bold);
     letter-spacing: var(--font-letter-spacing-yalenew-bold);
+
+    // adjust position so the text-shadow aligns nicely with the text.
+    --position: 0 1.05em;
+
+    // This text shadow will make the animated underline appear to avoid
+    // descenders in content.
+    // inspired by:
+    // https://github.com/adamschwartz/magic-of-css/commit/35fa2f5ab36aa8c81f053f5a8c7b67b60c79ae5b
+
+    text-shadow: 0.03em 0 var(--color-text-shadow),
+      -0.03em 0 var(--color-text-shadow), 0 0.03em var(--color-text-shadow),
+      0 -0.03em var(--color-text-shadow), 0.06em 0 var(--color-text-shadow),
+      -0.06em 0 var(--color-text-shadow), 0.09em 0 var(--color-text-shadow),
+      -0.09em 0 var(--color-text-shadow), 0.12em 0 var(--color-text-shadow),
+      -0.12em 0 var(--color-text-shadow), 0.15em 0 var(--color-text-shadow),
+      -0.15em 0 var(--color-text-shadow);
 
     &:focus {
       // Setting `outline: none` is generally a huge no-no! In this case,
@@ -103,6 +155,10 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
 
   &[data-link-style='no-underline'] {
     @include link(no-underline);
+  }
+
+  &[data-link-style='no-underline-animation'] {
+    @include plain-link;
   }
 
   svg {

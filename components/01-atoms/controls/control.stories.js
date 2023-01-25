@@ -138,5 +138,10 @@ export const textLink = () => `
     link__url: '#',
     link__content: 'This is a link with chevron',
     link__type: 'with-chevron',
+  })}<br />
+  ${linkTwig({
+    link__url: '#',
+    link__content: 'This is a long link without animated underlines',
+    link__style: 'no-underline-animation',
   })}
 `;

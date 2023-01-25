@@ -27,6 +27,7 @@ $alert-fade-speed: var(--animation-speed-slow);
       --color-alert-background: var(--color-alert-#{$theme}-background-color);
       --color-alert-text: var(--color-alert-#{$theme}-text);
       --color-alert-border: var(--color-alert-#{$theme}-border-color);
+      --color-text-shadow: var(--color-alert-#{$theme}-background-color);
     }
   }
 
@@ -134,6 +135,8 @@ $alert-fade-speed: var(--animation-speed-slow);
 .alert__link {
   @include atoms.link;
   @include tokens.body-s;
+
+  --position: 0 1.3em;
 
   margin-bottom: var(--size-spacing-2);
 
