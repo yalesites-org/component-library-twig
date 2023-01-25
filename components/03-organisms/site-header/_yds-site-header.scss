@@ -21,6 +21,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
   // prettier-ignore
   --site-header-mobile-border-bottom: var(--site-header-mobile-border-thickness, var(--site-header-border-thickness)) solid var(--color-site-header-border-color);
+  --color-text-shadow: var(--color-basic-white);
 
   position: relative;
   z-index: 2;
