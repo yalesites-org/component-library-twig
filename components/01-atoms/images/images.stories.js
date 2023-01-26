@@ -52,4 +52,4 @@ export const Figures = () => imageTwig(figureData);
 
 export const Icons = () => iconsTwig({ icons });
 
-export const faIcons = () => faIconsTwig(faIconData);
+export const FAIcons = () => faIconsTwig(faIconData);
