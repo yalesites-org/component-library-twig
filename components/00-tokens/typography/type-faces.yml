@@ -32,9 +32,3 @@ families:
       - name: Book
         weight: 400
         style: normal
-  - name: Font Awesome
-    id: "'Font Awesome 6 Pro'"
-    styles:
-      - name: Bold
-        weight: 900
-        style: normal

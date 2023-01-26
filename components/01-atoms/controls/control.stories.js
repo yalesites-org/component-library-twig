@@ -123,22 +123,22 @@ export const textLink = () => `
     link__url: '#',
     link__content: 'This is an "external" link',
     link__type: 'external',
-  })}<br />
+  })}
   ${linkTwig({
     link__url: '#',
     link__content: 'This is a "new target" link',
     link__type: 'target-blank',
-  })}<br />
+  })}
   ${linkTwig({
     link__url: '#',
     link__content: 'This is a "download" link',
     link__type: 'download',
-  })}<br />
+  })}
   ${linkTwig({
     link__url: '#',
     link__content: 'This is a link with chevron',
     link__type: 'with-chevron',
-  })}<br />
+  })}
   ${linkTwig({
     link__url: '#',
     link__content: 'This is a long link without animated underlines',

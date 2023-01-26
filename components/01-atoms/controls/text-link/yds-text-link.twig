@@ -21,6 +21,10 @@
 {% set link__base_class = link__base_class|default('link') %}
 {% set link__attributes = link__attributes|default({}) %}
 
+{% if link__type == 'external' or link__type == 'target-blank' or link__type == 'download' or link__type == 'with-chevron' %}
+  {% set link__modifiers = ['with-icon'] %}
+{% endif %}
+
 {% set link__attributes = link__attributes|merge({
   'data-link-style': link__style|default('underline'),
   'data-link-type': link__type|default('normal'),
@@ -28,55 +32,37 @@
   href: link__url,
 }) %}
 
-{# if link__type is target-blank add target="_blank" attribute #}
-{# {% if link__type == 'target-blank' %}
-  {% set link__attributes = link__attributes|merge({
-  'target': '_blank',
-  }) %}
-{% endif %} #}
-
-
-{% if 'link-target-blank' in link__extra_class %}
-  {% set link__attributes = link__attributes|merge({
-  'target': '_blank',
-  }) %}
-{% endif %}
-
 <a {{ add_attributes(link__attributes) }}>
   {% block link__content %}
     {{- link__content -}}
   {% endblock %}
 
   {# if link__type is external, target-blank, download, or with-chevron we add icons #}
-  {% if link__type == 'external' %} 
-    {% include "@atoms/images/icons/_yds-icon.twig" with {
-        icon__name: 'link-external',
-        icon__blockname: 'link-external',
-        icon__decorative: true,
+  {% if link__type == 'external' %}
+    {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
+        fa_icon__title: 'Up Right',
+        fa_icon__extra_class: ['fa-solid fa-up-right'],
       } 
     %}
   {% endif %}
-  {% if link__type == 'target-blank' %} 
-    {% include "@atoms/images/icons/_yds-icon.twig" with {
-        icon__name: 'link-target-blank',
-        icon__blockname: 'link-target-blank',
-        icon__decorative: true,
+  {% if link__type == 'target-blank' %}
+    {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
+        fa_icon__title: 'Up Right',
+        fa_icon__extra_class: ['fa-solid fa-arrow-up-right-from-square'],
       } 
     %}
   {% endif %}
   {% if link__type == 'download' %} 
-    {% include "@atoms/images/icons/_yds-icon.twig" with {
-        icon__name: 'circle-down',
-        icon__blockname: 'circle-down',
-        icon__decorative: true,
+    {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
+        fa_icon__title: 'Circle Down',
+        fa_icon__extra_class: ['fa-regular fa-circle-down'],
       } 
     %}
   {% endif %}
-  {% if link__type == 'with-chevron' %} 
-    {% include "@atoms/images/icons/_yds-icon.twig" with {
-        icon__name: 'angle-down',
-        icon__blockname: 'angle-down',
-        icon__modifiers: ['right'],
+  {% if link__type == 'with-chevron' %}
+    {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
+        fa_icon__title: 'Angle Right',
+        fa_icon__extra_class: ['fa-solid fa-angle-right'],
       } 
     %}
   {% endif %}

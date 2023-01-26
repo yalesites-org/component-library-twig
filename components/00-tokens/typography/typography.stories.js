@@ -5,11 +5,9 @@ import typeFaces from './type-faces.twig';
 import typeScale from './type-scale.twig';
 import headingStyles from './heading-styles.twig';
 import bodyStyles from './body-styles.twig';
-import fontIcons from './type-icons.twig';
 
 // Data files
 import typeFacesData from './type-faces.yml';
-import iconData from './type-icons.yml';
 
 const scaleData = { font_scale: tokens.font.scale };
 const headingStyleData = { heading_styles: tokens.font.style.heading };
@@ -30,5 +28,3 @@ export const HeadingStyles = () =>
   headingStyles({ ...headingStyleData, ...letterSpacing, ...textTransforms });
 
 export const BodyStyles = () => bodyStyles(bodyStyleData);
-
-export const FontIcons = () => fontIcons(iconData);
