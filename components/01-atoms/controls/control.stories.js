@@ -124,21 +124,25 @@ export const textLink = () => `
   ${linkTwig({
     link__url: '#',
     link__content: 'This is an "external" link',
+    link__style: 'underline-with-icon',
     link__type: 'external',
   })}
   ${linkTwig({
     link__url: '#',
     link__content: 'This is a "new target" link',
+    link__style: 'underline-with-icon',
     link__type: 'target-blank',
   })}
   ${linkTwig({
     link__url: '#',
     link__content: 'This is a "download" link',
+    link__style: 'underline-with-icon',
     link__type: 'download',
   })}
   ${linkTwig({
     link__url: '#',
     link__content: 'This is a link with chevron',
+    link__style: 'underline-with-icon',
     link__type: 'with-chevron',
   })}
   ${linkTwig({
