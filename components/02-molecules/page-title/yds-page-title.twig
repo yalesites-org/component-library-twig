@@ -10,7 +10,7 @@
 {% set page_title__base_class = 'page-title' %}
 
 {% set page_title__attributes = {
-  'data-component-width': 'max',
+  'data-component-width': page_title__width|default('max'),
   class: bem(page_title__base_class, [], page_title__blockname, page_title__additional_classes),
 } %}
 

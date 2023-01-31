@@ -11,7 +11,7 @@
 {% set media_grid__base_class = 'media-grid' %}
 
 {% set media_grid__attributes = {
-  'data-component-width': 'feature',
+  'data-component-width': media_grid__width|default('feature'),
   'data-media-grid-variation': media_grid__variation|default('basic'),
   'class': bem(media_grid__base_class),
 } %}

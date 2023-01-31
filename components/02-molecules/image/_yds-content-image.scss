@@ -2,4 +2,8 @@
 
 .content-image {
   @include tokens.spacing-page-inner;
+
+  img {
+    width: 100%;
+  }
 }
