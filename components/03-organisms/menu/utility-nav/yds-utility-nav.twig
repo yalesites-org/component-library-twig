@@ -8,7 +8,7 @@
   {# Search #}
   {% if utility_nav__search %}
     <div {{ bem('search', [], utility_nav__base_class) }}>
-      <form action="/search" method="get" id="header-search-form" accept-charset="UTF-8">
+      <form action="/search" class="form--inline" method="get" id="header-search-form" accept-charset="UTF-8">
         <div class="form-item form-item-keywords">
           <label for="edit-keywords--header-search-form">
             {% include "@atoms/images/icons/_yds-icon.twig" with {
