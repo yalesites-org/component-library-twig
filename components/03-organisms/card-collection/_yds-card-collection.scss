@@ -23,6 +23,10 @@
     @include list.primary;
   }
 
+  [data-collection-type='grid'] & {
+    align-items: flex-start;
+  }
+
   [data-collection-type='grid'][data-collection-featured='true'] & {
     @include grid.primary;
   }

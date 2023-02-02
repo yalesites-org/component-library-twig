@@ -18,6 +18,7 @@ $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
     &[data-component-theme='#{$theme}'] {
       // prettier-ignore
       --color-site-footer-border-color: var(--site-footer-themes-#{$theme}-border-color);
+      --color-text-shadow: var(--color-background);
     }
   }
 
@@ -71,6 +72,11 @@ $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
   @media (min-width: $break-site-footer) {
     font-size: 3rem;
   }
+}
+
+.site-footer__site-branding {
+  color: var(--color-text);
+  text-decoration: none;
 }
 
 .site-footer__meta {
