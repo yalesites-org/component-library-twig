@@ -10,9 +10,9 @@
         {title: page_title__heading, url: '#', is_active: true},
       ],
     } %}
-    {% embed "@molecules/page-title//yds-page-title.twig" %}
+    {% embed "@molecules/page-title/yds-page-title.twig" %}
       {% block page_title__meta %}
-        {% include "@molecules/meta/event-meta//yds-event-meta.twig" %}
+        {% include "@molecules/meta/event-meta/yds-event-meta.twig" %}
       {% endblock %}
     {% endembed %}
     {% include "@molecules/text/yds-text-field.twig" with {

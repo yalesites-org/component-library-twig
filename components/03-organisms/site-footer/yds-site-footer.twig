@@ -26,13 +26,7 @@
       {# Branding #}
       <div {{ bem('branding', [], site_footer__base_class) }}>
         <div {{ bem('logo', [], site_footer__base_class) }}>
-          {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-            link__content: '&#XF2A2',
-            link__url: 'https://yale.edu',
-            link__base_class: 'site-branding',
-            link__modifiers: ['primary'],
-            link__blockname: site_footer__base_class,
-          } %}
+          <a data-link-style="no-underline" class="site-footer__site-branding site-footer__site-branding--primary" href="https://yale.edu">&#XF2A2;</a>
         </div>
         {% block site_footer__text %}
           {% include "@page-layouts/placeholder/yds-placeholder.twig" with {

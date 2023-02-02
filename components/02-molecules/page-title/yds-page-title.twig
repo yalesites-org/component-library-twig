@@ -10,7 +10,7 @@
 {% set page_title__base_class = 'page-title' %}
 
 {% set page_title__attributes = {
-  'data-component-width': 'max',
+  'data-component-width': page_title__width|default('max'),
   class: bem(page_title__base_class, [], page_title__blockname, page_title__additional_classes),
 } %}
 
@@ -23,7 +23,7 @@
     } %}
     {% block page_title__meta %}
       {% if page_title__meta %}
-        {% include "@molecules/meta/basic-meta//yds-basic-meta.twig" with {
+        {% include "@molecules/meta/basic-meta/yds-basic-meta.twig" with {
           basic_meta: page_title__meta,
         } %}
       {% endif %}
