@@ -8,15 +8,4 @@
   .text {
     overflow-x: auto;
   }
-
-  // set text div max-width to var(--size-component-layout-width-content).
-  // when the text component is placed within a max-with component
-  // this will limit the text div width while giving the text the appearance
-  // of being left-aligned
-  &[data-component-width='max'] {
-    .text {
-      width: 100%;
-      max-width: var(--size-component-layout-width-content);
-    }
-  }
 }
