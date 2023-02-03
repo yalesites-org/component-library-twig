@@ -32,6 +32,7 @@
 
     {% include "@molecules/image/yds-content-image.twig" with {
       content_image__width:'max',
+      content_image__modifiers: ['limit'],
     }%}
     {% include "@molecules/text/yds-text-field.twig" with {
       text_field__modifiers:['limit'],
@@ -39,6 +40,7 @@
     } %}
     {% include "@molecules/video/yds-video.twig" with {
       video__width: 'max',
+      video__modifiers: ['limit'],
     }%}
     {% include "@atoms/divider/yds-divider.twig" %}
     {% include "@molecules/accordion/yds-accordion.twig" with {
