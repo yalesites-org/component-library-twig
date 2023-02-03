@@ -25,6 +25,10 @@
     margin-right: var(--size-spacing-5);
     border-right: var(--border-thickness-1) solid;
   }
+
+  .accordion--limit & {
+    max-width: var(--size-component-layout-width-content);
+  }
 }
 
 .accordion__toggle-all {
@@ -53,6 +57,10 @@
 .accordion-item {
   border-bottom: var(--border-thickness-1) solid;
   padding-top: var(--size-spacing-5);
+
+  .accordion--limit & {
+    max-width: var(--size-component-layout-width-content);
+  }
 }
 
 .accordion-item__heading {

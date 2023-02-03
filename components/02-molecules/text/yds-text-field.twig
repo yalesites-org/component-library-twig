@@ -6,8 +6,8 @@
 {% set text_field__base_class = 'text-field' %}
 
 {% set text_field__attributes = {
-  'data-component-width': text_field__width|default('content'),
-  class: bem(text_field__base_class),
+  'data-component-width': text_field__width|default('max'),
+  class: bem(text_field__base_class, text_field__modifiers),
 } %}
 
 <div {{ add_attributes(text_field__attributes) }}>

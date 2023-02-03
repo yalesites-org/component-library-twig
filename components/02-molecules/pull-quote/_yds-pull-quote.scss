@@ -38,6 +38,10 @@ blockquote {
       color: var(--color-pull-quote-accent);
     }
   }
+
+  .pull-quote--limit & {
+    max-width: var(--size-component-layout-width-content);
+  }
 }
 
 .pull-quote__quote {

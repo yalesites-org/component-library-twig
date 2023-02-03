@@ -8,4 +8,10 @@
   .text {
     overflow-x: auto;
   }
+
+  &--limit {
+    .text {
+      max-width: var(--size-component-layout-width-content);
+    }
+  }
 }
