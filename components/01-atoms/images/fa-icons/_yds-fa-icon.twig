@@ -29,6 +29,10 @@
     aria-labelledby="title-{{ unique_name }}"
   {% endif %}
 
+  {% if fa_icon__sr_title %}
+    title="{{ fa_icon__sr_title }}"
+  {% endif %}
+
   {% if fa_icon__desc %}
     aria-describedby="desc-{{ unique_name }}"
   {% endif %}
