@@ -74,6 +74,7 @@
       opacity: 1;
     }
 
+    [data-scroll-indicator='none'],
     [data-scroll-indicator='right'] & {
       @include tokens.animate-hidden;
     }
@@ -88,6 +89,7 @@
       opacity: 1;
     }
 
+    [data-scroll-indicator='none'] &,
     [data-scroll-indicator='left'] & {
       @include tokens.animate-hidden;
     }
@@ -169,5 +171,9 @@
     color: var(--color-basic-brown-gray);
     font-weight: var(--font-weights-mallory-book);
     cursor: default;
+  }
+
+  [data-scroll-indicator='none'] & {
+    z-index: 1;
   }
 }
