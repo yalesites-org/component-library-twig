@@ -24,6 +24,7 @@ import quickLinksData from '../../02-molecules/quick-links/quick-links.yml';
 import videoData from '../../02-molecules/video/video.yml';
 import accordionData from '../../02-molecules/accordion/accordion.yml';
 import tabData from '../../02-molecules/tabs/tabs.yml';
+import mediaGridData from '../../03-organisms/galleries/media-grid/media-grid.yml';
 
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
@@ -170,6 +171,7 @@ export const WithBanner = ({
     video__text: videoCaption,
     ...accordionData,
     ...tabData,
+    ...mediaGridData,
   });
 WithBanner.argTypes = {
   heading: {
@@ -286,6 +288,7 @@ export const WithBannerLeftAlign = ({
     video__text: videoCaption,
     ...accordionData,
     ...tabData,
+    ...mediaGridData,
   });
 WithBannerLeftAlign.argTypes = {
   heading: {
