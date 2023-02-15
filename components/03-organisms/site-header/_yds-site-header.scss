@@ -11,7 +11,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 
 // Mixin for the small branding typography.
 @mixin branding-small {
-  font: var(--font-style-branding-site-mobile);
+  font: var(--font-style-branding-yale);
   color: var(--color-site-header-yale-branding);
 }
 
