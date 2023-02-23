@@ -106,6 +106,7 @@ $break-grand-hero-banner: tokens.$break-m;
   padding-left: 0;
 
   @media (min-width: $break-grand-hero-banner) {
+    width: 100%;
     max-width: var(--size-component-layout-width-content);
 
     [data-grand-hero-overlay-variation='full'] & {

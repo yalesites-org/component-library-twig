@@ -4,9 +4,19 @@
  #}
 
 {% set text_field__base_class = 'text-field' %}
+{% set parentNode = paragraph.parentEntity.type.value.0['target_id'] %}
+
+{% if parentNode == 'news' or parentNode == 'events' %}
+  {% set text_field__width = "content" %}
+  {% set text_field__alignment = "center" %}
+{% else %}
+  {% set text_field__width = "max" %}
+  {% set text_field__alignment = "left" %}
+{% endif %}
 
 {% set text_field__attributes = {
   'data-component-width': text_field__width|default('max'),
+  'data-component-alignment': text_field__alignment|default('center'),
   class: bem(text_field__base_class, text_field__modifiers),
 } %}
 

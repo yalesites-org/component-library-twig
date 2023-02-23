@@ -2,7 +2,8 @@
 
 {% set component_wrapper__attributes = {
   class: bem(component__base_class, component__modifiers, component__blockname, component__extra_classes),
-  'data-component-width': component_width|default('max'),
+  'data-component-width': component_wrapper__width|default('max'),
+  'data-component-alignment': component_wrapper__alignment|default('center'),
 } %}
 
 <div {{ add_attributes(component_wrapper__attributes) }}>

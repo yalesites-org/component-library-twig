@@ -3,7 +3,7 @@
 .content-image {
   @include tokens.spacing-page-inner;
 
-  &--limit {
+  &[data-component-alignment='left'] {
     .image {
       max-width: var(--size-component-layout-width-content);
     }

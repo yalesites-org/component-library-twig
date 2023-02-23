@@ -9,6 +9,13 @@
 
 {% set pull_quote__base_class = 'pull-quote' %}
 {% set pull_quote__style = pull_quote__style|default('bar-left') %}
+{% set parentNode = paragraph.parentEntity.type.value.0['target_id'] %}
+
+{% if parentNode == 'news' or parentNode == 'events' %}
+  {% set pull_quote__alignment = "left" %}
+{% else %}
+  {% set pull_quote__alignment = "center" %}
+{% endif %}
 
 {# If pull_quote__attributes is not defined, set it to an empty object by default #}
 {% set pull_quote__attributes = pull_quote__attributes|default({}) %}
@@ -16,6 +23,7 @@
 {% set pull_quote__attributes = pull_quote__attributes|merge({
   'data-component-width': 'max',
   'data-pull-quote-style': pull_quote__style,
+  'data-component-alignment': pull_quote__alignment|default('center'),
   class: bem(pull_quote__base_class, pull_quote__modifiers),
 }) %}
 

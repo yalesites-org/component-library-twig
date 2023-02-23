@@ -8,7 +8,7 @@
   overflow: hidden;
   position: relative;
 
-  .component-wrapper--limit & {
+  [data-component-alignment='left'] & {
     max-width: var(--size-component-layout-width-content);
   }
 }

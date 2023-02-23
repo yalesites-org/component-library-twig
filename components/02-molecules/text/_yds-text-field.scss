@@ -9,7 +9,7 @@
     overflow-x: auto;
   }
 
-  &--limit {
+  &[data-component-alignment='left'] {
     .text {
       max-width: var(--size-component-layout-width-content);
     }
