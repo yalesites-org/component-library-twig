@@ -10,13 +10,6 @@
  #}
 
 {% set content_image__base_class = 'content-image' %}
-{% set parentNode = paragraph.parentEntity.type.value.0['target_id'] %}
-
-{% if parentNode == 'news' or parentNode == 'events' %}
-  {% set content_image__width = "content" %}
-{% else %}
-  {% set content_image__width = "max" %}
-{% endif %}
 
 {% set content_image__attributes = {
   'data-component-width': content_image__width|default('max'),
