@@ -48,10 +48,42 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   }
 }
 
+$content-width: clamp(20rem, 60%, var(--size-component-layout-width-content));
+
 .cta-banner__content {
   display: flex;
-  width: 100%;
   position: relative;
+
+  // Override the background to transparent, so we can add an opacity to it via
+  // the `::before` element below.
+  background-color: transparent;
+
+  [data-banner-content-layout='bottom'] & {
+    width: 100%;
+  }
+
+  [data-banner-content-layout='left'] & {
+    @media (min-width: $break-cta-banner) {
+      width: $content-width;
+      min-height: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  [data-banner-content-layout='right'] & {
+    @media (min-width: $break-cta-banner) {
+      width: $content-width;
+      min-height: 100%;
+      justify-content: center;
+      margin-left: auto;
+      align-items: center;
+    }
+  }
+
+  > * {
+    position: relative;
+  }
 
   &::before {
     position: absolute;
@@ -62,57 +94,6 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     content: '';
     background-color: var(--color-background);
     opacity: 0.9;
-  }
-
-  > * {
-    position: relative;
-  }
-}
-
-.cta-banner__wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-  max-width: var(--size-component-layout-width-max);
-  margin: 0 auto;
-
-  // prettier-ignore
-  padding: var(--size-spacing-6) var(--size-spacing-site-gutter) var(--size-spacing-7);
-
-  // Override the background to transparent, so we can add an opacity to it via
-  // the `::before` element below.
-  background-color: transparent;
-
-  [data-banner-content-layout='bottom'] & {
-    @media (min-width: $break-cta-banner) {
-      gap: var(--size-spacing-5);
-      flex-basis: 100%;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      padding-block: var(--size-spacing-5);
-      min-height: auto;
-    }
-  }
-
-  $content-width: clamp(20rem, 60%, var(--size-component-layout-width-content));
-
-  [data-banner-content-layout='left'] & {
-    @media (min-width: $break-cta-banner) {
-      width: $content-width;
-      min-height: 100%;
-      justify-content: center;
-    }
-  }
-
-  [data-banner-content-layout='right'] & {
-    @media (min-width: $break-cta-banner) {
-      width: $content-width;
-      min-height: 100%;
-      justify-content: center;
-      margin-left: auto;
-    }
   }
 
   &[data-component-theme='white'] {
@@ -126,6 +107,31 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
         height: var(--border-thickness-1);
         background-color: var(--color-gray-200);
       }
+    }
+  }
+}
+
+.cta-banner__wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+
+  // prettier-ignore
+  padding: var(--size-spacing-6) var(--size-spacing-site-gutter) var(--size-spacing-7);
+
+  [data-banner-content-layout='bottom'] & {
+    @media (min-width: $break-cta-banner) {
+      gap: var(--size-spacing-5);
+      flex-basis: 100%;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding-block: var(--size-spacing-5);
+      min-height: auto;
+      width: 100%;
+      max-width: var(--size-component-layout-width-max);
+      margin: 0 auto;
     }
   }
 }

@@ -19,12 +19,12 @@
     } %}
     
     {% include "@molecules/pull-quote/yds-pull-quote.twig" with {
-      pull_quote__alignment: 'left', 
+      pull_quote__alignment: 'center', 
       pull_quote__quote: 'Our platform will transform our ability to study metabolic filaments and, coupled with biochemical and biophysical tools, manipulate enzyme structures and metabolic activity in cells.',
     } %}
     {% embed "@organisms/component-wrapper/yds-component-wrapper.twig" with {
-      component_wrapper__width: 'max',
-      component_wrapper__alignment: 'left',
+      component_wrapper__width: 'content',
+      component_wrapper__alignment: 'center',
      }%}
       {% block component_wrapper_inner %}
         {% include "@molecules/tabs/yds-tabs.twig" %}
@@ -32,16 +32,16 @@
     {% endembed %}
 
     {% include "@molecules/image/yds-content-image.twig" with {
-      content_image__width:'max',
-      content_image__alignment: 'left', 
+      content_image__width:'content',
+      content_image__alignment: 'center', 
     }%}
     {% include "@molecules/text/yds-text-field.twig" with {
       text_field__alignment: 'left', 
       text_field__content: '<p>The undergraduate program in Chemistry at Yale reflects the position of chemistry as the foundation of all the molecular sciences. Students are equipped with the technical skills to appreciate the scientific basis for previous discoveries and develop the fundamental expertise required to make future breakthroughs. Under the tutelage of world-leading researchers, students are exposed to a broad range of topics in chemistry. The development of technical skills through lecture classes is complemented with hands-on experience in state-of-the-art chemistry laboratories.</p><p>Many students also perform independent laboratory research under the guidance of a faculty mentor. This rigorous training prepares students for professional careers in a diverse array of fields by teaching them how to apply the scientific method, providing them with skills in quantitative reasoning, and exposing them to scientific research.</p><p>After graduation, students with a B.A. or B.S. degree often pursue work or further studies in chemistry, biochemistry, or health-related disciplines, but also find their broad scientific training beneficial in energy research, policy, environment, business management, and law. As the problems of contemporary society involve ever more complex scientific issues, degree programs in the sciences become increasingly appropriate for students wishing to pursue careers in public policy, government, or public service.</p>',
     } %}
     {% include "@molecules/video/yds-video.twig" with {
-      video__width: 'max',
-      video__alignment: 'left',
+      video__width: 'content',
+      video__alignment: 'center',
     }%}
     {% include "@atoms/divider/yds-divider.twig" %}
 
@@ -55,13 +55,13 @@
           reference_card__url: '#',
         },
         {
-          reference_card__date: '2022-03-30 13:00',
+          reference_card__date: '2022-04-01 14:00',
           reference_card__heading: 'Wu Tsai Institute postdocs bridge disciplines in the study of cognition',
-          reference_card__snippet: "The Wu Tsai Institute's first postdoc cohort will study human cognition, working at the intersections of different fields of research.",
+          reference_card__snippet: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem mollis aliquam ut porttitor leo a diam sollicitudin. Habitasse platea dictumst quisque sagittis purus sit amet. Purus sit amet volutpat consequat mauris nunc. Eget duis at tellus at urna.",
           reference_card__url: '#',
         },
         {
-          reference_card__date: '2022-03-30 13:00',
+          reference_card__date: '2022-03-30 15:00',
           reference_card__heading: 'Wu Tsai Institute postdocs bridge disciplines in the study of cognition',
           reference_card__snippet: "The Wu Tsai Institute's first postdoc cohort will study human cognition, working at the intersections of different fields of research.",
           reference_card__url: '#',
@@ -71,8 +71,8 @@
 
     {% include "@molecules/accordion/yds-accordion.twig" with {
       accordion__heading: 'Accordion Group - left align',
-      accordion__width: 'max',
-      accordion__alignment: 'left', 
+      accordion__width: 'content',
+      accordion__alignment: 'center', 
       accordion__items: [
         {
           accordion__item__heading: accordion__item__heading,
@@ -95,12 +95,12 @@
     
     {% include "@organisms/galleries/media-grid/yds-media-grid.twig" with {
       media_grid__variation: 'interactive',
-      media_grid__width: 'max',
+      media_grid__width: 'content',
     }%}
 
   {% embed "@organisms/component-wrapper/yds-component-wrapper.twig" with {
-    component_wrapper__width: 'max',
-    component_wrapper__alignment: 'left', 
+    component_wrapper__width: 'content',
+    component_wrapper__alignment: 'center', 
     component_wrapper__label: 'Contact',
   } %}
     {% block component_wrapper_inner %}

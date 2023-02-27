@@ -108,18 +108,7 @@ $break-grand-hero-banner: tokens.$break-m;
   @media (min-width: $break-grand-hero-banner) {
     width: 100%;
     max-width: var(--size-component-layout-width-content);
-
-    [data-grand-hero-overlay-variation='full'] & {
-      padding-left: var(--size-spacing-8);
-      padding-right: var(--size-spacing-8);
-    }
-  }
-
-  @media (min-width: tokens.$break-l) {
-    [data-grand-hero-overlay-variation='full'] & {
-      padding-left: var(--size-spacing-8);
-      padding-right: 0;
-    }
+    margin: 0 auto;
   }
 }
 
