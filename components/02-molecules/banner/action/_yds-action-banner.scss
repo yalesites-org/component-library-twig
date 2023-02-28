@@ -65,6 +65,7 @@ $content-width: clamp(20rem, 60%, calc(var(--size-component-layout-width-content
 
   [data-banner-content-layout='bottom'] & {
     width: 100%;
+    max-width: 100%;
   }
 
   [data-banner-content-layout='left'] & {
@@ -102,15 +103,17 @@ $content-width: clamp(20rem, 60%, calc(var(--size-component-layout-width-content
   &::before {
     position: absolute;
     top: 0;
-    left: 0;
     height: 100%;
     width: 100%;
     content: '';
     background-color: var(--color-background);
     opacity: 0.9;
 
-    @media (min-width: $break-cta-banner) {
-      max-width: $content-width;
+    [data-banner-content-layout='left'] &,
+    [data-banner-content-layout='right'] & {
+      @media (min-width: $break-cta-banner) {
+        max-width: $content-width;
+      }
     }
   }
 
@@ -132,8 +135,11 @@ $content-width: clamp(20rem, 60%, calc(var(--size-component-layout-width-content
 .cta-banner__outer-wrap {
   width: 100%;
 
-  @media (min-width: $break-cta-banner) {
-    max-width: $content-width;
+  [data-banner-content-layout='left'] &,
+  [data-banner-content-layout='right'] & {
+    @media (min-width: $break-cta-banner) {
+      max-width: $content-width;
+    }
   }
 }
 
