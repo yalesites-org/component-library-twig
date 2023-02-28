@@ -43,7 +43,7 @@ export default {
 };
 
 export const customCard = ({ heading, snippet, withImage, featured }) => `
-  <div class='custom-card-collection' data-component-width='max' data-collection-featured="${featured}">
+  <div class='custom-card-collection' data-component-width='site' data-collection-featured="${featured}">
     <div class='custom-card-collection__inner'>
       <ul class='custom-card-collection__cards'>
         ${customCardTwig({

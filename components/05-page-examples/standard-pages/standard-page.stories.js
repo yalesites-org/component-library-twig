@@ -47,7 +47,7 @@ export default {
         'none',
         'image',
         'image--highlight',
-        'image--feature',
+        'image--site',
         'image--max',
         'wrapped-image',
         'text-with-image',

@@ -10,6 +10,9 @@ $break-grand-hero-banner: tokens.$break-m;
   overflow: hidden;
   display: grid;
   align-items: end;
+  width: 100%;
+  max-width: tokens.$break-max-width;
+  margin: 0 auto;
 
   &[data-grand-hero-overlay-variation='contained'] {
     @media (min-width: $break-grand-hero-banner) {
@@ -67,7 +70,8 @@ $break-grand-hero-banner: tokens.$break-m;
     margin-bottom: var(--size-spacing-6);
 
     @media (min-width: $break-grand-hero-banner) {
-      margin: var(--size-spacing-site-gutter);
+      margin: var(--size-spacing-site-gutter) 40%;
+      width: 100%;
     }
   }
 
@@ -107,8 +111,12 @@ $break-grand-hero-banner: tokens.$break-m;
 
   @media (min-width: $break-grand-hero-banner) {
     width: 100%;
-    max-width: var(--size-component-layout-width-content);
+    max-width: var(--size-component-layout-width-max);
     margin: 0 auto;
+  }
+
+  > * {
+    max-width: var(--size-component-layout-width-content);
   }
 }
 

@@ -19,11 +19,11 @@
     } %}
     
     {% include "@molecules/pull-quote/yds-pull-quote.twig" with {
-      pull_quote__alignment: 'center', 
+      pull_quote__alignment: 'center',
       pull_quote__quote: 'Our platform will transform our ability to study metabolic filaments and, coupled with biochemical and biophysical tools, manipulate enzyme structures and metabolic activity in cells.',
     } %}
     {% embed "@organisms/component-wrapper/yds-component-wrapper.twig" with {
-      component_wrapper__width: 'content',
+      component_wrapper__width: 'site',
       component_wrapper__alignment: 'center',
      }%}
       {% block component_wrapper_inner %}
@@ -71,8 +71,8 @@
 
     {% include "@molecules/accordion/yds-accordion.twig" with {
       accordion__heading: 'Accordion Group - left align',
-      accordion__width: 'content',
-      accordion__alignment: 'center', 
+      accordion__width: 'site',
+      accordion__alignment: 'left', 
       accordion__items: [
         {
           accordion__item__heading: accordion__item__heading,
@@ -95,12 +95,12 @@
     
     {% include "@organisms/galleries/media-grid/yds-media-grid.twig" with {
       media_grid__variation: 'interactive',
-      media_grid__width: 'content',
+      media_grid__width: 'site',
     }%}
 
   {% embed "@organisms/component-wrapper/yds-component-wrapper.twig" with {
-    component_wrapper__width: 'content',
-    component_wrapper__alignment: 'center', 
+    component_wrapper__width: 'site',
+    component_wrapper__alignment: 'left', 
     component_wrapper__label: 'Contact',
   } %}
     {% block component_wrapper_inner %}

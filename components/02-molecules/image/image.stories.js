@@ -16,7 +16,7 @@ export default {
     width: {
       name: 'Component Width',
       type: 'select',
-      options: ['content', 'highlight', 'feature', 'max'],
+      options: ['content', 'highlight', 'site', 'max'],
       defaultValue: 'content',
     },
   },

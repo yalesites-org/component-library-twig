@@ -130,7 +130,7 @@ $content-width: clamp(20rem, 60%, var(--size-component-layout-width-content));
       padding-block: var(--size-spacing-5);
       min-height: auto;
       width: 100%;
-      max-width: var(--size-component-layout-width-max);
+      max-width: calc(1600px + 8rem);
       margin: 0 auto;
     }
   }

@@ -6,7 +6,7 @@
 {% set text_field__base_class = 'text-field' %}
 
 {% set text_field__attributes = {
-  'data-component-width': text_field__width|default('max'),
+  'data-component-width': text_field__width|default('site'),
   'data-component-alignment': text_field__alignment|default('center'),
   class: bem(text_field__base_class, text_field__modifiers),
 } %}
