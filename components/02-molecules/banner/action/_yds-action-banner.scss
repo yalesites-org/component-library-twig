@@ -4,6 +4,9 @@
 $break-cta-banner: tokens.$break-m;
 $break-cta-banner-max: $break-cta-banner - 0.05;
 
+// prettier-ignore
+$content-width: clamp(20rem, 60%, calc(var(--size-component-layout-width-content) - (var(--size-spacing-site-gutter) * 4)) );
+
 .cta-banner {
   @include tokens.spacing-page-section($flush-top: true, $flush-bottom: true);
 
@@ -48,8 +51,6 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   }
 }
 
-$content-width: clamp(20rem, 60%, var(--size-component-layout-width-content));
-
 .cta-banner__content {
   display: flex;
   position: relative;
@@ -58,31 +59,44 @@ $content-width: clamp(20rem, 60%, var(--size-component-layout-width-content));
   // the `::before` element below.
   background-color: transparent;
 
+  > * {
+    position: relative;
+  }
+
   [data-banner-content-layout='bottom'] & {
     width: 100%;
   }
 
   [data-banner-content-layout='left'] & {
+    // prettier-ignore
+    max-width: calc(var(--size-component-layout-width-max) + (var(--size-spacing-10)));
+
     @media (min-width: $break-cta-banner) {
-      width: $content-width;
+      width: 100%;
+
+      // prettier-ignore
+      max-width: calc(var(--size-component-layout-width-max) + (var(--size-spacing-site-gutter) * 2));
       min-height: 100%;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
+      margin: 0 auto;
     }
   }
 
   [data-banner-content-layout='right'] & {
-    @media (min-width: $break-cta-banner) {
-      width: $content-width;
-      min-height: 100%;
-      justify-content: center;
-      margin-left: auto;
-      align-items: center;
-    }
-  }
+    // prettier-ignore
+    max-width: calc(var(--size-component-layout-width-max) + (var(--size-spacing-10)));
 
-  > * {
-    position: relative;
+    @media (min-width: $break-cta-banner) {
+      width: 100%;
+
+      // prettier-ignore
+      max-width: calc(var(--size-component-layout-width-max) + (var(--size-spacing-site-gutter) * 2));
+      min-height: 100%;
+      justify-content: flex-end;
+      align-items: center;
+      margin: 0 auto;
+    }
   }
 
   &::before {
@@ -94,6 +108,10 @@ $content-width: clamp(20rem, 60%, var(--size-component-layout-width-content));
     content: '';
     background-color: var(--color-background);
     opacity: 0.9;
+
+    @media (min-width: $break-cta-banner) {
+      max-width: $content-width;
+    }
   }
 
   &[data-component-theme='white'] {
@@ -111,6 +129,14 @@ $content-width: clamp(20rem, 60%, var(--size-component-layout-width-content));
   }
 }
 
+.cta-banner__outer-wrap {
+  width: 100%;
+
+  @media (min-width: $break-cta-banner) {
+    max-width: $content-width;
+  }
+}
+
 .cta-banner__wrap {
   display: flex;
   flex-direction: column;
@@ -118,7 +144,13 @@ $content-width: clamp(20rem, 60%, var(--size-component-layout-width-content));
   height: 100%;
 
   // prettier-ignore
-  padding: var(--size-spacing-6) var(--size-spacing-site-gutter) var(--size-spacing-7);
+  padding: var(--size-spacing-6) var(--size-spacing-7) var(--size-spacing-7);
+
+  [data-banner-content-layout='left'] &,
+  [data-banner-content-layout='right'] & {
+    width: 100%;
+    max-width: var(--size-component-layout-width-content);
+  }
 
   [data-banner-content-layout='bottom'] & {
     @media (min-width: $break-cta-banner) {
@@ -133,6 +165,11 @@ $content-width: clamp(20rem, 60%, var(--size-component-layout-width-content));
       max-width: calc(1600px + 8rem);
       margin: 0 auto;
     }
+  }
+
+  @media (min-width: $break-cta-banner) {
+    padding: var(--size-spacing-6) var(--size-spacing-site-gutter)
+      var(--size-spacing-7);
   }
 }
 
