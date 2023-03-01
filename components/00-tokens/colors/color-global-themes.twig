@@ -1,0 +1,25 @@
+{% set color_global_theme__base_class = 'cl-color-global-themes' %}
+{% set colors__base_class = "cl-colors" %}
+
+{% for globalTheme, value in _context.globalThemes %}
+  <div {{ bem(color_global_theme__base_class) }} data-global-theme={{ globalTheme }}>
+    <h2>Global Theme: {{ globalTheme }}</h2>
+    <div {{ bem('colors', [], color_global_theme__base_class) }}>
+      <ul {{ bem('list', [], colors__base_class) }}>
+        {% for color, colorset in value %}
+          {% if colorset is iterable %}
+            {% for nested_color, nested_value in colorset %}
+              <li {{ bem("item", [], colors__base_class) }} style="background: var(--global-themes-{{globalTheme}}-{{ nested_color }});">
+                <span {{ bem("title", [], colors__base_class) }}>--global-themes-{{globalTheme}}-{{ nested_color }}</span>
+              </li>
+            {% endfor %}
+          {% else %}
+            <li {{ bem("item", [], colors__base_class) }} style="background: var(--global-themes-{{globalTheme}}-{{color}});">
+              <span {{ bem("title", [], colors__base_class) }}>--global-themes-{{globalTheme}}-{{ color }}</span>
+            </li>
+          {% endif %}
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endfor %}
