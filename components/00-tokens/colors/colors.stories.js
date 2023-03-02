@@ -16,7 +16,7 @@ const colorsData = {
   },
 };
 const colorPairingsData = { themes: tokens['component-themes'] };
-const colorGlobalThemeData = { globalThemes: tokens['global-themes'] };
+const colorGlobalThemeData = { globalThemes: tokens.globalThemes };
 
 export default {
   title: 'Tokens/Colors',
