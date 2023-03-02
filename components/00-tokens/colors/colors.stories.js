@@ -28,6 +28,10 @@ export const ColorPairings = () => `
   <h2>These pairings are selected to support accessibility standards.</h2>
   <p>This page is useful to check the accessibility of various components against the available background colors.</p>
   ${colorPairingsTwig(colorPairingsData)}
+  <hr>
+  <h2>Global Theme pairings.</h2>
+  <p>This page is useful to check the accessibility of various components against the available background colors.</p>
+  ${colorPairingsTwig(colorGlobalThemeData)}
 `;
 
 export const ColorGlobalThemes = () => `
