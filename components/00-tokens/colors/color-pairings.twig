@@ -37,30 +37,11 @@
   <div {{ bem(color_pairing__base_class) }} data-global-theme={{ globalTheme }}>
     <h2>Global Theme: {{ globalTheme }}</h2>
     <p class="text-field">Here's a paragraph with some text. And <a href="#">links can go here</a> too. Isn't that cool?</p>
-    <div class="cta-group">
-      {% include "@atoms/controls/cta/yds-cta.twig" with {
-        cta__content: 'Cta Link',
-        cta__href: '#',
-      } %}
-      {% include "@atoms/controls/cta/yds-cta.twig" with {
-        cta__content: 'Outline',
-        cta__style: 'outline',
-        cta__href: '#',
-      } %}
-    </div>
-    {% include "@molecules/social-links/yds-social-links.twig" with {
-      icons: {
-        1: {
-          name: 'Facebook',
-          icon: 'facebook',
-          url: 'https://www.facebook.com',
-        },
-        2: {
-          name: 'Twitter',
-          icon: 'twitter',
-          url: 'https://www.twitter.com',
-        }
-      }
+
+    
+    {% include "@molecules/pull-quote/yds-pull-quote.twig" with {
+      pull_quote__quote: 'Our platform will transform our ability to study metabolic filaments and, coupled with biochemical and biophysical tools, manipulate enzyme structures and metabolic activity in cells.',
     } %}
+
   </div>
 {% endfor %}

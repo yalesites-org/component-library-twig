@@ -25,3 +25,9 @@
   padding: var(--size-spacing-6);
   margin-bottom: var(--size-spacing-6);
 }
+
+[data-global-theme] {
+  .pull-quote__figure {
+    border-color: var(--color-slot-three);
+  }
+}
