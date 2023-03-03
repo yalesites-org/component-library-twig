@@ -1,5 +1,4 @@
 {% set color_pairing__base_class = 'cl-color-pairing' %}
-{% set color_global_theme__base_class = 'cl-color-global-themes' %}
 
 {% for theme, value in _context.themes %}
   <div {{ bem(color_pairing__base_class) }} data-component-theme={{ theme }}>
@@ -30,18 +29,5 @@
         }
       }
     } %}
-  </div>
-{% endfor %}
-
-{% for globalTheme, value in _context.globalThemes %}
-  <div {{ bem(color_pairing__base_class) }} data-global-theme={{ globalTheme }}>
-    <h2>Global Theme: {{ globalTheme }}</h2>
-    <p class="text-field">Here's a paragraph with some text. And <a href="#">links can go here</a> too. Isn't that cool?</p>
-
-    
-    {% include "@molecules/pull-quote/yds-pull-quote.twig" with {
-      pull_quote__quote: 'Our platform will transform our ability to study metabolic filaments and, coupled with biochemical and biophysical tools, manipulate enzyme structures and metabolic activity in cells.',
-    } %}
-
   </div>
 {% endfor %}

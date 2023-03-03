@@ -1,0 +1,39 @@
+{% set color_global_theme__base_class = 'cl-color-global-themes' %}
+
+{% for globalTheme, value in _context.globalThemes %}
+  <div {{ bem(color_pairing__base_class) }} data-global-theme={{ globalTheme }}>
+    <h2>Global Theme: {{ globalTheme }}</h2>
+    <p class="text-field">Here's a paragraph with some text. And <a href="#">links can go here</a> too. Isn't that cool?</p>
+    
+    <div class="pairing-item">
+      {% include "@molecules/pull-quote/yds-pull-quote.twig" with {
+        pull_quote__width: 'max',
+        pull_quote__alignment: 'left',
+        pull_quote__quote: 'Our platform will transform our ability to study metabolic filaments and, coupled with biochemical and biophysical tools, manipulate enzyme structures and metabolic activity in cells.',
+      } %}
+    </div>
+
+    <div class="pairing-item">
+        {% include "@molecules/quick-links/yds-quick-links.twig" with {
+          quick_links__heading: 'Heading for Quick Links',
+          quick_links__description: '<p>This is a Quick Links description.</p>',
+          quick_links__image: true,
+          quick_links__links:[
+            {
+              quick_links__link__url: '#',
+              quick_links__link__content: 'This is a link',
+            },
+            { quick_links__link__url: '#',
+              quick_links__link__content: 'This is another link',
+            },
+            { quick_links__link__url: '#',
+              quick_links__link__content: 'Link #3',
+            },
+            { quick_links__link__url: '#',
+              quick_links__link__content: 'This is a long link that will wrap lines',
+            }
+          ]
+        }%}
+    </div>
+  </div>
+{% endfor %}

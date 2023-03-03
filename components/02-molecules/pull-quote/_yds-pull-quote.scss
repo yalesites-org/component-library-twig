@@ -42,6 +42,10 @@ blockquote {
   [data-component-alignment='left'] & {
     max-width: var(--size-component-layout-width-content);
   }
+
+  [data-global-theme] & {
+    border-color: var(--color-slot-three);
+  }
 }
 
 .pull-quote__quote {

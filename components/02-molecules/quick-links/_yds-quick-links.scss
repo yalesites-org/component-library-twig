@@ -6,6 +6,10 @@
 
   position: relative;
   overflow: hidden;
+
+  [data-global-theme] & {
+    background-color: var(--color-slot-one);
+  }
 }
 
 .quick-links__inner {
@@ -150,6 +154,10 @@
       height: 100%;
       width: 100%;
       object-fit: cover;
+    }
+
+    [data-global-theme] & {
+      background-color: var(--color-slot-one);
     }
   }
 }

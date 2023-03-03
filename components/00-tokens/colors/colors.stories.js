@@ -3,6 +3,7 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import colorsTwig from './colors.twig';
 import colorPairingsTwig from './color-pairings.twig';
 import colorGlobalThemeTwig from './color-global-themes.twig';
+import colorGlobalThemePairingTwig from './color-global-theme-pairings.twig';
 
 const colorsData = {
   colors: {
@@ -28,13 +29,15 @@ export const ColorPairings = () => `
   <h2>These pairings are selected to support accessibility standards.</h2>
   <p>This page is useful to check the accessibility of various components against the available background colors.</p>
   ${colorPairingsTwig(colorPairingsData)}
-  <hr>
-  <h2>Global Theme pairings.</h2>
-  <p>This page is useful to check the accessibility of various components against the available background colors.</p>
-  ${colorPairingsTwig(colorGlobalThemeData)}
 `;
 
 export const ColorGlobalThemes = () => `
   <h2>These are global themes.</h2>
   ${colorGlobalThemeTwig(colorGlobalThemeData)}
+`;
+
+export const GlobalThemeColorPairings = () => `
+  <h2>Global Theme pairings.</h2>
+  <p>This page is useful to check the accessibility of various components against the available background colors.</p>
+  ${colorGlobalThemePairingTwig(colorGlobalThemeData)}
 `;
