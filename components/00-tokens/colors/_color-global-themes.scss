@@ -10,7 +10,5 @@ $global-themes: map.deep-get(tokens.$tokens, 'globalThemes');
     --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
     --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
     --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
-
-    color: var(--color-slot-one);
   }
 }
