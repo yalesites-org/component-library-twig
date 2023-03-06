@@ -132,14 +132,6 @@ $cta-outline-weights: (
       text-decoration: underline;
     }
   }
-
-  [data-global-theme] & {
-    color: var(--color-slot-four);
-
-    &:hover {
-      color: var(--color-slot-one);
-    }
-  }
 }
 
 .cta {

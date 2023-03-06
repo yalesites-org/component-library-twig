@@ -43,8 +43,9 @@ blockquote {
     max-width: var(--size-component-layout-width-content);
   }
 
+  // if global theme is active, change accent to slot three.
   [data-global-theme] & {
-    border-color: var(--color-slot-three);
+    --color-pull-quote-accent: var(--color-slot-three);
   }
 }
 
