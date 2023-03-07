@@ -11,6 +11,14 @@ $content-width: clamp(20rem, 60%, calc(var(--size-component-layout-width-content
   @include tokens.spacing-page-section($flush-top: true, $flush-bottom: true);
 
   padding: 0;
+
+  [data-global-theme] & {
+    --color-background: var(--color-slot-one);
+    --color-text: var(--color-basic-white);
+    --color-heading: var(--color-basic-white);
+    --color-action: var(--color-basic-white);
+    --color-cta-secondary: var(--color-slot-one);
+  }
 }
 
 .cta-banner__content-wrapper {
@@ -129,6 +137,30 @@ $content-width: clamp(20rem, 60%, calc(var(--size-component-layout-width-content
         background-color: var(--color-gray-200);
       }
     }
+  }
+
+  &[data-component-theme='one'] {
+    --color-background: var(--color-slot-one);
+    --color-text: var(--color-basic-white);
+    --color-heading: var(--color-basic-white);
+    --color-action: var(--color-basic-white);
+    --color-cta-secondary: var(--color-slot-one);
+  }
+
+  &[data-component-theme='two'] {
+    --color-background: var(--color-slot-four);
+    --color-text: var(--color-gray-800);
+    --color-heading: var(--color-gray-800);
+    --color-action: var(--color-gray-800);
+    --color-cta-secondary: var(--color-basic-white);
+  }
+
+  &[data-component-theme='three'] {
+    --color-background: var(--color-slot-five);
+    --color-text: var(--color-basic-white);
+    --color-heading: var(--color-basic-white);
+    --color-action: var(--color-basic-white);
+    --color-cta-secondary: var(--color-slot-one);
   }
 }
 

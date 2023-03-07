@@ -18,6 +18,42 @@ $callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
       --color-text-shadow: var(--callout-themes-#{$theme}-background-color);
     }
   }
+
+  [data-global-theme] & {
+    --color-callouts-background: var(--color-slot-one);
+    --color-text-shadow: var(--slot-one);
+    --color-text: var(--color-basic-white);
+    --color-heading: var(--color-basic-white);
+    --color-action: var(--color-basic-white);
+    --color-cta-secondary: var(--color-slot-one);
+
+    &[data-component-theme='one'] {
+      --color-callouts-background: var(--color-slot-one);
+      --color-text-shadow: var(--slot-one);
+      --color-text: var(--color-basic-white);
+      --color-heading: var(--color-basic-white);
+      --color-action: var(--color-basic-white);
+      --color-cta-secondary: var(--color-slot-one);
+    }
+
+    &[data-component-theme='two'] {
+      --color-callouts-background: var(--color-slot-four);
+      --color-text-shadow: var(--slot-one);
+      --color-text: var(--color-gray-800);
+      --color-heading: var(--color-gray-800);
+      --color-action: var(--color-gray-800);
+      --color-cta-secondary: var(--color-basic-white);
+    }
+
+    &[data-component-theme='three'] {
+      --color-callouts-background: var(--color-slot-five);
+      --color-text-shadow: var(--slot-one);
+      --color-text: var(--color-basic-white);
+      --color-heading: var(--color-basic-white);
+      --color-action: var(--color-basic-white);
+      --color-cta-secondary: var(--color-slot-one);
+    }
+  }
 }
 
 .callouts__inner {

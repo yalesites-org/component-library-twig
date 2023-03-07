@@ -7,6 +7,8 @@ import colorGlobalThemePairingTwig from './color-global-theme-pairings.twig';
 
 import quickLinksData from '../../02-molecules/quick-links/quick-links.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
+import tabData from '../../02-molecules/tabs/tabs.yml';
+import bannerData from '../../02-molecules/banner/banner.yml';
 
 const colorsData = {
   colors: {
@@ -49,37 +51,48 @@ export const GlobalThemeColorPairings = ({
   heading,
   description,
   image,
-  theme,
+  calloutTheme,
+  qlTheme,
+  tabTheme,
+  bannerTheme,
 }) =>
   colorGlobalThemePairingTwig({
     ...imageData.responsive_images['16x9'],
     ...colorGlobalThemeData,
     ...colorGlobalThemeTwig,
+    ...tabData,
+    ...bannerData,
     quick_links__heading: heading,
     quick_links__description: description,
     quick_links__image: image,
-    callout__background_color: theme,
+    quick_links__background_color: qlTheme,
+    callout__background_color: calloutTheme,
     quick_links__links: quickLinksData.quick_links__links,
+    tabs__theme: tabTheme,
+    banner__content__background: bannerTheme,
   });
 
 GlobalThemeColorPairings.argTypes = {
-  heading: {
-    name: 'Quick Links Heading',
-    type: 'string',
-    defaultValue: quickLinksData.quick_links__heading,
+  bannerTheme: {
+    name: 'Banner Theme',
+    type: 'select',
+    options: ['one', 'two', 'three'],
+    defaultValue: 'one',
   },
-  description: {
-    name: 'Quick Links Description',
-    type: 'string',
-    defaultValue: quickLinksData.quick_links__description,
-  },
-  image: {
-    name: 'With image',
-    type: 'boolean',
-    defaultValue: true,
-  },
-  theme: {
+  qlTheme: {
     name: 'Quick Links Theme',
+    type: 'select',
+    options: ['one', 'two', 'three'],
+    defaultValue: 'one',
+  },
+  calloutTheme: {
+    name: 'Callout Theme',
+    type: 'select',
+    options: ['one', 'two', 'three'],
+    defaultValue: 'one',
+  },
+  tabTheme: {
+    name: 'Tabs Theme',
     type: 'select',
     options: ['one', 'two', 'three'],
     defaultValue: 'one',

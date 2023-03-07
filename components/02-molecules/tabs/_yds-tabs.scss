@@ -8,8 +8,28 @@
   overflow: hidden;
   position: relative;
 
+  --color-tabs-accent: --color-gray-500;
+
   [data-component-alignment='left'] & {
     max-width: var(--size-component-layout-width-content);
+  }
+
+  [data-global-theme] & {
+    --color-tabs-accent: var(--color-slot-one);
+    --color-background: var(--color-basic-white);
+    --color-text: var(--color-gray-800);
+
+    &[data-component-theme='one'] {
+      --color-tabs-accent: var(--color-slot-one);
+    }
+
+    &[data-component-theme='two'] {
+      --color-tabs-accent: var(--color-slot-three);
+    }
+
+    &[data-component-theme='three'] {
+      --color-tabs-accent: var(--color-slot-five);
+    }
   }
 }
 
@@ -113,6 +133,10 @@
     @include tokens.underline-slide-end('no-underline', $size: 'thick');
 
     color: var(--color-action);
+    background-image: linear-gradient(
+      var(--color-tabs-accent),
+      var(--color-tabs-accent)
+    );
   }
 }
 
