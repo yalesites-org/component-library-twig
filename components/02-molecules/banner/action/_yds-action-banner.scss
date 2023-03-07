@@ -1,6 +1,9 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
+@use '../../../00-tokens/functions/map';
 
+// get global themes
+$global-banner-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 $break-cta-banner: tokens.$break-m;
 $break-cta-banner-max: $break-cta-banner - 0.05;
 
@@ -11,14 +14,6 @@ $content-width: clamp(20rem, 60%, calc(var(--size-component-layout-width-content
   @include tokens.spacing-page-section($flush-top: true, $flush-bottom: true);
 
   padding: 0;
-
-  [data-global-theme] & {
-    --color-background: var(--color-slot-one);
-    --color-text: var(--color-basic-white);
-    --color-heading: var(--color-basic-white);
-    --color-action: var(--color-basic-white);
-    --color-cta-secondary: var(--color-slot-one);
-  }
 }
 
 .cta-banner__content-wrapper {
@@ -66,6 +61,16 @@ $content-width: clamp(20rem, 60%, calc(var(--size-component-layout-width-content
   // Override the background to transparent, so we can add an opacity to it via
   // the `::before` element below.
   background-color: transparent;
+
+  @each $globalTheme, $value in $global-banner-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
+      --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
+      --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
+    }
+  }
 
   > * {
     position: relative;
@@ -139,6 +144,7 @@ $content-width: clamp(20rem, 60%, calc(var(--size-component-layout-width-content
     }
   }
 
+  // theme settings
   &[data-component-theme='one'] {
     --color-background: var(--color-slot-one);
     --color-text: var(--color-basic-white);

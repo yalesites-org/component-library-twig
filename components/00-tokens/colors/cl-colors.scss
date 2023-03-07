@@ -30,4 +30,12 @@
   .text-field a {
     color: var(--color-slot-one);
   }
+
+  .global-theme-title {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: var(--site-spacing-4);
+    background-color: var(--color-basic-white);
+  }
 }

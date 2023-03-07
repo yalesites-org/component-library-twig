@@ -72,6 +72,22 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
     text-decoration: none;
     color: var(--color-link-hover);
   }
+
+  // theme settings
+  [data-component-theme='one'] & {
+    --color-link-base: var(--color-basic-white);
+    --color-link-hover: var(--color-slot-three);
+  }
+
+  [data-component-theme='two'] & {
+    --color-link-base: var(--color-gray-800);
+    --color-link-hover: var(--color-gray-800);
+  }
+
+  [data-component-theme='three'] & {
+    --color-link-base: var(--color-basic-white);
+    --color-link-hover: var(--color-basic-white);
+  }
 }
 
 // This mixin is used to style linked headings in components that should be

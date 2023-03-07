@@ -1,5 +1,9 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
+@use '../../00-tokens/functions/map';
+
+// get global themes
+$global-tab-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 
 .tabs {
   @include tokens.spacing-page-section;
@@ -14,22 +18,35 @@
     max-width: var(--size-component-layout-width-content);
   }
 
-  [data-global-theme] & {
+  @each $globalTheme, $value in $global-tab-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
+      --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
+      --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
+    }
+  }
+
+  &[data-component-theme='one'] {
     --color-tabs-accent: var(--color-slot-one);
     --color-background: var(--color-basic-white);
     --color-text: var(--color-gray-800);
+    --color-action: var(--color-slot-one);
+  }
 
-    &[data-component-theme='one'] {
-      --color-tabs-accent: var(--color-slot-one);
-    }
+  &[data-component-theme='two'] {
+    --color-tabs-accent: var(--color-slot-three);
+    --color-background: var(--color-basic-white);
+    --color-text: var(--color-gray-800);
+    --color-action: var(--color-slot-three);
+  }
 
-    &[data-component-theme='two'] {
-      --color-tabs-accent: var(--color-slot-three);
-    }
-
-    &[data-component-theme='three'] {
-      --color-tabs-accent: var(--color-slot-five);
-    }
+  &[data-component-theme='three'] {
+    --color-tabs-accent: var(--color-slot-five);
+    --color-background: var(--color-basic-white);
+    --color-text: var(--color-gray-800);
+    --color-action: var(--color-slot-five);
   }
 }
 
@@ -133,10 +150,7 @@
     @include tokens.underline-slide-end('no-underline', $size: 'thick');
 
     color: var(--color-action);
-    background-image: linear-gradient(
-      var(--color-tabs-accent),
-      var(--color-tabs-accent)
-    );
+    background-image: linear-gradient(var(--color-action), var(--color-action));
   }
 }
 

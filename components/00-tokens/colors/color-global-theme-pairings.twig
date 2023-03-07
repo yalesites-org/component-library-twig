@@ -2,14 +2,16 @@
 
 {% for globalTheme, value in _context.globalThemes %}
   <div {{ bem(color_pairing__base_class) }} data-global-theme={{ globalTheme }}>
-    <h2>Global Theme: {{ globalTheme }}</h2>
+    <h2 class="global-theme-title">Global Theme: {{ globalTheme }}</h2>
 
     <div class="pairing-item">
       {% include "@molecules/banner/action/yds-action-banner.twig" %}
     </div>
 
-    <p class="text-field">Here's a paragraph with some text. And <a href="#">links can go here</a> too. Isn't that cool? In the Storybook controls you can select component theme variations (one, two, three), where applicable.</p>
-  
+    <div class="pairing-item">
+      <p class="text-field">Here's a paragraph with some text. And <a href="#">links can go here</a> too. Isn't that cool? In the Storybook controls you can select component theme variations (one, two, three), where applicable.</p>
+    </div>
+
     <div class="pairing-item">
       {% include "@molecules/quick-links/yds-quick-links.twig" with {
         quick_links__heading: 'Heading for Quick Links',
@@ -67,6 +69,10 @@
           {% include "@molecules/tabs/yds-tabs.twig" %}
         {% endblock %}
       {% endembed %}
+    </div>
+
+    <div class="pairing-item">
+      <p class="text-field">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis tincidunt id aliquet risus. Odio morbi quis commodo odio aenean sed adipiscing. Condimentum id venenatis a condimentum vitae sapien. Placerat vestibulum lectus mauris ultrices eros. In fermentum et sollicitudin ac. Sed risus ultricies tristique nulla aliquet enim tortor at auctor. Imperdiet sed euismod nisi porta lorem mollis aliquam ut porttitor. Tortor at risus viverra adipiscing at in tellus integer feugiat. Dignissim convallis aenean et tortor at risus. Et tortor consequat id porta nibh venenatis cras sed. Sed nisi lacus sed viverra tellus in hac.</p>
     </div>
   
   </div>
