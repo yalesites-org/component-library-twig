@@ -12,9 +12,11 @@ import '../../02-molecules/menu/menu-toggle/yds-menu-toggle';
 import './yds-site-header';
 
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
+const siteGlobalThemes = { themes: tokens.globalThemes };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
+const siteGlobalThemeOptions = Object.keys(tokens.globalThemes);
 
 /**
  * Storybook Definition.
@@ -25,6 +27,11 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: {
+    globalTheme: {
+      options: siteGlobalThemeOptions,
+      type: 'select',
+      defaultValue: 'one',
+    },
     borderThickness: {
       options: borderThicknessOptions,
       type: 'select',
@@ -38,7 +45,7 @@ export default {
     siteHeaderTheme: {
       options: siteHeaderThemeOptions,
       type: 'select',
-      defaultValue: 'white',
+      defaultValue: 'one',
     },
     menuVariation: {
       name: 'Menu Variation',
@@ -69,10 +76,13 @@ export const HeaderExamples = ({
   borderThickness,
   primaryNavPosition,
   menuVariation,
+  globalTheme,
 }) =>
   siteHeaderExamples({
+    ...siteGlobalThemes,
     ...siteHeaderThemes,
     site_name: 'Department of Chemistry',
+    site_global__theme: globalTheme,
     site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__menu__variation: menuVariation,

@@ -20,7 +20,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'globalThemes');
     }
   }
 
-  // global themes
+  // global themes, set color slots
   @each $globalTheme, $value in $global-callout-themes {
     [data-global-theme='#{$globalTheme}'] & {
       --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
@@ -34,29 +34,26 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'globalThemes');
   // specific component themes
   &[data-component-theme='one'] {
     --color-callouts-background: var(--color-slot-one);
-    --color-text-shadow: var(--slot-one);
-    --color-text: var(--color-basic-white);
-    --color-heading: var(--color-basic-white);
+    --color-text-shadow: var(--color-slot-one);
     --color-action: var(--color-basic-white);
     --color-cta-secondary: var(--color-slot-one);
+    --color-text: var(--color-basic-white);
   }
 
   &[data-component-theme='two'] {
     --color-callouts-background: var(--color-slot-four);
-    --color-text-shadow: var(--slot-one);
-    --color-text: var(--color-gray-800);
-    --color-heading: var(--color-gray-800);
+    --color-text-shadow: var(--color-slot-one);
     --color-action: var(--color-gray-800);
     --color-cta-secondary: var(--color-basic-white);
+    --color-text: var(--color-basic-white);
   }
 
   &[data-component-theme='three'] {
     --color-callouts-background: var(--color-slot-five);
-    --color-text-shadow: var(--slot-one);
-    --color-text: var(--color-basic-white);
-    --color-heading: var(--color-basic-white);
+    --color-text-shadow: var(--color-slot-one);
     --color-action: var(--color-basic-white);
     --color-cta-secondary: var(--color-slot-one);
+    --color-text: var(--color-basic-white);
   }
 }
 
