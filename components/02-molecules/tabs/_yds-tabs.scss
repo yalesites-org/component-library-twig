@@ -18,6 +18,7 @@ $global-tab-themes: map.deep-get(tokens.$tokens, 'globalThemes');
     max-width: var(--size-component-layout-width-content);
   }
 
+  // global themes, set color slots
   @each $globalTheme, $value in $global-tab-themes {
     [data-global-theme='#{$globalTheme}'] & {
       --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
@@ -28,6 +29,7 @@ $global-tab-themes: map.deep-get(tokens.$tokens, 'globalThemes');
     }
   }
 
+  // specific component themes overrides
   &[data-component-theme='one'] {
     --color-tabs-accent: var(--color-slot-one);
     --color-background: var(--color-basic-white);

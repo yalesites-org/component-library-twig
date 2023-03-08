@@ -3,7 +3,13 @@
 {% for globalTheme, value in _context.globalThemes %}
   <div {{ bem(color_global_theme__base_class) }} data-global-theme={{ globalTheme }}>
     <h2 class="global-theme-title">Global Theme: {{ globalTheme }}</h2>
-
+    <div class="pairing-item">
+      <section>
+        {% include "@organisms/site-header/yds-site-header.twig" with {
+          site_header__theme: site_header__theme,
+        } %}
+      </section>
+    </div>
     <div class="pairing-item">
       {% include "@molecules/banner/action/yds-action-banner.twig" %}
     </div>

@@ -55,7 +55,7 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'globalThemes');
     }
   }
 
-  // specific component themes
+  // specific component themes overrides
   &[data-component-theme='one'] {
     --color-site-header-border-color: var(--color-slot-one);
   }

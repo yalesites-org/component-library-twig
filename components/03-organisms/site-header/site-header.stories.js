@@ -40,7 +40,7 @@ export default {
     primaryNavPosition: {
       options: primaryNavPositions,
       type: 'select',
-      defaultValue: 'right',
+      defaultValue: 'left',
     },
     siteHeaderTheme: {
       options: siteHeaderThemeOptions,

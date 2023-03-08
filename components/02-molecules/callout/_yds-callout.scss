@@ -11,15 +11,6 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 
   background-color: var(--color-callouts-background);
 
-  // Component themes
-  @each $theme, $value in $callout-themes {
-    &[data-component-theme='#{$theme}'] {
-      // prettier-ignore
-      --color-callouts-background: var(--callout-themes-#{$theme}-background-color);
-      --color-text-shadow: var(--callout-themes-#{$theme}-background-color);
-    }
-  }
-
   // global themes, set color slots
   @each $globalTheme, $value in $global-callout-themes {
     [data-global-theme='#{$globalTheme}'] & {
@@ -31,13 +22,23 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'globalThemes');
     }
   }
 
-  // specific component themes
+  // Component themes
+  @each $theme, $value in $callout-themes {
+    &[data-component-theme='#{$theme}'] {
+      // prettier-ignore
+      --color-callouts-background: var(--callout-themes-#{$theme}-background-color);
+      --color-text-shadow: var(--callout-themes-#{$theme}-background-color);
+    }
+  }
+
+  // specific component themes overrides
   &[data-component-theme='one'] {
     --color-callouts-background: var(--color-slot-one);
     --color-text-shadow: var(--color-slot-one);
     --color-action: var(--color-basic-white);
     --color-cta-secondary: var(--color-slot-one);
     --color-text: var(--color-basic-white);
+    --color-heading: var(--color-basic-white);
   }
 
   &[data-component-theme='two'] {
@@ -45,7 +46,8 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'globalThemes');
     --color-text-shadow: var(--color-slot-one);
     --color-action: var(--color-gray-800);
     --color-cta-secondary: var(--color-basic-white);
-    --color-text: var(--color-basic-white);
+    --color-text: var(--color-gray-800);
+    --color-heading: var(--color-gray-800);
   }
 
   &[data-component-theme='three'] {
@@ -54,6 +56,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'globalThemes');
     --color-action: var(--color-basic-white);
     --color-cta-secondary: var(--color-slot-one);
     --color-text: var(--color-basic-white);
+    --color-heading: var(--color-basic-white);
   }
 }
 
