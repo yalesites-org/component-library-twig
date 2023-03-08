@@ -57,6 +57,7 @@ $content-width: clamp(20rem, 60%, calc(var(--size-component-layout-width-content
 .cta-banner__content {
   display: flex;
   position: relative;
+  color: var(--color-text);
 
   // Override the background to transparent, so we can add an opacity to it via
   // the `::before` element below.

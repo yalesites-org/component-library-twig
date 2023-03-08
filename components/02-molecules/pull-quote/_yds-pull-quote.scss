@@ -1,4 +1,7 @@
 @use '../../00-tokens/tokens';
+@use '../../00-tokens/functions/map';
+
+$global-quote-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 
 blockquote {
   margin: 0;
@@ -9,6 +12,30 @@ blockquote {
   --color-pull-quote-attribution: var(--color-basic-brown-gray);
 
   @include tokens.spacing-page-inner;
+
+  // global themes, set color slots
+  @each $globalTheme, $value in $global-quote-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
+      --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
+      --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
+    }
+  }
+
+  // theme settings
+  &[data-component-theme='one'] {
+    --color-pull-quote-accent: var(--color-slot-one);
+  }
+
+  &[data-component-theme='two'] {
+    --color-pull-quote-accent: var(--color-slot-three);
+  }
+
+  &[data-component-theme='three'] {
+    --color-pull-quote-accent: var(--color-slot-five);
+  }
 }
 
 .pull-quote__figure {
@@ -41,11 +68,6 @@ blockquote {
 
   [data-component-alignment='left'] & {
     max-width: var(--size-component-layout-width-content);
-  }
-
-  // if global theme is active, change accent to slot three.
-  [data-global-theme] & {
-    --color-pull-quote-accent: var(--color-slot-three);
   }
 }
 

@@ -59,6 +59,7 @@ export const GlobalThemeColorPairings = ({
   image,
   calloutTheme,
   qlTheme,
+  quoteTheme,
   tabTheme,
   bannerTheme,
   siteHeaderTwig,
@@ -92,6 +93,7 @@ export const GlobalThemeColorPairings = ({
     quick_links__links: quickLinksData.quick_links__links,
     tabs__theme: tabTheme,
     banner__content__background: bannerTheme,
+    pull_quote__accent_theme: quoteTheme,
   });
 
 GlobalThemeColorPairings.argTypes = {
@@ -124,6 +126,12 @@ GlobalThemeColorPairings.argTypes = {
   },
   qlTheme: {
     name: 'Quick Links Theme',
+    type: 'select',
+    options: ['one', 'two', 'three'],
+    defaultValue: 'one',
+  },
+  quoteTheme: {
+    name: 'Quote Theme',
     type: 'select',
     options: ['one', 'two', 'three'],
     defaultValue: 'one',

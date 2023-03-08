@@ -8,6 +8,8 @@ $global-ql-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 .quick-links {
   @include tokens.spacing-page-section;
 
+  background-color: var(--color-background);
+  color: var(--color-text);
   position: relative;
   overflow: hidden;
 

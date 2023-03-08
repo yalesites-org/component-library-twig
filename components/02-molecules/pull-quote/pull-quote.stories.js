@@ -26,9 +26,9 @@ export default {
     },
     accentColor: {
       name: 'Accent Color',
-      options: ['gray-500', 'blue-yale', 'accent'],
+      options: ['one', 'two', 'three'],
       type: 'select',
-      defaultValue: 'gray-500',
+      defaultValue: 'one',
     },
   },
 };
@@ -54,6 +54,7 @@ export const pullQuote = ({ style, accentColor, quote, attribution }) => `
       pull_quote__quote: quote,
       pull_quote__attribution: attribution,
       pull_quote__style: style,
+      pull_quote__accent_theme: accentColor,
     })}
   </div>
 `;

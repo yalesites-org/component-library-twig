@@ -52,6 +52,9 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 
       // prettier-ignore
       --color-site-header-divider-color: var(--site-header-themes-#{$theme}-divider-color);
+
+      background-color: var(--color-background);
+      color: var(--color-text);
     }
   }
 

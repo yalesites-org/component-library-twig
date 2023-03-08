@@ -32,22 +32,16 @@ $global-tab-themes: map.deep-get(tokens.$tokens, 'globalThemes');
   // specific component themes overrides
   &[data-component-theme='one'] {
     --color-tabs-accent: var(--color-slot-one);
-    --color-background: var(--color-basic-white);
-    --color-text: var(--color-gray-800);
     --color-action: var(--color-slot-one);
   }
 
   &[data-component-theme='two'] {
     --color-tabs-accent: var(--color-slot-three);
-    --color-background: var(--color-basic-white);
-    --color-text: var(--color-gray-800);
     --color-action: var(--color-slot-three);
   }
 
   &[data-component-theme='three'] {
     --color-tabs-accent: var(--color-slot-five);
-    --color-background: var(--color-basic-white);
-    --color-text: var(--color-gray-800);
     --color-action: var(--color-slot-five);
   }
 }

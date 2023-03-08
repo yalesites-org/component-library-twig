@@ -9,6 +9,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 .callouts {
   @include tokens.spacing-page-section($flush-bottom: true);
 
+  color: var(--color-text);
   background-color: var(--color-callouts-background);
 
   // global themes, set color slots
