@@ -13,7 +13,7 @@ items:
         below:
           - title: 'Combating Racism'
             url: '#'
-            in_active_trail: true
+            is_active: true
           - title: 'Changing Faces of YDS'
             url: '#'
       - title: 'Strategic Plan'
@@ -33,7 +33,7 @@ items:
         url: '#'
       - title: 'Staff Directory'
         url: '#'
-        in_active_trail: true
+        is_active: true
       - title: 'Mission & History'
         url: '#'
         below:
@@ -49,7 +49,7 @@ items:
         url: '#'
   - title: 'Academics'
     url: '#'
-    in_active_trail: true
+    is_active: true
   - title: 'Admission & Aid'
     url: '#'
     below:

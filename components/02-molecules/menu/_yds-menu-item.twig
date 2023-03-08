@@ -12,7 +12,7 @@
 {% set link__attributes = link__attributes|default({}) %}
 
 {# Item Modifiers #}
-{% if item.in_active_trail == TRUE %}
+{% if item.is_active == TRUE %}
   {% set item__modifiers = item__modifiers|merge(['active']) %}
 {% endif %}
 {% if item.below %}
