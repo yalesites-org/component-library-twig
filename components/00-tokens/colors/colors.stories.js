@@ -110,7 +110,7 @@ GlobalThemeColorPairings.argTypes = {
   primaryNavPosition: {
     options: primaryNavPositions,
     type: 'select',
-    defaultValue: 'right',
+    defaultValue: 'left',
   },
   menuVariation: {
     name: 'Menu Variation',

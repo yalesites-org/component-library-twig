@@ -52,6 +52,8 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 
       // prettier-ignore
       --color-site-header-divider-color: var(--site-header-themes-#{$theme}-divider-color);
+      --color-background: var(--color-background);
+      --color-text: var(--color-text);
 
       background-color: var(--color-background);
       color: var(--color-text);
@@ -61,10 +63,14 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'globalThemes');
   // specific component themes overrides
   &[data-component-theme='one'] {
     --color-site-header-border-color: var(--color-slot-one);
+    --color-background: var(--color-background);
+    --color-heading: var(--color-heading);
   }
 
   &[data-component-theme='two'] {
     --color-site-header-border-color: var(--color-slot-two);
+    --color-background: var(--color-background);
+    --color-heading: var(--color-heading);
   }
 
   &[data-component-theme='three'] {
@@ -72,6 +78,7 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'globalThemes');
     --color-site-header-border-color: var(--color-slot-three);
     --color-background: var(--color-slot-one);
     --color-site-header-divider-color: var(--color-basic-white);
+    --color-text: var(--color-basic-white);
   }
 
   // Border bottom thickness
