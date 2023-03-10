@@ -33,16 +33,19 @@ $global-tab-themes: map.deep-get(tokens.$tokens, 'globalThemes');
   &[data-component-theme='one'] {
     --color-tabs-accent: var(--color-slot-one);
     --color-action: var(--color-slot-one);
+    --color-background: var(--color-basic-white);
   }
 
   &[data-component-theme='two'] {
     --color-tabs-accent: var(--color-slot-three);
     --color-action: var(--color-slot-three);
+    --color-background: var(--color-basic-white);
   }
 
   &[data-component-theme='three'] {
     --color-tabs-accent: var(--color-slot-five);
     --color-action: var(--color-slot-five);
+    --color-background: var(--color-basic-white);
   }
 }
 

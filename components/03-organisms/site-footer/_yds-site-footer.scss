@@ -19,6 +19,9 @@ $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
       // prettier-ignore
       --color-site-footer-border-color: var(--site-footer-themes-#{$theme}-border-color);
       --color-text-shadow: var(--color-background);
+
+      background-color: var(--color-background);
+      color: var(--color-text);
     }
   }
 

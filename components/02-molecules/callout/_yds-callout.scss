@@ -3,7 +3,7 @@
 @use '../../00-tokens/functions/map';
 @use '../../01-atoms/atoms';
 
-$callout-themes: map.deep-get(sass-tokens.$tokens, callout-themes);
+$callout-themes: map.deep-get(sass-tokens.$tokens, component-themes);
 $global-callout-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 
 .callouts {
@@ -27,8 +27,8 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'globalThemes');
   @each $theme, $value in $callout-themes {
     &[data-component-theme='#{$theme}'] {
       // prettier-ignore
-      --color-callouts-background: var(--callout-themes-#{$theme}-background-color);
-      --color-text-shadow: var(--callout-themes-#{$theme}-background-color);
+      --color-callouts-background: var(--callout-themes-#{$theme}-background);
+      --color-text-shadow: var(--callout-themes-#{$theme}-background);
     }
   }
 
