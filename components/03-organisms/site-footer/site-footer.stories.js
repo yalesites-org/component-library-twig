@@ -6,8 +6,10 @@ import siteFooterExamples from './_site-footer--examples.twig';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 
 const siteFooterThemes = { themes: tokens['site-footer-themes'] };
+const siteGlobalThemes = { themes: tokens.globalThemes };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
+const siteGlobalThemeOptions = Object.keys(tokens.globalThemes);
 
 /**
  * Storybook Definition.
@@ -18,6 +20,11 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: {
+    globalTheme: {
+      options: siteGlobalThemeOptions,
+      type: 'select',
+      defaultValue: 'one',
+    },
     borderThickness: {
       options: borderThicknessOptions,
       type: 'select',
@@ -31,16 +38,19 @@ export default {
   },
 };
 
-export const Footer = ({ borderThickness, siteFooterTheme }) =>
+export const Footer = ({ borderThickness, siteFooterTheme, globalTheme }) =>
   siteFooterTwig({
     ...socialLinksData,
+    site_global__theme: globalTheme,
     site_footer__border_thickness: borderThickness,
     site_footer__theme: siteFooterTheme,
   });
 
-export const FooterExamples = ({ borderThickness }) =>
+export const FooterExamples = ({ borderThickness, globalTheme }) =>
   siteFooterExamples({
     ...socialLinksData,
     ...siteFooterThemes,
+    ...siteGlobalThemes,
+    site_global__theme: globalTheme,
     site_footer__border_thickness: borderThickness,
   });

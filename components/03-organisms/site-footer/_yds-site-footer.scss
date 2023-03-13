@@ -6,6 +6,7 @@ $break-site-footer: tokens.$break-s;
 $break-site-footer-max: $break-site-footer - 0.05;
 $site-footer-themes: map.deep-get(tokens.$tokens, site-footer-themes);
 $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
+$global-footer-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 
 .site-footer {
   padding: var(--size-spacing-7) var(--size-spacing-site-gutter);
@@ -13,16 +14,80 @@ $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
   // prettier-ignore
   border-top: var(--site-footer-border-thickness) solid var(--color-site-footer-border-color);
 
+  --color-text: var(--color-site-footer-text-color);
+  --color-link-base: var(--color-text);
+  --color-link-hover: var(--color-text);
+
+  // global themes, set color slots
+  @each $globalTheme, $value in $global-footer-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
+      --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
+      --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
+    }
+  }
+
   // Component themes
   @each $theme, $value in $site-footer-themes {
-    &[data-component-theme='#{$theme}'] {
+    &[data-footer-theme='#{$theme}'] {
       // prettier-ignore
       --color-site-footer-border-color: var(--site-footer-themes-#{$theme}-border-color);
-      --color-text-shadow: var(--color-background);
 
-      background-color: var(--color-background);
-      color: var(--color-text);
+      // prettier-ignore
+      --color-site-footer-background-color: var(--site-footer-themes-#{$theme}-background-color);
+
+      // prettier-ignore
+      --color-site-footer-text-color: var(--site-footer-themes-#{$theme}-text-color);
+
+      // prettier-ignore
+      --color-site-footer-text-shadow: var(--site-footer-themes-#{$theme}-background-color);
+
+      background-color: var(--color-site-footer-background-color);
+      color: var(--color-site-footer-text-color);
+      border-color: var(--color-site-footer-border-color);
     }
+  }
+
+  // Set specific component themes overrides
+  /// define component name spaced variables and map them to global theme slots.
+  &[data-footer-theme='one'] {
+    --color-site-footer-yale-branding: var(--color-site-footer-heading);
+    --color-site-footer-border-color: var(--color-slot-one);
+    --color-site-footer-background: var(--color-site-footer-background);
+    --color-site-footer-text: var(--color-site-footer-heading);
+  }
+
+  &[data-footer-theme='two'] {
+    --color-site-footer-yale-branding: var(--color-site-footer-heading);
+    --color-site-footer-border-color: var(--color-slot-five);
+    --color-site-footer-background: var(--color-site-footer-background);
+    --color-site-footer-text: var(--color-site-footer-heading);
+  }
+
+  &[data-footer-theme='three'] {
+    --color-site-footer-yale-branding: var(--color-basic-white);
+    --color-site-footer-border-color: var(--color-slot-three);
+    --color-site-footer-background: var(--color-slot-one);
+    --color-site-footer-divider-color: var(--color-basic-white);
+    --color-site-footer-text: var(--color-basic-white);
+  }
+
+  &[data-footer-theme='four'] {
+    --color-site-footer-yale-branding: var(--color-basic-white);
+    --color-site-footer-border-color: var(--color-slot-three);
+    --color-site-footer-background: var(--color-gray-700);
+    --color-site-footer-divider-color: var(--color-basic-white);
+    --color-site-footer-text: var(--color-basic-white);
+  }
+
+  &[data-footer-theme='five'] {
+    --color-site-footer-yale-branding: var(--color-basic-white);
+    --color-site-footer-border-color: var(--color-slot-three);
+    --color-site-footer-background: var(--color-slot-one);
+    --color-site-footer-divider-color: var(--color-basic-white);
+    --color-site-footer-text: var(--color-basic-white);
   }
 
   // Border top thickness

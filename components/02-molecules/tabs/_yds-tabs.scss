@@ -4,6 +4,7 @@
 
 // get global themes
 $global-tab-themes: map.deep-get(tokens.$tokens, 'globalThemes');
+$component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .tabs {
   @include tokens.spacing-page-section;
@@ -29,23 +30,34 @@ $global-tab-themes: map.deep-get(tokens.$tokens, 'globalThemes');
     }
   }
 
-  // specific component themes overrides
+  // Component themes: set general css variables equal to name spaced variables.
+  @each $theme, $value in $component-tab-themes {
+    &[data-component-theme='#{$theme}'] {
+      // prettier-ignore
+      --color-tabs-accent: var(--color-tabs-accent);
+      --color-action: var(--color-tabs-action);
+      --color-background: var(--color-tabs-background);
+    }
+  }
+
+  // Set specific component themes overrides
+  /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
     --color-tabs-accent: var(--color-slot-one);
-    --color-action: var(--color-slot-one);
-    --color-background: var(--color-basic-white);
+    --color-tabs-action: var(--color-slot-one);
+    --color-tabs-background: var(--color-basic-white);
   }
 
   &[data-component-theme='two'] {
     --color-tabs-accent: var(--color-slot-three);
-    --color-action: var(--color-slot-three);
-    --color-background: var(--color-basic-white);
+    --color-tabs-action: var(--color-slot-three);
+    --color-tabs-background: var(--color-basic-white);
   }
 
   &[data-component-theme='three'] {
     --color-tabs-accent: var(--color-slot-five);
-    --color-action: var(--color-slot-five);
-    --color-background: var(--color-basic-white);
+    --color-tabs-action: var(--color-slot-five);
+    --color-tabs-background: var(--color-basic-white);
   }
 }
 

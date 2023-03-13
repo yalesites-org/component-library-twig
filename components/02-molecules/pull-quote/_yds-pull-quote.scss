@@ -2,6 +2,7 @@
 @use '../../00-tokens/functions/map';
 
 $global-quote-themes: map.deep-get(tokens.$tokens, 'globalThemes');
+$quote-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 blockquote {
   margin: 0;
@@ -24,7 +25,16 @@ blockquote {
     }
   }
 
-  // theme settings
+  // Component themes: set general css variables equal to name spaced variables.
+  @each $theme, $value in $quote-component-themes {
+    &[data-component-theme='#{$theme}'] {
+      // prettier-ignore
+      --color-pull-quote-accent: var(--color-pull-quote-accent);
+    }
+  }
+
+  // Set specific component themes overrides
+  /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
     --color-pull-quote-accent: var(--color-slot-one);
   }

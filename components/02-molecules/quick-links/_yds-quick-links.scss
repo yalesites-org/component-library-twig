@@ -3,7 +3,8 @@
 @use '../../00-tokens/functions/map';
 
 // get global themes
-$global-ql-themes: map.deep-get(tokens.$tokens, 'globalThemes');
+$global-quick-links-themes: map.deep-get(tokens.$tokens, 'globalThemes');
+$component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .quick-links {
   @include tokens.spacing-page-section;
@@ -14,7 +15,7 @@ $global-ql-themes: map.deep-get(tokens.$tokens, 'globalThemes');
   overflow: hidden;
 
   // global themes
-  @each $globalTheme, $value in $global-ql-themes {
+  @each $globalTheme, $value in $global-quick-links-themes {
     [data-global-theme='#{$globalTheme}'] & {
       --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
       --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
@@ -24,28 +25,39 @@ $global-ql-themes: map.deep-get(tokens.$tokens, 'globalThemes');
     }
   }
 
+  // Component themes: set general css variables equal to name spaced variables.
+  @each $theme, $value in $component-quick-links-themes {
+    &[data-component-theme='#{$theme}'] {
+      --color-background: var(--color-quick-links-background);
+      --color-text: var(--color-quick-links-text);
+      --color-heading: var(--color-quick-links-heading);
+      --color-action: var(--color-quick-links-action);
+      --color-cta-secondary: var(--color-quick-links-action-secondary);
+    }
+  }
+
   &[data-component-theme='one'] {
-    --color-background: var(--color-slot-one);
-    --color-text: var(--color-basic-white);
-    --color-heading: var(--color-basic-white);
-    --color-action: var(--color-basic-white);
-    --color-cta-secondary: var(--color-slot-one);
+    --color-quick-links-background: var(--color-slot-one);
+    --color-quick-links-text: var(--color-basic-white);
+    --color-quick-links-heading: var(--color-basic-white);
+    --color-quick-links-action: var(--color-basic-white);
+    --color-quick-links-action-secondary: var(--color-slot-one);
   }
 
   &[data-component-theme='two'] {
-    --color-background: var(--color-slot-four);
-    --color-text: var(--color-gray-800);
-    --color-heading: var(--color-gray-800);
-    --color-action: var(--color-gray-800);
-    --color-cta-secondary: var(--color-basic-white);
+    --color-quick-links-background: var(--color-slot-four);
+    --color-quick-links-text: var(--color-gray-800);
+    --color-quick-links-heading: var(--color-gray-800);
+    --color-quick-links-action: var(--color-gray-800);
+    --color-quick-links-action-secondary: var(--color-basic-white);
   }
 
   &[data-component-theme='three'] {
-    --color-background: var(--color-slot-five);
-    --color-text: var(--color-basic-white);
-    --color-heading: var(--color-basic-white);
-    --color-action: var(--color-basic-white);
-    --color-cta-secondary: var(--color-slot-one);
+    --color-quick-links-background: var(--color-slot-five);
+    --color-quick-links-text: var(--color-basic-white);
+    --color-quick-links-heading: var(--color-basic-white);
+    --color-quick-links-action: var(--color-basic-white);
+    --color-quick-links-action-secondary: var(--color-slot-one);
   }
 }
 
