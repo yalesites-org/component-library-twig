@@ -40,7 +40,7 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 
   // Component themes: set general css variables equal to name spaced variables.
   @each $theme, $value in $site-header-themes {
-    &[data-component-theme='#{$theme}'] {
+    &[data-header-theme='#{$theme}'] {
       // prettier-ignore
       --color-site-header-yale-branding: var(--site-header-themes-#{$theme}-yale-branding);
 
@@ -52,12 +52,13 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 
       // prettier-ignore
       --color-site-header-divider-color: var(--site-header-themes-#{$theme}-divider-color);
-      --color-site-header-background: var(
-        --site-header-themes-#{$theme}-background
-      );
-      --color-site-header-text: var(--site-header-themes-#{$theme}-text);
-      --color-heading: var(--site-header-themes-#{$theme}-text);
 
+      // prettier-ignore
+      --color-site-header-background: var(--site-header-themes-#{$theme}-background);
+      --color-text: var(--color-site-header-text);
+      --color-heading: var(--color-site-header-text);
+
+      // set default background and text colors.
       background-color: var(--color-site-header-background);
       color: var(--color-site-header-text);
     }
@@ -65,19 +66,19 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 
   // Set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
-  &[data-component-theme='one'] {
+  &[data-header-theme='one'] {
     --color-site-header-border-color: var(--color-slot-one);
     --color-site-header-background: var(--color-site-header-background);
-    --color-site-header-text: var(--color-site-header-heading);
+    --color-site-header-text: var(--color-heading);
   }
 
-  &[data-component-theme='two'] {
+  &[data-header-theme='two'] {
     --color-site-header-border-color: var(--color-slot-two);
     --color-site-header-background: var(--color-site-header-background);
-    --color-site-header-text: var(--color-site-header-heading);
+    --color-site-header-text: var(--color-heading);
   }
 
-  &[data-component-theme='three'] {
+  &[data-header-theme='three'] {
     --color-site-header-yale-branding: var(--color-basic-white);
     --color-site-header-border-color: var(--color-slot-three);
     --color-site-header-background: var(--color-slot-one);
