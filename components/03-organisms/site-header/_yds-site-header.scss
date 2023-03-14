@@ -55,17 +55,22 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 
       // re-map general variables to name spaced variables.
       // prettier-ignore
-      --color-site-header-background: var(--site-header-themes-#{$theme}-background);
+      --color-slot-one: var(--site-header-themes-#{$theme}-slot-one);
+      --color-slot-two: var(--site-header-themes-#{$theme}-slot-two);
+      --color-slot-three: var(--site-header-themes-#{$theme}-slot-three);
+      --color-site-header-background: var(
+        --site-header-themes-#{$theme}-background
+      );
       --color-text: var(--color-site-header-text);
       --color-heading: var(--color-site-header-text);
       --color-link-base: var(--color-site-header-text);
       --color-link-hover: var(--color-site-header-link-hover);
-      --color-background: var(--color-site-header-background);
       --color-navigation-border: var(--color-site-header-border-color);
 
       // set default background and text colors.
       background-color: var(--color-site-header-background);
       color: var(--color-site-header-text);
+      border-color: var(--color-site-header-border-color);
     }
   }
 

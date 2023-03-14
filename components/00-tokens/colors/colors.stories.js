@@ -35,6 +35,8 @@ const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
+// const siteFooterThemes = { themes: tokens['site-footer-themes'] };
+// const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
 
 export default {
   title: 'Tokens/Colors',
@@ -98,6 +100,7 @@ export const GlobalThemeColorPairings = ({
 
 GlobalThemeColorPairings.argTypes = {
   siteHeaderTheme: {
+    name: 'Header Theme (dial)',
     options: siteHeaderThemeOptions,
     type: 'select',
     defaultValue: 'one',
@@ -119,31 +122,31 @@ GlobalThemeColorPairings.argTypes = {
     defaultValue: 'basic',
   },
   bannerTheme: {
-    name: 'Banner Theme',
+    name: 'Banner Theme (dial)',
     type: 'select',
     options: ['one', 'two', 'three'],
     defaultValue: 'one',
   },
   qlTheme: {
-    name: 'Quick Links Theme',
+    name: 'Quick Links Theme (dial)',
     type: 'select',
     options: ['one', 'two', 'three'],
     defaultValue: 'one',
   },
   quoteTheme: {
-    name: 'Quote Theme',
+    name: 'Quote Theme (dial)',
     type: 'select',
     options: ['one', 'two', 'three'],
     defaultValue: 'one',
   },
   calloutTheme: {
-    name: 'Callout Theme',
+    name: 'Callout Theme (dial)',
     type: 'select',
     options: ['one', 'two', 'three'],
     defaultValue: 'one',
   },
   tabTheme: {
-    name: 'Tabs Theme',
+    name: 'Tabs Theme (dial)',
     type: 'select',
     options: ['one', 'two', 'three'],
     defaultValue: 'one',

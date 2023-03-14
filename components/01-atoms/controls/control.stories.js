@@ -17,11 +17,13 @@ export default {
   title: 'Atoms/Controls',
   argTypes: {
     globalTheme: {
+      name: 'Global Theme (lever)',
       options: siteGlobalThemeOptions,
       type: 'select',
       defaultValue: 'one',
     },
     componentTheme: {
+      name: 'Component Theme (dial)',
       options: componentThemeOptions,
       type: 'select',
       defaultValue: 'one',
