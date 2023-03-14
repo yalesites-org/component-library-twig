@@ -8,4 +8,10 @@
   .text {
     overflow-x: auto;
   }
+
+  &[data-component-alignment='left'] {
+    .text {
+      max-width: var(--size-component-layout-width-content);
+    }
+  }
 }

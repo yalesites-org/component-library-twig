@@ -9,7 +9,7 @@
 {% set custom_card_collection__base_class = 'custom-card-collection' %}
 
 {% set custom_card_collection__featured = custom_card_collection__featured == 'true' ? 'true' : 'false' %}
-{% set custom_card_collection__width = custom_card_collection__width|default('max') %}
+{% set custom_card_collection__width = custom_card_collection__width|default('site') %}
 
 {% set custom_card_collection__attributes = {
   'data-collection-featured': custom_card_collection__featured,

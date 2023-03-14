@@ -22,3 +22,10 @@
     margin-bottom: 0;
   }
 }
+
+.video__video,
+.video__content {
+  [data-component-alignment='left'] & {
+    max-width: var(--size-component-layout-width-content);
+  }
+}

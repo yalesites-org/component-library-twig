@@ -25,8 +25,9 @@
 {% endset %}
 
 {% set accordion__attibutes = {
-  'data-component-width': 'content',
-  class: bem(accordion__base_class),
+  'data-component-width': accordion__width|default('content'),
+  'data-component-alignment': accordion__alignment|default('center'),
+  class: bem(accordion__base_class, accordion__modifiers),
 } %}
 
 <div {{ add_attributes(accordion__attibutes) }} data-embedded-components>

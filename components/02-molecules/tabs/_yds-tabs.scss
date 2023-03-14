@@ -7,6 +7,10 @@
 
   overflow: hidden;
   position: relative;
+
+  [data-component-alignment='left'] & {
+    max-width: var(--size-component-layout-width-content);
+  }
 }
 
 .tabs__tabs {
