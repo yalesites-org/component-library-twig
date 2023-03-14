@@ -14,9 +14,10 @@
 {% set pull_quote__attributes = pull_quote__attributes|default({}) %}
 
 {% set pull_quote__attributes = pull_quote__attributes|merge({
-  'data-component-width': 'content',
+  'data-component-width': pull_quote__width|default('content'),
   'data-pull-quote-style': pull_quote__style,
-  class: bem(pull_quote__base_class),
+  'data-component-alignment': pull_quote__alignment|default('center'),
+  class: bem(pull_quote__base_class, pull_quote__modifiers),
 }) %}
 
 <div {{ add_attributes(pull_quote__attributes) }}>

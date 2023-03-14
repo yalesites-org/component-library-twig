@@ -19,6 +19,10 @@
 .card-collection__cards {
   --card-collection-spacing: var(--spacing-component-gutter);
 
+  .card-collection--limit & {
+    max-width: var(--size-component-layout-width-content);
+  }
+
   [data-collection-type='list'] & {
     @include list.primary;
   }

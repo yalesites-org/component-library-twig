@@ -51,7 +51,7 @@ export const NewsCard = ({
   featured,
   withImage,
 }) => `
-<div class='card-collection' data-component-width='max' data-collection-type='${collectionType}' data-collection-featured="${featured}">
+<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${referenceCardTwig({
@@ -85,7 +85,7 @@ export const EventCard = ({
   featured,
   withImage,
 }) => `
-<div class='card-collection' data-component-width='max' data-collection-type='${collectionType}' data-collection-featured="${featured}">
+<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${referenceCardTwig({

@@ -28,35 +28,39 @@
       {% endblock %}
     </div>
     <div {{ bem('content', [], banner__base_class) }} data-component-theme={{ banner__content__background }}>
-      <div {{ bem('text', [], banner__base_class) }}>
-        {% include "@atoms/typography/headings/yds-heading.twig" with {
-          heading__level: '2',
-          heading__blockname: banner__base_class,
-          heading: banner__heading,
-        } %}
-        {% if banner__snippet %}
-          {% include "@atoms/typography/text/yds-text.twig" with {
-            text__base_class: 'snippet',
-            text__blockname: banner__base_class,
-            text__content: banner__snippet,
-          } %}
-        {% endif %}
+      <div {{ bem('outer-wrap', [], banner__base_class) }}>
+        <div {{ bem('wrap', [], banner__base_class) }}>
+          <div {{ bem('text', [], banner__base_class) }}>
+            {% include "@atoms/typography/headings/yds-heading.twig" with {
+              heading__level: '2',
+              heading__blockname: banner__base_class,
+              heading: banner__heading,
+            } %}
+            {% if banner__snippet %}
+              {% include "@atoms/typography/text/yds-text.twig" with {
+                text__base_class: 'snippet',
+                text__blockname: banner__base_class,
+                text__content: banner__snippet,
+              } %}
+            {% endif %}
+          </div>
+          {% if banner__link__content and banner__link__url %}
+            {% if banner__link__style == 'text-link' %}
+              {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+                link__content: banner__link__content,
+                link__url: banner__link__url,
+                link__blockname: banner__base_class,
+              } %}
+            {% else %}
+              {% include "@atoms/controls/cta/yds-cta.twig" with {
+                cta__content: banner__link__content,
+                cta__href: banner__link__url,
+                cta__blockname: banner__base_class,
+              } %}
+            {% endif %}
+          {% endif %}
+        </div>
       </div>
-      {% if banner__link__content and banner__link__url %}
-        {% if banner__link__style == 'text-link' %}
-          {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-            link__content: banner__link__content,
-            link__url: banner__link__url,
-            link__blockname: banner__base_class,
-          } %}
-        {% else %}
-          {% include "@atoms/controls/cta/yds-cta.twig" with {
-            cta__content: banner__link__content,
-            cta__href: banner__link__url,
-            cta__blockname: banner__base_class,
-          } %}
-        {% endif %}
-      {% endif %}
     </div>
   </div>
 </div>
