@@ -35,7 +35,7 @@ export default {
       defaultValue: bannerData.banner__link__content,
     },
     bgColor: {
-      name: 'Content Background Theme',
+      name: 'Component Theme',
       type: 'select',
       options: colorPairingsData,
       defaultValue: 'one',

@@ -8,7 +8,8 @@ import themeExamplesTwig from './cta/_yds-cta-examples.twig';
 
 const siteGlobalThemes = { themes: tokens.globalThemes };
 const siteGlobalThemeOptions = Object.keys(tokens.globalThemes);
-
+const componentThemes = { themes: tokens['component-themes'] };
+const componentThemeOptions = Object.keys(tokens['component-themes']);
 /**
  * Storybook Definition.
  */
@@ -17,6 +18,11 @@ export default {
   argTypes: {
     globalTheme: {
       options: siteGlobalThemeOptions,
+      type: 'select',
+      defaultValue: 'one',
+    },
+    componentTheme: {
+      options: componentThemeOptions,
       type: 'select',
       defaultValue: 'one',
     },
@@ -174,9 +180,10 @@ export const textLink = () => `
   })}
 `;
 
-export const CtaExamples = ({ globalTheme }) =>
+export const CtaExamples = ({ globalTheme, componentTheme }) =>
   themeExamplesTwig({
     ...siteGlobalThemes,
+    ...componentThemes,
     site_global__theme: globalTheme,
     example_content: `
     <h2>Filled</h2>
@@ -184,16 +191,19 @@ export const CtaExamples = ({ globalTheme }) =>
       ${ctaTwig({
         cta__content: ctaText,
         cta__href: '#',
+        cta__component_theme: componentTheme,
       })}
       ${ctaTwig({
         cta__content: ctaText,
         cta__href: '#',
         cta__radius: 'soft',
+        cta__component_theme: componentTheme,
       })}
       ${ctaTwig({
         cta__content: ctaText,
         cta__href: '#',
         cta__radius: 'pill',
+        cta__component_theme: componentTheme,
       })}
     </div>
     <h2>Outline</h2>
@@ -202,18 +212,21 @@ export const CtaExamples = ({ globalTheme }) =>
         cta__content: ctaText,
         cta__href: '#',
         cta__style: 'outline',
+        cta__component_theme: componentTheme,
       })}
       ${ctaTwig({
         cta__content: ctaText,
         cta__href: '#',
         cta__radius: 'soft',
         cta__style: 'outline',
+        cta__component_theme: componentTheme,
       })}
       ${ctaTwig({
         cta__content: ctaText,
         cta__href: '#',
         cta__radius: 'pill',
         cta__style: 'outline',
+        cta__component_theme: componentTheme,
       })}
     </div>
     <h2>Outline Weights</h2>
@@ -223,18 +236,21 @@ export const CtaExamples = ({ globalTheme }) =>
         cta__href: '#',
         cta__style: 'outline',
         cta__outline_weight: '1',
+        cta__component_theme: componentTheme,
       })}
       ${ctaTwig({
         cta__content: ctaText,
         cta__href: '#',
         cta__style: 'outline',
         cta__outline_weight: '2',
+        cta__component_theme: componentTheme,
       })}
       ${ctaTwig({
         cta__content: ctaText,
         cta__href: '#',
         cta__style: 'outline',
         cta__outline_weight: '4',
+        cta__component_theme: componentTheme,
       })}
     </div>
     <h2>Hover Effects</h2>
@@ -242,16 +258,19 @@ export const CtaExamples = ({ globalTheme }) =>
       ${ctaTwig({
         cta__content: 'Fade',
         cta__href: '#',
+        cta__component_theme: componentTheme,
       })}
       ${ctaTwig({
         cta__content: 'Rise',
         cta__hover_style: 'rise',
         cta__href: '#',
+        cta__component_theme: componentTheme,
       })}
       ${ctaTwig({
         cta__content: 'Wipe',
         cta__hover_style: 'wipe',
         cta__href: '#',
+        cta__component_theme: componentTheme,
       })}
     </div>
     <div class="cta-group">
@@ -259,29 +278,33 @@ export const CtaExamples = ({ globalTheme }) =>
         cta__content: 'Fade',
         cta__style: 'outline',
         cta__href: '#',
+        cta__component_theme: componentTheme,
       })}
       ${ctaTwig({
         cta__content: 'Rise',
         cta__style: 'outline',
         cta__hover_style: 'rise',
         cta__href: '#',
+        cta__component_theme: componentTheme,
       })}
       ${ctaTwig({
         cta__content: 'Wipe',
         cta__style: 'outline',
         cta__hover_style: 'wipe',
         cta__href: '#',
+        cta__component_theme: componentTheme,
       })}
     </div>
     `,
   });
 
-export const LinkExamples = ({ globalTheme }) =>
+export const LinkExamples = ({ globalTheme, componentTheme }) =>
   themeExamplesTwig({
     ...siteGlobalThemes,
+    ...componentThemes,
     site_global__theme: globalTheme,
     example_content: `
-      <div class="link-group">
+      <div class="link-group" data-component-theme="${componentTheme}">
       ${linkTwig({
         link__url: 'http://localhost:6006',
         link__content: 'This is a default link',

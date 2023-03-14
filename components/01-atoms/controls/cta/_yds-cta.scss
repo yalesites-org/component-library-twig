@@ -4,6 +4,7 @@
 @use '../../../00-tokens/tokens';
 
 $cta-themes: map.deep-get(sass-tokens.$tokens, color, cta, theme);
+$global-cta-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 $cta-radii: (
   'soft': var(--cta-radius-soft),
   'pill': 100vmax,
@@ -46,12 +47,12 @@ $cta-outline-weights: (
   }
 
   // These color schemes are "inverted" from the default ones.
-  @each $theme, $value in $cta-themes {
-    [data-component-theme='#{$theme}'] & {
-      --color-action: var(--color-text);
-      --color-cta-secondary: var(--color-background);
-    }
-  }
+  // @each $theme, $value in $cta-themes {
+  //   [data-component-theme='#{$theme}'] & {
+  //     --color-action: var(--color-text);
+  //     --color-cta-secondary: var(--color-background);
+  //   }
+  // }
 
   // Styles
   &[data-cta-style='filled'] {
@@ -68,6 +69,78 @@ $cta-outline-weights: (
     --color-cta-border: var(--color-action);
     --color-cta-text: var(--color-action);
     --color-cta-text-hover: var(--color-cta-secondary);
+  }
+
+  // Global themes, set color slots
+  @each $globalTheme, $value in $global-cta-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
+      --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
+      --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
+    }
+  }
+
+  &[data-component-theme='one'] {
+    &[data-cta-style='filled'] {
+      --color-action: var(--color-slot-one);
+      --color-cta-bg: var(--color-slot-one);
+      --color-cta-bg-hover: transparent;
+      --color-cta-border: var(--color-action);
+      --color-cta-text: var(--color-basic-white);
+      --color-cta-text-hover: var(--color-action);
+      --color-cta-secondary: var(--color-background);
+    }
+
+    &[data-cta-style='outline'] {
+      --color-action: var(--color-slot-one);
+      --color-cta-bg: transparent;
+      --color-cta-bg-hover: var(--color-action);
+      --color-cta-border: var(--color-action);
+      --color-cta-text: var(--color-action);
+      --color-cta-text-hover: var(--color-cta-secondary);
+    }
+  }
+
+  &[data-component-theme='two'] {
+    &[data-cta-style='filled'] {
+      --color-action: var(--color-slot-two);
+      --color-cta-bg: var(--color-slot-two);
+      --color-cta-bg-hover: transparent;
+      --color-cta-border: var(--color-action);
+      --color-cta-text: var(--color-cta-secondary);
+      --color-cta-text-hover: var(--color-action);
+    }
+
+    &[data-cta-style='outline'] {
+      --color-action: var(--color-slot-two);
+      --color-cta-bg: transparent;
+      --color-cta-bg-hover: var(--color-action);
+      --color-cta-border: var(--color-action);
+      --color-cta-text: var(--color-action);
+      --color-cta-text-hover: var(--color-cta-secondary);
+    }
+  }
+
+  &[data-component-theme='three'] {
+    &[data-cta-style='filled'] {
+      --color-action: var(--color-slot-five);
+      --color-cta-bg: var(--color-slot-five);
+      --color-cta-bg-hover: transparent;
+      --color-cta-border: var(--color-action);
+      --color-cta-text: var(--color-cta-secondary);
+      --color-cta-text-hover: var(--color-action);
+    }
+
+    &[data-cta-style='outline'] {
+      --color-action: var(--color-slot-five);
+      --color-cta-bg: transparent;
+      --color-cta-bg-hover: var(--color-action);
+      --color-cta-border: var(--color-action);
+      --color-cta-text: var(--color-action);
+      --color-cta-text-hover: var(--color-cta-secondary);
+    }
   }
 
   // Hover styles
