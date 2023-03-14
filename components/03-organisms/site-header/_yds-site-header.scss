@@ -53,10 +53,15 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'globalThemes');
       // prettier-ignore
       --color-site-header-divider-color: var(--site-header-themes-#{$theme}-divider-color);
 
+      // re-map general variables to name spaced variables.
       // prettier-ignore
       --color-site-header-background: var(--site-header-themes-#{$theme}-background);
       --color-text: var(--color-site-header-text);
       --color-heading: var(--color-site-header-text);
+      --color-link-base: var(--color-site-header-text);
+      --color-link-hover: var(--color-site-header-link-hover);
+      --color-background: var(--color-site-header-background);
+      --color-navigation-border: var(--color-site-header-border-color);
 
       // set default background and text colors.
       background-color: var(--color-site-header-background);
@@ -68,14 +73,16 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'globalThemes');
   /// define component name spaced variables and map them to global theme slots.
   &[data-header-theme='one'] {
     --color-site-header-border-color: var(--color-slot-one);
-    --color-site-header-background: var(--color-site-header-background);
+    --color-site-header-background: var(--color-basic-white);
     --color-site-header-text: var(--color-heading);
+    --color-site-header-link-hover: var(--color-slot-two);
   }
 
   &[data-header-theme='two'] {
-    --color-site-header-border-color: var(--color-slot-two);
-    --color-site-header-background: var(--color-site-header-background);
+    --color-site-header-border-color: var(--color-slot-three);
+    --color-site-header-background: var(--color-gray-100);
     --color-site-header-text: var(--color-heading);
+    --color-site-header-link-hover: var(--color-slot-two);
   }
 
   &[data-header-theme='three'] {
@@ -84,6 +91,7 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'globalThemes');
     --color-site-header-background: var(--color-slot-one);
     --color-site-header-divider-color: var(--color-basic-white);
     --color-site-header-text: var(--color-basic-white);
+    --color-site-header-link-hover: var(--color-gray-100);
   }
 
   // Border bottom thickness

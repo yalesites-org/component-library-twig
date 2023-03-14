@@ -1,6 +1,9 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
+@use '../../../00-tokens/functions/map';
 
+$global-grand-hero-themes: map.deep-get(tokens.$tokens, 'globalThemes');
+$component-grand-hero-themes: map.deep-get(tokens.$tokens, 'component-themes');
 $break-grand-hero-banner: tokens.$break-m;
 
 .grand-hero-banner {
@@ -65,6 +68,29 @@ $break-grand-hero-banner: tokens.$break-m;
   position: relative;
   padding: var(--size-spacing-5) var(--size-spacing-7);
   background: transparent;
+  color: var(--color-text);
+
+  @each $globalTheme, $value in $global-grand-hero-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
+      --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
+      --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
+    }
+  }
+
+  // Component themes: set general css variables equal to name spaced variables.
+  @each $theme, $value in $component-grand-hero-themes {
+    &[data-component-theme='#{$theme}'] {
+      // prettier-ignore
+      --color-text: var(--color-grand-hero-text);
+      --color-backgound: var(--color-grand-hero-background);
+      --color-heading: var(--color-grand-hero-heading);
+      --color-action: var(--color-grand-hero-action);
+      --color-cta-secondary: var(--color-grand-hero-action-secondary);
+    }
+  }
 
   [data-grand-hero-overlay-variation='contained'] & {
     margin-bottom: var(--size-spacing-6);
@@ -88,43 +114,37 @@ $break-grand-hero-banner: tokens.$break-m;
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: var(--color-background);
+    background-color: var(--color-grand-hero-background);
     opacity: 0.6;
   }
 
-  &[data-component-theme='gray-100'],
-  &[data-component-theme='gray-200'],
-  &[data-component-theme='white'] {
-    color: var(--color-gray-800);
+  // theme settings
+  &[data-component-theme='one'] {
+    --color-grand-hero-background: var(--color-slot-one);
+    --color-grand-hero-text: var(--color-basic-white);
+    --color-grand-hero-heading: var(--color-basic-white);
+    --color-grand-hero-action: var(--color-basic-white);
+    --color-grand-hero-action-secondary: var(--color-slot-one);
+  }
+
+  &[data-component-theme='two'] {
+    --color-grand-hero-background: var(--color-slot-four);
+    --color-grand-hero-text: var(--color-gray-800);
+    --color-grand-hero-heading: var(--color-gray-800);
+    --color-grand-hero-action: var(--color-gray-800);
+    --color-grand-hero-action-secondary: var(--color-basic-white);
 
     a {
       color: var(--color-gray-800);
     }
   }
 
-  // theme settings
-  &[data-component-theme='one'] {
-    --color-background: var(--color-slot-one);
-    --color-text: var(--color-basic-white);
-    --color-heading: var(--color-basic-white);
-    --color-action: var(--color-basic-white);
-    --color-cta-secondary: var(--color-slot-one);
-  }
-
-  &[data-component-theme='two'] {
-    --color-background: var(--color-slot-four);
-    --color-text: var(--color-gray-800);
-    --color-heading: var(--color-gray-800);
-    --color-action: var(--color-gray-800);
-    --color-cta-secondary: var(--color-basic-white);
-  }
-
   &[data-component-theme='three'] {
-    --color-background: var(--color-slot-five);
-    --color-text: var(--color-basic-white);
-    --color-heading: var(--color-basic-white);
-    --color-action: var(--color-basic-white);
-    --color-cta-secondary: var(--color-slot-one);
+    --color-grand-hero-background: var(--color-slot-five);
+    --color-grand-hero-text: var(--color-basic-white);
+    --color-grand-hero-heading: var(--color-basic-white);
+    --color-grand-hero-action: var(--color-basic-white);
+    --color-grand-hero-action-secondary: var(--color-slot-one);
   }
 }
 

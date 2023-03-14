@@ -35,10 +35,10 @@ export default {
       defaultValue: bannerData.banner__link__content,
     },
     bgColor: {
-      name: 'Content Background Color',
+      name: 'Content Background Theme',
       type: 'select',
       options: colorPairingsData,
-      defaultValue: 'gray-800',
+      defaultValue: 'one',
     },
   },
 };
