@@ -45,7 +45,10 @@ export const Colors = () => `
   <p>Each color is defined in the tokens repository: <code>atomic/_yale-packages/tokens/tokens/figma-export/tokens.json</code>.</p>
 ${colorsTwig(colorsData)}`;
 
-export const ColorComponentThemePairings = ({
+// prettier-ignore
+export const ColorsGlobalThemes = () => colorGlobalThemeTwig(colorGlobalThemeData);
+
+export const ComponentThemeColorPairings = ({
   heading,
   description,
   image,
@@ -88,7 +91,7 @@ export const ColorComponentThemePairings = ({
     pull_quote__accent_theme: quoteTheme,
     site_footer__theme: siteFooterTheme,
   });
-ColorComponentThemePairings.argTypes = {
+ComponentThemeColorPairings.argTypes = {
   siteHeaderTheme: {
     name: 'Header Theme (dial)',
     options: siteHeaderThemeOptions,
@@ -132,9 +135,6 @@ ColorComponentThemePairings.argTypes = {
     defaultValue: 'one',
   },
 };
-
-export const ColorGlobalThemes = () =>
-  colorGlobalThemeTwig(colorGlobalThemeData);
 
 export const GlobalThemeColorPairings = ({
   heading,
