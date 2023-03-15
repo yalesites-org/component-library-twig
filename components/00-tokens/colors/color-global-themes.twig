@@ -1,23 +1,30 @@
 {% set color_global_theme__base_class = 'cl-color-global-themes' %}
 {% set colors__base_class = "cl-colors" %}
 
+<div {{ bem('wrap', [], color_global_theme__base_class) }}>
+  <h1>These are global themes.</h1> 
+  <p class="text-field">
+    Each theme is defined in the tokens repository: <code>atomic/_yale-packages/tokens/tokens/base/color.yml</code>. Each theme has a generic numerical name. If you were to add another global theme, it should follow the same naming convention. For example: <code>six</code> - "Purple Dream". In this example, each theme's non-numerical name (e.g. "Purple Dream") is added in this <code>color-global-themes.twig</code> file. It doesn't exist in the tokens library.
+  </p>
+</div>
+
 {% for globalTheme, value in _context.globalThemes %}
 
-{% if globalTheme == 'one' %}
-  {% set theme_name = 'Old Blues' %}
-{% endif %}
-{% if globalTheme == 'two' %}
-  {% set theme_name = 'New Haven Green' %}
-{% endif %}
-{% if globalTheme == 'three' %}
-  {% set theme_name = 'Shoreline Summer' %}
-{% endif %}
-{% if globalTheme == 'four' %}
-  {% set theme_name = 'Elm City Nights' %}
-{% endif %}
-{% if globalTheme == 'five' %}
-  {% set theme_name = 'Quiet Corner' %}
-{% endif %}
+  {% if globalTheme == 'one' %}
+    {% set theme_name = 'Old Blues' %}
+  {% endif %}
+  {% if globalTheme == 'two' %}
+    {% set theme_name = 'New Haven Green' %}
+  {% endif %}
+  {% if globalTheme == 'three' %}
+    {% set theme_name = 'Shoreline Summer' %}
+  {% endif %}
+  {% if globalTheme == 'four' %}
+    {% set theme_name = 'Elm City Nights' %}
+  {% endif %}
+  {% if globalTheme == 'five' %}
+    {% set theme_name = 'Quiet Corner' %}
+  {% endif %}
 
   <div {{ bem(color_global_theme__base_class) }} data-global-theme={{ globalTheme }}>
     <h2>Global Theme: {{ globalTheme }} - "{{theme_name}}"</h2>

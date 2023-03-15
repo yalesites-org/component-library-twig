@@ -59,10 +59,10 @@ export default {
       defaultValue: 'none',
     },
     calloutBackground: {
-      name: 'Callout Background Color',
+      name: 'Callout Theme (dial)',
       type: 'select',
-      options: ['blue-yale', 'gray-700'],
-      defaultValue: 'blue-yale',
+      options: ['one', 'two', 'three'],
+      defaultValue: 'one',
     },
   },
 };

@@ -1,5 +1,12 @@
 {% set color_global_theme__base_class = 'cl-color-global-themes' %}
 
+<div {{ bem('wrap', [], color_global_theme__base_class) }}>
+  <h1>Global Theme &amp; Component Theme applications.</h1> 
+  <p class="text-field">This page outlines all components which have dial/component theme options. Each component below is housed within global theme applications. Global themes define the color pallete from which each component dial/component theme gets its color assignments.</p>
+
+  <p class="text-field">As you scroll down the page, each <code>global theme</code> is presented in sections. The <code>controls</code> panel in storybook allow you to select which dial option to apply to each component within each global theme application. You can select a dial option for one or all components and scroll down to each global theme context to see how that dial is applied in each global theme instance.</p>
+</div>
+
 {% for globalTheme, value in _context.globalThemes %}
   <div {{ bem(color_global_theme__base_class) }} data-global-theme={{ globalTheme }}>
     <h2 class="global-theme-title">Global Theme: {{ globalTheme }}</h2>

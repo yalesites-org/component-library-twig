@@ -42,7 +42,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'globalThemes');
       --color-site-footer-text-color: var(--site-footer-themes-#{$theme}-text-color);
 
       // prettier-ignore
-      --color-site-footer-text-shadow: var(--site-footer-themes-#{$theme}-background-color);
+      --color-text-shadow: var(--color-site-footer-background-color);
 
       background-color: var(--color-site-footer-background-color);
       color: var(--color-site-footer-text-color);

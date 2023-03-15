@@ -1,9 +1,9 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
 import colorsTwig from './colors.twig';
-import colorPairingsTwig from './color-pairings.twig';
 import colorGlobalThemeTwig from './color-global-themes.twig';
 import colorGlobalThemePairingTwig from './color-global-theme-pairings.twig';
+// import colorPairingsTwig from './color-pairings.twig';
 
 import utilityNavData from '../../03-organisms/menu/utility-nav/utility-nav.yml';
 import primaryNavData from '../../03-organisms/menu/primary-nav/primary-nav.yml';
@@ -29,10 +29,8 @@ const colorsData = {
     gray: tokens.color.gray,
   },
 };
-const colorPairingsData = { themes: tokens['component-themes'] };
+// const colorPairingsData = { themes: tokens['component-themes'] };
 const colorGlobalThemeData = { globalThemes: tokens.globalThemes };
-const borderThicknessOptions = Object.keys(tokens.border.thickness);
-const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 const siteFooterThemes = { themes: tokens['site-footer-themes'] };
@@ -42,18 +40,13 @@ export default {
   title: 'Tokens/Colors',
 };
 
-export const Colors = () => colorsTwig(colorsData);
+export const Colors = () => `
+  <h1>All available color options are outlined here.</h1>
+  <p>Each color is defined in the tokens repository: <code>atomic/_yale-packages/tokens/tokens/figma-export/tokens.json</code>.</p>
+${colorsTwig(colorsData)}`;
 
-export const ColorPairings = () => `
-  <h2>These pairings are selected to support accessibility standards.</h2>
-  <p>This page is useful to check the accessibility of various components against the available background colors.</p>
-  ${colorPairingsTwig(colorPairingsData)}
-`;
-
-export const ColorGlobalThemes = () => `
-  <h2>These are global themes.</h2>
-  ${colorGlobalThemeTwig(colorGlobalThemeData)}
-`;
+export const ColorGlobalThemes = () =>
+  colorGlobalThemeTwig(colorGlobalThemeData);
 
 export const GlobalThemeColorPairings = ({
   heading,
@@ -67,9 +60,6 @@ export const GlobalThemeColorPairings = ({
   siteHeaderTwig,
   siteHeaderTheme,
   siteFooterTheme,
-  borderThickness,
-  primaryNavPosition,
-  menuVariation,
 }) =>
   colorGlobalThemePairingTwig({
     ...imageData.responsive_images['16x9'],
@@ -83,10 +73,10 @@ export const GlobalThemeColorPairings = ({
     ...utilityNavData,
     ...primaryNavData,
     site_name: 'Department of Chemistry',
-    site_header__border_thickness: borderThickness,
-    site_header__nav_position: primaryNavPosition,
+    site_header__border_thickness: '8',
+    site_header__nav_position: 'left',
     site_header__theme: siteHeaderTheme,
-    site_header__menu__variation: menuVariation,
+    site_header__menu__variation: 'basic',
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
     quick_links__heading: heading,
@@ -107,22 +97,6 @@ GlobalThemeColorPairings.argTypes = {
     options: siteHeaderThemeOptions,
     type: 'select',
     defaultValue: 'one',
-  },
-  borderThickness: {
-    options: borderThicknessOptions,
-    type: 'select',
-    defaultValue: '8',
-  },
-  primaryNavPosition: {
-    options: primaryNavPositions,
-    type: 'select',
-    defaultValue: 'left',
-  },
-  menuVariation: {
-    name: 'Menu Variation',
-    options: ['basic', 'mega'],
-    type: 'select',
-    defaultValue: 'basic',
   },
   bannerTheme: {
     name: 'Banner Theme (dial)',

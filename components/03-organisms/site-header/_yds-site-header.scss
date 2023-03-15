@@ -66,6 +66,7 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'globalThemes');
       --color-link-base: var(--color-site-header-text);
       --color-link-hover: var(--color-site-header-link-hover);
       --color-navigation-border: var(--color-site-header-border-color);
+      --color-background: var(--color-site-header-background);
 
       // set default background and text colors.
       background-color: var(--color-site-header-background);

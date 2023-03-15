@@ -13,8 +13,8 @@ code {
   padding: 0 var(--size-spacing-3);
   background-color: var(--color-code-background);
 
-  [data-component-theme='blue-yale'] &,
-  [data-component-theme='gray-700'] & {
+  [data-component-theme='one'] &,
+  [data-component-theme='three'] & {
     --color-code-border: var(--color-gray-800);
     --color-code-background: var(--color-gray-600);
   }

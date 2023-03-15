@@ -33,7 +33,7 @@ export default {
     siteFooterTheme: {
       options: siteFooterThemeOptions,
       type: 'select',
-      defaultValue: 'white',
+      defaultValue: 'one',
     },
   },
 };

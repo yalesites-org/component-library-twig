@@ -30,7 +30,7 @@ export default {
     },
     dividerColor: {
       name: 'Line color',
-      options: ['gray-500', 'blue-yale', 'accent'],
+      options: ['gray-500', 'blue-yale', 'basic-brown-gray'],
       type: 'select',
       defaultValue: 'gray-500',
     },

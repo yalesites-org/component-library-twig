@@ -44,9 +44,17 @@
     position: sticky;
     top: 0;
     z-index: 10;
-    padding: var(--site-spacing-4);
+    padding: var(--site-spacing-5);
     background-color: var(--color-basic-white);
     border-bottom: 0.25rem solid var(--color-gray-700);
     margin-bottom: var(--size-spacing-6);
+  }
+}
+
+.cl-color-global-themes__wrap {
+  padding: var(--site-spacing-5);
+
+  > * {
+    max-width: 60%;
   }
 }
