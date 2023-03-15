@@ -1,10 +1,16 @@
 {% set color_global_theme__base_class = 'cl-color-global-themes' %}
 
 <div {{ bem('wrap', [], color_global_theme__base_class) }}>
-  <h1>Global Theme &amp; Component Theme applications.</h1> 
-  <p class="text-field">This page outlines all components which have dial/component theme options. Each component below is housed within global theme applications. Global themes define the color pallete from which each component dial/component theme gets its color assignments.</p>
+  <div class="text-field" data-component-alignment="left" data-component-width="max">
+    <div class="text-field__inner">
+      <div class="text">
+        <h1>Global Themes</h1> 
+        <p>This page outlines all components which have dial/component theme options. Each component below is housed within global theme applications. Global themes define the color pallete from which each component dial/component theme gets its color assignments.</p>
 
-  <p class="text-field">As you scroll down the page, each <code>global theme</code> is presented in sections. The <code>controls</code> panel in storybook allow you to select which dial option to apply to each component within each global theme application. You can select a dial option for one or all components and scroll down to each global theme context to see how that dial is applied in each global theme instance.</p>
+        <p>As you scroll down the page, each <code>global theme</code> is presented in sections. The <code>controls</code> panel in storybook allow you to select which dial option to apply to each component within each global theme application. You can select a dial option for one or all components and scroll down to each global theme context to see how that dial is applied in each global theme instance.</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% for globalTheme, value in _context.globalThemes %}
@@ -22,7 +28,10 @@
     </div>
 
     <div class="pairing-item">
-      <p class="text-field">Here's a paragraph with some text. And <a href="#">links can go here</a> too. Isn't that cool? In the Storybook controls you can select component theme variations (one, two, three), where applicable.</p>
+      {% include "@molecules/text/yds-text-field.twig" with {
+        text_field__alignment: 'left',
+        text_field__content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A lacus vestibulum sed arcu non odio euismod lacinia. Varius sit amet mattis vulputate enim nulla. Sit amet justo donec enim diam vulputate ut pharetra sit. Ipsum dolor sit amet consectetur adipiscing elit ut aliquam purus. Lorem ipsum dolor sit amet consectetur adipiscing elit pellentesque. Vitae congue mauris rhoncus aenean vel elit scelerisque. Vulputate odio ut enim blandit volutpat maecenas volutpat blandit aliquam. Turpis massa sed elementum tempus egestas sed sed risus. A erat nam at lectus urna duis convallis convallis. Sollicitudin nibh sit amet commodo nulla. Iaculis urna id volutpat lacus.',
+      } %}
     </div>
 
     <div class="pairing-item">
@@ -85,7 +94,10 @@
     </div>
 
     <div class="pairing-item">
-      <p class="text-field">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis tincidunt id aliquet risus. Odio morbi quis commodo odio aenean sed adipiscing. Condimentum id venenatis a condimentum vitae sapien. Placerat vestibulum lectus mauris ultrices eros. In fermentum et sollicitudin ac. Sed risus ultricies tristique nulla aliquet enim tortor at auctor. Imperdiet sed euismod nisi porta lorem mollis aliquam ut porttitor. Tortor at risus viverra adipiscing at in tellus integer feugiat. Dignissim convallis aenean et tortor at risus. Et tortor consequat id porta nibh venenatis cras sed. Sed nisi lacus sed viverra tellus in hac.</p>
+      {% include "@molecules/text/yds-text-field.twig" with {
+        text_field__alignment: 'left',
+        text_field__content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A lacus vestibulum sed arcu non odio euismod lacinia. Varius sit amet mattis vulputate enim nulla. Sit amet justo donec enim diam vulputate ut pharetra sit. Ipsum dolor sit amet consectetur adipiscing elit ut aliquam purus. Lorem ipsum dolor sit amet consectetur adipiscing elit pellentesque. Vitae congue mauris rhoncus aenean vel elit scelerisque. Vulputate odio ut enim blandit volutpat maecenas volutpat blandit aliquam. Turpis massa sed elementum tempus egestas sed sed risus. A erat nam at lectus urna duis convallis convallis. Sollicitudin nibh sit amet commodo nulla. Iaculis urna id volutpat lacus.',
+      } %}
     </div>
 
     <div class="pairing-item">

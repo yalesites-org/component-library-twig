@@ -2,10 +2,15 @@
 {% set colors__base_class = "cl-colors" %}
 
 <div {{ bem('wrap', [], color_global_theme__base_class) }}>
-  <h1>These are global themes.</h1> 
-  <p class="text-field">
-    Each theme is defined in the tokens repository: <code>atomic/_yale-packages/tokens/tokens/base/color.yml</code>. Each theme has a generic numerical name. If you were to add another global theme, it should follow the same naming convention. For example: <code>six</code> - "Purple Dream". In this example, each theme's non-numerical name (e.g. "Purple Dream") is added in this <code>color-global-themes.twig</code> file. It doesn't exist in the tokens library.
-  </p>
+  <div class="text-field" data-component-alignment="left" data-component-width="max">
+    <div class="text-field__inner">
+      <div class="text">
+        <h1>These are global themes.</h1> 
+        <p>
+          Each theme is defined in the tokens repository: <code>atomic/_yale-packages/tokens/tokens/base/color.yml</code>. Each theme has a generic numerical name. If you were to add another global theme, it should follow the same naming convention. For example: <code>six</code> - "Purple Dream". In this example, each theme's non-numerical name (e.g. "Purple Dream") is added in this <code>color-global-themes.twig</code> file. It doesn't exist in the tokens library.
+      </div>
+    </div>
+  </div>
 </div>
 
 {% for globalTheme, value in _context.globalThemes %}

@@ -40,10 +40,7 @@ export default {
   title: 'Tokens/Colors',
 };
 
-export const Colors = () => `
-  <h1>All available color options are outlined here.</h1>
-  <p>Each color is defined in the tokens repository: <code>atomic/_yale-packages/tokens/tokens/figma-export/tokens.json</code>.</p>
-${colorsTwig(colorsData)}`;
+export const Colors = () => colorsTwig(colorsData);
 
 // prettier-ignore
 export const ColorsGlobalThemes = () => colorGlobalThemeTwig(colorGlobalThemeData);
