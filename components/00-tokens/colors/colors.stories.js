@@ -1,9 +1,9 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
 import colorsTwig from './colors.twig';
+import colorComponentThemeTwig from './color-component-theme-pairings.twig';
 import colorGlobalThemeTwig from './color-global-themes.twig';
 import colorGlobalThemePairingTwig from './color-global-theme-pairings.twig';
-// import colorPairingsTwig from './color-pairings.twig';
 
 import utilityNavData from '../../03-organisms/menu/utility-nav/utility-nav.yml';
 import primaryNavData from '../../03-organisms/menu/primary-nav/primary-nav.yml';
@@ -29,7 +29,7 @@ const colorsData = {
     gray: tokens.color.gray,
   },
 };
-// const colorPairingsData = { themes: tokens['component-themes'] };
+const colorPairingsData = { themes: tokens['component-themes'] };
 const colorGlobalThemeData = { globalThemes: tokens.globalThemes };
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
@@ -44,6 +44,94 @@ export const Colors = () => `
   <h1>All available color options are outlined here.</h1>
   <p>Each color is defined in the tokens repository: <code>atomic/_yale-packages/tokens/tokens/figma-export/tokens.json</code>.</p>
 ${colorsTwig(colorsData)}`;
+
+export const ColorComponentThemePairings = ({
+  heading,
+  description,
+  image,
+  calloutTheme,
+  qlTheme,
+  quoteTheme,
+  tabTheme,
+  bannerTheme,
+  siteHeaderTwig,
+  siteHeaderTheme,
+  siteFooterTheme,
+}) =>
+  colorComponentThemeTwig({
+    ...imageData.responsive_images['16x9'],
+    ...colorGlobalThemeData,
+    ...colorGlobalThemeTwig,
+    ...tabData,
+    ...bannerData,
+    ...siteHeaderTwig,
+    ...siteHeaderThemes,
+    ...siteFooterThemes,
+    ...colorPairingsData,
+    ...utilityNavData,
+    ...primaryNavData,
+    site_name: 'Department of Chemistry',
+    site_header__border_thickness: '8',
+    site_header__nav_position: 'left',
+    site_header__theme: siteHeaderTheme,
+    site_header__menu__variation: 'basic',
+    utility_nav__items: utilityNavData.items,
+    primary_nav__items: primaryNavData.items,
+    quick_links__heading: heading,
+    quick_links__description: description,
+    quick_links__image: image,
+    quick_links__background_color: qlTheme,
+    callout__background_color: calloutTheme,
+    quick_links__links: quickLinksData.quick_links__links,
+    tabs__theme: tabTheme,
+    banner__content__background: bannerTheme,
+    pull_quote__accent_theme: quoteTheme,
+    site_footer__theme: siteFooterTheme,
+  });
+ColorComponentThemePairings.argTypes = {
+  siteHeaderTheme: {
+    name: 'Header Theme (dial)',
+    options: siteHeaderThemeOptions,
+    type: 'select',
+    defaultValue: 'one',
+  },
+  bannerTheme: {
+    name: 'Banner Theme (dial)',
+    type: 'select',
+    options: ['one', 'two', 'three'],
+    defaultValue: 'one',
+  },
+  qlTheme: {
+    name: 'Quick Links Theme (dial)',
+    type: 'select',
+    options: ['one', 'two', 'three'],
+    defaultValue: 'one',
+  },
+  quoteTheme: {
+    name: 'Quote Theme (dial)',
+    type: 'select',
+    options: ['one', 'two', 'three'],
+    defaultValue: 'one',
+  },
+  calloutTheme: {
+    name: 'Callout Theme (dial)',
+    type: 'select',
+    options: ['one', 'two', 'three'],
+    defaultValue: 'one',
+  },
+  tabTheme: {
+    name: 'Tabs Theme (dial)',
+    type: 'select',
+    options: ['one', 'two', 'three'],
+    defaultValue: 'one',
+  },
+  siteFooterTheme: {
+    name: 'Footer Theme (dial)',
+    options: siteFooterThemeOptions,
+    type: 'select',
+    defaultValue: 'one',
+  },
+};
 
 export const ColorGlobalThemes = () =>
   colorGlobalThemeTwig(colorGlobalThemeData);
