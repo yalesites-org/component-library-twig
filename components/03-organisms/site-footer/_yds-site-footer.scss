@@ -44,6 +44,16 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'globalThemes');
       // prettier-ignore
       --color-text-shadow: var(--color-site-footer-background-color);
 
+      // prettier-ignore
+      --color-site-footer-heading: var(--site-footer-themes-#{$theme}-text-color);
+
+      // re-map general variables to name spaced variables.
+      --color-slot-one: var(--site-footer-themes-#{$theme}-slot-one);
+      --color-slot-two: var(--site-footer-themes-#{$theme}-slot-two);
+      --color-slot-three: var(--site-footer-themes-#{$theme}-slot-three);
+      --color-slot-four: var(--site-footer-themes-#{$theme}-slot-four);
+      --color-slot-five: var(--site-footer-themes-#{$theme}-slot-five);
+
       background-color: var(--color-site-footer-background-color);
       color: var(--color-site-footer-text-color);
       border-color: var(--color-site-footer-border-color);
