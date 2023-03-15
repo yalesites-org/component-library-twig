@@ -4,6 +4,7 @@ import colorsTwig from './colors.twig';
 import colorComponentThemeTwig from './color-component-theme-pairings.twig';
 import colorGlobalThemeTwig from './color-global-themes.twig';
 import colorGlobalThemePairingTwig from './color-global-theme-pairings.twig';
+import colorBasicThemesTwig from './color-basic-themes.twig';
 
 import utilityNavData from '../../03-organisms/menu/utility-nav/utility-nav.yml';
 import primaryNavData from '../../03-organisms/menu/primary-nav/primary-nav.yml';
@@ -29,7 +30,8 @@ const colorsData = {
     gray: tokens.color.gray,
   },
 };
-const colorPairingsData = { themes: tokens['component-themes'] };
+const colorComponentThemeData = { themes: tokens['component-themes'] };
+const colorBasicThemeData = { themes: tokens['basic-themes'] };
 const colorGlobalThemeData = { globalThemes: tokens.globalThemes };
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
@@ -42,8 +44,12 @@ export default {
 
 export const Colors = () => colorsTwig(colorsData);
 
-// prettier-ignore
-export const ColorsGlobalThemes = () => colorGlobalThemeTwig(colorGlobalThemeData);
+export const ColorBasicThemes = () => `
+  <h2>These pairings are selected to support accessibility standards.</h2>
+  <p>This page is useful to check the accessibility of various components against the available background colors.</p>
+
+  ${colorBasicThemesTwig(colorBasicThemeData)}
+`;
 
 export const ComponentThemeColorPairings = ({
   heading,
@@ -67,7 +73,7 @@ export const ComponentThemeColorPairings = ({
     ...siteHeaderTwig,
     ...siteHeaderThemes,
     ...siteFooterThemes,
-    ...colorPairingsData,
+    ...colorComponentThemeData,
     ...utilityNavData,
     ...primaryNavData,
     site_name: 'Department of Chemistry',

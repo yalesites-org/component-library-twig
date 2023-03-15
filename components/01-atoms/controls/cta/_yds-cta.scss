@@ -47,12 +47,12 @@ $cta-outline-weights: (
   }
 
   // These color schemes are "inverted" from the default ones.
-  // @each $theme, $value in $cta-themes {
-  //   [data-component-theme='#{$theme}'] & {
-  //     --color-action: var(--color-text);
-  //     --color-cta-secondary: var(--color-background);
-  //   }
-  // }
+  @each $theme, $value in $cta-themes {
+    [data-basic-theme='#{$theme}'] & {
+      --color-action: var(--color-text);
+      --color-cta-secondary: var(--color-background);
+    }
+  }
 
   // Styles
   &[data-cta-style='filled'] {

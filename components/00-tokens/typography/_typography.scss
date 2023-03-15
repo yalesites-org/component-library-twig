@@ -14,7 +14,9 @@ code {
   background-color: var(--color-code-background);
 
   [data-component-theme='one'] &,
-  [data-component-theme='three'] & {
+  [data-component-theme='three'] &,
+  [data-basic-theme='blue-yale'] &,
+  [data-basic-theme='gray-700'] & {
     --color-code-border: var(--color-gray-800);
     --color-code-background: var(--color-gray-600);
   }

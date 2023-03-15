@@ -144,20 +144,6 @@ $content-width: clamp(20rem, 60%, calc(var(--size-component-layout-width-content
     }
   }
 
-  &[data-component-theme='white'] {
-    @media (max-width: $break-cta-banner-max) {
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: var(--size-spacing-site-gutter);
-        right: var(--size-spacing-site-gutter);
-        height: var(--border-thickness-1);
-        background-color: var(--color-gray-200);
-      }
-    }
-  }
-
   // theme settings
   &[data-component-theme='one'] {
     --color-banner-background: var(--color-slot-one);
@@ -173,6 +159,24 @@ $content-width: clamp(20rem, 60%, calc(var(--size-component-layout-width-content
     --color-banner-heading: var(--color-gray-800);
     --color-banner-action: var(--color-gray-800);
     --color-banner-action-secondary: var(--color-basic-white);
+
+    // component theme two has a white background when in global theme one, four, and five.
+    // add border between the bottom of the banner and any content after it.
+    [data-global-theme='one'] &,
+    [data-global-theme='four'] &,
+    [data-global-theme='five'] & {
+      @media (max-width: $break-cta-banner-max) {
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: var(--size-spacing-site-gutter);
+          right: var(--size-spacing-site-gutter);
+          height: var(--border-thickness-1);
+          background-color: var(--color-gray-300);
+        }
+      }
+    }
   }
 
   &[data-component-theme='three'] {
