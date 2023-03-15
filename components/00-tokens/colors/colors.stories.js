@@ -35,8 +35,8 @@ const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
-// const siteFooterThemes = { themes: tokens['site-footer-themes'] };
-// const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
+const siteFooterThemes = { themes: tokens['site-footer-themes'] };
+const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
 
 export default {
   title: 'Tokens/Colors',
@@ -66,6 +66,7 @@ export const GlobalThemeColorPairings = ({
   bannerTheme,
   siteHeaderTwig,
   siteHeaderTheme,
+  siteFooterTheme,
   borderThickness,
   primaryNavPosition,
   menuVariation,
@@ -78,6 +79,7 @@ export const GlobalThemeColorPairings = ({
     ...bannerData,
     ...siteHeaderTwig,
     ...siteHeaderThemes,
+    ...siteFooterThemes,
     ...utilityNavData,
     ...primaryNavData,
     site_name: 'Department of Chemistry',
@@ -96,6 +98,7 @@ export const GlobalThemeColorPairings = ({
     tabs__theme: tabTheme,
     banner__content__background: bannerTheme,
     pull_quote__accent_theme: quoteTheme,
+    site_footer__theme: siteFooterTheme,
   });
 
 GlobalThemeColorPairings.argTypes = {
@@ -149,6 +152,12 @@ GlobalThemeColorPairings.argTypes = {
     name: 'Tabs Theme (dial)',
     type: 'select',
     options: ['one', 'two', 'three'],
+    defaultValue: 'one',
+  },
+  siteFooterTheme: {
+    name: 'Footer Theme (dial)',
+    options: siteFooterThemeOptions,
+    type: 'select',
     defaultValue: 'one',
   },
 };
