@@ -48,6 +48,10 @@
   @media (min-width: tokens.$break-xl) {
     gap: var(--size-spacing-6);
   }
+
+  [data-quick-links-variation='subtle'][data-component-alignment='left'] & {
+    max-width: var(--size-component-layout-width-content);
+  }
 }
 
 .quick-links__heading {
@@ -121,6 +125,10 @@
       grid-template-columns: 1fr 1fr 1fr;
     }
   }
+
+  [data-quick-links-variation='subtle'][data-component-alignment='left'] & {
+    max-width: var(--size-component-layout-width-content);
+  }
 }
 
 .quick-links__list-item {
@@ -151,5 +159,9 @@
       width: 100%;
       object-fit: cover;
     }
+  }
+
+  [data-quick-links-variation='subtle'][data-component-alignment='left'] & {
+    max-width: var(--size-component-layout-width-content);
   }
 }

@@ -39,6 +39,20 @@
       video__width: 'content',
       video__alignment: 'center',
     }%}
+
+    {% include "@atoms/divider/yds-divider.twig" %}
+
+    {% include "@organisms/custom-card-collection/yds-custom-card-collection.twig" with {
+      custom_card_collection__heading: 'Custom Cards',
+      custom_card_collection__featured: false,
+      custom_card_collection__cards:[
+        {},
+        {},
+        {},
+        {},
+      ]
+    }%}
+
     {% include "@atoms/divider/yds-divider.twig" %}
 
     {% include "@organisms/card-collection/yds-card-collection.twig" with {

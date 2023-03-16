@@ -50,4 +50,9 @@
       margin-left: -5%;
     }
   }
+
+  > *,
+  figure > * {
+    width: 100%;
+  }
 }

@@ -154,7 +154,7 @@ $menu-sub-max-width: 19rem;
         border-bottom-width: var(--border-thickness-4);
         padding: var(--size-spacing-7) var(--size-spacing-site-gutter);
         width: calc(100vw - calc(var(--size-spacing-site-gutter) * 2));
-        max-width: var(--size-component-layout-width-max);
+        max-width: var(--size-component-layout-width-site);
         column-count: 3;
       }
 
