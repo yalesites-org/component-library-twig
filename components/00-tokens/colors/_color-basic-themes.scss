@@ -8,6 +8,7 @@ $basic-themes: map.deep-get(tokens.$tokens, 'basic-themes');
     --color-background: var(--basic-themes-#{$basicTheme}-background);
     --color-text: var(--basic-themes-#{$basicTheme}-text);
     --color-heading: var(--basic-themes-#{$basicTheme}-heading);
+    --color-text-shadow: var(--basic-themes-#{$basicTheme}-background);
 
     background-color: var(--color-background);
     color: var(--color-text);

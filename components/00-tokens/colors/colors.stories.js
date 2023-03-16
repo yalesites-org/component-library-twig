@@ -43,6 +43,8 @@ export default {
 };
 
 export const Colors = () => colorsTwig(colorsData);
+export const ColorGlobalThemes = () =>
+  colorGlobalThemeTwig(colorGlobalThemeData);
 
 export const ColorBasicThemes = () => `
   <h2>These pairings are selected to support accessibility standards.</h2>
