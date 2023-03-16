@@ -17,12 +17,6 @@ $break-grand-hero-banner: tokens.$break-m;
   max-width: tokens.$break-max-width;
   margin: 0 auto;
 
-  &[data-grand-hero-overlay-variation='contained'] {
-    @media (min-width: $break-grand-hero-banner) {
-      justify-content: start;
-    }
-  }
-
   @media (min-width: $break-grand-hero-banner) {
     align-items: center;
   }
@@ -64,9 +58,45 @@ $break-grand-hero-banner: tokens.$break-m;
   }
 }
 
+.grand-hero-banner__outer-wrap {
+  width: 100%;
+
+  [data-grand-hero-overlay-variation='contained'] & {
+    align-items: flex-end;
+
+    @media (min-width: $break-grand-hero-banner) {
+      align-items: center;
+    }
+  }
+
+  [data-grand-hero-overlay-variation='full'] & {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+  }
+}
+
+.grand-hero-banner__wrap {
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+
+  [data-grand-hero-overlay-variation='contained'] & {
+    // prettier-ignore
+    max-width: calc(var(--size-component-layout-width-max) + (var(--size-spacing-site-gutter) * 2) );
+  }
+
+  [data-grand-hero-overlay-variation='full'] & {
+    height: 100%;
+    align-items: center;
+  }
+}
+
 .grand-hero-banner__content {
   position: relative;
-  padding: var(--size-spacing-5) var(--size-spacing-7);
+  padding: var(--size-spacing-6) var(--size-spacing-site-gutter)
+    var(--size-spacing-7);
   background: transparent;
   color: var(--color-text);
 
@@ -94,14 +124,16 @@ $break-grand-hero-banner: tokens.$break-m;
 
   [data-grand-hero-overlay-variation='contained'] & {
     margin-bottom: var(--size-spacing-6);
+    width: 100%;
 
     @media (min-width: $break-grand-hero-banner) {
-      margin: var(--size-spacing-site-gutter) 40%;
-      width: 100%;
+      width: auto;
+      max-width: var(--size-component-layout-width-content);
     }
   }
 
   [data-grand-hero-overlay-variation='full'] & {
+    width: 100%;
     height: 100%;
     display: flex;
     align-items: center;

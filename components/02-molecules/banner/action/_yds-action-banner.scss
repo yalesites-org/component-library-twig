@@ -5,16 +5,15 @@
 // get global themes
 $global-banner-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 $component-banner-themes: map.deep-get(tokens.$tokens, 'component-themes');
-$break-cta-banner: tokens.$break-m;
+$break-cta-banner: tokens.$break-l;
 $break-cta-banner-max: $break-cta-banner - 0.05;
-
-// prettier-ignore
-$content-width: clamp(20rem, 60%, calc(var(--size-component-layout-width-content) - (var(--size-spacing-site-gutter) * 4)) );
 
 .cta-banner {
   @include tokens.spacing-page-section($flush-top: true, $flush-bottom: true);
 
   padding: 0;
+
+  --banner-content-max-width: 37rem;
 }
 
 .cta-banner__content-wrapper {
@@ -139,7 +138,7 @@ $content-width: clamp(20rem, 60%, calc(var(--size-component-layout-width-content
     [data-banner-content-layout='left'] &,
     [data-banner-content-layout='right'] & {
       @media (min-width: $break-cta-banner) {
-        max-width: $content-width;
+        max-width: var(--banner-content-max-width);
       }
     }
   }
@@ -194,7 +193,7 @@ $content-width: clamp(20rem, 60%, calc(var(--size-component-layout-width-content
   [data-banner-content-layout='left'] &,
   [data-banner-content-layout='right'] & {
     @media (min-width: $break-cta-banner) {
-      max-width: $content-width;
+      max-width: var(--banner-content-max-width);
     }
   }
 }
