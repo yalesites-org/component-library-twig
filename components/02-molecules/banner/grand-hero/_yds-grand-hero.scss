@@ -125,6 +125,8 @@ $break-grand-hero-banner: tokens.$break-m;
     --color-grand-hero-heading: var(--color-basic-white);
     --color-grand-hero-action: var(--color-basic-white);
     --color-grand-hero-action-secondary: var(--color-slot-one);
+    --color-link-base: var(--color-grand-hero-text);
+    --color-link-hover: var(--color-grand-hero-text);
   }
 
   &[data-component-theme='two'] {
@@ -133,6 +135,8 @@ $break-grand-hero-banner: tokens.$break-m;
     --color-grand-hero-heading: var(--color-gray-800);
     --color-grand-hero-action: var(--color-gray-800);
     --color-grand-hero-action-secondary: var(--color-basic-white);
+    --color-link-base: var(--color-grand-hero-text);
+    --color-link-hover: var(--color-grand-hero-text);
 
     a {
       color: var(--color-gray-800);
@@ -145,6 +149,8 @@ $break-grand-hero-banner: tokens.$break-m;
     --color-grand-hero-heading: var(--color-basic-white);
     --color-grand-hero-action: var(--color-basic-white);
     --color-grand-hero-action-secondary: var(--color-slot-one);
+    --color-link-base: var(--color-grand-hero-text);
+    --color-link-hover: var(--color-grand-hero-text);
   }
 }
 

@@ -3,14 +3,26 @@
 @use '../../../00-tokens/tokens';
 
 $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
+$global-link-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 
 :root {
   // Component themes
   @each $theme, $value in $link-themes {
-    [data-component-theme='#{$theme}'] {
+    [data-basic-theme='#{$theme}'] {
       --color-link-base: var(--color-link-theme-#{$theme}-base);
       --color-link-hover: var(--color-link-theme-#{$theme}-hover);
       --color-text-shadow: var(--color-background-#{$theme}-background-color);
+    }
+  }
+
+  // Global themes, set color slots
+  @each $globalTheme, $value in $global-link-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
+      --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
+      --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
     }
   }
 }
@@ -71,22 +83,6 @@ $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
   &:hover {
     text-decoration: none;
     color: var(--color-link-hover);
-  }
-
-  // theme settings
-  [data-component-theme='one'] & {
-    --color-link-base: var(--color-basic-white);
-    --color-link-hover: var(--color-slot-three);
-  }
-
-  [data-component-theme='two'] & {
-    --color-link-base: var(--color-gray-800);
-    --color-link-hover: var(--color-gray-800);
-  }
-
-  [data-component-theme='three'] & {
-    --color-link-base: var(--color-basic-white);
-    --color-link-hover: var(--color-basic-white);
   }
 }
 
