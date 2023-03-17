@@ -131,6 +131,12 @@
   }
 }
 
+.quick-links__list-item {
+  [data-quick-links-variation='promotional'] & {
+    display: grid;
+  }
+}
+
 .quick-links__link {
   @include atoms.link;
 
