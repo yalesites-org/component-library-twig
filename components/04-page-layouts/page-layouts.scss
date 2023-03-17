@@ -27,6 +27,10 @@ body[data-body-frozen] {
   margin-top: var(--main-content-top-margin, var(--size-spacing-6));
 }
 
+.main-content .page-title {
+  margin-top: var(--size-spacing-7); // 2rem
+}
+
 // The last item inside the `.main-content` area should have some space between
 // it and the site footer (size-spacing-12 below) - unless it is designated as
 // `$flush-bottom` above. Then it will have no bottom-margin separating it from
