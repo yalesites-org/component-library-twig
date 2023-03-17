@@ -32,6 +32,13 @@
       {% endblock %}
     {% endembed %}
 
+    {% include "@molecules/pull-quote/yds-pull-quote.twig" with {
+      pull_quote__width: 'site',
+      pull_quote__alignment: 'left',
+      pull_quote__style: 'bar-right',
+      pull_quote__quote: 'Our platform will transform our ability to study metabolic filaments and, coupled with biochemical and biophysical tools, manipulate enzyme structures and metabolic activity in cells.',
+    } %}
+
     {% include "@molecules/image/yds-content-image.twig" with {
       content_image__width:'site',
       content_image__alignment: 'left', 
