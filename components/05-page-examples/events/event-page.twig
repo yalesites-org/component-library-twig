@@ -3,13 +3,15 @@
     {% include "@organisms/site-header/yds-site-header.twig" %}
   {% endblock %}
   {% block page__content %}
-    {% include "@organisms/menu/breadcrumbs/yds-breadcrumbs.twig" with {
-      breadcrumbs__items: [
-        {title: 'Home', url: '#'},
-        {title: 'Events', url: '#'},
-        {title: page_title__heading, url: '#', is_active: true},
-      ],
-    } %}
+    {% if show_breadcrumbs %}
+      {% include "@organisms/menu/breadcrumbs/yds-breadcrumbs.twig" with {
+        breadcrumbs__items: [
+          {title: 'Home', url: '#'},
+          {title: 'Events', url: '#'},
+          {title: page_title__heading, url: '#', is_active: true},
+        ],
+      } %}
+    {% endif %}
     {% embed "@molecules/page-title/yds-page-title.twig" %}
       {% block page_title__meta %}
         {% include "@molecules/meta/event-meta/yds-event-meta.twig" %}
