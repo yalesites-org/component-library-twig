@@ -88,6 +88,17 @@ $break-grand-hero-banner: tokens.$break-m;
     height: 100%;
     align-items: center;
   }
+
+  [data-grand-hero-width='site'] & {
+    // prettier-ignore
+    max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-10)));
+
+    @media (min-width: $break-grand-hero-banner) {
+      // prettier-ignore
+      max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-site-gutter) * 2));
+      margin: 0 auto;
+    }
+  }
 }
 
 .grand-hero-banner__content {

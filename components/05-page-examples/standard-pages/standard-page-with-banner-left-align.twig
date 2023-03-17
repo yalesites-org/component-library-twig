@@ -1,9 +1,12 @@
 {% extends "@page-layouts/yds-full-width.twig" %}
   {% block page__content %}
     {% if banner_type == 'action' %}
-      {% include "@molecules/banner/action/yds-action-banner.twig" %}
+      {% include "@molecules/banner/action/yds-action-banner.twig" with {
+        banner__width: 'site',
+      }%}
     {% else %}
       {% include "@molecules/banner/grand-hero/yds-grand-hero.twig" with {
+        grand_hero__width: 'site',
         grand_hero__heading: banner__heading,
         grand_hero__snippet: banner__snippet,
         grand_hero__link__content: banner__link__content,
