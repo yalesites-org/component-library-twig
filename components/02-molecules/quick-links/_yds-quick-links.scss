@@ -137,6 +137,10 @@
 
 .quick-links__link {
   @include atoms.link;
+
+  [data-quick-links-variation='subtle'] & {
+    --color-text-shadow: var(--color-basic-white);
+  }
 }
 
 .quick-links__cta {

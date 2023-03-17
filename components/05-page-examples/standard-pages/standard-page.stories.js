@@ -254,6 +254,10 @@ export const WithBannerLeftAlign = ({
   bannerType,
   videoHeading,
   videoCaption,
+  QLheading,
+  QLdescription,
+  QLimage,
+  QLvariation,
 }) =>
   standardPageBannerLeftAlignTwig({
     site_name: siteName,
@@ -277,6 +281,11 @@ export const WithBannerLeftAlign = ({
     ...textWithImageData,
     ...referenceCardData,
     ...customCardData,
+    ...socialLinksData,
+    ...videoData,
+    ...accordionData,
+    ...tabData,
+    ...mediaGridData,
     banner__heading: heading,
     banner__snippet: snippet,
     banner__link__content: linkContent,
@@ -284,14 +293,14 @@ export const WithBannerLeftAlign = ({
     banner__link__style: linkStyle,
     banner__content__layout: contentLayout,
     banner__content__background: bgColor,
-    ...socialLinksData,
     banner_type: bannerType,
-    ...videoData,
+    quick_links__heading: QLheading,
+    quick_links__description: QLdescription,
+    quick_links__image: QLimage,
+    quick_links__variation: QLvariation,
+    quick_links__links: quickLinksData.quick_links__links,
     video__heading: videoHeading,
     video__text: videoCaption,
-    ...accordionData,
-    ...tabData,
-    ...mediaGridData,
   });
 WithBannerLeftAlign.argTypes = {
   heading: {
@@ -332,6 +341,27 @@ WithBannerLeftAlign.argTypes = {
     type: 'select',
     options: ['action', 'grand-hero'],
     defaultValue: 'grand-hero',
+  },
+  QLheading: {
+    name: 'Quick Links Heading',
+    type: 'string',
+    defaultValue: quickLinksData.quick_links__heading,
+  },
+  QLdescription: {
+    name: 'Quick Links Description',
+    type: 'string',
+    defaultValue: quickLinksData.quick_links__description,
+  },
+  QLimage: {
+    name: 'With image',
+    type: 'boolean',
+    defaultValue: true,
+  },
+  QLvariation: {
+    name: 'Quick Links Variation',
+    type: 'select',
+    options: ['promotional', 'subtle'],
+    defaultValue: 'subtle',
   },
   videoHeading: {
     name: 'Video Heading',
