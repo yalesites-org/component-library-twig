@@ -131,10 +131,6 @@
   }
 }
 
-.quick-links__list-item {
-  display: grid;
-}
-
 .quick-links__link {
   @include atoms.link;
 
