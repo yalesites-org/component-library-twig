@@ -9,10 +9,21 @@
     display: block;
     clear: both;
   }
+
+  &[data-component-width='site'][data-wrapped-image-alignment] {
+    margin: 0 auto;
+    max-width: var(--size-component-layout-width-site);
+    padding-inline: 0;
+  }
 }
 
 .wrapped-image__inner {
   position: relative;
+
+  [data-component-width='site'] & {
+    margin: 0;
+    max-width: var(--size-component-layout-width-content);
+  }
 }
 
 .wrapped-image__image {

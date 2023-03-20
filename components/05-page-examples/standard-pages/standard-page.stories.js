@@ -49,7 +49,7 @@ export default {
         'image',
         'image--highlight',
         'image--site',
-        'image--max',
+        'image--content',
         'wrapped-image',
         'text-with-image',
         'text-with-image--highlight',
