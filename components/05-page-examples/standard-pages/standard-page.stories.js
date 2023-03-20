@@ -47,9 +47,6 @@ export default {
       options: [
         'none',
         'image',
-        'image--highlight',
-        'image--site',
-        'image--content',
         'wrapped-image',
         'text-with-image',
         'text-with-image--highlight',
