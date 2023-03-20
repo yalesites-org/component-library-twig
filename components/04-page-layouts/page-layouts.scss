@@ -28,7 +28,13 @@ body[data-body-frozen] {
 }
 
 .main-content .page-title {
-  margin-top: var(--size-spacing-7); // 2rem
+  margin-top: var(--size-spacing-10); // 4rem
+}
+
+// Subtract 2rem to the 4rem to have a negative number so that the margin-top of
+// the page title does not affect the spacing when there are breadcrumbs.
+.main-content .breadcrumbs__wrapper {
+  margin-bottom: calc(var(--size-spacing-7) - var(--size-spacing-10));
 }
 
 // The last item inside the `.main-content` area should have some space between
