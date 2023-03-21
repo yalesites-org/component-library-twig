@@ -7,6 +7,7 @@
 
   overflow: hidden;
   position: relative;
+  border-bottom: var(--size-thickness-1) solid var(--color-gray-500);
 
   [data-component-alignment='left'] & {
     max-width: var(--size-component-layout-width-content);
