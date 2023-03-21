@@ -29,12 +29,31 @@ body[data-body-frozen] {
 
 .main-content .page-title {
   margin-top: var(--size-spacing-10); // 4rem
+
+  @media (max-width: tokens.$break-l) {
+    margin-top: var(--size-spacing-8); // 2.5rem large breakpoints
+  }
+
+  @media (max-width: tokens.$break-s) {
+    margin-top: var(--size-spacing-7); // 2rem small breakpoints
+  }
 }
 
-// Subtract 2rem to the 4rem to have a negative number so that the margin-top of
-// the page title does not affect the spacing when there are breadcrumbs.
+// Subtract to have a negative numbers so that the margin-top of the page
+// title does not affect the spacing when there are breadcrumbs.
 .main-content .breadcrumbs__wrapper {
+  // Subtract 2rem to the 4rem
   margin-bottom: calc(var(--size-spacing-7) - var(--size-spacing-10));
+
+  // Subtract 1.5rem to the 2.5rem
+  @media (max-width: tokens.$break-l) {
+    margin-bottom: calc(1.5rem - var(--size-spacing-8));
+  }
+
+  // Subtract 1rem to the 2rem
+  @media (max-width: tokens.$break-s) {
+    margin-bottom: calc(var(--size-spacing-5) - var(--size-spacing-7));
+  }
 }
 
 // The last item inside the `.main-content` area should have some space between
