@@ -43,31 +43,35 @@
     </div>
   {% endif %}
   {% if grand_hero__heading or grand_hero__snippet or grand_hero__link__content and grand_hero__link__url %}
-    <div {{ bem('content', [], grand_hero__base_class) }} data-component-theme={{ grand_hero__content__background }}>
-      <div {{ bem('content-inner', [], grand_hero__base_class) }}>
-        {% if grand_hero__heading %}
-          {% include "@atoms/typography/headings/yds-heading.twig" with {
-            heading__level: '2',
-            heading__blockname: grand_hero__base_class,
-            heading: grand_hero__heading,
-          } %}
-        {% endif %}
-        {% if grand_hero__snippet %}
-          {% include "@atoms/typography/text/yds-text.twig" with {
-            text__base_class: 'snippet',
-            text__blockname: grand_hero__base_class,
-            text__content: grand_hero__snippet,
-          } %}
-        {% endif %}
-        {% if grand_hero__link__content and grand_hero__link__url %}
-          {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-            link__content: grand_hero__link__content,
-            link__url: grand_hero__link__url,
-            link__blockname: grand_hero__base_class,
-            link__type: 'with-chevron',
-            link__style: grand_hero__link__style|default('no-underline-animation'),
-          } %}
-        {% endif %}
+    <div {{ bem('outer-wrap', [], grand_hero__base_class) }}>
+      <div {{ bem('wrap', [], grand_hero__base_class) }}>
+        <div {{ bem('content', [], grand_hero__base_class) }} data-component-theme={{ grand_hero__content__background }}>
+          <div {{ bem('content-inner', [], grand_hero__base_class) }}>
+            {% if grand_hero__heading %}
+              {% include "@atoms/typography/headings/yds-heading.twig" with {
+                heading__level: '2',
+                heading__blockname: grand_hero__base_class,
+                heading: grand_hero__heading,
+              } %}
+            {% endif %}
+            {% if grand_hero__snippet %}
+              {% include "@atoms/typography/text/yds-text.twig" with {
+                text__base_class: 'snippet',
+                text__blockname: grand_hero__base_class,
+                text__content: grand_hero__snippet,
+              } %}
+            {% endif %}
+            {% if grand_hero__link__content and grand_hero__link__url %}
+              {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+                link__content: grand_hero__link__content,
+                link__url: grand_hero__link__url,
+                link__blockname: grand_hero__base_class,
+                link__type: 'with-chevron',
+                link__style: grand_hero__link__style|default('no-underline-animation'),
+              } %}
+            {% endif %}
+          </div>
+        </div>
       </div>
     </div>
   {% endif %}

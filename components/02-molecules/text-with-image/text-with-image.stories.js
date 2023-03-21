@@ -17,8 +17,8 @@ export default {
     width: {
       name: 'Width',
       type: 'select',
-      options: ['highlight', 'feature'],
-      defaultValue: 'feature',
+      options: ['highlight', 'site'],
+      defaultValue: 'site',
     },
     position: {
       name: 'Image Position',
