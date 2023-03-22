@@ -18,6 +18,7 @@ import breadcrumbData from '../../03-organisms/menu/breadcrumbs/breadcrumbs.yml'
 import imageData from '../../01-atoms/images/image/image.yml';
 import textWithImageData from '../../02-molecules/text-with-image/text-with-image.yml';
 import bannerData from '../../02-molecules/banner/banner.yml';
+import grandHeroData from '../../02-molecules/banner/grand-hero.yml';
 import referenceCardData from '../../02-molecules/cards/reference-card/examples/news-card.yml';
 import customCardData from '../../02-molecules/cards/custom-card/custom-card.yml';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
@@ -133,6 +134,9 @@ export const WithBanner = ({
   bannerType,
   videoHeading,
   videoCaption,
+  grandHeroOverlayVariation,
+  grandHeroSize,
+  grandHeroWithVideo,
 }) =>
   standardPageBannerTwig({
     site_name: siteName,
@@ -156,6 +160,7 @@ export const WithBanner = ({
     ...textWithImageData,
     ...referenceCardData,
     ...customCardData,
+    banner_type: bannerType,
     banner__heading: heading,
     banner__snippet: snippet,
     banner__link__content: linkContent,
@@ -163,8 +168,15 @@ export const WithBanner = ({
     banner__link__style: linkStyle,
     banner__content__layout: contentLayout,
     banner__content__background: bgColor,
+    grand_hero__heading: heading,
+    grand_hero__snippet: snippet,
+    grand_hero__link__content: linkContent,
+    grand_hero__link__url: grandHeroData.grand_hero__link__url,
+    grand_hero__content__background: bgColor,
+    grand_hero__overlay_variation: grandHeroOverlayVariation,
+    grand_hero__size: grandHeroSize,
+    grand_hero__video: grandHeroWithVideo ? 'true' : 'false',
     ...socialLinksData,
-    banner_type: bannerType,
     ...videoData,
     video__heading: videoHeading,
     video__text: videoCaption,
@@ -212,6 +224,23 @@ WithBanner.argTypes = {
     options: ['action', 'grand-hero'],
     defaultValue: 'grand-hero',
   },
+  grandHeroOverlayVariation: {
+    name: 'Grand Hero Content Overlay',
+    type: 'select',
+    options: ['contained', 'full'],
+    defaultValue: 'full',
+  },
+  grandHeroSize: {
+    name: 'Grand Hero Content Size',
+    type: 'select',
+    options: ['reduced', 'full'],
+    defaultValue: 'full',
+  },
+  grandHeroWithVideo: {
+    name: 'Grand Hero With Video',
+    type: 'boolean',
+    defaultValue: false,
+  },
   videoHeading: {
     name: 'Video Heading',
     type: 'string',
@@ -249,6 +278,9 @@ export const WithBannerLeftAlign = ({
   bgColor,
   linkStyle,
   bannerType,
+  grandHeroOverlayVariation,
+  grandHeroSize,
+  grandHeroWithVideo,
   videoHeading,
   videoCaption,
   QLheading,
@@ -283,6 +315,7 @@ export const WithBannerLeftAlign = ({
     ...accordionData,
     ...tabData,
     ...mediaGridData,
+    banner_type: bannerType,
     banner__heading: heading,
     banner__snippet: snippet,
     banner__link__content: linkContent,
@@ -290,7 +323,14 @@ export const WithBannerLeftAlign = ({
     banner__link__style: linkStyle,
     banner__content__layout: contentLayout,
     banner__content__background: bgColor,
-    banner_type: bannerType,
+    grand_hero__heading: heading,
+    grand_hero__snippet: snippet,
+    grand_hero__link__content: linkContent,
+    grand_hero__link__url: grandHeroData.grand_hero__link__url,
+    grand_hero__content__background: bgColor,
+    grand_hero__overlay_variation: grandHeroOverlayVariation,
+    grand_hero__size: grandHeroSize,
+    grand_hero__video: grandHeroWithVideo ? 'true' : 'false',
     quick_links__heading: QLheading,
     quick_links__description: QLdescription,
     quick_links__image: QLimage,
@@ -338,6 +378,23 @@ WithBannerLeftAlign.argTypes = {
     type: 'select',
     options: ['action', 'grand-hero'],
     defaultValue: 'grand-hero',
+  },
+  grandHeroOverlayVariation: {
+    name: 'Grand Hero Content Overlay',
+    type: 'select',
+    options: ['contained', 'full'],
+    defaultValue: 'full',
+  },
+  grandHeroSize: {
+    name: 'Grand Hero Content Size',
+    type: 'select',
+    options: ['reduced', 'full'],
+    defaultValue: 'full',
+  },
+  grandHeroWithVideo: {
+    name: 'Grand Hero With Video',
+    type: 'boolean',
+    defaultValue: false,
   },
   QLheading: {
     name: 'Quick Links Heading',
