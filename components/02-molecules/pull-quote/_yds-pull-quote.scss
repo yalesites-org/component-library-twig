@@ -11,6 +11,16 @@ blockquote {
   @include tokens.spacing-page-inner;
 }
 
+.pull-quote__inner {
+  [data-component-alignment='left'][data-pull-quote-style='bar-left'] & {
+    padding-left: var(--size-spacing-6);
+  }
+
+  [data-component-alignment='left'][data-pull-quote-style='bar-right'] & {
+    padding-right: var(--size-spacing-6);
+  }
+}
+
 .pull-quote__figure {
   [data-pull-quote-style='bar-left'] & {
     padding-left: var(--size-spacing-6);
