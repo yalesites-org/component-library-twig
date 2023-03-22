@@ -185,6 +185,24 @@ export const WithBanner = ({
     ...mediaGridData,
   });
 WithBanner.argTypes = {
+  bannerType: {
+    name: 'Banner Type',
+    type: 'select',
+    options: ['action', 'grand-hero'],
+    defaultValue: 'grand-hero',
+  },
+  contentLayout: {
+    name: 'Banner Content Layout',
+    type: 'select',
+    options: ['bottom', 'left', 'right'],
+    defaultValue: 'bottom',
+  },
+  bgColor: {
+    name: 'Banner Content Background Color',
+    type: 'select',
+    options: colorPairingsData,
+    defaultValue: 'gray-800',
+  },
   heading: {
     name: 'Banner Heading',
     type: 'string',
@@ -200,29 +218,11 @@ WithBanner.argTypes = {
     type: 'string',
     defaultValue: bannerData.banner__link__content,
   },
-  contentLayout: {
-    name: 'Banner Content Layout',
-    type: 'select',
-    options: ['bottom', 'left', 'right'],
-    defaultValue: 'bottom',
-  },
-  bgColor: {
-    name: 'Banner Content Background Color',
-    type: 'select',
-    options: colorPairingsData,
-    defaultValue: 'gray-800',
-  },
   linkStyle: {
     name: 'Link Style',
     type: 'select',
     options: ['cta', 'text-link'],
     defaultValue: 'cta',
-  },
-  bannerType: {
-    name: 'Banner Type',
-    type: 'select',
-    options: ['action', 'grand-hero'],
-    defaultValue: 'grand-hero',
   },
   grandHeroOverlayVariation: {
     name: 'Grand Hero Content Overlay',
@@ -340,6 +340,24 @@ export const WithBannerLeftAlign = ({
     video__text: videoCaption,
   });
 WithBannerLeftAlign.argTypes = {
+  bannerType: {
+    name: 'Banner Type',
+    type: 'select',
+    options: ['action', 'grand-hero'],
+    defaultValue: 'grand-hero',
+  },
+  contentLayout: {
+    name: 'Banner Content Layout',
+    type: 'select',
+    options: ['bottom', 'left', 'right'],
+    defaultValue: 'bottom',
+  },
+  bgColor: {
+    name: 'Banner Content Background Color',
+    type: 'select',
+    options: colorPairingsData,
+    defaultValue: 'gray-800',
+  },
   heading: {
     name: 'Banner Heading',
     type: 'string',
@@ -355,29 +373,11 @@ WithBannerLeftAlign.argTypes = {
     type: 'string',
     defaultValue: bannerData.banner__link__content,
   },
-  contentLayout: {
-    name: 'Banner Content Layout',
-    type: 'select',
-    options: ['bottom', 'left', 'right'],
-    defaultValue: 'bottom',
-  },
-  bgColor: {
-    name: 'Banner Content Background Color',
-    type: 'select',
-    options: colorPairingsData,
-    defaultValue: 'gray-800',
-  },
   linkStyle: {
     name: 'Link Style',
     type: 'select',
     options: ['cta', 'text-link'],
     defaultValue: 'cta',
-  },
-  bannerType: {
-    name: 'Banner Type',
-    type: 'select',
-    options: ['action', 'grand-hero'],
-    defaultValue: 'grand-hero',
   },
   grandHeroOverlayVariation: {
     name: 'Grand Hero Content Overlay',
