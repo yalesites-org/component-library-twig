@@ -120,7 +120,7 @@
 .tabs__container {
   position: absolute;
   width: 100%;
-  padding-top: var(--size-spacing-9);
+  padding-block: var(--size-spacing-9);
 
   &:not(.is-active) {
     @include tokens.animate-hidden;
