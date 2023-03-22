@@ -76,14 +76,12 @@ $menu-sub-max-width: 19rem;
     place-content: center;
   }
 
-  @media (max-width: tokens.$break-mobile-max) {
-    [data-site-header-nav-position='left'] & {
-      margin-left: calc(var(--size-spacing-5) * -1);
-    }
+  [data-site-header-nav-position='left'] & {
+    margin-left: calc(var(--size-spacing-5) * -1);
+  }
 
-    [data-site-header-nav-position='right'] & {
-      margin-right: calc(var(--size-spacing-5) * -1);
-    }
+  [data-site-header-nav-position='right'] & {
+    margin-right: calc(var(--size-spacing-5) * -1);
   }
 }
 
