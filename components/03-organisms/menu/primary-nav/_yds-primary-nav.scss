@@ -20,6 +20,7 @@ $menu-sub-max-width: 19rem;
   font: var(--font-style-nav-primary-0);
   color: var(--color-heading);
   text-align: left;
+  padding: 0 var(--size-spacing-5);
 
   &[aria-expanded='true'] {
     color: var(--color-navigation-expanded-item);
@@ -32,11 +33,6 @@ $menu-sub-max-width: 19rem;
 
   @media (min-width: tokens.$break-mobile) {
     position: relative;
-    padding: var(--size-spacing-5);
-
-    [data-menu-variation='basic'] & {
-      padding-top: var(--size-spacing-2);
-    }
 
     [data-menu-variation='mega'] & {
       border: var(--border-thickness-1) solid transparent;
@@ -197,6 +193,10 @@ $menu-sub-max-width: 19rem;
   }
 
   .primary-nav__menu--level-1 {
+    [data-menu-variation='basic'] & {
+      padding-top: var(--size-spacing-4);
+    }
+
     [data-menu-variation='basic'] :not(:last-child) > & {
       // prettier-ignore
       border-left: var(--border-thickness-4) solid var(--color-navigation-border);
