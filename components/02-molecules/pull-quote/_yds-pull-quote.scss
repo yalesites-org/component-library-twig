@@ -40,9 +40,15 @@ blockquote {
   }
 
   [data-component-alignment='left'] & {
-    max-width: calc(
-      var(--size-component-layout-width-content) - var(--size-spacing-6)
-    );
+    @media (min-width: tokens.$break-mobile) {
+      max-width: calc(var(--size-component-layout-width-content) - 11rem);
+    }
+  }
+
+  [data-pull-quote-style='bar-right'][data-component-alignment='left'] & {
+    @media (min-width: tokens.$break-mobile) {
+      margin-left: 11rem;
+    }
   }
 }
 
