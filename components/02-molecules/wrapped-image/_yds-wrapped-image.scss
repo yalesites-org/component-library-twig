@@ -39,12 +39,14 @@
       & {
       float: left;
       margin-right: 5%;
+      margin-top: var(--size-spacing-4);
     }
 
     [data-wrapped-image-style='floated'][data-wrapped-image-alignment='right']
       & {
       float: right;
       margin-left: 5%;
+      margin-top: var(--size-spacing-4);
     }
 
     // offset
