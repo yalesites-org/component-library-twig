@@ -42,12 +42,13 @@ blockquote {
   [data-component-alignment='left'] & {
     @media (min-width: tokens.$break-mobile) {
       max-width: calc(var(--size-component-layout-width-content) - 11rem);
+      margin-left: var(--size-spacing-7);
     }
   }
 
   [data-pull-quote-style='bar-right'][data-component-alignment='left'] & {
     @media (min-width: tokens.$break-mobile) {
-      margin-left: 11rem;
+      margin-left: 9rem;
     }
   }
 }
