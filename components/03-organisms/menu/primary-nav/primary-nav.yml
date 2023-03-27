@@ -33,6 +33,7 @@ items:
         url: '#'
       - title: 'Staff Directory'
         url: '#'
+        is_active: true
       - title: 'Mission & History'
         url: '#'
         below:
@@ -48,6 +49,7 @@ items:
         url: '#'
   - title: 'Academics'
     url: '#'
+    is_active: true
   - title: 'Admission & Aid'
     url: '#'
     below:
