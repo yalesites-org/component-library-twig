@@ -34,13 +34,11 @@
   }) %}
 {% endif %}
 
-{% if quick_links__variation == 'subtle' %}
-  {% set quick_links__attributes = quick_links__attributes|merge({
-    'data-component-width': 'content',
-  }) %}
-{% endif %}
+{% set quick_links__attributes = quick_links__attributes|merge(attributes) %}
 
 <div {{ add_attributes(quick_links__attributes) }}>
+  {% block prefix_suffix %}
+  {% endblock %}
   <div {{ bem('inner', [], quick_links__base_class) }}>
     <div {{ bem('text', [], quick_links__base_class) }}>
       {% include "@atoms/typography/headings/yds-heading.twig"  with {

@@ -14,10 +14,8 @@
 {% set text_field__attributes = text_field__attributes|merge(attributes) %}
 
 <div {{ add_attributes(text_field__attributes) }}>
-
   {% block prefix_suffix %}
   {% endblock %}
-
   <div {{ bem('inner', [], text_field__base_class) }}>
     {% include "@atoms/typography/text/yds-text.twig" with {
       text__content: text_field__content,

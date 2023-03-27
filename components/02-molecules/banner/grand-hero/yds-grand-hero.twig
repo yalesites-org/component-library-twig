@@ -21,11 +21,15 @@
 
 {% set grand_hero__attributes = {
   'data-grand-hero-overlay-variation': grand_hero__overlay_variation,
-  'data-grand-hero-size' : grand_hero__size, 
+  'data-grand-hero-size' : grand_hero__size,
   class: bem(grand_hero__base_class),
 } %}
 
+{% set grand_hero__attributes = grand_hero__attributes|merge(attributes) %}
+
 <div {{ add_attributes(grand_hero__attributes) }}>
+  {% block prefix_suffix %}
+  {% endblock %}
   {% if grand_hero__video == 'true' %}
   <div {{ bem('video', [], grand_hero__base_class) }}>
     {% block grand_hero__video %}

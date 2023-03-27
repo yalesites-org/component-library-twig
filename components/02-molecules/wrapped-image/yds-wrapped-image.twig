@@ -18,6 +18,8 @@
   'class': bem(wrapped_image__base_class),
 } %}
 
+{% set wrapped_image__attributes = wrapped_image__attributes|merge(attributes) %}
+
 {% set wrapped_image__image %}
   {% block wrapped_image__image %}
     {% include "@atoms/images/image/_responsive-image.twig" %}
@@ -25,6 +27,8 @@
 {% endset %}
 
 <div {{ add_attributes(wrapped_image__attributes) }}>
+  {% block prefix_suffix %}
+  {% endblock %}
   <div {{ bem('inner', [], wrapped_image__base_class) }}>
     {# Image #}
     <div {{ bem('image', [], wrapped_image__base_class) }}>
