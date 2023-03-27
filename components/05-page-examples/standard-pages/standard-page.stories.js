@@ -10,6 +10,7 @@ import standardPageSidebarTwig from './standard-page-with-sidebar.twig';
 import standardPageQuickLinksTwig from './standard-page-with-quicklinks.twig';
 import standardPageBannerLeftAlignTwig from './standard-page-with-banner-left-align.twig';
 // import standardPageVideoTwig from './standard-page-with-video.twig';
+import standardPageShortTwig from './standard-page-short.twig';
 
 // Data files.
 import utilityNavData from '../../03-organisms/menu/utility-nav/utility-nav.yml';
@@ -85,6 +86,48 @@ export const Basic = ({
   calloutBackground,
 }) =>
   standardPageTwig({
+    site_name: siteName,
+    page_title__heading: pageTitle,
+    page_title__meta: null,
+    site_header__border_thickness: headerBorderThickness,
+    site_header__nav_position: primaryNavPosition,
+    site_header__theme: siteHeaderTheme,
+    site_footer__border_thickness: footerBorderThickness,
+    site_footer__theme: siteFooterTheme,
+    utility_nav__items: utilityNavData.items,
+    primary_nav__items: primaryNavData.items,
+    menu__variation: menuVariation,
+    utility_nav__link__content: utilityNavLinkContent,
+    utility_nav__link__url: '#',
+    utility_nav__search: utilityNavSearch,
+    breadcrumbs__items: breadcrumbData.items,
+    ...imageData.responsive_images['4x3'],
+    intro_content: introContent,
+    callout__background_color: calloutBackground,
+    ...textWithImageData,
+    ...referenceCardData,
+    ...socialLinksData,
+  });
+
+export const BasicShort = ({
+  siteName,
+  pageTitle,
+  headerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-header-border-thickness',
+  ),
+  primaryNavPosition = localStorage.getItem('yds-cl-twig-primary-nav-position'),
+  siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
+  utilityNavLinkContent,
+  utilityNavSearch,
+  siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
+  footerBorderThickness = localStorage.getItem(
+    'yds-cl-twig-footer-border-thickness',
+  ),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
+  introContent,
+  calloutBackground,
+}) =>
+  standardPageShortTwig({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
