@@ -41,7 +41,7 @@
 
 .text-with-image__image {
   @media (min-width: tokens.$break-mobile) {
-    margin-top: 4px;
+    margin-top: var(--size-spacing-2);
 
     // Layout Options
     [data-image-position='image-left'] & {
