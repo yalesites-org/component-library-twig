@@ -1,5 +1,7 @@
 @use '../../00-tokens/tokens';
 
+$wrapped-image-max: '1470px';
+
 .wrapped-image {
   @include tokens.spacing-page-inner;
 
@@ -11,9 +13,14 @@
   }
 
   &[data-component-width='site'][data-wrapped-image-alignment] {
+    width: 100%;
     margin: 0 auto;
-    max-width: var(--size-component-layout-width-site);
-    padding-inline: 0;
+    padding-inline: var(--size-spacing-site-gutter);
+
+    @media (min-width: $wrapped-image-max) {
+      max-width: var(--size-component-layout-width-site);
+      padding-inline: 0;
+    }
   }
 }
 
@@ -21,8 +28,12 @@
   position: relative;
 
   [data-component-width='site'] & {
-    margin: 0;
-    max-width: var(--size-component-layout-width-content);
+    width: 100%;
+
+    @media (min-width: $wrapped-image-max) {
+      margin: 0;
+      max-width: var(--size-component-layout-width-content);
+    }
   }
 }
 
