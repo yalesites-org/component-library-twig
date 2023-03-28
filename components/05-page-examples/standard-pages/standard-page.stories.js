@@ -50,7 +50,6 @@ export default {
         'none',
         'image',
         'wrapped-image',
-        'text-with-image--focus-content',
         'text-with-image--focus-image',
         'text-with-image--focus-equal',
         'collection-featured',

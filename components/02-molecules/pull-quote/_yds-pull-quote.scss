@@ -8,7 +8,7 @@ blockquote {
   --color-pull-quote-quote: var(--color-gray-800);
   --color-pull-quote-attribution: var(--color-basic-brown-gray);
 
-  @include tokens.spacing-page-inner;
+  @include tokens.spacing-page-section;
 }
 
 .pull-quote__figure {

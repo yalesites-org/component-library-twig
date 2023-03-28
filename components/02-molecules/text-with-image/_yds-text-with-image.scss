@@ -32,10 +32,17 @@
       grid-template-columns: 5fr 3fr;
     }
   }
+
+  :not(:last-child) & {
+    padding-bottom: var(--size-spacing-10);
+    border-bottom: var(--border-thickness-1) solid var(--color-divider-subtle);
+  }
 }
 
 .text-with-image__image {
   @media (min-width: tokens.$break-mobile) {
+    margin-top: 4px;
+
     // Layout Options
     [data-image-position='image-left'] & {
       grid-area: primary;
