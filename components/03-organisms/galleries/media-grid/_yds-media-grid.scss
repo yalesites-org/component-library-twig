@@ -41,6 +41,14 @@
   overflow: hidden;
   opacity: 1;
 
+  [data-component-width='content'] & {
+    width: 100%;
+
+    img {
+      width: 100%;
+    }
+  }
+
   [data-media-grid-variation='interactive'] &:focus-visible,
   [data-media-grid-variation='interactive'] .media-grid__item:hover & {
     opacity: 0.8;
