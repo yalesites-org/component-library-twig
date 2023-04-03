@@ -37,7 +37,7 @@
   // on the page.
   .text-with-image:not(:last-child) & {
     padding-bottom: var(--size-spacing-10);
-    border-bottom: var(--border-thickness-1) solid var(--color-divider-subtle);
+    border-bottom: var(--thickness-divider) solid var(--color-divider);
   }
 }
 
