@@ -36,8 +36,12 @@
   // add bottom border and bottom padding if text with image isn't the last element
   // on the page.
   .text-with-image:not(:last-child) & {
-    padding-bottom: var(--size-spacing-10);
+    padding-bottom: var(--size-spacing-5);
     border-bottom: var(--thickness-divider) solid var(--color-divider);
+
+    @media (min-width: tokens.$break-mobile) {
+      padding-bottom: var(--size-spacing-10);
+    }
   }
 }
 
