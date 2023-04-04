@@ -34,6 +34,11 @@ export default {
       defaultValue:
         'Parlika (2016) film screening + Q&A with film director Sahraa Karimi',
     },
+    showBreadcrumbs: {
+      name: 'Breadcrumbs',
+      type: 'boolean',
+      defaultValue: true,
+    },
   },
 };
 
@@ -57,6 +62,7 @@ export const EventPage = ({
   format,
   address,
   ctaText,
+  showBreadcrumbs,
 }) =>
   eventPageTwig({
     site_name: siteName,
@@ -83,6 +89,7 @@ export const EventPage = ({
     event_meta__cta_secondary__content: 'Add to calendar',
     event_meta__cta_secondary__href: '#',
     ...socialLinksData,
+    show_breadcrumbs: showBreadcrumbs,
   });
 EventPage.argTypes = {
   pageTitle: {

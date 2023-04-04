@@ -27,6 +27,35 @@ body[data-body-frozen] {
   margin-top: var(--main-content-top-margin, var(--size-spacing-6));
 }
 
+.main-content .page-title {
+  margin-top: var(--size-spacing-10); // 4rem
+
+  @media (max-width: tokens.$break-l) {
+    margin-top: var(--size-spacing-8); // 2.5rem large breakpoints
+  }
+
+  @media (max-width: tokens.$break-s) {
+    margin-top: var(--size-spacing-7); // 2rem small breakpoints
+  }
+}
+
+// Subtract to have a negative numbers so that the margin-top of the page
+// title does not affect the spacing when there are breadcrumbs.
+.main-content .breadcrumbs__wrapper {
+  // Subtract 2rem to the 4rem
+  margin-bottom: calc(var(--size-spacing-7) - var(--size-spacing-10));
+
+  // Subtract 1.5rem to the 2.5rem
+  @media (max-width: tokens.$break-l) {
+    margin-bottom: calc(1.5rem - var(--size-spacing-8));
+  }
+
+  // Subtract 1rem to the 2rem
+  @media (max-width: tokens.$break-s) {
+    margin-bottom: calc(var(--size-spacing-5) - var(--size-spacing-7));
+  }
+}
+
 // The last item inside the `.main-content` area should have some space between
 // it and the site footer (size-spacing-12 below) - unless it is designated as
 // `$flush-bottom` above. Then it will have no bottom-margin separating it from
