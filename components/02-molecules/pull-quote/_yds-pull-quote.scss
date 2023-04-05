@@ -14,7 +14,10 @@ blockquote {
 
   @include tokens.spacing-page-section;
 
-  // global themes, set color slots
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
   @each $globalTheme, $value in $global-quote-themes {
     [data-global-theme='#{$globalTheme}'] & {
       --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
@@ -25,7 +28,8 @@ blockquote {
     }
   }
 
-  // Component themes: set general css variables equal to name spaced variables.
+  // Component themes defaults: iterate over each component theme to establish
+  // default variables.
   @each $theme, $value in $quote-component-themes {
     &[data-component-theme='#{$theme}'] {
       // prettier-ignore
@@ -33,7 +37,7 @@ blockquote {
     }
   }
 
-  // Set specific component themes overrides
+  // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
     --color-pull-quote-accent: var(--color-slot-one);

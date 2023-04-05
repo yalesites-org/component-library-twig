@@ -12,7 +12,8 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
   color: var(--color-text);
   background-color: var(--color-callouts-background);
 
-  // Component themes defaults
+  // Component themes defaults: iterate over each component theme to establish
+  // default variables.
   @each $theme, $value in $component-callout-themes {
     &[data-component-theme='#{$theme}'] {
       // prettier-ignore
@@ -26,7 +27,10 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     }
   }
 
-  // global themes, set color slots to override the defaults above
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
   @each $globalTheme, $value in $global-callout-themes {
     [data-global-theme='#{$globalTheme}'] & {
       --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
@@ -37,7 +41,8 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     }
   }
 
-  // specific component themes overrides
+  // Component theme overrides: set specific component themes overrides
+  /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
     --color-callouts-background: var(--color-slot-one);
     --color-text-shadow: var(--color-slot-one);

@@ -63,7 +63,8 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   // the `::before` element below.
   background-color: transparent;
 
-  // Component themes: set general css variables equal to name spaced variables.
+  // Component themes defaults: iterate over each component theme to establish
+  // default variables.
   @each $theme, $value in $component-banner-themes {
     &[data-component-theme='#{$theme}'] {
       // prettier-ignore
@@ -75,7 +76,10 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     }
   }
 
-  // global themes, set color slots to override the defaults above
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
   @each $globalTheme, $value in $global-banner-themes {
     [data-global-theme='#{$globalTheme}'] & {
       --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
@@ -156,7 +160,8 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     }
   }
 
-  // theme settings
+  // Component theme overrides: set specific component themes overrides
+  /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
     --color-banner-background: var(--color-slot-one);
     --color-banner-text: var(--color-basic-white);
