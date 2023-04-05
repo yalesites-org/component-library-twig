@@ -40,7 +40,7 @@
     </ul>
   </div>
   {% if media_grid__variation == 'interactive' %}
-    <div {{ bem('modal', [], media_grid__base_class) }} data-component-theme="gray-700">
+    <div {{ bem('modal', [], media_grid__base_class) }} data-basic-theme="gray-700">
       {% block media_grid__modal %}
         {% include "@organisms/galleries/media-grid/_yds-media-grid-modal-item.twig" %}
       {% endblock %}
