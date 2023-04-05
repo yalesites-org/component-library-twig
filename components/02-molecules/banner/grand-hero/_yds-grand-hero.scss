@@ -2,7 +2,7 @@
 @use '../../../01-atoms/atoms';
 @use '../../../00-tokens/functions/map';
 
-$global-grand-hero-themes: map.deep-get(tokens.$tokens, 'globalThemes');
+$global-grand-hero-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $component-grand-hero-themes: map.deep-get(tokens.$tokens, 'component-themes');
 $break-grand-hero-banner: tokens.$break-m;
 
@@ -100,16 +100,6 @@ $break-grand-hero-banner: tokens.$break-m;
   background: transparent;
   color: var(--color-text);
 
-  @each $globalTheme, $value in $global-grand-hero-themes {
-    [data-global-theme='#{$globalTheme}'] & {
-      --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
-      --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
-      --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
-      --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
-      --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
-    }
-  }
-
   // Component themes: set general css variables equal to name spaced variables.
   @each $theme, $value in $component-grand-hero-themes {
     &[data-component-theme='#{$theme}'] {
@@ -119,6 +109,17 @@ $break-grand-hero-banner: tokens.$break-m;
       --color-heading: var(--color-grand-hero-heading);
       --color-action: var(--color-grand-hero-action);
       --color-cta-secondary: var(--color-grand-hero-action-secondary);
+    }
+  }
+
+  // global themes, set color slots to override the defaults above
+  @each $globalTheme, $value in $global-grand-hero-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
+      --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
+      --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
     }
   }
 

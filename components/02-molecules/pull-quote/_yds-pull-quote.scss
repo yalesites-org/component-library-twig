@@ -1,7 +1,7 @@
 @use '../../00-tokens/tokens';
 @use '../../00-tokens/functions/map';
 
-$global-quote-themes: map.deep-get(tokens.$tokens, 'globalThemes');
+$global-quote-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $quote-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 blockquote {

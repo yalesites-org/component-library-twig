@@ -32,7 +32,8 @@ const colorsData = {
 };
 const colorComponentThemeData = { themes: tokens['component-themes'] };
 const colorBasicThemeData = { themes: tokens['basic-themes'] };
-const colorGlobalThemeData = { globalThemes: tokens.globalThemes };
+const siteGlobalThemeOptions = Object.keys(tokens['global-themes']);
+const colorGlobalThemeData = { globalThemes: tokens['global-themes'] };
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 const siteFooterThemes = { themes: tokens['site-footer-themes'] };
@@ -145,6 +146,7 @@ export const GlobalThemeColorPairings = ({
   heading,
   description,
   image,
+  globalTheme,
   calloutTheme,
   qlTheme,
   quoteTheme,
@@ -165,6 +167,7 @@ export const GlobalThemeColorPairings = ({
     ...siteFooterThemes,
     ...utilityNavData,
     ...primaryNavData,
+    site_global__theme: globalTheme,
     site_name: 'Department of Chemistry',
     site_header__border_thickness: '8',
     site_header__nav_position: 'left',
@@ -185,6 +188,12 @@ export const GlobalThemeColorPairings = ({
   });
 
 GlobalThemeColorPairings.argTypes = {
+  globalTheme: {
+    name: 'Global Theme (lever)',
+    options: siteGlobalThemeOptions,
+    type: 'select',
+    defaultValue: 'one',
+  },
   siteHeaderTheme: {
     name: 'Header Theme (dial)',
     options: siteHeaderThemeOptions,

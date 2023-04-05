@@ -4,7 +4,7 @@
 $site-header-themes: map.deep-get(tokens.$tokens, site-header-themes);
 $site-header-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
-$global-site-themes: map.deep-get(tokens.$tokens, 'globalThemes');
+$global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
 :root {
   --site-header-animation-speed: var(--animation-speed-slow);
@@ -26,17 +26,6 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'globalThemes');
 
   position: relative;
   z-index: 2;
-
-  // global themes, set color slots
-  @each $globalTheme, $value in $global-site-themes {
-    [data-global-theme='#{$globalTheme}'] & {
-      --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
-      --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
-      --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
-      --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
-      --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
-    }
-  }
 
   // Component themes: set general css variables equal to name spaced variables.
   @each $theme, $value in $site-header-themes {
@@ -71,6 +60,17 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'globalThemes');
       background-color: var(--color-site-header-background);
       color: var(--color-site-header-text);
       border-color: var(--color-site-header-border-color);
+    }
+  }
+
+  // global themes, set color slots to override the defaults above
+  @each $globalTheme, $value in $global-site-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
+      --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
+      --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
     }
   }
 

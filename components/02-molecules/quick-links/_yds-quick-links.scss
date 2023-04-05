@@ -3,7 +3,7 @@
 @use '../../00-tokens/functions/map';
 
 // get global themes
-$global-quick-links-themes: map.deep-get(tokens.$tokens, 'globalThemes');
+$global-quick-links-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .quick-links {

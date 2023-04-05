@@ -4,7 +4,7 @@
 @use '../../../00-tokens/tokens';
 
 $cta-themes: map.deep-get(sass-tokens.$tokens, color, cta, theme);
-$global-cta-themes: map.deep-get(tokens.$tokens, 'globalThemes');
+$global-cta-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $cta-radii: (
   'soft': var(--cta-radius-soft),
   'pill': 100vmax,

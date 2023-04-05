@@ -3,7 +3,7 @@
 @use '../../../00-tokens/functions/map';
 
 // get global themes
-$global-banner-themes: map.deep-get(tokens.$tokens, 'globalThemes');
+$global-banner-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $component-banner-themes: map.deep-get(tokens.$tokens, 'component-themes');
 $break-cta-banner: tokens.$break-l;
 $break-cta-banner-max: $break-cta-banner - 0.05;
@@ -63,16 +63,6 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   // the `::before` element below.
   background-color: transparent;
 
-  @each $globalTheme, $value in $global-banner-themes {
-    [data-global-theme='#{$globalTheme}'] & {
-      --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
-      --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
-      --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
-      --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
-      --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
-    }
-  }
-
   // Component themes: set general css variables equal to name spaced variables.
   @each $theme, $value in $component-banner-themes {
     &[data-component-theme='#{$theme}'] {
@@ -82,6 +72,17 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
       --color-heading: var(--color-banner-heading);
       --color-action: var(--color-banner-action);
       --color-cta-secondary: var(--color-banner-action-secondary);
+    }
+  }
+
+  // global themes, set color slots to override the defaults above
+  @each $globalTheme, $value in $global-banner-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
+      --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
+      --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
     }
   }
 

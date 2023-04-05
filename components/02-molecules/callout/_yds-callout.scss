@@ -4,7 +4,7 @@
 @use '../../01-atoms/atoms';
 
 $component-callout-themes: map.deep-get(sass-tokens.$tokens, component-themes);
-$global-callout-themes: map.deep-get(tokens.$tokens, 'globalThemes');
+$global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
 .callouts {
   @include tokens.spacing-page-section($flush-bottom: true);
@@ -12,7 +12,16 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'globalThemes');
   color: var(--color-text);
   background-color: var(--color-callouts-background);
 
-  // global themes, set color slots
+  // Component themes defaults
+  @each $theme, $value in $component-callout-themes {
+    &[data-component-theme='#{$theme}'] {
+      // prettier-ignore
+      --color-callouts-background: var(--callout-themes-#{$theme}-background);
+      --color-text-shadow: var(--callout-themes-#{$theme}-background);
+    }
+  }
+
+  // global themes, set color slots to override the defaults above
   @each $globalTheme, $value in $global-callout-themes {
     [data-global-theme='#{$globalTheme}'] & {
       --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
@@ -20,15 +29,6 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'globalThemes');
       --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
       --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
-    }
-  }
-
-  // Component themes
-  @each $theme, $value in $component-callout-themes {
-    &[data-component-theme='#{$theme}'] {
-      // prettier-ignore
-      --color-callouts-background: var(--callout-themes-#{$theme}-background);
-      --color-text-shadow: var(--callout-themes-#{$theme}-background);
     }
   }
 

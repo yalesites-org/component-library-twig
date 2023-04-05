@@ -6,10 +6,10 @@ import siteFooterExamples from './_site-footer--examples.twig';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 
 const siteFooterThemes = { themes: tokens['site-footer-themes'] };
-const siteGlobalThemes = { themes: tokens.globalThemes };
+const siteGlobalThemes = { themes: tokens['global-themes'] };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
-const siteGlobalThemeOptions = Object.keys(tokens.globalThemes);
+const siteGlobalThemeOptions = Object.keys(tokens['global-themes']);
 
 /**
  * Storybook Definition.

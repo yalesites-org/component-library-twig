@@ -1,7 +1,7 @@
 @use '~@yalesites-org/tokens/build/scss/tokens';
 @use '../functions/map';
 
-$global-themes: map.deep-get(tokens.$tokens, 'globalThemes');
+$global-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
 @each $globalTheme, $value in $global-themes {
   [data-global-theme='#{$globalTheme}'] {

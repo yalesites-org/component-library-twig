@@ -3,7 +3,7 @@
 @use '../../../00-tokens/tokens';
 
 $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
-$global-link-themes: map.deep-get(tokens.$tokens, 'globalThemes');
+$global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
 :root {
   // Component themes

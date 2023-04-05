@@ -12,11 +12,11 @@ import '../../02-molecules/menu/menu-toggle/yds-menu-toggle';
 import './yds-site-header';
 
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
-const siteGlobalThemes = { themes: tokens.globalThemes };
+const siteGlobalThemes = { themes: tokens['global-themes'] };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
-const siteGlobalThemeOptions = Object.keys(tokens.globalThemes);
+const siteGlobalThemeOptions = Object.keys(tokens['global-themes']);
 
 /**
  * Storybook Definition.
