@@ -5,9 +5,9 @@
     <div class="text-field__inner">
       <div class="text">
         <h1>Global Themes</h1> 
-        <p>This page outlines all components which have dial/component theme options. Each component below is housed within global theme applications. Global themes define the color pallete from which each component dial/component theme gets its color assignments.</p>
+        <p>This page outlines all components which have dial/component theme options. Each component below is housed within a global theme application. Global themes define the color pallete from which each component dial/component theme gets its color assignments.</p>
 
-        <p>As you scroll down the page, each <code>global theme</code> is presented in sections. The <code>controls</code> panel in storybook allow you to select which dial option to apply to each component within each global theme application. You can select a dial option for one or all components and scroll down to each global theme context to see how that dial is applied in each global theme instance.</p>
+        <p>The <code>controls</code> panel in storybook allow you to select _both_ which global theme lever along with each component's dial option. You can select a global theme lever and scroll down the page, optionally changing each component's dial theme options.</p>
       </div>
     </div>
   </div>
@@ -23,7 +23,9 @@
     </section>
   </div>
   <div class="pairing-item">
-    {% include "@molecules/banner/action/yds-action-banner.twig" %}
+    {% include "@molecules/banner/action/yds-action-banner.twig" with {
+        banner__width: 'site',
+    }%}
   </div>
 
   <div class="pairing-item">
@@ -59,7 +61,7 @@
 
   <div class="pairing-item">
     {% include "@molecules/pull-quote/yds-pull-quote.twig" with {
-      pull_quote__width: 'max',
+      pull_quote__width: 'site',
       pull_quote__alignment: 'left',
       pull_quote__quote: 'Our platform will transform our ability to study metabolic filaments and, coupled with biochemical and biophysical tools, manipulate enzyme structures and metabolic activity in cells.',
     } %}
@@ -85,11 +87,14 @@
   </div>
 
   <div class="pairing-item">
-    {% embed "@organisms/component-wrapper/yds-component-wrapper.twig" %}
-      {% block component_wrapper_inner %}
-        {% include "@molecules/tabs/yds-tabs.twig" %}
-      {% endblock %}
-    {% endembed %}
+	{% embed "@organisms/component-wrapper/yds-component-wrapper.twig" with {
+      component_wrapper__width: 'site',
+      component_wrapper__alignment: 'left',
+     }%}
+		{% block component_wrapper_inner %}
+			{% include "@molecules/tabs/yds-tabs.twig" %}
+		{% endblock %}
+	{% endembed %}
   </div>
 
   <div class="pairing-item">
