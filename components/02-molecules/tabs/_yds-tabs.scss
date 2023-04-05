@@ -12,6 +12,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   overflow: hidden;
   position: relative;
+  border-bottom: var(--size-thickness-1) solid var(--color-gray-500);
 
   --color-tabs-accent: --color-gray-500;
 
@@ -168,7 +169,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
 .tabs__container {
   position: absolute;
   width: 100%;
-  padding-top: var(--size-spacing-9);
+  padding-block: var(--size-spacing-9);
 
   &:not(.is-active) {
     @include tokens.animate-hidden;

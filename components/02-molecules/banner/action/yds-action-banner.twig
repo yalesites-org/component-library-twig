@@ -20,6 +20,12 @@
   class: bem(banner__base_class),
 } %}
 
+{% if banner__width %}
+  {% set banner__attributes = banner__attributes|merge({
+    'data-banner-width' : banner__width, 
+  }) %}
+{% endif %}
+
 <div {{ add_attributes(banner__attributes) }}>
   <div {{ bem('content-wrapper', [], banner__base_class) }}>
     <div {{ bem('image', [], banner__base_class) }}>

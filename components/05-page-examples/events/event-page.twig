@@ -3,7 +3,7 @@
     {% include "@organisms/site-header/yds-site-header.twig" %}
   {% endblock %}
   {% block page__content %}
-    {% if show_breadcrumbs %}
+  {% if show_breadcrumbs %}
       {% include "@organisms/menu/breadcrumbs/yds-breadcrumbs.twig" with {
         breadcrumbs__items: [
           {title: 'Home', url: '#'},
@@ -12,20 +12,30 @@
         ],
       } %}
     {% endif %}
-    {% embed "@molecules/page-title/yds-page-title.twig" %}
+    {% embed "@molecules/page-title/yds-page-title.twig" with {
+      page_title__width: 'content',
+    }%}
       {% block page_title__meta %}
         {% include "@molecules/meta/event-meta/yds-event-meta.twig" %}
       {% endblock %}
     {% endembed %}
     {% include "@molecules/text/yds-text-field.twig" with {
+      text_field__width: 'content',
+      text_field__alignment: 'center',
       text_field__content: '<p>This documentary examines the status of women during the transformation of Afghanistan from a totalitarian Taliban theocracy to a democratic country. It tells a story of Suraya Parlika, an Afghan woman who dared to enter public politics, which is eminently a territory of men. It also contains “black chronicle” of crimes from different provinces of Afghanistan, which was perpetrated by men against not only activists but also against women in their family, wives and daughters. Often just because they were determined to acquire a basic education.</p>',
     } %}
     {% include "@molecules/image/yds-content-image.twig" %}
     {% include "@molecules/text/yds-text-field.twig" with {
+      text_field__width: 'content',
+      text_field__alignment: 'center',
       text_field__content: '<p>The political arena either on the local or national level is a territory where the presence of active women, despite constitutional guarantees, is considered an oddity. Especially when brave women with unveiled face don’t remain silent, but try to stimulate an open discussion in public space: a discussion on disproportions between the laws and the (in)compliance with them in terms of everyday life, on an open and latent discrimination of women, or on particular crimes of men against the women who try to live their life more dignified.</p><p>Part of a trilogy of documentaries by Afghan Director Sahraa Karimi screened from Tuesday 29th to Thursday 31st March, 2022.</p>',
     } %}
-    {% include "@atoms/divider/yds-divider.twig" %}
+    {% include "@atoms/divider/yds-divider.twig" with {
+      divider__width: 'content',
+    }%}
     {% include "@molecules/text/yds-text-field.twig" with {
+      text_field__width: 'content',
+      text_field__alignment: 'center',
       text_field__content: '
         <h2>Speaker</h2>
         <h3>Dr. Sarhaa Karimi, filmmaker</h3>

@@ -30,7 +30,28 @@
   @media (min-width: tokens.$break-2xl) {
     --size-spacing-site-gutter: var(--size-spacing-10);
   }
+
+  height: 100%;
 }
+
+////////
+// sticky footer
+body,
+html {
+  height: 100%;
+}
+
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.dialog-off-canvas-main-canvas {
+  height: 100%;
+}
+
+///////
 
 $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 
