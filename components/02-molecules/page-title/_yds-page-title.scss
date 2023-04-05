@@ -6,4 +6,8 @@
 
 .page-title__heading {
   @include tokens.h1-yale-new;
+
+  [data-component-width='site'] & {
+    max-width: var(--size-component-layout-width-highlight);
+  }
 }
