@@ -36,6 +36,7 @@ export default {
 export const WrappedImage = ({ caption, imageAlignment, imageStyle }) => `
   ${textFieldTwig({
     text_field__content: WrappedImageData.text_one,
+    text_field__alignment: 'left',
   })}
   ${wrappedImageTwig({
     ...imageData.responsive_images['3x2'],
