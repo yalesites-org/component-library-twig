@@ -3,7 +3,7 @@
  # - text_field__content
  #}
 
-{% set text_field__base_class = 'text-field' %}
+{% set text_field__base_class = text_field__base_class|default('text-field') %}
 
 {% set text_field__attributes = {
   'data-component-width': text_field__width|default('site'),
