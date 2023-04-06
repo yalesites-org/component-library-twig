@@ -49,9 +49,9 @@ $cta-outline-weights: (
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
   @each $theme, $value in $component-cta-themes {
-    [data-basic-theme='#{$theme}'] & {
+    &[data-component-theme='#{$theme}'] {
       --color-action: var(--color-text);
-      --color-cta-secondary: var(--color-background);
+      --color-cta-secondary: var(--color-cta-text);
     }
   }
 
@@ -60,7 +60,7 @@ $cta-outline-weights: (
     --color-cta-bg: var(--color-action);
     --color-cta-bg-hover: transparent;
     --color-cta-border: var(--color-action);
-    --color-cta-text: var(--color-cta-secondary);
+    --color-cta-text: var(--color-text);
     --color-cta-text-hover: var(--color-action);
   }
 
@@ -96,10 +96,10 @@ $cta-outline-weights: (
       --color-cta-border: var(--color-action);
       --color-cta-text: var(--color-basic-white);
       --color-cta-text-hover: var(--color-action);
-      --color-cta-secondary: var(--color-background);
     }
 
     &[data-cta-style='outline'] {
+      --color-cta-secondary: var(--color-basic-white);
       --color-action: var(--color-slot-one);
       --color-cta-bg: transparent;
       --color-cta-bg-hover: var(--color-action);
@@ -115,11 +115,12 @@ $cta-outline-weights: (
       --color-cta-bg: var(--color-slot-two);
       --color-cta-bg-hover: transparent;
       --color-cta-border: var(--color-action);
-      --color-cta-text: var(--color-cta-secondary);
+      --color-cta-text: var(--color-basic-white);
       --color-cta-text-hover: var(--color-action);
     }
 
     &[data-cta-style='outline'] {
+      --color-cta-secondary: var(--color-basic-white);
       --color-action: var(--color-slot-two);
       --color-cta-bg: transparent;
       --color-cta-bg-hover: var(--color-action);
@@ -135,11 +136,12 @@ $cta-outline-weights: (
       --color-cta-bg: var(--color-slot-five);
       --color-cta-bg-hover: transparent;
       --color-cta-border: var(--color-action);
-      --color-cta-text: var(--color-cta-secondary);
+      --color-cta-text: var(--color-basic-white);
       --color-cta-text-hover: var(--color-action);
     }
 
     &[data-cta-style='outline'] {
+      --color-cta-secondary: var(--color-basic-white);
       --color-action: var(--color-slot-five);
       --color-cta-bg: transparent;
       --color-cta-bg-hover: var(--color-action);
