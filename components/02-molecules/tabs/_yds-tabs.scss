@@ -54,8 +54,8 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 
   &[data-component-theme='two'] {
-    --color-tabs-accent: var(--color-slot-three);
-    --color-tabs-action: var(--color-slot-three);
+    --color-tabs-accent: var(--color-slot-two);
+    --color-tabs-action: var(--color-slot-two);
     --color-tabs-background: var(--color-basic-white);
   }
 

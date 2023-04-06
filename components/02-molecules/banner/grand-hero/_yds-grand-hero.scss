@@ -114,7 +114,6 @@ $break-grand-hero-banner: tokens.$break-m;
   // default variables.
   @each $theme, $value in $component-grand-hero-themes {
     &[data-component-theme='#{$theme}'] {
-      // prettier-ignore
       --color-text: var(--color-grand-hero-text);
       --color-backgound: var(--color-grand-hero-background);
       --color-heading: var(--color-grand-hero-heading);

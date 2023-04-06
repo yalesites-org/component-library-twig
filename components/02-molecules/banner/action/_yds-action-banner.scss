@@ -67,7 +67,6 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   // default variables.
   @each $theme, $value in $component-banner-themes {
     &[data-component-theme='#{$theme}'] {
-      // prettier-ignore
       --color-text: var(--color-banner-text);
       --color-backgound: var(--color-banner-background);
       --color-heading: var(--color-banner-heading);

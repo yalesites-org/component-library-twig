@@ -19,7 +19,8 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   --color-link-base: var(--color-text);
   --color-link-hover: var(--color-text);
 
-  // Component themes
+  // Component themes defaults: iterate over each component theme to establish
+  // default variables.
   @each $theme, $value in $site-footer-themes {
     &[data-footer-theme='#{$theme}'] {
       // prettier-ignore
@@ -50,7 +51,10 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     }
   }
 
-  // global themes, set color slots to override the defaults above
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
   @each $globalTheme, $value in $global-footer-themes {
     [data-global-theme='#{$globalTheme}'] & {
       --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
@@ -61,7 +65,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     }
   }
 
-  // Set specific component themes overrides
+  // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
   &[data-footer-theme='one'] {
     --color-site-footer-yale-branding: var(--color-site-footer-heading);
@@ -137,6 +141,8 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 }
 
+// add social icon svg hover colors based on theme.
+// remove cta theme
 .site-footer__branding {
   display: flex;
   flex-direction: column;
