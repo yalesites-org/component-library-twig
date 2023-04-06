@@ -3,7 +3,7 @@
 @use '../../../00-tokens/functions/map';
 @use '../../../00-tokens/tokens';
 
-$cta-themes: map.deep-get(sass-tokens.$tokens, color, cta, theme);
+$component-cta-themes: map.deep-get(tokens.$tokens, 'component-themes');
 $global-cta-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $cta-radii: (
   'soft': var(--cta-radius-soft),
@@ -46,8 +46,9 @@ $cta-outline-weights: (
     }
   }
 
-  // These color schemes are "inverted" from the default ones.
-  @each $theme, $value in $cta-themes {
+  // Component themes defaults: iterate over each component theme to establish
+  // default variables.
+  @each $theme, $value in $component-cta-themes {
     [data-basic-theme='#{$theme}'] & {
       --color-action: var(--color-text);
       --color-cta-secondary: var(--color-background);
@@ -71,7 +72,10 @@ $cta-outline-weights: (
     --color-cta-text-hover: var(--color-cta-secondary);
   }
 
-  // Global themes, set color slots
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
   @each $globalTheme, $value in $global-cta-themes {
     [data-global-theme='#{$globalTheme}'] & {
       --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
@@ -82,6 +86,8 @@ $cta-outline-weights: (
     }
   }
 
+  // Component theme overrides: set specific component themes overrides
+  /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
     &[data-cta-style='filled'] {
       --color-action: var(--color-slot-one);
