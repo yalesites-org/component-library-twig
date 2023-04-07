@@ -4,6 +4,7 @@
 @use '../../../00-tokens/tokens';
 
 $component-cta-themes: map.deep-get(tokens.$tokens, 'component-themes');
+$component-basic-themes: map.deep-get(tokens.$tokens, 'basic-themes');
 $global-cta-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $cta-radii: (
   'soft': var(--cta-radius-soft),
@@ -62,6 +63,13 @@ $cta-outline-weights: (
     }
   }
 
+  @each $theme, $value in $component-basic-themes {
+    [data-basic-theme='#{$theme}'] & {
+      --color-action: var(--color-text);
+      --color-action-secondary: var(--color-background);
+    }
+  }
+
   // Styles
   &[data-cta-style='filled'] {
     --color-cta-bg: var(--color-action);
@@ -76,7 +84,7 @@ $cta-outline-weights: (
     --color-cta-bg-hover: var(--color-action);
     --color-cta-border: var(--color-action);
     --color-cta-text: var(--color-action);
-    --color-cta-text-hover: var(--color-cta-secondary);
+    --color-cta-text-hover: var(--color-action-secondary);
   }
 
   // Global themes: set color slots for each theme
