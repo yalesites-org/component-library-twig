@@ -49,9 +49,16 @@ $cta-outline-weights: (
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
   @each $theme, $value in $component-cta-themes {
-    &[data-component-theme='#{$theme}'] {
-      --color-action: var(--color-text);
-      --color-cta-secondary: var(--color-cta-text);
+    &[data-cta-theme='#{$theme}'] {
+      --color-slot-one: var(--component-themes-#{$theme}-slot-one);
+      --color-slot-two: var(--component-themes-#{$theme}-slot-two);
+      --color-slot-three: var(--component-themes-#{$theme}-slot-three);
+      --color-slot-four: var(--component-themes-#{$theme}-slot-four);
+      --color-slot-five: var(--component-themes-#{$theme}-slot-five);
+      --color-action: var(--color-cta-action);
+      --color-action-secondary: var(--color-cta-action-secondary);
+      --color-cta-action-secondary: var(--color-basic-white);
+      --color-cta-action: var(--color-slot-one);
     }
   }
 
@@ -60,7 +67,7 @@ $cta-outline-weights: (
     --color-cta-bg: var(--color-action);
     --color-cta-bg-hover: transparent;
     --color-cta-border: var(--color-action);
-    --color-cta-text: var(--color-text);
+    --color-cta-text: var(--color-action-secondary);
     --color-cta-text-hover: var(--color-action);
   }
 
@@ -88,30 +95,31 @@ $cta-outline-weights: (
 
   // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
-  &[data-component-theme='one'] {
+  &[data-cta-theme='one'] {
     &[data-cta-style='filled'] {
-      --color-action: var(--color-slot-one);
+      --color-cta-action-secondary: var(--color-basic-white);
+      --color-cta-action: var(--color-slot-one);
       --color-cta-bg: var(--color-slot-one);
       --color-cta-bg-hover: transparent;
       --color-cta-border: var(--color-action);
-      --color-cta-text: var(--color-basic-white);
+      --color-cta-text: var(--color-cta-action-secondary);
       --color-cta-text-hover: var(--color-action);
     }
 
     &[data-cta-style='outline'] {
-      --color-cta-secondary: var(--color-basic-white);
-      --color-action: var(--color-slot-one);
+      --color-cta-action-secondary: var(--color-basic-white);
+      --color-cta-action: var(--color-slot-one);
       --color-cta-bg: transparent;
       --color-cta-bg-hover: var(--color-action);
       --color-cta-border: var(--color-action);
       --color-cta-text: var(--color-action);
-      --color-cta-text-hover: var(--color-cta-secondary);
+      --color-cta-text-hover: var(--color-cta-action-secondary);
     }
   }
 
-  &[data-component-theme='two'] {
+  &[data-cta-theme='two'] {
     &[data-cta-style='filled'] {
-      --color-action: var(--color-slot-two);
+      --color-cta-action: var(--color-slot-two);
       --color-cta-bg: var(--color-slot-two);
       --color-cta-bg-hover: transparent;
       --color-cta-border: var(--color-action);
@@ -120,19 +128,19 @@ $cta-outline-weights: (
     }
 
     &[data-cta-style='outline'] {
-      --color-cta-secondary: var(--color-basic-white);
-      --color-action: var(--color-slot-two);
+      --color-cta-action-secondary: var(--color-basic-white);
+      --color-cta-action: var(--color-slot-two);
       --color-cta-bg: transparent;
       --color-cta-bg-hover: var(--color-action);
       --color-cta-border: var(--color-action);
       --color-cta-text: var(--color-action);
-      --color-cta-text-hover: var(--color-cta-secondary);
+      --color-cta-text-hover: var(--color-cta-action-secondary);
     }
   }
 
-  &[data-component-theme='three'] {
+  &[data-cta-theme='three'] {
     &[data-cta-style='filled'] {
-      --color-action: var(--color-slot-five);
+      --color-cta-action: var(--color-slot-five);
       --color-cta-bg: var(--color-slot-five);
       --color-cta-bg-hover: transparent;
       --color-cta-border: var(--color-action);
@@ -141,13 +149,13 @@ $cta-outline-weights: (
     }
 
     &[data-cta-style='outline'] {
-      --color-cta-secondary: var(--color-basic-white);
+      --color-cta-action-secondary: var(--color-basic-white);
       --color-action: var(--color-slot-five);
       --color-cta-bg: transparent;
       --color-cta-bg-hover: var(--color-action);
       --color-cta-border: var(--color-action);
       --color-cta-text: var(--color-action);
-      --color-cta-text-hover: var(--color-cta-secondary);
+      --color-cta-text-hover: var(--color-cta-action-secondary);
     }
   }
 

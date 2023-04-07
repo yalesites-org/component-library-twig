@@ -21,12 +21,12 @@
   'data-cta-radius': cta__radius|default('none'),
   'data-cta-style': cta__style|default('filled'),
   'data-cta-outline-weight': cta__outline_weight|default('2'),
-  'data-component-theme': 'one',
+  'data-cta-theme': cta__component_theme|default('none'),
 }) %}
 
 {% if cta__component_theme %}
   {% set cta__attributes = cta__attributes|merge({
-    'data-component-theme': cta__component_theme,
+    'data-cta-theme': cta__component_theme,
   }) %}
 {% endif %}
 

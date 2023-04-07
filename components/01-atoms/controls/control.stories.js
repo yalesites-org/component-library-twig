@@ -15,40 +15,28 @@ const componentThemeOptions = Object.keys(tokens['component-themes']);
  */
 export default {
   title: 'Atoms/Controls',
-  argTypes: {
-    globalTheme: {
-      name: 'Global Theme (lever)',
-      options: siteGlobalThemeOptions,
-      type: 'select',
-      defaultValue: 'one',
-    },
-    componentTheme: {
-      name: 'Component Theme (dial)',
-      options: componentThemeOptions,
-      type: 'select',
-      defaultValue: 'one',
-    },
-  },
 };
 
 const ctaText = 'Call to action';
-
-export const Cta = () => `
+export const Cta = ({ componentTheme }) => `
   <h2>Filled</h2>
   <div class="cta-group">
     ${ctaTwig({
       cta__content: ctaText,
       cta__href: '#',
+      cta__component_theme: componentTheme,
     })}
     ${ctaTwig({
       cta__content: ctaText,
       cta__href: '#',
       cta__radius: 'soft',
+      cta__component_theme: componentTheme,
     })}
     ${ctaTwig({
       cta__content: ctaText,
       cta__href: '#',
       cta__radius: 'pill',
+      cta__component_theme: componentTheme,
     })}
   </div>
   <h2>Outline</h2>
@@ -57,18 +45,21 @@ export const Cta = () => `
       cta__content: ctaText,
       cta__href: '#',
       cta__style: 'outline',
+      cta__component_theme: componentTheme,
     })}
     ${ctaTwig({
       cta__content: ctaText,
       cta__href: '#',
       cta__radius: 'soft',
       cta__style: 'outline',
+      cta__component_theme: componentTheme,
     })}
     ${ctaTwig({
       cta__content: ctaText,
       cta__href: '#',
       cta__radius: 'pill',
       cta__style: 'outline',
+      cta__component_theme: componentTheme,
     })}
   </div>
   <h2>Outline Weights</h2>
@@ -78,18 +69,21 @@ export const Cta = () => `
       cta__href: '#',
       cta__style: 'outline',
       cta__outline_weight: '1',
+      cta__component_theme: componentTheme,
     })}
     ${ctaTwig({
       cta__content: ctaText,
       cta__href: '#',
       cta__style: 'outline',
       cta__outline_weight: '2',
+      cta__component_theme: componentTheme,
     })}
     ${ctaTwig({
       cta__content: ctaText,
       cta__href: '#',
       cta__style: 'outline',
       cta__outline_weight: '4',
+      cta__component_theme: componentTheme,
     })}
   </div>
   <h2>Hover Effects</h2>
@@ -97,16 +91,19 @@ export const Cta = () => `
     ${ctaTwig({
       cta__content: 'Fade',
       cta__href: '#',
+      cta__component_theme: componentTheme,
     })}
     ${ctaTwig({
       cta__content: 'Rise',
       cta__hover_style: 'rise',
       cta__href: '#',
+      cta__component_theme: componentTheme,
     })}
     ${ctaTwig({
       cta__content: 'Wipe',
       cta__hover_style: 'wipe',
       cta__href: '#',
+      cta__component_theme: componentTheme,
     })}
   </div>
   <div class="cta-group">
@@ -114,21 +111,33 @@ export const Cta = () => `
       cta__content: 'Fade',
       cta__style: 'outline',
       cta__href: '#',
+      cta__component_theme: componentTheme,
     })}
     ${ctaTwig({
       cta__content: 'Rise',
       cta__style: 'outline',
       cta__hover_style: 'rise',
       cta__href: '#',
+      cta__component_theme: componentTheme,
     })}
     ${ctaTwig({
       cta__content: 'Wipe',
       cta__style: 'outline',
       cta__hover_style: 'wipe',
       cta__href: '#',
+      cta__component_theme: componentTheme,
     })}
   </div>
 `;
+
+Cta.argTypes = {
+  componentTheme: {
+    name: 'Component Theme (dial)',
+    options: componentThemeOptions,
+    type: 'select',
+    defaultValue: 'one',
+  },
+};
 
 export const textLink = () => `
   ${linkTwig({
@@ -300,13 +309,28 @@ export const CtaExamples = ({ globalTheme, componentTheme }) =>
     `,
   });
 
+CtaExamples.argTypes = {
+  globalTheme: {
+    name: 'Global Theme (lever)',
+    options: siteGlobalThemeOptions,
+    type: 'select',
+    defaultValue: 'one',
+  },
+  componentTheme: {
+    name: 'Component Theme (dial)',
+    options: componentThemeOptions,
+    type: 'select',
+    defaultValue: 'one',
+  },
+};
+
 export const LinkExamples = ({ globalTheme, componentTheme }) =>
   themeExamplesTwig({
     ...siteGlobalThemes,
     ...componentThemes,
     site_global__theme: globalTheme,
     example_content: `
-      <div class="link-group" data-component-theme="${componentTheme}">
+      <div class="link-group" data-cta-theme="${componentTheme}">
       ${linkTwig({
         link__url: 'http://localhost:6006',
         link__content: 'This is a default link',
