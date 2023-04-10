@@ -96,6 +96,7 @@ const intro = `
 ${ctaTwig({
   cta__content: 'Reset attributes',
   cta__attributes: { onClick: 'resetAttributes();' },
+  cta__component_theme: 'one',
 })}
 `;
 
