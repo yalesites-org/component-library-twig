@@ -135,15 +135,6 @@ $menu-sub-max-width: 19rem;
       [aria-expanded='false'] ~ & {
         visibility: hidden;
       }
-
-      [data-site-header-nav-position='center'] &,
-      [data-site-header-nav-position='left'] & {
-        left: 0;
-      }
-
-      [data-site-header-nav-position='right'] & {
-        right: 0;
-      }
     }
 
     [data-menu-variation='mega'] & {
@@ -154,6 +145,15 @@ $menu-sub-max-width: 19rem;
         width: calc(100vw - calc(var(--size-spacing-site-gutter) * 2));
         max-width: var(--size-component-layout-width-site);
         column-count: 3;
+
+        [data-site-header-nav-position='center'] &,
+        [data-site-header-nav-position='left'] & {
+          left: 0;
+        }
+
+        [data-site-header-nav-position='right'] & {
+          right: 0;
+        }
       }
 
       @media (min-width: tokens.$break-2xl) {
