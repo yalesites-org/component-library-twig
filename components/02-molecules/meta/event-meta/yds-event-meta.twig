@@ -62,6 +62,7 @@
           {% include "@atoms/controls/cta/yds-cta.twig" with {
             cta__content: event_meta__cta_primary__content,
             cta__href: event_meta__cta_primary__href,
+            cta__component_theme: cta__component_theme|default('one'),
           } %}
         {% endif %}
         {# Add to calendar #}
@@ -70,6 +71,7 @@
             cta__content: event_meta__cta_secondary__content,
             cta__href: event_meta__cta_secondary__href,
             cta__style: 'outline',
+            cta__component_theme: cta__component_theme|default('one'),
           } %}
         {% endif %}
       </div>
