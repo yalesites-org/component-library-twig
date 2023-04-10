@@ -36,7 +36,7 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
       --color-text: var(--color-quick-links-text);
       --color-heading: var(--color-quick-links-heading);
       --color-action: var(--color-quick-links-action);
-      --color-cta-secondary: var(--color-quick-links-action-secondary);
+      --color-action-secondary: var(--color-quick-links-action-secondary);
     }
   }
 

@@ -47,7 +47,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-callouts-background: var(--color-slot-one);
     --color-text-shadow: var(--color-slot-one);
     --color-action: var(--color-basic-white);
-    --color-cta-secondary: var(--color-slot-one);
+    --color-action-secondary: var(--color-slot-one);
     --color-text: var(--color-basic-white);
     --color-heading: var(--color-basic-white);
   }
@@ -56,7 +56,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-callouts-background: var(--color-slot-four);
     --color-text-shadow: var(--color-slot-one);
     --color-action: var(--color-gray-800);
-    --color-cta-secondary: var(--color-basic-white);
+    --color-action-secondary: var(--color-basic-white);
     --color-text: var(--color-gray-800);
     --color-heading: var(--color-gray-800);
   }
@@ -65,7 +65,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-callouts-background: var(--color-slot-five);
     --color-text-shadow: var(--color-slot-one);
     --color-action: var(--color-basic-white);
-    --color-cta-secondary: var(--color-slot-one);
+    --color-action-secondary: var(--color-slot-one);
     --color-text: var(--color-basic-white);
     --color-heading: var(--color-basic-white);
   }
