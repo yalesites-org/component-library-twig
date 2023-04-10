@@ -187,6 +187,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   font: var(--font-style-branding-site);
   color: var(--color-site-header-site-branding);
   text-decoration: none;
+  max-width: 36.5%;
 
   &--primary {
     @media (max-width: tokens.$break-mobile-max) {
