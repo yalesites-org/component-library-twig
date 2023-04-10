@@ -198,8 +198,7 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
     @include branding-small;
   }
 
-  // if left/right alignment, limit the branding width
-  [data-site-header-nav-position='left'] &,
+  // if right alignment, limit the branding width
   [data-site-header-nav-position='right'] & {
     max-width: 36.5%;
   }
