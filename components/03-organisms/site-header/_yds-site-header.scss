@@ -197,6 +197,11 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
   &--mobile {
     @include branding-small;
   }
+
+  // if right alignment, limit the branding width
+  [data-site-header-nav-position='right'] & {
+    max-width: 36.5%;
+  }
 }
 
 .site-header__primary-nav {

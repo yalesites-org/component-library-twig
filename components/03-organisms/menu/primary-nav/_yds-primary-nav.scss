@@ -77,11 +77,15 @@ $menu-sub-max-width: 19rem;
   }
 
   [data-site-header-nav-position='left'] & {
-    margin-left: calc(var(--size-spacing-5) * -1);
+    &[data-menu-variation='basic'] {
+      margin-left: calc(var(--size-spacing-5) * -1);
+    }
   }
 
   [data-site-header-nav-position='right'] & {
-    margin-right: calc(var(--size-spacing-5) * -1);
+    &[data-menu-variation='basic'] {
+      margin-right: calc(var(--size-spacing-5) * -1);
+    }
   }
 }
 
@@ -92,7 +96,6 @@ $menu-sub-max-width: 19rem;
     @media (min-width: tokens.$break-mobile) {
       display: flex;
       flex-wrap: wrap;
-      position: relative;
     }
   }
 
@@ -132,18 +135,6 @@ $menu-sub-max-width: 19rem;
       [aria-expanded='false'] ~ & {
         visibility: hidden;
       }
-
-      [data-site-header-nav-position='right'] [data-menu-variation='mega'] & {
-        right: 0;
-      }
-
-      [data-site-header-nav-position='left'] [data-menu-variation='mega'] & {
-        left: 0;
-      }
-
-      [data-site-header-nav-position='center'] [data-menu-variation='mega'] & {
-        left: 0;
-      }
     }
 
     [data-menu-variation='mega'] & {
@@ -154,6 +145,15 @@ $menu-sub-max-width: 19rem;
         width: calc(100vw - calc(var(--size-spacing-site-gutter) * 2));
         max-width: var(--size-component-layout-width-site);
         column-count: 3;
+
+        [data-site-header-nav-position='center'] &,
+        [data-site-header-nav-position='left'] & {
+          left: 0;
+        }
+
+        [data-site-header-nav-position='right'] & {
+          right: 0;
+        }
       }
 
       @media (min-width: tokens.$break-2xl) {
@@ -259,6 +259,11 @@ $menu-sub-max-width: 19rem;
     color: var(--color-heading);
     margin-bottom: var(--size-spacing-3);
 
+    [data-menu-variation='mega'] & {
+      padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2)
+        calc(var(--size-spacing-2) + var(--size-spacing-1));
+    }
+
     [data-menu-variation='basic'] & {
       padding: var(--size-spacing-5) var(--size-spacing-6) var(--size-spacing-4);
       position: relative;
@@ -274,19 +279,14 @@ $menu-sub-max-width: 19rem;
         height: var(--border-thickness-1);
         background-color: var(--color-gray-200);
       }
-    }
 
-    [data-menu-variation='mega'] & {
-      padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2)
-        calc(var(--size-spacing-2) + var(--size-spacing-1));
-    }
+      :last-child > & {
+        margin-bottom: 0;
+      }
 
-    :last-child > & {
-      margin-bottom: 0;
-    }
-
-    :first-child > & {
-      padding-top: 0;
+      :first-child > & {
+        padding-top: 0;
+      }
     }
 
     // remove last child's bottom border
