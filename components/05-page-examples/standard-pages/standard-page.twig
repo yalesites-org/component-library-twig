@@ -23,6 +23,11 @@
       text_field__alignment: 'left', 
       text_field__content: '<h2>Program Information</h2><h3>The Undergraduate Handbook</h3><p>A comprehensive guide for prospective and current Chemistry Majors, with a complete description of requirements and opportunities.</p><p><a href="#">View the handbook online</a></p><h3>Course List</h3><p>A list of courses and a description of the Chemistry undergraduate program, including information on placement exams, laboratory registration, premedical students, and major requirements</p><p><a href="#">Yale College programs of study</a></p>',
     } %}
+
+    {% include "@molecules/text-with-image/yds-text-with-image.twig" with {
+      text_with_image__focus: 'content',
+    } %}
+
     {% include "@molecules/callout/yds-callout.twig" with {
       callouts: [
         {
@@ -38,5 +43,9 @@
           callout__link__url: '#',
         },
       ],
+    } %}
+
+    {% include "@molecules/text-with-image/yds-text-with-image.twig" with {
+      text_with_image__focus: 'content',
     } %}
   {% endblock %}
