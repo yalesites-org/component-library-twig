@@ -35,7 +35,7 @@
 
   // add bottom border and bottom padding if text with image isn't the last element
   // on the page.
-  .text-with-image:not(:last-child) & {
+  .text-with-image:not(:last-of-type) & {
     padding-bottom: var(--size-spacing-5);
     border-bottom: var(--thickness-divider) solid var(--color-divider);
 
@@ -76,7 +76,7 @@
     }
   }
 
-  > *:not(:last-child) {
+  > *:not(:last-of-type) {
     margin-bottom: var(--size-spacing-5);
   }
 }
