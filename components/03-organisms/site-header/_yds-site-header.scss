@@ -257,6 +257,11 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
   &--mobile {
     @include branding-small;
   }
+
+  // if right alignment, limit the branding width
+  [data-site-header-nav-position='right'] & {
+    max-width: 36.5%;
+  }
 }
 
 .site-header__primary-nav {
