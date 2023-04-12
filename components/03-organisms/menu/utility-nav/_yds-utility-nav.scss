@@ -68,7 +68,7 @@
     border: none;
     color: inherit;
     min-height: var(--size-click-target-minimum);
-    width: 7.25rem;
+    width: 7.5rem;
 
     &::placeholder {
       color: inherit;
@@ -104,22 +104,26 @@
   }
 
   .form-item {
+    display: flex;
+    align-items: center;
+
     @media (max-width: tokens.$break-mobile-max) {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      align-items: center;
     }
   }
 
   .form-item label {
+    display: flex; // get the svg to vertically center.
+
     @media (max-width: tokens.$break-mobile-max) {
-      display: flex; // get the svg to vertically center.
       grid-area: 1/-1; // force the icon label inside the input.
       margin-left: var(--size-spacing-5);
     }
   }
 
   .form-item input {
+    padding-left: var(--size-spacing-3);
     @media (max-width: tokens.$break-mobile-max) {
       grid-area: 1/3;
 

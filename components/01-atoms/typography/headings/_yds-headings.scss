@@ -15,7 +15,7 @@ h6 {
   margin-block: 0 0.6em;
 
   &:not(:first-child) {
-    margin-top: 1em;
+    margin-top: 1.2em;
   }
 }
 
@@ -46,9 +46,19 @@ h4:not([class]) {
 h5:not([class]) {
   @include tokens.h5-yale-new;
   @include text-field-header-spacing;
+
+  // h5 needs a bit more top margin
+  &:not(:first-child) {
+    margin-top: 1.4em;
+  }
 }
 
 h6:not([class]) {
   @include tokens.h6-yale-new;
   @include text-field-header-spacing;
+
+  // h6 needs more top margin
+  &:not(:first-child) {
+    margin-top: 2em;
+  }
 }
