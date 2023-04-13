@@ -9,8 +9,10 @@
 }
 
 .sb-show-main {
-  .reference-card__image img {
-    height: 100%;
-    object-fit: cover;
+  [data-collection-type='grid'] {
+    .reference-card__image img {
+      height: 100%;
+      object-fit: cover;
+    }
   }
 }
