@@ -76,7 +76,7 @@
     }
   }
 
-  > *:not(:last-of-type) {
+  > *:not(:last-child) {
     margin-bottom: var(--size-spacing-5);
   }
 }
