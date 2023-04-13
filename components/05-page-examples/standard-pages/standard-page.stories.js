@@ -241,10 +241,10 @@ WithBanner.argTypes = {
     defaultValue: 'bottom',
   },
   bgColor: {
-    name: 'Banner Content Background Color',
+    name: 'Banner Content Background Color Theme (dial)',
     type: 'select',
     options: colorPairingsData,
-    defaultValue: 'gray-800',
+    defaultValue: 'one',
   },
   heading: {
     name: 'Banner Heading',
@@ -396,10 +396,10 @@ WithBannerLeftAlign.argTypes = {
     defaultValue: 'bottom',
   },
   bgColor: {
-    name: 'Banner Content Background Color',
+    name: 'Banner Content Background Color Theme (dial)',
     type: 'select',
     options: colorPairingsData,
-    defaultValue: 'gray-800',
+    defaultValue: 'one',
   },
   heading: {
     name: 'Banner Heading',
