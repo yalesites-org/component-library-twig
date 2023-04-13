@@ -27,11 +27,6 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: {
-    globalTheme: {
-      options: siteGlobalThemeOptions,
-      type: 'select',
-      defaultValue: 'one',
-    },
     borderThickness: {
       options: borderThicknessOptions,
       type: 'select',
@@ -41,11 +36,6 @@ export default {
       options: primaryNavPositions,
       type: 'select',
       defaultValue: 'left',
-    },
-    siteHeaderTheme: {
-      options: siteHeaderThemeOptions,
-      type: 'select',
-      defaultValue: 'one',
     },
     menuVariation: {
       name: 'Menu Variation',
@@ -72,6 +62,14 @@ export const Header = ({
     primary_nav__items: primaryNavData.items,
   });
 
+Header.argTypes = {
+  siteHeaderTheme: {
+    options: siteHeaderThemeOptions,
+    type: 'select',
+    defaultValue: 'one',
+  },
+};
+
 export const HeaderExamples = ({
   borderThickness,
   primaryNavPosition,
@@ -89,3 +87,11 @@ export const HeaderExamples = ({
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
   });
+
+HeaderExamples.argTypes = {
+  globalTheme: {
+    options: siteGlobalThemeOptions,
+    type: 'select',
+    defaultValue: 'one',
+  },
+};

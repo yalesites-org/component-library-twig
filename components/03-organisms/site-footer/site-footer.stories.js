@@ -20,31 +20,28 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: {
-    globalTheme: {
-      options: siteGlobalThemeOptions,
-      type: 'select',
-      defaultValue: 'one',
-    },
     borderThickness: {
       options: borderThicknessOptions,
       type: 'select',
       defaultValue: '8',
     },
-    siteFooterTheme: {
-      options: siteFooterThemeOptions,
-      type: 'select',
-      defaultValue: 'one',
-    },
   },
 };
 
-export const Footer = ({ borderThickness, siteFooterTheme, globalTheme }) =>
+export const Footer = ({ borderThickness, siteFooterTheme }) =>
   siteFooterTwig({
     ...socialLinksData,
-    site_global__theme: globalTheme,
     site_footer__border_thickness: borderThickness,
     site_footer__theme: siteFooterTheme,
   });
+
+Footer.argTypes = {
+  siteFooterTheme: {
+    options: siteFooterThemeOptions,
+    type: 'select',
+    defaultValue: 'one',
+  },
+};
 
 export const FooterExamples = ({ borderThickness, globalTheme }) =>
   siteFooterExamples({
@@ -54,3 +51,11 @@ export const FooterExamples = ({ borderThickness, globalTheme }) =>
     site_global__theme: globalTheme,
     site_footer__border_thickness: borderThickness,
   });
+
+FooterExamples.argTypes = {
+  globalTheme: {
+    options: siteGlobalThemeOptions,
+    type: 'select',
+    defaultValue: 'one',
+  },
+};
