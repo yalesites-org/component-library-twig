@@ -64,9 +64,7 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
 
   @media (min-width: tokens.$break-mobile) {
     [data-collection-type='grid'] & {
-      img {
-        aspect-ratio: 3/2;
-      }
+      aspect-ratio: 3/2;
     }
 
     [data-collection-type='list'] & {
