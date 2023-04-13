@@ -28,6 +28,12 @@ Drupal.behaviors.alert = {
       localStorage.setItem(id, 'dismissed');
     };
 
+    // Function to animate the dismissal of an alert.
+    const animatedDismiss = (item, id) => {
+      dismiss(item, id);
+      item.classList.add('alert__animate');
+    };
+
     // Function to remove old alerts from storage.
     const resetAlerts = () => {
       Object.keys(localStorage).forEach((key) => {
@@ -100,8 +106,8 @@ Drupal.behaviors.alert = {
               : expand(alert, toggle, id);
           }
 
-          // For all other alert types, dismiss the alert.
-          return dismiss(alert, id);
+          // For all other alert types, dismiss the alert with animation.
+          return animatedDismiss(alert, id);
         });
       });
 
