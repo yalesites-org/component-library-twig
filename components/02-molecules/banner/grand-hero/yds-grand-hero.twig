@@ -25,6 +25,12 @@
   class: bem(grand_hero__base_class),
 } %}
 
+{% if grand_hero__width %}
+  {% set grand_hero__attributes = grand_hero__attributes|merge({
+    'data-grand-hero-width' : grand_hero__width,
+  }) %}
+{% endif %}
+
 {% set grand_hero__attributes = grand_hero__attributes|merge(attributes) %}
 
 <div {{ add_attributes(grand_hero__attributes) }}>

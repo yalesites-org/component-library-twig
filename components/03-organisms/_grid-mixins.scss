@@ -7,7 +7,7 @@
   display: flex;
   flex-flow: row wrap;
   gap: var(--grid-gutter);
-  justify-content: center;
+  justify-content: flex-start;
 
   > * {
     flex-basis: 100%;
@@ -48,5 +48,16 @@
     @media (min-width: tokens.$break-l) {
       flex: 0 1 calc(25% - calc(var(--grid-gutter) * 3 / 4));
     }
+  }
+}
+
+@mixin tertiary {
+  --grid-gutter: var(--spacing-component-gutter-secondary);
+
+  @include base;
+
+  > * {
+    // Media-only grids are always two-up
+    flex: 0 1 calc(50% - calc(var(--grid-gutter) / 2));
   }
 }

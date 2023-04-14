@@ -29,7 +29,7 @@ export default {
     focus: {
       name: 'Focus',
       type: 'select',
-      options: ['image', 'equal', 'content'],
+      options: ['image', 'equal'],
       defaultValue: 'equal',
     },
     overline: {

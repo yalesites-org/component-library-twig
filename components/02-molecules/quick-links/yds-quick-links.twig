@@ -34,6 +34,13 @@
   }) %}
 {% endif %}
 
+{% if quick_links__variation == 'subtle' %}
+  {% set quick_links__attributes = quick_links__attributes|merge({
+    'data-component-width': quick_links__width|default('site'),
+    'data-component-alignment': quick_links__alignment|default('left'),
+  }) %}
+{% endif %}
+
 {% set quick_links__attributes = quick_links__attributes|merge(attributes) %}
 
 <div {{ add_attributes(quick_links__attributes) }}>

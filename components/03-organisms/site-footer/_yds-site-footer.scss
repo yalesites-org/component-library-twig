@@ -9,6 +9,7 @@ $site-footer-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 
 .site-footer {
   padding: var(--size-spacing-7) var(--size-spacing-site-gutter);
+  margin-top: auto; // for sticky footer to work
 
   // prettier-ignore
   border-top: var(--site-footer-border-thickness) solid var(--color-site-footer-border-color);
