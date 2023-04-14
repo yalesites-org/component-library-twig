@@ -25,7 +25,11 @@
   class: bem(text_with_image__base_class)
 } %}
 
+{% set text_with_image__attributes = text_with_image__attributes|merge(attributes) %}
+
 <div {{ add_attributes(text_with_image__attributes) }}>
+  {% block prefix_suffix %}
+  {% endblock %}
   <div {{ bem('inner', [], text_with_image__base_class) }}>
     {# Content #}
     <div {{ bem('content', [], text_with_image__base_class) }}>

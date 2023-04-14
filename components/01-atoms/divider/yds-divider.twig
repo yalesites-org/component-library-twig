@@ -12,7 +12,11 @@
   class: bem('wrapper', [], divider__base_class),
 } %}
 
+{% set divider__wrapper__attributes = divider__wrapper__attributes|merge(attributes) %}
+
 <div {{ add_attributes(divider__wrapper__attributes) }}>
+  {% block prefix_suffix %}
+  {% endblock %}
   <div {{ bem('inner', [], divider__base_class) }}>
     <div {{ bem(divider__base_class) }}></div>
   </div>
