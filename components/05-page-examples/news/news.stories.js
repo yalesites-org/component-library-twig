@@ -29,6 +29,7 @@ export const NewsArticle = ({
   siteName,
   pageTitle,
   meta,
+  globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -46,6 +47,7 @@ export const NewsArticle = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: meta,
+    site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,

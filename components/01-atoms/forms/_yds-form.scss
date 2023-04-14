@@ -7,6 +7,7 @@
   transition: color,
     background-color var(--animation-speed-default) ease-in-out 0ms;
 
+  --color-action-secondary: var(--color-basic-white);
   --color-button-bg: var(--color-action);
   --color-button-bg-hover: transparent;
   --color-button-border: var(--color-action);
