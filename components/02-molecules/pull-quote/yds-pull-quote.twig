@@ -20,7 +20,11 @@
   class: bem(pull_quote__base_class, pull_quote__modifiers),
 }) %}
 
+{% set pull_quote__attributes = pull_quote__attributes|merge(attributes) %}
+
 <div {{ add_attributes(pull_quote__attributes) }}>
+  {% block prefix_suffix %}
+  {% endblock %}
   <div {{ bem('inner', [], pull_quote__base_class) }}>
     <figure {{ bem('figure', [], pull_quote__base_class) }}>
       <blockquote {{ bem('quote', [], pull_quote__base_class) }}>

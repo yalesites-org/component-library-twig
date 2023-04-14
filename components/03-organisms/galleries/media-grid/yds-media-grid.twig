@@ -22,7 +22,11 @@
   }) %}
 {% endif %}
 
+{% set media_grid__attributes = media_grid__attributes|merge(attributes) %}
+
 <div {{ add_attributes(media_grid__attributes) }}>
+  {% block prefix_suffix %}
+  {% endblock %}
   <div {{ bem('inner', [], media_grid__base_class) }}>
     {% if media_grid__heading %}
       {% include "@atoms/typography/headings/yds-heading.twig" with {
