@@ -3,7 +3,7 @@ items:
     url: '#'
   - title: 'Events'
     url: '#'
-  - title: 'News'
+  - title: 'Post'
     url: '#'
 utility_nav__link__content: 'Apply Now'
 utility_nav__link__url: '#'

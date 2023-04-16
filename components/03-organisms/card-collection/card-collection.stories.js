@@ -1,6 +1,6 @@
 import cardCollectionTwig from './yds-card-collection.twig';
 
-import newsCardData from '../../02-molecules/cards/reference-card/examples/news-card.yml';
+import postCardData from '../../02-molecules/cards/reference-card/examples/post-card.yml';
 import eventCardData from '../../02-molecules/cards/reference-card/examples/event-card.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
@@ -32,7 +32,7 @@ export default {
   },
 };
 
-export const NewsCardCollection = ({
+export const PostCardCollection = ({
   heading,
   collectionType,
   featured,
@@ -41,21 +41,21 @@ export const NewsCardCollection = ({
   const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
 
   return cardCollectionTwig({
-    card_example_type: 'news',
+    card_example_type: 'post',
     card_collection__type: collectionType,
     card_collection__heading: heading,
     card_collection__featured: featured ? 'true' : 'false',
     card_collection__with_images: withImages ? 'true' : 'false',
     card_collection__cards: items,
-    ...newsCardData,
+    ...postCardData,
     ...imageData.responsive_images['3x2'],
   });
 };
-NewsCardCollection.argTypes = {
+PostCardCollection.argTypes = {
   heading: {
     name: 'Heading',
     type: 'string',
-    defaultValue: 'News Card Grid Heading',
+    defaultValue: 'Post Card Grid Heading',
   },
 };
 
