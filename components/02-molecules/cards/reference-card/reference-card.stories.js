@@ -1,6 +1,6 @@
 import referenceCardTwig from './examples/_card--examples.twig';
 
-import referenceCardData from './examples/news-card.yml';
+import referenceCardData from './examples/post-card.yml';
 import imageData from '../../../01-atoms/images/image/image.yml';
 
 import './yds-reference-card';
@@ -43,7 +43,7 @@ export default {
   },
 };
 
-export const NewsCard = ({
+export const PostCard = ({
   date,
   heading,
   snippet,
@@ -55,7 +55,7 @@ export const NewsCard = ({
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${referenceCardTwig({
-        card_example_type: 'news',
+        card_example_type: 'post',
         card_collection__type: collectionType,
         ...imageData.responsive_images['3x2'],
         reference_card__date: date,
@@ -69,7 +69,7 @@ export const NewsCard = ({
   </div>
 </div>
 `;
-NewsCard.argTypes = {
+PostCard.argTypes = {
   date: {
     name: 'Date',
     type: 'string',
