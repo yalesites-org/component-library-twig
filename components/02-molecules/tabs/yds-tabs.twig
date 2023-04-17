@@ -34,7 +34,11 @@
   'data-overflow': 'none',
 } %}
 
+{% set tabs__attributes = tabs__attributes|merge(attributes) %}
+
 <div {{ add_attributes(tabs__attributes) }}>
+  {% block prefix_suffix %}
+  {% endblock %}
   <div {{ bem('tabs', [], tabs__base_class) }}>
     {% include "@atoms/controls/base/yds-control.twig" with {
       control__content: icon_left,

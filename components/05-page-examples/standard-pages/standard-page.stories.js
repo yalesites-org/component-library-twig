@@ -20,7 +20,7 @@ import imageData from '../../01-atoms/images/image/image.yml';
 import textWithImageData from '../../02-molecules/text-with-image/text-with-image.yml';
 import bannerData from '../../02-molecules/banner/banner.yml';
 import grandHeroData from '../../02-molecules/banner/grand-hero.yml';
-import referenceCardData from '../../02-molecules/cards/reference-card/examples/news-card.yml';
+import referenceCardData from '../../02-molecules/cards/reference-card/examples/post-card.yml';
 import customCardData from '../../02-molecules/cards/custom-card/custom-card.yml';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 import quickLinksData from '../../02-molecules/quick-links/quick-links.yml';
