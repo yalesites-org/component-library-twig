@@ -9,7 +9,7 @@ import ctaTwig from '../01-atoms/controls/cta/yds-cta.twig';
 import primaryNavData from '../03-organisms/menu/primary-nav/primary-nav.yml';
 import tabsData from '../02-molecules/tabs/tabs.yml';
 
-const layoutOptions = Object.keys(tokens.layout['flex-position']);
+const layoutOptions = ['left', 'center'];
 const thicknessOptions = Object.keys(tokens.border.thickness);
 const widths = Object.keys(tokens.layout.width);
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
