@@ -2,8 +2,8 @@
 import argTypes from '../../04-page-layouts/cl-page-args';
 
 // Twig files.
-import newsArticleTwig from './news-article.twig';
-import newsGridTwig from './news-grid.twig';
+import postArticleTwig from './post-article.twig';
+import postGridTwig from './post-grid.twig';
 
 // Data files.
 import utilityNavData from '../../03-organisms/menu/utility-nav/utility-nav.yml';
@@ -18,14 +18,14 @@ import '../../00-tokens/layout/yds-layout';
  * Storybook Definition.
  */
 export default {
-  title: 'Page Examples/News',
+  title: 'Page Examples/Post',
   parameters: {
     layout: 'fullscreen',
   },
   argTypes,
 };
 
-export const NewsArticle = ({
+export const PostArticle = ({
   siteName,
   pageTitle,
   meta,
@@ -43,7 +43,7 @@ export const NewsArticle = ({
   ),
   menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
 }) =>
-  newsArticleTwig({
+  postArticleTwig({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: meta,
@@ -72,4 +72,4 @@ export const NewsArticle = ({
     ...socialLinksData,
   });
 
-export const newsGridCustom = () => newsGridTwig();
+export const postGridCustom = () => postGridTwig();

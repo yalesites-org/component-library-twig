@@ -17,7 +17,11 @@
   'class': bem(custom_card_collection__base_class),
 } %}
 
+{% set custom_card_collection__attributes = custom_card_collection__attributes|merge(attributes) %}
+
 <div {{ add_attributes(custom_card_collection__attributes) }}>
+  {% block prefix_suffix %}
+  {% endblock %}
   <div {{ bem('inner', [], custom_card_collection__base_class) }}>
     {% if custom_card_collection__heading %}
       {% include "@atoms/typography/headings/yds-heading.twig" with {

@@ -38,7 +38,7 @@
   } %}
 {% elseif intro_content == 'collection-featured' %}
 	{% include "@organisms/card-collection/yds-card-collection.twig" with {
-        card_example_type: 'news',
+        card_example_type: 'post',
         card_collection__type: 'grid',
         card_collection__featured: 'true',
         card_collection__with_images: 'true',
@@ -46,7 +46,7 @@
   } %}
 {% elseif intro_content == 'collection-secondary' %}
 	{% include "@organisms/card-collection/yds-card-collection.twig" with {
-        card_example_type: 'news',
+        card_example_type: 'post',
         card_collection__type: 'grid',
         card_collection__featured: 'false',
         card_collection__with_images: 'true',

@@ -22,11 +22,15 @@
 
 {% if banner__width %}
   {% set banner__attributes = banner__attributes|merge({
-    'data-banner-width' : banner__width, 
+    'data-banner-width' : banner__width,
   }) %}
 {% endif %}
 
+{% set banner__attributes = banner__attributes|merge(attributes) %}
+
 <div {{ add_attributes(banner__attributes) }}>
+  {% block prefix_suffix %}
+  {% endblock %}
   <div {{ bem('content-wrapper', [], banner__base_class) }}>
     <div {{ bem('image', [], banner__base_class) }}>
       {% block banner__image %}
