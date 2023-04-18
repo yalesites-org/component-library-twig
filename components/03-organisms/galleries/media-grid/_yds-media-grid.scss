@@ -9,7 +9,7 @@
 .media-grid__heading {
   @include tokens.h2-yale-new;
 
-  margin-bottom: var(--spacing-page-inner);
+  margin-bottom: var(--spacing-page-section);
 }
 
 .media-grid__items {

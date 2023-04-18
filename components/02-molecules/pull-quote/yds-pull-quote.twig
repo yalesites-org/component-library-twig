@@ -21,8 +21,6 @@
   class: bem(pull_quote__base_class, pull_quote__modifiers),
 }) %}
 
-{% set pull_quote__attributes = pull_quote__attributes|merge(attributes) %}
-
 <div {{ add_attributes(pull_quote__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}

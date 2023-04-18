@@ -31,8 +31,6 @@
   }) %}
 {% endif %}
 
-{% set grand_hero__attributes = grand_hero__attributes|merge(attributes) %}
-
 <div {{ add_attributes(grand_hero__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}

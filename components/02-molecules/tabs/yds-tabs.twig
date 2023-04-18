@@ -35,8 +35,6 @@
   'data-component-theme': tabs__theme|default('one'),
 } %}
 
-{% set tabs__attributes = tabs__attributes|merge(attributes) %}
-
 <div {{ add_attributes(tabs__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}

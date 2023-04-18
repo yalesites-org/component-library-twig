@@ -19,8 +19,6 @@
   class: bem(callouts__base_class),
 } %}
 
-{% set callouts__attributes = callouts__attributes|merge(attributes) %}
-
 <div {{ add_attributes(callouts__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}

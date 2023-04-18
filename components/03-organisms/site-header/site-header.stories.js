@@ -14,7 +14,6 @@ import './yds-site-header';
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const siteGlobalThemes = { themes: tokens['global-themes'] };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
-const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 const siteGlobalThemeOptions = Object.keys(tokens['global-themes']);
 
@@ -33,7 +32,7 @@ export default {
       defaultValue: '8',
     },
     primaryNavPosition: {
-      options: primaryNavPositions,
+      options: ['left', 'center', 'right'],
       type: 'select',
       defaultValue: 'left',
     },

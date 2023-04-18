@@ -41,8 +41,6 @@
   }) %}
 {% endif %}
 
-{% set quick_links__attributes = quick_links__attributes|merge(attributes) %}
-
 <div {{ add_attributes(quick_links__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}

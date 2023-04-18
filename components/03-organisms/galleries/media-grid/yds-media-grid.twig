@@ -22,8 +22,6 @@
   }) %}
 {% endif %}
 
-{% set media_grid__attributes = media_grid__attributes|merge(attributes) %}
-
 <div {{ add_attributes(media_grid__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}
