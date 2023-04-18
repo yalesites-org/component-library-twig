@@ -17,8 +17,6 @@
   'data-component-alignment': video__alignment
 } %}
 
-{% set video__attributes = video__attributes|merge(attributes) %}
-
 <div {{ add_attributes(video__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}

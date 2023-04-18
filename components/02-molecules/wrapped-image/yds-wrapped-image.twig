@@ -18,8 +18,6 @@
   'class': bem(wrapped_image__base_class),
 } %}
 
-{% set wrapped_image__attributes = wrapped_image__attributes|merge(attributes) %}
-
 {% set wrapped_image__image %}
   {% block wrapped_image__image %}
     {% include "@atoms/images/image/_responsive-image.twig" %}

@@ -30,8 +30,6 @@
   class: bem(accordion__base_class, accordion__modifiers),
 } %}
 
-{% set accordion__attibutes = accordion__attibutes|merge(attributes) %}
-
 <div {{ add_attributes(accordion__attibutes) }} data-embedded-components>
   {% block prefix_suffix %}
   {% endblock %}
