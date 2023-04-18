@@ -34,8 +34,6 @@
   'data-overflow': 'none',
 } %}
 
-{% set tabs__attributes = tabs__attributes|merge(attributes) %}
-
 <div {{ add_attributes(tabs__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}

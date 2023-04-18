@@ -61,7 +61,7 @@ body[data-body-frozen] {
 // `$flush-bottom` above. Then it will have no bottom-margin separating it from
 // the site footer.
 .main-content > *:last-child {
-  margin-bottom: var(--main-content-bottom-margin, var(--size-spacing-12));
+  margin-bottom: var(--main-content-bottom-margin, var(--size-spacing-13));
 }
 
 body {

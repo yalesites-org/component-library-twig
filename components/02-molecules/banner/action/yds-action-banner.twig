@@ -26,8 +26,6 @@
   }) %}
 {% endif %}
 
-{% set banner__attributes = banner__attributes|merge(attributes) %}
-
 <div {{ add_attributes(banner__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}

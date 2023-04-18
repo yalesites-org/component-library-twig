@@ -11,8 +11,6 @@
   class: bem(text_field__base_class, text_field__modifiers),
 } %}
 
-{% set text_field__attributes = text_field__attributes|merge(attributes) %}
-
 <div {{ add_attributes(text_field__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}
