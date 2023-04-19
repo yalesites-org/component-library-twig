@@ -25,7 +25,7 @@ export default {
       defaultValue: 'bar-left',
     },
     accentColor: {
-      name: 'Accent Color',
+      name: 'Component Theme (dial)',
       options: ['one', 'two', 'three'],
       type: 'select',
       defaultValue: 'one',

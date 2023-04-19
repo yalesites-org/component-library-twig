@@ -35,7 +35,7 @@ export default {
       defaultValue: bannerData.banner__link__content,
     },
     bgColor: {
-      name: 'Component Theme',
+      name: 'Component Theme (dial)',
       type: 'select',
       options: colorPairingsData,
       defaultValue: 'one',
