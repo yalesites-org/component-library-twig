@@ -15,7 +15,16 @@ const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const siteGlobalThemes = { themes: tokens['global-themes'] };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
-const siteGlobalThemeOptions = Object.keys(tokens['global-themes']);
+
+const globalThemeLabels = {
+  themes: {
+    'One - Old Blues': 'one',
+    'Two - New Haven Green': 'two',
+    'Three - Shoreline Summer': 'three',
+    'Four - Elm City Nights': 'four',
+    'Five - Quiet Corner': 'five',
+  },
+};
 
 /**
  * Storybook Definition.
@@ -89,7 +98,8 @@ export const HeaderExamples = ({
 
 HeaderExamples.argTypes = {
   globalTheme: {
-    options: siteGlobalThemeOptions,
+    name: 'Global Theme (lever)',
+    options: globalThemeLabels.themes,
     type: 'select',
     defaultValue: 'one',
   },

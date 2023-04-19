@@ -7,9 +7,19 @@ import './text-link/yds-text-link';
 import themeExamplesTwig from './cta/_yds-cta-examples.twig';
 
 const siteGlobalThemes = { themes: tokens['global-themes'] };
-const siteGlobalThemeOptions = Object.keys(tokens['global-themes']);
 const componentThemes = { themes: tokens['component-themes'] };
 const componentThemeOptions = Object.keys(tokens['component-themes']);
+
+const globalThemeLabels = {
+  themes: {
+    'One - Old Blues': 'one',
+    'Two - New Haven Green': 'two',
+    'Three - Shoreline Summer': 'three',
+    'Four - Elm City Nights': 'four',
+    'Five - Quiet Corner': 'five',
+  },
+};
+
 /**
  * Storybook Definition.
  */
@@ -312,7 +322,7 @@ export const CtaExamples = ({ globalTheme, componentTheme }) =>
 CtaExamples.argTypes = {
   globalTheme: {
     name: 'Global Theme (lever)',
-    options: siteGlobalThemeOptions,
+    options: globalThemeLabels.themes,
     type: 'select',
     defaultValue: 'one',
   },

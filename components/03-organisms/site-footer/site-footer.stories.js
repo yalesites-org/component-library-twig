@@ -9,7 +9,16 @@ const siteFooterThemes = { themes: tokens['site-footer-themes'] };
 const siteGlobalThemes = { themes: tokens['global-themes'] };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
-const siteGlobalThemeOptions = Object.keys(tokens['global-themes']);
+
+const globalThemeLabels = {
+  themes: {
+    'One - Old Blues': 'one',
+    'Two - New Haven Green': 'two',
+    'Three - Shoreline Summer': 'three',
+    'Four - Elm City Nights': 'four',
+    'Five - Quiet Corner': 'five',
+  },
+};
 
 /**
  * Storybook Definition.
@@ -54,7 +63,8 @@ export const FooterExamples = ({ borderThickness, globalTheme }) =>
 
 FooterExamples.argTypes = {
   globalTheme: {
-    options: siteGlobalThemeOptions,
+    name: 'Global Theme (lever)',
+    options: globalThemeLabels.themes,
     type: 'select',
     defaultValue: 'one',
   },

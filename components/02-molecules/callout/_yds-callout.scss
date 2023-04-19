@@ -33,11 +33,11 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
   // `--color-slot-` variables.
   @each $globalTheme, $value in $global-callout-themes {
     [data-global-theme='#{$globalTheme}'] & {
-      --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
-      --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
-      --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
-      --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
-      --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
+      --color-slot-one: var(--global-themes-#{$globalTheme}-slots-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-slots-slot-two);
+      --color-slot-three: var(--global-themes-#{$globalTheme}-slots-slot-three);
+      --color-slot-four: var(--global-themes-#{$globalTheme}-slots-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-slots-slot-five);
     }
   }
 

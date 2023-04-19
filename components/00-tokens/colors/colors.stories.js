@@ -30,9 +30,20 @@ const colorsData = {
     gray: tokens.color.gray,
   },
 };
+
+const globalThemeLabels = {
+  themes: {
+    'One - Old Blues': 'one',
+    'Two - New Haven Green': 'two',
+    'Three - Shoreline Summer': 'three',
+    'Four - Elm City Nights': 'four',
+    'Five - Quiet Corner': 'five',
+  },
+};
+
 const colorComponentThemeData = { themes: tokens['component-themes'] };
 const colorBasicThemeData = { themes: tokens['basic-themes'] };
-const siteGlobalThemeOptions = Object.keys(tokens['global-themes']);
+const colorGlobalThemeOptions = globalThemeLabels.themes;
 const colorGlobalThemeData = { globalThemes: tokens['global-themes'] };
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
@@ -69,8 +80,6 @@ export const ComponentThemeColorPairings = ({
 }) =>
   colorComponentThemeTwig({
     ...imageData.responsive_images['16x9'],
-    ...colorGlobalThemeData,
-    ...colorGlobalThemeTwig,
     ...tabData,
     ...bannerData,
     ...siteHeaderTwig,
@@ -158,6 +167,7 @@ export const GlobalThemeColorPairings = ({
 }) =>
   colorGlobalThemePairingTwig({
     ...imageData.responsive_images['16x9'],
+    ...colorGlobalThemeOptions,
     ...colorGlobalThemeData,
     ...colorGlobalThemeTwig,
     ...tabData,
@@ -190,7 +200,7 @@ export const GlobalThemeColorPairings = ({
 GlobalThemeColorPairings.argTypes = {
   globalTheme: {
     name: 'Global Theme (lever)',
-    options: siteGlobalThemeOptions,
+    options: colorGlobalThemeOptions,
     type: 'select',
     defaultValue: 'one',
   },
