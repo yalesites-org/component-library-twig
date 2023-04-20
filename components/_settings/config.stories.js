@@ -13,9 +13,18 @@ const layoutOptions = ['left', 'center'];
 const thicknessOptions = Object.keys(tokens.border.thickness);
 const widths = Object.keys(tokens.layout.width);
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
-const siteGlobalThemeOptions = Object.keys(tokens['global-themes']);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
+
+const globalThemeLabels = {
+  themes: {
+    'One - Old Blues': 'one',
+    'Two - New Haven Green': 'two',
+    'Three - Shoreline Summer': 'three',
+    'Four - Elm City Nights': 'four',
+    'Five - Quiet Corner': 'five',
+  },
+};
 
 export default {
   title: 'Config',
@@ -25,7 +34,7 @@ export default {
   argTypes: {
     globalTheme: {
       name: 'Global Theme (lever)',
-      options: siteGlobalThemeOptions,
+      options: globalThemeLabels.themes,
       type: 'select',
       defaultValue: localStorage.getItem('yds-cl-twig-global-theme'),
     },
