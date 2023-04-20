@@ -1,4 +1,6 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
+// get global themes as `label` : `key` values to pass into options as array.
+import getGlobalThemes from '../../00-tokens/colors/color-global-themes';
 
 import siteHeaderTwig from './yds-site-header.twig';
 import siteHeaderExamples from './_site-header--examples.twig';
@@ -15,16 +17,7 @@ const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const siteGlobalThemes = { themes: tokens['global-themes'] };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
-
-const globalThemeLabels = {
-  themes: {
-    'One - Old Blues': 'one',
-    'Two - New Haven Green': 'two',
-    'Three - Shoreline Summer': 'three',
-    'Four - Elm City Nights': 'four',
-    'Five - Quiet Corner': 'five',
-  },
-};
+const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
 
 /**
  * Storybook Definition.
@@ -99,7 +92,7 @@ export const HeaderExamples = ({
 HeaderExamples.argTypes = {
   globalTheme: {
     name: 'Global Theme (lever)',
-    options: globalThemeLabels.themes,
+    options: siteGlobalThemeOptions,
     type: 'select',
     defaultValue: 'one',
   },
