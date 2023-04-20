@@ -1,6 +1,6 @@
 {#
  # Available Props:
- # - callout__background_color: blue-yale or gray-700
+ # - callout__background_color: one, two, or three
  # - callout__link__type: cta (default), or link
  #
  # Available Variables:
@@ -14,7 +14,7 @@
 {% set callouts__base_class = 'callouts' %}
 
 {% set callouts__attributes = {
-  'data-component-theme': callout__background_color|default('blue-yale'),
+  'data-component-theme': callout__background_color|default('one'),
   'data-component-width': 'site',
   class: bem(callouts__base_class),
 } %}

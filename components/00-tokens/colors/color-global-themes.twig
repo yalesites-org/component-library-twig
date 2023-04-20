@@ -1,0 +1,54 @@
+{% set color_global_theme__base_class = 'cl-color-global-themes' %}
+{% set colors__base_class = "cl-colors" %}
+
+<div {{ bem('wrap', [], color_global_theme__base_class) }}>
+  <div class="text-field" data-component-alignment="left" data-component-width="max">
+    <div class="text-field__inner">
+      <div class="text">
+        <h1>These are global themes.</h1> 
+        <p>
+          Each theme is defined in the tokens repository: <code>atomic/_yale-packages/tokens/tokens/base/color.yml</code>. Each theme has a generic numerical name. If you were to add another global theme, it should follow the same naming convention. For example: <code>six</code> - "Purple Dream". In this example, each theme's non-numerical name (e.g. "Purple Dream") is added in this <code>color-global-themes.twig</code> file. It doesn't exist in the tokens library.
+      </div>
+    </div>
+  </div>
+</div>
+
+{% for globalTheme, value in _context.globalThemes %}
+
+  {% if globalTheme == 'one' %}
+    {% set theme_name = 'Old Blues' %}
+  {% endif %}
+  {% if globalTheme == 'two' %}
+    {% set theme_name = 'New Haven Green' %}
+  {% endif %}
+  {% if globalTheme == 'three' %}
+    {% set theme_name = 'Shoreline Summer' %}
+  {% endif %}
+  {% if globalTheme == 'four' %}
+    {% set theme_name = 'Elm City Nights' %}
+  {% endif %}
+  {% if globalTheme == 'five' %}
+    {% set theme_name = 'Quiet Corner' %}
+  {% endif %}
+
+  <div {{ bem(color_global_theme__base_class) }} data-global-theme={{ globalTheme }}>
+    <h2>Global Theme: {{ globalTheme }} - "{{theme_name}}"</h2>
+    <div {{ bem('colors', [], color_global_theme__base_class) }}>
+      <ul {{ bem('list', [], colors__base_class) }}>
+        {% for color, colorset in value %}
+          {% if colorset is iterable %}
+            {% for nested_color, nested_value in colorset %}
+              <li {{ bem("item", [], colors__base_class) }} style="background: var(--global-themes-{{globalTheme}}-{{ nested_color }});">
+                <span {{ bem("title", [], colors__base_class) }}>--global-themes-{{globalTheme}}-{{ nested_color }}</span>
+              </li>
+            {% endfor %}
+          {% else %}
+            <li {{ bem("item", [], colors__base_class) }} style="background: var(--global-themes-{{globalTheme}}-{{color}});">
+              <span {{ bem("title", [], colors__base_class) }}>--global-themes-{{globalTheme}}-{{ color }}</span>
+            </li>
+          {% endif %}
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endfor %}

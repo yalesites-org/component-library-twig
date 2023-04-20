@@ -23,6 +23,12 @@
   'data-cta-outline-weight': cta__outline_weight|default('2'),
 }) %}
 
+{% if cta__component_theme %}
+  {% set cta__attributes = cta__attributes|merge({
+    'data-cta-theme': cta__component_theme,
+  }) %}
+{% endif %}
+
 {% include "@atoms/controls/base/yds-control.twig" with {
   control__base_class: cta__base_class,
   control__modifiers: cta__modifiers,

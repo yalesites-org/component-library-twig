@@ -45,6 +45,7 @@ export default {
 export const EventPage = ({
   siteName,
   eventPageTitle,
+  globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -67,6 +68,7 @@ export const EventPage = ({
   eventPageTwig({
     site_name: siteName,
     page_title__heading: eventPageTitle,
+    site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
@@ -107,6 +109,7 @@ EventPage.argTypes = {
 export const EventGrid = ({
   siteName,
   pageTitle,
+  globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -124,6 +127,7 @@ export const EventGrid = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
@@ -157,6 +161,7 @@ EventGrid.argTypes = {
 export const EventList = ({
   siteName,
   pageTitle,
+  globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -174,6 +179,7 @@ export const EventList = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,

@@ -2,22 +2,21 @@
 @use '../../00-tokens/functions/map';
 @use '../../01-atoms/atoms';
 
-$social-link-themes: map.deep-get(
-  sass-tokens.$tokens,
-  color,
-  social-links,
-  theme
-);
-
 .social-links {
   // Create social-links specific color properties
   --color-social-links-hover: var(--color-link-base);
 
-  // Component themes
-  @each $theme, $value in $social-link-themes {
-    [data-component-theme='#{$theme}'] & {
-      --color-social-links-hover: var(--color-link-hover);
-    }
+  // assign color-slots, mapped to global themes set in
+  // components/03-organisms/site-footer/_yds-site-footer.scss
+  [data-footer-theme='one'] &,
+  [data-footer-theme='two'] &,
+  [data-footer-theme='three'] & {
+    --color-social-links-hover: var(--color-slot-two);
+  }
+
+  [data-footer-theme='four'] &,
+  [data-footer-theme='five'] & {
+    --color-social-links-hover: var(--color-slot-four);
   }
 }
 

@@ -32,6 +32,7 @@
 {% set tabs__attributes = {
   'class': bem(tabs__base_class),
   'data-overflow': 'none',
+  'data-component-theme': tabs__theme|default('one'),
 } %}
 
 <div {{ add_attributes(tabs__attributes) }}>

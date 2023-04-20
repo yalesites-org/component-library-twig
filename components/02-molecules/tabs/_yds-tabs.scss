@@ -1,5 +1,10 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
+@use '../../00-tokens/functions/map';
+
+// get global themes
+$global-tab-themes: map.deep-get(tokens.$tokens, 'global-themes');
+$component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .tabs {
   @include tokens.spacing-page-section;
@@ -9,8 +14,55 @@
   position: relative;
   border-bottom: var(--size-thickness-1) solid var(--color-gray-500);
 
+  --color-tabs-accent: --color-gray-500;
+
   [data-component-alignment='left'] & {
     max-width: var(--size-component-layout-width-content);
+  }
+
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
+  @each $globalTheme, $value in $global-tab-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
+      --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
+      --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
+    }
+  }
+
+  // Component themes defaults: iterate over each component theme to establish
+  // default variables.
+  @each $theme, $value in $component-tab-themes {
+    &[data-component-theme='#{$theme}'] {
+      // prettier-ignore
+      --color-tabs-accent: var(--color-tabs-accent);
+      --color-action: var(--color-tabs-action);
+      --color-background: var(--color-tabs-background);
+    }
+  }
+
+  // Component theme overrides: set specific component themes overrides
+  /// define component name spaced variables and map them to global theme slots.
+  &[data-component-theme='one'] {
+    --color-tabs-accent: var(--color-slot-one);
+    --color-tabs-action: var(--color-slot-one);
+    --color-tabs-background: var(--color-basic-white);
+  }
+
+  &[data-component-theme='two'] {
+    --color-tabs-accent: var(--color-slot-two);
+    --color-tabs-action: var(--color-slot-two);
+    --color-tabs-background: var(--color-basic-white);
+  }
+
+  &[data-component-theme='three'] {
+    --color-tabs-accent: var(--color-slot-five);
+    --color-tabs-action: var(--color-slot-five);
+    --color-tabs-background: var(--color-basic-white);
   }
 }
 
@@ -114,6 +166,7 @@
     @include tokens.underline-slide-end('no-underline', $size: 'thick');
 
     color: var(--color-action);
+    background-image: linear-gradient(var(--color-action), var(--color-action));
   }
 }
 
