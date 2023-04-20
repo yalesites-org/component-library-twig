@@ -1,5 +1,5 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-import setAttributes from './config';
+import { setAttributes, getGlobalThemes } from './config';
 
 // Twig files.
 import configTwig from './config.twig';
@@ -16,16 +16,6 @@ const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
 
-const globalThemeLabels = {
-  themes: {
-    'One - Old Blues': 'one',
-    'Two - New Haven Green': 'two',
-    'Three - Shoreline Summer': 'three',
-    'Four - Elm City Nights': 'four',
-    'Five - Quiet Corner': 'five',
-  },
-};
-
 export default {
   title: 'Config',
   parameters: {
@@ -34,7 +24,7 @@ export default {
   argTypes: {
     globalTheme: {
       name: 'Global Theme (lever)',
-      options: globalThemeLabels.themes,
+      options: getGlobalThemes(tokens['global-themes']),
       type: 'select',
       defaultValue: localStorage.getItem('yds-cl-twig-global-theme'),
     },

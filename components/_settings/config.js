@@ -37,4 +37,15 @@ const setAttributes = (dataAttributes) => {
   }
 };
 
-export default setAttributes;
+const getGlobalThemes = (globalThemeTokens) => {
+  const globalThemeOptions = {};
+  const tempArr = Object.keys(globalThemeTokens);
+
+  tempArr.forEach((element) => {
+    globalThemeOptions[globalThemeTokens[element].label] = element;
+  });
+
+  return globalThemeOptions;
+};
+
+export { setAttributes, getGlobalThemes };
