@@ -1,4 +1,5 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
+import getGlobalThemes from './color-global-themes';
 
 import colorsTwig from './colors.twig';
 import colorComponentThemeTwig from './color-component-theme-pairings.twig';
@@ -30,14 +31,17 @@ const colorsData = {
     gray: tokens.color.gray,
   },
 };
+
 const colorComponentThemeData = { themes: tokens['component-themes'] };
 const colorBasicThemeData = { themes: tokens['basic-themes'] };
-const siteGlobalThemeOptions = Object.keys(tokens['global-themes']);
 const colorGlobalThemeData = { globalThemes: tokens['global-themes'] };
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 const siteFooterThemes = { themes: tokens['site-footer-themes'] };
 const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
+
+// get global themes as `label` : `key` values to pass into options as array.
+const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
 
 export default {
   title: 'Tokens/Colors',
@@ -69,8 +73,6 @@ export const ComponentThemeColorPairings = ({
 }) =>
   colorComponentThemeTwig({
     ...imageData.responsive_images['16x9'],
-    ...colorGlobalThemeData,
-    ...colorGlobalThemeTwig,
     ...tabData,
     ...bannerData,
     ...siteHeaderTwig,

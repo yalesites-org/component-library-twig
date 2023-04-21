@@ -128,11 +128,13 @@ $break-grand-hero-banner: tokens.$break-m;
   // `--color-slot-` variables.
   @each $globalTheme, $value in $global-grand-hero-themes {
     [data-global-theme='#{$globalTheme}'] & {
-      --color-slot-one: var(--global-themes-#{$globalTheme}-slot-one);
-      --color-slot-two: var(--global-themes-#{$globalTheme}-slot-two);
-      --color-slot-three: var(--global-themes-#{$globalTheme}-slot-three);
-      --color-slot-four: var(--global-themes-#{$globalTheme}-slot-four);
-      --color-slot-five: var(--global-themes-#{$globalTheme}-slot-five);
+      --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
+      --color-slot-three: var(
+        --global-themes-#{$globalTheme}-colors-slot-three
+      );
+      --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
     }
   }
 

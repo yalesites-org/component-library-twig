@@ -1,5 +1,6 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import setAttributes from './config';
+import getGlobalThemes from '../00-tokens/colors/color-global-themes';
 
 // Twig files.
 import configTwig from './config.twig';
@@ -13,9 +14,9 @@ const layoutOptions = ['left', 'center'];
 const thicknessOptions = Object.keys(tokens.border.thickness);
 const widths = Object.keys(tokens.layout.width);
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
-const siteGlobalThemeOptions = Object.keys(tokens['global-themes']);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
+const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
 
 export default {
   title: 'Config',

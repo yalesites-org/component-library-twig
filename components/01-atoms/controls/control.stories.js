@@ -1,4 +1,5 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
+import getGlobalThemes from '../../00-tokens/colors/color-global-themes';
 import ctaTwig from './cta/yds-cta.twig';
 import linkTwig from './text-link/yds-text-link.twig';
 
@@ -7,9 +8,10 @@ import './text-link/yds-text-link';
 import themeExamplesTwig from './cta/_yds-cta-examples.twig';
 
 const siteGlobalThemes = { themes: tokens['global-themes'] };
-const siteGlobalThemeOptions = Object.keys(tokens['global-themes']);
 const componentThemes = { themes: tokens['component-themes'] };
 const componentThemeOptions = Object.keys(tokens['component-themes']);
+const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
+
 /**
  * Storybook Definition.
  */

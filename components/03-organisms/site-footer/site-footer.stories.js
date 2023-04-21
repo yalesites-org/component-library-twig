@@ -1,4 +1,5 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
+import getGlobalThemes from '../../00-tokens/colors/color-global-themes';
 
 import siteFooterTwig from './yds-site-footer.twig';
 import siteFooterExamples from './_site-footer--examples.twig';
@@ -9,7 +10,7 @@ const siteFooterThemes = { themes: tokens['site-footer-themes'] };
 const siteGlobalThemes = { themes: tokens['global-themes'] };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
-const siteGlobalThemeOptions = Object.keys(tokens['global-themes']);
+const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
 
 /**
  * Storybook Definition.
@@ -54,6 +55,7 @@ export const FooterExamples = ({ borderThickness, globalTheme }) =>
 
 FooterExamples.argTypes = {
   globalTheme: {
+    name: 'Global Theme (lever)',
     options: siteGlobalThemeOptions,
     type: 'select',
     defaultValue: 'one',

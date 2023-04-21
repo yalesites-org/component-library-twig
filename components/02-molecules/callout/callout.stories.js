@@ -34,7 +34,7 @@ export default {
       defaultValue: calloutData.callout__link__type,
     },
     backgroundColor: {
-      name: 'Callout Theme',
+      name: 'Callout Theme (dial)',
       type: 'select',
       options: colorPairingsData,
       defaultValue: 'one',
