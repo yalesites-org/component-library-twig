@@ -3,14 +3,28 @@
 @use '../../../00-tokens/tokens';
 
 $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
+$global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
 :root {
   // Component themes
   @each $theme, $value in $link-themes {
-    [data-component-theme='#{$theme}'] {
+    [data-basic-theme='#{$theme}'] {
       --color-link-base: var(--color-link-theme-#{$theme}-base);
       --color-link-hover: var(--color-link-theme-#{$theme}-hover);
       --color-text-shadow: var(--color-background-#{$theme}-background-color);
+    }
+  }
+
+  // Global themes, set color slots
+  @each $globalTheme, $value in $global-link-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
+      --color-slot-three: var(
+        --global-themes-#{$globalTheme}-colors-slot-three
+      );
+      --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
     }
   }
 }

@@ -1,11 +1,72 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
+@use '../../00-tokens/functions/map';
+
+// get global themes
+$global-quick-links-themes: map.deep-get(tokens.$tokens, 'global-themes');
+$component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .quick-links {
   @include tokens.spacing-page-section;
 
+  background-color: var(--color-background);
+  color: var(--color-text);
   position: relative;
   overflow: hidden;
+
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
+  @each $globalTheme, $value in $global-quick-links-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
+      --color-slot-three: var(
+        --global-themes-#{$globalTheme}-colors-slot-three
+      );
+      --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+    }
+  }
+
+  // Component themes defaults: iterate over each component theme to establish
+  // default variables.
+  @each $theme, $value in $component-quick-links-themes {
+    &[data-component-theme='#{$theme}'] {
+      --color-background: var(--color-quick-links-background);
+      --color-text: var(--color-quick-links-text);
+      --color-heading: var(--color-quick-links-heading);
+      --color-action: var(--color-quick-links-action);
+      --color-action-secondary: var(--color-quick-links-action-secondary);
+    }
+  }
+
+  // Component theme overrides: set specific component themes overrides
+  /// define component name spaced variables and map them to global theme slots.
+  &[data-component-theme='one'] {
+    --color-quick-links-background: var(--color-slot-one);
+    --color-quick-links-text: var(--color-basic-white);
+    --color-quick-links-heading: var(--color-basic-white);
+    --color-quick-links-action: var(--color-basic-white);
+    --color-quick-links-action-secondary: var(--color-slot-one);
+  }
+
+  &[data-component-theme='two'] {
+    --color-quick-links-background: var(--color-slot-four);
+    --color-quick-links-text: var(--color-gray-800);
+    --color-quick-links-heading: var(--color-gray-800);
+    --color-quick-links-action: var(--color-gray-800);
+    --color-quick-links-action-secondary: var(--color-basic-white);
+  }
+
+  &[data-component-theme='three'] {
+    --color-quick-links-background: var(--color-slot-five);
+    --color-quick-links-text: var(--color-basic-white);
+    --color-quick-links-heading: var(--color-basic-white);
+    --color-quick-links-action: var(--color-basic-white);
+    --color-quick-links-action-secondary: var(--color-slot-one);
+  }
 }
 
 .quick-links__inner {
@@ -63,10 +124,6 @@
 }
 
 .quick-links__description {
-  [data-quick-links-variation='subtle'] & {
-    margin-top: var(--size-spacing-6);
-  }
-
   [data-quick-links-layout='stacked'] & {
     text-align: center;
   }

@@ -1,4 +1,17 @@
-<div {{ bem('layout-container') }}>
+{# If layout__attributes is not defined, set it to an empty object by default #}
+{% set layout__attributes = layout__attributes|default({}) %}
+
+{% set layout__attributes = layout__attributes|merge({
+  class: bem('layout-container'),
+}) %}
+
+{% if site_global__theme %}
+  {% set layout__attributes = layout__attributes|merge({
+    'data-global-theme': site_global__theme,
+  }) %}
+{% endif %}
+
+<div {{ add_attributes(layout__attributes) }} >
   {# Page Header #}
   {% block page__header %}
     {% include "@organisms/site-header/yds-site-header.twig" %}

@@ -32,9 +32,8 @@
 {% set tabs__attributes = {
   'class': bem(tabs__base_class),
   'data-overflow': 'none',
+  'data-component-theme': tabs__theme|default('one'),
 } %}
-
-{% set tabs__attributes = tabs__attributes|merge(attributes) %}
 
 <div {{ add_attributes(tabs__attributes) }}>
   {% block prefix_suffix %}

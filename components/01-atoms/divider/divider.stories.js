@@ -2,7 +2,7 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
 import dividerTwig from './yds-divider.twig';
 
-const layoutOptions = Object.keys(tokens.layout['flex-position']);
+const layoutOptions = ['left', 'center'];
 const thicknessOptions = Object.keys(tokens.border.thickness);
 const widths = Object.keys(tokens.layout.width);
 
@@ -17,7 +17,7 @@ export default {
     },
     dividerColor: {
       name: 'Line Color',
-      options: ['gray-500', 'blue-yale', 'accent'],
+      options: ['gray-500', 'blue-yale', 'basic-brown-gray'],
       type: 'select',
       defaultValue: 'gray-500',
     },

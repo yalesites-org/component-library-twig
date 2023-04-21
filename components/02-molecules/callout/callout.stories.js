@@ -1,6 +1,10 @@
+import tokens from '@yalesites-org/tokens/build/json/tokens.json';
+
 import calloutTwig from './yds-callout.twig';
 
 import calloutData from './callout.yml';
+
+const colorPairingsData = Object.keys(tokens['component-themes']);
 
 /**
  * Storybook Definition.
@@ -30,10 +34,10 @@ export default {
       defaultValue: calloutData.callout__link__type,
     },
     backgroundColor: {
-      name: 'Background Color',
+      name: 'Callout Theme (dial)',
       type: 'select',
-      options: ['blue-yale', 'gray-700'],
-      defaultValue: 'blue-yale',
+      options: colorPairingsData,
+      defaultValue: 'one',
     },
   },
 };

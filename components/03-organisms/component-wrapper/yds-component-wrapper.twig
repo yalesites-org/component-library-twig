@@ -6,8 +6,6 @@
   'data-component-alignment': component_wrapper__alignment|default('center'),
 } %}
 
-{% set component_wrapper__attributes = component_wrapper__attributes|merge(attributes) %}
-
 <div {{ add_attributes(component_wrapper__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}

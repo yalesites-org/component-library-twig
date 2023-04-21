@@ -7,7 +7,7 @@
     {% set radii_item__attributes = {
       class: bem("item", [], radii__base_class),
       style: 'border-radius: var(' ~ variable ~ ')',
-      'data-component-theme': 'gray-700',
+      'data-basic-theme': 'gray-700',
     } %}
       <li {{ add_attributes(radii_item__attributes) }}>
         <span {{ bem("title", [], radii__base_class) }}>Radius {{ radius }}</span><br />

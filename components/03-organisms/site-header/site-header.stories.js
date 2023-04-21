@@ -1,4 +1,6 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
+// get global themes as `label` : `key` values to pass into options as array.
+import getGlobalThemes from '../../00-tokens/colors/color-global-themes';
 
 import siteHeaderTwig from './yds-site-header.twig';
 import siteHeaderExamples from './_site-header--examples.twig';
@@ -12,9 +14,10 @@ import '../../02-molecules/menu/menu-toggle/yds-menu-toggle';
 import './yds-site-header';
 
 const siteHeaderThemes = { themes: tokens['site-header-themes'] };
+const siteGlobalThemes = { themes: tokens['global-themes'] };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
-const primaryNavPositions = Object.keys(tokens.layout['flex-position']);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
+const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
 
 /**
  * Storybook Definition.
@@ -31,14 +34,9 @@ export default {
       defaultValue: '8',
     },
     primaryNavPosition: {
-      options: primaryNavPositions,
+      options: ['left', 'center', 'right'],
       type: 'select',
-      defaultValue: 'right',
-    },
-    siteHeaderTheme: {
-      options: siteHeaderThemeOptions,
-      type: 'select',
-      defaultValue: 'white',
+      defaultValue: 'left',
     },
     menuVariation: {
       name: 'Menu Variation',
@@ -65,17 +63,37 @@ export const Header = ({
     primary_nav__items: primaryNavData.items,
   });
 
+Header.argTypes = {
+  siteHeaderTheme: {
+    options: siteHeaderThemeOptions,
+    type: 'select',
+    defaultValue: 'one',
+  },
+};
+
 export const HeaderExamples = ({
   borderThickness,
   primaryNavPosition,
   menuVariation,
+  globalTheme,
 }) =>
   siteHeaderExamples({
+    ...siteGlobalThemes,
     ...siteHeaderThemes,
     site_name: 'Department of Chemistry',
+    site_global__theme: globalTheme,
     site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__menu__variation: menuVariation,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
   });
+
+HeaderExamples.argTypes = {
+  globalTheme: {
+    name: 'Global Theme (lever)',
+    options: siteGlobalThemeOptions,
+    type: 'select',
+    defaultValue: 'one',
+  },
+};

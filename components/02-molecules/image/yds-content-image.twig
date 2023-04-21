@@ -17,8 +17,6 @@
   'class': bem(content_image__base_class, content_image__modifiers),
 } %}
 
-{% set content_image__attributes = content_image__attributes|merge(attributes) %}
-
 {% set content_image__image %}
   {% block content_image__image %}
     {% include "@atoms/images/image/_responsive-image.twig" %}

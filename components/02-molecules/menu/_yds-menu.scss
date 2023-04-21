@@ -3,7 +3,7 @@
 :root {
   --menu-link-color: var(--color-link-base);
 
-  [data-component-theme='blue-yale'] {
+  [data-header-theme='three'] {
     --menu-link-color: var(--color-link-hover);
   }
 }

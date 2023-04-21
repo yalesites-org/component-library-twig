@@ -22,8 +22,6 @@
   }) %}
 {% endif %}
 
-{% set media_grid__attributes = media_grid__attributes|merge(attributes) %}
-
 <div {{ add_attributes(media_grid__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}
@@ -44,7 +42,7 @@
     </ul>
   </div>
   {% if media_grid__variation == 'interactive' %}
-    <div {{ bem('modal', [], media_grid__base_class) }} data-component-theme="gray-800">
+    <div {{ bem('modal', [], media_grid__base_class) }} data-basic-theme="gray-700">
       {% block media_grid__modal %}
         {% include "@organisms/galleries/media-grid/_yds-media-grid-modal-item.twig" %}
       {% endblock %}

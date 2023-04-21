@@ -32,6 +32,7 @@ export default {
 export const AccordionPage = ({
   siteName,
   pageTitle,
+  globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -49,6 +50,7 @@ export const AccordionPage = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
@@ -70,6 +72,7 @@ export const AccordionPage = ({
 
 export const QualtricsPage = ({
   siteName,
+  globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -87,6 +90,7 @@ export const QualtricsPage = ({
     site_name: siteName,
     page_title__heading: 'Example Page with a Qualtrics form',
     page_title__meta: null,
+    site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,

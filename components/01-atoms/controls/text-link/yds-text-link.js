@@ -25,7 +25,7 @@ Drupal.behaviors.textLink = {
             navigator.clipboard.writeText(text);
             const triggerValue = elem;
             triggerValue.innerHTML = 'Copied to clipboard';
-            setTimeout(function () {
+            setTimeout(() => {
               triggerValue.innerHTML = '(Copy)';
             }, 1200);
           } catch (error) {
@@ -38,7 +38,7 @@ Drupal.behaviors.textLink = {
     });
 
     // find all external links and add a class
-    links.forEach(function (link) {
+    links.forEach((link) => {
       const linkHref = link.getAttribute('href');
 
       if (linkHref !== currentURL) {

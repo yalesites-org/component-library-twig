@@ -1,5 +1,6 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import setAttributes from './config';
+import getGlobalThemes from '../00-tokens/colors/color-global-themes';
 
 // Twig files.
 import configTwig from './config.twig';
@@ -9,12 +10,13 @@ import ctaTwig from '../01-atoms/controls/cta/yds-cta.twig';
 import primaryNavData from '../03-organisms/menu/primary-nav/primary-nav.yml';
 import tabsData from '../02-molecules/tabs/tabs.yml';
 
-const layoutOptions = Object.keys(tokens.layout['flex-position']);
+const layoutOptions = ['left', 'center'];
 const thicknessOptions = Object.keys(tokens.border.thickness);
 const widths = Object.keys(tokens.layout.width);
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
+const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
 
 export default {
   title: 'Config',
@@ -22,6 +24,12 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: {
+    globalTheme: {
+      name: 'Global Theme (lever)',
+      options: siteGlobalThemeOptions,
+      type: 'select',
+      defaultValue: localStorage.getItem('yds-cl-twig-global-theme'),
+    },
     thickness: {
       name: 'Line thickness',
       options: thicknessOptions,
@@ -30,7 +38,7 @@ export default {
     },
     dividerColor: {
       name: 'Line color',
-      options: ['gray-500', 'blue-yale', 'accent'],
+      options: ['gray-500', 'blue-yale', 'basic-brown-gray'],
       type: 'select',
       defaultValue: 'gray-500',
     },
@@ -96,6 +104,7 @@ const intro = `
 ${ctaTwig({
   cta__content: 'Reset attributes',
   cta__attributes: { onClick: 'resetAttributes();' },
+  cta__component_theme: 'one',
 })}
 `;
 
@@ -111,6 +120,7 @@ export const GlobalConfig = ({
   siteFooterTheme,
   footerBorderThickness,
   menuVariation,
+  globalTheme,
 }) => {
   const root = document.documentElement;
   const customProperties = {
@@ -121,6 +131,7 @@ export const GlobalConfig = ({
     '--color-theme-action': `var(--color-${actionColor})`,
   };
   const dataAttributes = {
+    'yds-cl-twig-global-theme': globalTheme,
     'yds-cl-twig-primary-nav-position': primaryNavPosition,
     'yds-cl-twig-site-header-theme': siteHeaderTheme,
     'yds-cl-twig-header-border-thickness': headerBorderThickness,
@@ -157,6 +168,7 @@ export const GlobalConfig = ({
     site_name: 'Global Settings',
     config_page__intro: intro,
     primary_nav__items: primaryNavData.items,
+    site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,

@@ -56,6 +56,11 @@
   [data-with-image='false'] &,
   [data-collection-featured='false'] [data-with-image='true'] & {
     padding: var(--size-spacing-5);
+
+    @media (min-width: tokens.$break-m) {
+      // without images, allow the content to grow so columns can stretch.
+      flex: 1 auto;
+    }
   }
 
   @media (min-width: tokens.$break-m) {

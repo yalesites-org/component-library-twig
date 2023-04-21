@@ -59,10 +59,10 @@ export default {
       defaultValue: 'none',
     },
     calloutBackground: {
-      name: 'Callout Background Color',
+      name: 'Callout Theme (dial)',
       type: 'select',
-      options: ['blue-yale', 'gray-700'],
-      defaultValue: 'blue-yale',
+      options: ['one', 'two', 'three'],
+      defaultValue: 'one',
     },
   },
 };
@@ -70,6 +70,7 @@ export default {
 export const Basic = ({
   siteName,
   pageTitle,
+  globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -89,6 +90,7 @@ export const Basic = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
@@ -112,6 +114,7 @@ export const Basic = ({
 export const BasicShort = ({
   siteName,
   pageTitle,
+  globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -131,6 +134,7 @@ export const BasicShort = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
@@ -154,6 +158,7 @@ export const BasicShort = ({
 export const WithBanner = ({
   siteName,
   pageTitle,
+  globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -185,6 +190,7 @@ export const WithBanner = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
@@ -241,10 +247,10 @@ WithBanner.argTypes = {
     defaultValue: 'bottom',
   },
   bgColor: {
-    name: 'Banner Content Background Color',
+    name: 'Banner Content Background Color Theme (dial)',
     type: 'select',
     options: colorPairingsData,
-    defaultValue: 'gray-800',
+    defaultValue: 'one',
   },
   heading: {
     name: 'Banner Heading',
@@ -300,6 +306,7 @@ WithBanner.argTypes = {
 export const WithBannerLeftAlign = ({
   siteName,
   pageTitle,
+  globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -335,6 +342,7 @@ export const WithBannerLeftAlign = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
@@ -396,10 +404,10 @@ WithBannerLeftAlign.argTypes = {
     defaultValue: 'bottom',
   },
   bgColor: {
-    name: 'Banner Content Background Color',
+    name: 'Banner Content Background Color Theme (dial)',
     type: 'select',
     options: colorPairingsData,
-    defaultValue: 'gray-800',
+    defaultValue: 'one',
   },
   heading: {
     name: 'Banner Heading',
@@ -475,6 +483,7 @@ WithBannerLeftAlign.argTypes = {
 export const WithSidebar = ({
   siteName,
   pageTitle,
+  globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -494,6 +503,7 @@ export const WithSidebar = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
@@ -517,6 +527,7 @@ export const WithSidebar = ({
 export const WithQuickLinks = ({
   siteName,
   pageTitle,
+  globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -538,6 +549,7 @@ export const WithQuickLinks = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
@@ -587,6 +599,9 @@ WithQuickLinks.argTypes = {
 // export const withVideo = ({
 //   siteName,
 //   pageTitle,
+//   globalTheme = localStorage.getItem(
+//    'yds-cl-twig-global-theme',
+//   ),
 //   headerBorderThickness,
 //   primaryNavPosition,
 //   siteHeaderTheme,
@@ -602,6 +617,7 @@ WithQuickLinks.argTypes = {
 //     site_name: siteName,
 //     page_title__heading: pageTitle,
 //     page_title__meta: null,
+//     site_global__theme: globalTheme,
 //     site_header__border_thickness: headerBorderThickness,
 //     site_header__nav_position: primaryNavPosition,
 //     site_header__theme: siteHeaderTheme,

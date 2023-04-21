@@ -13,7 +13,7 @@
  #}
 
 {% set banner__base_class = 'cta-banner' %}
-{% set banner__content__background = banner__content__background|default('gray-800') %}
+{% set banner__content__background = banner__content__background|default('one') %}
 
 {% set banner__attributes = {
   'data-banner-content-layout': banner__content__layout|default('bottom'),
@@ -25,8 +25,6 @@
     'data-banner-width' : banner__width,
   }) %}
 {% endif %}
-
-{% set banner__attributes = banner__attributes|merge(attributes) %}
 
 <div {{ add_attributes(banner__attributes) }}>
   {% block prefix_suffix %}
