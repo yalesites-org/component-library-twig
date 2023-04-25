@@ -71,6 +71,7 @@ export const Basic = ({
   siteName,
   pageTitle,
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -82,7 +83,6 @@ export const Basic = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   introContent,
   calloutBackground,
 }) =>
@@ -115,6 +115,7 @@ export const BasicShort = ({
   siteName,
   pageTitle,
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -126,7 +127,6 @@ export const BasicShort = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   introContent,
   calloutBackground,
 }) =>
@@ -307,6 +307,7 @@ export const WithBannerLeftAlign = ({
   siteName,
   pageTitle,
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -318,7 +319,6 @@ export const WithBannerLeftAlign = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   introContent,
   calloutBackground,
   heading,
@@ -484,6 +484,7 @@ export const WithSidebar = ({
   siteName,
   pageTitle,
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -495,7 +496,6 @@ export const WithSidebar = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   introContent,
   calloutBackground,
 }) =>
@@ -528,6 +528,7 @@ export const WithQuickLinks = ({
   siteName,
   pageTitle,
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -539,7 +540,6 @@ export const WithQuickLinks = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   heading,
   description,
   image,

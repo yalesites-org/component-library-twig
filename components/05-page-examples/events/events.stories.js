@@ -46,6 +46,7 @@ export const EventPage = ({
   siteName,
   eventPageTitle,
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -57,7 +58,6 @@ export const EventPage = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   startDate,
   endDate,
   format,
@@ -110,6 +110,7 @@ export const EventGrid = ({
   siteName,
   pageTitle,
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -121,7 +122,6 @@ export const EventGrid = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
 }) =>
   eventGridPageTwig({
     site_name: siteName,
@@ -162,6 +162,7 @@ export const EventList = ({
   siteName,
   pageTitle,
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -173,7 +174,6 @@ export const EventList = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
 }) =>
   eventListPageTwig({
     site_name: siteName,

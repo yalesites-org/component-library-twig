@@ -30,6 +30,7 @@ export const PostArticle = ({
   pageTitle,
   meta,
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -41,7 +42,6 @@ export const PostArticle = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
 }) =>
   postArticleTwig({
     site_name: siteName,
