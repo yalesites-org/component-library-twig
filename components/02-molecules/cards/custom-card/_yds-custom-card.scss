@@ -114,6 +114,19 @@
     }
   }
 
+  // change hover background gradient and animate it.
+  .custom-card:hover & {
+    [data-collection-featured='false'] & {
+      @include tokens.animate(background);
+
+      background: linear-gradient(
+        90deg,
+        var(--color-blue-light) 0%,
+        var(--color-blue-light) 100%
+      );
+    }
+  }
+
   @media (min-width: tokens.$break-s) {
     [data-with-image='true'] & {
       background: none;
