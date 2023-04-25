@@ -6,4 +6,8 @@
 
 .component-wrapper__heading {
   margin-bottom: var(--spacing-page-section);
+
+  .ys-view & {
+    @include tokens.h2-yale-new;
+  }
 }
