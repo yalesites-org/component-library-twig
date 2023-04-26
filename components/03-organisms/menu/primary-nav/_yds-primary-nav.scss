@@ -78,13 +78,18 @@ $menu-sub-max-width: 19rem;
 
   // add negative left margin for both `mega` and `basic` variations
   // to align the menu item text with the site name.
+
   [data-site-header-nav-position='left'] & {
-    margin-left: calc(var(--size-spacing-5) * -1);
+    @media (min-width: tokens.$break-mobile) {
+      margin-left: calc(var(--size-spacing-5) * -1);
+    }
   }
 
   [data-site-header-nav-position='right'] & {
-    &[data-menu-variation='basic'] {
-      margin-right: calc(var(--size-spacing-5) * -1);
+    @media (min-width: tokens.$break-mobile) {
+      &[data-menu-variation='basic'] {
+        margin-right: calc(var(--size-spacing-5) * -1);
+      }
     }
   }
 }
