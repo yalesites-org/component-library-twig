@@ -9,8 +9,8 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   --card-border: 1px solid var(--color-gray-200);
   --color-text-shadow: var(--color-basic-white);
-  --color-card-bar-long: var(--color-blue-medium);
-  --color-card-bar-short: var(--color-blue-light);
+  --color-card-bar-long: var(--color-blue-light);
+  --color-card-bar-short: var(--color-blue-medium);
 
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -69,8 +69,8 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
       );
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
-      --color-card-bar-long: var(--color-slot-one);
-      --color-card-bar-short: var(--color-slot-two);
+      --color-card-bar-long: var(--color-slot-two);
+      --color-card-bar-short: var(--color-slot-one);
     }
   }
 }
@@ -145,7 +145,7 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
     position: relative;
 
     &::before {
-      @include tokens.animate(width, var(--animation-speed-medium));
+      @include tokens.animate(width);
 
       content: '';
       background-color: var(--color-card-bar-short);
@@ -161,7 +161,7 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
   .custom-card:hover & {
     [data-collection-featured='false'] & {
       &::before {
-        width: 100%;
+        width: 0%;
       }
     }
   }
