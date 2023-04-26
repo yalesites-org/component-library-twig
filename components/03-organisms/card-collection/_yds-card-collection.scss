@@ -38,4 +38,8 @@
   [data-collection-type='grid'][data-collection-featured='false'] & {
     @include grid.secondary;
   }
+
+  [data-collection-type='grid'][data-component-width='content'] & {
+    @include grid.quaternary;
+  }
 }
