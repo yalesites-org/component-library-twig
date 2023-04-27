@@ -1,11 +1,16 @@
 @use '../../../01-atoms/atoms';
 @use '../../../00-tokens/tokens';
+@use '../../../00-tokens/functions/map';
+
+$global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
 .custom-card {
   @include atoms.clickable-component-heading-link;
 
   --card-border: 1px solid var(--color-gray-200);
   --color-text-shadow: var(--color-basic-white);
+  --color-card-bar-long: var(--color-blue-light);
+  --color-card-bar-short: var(--color-blue-medium);
 
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -46,11 +51,32 @@
       box-shadow: var(--drop-shadow-level-1);
     }
   }
+
+  &[data-with-image='false'] {
+    border: var(--card-border);
+  }
+
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
+  @each $globalTheme, $value in $global-card-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
+      --color-slot-three: var(
+        --global-themes-#{$globalTheme}-colors-slot-three
+      );
+      --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-card-bar-long: var(--color-slot-two);
+      --color-card-bar-short: var(--color-slot-one);
+    }
+  }
 }
 
 .custom-card__content {
   padding: var(--size-spacing-5) 0;
-  border-top: var(--card-border);
   grid-area: content;
 
   [data-with-image='false'] &,
@@ -102,15 +128,41 @@
   grid-area: image;
 
   [data-collection-featured='false'] & {
-    background: linear-gradient(
-      90deg,
-      var(--color-blue-medium) 75%,
-      var(--color-blue-light) 25%
-    );
     min-height: 0.25rem;
 
     @media (min-width: tokens.$break-m) {
       min-height: 0.375rem;
+    }
+  }
+
+  // if the custom card is not part of a featured card collection
+  // and it doesn't have images
+  // show a top bar and animate it.
+  // If a global theme is active, the --color-card-bar-long and --color-card-bar-short
+  // will change from default colors to color slots.
+  [data-collection-featured='false'] [data-with-image='false'] & {
+    background-color: var(--color-card-bar-long);
+    position: relative;
+
+    &::before {
+      @include tokens.animate(width);
+
+      content: '';
+      background-color: var(--color-card-bar-short);
+      height: 100%;
+      width: 25%;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
+
+  // change hover background gradient and animate it.
+  .custom-card:hover & {
+    [data-collection-featured='false'] & {
+      &::before {
+        width: 0%;
+      }
     }
   }
 
