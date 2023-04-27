@@ -28,6 +28,7 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
     @media (min-width: tokens.$break-m) {
       flex-flow: row-reverse nowrap;
       gap: var(--size-spacing-8);
+      align-items: flex-start;
     }
   }
 }
