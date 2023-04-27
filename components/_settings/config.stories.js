@@ -60,6 +60,12 @@ export default {
       type: 'select',
       defaultValue: 'blue-yale',
     },
+    menuVariation: {
+      name: 'Menu Variation',
+      options: ['mega', 'basic'],
+      type: 'select',
+      defaultValue: localStorage.getItem('yds-cl-twig-menu-variation'),
+    },
     primaryNavPosition: {
       name: 'Navigation position',
       options: ['left', 'center', 'right'],
@@ -89,12 +95,6 @@ export default {
       options: borderThicknessOptions,
       type: 'select',
       defaultValue: localStorage.getItem('yds-cl-twig-footer-border-thickness'),
-    },
-    menuVariation: {
-      name: 'Menu Variation',
-      options: ['mega', 'basic'],
-      type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-menu-variation'),
     },
   },
 };
@@ -132,12 +132,12 @@ export const GlobalConfig = ({
   };
   const dataAttributes = {
     'yds-cl-twig-global-theme': globalTheme,
+    'yds-cl-twig-menu-variation': menuVariation,
     'yds-cl-twig-primary-nav-position': primaryNavPosition,
     'yds-cl-twig-site-header-theme': siteHeaderTheme,
     'yds-cl-twig-header-border-thickness': headerBorderThickness,
     'yds-cl-twig-site-footer-theme': siteFooterTheme,
     'yds-cl-twig-footer-border-thickness': footerBorderThickness,
-    'yds-cl-twig-menu-variation': menuVariation,
   };
 
   // Set properties that are stored as custom properties to the root element.
@@ -169,12 +169,12 @@ export const GlobalConfig = ({
     config_page__intro: intro,
     primary_nav__items: primaryNavData.items,
     site_global__theme: globalTheme,
+    menu__variation: menuVariation,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
     site_footer__border_thickness: footerBorderThickness,
     site_footer__theme: siteFooterTheme,
-    menu__variation: menuVariation,
     ...tabsData,
   })}
   `;

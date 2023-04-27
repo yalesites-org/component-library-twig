@@ -11,6 +11,8 @@ import primaryNavData from '../../03-organisms/menu/primary-nav/primary-nav.yml'
 import breadcrumbData from '../../03-organisms/menu/breadcrumbs/breadcrumbs.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
+import referenceCardData from '../../02-molecules/cards/reference-card/examples/post-card.yml';
+
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
 
@@ -30,6 +32,7 @@ export const PostArticle = ({
   pageTitle,
   meta,
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -41,7 +44,6 @@ export const PostArticle = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
 }) =>
   postArticleTwig({
     site_name: siteName,
@@ -70,6 +72,7 @@ export const PostArticle = ({
     image__alt__wrapped: imageData.responsive_images['3x2'].image__alt,
     image__src__wrapped: imageData.responsive_images['3x2'].image__src,
     ...socialLinksData,
+    ...referenceCardData,
   });
 
 export const postGridCustom = () => postGridTwig();

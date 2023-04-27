@@ -61,3 +61,15 @@
     flex: 0 1 calc(50% - calc(var(--grid-gutter) / 2));
   }
 }
+
+@mixin quaternary {
+  --grid-gutter: var(--spacing-component-gutter-secondary);
+
+  @include base;
+
+  > * {
+    @media (min-width: tokens.$break-m) {
+      flex: 0 1 calc(50% - calc(var(--grid-gutter) / 2));
+    }
+  }
+}

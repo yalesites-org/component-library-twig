@@ -33,6 +33,7 @@ export const AccordionPage = ({
   siteName,
   pageTitle,
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -44,7 +45,6 @@ export const AccordionPage = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
 }) =>
   accordionPageTwig({
     site_name: siteName,
@@ -73,6 +73,7 @@ export const AccordionPage = ({
 export const QualtricsPage = ({
   siteName,
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
+  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
   ),
@@ -84,7 +85,6 @@ export const QualtricsPage = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
 }) =>
   qualtricsPageTwig({
     site_name: siteName,

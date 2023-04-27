@@ -76,15 +76,20 @@ $menu-sub-max-width: 19rem;
     place-content: center;
   }
 
+  // add negative left margin for both `mega` and `basic` variations
+  // to align the menu item text with the site name.
+
   [data-site-header-nav-position='left'] & {
-    &[data-menu-variation='basic'] {
+    @media (min-width: tokens.$break-mobile) {
       margin-left: calc(var(--size-spacing-5) * -1);
     }
   }
 
   [data-site-header-nav-position='right'] & {
-    &[data-menu-variation='basic'] {
-      margin-right: calc(var(--size-spacing-5) * -1);
+    @media (min-width: tokens.$break-mobile) {
+      &[data-menu-variation='basic'] {
+        margin-right: calc(var(--size-spacing-5) * -1);
+      }
     }
   }
 }
@@ -149,6 +154,14 @@ $menu-sub-max-width: 19rem;
         [data-site-header-nav-position='center'] &,
         [data-site-header-nav-position='left'] & {
           left: 0;
+        }
+
+        // increase max-width if mega menu is left-aligned
+        // to align the menu item text with the site name.
+        [data-site-header-nav-position='left'] & {
+          max-width: calc(
+            var(--size-component-layout-width-site) + var(--size-spacing-5)
+          );
         }
 
         [data-site-header-nav-position='right'] & {
