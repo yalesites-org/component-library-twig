@@ -14,8 +14,16 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
       --color-text-shadow: var(--color-background-#{$theme}-background-color);
     }
   }
+}
 
-  // Global themes, set color slots
+// Mixin for generic links.
+// Style options are "default" or "no-underline" or "no-animation".
+// The style name indicates the initial appearance.
+@mixin link($style: default, $family-weight: 'mallory-medium') {
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
   @each $globalTheme, $value in $global-link-themes {
     [data-global-theme='#{$globalTheme}'] & {
       --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
@@ -25,20 +33,33 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
       );
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-link-hover: var(--color-slot-two);
     }
   }
-}
 
-// Mixin for generic links.
-// Style options are "default" or "no-underline" or "no-animation".
-// The style name indicates the initial appearance.
-@mixin link($style: default, $family-weight: 'mallory-medium') {
   @include tokens.underline-slide-start($variation: #{$style});
 
   color: var(--color-link-base);
   text-decoration: none;
   font-weight: var(--font-weights-#{$family-weight});
   line-height: normal;
+
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
+  @each $globalTheme, $value in $global-link-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
+      --color-slot-three: var(
+        --global-themes-#{$globalTheme}-colors-slot-three
+      );
+      --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-link-hover: var(--color-slot-two);
+    }
+  }
 
   // This text shadow will make the animated underline appear to avoid
   // descenders in content.
@@ -76,6 +97,23 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 @mixin plain-link {
   @include tokens.animate;
 
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
+  @each $globalTheme, $value in $global-link-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
+      --color-slot-three: var(
+        --global-themes-#{$globalTheme}-colors-slot-three
+      );
+      --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-link-hover: var(--color-slot-two);
+    }
+  }
+
   color: var(--color-link-base);
   text-decoration: underline;
   text-decoration-thickness: 0.1em;
@@ -106,6 +144,27 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   // Style the heading link inside the component.
   [class*='__heading-link'] {
     @include tokens.underline-slide-start('no-underline');
+
+    // Global themes: set color slots for each theme
+    // This establishes `--color-slot-` variables name-spaced to the selector
+    // in which it is used. We can map component-level variables to global-level
+    // `--color-slot-` variables.
+    @each $globalTheme, $value in $global-link-themes {
+      [data-global-theme='#{$globalTheme}'] & {
+        --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
+        --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
+        --color-slot-three: var(
+          --global-themes-#{$globalTheme}-colors-slot-three
+        );
+        --color-slot-four: var(
+          --global-themes-#{$globalTheme}-colors-slot-four
+        );
+        --color-slot-five: var(
+          --global-themes-#{$globalTheme}-colors-slot-five
+        );
+        --color-link-hover: var(--color-slot-two);
+      }
+    }
 
     color: currentcolor;
     text-decoration: none;
@@ -143,7 +202,7 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   &:hover [class*='__heading-link'] {
     @include tokens.underline-slide-end('no-underline');
 
-    color: var(--color-link-base);
+    color: var(--color-link-hover);
   }
 
   // Style the heading link when the component is focused.
