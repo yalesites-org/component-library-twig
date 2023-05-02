@@ -6,6 +6,7 @@
  #}
 
 {% set divider__base_class = 'divider' %}
+{% set divider__position = divider__position|default('center')|lower %}
 
 {% set divider__wrapper__attributes = {
   'data-component-width': divider__width|default('site'),
