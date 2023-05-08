@@ -151,7 +151,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     width: 100%;
     content: '';
     background-color: var(--color-banner-background);
-    opacity: 0.9;
+    opacity: 0.85;
 
     [data-banner-content-layout='left'] &,
     [data-banner-content-layout='right'] & {
