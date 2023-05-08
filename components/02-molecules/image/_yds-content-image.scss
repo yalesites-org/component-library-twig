@@ -4,7 +4,8 @@
   @include tokens.spacing-page-inner;
 
   &[data-component-alignment='left'] {
-    .image {
+    figure,
+    img {
       max-width: var(--size-component-layout-width-content);
     }
   }
