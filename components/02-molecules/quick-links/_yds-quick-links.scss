@@ -208,6 +208,7 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
   // in subtle variartion, inline-flex the links
   [data-quick-links-variation='subtle'] & {
     display: inline-flex;
+    text-align: left;
   }
 }
 
