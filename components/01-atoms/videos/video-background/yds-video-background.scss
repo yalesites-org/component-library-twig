@@ -23,6 +23,7 @@ $break-video-banner-max: $break-video-banner - 0.05;
   @each $theme, $value in $component-video-bg-themes {
     &[data-component-theme='#{$theme}'] {
       --color-backgound: var(--color-video-background);
+      --color-video-svg: var(--color-basic-white);
     }
   }
 
@@ -46,14 +47,17 @@ $break-video-banner-max: $break-video-banner - 0.05;
   /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
     --color-video-background: var(--color-slot-one);
+    --color-video-svg: var(--color-basic-white);
   }
 
   &[data-component-theme='two'] {
     --color-video-background: var(--color-slot-four);
+    --color-video-svg: var(--color-gray-800);
   }
 
   &[data-component-theme='three'] {
     --color-video-background: var(--color-slot-five);
+    --color-video-svg: var(--color-basic-white);
   }
 }
 
@@ -82,7 +86,7 @@ $break-video-banner-max: $break-video-banner - 0.05;
   }
 
   svg {
-    fill: var(--color-basic-white);
+    fill: var(--color-video-svg);
     width: $video-background-icon-size-sm;
     height: $video-background-icon-size-sm;
 
