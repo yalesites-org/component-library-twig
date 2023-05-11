@@ -243,4 +243,8 @@ $break-grand-hero-banner: tokens.$break-m;
   @include atoms.plain-link;
 
   width: fit-content;
+
+  [data-component-theme] & {
+    --color-link-hover: var(--color-grand-hero-text);
+  }
 }
