@@ -75,6 +75,8 @@ View the status of any build here: https://percy.io/95144ff9/component-library-t
 
 ### Running Visreg Tests
 
+**NOTE: Percy is temporarily auto-approving all branches for now. (Original was only auto-approving `main`)  This will be reverted once we have a better handle on how to manage the visreg tests.**
+
 Visual regression tests are automatically run on Percy any time a PR is changed from "Draft" state to "Ready for Review". So there are a few things to keep in mind when creating PRs.
 
 - When you initially create a PR that needs visreg tests, click the "Create draft PR" button instead of the "Create Pull Request" button.
