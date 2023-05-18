@@ -48,6 +48,12 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
       background-color: var(--color-site-footer-background-color);
       color: var(--color-site-footer-text-color);
       border-color: var(--color-site-footer-border-color);
+
+      // set hover for footer links to override the variable from
+      // components/01-atoms/controls/text-link/_yds-text-link.scss
+      .link--footer-link {
+        --color-link-hover: var(--color-text);
+      }
     }
   }
 
