@@ -1,5 +1,8 @@
 @use '../../../00-tokens/tokens';
+@use '../../../00-tokens/functions/map';
 
+$global-video-bg-themes: map.deep-get(tokens.$tokens, 'global-themes');
+$component-video-bg-themes: map.deep-get(tokens.$tokens, 'component-themes');
 $video-background-icon-size: 2rem;
 $video-background-icon-size-sm: 1.4rem;
 $break-video-banner: tokens.$break-m;
@@ -13,6 +16,50 @@ $break-video-banner-max: $break-video-banner - 0.05;
   video {
     display: block;
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  // Component themes defaults: iterate over each component theme to establish
+  // default variables.
+  @each $theme, $value in $component-video-bg-themes {
+    &[data-component-theme='#{$theme}'] {
+      --color-backgound: var(--color-video-background);
+      --color-video-svg: var(--color-basic-white);
+    }
+  }
+
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
+  @each $globalTheme, $value in $global-video-bg-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
+      --color-slot-three: var(
+        --global-themes-#{$globalTheme}-colors-slot-three
+      );
+      --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+    }
+  }
+
+  // Component theme overrides: set specific component themes overrides
+  /// define component name spaced variables and map them to global theme slots.
+  &[data-component-theme='one'] {
+    --color-video-background: var(--color-slot-one);
+    --color-video-svg: var(--color-basic-white);
+  }
+
+  &[data-component-theme='two'] {
+    --color-video-background: var(--color-slot-four);
+    --color-video-svg: var(--color-gray-800);
+  }
+
+  &[data-component-theme='three'] {
+    --color-video-background: var(--color-slot-five);
+    --color-video-svg: var(--color-basic-white);
   }
 }
 
@@ -41,7 +88,7 @@ $break-video-banner-max: $break-video-banner - 0.05;
   }
 
   svg {
-    fill: var(--color-basic-white);
+    fill: var(--color-video-svg);
     width: $video-background-icon-size-sm;
     height: $video-background-icon-size-sm;
 
@@ -62,8 +109,8 @@ $break-video-banner-max: $break-video-banner - 0.05;
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: var(--color-background);
-    opacity: 0.6;
+    background-color: var(--color-video-background);
+    opacity: 0.85;
     z-index: -1;
   }
 
