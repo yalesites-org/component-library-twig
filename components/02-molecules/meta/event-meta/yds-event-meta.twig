@@ -24,8 +24,22 @@
 {% endset %}
 
 {% set event_meta__base_class = 'event-meta' %}
+{# Check if event has passed #}
+{% set event_has_passed = event_meta__date_end < "now"|date("Y-m-d") %}
+{# Set the event title prefix based on event status #}
+{% set event_title_prefix = event_has_passed ? 'Past Event: ' : '' %}
 
-<div {{ bem(event_meta__base_class) }}>
+{# Set the event status based on event_has_passed variable #}
+{% set event_status = event_has_passed ? 'passed' : 'current' %}
+
+<div {{ bem(event_meta__base_class) }} data-event-status="{{ event_status }}">
+{# Event Title #}
+  <h1>
+    {% if event_has_passed %}
+      <span class="event-prefix">Past Event: </span>
+    {% endif %}
+    <span class="page-title__heading">{{ page_title }}</span>
+  </h1>
   <div {{ bem('inner', [], event_meta__base_class) }}>
     {# Date #}
     <div {{ bem('date', [], event_meta__base_class) }}>
