@@ -8,4 +8,8 @@
     height: 70vh;
     border: var(--border-thickness-2) solid;
   }
+
+  iframe[src*='soundcloud'] {
+    height: 130px;
+  }
 }
