@@ -43,6 +43,7 @@
   align-items: flex-end;
   display: flex;
   gap: 0 1rem;
+  margin-bottom: var(--size-spacing-8);
 
   .form-item {
     margin-bottom: 0;
@@ -51,5 +52,11 @@
   .form-select {
     height: 3.25rem;
     padding: 0 0.5rem;
+  }
+
+  .form-submit {
+    @include button-submit;
+
+    --border-radius-button: var(--radius-0);
   }
 }
