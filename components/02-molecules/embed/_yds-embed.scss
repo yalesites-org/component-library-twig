@@ -5,11 +5,24 @@
 
   iframe {
     display: block;
-    height: 70vh;
     border: var(--border-thickness-2) solid;
   }
+}
 
-  iframe[src*='soundcloud'] {
+.embed[data-embed-type='form'] {
+  iframe {
+    height: 70vh;
+  }
+}
+
+.embed[data-embed-type='audio'] {
+  iframe {
     height: 130px;
+  }
+}
+
+.embed[data-embed-type='unknown'] {
+  iframe {
+    height: 70vh;
   }
 }
