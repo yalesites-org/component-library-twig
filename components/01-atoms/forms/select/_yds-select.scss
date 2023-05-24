@@ -1,11 +1,10 @@
 @use '../../../00-tokens/tokens';
 
 // CSS-only select styling (from https://github.com/filamentgroup/select-css)
-// SVGs encoded using https://yoksel.github.io/url-encoder/
+// SVG background-images encoded using https://yoksel.github.io/url-encoder/
 .form-item__dropdown {
   --color-dropdown-border: var(--color-gray-400);
   --color-dropdown-border-hover: var(--color-blue-medium);
-  --color-dropdown-background: var(--color-gray-100);
   --color-dropdown-icon: var(--color-gray-400);
   --color-dropdown-icon-hover: var(--color-blue-medium);
 
@@ -48,6 +47,7 @@
   --color-select-background: var(--color-gray-100);
   --color-select-icon: var(--color-gray-400);
   --color-select-icon-hover: var(--color-blue-medium);
+  --color-select-text-color: var(--color-gray-700);
 
   font-size: 100%;
   line-height: 1.4;
@@ -55,6 +55,7 @@
   padding: 0.5em 0.8em;
   width: 100%;
   min-width: 22rem;
+  color: var(--color-select-text-color);
 
   :focus {
     outline: none;
