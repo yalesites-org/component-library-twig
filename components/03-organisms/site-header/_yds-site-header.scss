@@ -54,6 +54,7 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
       --color-heading: var(--color-site-header-text);
       --color-link-base: var(--color-site-header-text);
       --color-link-hover: var(--color-site-header-link-hover);
+      --menu-link-color: var(--color-site-header-link-hover);
       --color-navigation-border: var(--color-site-header-border-color);
       --color-background: var(--color-site-header-background);
 
@@ -85,14 +86,12 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
   &[data-header-theme='one'] {
     --color-site-header-border-color: var(--color-slot-one);
     --color-site-header-background: var(--color-basic-white);
-    --color-site-header-text: var(--color-slot-one);
     --color-site-header-link-hover: var(--color-slot-two);
   }
 
   &[data-header-theme='two'] {
     --color-site-header-border-color: var(--color-slot-three);
     --color-site-header-background: var(--color-gray-100);
-    --color-site-header-text: var(--color-slot-two);
     --color-site-header-link-hover: var(--color-slot-two);
   }
 
