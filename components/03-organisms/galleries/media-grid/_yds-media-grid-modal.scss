@@ -134,7 +134,9 @@ $modal-speed: var(--animation-speed-slow);
   }
 
   @media (max-width: tokens.$break-s - 0.05) {
-    &:not(.media-grid-modal__pager-item--total):not([data-media-grid-modal-item-active='true']) {
+    &:not(.media-grid-modal__pager-item--total):not(
+        [data-media-grid-modal-item-active='true']
+      ) {
       display: none;
     }
 
