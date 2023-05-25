@@ -16,7 +16,6 @@
 
 {% set embed__attributes = {
   'data-component-width': 'site',
-  'data-embed-type': embed__type,
   'class': bem(embed__base_class),
 } %}
 
@@ -25,7 +24,7 @@
   {% endblock %}
   <div {{ bem('inner', [], embed__base_class) }}>
     {% block embed__block %}
-      <iframe {{ bem('iframe', [], embed__base_class) }} title="{{ embed__title }}" src="{{ embed__src }}" height="{{ embed__height }}" width="{{ embed__width }}" loading="{{ embed__loading }}">
+      <iframe {{ bem('iframe', [], embed__base_class) }} title="{{ embed__title }}" src="{{ embed__src }}" height="{{ embed__height }}" width="{{ embed__width }}" loading="{{ embed__loading }}" data-embed-type="{{ embed__type }}">
       </iframe>
     {% endblock %}
   </div>

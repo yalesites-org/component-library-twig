@@ -9,20 +9,16 @@
   }
 }
 
-.embed[data-embed-type='form'] {
-  iframe {
-    height: 70vh;
-  }
-}
+$heights: (
+  'form': 70vh,
+  'audio': 130px,
+  'unknown': 70vh,
+);
 
-.embed[data-embed-type='audio'] {
-  iframe {
-    height: 130px;
-  }
-}
-
-.embed[data-embed-type='unknown'] {
-  iframe {
-    height: 70vh;
+@each $type, $height in $heights {
+  .embed {
+    iframe[data-embed-type='#{$type}'] {
+      height: $height;
+    }
   }
 }
