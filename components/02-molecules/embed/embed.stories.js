@@ -6,11 +6,6 @@ import embedTwig from './yds-embed.twig';
 export default {
   title: 'Molecules/Embed',
   argTypes: {
-    height: {
-      name: 'Height',
-      type: 'string',
-      defaultValue: '100%',
-    },
     width: {
       name: 'Width',
       type: 'string',
@@ -31,13 +26,13 @@ export default {
   },
 };
 
-export const Embed = ({ height, width, type, loading }) =>
+export const Embed = ({ width, type, loading }) =>
   embedTwig({
     embed__src:
       'https://yalesurvey.ca1.qualtrics.com/jfe/form/SV_cDezt2JVsNok77o',
     embed__title: 'Example Qualtrics Form',
-    embed__height: height,
     embed__width: width,
+    embed__height: '100%',
     embed__type: type,
     embed__loading: loading,
   });
