@@ -9,11 +9,10 @@
   }
 }
 
-$default-height: 70vh;
 $heights: (
-  'form': $default-height,
+  'form': 70vh,
   'audio': 130px,
-  'unknown': $default-height,
+  'unknown': 70vh,
 );
 
 @each $type, $height in $heights {
@@ -23,9 +22,3 @@ $heights: (
     }
   }
 }
-
-// .embed {
-//   iframe:not([data-embed-type]) {
-//     height: $default-height;
-//   }
-// }
