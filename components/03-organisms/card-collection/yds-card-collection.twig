@@ -30,6 +30,8 @@
         heading: card_collection__heading,
       } %}
     {% endif %}
+    {% block card_collection__filters %}
+    {% endblock %}
     <ul {{ bem('cards', [], card_collection__base_class) }}>
       {% block card_collection__cards %}
         {% for card in card_collection__cards %}
