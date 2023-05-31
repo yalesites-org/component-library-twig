@@ -11,3 +11,11 @@
     max-width: var(--size-component-layout-width-highlight);
   }
 }
+
+.page-title__prefix {
+  @include tokens.h2-mallory-compact-book;
+
+  color: var(--color-basic-brown-gray);
+  border-bottom: none;
+  text-transform: uppercase;
+}

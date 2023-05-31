@@ -14,6 +14,7 @@
     {% endif %}
     {% embed "@molecules/page-title/yds-page-title.twig" with {
       page_title__width: 'content',
+      page_title__prefix: 'Past Event:',
     }%}
       {% block page_title__meta %}
         {% include "@molecules/meta/event-meta/yds-event-meta.twig" %}
