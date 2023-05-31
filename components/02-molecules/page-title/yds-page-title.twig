@@ -8,9 +8,6 @@
  # - page_title__meta
 #}
 
-{% set event_has_passed = event_meta__date_end|date("Y-m-d") < "now"|date("Y-m-d") %}
-{% set page_title_prefix = event_has_passed ? 'Past Event: ' : '' %}
-{% set event_status = event_has_passed ? 'passed' : 'current' %}
 {% set page_title__base_class = 'page-title' %}
 
 {% set page_title__attributes = {
@@ -20,14 +17,13 @@
 
 <div {{ add_attributes(page_title__attributes) }}>
   <div {{ bem('inner', [], page_title__base_class) }}>
-    {% if event_has_passed and page_title__prefix %}
-      <h1 {{ bem('heading', ['prefix'], page_title__base_class) }}>
-        <span {{ bem('prefix', [], page_title__base_class) }}>{{ page_title_prefix }}</span>
-        {{ page_title__heading }}
-      </h1>
-    {% else %}
-      <h1 {{ bem('heading', [], page_title__base_class) }}>{{ page_title__heading }}</h1>
-    {% endif %}
+    {% include "@atoms/typography/headings/yds-heading.twig" with {
+      heading__level: '1',
+      heading: page_title__heading,
+      heading__blockname: page_title__base_class,
+      heading__prefix: page_title__prefix,
+      heading__prefix__base_class: page_title__base_class,
+    } %}
     {% block page_title__meta %}
       {% if page_title__meta %}
         {% include "@molecules/meta/basic-meta/yds-basic-meta.twig" with {
