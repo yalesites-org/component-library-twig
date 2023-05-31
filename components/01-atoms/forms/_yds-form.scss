@@ -37,3 +37,25 @@
 .webform-submission-form {
   max-width: 80rem;
 }
+
+// Used for exposed filter forms
+.ys-filter-form {
+  align-items: flex-end;
+  display: flex;
+  gap: 0 1rem;
+  margin-bottom: var(--size-spacing-8);
+
+  .form-item {
+    margin-bottom: 0;
+  }
+
+  .form-select {
+    height: 3rem;
+  }
+
+  .form-submit {
+    @include button-submit;
+
+    --border-radius-button: var(--radius-0);
+  }
+}
