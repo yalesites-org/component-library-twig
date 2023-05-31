@@ -2,14 +2,12 @@
  # Available Variables:
  # - embed__src
  # - embed__title
- # - embed__height: default('100%')
- # - embed__width: default('100%')
- # - embed__type: 'form', 'audio', 'unknown', default('form')
+ # - embed__width: default('site')
+ # - embed__type: 'form', 'audio', default('form')
  # - embed__loading: 'lazy', 'eager', default('lazy')
  #}
 
 {% set embed__base_class = 'embed' %}
-{% set embed__height = embed__height|default('100%') %}
 {% set embed__width = embed__width|default('site') %}
 {% set embed__type = embed__type|default('form') %}
 {% set embed__loading = embed__loading|default('lazy') %}
@@ -24,7 +22,7 @@
   {% endblock %}
   <div {{ bem('inner', [], embed__base_class) }}>
     {% block embed__block %}
-      <iframe {{ bem('iframe', [], embed__base_class) }} title="{{ embed__title }}" src="{{ embed__src }}" height="{{ embed__height }}" width="100%" loading="{{ embed__loading }}" data-embed-type="{{ embed__type }}">
+      <iframe {{ bem('iframe', [], embed__base_class) }} title="{{ embed__title }}" src="{{ embed__src }}" height="100%" width="100%" loading="{{ embed__loading }}" data-embed-type="{{ embed__type }}">
       </iframe>
     {% endblock %}
   </div>
