@@ -7,6 +7,10 @@
   }
 }
 
+.event-meta {
+  color: var(--color-basic-brown-gray);
+}
+
 .event-meta__date {
   @include tokens.h3-mallory-compact-book;
 }
@@ -27,4 +31,12 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--size-spacing-6);
+}
+
+.event-meta__address {
+  color: var(--color-text);
+}
+
+.event-meta__format {
+  color: var(--color-text);
 }
