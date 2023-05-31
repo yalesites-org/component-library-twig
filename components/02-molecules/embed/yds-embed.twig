@@ -10,12 +10,12 @@
 
 {% set embed__base_class = 'embed' %}
 {% set embed__height = embed__height|default('100%') %}
-{% set embed__width = embed__width|default('100%') %}
+{% set embed__width = embed__width|default('site') %}
 {% set embed__type = embed__type|default('form') %}
 {% set embed__loading = embed__loading|default('lazy') %}
 
 {% set embed__attributes = {
-  'data-component-width': 'site',
+  'data-component-width': embed__width,
   'class': bem(embed__base_class),
 } %}
 
@@ -24,7 +24,7 @@
   {% endblock %}
   <div {{ bem('inner', [], embed__base_class) }}>
     {% block embed__block %}
-      <iframe {{ bem('iframe', [], embed__base_class) }} title="{{ embed__title }}" src="{{ embed__src }}" height="{{ embed__height }}" width="{{ embed__width }}" loading="{{ embed__loading }}" data-embed-type="{{ embed__type }}">
+      <iframe {{ bem('iframe', [], embed__base_class) }} title="{{ embed__title }}" src="{{ embed__src }}" height="{{ embed__height }}" width="100%" loading="{{ embed__loading }}" data-embed-type="{{ embed__type }}">
       </iframe>
     {% endblock %}
   </div>
