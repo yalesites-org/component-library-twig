@@ -35,7 +35,7 @@
 {% set event_title__prefix = event_has_passed ? 'Past Event: ' : '' %}
 
 <div {{ bem(event_meta__base_class) }} data-event-status="{{ event_status }}">
-  {# To get the event_title__prefix to wire properly to the page_title__prefix 
+  {# To get the event_title__prefix to wire properly to the page_title__prefix
   and retain the logic of end_date, we need to include the page-title
   in the same component file #}
   {# instead of passing the page-title component into a template separately
@@ -47,13 +47,15 @@
   }%}
     {% block page_title__meta %}
       {% if event_has_passed %}
-        <p>This event has passed.</p>
+        <p {{ bem('prefix', [], event_title__prefix__base_class) }}>
+          This event has passed.
+        </p>
       {% endif %}
 
       <div {{ bem('inner', [], event_meta__base_class) }}>
         {# Date #}
         <div {{ bem('date', [], event_meta__base_class) }}>
-          
+
           {# Day #}
           <div {{ bem('day', [], event_meta__base_class) }}>
             {{ event_meta__day }}

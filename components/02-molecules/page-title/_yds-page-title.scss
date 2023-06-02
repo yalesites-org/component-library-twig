@@ -4,12 +4,6 @@
   @include tokens.spacing-page-inner;
 }
 
-.page-title__inner {
-  p {
-    margin-top: var(--size-spacing-7);
-  }
-}
-
 .page-title__heading {
   @include tokens.h1-yale-new;
 
@@ -23,4 +17,8 @@
 
   color: var(--color-basic-brown-gray);
   text-transform: uppercase;
+}
+
+.prefix {
+  margin-top: var(--size-spacing-7);
 }
