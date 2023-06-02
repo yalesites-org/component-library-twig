@@ -189,6 +189,8 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
 }
 
 .quick-links__list-item {
+  height: 100%;
+
   [data-quick-links-variation='promotional'] & {
     display: grid;
   }
