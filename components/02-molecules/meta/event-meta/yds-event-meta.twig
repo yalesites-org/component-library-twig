@@ -47,7 +47,7 @@
   }%}
     {% block page_title__meta %}
       {% if event_has_passed %}
-        <p {{ bem('prefix', [], event_title__prefix__base_class) }}>
+        <p {{ bem('past-event', [], event_meta__base_class) }}>
           This event has passed.
         </p>
       {% endif %}
