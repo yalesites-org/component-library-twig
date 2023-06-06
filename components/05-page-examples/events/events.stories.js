@@ -67,7 +67,7 @@ export const EventPage = ({
 }) =>
   eventPageTwig({
     site_name: siteName,
-    page_title__heading: eventPageTitle,
+    event_title__heading: eventPageTitle,
     site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,

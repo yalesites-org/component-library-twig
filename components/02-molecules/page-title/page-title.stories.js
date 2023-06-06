@@ -19,11 +19,16 @@ export default {
         date_time__format: 'date',
       })}`,
     },
+    prefix: {
+      name: 'Page Title Prefix',
+      type: 'string',
+    },
   },
 };
 
-export const PageTitle = ({ meta }) =>
+export const PageTitle = ({ meta, prefix }) =>
   pageTitleTwig({
     page_title__heading: 'Davis Team Project Wins Award for Research',
     page_title__meta: meta,
+    page_title__prefix: prefix,
   });

@@ -1,11 +1,12 @@
 {#
  # Available Variables:
  # - page_title__heading
+ # - page_title__prefix
  # - page_title__meta (optional. Will fill in the `basic-meta` meta type.)
  #
  # Available Blocks
  # - page_title__meta
- #}
+#}
 
 {% set page_title__base_class = 'page-title' %}
 
@@ -20,6 +21,8 @@
       heading__level: '1',
       heading: page_title__heading,
       heading__blockname: page_title__base_class,
+      heading__prefix: page_title__prefix,
+      heading__prefix__base_class: page_title__base_class,
     } %}
     {% block page_title__meta %}
       {% if page_title__meta %}
