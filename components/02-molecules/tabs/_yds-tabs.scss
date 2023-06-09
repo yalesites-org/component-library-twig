@@ -53,21 +53,18 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-tabs-accent: var(--color-slot-one);
     --color-tabs-action: var(--color-slot-one);
     --color-tabs-background: var(--color-basic-white);
-    --color-heading: var(--color-gray-700);
   }
 
   &[data-component-theme='two'] {
     --color-tabs-accent: var(--color-slot-two);
     --color-tabs-action: var(--color-slot-two);
     --color-tabs-background: var(--color-basic-white);
-    --color-heading: var(--color-gray-700);
   }
 
   &[data-component-theme='three'] {
     --color-tabs-accent: var(--color-slot-five);
     --color-tabs-action: var(--color-slot-five);
     --color-tabs-background: var(--color-basic-white);
-    --color-heading: var(--color-gray-700);
   }
 }
 
