@@ -24,7 +24,7 @@ figure {
   }
 
   a {
-    // @include link.link;
+    @include link.link;
     @include link.plain-link;
 
     // Override hover variable, it shouldn't use global-theme slots.
