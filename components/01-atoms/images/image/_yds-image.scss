@@ -28,7 +28,9 @@ figure {
     @include link.plain-link;
 
     // Override hover variable, it shouldn't use global-theme slots.
-    --color-link-hover: var(--color-link-base);
+    &:hover {
+      color: var(--color-gray-800);
+    }
   }
 }
 
