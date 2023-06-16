@@ -177,6 +177,10 @@ $modal-speed: var(--animation-speed-slow);
 
   a {
     @include atoms.plain-link;
+
+    &:hover {
+      color: var(--color-gray-300);
+    }
   }
 }
 
