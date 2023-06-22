@@ -14,10 +14,10 @@
    * logical section. */
   --spacing-page-inner: var(--size-spacing-7);
 
-  /* The `--spacing-banner-spacing` variable is assigned to components which
+  /* The `--spacing-component-banner` variable is assigned to components which
    * need more space above and below.
    * these include: banners, quick links, callouts, quote spotlight */
-  --spacing-banner-spacing: var(--size-spacing-9);
+  --spacing-component-banner: var(--size-spacing-9);
 
   @media (min-width: tokens.$break-m) {
     --size-spacing-site-gutter: var(--size-spacing-6);
@@ -26,17 +26,17 @@
   @media (min-width: tokens.$break-l) {
     --size-spacing-site-gutter: var(--size-spacing-7);
     --spacing-page-section: var(--size-spacing-10);
-    --spacing-banner-spacing: var(--size-spacing-10);
+    --spacing-component-banner: var(--size-spacing-10);
   }
 
   @media (min-width: tokens.$break-xl) {
     --size-spacing-site-gutter: var(--size-spacing-8);
-    --spacing-banner-spacing: var(--size-spacing-11);
+    --spacing-component-banner: var(--size-spacing-11);
   }
 
   @media (min-width: tokens.$break-2xl) {
     --size-spacing-site-gutter: var(--size-spacing-10);
-    --spacing-banner-spacing: var(--size-spacing-12);
+    --spacing-component-banner: var(--size-spacing-12);
   }
 
   height: 100%;
@@ -105,13 +105,13 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
   margin-block: var(--spacing-page-section);
 
   @if $banner-spacing == true {
-    margin-block: var(--spacing-banner-spacing);
+    margin-block: var(--spacing-component-banner);
 
     @if $flush-top == true {
       &:first-child {
         --main-content-top-margin: 0;
 
-        margin-bottom: var(--spacing-banner-spacing);
+        margin-bottom: var(--spacing-component-banner);
       }
     }
   }
