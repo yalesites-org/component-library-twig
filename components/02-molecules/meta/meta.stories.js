@@ -24,6 +24,7 @@ Basic.argTypes = {
 };
 
 export const Event = ({
+  pageTitle,
   startDate,
   endDate,
   format,
@@ -32,6 +33,7 @@ export const Event = ({
   allDay,
 }) =>
   eventMetaTwig({
+    event_title__heading: pageTitle,
     event_meta__date_start: startDate,
     event_meta__date_end: endDate,
     event_meta__format: format,

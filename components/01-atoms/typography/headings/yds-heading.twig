@@ -15,6 +15,11 @@
 {% set heading__base_class = heading__base_class|default('heading') %}
 
 <h{{ heading__level }} {{ bem(heading__base_class, heading__modifiers, heading__blockname) }}>
+  {% if heading__prefix %}
+    <span {{ bem('prefix', [], heading__prefix__base_class) }}>
+      {{ heading__prefix }}
+    </span>
+  {% endif %}
   {%- if heading__url %}
     {% include "@atoms/controls/text-link/yds-text-link.twig" with {
       link__content: heading,
@@ -24,7 +29,7 @@
       link__modifiers: heading__link__modifiers,
       link__blockname: heading__link__blockname|default(heading__blockname),
     } %}
-  {% else %}
+  {% else %}  
     {{- heading -}}
   {% endif -%}
 </h{{ heading__level }}>

@@ -1,4 +1,5 @@
 @use '../../../00-tokens/tokens';
+@use '../../controls/text-link/yds-text-link' as link;
 
 img,
 picture {
@@ -20,6 +21,16 @@ figure {
 
   > p:last-child {
     margin-bottom: 0;
+  }
+
+  a {
+    @include link.link;
+    @include link.plain-link;
+
+    // Override hover variable, it shouldn't use global-theme slots.
+    &:hover {
+      color: var(--color-gray-800);
+    }
   }
 }
 
