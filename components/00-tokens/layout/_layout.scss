@@ -104,18 +104,6 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 ) {
   margin-block: var(--spacing-page-section);
 
-  @if $banner-spacing == true {
-    margin-block: var(--spacing-component-banner);
-
-    @if $flush-top == true {
-      &:first-child {
-        --main-content-top-margin: 0;
-
-        margin-bottom: var(--spacing-component-banner);
-      }
-    }
-  }
-
   @if $flush-top == true {
     &:first-child {
       --main-content-top-margin: 0;
@@ -127,6 +115,18 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
   @if $flush-bottom == true {
     &:last-child {
       --main-content-bottom-margin: 0;
+    }
+  }
+
+  @if $banner-spacing == true {
+    margin-block: var(--spacing-component-banner);
+
+    @if $flush-top == true {
+      &:first-child {
+        --main-content-top-margin: 0;
+
+        margin-bottom: var(--spacing-component-banner);
+      }
     }
   }
 }
