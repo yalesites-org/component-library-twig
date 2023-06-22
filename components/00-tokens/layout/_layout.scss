@@ -14,6 +14,11 @@
    * logical section. */
   --spacing-page-inner: var(--size-spacing-7);
 
+  /* The `--spacing-banner-spacing` variable is assigned to components which
+   * need more space above and below.
+   * these include: banners, quick links, callouts, quote spotlight */
+  --spacing-banner-spacing: var(--size-spacing-9);
+
   @media (min-width: tokens.$break-m) {
     --size-spacing-site-gutter: var(--size-spacing-6);
   }
@@ -21,14 +26,17 @@
   @media (min-width: tokens.$break-l) {
     --size-spacing-site-gutter: var(--size-spacing-7);
     --spacing-page-section: var(--size-spacing-10);
+    --spacing-banner-spacing: var(--size-spacing-10);
   }
 
   @media (min-width: tokens.$break-xl) {
     --size-spacing-site-gutter: var(--size-spacing-8);
+    --spacing-banner-spacing: var(--size-spacing-11);
   }
 
   @media (min-width: tokens.$break-2xl) {
     --size-spacing-site-gutter: var(--size-spacing-10);
+    --spacing-banner-spacing: var(--size-spacing-12);
   }
 
   height: 100%;
@@ -89,8 +97,24 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 // intended to "stand out" from the components around them. A callout, or a card
 // grid, for example, may relate to the text around them, but they're not "part"
 // of the text.
-@mixin spacing-page-section($flush-bottom: false, $flush-top: false) {
+@mixin spacing-page-section(
+  $flush-bottom: false,
+  $flush-top: false,
+  $banner-spacing: false
+) {
   margin-block: var(--spacing-page-section);
+
+  @if $banner-spacing == true {
+    margin-block: var(--spacing-banner-spacing);
+
+    @if $flush-top == true {
+      &:first-child {
+        --main-content-top-margin: 0;
+
+        margin-bottom: var(--spacing-banner-spacing);
+      }
+    }
+  }
 
   @if $flush-top == true {
     &:first-child {
