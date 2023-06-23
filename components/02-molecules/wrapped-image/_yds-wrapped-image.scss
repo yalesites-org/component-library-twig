@@ -45,19 +45,24 @@ $wrapped-image-max: '1470px';
     width: 50%;
     margin-bottom: var(--size-spacing-7);
 
+    // Add top magin to image if left or right aligned,
+    // so that the top of the image aligns with the top of the text.
+    [data-wrapped-image-alignment='left'] &,
+    [data-wrapped-image-alignment='right'] & {
+      margin-top: var(--size-spacing-4);
+    }
+
     // floated
     [data-wrapped-image-style='floated'][data-wrapped-image-alignment='left']
       & {
       float: left;
       margin-right: 5%;
-      margin-top: var(--size-spacing-4);
     }
 
     [data-wrapped-image-style='floated'][data-wrapped-image-alignment='right']
       & {
       float: right;
       margin-left: 5%;
-      margin-top: var(--size-spacing-4);
     }
 
     // offset
