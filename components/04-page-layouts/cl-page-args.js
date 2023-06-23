@@ -59,6 +59,11 @@ export const eventArgTypes = {
     type: 'boolean',
     defaultValue: true,
   },
+  pageTitle: {
+    name: 'Page Title',
+    type: 'string',
+    defaultValue: 'Davis Team Project Wins Award for Research',
+  },
 };
 
 export default argTypes;
