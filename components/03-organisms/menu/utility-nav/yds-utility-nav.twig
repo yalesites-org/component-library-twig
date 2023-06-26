@@ -1,5 +1,7 @@
 {% set utility_nav__base_class = 'utility-nav' %}
 
+{% set screen_size = screen_size|default('mobile') %}
+
 <div {{ bem('utility-bar') }}>
   {# Menu #}
   {% block utility_nav__menu %}
@@ -8,9 +10,9 @@
   {# Search #}
   {% if utility_nav__search %}
     <div {{ bem('search', [], utility_nav__base_class) }}>
-      <form action="/search" class="form--inline" method="get" id="header-search-form" accept-charset="UTF-8">
+      <form action="/search" class="form--inline" method="get" id="{{ 'header-search-form-' ~ screen_size }}" accept-charset="UTF-8">
         <div class="form-item form-item-keywords">
-          <label for="edit-keywords--header-search-form">
+          <label for="{{ 'edit-keywords--header-search-form-' ~ screen_size }}">
             {% include "@atoms/images/icons/_yds-icon.twig" with {
               icon__name: 'magnifying-glass',
               icon__blockname: utility_nav__base_class,
@@ -18,10 +20,10 @@
               icon__decorative: true,
             } %}
           </label>
-          <input placeholder="Search this site" type="text" id="edit-keywords--header-search-form" name="keywords" value="" size="30" maxlength="128" class="form-text">
+          <input placeholder="Search this site" type="text" id="{{ 'edit-keywords--header-search-form-' ~ screen_size }}" name="keywords" value="" size="30" maxlength="128" class="form-text">
         </div>
-        <div class="form-actions form-wrapper" id="edit-actions--header-search-form">
-          <input class="visually-hidden button form-submit" type="submit" id="edit-submit-search--header-search-form" value="Search">
+        <div class="form-actions form-wrapper" id="{{ 'edit-actions--header-search-form-' ~ screen_size }}">
+          <input class="visually-hidden button form-submit" type="submit" id="{{ 'edit-submit-search--header-search-form-' ~ screen_size }}" value="Search">
         </div>
       </form>
     </div>
