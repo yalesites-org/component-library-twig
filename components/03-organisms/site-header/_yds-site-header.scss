@@ -49,12 +49,10 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
       --color-slot-three: var(--site-header-themes-#{$theme}-slot-three);
 
       // prettier-ignore
-      --color-site-header-text: var(--color-link-base);
-      --color-site-header-background: var(
-        --site-header-themes-#{$theme}-background
-      );
+      --color-site-header-background: var(--site-header-themes-#{$theme}-background);
       --color-text: var(--color-site-header-text);
       --color-heading: var(--color-site-header-text);
+      --color-link-base: var(--color-site-header-text);
       --color-link-hover: var(--color-site-header-link-hover);
       --menu-link-color: var(--color-site-header-link-hover);
       --color-navigation-border: var(--color-site-header-border-color);
@@ -89,12 +87,14 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-site-header-border-color: var(--color-slot-one);
     --color-site-header-background: var(--color-basic-white);
     --color-site-header-link-hover: var(--color-slot-two);
+    --color-site-header-text: var(--color-site-header-yale-branding);
   }
 
   &[data-header-theme='two'] {
     --color-site-header-border-color: var(--color-slot-three);
     --color-site-header-background: var(--color-gray-100);
     --color-site-header-link-hover: var(--color-slot-two);
+    --color-site-header-text: var(--color-site-header-yale-branding);
   }
 
   &[data-header-theme='three'] {
