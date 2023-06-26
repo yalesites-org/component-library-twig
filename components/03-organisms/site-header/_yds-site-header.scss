@@ -49,10 +49,12 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
       --color-slot-three: var(--site-header-themes-#{$theme}-slot-three);
 
       // prettier-ignore
-      --color-site-header-background: var(--site-header-themes-#{$theme}-background);
+      --color-site-header-text: var(--color-link-base);
+      --color-site-header-background: var(
+        --site-header-themes-#{$theme}-background
+      );
       --color-text: var(--color-site-header-text);
       --color-heading: var(--color-site-header-text);
-      --color-link-base: var(--color-site-header-text);
       --color-link-hover: var(--color-site-header-link-hover);
       --menu-link-color: var(--color-site-header-link-hover);
       --color-navigation-border: var(--color-site-header-border-color);
