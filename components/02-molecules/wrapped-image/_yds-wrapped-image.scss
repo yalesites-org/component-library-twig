@@ -14,7 +14,8 @@ $wrapped-image-max: '1470px';
 
   &[data-component-width='site'][data-wrapped-image-alignment] {
     width: 100%;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
     padding-inline: var(--size-spacing-site-gutter);
 
     @media (min-width: $wrapped-image-max) {
