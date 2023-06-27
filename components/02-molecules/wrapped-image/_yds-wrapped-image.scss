@@ -1,6 +1,6 @@
 @use '../../00-tokens/tokens';
 
-$wrapped-image-offset-max: '1470px';
+$wrapped-image-offset-max: 1550px;
 
 .wrapped-image {
   @include tokens.spacing-page-inner;
@@ -78,7 +78,19 @@ $wrapped-image-offset-max: '1470px';
     }
   }
 
-  // offset at min-width 1470px
+  @media (min-width: tokens.$break-l) {
+    [data-wrapped-image-style='offset'][data-wrapped-image-alignment='left'] & {
+      transform: translateX(-2rem);
+      margin-right: 0;
+    }
+
+    [data-wrapped-image-style='offset'][data-wrapped-image-alignment='right']
+      & {
+      transform: translateX(2rem);
+      margin-left: 0;
+    }
+  }
+
   @media (min-width: $wrapped-image-offset-max) {
     [data-wrapped-image-style='offset'][data-wrapped-image-alignment='left'] & {
       transform: translateX(-20%);
