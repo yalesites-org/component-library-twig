@@ -1,6 +1,6 @@
 @use '../../00-tokens/tokens';
 
-$wrapped-image-max: '1470px';
+$wrapped-image-max: '992px';
 
 .wrapped-image {
   @include tokens.spacing-page-inner;
