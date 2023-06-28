@@ -17,6 +17,11 @@ import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
 
+// Utility to convert dates to unix timestamps
+const toUnixTimeStamp = (date) => {
+  return Math.floor(Date.parse(date) / 1000);
+};
+
 /**
  * Storybook Definition.
  */
@@ -82,8 +87,8 @@ export const EventPage = ({
     utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
     ...imageData.responsive_images['4x3'],
-    event_meta__date_start: startDate,
-    event_meta__date_end: endDate,
+    event_meta__date_start: toUnixTimeStamp(startDate),
+    event_meta__date_end: toUnixTimeStamp(endDate),
     event_meta__format: format,
     event_meta__address: address,
     event_meta__cta_primary__content: ctaText,
