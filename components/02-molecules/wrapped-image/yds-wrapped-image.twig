@@ -28,21 +28,23 @@
   {% block prefix_suffix %}
   {% endblock %}
   <div {{ bem('inner', [], wrapped_image__base_class) }}>
-    {# Image #}
-    <div {{ bem('image', [], wrapped_image__base_class) }}>
-      {% embed "@atoms/images/image/yds-image.twig" with {
-        figure__caption: wrapped_image__caption,
+    <div {{ bem('content-wrapper', [], wrapped_image__base_class) }}>
+      {# Image #}
+      <div {{ bem('image', [], wrapped_image__base_class) }}>
+        {% embed "@atoms/images/image/yds-image.twig" with {
+          figure__caption: wrapped_image__caption,
+        } %}
+          {% block image__image %}
+            {{ wrapped_image__image }}
+          {% endblock %}
+        {% endembed %}
+      </div>
+      {# Text #}
+      {% include "@atoms/typography/text/yds-text.twig" with {
+        text_field__alignment: 'left', 
+        text__content: wrapped_image__content,
+        text__blockname: wrapped_image__base_class,
       } %}
-        {% block image__image %}
-          {{ wrapped_image__image }}
-        {% endblock %}
-      {% endembed %}
     </div>
-    {# Text #}
-    {% include "@atoms/typography/text/yds-text.twig" with {
-      text_field__alignment: 'left', 
-      text__content: wrapped_image__content,
-      text__blockname: wrapped_image__base_class,
-    } %}
   </div>
 </div>

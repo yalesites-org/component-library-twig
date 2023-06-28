@@ -30,7 +30,7 @@
 {% set event_meta__base_class = 'event-meta' %}
 
 {# Check if event has passed #}
-{% set event_has_passed = event_meta__date_end < "now"|date("Y-m-d") %}
+{% set event_has_passed = event_meta__date_end < "now"|date("U") %}
 
 {# Set the event status based on event_has_passed variable #}
 {% set event_status = event_has_passed ? 'passed' : 'current' %}
