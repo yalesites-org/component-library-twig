@@ -81,13 +81,13 @@ $wrapped-image-offset-max: 1550px;
   @media (min-width: tokens.$break-l) {
     [data-wrapped-image-style='offset'][data-wrapped-image-alignment='left'] & {
       transform: translateX(-2rem);
-      margin-right: 0;
+      margin-right: 1rem;
     }
 
     [data-wrapped-image-style='offset'][data-wrapped-image-alignment='right']
       & {
       transform: translateX(2rem);
-      margin-left: 0;
+      margin-left: 1rem;
     }
   }
 
