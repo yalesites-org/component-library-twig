@@ -9,7 +9,11 @@ $break-cta-banner: tokens.$break-l;
 $break-cta-banner-max: $break-cta-banner - 0.05;
 
 .cta-banner {
-  @include tokens.spacing-page-section($flush-top: true, $flush-bottom: true);
+  @include tokens.spacing-page-section(
+    $flush-top: true,
+    $flush-bottom: true,
+    $banner-spacing: true
+  );
 
   padding: 0;
 

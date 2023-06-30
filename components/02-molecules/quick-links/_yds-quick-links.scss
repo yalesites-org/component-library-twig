@@ -7,7 +7,7 @@ $global-quick-links-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .quick-links {
-  @include tokens.spacing-page-section;
+  @include tokens.spacing-page-section($banner-spacing: true);
 
   background-color: var(--color-background);
   color: var(--color-text);
