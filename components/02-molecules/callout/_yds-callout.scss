@@ -7,7 +7,10 @@ $component-callout-themes: map.deep-get(tokens.$tokens, 'component-themes');
 $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
 .callouts {
-  @include tokens.spacing-page-section($flush-bottom: true);
+  @include tokens.spacing-page-section(
+    $flush-bottom: true,
+    $banner-spacing: true
+  );
 
   color: var(--color-text);
   background-color: var(--color-callouts-background);

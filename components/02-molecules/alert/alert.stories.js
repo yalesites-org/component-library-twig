@@ -38,6 +38,7 @@ const alertResetInstructions = `
 ${ctaTwig({
   cta__content: 'Reset dismissed alerts',
   cta__attributes: { onClick: 'resetAlerts();' },
+  cta__component_theme: 'one',
 })}
 `;
 

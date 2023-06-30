@@ -7,7 +7,11 @@ $component-grand-hero-themes: map.deep-get(tokens.$tokens, 'component-themes');
 $break-grand-hero-banner: tokens.$break-m;
 
 .grand-hero-banner {
-  @include tokens.spacing-page-section($flush-top: true, $flush-bottom: true);
+  @include tokens.spacing-page-section(
+    $flush-top: true,
+    $flush-bottom: true,
+    $banner-spacing: true
+  );
 
   position: relative;
   overflow: hidden;
