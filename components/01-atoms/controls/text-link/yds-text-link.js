@@ -19,7 +19,7 @@ Drupal.behaviors.textLink = {
           }
           const text =
             event.target.parentNode.querySelector(
-              '.link__pre-text',
+              '.pre-text__text',
             ).textContent;
           try {
             navigator.clipboard.writeText(text);

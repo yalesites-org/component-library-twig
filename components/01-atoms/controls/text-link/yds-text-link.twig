@@ -35,7 +35,9 @@
 
 {% if link__pre_text %}
   <div {{ bem('inner', [], link__base_class) }}>
-    <span {{ bem('pre-text', [], link__base_class) }}>
+   {# set these bem classes so that they can't be changed. 
+      the JS in `./yds-text-link.js` is looking for `pre-text__text` #}
+    <span {{ bem('text', [], 'pre-text') }}>
       {{link__pre_text}}
     </span>
 {% endif %}
