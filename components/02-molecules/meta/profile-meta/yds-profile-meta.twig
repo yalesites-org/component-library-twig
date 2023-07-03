@@ -23,8 +23,10 @@
 
     <div {{ bem('content', [], profile_meta__base_class) }}>
       {% include "@molecules/page-title/yds-page-title.twig" with {
-        page_title__heading: profile_title__heading,
+        page_title__heading: profile_meta__heading,
+        page_title__blockname: 'profile-title',
       }%}
+      
       {% if profile_meta__title_line %}
         {% include "@atoms/typography/text/yds-text.twig" with {
           text__blockname: profile_meta__base_class,
@@ -32,6 +34,7 @@
           text__base_class: 'title-line',
         } %}
       {% endif %}
+
       {% if profile_meta__subtitle_line %}
         {% include "@atoms/typography/text/yds-text.twig" with {
           text__blockname: profile_meta__base_class,

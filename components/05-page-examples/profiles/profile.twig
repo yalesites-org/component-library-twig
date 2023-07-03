@@ -1,5 +1,12 @@
 {% extends "@page-layouts/yds-full-width.twig" %}
-  {% block page__content %}
+  {% block page__content %} 
+    {% include "@molecules/meta/profile-meta/yds-profile-meta.twig" with {
+      profile_meta__heading: 'Person Namerton',
+      profile_meta__title_line: 'Profile Title',
+      profile_meta__subtitle_line: 'Profile Subtitle',
+      profile_meta__department: 'Department name',
+    } %}
+
     {% include "@organisms/menu/breadcrumbs/yds-breadcrumbs.twig" %}
     {% include "@molecules/page-title/yds-page-title.twig" with {
       page_title__heading: 'Person Namerton',
@@ -84,24 +91,45 @@
             ]
         } %}
       {% endblock %}
+
       {% block two_column__secondary %}
-        {% include "@molecules/text/yds-text-field.twig" with {
-          text_field__content: '<h3>Contact Info</h3>',
-        } %}
-        {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-          link__pre_text: 'person.name@yale.edu',
-          link__content: '(copy)',
-          link__type: 'email',
-          link__extra_class: ['copy-trigger'],
-          link__url: 'javascript:;',
-        } %}
-        <br />
-        {% include "@molecules/text/yds-text-field.twig" with {
-          text_field__content: '<h3>Section Heading</h3>',
-        } %}
-        {% include "@molecules/text/yds-text-field.twig" with {
-          text_field__content: '<ul><li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li><li>Feugiat in ante metus dictum</li><li>Massa eget egestas purus viverra accumsan in nisl nisi</li><li>Sed tempus urna et pharetra</li></ul>',
-        } %}
+
+        {% embed "@organisms/block-wrapper/yds-block-wrapper.twig" with {
+          block_wrapper__label: 'Contact Info',
+          block_wrapper__heading__level: 3,
+        }%}
+          {% block block_wrapper__inner %}
+            {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+              link__pre_text: 'person.name@yale.edu',
+              link__content: '(copy)',
+              link__type: 'email',
+              link__extra_class: ['copy-trigger'],
+              link__url: 'javascript:;',
+            } %}
+            <br/>
+            {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+              link__content: '(203) 593-0486',
+              link__url: 'tel:(203) 593-0486',
+              link__style: ['no-underline'],
+            } %}
+            {% include "@molecules/text/yds-text-field.twig" with {
+              text_field__content: '<br/>Building Name, Room 120<br/>Street Name<br/>City, ST 86753',
+            } %}
+          {% endblock %}
+          
+        {% endembed %}
+
+        {% embed "@organisms/block-wrapper/yds-block-wrapper.twig" with {
+          block_wrapper__label: 'Section Heading',
+          block_wrapper__heading__level: 3,
+          }%}
+          {% block block_wrapper__inner %}
+            {% include "@molecules/text/yds-text-field.twig" with {
+              text_field__content: '<ul><li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li><li>Feugiat in ante metus dictum</li><li>Massa eget egestas purus viverra accumsan in nisl nisi</li><li>Sed tempus urna et pharetra</li></ul>',
+            } %}
+          {% endblock %}
+        {% endembed %}
+
       {% endblock %}
     {% endembed %}
 

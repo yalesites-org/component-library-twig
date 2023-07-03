@@ -67,7 +67,7 @@ export const ProfilePage = ({
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
-    ...imageData.responsive_images['16x9'],
+    ...imageData.responsive_images['3x2'],
     ...textWithImageData,
     ...referenceCardData,
     ...socialLinksData,

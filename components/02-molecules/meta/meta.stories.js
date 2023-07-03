@@ -66,7 +66,7 @@ export const Profile = ({
 }) =>
   profileMetaTwig({
     ...imageData.responsive_images['3x2'],
-    profile_title__heading: heading,
+    profile_meta__heading: heading,
     profile_meta__title_line: titleLine,
     profile_meta__subtitle_line: subTitle,
     profile_meta__department: department,
