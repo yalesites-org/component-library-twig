@@ -106,7 +106,7 @@ $break-profile-banner-max: $break-profile-banner - 0.05;
   display: flex;
   flex-direction: column;
   flex: 1 auto;
-  padding-block: var(--size-spacing-8) var(--size-spacing-4);
+  padding-block: var(--size-spacing-8) var(--size-spacing-6);
 
   @media (min-width: $break-profile-banner) {
     max-width: calc(100% - 661px);
