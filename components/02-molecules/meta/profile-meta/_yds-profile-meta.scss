@@ -113,12 +113,20 @@ $break-profile-banner-max: $break-profile-banner - 0.05;
   }
 }
 
+.profile-title__page-title {
+  margin-bottom: var(--size-spacing-8);
+}
+
 .profile-meta__title-line {
   @include tokens.h3-yale-new;
+
+  margin-bottom: var(--size-spacing-6);
 }
 
 .profile-meta__subtitle-line {
   @include tokens.h4-yale-new;
+
+  margin-bottom: var(--size-spacing-6);
 }
 
 .profile-meta__department-line {
