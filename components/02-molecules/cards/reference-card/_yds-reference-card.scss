@@ -31,6 +31,12 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
       align-items: flex-start;
     }
   }
+
+  [data-collection-type='condensed'] & {
+    padding-bottom: var(--size-spacing-5);
+    border-bottom: var(--border-thickness-1) solid var(--color-divider);
+    margin-bottom: var(--size-spacing-5);
+  }
 }
 
 .reference-card__image {
@@ -75,6 +81,8 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
 }
 
 .reference-card__content {
+  width: 100%;
+
   [data-collection-type='list'][data-collection-featured='false'] & {
     flex: 1 1 100%;
   }
@@ -132,6 +140,12 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
 
   [data-collection-type='list'][data-collection-featured='true'] & {
     @include tokens.h3-yale-new;
+
+    font-weight: var(--font-weights-yalenew-bold);
+  }
+
+  [data-collection-type='condensed'][data-collection-featured='true'] & {
+    @include tokens.h5-yale-new;
 
     font-weight: var(--font-weights-yalenew-bold);
   }

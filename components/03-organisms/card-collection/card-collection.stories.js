@@ -1,7 +1,8 @@
 import cardCollectionTwig from './yds-card-collection.twig';
-
 import postCardData from '../../02-molecules/cards/reference-card/examples/post-card.yml';
 import eventCardData from '../../02-molecules/cards/reference-card/examples/event-card.yml';
+import directoryCardData from '../../02-molecules/cards/directory-listing-card/yds-directory-listing-card.yml';
+
 import imageData from '../../01-atoms/images/image/image.yml';
 
 /**
@@ -16,7 +17,7 @@ export default {
     collectionType: {
       name: 'Collection Type',
       type: 'select',
-      options: ['grid', 'list'],
+      options: ['grid', 'list', 'condensed'],
       defaultValue: 'grid',
     },
     featured: {
@@ -84,5 +85,33 @@ EventCardCollection.argTypes = {
     name: 'Heading',
     type: 'string',
     defaultValue: 'Event Card Grid Heading',
+  },
+};
+
+export const DirectoryListingCardCollection = ({ featured, withImages }) => {
+  const items = featured ? [1, 2, 3, 4] : [1, 2, 3, 4, 5, 6];
+
+  return cardCollectionTwig({
+    card_example_type: 'directory-listing',
+    card_collection__type: 'directory',
+    card_collection__heading: 'Directory Listing',
+    card_collection__featured: featured ? 'true' : 'false',
+    card_collection__with_images: withImages ? 'true' : 'false',
+    card_collection__cards: items,
+    ...directoryCardData,
+    ...imageData.responsive_images['1x1'],
+  });
+};
+DirectoryListingCardCollection.argTypes = {
+  heading: {
+    name: 'Heading',
+    type: 'string',
+    defaultValue: directoryCardData.directory_listing_card__heading,
+  },
+  collectionType: {
+    name: 'Collection Type',
+    type: 'select',
+    options: ['directory'],
+    defaultValue: 'directory',
   },
 };

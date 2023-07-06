@@ -4,6 +4,10 @@
   @include tokens.spacing-page-section;
 
   margin-top: 0;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .block-wrapper__heading {

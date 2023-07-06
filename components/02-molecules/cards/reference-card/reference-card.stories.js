@@ -1,6 +1,7 @@
 import referenceCardTwig from './examples/_card--examples.twig';
 
 import referenceCardData from './examples/post-card.yml';
+import referenceProfileCardData from './examples/profile-card.yml';
 import imageData from '../../../01-atoms/images/image/image.yml';
 
 import './yds-reference-card';
@@ -27,7 +28,7 @@ export default {
     collectionType: {
       name: 'Collection Type',
       type: 'select',
-      options: ['grid', 'list'],
+      options: ['grid', 'list', 'condensed'],
       defaultValue: 'grid',
     },
     featured: {
@@ -111,3 +112,24 @@ EventCard.argTypes = {
     defaultValue: 'In-person',
   },
 };
+
+export const ProfileCard = ({ collectionType, featured }) => `
+<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
+  <div class='card-collection__inner'>
+    <ul class='card-collection__cards'>
+      ${referenceCardTwig({
+        card_example_type: 'profile',
+        card_collection__type: collectionType,
+        ...imageData.responsive_images['3x2'],
+        reference_card__heading:
+          referenceProfileCardData.reference_card__heading,
+        reference_card__subheading:
+          referenceProfileCardData.reference_card__subheading,
+        reference_card__snippet:
+          referenceProfileCardData.reference_card__snippet,
+        reference_card__url: referenceProfileCardData.reference_card__url,
+      })}
+    </ul>
+  </div>
+</div>
+`;

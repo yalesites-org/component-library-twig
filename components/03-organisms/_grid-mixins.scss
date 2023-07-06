@@ -73,3 +73,35 @@
     }
   }
 }
+
+@mixin directory-primary {
+  --grid-gutter: var(--spacing-component-gutter);
+
+  @include base;
+
+  > * {
+    @media (min-width: tokens.$break-m) {
+      flex: 0 1 calc(33.33% - calc(var(--grid-gutter) / 2));
+    }
+
+    @media (min-width: tokens.$break-l) {
+      flex: 0 1 calc(14.88% - calc(var(--grid-gutter) * 2 / 6));
+    }
+  }
+}
+
+@mixin directory-secondary {
+  --grid-gutter: var(--spacing-component-gutter);
+
+  @include base;
+
+  > * {
+    @media (min-width: tokens.$break-m) {
+      flex: 0 1 calc(50% - calc(var(--grid-gutter) / 2));
+    }
+
+    @media (min-width: tokens.$break-l) {
+      flex: 0 1 calc(25% - calc(var(--grid-gutter) * 2 / 4));
+    }
+  }
+}

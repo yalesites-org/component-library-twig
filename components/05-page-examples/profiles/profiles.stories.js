@@ -28,9 +28,7 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    ...argTypes,
-  },
+  argTypes,
 };
 
 export const ProfilePage = ({

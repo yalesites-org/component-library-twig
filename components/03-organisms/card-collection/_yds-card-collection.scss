@@ -42,4 +42,12 @@
   [data-collection-type='grid'][data-component-width='content'] & {
     @include grid.quaternary;
   }
+
+  [data-collection-type='directory'][data-collection-featured='false'] & {
+    @include grid.directory-primary;
+  }
+
+  [data-collection-type='directory'][data-collection-featured='true'] & {
+    @include grid.directory-secondary;
+  }
 }
