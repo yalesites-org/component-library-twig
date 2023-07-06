@@ -85,7 +85,8 @@
     }
 
     @media (min-width: tokens.$break-l) {
-      flex: 0 1 calc(14.88% - calc(var(--grid-gutter) * 2 / 6));
+      flex: 0 1 calc(13.68% - calc(var(--grid-gutter) * 2 / 6));
+      max-width: 13.68%;
     }
   }
 }

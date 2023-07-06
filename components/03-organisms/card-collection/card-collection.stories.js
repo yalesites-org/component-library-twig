@@ -93,7 +93,7 @@ EventCardCollection.argTypes = {
   },
 };
 
-export const DirectoryListingCardCollection = ({ featured, withImages }) => {
+export const DirectoryListingCardCollection = ({ featured, heading }) => {
   const items = featured ? [1, 2, 3, 4] : [1, 2, 3, 4, 5, 6];
 
   return cardCollectionTwig({
@@ -101,8 +101,8 @@ export const DirectoryListingCardCollection = ({ featured, withImages }) => {
     card_collection__type: 'directory',
     card_collection__heading: 'Directory Listing',
     card_collection__featured: featured ? 'true' : 'false',
-    card_collection__with_images: withImages ? 'true' : 'false',
     card_collection__cards: items,
+    directory_listing_card__heading: heading,
     ...directoryCardData,
     ...imageData.responsive_images['1x1'],
   });

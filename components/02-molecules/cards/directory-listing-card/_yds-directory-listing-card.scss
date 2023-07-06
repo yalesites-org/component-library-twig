@@ -71,8 +71,6 @@ $break-directory-card-collection-list-image-max: tokens.$break-s - 0.05;
 }
 
 .directory-listing-card__subheading {
-  @include tokens.body-default-condensed;
-
   display: flex;
   flex-wrap: wrap;
   margin-top: var(--size-spacing-3);
@@ -87,6 +85,14 @@ $break-directory-card-collection-list-image-max: tokens.$break-s - 0.05;
       content: '|';
       left: -0.225rem;
     }
+  }
+
+  [data-collection-featured='false'] & {
+    @include tokens.body-default-condensed;
+  }
+
+  [data-collection-featured='true'] & {
+    @include tokens.h5-yale-new;
   }
 }
 
