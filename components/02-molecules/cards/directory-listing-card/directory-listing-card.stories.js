@@ -17,6 +17,11 @@ export default {
       type: 'string',
       defaultValue: directoryCardData.directory_listing_card__heading,
     },
+    subheading: {
+      name: 'Subheading',
+      type: 'string',
+      defaultValue: directoryCardData.directory_listing_card__subheading,
+    },
     snippet: {
       name: 'Snippet',
       type: 'string',
@@ -27,10 +32,22 @@ export default {
       type: 'boolean',
       defaultValue: true,
     },
+    overline: {
+      name: 'Overline',
+      type: 'string',
+      defaultValue: directoryCardData.directory_listing_card__overline,
+    },
   },
 };
 
-export const ProfileDirectoryListingCard = ({ collectionType, featured }) => `
+export const ProfileDirectoryListingCard = ({
+  collectionType,
+  featured,
+  heading,
+  subheading,
+  snippet,
+  overline,
+}) => `
 <div class='card-collection' data-component-width='site' data-collection-type='directory' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
@@ -38,12 +55,10 @@ export const ProfileDirectoryListingCard = ({ collectionType, featured }) => `
         card_example_type: 'profile',
         card_collection__type: collectionType,
         ...imageData.responsive_images['1x1'],
-        directory_listing_card__heading:
-          directoryCardData.directory_listing_card__heading,
-        directory_listing_card__subheading:
-          directoryCardData.directory_listing_card__subheading,
-        directory_listing_card__snippet:
-          directoryCardData.directory_listing_card__snippet,
+        directory_listing_card__overline: overline,
+        directory_listing_card__heading: heading,
+        directory_listing_card__subheading: subheading,
+        directory_listing_card__snippet: snippet,
         directory_listing_card__url:
           directoryCardData.directory_listing_card__url,
       })}

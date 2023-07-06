@@ -56,11 +56,18 @@ $break-directory-card-collection-list-image-max: tokens.$break-s - 0.05;
     font-weight: var(--font-weights-yalenew-bold);
   }
 
-  [data-collection-type='directory'][data-collection-featured='true'] & {
+  [data-collection-featured='true'] & {
     @include tokens.h4-yale-new;
 
     font-weight: var(--font-weights-yalenew-bold);
   }
+}
+
+.directory-listing-card__heading-link {
+  @include atoms.link('no-underline');
+
+  color: currentcolor;
+  font-weight: inherit;
 }
 
 .directory-listing-card__subheading {

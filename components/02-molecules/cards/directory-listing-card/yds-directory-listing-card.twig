@@ -18,6 +18,13 @@
  
  <li {{ bem(directory_listing_card__base_class) }}>
    <div {{ bem('content', [], directory_listing_card__base_class) }}>
+    {% if directory_listing_card__overline %}
+      {% include "@atoms/typography/text/yds-text.twig" with {
+        text__base_class: 'overline',
+        text__blockname: directory_listing_card__base_class,
+        text__content: directory_listing_card__overline,
+      } %}
+    {% endif %}
      {% include "@atoms/typography/headings/yds-heading.twig" with {
        heading__level: directory_listing_card__heading_level|default('3'),
        heading__blockname: directory_listing_card__base_class,
