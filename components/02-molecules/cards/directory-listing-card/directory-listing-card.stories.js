@@ -22,19 +22,8 @@ export default {
       type: 'string',
       defaultValue: directoryCardData.directory_listing_card__snippet,
     },
-    collectionType: {
-      name: 'Collection Type',
-      type: 'select',
-      options: ['directory'],
-      defaultValue: 'directory',
-    },
     featured: {
       name: 'Featured',
-      type: 'boolean',
-      defaultValue: true,
-    },
-    withImage: {
-      name: 'With Image',
       type: 'boolean',
       defaultValue: true,
     },
@@ -42,13 +31,13 @@ export default {
 };
 
 export const ProfileDirectoryListingCard = ({ collectionType, featured }) => `
-<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
+<div class='card-collection' data-component-width='site' data-collection-type='directory' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${directoryCardTwig({
         card_example_type: 'profile',
         card_collection__type: collectionType,
-        ...imageData.responsive_images['3x2'],
+        ...imageData.responsive_images['1x1'],
         directory_listing_card__heading:
           directoryCardData.directory_listing_card__heading,
         directory_listing_card__subheading:

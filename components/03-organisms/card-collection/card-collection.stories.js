@@ -25,11 +25,6 @@ export default {
       type: 'boolean',
       defaultValue: true,
     },
-    withImages: {
-      name: 'With Images',
-      type: 'boolean',
-      defaultValue: true,
-    },
   },
 };
 
@@ -53,6 +48,11 @@ export const PostCardCollection = ({
   });
 };
 PostCardCollection.argTypes = {
+  withImages: {
+    name: 'With Images',
+    type: 'boolean',
+    defaultValue: true,
+  },
   heading: {
     name: 'Heading',
     type: 'string',
@@ -81,6 +81,11 @@ export const EventCardCollection = ({
   });
 };
 EventCardCollection.argTypes = {
+  withImages: {
+    name: 'With Images',
+    type: 'boolean',
+    defaultValue: true,
+  },
   heading: {
     name: 'Heading',
     type: 'string',
