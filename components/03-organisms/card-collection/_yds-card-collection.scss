@@ -43,11 +43,13 @@
     @include grid.quaternary;
   }
 
-  [data-collection-type='directory'][data-collection-featured='false'] & {
+  [data-collection-type='profile-directory'][data-collection-featured='false']
+    & {
     @include grid.directory-primary;
   }
 
-  [data-collection-type='directory'][data-collection-featured='true'] & {
+  [data-collection-type='profile-directory'][data-collection-featured='true']
+    & {
     @include grid.directory-secondary;
   }
 }

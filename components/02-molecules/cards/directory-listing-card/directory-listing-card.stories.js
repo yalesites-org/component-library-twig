@@ -50,7 +50,7 @@ export default {
   },
 };
 
-export const ProfileDirectoryListingCard = ({
+export const ProfileCardDirectoryListing = ({
   collectionType,
   featured,
   heading,
@@ -60,7 +60,7 @@ export const ProfileDirectoryListingCard = ({
   email,
   phone,
 }) => `
-<div class='card-collection' data-component-width='site' data-collection-type='directory' data-collection-featured="${featured}">
+<div class='card-collection' data-component-width='site' data-collection-type='directory-listing' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${directoryCardTwig({

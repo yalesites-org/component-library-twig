@@ -98,7 +98,7 @@ export const DirectoryListingCardCollection = ({ featured, heading }) => {
 
   return cardCollectionTwig({
     card_example_type: 'directory-listing',
-    card_collection__type: 'directory',
+    card_collection__type: 'profile-directory',
     card_collection__heading: 'Directory Listing',
     card_collection__featured: featured ? 'true' : 'false',
     card_collection__cards: items,
@@ -116,7 +116,7 @@ DirectoryListingCardCollection.argTypes = {
   collectionType: {
     name: 'Collection Type',
     type: 'select',
-    options: ['directory'],
-    defaultValue: 'directory',
+    options: ['profile-directory'],
+    defaultValue: 'profile-directory',
   },
 };
