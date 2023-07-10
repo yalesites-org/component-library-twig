@@ -2,6 +2,8 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
 import dividerTwig from './yds-divider.twig';
 
+import './cl-dividers.scss';
+
 const layoutOptions = ['left', 'center'];
 const thicknessOptions = Object.keys(tokens.border.thickness);
 const widths = Object.keys(tokens.layout.width);
