@@ -8,7 +8,6 @@
 {# Render the image in a <figure> if there is a caption provided. #}
 {% if figure__caption %}
   {% set figure__attributes = {
-    'aria-label': figure__caption,
     'class': bem('figure'),
   } %}
 
