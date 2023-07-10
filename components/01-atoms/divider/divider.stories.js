@@ -58,7 +58,7 @@ export const Dividers = ({ position, thickness, dividerColor, width }) => {
   <div style="--thickness-divider: var(--size-thickness-4)">${dividerTwig()}</div>
   <div style="--thickness-divider: var(--size-thickness-6)">${dividerTwig()}</div>
   <div style="--thickness-divider: var(--size-thickness-8)">${dividerTwig()}</div>
-  <div style="
+  <div class="cl-divider-playground" style="
     --color-divider: var(--color-${dividerColor});
     --width-theme-divider: var(--layout-width-${width});
   ">
