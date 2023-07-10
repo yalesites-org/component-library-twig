@@ -78,6 +78,18 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
       flex: 0 0 33%;
     }
   }
+
+  @media (min-width: tokens.$break-mobile) {
+    [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='false']
+      & {
+      flex: 0 1 10%;
+    }
+
+    [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='true']
+      & {
+      flex: 0 1 15%;
+    }
+  }
 }
 
 .reference-card__content {
@@ -110,6 +122,18 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
     [data-collection-type='list'][data-collection-featured='true'] & {
       flex: 0 1 71%;
       margin-inline: auto;
+    }
+  }
+
+  @media (min-width: tokens.$break-mobile) {
+    [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='false']
+      & {
+      flex: 0 1 90%;
+    }
+
+    [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='true']
+      & {
+      flex: 0 1 85%;
     }
   }
 }
