@@ -82,12 +82,12 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
   @media (min-width: tokens.$break-mobile) {
     [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='false']
       & {
-      flex: 0 1 10%;
+      flex-basis: 10%;
     }
 
     [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='true']
       & {
-      flex: 0 1 15%;
+      flex-basis: 15%;
     }
   }
 }
@@ -128,12 +128,12 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
   @media (min-width: tokens.$break-mobile) {
     [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='false']
       & {
-      flex: 0 1 90%;
+      flex-basis: 90%;
     }
 
     [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='true']
       & {
-      flex: 0 1 85%;
+      flex-basis: 85%;
     }
   }
 }
