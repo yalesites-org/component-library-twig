@@ -114,13 +114,13 @@ EventCard.argTypes = {
 };
 
 export const ProfileCard = ({ collectionType, featured }) => `
-<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
+<div class='card-collection' data-component-width='site' data-collection-source='profile' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${referenceCardTwig({
         card_example_type: 'profile',
         card_collection__type: collectionType,
-        ...imageData.responsive_images['3x2'],
+        ...imageData.responsive_images['1x1'],
         reference_card__heading:
           referenceProfileCardData.reference_card__heading,
         reference_card__subheading:
