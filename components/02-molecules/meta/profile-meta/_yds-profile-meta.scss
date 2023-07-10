@@ -93,12 +93,15 @@ $break-profile-banner-max: $break-profile-banner - 0.05;
 
 .profile-meta__image {
   width: 100%;
-  max-width: 661px;
   flex: 0 auto;
   aspect-ratio: 3/2;
 
   @media (max-width: $break-profile-banner-max) {
     margin-bottom: var(--size-spacing-5);
+  }
+
+  @media (min-width: $break-profile-banner) {
+    max-width: 661px;
   }
 }
 
