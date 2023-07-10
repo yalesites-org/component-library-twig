@@ -51,6 +51,17 @@ $break-directory-card-collection-list-image-max: tokens.$break-s - 0.05;
   }
 }
 
+.directory-listing-card__overline {
+  @include tokens.body-s;
+
+  margin-bottom: var(--size-spacing-3);
+  color: var(--color-gray-500);
+  font-variant-caps: small-caps;
+  font-variant-numeric: oldstyle-nums;
+  text-transform: lowercase;
+  letter-spacing: 0.5px;
+}
+
 .directory-listing-card__heading {
   [data-collection-featured='false'] & {
     @include tokens.h5-yale-new;
@@ -96,6 +107,11 @@ $break-directory-card-collection-list-image-max: tokens.$break-s - 0.05;
   [data-collection-featured='true'] & {
     @include tokens.h5-yale-new;
   }
+
+  [data-collection-type='profile-directory'][data-collection-featured='false']
+    & {
+    @include tokens.body-s-condensed;
+  }
 }
 
 .directory-listing-card__snippet {
@@ -103,5 +119,28 @@ $break-directory-card-collection-list-image-max: tokens.$break-s - 0.05;
 
   [data-collection-featured='false'] & {
     @include tokens.body-default-condensed;
+  }
+
+  [data-collection-type='profile-directory'][data-collection-featured='false']
+    & {
+    @include tokens.body-s-condensed;
+  }
+}
+
+.directory-listing-card__email {
+  @include tokens.body-default-condensed;
+
+  [data-collection-type='profile-directory'][data-collection-featured='false']
+    & {
+    @include tokens.body-s-condensed;
+  }
+}
+
+.directory-listing-card__phone {
+  @include tokens.body-default-condensed;
+
+  [data-collection-type='profile-directory'][data-collection-featured='false']
+    & {
+    @include tokens.body-s-condensed;
   }
 }
