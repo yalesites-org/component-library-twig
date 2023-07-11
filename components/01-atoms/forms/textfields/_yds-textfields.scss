@@ -94,7 +94,8 @@ $form-item-icon-size: 1.7rem;
   padding: 0;
 
   .form-item {
-    margin-inline: var(--size-spacing-4);
+    margin-inline-start: var(--size-spacing-4);
+    margin-inline-end: var(--size-spacing-4);
     max-width: $form-item-max-width;
   }
 }
