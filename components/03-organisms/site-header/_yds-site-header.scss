@@ -139,7 +139,8 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
   padding: var(--size-spacing-4) var(--size-spacing-site-gutter);
   background-color: var(--color-background);
   border-bottom: var(--site-header-border-bottom);
-  margin-inline: calc(var(--size-spacing-site-gutter) * -1);
+  margin-inline-start: calc(var(--size-spacing-site-gutter) * -1);
+  margin-inline-end: calc(var(--size-spacing-site-gutter) * -1);
 
   @media (min-width: tokens.$break-mobile) {
     display: none;

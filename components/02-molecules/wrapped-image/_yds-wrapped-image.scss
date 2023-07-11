@@ -1,4 +1,5 @@
 @use '../../00-tokens/tokens';
+@use '../../01-atoms/atoms';
 
 $wrapped-image-offset-max: 1550px;
 
@@ -19,7 +20,8 @@ $wrapped-image-offset-max: 1550px;
   }
 
   &[data-wrapped-image-style='offset'] {
-    padding-inline: 0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
   }
 }
 
@@ -29,6 +31,12 @@ $wrapped-image-offset-max: 1550px;
   [data-component-width='site'] & {
     width: 100%;
     max-width: var(--size-component-layout-width-site);
+  }
+}
+
+.wrapped-image__text {
+  a {
+    @include atoms.link;
   }
 }
 

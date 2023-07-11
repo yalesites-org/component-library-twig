@@ -65,14 +65,16 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 
 [data-component-width] {
   &:not([data-embedded-components] [data-component-width]) {
-    padding-inline: var(--size-spacing-site-gutter);
+    padding-inline-start: var(--size-spacing-site-gutter);
+    padding-inline-end: var(--size-spacing-site-gutter);
   }
 }
 
 [class*='__inner'] {
   width: var(--component-width);
   max-width: 100%;
-  margin-inline: auto;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
 
   @each $width, $value in $layout-widths {
     [data-component-width='#{$width}'] & {
@@ -108,7 +110,8 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
   $flush-top: false,
   $banner-spacing: false
 ) {
-  margin-block: var(--spacing-page-section);
+  margin-block-start: var(--spacing-page-section);
+  margin-block-end: var(--spacing-page-section);
 
   @if $flush-top == true {
     &:first-child {
@@ -125,7 +128,8 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
   }
 
   @if $banner-spacing == true {
-    margin-block: var(--spacing-component-banner);
+    margin-block-start: var(--spacing-component-banner);
+    margin-block-end: var(--spacing-component-banner);
 
     @if $flush-top == true {
       &:first-child {
