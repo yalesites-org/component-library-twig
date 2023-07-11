@@ -3,7 +3,8 @@
 .event-meta__inner {
   > * {
     border-bottom: var(--border-thickness-1) solid var(--color-divider);
-    padding-block: var(--size-spacing-6);
+    padding-block-start: var(--size-spacing-6);
+    padding-block-end: var(--size-spacing-6);
   }
 }
 

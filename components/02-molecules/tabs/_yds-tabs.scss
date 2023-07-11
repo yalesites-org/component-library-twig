@@ -178,7 +178,8 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
 .tabs__container {
   position: absolute;
   width: 100%;
-  padding-block: var(--size-spacing-9);
+  padding-block-start: var(--size-spacing-9);
+  padding-block-end: var(--size-spacing-9);
 
   &:not(.is-active) {
     @include tokens.animate-hidden;

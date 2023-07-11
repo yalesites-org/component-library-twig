@@ -85,7 +85,7 @@ $form-item-icon-size: 1.7rem;
   @include tokens.body-xs;
 
   color: var(--color-form-item-description);
-  padding-block: var(--size-spacing-2) 0;
+  padding-block-start: var(--size-spacing-2);
 }
 
 .form-fieldset {

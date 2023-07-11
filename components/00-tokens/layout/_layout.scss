@@ -108,7 +108,8 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
   $flush-top: false,
   $banner-spacing: false
 ) {
-  margin-block: var(--spacing-page-section);
+  margin-block-start: var(--spacing-page-section);
+  margin-block-end: var(--spacing-page-section);
 
   @if $flush-top == true {
     &:first-child {
@@ -125,7 +126,8 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
   }
 
   @if $banner-spacing == true {
-    margin-block: var(--spacing-component-banner);
+    margin-block-start: var(--spacing-component-banner);
+    margin-block-end: var(--spacing-component-banner);
 
     @if $flush-top == true {
       &:first-child {
