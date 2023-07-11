@@ -87,7 +87,8 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 
   [data-quick-links-variation='promotional'] & {
-    padding-block: var(--size-spacing-9);
+    padding-block-start: var(--size-spacing-9);
+    padding-block-end: var(--size-spacing-9);
   }
 
   [data-quick-links-layout='fluid'] & {

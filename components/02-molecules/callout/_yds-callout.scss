@@ -96,7 +96,8 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
   position: relative;
   padding-top: var(--size-spacing-8);
   padding-bottom: var(--size-spacing-9);
-  padding-inline: var(--size-spacing-7);
+  padding-inline-start: var(--size-spacing-7);
+  padding-inline-end: var(--size-spacing-7);
   flex: 1 1 50%;
   text-align: center;
 

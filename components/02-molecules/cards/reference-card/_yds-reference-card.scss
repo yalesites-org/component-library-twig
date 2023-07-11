@@ -66,6 +66,21 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
   @media (min-width: tokens.$break-mobile) {
     [data-collection-type='grid'] & {
       aspect-ratio: 3/2;
+
+      // Safari 14 fix for aspect-ratio
+      @supports not (aspect-ratio: 3 / 2) {
+        &::before {
+          float: left;
+          padding-top: 66.66%;
+          content: '';
+        }
+
+        &::after {
+          display: block;
+          content: '';
+          clear: both;
+        }
+      }
     }
 
     [data-collection-type='list'] & {
@@ -94,14 +109,16 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
   @media (min-width: tokens.$break-m) {
     [data-collection-type='list'][data-collection-featured='true'] & {
       flex: 1 0 50%;
-      margin-inline: auto;
+      margin-inline-start: auto;
+      margin-inline-end: auto;
     }
   }
 
   @media (min-width: tokens.$break-mobile) {
     [data-collection-type='list'][data-collection-featured='true'] & {
       flex: 0 1 71%;
-      margin-inline: auto;
+      margin-inline-start: auto;
+      margin-inline-end: auto;
     }
   }
 }

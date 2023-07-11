@@ -24,6 +24,23 @@
   display: flex;
   aspect-ratio: 3/2;
 
+  // Safari 14 fix for aspect-ratio
+  @supports not (aspect-ratio: 3 / 2) {
+    max-height: 200px;
+
+    &::before {
+      float: left;
+      padding-top: 66.66%;
+      content: '';
+    }
+
+    &::after {
+      display: block;
+      content: '';
+      clear: both;
+    }
+  }
+
   [data-media-grid-variation='interactive'] & {
     position: relative;
     background-color: var(--color-basic-black);
@@ -80,5 +97,39 @@
   svg {
     height: var(--size-icon);
     aspect-ratio: 1 / 1;
+
+    // Safari 14 fix for aspect-ratio
+    @supports not (aspect-ratio: 1 / 1) {
+      width: 1.5rem;
+      height: 1.5rem;
+      padding: var(--size-spacing-2);
+
+      &::before {
+        float: left;
+        padding-top: 100%;
+        content: '';
+      }
+
+      &::after {
+        display: block;
+        content: '';
+        clear: both;
+      }
+    }
+  }
+
+  // Safari 14 fix for aspect-ratio
+  @supports not (aspect-ratio: 1 / 1) {
+    &::before {
+      float: left;
+      padding-top: 100%;
+      content: '';
+    }
+
+    &::after {
+      display: block;
+      content: '';
+      clear: both;
+    }
   }
 }

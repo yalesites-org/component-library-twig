@@ -155,7 +155,8 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   display: block;
   text-decoration: none;
-  padding-inline: var(--size-spacing-3);
+  padding-inline-start: var(--size-spacing-3);
+  padding-inline-end: var(--size-spacing-3);
   color: var(--color-gray-500);
 
   &:hover {
@@ -178,7 +179,8 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
 .tabs__container {
   position: absolute;
   width: 100%;
-  padding-block: var(--size-spacing-9);
+  padding-block-start: var(--size-spacing-9);
+  padding-block-end: var(--size-spacing-9);
 
   &:not(.is-active) {
     @include tokens.animate-hidden;
