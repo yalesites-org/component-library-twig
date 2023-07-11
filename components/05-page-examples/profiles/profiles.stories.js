@@ -33,7 +33,6 @@ export default {
 
 export const ProfilePage = ({
   siteName,
-  pageTitle,
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
@@ -50,8 +49,6 @@ export const ProfilePage = ({
 }) =>
   profilePageTwig({
     site_name: siteName,
-    page_title__heading: pageTitle,
-    page_title__meta: null,
     site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,

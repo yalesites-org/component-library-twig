@@ -61,7 +61,10 @@
     {% set reference_card__overline = null %}
     {% set reference_card__snippet = null %}
     {% set reference_card__image = false %}
-    {% set reference_card__subheading = reference_card__date__formatted ~ reference_card__time__formatted %}
+    {% set format %}
+      <span class="format-inline">{{ format }}</span>
+    {% endset %}
+    {% set reference_card__subheading = reference_card__date__formatted ~ reference_card__time__formatted ~ format %}
   {% else %}
     {# If event and list put the date and time in the subheading. #}
     {% set reference_card__subheading = reference_card__date__formatted ~ reference_card__time__formatted %}

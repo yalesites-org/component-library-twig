@@ -1,5 +1,7 @@
 {% extends "@page-layouts/yds-full-width.twig" %}
   {% block page__content %} 
+      {% include "@organisms/menu/breadcrumbs/yds-breadcrumbs.twig" %}
+
     {% include "@molecules/meta/profile-meta/yds-profile-meta.twig" with {
       profile_meta__heading: 'Person Namerton',
       profile_meta__title_line: 'Profile Title',
@@ -7,10 +9,6 @@
       profile_meta__department: 'Department name',
     } %}
 
-    {% include "@organisms/menu/breadcrumbs/yds-breadcrumbs.twig" %}
-    {% include "@molecules/page-title/yds-page-title.twig" with {
-      page_title__heading: 'Person Namerton',
-    }%}
     {% embed "@organisms/layout/two-column/yds-two-column.twig" %}
       {% block two_column__primary %}
         {# -- text, image, video, quote, button link, divider, accordion, tabs #}

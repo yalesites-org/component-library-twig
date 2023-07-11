@@ -88,6 +88,7 @@ $break-profile-banner-max: $break-profile-banner - 0.05;
 
   @media (min-width: $break-profile-banner) {
     flex-direction: row-reverse;
+    gap: var(--size-spacing-5);
   }
 }
 
