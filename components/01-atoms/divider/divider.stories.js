@@ -2,6 +2,8 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
 import dividerTwig from './yds-divider.twig';
 
+import './cl-dividers.scss';
+
 const layoutOptions = ['left', 'center'];
 const thicknessOptions = Object.keys(tokens.border.thickness);
 const widths = Object.keys(tokens.layout.width);
@@ -56,7 +58,7 @@ export const Dividers = ({ position, thickness, dividerColor, width }) => {
   <div style="--thickness-divider: var(--size-thickness-4)">${dividerTwig()}</div>
   <div style="--thickness-divider: var(--size-thickness-6)">${dividerTwig()}</div>
   <div style="--thickness-divider: var(--size-thickness-8)">${dividerTwig()}</div>
-  <div style="
+  <div class="cl-divider-playground" style="
     --color-divider: var(--color-${dividerColor});
     --width-theme-divider: var(--layout-width-${width});
   ">

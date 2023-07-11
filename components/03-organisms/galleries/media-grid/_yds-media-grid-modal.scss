@@ -58,7 +58,8 @@ $modal-speed: var(--animation-speed-slow);
 }
 
 .media-grid-modal__item {
-  padding-block: var(--size-spacing-site-gutter);
+  padding-block-start: var(--size-spacing-site-gutter);
+  padding-block-end: var(--size-spacing-site-gutter);
   width: 100%;
   height: 100%;
   overflow: auto;

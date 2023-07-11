@@ -42,7 +42,8 @@ $alert-fade-speed: var(--animation-speed-slow);
 .alert__inner {
   display: flex;
   align-items: flex-start;
-  padding-block: var(--size-spacing-5);
+  padding-block-start: var(--size-spacing-5);
+  padding-block-end: var(--size-spacing-5);
 
   @media (min-width: tokens.$break-mobile) {
     align-items: center;

@@ -23,10 +23,26 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
 .cta-banner__content-wrapper {
   position: relative;
   max-width: tokens.$break-max-width;
-  margin-inline: auto;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
 
   @media (min-width: $break-cta-banner) {
     aspect-ratio: 16 / 5;
+
+    // Safari 14 fix for aspect-ratio
+    @supports not (aspect-ratio: 16 / 5) {
+      &::before {
+        float: left;
+        padding-top: 26.25%;
+        content: '';
+      }
+
+      &::after {
+        display: block;
+        content: '';
+        clear: both;
+      }
+    }
   }
 
   [data-banner-content-layout='bottom'] & {
@@ -41,6 +57,21 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
 .cta-banner__image {
   @media (max-width: $break-cta-banner - 0.05) {
     aspect-ratio: 16 / 5;
+
+    // Safari 14 fix for aspect-ratio
+    @supports not (aspect-ratio: 16 / 5) {
+      &::before {
+        float: left;
+        padding-top: 26.25%;
+        content: '';
+      }
+
+      &::after {
+        display: block;
+        content: '';
+        clear: both;
+      }
+    }
   }
 
   @media (min-width: $break-cta-banner) {
@@ -249,7 +280,8 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      padding-block: var(--size-spacing-5);
+      padding-block-start: var(--size-spacing-5);
+      padding-block-end: var(--size-spacing-5);
       min-height: auto;
       width: 100%;
       max-width: calc(1600px + 8rem);
