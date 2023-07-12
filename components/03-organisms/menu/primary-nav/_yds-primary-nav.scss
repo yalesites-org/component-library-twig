@@ -102,6 +102,7 @@ $menu-sub-max-width: 19rem;
     @media (min-width: tokens.$break-mobile) {
       display: flex;
       flex-wrap: wrap;
+      position: relative;
     }
   }
 
@@ -160,9 +161,7 @@ $menu-sub-max-width: 19rem;
         // increase max-width if mega menu is left-aligned
         // to align the menu item text with the site name.
         [data-site-header-nav-position='left'] & {
-          max-width: calc(
-            var(--size-component-layout-width-site) + var(--size-spacing-5)
-          );
+          width: calc(100vw - var(--size-spacing-site-gutter) * 1.2);
         }
 
         [data-site-header-nav-position='right'] & {
@@ -172,6 +171,12 @@ $menu-sub-max-width: 19rem;
 
       @media (min-width: tokens.$break-2xl) {
         column-count: 4;
+
+        [data-site-header-nav-position='left'] & {
+          max-width: calc(
+            var(--size-component-layout-width-site) + var(--size-spacing-5)
+          );
+        }
       }
     }
 
