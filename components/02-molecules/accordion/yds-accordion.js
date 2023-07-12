@@ -8,6 +8,7 @@ Drupal.behaviors.accordion = {
     const itemContent = '.accordion-item__content';
     const itemState = 'data-accordion-expanded';
     const buttonState = 'aria-expanded';
+    const buttonPressed = 'aria-pressed';
 
     // Function to expand an accordion item.
     const expand = (item) => {
@@ -20,6 +21,7 @@ Drupal.behaviors.accordion = {
       );
       item.setAttribute(itemState, 'true');
       toggle.setAttribute(buttonState, 'true');
+      toggle.setAttribute(buttonPressed, 'true');
     };
 
     // Function to collapse an accordion item.
@@ -28,6 +30,7 @@ Drupal.behaviors.accordion = {
 
       item.setAttribute(itemState, 'false');
       toggle.setAttribute(buttonState, 'false');
+      toggle.setAttribute(buttonPressed, 'false');
     };
 
     // Hide all accordion content sections if JavaScript is enabled.
