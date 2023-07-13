@@ -42,8 +42,7 @@ Drupal.behaviors.accordion = {
       return value.startsWith(startsWith);
     };
 
-    // Replaces the first word of a string with Collapse or Expand
-    // based on the state given (true or false)
+    // Replaces the first word of a string with another string
     const replaceFirstWord = (original, revised) => {
       // Capture the first word of a string
       const firstWord = /^[^\s]+/;
@@ -55,8 +54,6 @@ Drupal.behaviors.accordion = {
     const updateToggleButtonToCollapse = (element) => {
       const button = element;
 
-      // Do not update if the beginning of the button's innerHTML
-      // starts with Collapse
       if (alreadyStartsWith(button.innerHTML, collapseText)) return;
 
       button.innerHTML = replaceFirstWord(button.innerHTML, collapseText);
@@ -69,8 +66,6 @@ Drupal.behaviors.accordion = {
     const updateToggleButtonToExpand = (element) => {
       const button = element;
 
-      // Do not update if the beginning of the button's innerHTML
-      // starts with Collapse
       if (alreadyStartsWith(button.innerHTML, expandText)) return;
 
       button.innerHTML = replaceFirstWord(button.innerHTML, expandText);
@@ -154,36 +149,70 @@ Drupal.behaviors.accordion = {
       }
     };
 
-    // Hide all accordion content sections if JavaScript is enabled.
-    items.forEach((item) => {
-      collapse(item);
-    });
-
-    // Toggle accordion content when toggle is activated.
-    items.forEach((item) => {
-      const toggle = item.querySelector(itemToggle);
-      const otherAccordionItems =
-        findClosestAccordion(item).querySelectorAll(accordionItem);
-
-      toggle.addEventListener('click', () => {
-        toggleItemState(toggle, item);
-        updateToggleButtonState(otherAccordionItems);
+    // Graceful degrading by only collapsing if JavaScript is enabled
+    const collapseAllItems = (allItems) => {
+      allItems.forEach((item) => {
+        collapse(item);
       });
-    });
+    };
 
-    controls.forEach((parentUl) => {
-      // Get all items relevant to the control.
-      const allItems = findAllItems(parentUl.parentNode);
-      // Add click listener on the parent <ul>
-      parentUl.addEventListener('click', (e) => {
-        if (isButtonExpanded(e.target)) {
-          updateToggleButtonToExpand(e.target);
-          setAllItemStates(allItems, collapse);
-        } else {
-          updateToggleButtonToCollapse(e.target);
-          setAllItemStates(allItems, expand);
-        }
+    // Attaches item click events to subitems
+    const attachItemClickEvent = (allItems) => {
+      // Toggle accordion content when toggle is activated.
+      allItems.forEach((item) => {
+        const toggle = item.querySelector(itemToggle);
+        const otherAccordionItems =
+          findClosestAccordion(item).querySelectorAll(accordionItem);
+
+        toggle.addEventListener('click', () => {
+          toggleItemState(toggle, item);
+          updateToggleButtonState(otherAccordionItems);
+        });
       });
-    });
+    };
+
+    // Determines if there is only one item
+    const hasMoreThanOneItem = (allItems) => {
+      return allItems.length > 1;
+    };
+
+    // Hides the toggle button if there is one item
+    const hideToggleIfOneItem = (parentUl, allItems) => {
+      if (hasMoreThanOneItem(allItems)) return;
+
+      const button = parentUl.querySelector(accordionToggleAll);
+      button.style.display = 'none';
+    };
+
+    // Traverses each control to hide toggles with one item
+    const hideSingleItemToggles = (allControls) => {
+      allControls.forEach((parentUl) => {
+        const allItems = findAllItems(parentUl.parentNode);
+        hideToggleIfOneItem(parentUl, allItems);
+      });
+    };
+
+    // Attaches the toggle button click event to controls
+    const attachToggleButtonClickEvent = (allControls) => {
+      allControls.forEach((parentUl) => {
+        // Get all items relevant to the control.
+        const allItems = findAllItems(parentUl.parentNode);
+        // Add click listener on the parent <ul>
+        parentUl.addEventListener('click', (e) => {
+          if (isButtonExpanded(e.target)) {
+            updateToggleButtonToExpand(e.target);
+            setAllItemStates(allItems, collapse);
+          } else {
+            updateToggleButtonToCollapse(e.target);
+            setAllItemStates(allItems, expand);
+          }
+        });
+      });
+    };
+
+    collapseAllItems(items);
+    hideSingleItemToggles(controls);
+    attachItemClickEvent(items);
+    attachToggleButtonClickEvent(controls);
   },
 };
