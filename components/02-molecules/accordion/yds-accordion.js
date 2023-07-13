@@ -180,8 +180,8 @@ Drupal.behaviors.accordion = {
     const hideToggleIfOneItem = (parentUl, allItems) => {
       if (hasMoreThanOneItem(allItems)) return;
 
-      const button = parentUl.querySelector(accordionToggleAll);
-      button.style.display = 'none';
+      const ul = parentUl;
+      ul.style.display = 'none';
     };
 
     // Traverses each control to hide toggles with one item
