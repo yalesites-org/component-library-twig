@@ -4,11 +4,11 @@ Drupal.behaviors.accordion = {
     const items = context.querySelectorAll('.accordion-item');
     const controls = context.querySelectorAll('.accordion__controls');
     // Classes
-    const itemToggle = '.accordion-item__toggle';
     const itemContent = '.accordion-item__content';
     const itemState = 'data-accordion-expanded';
+    const itemToggle = '.accordion-item__toggle';
+    // States
     const buttonState = 'aria-expanded';
-    const buttonPressed = 'aria-pressed';
 
     // Function to expand an accordion item.
     const expand = (item) => {
@@ -21,7 +21,6 @@ Drupal.behaviors.accordion = {
       );
       item.setAttribute(itemState, 'true');
       toggle.setAttribute(buttonState, 'true');
-      toggle.setAttribute(buttonPressed, 'true');
     };
 
     // Function to collapse an accordion item.
@@ -30,7 +29,36 @@ Drupal.behaviors.accordion = {
 
       item.setAttribute(itemState, 'false');
       toggle.setAttribute(buttonState, 'false');
-      toggle.setAttribute(buttonPressed, 'false');
+    };
+
+    // Tels if the expand/collapse button is expanded
+    const isButtonExpanded = (element) => {
+      const value = element.getAttribute(buttonState);
+
+      return value === 'true';
+    };
+
+    // Replaces the first word of a string with Collapse or Expand
+    // based on the state given (true or false)
+    const replaceCollapseOrExpand = (original, state) => {
+      const firstWordOptions = {
+        true: 'Collapse',
+        false: 'Expand',
+      };
+
+      // Capture the first word of a string
+      const firstWord = /^[^\s]+/;
+
+      return original.replace(firstWord, firstWordOptions[state]);
+    };
+
+    // Replaces text and aria for the toggle all button
+    const getNewToggleValue = (button) => {
+      const initialValue = isButtonExpanded(button);
+      const newValue = !initialValue;
+
+      // Return the new value so that other things can happen
+      return newValue;
     };
 
     // Hide all accordion content sections if JavaScript is enabled.
@@ -55,11 +83,16 @@ Drupal.behaviors.accordion = {
       const allItems = control.parentNode.querySelectorAll('.accordion-item');
       // Add click listener on the parent <ul>
       control.addEventListener('click', (e) => {
-        // Determine which control was activated. `action` will re turn a
-        // boolean. `true` if the expand control was clicked, otherwise false.
-        const action = e.target.classList.contains(
-          'accordion__toggle-all--expand',
+        const action = getNewToggleValue(e.target);
+        const targetButton = e.target;
+
+        // Replace first word with expand or collapse message
+        targetButton.innerHTML = replaceCollapseOrExpand(
+          targetButton.innerHTML,
+          action,
         );
+        // Set the button state so that arrows and actions take place
+        targetButton.setAttribute(buttonState, action);
 
         // Iterate over
         allItems.forEach((item) => {

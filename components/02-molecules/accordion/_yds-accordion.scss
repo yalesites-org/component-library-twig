@@ -31,6 +31,15 @@
   }
 }
 
+.accordion__icon {
+  height: 1em;
+  width: 1em;
+
+  .accordion__toggle-all--collapse & {
+    transform: rotate(180deg);
+  }
+}
+
 .accordion__toggle-all {
   @include tokens.body-s;
   @include atoms.button-reset;
@@ -42,13 +51,8 @@
   &:hover {
     color: var(--color-link-base);
   }
-}
 
-.accordion__icon {
-  height: 1em;
-  width: 1em;
-
-  .accordion__toggle-all--collapse & {
+  &[aria-expanded='true'] .accordion__icon {
     transform: rotate(180deg);
   }
 }
