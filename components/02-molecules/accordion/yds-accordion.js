@@ -184,11 +184,27 @@ Drupal.behaviors.accordion = {
       ul.style.display = 'none';
     };
 
+    // Display the toggle button
+    const showToggleButton = (ul) => {
+      const control = ul;
+      control.style.display = '';
+    };
+
+    // Show accordion controls if JavaScript is enabled
+    const hideOrShowToggleButtons = (ul, allItems) => {
+      if (hasMoreThanOneItem(allItems)) {
+        showToggleButton(ul);
+      } else {
+        hideToggleIfOneItem(ul, allItems);
+      }
+    };
+
     // Traverses each control to hide toggles with one item
     const hideSingleItemToggles = (allControls) => {
       allControls.forEach((parentUl) => {
         const allItems = findAllItems(parentUl.parentNode);
-        hideToggleIfOneItem(parentUl, allItems);
+        // hideToggleIfOneItem(parentUl, allItems);
+        hideOrShowToggleButtons(parentUl, allItems);
       });
     };
 

@@ -26,6 +26,11 @@
   class: bem(accordion__base_class, accordion__modifiers),
 } %}
 
+{% set section_controls__attributes = {
+  'style': 'display: none',
+  'aria-label': 'Section controls'
+} %}
+
 <div {{ add_attributes(accordion__attibutes) }} data-embedded-components>
   {% block prefix_suffix %}
   {% endblock %}
@@ -40,7 +45,7 @@
     {% embed "@atoms/lists/yds-list.twig" with {
       list__base_class: 'controls',
       list__blockname: accordion__base_class,
-      list__attributes: {'aria-label': 'Section controls'},
+      list__attributes: section_controls__attributes,
     } %}
       {% block list__content %}
         {% embed "@atoms/lists/_yds-list-item.twig" %}
