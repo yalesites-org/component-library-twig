@@ -11,7 +11,7 @@
   {% if modal_item__heading or modal_item__content %}
     {% set media_grid__item__content %}
       {# Content Heading #}
-      {% if modal_item__heading %}
+      {% if modal_item__heading is not empty %}
         {% include "@atoms/typography/headings/yds-heading.twig" with {
           heading__level: '2',
           heading: modal_item__heading,
