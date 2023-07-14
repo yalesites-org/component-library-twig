@@ -26,7 +26,7 @@
   {% block prefix_suffix %}
   {% endblock %}
   <div {{ bem('inner', [], media_grid__base_class) }}>
-    {% if media_grid__heading %}
+    {% if media_grid__heading is not empty %}
       {% include "@atoms/typography/headings/yds-heading.twig" with {
         heading__level: '2',
         heading__blockname: media_grid__base_class,
