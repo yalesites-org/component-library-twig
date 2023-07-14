@@ -8,7 +8,6 @@
  # - site_name
  #
  # Available Blocks
- # - site_header__utility_nav
  # - site_header__primary_nav
  #}
 
@@ -38,7 +37,7 @@
     <div {{ bem('primary-nav', [], site_header__base_class) }}>
       {% block site_header__primary_nav %}
         {% include "@organisms/menu/primary-nav/yds-primary-nav.twig" with {
-          menu__variation: menu__variation,
+          menu__variation: site_header__menu__variation,
         } %}
       {% endblock %}
     </div>

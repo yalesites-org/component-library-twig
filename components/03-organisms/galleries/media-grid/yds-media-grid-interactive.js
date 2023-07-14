@@ -1,6 +1,8 @@
 Drupal.behaviors.mediaGridInteractive = {
   attach(context) {
-    const mediaGrids = context.querySelectorAll('.media-grid');
+    const mediaGrids = context.querySelectorAll(
+      '.media-grid[data-media-grid-variation="interactive"]',
+    );
     const focusableElements =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     const body = document.querySelector('body');
