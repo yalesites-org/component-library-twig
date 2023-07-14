@@ -73,7 +73,7 @@ $break-video-banner-max: $break-video-banner - 0.05;
   background: transparent;
   padding: var(--size-spacing-3);
   color: inherit;
-  z-index: 10;
+  z-index: 1;
 
   &:focus-visible {
     @include tokens.focus-styles;
@@ -85,6 +85,14 @@ $break-video-banner-max: $break-video-banner - 0.05;
       right: var(--size-spacing-6);
       bottom: unset;
     }
+  }
+
+  [data-grand-hero-overlay-variation='full'] & {
+    border: 1px solid var(--color-basic-white);
+  }
+
+  [data-body-frozen] & {
+    z-index: 0;
   }
 
   svg {
