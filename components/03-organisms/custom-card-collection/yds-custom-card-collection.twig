@@ -21,7 +21,7 @@
   {% block prefix_suffix %}
   {% endblock %}
   <div {{ bem('inner', [], custom_card_collection__base_class) }}>
-    {% if custom_card_collection__heading %}
+    {% if custom_card_collection__heading is not empty %}
       {% include "@atoms/typography/headings/yds-heading.twig" with {
         heading__level: '2',
         heading__blockname: custom_card_collection__base_class,

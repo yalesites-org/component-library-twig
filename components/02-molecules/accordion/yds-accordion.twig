@@ -35,7 +35,7 @@
   {% block prefix_suffix %}
   {% endblock %}
   <div {{ bem('inner', [], accordion__base_class) }}>
-    {% if accordion__heading %}
+    {% if accordion__heading is not empty %}
       {% include "@atoms/typography/headings/yds-heading.twig" with {
         heading__level: '2',
         heading__blockname: accordion__base_class,
