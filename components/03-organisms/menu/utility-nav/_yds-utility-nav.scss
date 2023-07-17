@@ -47,8 +47,8 @@
 
   @media (max-width: tokens.$break-mobile-max) {
     align-self: center;
-    width: 25rem;
-    max-width: 100%;
+    width: 100%;
+    max-width: 25rem;
   }
 }
 
@@ -98,8 +98,8 @@
 
     @media (max-width: tokens.$break-mobile-max) {
       border: var(--border-thickness-2) solid;
-      width: 25rem;
-      max-width: 100%;
+      width: 100%;
+      max-width: 25rem;
     }
   }
 
