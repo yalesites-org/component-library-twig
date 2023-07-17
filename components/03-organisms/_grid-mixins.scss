@@ -73,3 +73,41 @@
     }
   }
 }
+
+@mixin directory-primary {
+  --grid-gutter: var(--spacing-component-gutter);
+
+  @include base;
+
+  > * {
+    @media (min-width: tokens.$break-m) {
+      flex: 0 1 calc(33.33% - calc(var(--grid-gutter) * 2 / 3));
+    }
+
+    @media (min-width: tokens.$break-l) {
+      flex: 0 1 calc(20% - calc(var(--grid-gutter) * 4 / 5));
+      max-width: calc(20% - calc(var(--grid-gutter) * 4 / 5));
+    }
+
+    @media (min-width: tokens.$break-2xl) {
+      flex: 0 1 calc(16.66% - calc(var(--grid-gutter) * 5 / 6));
+      max-width: calc(16.66% - calc(var(--grid-gutter) * 5 / 6));
+    }
+  }
+}
+
+@mixin directory-secondary {
+  --grid-gutter: var(--spacing-component-gutter);
+
+  @include base;
+
+  > * {
+    @media (min-width: tokens.$break-m) {
+      flex: 0 1 calc(50% - calc(var(--grid-gutter) / 2));
+    }
+
+    @media (min-width: tokens.$break-l) {
+      flex: 0 1 calc(25% - calc(var(--grid-gutter) * 3 / 4));
+    }
+  }
+}

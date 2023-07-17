@@ -3,6 +3,7 @@
 @forward './banner/action/yds-action-banner';
 @forward './callout/yds-callout';
 @forward './cards/reference-card/yds-reference-card';
+@forward './cards/directory-listing-card/yds-directory-listing-card';
 @forward './cards/custom-card/yds-custom-card';
 @forward './embed/yds-embed';
 @forward './image/yds-content-image';
@@ -10,6 +11,7 @@
 @forward './menu/menu-toggle/yds-menu-toggle';
 @forward './meta/basic-meta/yds-basic-meta';
 @forward './meta/event-meta/yds-event-meta';
+@forward './meta/profile-meta/yds-profile-meta';
 @forward './page-title/yds-page-title';
 @forward './pager/yds-pager';
 @forward './wrapped-image/yds-wrapped-image';
