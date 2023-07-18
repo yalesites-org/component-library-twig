@@ -9,7 +9,7 @@
 {% set accordion__base_class = 'accordion' %}
 
 {# Default assuming no accordion header exists; will changed when detected #}
-{% set accordion__item_heading_level = '3' %}
+{% set accordion__item__heading__level = (accordion__heading is empty) ? '2' : '3' %}
 
 {% set toggle_all__content -%}
   Expand All
@@ -39,8 +39,6 @@
   {% endblock %}
   <div {{ bem('inner', [], accordion__base_class) }}>
     {% if accordion__heading is not empty %}
-      {% set accordion__item_heading_level  = '2' %}
-      
       {% include "@atoms/typography/headings/yds-heading.twig" with {
         heading__level: '2',
         heading__blockname: accordion__base_class,
@@ -67,10 +65,11 @@
     {% endembed %}
     {% block accordion__items %}
       {% for item in accordion__items %}
+      <div>{{dump(item)}}</div>
         {% include "@molecules/accordion/_yds-accordion-item.twig" with {
           accordion__item__heading: item.accordion__item__heading,
           accordion__item__content: item.accordion__item__content,
-          accordion__item__heading__level: accordion__item_heading_level ,
+          accordion__item__heading__level: accordion__item__heading__level,
         } %}
       {% endfor %}
     {% endblock %}
