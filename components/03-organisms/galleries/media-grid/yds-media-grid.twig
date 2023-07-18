@@ -22,7 +22,7 @@
   }) %}
 {% endif %}
 
-{% set media_grid__modal_aria = media_grid__heading ? media_grid__heading.0 : 'Gallery Viewer' %}
+{% set media_grid__modal_aria = media_grid__heading.0 ? media_grid__heading.0 : 'Gallery Viewer' %}
 
 <div {{ add_attributes(media_grid__attributes) }}>
   {% block prefix_suffix %}
