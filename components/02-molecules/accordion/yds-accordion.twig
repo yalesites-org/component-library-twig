@@ -39,7 +39,7 @@
   {% endblock %}
   <div {{ bem('inner', [], accordion__base_class) }}>
     {% if accordion__heading is not empty %}
-      {% set accordion__item_heading_level = '2' %}
+      {% set accordion__item_heading_level  = '2' %}
       
       {% include "@atoms/typography/headings/yds-heading.twig" with {
         heading__level: '2',
@@ -70,7 +70,7 @@
         {% include "@molecules/accordion/_yds-accordion-item.twig" with {
           accordion__item__heading: item.accordion__item__heading,
           accordion__item__content: item.accordion__item__content,
-          accordion__item__heading__level: accordion__item_heading_level,
+          accordion__item__heading__level: accordion__item_heading_level ,
         } %}
       {% endfor %}
     {% endblock %}
