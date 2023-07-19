@@ -65,7 +65,6 @@
     {% endembed %}
     {% block accordion__items %}
       {% for item in accordion__items %}
-      <div>{{dump(item)}}</div>
         {% include "@molecules/accordion/_yds-accordion-item.twig" with {
           accordion__item__heading: item.accordion__item__heading,
           accordion__item__content: item.accordion__item__content,
