@@ -18,9 +18,9 @@ import '../fonts/fontawesome/css/solid.css';
 import './_drupal.js';
 
 // addDecorator deprecated, but not sure how to use this otherwise.
-addDecorator((storyFn) => {
-  useEffect(() => Drupal.attachBehaviors(), []);
-  return storyFn();
+addDecorator((storyFn, context) => {
+  useEffect(() => Drupal.attachBehaviors(), [context]);
+  return storyFn(context);
 });
 
 setupTwig(Twig);
