@@ -203,7 +203,6 @@ Drupal.behaviors.accordion = {
     const hideSingleItemToggles = (allControls) => {
       allControls.forEach((parentUl) => {
         const allItems = findAllItems(parentUl.parentNode);
-        // hideToggleIfOneItem(parentUl, allItems);
         hideOrShowToggleButtons(parentUl, allItems);
       });
     };
