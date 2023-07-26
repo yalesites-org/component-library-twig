@@ -10,7 +10,7 @@
   {% block prefix_suffix %}
   {% endblock %}
   <div {{ bem('inner', [], 'component-wrapper') }}>
-    {% if component_wrapper__label %}
+    {% if component_wrapper__label is not empty %}
       {% set component_wrapper__heading__level = 2 %}
       {% include "@atoms/typography/headings/yds-heading.twig" with {
         heading__level: component_wrapper__heading__level,

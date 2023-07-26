@@ -8,6 +8,9 @@
 
 {% set accordion__base_class = 'accordion' %}
 
+{# Default assuming no accordion header exists; will changed when detected #}
+{% set accordion__item__heading__level = (accordion__heading is empty) ? '2' : '3' %}
+
 {% set toggle_all__content -%}
   Expand All
   {% include "@atoms/images/icons/_yds-icon.twig" with {
@@ -35,7 +38,7 @@
   {% block prefix_suffix %}
   {% endblock %}
   <div {{ bem('inner', [], accordion__base_class) }}>
-    {% if accordion__heading %}
+    {% if accordion__heading is not empty %}
       {% include "@atoms/typography/headings/yds-heading.twig" with {
         heading__level: '2',
         heading__blockname: accordion__base_class,
@@ -65,7 +68,7 @@
         {% include "@molecules/accordion/_yds-accordion-item.twig" with {
           accordion__item__heading: item.accordion__item__heading,
           accordion__item__content: item.accordion__item__content,
-          accordion__item__heading__level: accordion__heading ? '3' : '2',
+          accordion__item__heading__level: accordion__item__heading__level,
         } %}
       {% endfor %}
     {% endblock %}
