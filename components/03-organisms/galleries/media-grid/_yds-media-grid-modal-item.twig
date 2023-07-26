@@ -15,7 +15,7 @@
 {% endset %}
 
 {% set control_next %}
-  <span class="visually-hidden">Previous item</span>
+  <span class="visually-hidden">Next item</span>
   {% include "@atoms/images/icons/_yds-icon.twig" with {
     icon__name: 'angle-down',
   } %}
@@ -81,7 +81,7 @@
       </div>
     </div>
     {% for item in media_grid__items %}
-      <div {{ bem('content', [], media_grid__modal__base_class) }} data-component-width="content" data-embedded-components data-media-grid-modal-item={{ loop.index }} tabindex='0'>
+      <div {{ bem('content', [], media_grid__modal__base_class) }} data-component-width="content" data-embedded-components data-media-grid-modal-item={{ loop.index }}>
         {% block media_grid__modal__content %}
           {% include "@organisms/galleries/media-grid/_yds-media-grid-modal-item--content.twig" %}
         {% endblock %}
