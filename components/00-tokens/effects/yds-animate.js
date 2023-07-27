@@ -5,6 +5,11 @@ Drupal.behaviors.animateItems = {
       '[data-animate-item="true"]',
     );
 
+    // Check if the user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+
     // Create a new Intersection Observer
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -20,7 +25,9 @@ Drupal.behaviors.animateItems = {
       });
     });
 
-    if (elementsToAnimate) {
+    // only add observer if there are elements to animate
+    // and if user hasn't enabled reduced motion.
+    if (elementsToAnimate && !prefersReducedMotion) {
       // Observe each .divider element
       elementsToAnimate.forEach((animatedElement) => {
         observer.observe(animatedElement);
