@@ -9,6 +9,7 @@
 {% set divider__position = divider__position|default('center')|lower %}
 {% set divider__width = divider__width|default('100') %}
 {% set divider__component_width = divider__component_width|default('site') %}
+{% set divider__attributes = divider__attributes|default({}) %}
 
 {% set divider__wrapper__attributes = {
   'data-component-width': divider__component_width,
@@ -20,10 +21,16 @@
   class: bem('inner', [], divider__base_class),
 } %}
 
-{% set divider__attributes = {
+{% if divider__animate__item == true %}
+  {% set divider__attributes = divider__attributes|merge({
+    'data-animate-item': divider__animate__item,
+  }) %}
+{% endif %}
+
+{% set divider__attributes = divider__attributes|merge({
   class: bem(divider__base_class),
   'data-divider-width': divider__width,
-} %}
+}) %}
 
 <div {{ add_attributes(divider__wrapper__attributes) }}>
   {% block prefix_suffix %}

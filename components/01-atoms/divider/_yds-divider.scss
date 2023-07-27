@@ -26,10 +26,15 @@ $divider-positions: left, center;
 }
 
 .divider {
-  @include tokens.animate($property: 'transform');
-  @include tokens.expand-out(var(--width-divider));
-
   background: var(--color-divider);
   width: var(--width-divider);
   height: var(--thickness-divider);
+
+  &[data-animate-item='true'] {
+    @include tokens.animate(
+      $property: 'transform',
+      $duration: var(--animation-speed-slow)
+    );
+    @include tokens.expand-out(var(--width-divider));
+  }
 }
