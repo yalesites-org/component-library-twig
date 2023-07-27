@@ -109,8 +109,11 @@
 }
 
 @mixin expand-out($amount: 100%) {
-  transform: scaleX(0);
   width: $amount;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transform: scaleX(0);
+  }
 
   &.animate {
     transform: scaleX(1);
