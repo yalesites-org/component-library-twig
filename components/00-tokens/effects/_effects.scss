@@ -107,3 +107,12 @@
     background-color: var(--color-cta-bg);
   }
 }
+
+@mixin expand-out($amount: 100%) {
+  transform: scaleX(0);
+  width: $amount;
+
+  &.animate {
+    transform: scaleX(1);
+  }
+}

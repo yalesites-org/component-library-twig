@@ -26,6 +26,9 @@ $divider-positions: left, center;
 }
 
 .divider {
+  @include tokens.animate($property: 'transform');
+  @include tokens.expand-out(var(--width-divider));
+
   background: var(--color-divider);
   width: var(--width-divider);
   height: var(--thickness-divider);
