@@ -108,9 +108,7 @@
   }
 }
 
-@mixin expand-out($amount: 100%) {
-  width: $amount;
-
+@mixin expand-out {
   @media (prefers-reduced-motion: no-preference) {
     transform: scaleX(0);
   }
