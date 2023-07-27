@@ -7,6 +7,8 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
 .reference-card {
   @include atoms.clickable-component-heading-link;
   @include atoms.clickable-component-image;
+  @include tokens.animate($property: 'transform');
+  @include tokens.rise-effect;
 
   --color-text-shadow: var(--color-basic-white);
 

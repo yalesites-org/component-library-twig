@@ -6,6 +6,8 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
 .custom-card {
   @include atoms.clickable-component-heading-link;
+  @include tokens.animate($property: 'transform');
+  @include tokens.rise-effect;
 
   --card-border: 1px solid var(--color-gray-200);
   --color-text-shadow: var(--color-basic-white);

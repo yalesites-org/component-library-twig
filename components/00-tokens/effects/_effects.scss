@@ -97,3 +97,13 @@
 
   background-size: 0 var(--thickness);
 }
+
+@mixin rise-effect($amount: -0.25em) {
+  transform: translateY(0);
+
+  &:hover {
+    transform: translateY($amount);
+    color: var(--color-cta-text);
+    background-color: var(--color-cta-bg);
+  }
+}
