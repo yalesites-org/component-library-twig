@@ -21,9 +21,9 @@
   class: bem('inner', [], divider__base_class),
 } %}
 
-{% if divider__animate__item == true %}
-  {% set divider__attributes = divider__attributes|merge({
-    'data-animate-item': divider__animate__item,
+{% if animate__item == true %}
+	{% set divider__attributes = divider__attributes|merge({
+    'data-animate-item': animate__item,
   }) %}
 {% endif %}
 
@@ -32,10 +32,8 @@
   'data-divider-width': divider__width,
 }) %}
 
-<div {{ add_attributes(divider__wrapper__attributes) }}>
-  {% block prefix_suffix %}
-  {% endblock %}
-  <div {{ add_attributes(divider__inner__attributes) }}>
-    <div {{ add_attributes(divider__attributes) }}></div>
-  </div>
+<div {{ add_attributes(divider__wrapper__attributes) }}> {% block prefix_suffix %}{% endblock %}
+	<div {{ add_attributes(divider__inner__attributes) }}>
+		<div {{ add_attributes(divider__attributes) }}></div>
+	</div>
 </div>

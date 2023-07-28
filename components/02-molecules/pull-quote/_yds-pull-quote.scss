@@ -14,6 +14,15 @@ blockquote {
 
   @include tokens.spacing-page-section;
 
+  // if animation is active
+  &[data-animate-item='true'] {
+    @include tokens.animate(
+      $property: 'transform',
+      $duration: var(--animation-speed-slow)
+    );
+    @include tokens.fade-in-up;
+  }
+
   // Global themes: set color slots for each theme
   // This establishes `--color-slot-` variables name-spaced to the selector
   // in which it is used. We can map component-level variables to global-level
