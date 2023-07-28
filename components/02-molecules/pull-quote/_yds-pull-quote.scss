@@ -15,12 +15,14 @@ blockquote {
   @include tokens.spacing-page-section;
 
   // if animation is active
-  &[data-animate-item='true'] {
-    @include tokens.animate(
-      $property: 'transform',
-      $duration: var(--animation-speed-slow)
-    );
-    @include tokens.fade-in-up;
+  [data-site-animation='true'] & {
+    &[data-animate-item='true'] {
+      @include tokens.animate(
+        $property: 'transform',
+        $duration: var(--animation-speed-slow)
+      );
+      @include tokens.fade-in-up;
+    }
   }
 
   // Global themes: set color slots for each theme

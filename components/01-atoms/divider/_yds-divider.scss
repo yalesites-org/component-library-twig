@@ -31,11 +31,13 @@ $divider-positions: left, center;
   height: var(--thickness-divider);
 
   // if animation is active
-  &[data-animate-item='true'] {
-    @include tokens.animate(
-      $property: 'transform',
-      $duration: var(--animation-speed-slow)
-    );
-    @include tokens.expand-out;
+  [data-site-animation='true'] & {
+    &[data-animate-item='true'] {
+      @include tokens.animate(
+        $property: 'transform',
+        $duration: var(--animation-speed-slow)
+      );
+      @include tokens.expand-out;
+    }
   }
 }
