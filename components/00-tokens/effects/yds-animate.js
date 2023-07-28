@@ -1,12 +1,17 @@
 Drupal.behaviors.animateItems = {
   attach(context) {
+    // Check if animation is active in site settings.
+    const siteAnimationEnabled = context.querySelector(
+      '[data-site-animation="true"]',
+    );
+
     // Select all elements with [data-animate-item] attribute
     const elementsToAnimate = context.querySelectorAll(
       '[data-animate-item="true"]',
     );
 
     // Check if the user prefers reduced motion
-    const prefersReducedMotion = window.matchMedia(
+    const prefersReducedMotionNoPref = window.matchMedia(
       '(prefers-reduced-motion: no-preference)',
     ).matches;
 
@@ -25,9 +30,13 @@ Drupal.behaviors.animateItems = {
       });
     });
 
-    // only add observer if there are elements to animate
+    // Only add observer if siteAnimationEnabled, there are elements to animate,
     // and if user hasn't enabled reduced motion.
-    if (elementsToAnimate && prefersReducedMotion) {
+    if (
+      elementsToAnimate &&
+      siteAnimationEnabled &&
+      prefersReducedMotionNoPref
+    ) {
       // Observe each .divider element
       elementsToAnimate.forEach((animatedElement) => {
         observer.observe(animatedElement);

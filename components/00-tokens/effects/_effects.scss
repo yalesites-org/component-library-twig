@@ -99,16 +99,19 @@
 }
 
 @mixin rise-effect($amount: -0.25em) {
-  transform: translateY(0);
+  @media (prefers-reduced-motion: no-preference) {
+    transform: translateY(0);
 
-  &:hover {
-    transform: translateY($amount);
-    color: var(--color-cta-text);
-    background-color: var(--color-cta-bg);
+    &:hover {
+      transform: translateY($amount);
+      color: var(--color-cta-text);
+      background-color: var(--color-cta-bg);
+    }
   }
 }
 
 @mixin expand-out {
+  // only set scale to 0 if animation can run
   @media (prefers-reduced-motion: no-preference) {
     transform: scaleX(0);
   }
