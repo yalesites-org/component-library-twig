@@ -20,6 +20,25 @@
     {% set reference_card__snippet = null %}
   {% endif %}
 
+  {# If post, and condensed, hide snippet and set image to false. #}
+  {% if card_collection__type == 'condensed' %}
+    {% set reference_card__snippet = null %}
+    {% set reference_card__image = false %}
+  {% endif %}
+
+{# Profile Card #}
+{% elseif card_example_type == 'profile' %}
+  {# If post, list, and not freatured, hide snippet. #}
+  {% if card_collection__type == 'list' and card_collection__featured == 'false' %}
+    {% set reference_card__subheading = null %}
+  {% endif %}
+
+  {# If post, and condensed, hide snippet and set image to false. #}
+  {% if card_collection__type == 'condensed' %}
+    {% set reference_card__image = false %}
+    {% set reference_card__snippet = null %}
+  {% endif %}
+
 {# Event Card #}
 {% elseif card_example_type == 'event' %}
   {# If a format is provided, put it in the overline #}
@@ -37,10 +56,23 @@
     {% if card_collection__featured == 'false' %}
       {% set reference_card__snippet = null %}
     {% endif %}
+  {# If event, and condensed, hide snippet and set image to false. #}
+  {% elseif card_collection__type == 'condensed' %}
+    {% set reference_card__overline = null %}
+    {% set reference_card__snippet = null %}
+    {% set reference_card__image = false %}
+    {% set format %}
+      <span class="format-inline">{{ format }}</span>
+    {% endset %}
+    {% set reference_card__subheading = reference_card__date__formatted ~ reference_card__time__formatted ~ format %}
   {% else %}
     {# If event and list put the date and time in the subheading. #}
     {% set reference_card__subheading = reference_card__date__formatted ~ reference_card__time__formatted %}
   {% endif %}
 {% endif %}
 
-{% include "@molecules/cards/reference-card/yds-reference-card.twig" %}
+{% if card_example_type == 'directory-listing' %}
+  {% include "@molecules/cards/directory-listing-card/yds-directory-listing-card.twig" %}
+{% else %}
+  {% include "@molecules/cards/reference-card/yds-reference-card.twig" %}
+{% endif %}

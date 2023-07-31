@@ -8,10 +8,10 @@
 {% set modal_item__content = modal_item__content|default(item.media_grid__modal__text) %}
 {% set media_grid__modal__base_class = 'media-grid-modal' %}
 
-  {% if modal_item__heading or modal_item__content %}
+  {% if modal_item__heading is not empty or modal_item__content is not empty %}
     {% set media_grid__item__content %}
       {# Content Heading #}
-      {% if modal_item__heading %}
+      {% if modal_item__heading is not empty %}
         {% include "@atoms/typography/headings/yds-heading.twig" with {
           heading__level: '2',
           heading: modal_item__heading,

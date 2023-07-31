@@ -16,6 +16,12 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
   color: var(--color-site-header-yale-branding);
 }
 
+// Department/site name on mobile
+@mixin branding-small-mobile {
+  font: var(--font-style-branding-site-mobile);
+  color: var(--color-site-header-yale-branding);
+}
+
 .site-header {
   // prettier-ignore
   --site-header-border-bottom: var(--site-header-border-thickness) solid var(--color-site-header-border-color);
@@ -258,13 +264,17 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
     }
   }
 
-  &--mobile {
-    @include branding-small;
+  // if right alignment, limit the branding width
+  @media (min-width: tokens.$break-mobile) {
+    [data-site-header-nav-position='right'] & {
+      max-width: 36.5%;
+    }
   }
 
-  // if right alignment, limit the branding width
-  [data-site-header-nav-position='right'] & {
-    max-width: 36.5%;
+  &--mobile {
+    @include branding-small-mobile;
+
+    max-width: 80%;
   }
 }
 

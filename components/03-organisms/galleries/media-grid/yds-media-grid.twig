@@ -22,11 +22,13 @@
   }) %}
 {% endif %}
 
+{% set media_grid__modal_aria = media_grid__heading.0 ? media_grid__heading.0 : 'Gallery Viewer' %}
+
 <div {{ add_attributes(media_grid__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}
   <div {{ bem('inner', [], media_grid__base_class) }}>
-    {% if media_grid__heading %}
+    {% if media_grid__heading is not empty %}
       {% include "@atoms/typography/headings/yds-heading.twig" with {
         heading__level: '2',
         heading__blockname: media_grid__base_class,
@@ -42,7 +44,7 @@
     </ul>
   </div>
   {% if media_grid__variation == 'interactive' %}
-    <div {{ bem('modal', [], media_grid__base_class) }} data-basic-theme="gray-700">
+    <div {{ bem('modal', [], media_grid__base_class) }} data-basic-theme="gray-700" aria-modal="true" role="dialog" aria-label="{{ media_grid__modal_aria }}" >
       {% block media_grid__modal %}
         {% include "@organisms/galleries/media-grid/_yds-media-grid-modal-item.twig" %}
       {% endblock %}

@@ -112,12 +112,4 @@ blockquote {
   font: var(--font-style-body-default);
   color: var(--color-pull-quote-attribution);
   margin-top: 0.4em;
-
-  // if the attribution has a <p> element we need to make the `-` character
-  // and the attribution text in line, and remove bottom-margin from the <p>
-  display: flex;
-
-  p {
-    margin-bottom: 0;
-  }
 }
