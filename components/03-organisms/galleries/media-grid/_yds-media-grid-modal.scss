@@ -112,7 +112,6 @@ $modal-speed: var(--animation-speed-slow);
   display: flex;
   gap: var(--size-spacing-1);
   justify-content: center;
-  overflow: auto;
 }
 
 .media-grid-modal__pager-item {
@@ -135,10 +134,11 @@ $modal-speed: var(--animation-speed-slow);
   }
 
   @media (max-width: tokens.$break-s - 0.05) {
-    &:not(.media-grid-modal__pager-item--total):not([data-media-grid-modal-item-active='true']) {
+    &:not(.media-grid-modal__pager-item--total):not([data-media-grid-modal-item-active='true']):not([aria-current='true']) {
       display: none;
     }
 
+    &[aria-current='true'],
     &[data-media-grid-modal-item-active='true'] {
       position: relative;
 
