@@ -169,6 +169,7 @@ $modal-speed: var(--animation-speed-slow);
   grid-area: content;
   overflow: auto;
   max-height: 100%;
+  position: relative;
 
   .text {
     display: flex;
@@ -182,6 +183,14 @@ $modal-speed: var(--animation-speed-slow);
     &:hover {
       color: var(--color-gray-300);
     }
+  }
+
+  &.content-expanded {
+    position: absolute;
+    margin: 0 auto;
+    height: auto;
+    bottom: 0;
+    background-color: black;
   }
 }
 
@@ -243,4 +252,16 @@ $modal-speed: var(--animation-speed-slow);
   @include media-grid-modal-transition;
 
   opacity: 1;
+}
+
+.media-grid-modal__toggle-caption {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 4px 8px;
+  cursor: pointer;
+
+  .content-expanded & {
+    display: block;
+  }
 }

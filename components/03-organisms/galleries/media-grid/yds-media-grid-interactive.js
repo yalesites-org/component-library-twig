@@ -125,6 +125,52 @@ Drupal.behaviors.mediaGridInteractive = {
       };
 
       /**
+       * toggleCaptions
+       * @description toggleCaptions truncates long captions visible in the modal.
+       */
+      const imageCaptions = document.querySelectorAll(
+        '.media-grid-modal__content',
+      );
+
+      imageCaptions.forEach((imageCaption) => {
+        const captionContent = imageCaption.querySelector(
+          '.media-grid-modal__text',
+        );
+        const toggleCaption = imageCaption.querySelector(
+          '.media-grid-modal__toggle-caption',
+        );
+
+        if (captionContent) {
+          // Store the full caption text
+          const maxLength = 100;
+          const fullCaption = captionContent.textContent.trim();
+          const visuallyHidden =
+            toggleCaption.querySelector('.visually-hidden');
+          // Check the length of the caption and truncate if necessary
+          if (toggleCaption && fullCaption.length > maxLength) {
+            const truncatedCaption = fullCaption.slice(0, maxLength);
+            captionContent.textContent = `${truncatedCaption}...`;
+            toggleCaption.style.display = 'inline'; // Show the "Read More" toggle
+
+            // Toggle the full caption when the "Read More" is clicked
+            toggleCaption.addEventListener('click', function () {
+              if (captionContent.textContent === `${truncatedCaption}...`) {
+                captionContent.textContent = fullCaption;
+                imageCaption.classList.add('content-expanded');
+                imageCaption.classList.remove('content-collapsed');
+                visuallyHidden.textContent = 'Collapse the Content';
+              } else {
+                captionContent.textContent = `${truncatedCaption}...`;
+                imageCaption.classList.add('content-collapsed');
+                imageCaption.classList.remove('content-expanded');
+                visuallyHidden.textContent = 'Expand the Content';
+              }
+            });
+          }
+        }
+      });
+
+      /**
        * handlePagerClick
        * @description Supports pager navigation.
        */
