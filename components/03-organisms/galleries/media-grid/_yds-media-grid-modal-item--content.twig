@@ -26,10 +26,10 @@
         <button {{ bem('toggle-caption', ['expand-content'], media_grid__modal__base_class) }}>
           <span {{ bem('visually-hidden') }}>{{ 'Expand the Content'|t }}</span>
           {% include "@atoms/images/icons/_yds-icon.twig" with {
-            icon__name: 'play',
+            icon__name: 'angle-down',
             icon__decorative: true,
             icon__blockname: media_grid__modal__base_class,
-            icon__modifiers: ['play'],
+            icon__modifiers: ['angle-down'],
           } %}
         </button>
       {% endif %}

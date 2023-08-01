@@ -169,7 +169,12 @@ $modal-speed: var(--animation-speed-slow);
   grid-area: content;
   overflow: auto;
   max-height: 100%;
-  position: relative;
+  position: absolute;
+  left: auto;
+  right: auto;
+  bottom: 0;
+  width: 100%;
+  max-width: var(--size-component-layout-width-content);
 
   .text {
     display: flex;
@@ -258,10 +263,20 @@ $modal-speed: var(--animation-speed-slow);
   position: absolute;
   top: 0;
   right: 0;
-  padding: 4px 8px;
+  padding: 0;
   cursor: pointer;
+  background-color: transparent;
+  border: none;
+  height: 24px;
+  width: 24px;
+
+  svg {
+    fill: var(--color-basic-white);
+  }
 
   .content-expanded & {
-    display: block;
+    svg {
+      rotate: 180deg;
+    }
   }
 }
