@@ -179,7 +179,7 @@ $modal-speed: var(--animation-speed-slow);
     display: flex;
     flex-direction: column;
     gap: var(--size-spacing-3);
-    padding-inline-end: var(--size-spacing-7);
+    padding-inline-end: var(--size-spacing-8);
   }
 
   &.content-expanded {
@@ -246,6 +246,7 @@ $modal-speed: var(--animation-speed-slow);
 
   &--next {
     grid-area: control-next;
+    justify-content: end;
 
     svg {
       transform: rotate(-90deg);
@@ -256,6 +257,7 @@ $modal-speed: var(--animation-speed-slow);
     grid-area: control-close;
     border: var(--size-thickness-1) solid;
     padding: var(--size-spacing-2);
+    justify-content: center;
   }
 }
 
@@ -280,8 +282,8 @@ $modal-speed: var(--animation-speed-slow);
   cursor: pointer;
   background-color: transparent;
   border: none;
-  height: 40px;
-  width: 40px;
+  height: var(--size-click-target-minimum);
+  width: var(--size-click-target-minimum);
 
   svg {
     @include tokens.animate($property: 'transform', $duration: 400ms);
