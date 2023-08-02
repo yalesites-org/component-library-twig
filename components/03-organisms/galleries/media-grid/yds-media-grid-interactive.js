@@ -142,7 +142,7 @@ Drupal.behaviors.mediaGridInteractive = {
 
         if (captionContent) {
           // Store the full caption text
-          const maxLength = 100;
+          const maxLength = 80;
           const fullCaption = captionContent.textContent.trim();
           const visuallyHidden =
             toggleCaption.querySelector('.visually-hidden');
