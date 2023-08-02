@@ -77,8 +77,7 @@ $modal-speed: var(--animation-speed-slow);
     '. . control-close' var(--size-click-target-minimum)
     'media media media' minmax(auto, 50vh)
     'control-previous pager control-next' var(--size-click-target-minimum)
-    'content content content' minmax(var(--size-click-target-minimum), 1fr)
-    / var(--size-click-target-minimum) minmax(0, 1fr) var(--size-click-target-minimum);
+    'content content content' minmax(auto, 20vh);
   /* stylelint-enable scss/operator-no-newline-before */
   gap: var(--spacing-component-gutter-secondary);
   max-height: 100%;
@@ -173,7 +172,8 @@ $modal-speed: var(--animation-speed-slow);
   width: 100%;
   max-width: var(--size-component-layout-width-content);
   padding-block-start: var(--size-spacing-5);
-  padding-block-end: var(--size-spacing-5);
+  padding-block-end: 0;
+  min-height: fit-content;
 
   .text {
     display: flex;
