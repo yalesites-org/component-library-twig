@@ -77,9 +77,12 @@ $modal-speed: var(--animation-speed-slow);
     '. . control-close' var(--size-click-target-minimum)
     'media media media' minmax(auto, 50vh)
     'control-previous pager control-next' var(--size-click-target-minimum)
-    'content content content' minmax(auto, 20vh);
+    'content content content' minmax(auto, 1fr) / var(
+      --size-click-target-minimum
+    )
+    minmax(0, 1fr) var(--size-click-target-minimum);
   /* stylelint-enable scss/operator-no-newline-before */
-  gap: var(--spacing-component-gutter-secondary);
+  gap: var(--size-spacing-5);
   max-height: 100%;
 
   @media (min-width: tokens.$break-s) {
@@ -172,8 +175,8 @@ $modal-speed: var(--animation-speed-slow);
   width: 100%;
   max-width: var(--size-component-layout-width-content);
   padding-block-start: var(--size-spacing-5);
-  padding-block-end: 0;
-  min-height: fit-content;
+  padding-block-end: var(--size-spacing-5);
+  max-height: 100%;
 
   .text {
     display: flex;
@@ -246,7 +249,6 @@ $modal-speed: var(--animation-speed-slow);
 
   &--next {
     grid-area: control-next;
-    justify-content: end;
 
     svg {
       transform: rotate(-90deg);
@@ -257,7 +259,6 @@ $modal-speed: var(--animation-speed-slow);
     grid-area: control-close;
     border: var(--size-thickness-1) solid;
     padding: var(--size-spacing-2);
-    justify-content: center;
   }
 }
 
