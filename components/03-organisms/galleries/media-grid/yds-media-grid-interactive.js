@@ -151,6 +151,7 @@ Drupal.behaviors.mediaGridInteractive = {
             const truncatedCaption = fullCaption.slice(0, maxLength);
             captionContent.textContent = `${truncatedCaption}...`;
             toggleCaption.style.display = 'inline'; // Show the "Read More" toggle
+            imageCaption.classList.add('content-collapsed');
 
             // Toggle the full caption when the "Read More" is clicked
             toggleCaption.addEventListener('click', function () {
