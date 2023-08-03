@@ -192,6 +192,7 @@ $modal-speed: var(--animation-speed-slow);
     overflow: auto;
     position: absolute;
     bottom: 0;
+    top: auto;
     z-index: 1;
     max-height: 80vh;
   }
@@ -218,6 +219,7 @@ $modal-speed: var(--animation-speed-slow);
     @include tokens.body-l;
   }
 
+  // if the toggle is present, truncate the heading to 1 line
   [aria-expanded='false'] & {
     max-width: 100%;
     text-overflow: ellipsis;
