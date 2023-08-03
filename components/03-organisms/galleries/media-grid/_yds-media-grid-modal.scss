@@ -212,15 +212,39 @@ $modal-speed: var(--animation-speed-slow);
 }
 
 .media-grid-modal__heading {
-  @include tokens.body-default;
+  @include tokens.body-l;
 
   @media (min-width: tokens.$break-s) {
     @include tokens.body-l;
+  }
+
+  [aria-expanded='false'] & {
+    max-width: 100%;
+    text-overflow: ellipsis;
+    width: fit-content;
+    white-space: nowrap;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
   }
 }
 
 .media-grid-modal__text {
   @include tokens.body-default-condensed;
+
+  > * {
+    margin-top: 0;
+  }
+
+  [aria-expanded='false'] & {
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    width: fit-content;
+    white-space: nowrap;
+  }
 }
 
 .media-grid-modal__control {
@@ -285,6 +309,7 @@ $modal-speed: var(--animation-speed-slow);
   border: none;
   height: var(--size-click-target-minimum);
   width: var(--size-click-target-minimum);
+  display: none;
 
   svg {
     @include tokens.animate($property: 'transform', $duration: 400ms);

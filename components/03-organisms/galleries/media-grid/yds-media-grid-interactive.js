@@ -147,12 +147,55 @@ Drupal.behaviors.mediaGridInteractive = {
           '.media-grid-modal__heading',
         );
 
+        if (captionHeading && !captionContent) {
+          const maxHeadingLength = 90;
+          const fullHeading = captionHeading.textContent.trim();
+          const visuallyHidden =
+            toggleCaption.querySelector('.visually-hidden');
+
+          // Check the length of the caption and truncate if necessary
+          if (toggleCaption && fullHeading.length > maxHeadingLength) {
+            const truncatedHeading = fullHeading.slice(0, maxHeadingLength);
+
+            // set truncated content.
+            captionHeading.textContent = `${truncatedHeading}...`;
+
+            imageCaption.setAttribute('aria-expanded', 'false');
+            imageCaption.style.setProperty(
+              '--modal-content-item-height',
+              `${imageCaption.scrollHeight}px`,
+            );
+            toggleCaption.style.setProperty('display', 'inline');
+
+            // Toggle the full caption when the "up arrow" toggle is clicked
+            toggleCaption.addEventListener('click', function () {
+              if (captionHeading.textContent === `${truncatedHeading}...`) {
+                captionHeading.textContent = fullHeading;
+                visuallyHidden.textContent = 'Collapse the Content';
+                imageCaption.setAttribute('aria-expanded', 'true');
+                imageCaption.style.setProperty(
+                  '--modal-content-item-height',
+                  `${imageCaption.scrollHeight}px`,
+                );
+              } else {
+                captionHeading.textContent = `${truncatedHeading}...`;
+                visuallyHidden.textContent = 'Expand the Content';
+                imageCaption.setAttribute('aria-expanded', 'false');
+                imageCaption.style.setProperty(
+                  '--modal-content-item-height',
+                  `${imageCaption.scrollHeight}px`,
+                );
+              }
+            });
+          }
+        }
+
         // Check if captionContent exists.
-        if (captionContent) {
+        if ((captionHeading && captionContent) || captionContent) {
           // Store the full caption text.
           // if a captionHeading is present, shorten the amount of characters
           // for the caption text.
-          const maxLength = captionHeading ? 70 : 90;
+          const maxLength = 110;
 
           const fullCaption = captionContent.textContent.trim();
           const visuallyHidden =
@@ -161,12 +204,16 @@ Drupal.behaviors.mediaGridInteractive = {
           // Check the length of the caption and truncate if necessary
           if (toggleCaption && fullCaption.length > maxLength) {
             const truncatedCaption = fullCaption.slice(0, maxLength);
+
+            // set truncated content.
             captionContent.textContent = `${truncatedCaption}...`;
+
             imageCaption.setAttribute('aria-expanded', 'false');
             imageCaption.style.setProperty(
               '--modal-content-item-height',
-              `${imageCaption.clientHeight}px`,
+              `${imageCaption.scrollHeight}px`,
             );
+            toggleCaption.style.setProperty('display', 'inline');
 
             // Toggle the full caption when the "up arrow" toggle is clicked
             toggleCaption.addEventListener('click', function () {
@@ -184,7 +231,7 @@ Drupal.behaviors.mediaGridInteractive = {
                 imageCaption.setAttribute('aria-expanded', 'false');
                 imageCaption.style.setProperty(
                   '--modal-content-item-height',
-                  `${imageCaption.clientHeight}px`,
+                  `${imageCaption.scrollHeight}px`,
                 );
               }
             });
