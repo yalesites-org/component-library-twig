@@ -182,7 +182,7 @@ $modal-speed: var(--animation-speed-slow);
     display: flex;
     flex-direction: column;
     gap: var(--size-spacing-3);
-    padding-inline-end: var(--size-spacing-8);
+    padding-inline-end: var(--size-spacing-9);
   }
 
   &[aria-expanded='true'] {
