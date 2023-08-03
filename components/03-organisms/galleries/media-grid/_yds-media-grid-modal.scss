@@ -169,14 +169,16 @@ $modal-speed: var(--animation-speed-slow);
 }
 
 .media-grid-modal__content {
-  grid-area: content;
+  @include tokens.animate(all, var(--animation-speed-slow));
+
+  max-height: var(--modal-content-item-height);
   overflow: hidden;
+  grid-area: content;
   position: relative;
   width: 100%;
   max-width: var(--size-component-layout-width-content);
   padding-block-start: var(--size-spacing-5);
   padding-block-end: var(--size-spacing-5);
-  max-height: 100%;
 
   .text {
     display: flex;
@@ -186,10 +188,7 @@ $modal-speed: var(--animation-speed-slow);
   }
 
   &.content-expanded {
-    @include tokens.animate(
-      $property: all,
-      $duration: var(--animation-speed-slow)
-    );
+    @include tokens.animate(all, var(--animation-speed-slow));
 
     background-color: rgb(0 0 0 / 90%);
     overflow: auto;
@@ -200,10 +199,10 @@ $modal-speed: var(--animation-speed-slow);
   }
 
   &.content-collapsed {
-    @include tokens.animate(
-      $property: all,
-      $duration: var(--animation-speed-slow)
-    );
+    @include tokens.animate(all, var(--animation-speed-slow));
+
+    max-height: var(--modal-content-item-height);
+    overflow: hidden;
   }
 
   a {

@@ -145,6 +145,10 @@ Drupal.behaviors.mediaGridInteractive = {
         );
 
         if (captionContent) {
+          imageCaption.style.setProperty(
+            '--modal-content-item-height',
+            `${imageCaption.scrollHeight}px`,
+          );
           // Store the full caption text
           const maxLength = captionHeading ? 40 : 70;
 
@@ -157,7 +161,6 @@ Drupal.behaviors.mediaGridInteractive = {
             captionContent.textContent = `${truncatedCaption}...`;
             toggleCaption.style.display = 'inline'; // Show the "Read More" toggle
             imageCaption.classList.add('content-collapsed');
-
             // Toggle the full caption when the "Read More" is clicked
             toggleCaption.addEventListener('click', function () {
               if (captionContent.textContent === `${truncatedCaption}...`) {
@@ -165,11 +168,19 @@ Drupal.behaviors.mediaGridInteractive = {
                 imageCaption.classList.add('content-expanded');
                 imageCaption.classList.remove('content-collapsed');
                 visuallyHidden.textContent = 'Collapse the Content';
+                imageCaption.style.setProperty(
+                  '--modal-content-item-height',
+                  `${imageCaption.scrollHeight}px`,
+                );
               } else {
                 captionContent.textContent = `${truncatedCaption}...`;
                 imageCaption.classList.add('content-collapsed');
                 imageCaption.classList.remove('content-expanded');
                 visuallyHidden.textContent = 'Expand the Content';
+                imageCaption.style.setProperty(
+                  '--modal-content-item-height',
+                  `${imageCaption.scrollHeight}px`,
+                );
               }
             });
           }
