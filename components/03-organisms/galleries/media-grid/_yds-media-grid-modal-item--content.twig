@@ -26,17 +26,16 @@
 		<div {{ bem('text', [], media_grid__modal__base_class) }}>
 			{{ modal_item__content }}
 		</div>
+    <button {{ bem('toggle-caption', ['expand-content'], media_grid__modal__base_class) }}>
+      <span {{ bem('visually-hidden') }}>{{ 'Expand the Content'|t }}</span>
+      {% include "@atoms/images/icons/_yds-icon.twig" with {
+        icon__name: 'arrow-up',
+        icon__decorative: true,
+        icon__blockname: media_grid__modal__base_class,
+        icon__modifiers: ['arrow-up'],
+      } %}
+    </button>
 	{% endif %}
-	<button {{ bem('toggle-caption', ['expand-content'], media_grid__modal__base_class) }}>
-		<span {{ bem('visually-hidden') }}>{{ 'Expand the Content'|t }}</span>
-		{% include "@atoms/images/icons/_yds-icon.twig" with {
-      icon__name: 'arrow-up',
-      icon__decorative: true,
-      icon__blockname: media_grid__modal__base_class,
-      icon__modifiers: ['arrow-up'],
-    } %}
-	</button>
-
 	{% endset %}
 	{% include "@molecules/text/yds-text-field.twig" with {
       text_field__content: media_grid__item__content,

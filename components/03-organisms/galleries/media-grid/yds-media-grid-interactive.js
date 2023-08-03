@@ -143,59 +143,12 @@ Drupal.behaviors.mediaGridInteractive = {
           '.media-grid-modal__toggle-caption',
         );
 
-        const captionHeading = imageCaption.querySelector(
-          '.media-grid-modal__heading',
-        );
-
-        if (captionHeading && !captionContent) {
-          const maxHeadingLength = 90;
-          const fullHeading = captionHeading.textContent.trim();
-          const visuallyHidden =
-            toggleCaption.querySelector('.visually-hidden');
-
-          // Check the length of the caption and truncate if necessary
-          if (toggleCaption && fullHeading.length > maxHeadingLength) {
-            const truncatedHeading = fullHeading.slice(0, maxHeadingLength);
-
-            // set truncated content.
-            captionHeading.textContent = `${truncatedHeading}...`;
-
-            imageCaption.setAttribute('aria-expanded', 'false');
-            imageCaption.style.setProperty(
-              '--modal-content-item-height',
-              `${imageCaption.scrollHeight}px`,
-            );
-            toggleCaption.style.setProperty('display', 'inline');
-
-            // Toggle the full caption when the "up arrow" toggle is clicked
-            toggleCaption.addEventListener('click', function () {
-              if (captionHeading.textContent === `${truncatedHeading}...`) {
-                captionHeading.textContent = fullHeading;
-                visuallyHidden.textContent = 'Collapse the Content';
-                imageCaption.setAttribute('aria-expanded', 'true');
-                imageCaption.style.setProperty(
-                  '--modal-content-item-height',
-                  `${imageCaption.scrollHeight}px`,
-                );
-              } else {
-                captionHeading.textContent = `${truncatedHeading}...`;
-                visuallyHidden.textContent = 'Expand the Content';
-                imageCaption.setAttribute('aria-expanded', 'false');
-                imageCaption.style.setProperty(
-                  '--modal-content-item-height',
-                  `${imageCaption.scrollHeight}px`,
-                );
-              }
-            });
-          }
-        }
-
         // Check if captionContent exists.
-        if ((captionHeading && captionContent) || captionContent) {
+        if (captionContent) {
           // Store the full caption text.
           // if a captionHeading is present, shorten the amount of characters
           // for the caption text.
-          const maxLength = 110;
+          const maxLength = 100;
 
           const fullCaption = captionContent.textContent.trim();
           const visuallyHidden =
