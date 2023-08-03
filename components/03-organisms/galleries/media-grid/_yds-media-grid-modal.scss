@@ -169,8 +169,6 @@ $modal-speed: var(--animation-speed-slow);
 }
 
 .media-grid-modal__content {
-  @include tokens.animate(all, var(--animation-speed-slow));
-
   overflow: hidden;
   grid-area: content;
   position: relative;
@@ -193,7 +191,6 @@ $modal-speed: var(--animation-speed-slow);
     position: absolute;
     bottom: 0;
     z-index: 1;
-    max-height: 80vh;
   }
 
   &[aria-expanded='false'] {
