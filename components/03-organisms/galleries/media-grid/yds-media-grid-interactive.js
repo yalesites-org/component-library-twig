@@ -128,14 +128,17 @@ Drupal.behaviors.mediaGridInteractive = {
        * toggleCaptions
        * @description toggleCaptions truncates long captions visible in the modal.
        */
+      // Get all modal content.
       const imageCaptions = document.querySelectorAll(
         '.media-grid-modal__content',
       );
 
+      // Set variables for each modal content/caption.
       imageCaptions.forEach((imageCaption) => {
         const captionContent = imageCaption.querySelector(
           '.media-grid-modal__text',
         );
+
         const toggleCaption = imageCaption.querySelector(
           '.media-grid-modal__toggle-caption',
         );
@@ -144,42 +147,44 @@ Drupal.behaviors.mediaGridInteractive = {
           '.media-grid-modal__heading',
         );
 
+        // Check if captionContent exists.
         if (captionContent) {
-          imageCaption.style.setProperty(
-            '--modal-content-item-height',
-            `${imageCaption.scrollHeight}px`,
-          );
-          // Store the full caption text
-          const maxLength = captionHeading ? 40 : 70;
+          // Store the full caption text.
+          // if a captionHeading is present, shorten the amount of characters
+          // for the caption text.
+          const maxLength = captionHeading ? 70 : 90;
 
           const fullCaption = captionContent.textContent.trim();
           const visuallyHidden =
             toggleCaption.querySelector('.visually-hidden');
+
           // Check the length of the caption and truncate if necessary
           if (toggleCaption && fullCaption.length > maxLength) {
             const truncatedCaption = fullCaption.slice(0, maxLength);
             captionContent.textContent = `${truncatedCaption}...`;
-            toggleCaption.style.display = 'inline'; // Show the "Read More" toggle
-            imageCaption.classList.add('content-collapsed');
-            // Toggle the full caption when the "Read More" is clicked
+            imageCaption.setAttribute('aria-expanded', 'false');
+            imageCaption.style.setProperty(
+              '--modal-content-item-height',
+              `${imageCaption.clientHeight}px`,
+            );
+
+            // Toggle the full caption when the "up arrow" toggle is clicked
             toggleCaption.addEventListener('click', function () {
               if (captionContent.textContent === `${truncatedCaption}...`) {
                 captionContent.textContent = fullCaption;
-                imageCaption.classList.add('content-expanded');
-                imageCaption.classList.remove('content-collapsed');
                 visuallyHidden.textContent = 'Collapse the Content';
+                imageCaption.setAttribute('aria-expanded', 'true');
                 imageCaption.style.setProperty(
                   '--modal-content-item-height',
                   `${imageCaption.scrollHeight}px`,
                 );
               } else {
                 captionContent.textContent = `${truncatedCaption}...`;
-                imageCaption.classList.add('content-collapsed');
-                imageCaption.classList.remove('content-expanded');
                 visuallyHidden.textContent = 'Expand the Content';
+                imageCaption.setAttribute('aria-expanded', 'false');
                 imageCaption.style.setProperty(
                   '--modal-content-item-height',
-                  `${imageCaption.scrollHeight}px`,
+                  `${imageCaption.clientHeight}px`,
                 );
               }
             });

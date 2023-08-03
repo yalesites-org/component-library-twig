@@ -171,7 +171,6 @@ $modal-speed: var(--animation-speed-slow);
 .media-grid-modal__content {
   @include tokens.animate(all, var(--animation-speed-slow));
 
-  max-height: var(--modal-content-item-height);
   overflow: hidden;
   grid-area: content;
   position: relative;
@@ -187,7 +186,7 @@ $modal-speed: var(--animation-speed-slow);
     padding-inline-end: var(--size-spacing-8);
   }
 
-  &.content-expanded {
+  &[aria-expanded='true'] {
     @include tokens.animate(all, var(--animation-speed-slow));
 
     background-color: rgb(0 0 0 / 90%);
@@ -198,11 +197,10 @@ $modal-speed: var(--animation-speed-slow);
     max-height: 80vh;
   }
 
-  &.content-collapsed {
+  &[aria-expanded='false'] {
     @include tokens.animate(all, var(--animation-speed-slow));
 
     max-height: var(--modal-content-item-height);
-    overflow: hidden;
   }
 
   a {
@@ -215,7 +213,11 @@ $modal-speed: var(--animation-speed-slow);
 }
 
 .media-grid-modal__heading {
-  @include tokens.body-l;
+  @include tokens.body-default;
+
+  @media (min-width: tokens.$break-s) {
+    @include tokens.body-l;
+  }
 }
 
 .media-grid-modal__text {
@@ -292,7 +294,7 @@ $modal-speed: var(--animation-speed-slow);
     fill: var(--color-basic-white);
   }
 
-  .content-expanded & {
+  [aria-expanded='true'] & {
     svg {
       transform: rotate3d(0, 0, 1, -180deg);
     }
