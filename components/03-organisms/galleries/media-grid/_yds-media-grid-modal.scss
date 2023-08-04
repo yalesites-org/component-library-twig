@@ -82,7 +82,7 @@ $modal-speed: var(--animation-speed-slow);
     )
     minmax(0, 1fr) var(--size-click-target-minimum);
   /* stylelint-enable scss/operator-no-newline-before */
-  gap: var(--size-spacing-6);
+  gap: var(--spacing-component-gutter-secondary);
   max-height: 100%;
 
   @media (min-width: tokens.$break-s) {
@@ -210,10 +210,6 @@ $modal-speed: var(--animation-speed-slow);
 
 .media-grid-modal__heading {
   @include tokens.body-l;
-
-  @media (min-width: tokens.$break-s) {
-    @include tokens.body-l;
-  }
 
   // if the toggle is present, truncate the heading to 1 line
   [aria-expanded='false'] & {
