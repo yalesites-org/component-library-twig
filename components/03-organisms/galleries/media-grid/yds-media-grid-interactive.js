@@ -169,7 +169,9 @@ Drupal.behaviors.mediaGridInteractive = {
             toggleCaption.style.setProperty('display', 'inline');
 
             // Toggle the full caption when the "up arrow" toggle is clicked
-            toggleCaption.addEventListener('click', function () {
+            toggleCaption.addEventListener('click', function (e) {
+              e.preventDefault();
+
               if (captionContent.textContent === `${truncatedCaption}...`) {
                 captionContent.textContent = fullCaption;
                 visuallyHidden.textContent = 'Collapse the Content';

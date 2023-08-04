@@ -1,5 +1,6 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
+@use '../../../00-tokens/typography/typography';
 
 $modal-speed: var(--animation-speed-slow);
 
@@ -213,13 +214,7 @@ $modal-speed: var(--animation-speed-slow);
 
   // if the toggle is present, truncate the heading to 1 line
   [aria-expanded='false'] & {
-    max-width: 100%;
-    text-overflow: ellipsis;
-    width: fit-content;
-    white-space: nowrap;
-    line-clamp: 1;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
+    @include typography.truncate-text;
   }
 }
 
@@ -231,13 +226,7 @@ $modal-speed: var(--animation-speed-slow);
   }
 
   [aria-expanded='false'] & {
-    line-clamp: 1;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
-    max-width: 100%;
-    text-overflow: ellipsis;
-    width: fit-content;
-    white-space: nowrap;
+    @include typography.truncate-text;
   }
 }
 

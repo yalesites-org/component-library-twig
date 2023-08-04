@@ -150,3 +150,13 @@ code {
 @mixin body-xs {
   font: var(--font-style-body-xs);
 }
+
+@mixin truncate-text($lines: 1) {
+  max-width: 100%;
+  text-overflow: ellipsis;
+  width: fit-content;
+  white-space: nowrap;
+  line-clamp: $lines;
+  -webkit-line-clamp: $lines;
+  overflow: hidden;
+}
