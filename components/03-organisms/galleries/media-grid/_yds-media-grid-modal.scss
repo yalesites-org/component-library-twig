@@ -82,7 +82,7 @@ $modal-speed: var(--animation-speed-slow);
     )
     minmax(0, 1fr) var(--size-click-target-minimum);
   /* stylelint-enable scss/operator-no-newline-before */
-  gap: var(--size-spacing-5);
+  gap: var(--size-spacing-6);
   max-height: 100%;
 
   @media (min-width: tokens.$break-s) {
