@@ -83,7 +83,7 @@ $modal-speed: var(--animation-speed-slow);
     minmax(0, 1fr) var(--size-click-target-minimum);
   /* stylelint-enable scss/operator-no-newline-before */
   gap: var(--size-spacing-5);
-  max-height: 100%;
+  min-height: 100vh;
 
   @media (min-width: tokens.$break-s) {
     grid-template:
