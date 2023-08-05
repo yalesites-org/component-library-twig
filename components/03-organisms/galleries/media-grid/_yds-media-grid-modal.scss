@@ -116,6 +116,15 @@ $modal-speed: var(--animation-speed-slow);
   display: flex;
   gap: var(--size-spacing-1);
   justify-content: center;
+
+  // hide pager for very small screens
+  @media (max-width: tokens.$break-s - 0.05) {
+    display: none;
+  }
+
+  @media (orientation: landscape) and (max-height: 400px) {
+    display: none;
+  }
 }
 
 .media-grid-modal__pager-item {
@@ -216,6 +225,14 @@ $modal-speed: var(--animation-speed-slow);
   [aria-expanded='false'] & {
     @include typography.truncate-text;
   }
+
+  @media (max-width: tokens.$break-s - 0.05) {
+    @include tokens.body-default;
+  }
+
+  @media (orientation: landscape) and (max-height: 400px) {
+    @include tokens.body-default;
+  }
 }
 
 .media-grid-modal__text {
@@ -227,6 +244,19 @@ $modal-speed: var(--animation-speed-slow);
 
   [aria-expanded='false'] & {
     @include typography.truncate-text;
+  }
+
+  @media (max-width: tokens.$break-s - 0.05) {
+    @include tokens.body-s;
+
+    max-height: 60vh;
+  }
+
+  // small height and landscape
+  @media (orientation: landscape) and (max-height: 400px) {
+    @include tokens.body-s;
+
+    max-height: 20vh;
   }
 }
 
