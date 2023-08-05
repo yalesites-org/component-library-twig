@@ -33,7 +33,7 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
   }
 
   [data-collection-type='condensed'] & {
-    padding-bottom: var(--size-spacing-5);
+    padding-bottom: var(--size-spacing-6);
     border-bottom: var(--border-thickness-1) solid var(--color-divider);
     margin-bottom: var(--size-spacing-5);
   }
@@ -186,7 +186,7 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
   }
 
   [data-collection-type='condensed'][data-collection-featured='true'] & {
-    @include tokens.h5-yale-new;
+    @include tokens.h4-yale-new;
 
     font-weight: var(--font-weights-yalenew-bold);
   }

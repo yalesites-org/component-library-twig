@@ -31,6 +31,17 @@
     align-items: flex-start;
   }
 
+  [data-collection-type='condensed'] & {
+    margin-block-start: 0;
+    padding-inline-start: 0;
+
+    .reference-card {
+      &:hover {
+        box-shadow: var(--drop-shadow-level-1-bottom-shadow-only);
+      }
+    }
+  }
+
   [data-collection-type='grid'][data-collection-featured='true'] & {
     @include grid.primary;
   }
