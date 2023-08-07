@@ -83,7 +83,7 @@ $modal-speed: var(--animation-speed-slow);
     )
     minmax(0, 1fr) var(--size-click-target-minimum);
   /* stylelint-enable scss/operator-no-newline-before */
-  gap: var(--spacing-component-gutter-secondary);
+  gap: var(--size-spacing-3);
   max-height: 100%;
 
   @media (min-width: tokens.$break-s) {
@@ -96,6 +96,19 @@ $modal-speed: var(--animation-speed-slow);
       )
       minmax(0, 1fr)
       var(--size-click-target-minimum);
+    gap: var(--spacing-component-gutter-secondary);
+  }
+
+  @media (orientation: landscape) and (max-height: 400px) {
+    grid-template:
+      '. media control-close' var(--size-click-target-minimum)
+      'control-previous media control-next' minmax(auto, 4fr)
+      '. content .' minmax(var(--size-click-target-minimum), 1fr) / var(
+        --size-click-target-minimum
+      )
+      minmax(0, 1fr)
+      var(--size-click-target-minimum);
+    gap: var(--size-spacing-3);
   }
 }
 
@@ -118,10 +131,6 @@ $modal-speed: var(--animation-speed-slow);
   justify-content: center;
 
   // hide pager for very small screens
-  @media (max-width: tokens.$break-s - 0.05) {
-    display: none;
-  }
-
   @media (orientation: landscape) and (max-height: 400px) {
     display: none;
   }
