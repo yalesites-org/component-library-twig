@@ -83,7 +83,7 @@ $modal-speed: var(--animation-speed-slow);
     )
     minmax(0, 1fr) var(--size-click-target-minimum);
   /* stylelint-enable scss/operator-no-newline-before */
-  gap: var(--size-spacing-3);
+  gap: var(--size-spacing-5);
   max-height: 100%;
 
   @media (min-width: tokens.$break-s) {
@@ -103,12 +103,12 @@ $modal-speed: var(--animation-speed-slow);
     grid-template:
       '. media control-close' var(--size-click-target-minimum)
       'control-previous media control-next' minmax(auto, 4fr)
-      '. content .' minmax(var(--size-click-target-minimum), 1fr) / var(
+      '. content .' minmax(var(--size-click-target-minimum), 2fr) / var(
         --size-click-target-minimum
       )
       minmax(0, 1fr)
       var(--size-click-target-minimum);
-    gap: var(--size-spacing-3);
+    gap: var(--size-spacing-5);
   }
 }
 
