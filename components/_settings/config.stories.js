@@ -17,7 +17,7 @@ const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
 const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
-const siteAnimationOptions = ['true', 'false'];
+const siteAnimationOptions = ['artistic', 'default'];
 
 export default {
   title: 'Config',

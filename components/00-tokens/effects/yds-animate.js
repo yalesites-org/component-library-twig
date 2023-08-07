@@ -1,9 +1,11 @@
 Drupal.behaviors.animateItems = {
   attach(context) {
     // Check if animation is active in site settings.
-    const siteAnimationEnabled = context.querySelector(
-      '[data-site-animation="true"]',
-    );
+    const siteAnimationTheme = context.querySelector('[data-site-animation]');
+
+    // Set variable to check that the animation theme isn't the default.
+    const siteAnimationEnabled =
+      siteAnimationTheme.getAttribute('data-site-animation') !== 'default';
 
     // Select all elements with [data-animate-item] attribute
     const elementsToAnimate = context.querySelectorAll(

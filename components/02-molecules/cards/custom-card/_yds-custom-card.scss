@@ -8,7 +8,7 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
   @include atoms.clickable-component-heading-link;
 
   // only animate if animation is enabled in site configuration.
-  [data-site-animation='true'] & {
+  [data-site-animation='artistic'] & {
     @include tokens.animate($property: 'transform');
     @include tokens.rise-effect;
   }

@@ -15,7 +15,7 @@ blockquote {
   @include tokens.spacing-page-section;
 
   // if animation is active
-  [data-site-animation='true'] & {
+  [data-site-animation='artistic'] & {
     &[data-animate-item='true'] {
       @include tokens.animate(
         $property: 'transform',
