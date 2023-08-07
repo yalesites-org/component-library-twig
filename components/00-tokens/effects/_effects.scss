@@ -136,3 +136,10 @@
     }
   }
 }
+
+@mixin expand-height($height: 100%) {
+  // only run animation if animation can run
+  @media (prefers-reduced-motion: no-preference) {
+    height: $height;
+  }
+}

@@ -15,15 +15,15 @@ blockquote {
   @include tokens.spacing-page-section;
 
   // if animation is active
-  [data-site-animation='artistic'] & {
-    &[data-animate-item='true'] {
-      @include tokens.animate(
-        $property: 'transform',
-        $duration: var(--animation-speed-slow)
-      );
-      @include tokens.fade-in-up;
-    }
-  }
+  // [data-site-animation='artistic'] & {
+  //   &[data-animate-item='true'] {
+  //     @include tokens.animate(
+  //       $property: 'transform',
+  //       $duration: var(--animation-speed-slow)
+  //     );
+  //     @include tokens.fade-in-up;
+  //   }
+  // }
 
   // Global themes: set color slots for each theme
   // This establishes `--color-slot-` variables name-spaced to the selector
@@ -71,11 +71,23 @@ blockquote {
   }
 
   [data-pull-quote-style='bar-left'] & {
+    position: relative;
     padding-left: var(--size-spacing-6);
-    border-left: var(--border-thickness-4) solid var(--color-pull-quote-accent);
 
     @media (min-width: tokens.$break-mobile) {
       margin-left: var(--size-spacing-7);
+    }
+
+    &::before {
+      --border-height: 100%;
+
+      content: '';
+      position: absolute;
+      left: calc(var(--border-thickness-4) * -1);
+      top: 0;
+      height: var(--border-height);
+      width: var(--border-thickness-4);
+      background-color: var(--color-pull-quote-accent);
     }
   }
 
@@ -106,6 +118,30 @@ blockquote {
 
     @media (min-width: tokens.$break-mobile) {
       margin-left: var(--size-spacing-6);
+    }
+  }
+
+  // if animation is active
+  [data-site-animation='artistic']
+    [data-pull-quote-style='bar-left'][data-animate-item='true']
+    & {
+    &::before {
+      --animation-speed-mid-slow: 400ms;
+
+      height: 0;
+
+      @include tokens.animate(
+        $property: height,
+        $duration: var(--animation-speed-mid-slow)
+      );
+    }
+  }
+
+  [data-site-animation='artistic']
+    [data-pull-quote-style='bar-left'][data-animate-item='true'].animate
+    & {
+    &::before {
+      @include tokens.expand-height(100%);
     }
   }
 }
