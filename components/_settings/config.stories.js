@@ -35,7 +35,7 @@ export default {
       name: 'Animate Components',
       options: siteAnimationOptions,
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-animate-items'),
+      defaultValue: 'default',
     },
     thickness: {
       name: 'Line thickness',
