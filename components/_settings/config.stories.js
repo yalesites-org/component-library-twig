@@ -32,7 +32,7 @@ export default {
       defaultValue: localStorage.getItem('yds-cl-twig-global-theme'),
     },
     allowAnimatedItems: {
-      name: 'Animate Components',
+      name: 'Component Animation Theme',
       options: siteAnimationOptions,
       type: 'select',
       defaultValue: 'default',
