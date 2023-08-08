@@ -136,21 +136,24 @@ blockquote {
   [data-site-animation='artistic']
     [data-pull-quote-style='bar-right'][data-animate-item='true']
     & {
-    @include tokens.animate($duration: var(--animation-speed-default));
+    @media (prefers-reduced-motion: no-preference) {
+      @include tokens.animate($duration: var(--animation-speed-default));
 
-    &::before {
-      --animation-speed-mid-slow: 400ms;
+      &::before {
+        --animation-speed-mid-slow: 400ms;
 
-      height: 0;
+        height: 0;
 
-      @include tokens.animate(
-        $property: height,
-        $duration: var(--animation-speed-mid-slow),
-        $delay: 400ms
-      );
+        @include tokens.animate(
+          $property: height,
+          $duration: var(--animation-speed-mid-slow),
+          $delay: 400ms
+        );
+      }
     }
   }
 
+  // when animations
   [data-site-animation='artistic']
     [data-pull-quote-style='bar-left'][data-animate-item='true'].animate
     &,
