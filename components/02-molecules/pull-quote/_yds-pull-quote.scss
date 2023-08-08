@@ -15,15 +15,15 @@ blockquote {
   @include tokens.spacing-page-section;
 
   // if animation is active
-  // [data-site-animation='artistic'] & {
-  //   &[data-animate-item='true'] {
-  //     @include tokens.animate(
-  //       $property: 'transform',
-  //       $duration: var(--animation-speed-slow)
-  //     );
-  //     @include tokens.fade-in-up;
-  //   }
-  // }
+  [data-site-animation='artistic'] & {
+    &[data-animate-item='true'] {
+      @include tokens.animate(
+        $property: 'transform',
+        $duration: var(--animation-speed-slow)
+      );
+      @include tokens.fade-in-up;
+    }
+  }
 
   // Global themes: set color slots for each theme
   // This establishes `--color-slot-` variables name-spaced to the selector
@@ -79,25 +79,33 @@ blockquote {
     }
 
     &::before {
-      --border-height: 100%;
-
       content: '';
       position: absolute;
       left: calc(var(--border-thickness-4) * -1);
-      top: 0;
-      height: var(--border-height);
+      bottom: 0;
+      height: 100%;
       width: var(--border-thickness-4);
       background-color: var(--color-pull-quote-accent);
     }
   }
 
   [data-pull-quote-style='bar-right'] & {
+    position: relative;
     padding-right: var(--size-spacing-6);
-    border-right: var(--border-thickness-4) solid var(--color-pull-quote-accent);
     text-align: right;
 
     @media (min-width: tokens.$break-mobile) {
       margin-left: 9rem;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      right: calc(var(--border-thickness-4) * -1);
+      bottom: 0;
+      height: 100%;
+      width: var(--border-thickness-4);
+      background-color: var(--color-pull-quote-accent);
     }
   }
 
@@ -109,7 +117,7 @@ blockquote {
       content: '“';
       font-family: var(--font-families-yalenew);
       position: absolute;
-      bottom: 0;
+      top: 0;
       left: 0;
       font-size: 4em;
       line-height: 0.8;
@@ -124,7 +132,12 @@ blockquote {
   // if animation is active
   [data-site-animation='artistic']
     [data-pull-quote-style='bar-left'][data-animate-item='true']
+    &,
+  [data-site-animation='artistic']
+    [data-pull-quote-style='bar-right'][data-animate-item='true']
     & {
+    @include tokens.animate($duration: var(--animation-speed-default));
+
     &::before {
       --animation-speed-mid-slow: 400ms;
 
@@ -132,13 +145,17 @@ blockquote {
 
       @include tokens.animate(
         $property: height,
-        $duration: var(--animation-speed-mid-slow)
+        $duration: var(--animation-speed-mid-slow),
+        $delay: 400ms
       );
     }
   }
 
   [data-site-animation='artistic']
     [data-pull-quote-style='bar-left'][data-animate-item='true'].animate
+    &,
+  [data-site-animation='artistic']
+    [data-pull-quote-style='bar-right'][data-animate-item='true'].animate
     & {
     &::before {
       @include tokens.expand-height(100%);

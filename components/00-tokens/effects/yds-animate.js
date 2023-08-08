@@ -39,9 +39,15 @@ Drupal.behaviors.animateItems = {
       siteAnimationEnabled &&
       prefersReducedMotionNoPref
     ) {
+      // add options, set threshold
+      const options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.75,
+      };
       // Observe each .divider element
       elementsToAnimate.forEach((animatedElement) => {
-        observer.observe(animatedElement);
+        observer.observe(animatedElement, options);
       });
     }
   },
