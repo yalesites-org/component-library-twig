@@ -25,13 +25,9 @@ Drupal.behaviors.animateItems = {
         if (entry.isIntersecting) {
           // If the element is in the viewport, add the 'animate' class
           animatedElement.classList.add('animate');
-        } else {
-          // remove 'animate'
-          animatedElement.classList.remove('animate');
         }
       });
     });
-
     // Only add observer if siteAnimationEnabled, there are elements to animate,
     // and if user hasn't enabled reduced motion.
     if (
@@ -39,15 +35,15 @@ Drupal.behaviors.animateItems = {
       siteAnimationEnabled &&
       prefersReducedMotionNoPref
     ) {
-      // add options, set threshold
-      const options = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.75,
-      };
       // Observe each .divider element
       elementsToAnimate.forEach((animatedElement) => {
-        observer.observe(animatedElement, options);
+        observer.observe(animatedElement);
+      });
+    }
+    // Set each component to data-animate-item false if prefers reduced motion.
+    if (!prefersReducedMotionNoPref) {
+      elementsToAnimate.forEach((reducedMotionElement) => {
+        reducedMotionElement.setAttribute('data-animate-item', 'false');
       });
     }
   },
