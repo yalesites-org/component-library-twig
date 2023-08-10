@@ -160,6 +160,7 @@ Drupal.behaviors.mediaGridInteractive = {
 
             // set truncated content.
             captionContent.textContent = `${truncatedCaption}...`;
+            toggleCaption.setAttribute('aria-expanded', 'false');
 
             imageCaption.setAttribute('aria-expanded', 'false');
             imageCaption.style.setProperty(
@@ -171,8 +172,8 @@ Drupal.behaviors.mediaGridInteractive = {
             // Toggle the full caption when the "up arrow" toggle is clicked
             toggleCaption.addEventListener('click', function (e) {
               e.preventDefault();
-
               if (captionContent.textContent === `${truncatedCaption}...`) {
+                toggleCaption.setAttribute('aria-expanded', 'true');
                 captionContent.textContent = fullCaption;
                 visuallyHidden.textContent = 'Collapse the Content';
                 imageCaption.setAttribute('aria-expanded', 'true');
@@ -181,6 +182,7 @@ Drupal.behaviors.mediaGridInteractive = {
                   `${imageCaption.scrollHeight}px`,
                 );
               } else {
+                toggleCaption.setAttribute('aria-expanded', 'false');
                 captionContent.textContent = `${truncatedCaption}...`;
                 visuallyHidden.textContent = 'Expand the Content';
                 imageCaption.setAttribute('aria-expanded', 'false');
