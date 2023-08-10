@@ -151,8 +151,6 @@ Drupal.behaviors.mediaGridInteractive = {
           const maxLength = 100;
 
           const fullCaption = captionContent.textContent.trim();
-          const visuallyHidden =
-            toggleCaption.querySelector('.visually-hidden');
 
           // Check the length of the caption and truncate if necessary
           if (toggleCaption && fullCaption.length > maxLength) {
@@ -175,7 +173,6 @@ Drupal.behaviors.mediaGridInteractive = {
               if (captionContent.textContent === `${truncatedCaption}...`) {
                 toggleCaption.setAttribute('aria-expanded', 'true');
                 captionContent.textContent = fullCaption;
-                visuallyHidden.textContent = 'Collapse the Content';
                 imageCaption.setAttribute('aria-expanded', 'true');
                 imageCaption.style.setProperty(
                   '--modal-content-item-height',
@@ -184,7 +181,6 @@ Drupal.behaviors.mediaGridInteractive = {
               } else {
                 toggleCaption.setAttribute('aria-expanded', 'false');
                 captionContent.textContent = `${truncatedCaption}...`;
-                visuallyHidden.textContent = 'Expand the Content';
                 imageCaption.setAttribute('aria-expanded', 'false');
                 imageCaption.style.setProperty(
                   '--modal-content-item-height',

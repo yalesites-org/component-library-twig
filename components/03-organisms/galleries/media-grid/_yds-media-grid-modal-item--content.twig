@@ -27,7 +27,6 @@
 			{{ modal_item__content }}
 		</div>
     <button {{ bem('toggle-caption', ['expand-content'], media_grid__modal__base_class) }}>
-      <span {{ bem('visually-hidden') }}>{{ 'Expand the Content'|t }}</span>
       {% include "@atoms/images/icons/_yds-icon.twig" with {
         icon__name: 'arrow-up',
         icon__decorative: true,
