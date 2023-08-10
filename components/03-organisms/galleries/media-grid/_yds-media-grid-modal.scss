@@ -8,6 +8,15 @@ $modal-speed: var(--animation-speed-slow);
   @include tokens.animate(opacity, $modal-speed);
 }
 
+.media-grid__inner {
+  position: relative;
+  z-index: 1;
+
+  [data-media-grid-modal-state='active'] & {
+    z-index: 0;
+  }
+}
+
 .media-grid__modal {
   position: fixed;
   top: 0;

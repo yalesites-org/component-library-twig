@@ -24,14 +24,17 @@
     // Start visible at 0% to avoid an occasional "flash" when closing.
     0% {
       visibility: visible;
+      z-index: 0;
     }
 
     99% {
       visibility: visible;
+      z-index: 0;
     }
 
     100% {
       visibility: hidden;
+      z-index: -1;
     }
   }
 }
