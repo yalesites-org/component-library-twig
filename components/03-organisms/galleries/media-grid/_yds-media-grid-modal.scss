@@ -23,9 +23,6 @@ $modal-speed: var(--animation-speed-slow);
   left: 0;
   height: 100%;
   width: 100%;
-
-  // This z-index is crazy high to ensure it shows above admin toolbars.
-  z-index: 600;
   background: transparent;
 
   [data-media-grid-modal-state='inactive'] & {
@@ -33,6 +30,11 @@ $modal-speed: var(--animation-speed-slow);
     @include media-grid-modal-transition;
 
     opacity: 0;
+
+    // when inactive, set the z-index below the `media-grid__inner`
+    // to make sure it doesn't render as an invisible elements over the grid
+    // preventing interaction.
+    z-index: -1;
   }
 
   // Show the modal and backdrop when active.
@@ -43,6 +45,9 @@ $modal-speed: var(--animation-speed-slow);
     display: flex;
     align-items: center;
     justify-content: center;
+
+    // This z-index is crazy high to ensure it shows above admin toolbars.
+    z-index: 600;
   }
 
   &::before {
