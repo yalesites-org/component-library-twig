@@ -11,6 +11,12 @@
   }) %}
 {% endif %}
 
+{% if site_animate_components %}
+  {% set layout__attributes = layout__attributes|merge({
+    'data-site-animation': site_animate_components,
+  }) %}
+{% endif %}
+
 <div {{ add_attributes(layout__attributes) }} >
   {# Page Header #}
   {% block page__header %}

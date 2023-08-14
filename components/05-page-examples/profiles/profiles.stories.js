@@ -42,6 +42,7 @@ export const ProfilePage = ({
   siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
+  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
   siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
@@ -49,6 +50,7 @@ export const ProfilePage = ({
 }) =>
   profilePageTwig({
     site_name: siteName,
+    site_animate_components: allowAnimatedItems,
     site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,

@@ -50,6 +50,7 @@ export default {
 export const EventPage = ({
   siteName,
   eventPageTitle,
+  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
@@ -73,6 +74,7 @@ export const EventPage = ({
   eventPageTwig({
     site_name: siteName,
     event_title__heading: eventPageTitle,
+    site_animate_components: allowAnimatedItems,
     site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
@@ -114,6 +116,7 @@ EventPage.argTypes = {
 export const EventGrid = ({
   siteName,
   pageTitle,
+  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
@@ -132,6 +135,7 @@ export const EventGrid = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_animate_components: allowAnimatedItems,
     site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
@@ -166,6 +170,7 @@ EventGrid.argTypes = {
 export const EventList = ({
   siteName,
   pageTitle,
+  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
@@ -184,6 +189,7 @@ export const EventList = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_animate_components: allowAnimatedItems,
     site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
