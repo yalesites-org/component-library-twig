@@ -126,7 +126,9 @@
       ]
     }%}
 
-	{% include "@atoms/divider/yds-divider.twig" %}
+	{% include "@atoms/divider/yds-divider.twig" with {
+    animate__item: [true],
+  }%}
 
 	{% include "@molecules/quick-links/yds-quick-links.twig" %}
 
