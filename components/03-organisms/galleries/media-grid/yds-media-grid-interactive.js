@@ -125,6 +125,74 @@ Drupal.behaviors.mediaGridInteractive = {
       };
 
       /**
+       * toggleCaptions
+       * @description toggleCaptions truncates long captions visible in the modal.
+       */
+      // Get all modal content.
+      const imageCaptions = document.querySelectorAll(
+        '.media-grid-modal__content',
+      );
+
+      // Set variables for each modal content/caption.
+      imageCaptions.forEach((imageCaption) => {
+        const captionContent = imageCaption.querySelector(
+          '.media-grid-modal__text',
+        );
+
+        const toggleCaption = imageCaption.querySelector(
+          '.media-grid-modal__toggle-caption',
+        );
+
+        // Check if captionContent exists.
+        if (captionContent) {
+          // Store the full caption text.
+          // if a captionHeading is present, shorten the amount of characters
+          // for the caption text.
+          const maxLength = 100;
+
+          const fullCaption = captionContent.textContent.trim();
+
+          // Check the length of the caption and truncate if necessary
+          if (toggleCaption && fullCaption.length > maxLength) {
+            const truncatedCaption = fullCaption.slice(0, maxLength);
+
+            // set truncated content.
+            captionContent.textContent = `${truncatedCaption}...`;
+            toggleCaption.setAttribute('aria-expanded', 'false');
+
+            imageCaption.setAttribute('aria-expanded', 'false');
+            imageCaption.style.setProperty(
+              '--modal-content-item-height',
+              `${imageCaption.scrollHeight}px`,
+            );
+            toggleCaption.style.setProperty('display', 'inline');
+
+            // Toggle the full caption when the "up arrow" toggle is clicked
+            toggleCaption.addEventListener('click', function (e) {
+              e.preventDefault();
+              if (captionContent.textContent === `${truncatedCaption}...`) {
+                toggleCaption.setAttribute('aria-expanded', 'true');
+                captionContent.textContent = fullCaption;
+                imageCaption.setAttribute('aria-expanded', 'true');
+                imageCaption.style.setProperty(
+                  '--modal-content-item-height',
+                  `${imageCaption.scrollHeight}px`,
+                );
+              } else {
+                toggleCaption.setAttribute('aria-expanded', 'false');
+                captionContent.textContent = `${truncatedCaption}...`;
+                imageCaption.setAttribute('aria-expanded', 'false');
+                imageCaption.style.setProperty(
+                  '--modal-content-item-height',
+                  `${imageCaption.scrollHeight}px`,
+                );
+              }
+            });
+          }
+        }
+      });
+
+      /**
        * handlePagerClick
        * @description Supports pager navigation.
        */
