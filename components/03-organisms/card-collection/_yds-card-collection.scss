@@ -31,6 +31,10 @@
     align-items: flex-start;
   }
 
+  [data-collection-type='profile-directory'] & {
+    align-items: flex-start;
+  }
+
   [data-collection-type='grid'][data-collection-featured='true'] & {
     @include grid.primary;
   }
