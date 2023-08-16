@@ -29,11 +29,16 @@ export default {
   },
 };
 
-export const Footer = ({ borderThickness, siteFooterTheme }) =>
+export const Footer = ({
+  borderThickness,
+  siteFooterTheme,
+  siteFooterVariation,
+}) =>
   siteFooterTwig({
     ...socialLinksData,
     site_footer__border_thickness: borderThickness,
     site_footer__theme: siteFooterTheme,
+    site_footer__variation: siteFooterVariation,
   });
 
 Footer.argTypes = {
@@ -42,15 +47,25 @@ Footer.argTypes = {
     type: 'select',
     defaultValue: 'one',
   },
+  siteFooterVariation: {
+    options: ['basic', 'fat'],
+    type: 'select',
+    defaultValue: 'basic',
+  },
 };
 
-export const FooterExamples = ({ borderThickness, globalTheme }) =>
+export const FooterExamples = ({
+  borderThickness,
+  globalTheme,
+  siteFooterVariation,
+}) =>
   siteFooterExamples({
     ...socialLinksData,
     ...siteFooterThemes,
     ...siteGlobalThemes,
     site_global__theme: globalTheme,
     site_footer__border_thickness: borderThickness,
+    site_footer__variation: siteFooterVariation,
   });
 
 FooterExamples.argTypes = {

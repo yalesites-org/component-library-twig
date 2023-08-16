@@ -136,6 +136,14 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   @media (min-width: $break-site-footer) {
     flex-direction: row;
   }
+
+  [data-footer-variation='fat'] & {
+    @media (min-width: tokens.$break-l) {
+      display: grid;
+      grid-template-areas: 'logos content columns';
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
 }
 
 .site-footer__secondary {
@@ -155,6 +163,10 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   display: flex;
   flex-direction: column;
   gap: var(--size-spacing-3);
+
+  [data-footer-variation='fat'] & {
+    flex: 1 1 33.33%;
+  }
 }
 
 .site-footer__logo {
@@ -190,5 +202,59 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
 .site-footer__divider {
   @media (max-width: $break-site-footer-max) {
     display: none;
+  }
+}
+
+// Fat footer styles only
+.site-footer__logo-group {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--size-spacing-3);
+
+  > * {
+    flex: 1 0 calc(50% - var(--size-spacing-3));
+  }
+}
+
+.site-footer__content {
+  [data-footer-variation='fat'] & {
+    flex: 1 1 33.33%;
+
+    @media (min-width: tokens.$break-l) {
+      grid-area: content;
+    }
+  }
+}
+
+.site-footer__columns {
+  [data-footer-variation='fat'] & {
+    flex: 1 1 33.33%;
+
+    @media (min-width: tokens.$break-l) {
+      grid-area: columns;
+    }
+  }
+}
+
+.site-footer__columns-inner {
+  @media (min-width: tokens.$break-l) {
+    display: grid;
+    grid-template-areas: 'top' 'bottom';
+    grid-template-columns: 1fr 1fr;
+  }
+
+  [data-footer-variation='fat'] & {
+    @media (min-width: tokens.$break-l) {
+      grid-area: top;
+    }
+  }
+}
+
+.site-footer__social {
+  [data-footer-variation='fat'] & {
+    @media (min-width: tokens.$break-l) {
+      grid-area: bottom;
+    }
   }
 }
