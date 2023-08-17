@@ -155,6 +155,12 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   @media (min-width: $break-site-footer) {
     flex-direction: row-reverse;
   }
+
+  [data-footer-variation='fat'] & {
+    @media (min-width: $break-site-footer) {
+      flex-direction: row;
+    }
+  }
 }
 
 // add social icon svg hover colors based on theme.
@@ -165,7 +171,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   gap: var(--size-spacing-3);
 
   [data-footer-variation='fat'] & {
-    flex: 1 1 33.33%;
+    flex: 1 1 30%;
   }
 }
 
@@ -187,7 +193,6 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
 .site-footer__meta {
   @include typography.body-xs;
 
-  margin-right: auto;
   display: flex;
   flex-flow: column wrap;
   align-items: flex-start;
@@ -196,6 +201,16 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   @media (min-width: $break-site-footer) {
     flex-direction: row;
     align-items: flex-end;
+  }
+
+  [data-footer-variation='fat'] & {
+    @media (min-width: tokens.$break-m) {
+      margin-left: auto;
+    }
+  }
+
+  [data-footer-variation='basic'] & {
+    margin-right: auto;
   }
 }
 
@@ -219,7 +234,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
 .site-footer__content {
   [data-footer-variation='fat'] & {
-    flex: 1 1 33.33%;
+    flex: 1 1 30%;
 
     @media (min-width: tokens.$break-l) {
       grid-area: content;
@@ -229,11 +244,10 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
 .site-footer__columns {
   [data-footer-variation='fat'] & {
-    flex: 1 1 33.33%;
-
-    @media (min-width: tokens.$break-l) {
-      grid-area: columns;
-    }
+    flex: 1 1 30%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-spacing-6);
   }
 }
 
@@ -245,16 +259,30 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 
   [data-footer-variation='fat'] & {
+    display: flex;
+    flex: 1 auto;
+    flex-direction: column;
+    gap: var(--size-spacing-3);
+
     @media (min-width: tokens.$break-l) {
-      grid-area: top;
+      display: grid;
+      grid-template-areas: 'top' 'bottom';
+      grid-template-columns: 1fr 1fr;
     }
+  }
+}
+
+.site-footer__yale-logo {
+  [data-footer-variation='fat'] & {
+    gap: var(--size-spacing-6);
   }
 }
 
 .site-footer__social {
   [data-footer-variation='fat'] & {
     @media (min-width: tokens.$break-l) {
-      grid-area: bottom;
+      flex: 0 auto;
+      align-self: flex-end;
     }
   }
 }

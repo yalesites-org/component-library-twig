@@ -77,7 +77,7 @@
           {# Columns #}
           <div {{ bem('columns', [], site_footer__base_class) }}>
             <div {{ bem('columns-inner', [], site_footer__base_class) }}>
-              {% block site_footer__columns %}
+              {% block site_footer__two_columns %}
                 {% include "@page-layouts/placeholder/yds-placeholder.twig" with {
                   placeholder: 'Column 1',
                   placeholder__type: 'element',
@@ -90,7 +90,7 @@
             </div>
             {# Social #}
             <div {{ bem('social', [], site_footer__base_class) }}>
-              {% block site_footer__social %}
+              {% block site_footer__social_links %}
                 {% include "@molecules/social-links/yds-social-links.twig" %}
               {% endblock %}
             </div>
