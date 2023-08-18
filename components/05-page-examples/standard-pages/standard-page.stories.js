@@ -70,6 +70,7 @@ export default {
 export const Basic = ({
   siteName,
   pageTitle,
+  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
@@ -90,6 +91,7 @@ export const Basic = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_animate_components: allowAnimatedItems,
     site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
@@ -114,6 +116,7 @@ export const Basic = ({
 export const BasicShort = ({
   siteName,
   pageTitle,
+  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
@@ -134,6 +137,7 @@ export const BasicShort = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_animate_components: allowAnimatedItems,
     site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
@@ -158,6 +162,7 @@ export const BasicShort = ({
 export const WithBanner = ({
   siteName,
   pageTitle,
+  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   headerBorderThickness = localStorage.getItem(
     'yds-cl-twig-header-border-thickness',
@@ -190,6 +195,7 @@ export const WithBanner = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_animate_components: allowAnimatedItems,
     site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
@@ -306,6 +312,7 @@ WithBanner.argTypes = {
 export const WithBannerLeftAlign = ({
   siteName,
   pageTitle,
+  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
@@ -342,6 +349,7 @@ export const WithBannerLeftAlign = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_animate_components: allowAnimatedItems,
     site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
@@ -483,6 +491,7 @@ WithBannerLeftAlign.argTypes = {
 export const WithSidebar = ({
   siteName,
   pageTitle,
+  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
@@ -503,6 +512,7 @@ export const WithSidebar = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_animate_components: allowAnimatedItems,
     site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
@@ -527,6 +537,7 @@ export const WithSidebar = ({
 export const WithQuickLinks = ({
   siteName,
   pageTitle,
+  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
@@ -549,6 +560,7 @@ export const WithQuickLinks = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    site_animate_components: allowAnimatedItems,
     site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,

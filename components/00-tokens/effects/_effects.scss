@@ -24,14 +24,17 @@
     // Start visible at 0% to avoid an occasional "flash" when closing.
     0% {
       visibility: visible;
+      z-index: 0;
     }
 
     99% {
       visibility: visible;
+      z-index: 0;
     }
 
     100% {
       visibility: hidden;
+      z-index: -1;
     }
   }
 }
@@ -96,4 +99,50 @@
   }
 
   background-size: 0 var(--thickness);
+}
+
+// Animate upward on hover: cards
+@mixin rise-effect($amount: -0.25em) {
+  @media (prefers-reduced-motion: no-preference) {
+    transform: translateY(0);
+
+    &:hover {
+      transform: translateY($amount);
+      color: var(--color-cta-text);
+      background-color: var(--color-cta-bg);
+    }
+  }
+}
+
+// Animate center outwards: divider
+@mixin expand-out {
+  // only set scale to 0 if animation can run
+  @media (prefers-reduced-motion: no-preference) {
+    transform: scaleX(0);
+
+    &.animate {
+      transform: scaleX(1);
+    }
+  }
+}
+
+// Animate and fade-in upwards: pull quote
+@mixin fade-in-up {
+  // only run animation if animation can run
+  @media (prefers-reduced-motion: no-preference) {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+
+    &.animate {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}
+
+@mixin expand-height($height: 100%) {
+  // only run animation if animation can run
+  @media (prefers-reduced-motion: no-preference) {
+    height: $height;
+  }
 }

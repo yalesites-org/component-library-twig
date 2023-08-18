@@ -31,6 +31,7 @@ export const PostArticle = ({
   siteName,
   pageTitle,
   meta,
+  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
   headerBorderThickness = localStorage.getItem(
@@ -49,6 +50,7 @@ export const PostArticle = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: meta,
+    site_animate_components: allowAnimatedItems,
     site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,

@@ -64,7 +64,7 @@ export const ProfileCardDirectoryListing = ({
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${directoryCardTwig({
-        card_example_type: 'profile',
+        card_collection__source_type: 'profile',
         card_collection__type: collectionType,
         ...imageData.responsive_images['1x1'],
         directory_listing_card__overline: overline,

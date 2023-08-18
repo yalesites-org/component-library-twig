@@ -31,6 +31,15 @@
     align-items: flex-start;
   }
 
+  [data-collection-type='profile-directory'] & {
+    align-items: flex-start;
+  }
+
+  [data-collection-type='condensed'] & {
+    margin-block-start: 0;
+    padding-inline-start: 0;
+  }
+
   [data-collection-type='grid'][data-collection-featured='true'] & {
     @include grid.primary;
   }

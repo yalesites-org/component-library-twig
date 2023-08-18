@@ -29,4 +29,15 @@ $divider-positions: left, center;
   background: var(--color-divider);
   width: var(--width-divider);
   height: var(--thickness-divider);
+
+  // if animation is active
+  [data-site-animation='artistic'] & {
+    &[data-animate-item='true'] {
+      @include tokens.animate(
+        $property: 'transform',
+        $duration: var(--animation-speed-slow)
+      );
+      @include tokens.expand-out;
+    }
+  }
 }
