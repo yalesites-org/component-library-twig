@@ -38,7 +38,7 @@ export const PostCardCollection = ({
   const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
 
   return cardCollectionTwig({
-    card_example_type: 'post',
+    card_collection__source_type: 'post',
     card_collection__type: collectionType,
     card_collection__heading: heading,
     card_collection__featured: featured ? 'true' : 'false',
@@ -70,7 +70,7 @@ export const EventCardCollection = ({
   const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
 
   return cardCollectionTwig({
-    card_example_type: 'event',
+    card_collection__source_type: 'event',
     format: 'Online',
     card_collection__type: collectionType,
     card_collection__heading: heading,
@@ -103,7 +103,7 @@ export const ProfileCardCollection = ({
   const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
 
   return cardCollectionTwig({
-    card_example_type: 'profile',
+    card_collection__source_type: 'profile',
     card_collection__type: collectionType,
     card_collection__heading: heading,
     card_collection__featured: featured ? 'true' : 'false',
@@ -130,7 +130,7 @@ export const DirectoryListingCardCollection = ({ featured, heading }) => {
   const items = featured ? [1, 2, 3, 4] : [1, 2, 3, 4, 5, 6];
 
   return cardCollectionTwig({
-    card_example_type: 'directory-listing',
+    card_collection__source_type: 'directory-listing',
     card_collection__type: 'profile-directory',
     card_collection__heading: 'Directory Listing',
     card_collection__featured: featured ? 'true' : 'false',
