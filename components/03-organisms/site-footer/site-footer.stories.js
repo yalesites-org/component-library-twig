@@ -48,7 +48,7 @@ Footer.argTypes = {
     defaultValue: 'one',
   },
   siteFooterVariation: {
-    options: ['basic', 'fat'],
+    options: ['basic', 'mega'],
     type: 'select',
     defaultValue: 'basic',
   },
