@@ -1,5 +1,5 @@
 {% set reference_card__date__formatted %}
-  {% set date_time__format = card_example_type == 'post' ? 'date' %}
+  {% set date_time__format = card_collection__source_type == 'post' ? 'date' %}
   {% include "@atoms/date-time/yds-date-time.twig" with {
     date_time__start: reference_card__date,
   } %}
@@ -13,7 +13,7 @@
 {% endset %}
 
 {# Post Card #}
-{% if card_example_type == 'post' %}
+{% if card_collection__source_type == 'post' %}
   {% set reference_card__overline = reference_card__date__formatted %}
   {# If post, list, and not freatured, hide snippet. #}
   {% if card_collection__type == 'list' and card_collection__featured == 'false' %}
@@ -27,7 +27,7 @@
   {% endif %}
 
 {# Profile Card #}
-{% elseif card_example_type == 'profile' %}
+{% elseif card_collection__source_type == 'profile' %}
   {# If post, list, and not freatured, hide snippet. #}
   {% if card_collection__type == 'list' and card_collection__featured == 'false' %}
     {% set reference_card__subheading = null %}
@@ -40,7 +40,7 @@
   {% endif %}
 
 {# Event Card #}
-{% elseif card_example_type == 'event' %}
+{% elseif card_collection__source_type == 'event' %}
   {# If a format is provided, put it in the overline #}
   {% if format %}
     {% set reference_card__overline %}
@@ -71,7 +71,7 @@
   {% endif %}
 {% endif %}
 
-{% if card_example_type == 'directory-listing' %}
+{% if card_collection__source_type == 'directory-listing' %}
   {% include "@molecules/cards/directory-listing-card/yds-directory-listing-card.twig" %}
 {% else %}
   {% include "@molecules/cards/reference-card/yds-reference-card.twig" %}
