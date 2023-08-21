@@ -21,9 +21,9 @@
   class: bem(card_collection__base_class, card_collection__modifiers),
 } %}
 
-{% if card_example_type %}
+{% if card_collection__source_type %}
   {% set card_collection__attributes = card_collection__attributes|merge({
-    'data-collection-source': card_example_type,
+    'data-collection-source': card_collection__source_type,
   }) %}
 {% endif %}
 

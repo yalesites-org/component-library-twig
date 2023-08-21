@@ -56,7 +56,7 @@ export const PostCard = ({
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${referenceCardTwig({
-        card_example_type: 'post',
+        card_collection__source_type: 'post',
         card_collection__type: collectionType,
         ...imageData.responsive_images['3x2'],
         reference_card__date: date,
@@ -90,7 +90,7 @@ export const EventCard = ({
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${referenceCardTwig({
-        card_example_type: 'event',
+        card_collection__source_type: 'event',
         card_collection__type: collectionType,
         ...imageData.responsive_images['3x2'],
         format,
@@ -118,7 +118,7 @@ export const ProfileCard = ({ collectionType, featured }) => `
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${referenceCardTwig({
-        card_example_type: 'profile',
+        card_collection__source_type: 'profile',
         card_collection__type: collectionType,
         ...imageData.responsive_images['1x1'],
         reference_card__heading:
