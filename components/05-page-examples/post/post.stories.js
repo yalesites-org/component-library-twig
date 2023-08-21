@@ -41,6 +41,9 @@ export const PostArticle = ({
   siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
+  siteFooterVariation = localStorage.getItem(
+    'yds-cl-twig-site-footer-variation',
+  ),
   siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
@@ -55,6 +58,7 @@ export const PostArticle = ({
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
+    site_footer__variation: siteFooterVariation,
     site_footer__border_thickness: footerBorderThickness,
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
