@@ -3,12 +3,15 @@
 
 .link-group__inner {
   border-left: var(--thickness-divider) solid var(--color-gray-700);
-  display: grid;
-  grid-template:
-    'header' minmax(3rem, auto)
-    'links'
-    / 1fr;
-  width: 100%;
+
+  @media (min-width: tokens.$break-l) {
+    width: 100%;
+    display: grid;
+    grid-template:
+      'header' minmax(3rem, auto)
+      'links'
+      / 1fr;
+  }
 
   // if used in the footer, set border color to site-footer theme color
   .site-footer & {
