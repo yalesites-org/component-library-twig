@@ -1,0 +1,24 @@
+{% set link_group__base_class = 'link-group' %}
+
+{% set link_group__attributes = {
+  'class': bem(link_group__base_class),
+} %}
+
+<div {{ add_attributes(link_group__attributes) }}>
+  <div {{ bem('inner', [], link_group__base_class) }}>
+    <div {{ bem('text', [], link_group__base_class) }}>
+      {% include "@atoms/typography/headings/yds-heading.twig"  with {
+        heading__level: '2',
+        heading__blockname: link_group__base_class,
+        heading: link_group__heading,
+      } %}
+    </div>
+    <ul {{ bem('links', [], link_group__base_class) }}>
+      {% block link_group__links %}
+        {% for link in link_group__links %}
+          {% include "@molecules/link-group/_yds-link-group--links.twig" %}
+        {% endfor %}
+      {% endblock %}
+    </ul>
+  </div>
+</div>

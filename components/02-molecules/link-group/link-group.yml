@@ -1,0 +1,11 @@
+link_group__heading: 'Heading for Link Group'
+link_group__links:
+  - link_group__link__url: '#'
+    link_group__link__content: 'This is a link'
+  - link_group__link__url: '#'
+    link_group__link__content: 'This is another link'
+  - link_group__link__url: '#'
+    link_group__link__content: 'This is a very long link that will wrap lines'
+  - link_group__link__url: '#'
+    link_group__link__content: 'Link #4'
+

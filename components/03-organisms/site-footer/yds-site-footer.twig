@@ -78,14 +78,21 @@
           <div {{ bem('columns', [], site_footer__base_class) }}>
             <div {{ bem('columns-inner', [], site_footer__base_class) }}>
               {% block site_footer__two_columns %}
-                {% include "@page-layouts/placeholder/yds-placeholder.twig" with {
+                {# {% include "@page-layouts/placeholder/yds-placeholder.twig" with {
                   placeholder: 'Column 1',
                   placeholder__type: 'element',
                 } %}
                 {% include "@page-layouts/placeholder/yds-placeholder.twig" with {
                   placeholder: 'Column 2',
                   placeholder__type: 'element',
-                } %}
+                } %} #}
+                  {% include "@molecules/link-group/yds-link-group.twig" with {
+                    link_group__heading: 'Links Column One',
+                    link_group__links: [{link_group__link__url: '#', link_group__link__content: 'Link one'}, {link_group__link__url: '#', link_group__link__content: 'Link two'}, {link_group__link__url: '#', link_group__link__content: 'Link three'}, {link_group__link__url: '#', link_group__link__content: 'Link four'}]
+                  } %}
+               {% include "@molecules/link-group/yds-link-group.twig" with {
+                    link_group__links: [{link_group__link__url: '#', link_group__link__content: 'Link one in column two'}, {link_group__link__url: '#', link_group__link__content: 'Link two  in column two'}, {link_group__link__url: '#', link_group__link__content: 'Link three  in column two'}, {link_group__link__url: '#', link_group__link__content: 'Link four in column two with a very, very, very long title'}]
+                  } %}
               {% endblock %}
             </div>
             {# Social #}

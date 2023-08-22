@@ -1,0 +1,10 @@
+{% set link_group__base_class = 'link-group' %}
+
+<li {{ bem('list-item', [], link_group__base_class) }}>
+  {% include "@atoms/controls/cta/yds-cta.twig" with {
+    cta__content: link_group__link__content|default(link.link_group__link__content),
+    cta__href: link_group__link__url|default(link.link_group__link__url),
+    cta__blockname: link_group__base_class,
+    cta__style: 'outline'
+  } %}
+</li>

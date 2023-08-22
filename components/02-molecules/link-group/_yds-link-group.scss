@@ -1,0 +1,40 @@
+@use '../../00-tokens/tokens';
+@use '../../01-atoms/atoms';
+
+.link-group__inner {
+  border-left: var(--thickness-divider) solid var(--color-gray-700);
+  display: grid;
+  grid-template:
+    'header' minmax(3rem, auto)
+    'links'
+    / 1fr;
+  width: 100%;
+
+  // if used in the footer, set border color to site-footer theme color
+  .site-footer & {
+    border-color: var(--color-site-footer-border-color);
+  }
+}
+
+.link-group__text {
+  grid-area: header;
+}
+
+.link-group__heading {
+  @include tokens.h6-mallory-compact-medium;
+
+  padding: 0 var(--size-spacing-6) var(--size-spacing-3);
+}
+
+.link-group__links {
+  @include atoms.list-reset;
+
+  grid-area: links;
+}
+
+.link-group__cta {
+  @include atoms.cta;
+
+  display: block;
+  text-align: left;
+}

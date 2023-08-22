@@ -137,7 +137,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     flex-direction: row;
   }
 
-  [data-footer-variation='fat'] & {
+  [data-footer-variation='mega'] & {
     @media (min-width: tokens.$break-l) {
       display: grid;
       grid-template-areas: 'logos content columns';
@@ -156,7 +156,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     flex-direction: row-reverse;
   }
 
-  [data-footer-variation='fat'] & {
+  [data-footer-variation='mega'] & {
     @media (min-width: $break-site-footer) {
       flex-direction: row;
     }
@@ -170,7 +170,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   flex-direction: column;
   gap: var(--size-spacing-3);
 
-  [data-footer-variation='fat'] & {
+  [data-footer-variation='mega'] & {
     flex: 1 1 30%;
   }
 }
@@ -203,7 +203,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     align-items: flex-end;
   }
 
-  [data-footer-variation='fat'] & {
+  [data-footer-variation='mega'] & {
     @media (min-width: tokens.$break-m) {
       margin-left: auto;
     }
@@ -220,20 +220,21 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 }
 
-// Fat footer styles only
+// mega footer styles only
 .site-footer__logo-group {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--size-spacing-3);
 
+  // make each logo block within this group 50% max-width
   > * {
     flex: 1 0 calc(50% - var(--size-spacing-3));
   }
 }
 
 .site-footer__content {
-  [data-footer-variation='fat'] & {
+  [data-footer-variation='mega'] & {
     flex: 1 1 30%;
 
     @media (min-width: tokens.$break-l) {
@@ -243,7 +244,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
 }
 
 .site-footer__columns {
-  [data-footer-variation='fat'] & {
+  [data-footer-variation='mega'] & {
     flex: 1 1 30%;
     display: flex;
     flex-direction: column;
@@ -258,7 +259,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     grid-template-columns: 1fr 1fr;
   }
 
-  [data-footer-variation='fat'] & {
+  [data-footer-variation='mega'] & {
     display: flex;
     flex: 1 auto;
     flex-direction: column;
@@ -273,13 +274,13 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
 }
 
 .site-footer__yale-logo {
-  [data-footer-variation='fat'] & {
+  [data-footer-variation='mega'] & {
     gap: var(--size-spacing-6);
   }
 }
 
 .site-footer__social {
-  [data-footer-variation='fat'] & {
+  [data-footer-variation='mega'] & {
     @media (min-width: tokens.$break-l) {
       flex: 0 auto;
       align-self: flex-end;
