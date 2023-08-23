@@ -10,6 +10,24 @@
   {% set link_column_modifiers = link_column_modifiers|merge(['two-headings']) %}
 {% endif %}
 
+{# Set variable for all the links  #}
+{% set link_group_columns %}
+  {% if link_group__links_one %}
+    <ul {{ bem('links-column', ['one'], link_group__base_class) }}>
+      {% for link in link_group__links_one %}
+        {% include "@molecules/link-group/_yds-link-group--links.twig" %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% if link_group__links_two %}
+    <ul {{ bem('links-column', ['two'], link_group__base_class) }}>
+      {% for link in link_group__links_two %}
+        {% include "@molecules/link-group/_yds-link-group--links.twig" %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endset %}
+
 <div {{ add_attributes(link_group__attributes) }}>
   <div {{ bem('inner', [], link_group__base_class) }}>
     {% if link_group__heading_one %}
@@ -28,23 +46,8 @@
         heading__modifiers: link_column_modifiers|merge(['two']),
       } %}
     {% endif %}
-    {% if link_group__links_one %}
-      <ul {{ bem('links-column', ['one'], link_group__base_class) }}>
-        {% block link_group__links_one %}
-          {% for link in link_group__links_one %}
-            {% include "@molecules/link-group/_yds-link-group--links.twig" %}
-          {% endfor %}
-        {% endblock %}
-      </ul>
-    {% endif %}
-    {% if link_group__links_two %}
-      <ul {{ bem('links-column', ['two'], link_group__base_class) }}>
-        {% block link_group__links_two %}
-          {% for link in link_group__links_two %}
-            {% include "@molecules/link-group/_yds-link-group--links.twig" %}
-          {% endfor %}
-        {% endblock %}
-      </ul>
-    {% endif %}
+    {% block link_group__links %}
+      {{link_group_columns}}
+    {% endblock %}
   </div>
 </div>
