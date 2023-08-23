@@ -2,20 +2,25 @@
 @use '../../01-atoms/atoms';
 
 .link-group__inner {
-  border-left: var(--thickness-divider) solid var(--color-gray-700);
+  --color-link-group-border: var(--color-gray-700);
 
-  @media (min-width: tokens.$break-l) {
-    width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+
+  @media (max-width: tokens.$break-m) {
     display: grid;
     grid-template:
-      'header' minmax(3rem, auto)
-      'links'
+      'header-one'
+      'links-one'
+      'header-two'
+      'links-two'
       / 1fr;
   }
 
   // if used in the footer, set border color to site-footer theme color
   .site-footer & {
-    border-color: var(--color-site-footer-border-color);
+    --color-link-group-border: var(--color-site-footer-border-color);
   }
 }
 
@@ -26,13 +31,42 @@
 .link-group__heading {
   @include tokens.h6-mallory-compact-medium;
 
+  border-left: var(--thickness-divider) solid var(--color-link-group-border);
   padding: 0 var(--size-spacing-6) var(--size-spacing-3);
+
+  &--one {
+    grid-area: header-one;
+    flex: 1 0 100%;
+  }
+
+  &--two {
+    grid-area: header-two;
+  }
+
+  // if two heading set basis to 50%;
+  &--two-headings {
+    flex: 1 0 50%;
+  }
 }
 
-.link-group__links {
+.link-group__links-column {
   @include atoms.list-reset;
 
-  grid-area: links;
+  width: 100%;
+  border-left: var(--thickness-divider) solid var(--color-link-group-border);
+  margin-bottom: var(--size-spacing-7);
+
+  &--one {
+    grid-area: links-one;
+  }
+
+  &--two {
+    grid-area: links-two;
+  }
+
+  @media (min-width: tokens.$break-m) {
+    flex: 0 0 50%;
+  }
 }
 
 .link-group__cta {
@@ -40,4 +74,5 @@
 
   display: block;
   text-align: left;
+  line-height: 1.2;
 }
