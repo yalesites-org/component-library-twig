@@ -1,6 +1,12 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
 
+.link-group {
+  .site-footer__columns-inner & {
+    grid-area: top;
+  }
+}
+
 .link-group__inner {
   --color-link-group-border: var(--color-gray-700);
 
