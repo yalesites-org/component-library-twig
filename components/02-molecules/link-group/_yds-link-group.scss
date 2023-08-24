@@ -42,6 +42,8 @@
 
   &--one {
     grid-area: header-one;
+
+    // Needed if only one heading is present. Pushes down the second column.
     flex: 1 0 100%;
   }
 
@@ -49,7 +51,7 @@
     grid-area: header-two;
   }
 
-  // if two heading set basis to 50%;
+  // If two headings, set basis to 50%;
   &--two-headings {
     flex: 1 0 50%;
   }
