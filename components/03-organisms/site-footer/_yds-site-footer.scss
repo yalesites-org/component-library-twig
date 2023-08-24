@@ -256,10 +256,18 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
 // WYSIWYG
 .site-footer__content {
   [data-footer-variation='mega'] & {
+    @include typography.body-s-condensed;
+
     flex: 1 1 30%;
+
+    > p {
+      margin-top: 0;
+    }
 
     @media (min-width: tokens.$break-l) {
       grid-area: content;
+      padding-inline-start: var(--size-spacing-8);
+      padding-inline-end: var(--size-spacing-8);
     }
   }
 }
