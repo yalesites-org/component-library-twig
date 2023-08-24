@@ -29,25 +29,20 @@
         {# Branding  - mega #}
         <div {{ bem('branding', [], site_footer__base_class) }}>
           <div {{ bem('logo-group', [], site_footer__base_class) }}>
-            {% block site_footer__logo %}
+            {% block site_footer__logos %}
               {% include "@page-layouts/placeholder/yds-placeholder.twig" with {
                 placeholder: 'logo',
                 placeholder__type: 'element',
               } %}
-            {% endblock %}
-            {% block site_footer__logo_2 %}
               {% include "@page-layouts/placeholder/yds-placeholder.twig" with {
                 placeholder: 'logo',
                 placeholder__type: 'element',
               } %}
-            {% endblock %}
-            {% block site_footer__logo_3 %}
+      
               {% include "@page-layouts/placeholder/yds-placeholder.twig" with {
                 placeholder: 'logo',
                 placeholder__type: 'element',
               } %}
-            {% endblock %}
-            {% block site_footer__logo_4 %}
               {% include "@page-layouts/placeholder/yds-placeholder.twig" with {
                 placeholder: 'logo',
                 placeholder__type: 'element',
