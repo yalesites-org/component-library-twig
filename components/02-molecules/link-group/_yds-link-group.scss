@@ -39,6 +39,7 @@
 
   border-left: var(--thickness-divider) solid var(--color-link-group-border);
   padding: 0 var(--size-spacing-6) var(--size-spacing-3);
+  color: var(--color-site-footer-text-color);
 
   &--one {
     grid-area: header-one;

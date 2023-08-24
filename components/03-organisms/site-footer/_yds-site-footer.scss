@@ -157,6 +157,10 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 
   [data-footer-variation='mega'] & {
+    border-top: var(--thickness-divider) solid
+      var(--color-site-footer-border-color);
+    padding-top: var(--size-spacing-6);
+
     @media (min-width: $break-site-footer) {
       flex-direction: row;
     }
