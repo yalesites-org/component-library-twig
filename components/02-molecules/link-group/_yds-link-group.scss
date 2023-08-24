@@ -1,9 +1,14 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
 
+$break-link-group: tokens.$break-m;
+$break-link-group-max: $break-link-group - 0.05;
+
 .link-group {
   .site-footer__columns-inner & {
-    grid-area: top;
+    @media (max-width: $break-link-group-max) {
+      grid-area: top;
+    }
   }
 }
 
@@ -14,7 +19,7 @@
   flex-wrap: wrap;
   width: 100%;
 
-  @media (max-width: tokens.$break-m) {
+  @media (max-width: $break-link-group-max) {
     display: grid;
     grid-template:
       'header-one'
@@ -42,14 +47,18 @@
   color: var(--color-site-footer-text-color);
 
   &--one {
-    grid-area: header-one;
+    @media (max-width: $break-link-group-max) {
+      grid-area: header-one;
+    }
 
     // Needed if only one heading is present. Pushes down the second column.
     flex: 1 0 100%;
   }
 
   &--two {
-    grid-area: header-two;
+    @media (max-width: $break-link-group-max) {
+      grid-area: header-two;
+    }
   }
 
   // If two headings, set basis to 50%;
@@ -66,14 +75,18 @@
   margin-bottom: var(--size-spacing-7);
 
   &--one {
-    grid-area: links-one;
+    @media (max-width: $break-link-group-max) {
+      grid-area: links-one;
+    }
   }
 
   &--two {
-    grid-area: links-two;
+    @media (max-width: $break-link-group-max) {
+      grid-area: links-two;
+    }
   }
 
-  @media (min-width: tokens.$break-m) {
+  @media (min-width: $break-link-group) {
     flex: 0 0 50%;
   }
 }
