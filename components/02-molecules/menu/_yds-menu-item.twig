@@ -22,6 +22,29 @@
 {# Cta Modifiers #}
 {% set cta__modifiers = ['level-' ~ menu__level] %}
 
+{# Headings for main menu.
+ # @see web/profiles/custom/yalesites_profile/modules/custom/ys_core/ys_core.module
+#}
+{% if menu__level == 1 and item|first and item.is_heading %}
+
+  {# Heading on left. #}
+  {% set list__heading %}
+    {% include "@atoms/typography/headings/yds-heading.twig" with {
+      heading__level: list__item__heading__level|default('4'),
+      heading__blockname: list__item__base_class,
+      heading: item.title,
+    } %}
+  {% endset %}
+
+  {# CTA on right #}
+  {% set item = item|merge({'title': item.heading_cta }) %}
+
+  {# li modifier#}
+  {% set item__modifiers = item__modifiers|merge(['explore-bar']) %}
+
+{% endif %}
+{# end headings for main menu #}
+
 {# Set link component as default #}
 {% set list__item %}
     {# Set aria-current if the link is the current page #}
@@ -54,6 +77,9 @@
     {# This import needs to be inside the block for it to work in Drupal #}
     {% import "@molecules/menu/yds-menu.twig" as menus %}
     {% set levels = menu__variation == 'mega' ? 2 : 1 %}
+
+    {{ list__heading }}
+
     {{- list__item -}}
     {% if item.below and menu__level < levels %}
       {% if menu__level == 0 and menu__level__toggle %}
