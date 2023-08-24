@@ -141,7 +141,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     @media (min-width: tokens.$break-l) {
       display: grid;
       grid-template-areas: 'logos content columns';
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 23.5rem 1fr 1fr;
     }
   }
 }
