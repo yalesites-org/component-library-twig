@@ -231,17 +231,25 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   // make each logo block within this group 50% max-width
   > * {
-    flex: 1 0 calc(50% - var(--size-spacing-3));
+    flex: 0 0 calc(50% - var(--size-spacing-3));
 
     @media (min-width: $break-site-footer) {
-      flex: 1 0 calc(25% - var(--size-spacing-3));
+      flex: 0 0 calc(25% - var(--size-spacing-3));
     }
     @media (min-width: tokens.$break-l) {
-      flex: 1 0 calc(50% - var(--size-spacing-3));
+      flex: 0 0 calc(50% - var(--size-spacing-3));
     }
   }
 }
 
+// Yale school logo
+.site-footer__yale-logo {
+  [data-footer-variation='mega'] & {
+    gap: var(--size-spacing-6);
+  }
+}
+
+// WYSIWYG
 .site-footer__content {
   [data-footer-variation='mega'] & {
     flex: 1 1 30%;
@@ -252,6 +260,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 }
 
+// Link Columns
 .site-footer__columns {
   [data-footer-variation='mega'] & {
     flex: 1 1 30%;
@@ -284,12 +293,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 }
 
-.site-footer__yale-logo {
-  [data-footer-variation='mega'] & {
-    gap: var(--size-spacing-6);
-  }
-}
-
+// Social
 .site-footer__social {
   [data-footer-variation='mega'] & {
     @media (min-width: tokens.$break-l) {
