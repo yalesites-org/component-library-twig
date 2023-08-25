@@ -258,10 +258,6 @@ $menu-sub-max-width: 19rem;
   }
 
   &--explore-bar {
-    [data-menu-variation='basic'] & {
-      visibility: hidden;
-    }
-
     [data-menu-variation='mega'] & {
       display: flex;
       column-span: all;
@@ -352,11 +348,12 @@ $menu-sub-max-width: 19rem;
       calc(var(--size-spacing-2) + var(--size-spacing-1));
   }
 
-  &--explore-bar {
+  &--with-icon {
     [data-menu-variation='mega'] & {
       @include tokens.body-default;
 
       margin-bottom: 0;
+      color: inherit;
     }
   }
 }
