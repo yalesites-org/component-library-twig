@@ -256,6 +256,32 @@ $menu-sub-max-width: 19rem;
   &--level-2 {
     margin-bottom: var(--size-spacing-5);
   }
+
+  &--explore-bar {
+    [data-menu-variation='basic'] & {
+      visibility: hidden;
+    }
+
+    [data-menu-variation='mega'] & {
+      display: flex;
+      column-span: all;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+      margin-bottom: var(--size-spacing-6);
+      padding-bottom: var(--size-spacing-2);
+      border-bottom: var(--border-thickness-1) solid
+        var(--color-navigation-border);
+    }
+  }
+}
+
+.primary-nav__heading {
+  [data-menu-variation='mega'] & {
+    padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2)
+      calc(var(--size-spacing-2) + var(--size-spacing-1));
+    color: var(--color-gray-700);
+  }
 }
 
 .primary-nav__link {
@@ -325,6 +351,14 @@ $menu-sub-max-width: 19rem;
     padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2)
       calc(var(--size-spacing-2) + var(--size-spacing-1));
   }
+
+  &--explore-bar {
+    [data-menu-variation='mega'] & {
+      @include tokens.body-default;
+
+      margin-bottom: 0;
+    }
+  }
 }
 
 // Active trail styles.
@@ -332,7 +366,7 @@ $menu-sub-max-width: 19rem;
   color: var(--menu-link-color);
 }
 
-.primary-nav__link:not(.primary-nav__link--level-0).primary-nav__link--active {
+.primary-nav__link:not(.primary-nav__link--level-0):not(.primary-nav__link--explore-bar).primary-nav__link--active {
   position: relative;
   border-left: var(--border-thickness-4) solid var(--color-navigation-border);
 
