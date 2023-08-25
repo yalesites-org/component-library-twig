@@ -25,7 +25,12 @@
 {# Headings for main menu.
  # @see web/profiles/custom/yalesites_profile/modules/custom/ys_core/ys_core.module
 #}
-{% if menu__level == 1 and item|first and item.is_heading %}
+{%
+  if menu__level == 1
+  and item|first
+  and item.is_heading
+  and menu__variation == 'mega'
+%}
 
   {# Heading on left. #}
   {% set list__heading %}
