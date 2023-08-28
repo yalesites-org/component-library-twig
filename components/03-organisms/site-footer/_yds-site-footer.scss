@@ -228,21 +228,16 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
 // mega footer styles only
 */
 .site-footer__logo-group {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: grid;
   gap: var(--size-spacing-3);
+  grid-template-columns: 1fr 1fr;
 
-  // make each logo block within this group 50% max-width
-  > * {
-    flex: 0 0 calc(50% - var(--size-spacing-3));
+  @media (min-width: $break-site-footer) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
 
-    @media (min-width: $break-site-footer) {
-      flex: 0 0 calc(25% - var(--size-spacing-3));
-    }
-    @media (min-width: tokens.$break-l) {
-      flex: 0 0 calc(50% - var(--size-spacing-3));
-    }
+  @media (min-width: tokens.$break-l) {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
