@@ -91,7 +91,7 @@ $break-link-group-max: $break-link-group - 0.05;
   }
 }
 
-.link-group__cta {
+.link-group__link {
   @include atoms.cta;
 
   display: block;
