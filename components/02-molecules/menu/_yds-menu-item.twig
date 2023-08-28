@@ -57,13 +57,14 @@
       'aria-current': 'page',
     }) %}
   {% endif %}
+
   {% if directory and not menu__contextual %}
     {% set link__url = item.url.toString %}
   {% else %}
     {% set link__url = item.url %}
   {% endif %}
 
-  {% if item.is_heading %}
+  {% if item.is_heading and menu__variation == 'mega' %}
     {% set link__type = 'with-chevron' %}
   {% endif %}
 
@@ -82,6 +83,7 @@
   list__item__blockname: item__blockname,
   list__item__attributes: item__attributes,
 } %}
+
   {% block list__item__content %}
     {# This import needs to be inside the block for it to work in Drupal #}
     {% import "@molecules/menu/yds-menu.twig" as menus %}
