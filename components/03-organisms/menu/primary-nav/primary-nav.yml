@@ -53,6 +53,10 @@ items:
   - title: 'Admission & Aid'
     url: '#'
     below:
+      - title: 'Admission & Aid'
+        list__item__is_heading: true
+        heading_cta: 'Explore More'
+        url: '#'
       - title: 'Strategic Plan'
         url: '#'
         below:

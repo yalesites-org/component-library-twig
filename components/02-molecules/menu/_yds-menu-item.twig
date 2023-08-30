@@ -29,22 +29,16 @@
 {%
   if menu__level == 1
   and item|first
+  and item.list__item__is_heading
   and menu__variation == 'mega'
 %}
-
-  {# Heading on left. #}
-  {% set list__heading %}
-    {% include "@atoms/typography/headings/yds-heading.twig" with {
-      heading__level: item__heading__level|default('4'),
-      heading__blockname: item__blockname,
-      heading: item.title,
-    } %}
-  {% endset %}
+  {# Heading on left #}
+  {% set list__item__content__heading = item.title %}
 
   {# CTA on right #}
   {% set item = item|merge({'title': item.heading_cta }) %}
 
-  {# li modifier#}
+  {# li modifier #}
   {% set item__modifiers = item__modifiers|merge(['explore-bar', 'with-icon']) %}
 {% endif %}
 {# end headings for main menu #}
@@ -64,7 +58,7 @@
     {% set link__url = item.url %}
   {% endif %}
 
-  {% if item.is_heading and menu__variation == 'mega' %}
+  {% if item.list__item__is_heading and menu__variation == 'mega' %}
     {% set link__type = 'with-chevron' %}
   {% endif %}
 
@@ -89,7 +83,7 @@
     {% import "@molecules/menu/yds-menu.twig" as menus %}
     {% set levels = menu__variation == 'mega' ? 2 : 1 %}
 
-    {{ list__heading }}
+    {{ list__item__content__heading }}
 
     {{- list__item -}}
     {% if item.below and menu__level < levels %}
