@@ -259,21 +259,15 @@ $menu-sub-max-width: 19rem;
 
   &--explore-bar {
     [data-menu-variation='mega'] & {
-      display: flex;
-      flex-direction: column;
-      column-span: all;
-      justify-content: flex-start;
-      position: relative;
-      z-index: 1;
-      margin-bottom: var(--size-spacing-3);
-      padding-bottom: var(--size-spacing-2);
-      border-bottom: var(--border-thickness-1) solid
-        var(--color-navigation-border);
-
-      @media (min-width: tokens.$break-s) {
+      @media (min-width: tokens.$break-mobile) {
+        display: flex;
+        column-span: all;
         justify-content: space-between;
         align-items: center;
-        flex-direction: row;
+        position: relative;
+        padding-bottom: var(--size-spacing-2);
+        border-bottom: var(--border-thickness-1) solid
+          var(--color-navigation-border);
         margin-bottom: var(--size-spacing-6);
       }
     }
@@ -282,12 +276,18 @@ $menu-sub-max-width: 19rem;
 
 .primary-nav__heading {
   [data-menu-variation='mega'] & {
-    @include tokens.h4-mallory-compact-medium;
+    // hide heading on mobile
+    display: none;
 
-    padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2)
-      calc(var(--size-spacing-2) + var(--size-spacing-1));
-    flex: 1 auto;
-    color: var(--color-heading);
+    @media (min-width: tokens.$break-mobile) {
+      @include tokens.h5-mallory-compact-medium;
+
+      display: block;
+      padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2)
+        calc(var(--size-spacing-2) + var(--size-spacing-1));
+      flex: 1 auto;
+      color: var(--color-heading);
+    }
   }
 }
 
@@ -359,18 +359,26 @@ $menu-sub-max-width: 19rem;
       calc(var(--size-spacing-2) + var(--size-spacing-1));
   }
 
+  // this is used for the explore bar link
   &--with-icon {
     [data-menu-variation='mega'] & {
-      @include tokens.h5-mallory-compact-medium;
-
-      flex: 0 1 auto;
-      margin-bottom: 0;
+      font: var(--font-style-nav-primary-1);
+      color: var(--color-heading);
+      margin-bottom: var(--size-spacing-3);
       padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2)
         calc(var(--size-spacing-2) + var(--size-spacing-1));
-      color: inherit;
+      z-index: 1;
 
       &:hover {
         color: var(--menu-link-color);
+      }
+
+      @media (min-width: tokens.$break-mobile) {
+        @include tokens.h6-mallory-compact-medium;
+
+        flex: 0 1 auto;
+        margin-bottom: 0;
+        color: inherit;
       }
     }
   }
