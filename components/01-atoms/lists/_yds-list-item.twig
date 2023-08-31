@@ -18,10 +18,10 @@
 
   {# li modifier#}
   {% set list__item__content__heading %}
-    {% include "@atoms/typography/headings/yds-heading.twig" with {
-      heading__level: list__item__heading__level|default('2'),
-      heading__blockname: list__item__blockname,
-      heading: list__item__content__heading,
+    {% include "@atoms/typography/text/yds-text.twig" with {
+      text__blockname: list__item__blockname,
+      text__content: list__item__content__heading,
+      text__base_class: 'heading',
     } %}
   {% endset %}
 {% endif %}
