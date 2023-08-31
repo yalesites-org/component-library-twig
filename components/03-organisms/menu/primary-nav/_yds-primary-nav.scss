@@ -352,7 +352,7 @@ $menu-sub-max-width: 19rem;
 
   &--with-icon {
     [data-menu-variation='mega'] & {
-      @include tokens.body-default;
+      @include tokens.h5-mallory-compact-medium;
 
       margin-bottom: 0;
       color: inherit;
