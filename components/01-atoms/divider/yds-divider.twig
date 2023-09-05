@@ -21,7 +21,7 @@
   class: bem('inner', [], divider__base_class),
 } %}
 
-{% if animate__item == true %}
+{% if animate__item == 'enabled' %}
 	{% set divider__attributes = divider__attributes|merge({
     'data-animate-item': animate__item,
   }) %}

@@ -30,7 +30,7 @@
     } %}
 
 	{% include "@molecules/pull-quote/yds-pull-quote.twig" with {
-      animate__item: [true],
+      animate__item: 'enabled',
       pull_quote__width: 'site',
       pull_quote__alignment: 'left',
       pull_quote__quote: 'Our platform will transform our ability to study metabolic filaments and, coupled with biochemical and biophysical tools, manipulate enzyme structures and metabolic activity in cells.',
@@ -46,7 +46,7 @@
 	{% endembed %}
 
 	{% include "@molecules/pull-quote/yds-pull-quote.twig" with {
-      animate__item: [true],
+      animate__item: 'enabled',
       pull_quote__width: 'site',
       pull_quote__alignment: 'left',
       pull_quote__style: 'bar-right',
@@ -68,7 +68,7 @@
     }%}
 
 	{% include "@atoms/divider/yds-divider.twig" with {
-      animate__item: [true],
+      animate__item: 'enabled',
   }%}
 
 	{% include "@organisms/custom-card-collection/yds-custom-card-collection.twig" with {
@@ -83,11 +83,12 @@
     }%}
 
 	{% include "@atoms/divider/yds-divider.twig" with {
-      animate__item: [true],
+      animate__item: 'enabled',
   }%}
 
 	{% include "@organisms/card-collection/yds-card-collection.twig" with {
       card_collection__source_type: 'post',
+      animate__item: 'enabled',
       card_collection__cards:[
         {
           reference_card__date: '2022-03-30 13:00',

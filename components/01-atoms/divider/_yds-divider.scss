@@ -32,7 +32,7 @@ $divider-positions: left, center;
 
   // if animation is active
   [data-site-animation='artistic'] & {
-    &[data-animate-item='true'] {
+    &[data-animate-item='enabled'] {
       @include tokens.animate(
         $property: 'transform',
         $duration: var(--animation-speed-slow)
