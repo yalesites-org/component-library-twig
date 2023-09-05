@@ -13,11 +13,9 @@
 {# If pull_quote__attributes is not defined, set it to an empty object by default #}
 {% set pull_quote__attributes = pull_quote__attributes|default({}) %}
 
-{% if animate__item == 'enabled' %}
-	{% set pull_quote__attributes = pull_quote__attributes|merge({
-    'data-animate-item': animate__item,
-  }) %}
-{% endif %}
+{% set pull_quote__attributes = pull_quote__attributes|merge({
+	'data-animate-item': animate__item|default('enabled'),
+}) %}
 
 
 {% set pull_quote__attributes = pull_quote__attributes|merge({
