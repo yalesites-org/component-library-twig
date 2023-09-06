@@ -77,4 +77,9 @@ export const PostArticle = ({
     ...referenceCardData,
   });
 
-export const postGridCustom = () => postGridTwig();
+export const postGridCustom = ({
+  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
+}) =>
+  postGridTwig({
+    site_animate_components: allowAnimatedItems,
+  });
