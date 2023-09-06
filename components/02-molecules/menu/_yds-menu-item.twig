@@ -22,26 +22,52 @@
 {# Cta Modifiers #}
 {% set cta__modifiers = ['level-' ~ menu__level] %}
 
+{# Headings for main menu.
+ # @see web/profiles/custom/yalesites_profile/modules/custom/ys_core/ys_core.module
+#}
+{%
+  if menu__level == 1
+  and [item]|first
+  and item.list__item__is_heading
+  and menu__variation == 'mega'
+%}
+  {# Heading on left #}
+  {% set list__item__content__heading = item.title %}
+
+  {# CTA on right #}
+  {% set item = item|merge({'title': item.heading_cta }) %}
+
+  {# li modifier #}
+  {% set item__modifiers = item__modifiers|merge(['explore-bar', 'with-icon']) %}
+{% endif %}
+{# end headings for main menu #}
+
 {# Set link component as default #}
 {% set list__item %}
-    {# Set aria-current if the link is the current page #}
-    {% if item.is_active %}
-      {% set link__attributes = link__attributes|merge({
-        'aria-current': 'page',
-      }) %}
-    {% endif %}
-    {% if directory and not menu__contextual %}
-      {% set link__url = item.url.toString %}
-    {% else %}
-      {% set link__url = item.url %}
-    {% endif %}
-    {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-      link__content: item.title,
-      link__base_class: 'link',
-      link__blockname: menu__base_class,
-      link__modifiers: item__modifiers,
-      link__attributes: link__attributes,
-    } %}
+  {# Set aria-current if the link is the current page #}
+  {% if item.is_active %}
+    {% set link__attributes = link__attributes|merge({
+      'aria-current': 'page',
+    }) %}
+  {% endif %}
+
+  {% if directory and not menu__contextual %}
+    {% set link__url = item.url.toString %}
+  {% else %}
+    {% set link__url = item.url %}
+  {% endif %}
+
+  {% if item.list__item__is_heading and menu__variation == 'mega' %}
+    {% set link__type = 'with-chevron' %}
+  {% endif %}
+
+  {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+    link__content: item.title,
+    link__base_class: 'link',
+    link__blockname: menu__base_class,
+    link__modifiers: item__modifiers,
+    link__attributes: link__attributes,
+  } %}
 {% endset %}
 
 {% embed "@atoms/lists/_yds-list-item.twig" with {
@@ -50,10 +76,14 @@
   list__item__blockname: item__blockname,
   list__item__attributes: item__attributes,
 } %}
+
   {% block list__item__content %}
     {# This import needs to be inside the block for it to work in Drupal #}
     {% import "@molecules/menu/yds-menu.twig" as menus %}
     {% set levels = menu__variation == 'mega' ? 2 : 1 %}
+
+    {{ list__item__content__heading }}
+
     {{- list__item -}}
     {% if item.below and menu__level < levels %}
       {% if menu__level == 0 and menu__level__toggle %}
