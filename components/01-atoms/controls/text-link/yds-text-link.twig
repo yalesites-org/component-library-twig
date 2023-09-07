@@ -26,6 +26,11 @@
   {% set link__modifiers = ['with-icon'] %}
 {% endif %}
 
+{# If link type is email, set the link__style here. #}
+{% if link__type == 'email' %}
+  {% set link__style = 'no-underline-animation' %}
+{% endif %}
+
 {% set link__attributes = link__attributes|merge({
   'data-link-style': link__style|default('underline'),
   'data-link-type': link__type|default('normal'),

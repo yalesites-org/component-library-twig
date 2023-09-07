@@ -242,5 +242,6 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   &[data-link-type='email'] {
     cursor: pointer;
+    text-underline-offset: 0.22rem;
   }
 }
