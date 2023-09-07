@@ -246,4 +246,8 @@ $cta-outline-weights: (
   display: flex;
   gap: var(--size-spacing-7);
   margin-bottom: var(--size-spacing-7);
+
+  .component-wrapper--no-bottom-margin & {
+    margin-bottom: 0;
+  }
 }
