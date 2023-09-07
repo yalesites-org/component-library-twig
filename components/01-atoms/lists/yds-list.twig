@@ -18,6 +18,9 @@
       {% include "@atoms/lists/_yds-list-item.twig" with {
         list__item__content: list__item.list__item__content,
         list__item__blockname: list__base_class,
+        list__item__modifiers: list__item__modifiers,
+        list__item__content__heading: list__item.list__item__content__heading,
+        list__item__is_heading: list__item.list__item__is_heading,
       } %}
     {% endfor %}
   {% endblock %}
