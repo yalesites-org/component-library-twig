@@ -1,8 +1,10 @@
 @use '../../00-tokens/tokens';
+@use '../../01-atoms/atoms';
 
 .text-with-image {
   @include tokens.spacing-page-section;
 
+  // used by a element for animated hover underline
   --color-text-shadow: var(--color-basic-white);
 }
 
@@ -88,6 +90,10 @@
 
 .text-with-image__text {
   color: var(--color-text);
+
+  a {
+    @include atoms.link;
+  }
 
   > *:last-child {
     margin-bottom: 0;

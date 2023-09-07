@@ -4,6 +4,9 @@
 .text-field {
   @include tokens.spacing-page-inner;
 
+  // used by a element for animated hover underline
+  --color-text-shadow: var(--color-basic-white);
+
   .text {
     overflow-x: auto;
   }
