@@ -80,6 +80,9 @@ export const Basic = ({
   siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
+  siteFooterVariation = localStorage.getItem(
+    'yds-cl-twig-site-footer-variation',
+  ),
   siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
@@ -96,6 +99,7 @@ export const Basic = ({
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
+    site_footer__variation: siteFooterVariation,
     site_footer__border_thickness: footerBorderThickness,
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
@@ -126,6 +130,9 @@ export const BasicShort = ({
   siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
+  siteFooterVariation = localStorage.getItem(
+    'yds-cl-twig-site-footer-variation',
+  ),
   siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
@@ -142,6 +149,7 @@ export const BasicShort = ({
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
+    site_footer__variation: siteFooterVariation,
     site_footer__border_thickness: footerBorderThickness,
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
@@ -171,6 +179,9 @@ export const WithBanner = ({
   siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
+  siteFooterVariation = localStorage.getItem(
+    'yds-cl-twig-site-footer-variation',
+  ),
   siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
@@ -200,6 +211,7 @@ export const WithBanner = ({
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
+    site_footer__variation: siteFooterVariation,
     site_footer__border_thickness: footerBorderThickness,
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
@@ -322,6 +334,9 @@ export const WithBannerLeftAlign = ({
   siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
+  siteFooterVariation = localStorage.getItem(
+    'yds-cl-twig-site-footer-variation',
+  ),
   siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
@@ -354,6 +369,7 @@ export const WithBannerLeftAlign = ({
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
+    site_footer__variation: siteFooterVariation,
     site_footer__border_thickness: footerBorderThickness,
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
@@ -501,6 +517,9 @@ export const WithSidebar = ({
   siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
+  siteFooterVariation = localStorage.getItem(
+    'yds-cl-twig-site-footer-variation',
+  ),
   siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
@@ -517,6 +536,7 @@ export const WithSidebar = ({
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
+    site_footer__variation: siteFooterVariation,
     site_footer__border_thickness: footerBorderThickness,
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
@@ -547,6 +567,9 @@ export const WithQuickLinks = ({
   siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
   utilityNavLinkContent,
   utilityNavSearch,
+  siteFooterVariation = localStorage.getItem(
+    'yds-cl-twig-site-footer-variation',
+  ),
   siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
@@ -565,6 +588,7 @@ export const WithQuickLinks = ({
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
+    site_footer__variation: siteFooterVariation,
     site_footer__border_thickness: footerBorderThickness,
     site_footer__theme: siteFooterTheme,
     utility_nav__items: utilityNavData.items,
@@ -606,58 +630,3 @@ WithQuickLinks.argTypes = {
     defaultValue: 'promotional',
   },
 };
-
-// commenting out video page for now.
-// export const withVideo = ({
-//   siteName,
-//   pageTitle,
-//   globalTheme = localStorage.getItem(
-//    'yds-cl-twig-global-theme',
-//   ),
-//   headerBorderThickness,
-//   primaryNavPosition,
-//   siteHeaderTheme,
-//   utilityNavLinkContent,
-//   utilityNavSearch,
-//   siteFooterTheme,
-//   footerBorderThickness,
-//   videoHeading,
-//   videoCaption,
-//   menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
-// }) =>
-//   standardPageVideoTwig({
-//     site_name: siteName,
-//     page_title__heading: pageTitle,
-//     page_title__meta: null,
-//     site_global__theme: globalTheme,
-//     site_header__border_thickness: headerBorderThickness,
-//     site_header__nav_position: primaryNavPosition,
-//     site_header__theme: siteHeaderTheme,
-//     site_footer__border_thickness: footerBorderThickness,
-//     site_footer__theme: siteFooterTheme,
-//     utility_nav__items: utilityNavData.items,
-//     primary_nav__items: primaryNavData.items,
-//     menu__variation: menuVariation,
-//     utility_nav__link__content: utilityNavLinkContent,
-//     utility_nav__link__url: '#',
-//     utility_nav__search: utilityNavSearch,
-//     breadcrumbs__items: breadcrumbData.items,
-//     ...imageData.responsive_images['16x9'],
-//     ...referenceCardData,
-//     ...socialLinksData,
-//     ...videoData,
-//     video__heading: videoHeading,
-//     video__text: videoCaption,
-//   });
-// withVideo.argTypes = {
-//   videoHeading: {
-//     name: 'Video Heading',
-//     type: 'string',
-//     defaultValue: videoData.video__heading,
-//   },
-//   videoCaption: {
-//     name: 'Video Caption',
-//     type: 'string',
-//     defaultValue: videoData.video__text,
-//   },
-// };

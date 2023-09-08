@@ -18,6 +18,7 @@ const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
 const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
 const siteAnimationOptions = ['artistic', 'default'];
+const siteFooterVariations = ['basic', 'mega'];
 
 export default {
   title: 'Config',
@@ -91,6 +92,12 @@ export default {
       type: 'select',
       defaultValue: localStorage.getItem('yds-cl-twig-header-border-thickness'),
     },
+    siteFooterVariation: {
+      name: 'Footer: Variation',
+      options: siteFooterVariations,
+      type: 'select',
+      defaultValue: localStorage.getItem('yds-cl-twig-site-footer-variation'),
+    },
     siteFooterTheme: {
       name: 'Footer: Theme',
       options: siteFooterThemeOptions,
@@ -129,6 +136,7 @@ export const GlobalConfig = ({
   menuVariation,
   globalTheme,
   allowAnimatedItems,
+  siteFooterVariation,
 }) => {
   const root = document.documentElement;
   const customProperties = {
@@ -147,6 +155,7 @@ export const GlobalConfig = ({
     'yds-cl-twig-site-footer-theme': siteFooterTheme,
     'yds-cl-twig-footer-border-thickness': footerBorderThickness,
     'yds-cl-twig-animate-items': allowAnimatedItems,
+    'yds-cl-twig-site-footer-variation': siteFooterVariation,
   };
 
   // Set properties that are stored as custom properties to the root element.
@@ -184,6 +193,7 @@ export const GlobalConfig = ({
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
+    site_footer__variation: siteFooterVariation,
     site_footer__border_thickness: footerBorderThickness,
     site_footer__theme: siteFooterTheme,
     ...tabsData,
