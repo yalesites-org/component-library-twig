@@ -43,6 +43,7 @@
         card_collection__featured: 'true',
         card_collection__with_images: 'true',
         card_collection__cards: [1, 2, 3],
+        animate__item: 'enabled',
   } %}
 {% elseif intro_content == 'collection-secondary' %}
 	{% include "@organisms/card-collection/yds-card-collection.twig" with {
@@ -51,5 +52,6 @@
         card_collection__featured: 'false',
         card_collection__with_images: 'true',
         card_collection__cards: [1, 2, 3, 4],
+        animate__item: 'enabled',
   } %}
 {% endif %}

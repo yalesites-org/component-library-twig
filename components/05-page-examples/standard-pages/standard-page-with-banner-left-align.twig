@@ -92,6 +92,7 @@
 	{% include "@organisms/custom-card-collection/yds-custom-card-collection.twig" with {
       custom_card_collection__heading: 'Custom Cards',
       custom_card_collection__featured: false,
+      animate__item: 'enabled',
       custom_card_collection__cards:[
         {},
         {},
@@ -104,6 +105,7 @@
 
 	{% include "@organisms/card-collection/yds-card-collection.twig" with {
       card_collection__source_type: 'post',
+      animate__item: 'enabled',
       card_collection__cards:[
         {
           reference_card__date: '2022-03-30 13:00',
@@ -127,7 +129,7 @@
     }%}
 
 	{% include "@atoms/divider/yds-divider.twig" with {
-    animate__item: [true],
+    animate__item: 'enabled',
   }%}
 
 	{% include "@molecules/quick-links/yds-quick-links.twig" %}
@@ -186,7 +188,7 @@
 					<textarea id="textarea" required="required" aria-required="true" class="form-item__textfield form-item__textarea form-item__textfield--required" rows="8" cols="48" placeholder="Enter your message here"></textarea>
 				</div>
 				<div class="form-item form-actions">
-					<input class="webform-button--submit button button--primary js-form-submit form-submit form-item__textfield" data-drupal-selector="edit-actions-submit" type="submit" id="edit-actions-submit" name="op" value="Send Message">
+          <input class="webform-button--submit button cta button--primary js-form-submit form-submit form-item__textfield" data-drupal-selector="edit-actions-submit" type="submit" id="edit-actions-submit" name="op" value="Send Message" data-cta-radius="none" data-cta-theme="one" data-cta-outline-weight="2" data-cta-hover-style="fade">
 				</div>
 			</form>
 		{% endblock %}
