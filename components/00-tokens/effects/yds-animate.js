@@ -9,7 +9,7 @@ Drupal.behaviors.animateItems = {
 
     // Select all elements with [data-animate-item] attribute
     const elementsToAnimate = context.querySelectorAll(
-      '[data-animate-item="true"]',
+      '[data-animate-item="enabled"]',
     );
 
     // Check if the user prefers reduced motion
@@ -43,7 +43,7 @@ Drupal.behaviors.animateItems = {
     // Set each component to data-animate-item false if prefers reduced motion.
     if (!prefersReducedMotionNoPref) {
       elementsToAnimate.forEach((reducedMotionElement) => {
-        reducedMotionElement.setAttribute('data-animate-item', 'false');
+        reducedMotionElement.setAttribute('data-animate-item', 'disabled');
       });
     }
   },

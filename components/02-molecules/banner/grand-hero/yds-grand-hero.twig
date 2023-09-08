@@ -57,7 +57,7 @@
           <div {{ bem('content-inner', [], grand_hero__base_class) }}>
             {% if grand_hero__heading is not empty %}
               {% include "@atoms/typography/headings/yds-heading.twig" with {
-                heading__level: '2',
+                heading__level: grand_hero__heading__level|default('2'),
                 heading__blockname: grand_hero__base_class,
                 heading: grand_hero__heading,
               } %}

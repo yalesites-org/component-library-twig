@@ -34,7 +34,7 @@
       text_field__content: '<p>Davis and her teammate Lars Plate, assistant professor of chemistry and biological sciences at Vanderbilt University, were two of 21 researchers to receive the award. They will work together on their project, <em>“</em><em>Structure-Function of Enzyme Filaments: Regulators of Cell Metabolism in Space and Time.”</em></p>',
     } %}
     {% include "@molecules/pull-quote/yds-pull-quote.twig" with {
-      animate__item: [true],
+      animate__item: 'enabled',
       pull_quote__quote: 'Our platform will transform our ability to study metabolic filaments and, coupled with biochemical and biophysical tools, manipulate enzyme structures and metabolic activity in cells.',
     } %}
     {% include "@molecules/text/yds-text-field.twig" with {
@@ -61,6 +61,7 @@
       card_collection__source_type: 'events',
       card_collection__type: 'grid',
       card_collection__width: 'content',
+      animate__item: 'enabled',
       card_collection__cards:[
         {
           reference_card__date: '2022-03-30 13:00',

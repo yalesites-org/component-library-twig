@@ -27,6 +27,10 @@
   }) %}
 {% endif %}
 
+{% set card_collection__attributes = card_collection__attributes|merge({
+  'data-animate-item': animate__item|default('enabled'),
+}) %}
+
 <div {{ add_attributes(card_collection__attributes) }}>
   <div {{ bem('inner', [], card_collection__base_class) }}>
     {% if card_collection__heading is not empty %}

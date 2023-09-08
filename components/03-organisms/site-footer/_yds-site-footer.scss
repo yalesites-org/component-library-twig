@@ -133,8 +133,16 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   gap: var(--size-spacing-6);
   justify-content: space-between;
 
-  @media (min-width: $break-site-footer) {
+  @media (min-width: tokens.$break-l) {
     flex-direction: row;
+  }
+
+  [data-footer-variation='mega'] & {
+    @media (min-width: tokens.$break-l) {
+      display: grid;
+      grid-template-areas: 'logos content columns';
+      grid-template-columns: 23.5rem 1fr 1fr;
+    }
   }
 }
 
@@ -147,6 +155,16 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   @media (min-width: $break-site-footer) {
     flex-direction: row-reverse;
   }
+
+  [data-footer-variation='mega'] & {
+    border-top: var(--thickness-divider) solid
+      var(--color-site-footer-border-color);
+    padding-top: var(--size-spacing-6);
+
+    @media (min-width: $break-site-footer) {
+      flex-direction: row;
+    }
+  }
 }
 
 // add social icon svg hover colors based on theme.
@@ -155,6 +173,10 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   display: flex;
   flex-direction: column;
   gap: var(--size-spacing-3);
+
+  [data-footer-variation='mega'] & {
+    flex: 1 1 30%;
+  }
 }
 
 .site-footer__logo {
@@ -175,7 +197,6 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
 .site-footer__meta {
   @include typography.body-xs;
 
-  margin-right: auto;
   display: flex;
   flex-flow: column wrap;
   align-items: flex-start;
@@ -185,10 +206,106 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     flex-direction: row;
     align-items: flex-end;
   }
+
+  [data-footer-variation='mega'] & {
+    @media (min-width: tokens.$break-m) {
+      margin-left: auto;
+    }
+  }
+
+  [data-footer-variation='basic'] & {
+    margin-right: auto;
+  }
 }
 
 .site-footer__divider {
   @media (max-width: $break-site-footer-max) {
     display: none;
+  }
+}
+
+/*
+// mega footer styles only
+*/
+.site-footer__logo-group {
+  display: grid;
+  gap: var(--size-spacing-3);
+  grid-template-columns: 1fr 1fr;
+
+  @media (min-width: $break-site-footer) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  @media (min-width: tokens.$break-l) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+// Yale school logo
+.site-footer__yale-logo {
+  [data-footer-variation='mega'] & {
+    gap: var(--size-spacing-6);
+  }
+}
+
+// WYSIWYG
+.site-footer__content {
+  [data-footer-variation='mega'] & {
+    @include typography.body-s-condensed;
+
+    flex: 1 1 30%;
+
+    > p {
+      margin-top: 0;
+    }
+
+    @media (min-width: tokens.$break-l) {
+      grid-area: content;
+      padding-inline-start: var(--size-spacing-8);
+      padding-inline-end: var(--size-spacing-8);
+    }
+  }
+}
+
+// Link Columns
+.site-footer__columns {
+  [data-footer-variation='mega'] & {
+    flex: 1 1 30%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-spacing-6);
+  }
+}
+
+.site-footer__columns-inner {
+  @media (min-width: tokens.$break-l) {
+    display: grid;
+    grid-template-areas: 'top' 'bottom';
+    grid-template-columns: 1fr 1fr;
+  }
+
+  [data-footer-variation='mega'] & {
+    display: flex;
+    flex: 1 auto;
+    flex-direction: column;
+    gap: var(--size-spacing-3);
+
+    @media (min-width: tokens.$break-l) {
+      display: grid;
+      grid-template:
+        'top'
+        'bottom'
+        / 1fr;
+    }
+  }
+}
+
+// Social
+.site-footer__social {
+  [data-footer-variation='mega'] & {
+    @media (min-width: tokens.$break-l) {
+      flex: 0 auto;
+      align-self: flex-end;
+    }
   }
 }

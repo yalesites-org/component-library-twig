@@ -8,12 +8,6 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
   @include atoms.clickable-component-heading-link;
   @include atoms.clickable-component-image;
 
-  // only animate if animation is enabled in site configuration.
-  [data-site-animation='artistic'] & {
-    @include tokens.animate($property: 'transform');
-    @include tokens.rise-effect;
-  }
-
   --color-text-shadow: var(--color-basic-white);
 
   display: flex;
@@ -46,6 +40,12 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
     &:hover {
       box-shadow: var(--drop-shadow-level-1-bottom-shadow-only);
     }
+  }
+
+  // only animate if animation is enabled in site configuration.
+  [data-site-animation='artistic'] [data-animate-item='enabled'] & {
+    @include tokens.animate($property: 'transform');
+    @include tokens.rise-effect;
   }
 }
 
