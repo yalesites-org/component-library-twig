@@ -6,6 +6,9 @@ $wrapped-image-offset-max: 1550px;
 .wrapped-image {
   @include tokens.spacing-page-inner;
 
+  // used by a element for animated hover underline
+  --color-text-shadow: var(--color-basic-white);
+
   // Clear the float in case the next component is an image or something.
   &::after {
     content: '';
