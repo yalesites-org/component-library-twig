@@ -289,14 +289,6 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     flex: 1 auto;
     flex-direction: column;
     gap: var(--size-spacing-3);
-
-    @media (min-width: tokens.$break-l) {
-      display: grid;
-      grid-template:
-        'top'
-        'bottom'
-        / 1fr;
-    }
   }
 }
 
