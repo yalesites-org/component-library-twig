@@ -26,7 +26,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--size-spacing-6);
-  justify-content: end;
+
+  @media (min-width: sass-tokens.$break-l) {
+    justify-content: end;
+  }
 }
 
 .social-links__link {
