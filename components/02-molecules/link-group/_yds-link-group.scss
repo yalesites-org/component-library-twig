@@ -99,18 +99,21 @@ $break-link-group-max: $break-link-group - 0.05;
   line-height: 1.2;
   font-weight: var(--font-weights-mallory-book);
 
-  [data-footer-theme='one'] &,
-  [data-footer-theme='two'] &,
-  [data-footer-theme='three'] & {
-    --color-link-group-hover: var(--color-slot-two);
-  }
+  // used in footer context, we need theme colors for hover
+  .site-footer__columns-inner & {
+    [data-footer-theme='one'] &,
+    [data-footer-theme='two'] &,
+    [data-footer-theme='three'] & {
+      --color-link-group-hover: var(--color-slot-two);
+    }
 
-  [data-footer-theme='four'] &,
-  [data-footer-theme='five'] & {
-    --color-link-group-hover: var(--color-slot-four);
-  }
+    [data-footer-theme='four'] &,
+    [data-footer-theme='five'] & {
+      --color-link-group-hover: var(--color-slot-four);
+    }
 
-  &:hover {
-    color: var(--color-link-group-hover);
+    &:hover {
+      color: var(--color-link-group-hover);
+    }
   }
 }
