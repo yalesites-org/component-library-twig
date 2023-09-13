@@ -178,6 +178,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     @media (min-width: $break-site-footer) {
       flex-direction: row;
       justify-content: space-between;
+      gap: var(--size-spacing-5);
     }
 
     @media (min-width: tokens.$break-l) {
@@ -239,7 +240,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
 .site-footer__logo-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--size-spacing-3);
+  gap: var(--size-spacing-5);
 }
 
 // Yale school logo
