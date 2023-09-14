@@ -32,9 +32,7 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   // default variables.
   @each $theme, $value in $component-link-grid-themes {
     &[data-component-theme='#{$theme}'] {
-      --color-text: var(--color-link-grid-text);
       --color-action: var(--color-link-grid-action);
-      --color-action-secondary: var(--color-link-grid-action-secondary);
       --color-link-grid-border: var(--color-link-grid-action);
     }
   }
@@ -43,17 +41,14 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
     --color-link-grid-action: var(--color-slot-two);
-    --color-link-grid-text: var(--color-slot-one);
   }
 
   &[data-component-theme='two'] {
     --color-link-grid-action: var(--color-slot-two);
-    --color-link-grid-text: var(--color-slot-one);
   }
 
   &[data-component-theme='three'] {
     --color-link-grid-action: var(--color-slot-five);
-    --color-link-grid-text: var(--color-slot-one);
   }
 }
 
@@ -94,16 +89,15 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 }
 
-.link-grid__link {
-  @include atoms.cta;
+.link-grid__list-item {
+  padding: var(--size-spacing-2) var(--size-spacing-5);
+}
 
-  display: block;
+.link-grid__link {
+  @include atoms.link;
+
   text-align: left;
   line-height: 1.2;
   font-weight: var(--font-weights-mallory-book);
-  color: var(--color-link-grid-text);
-
-  &:hover {
-    color: var(--color-action);
-  }
+  color: var(--color-link-base);
 }
