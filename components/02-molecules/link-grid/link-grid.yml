@@ -19,7 +19,7 @@ link_grid__links_two:
   - link_grid__link__url: '#'
     link_grid__link__content: 'Link #5 column 2'
   - link_grid__link__url: '#'
-    link_grid__link__content: 'Link #6 column 2'    
+    link_grid__link__content: 'Link #6 column 2'
 link_grid__links_three:
   - link_grid__link__url: '#'
     link_grid__link__content: 'This is a link in the third column'
