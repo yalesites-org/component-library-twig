@@ -61,10 +61,14 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   --color-link-grid-border: var(--color-link-grid-action);
 
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column nowrap;
   width: 100%;
   max-width: var(--size-component-layout-width-site);
   border-color: var(--color-link-grid-border);
+
+  @media (min-width: tokens.$break-m) {
+    flex-flow: row wrap;
+  }
 }
 
 .link-grid__links-column {
