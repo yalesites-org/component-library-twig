@@ -72,6 +72,7 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   width: 100%;
   border-left: var(--size-thickness-1) solid var(--color-link-grid-border);
   margin-bottom: var(--size-spacing-7);
+  padding: var(--size-spacing-4) 0;
 
   // medium = two columns
   @media (min-width: tokens.$break-m) {
@@ -90,14 +91,19 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
 }
 
 .link-grid__list-item {
-  padding: var(--size-spacing-2) var(--size-spacing-5);
+  padding: 0 var(--size-spacing-6);
+  margin-bottom: var(--size-spacing-6);
+  line-height: 1.2;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .link-grid__link {
   @include atoms.link;
 
   text-align: left;
-  line-height: 1.2;
   font-weight: var(--font-weights-mallory-book);
   color: var(--color-link-base);
 }
