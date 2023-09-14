@@ -42,8 +42,9 @@
 .ys-filter-form {
   align-items: flex-end;
   display: flex;
-  gap: 0 1rem;
+  gap: 1rem;
   margin-bottom: var(--size-spacing-8);
+  flex-flow: row wrap;
 
   .form-item {
     margin-bottom: 0;
