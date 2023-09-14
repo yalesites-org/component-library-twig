@@ -77,12 +77,18 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   width: 100%;
   border-left: var(--size-thickness-1) solid var(--color-link-grid-border);
   margin-bottom: var(--size-spacing-7);
-  flex: 1 1 50%;
 
+  // medium = two columns
+  @media (min-width: tokens.$break-m) {
+    flex: 1 1 50%;
+  }
+
+  // large = four columns
   @media (min-width: $break-link-grid) {
     flex: 1 1 25%;
   }
 
+  // first column gets wider border
   &--one {
     border-width: var(--size-thickness-4);
   }
