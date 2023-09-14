@@ -40,11 +40,11 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
-    --color-link-grid-action: var(--color-slot-two);
+    --color-link-grid-action: var(--color-slot-one);
   }
 
   &[data-component-theme='two'] {
-    --color-link-grid-action: var(--color-slot-two);
+    --color-link-grid-action: var(--color-slot-three);
   }
 
   &[data-component-theme='three'] {
