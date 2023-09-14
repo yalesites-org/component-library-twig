@@ -20,8 +20,8 @@
   'data-component-width': link_grid__width|default('site'),
 } %}
 
-{# Set variable for all the links  #}
-{% set link_grid_columns %}
+<div {{ add_attributes(link_grid__attributes) }}>
+  <div {{ bem('inner', [], link_grid__base_class) }}>
   {% if link_grid__links_one %}
     <ul {{ bem('links-column', ['one'], link_grid__base_class) }}>
       {% for link in link_grid__links_one %}
@@ -49,13 +49,6 @@
         {% include "@molecules/link-grid/_yds-link-grid--links.twig" %}
       {% endfor %}
     </ul>
-  {% endif %}    
-{% endset %}
-
-<div {{ add_attributes(link_grid__attributes) }}>
-  <div {{ bem('inner', [], link_grid__base_class) }}>
-    {% block link_grid__links %}
-      {{link_grid_columns}}
-    {% endblock %}
+  {% endif %}
   </div>
 </div>
