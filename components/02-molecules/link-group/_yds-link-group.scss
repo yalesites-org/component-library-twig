@@ -72,7 +72,7 @@ $break-link-group-max: $break-link-group - 0.05;
 
   width: 100%;
   border-left: var(--thickness-divider) solid var(--color-link-group-border);
-  margin-bottom: var(--size-spacing-7);
+  margin-bottom: var(--size-spacing-3);
 
   &--one {
     @media (max-width: $break-link-group-max) {

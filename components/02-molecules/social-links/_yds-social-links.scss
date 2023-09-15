@@ -27,7 +27,7 @@
   flex-wrap: wrap;
   gap: var(--size-spacing-6);
 
-  @media (min-width: sass-tokens.$break-l) {
+  [data-footer-variation='mega'] & {
     justify-content: end;
   }
 }

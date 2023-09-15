@@ -159,7 +159,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   [data-footer-variation='mega'] & {
     border-top: var(--thickness-divider) solid
       var(--color-site-footer-border-color);
-    padding-top: var(--size-spacing-6);
+    padding-top: var(--size-spacing-8);
 
     @media (min-width: $break-site-footer) {
       flex-direction: row;
@@ -218,6 +218,8 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 
   [data-footer-variation='mega'] & {
+    margin-bottom: var(--size-spacing-3);
+
     @media (min-width: tokens.$break-m) {
       margin-left: auto;
     }
@@ -298,9 +300,11 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
 // Social
 .site-footer__social {
   [data-footer-variation='mega'] & {
-    @media (min-width: tokens.$break-l) {
-      flex: 0 auto;
-      align-self: flex-end;
+    flex: 0 0 100%;
+    align-self: flex-end;
+
+    @media (max-width: $break-site-footer-max) {
+      order: 3;
     }
   }
 }
