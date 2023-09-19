@@ -46,6 +46,7 @@ module.exports = {
     plugins.SpriteLoaderPlugin,
     plugins.ProgressPlugin,
     plugins.CleanWebpackPlugin,
+    plugins.CopyWebpackPlugin,
   ],
   output: {
     path: distDir,
