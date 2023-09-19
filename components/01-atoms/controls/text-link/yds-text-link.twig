@@ -21,6 +21,7 @@
 
 {% set link__base_class = link__base_class|default('link') %}
 {% set link__attributes = link__attributes|default({}) %}
+{% set link__element = link__element|default('a') %}
 
 {% if link__type == 'external' or link__type == 'target-blank' or link__type == 'download' or link__type == 'with-chevron' %}
   {% set link__modifiers = ['with-icon'] %}
@@ -29,6 +30,7 @@
 {# If link type is email, set the link__style here. #}
 {% if link__type == 'email' %}
   {% set link__style = 'no-underline-animation' %}
+  {% set link__element = 'button' %}
 {% endif %}
 
 {% set link__attributes = link__attributes|merge({
@@ -47,7 +49,7 @@
     </span>
 {% endif %}
 
-<a {{ add_attributes(link__attributes) }}>
+<{{link__element}} {{ add_attributes(link__attributes) }}>
   {% block link__content %}
     {{- link__content -}}
   {% endblock %}
@@ -88,7 +90,7 @@
       } 
     %}
   {% endif %}
-</a>
+</{{link__element}}>
 
 {% if link__pre_text %}
   </div >
