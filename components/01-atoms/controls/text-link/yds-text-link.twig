@@ -33,11 +33,17 @@
   {% set link__element = 'button' %}
 {% endif %}
 
+{# Add href if the link is an `a` element #}
+{% if link__element == 'a' %}
+  {% set link__attributes = link__attributes|merge({
+    href: link__url,
+  }) %}
+{% endif %}
+
 {% set link__attributes = link__attributes|merge({
   'data-link-style': link__style|default('underline'),
   'data-link-type': link__type|default('normal'),
   class: bem(link__base_class, link__modifiers, link__blockname, link__extra_class),
-  href: link__url,
 }) %}
 
 {% if link__pre_text %}
