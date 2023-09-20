@@ -1,7 +1,6 @@
 @use '~@yalesites-org/tokens/build/scss/tokens' as sass-tokens;
 @use '../../../00-tokens/functions/map';
 @use '../../../00-tokens/tokens';
-@use '../../../01-atoms/controls/button/yds-button' as button;
 
 $link-themes: map.deep-get(sass-tokens.$tokens, color, link, theme);
 $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
@@ -239,13 +238,5 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   &[data-link-style='no-underline-animation'] {
     @include plain-link;
-  }
-
-  &[data-link-type='email'] {
-    @include button.reset;
-
-    color: var(--color-link-base);
-    cursor: pointer;
-    text-underline-offset: 0.22rem;
   }
 }

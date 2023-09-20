@@ -6,7 +6,6 @@
  #   - external (adds icon), 
  #   - target-blank (adds icon + opens in new window/tab),
  #   - with-chevron
- #   - email
  # - link__style: underline (default), no-underline, no-animation
  #
  # Available variables:
@@ -21,23 +20,9 @@
 
 {% set link__base_class = link__base_class|default('link') %}
 {% set link__attributes = link__attributes|default({}) %}
-{% set link__element = link__element|default('a') %}
 
 {% if link__type == 'external' or link__type == 'target-blank' or link__type == 'download' or link__type == 'with-chevron' %}
   {% set link__modifiers = ['with-icon'] %}
-{% endif %}
-
-{# If link type is email, set the link__style here. #}
-{% if link__type == 'email' %}
-  {% set link__style = 'no-underline-animation' %}
-  {% set link__element = 'button' %}
-{% endif %}
-
-{# Add href if the link is an `a` element #}
-{% if link__element == 'a' %}
-  {% set link__attributes = link__attributes|merge({
-    href: link__url,
-  }) %}
 {% endif %}
 
 {% set link__attributes = link__attributes|merge({
@@ -46,16 +31,7 @@
   class: bem(link__base_class, link__modifiers, link__blockname, link__extra_class),
 }) %}
 
-{% if link__pre_text %}
-  <div {{ bem('inner', [], link__base_class) }}>
-   {# set these bem classes so that they can't be changed. 
-      the JS in `./yds-text-link.js` is looking for `pre-text__text` #}
-    <span {{ bem('text', [], 'pre-text') }}>
-      {{link__pre_text}}
-    </span>
-{% endif %}
-
-<{{link__element}} {{ add_attributes(link__attributes) }}>
+<a {{ add_attributes(link__attributes) }}>
   {% block link__content %}
     {{- link__content -}}
   {% endblock %}
@@ -63,41 +39,37 @@
   {# if link__type is external, target-blank, download, or with-chevron we add icons #}
   {% if link__type == 'external' %}
     {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
-        fa_icon__title: 'Arrow Up Right',
-        fa_icon__extra_class: ['fa-solid fa-arrow-up-right'],
-        fa_icon__decorative: true,
-        fa_icon__sr_title: '(link is external)',
+      fa_icon__title: 'Arrow Up Right',
+      fa_icon__extra_class: ['fa-solid fa-arrow-up-right'],
+      fa_icon__decorative: true,
+      fa_icon__sr_title: '(link is external)',
       } 
     %}
   {% endif %}
   {% if link__type == 'target-blank' %}
     {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
-        fa_icon__title: 'Up Right',
-        fa_icon__extra_class: ['fa-solid fa-arrow-up-right-from-square'],
-        fa_icon__decorative: true,
-        fa_icon__sr_title: '(opens in a new window/tab)',
+      fa_icon__title: 'Up Right',
+      fa_icon__extra_class: ['fa-solid fa-arrow-up-right-from-square'],
+      fa_icon__decorative: true,
+      fa_icon__sr_title: '(opens in a new window/tab)',
       } 
     %}
   {% endif %}
   {% if link__type == 'download' %} 
     {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
-        fa_icon__title: 'Circle Down',
-        fa_icon__extra_class: ['fa-regular fa-circle-down'],
-        fa_icon__decorative: true,
-        fa_icon__sr_title: '(file download)',
+      fa_icon__title: 'Circle Down',
+      fa_icon__extra_class: ['fa-regular fa-circle-down'],
+      fa_icon__decorative: true,
+      fa_icon__sr_title: '(file download)',
       } 
     %}
   {% endif %}
   {% if link__type == 'with-chevron' %}
     {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
-        fa_icon__title: 'Angle Right',
-        fa_icon__extra_class: ['fa-solid fa-angle-right'],
-        fa_icon__decorative: true,
+      fa_icon__title: 'Angle Right',
+      fa_icon__extra_class: ['fa-solid fa-angle-right'],
+      fa_icon__decorative: true,
       } 
     %}
   {% endif %}
-</{{link__element}}>
-
-{% if link__pre_text %}
-  </div >
-{% endif %}
+</a>
