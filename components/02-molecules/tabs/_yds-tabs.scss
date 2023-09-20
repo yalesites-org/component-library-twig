@@ -163,14 +163,17 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   flex-shrink: 0;
   border-top: var(--size-thickness-1) solid var(--color-gray-300);
   border-left: var(--size-thickness-1) solid var(--color-gray-300);
-  border-right: var(--size-thickness-1) solid var(--color-gray-300);
+
+  &:last-child {
+    border-right: var(--size-thickness-1) solid var(--color-gray-300);
+  }
 }
 
 .tabs__link {
   display: block;
   position: relative;
   text-decoration: none;
-  padding: var(--size-spacing-3) var(--size-spacing-7);
+  padding: var(--size-spacing-3) var(--size-spacing-7) var(--size-spacing-5);
   color: var(--color-gray-700);
   border-top: var(--size-thickness-6) solid transparent;
   background-color: var(--color-gray-100);
