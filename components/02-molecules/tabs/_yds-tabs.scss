@@ -147,8 +147,6 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   @include atoms.list-reset;
 
   display: flex;
-  width: 100%;
-  max-width: 100%;
   overflow: auto;
   scroll-behavior: smooth;
   -ms-overflow-style: none; /* IE and Edge */
