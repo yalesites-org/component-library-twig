@@ -141,7 +141,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     @media (min-width: tokens.$break-l) {
       display: grid;
       grid-template-areas: 'logos content columns';
-      grid-template-columns: 23.5rem 1fr 1fr;
+      grid-template-columns: 18rem 1fr 1fr;
     }
   }
 }
@@ -159,7 +159,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   [data-footer-variation='mega'] & {
     border-top: var(--thickness-divider) solid
       var(--color-site-footer-border-color);
-    padding-top: var(--size-spacing-6);
+    padding-top: var(--size-spacing-8);
 
     @media (min-width: $break-site-footer) {
       flex-direction: row;
@@ -175,7 +175,17 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   gap: var(--size-spacing-3);
 
   [data-footer-variation='mega'] & {
-    flex: 1 1 30%;
+    @media (min-width: $break-site-footer) {
+      flex-direction: row;
+      justify-content: space-between;
+      gap: var(--size-spacing-5);
+    }
+
+    @media (min-width: tokens.$break-l) {
+      flex-direction: column;
+      justify-content: flex-start;
+      flex: 1 1 30%;
+    }
   }
 }
 
@@ -208,6 +218,8 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 
   [data-footer-variation='mega'] & {
+    margin-bottom: var(--size-spacing-3);
+
     @media (min-width: tokens.$break-m) {
       margin-left: auto;
     }
@@ -229,21 +241,14 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
 */
 .site-footer__logo-group {
   display: grid;
-  gap: var(--size-spacing-3);
   grid-template-columns: 1fr 1fr;
-
-  @media (min-width: $break-site-footer) {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-
-  @media (min-width: tokens.$break-l) {
-    grid-template-columns: 1fr 1fr;
-  }
+  gap: var(--size-spacing-5);
 }
 
 // Yale school logo
 .site-footer__yale-logo {
   [data-footer-variation='mega'] & {
+    flex-basis: 50%;
     gap: var(--size-spacing-6);
   }
 }
@@ -255,14 +260,14 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
     flex: 1 1 30%;
 
-    > p {
-      margin-top: 0;
-    }
-
     @media (min-width: tokens.$break-l) {
       grid-area: content;
       padding-inline-start: var(--size-spacing-8);
       padding-inline-end: var(--size-spacing-8);
+
+      > p {
+        margin-top: 0;
+      }
     }
   }
 }
@@ -289,23 +294,17 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     flex: 1 auto;
     flex-direction: column;
     gap: var(--size-spacing-3);
-
-    @media (min-width: tokens.$break-l) {
-      display: grid;
-      grid-template:
-        'top'
-        'bottom'
-        / 1fr;
-    }
   }
 }
 
 // Social
 .site-footer__social {
   [data-footer-variation='mega'] & {
-    @media (min-width: tokens.$break-l) {
-      flex: 0 auto;
-      align-self: flex-end;
+    flex: 0 0 100%;
+    align-self: flex-end;
+
+    @media (max-width: $break-site-footer-max) {
+      order: 3;
     }
   }
 }
