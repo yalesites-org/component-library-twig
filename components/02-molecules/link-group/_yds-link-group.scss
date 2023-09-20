@@ -72,11 +72,11 @@ $break-link-group-max: $break-link-group - 0.05;
 
   width: 100%;
   border-left: var(--thickness-divider) solid var(--color-link-group-border);
-  margin-bottom: var(--size-spacing-7);
 
   &--one {
     @media (max-width: $break-link-group-max) {
       grid-area: links-one;
+      margin-bottom: var(--size-spacing-8);
     }
   }
 
@@ -88,6 +88,7 @@ $break-link-group-max: $break-link-group - 0.05;
 
   @media (min-width: $break-link-group) {
     flex: 0 0 50%;
+    margin-bottom: var(--size-spacing-3);
   }
 }
 
@@ -98,4 +99,22 @@ $break-link-group-max: $break-link-group - 0.05;
   text-align: left;
   line-height: 1.2;
   font-weight: var(--font-weights-mallory-book);
+
+  // used in footer context, we need theme colors for hover
+  .site-footer__columns-inner & {
+    [data-footer-theme='one'] &,
+    [data-footer-theme='two'] &,
+    [data-footer-theme='three'] & {
+      --color-link-group-hover: var(--color-slot-two);
+    }
+
+    [data-footer-theme='four'] &,
+    [data-footer-theme='five'] & {
+      --color-link-group-hover: var(--color-slot-four);
+    }
+
+    &:hover {
+      color: var(--color-link-group-hover);
+    }
+  }
 }
