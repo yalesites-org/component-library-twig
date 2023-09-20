@@ -14,14 +14,6 @@
           placeholder: 'logo',
           placeholder__type: 'element',
         } %}
-        {% include "@page-layouts/placeholder/yds-placeholder.twig" with {
-          placeholder: 'logo',
-          placeholder__type: 'element',
-        } %}
-        {% include "@page-layouts/placeholder/yds-placeholder.twig" with {
-          placeholder: 'logo',
-          placeholder__type: 'element',
-        } %}
       {% endblock %}
     </div>
 
@@ -54,16 +46,16 @@
         } %}
       {% endblock %}
     </div>
-    {# Social #}
-    <div {{ bem('social', [], site_footer__base_class) }}>
-      {% block site_footer__social_links %}
-        {% include "@molecules/social-links/yds-social-links.twig" %}
-      {% endblock %}
-    </div>
   </div>
 </div>
 {# Secondary #}
 <div {{ bem('secondary', [], site_footer__base_class) }}>
+  {# Social #}
+  <div {{ bem('social', [], site_footer__base_class) }}>
+    {% block site_footer__social_links %}
+      {% include "@molecules/social-links/yds-social-links.twig" %}
+    {% endblock %}
+  </div>
   {# YALE Logo #}
   <div {{ bem('logo', [], site_footer__base_class) }}>
     <a data-link-style="no-underline" class="site-footer__site-branding site-footer__site-branding--primary" href="https://yale.edu">&#XF2A2;</a>

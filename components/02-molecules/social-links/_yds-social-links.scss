@@ -26,6 +26,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--size-spacing-6);
+
+  [data-footer-variation='mega'] & {
+    justify-content: end;
+  }
 }
 
 .social-links__link {
