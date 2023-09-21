@@ -29,6 +29,7 @@
   'data-link-style': link__style|default('underline'),
   'data-link-type': link__type|default('normal'),
   class: bem(link__base_class, link__modifiers, link__blockname, link__extra_class),
+  href: link__url,
 }) %}
 
 <a {{ add_attributes(link__attributes) }}>
