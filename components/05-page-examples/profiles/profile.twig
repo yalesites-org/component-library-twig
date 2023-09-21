@@ -101,12 +101,10 @@
           block_wrapper__heading__level: 3,
         }%}
 				{% block block_wrapper__inner %}
-					{% include "@atoms/controls/text-link/yds-text-link.twig" with {
-              link__pre_text: 'person.name@yale.edu',
-              link__content: '(copy)',
-              link__type: 'email',
-              link__extra_class: ['copy-trigger'],
-              link__url: 'javascript:;',
+					{% include "@atoms/controls/text-copy-button/yds-text-copy-button.twig" with {
+              text_copy_button__pre_text: 'person.name@yale.edu',
+              text_copy_button__content: '(copy)',
+              text_copy_button__extra_class: ['copy-trigger'],
             } %}
 					<br/>
 					{% include "@atoms/controls/text-link/yds-text-link.twig" with {

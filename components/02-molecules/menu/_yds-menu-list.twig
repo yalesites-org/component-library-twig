@@ -4,7 +4,7 @@
   {% block menu__item__content %}
     {% for item in items %}
       {% include "@molecules/menu/_yds-menu-item.twig" with {
-        list__item__is_heading: item.list__item__is_heading, 
+        list__item__is_heading: item.list__item__is_heading,
         list__item__content__heading: item.list__item__content__heading,
         list__item__modifiers: item.list__item__modifiers
       }%}
