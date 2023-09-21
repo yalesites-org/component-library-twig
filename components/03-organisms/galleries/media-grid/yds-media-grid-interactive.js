@@ -128,6 +128,16 @@ Drupal.behaviors.mediaGridInteractive = {
        * toggleCaptions
        * @description toggleCaptions truncates long captions visible in the modal.
        */
+
+      // Truncate caption function
+      // Take a string and a maxlength parameter
+      // slice the string starting at 0 and ending at maxLength.
+      function handleCaptionTruncation(captionContent, maxLength) {
+        return captionContent.length > maxLength
+          ? captionContent.slice(0, maxLength)
+          : captionContent;
+      }
+
       // Get all modal content.
       const imageCaptions = document.querySelectorAll(
         '.media-grid-modal__content',
@@ -154,7 +164,10 @@ Drupal.behaviors.mediaGridInteractive = {
 
           // Check the length of the caption and truncate if necessary
           if (toggleCaption && fullCaption.length > maxLength) {
-            const truncatedCaption = fullCaption.slice(0, maxLength);
+            const truncatedCaption = handleCaptionTruncation(
+              fullCaption,
+              maxLength,
+            );
 
             // set truncated content.
             captionContent.textContent = `${truncatedCaption}...`;
@@ -168,7 +181,7 @@ Drupal.behaviors.mediaGridInteractive = {
             toggleCaption.style.setProperty('display', 'inline');
 
             // Toggle the full caption when the "up arrow" toggle is clicked
-            toggleCaption.addEventListener('click', function (e) {
+            toggleCaption.addEventListener('click', function _(e) {
               e.preventDefault();
               if (captionContent.textContent === `${truncatedCaption}...`) {
                 toggleCaption.setAttribute('aria-expanded', 'true');
