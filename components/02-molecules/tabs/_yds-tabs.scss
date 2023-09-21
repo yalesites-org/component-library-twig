@@ -161,6 +161,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   flex-shrink: 0;
   border-top: var(--size-thickness-1) solid var(--color-gray-300);
   border-left: var(--size-thickness-1) solid var(--color-gray-300);
+  overflow: hidden;
 
   &:last-child {
     border-right: var(--size-thickness-1) solid var(--color-gray-300);
