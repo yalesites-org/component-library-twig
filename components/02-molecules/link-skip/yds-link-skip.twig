@@ -1,0 +1,27 @@
+{#
+ # Available variables:
+ # - link_skip__content - the content of the link (typically text)
+ # - link_skip__attributes - array of attribute,value pairs
+ #
+ # Available blocks:
+ # - link_skip__content - used to replace the content of the link
+ #     Example: to insert the image component
+ #}
+
+{% set link_skip__base_class = link_skip__base_class|default('link-skip') %}
+{% set link_skip__attributes = link_skip__attributes|default({}) %}
+
+{% set link_skip__attributes = link_skip__attributes|merge({
+  'data-component-width': link_skip__width|default('site'),
+  class: bem(link_skip__base_class, link_skip__modifiers, link_skip__blockname, link_skip__extra_class),
+}) %}
+
+<div {{ add_attributes(link_skip__attributes) }}>
+  <div {{ bem('inner', [], link_skip__base_class ) }}>
+    <a href="{{link_skip__url}}" {{ bem('link', [], link_skip__base_class ) }}>
+      {% block link_skip__content %}
+        {{- link_skip__content -}}
+      {% endblock %}
+    </a>
+  </div>
+</div >

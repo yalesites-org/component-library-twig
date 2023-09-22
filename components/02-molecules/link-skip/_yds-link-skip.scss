@@ -1,0 +1,14 @@
+@use '../../00-tokens/tokens';
+@use '../../01-atoms/controls/text-link/yds-text-link' as link;
+
+.link-skip {
+  @include tokens.spacing-page-section;
+
+  width: 100%;
+}
+
+.link-skip__link {
+  @include link.link;
+
+  --color-text-shadow: var(--color-basic-white);
+}
