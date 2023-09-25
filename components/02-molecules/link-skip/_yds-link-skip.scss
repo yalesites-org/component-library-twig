@@ -2,13 +2,18 @@
 @use '../../01-atoms/controls/text-link/yds-text-link' as link;
 
 .link-skip {
-  @include tokens.spacing-page-section;
-
-  width: 100%;
-}
-
-.link-skip__link {
-  @include link.link;
+  @include link.plain-link;
 
   --color-text-shadow: var(--color-basic-white);
+
+  margin-block-start: var(--size-spacing-4);
+  margin-block-end: var(--size-spacing-4);
+
+  &.visually-hidden.focusable:focus {
+    display: block;
+    width: 100%;
+    max-width: 1344px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

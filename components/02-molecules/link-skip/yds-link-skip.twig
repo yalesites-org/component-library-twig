@@ -14,14 +14,11 @@
 {% set link_skip__attributes = link_skip__attributes|merge({
   'data-component-width': link_skip__width|default('site'),
   class: bem(link_skip__base_class, link_skip__modifiers, link_skip__blockname, link_skip__extra_class),
+  href: link_skip__url
 }) %}
 
-<div {{ add_attributes(link_skip__attributes) }}>
-  <div {{ bem('inner', [], link_skip__base_class ) }}>
-    <a href="{{link_skip__url}}" {{ bem('link', [], link_skip__base_class ) }}>
-      {% block link_skip__content %}
-        {{- link_skip__content -}}
-      {% endblock %}
-    </a>
-  </div>
-</div >
+<a {{ add_attributes(link_skip__attributes) }}>
+  {% block link_skip__content %}
+    {{- link_skip__content -}}
+  {% endblock %}
+</a>
