@@ -105,7 +105,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   border: var(--size-thickness-1) solid var(--color-gray-700);
 
   &--left {
-    left: var(--size-thickness-1);
+    left: 0;
     transform: rotate(90deg);
     z-index: 2;
 
@@ -120,7 +120,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 
   &--right {
-    right: var(--size-thickness-1);
+    right: 0;
     transform: rotate(-90deg);
     z-index: 2;
 
