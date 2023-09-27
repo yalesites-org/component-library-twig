@@ -139,6 +139,7 @@ ComponentThemeColorPairings.argTypes = {
     defaultValue: 'one',
   },
   siteHeaderAccent: {
+    name: 'Header Accent Color (dial)',
     options: siteHeaderAccents,
     type: 'select',
     defaultValue: 'one',
