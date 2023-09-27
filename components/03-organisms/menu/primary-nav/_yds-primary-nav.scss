@@ -301,6 +301,7 @@ $menu-sub-max-width: 19rem;
 
   &:hover {
     color: var(--menu-link-color);
+    text-decoration: underline;
   }
 
   &--level-0 {
