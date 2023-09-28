@@ -24,7 +24,6 @@ const colorsData = {
   colors: {
     blue: tokens.color.blue,
     green: tokens.color.green,
-    purple: tokens.color.purple,
     orange: tokens.color.orange,
     yellow: tokens.color.yellow,
     basic: tokens.color.basic,
