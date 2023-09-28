@@ -3,7 +3,7 @@
 @use '../../../00-tokens/functions/map';
 @use '../../../00-tokens/tokens';
 
-$component-cta-themes: 'one', 'two', 'three', 'four', 'five', 'six', 'seven';
+$component-cta-themes: map.deep-get(tokens.$tokens, 'button-cta-themes');
 $component-basic-themes: map.deep-get(tokens.$tokens, 'basic-themes');
 $global-cta-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $cta-radii: (
@@ -51,11 +51,11 @@ $cta-outline-weights: (
   // default variables.
   @each $theme, $value in $component-cta-themes {
     &[data-cta-theme='#{$theme}'] {
-      --color-slot-one: var(--component-themes-#{$theme}-slot-one);
-      --color-slot-two: var(--component-themes-#{$theme}-slot-two);
-      --color-slot-three: var(--component-themes-#{$theme}-slot-three);
-      --color-slot-four: var(--component-themes-#{$theme}-slot-four);
-      --color-slot-five: var(--component-themes-#{$theme}-slot-five);
+      --color-slot-one: var(--button-cta-themes-#{$theme}-slot-one);
+      --color-slot-two: var(--button-cta-themes-#{$theme}-slot-two);
+      --color-slot-three: var(--button-cta-themes-#{$theme}-slot-three);
+      --color-slot-four: var(--button-cta-themes-#{$theme}-slot-four);
+      --color-slot-five: var(--button-cta-themes-#{$theme}-slot-five);
       --color-action: var(--color-cta-action);
       --color-action-secondary: var(--color-cta-action-secondary);
       --color-cta-action-secondary: var(--color-basic-white);

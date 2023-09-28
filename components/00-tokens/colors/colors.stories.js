@@ -59,15 +59,7 @@ const siteFooterAccents = [
   'eight',
 ];
 
-const ctaButtonThemeOptions = [
-  'one',
-  'two',
-  'three',
-  'four',
-  'five',
-  'six',
-  'seven',
-];
+const ctaButtonThemeOptions = Object.keys(tokens['button-cta-themes']);
 
 // get global themes as `label` : `key` values to pass into options as array.
 const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
