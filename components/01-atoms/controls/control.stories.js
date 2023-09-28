@@ -10,9 +10,19 @@ import './text-copy-button/yds-text-copy-button';
 
 import themeExamplesTwig from './cta/_yds-cta-examples.twig';
 
+const componentButtonCTAThemes = [
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+];
+
 const siteGlobalThemes = { themes: tokens['global-themes'] };
-const componentThemes = { themes: tokens['component-themes'] };
-const componentThemeOptions = Object.keys(tokens['component-themes']);
+const componentThemes = { themes: componentButtonCTAThemes };
+const componentThemeOptions = componentButtonCTAThemes;
 const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
 
 /**
