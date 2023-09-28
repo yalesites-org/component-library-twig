@@ -150,6 +150,12 @@ ComponentThemeColorPairings.argTypes = {
     options: ['one', 'two', 'three'],
     defaultValue: 'one',
   },
+  ctaButtonTheme: {
+    name: 'Button CTA Theme (dial)',
+    type: 'select',
+    options: ctaButtonThemeOptions,
+    defaultValue: 'one',
+  },
   qlTheme: {
     name: 'Quick Links Theme (dial)',
     type: 'select',
@@ -166,12 +172,6 @@ ComponentThemeColorPairings.argTypes = {
     name: 'Callout Theme (dial)',
     type: 'select',
     options: ['one', 'two', 'three'],
-    defaultValue: 'one',
-  },
-  ctaButtonTheme: {
-    name: 'Button CTA Theme (dial)',
-    type: 'select',
-    options: ctaButtonThemeOptions,
     defaultValue: 'one',
   },
   tabTheme: {
@@ -280,6 +280,12 @@ GlobalThemeColorPairings.argTypes = {
     options: ['one', 'two', 'three'],
     defaultValue: 'one',
   },
+  ctaButtonTheme: {
+    name: 'Button CTA Theme (dial)',
+    type: 'select',
+    options: ctaButtonThemeOptions,
+    defaultValue: 'one',
+  },
   qlTheme: {
     name: 'Quick Links Theme (dial)',
     type: 'select',
@@ -296,12 +302,6 @@ GlobalThemeColorPairings.argTypes = {
     name: 'Callout Theme (dial)',
     type: 'select',
     options: ['one', 'two', 'three'],
-    defaultValue: 'one',
-  },
-  ctaButtonTheme: {
-    name: 'Button CTA Theme (dial)',
-    type: 'select',
-    options: ctaButtonThemeOptions,
     defaultValue: 'one',
   },
   tabTheme: {

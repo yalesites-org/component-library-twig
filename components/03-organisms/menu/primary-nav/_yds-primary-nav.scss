@@ -12,6 +12,14 @@
 
 $menu-sub-max-width: 19rem;
 
+[data-header-theme='two'] {
+  --color-muted: var(--color-gray-300);
+  --color-navigation-border: var(--color-gray-300);
+  --color-navigation-expanded-item: var(--color-gray-300);
+  --color-navigation-active-item-link-background: var(--color-blue-medium);
+  --color-navigation-active-item-link-opacity: 0.13;
+}
+
 [data-header-theme='three'] {
   --color-muted: var(--color-gray-300);
   --color-navigation-border: var(--color-gray-300);
