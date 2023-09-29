@@ -154,17 +154,17 @@ $cta-outline-weights: (
       --color-cta-bg: var(--color-slot-three);
       --color-cta-bg-hover: transparent;
       --color-cta-border: var(--color-action);
-      --color-cta-text: var(--color-basic-white);
-      --color-cta-text-hover: var(--color-action);
+      --color-cta-text: var(--color-gray-800);
+      --color-cta-text-hover: var(--color-gray-700);
     }
 
     &[data-cta-style='outline'] {
-      --color-cta-action-secondary: var(--color-basic-white);
+      --color-cta-action-secondary: var(--color-gray-800);
       --color-action: var(--color-slot-three);
       --color-cta-bg: transparent;
       --color-cta-bg-hover: var(--color-action);
       --color-cta-border: var(--color-action);
-      --color-cta-text: var(--color-action);
+      --color-cta-text: var(--color-gray-800);
       --color-cta-text-hover: var(--color-cta-action-secondary);
     }
   }
