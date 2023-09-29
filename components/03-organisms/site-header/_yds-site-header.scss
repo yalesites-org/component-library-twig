@@ -55,6 +55,9 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
       --color-slot-three: var(--site-header-themes-#{$theme}-slot-three);
       --color-slot-four: var(--site-header-themes-#{$theme}-slot-four);
       --color-slot-five: var(--site-header-themes-#{$theme}-slot-five);
+      --color-slot-six: var(--site-header-themes-#{$theme}-slot-six);
+      --color-slot-seven: var(--site-header-themes-#{$theme}-slot-seven);
+      --color-slot-eight: var(--site-header-themes-#{$theme}-slot-eight);
       --color-action: var(--color-site-header-theme-action);
       --color-action-secondary: var(--color-site-header-theme-action-secondary);
 
@@ -88,6 +91,13 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
       );
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-slot-six: var(--global-themes-#{$globalTheme}-colors-slot-six);
+      --color-slot-seven: var(
+        --global-themes-#{$globalTheme}-colors-slot-seven
+      );
+      --color-slot-eight: var(
+        --global-themes-#{$globalTheme}-colors-slot-eight
+      );
     }
   }
 
@@ -152,15 +162,15 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 
   &[data-header-accent='six'] {
-    --color-site-header-border-color: var(--color-blue-yale);
+    --color-site-header-border-color: var(--color-slot-six);
   }
 
   &[data-header-accent='seven'] {
-    --color-site-header-border-color: var(--color-gray-800);
+    --color-site-header-border-color: var(--color-slot-seven);
   }
 
   &[data-header-accent='eight'] {
-    --color-site-header-border-color: var(--color-basic-white);
+    --color-site-header-border-color: var(--color-slot-eight);
   }
 
   // Border bottom thickness
