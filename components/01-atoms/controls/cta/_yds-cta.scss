@@ -63,6 +63,7 @@ $cta-outline-weights: (
       --color-action-secondary: var(--color-cta-action-secondary);
       --color-cta-action-secondary: var(--color-basic-white);
       --color-cta-action: var(--color-slot-one);
+      --color-link-base: var(--color-slot-two);
     }
   }
 
@@ -117,7 +118,7 @@ $cta-outline-weights: (
   /// define component name spaced variables and map them to global theme slots.
   &[data-cta-theme='one'] {
     &[data-cta-style='filled'] {
-      --color-cta-action-secondary: var(--color-basic-white);
+      --color-cta-action-secondary: var(--color-slot-eight);
       --color-cta-action: var(--color-slot-one);
       --color-cta-bg: var(--color-slot-one);
       --color-cta-bg-hover: transparent;
@@ -127,7 +128,7 @@ $cta-outline-weights: (
     }
 
     &[data-cta-style='outline'] {
-      --color-cta-action-secondary: var(--color-basic-white);
+      --color-cta-action-secondary: var(--color-slot-eight);
       --color-cta-action: var(--color-slot-one);
       --color-cta-bg: transparent;
       --color-cta-bg-hover: var(--color-action);
@@ -143,12 +144,12 @@ $cta-outline-weights: (
       --color-cta-bg: var(--color-slot-two);
       --color-cta-bg-hover: transparent;
       --color-cta-border: var(--color-action);
-      --color-cta-text: var(--color-basic-white);
+      --color-cta-text: var(--color-slot-eight);
       --color-cta-text-hover: var(--color-action);
     }
 
     &[data-cta-style='outline'] {
-      --color-cta-action-secondary: var(--color-basic-white);
+      --color-cta-action-secondary: var(--color-slot-eight);
       --color-cta-action: var(--color-slot-two);
       --color-cta-bg: transparent;
       --color-cta-bg-hover: var(--color-action);
@@ -164,17 +165,17 @@ $cta-outline-weights: (
       --color-cta-bg: var(--color-slot-three);
       --color-cta-bg-hover: transparent;
       --color-cta-border: var(--color-action);
-      --color-cta-text: var(--color-gray-800);
-      --color-cta-text-hover: var(--color-gray-700);
+      --color-cta-text: var(--color-slot-seven);
+      --color-cta-text-hover: var(--color-slot-seven);
     }
 
     &[data-cta-style='outline'] {
-      --color-cta-action-secondary: var(--color-gray-800);
+      --color-cta-action-secondary: var(--color-slot-seven);
       --color-action: var(--color-slot-three);
       --color-cta-bg: transparent;
       --color-cta-bg-hover: var(--color-action);
       --color-cta-border: var(--color-action);
-      --color-cta-text: var(--color-gray-800);
+      --color-cta-text: var(--color-slot-seven);
       --color-cta-text-hover: var(--color-cta-action-secondary);
     }
   }
@@ -185,18 +186,18 @@ $cta-outline-weights: (
       --color-cta-bg: var(--color-slot-four);
       --color-cta-bg-hover: transparent;
       --color-cta-border: var(--color-action);
-      --color-cta-text: var(--color-gray-800);
-      --color-cta-text-hover: var(--color-gray-700);
+      --color-cta-text: var(--color-slot-seven);
+      --color-cta-text-hover: var(--color-slot-seven);
     }
 
     &[data-cta-style='outline'] {
-      --color-cta-action-secondary: var(--color-gray-800);
+      --color-cta-action-secondary: var(--color-slot-seven);
       --color-action: var(--color-slot-four);
       --color-cta-bg: transparent;
       --color-cta-bg-hover: var(--color-action);
       --color-cta-border: var(--color-action);
-      --color-cta-text: var(--color-gray-800);
-      --color-cta-text-hover: var(--color-gray-700);
+      --color-cta-text: var(--color-slot-seven);
+      --color-cta-text-hover: var(--color-slot-seven);
     }
   }
 
@@ -206,12 +207,12 @@ $cta-outline-weights: (
       --color-cta-bg: var(--color-slot-five);
       --color-cta-bg-hover: transparent;
       --color-cta-border: var(--color-action);
-      --color-cta-text: var(--color-basic-white);
+      --color-cta-text: var(--color-slot-eight);
       --color-cta-text-hover: var(--color-action);
     }
 
     &[data-cta-style='outline'] {
-      --color-cta-action-secondary: var(--color-basic-white);
+      --color-cta-action-secondary: var(--color-slot-eight);
       --color-action: var(--color-slot-five);
       --color-cta-bg: transparent;
       --color-cta-bg-hover: var(--color-action);
