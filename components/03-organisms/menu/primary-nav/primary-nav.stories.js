@@ -28,7 +28,7 @@ export default {
     },
     menuVariation: {
       name: 'Menu Variation',
-      options: ['basic', 'mega'],
+      options: ['basic', 'mega', 'simple'],
       type: 'select',
       defaultValue: 'basic',
     },

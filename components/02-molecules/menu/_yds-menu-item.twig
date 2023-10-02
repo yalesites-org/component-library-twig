@@ -80,7 +80,15 @@
   {% block list__item__content %}
     {# This import needs to be inside the block for it to work in Drupal #}
     {% import "@molecules/menu/yds-menu.twig" as menus %}
-    {% set levels = menu__variation == 'mega' ? 2 : 1 %}
+
+    {% if menu__variation == 'mega' %}
+      {% set levels = 2 %}
+    {% elseif menu__variation == 'basic' %}
+      {% set levels = 1 %}
+    {% else %}
+      {% set levels = 0 %}
+    {% endif %}
+    {# {% set levels = menu__variation == 'mega' ? 2 : 1 %} #}
 
     {{ list__item__content__heading }}
 
@@ -94,6 +102,7 @@
             icon__base_class: 'toggle-icon',
             icon__blockname: item__blockname,
           } %}
+
         {% endset %}
         {% include "@atoms/controls/base/yds-control.twig" with {
           control__content: menu_item__cta__content,

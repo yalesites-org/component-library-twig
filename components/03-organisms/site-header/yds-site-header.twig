@@ -23,6 +23,20 @@
   class: bem(site_header__base_class),
 } %}
 
+{% if site_header__menu__variation == 'simple' %}
+  {% set site_header__type = 'simple' %}
+  {% set site_header__attributes = site_header__attributes|merge({
+  'data-site-header-type': 'simple',
+  }) %}
+
+  {% if site_header__background_image %}
+    {% set site_header__attributes = site_header__attributes|merge({
+    'data-site-header-with-background-image': '',
+    }) %}
+  {% endif %}
+
+{% endif %}
+
 {# Primary #}
 {% set site_header__primary %}
   <div {{ bem('primary', [], site_header__base_class) }}>
@@ -60,20 +74,21 @@
       {% include "@molecules/menu/menu-toggle/yds-menu-toggle.twig" %}
     </div>
     <div {{ bem('menu-wrapper', [], site_header__base_class) }}>
-      {# Secondary should come first on "desktop" sized screens #}
-      <div {{ bem('menu-secondary', ['desktop'], site_header__base_class) }}>
-        {% include "@organisms/site-header/_site-header--secondary.twig" with {
-          screen_size: 'desktop'
-        }%}
-      </div>
-        {{ site_header__primary }}
-      {# Secondary should come second on "mobile" sized screens #}
-      <div {{ bem('menu-secondary', ['mobile'], site_header__base_class) }}>
-        {% include "@organisms/site-header/_site-header--secondary.twig" with {
-          screen_size: 'mobile'
-        }%}
-      </div>
+    {# If header type is simple, load the simple component #}
+    {% if site_header__type == 'simple' %}
+      {% include "@organisms/site-header/_site-header-simple.twig" %}
+    {% else %}
+      {% include "@organisms/site-header/_site-header-default.twig" %}
+    {% endif %}
     </div>
   </div>
 </header>
 <div {{ bem('overlay', [], site_header__base_class) }}></div>
+
+{% if site_header__background_image and site_header__type == 'simple' %}
+  <div {{ bem('image', [], site_header__base_class) }}>
+    {% block site_header__background_image %}
+      {% include "@atoms/images/image/_responsive-image.twig" %}
+    {% endblock %}
+  </div>
+{% endif %}

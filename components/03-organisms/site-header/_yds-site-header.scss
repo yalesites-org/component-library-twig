@@ -194,6 +194,27 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
   @media (min-width: tokens.$break-mobile) {
     border-bottom: var(--site-header-border-bottom);
   }
+
+  &[data-site-header-with-background-image] {
+    background-color: transparent;
+    border-bottom: unset;
+
+    @media (min-width: tokens.$break-mobile) {
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-image: linear-gradient(
+          var(--color-site-header-background),
+          transparent
+        );
+        width: 100%;
+        height: 80vh;
+        z-index: -1;
+      }
+    }
+  }
 }
 
 .site-header__mobile-header {
@@ -379,5 +400,17 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
       height: 100vh;
       opacity: 1;
     }
+  }
+}
+
+// Image
+.site-header__image {
+  @media (min-width: tokens.$break-mobile) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
   }
 }

@@ -7,6 +7,7 @@ import siteHeaderExamples from './_site-header--examples.twig';
 
 import utilityNavData from '../menu/utility-nav/utility-nav.yml';
 import primaryNavData from '../menu/primary-nav/primary-nav.yml';
+import imageData from '../../01-atoms/images/image/image.yml';
 
 import '../../02-molecules/menu/menu-toggle/yds-menu-toggle';
 
@@ -50,9 +51,14 @@ export default {
     },
     menuVariation: {
       name: 'Menu Variation',
-      options: ['basic', 'mega'],
+      options: ['basic', 'mega', 'simple'],
       type: 'select',
       defaultValue: 'basic',
+    },
+    siteHeaderImage: {
+      name: 'With image',
+      type: 'boolean',
+      defaultValue: false,
     },
   },
 };
@@ -62,15 +68,18 @@ export const Header = ({
   primaryNavPosition,
   siteHeaderTheme,
   menuVariation,
+  siteHeaderImage,
   siteHeaderAccent,
 }) =>
   siteHeaderTwig({
+    ...imageData.responsive_images['16x9'],
     site_name: 'Department of Chemistry',
     site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
     site_header__accent: siteHeaderAccent,
     site_header__menu__variation: menuVariation,
+    site_header__background_image: siteHeaderImage,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
   });
@@ -88,6 +97,11 @@ Header.argTypes = {
     type: 'select',
     defaultValue: 'one',
   },
+  siteHeaderImage: {
+    name: 'With image',
+    type: 'boolean',
+    defaultValue: false,
+  },
 };
 
 export const HeaderExamples = ({
@@ -96,17 +110,20 @@ export const HeaderExamples = ({
   menuVariation,
   globalTheme,
   siteHeaderAccent,
+  siteHeaderImage,
 }) =>
   siteHeaderExamples({
     ...siteGlobalThemes,
     ...siteHeaderThemes,
     ...siteHeaderAccents,
+    ...imageData.responsive_images['16x9'],
     site_name: 'Department of Chemistry',
     site_global__theme: globalTheme,
     site_header__accent: siteHeaderAccent,
     site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__menu__variation: menuVariation,
+    site_header__background_image: siteHeaderImage,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
   });
@@ -123,5 +140,10 @@ HeaderExamples.argTypes = {
     options: siteHeaderAccents,
     type: 'select',
     defaultValue: 'one',
+  },
+  siteHeaderImage: {
+    name: 'With image',
+    type: 'boolean',
+    defaultValue: false,
   },
 };
