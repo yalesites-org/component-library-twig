@@ -3,7 +3,10 @@ import getGlobalThemes from '../../00-tokens/colors/color-global-themes';
 import ctaTwig from './cta/yds-cta.twig';
 import linkTwig from './text-link/yds-text-link.twig';
 
+import textCopyButton from './text-copy-button/yds-text-copy-button.twig';
+
 import './text-link/yds-text-link';
+import './text-copy-button/yds-text-copy-button';
 
 import themeExamplesTwig from './cta/_yds-cta-examples.twig';
 
@@ -184,13 +187,6 @@ export const textLink = () => `
     link__content: 'This is a long link without animated underlines',
     link__style: 'no-underline-animation',
   })}<br/>
-  ${linkTwig({
-    link__url: '#',
-    link__pre_text: 'person@example.com',
-    link__content: '(copy)',
-    link__type: 'email',
-    link__extra_class: ['copy-trigger'],
-  })}
 `;
 
 export const CtaExamples = ({ globalTheme, componentTheme }) =>
@@ -375,12 +371,35 @@ export const LinkExamples = ({ globalTheme, componentTheme }) =>
         link__content: 'This is a long link without animated underlines',
         link__style: 'no-underline-animation',
       })}<br/>
-      ${linkTwig({
-        link__url: '#',
-        link__pre_text: 'person@example.com',
-        link__content: '(copy)',
-        link__type: 'email',
-        link__extra_class: ['copy-trigger'],
-      })}</div>
+      </div>
       `,
   });
+
+export const textCopyButtonExamples = ({ globalTheme, componentTheme }) =>
+  themeExamplesTwig({
+    ...siteGlobalThemes,
+    ...componentThemes,
+    site_global__theme: globalTheme,
+    example_content: `
+      ${textCopyButton({
+        text_copy_button__pre_text: 'person@example.com',
+        text_copy_button__content: '(copy)',
+        text_copy_button__component_theme: componentTheme,
+      })}
+    `,
+  });
+
+textCopyButtonExamples.argTypes = {
+  globalTheme: {
+    name: 'Global Theme (lever)',
+    options: siteGlobalThemeOptions,
+    type: 'select',
+    defaultValue: 'one',
+  },
+  componentTheme: {
+    name: 'Component Theme (dial)',
+    options: componentThemeOptions,
+    type: 'select',
+    defaultValue: 'one',
+  },
+};

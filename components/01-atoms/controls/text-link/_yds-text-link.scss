@@ -239,9 +239,4 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   &[data-link-style='no-underline-animation'] {
     @include plain-link;
   }
-
-  &[data-link-type='email'] {
-    cursor: pointer;
-    text-underline-offset: 0.22rem;
-  }
 }

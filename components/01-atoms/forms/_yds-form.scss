@@ -42,10 +42,12 @@
 .ys-filter-form {
   align-items: flex-end;
   display: flex;
-  gap: 0 1rem;
+  gap: 1rem;
   margin-bottom: var(--size-spacing-8);
+  flex-flow: row wrap;
 
   .form-item {
+    width: 100%;
     margin-bottom: 0;
   }
 
@@ -57,5 +59,7 @@
     @include button-submit;
 
     --border-radius-button: var(--radius-0);
+
+    min-height: var(--size-spacing-9);
   }
 }
