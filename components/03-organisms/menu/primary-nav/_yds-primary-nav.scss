@@ -396,6 +396,8 @@ $menu-sub-max-width: 19rem;
 // Active trail styles.
 .primary-nav__link.primary-nav__link--active {
   color: var(--menu-link-color);
+  text-decoration: underline;
+  text-decoration-thickness: var(--border-thickness-2);
 }
 
 .primary-nav__link:not(.primary-nav__link--level-0):not(.primary-nav__link--explore-bar).primary-nav__link--active {
