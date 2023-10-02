@@ -206,8 +206,8 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
         top: 0;
         left: 0;
         background-image: linear-gradient(
-          var(--color-site-header-background),
-          transparent
+          var(--color-site-header-background) 30%,
+          transparent 100%
         );
         width: 100%;
         height: 80vh;
