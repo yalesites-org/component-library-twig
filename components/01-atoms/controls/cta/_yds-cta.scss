@@ -224,27 +224,6 @@ $cta-outline-weights: (
 
   &[data-cta-theme='six'] {
     &[data-cta-style='filled'] {
-      --color-cta-action: var(--color-slot-seven);
-      --color-cta-bg: var(--color-slot-seven);
-      --color-cta-bg-hover: transparent;
-      --color-cta-border: var(--color-action);
-      --color-cta-text: var(--color-slot-eight);
-      --color-cta-text-hover: var(--color-action);
-    }
-
-    &[data-cta-style='outline'] {
-      --color-cta-action-secondary: var(--color-slot-seven);
-      --color-action: var(--color-slot-seven);
-      --color-cta-bg: transparent;
-      --color-cta-bg-hover: var(--color-action);
-      --color-cta-border: var(--color-action);
-      --color-cta-text: var(--color-action);
-      --color-cta-text-hover: var(--color-slot-eight);
-    }
-  }
-
-  &[data-cta-theme='seven'] {
-    &[data-cta-style='filled'] {
       --color-cta-action: var(--color-slot-six);
       --color-cta-bg: var(--color-slot-six);
       --color-cta-bg-hover: transparent;
@@ -256,6 +235,27 @@ $cta-outline-weights: (
     &[data-cta-style='outline'] {
       --color-cta-action-secondary: var(--color-slot-six);
       --color-action: var(--color-slot-six);
+      --color-cta-bg: transparent;
+      --color-cta-bg-hover: var(--color-action);
+      --color-cta-border: var(--color-action);
+      --color-cta-text: var(--color-action);
+      --color-cta-text-hover: var(--color-slot-eight);
+    }
+  }
+
+  &[data-cta-theme='seven'] {
+    &[data-cta-style='filled'] {
+      --color-cta-action: var(--color-slot-seven);
+      --color-cta-bg: var(--color-slot-seven);
+      --color-cta-bg-hover: transparent;
+      --color-cta-border: var(--color-action);
+      --color-cta-text: var(--color-slot-eight);
+      --color-cta-text-hover: var(--color-action);
+    }
+
+    &[data-cta-style='outline'] {
+      --color-cta-action-secondary: var(--color-slot-seven);
+      --color-action: var(--color-slot-seven);
       --color-cta-bg: transparent;
       --color-cta-bg-hover: var(--color-action);
       --color-cta-border: var(--color-action);
