@@ -440,6 +440,13 @@ $site-max-width: 84rem;
       width: 100%;
       height: 80%;
       z-index: 1;
+
+      @media (min-width: $site-max-width) {
+        background-image: linear-gradient(
+          var(--color-site-header-background) 10%,
+          transparent 100%
+        );
+      }
     }
   }
 }
