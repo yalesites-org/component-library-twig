@@ -82,8 +82,6 @@
     {% endif %}
     </div>
   </div>
-</header>
-<div {{ bem('overlay', [], site_header__base_class) }}></div>
 
 {% if site_header__background_image and site_header__type == 'simple' %}
   <div {{ bem('image', [], site_header__base_class) }}>
@@ -92,3 +90,6 @@
     {% endblock %}
   </div>
 {% endif %}
+</header>
+<div {{ bem('overlay', [], site_header__base_class) }}></div>
+

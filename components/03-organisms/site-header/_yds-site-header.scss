@@ -211,7 +211,7 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
         );
         width: 100%;
         height: 80vh;
-        z-index: -1;
+        z-index: 1;
       }
     }
   }
@@ -403,6 +403,11 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 }
 
+.site-header__inner {
+  position: relative;
+  z-index: 1;
+}
+
 // Image
 .site-header__image {
   @media (min-width: tokens.$break-mobile) {
@@ -411,6 +416,6 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: 0;
   }
 }
