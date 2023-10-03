@@ -5,6 +5,7 @@ $site-header-themes: map.deep-get(tokens.$tokens, site-header-themes);
 $site-header-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
+$site-max-width: 84rem;
 
 :root {
   --site-header-animation-speed: var(--animation-speed-slow);
@@ -202,21 +203,8 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
     @media (min-width: tokens.$break-mobile) {
       display: grid;
       grid-template: 'header';
-      place-content: start;
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-image: linear-gradient(
-          var(--color-site-header-background) 30%,
-          transparent 100%
-        );
-        width: 100%;
-        height: 80vh;
-        z-index: 1;
-      }
+      width: 100%;
+      max-width: 100%;
     }
   }
 }
@@ -259,6 +247,11 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
       @include tokens.animate-hidden(var(--site-header-animation-speed));
 
       transform: translateY(-100%);
+    }
+
+    // when it's a simple menu with an image we need to set a min-height
+    [data-site-header-type='simple'][data-site-header-with-background-image] & {
+      min-height: var(--header-height-mobile);
     }
   }
 }
@@ -408,16 +401,45 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
 }
 
 .site-header__inner {
-  grid-area: container;
-  z-index: 2;
+  [data-site-header-type='simple'][data-site-header-with-background-image] & {
+    @media (min-width: tokens.$break-mobile) {
+      grid-area: container;
+      z-index: 2;
+    }
+
+    @media (max-width: $site-max-width) {
+      width: 100%;
+    }
+  }
 }
 
 // Image
 .site-header__image {
+  position: relative;
+  margin-left: calc(var(--size-spacing-site-gutter) * -1);
+  margin-right: calc(var(--size-spacing-site-gutter) * -1);
+
+  [data-main-menu-state='open'] & {
+    z-index: -1;
+    opacity: 0.1;
+  }
+
   @media (min-width: tokens.$break-mobile) {
-    width: 100%;
-    height: 100%;
     grid-area: container;
     z-index: 0;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-image: linear-gradient(
+        var(--color-site-header-background) 30%,
+        transparent 100%
+      );
+      width: 100%;
+      height: 80%;
+      z-index: 1;
+    }
   }
 }

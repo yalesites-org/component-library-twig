@@ -23,10 +23,14 @@
   class: bem(site_header__base_class),
 } %}
 
+{# If header is simple, set header-type attribute
+  set default nav position to right
+ #}
 {% if site_header__menu__variation == 'simple' %}
   {% set site_header__type = 'simple' %}
   {% set site_header__attributes = site_header__attributes|merge({
-  'data-site-header-type': 'simple',
+    'data-site-header-type': 'simple',
+    'data-site-header-nav-position': 'right',
   }) %}
 
   {% if site_header__background_image %}
@@ -82,14 +86,13 @@
     {% endif %}
     </div>
   </div>
-
-{% if site_header__background_image and site_header__type == 'simple' %}
-  <div {{ bem('image', [], site_header__base_class) }}>
-    {% block site_header__background_image %}
-      {% include "@atoms/images/image/_responsive-image.twig" %}
-    {% endblock %}
-  </div>
-{% endif %}
+  {% if site_header__background_image and site_header__type == 'simple' %}
+    <div {{ bem('image', [], site_header__base_class) }}>
+      {% block site_header__background_image %}
+        {% include "@atoms/images/image/_responsive-image.twig" %}
+      {% endblock %}
+    </div>
+  {% endif %}
 </header>
 <div {{ bem('overlay', [], site_header__base_class) }}></div>
 
