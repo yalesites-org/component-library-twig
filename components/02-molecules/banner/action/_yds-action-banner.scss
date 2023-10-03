@@ -24,6 +24,14 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
       --color-heading: var(--color-banner-heading);
       --color-action: var(--color-banner-action);
       --color-action-secondary: var(--color-banner-action-secondary);
+      --color-slot-one: var(--component-themes-#{$theme}-slot-one);
+      --color-slot-two: var(--component-themes-#{$theme}-slot-two);
+      --color-slot-three: var(--component-themes-#{$theme}-slot-three);
+      --color-slot-four: var(--component-themes-#{$theme}-slot-four);
+      --color-slot-five: var(--component-themes-#{$theme}-slot-five);
+      --color-slot-six: var(--component-themes-#{$theme}-slot-six);
+      --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
+      --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
     }
   }
 
@@ -40,6 +48,13 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
       );
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-slot-six: var(--global-themes-#{$globalTheme}-colors-slot-six);
+      --color-slot-seven: var(
+        --global-themes-#{$globalTheme}-colors-slot-seven
+      );
+      --color-slot-eight: var(
+        --global-themes-#{$globalTheme}-colors-slot-eight
+      );
     }
   }
 
@@ -55,9 +70,9 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
     --color-banner-background: var(--color-slot-one);
-    --color-banner-text: var(--color-basic-white);
-    --color-banner-heading: var(--color-basic-white);
-    --color-banner-action: var(--color-basic-white);
+    --color-banner-text: var(--color-slot-eight);
+    --color-banner-heading: var(--color-slot-eight);
+    --color-banner-action: var(--color-slot-eight);
     --color-banner-action-secondary: var(--color-slot-one);
     --color-link-base: var(--color-banner-heading);
     --color-link-hover: var(--color-banner-heading);
@@ -65,10 +80,10 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
 
   &[data-component-theme='two'] {
     --color-banner-background: var(--color-slot-four);
-    --color-banner-text: var(--color-gray-800);
-    --color-banner-heading: var(--color-gray-800);
-    --color-banner-action: var(--color-gray-800);
-    --color-banner-action-secondary: var(--color-basic-white);
+    --color-banner-text: var(--color-slot-seven);
+    --color-banner-heading: var(--color-slot-seven);
+    --color-banner-action: var(--color-slot-seven);
+    --color-banner-action-secondary: var(--color-slot-eight);
     --color-link-base: var(--color-banner-heading);
     --color-link-hover: var(--color-banner-heading);
 
@@ -93,9 +108,9 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
 
   &[data-component-theme='three'] {
     --color-banner-background: var(--color-slot-five);
-    --color-banner-text: var(--color-basic-white);
-    --color-banner-heading: var(--color-basic-white);
-    --color-banner-action: var(--color-basic-white);
+    --color-banner-text: var(--color-slot-eight);
+    --color-banner-heading: var(--color-slot-eight);
+    --color-banner-action: var(--color-slot-eight);
     --color-banner-action-secondary: var(--color-slot-one);
     --color-link-base: var(--color-banner-heading);
     --color-link-hover: var(--color-banner-heading);
