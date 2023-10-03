@@ -9,6 +9,7 @@ import ctaTwig from '../01-atoms/controls/cta/yds-cta.twig';
 // Data files.
 import primaryNavData from '../03-organisms/menu/primary-nav/primary-nav.yml';
 import tabsData from '../02-molecules/tabs/tabs.yml';
+import imageData from '../01-atoms/images/image/image.yml';
 
 const layoutOptions = ['left', 'center'];
 const thicknessOptions = Object.keys(tokens.border.thickness);
@@ -19,7 +20,7 @@ const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
 const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
 const siteAnimationOptions = ['artistic', 'default'];
 const siteFooterVariations = ['basic', 'mega'];
-const siteHeaderAccents = [
+const themesOneToEight = [
   'one',
   'two',
   'three',
@@ -29,16 +30,8 @@ const siteHeaderAccents = [
   'seven',
   'eight',
 ];
-const siteFooterAccents = [
-  'one',
-  'two',
-  'three',
-  'four',
-  'five',
-  'six',
-  'seven',
-  'eight',
-];
+const siteHeaderAccents = themesOneToEight;
+const siteFooterAccents = themesOneToEight;
 
 export default {
   title: 'Config',
@@ -93,6 +86,11 @@ export default {
       options: ['mega', 'basic', 'simple'],
       type: 'select',
       defaultValue: localStorage.getItem('yds-cl-twig-menu-variation'),
+    },
+    siteHeaderImage: {
+      name: 'Header With image',
+      type: 'boolean',
+      defaultValue: false,
     },
     primaryNavPosition: {
       name: 'Navigation position',
@@ -161,6 +159,7 @@ export const GlobalConfig = ({
   dividerWidth,
   actionColor,
   primaryNavPosition,
+  siteHeaderImage,
   siteHeaderTheme,
   siteHeaderAccent,
   headerBorderThickness,
@@ -225,7 +224,8 @@ export const GlobalConfig = ({
     site_animate_components: allowAnimatedItems,
     primary_nav__items: primaryNavData.items,
     site_global__theme: globalTheme,
-    menu__variation: menuVariation,
+    site_header__menu__variation: menuVariation,
+    site_header__background_image: siteHeaderImage,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
@@ -235,6 +235,7 @@ export const GlobalConfig = ({
     site_footer__theme: siteFooterTheme,
     site_footer__accent: siteFooterAccent,
     ...tabsData,
+    ...imageData.responsive_images['16x9'],
   })}
   `;
 };
