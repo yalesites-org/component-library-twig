@@ -200,6 +200,10 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
     border-bottom: unset;
 
     @media (min-width: tokens.$break-mobile) {
+      display: grid;
+      grid-template: 'header';
+      place-content: start;
+
       &::before {
         content: '';
         position: absolute;
@@ -404,18 +408,16 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
 }
 
 .site-header__inner {
-  position: relative;
-  z-index: 1;
+  grid-area: container;
+  z-index: 2;
 }
 
 // Image
 .site-header__image {
   @media (min-width: tokens.$break-mobile) {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
+    grid-area: container;
     z-index: 0;
   }
 }
