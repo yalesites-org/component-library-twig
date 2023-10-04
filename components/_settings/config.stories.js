@@ -83,7 +83,7 @@ export default {
     },
     menuVariation: {
       name: 'Menu Variation',
-      options: ['mega', 'basic', 'simple'],
+      options: ['mega', 'basic', 'focus'],
       type: 'select',
       defaultValue: localStorage.getItem('yds-cl-twig-menu-variation'),
     },

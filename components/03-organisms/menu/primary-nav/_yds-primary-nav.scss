@@ -320,7 +320,7 @@ $menu-sub-max-width: 19rem;
 
       // always show first level in simple menu
       // even if they have child items which won't display
-      [data-menu-variation='simple'] & {
+      [data-menu-variation='focus'] & {
         display: block;
       }
     }

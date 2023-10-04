@@ -250,7 +250,7 @@ $site-max-width: 84rem;
     }
 
     // when it's a simple menu with an image we need to set a min-height
-    [data-site-header-type='simple'][data-site-header-with-background-image] & {
+    [data-site-header-type='focus'][data-site-header-with-background-image] & {
       min-height: var(--header-height-mobile);
     }
   }
@@ -370,6 +370,10 @@ $site-max-width: 84rem;
     [data-site-header-nav-position='right'] & {
       margin-left: auto;
     }
+
+    [data-site-header-site-name-is-image] & {
+      align-self: center;
+    }
   }
 }
 
@@ -401,7 +405,7 @@ $site-max-width: 84rem;
 }
 
 .site-header__inner {
-  [data-site-header-type='simple'][data-site-header-with-background-image] & {
+  [data-site-header-type='focus'][data-site-header-with-background-image] & {
     @media (min-width: tokens.$break-mobile) {
       grid-area: container;
       z-index: 2;
@@ -447,6 +451,15 @@ $site-max-width: 84rem;
           transparent 100%
         );
       }
+    }
+  }
+}
+
+// Site Name is Logo/SVG
+.site-header__site-branding-logo {
+  [data-site-header-site-name-is-image] & {
+    > * {
+      max-height: 200px;
     }
   }
 }

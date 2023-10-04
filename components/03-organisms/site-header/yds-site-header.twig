@@ -23,13 +23,22 @@
   class: bem(site_header__base_class),
 } %}
 
+{# If the header uses a logo as its site_name instead of text #}
+{% set site_name__is_image = true %}
+
+{% if site_name__is_image %}
+  {% set site_header__attributes = site_header__attributes|merge({
+  'data-site-header-site-name-is-image': '',
+  }) %}
+{% endif %}
+
 {# If header is simple, set header-type attribute
   set default nav position to right
  #}
-{% if site_header__menu__variation == 'simple' %}
-  {% set site_header__type = 'simple' %}
+{% if site_header__menu__variation == 'focus' %}
+  {% set site_header__type = 'focus' %}
   {% set site_header__attributes = site_header__attributes|merge({
-    'data-site-header-type': 'simple',
+    'data-site-header-type': 'focus',
     'data-site-header-nav-position': 'right',
   }) %}
 
@@ -38,20 +47,32 @@
     'data-site-header-with-background-image': '',
     }) %}
   {% endif %}
-
 {% endif %}
 
 {# Primary #}
 {% set site_header__primary %}
   <div {{ bem('primary', [], site_header__base_class) }}>
-    {# Site Branding #}
-    {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-      link__content: site_name,
-      link__url: '/',
-      link__base_class: 'site-branding',
-      link__modifiers: ['primary'],
-      link__blockname: site_header__base_class,
-    } %}
+    {% if site_name__is_image %}
+      {% embed "@atoms/controls/text-link/yds-text-link.twig" with {
+        link__url: '/',
+        link__base_class: 'site-branding-logo',
+        link__modifiers: ['primary'],
+        link__blockname: site_header__base_class,
+      } %}
+        {% block link__image %}
+          {% include "@atoms/images/image/_responsive-image.twig" %}
+        {% endblock %}
+      {% endembed %}
+      {% else %}
+      {# Site Branding #}
+      {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+        link__content: site_name,
+        link__url: '/',
+        link__base_class: 'site-branding',
+        link__modifiers: ['primary'],
+        link__blockname: site_header__base_class,
+      } %}
+    {% endif %}
     {# Primary Nav #}
     <div {{ bem('primary-nav', [], site_header__base_class) }}>
       {% block site_header__primary_nav %}
@@ -79,14 +100,14 @@
     </div>
     <div {{ bem('menu-wrapper', [], site_header__base_class) }}>
     {# If header type is simple, load the simple component #}
-    {% if site_header__type == 'simple' %}
+    {% if site_header__type == 'focus' %}
       {% include "@organisms/site-header/_site-header-simple.twig" %}
     {% else %}
       {% include "@organisms/site-header/_site-header-default.twig" %}
     {% endif %}
     </div>
   </div>
-  {% if site_header__background_image and site_header__type == 'simple' %}
+  {% if site_header__background_image and site_header__type == 'focus' %}
     <div {{ bem('image', [], site_header__base_class) }}>
       {% block site_header__background_image %}
         {% include "@atoms/images/image/_responsive-image.twig" %}
