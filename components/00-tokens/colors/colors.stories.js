@@ -304,6 +304,7 @@ GlobalThemeColorPairings.argTypes = {
     defaultValue: 'one',
   },
   primaryNavPosition: {
+    name: 'Navigation position',
     options: ['left', 'center', 'right'],
     type: 'select',
     defaultValue: 'left',

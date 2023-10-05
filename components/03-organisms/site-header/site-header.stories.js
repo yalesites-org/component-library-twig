@@ -40,11 +40,13 @@ export default {
   },
   argTypes: {
     borderThickness: {
+      name: 'Navigation border thickness',
       options: borderThicknessOptions,
       type: 'select',
       defaultValue: '8',
     },
     primaryNavPosition: {
+      name: 'Navigation position',
       options: ['left', 'center', 'right'],
       type: 'select',
       defaultValue: 'left',
