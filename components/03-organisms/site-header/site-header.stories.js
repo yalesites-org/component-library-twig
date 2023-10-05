@@ -60,6 +60,11 @@ export default {
       type: 'boolean',
       defaultValue: false,
     },
+    siteHeaderSiteNameImage: {
+      name: 'Site Name is an Image',
+      type: 'boolean',
+      defaultValue: false,
+    },
   },
 };
 
@@ -69,6 +74,7 @@ export const Header = ({
   siteHeaderTheme,
   menuVariation,
   siteHeaderImage,
+  siteHeaderSiteNameImage,
   siteHeaderAccent,
 }) =>
   siteHeaderTwig({
@@ -80,6 +86,7 @@ export const Header = ({
     site_header__accent: siteHeaderAccent,
     site_header__menu__variation: menuVariation,
     site_header__background_image: siteHeaderImage,
+    site_header__site_name_is_image: siteHeaderSiteNameImage,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
   });
@@ -111,6 +118,7 @@ export const HeaderExamples = ({
   globalTheme,
   siteHeaderAccent,
   siteHeaderImage,
+  siteHeaderSiteNameImage,
 }) =>
   siteHeaderExamples({
     ...siteGlobalThemes,
@@ -124,6 +132,7 @@ export const HeaderExamples = ({
     site_header__nav_position: primaryNavPosition,
     site_header__menu__variation: menuVariation,
     site_header__background_image: siteHeaderImage,
+    site_header__site_name_is_image: siteHeaderSiteNameImage,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
   });

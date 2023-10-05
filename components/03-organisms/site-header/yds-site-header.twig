@@ -24,9 +24,7 @@
 } %}
 
 {# If the header uses a logo as its site_name instead of text #}
-{% set site_name__is_image = true %}
-
-{% if site_name__is_image %}
+{% if site_header__site_name_is_image %}
   {% set site_header__attributes = site_header__attributes|merge({
   'data-site-header-site-name-is-image': '',
   }) %}
@@ -52,7 +50,7 @@
 {# Primary #}
 {% set site_header__primary %}
   <div {{ bem('primary', [], site_header__base_class) }}>
-    {% if site_name__is_image %}
+    {% if site_header__site_name_is_image %}
       {% embed "@atoms/controls/text-link/yds-text-link.twig" with {
         link__url: '/',
         link__base_class: 'site-branding-logo',

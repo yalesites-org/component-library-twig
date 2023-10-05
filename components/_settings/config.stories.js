@@ -110,6 +110,11 @@ export default {
       type: 'select',
       defaultValue: localStorage.getItem('yds-cl-twig-site-header-accent'),
     },
+    siteHeaderSiteNameImage: {
+      name: 'Site Name is an Image',
+      type: 'boolean',
+      defaultValue: false,
+    },
     headerBorderThickness: {
       name: 'Header: Border thickness',
       options: borderThicknessOptions,
@@ -162,6 +167,7 @@ export const GlobalConfig = ({
   siteHeaderImage,
   siteHeaderTheme,
   siteHeaderAccent,
+  siteHeaderSiteNameImage,
   headerBorderThickness,
   siteFooterTheme,
   siteFooterAccent,
@@ -226,6 +232,7 @@ export const GlobalConfig = ({
     site_global__theme: globalTheme,
     site_header__menu__variation: menuVariation,
     site_header__background_image: siteHeaderImage,
+    site_header__site_name_is_image: siteHeaderSiteNameImage,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
