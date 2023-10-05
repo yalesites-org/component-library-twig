@@ -20,6 +20,9 @@ const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
 const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
 const siteAnimationOptions = ['artistic', 'default'];
 const siteFooterVariations = ['basic', 'mega'];
+
+// Storing the header/footer accent colors here for now instead of adding them to our Tokens repository. These may move
+// in the future.
 const themesOneToEight = [
   'one',
   'two',
@@ -87,11 +90,6 @@ export default {
       type: 'select',
       defaultValue: localStorage.getItem('yds-cl-twig-menu-variation'),
     },
-    siteHeaderImage: {
-      name: 'Header With image',
-      type: 'boolean',
-      defaultValue: false,
-    },
     primaryNavPosition: {
       name: 'Navigation position',
       options: ['left', 'center', 'right'],
@@ -109,6 +107,11 @@ export default {
       options: siteHeaderAccents,
       type: 'select',
       defaultValue: localStorage.getItem('yds-cl-twig-site-header-accent'),
+    },
+    siteHeaderImage: {
+      name: 'Header With image',
+      type: 'boolean',
+      defaultValue: false,
     },
     siteHeaderSiteNameImage: {
       name: 'Site Name is an Image',
@@ -164,9 +167,9 @@ export const GlobalConfig = ({
   dividerWidth,
   actionColor,
   primaryNavPosition,
-  siteHeaderImage,
   siteHeaderTheme,
   siteHeaderAccent,
+  siteHeaderImage,
   siteHeaderSiteNameImage,
   headerBorderThickness,
   siteFooterTheme,

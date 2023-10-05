@@ -56,7 +56,7 @@ export default {
       defaultValue: 'basic',
     },
     siteHeaderImage: {
-      name: 'With image',
+      name: 'Header With image',
       type: 'boolean',
       defaultValue: false,
     },
