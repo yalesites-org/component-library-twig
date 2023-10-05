@@ -378,8 +378,7 @@ $background-image-max-width: 100rem;
       margin-left: auto;
     }
 
-    [data-site-header-nav-position='right'][data-site-header-site-name-is-image]
-      & {
+    [data-site-header-type='focus'] & {
       align-self: center;
     }
   }
