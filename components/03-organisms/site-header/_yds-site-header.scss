@@ -6,6 +6,7 @@ $site-header-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $site-max-width: 84rem;
+$background-image-max-width: 100rem;
 
 :root {
   --site-header-animation-speed: var(--animation-speed-slow);
@@ -205,6 +206,12 @@ $site-max-width: 84rem;
       grid-template: 'header';
       width: 100%;
       max-width: 100%;
+    }
+
+    @media (min-width: $background-image-max-width) {
+      max-width: 150rem; // 2400px
+      padding: 0;
+      margin: 0 auto;
     }
   }
 }
@@ -421,12 +428,24 @@ $site-max-width: 84rem;
 // Image
 .site-header__image {
   position: relative;
+
+  // pull image into the site margins, full-bleed
   margin-left: calc(var(--size-spacing-site-gutter) * -1);
   margin-right: calc(var(--size-spacing-site-gutter) * -1);
 
   [data-main-menu-state='open'] & {
     z-index: -1;
     opacity: 0.1;
+  }
+
+  // make image width and height take up the full screen at resolutions
+  // greater than mobile
+  @media (min-width: tokens.$break-mobile) {
+    > * {
+      object-fit: cover;
+      height: 100vh;
+      width: 100vw;
+    }
   }
 
   @media (min-width: tokens.$break-mobile) {
@@ -443,7 +462,7 @@ $site-max-width: 84rem;
         transparent 100%
       );
       width: 100%;
-      height: 80%;
+      height: 100%;
       z-index: 1;
 
       @media (min-width: $site-max-width) {
