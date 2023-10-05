@@ -478,17 +478,21 @@ $background-image-max-width: 100rem;
 // Site Name is Logo/SVG
 .site-header__site-branding-logo {
   [data-site-header-site-name-is-image] & {
-    > * {
-      max-height: 200px;
-    }
-
     &--desktop {
+      > * {
+        max-height: 200px;
+      }
+
       @media (max-width: tokens.$break-mobile-max) {
         display: none;
       }
     }
 
     &--mobile {
+      > * {
+        max-height: 100px;
+      }
+
       @media (min-width: tokens.$break-mobile) {
         display: none;
       }
