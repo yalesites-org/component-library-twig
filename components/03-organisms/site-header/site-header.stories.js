@@ -40,13 +40,13 @@ export default {
   },
   argTypes: {
     borderThickness: {
-      name: 'Navigation border thickness',
+      name: 'Navigation Border Thickness',
       options: borderThicknessOptions,
       type: 'select',
       defaultValue: '8',
     },
     primaryNavPosition: {
-      name: 'Navigation position',
+      name: 'Navigation Position',
       options: ['left', 'center', 'right'],
       type: 'select',
       defaultValue: 'left',
@@ -58,7 +58,7 @@ export default {
       defaultValue: 'basic',
     },
     siteHeaderImage: {
-      name: 'Header With image',
+      name: 'Header With Image',
       type: 'boolean',
       defaultValue: false,
     },
@@ -153,7 +153,7 @@ HeaderExamples.argTypes = {
     defaultValue: 'one',
   },
   siteHeaderImage: {
-    name: 'With image',
+    name: 'Header With Image',
     type: 'boolean',
     defaultValue: false,
   },
