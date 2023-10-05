@@ -54,7 +54,7 @@
       {% embed "@atoms/controls/text-link/yds-text-link.twig" with {
         link__url: '/',
         link__base_class: 'site-branding-logo',
-        link__modifiers: ['primary'],
+        link__modifiers: ['desktop'],
         link__blockname: site_header__base_class,
       } %}
         {% block link__image %}
@@ -86,13 +86,26 @@
   <div {{ bem('inner', [], site_header__base_class) }}>
     <div {{ bem('mobile-header', [], site_header__base_class) }}>
       {# Yale Branding #}
-      {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-        link__content: site_name,
-        link__url: '/',
-        link__base_class: 'site-branding',
-        link__modifiers: ['mobile'],
-        link__blockname: site_header__base_class,
-      } %}
+      {% if site_header__site_name_is_image %}
+        {% embed "@atoms/controls/text-link/yds-text-link.twig" with {
+          link__url: '/',
+          link__base_class: 'site-branding-logo',
+          link__modifiers: ['mobile'],
+          link__blockname: site_header__base_class,
+        } %}
+          {% block link__image %}
+            {% include "@atoms/images/image/_responsive-image.twig" %}
+          {% endblock %}
+        {% endembed %}
+        {% else %}
+        {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+          link__content: site_name,
+          link__url: '/',
+          link__base_class: 'site-branding',
+          link__modifiers: ['mobile'],
+          link__blockname: site_header__base_class,
+        } %}
+      {% endif %}
       {# Mobile Menu Toggle #}
       {% include "@molecules/menu/menu-toggle/yds-menu-toggle.twig" %}
     </div>

@@ -481,5 +481,17 @@ $background-image-max-width: 100rem;
     > * {
       max-height: 200px;
     }
+
+    &--desktop {
+      @media (max-width: tokens.$break-mobile-max) {
+        display: none;
+      }
+    }
+
+    &--mobile {
+      @media (min-width: tokens.$break-mobile) {
+        display: none;
+      }
+    }
   }
 }
