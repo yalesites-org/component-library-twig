@@ -297,6 +297,12 @@ GlobalThemeColorPairings.argTypes = {
     type: 'select',
     defaultValue: 'one',
   },
+  siteHeaderAccent: {
+    name: 'Header Accent Color (dial)',
+    options: siteHeaderAccents,
+    type: 'select',
+    defaultValue: 'one',
+  },
   primaryNavPosition: {
     options: ['left', 'center', 'right'],
     type: 'select',
@@ -317,12 +323,6 @@ GlobalThemeColorPairings.argTypes = {
     name: 'Site Name is an Image',
     type: 'boolean',
     defaultValue: false,
-  },
-  siteHeaderAccent: {
-    name: 'Header Accent Color (dial)',
-    options: siteHeaderAccents,
-    type: 'select',
-    defaultValue: 'one',
   },
   bannerTheme: {
     name: 'Banner Theme (dial)',
