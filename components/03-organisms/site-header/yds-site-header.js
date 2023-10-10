@@ -2,6 +2,9 @@ Drupal.behaviors.siteHeader = {
   attach(context) {
     const body = context.querySelector('body');
     const header = context.querySelector('.site-header');
+    const headerLogo = context.querySelector(
+      '.site-header__site-branding-logo',
+    );
 
     /**
      * debounce
@@ -39,5 +42,20 @@ Drupal.behaviors.siteHeader = {
         setHeaderHeight();
       }),
     );
+
+    // If the site is using a logo as the site-name, we need to add some attributes.
+
+    if (headerLogo) {
+      const svgElement = context.querySelector(
+        '.site-header__site-branding-logo svg',
+      );
+      const srText = context.querySelector(
+        '.site-header__site-branding-logo .sr-text',
+      );
+      const siteName = srText.innerHTML;
+      // add attributes
+      svgElement.setAttribute('role', 'img');
+      svgElement.setAttribute('title', siteName);
+    }
   },
 };
