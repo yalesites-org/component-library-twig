@@ -191,6 +191,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
     color: var(--color-action);
     border-color: var(--color-action);
     background-color: var(--color-basic-white);
+    height: 100%;
 
     &::before {
       content: '';
@@ -198,7 +199,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
       width: 100%;
       left: 0;
       right: 0;
-      bottom: -2px;
+      bottom: 0;
       border-bottom: var(--size-spacing-3) solid var(--color-basic-white);
       z-index: 1;
     }
