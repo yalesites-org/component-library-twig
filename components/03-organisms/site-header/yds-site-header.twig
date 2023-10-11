@@ -131,7 +131,7 @@
     </div>
   </div>
   {% if site_header__background_image and site_header__type == 'focus' %}
-    <div {{ bem('image', [], site_header__base_class) }} role="presentation">
+    <div {{ bem('image', [], site_header__base_class) }} aria-hidden='true'>
       {% block site_header__background_image %}
         {% include "@atoms/images/image/_responsive-image.twig" %}
       {% endblock %}
