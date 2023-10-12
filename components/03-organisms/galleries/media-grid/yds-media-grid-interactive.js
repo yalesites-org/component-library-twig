@@ -211,9 +211,6 @@ Drupal.behaviors.mediaGridInteractive = {
         }
       });
 
-      // set an attribute after the click event has been set once.
-      body.setAttribute('gallery-has-click-event', '');
-
       /**
        * handlePagerClick
        * @description Supports pager navigation.
