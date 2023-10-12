@@ -139,9 +139,7 @@ Drupal.behaviors.mediaGridInteractive = {
       }
 
       // Get all modal content.
-      const imageCaptions = context.querySelectorAll(
-        '.media-grid-modal__content',
-      );
+      const imageCaptions = grid.querySelectorAll('.media-grid-modal__content');
 
       // Set variables for each modal content/caption.
       imageCaptions.forEach((imageCaption) => {
