@@ -31,10 +31,15 @@ export const ImageGrid = ({ gridHeading }) => {
   });
 };
 
-export const InteractiveGrid = ({ gridHeading }) => {
-  return mediaGridTwig({
+export const InteractiveGrid = ({ gridHeading }) => `
+  ${mediaGridTwig({
     ...mediaGridData,
     media_grid__variation: 'interactive',
     media_grid__heading: gridHeading,
-  });
-};
+  })};
+  ${mediaGridTwig({
+    ...mediaGridData,
+    media_grid__variation: 'interactive',
+    media_grid__heading: gridHeading,
+  })};
+`;

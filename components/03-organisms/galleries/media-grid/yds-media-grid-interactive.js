@@ -185,31 +185,36 @@ Drupal.behaviors.mediaGridInteractive = {
             );
 
             // Toggle the full caption when the "up arrow" toggle is clicked
-            toggleCaption.addEventListener('click', function _(e) {
-              e.preventDefault();
-              if (captionContent.textContent === `${truncatedCaption}...`) {
-                toggleCaption.setAttribute('aria-expanded', 'true');
-                toggleCaption.setAttribute('aria-label', 'collapse');
-                captionContent.textContent = fullCaption;
-                imageCaption.setAttribute('aria-expanded', 'true');
-                imageCaption.style.setProperty(
-                  '--modal-content-item-height',
-                  `${imageCaption.scrollHeight}px`,
-                );
-              } else {
-                toggleCaption.setAttribute('aria-expanded', 'false');
-                toggleCaption.setAttribute('aria-label', 'expand');
-                captionContent.textContent = `${truncatedCaption}...`;
-                imageCaption.setAttribute('aria-expanded', 'false');
-                imageCaption.style.setProperty(
-                  '--modal-content-item-height',
-                  `${imageCaption.scrollHeight}px`,
-                );
-              }
-            });
+            if (!body.hasAttribute('gallery-has-click-event')) {
+              toggleCaption.addEventListener('click', function _(e) {
+                e.preventDefault();
+                if (captionContent.textContent === `${truncatedCaption}...`) {
+                  toggleCaption.setAttribute('aria-expanded', 'true');
+                  toggleCaption.setAttribute('aria-label', 'collapse');
+                  captionContent.textContent = fullCaption;
+                  imageCaption.setAttribute('aria-expanded', 'true');
+                  imageCaption.style.setProperty(
+                    '--modal-content-item-height',
+                    `${imageCaption.scrollHeight}px`,
+                  );
+                } else {
+                  toggleCaption.setAttribute('aria-expanded', 'false');
+                  toggleCaption.setAttribute('aria-label', 'expand');
+                  captionContent.textContent = `${truncatedCaption}...`;
+                  imageCaption.setAttribute('aria-expanded', 'false');
+                  imageCaption.style.setProperty(
+                    '--modal-content-item-height',
+                    `${imageCaption.scrollHeight}px`,
+                  );
+                }
+              });
+            }
           }
         }
       });
+
+      // set an attribute after the click event has been set once.
+      body.setAttribute('gallery-has-click-event', '');
 
       /**
        * handlePagerClick
