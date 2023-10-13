@@ -33,10 +33,11 @@
   'data-alert-id': 'ys-alert-id-' ~ alert__id,
   'data-alert-state': alert__state|default('expanded'),
   'data-alert-type': alert__type,
+  'aria-label': 'announcement',
   class: bem(alert__base_class),
 } %}
 
-<div {{ add_attributes(alert__attributes) }}>
+<section {{ add_attributes(alert__attributes) }}>
   <div {{ bem('inner', [], alert__base_class) }}>
     {% if alert__icon %}
       <div {{ bem('icon', ['type'], alert__base_class) }}>
@@ -83,4 +84,4 @@
       aria_expanded: alert__toggle__aria_expanded,
     } %}
   </div>
-</div>
+</section>
