@@ -102,6 +102,25 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
     [data-collection-type='list'] & {
       flex: 0 0 33%;
     }
+
+    [data-collection-type='grid'][data-collection-source='profile'] & {
+      aspect-ratio: 1/1;
+
+      // Safari 14 fix for aspect-ratio
+      @supports not (aspect-ratio: 1 / 1) {
+        &::before {
+          float: left;
+          padding-top: 66.66%;
+          content: '';
+        }
+
+        &::after {
+          display: block;
+          content: '';
+          clear: both;
+        }
+      }
+    }
   }
 
   @media (min-width: tokens.$break-mobile) {
