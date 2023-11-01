@@ -479,7 +479,9 @@ $background-image-max-width: 100rem;
   [data-site-header-site-name-is-image] & {
     &--desktop {
       > * {
+        height: auto;
         max-height: 200px;
+        max-width: 200px;
       }
 
       @media (max-width: tokens.$break-mobile-max) {
