@@ -416,9 +416,6 @@ $background-image-max-width: 100rem;
     @media (min-width: tokens.$break-mobile) {
       grid-area: container;
       z-index: 2;
-    }
-
-    @media (max-width: $site-max-width) {
       width: 100%;
     }
   }
@@ -457,7 +454,7 @@ $background-image-max-width: 100rem;
       top: 0;
       left: 0;
       background-image: linear-gradient(
-        var(--color-site-header-background) 30%,
+        var(--color-site-header-background) 20%,
         transparent 100%
       );
       width: 100%;
