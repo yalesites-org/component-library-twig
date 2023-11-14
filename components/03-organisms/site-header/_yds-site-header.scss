@@ -417,6 +417,7 @@ $background-image-max-width: 100rem;
       grid-area: container;
       z-index: 2;
       width: 100%;
+      max-width: 84rem;
     }
   }
 }
@@ -454,7 +455,7 @@ $background-image-max-width: 100rem;
       top: 0;
       left: 0;
       background-image: linear-gradient(
-        var(--color-site-header-background) 20%,
+        var(--color-site-header-background) 15%,
         transparent 100%
       );
       width: 100%;
