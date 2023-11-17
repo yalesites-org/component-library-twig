@@ -104,6 +104,21 @@ $break-profile-banner-max: $break-profile-banner - 0.05;
   @media (min-width: $break-profile-banner) {
     max-width: 661px;
   }
+
+  // Safari 14 fix for aspect-ratio
+  @supports not (aspect-ratio: 3 / 2) {
+    &::before {
+      float: left;
+      padding-top: 66.66%;
+      content: '';
+    }
+
+    &::after {
+      display: block;
+      content: '';
+      clear: both;
+    }
+  }
 }
 
 .profile-meta__content {
