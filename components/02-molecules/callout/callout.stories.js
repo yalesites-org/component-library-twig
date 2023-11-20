@@ -39,6 +39,18 @@ export default {
       options: colorPairingsData,
       defaultValue: 'one',
     },
+    calloutAlignment: {
+      name: 'Callout Alignment',
+      type: 'select',
+      options: ['left', 'center'],
+      defaultValue: 'center',
+    },
+    calloutWidth: {
+      name: 'Callout Width',
+      type: 'select',
+      options: ['site', 'content'],
+      defaultValue: 'site',
+    },
   },
 };
 
@@ -48,10 +60,14 @@ export const Callout = ({
   linkText,
   linkType,
   backgroundColor,
+  calloutAlignment,
+  calloutWidth,
 }) => `
   <h2>One Callout</h2>
   ${calloutTwig({
     callout__background_color: backgroundColor,
+    callout__alignment: calloutAlignment,
+    callout__width: calloutWidth,
     callouts: [
       {
         callout__heading: heading,
@@ -65,6 +81,8 @@ export const Callout = ({
   <h2>Two Callouts</h2>
   ${calloutTwig({
     callout__background_color: backgroundColor,
+    callout__alignment: calloutAlignment,
+    callout__width: calloutWidth,
     callouts: [
       {
         callout__heading: heading,
