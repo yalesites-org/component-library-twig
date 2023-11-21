@@ -6,7 +6,7 @@
   --color-muted: var(--color-gray-600);
   --color-navigation-border: var(--color-blue-yale);
   --color-navigation-expanded-item: var(--color-basic-brown-gray);
-  --color-navigation-active-item-link-background: var(--color-blue-light);
+  --color-navigation-active-item-link-background: var(--color-blue-shale);
   --color-navigation-active-item-link-opacity: 0.1;
 }
 
@@ -317,6 +317,12 @@ $menu-sub-max-width: 19rem;
 
     &.primary-nav__link--with-sub {
       display: none;
+
+      // always show first level in simple menu
+      // even if they have child items which won't display
+      [data-menu-variation='focus'] & {
+        display: block;
+      }
     }
   }
 

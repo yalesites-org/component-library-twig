@@ -67,7 +67,7 @@ export const ProfilePage = ({
     site_footer__accent: siteFooterAccent,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
-    menu__variation: menuVariation,
+    site_header__menu__variation: menuVariation,
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,

@@ -36,7 +36,6 @@
   {% block link__content %}
     {{- link__content -}}
   {% endblock %}
-  
   {# if link__type is external, target-blank, download, or with-chevron we add icons #}
   {% if link__type == 'external' %}
     {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
