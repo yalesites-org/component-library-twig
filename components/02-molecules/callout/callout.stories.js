@@ -45,12 +45,6 @@ export default {
       options: ['left', 'center'],
       defaultValue: 'center',
     },
-    calloutWidth: {
-      name: 'Callout Width',
-      type: 'select',
-      options: ['site', 'content'],
-      defaultValue: 'site',
-    },
   },
 };
 
@@ -61,13 +55,11 @@ export const Callout = ({
   linkType,
   backgroundColor,
   calloutAlignment,
-  calloutWidth,
 }) => `
   <h2>One Callout</h2>
   ${calloutTwig({
     callout__background_color: backgroundColor,
     callout__alignment: calloutAlignment,
-    callout__width: calloutWidth,
     callouts: [
       {
         callout__heading: heading,
@@ -82,7 +74,6 @@ export const Callout = ({
   ${calloutTwig({
     callout__background_color: backgroundColor,
     callout__alignment: calloutAlignment,
-    callout__width: calloutWidth,
     callouts: [
       {
         callout__heading: heading,

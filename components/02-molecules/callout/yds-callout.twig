@@ -14,6 +14,10 @@
 
 {% set callouts__base_class = 'callouts' %}
 
+{% if callout__alignment == 'left' %}
+  {% set callout__width = 'content' %}
+{% endif %}
+
 {% set callouts__attributes = {
   'data-component-theme': callout__background_color|default('one'),
   'data-component-width': callout__width|default('site'),
