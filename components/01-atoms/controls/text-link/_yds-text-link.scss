@@ -34,6 +34,7 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
       --color-link-hover: var(--color-slot-two);
+      --color-link-visited: var(--color-slot-one);
     }
   }
 
@@ -58,6 +59,7 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
       --color-link-hover: var(--color-slot-two);
+      --color-link-visited: var(--color-slot-one);
     }
   }
 
@@ -84,6 +86,14 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   // Remove underline when focus is visible.
   &:focus-visible {
     @include tokens.underline-slide-none;
+  }
+
+  &:visited {
+    color: var(--color-link-visited);
+
+    &:hover {
+      color: var(--color-link-hover);
+    }
   }
 }
 
@@ -121,6 +131,14 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   &:hover {
     text-decoration: none;
     color: var(--color-link-hover);
+  }
+
+  &:visited {
+    color: var(--color-link-visited);
+
+    &:hover {
+      color: var(--color-link-hover);
+    }
   }
 }
 
@@ -207,6 +225,14 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   &:focus-visible [class*='__heading-link'] {
     @include tokens.underline-slide-end('no-underline');
   }
+
+  &:visited [class*='__heading-link'] {
+    color: var(--color-link-visited);
+
+    &:hover {
+      color: var(--color-link-hover);
+    }
+  }
 }
 
 .link {
@@ -236,5 +262,13 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   &[data-link-style='no-underline-animation'] {
     @include plain-link;
+  }
+
+  &:visited {
+    color: var(--color-link-visited);
+
+    &:hover {
+      color: var(--color-link-hover);
+    }
   }
 }
