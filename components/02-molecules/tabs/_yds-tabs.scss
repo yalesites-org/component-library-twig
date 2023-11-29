@@ -177,6 +177,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   color: var(--color-gray-700);
   border-top: var(--size-thickness-6) solid transparent;
   background-color: var(--color-gray-100);
+  height: 100%;
 
   &:hover {
     color: var(--color-link-base);
@@ -198,7 +199,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
       width: 100%;
       left: 0;
       right: 0;
-      bottom: -2px;
+      bottom: 0;
       border-bottom: var(--size-spacing-3) solid var(--color-basic-white);
       z-index: 1;
     }

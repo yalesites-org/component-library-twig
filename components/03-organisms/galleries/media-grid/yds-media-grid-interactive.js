@@ -139,9 +139,7 @@ Drupal.behaviors.mediaGridInteractive = {
       }
 
       // Get all modal content.
-      const imageCaptions = document.querySelectorAll(
-        '.media-grid-modal__content',
-      );
+      const imageCaptions = grid.querySelectorAll('.media-grid-modal__content');
 
       // Set variables for each modal content/caption.
       imageCaptions.forEach((imageCaption) => {
@@ -171,36 +169,44 @@ Drupal.behaviors.mediaGridInteractive = {
 
             // set truncated content.
             captionContent.textContent = `${truncatedCaption}...`;
-            toggleCaption.setAttribute('aria-expanded', 'false');
 
+            // toggleCaption: set default attributes
+            toggleCaption.setAttribute('aria-expanded', 'false');
+            toggleCaption.setAttribute('aria-label', 'expand');
+            toggleCaption.style.setProperty('display', 'inline');
+
+            // imageCaption: set default attributes
             imageCaption.setAttribute('aria-expanded', 'false');
             imageCaption.style.setProperty(
               '--modal-content-item-height',
               `${imageCaption.scrollHeight}px`,
             );
-            toggleCaption.style.setProperty('display', 'inline');
 
             // Toggle the full caption when the "up arrow" toggle is clicked
-            toggleCaption.addEventListener('click', function _(e) {
-              e.preventDefault();
-              if (captionContent.textContent === `${truncatedCaption}...`) {
-                toggleCaption.setAttribute('aria-expanded', 'true');
-                captionContent.textContent = fullCaption;
-                imageCaption.setAttribute('aria-expanded', 'true');
-                imageCaption.style.setProperty(
-                  '--modal-content-item-height',
-                  `${imageCaption.scrollHeight}px`,
-                );
-              } else {
-                toggleCaption.setAttribute('aria-expanded', 'false');
-                captionContent.textContent = `${truncatedCaption}...`;
-                imageCaption.setAttribute('aria-expanded', 'false');
-                imageCaption.style.setProperty(
-                  '--modal-content-item-height',
-                  `${imageCaption.scrollHeight}px`,
-                );
-              }
-            });
+            if (!body.hasAttribute('gallery-has-click-event')) {
+              toggleCaption.addEventListener('click', function _(e) {
+                e.preventDefault();
+                if (captionContent.textContent === `${truncatedCaption}...`) {
+                  toggleCaption.setAttribute('aria-expanded', 'true');
+                  toggleCaption.setAttribute('aria-label', 'collapse');
+                  captionContent.textContent = fullCaption;
+                  imageCaption.setAttribute('aria-expanded', 'true');
+                  imageCaption.style.setProperty(
+                    '--modal-content-item-height',
+                    `${imageCaption.scrollHeight}px`,
+                  );
+                } else {
+                  toggleCaption.setAttribute('aria-expanded', 'false');
+                  toggleCaption.setAttribute('aria-label', 'expand');
+                  captionContent.textContent = `${truncatedCaption}...`;
+                  imageCaption.setAttribute('aria-expanded', 'false');
+                  imageCaption.style.setProperty(
+                    '--modal-content-item-height',
+                    `${imageCaption.scrollHeight}px`,
+                  );
+                }
+              });
+            }
           }
         }
       });

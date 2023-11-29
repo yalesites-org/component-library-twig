@@ -303,7 +303,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
       padding-block-end: var(--size-spacing-5);
       min-height: auto;
       width: 100%;
-      max-width: calc(1600px + 8rem);
+      max-width: 108rem; // 1728px
       margin: 0 auto;
     }
   }

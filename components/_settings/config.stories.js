@@ -9,6 +9,7 @@ import ctaTwig from '../01-atoms/controls/cta/yds-cta.twig';
 // Data files.
 import primaryNavData from '../03-organisms/menu/primary-nav/primary-nav.yml';
 import tabsData from '../02-molecules/tabs/tabs.yml';
+import imageData from '../01-atoms/images/image/image.yml';
 
 const layoutOptions = ['left', 'center'];
 const thicknessOptions = Object.keys(tokens.border.thickness);
@@ -19,7 +20,10 @@ const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
 const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
 const siteAnimationOptions = ['artistic', 'default'];
 const siteFooterVariations = ['basic', 'mega'];
-const siteHeaderAccents = [
+
+// Storing the header/footer accent colors here for now instead of adding them to our Tokens repository. These may move
+// in the future.
+const themesOneToEight = [
   'one',
   'two',
   'three',
@@ -29,16 +33,8 @@ const siteHeaderAccents = [
   'seven',
   'eight',
 ];
-const siteFooterAccents = [
-  'one',
-  'two',
-  'three',
-  'four',
-  'five',
-  'six',
-  'seven',
-  'eight',
-];
+const siteHeaderAccents = themesOneToEight;
+const siteFooterAccents = themesOneToEight;
 
 export default {
   title: 'Config',
@@ -47,55 +43,55 @@ export default {
   },
   argTypes: {
     globalTheme: {
-      name: 'Global Theme (lever)',
+      name: 'Site: Global Theme (lever)',
       options: siteGlobalThemeOptions,
       type: 'select',
       defaultValue: localStorage.getItem('yds-cl-twig-global-theme'),
     },
     allowAnimatedItems: {
-      name: 'Site Animation Theme',
+      name: 'Site: Animation Theme',
       options: siteAnimationOptions,
       type: 'select',
       defaultValue: 'default',
     },
     thickness: {
-      name: 'Line thickness',
+      name: 'Site: Line thickness',
       options: thicknessOptions,
       type: 'select',
       defaultValue: 'hairline',
     },
     dividerColor: {
-      name: 'Line color',
+      name: 'Site: Line color',
       options: ['gray-500', 'blue-yale', 'basic-brown-gray'],
       type: 'select',
       defaultValue: 'gray-500',
     },
     dividerWidth: {
-      name: 'Divider width',
+      name: 'Site: Divider width',
       options: [...widths],
       type: 'select',
       defaultValue: '100',
     },
     dividerPosition: {
-      name: 'Divider position',
+      name: 'Site: Divider position',
       options: layoutOptions,
       type: 'select',
       defaultValue: 'center',
     },
     actionColor: {
-      name: 'Action color',
+      name: 'Action Color',
       options: ['blue-yale', 'basic-black'],
       type: 'select',
       defaultValue: 'blue-yale',
     },
     menuVariation: {
-      name: 'Menu Variation',
-      options: ['mega', 'basic'],
+      name: 'Site: Menu Variation',
+      options: ['mega', 'basic', 'focus'],
       type: 'select',
       defaultValue: localStorage.getItem('yds-cl-twig-menu-variation'),
     },
     primaryNavPosition: {
-      name: 'Navigation position',
+      name: 'Site: Navigation Position',
       options: ['left', 'center', 'right'],
       type: 'select',
       defaultValue: localStorage.getItem('yds-cl-twig-primary-nav-position'),
@@ -107,13 +103,23 @@ export default {
       defaultValue: localStorage.getItem('yds-cl-twig-site-header-theme'),
     },
     siteHeaderAccent: {
-      name: 'Header Accent Color (dial)',
+      name: 'Header: Accent Color (dial)',
       options: siteHeaderAccents,
       type: 'select',
       defaultValue: localStorage.getItem('yds-cl-twig-site-header-accent'),
     },
+    siteHeaderImage: {
+      name: 'Header: With Image',
+      type: 'boolean',
+      defaultValue: false,
+    },
+    siteHeaderSiteNameImage: {
+      name: 'Header: Site Name Is An Image',
+      type: 'boolean',
+      defaultValue: false,
+    },
     headerBorderThickness: {
-      name: 'Header: Border thickness',
+      name: 'Header: Border Thickness',
       options: borderThicknessOptions,
       type: 'select',
       defaultValue: localStorage.getItem('yds-cl-twig-header-border-thickness'),
@@ -131,7 +137,7 @@ export default {
       defaultValue: localStorage.getItem('yds-cl-twig-site-footer-theme'),
     },
     siteFooterAccent: {
-      name: 'Footer Accent Color (dial)',
+      name: 'Footer: Accent Color (dial)',
       options: siteFooterAccents,
       type: 'select',
       defaultValue: localStorage.getItem('yds-cl-twig-site-footer-accent'),
@@ -163,6 +169,8 @@ export const GlobalConfig = ({
   primaryNavPosition,
   siteHeaderTheme,
   siteHeaderAccent,
+  siteHeaderImage,
+  siteHeaderSiteNameImage,
   headerBorderThickness,
   siteFooterTheme,
   siteFooterAccent,
@@ -225,7 +233,9 @@ export const GlobalConfig = ({
     site_animate_components: allowAnimatedItems,
     primary_nav__items: primaryNavData.items,
     site_global__theme: globalTheme,
-    menu__variation: menuVariation,
+    site_header__menu__variation: menuVariation,
+    site_header__background_image: siteHeaderImage,
+    site_header__site_name_is_image: siteHeaderSiteNameImage,
     site_header__border_thickness: headerBorderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
@@ -235,6 +245,7 @@ export const GlobalConfig = ({
     site_footer__theme: siteFooterTheme,
     site_footer__accent: siteFooterAccent,
     ...tabsData,
+    ...imageData.responsive_images['16x9'],
   })}
   `;
 };

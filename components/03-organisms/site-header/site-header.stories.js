@@ -7,6 +7,7 @@ import siteHeaderExamples from './_site-header--examples.twig';
 
 import utilityNavData from '../menu/utility-nav/utility-nav.yml';
 import primaryNavData from '../menu/primary-nav/primary-nav.yml';
+import imageData from '../../01-atoms/images/image/image.yml';
 
 import '../../02-molecules/menu/menu-toggle/yds-menu-toggle';
 
@@ -39,20 +40,32 @@ export default {
   },
   argTypes: {
     borderThickness: {
+      name: 'Navigation Border Thickness',
       options: borderThicknessOptions,
       type: 'select',
       defaultValue: '8',
     },
     primaryNavPosition: {
+      name: 'Navigation Position',
       options: ['left', 'center', 'right'],
       type: 'select',
       defaultValue: 'left',
     },
     menuVariation: {
       name: 'Menu Variation',
-      options: ['basic', 'mega'],
+      options: ['basic', 'mega', 'focus'],
       type: 'select',
       defaultValue: 'basic',
+    },
+    siteHeaderImage: {
+      name: 'Header With Image',
+      type: 'boolean',
+      defaultValue: false,
+    },
+    siteHeaderSiteNameImage: {
+      name: 'Site Name is an Image',
+      type: 'boolean',
+      defaultValue: false,
     },
   },
 };
@@ -62,15 +75,20 @@ export const Header = ({
   primaryNavPosition,
   siteHeaderTheme,
   menuVariation,
+  siteHeaderImage,
+  siteHeaderSiteNameImage,
   siteHeaderAccent,
 }) =>
   siteHeaderTwig({
+    ...imageData.responsive_images['16x9'],
     site_name: 'Department of Chemistry',
     site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
     site_header__accent: siteHeaderAccent,
     site_header__menu__variation: menuVariation,
+    site_header__background_image: siteHeaderImage,
+    site_header__site_name_is_image: siteHeaderSiteNameImage,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
   });
@@ -88,6 +106,11 @@ Header.argTypes = {
     type: 'select',
     defaultValue: 'one',
   },
+  siteHeaderImage: {
+    name: 'With image',
+    type: 'boolean',
+    defaultValue: false,
+  },
 };
 
 export const HeaderExamples = ({
@@ -96,17 +119,22 @@ export const HeaderExamples = ({
   menuVariation,
   globalTheme,
   siteHeaderAccent,
+  siteHeaderImage,
+  siteHeaderSiteNameImage,
 }) =>
   siteHeaderExamples({
     ...siteGlobalThemes,
     ...siteHeaderThemes,
     ...siteHeaderAccents,
+    ...imageData.responsive_images['16x9'],
     site_name: 'Department of Chemistry',
     site_global__theme: globalTheme,
     site_header__accent: siteHeaderAccent,
     site_header__border_thickness: borderThickness,
     site_header__nav_position: primaryNavPosition,
     site_header__menu__variation: menuVariation,
+    site_header__background_image: siteHeaderImage,
+    site_header__site_name_is_image: siteHeaderSiteNameImage,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
   });
@@ -123,5 +151,10 @@ HeaderExamples.argTypes = {
     options: siteHeaderAccents,
     type: 'select',
     defaultValue: 'one',
+  },
+  siteHeaderImage: {
+    name: 'Header With Image',
+    type: 'boolean',
+    defaultValue: false,
   },
 };
