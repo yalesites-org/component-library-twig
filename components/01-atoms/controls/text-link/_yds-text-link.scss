@@ -14,6 +14,9 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
       --color-text-shadow: var(--color-background-#{$theme}-background-color);
     }
   }
+
+  --color-link-visited: #4c2c92;
+  --color-link-visited-hover: #6438c3;
 }
 
 // Mixin for generic links.
@@ -34,7 +37,6 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
       --color-link-hover: var(--color-slot-two);
-      --color-link-visited: var(--color-slot-one);
     }
   }
 
@@ -59,7 +61,6 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
       --color-link-hover: var(--color-slot-two);
-      --color-link-visited: var(--color-slot-one);
     }
   }
 
@@ -91,8 +92,9 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   &:visited {
     color: var(--color-link-visited);
 
+    &:focus,
     &:hover {
-      color: var(--color-link-hover);
+      color: var(--color-link-visited-hover);
     }
   }
 }
@@ -136,8 +138,9 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   &:visited {
     color: var(--color-link-visited);
 
+    &:focus,
     &:hover {
-      color: var(--color-link-hover);
+      color: var(--color-link-visited-hover);
     }
   }
 }
@@ -226,11 +229,12 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
     @include tokens.underline-slide-end('no-underline');
   }
 
-  &:visited [class*='__heading-link'] {
+  &:visited {
     color: var(--color-link-visited);
 
+    &:focus,
     &:hover {
-      color: var(--color-link-hover);
+      color: var(--color-link-visited-hover);
     }
   }
 }
@@ -268,7 +272,7 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
     color: var(--color-link-visited);
 
     &:hover {
-      color: var(--color-link-hover);
+      color: var(--color-link-visited-hover);
     }
   }
 }
