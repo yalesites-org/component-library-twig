@@ -219,7 +219,7 @@ $modal-speed: var(--animation-speed-slow);
   &[aria-expanded='true'] {
     @include tokens.animate(all, var(--animation-speed-slow));
 
-    background-color: rgb(0 0 0 / 90%);
+    background-color: var(--color-background);
     overflow: auto;
     position: absolute;
     bottom: 0;
@@ -351,7 +351,7 @@ $modal-speed: var(--animation-speed-slow);
     @include tokens.animate($property: 'transform', $duration: 400ms);
 
     transform: rotate3d(0, 0, 0);
-    fill: var(--color-basic-white);
+    fill: var(--color-text);
   }
 
   [aria-expanded='true'] & {

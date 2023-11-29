@@ -167,7 +167,21 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 .callout__link {
   @include atoms.link;
 
+  --color-text-shadow: var(--color-callouts-background);
+
   margin-top: var(--size-spacing-4);
+
+  [data-component-theme='one'] & {
+    --color-link-hover: var(--color-slot-eight);
+  }
+
+  [data-component-theme='two'] & {
+    --color-link-hover: var(--color-slot-seven);
+  }
+
+  [data-component-theme='three'] & {
+    --color-link-hover: var(--color-slot-eight);
+  }
 }
 
 .callout__cta {

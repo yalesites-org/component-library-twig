@@ -54,7 +54,7 @@ $wrapped-image-offset-max: 1550px;
   @media (min-width: tokens.$break-l) {
     top: 0;
     width: 50%;
-    margin-bottom: var(--size-spacing-7);
+    margin-bottom: var(--size-spacing-4);
 
     // Add top magin to image if left or right aligned,
     // so that the top of the image aligns with the top of the text.
