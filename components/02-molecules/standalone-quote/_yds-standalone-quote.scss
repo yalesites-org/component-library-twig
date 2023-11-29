@@ -31,6 +31,28 @@ blockquote {
     }
   }
 
+  // Component themes defaults: iterate over each component theme to establish
+  // default variables.
+  @each $theme, $value in $standalone-quote-component-themes {
+    &[data-component-theme='#{$theme}'] {
+      // prettier-ignore
+      --color-slot-one: var(--component-themes-#{$theme}-slot-one);
+      --color-slot-two: var(--component-themes-#{$theme}-slot-two);
+      --color-slot-three: var(--component-themes-#{$theme}-slot-three);
+      --color-slot-four: var(--component-themes-#{$theme}-slot-four);
+      --color-slot-five: var(--component-themes-#{$theme}-slot-five);
+      --color-slot-six: var(--component-themes-#{$theme}-slot-six);
+      --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
+      --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
+      --color-standalone-quote-accent: var(--color-standalone-quote-accent);
+      --color-standalone-quote-background: var(
+        --color-standalone-quote-background
+      );
+
+      background-color: var(--color-standalone-quote-background);
+    }
+  }
+
   // Global themes: set color slots for each theme
   // This establishes `--color-slot-` variables name-spaced to the selector
   // in which it is used. We can map component-level variables to global-level
@@ -51,28 +73,6 @@ blockquote {
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
-    }
-  }
-
-  // Component themes defaults: iterate over each component theme to establish
-  // default variables.
-  @each $theme, $value in $standalone-quote-component-themes {
-    &[data-component-theme='#{$theme}'] {
-      // prettier-ignore
-      --color-slot-one: var(--component-themes-#{$theme}-slot-one);
-      --color-slot-two: var(--component-themes-#{$theme}-slot-two);
-      --color-slot-three: var(--component-themes-#{$theme}-slot-three);
-      --color-slot-four: var(--component-themes-#{$theme}-slot-four);
-      --color-slot-five: var(--component-themes-#{$theme}-slot-five);
-      --color-slot-six: var(--component-themes-#{$theme}-slot-six);
-      --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
-      --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
-      --color-standalone-quote-accent: var(--color-standalone-quote-accent);
-      --color-standalone-quote-background: var(
-        --color-standalone-quote-background
-      );
-
-      background-color: var(--color-standalone-quote-background);
     }
   }
 
