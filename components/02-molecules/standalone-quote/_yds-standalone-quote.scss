@@ -109,7 +109,7 @@ blockquote {
 
   // with image
   [data-standalone-quote-style='image'] & {
-    flex: 1 0 calc(60% - var(--size-spacing-6));
+    flex: 1 0 calc(80% - var(--size-spacing-8));
   }
 
   [data-standalone-quote-style='bar'][data-standalone-quote-quote-alignment='left']
@@ -232,13 +232,19 @@ blockquote {
   // image
   [data-standalone-quote-style='image'] & {
     display: flex;
-    flex-flow: row wrap;
-    gap: var(--size-spacing-6);
+    flex-flow: column nowrap;
+    gap: var(--size-spacing-8);
+
+    @media (min-width: tokens.$break-mobile) {
+      flex-flow: row wrap;
+    }
   }
 
   [data-standalone-quote-style='image'][data-standalone-quote-quote-alignment='right']
     & {
-    flex-direction: row-reverse;
+    @media (min-width: tokens.$break-mobile) {
+      flex-direction: row-reverse;
+    }
   }
 }
 
@@ -259,5 +265,10 @@ blockquote {
 }
 
 .standalone-quote__image {
-  flex: 1 0 calc(40% - var(--size-spacing-6));
+  width: 100%;
+  max-width: 20%;
+
+  @media (min-width: tokens.$break-mobile) {
+    flex: 1 0 calc(20% - var(--size-spacing-8));
+  }
 }

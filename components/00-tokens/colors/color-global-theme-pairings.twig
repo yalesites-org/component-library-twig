@@ -1,7 +1,7 @@
 {% set color_global_theme__base_class = 'cl-color-global-themes' %}
 
 <div {{ bem('wrap', [], color_global_theme__base_class) }}>
-  <div class="text-field" data-component-alignment="left" data-component-width="max">
+  <div class="text-field" data-component-alignment="left" data-component-width="site">
     <div class="text-field__inner">
       <div class="text">
         <h1>Global Themes (levers)</h1>
@@ -119,6 +119,16 @@
     {% include "@molecules/text/yds-text-field.twig" with {
       text_field__alignment: 'left',
       text_field__content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A lacus vestibulum sed arcu non odio euismod lacinia. Varius sit amet mattis vulputate enim nulla. Sit amet justo donec enim diam vulputate ut pharetra sit. Ipsum dolor sit amet consectetur adipiscing elit ut aliquam purus. Lorem ipsum dolor sit amet consectetur adipiscing elit pellentesque. Vitae congue mauris rhoncus aenean vel elit scelerisque. Vulputate odio ut enim blandit volutpat maecenas volutpat blandit aliquam. Turpis massa sed elementum tempus egestas sed sed risus. A erat nam at lectus urna duis convallis convallis. Sollicitudin nibh sit amet commodo nulla. Iaculis urna id volutpat lacus.',
+    } %}
+  </div>
+
+  <div class="pairing-item">
+    {% include "@molecules/standalone-quote/yds-standalone-quote.twig" with {
+      standalone_quote__width: 'site',
+      standalone_quote__alignment: 'left',
+      standalone_quote__quote_alignment: 'left',
+      standalone_quote__style: 'bar',
+      standalone_quote__quote: 'Our platform will transform our ability to study metabolic filaments and, coupled with biochemical and biophysical tools, manipulate enzyme structures and metabolic activity in cells.',
     } %}
   </div>
 
