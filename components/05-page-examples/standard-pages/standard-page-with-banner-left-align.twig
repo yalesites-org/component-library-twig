@@ -194,6 +194,15 @@
 		{% endblock %}
 	{% endembed %}
 
+  {% include "@molecules/standalone-quote/yds-standalone-quote.twig" with {
+    animate__item: 'enabled',
+    standalone_quote__width: 'site',
+    standalone_quote__alignment: 'left',
+    standalone_quote__style: 'bar',
+    standalone_quote__quote_alignment: 'left',
+    standalone_quote__quote: 'Our platform will transform our ability to study metabolic filaments and, coupled with biochemical and biophysical tools, manipulate enzyme structures and metabolic activity in cells.',
+  } %}
+
 	{% include "@molecules/text/yds-text-field.twig" with {
       text_field__alignment: 'left',
       text_field__content: '<h2>Program Information</h2><h3>The Undergraduate Handbook</h3><p>A comprehensive guide for prospective and current Chemistry Majors, with a complete description of requirements and opportunities.</p><p><a href="#">View the handbook online</a></p><h3>Course List</h3><p>A list of courses and a description of the Chemistry undergraduate program, including information on placement exams, laboratory registration, premedical students, and major requirements</p><p><a href="#">Yale College programs of study</a></p>',

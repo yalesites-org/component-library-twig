@@ -17,8 +17,8 @@ blockquote {
 
   @include tokens.spacing-page-section;
 
-  padding-top: var(--size-spacing-8);
-  padding-bottom: var(--size-spacing-9);
+  padding-top: var(--size-spacing-11);
+  padding-bottom: var(--size-spacing-11);
 
   // if animation is active
   [data-site-animation='artistic'] & {
@@ -196,9 +196,9 @@ blockquote {
     }
   }
 
-  // if animation is active
+  // if animation is active, animate bar variation
   // prettier-ignore
-  [data-site-animation='artistic'] [data-standalone-quote-style='quote'][data-standalone-quote-quote-alignment='left'][data-animate-item='true'] &,
+  [data-site-animation='artistic'] [data-standalone-quote-style='bar'][data-standalone-quote-quote-alignment='left'][data-animate-item='true'] &,
   [data-site-animation='artistic'] [data-standalone-quote-style='bar'][data-standalone-quote-quote-alignment='right'][data-animate-item='true'] & {
     @include tokens.animate($duration: var(--animation-speed-default));
 
@@ -229,7 +229,7 @@ blockquote {
 }
 
 .standalone-quote__inner {
-  // image
+  // image variaton
   [data-standalone-quote-style='image'] & {
     display: flex;
     flex-flow: column nowrap;
@@ -245,6 +245,11 @@ blockquote {
     @media (min-width: tokens.$break-mobile) {
       flex-direction: row-reverse;
     }
+  }
+
+  @media (max-width: tokens.$break-mobile-max) {
+    padding-inline-start: var(--size-spacing-6);
+    padding-inline-end: var(--size-spacing-6);
   }
 }
 
