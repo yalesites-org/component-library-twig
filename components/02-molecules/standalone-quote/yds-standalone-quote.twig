@@ -14,8 +14,8 @@
 {# If standalone_quote__attributes is not defined, set it to an empty object by default #}
 {% set standalone_quote__attributes = standalone_quote__attributes|default({}) %}
 
-{# If standalone_quote__quote_image is 'true' set data-standalone-quote-style = 'image' #}
-{% if standalone_quote__quote_image == 'true' %}
+{# If standalone_quote__quote_image is 'with-image' set data-standalone-quote-style = 'image' #}
+{% if standalone_quote__quote_image == 'with-image' %}
 	{% set standalone_quote__style = 'image' %}
 {% endif %}
 
@@ -34,7 +34,7 @@
 
 <div {{ add_attributes(standalone_quote__attributes) }}> {% block prefix_suffix %}{% endblock %}
 	<div {{ bem('inner', [], standalone_quote__base_class) }}>
-		{% if standalone_quote__quote_image == 'true' %}
+		{% if standalone_quote__quote_image == 'with-image' %}
 			<div {{ bem('image', [], standalone_quote__base_class) }}>
 				{% block standalone_quote__image %}
 					{% include "@atoms/images/image/_responsive-image.twig" %}

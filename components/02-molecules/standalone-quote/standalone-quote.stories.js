@@ -41,9 +41,9 @@ export default {
     },
     quoteImage: {
       name: 'Quote Image',
-      options: ['true', 'false'],
+      options: ['with-image', 'no-image'],
       type: 'select',
-      defaultValue: 'false',
+      defaultValue: 'no-image',
     },
   },
 };
@@ -79,7 +79,7 @@ export const standaloneQuote = ({
       standaloneQuoteData.standalone_quote__attribution,
     standalone_quote__style: 'image',
     standalone_quote__quote_alignment: 'left',
-    standalone_quote__quote_image: 'true',
+    standalone_quote__quote_image: 'with-image',
     ...imageData.responsive_images['1x1'],
   })}
   <div style="--color-standalone-quote-accent: var(--color-${accentColor})">
