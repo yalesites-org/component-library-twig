@@ -139,7 +139,7 @@ blockquote {
     text-align: right;
 
     @media (min-width: tokens.$break-mobile) {
-      margin-left: 9rem;
+      margin-left: calc(var(--size-spacing-13) - 1rem);
     }
 
     &::before {
@@ -180,6 +180,10 @@ blockquote {
     padding-left: var(--size-spacing-8);
     text-align: right;
 
+    @media (min-width: tokens.$break-mobile) {
+      margin-left: calc(var(--size-spacing-13) - 1rem);
+    }
+
     &::before {
       content: '“';
       font-family: var(--font-families-yalenew);
@@ -189,10 +193,6 @@ blockquote {
       font-size: 4em;
       line-height: 0.8;
       color: var(--color-standalone-quote-accent);
-    }
-
-    @media (min-width: tokens.$break-mobile) {
-      margin-left: var(--size-spacing-6);
     }
   }
 

@@ -77,6 +77,13 @@ export const standaloneQuote = ({
     standalone_quote__quote: standaloneQuoteData.standalone_quote__quote,
     standalone_quote__attribution:
       standaloneQuoteData.standalone_quote__attribution,
+    standalone_quote__style: 'quote',
+    standalone_quote__quote_alignment: 'right',
+  })}
+  ${standaloneQuoteTwig({
+    standalone_quote__quote: standaloneQuoteData.standalone_quote__quote,
+    standalone_quote__attribution:
+      standaloneQuoteData.standalone_quote__attribution,
     standalone_quote__style: 'image',
     standalone_quote__quote_alignment: 'left',
     standalone_quote__quote_image: 'with-image',
