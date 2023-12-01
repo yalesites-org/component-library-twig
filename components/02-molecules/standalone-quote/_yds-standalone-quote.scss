@@ -109,7 +109,7 @@ blockquote {
 
   // with image
   [data-standalone-quote-style='image'] & {
-    flex: 1 0 calc(80% - var(--size-spacing-8));
+    flex: 1 0 calc(75% - var(--size-spacing-8));
   }
 
   [data-standalone-quote-style='bar'][data-standalone-quote-quote-alignment='left']
@@ -271,9 +271,13 @@ blockquote {
 
 .standalone-quote__image {
   width: 100%;
-  max-width: 20%;
+  max-width: 25%;
+  align-self: flex-start;
 
   @media (min-width: tokens.$break-mobile) {
-    flex: 1 0 calc(20% - var(--size-spacing-8));
+    flex: 1 0 calc(25% - var(--size-spacing-8));
+
+    // push the image down a bit to align with the quote text
+    margin-top: var(--size-spacing-4);
   }
 }
