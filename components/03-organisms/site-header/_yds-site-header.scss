@@ -246,6 +246,7 @@ $background-image-max-width: 100rem;
     background: var(--color-background);
     max-height: calc(100vh - var(--header-height-mobile));
     width: 100vw;
+    max-width: 100%;
     overflow: auto;
     border-bottom: var(--site-header-mobile-border-bottom);
     transform: translateY(0%);
