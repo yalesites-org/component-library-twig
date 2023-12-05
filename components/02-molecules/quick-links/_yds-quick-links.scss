@@ -1,6 +1,7 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
 @use '../../00-tokens/functions/map';
+@use '../../01-atoms/controls/text-link/yds-text-link' as link;
 
 // get global themes
 $global-quick-links-themes: map.deep-get(tokens.$tokens, 'global-themes');
@@ -58,6 +59,8 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-quick-links-action: var(--color-basic-white);
     --color-quick-links-action-secondary: var(--color-slot-one);
     --color-link-base: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 
   &[data-component-theme='two'] {
@@ -76,6 +79,8 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-quick-links-action: var(--color-basic-white);
     --color-quick-links-action-secondary: var(--color-slot-one);
     --color-link-base: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 }
 
@@ -144,15 +149,8 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 
   // in-content link:visited color changes based on theme
-  [data-component-theme='one'] &,
-  [data-component-theme='three'] & {
-    a:visited {
-      color: var(--color-link-visited-light);
-
-      &:hover {
-        color: var(--color-link-visited-light-hover);
-      }
-    }
+  a {
+    @include link.plain-link;
   }
 }
 
