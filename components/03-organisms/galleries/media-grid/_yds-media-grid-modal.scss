@@ -208,13 +208,16 @@ $modal-speed: var(--animation-speed-slow);
   width: 100%;
   padding-block-start: var(--size-spacing-5);
   padding-block-end: var(--size-spacing-5);
-  background-color: var(--color-gray-800);
 
   .text {
     display: flex;
     flex-direction: column;
     gap: var(--size-spacing-3);
     padding-inline-start: var(--size-spacing-9);
+  }
+
+  &[aria-expanded] {
+    background-color: var(--color-gray-800);
   }
 
   &[aria-expanded='true'] {
