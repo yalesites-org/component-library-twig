@@ -70,7 +70,7 @@
     border: var(--border-thickness-2) solid;
     border-radius: var(--radius-20);
     width: 100%;
-    max-width: 10rem;
+    max-width: 11rem;
 
     &::placeholder {
       color: inherit;
@@ -118,12 +118,9 @@
   }
 
   .form-item input {
-    padding-left: var(--size-spacing-3);
+    padding-left: var(--size-spacing-4);
+    padding-right: var(--size-spacing-4);
     grid-area: 1/3;
-
-    &:focus {
-      padding-left: var(--size-spacing-3);
-    }
   }
 }
 
