@@ -151,6 +151,10 @@ Drupal.behaviors.mediaGridInteractive = {
           '.media-grid-modal__toggle-caption',
         );
 
+        const captionHeading = imageCaption.querySelector(
+          '.media-grid-modal__heading',
+        );
+
         // Check if captionContent exists.
         if (captionContent) {
           // Store the full caption text.
@@ -160,6 +164,9 @@ Drupal.behaviors.mediaGridInteractive = {
 
           const fullCaption = captionContent.textContent.trim();
 
+          if (captionHeading) {
+            captionContent.classList.add('media-grid-modal__text--has-heading');
+          }
           // Check the length of the caption and truncate if necessary
           if (toggleCaption && fullCaption.length > maxLength) {
             const truncatedCaption = handleCaptionTruncation(
@@ -179,7 +186,9 @@ Drupal.behaviors.mediaGridInteractive = {
             imageCaption.setAttribute('aria-expanded', 'false');
             imageCaption.style.setProperty(
               '--modal-content-item-height',
-              `${imageCaption.scrollHeight}px`,
+              `${
+                imageCaption.querySelector('.text-field').scrollHeight + 40
+              }px`,
             );
 
             // Toggle the full caption when the "up arrow" toggle is clicked
@@ -193,7 +202,10 @@ Drupal.behaviors.mediaGridInteractive = {
                   imageCaption.setAttribute('aria-expanded', 'true');
                   imageCaption.style.setProperty(
                     '--modal-content-item-height',
-                    `${imageCaption.scrollHeight}px`,
+                    `${
+                      imageCaption.querySelector('.text-field').scrollHeight +
+                      40
+                    }px`,
                   );
                 } else {
                   toggleCaption.setAttribute('aria-expanded', 'false');
@@ -202,7 +214,10 @@ Drupal.behaviors.mediaGridInteractive = {
                   imageCaption.setAttribute('aria-expanded', 'false');
                   imageCaption.style.setProperty(
                     '--modal-content-item-height',
-                    `${imageCaption.scrollHeight}px`,
+                    `${
+                      imageCaption.querySelector('.text-field').scrollHeight +
+                      40
+                    }px`,
                   );
                 }
               });

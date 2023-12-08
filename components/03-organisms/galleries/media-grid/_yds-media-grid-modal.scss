@@ -208,12 +208,13 @@ $modal-speed: var(--animation-speed-slow);
   width: 100%;
   padding-block-start: var(--size-spacing-5);
   padding-block-end: var(--size-spacing-5);
+  align-self: flex-end;
 
   .text {
     display: flex;
     flex-direction: column;
     gap: var(--size-spacing-3);
-    padding-inline-start: var(--size-spacing-9);
+    padding-inline-start: var(--size-spacing-6);
   }
 
   &[aria-expanded] {
@@ -227,6 +228,7 @@ $modal-speed: var(--animation-speed-slow);
     position: absolute;
     bottom: 0;
     z-index: 1;
+    max-height: var(--modal-content-item-height);
   }
 
   &[aria-expanded='false'] {
@@ -252,7 +254,7 @@ $modal-speed: var(--animation-speed-slow);
     @include typography.truncate-text;
   }
 
-  @media (max-width: tokens.$break-s - 0.05) {
+  @media (max-width: (tokens.$break-s - 0.05)) {
     @include tokens.body-default;
   }
 
@@ -283,6 +285,12 @@ $modal-speed: var(--animation-speed-slow);
     @include tokens.body-s;
 
     max-height: 20vh;
+  }
+
+  &--has-heading {
+    [aria-expanded='false'] & {
+      display: none;
+    }
   }
 }
 
@@ -340,7 +348,7 @@ $modal-speed: var(--animation-speed-slow);
 
 .media-grid-modal__toggle-caption {
   position: absolute;
-  top: var(--size-spacing-6);
+  top: var(--size-spacing-5);
   left: var(--size-spacing-6);
   padding: 0;
   cursor: pointer;
