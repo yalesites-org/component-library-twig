@@ -206,8 +206,8 @@ $modal-speed: var(--animation-speed-slow);
   grid-area: content;
   position: relative;
   width: 100%;
-  padding-block-start: var(--size-spacing-5);
-  padding-block-end: var(--size-spacing-5);
+  padding-block-start: var(--size-spacing-6);
+  padding-block-end: var(--size-spacing-6);
   align-self: flex-end;
 
   .text {
@@ -222,7 +222,7 @@ $modal-speed: var(--animation-speed-slow);
   }
 
   &[aria-expanded='true'] {
-    @include tokens.animate(all, var(--animation-speed-slow));
+    @include tokens.animate(max-height, var(--animation-speed-slow));
 
     overflow: auto;
     position: absolute;
@@ -232,7 +232,7 @@ $modal-speed: var(--animation-speed-slow);
   }
 
   &[aria-expanded='false'] {
-    @include tokens.animate(all, var(--animation-speed-slow));
+    @include tokens.animate(max-height, var(--animation-speed-slow));
 
     max-height: var(--modal-content-item-height);
   }
@@ -374,5 +374,10 @@ $modal-speed: var(--animation-speed-slow);
     svg.media-grid-modal__icon--collapse-content {
       display: block;
     }
+  }
+
+  // adjust icon position when heading is present
+  .media-grid-modal__content--has-heading & {
+    top: var(--size-spacing-6);
   }
 }
