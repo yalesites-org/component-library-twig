@@ -222,17 +222,15 @@ $modal-speed: var(--animation-speed-slow);
   }
 
   &[aria-expanded='true'] {
-    @include tokens.animate(max-height, var(--animation-speed-slow));
+    @include tokens.animate(all, var(--animation-speed-slow));
 
     overflow: auto;
-    position: absolute;
-    bottom: 0;
     z-index: 1;
     max-height: var(--modal-content-item-height);
   }
 
   &[aria-expanded='false'] {
-    @include tokens.animate(max-height, var(--animation-speed-slow));
+    @include tokens.animate(all, var(--animation-speed-slow));
 
     max-height: var(--modal-content-item-height);
   }
