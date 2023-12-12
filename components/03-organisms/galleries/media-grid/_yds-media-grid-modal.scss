@@ -209,6 +209,7 @@ $modal-speed: var(--animation-speed-slow);
   padding-block-start: var(--size-spacing-6);
   padding-block-end: var(--size-spacing-6);
   align-self: flex-end;
+  max-height: var(--modal-content-item-height);
 
   .text {
     display: flex;
@@ -226,17 +227,10 @@ $modal-speed: var(--animation-speed-slow);
   }
 
   &[aria-expanded='true'] {
-    @include tokens.animate(all, var(--animation-speed-slow));
+    @include tokens.animate(max-height, var(--animation-speed-slow));
 
     overflow: auto;
     z-index: 1;
-    max-height: var(--modal-content-item-height);
-  }
-
-  &[aria-expanded='false'] {
-    @include tokens.animate(all, var(--animation-speed-slow));
-
-    max-height: var(--modal-content-item-height);
   }
 
   a {
