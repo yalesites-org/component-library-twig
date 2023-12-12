@@ -169,7 +169,7 @@ $modal-speed: var(--animation-speed-slow);
     }
   }
 
-  @media (max-width: tokens.$break-s - 0.05) {
+  @media (max-width: (tokens.$break-s - 0.05)) {
     &:not(.media-grid-modal__pager-item--total):not([data-media-grid-modal-item-active='true']):not([aria-current='true']) {
       display: none;
     }
@@ -214,7 +214,11 @@ $modal-speed: var(--animation-speed-slow);
     display: flex;
     flex-direction: column;
     gap: var(--size-spacing-3);
-    padding-inline-start: var(--size-spacing-6);
+    padding-inline-start: var(--size-spacing-10);
+
+    @media (min-width: tokens.$break-2xl) {
+      padding-inline-start: var(--size-spacing-4);
+    }
   }
 
   &[aria-expanded] {
@@ -272,7 +276,7 @@ $modal-speed: var(--animation-speed-slow);
     @include typography.truncate-text;
   }
 
-  @media (max-width: tokens.$break-s - 0.05) {
+  @media (max-width: (tokens.$break-s - 0.05)) {
     @include tokens.body-s;
 
     max-height: 60vh;
