@@ -147,7 +147,9 @@ Drupal.behaviors.mediaGridInteractive = {
           '.media-grid-modal__text',
         );
 
-        const toggleCaption = imageCaption.querySelector('.text-field');
+        const toggleCaption = imageCaption.querySelector(
+          '.media-grid-modal__toggle-caption',
+        );
 
         const captionHeading = imageCaption.querySelector(
           '.media-grid-modal__heading',
