@@ -17,6 +17,11 @@
 	{% include "@molecules/page-title/yds-page-title.twig" %}
 	{% include "@page-examples/_intro-content-examples.twig" %}
 
+	{% include "@molecules/text/yds-emphasized-text.twig" with {
+      emphasized_text__alignment: 'left',
+      emphasized_text__content: '<h2>Heading 2 here</h2><p><strong>Introduction</strong>: <i>emphasized text</i>. <a href="/">A comprehensive guide</a> for prospective and current Chemistry Majors, with a complete description of requirements and opportunities.</p>',
+  } %}
+
 	{% include "@molecules/wrapped-image/yds-wrapped-image.twig" with {
     wrapped_image__width: 'site',
     wrapped_image__alignment: 'left',
