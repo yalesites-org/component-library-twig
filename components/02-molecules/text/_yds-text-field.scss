@@ -22,7 +22,7 @@
   }
 
   // emphasized: intro text variation
-  &--emphasized {
+  &[data-component-variation='emphasized'] {
     @include tokens.body-xl;
   }
 }
