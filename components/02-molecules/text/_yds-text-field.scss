@@ -20,25 +20,9 @@
   a {
     @include atoms.link;
   }
-}
 
-.emphasized-text {
-  @include tokens.spacing-page-inner;
-
-  // used by a element for animated hover underline
-  --color-text-shadow: var(--color-basic-white);
-}
-
-.emphasized-text__text {
-  // @include tokens.h2-yale-new;
-  // @include tokens.h2-mallory-compact-book;
-  @include tokens.body-xl;
-
-  [data-component-alignment='left'] & {
-    max-width: var(--size-component-layout-width-content);
-  }
-
-  a {
-    @include atoms.link;
+  // emphasized: intro text variation
+  &--emphasized {
+    @include tokens.body-xl;
   }
 }

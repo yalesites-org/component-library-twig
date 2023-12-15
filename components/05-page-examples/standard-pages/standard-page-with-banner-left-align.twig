@@ -18,9 +18,10 @@
 	{% include "@molecules/page-title/yds-page-title.twig" %}
 	{% include "@page-examples/_intro-content-examples.twig" %}
 
-	{% include "@molecules/text/yds-emphasized-text.twig" with {
-      emphasized_text__alignment: 'left',
-      emphasized_text__content: '<h2>Heading 2 here</h2><p><strong>Introduction</strong>: <i>emphasized text</i>. <a href="/">A comprehensive guide</a> for prospective and current Chemistry Majors, with a complete description of requirements and opportunities.</p>',
+  {% include "@molecules/text/yds-text-field.twig" with {
+      text_field__alignment: 'left',
+      text_field__modifiers: ['emphasized'],
+      text_field__content: '<h2>Research</h2><p><strong>Introduction</strong>: <i>emphasized text</i>. <a href="/">A comprehensive guide</a> for prospective and current Chemistry Majors, with a complete description of requirements and opportunities.</p>',
   } %}
 
 	{% include "@molecules/text-with-image/yds-text-with-image.twig" with {
