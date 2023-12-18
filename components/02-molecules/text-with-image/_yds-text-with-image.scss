@@ -1,11 +1,95 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
+@use '../../00-tokens/functions/map';
 
+// get global themes
+$global-spotlight-themes: map.deep-get(tokens.$tokens, 'global-themes');
+$component-spotlight-themes: map.deep-get(tokens.$tokens, 'component-themes');
+
+// Content Spotlight
 .text-with-image {
   @include tokens.spacing-page-section;
 
   // used by a element for animated hover underline
   --color-text-shadow: var(--color-basic-white);
+
+  // if we're using a component theme, add padding and set background-color and color;
+  &:not([data-component-theme='default']) {
+    padding-block-start: var(--size-spacing-12);
+    padding-block-end: var(--size-spacing-12);
+    background-color: var(--color-background);
+    color: var(--color-text);
+  }
+
+  // Component themes defaults: iterate over each component theme to establish
+  // default variables.
+  @each $theme, $value in $component-spotlight-themes {
+    &[data-component-theme='#{$theme}'] {
+      --color-slot-one: var(--component-themes-#{$theme}-slot-one);
+      --color-slot-two: var(--component-themes-#{$theme}-slot-two);
+      --color-slot-three: var(--component-themes-#{$theme}-slot-three);
+      --color-slot-four: var(--component-themes-#{$theme}-slot-four);
+      --color-slot-five: var(--component-themes-#{$theme}-slot-five);
+      --color-slot-six: var(--component-themes-#{$theme}-slot-six);
+      --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
+      --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
+      --color-spotlight-text-shadow: var(--color-background);
+
+      // override text-shadow color for links in component themes
+      .link {
+        --color-text-shadow: var(--color-spotlight-text-shadow);
+      }
+    }
+  }
+
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
+  @each $globalTheme, $value in $global-spotlight-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
+      --color-slot-three: var(
+        --global-themes-#{$globalTheme}-colors-slot-three
+      );
+      --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-slot-six: var(--global-themes-#{$globalTheme}-colors-slot-six);
+      --color-slot-seven: var(
+        --global-themes-#{$globalTheme}-colors-slot-seven
+      );
+      --color-slot-eight: var(
+        --global-themes-#{$globalTheme}-colors-slot-eight
+      );
+    }
+  }
+
+  // Component theme overrides: set specific component themes overrides
+  /// define component name spaced variables and map them to global theme slots.
+  &[data-component-theme='one'] {
+    --color-background: var(--color-slot-one);
+    --color-text: var(--color-slot-eight);
+    --color-heading: var(--color-slot-eight);
+    --color-link-base: var(--color-slot-eight);
+    --color-link-hover: var(--color-slot-eight);
+  }
+
+  &[data-component-theme='two'] {
+    --color-background: var(--color-slot-four);
+    --color-text: var(--color-slot-seven);
+    --color-heading: var(--color-slot-seven);
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
+  }
+
+  &[data-component-theme='three'] {
+    --color-background: var(--color-slot-five);
+    --color-text: var(--color-slot-eight);
+    --color-heading: var(--color-slot-eight);
+    --color-link-base: var(--color-slot-eight);
+    --color-link-hover: var(--color-slot-eight);
+  }
 }
 
 .text-with-image__inner {
@@ -18,6 +102,11 @@
   @media (min-width: tokens.$break-mobile) {
     grid-template: 'primary secondary';
     gap: var(--size-spacing-8);
+
+    // When offset, vertically center the content with the image
+    [data-image-style='offset'] & {
+      align-items: center;
+    }
 
     // Focus Options
     [data-component-focus='equal'] & {
@@ -33,6 +122,21 @@
     [data-component-focus='content'][data-image-position='image-right'] & {
       grid-template-columns: 5fr 3fr;
     }
+
+    // portrait orientation
+    [data-component-focus='content'][data-image-position='image-left'][data-image-orientation='portrait']
+      &,
+    [data-component-focus='image'][data-image-position='image-right'][data-image-orientation='portrait']
+      & {
+      grid-template-columns: 6fr 2fr;
+    }
+
+    [data-component-focus='image'][data-image-position='image-left'][data-image-orientation='portrait']
+      &,
+    [data-component-focus='content'][data-image-position='image-right'][data-image-orientation='portrait']
+      & {
+      grid-template-columns: 2fr 6fr;
+    }
   }
 }
 
@@ -41,12 +145,20 @@
     margin-top: var(--size-spacing-2);
 
     // Layout Options
-    [data-image-position='image-left'] & {
+    [data-image-style='floated'][data-image-position='image-left'] & {
       grid-area: primary;
     }
 
-    [data-image-position='image-right'] & {
+    [data-image-style='floated'][data-image-position='image-right'] & {
       grid-area: secondary;
+    }
+
+    [data-image-style='offset'][data-image-position='image-left'] & {
+      margin-left: calc(var(--size-spacing-7) * -1);
+    }
+
+    [data-image-style='offset'][data-image-position='image-right'] & {
+      margin-right: calc(var(--size-spacing-7) * -1);
     }
   }
 }

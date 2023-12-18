@@ -1,9 +1,13 @@
+import tokens from '@yalesites-org/tokens/build/json/tokens.json';
+
 // Twig templates
 import textWithImageTwig from './yds-text-with-image.twig';
 
 // Data files
 import imageData from '../../01-atoms/images/image/image.yml';
 import textWithImageData from './text-with-image.yml';
+
+const colorPairingsData = Object.keys(tokens['component-themes']);
 
 /**
  * Storybook Definition.
@@ -14,6 +18,12 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: {
+    componentTheme: {
+      name: 'Component Theme (dial)',
+      type: 'select',
+      options: colorPairingsData,
+      defaultValue: 'default',
+    },
     width: {
       name: 'Width',
       type: 'select',
@@ -31,6 +41,18 @@ export default {
       type: 'select',
       options: ['image', 'equal'],
       defaultValue: 'equal',
+    },
+    imageStyle: {
+      name: 'Image Style',
+      type: 'select',
+      options: ['floated', 'offset'],
+      defaultValue: 'floated',
+    },
+    imageOrientation: {
+      name: 'Image Orientation',
+      type: 'select',
+      options: ['landscape', 'portrait'],
+      defaultValue: 'landscape',
     },
     overline: {
       name: 'Overline (optional)',
@@ -69,12 +91,18 @@ export const TextWithImage = ({
   subheading,
   text,
   linkContent,
+  componentTheme,
+  imageStyle,
+  imageOrientation,
 }) =>
   textWithImageTwig({
     ...imageData.responsive_images['3x2'],
+    text_with_image__theme: componentTheme,
     text_with_image__width: width,
     text_with_image__position: position,
+    text_with_image__orientation: imageOrientation,
     text_with_image__focus: focus,
+    text_with_image__style: imageStyle,
     text_with_image__overline: overline,
     text_with_image__heading: heading,
     text_with_image__subheading: subheading,
