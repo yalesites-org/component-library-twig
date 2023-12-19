@@ -96,7 +96,9 @@ export const TextWithImage = ({
   imageOrientation,
 }) =>
   textWithImageTwig({
-    ...imageData.responsive_images['3x2'],
+    ...(imageOrientation === 'portrait'
+      ? imageData.responsive_images['2x3']
+      : imageData.responsive_images['3x2']),
     text_with_image__theme: componentTheme,
     text_with_image__width: width,
     text_with_image__position: position,

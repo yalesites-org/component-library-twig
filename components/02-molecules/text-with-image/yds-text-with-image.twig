@@ -72,7 +72,11 @@
     {# Image #}
     <div {{ bem('image', [], text_with_image__base_class) }}>
       {% block text_with_image__image %}
-        {% include "@atoms/images/image/yds-image.twig" %}
+        {% if text_with_image__orientation == 'portrait' %}
+          {% include "@atoms/images/image/yds-image.twig" %}
+        {% else %}
+          {% include "@atoms/images/image/yds-image.twig" %}
+        {% endif %}
       {% endblock %}
     </div>
   </div>
