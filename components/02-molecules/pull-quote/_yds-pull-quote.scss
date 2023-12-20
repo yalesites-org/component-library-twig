@@ -25,6 +25,15 @@ blockquote {
     }
   }
 
+  // Component themes defaults: iterate over each component theme to establish
+  // default variables.
+  @each $theme, $value in $quote-component-themes {
+    &[data-component-theme='#{$theme}'] {
+      // prettier-ignore
+      --color-pull-quote-accent: var(--color-pull-quote-accent);
+    }
+  }
+
   // Global themes: set color slots for each theme
   // This establishes `--color-slot-` variables name-spaced to the selector
   // in which it is used. We can map component-level variables to global-level
@@ -38,15 +47,6 @@ blockquote {
       );
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
-    }
-  }
-
-  // Component themes defaults: iterate over each component theme to establish
-  // default variables.
-  @each $theme, $value in $quote-component-themes {
-    &[data-component-theme='#{$theme}'] {
-      // prettier-ignore
-      --color-pull-quote-accent: var(--color-pull-quote-accent);
     }
   }
 

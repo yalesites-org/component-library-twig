@@ -1,7 +1,7 @@
 {% set color_pairing__base_class = 'cl-color-pairing' %}
 
 <div {{ bem('wrap', [], color_pairing__base_class) }}>
-  <div class="text-field" data-component-alignment="left" data-component-width="max">
+  <div class="text-field" data-component-alignment="left" data-component-width="site">
     <div class="text-field__inner">
       <div class="text">
         <h1>Component themes (dials)</h1> 
@@ -82,7 +82,7 @@
 
   <div class="pairing-item">
     {% include "@molecules/pull-quote/yds-pull-quote.twig" with {
-      pull_quote__width: 'max',
+      pull_quote__width: 'site',
       pull_quote__alignment: 'left',
       pull_quote__quote: 'Our platform will transform our ability to study metabolic filaments and, coupled with biochemical and biophysical tools, manipulate enzyme structures and metabolic activity in cells.',
     } %}
@@ -107,12 +107,23 @@
   } %}
   </div>
 
+  
   <div class="pairing-item">
     {% embed "@organisms/component-wrapper/yds-component-wrapper.twig" %}
       {% block component_wrapper_inner %}
         {% include "@molecules/tabs/yds-tabs.twig" %}
       {% endblock %}
     {% endembed %}
+  </div>
+
+  <div class="pairing-item">
+    {% include "@molecules/standalone-quote/yds-standalone-quote.twig" with {
+      standalone_quote__width: 'site',
+      standalone_quote__alignment: 'left',
+      standalone_quote__quote_alignment: 'left',
+      standalone_quote__style: 'bar',
+      standalone_quote__quote: 'Our platform will transform our ability to study metabolic filaments and, coupled with biochemical and biophysical tools, manipulate enzyme structures and metabolic activity in cells.',
+    } %}
   </div>
 
   <div class="pairing-item">
