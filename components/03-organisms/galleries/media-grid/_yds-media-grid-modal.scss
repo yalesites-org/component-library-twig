@@ -208,6 +208,10 @@ $modal-speed: var(--animation-speed-slow);
   width: 100%;
   max-width: calc(100% - var(--size-click-target-minimum));
   overflow: hidden;
+
+  &[aria-expanded='true'] {
+    overflow: auto;
+  }
 }
 
 .media-grid-modal__content {
