@@ -5,6 +5,8 @@ $site-header-themes: map.deep-get(tokens.$tokens, site-header-themes);
 $site-header-border-thickness: map.deep-get(tokens.$tokens, border, thickness);
 $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
+$site-max-width: 84rem;
+$background-image-max-width: 100rem;
 
 :root {
   --site-header-animation-speed: var(--animation-speed-slow);
@@ -194,6 +196,24 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
   @media (min-width: tokens.$break-mobile) {
     border-bottom: var(--site-header-border-bottom);
   }
+
+  &[data-site-header-with-background-image] {
+    background-color: transparent;
+    border-bottom: unset;
+
+    @media (min-width: tokens.$break-mobile) {
+      display: grid;
+      grid-template: 'header';
+      width: 100%;
+      max-width: 100%;
+    }
+
+    @media (min-width: $background-image-max-width) {
+      max-width: 150rem; // 2400px
+      padding: 0;
+      margin: 0 auto;
+    }
+  }
 }
 
 .site-header__mobile-header {
@@ -226,6 +246,7 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
     background: var(--color-background);
     max-height: calc(100vh - var(--header-height-mobile));
     width: 100vw;
+    max-width: 100%;
     overflow: auto;
     border-bottom: var(--site-header-mobile-border-bottom);
     transform: translateY(0%);
@@ -234,6 +255,11 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
       @include tokens.animate-hidden(var(--site-header-animation-speed));
 
       transform: translateY(-100%);
+    }
+
+    // when it's a simple menu with an image we need to set a min-height
+    [data-site-header-type='focus'][data-site-header-with-background-image] & {
+      min-height: var(--header-height-mobile);
     }
   }
 }
@@ -352,6 +378,10 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
     [data-site-header-nav-position='right'] & {
       margin-left: auto;
     }
+
+    [data-site-header-type='focus'] & {
+      align-self: center;
+    }
   }
 }
 
@@ -378,6 +408,94 @@ $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
       height: 100vh;
       opacity: 1;
+    }
+  }
+}
+
+.site-header__inner {
+  [data-site-header-type='focus'][data-site-header-with-background-image] & {
+    @media (min-width: tokens.$break-mobile) {
+      grid-area: container;
+      z-index: 2;
+      width: 100%;
+      max-width: 84rem;
+    }
+  }
+}
+
+// Image
+.site-header__image {
+  position: relative;
+
+  // pull image into the site margins, full-bleed
+  margin-left: calc(var(--size-spacing-site-gutter) * -1);
+  margin-right: calc(var(--size-spacing-site-gutter) * -1);
+
+  [data-main-menu-state='open'] & {
+    z-index: -1;
+    opacity: 0.1;
+  }
+
+  // make image width and height take up the full screen at resolutions
+  // greater than mobile
+  @media (min-width: tokens.$break-mobile) {
+    > * {
+      object-fit: cover;
+      height: 100vh;
+      width: 100vw;
+    }
+  }
+
+  @media (min-width: tokens.$break-mobile) {
+    grid-area: container;
+    z-index: 0;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-image: linear-gradient(
+        var(--color-site-header-background) 15%,
+        transparent 100%
+      );
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+
+      @media (min-width: $site-max-width) {
+        background-image: linear-gradient(
+          var(--color-site-header-background) 10%,
+          transparent 100%
+        );
+      }
+    }
+  }
+}
+
+// Site Name is Logo/SVG
+.site-header__site-branding-logo {
+  [data-site-header-site-name-is-image] & {
+    &--desktop {
+      > * {
+        height: auto;
+        max-height: 200px;
+        max-width: 200px;
+      }
+
+      @media (max-width: tokens.$break-mobile-max) {
+        display: none;
+      }
+    }
+
+    &--mobile {
+      > * {
+        max-height: 100px;
+      }
+
+      @media (min-width: tokens.$break-mobile) {
+        display: none;
+      }
     }
   }
 }

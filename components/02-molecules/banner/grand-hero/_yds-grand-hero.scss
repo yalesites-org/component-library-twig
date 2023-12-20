@@ -87,6 +87,8 @@ $break-grand-hero-banner: tokens.$break-m;
     --color-grand-hero-action-secondary: var(--color-slot-one);
     --color-link-base: var(--color-grand-hero-text);
     --color-link-hover: var(--color-grand-hero-text);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 
   &[data-component-theme='two'] {
@@ -98,7 +100,7 @@ $break-grand-hero-banner: tokens.$break-m;
     --color-link-base: var(--color-grand-hero-text);
     --color-link-hover: var(--color-grand-hero-text);
 
-    a {
+    p > a {
       color: var(--color-slot-seven);
     }
   }
@@ -111,6 +113,8 @@ $break-grand-hero-banner: tokens.$break-m;
     --color-grand-hero-action-secondary: var(--color-slot-one);
     --color-link-base: var(--color-grand-hero-text);
     --color-link-hover: var(--color-grand-hero-text);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 }
 

@@ -89,6 +89,16 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 }
 
+.callouts__wrap {
+  display: flex;
+  max-width: var(--size-component-layout-width-site);
+  margin: 0 auto;
+
+  [data-component-width='content'][data-component-alignment='left'] & {
+    justify-content: flex-start;
+  }
+}
+
 .callouts__inner {
   @media (min-width: tokens.$break-mobile) {
     display: flex;
@@ -101,6 +111,10 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
     > *:nth-child(2n + 1):not(:last-child) {
       padding-right: var(--size-spacing-9);
+    }
+
+    [data-component-width='content'][data-component-alignment='left'] & {
+      margin: 0;
     }
   }
 }
@@ -167,7 +181,21 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 .callout__link {
   @include atoms.link;
 
+  --color-text-shadow: var(--color-callouts-background);
+
   margin-top: var(--size-spacing-4);
+
+  [data-component-theme='one'] & {
+    --color-link-hover: var(--color-slot-eight);
+  }
+
+  [data-component-theme='two'] & {
+    --color-link-hover: var(--color-slot-seven);
+  }
+
+  [data-component-theme='three'] & {
+    --color-link-hover: var(--color-slot-eight);
+  }
 }
 
 .callout__cta {
