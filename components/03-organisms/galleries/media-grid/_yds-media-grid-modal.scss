@@ -201,6 +201,15 @@ $modal-speed: var(--animation-speed-slow);
   }
 }
 
+.media-grid-modal__content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-3);
+  width: 100%;
+  max-width: calc(100% - var(--size-click-target-minimum));
+  overflow: hidden;
+}
+
 .media-grid-modal__content {
   overflow: hidden;
   grid-area: content;
@@ -213,13 +222,10 @@ $modal-speed: var(--animation-speed-slow);
 
   .text {
     display: flex;
-    flex-direction: column;
-    gap: var(--size-spacing-3);
-    padding-inline-start: var(--size-spacing-10);
-
-    @media (min-width: tokens.$break-2xl) {
-      padding-inline-start: var(--size-spacing-6);
-    }
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: var(--size-spacing-5);
   }
 
   &[aria-expanded] {
@@ -231,6 +237,11 @@ $modal-speed: var(--animation-speed-slow);
 
     overflow: auto;
     z-index: 1;
+
+    .text {
+      justify-content: start;
+      align-items: flex-start;
+    }
   }
 
   a {
@@ -343,15 +354,16 @@ $modal-speed: var(--animation-speed-slow);
 }
 
 .media-grid-modal__toggle-caption {
-  position: absolute;
-  top: var(--size-spacing-5);
-  left: var(--size-spacing-6);
+  display: none;
+  flex: 0 0 var(--size-click-target-minimum);
+  position: relative;
   padding: 0;
   cursor: pointer;
   background-color: transparent;
   border: none;
   height: var(--size-click-target-minimum);
   width: var(--size-click-target-minimum);
+  overflow: hidden;
 
   svg {
     fill: var(--color-text);
@@ -369,10 +381,5 @@ $modal-speed: var(--animation-speed-slow);
     svg.media-grid-modal__icon--collapse-content {
       display: block;
     }
-  }
-
-  // adjust icon position when heading is present
-  .media-grid-modal__content--has-heading & {
-    top: var(--size-spacing-6);
   }
 }
