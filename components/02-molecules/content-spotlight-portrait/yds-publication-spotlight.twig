@@ -1,0 +1,77 @@
+{#
+ # Available Props:
+ # - publication_spotlight__width: feature (default) or highlight
+ # - publication_spotlight__position: image-left (default) or image-right
+ #
+ # Available variables:
+ # - publication_spotlight__overline (optional)
+ # - publication_spotlight__heading
+ # - publication_spotlight__subheading (optional)
+ # - publication_spotlight__text
+ # - publication_spotlight__link__content (optional)
+ # - publication_spotlight__link__url (optional)
+ #
+ # Available blocks:
+ # - publication_spotlight__image
+ #}
+
+{% set publication_spotlight__base_class = 'text-with-image' %}
+
+{% set publication_spotlight__attributes = {
+  'data-image-position': publication_spotlight__position|default('image-left'),
+  'data-component-width': publication_spotlight__width|default('site'),
+  'data-component-theme': publication_spotlight__theme|default('default'),
+  'data-image-style': publication_spotlight__style|default('floated'),
+  'data-image-orientation': publication_spotlight__orientation|default('landscape'),
+  class: bem(publication_spotlight__base_class)
+} %}
+
+<div {{ add_attributes(publication_spotlight__attributes) }}>
+  {% block prefix_suffix %}
+  {% endblock %}
+  <div {{ bem('inner', [], publication_spotlight__base_class) }}>
+    {# Content #}
+    <div {{ bem('content', [], publication_spotlight__base_class) }}>
+      {# Overline #}
+      {% if publication_spotlight__overline %}
+        {% include "@atoms/typography/text/yds-text.twig" with {
+          text__content: publication_spotlight__overline,
+          text__base_class: 'overline',
+          text__blockname: publication_spotlight__base_class,
+        } %}
+      {% endif %}
+      {# Heading #}
+      {% include "@atoms/typography/headings/yds-heading.twig" with {
+        heading: publication_spotlight__heading,
+        heading__level: '2',
+        heading__blockname: publication_spotlight__base_class,
+      } %}
+      {# Subheading #}
+      {% if publication_spotlight__subheading %}
+        {% include "@atoms/typography/text/yds-text.twig" with {
+          text__content: publication_spotlight__subheading,
+          text__base_class: 'subheading',
+          text__blockname: publication_spotlight__base_class,
+        } %}
+      {% endif %}
+      {# Text #}
+      {% include "@atoms/typography/text/yds-text.twig" with {
+        text__content: publication_spotlight__text,
+        text__blockname: publication_spotlight__base_class,
+      } %}
+      {# Link #}
+      {% if publication_spotlight__link__content and publication_spotlight__link__url %}
+        {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+          link__content: publication_spotlight__link__content,
+          link__url: publication_spotlight__link__url,
+        } %}
+      {% endif %}
+    </div>
+    {# Image #}
+    <div {{ bem('image', [], publication_spotlight__base_class) }}>
+      {% block publication_spotlight__image %}
+        {% include "@atoms/images/image/yds-image.twig" %}
+      {% endblock %}
+    </div>
+  </div>
+</div>

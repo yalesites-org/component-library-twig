@@ -9,7 +9,7 @@ import textWithImageData from './text-with-image.yml';
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Text With Image',
+  title: 'Molecules/Content Spotlight/Landscape',
   parameters: {
     layout: 'fullscreen',
   },
