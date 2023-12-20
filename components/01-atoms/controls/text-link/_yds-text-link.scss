@@ -85,6 +85,15 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   &:focus-visible {
     @include tokens.underline-slide-none;
   }
+
+  &:visited {
+    color: var(--color-link-visited-base);
+
+    &:focus,
+    &:hover {
+      color: var(--color-link-visited-hover);
+    }
+  }
 }
 
 // This mixin is primarily used in instances in which the link mixin
@@ -121,6 +130,15 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   &:hover {
     text-decoration: none;
     color: var(--color-link-hover);
+  }
+
+  &:visited {
+    color: var(--color-link-visited-base);
+
+    &:focus,
+    &:hover {
+      color: var(--color-link-visited-hover);
+    }
   }
 }
 
@@ -194,6 +212,15 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
       // elements would appear to be focused at the same time.
       outline: none;
     }
+
+    &:visited {
+      color: var(--color-link-visited-base);
+    }
+  }
+
+  // Style the heading link when the component is focused.
+  &:focus-visible [class*='__heading-link'] {
+    @include tokens.underline-slide-end('no-underline');
   }
 
   // Style the heading link when the component is hovered.
@@ -201,11 +228,10 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
     @include tokens.underline-slide-end('no-underline');
 
     color: var(--color-link-hover);
-  }
 
-  // Style the heading link when the component is focused.
-  &:focus-visible [class*='__heading-link'] {
-    @include tokens.underline-slide-end('no-underline');
+    &:visited {
+      color: var(--color-link-visited-hover);
+    }
   }
 }
 
@@ -236,5 +262,13 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   &[data-link-style='no-underline-animation'] {
     @include plain-link;
+  }
+
+  &:visited {
+    color: var(--color-link-visited-base);
+
+    &:hover {
+      color: var(--color-link-visited-hover);
+    }
   }
 }
