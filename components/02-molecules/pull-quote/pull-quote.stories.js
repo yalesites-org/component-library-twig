@@ -6,7 +6,7 @@ import pullQuoteData from './pull-quote.yml';
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Quote',
+  title: 'Molecules/Quotes/Pull Quote',
   argTypes: {
     quote: {
       name: 'Quote',

@@ -36,9 +36,6 @@ $break-layout-two-column-max: $break-layout-two-column - 0.05;
 
   @media (min-width: $break-layout-two-column) {
     flex: 1 0 var(--size-component-layout-width-content);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
   }
 }
 
