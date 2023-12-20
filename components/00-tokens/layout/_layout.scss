@@ -88,10 +88,6 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 @mixin spacing-page-inner {
   --font-spacing-paragraph-extra: 2em;
 
-  @media (min-width: tokens.$break-l) {
-    --font-spacing-paragraph-extra: 1em;
-  }
-
   .no-page-spacing + & {
     margin-top: var(--font-spacing-paragraph-extra);
   }
