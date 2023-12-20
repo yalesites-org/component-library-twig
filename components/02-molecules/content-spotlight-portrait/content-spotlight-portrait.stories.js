@@ -1,11 +1,11 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
 // Twig templates
-import publicationSpotlightTwig from './yds-publication-spotlight.twig';
+import contentSpotlightPortraitTwig from './yds-content-spotlight-portrait.twig';
 
 // Data files
 import imageData from '../../01-atoms/images/image/image.yml';
-import publicationSpotlightData from './publication-spotlight.yml';
+import contentSpotlightPortraitData from './content-spotlight-portrait.yml';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
@@ -36,12 +36,6 @@ export default {
       options: ['inline', 'offset'],
       defaultValue: 'inline',
     },
-    imageOrientation: {
-      name: 'Image Orientation',
-      type: 'select',
-      options: ['landscape', 'portrait'],
-      defaultValue: 'portrait',
-    },
     overline: {
       name: 'Overline (optional)',
       type: 'string',
@@ -50,28 +44,31 @@ export default {
     heading: {
       name: 'Heading',
       type: 'string',
-      defaultValue: publicationSpotlightData.publication_spotlight__heading,
+      defaultValue:
+        contentSpotlightPortraitData.content_spotlight_portrait__heading,
     },
     subheading: {
       name: 'Subheading (optional)',
       type: 'string',
-      defaultValue: publicationSpotlightData.publication_spotlight__subheading,
+      defaultValue:
+        contentSpotlightPortraitData.content_spotlight_portrait__subheading,
     },
     text: {
       name: 'Text',
       type: 'string',
-      defaultValue: publicationSpotlightData.publication_spotlight__text,
+      defaultValue:
+        contentSpotlightPortraitData.content_spotlight_portrait__text,
     },
     linkContent: {
       name: 'Link Content (optional)',
       type: 'string',
       defaultValue:
-        publicationSpotlightData.publication_spotlight__link__content,
+        contentSpotlightPortraitData.content_spotlight_portrait__link__content,
     },
   },
 };
 
-export const publicationSpotlight = ({
+export const ContentSpotlightPortrait = ({
   position,
   overline,
   heading,
@@ -80,21 +77,17 @@ export const publicationSpotlight = ({
   linkContent,
   componentTheme,
   imageStyle,
-  imageOrientation,
 }) =>
-  publicationSpotlightTwig({
-    ...(imageOrientation === 'portrait'
-      ? imageData.responsive_images['2x3']
-      : imageData.responsive_images['3x2']),
-    publication_spotlight__theme: componentTheme,
-    publication_spotlight__position: position,
-    publication_spotlight__orientation: imageOrientation,
-    publication_spotlight__style: imageStyle,
-    publication_spotlight__overline: overline,
-    publication_spotlight__heading: heading,
-    publication_spotlight__subheading: subheading,
-    publication_spotlight__text: text,
-    publication_spotlight__link__content: linkContent,
-    publication_spotlight__link__url:
-      publicationSpotlightData.publication_spotlight__link__url,
+  contentSpotlightPortraitTwig({
+    ...imageData.responsive_images['2x3'],
+    content_spotlight_portrait__theme: componentTheme,
+    content_spotlight_portrait__position: position,
+    content_spotlight_portrait__style: imageStyle,
+    content_spotlight_portrait__overline: overline,
+    content_spotlight_portrait__heading: heading,
+    content_spotlight_portrait__subheading: subheading,
+    content_spotlight_portrait__text: text,
+    content_spotlight_portrait__link__content: linkContent,
+    content_spotlight_portrait__link__url:
+      contentSpotlightPortraitData.content_spotlight_portrait__link__url,
   });

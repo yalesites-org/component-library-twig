@@ -29,3 +29,9 @@ responsive_images:
     image__sizes: '100vw'
     image__src: 'https://picsum.photos/320/240'
     image__alt: 'A 4 by 3 image'
+  2x3:
+    output_image_tag: true
+    image__srcset: 'https://picsum.photos/213/320 213w, https://picsum.photos/320/480 320w, https://picsum.photos/427/640 427w, https://picsum.photos/533/800 533w, https://picsum.photos/640/960 640w, https://picsum.photos/747/1120 747w, https://picsum.photos/853/1280 853w, https://picsum.photos/960/1440 960w, https://picsum.photos/1067/1600 1067w, https://picsum.photos/1173/1760 1173w, https://picsum.photos/1280/1920 1280w, https://picsum.photos/1387/2080 1387w, https://picsum.photos/1493/2240 1493w, https://picsum.photos/1600/2400 1600w'
+    image__sizes: '100vw'
+    image__src: 'https://picsum.photos/213/320'
+    image__alt: 'A 2 by 3 image'
