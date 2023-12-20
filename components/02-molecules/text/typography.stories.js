@@ -7,6 +7,21 @@ import textData from './text-field.yml';
 /**
  * Storybook Definition.
  */
-export default { title: 'Molecules/Text' };
+export default {
+  title: 'Molecules/Text',
+  argTypes: {
+    variation: {
+      name: 'Text Field Variation',
+      options: ['default', 'emphasized'],
+      type: 'select',
+      defaultValue: 'default',
+    },
+  },
+};
 
-export const TextField = () => textFieldTwig(textData);
+export const TextField = ({ variation }) => `
+${textFieldTwig({
+  text_field__content: textData.text_field__content,
+  text_field__variation: variation,
+})};
+`;
