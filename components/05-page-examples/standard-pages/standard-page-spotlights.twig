@@ -38,6 +38,30 @@
         content_spotlight_portrait__theme: 'two',
     }%}
 
+    {% include "@molecules/content-spotlight-portrait/yds-content-spotlight-portrait.twig" with {
+        content_spotlight_portrait__style: 'offset',
+        content_spotlight_portrait__position: 'image-left',
+        content_spotlight_portrait__theme: 'default',
+    }%}
+
+    {% include "@molecules/content-spotlight-portrait/yds-content-spotlight-portrait.twig" with {
+        content_spotlight_portrait__style: 'offset',
+        content_spotlight_portrait__position: 'image-right',
+        content_spotlight_portrait__theme: 'default',
+    }%}
+
+    {% include "@molecules/content-spotlight-portrait/yds-content-spotlight-portrait.twig" with {
+        content_spotlight_portrait__style: 'inline',
+        content_spotlight_portrait__position: 'image-left',
+        content_spotlight_portrait__theme: 'default',
+    }%}
+
+    {% include "@molecules/content-spotlight-portrait/yds-content-spotlight-portrait.twig" with {
+        content_spotlight_portrait__style: 'inline',
+        content_spotlight_portrait__position: 'image-right',
+        content_spotlight_portrait__theme: 'default',
+    }%}
+
     {% include "@molecules/text/yds-text-field.twig" with {
       text_field__alignment: 'left',
       text_field__content: '<h2>New Text Block</h2>

@@ -13,7 +13,7 @@ const colorPairingsData = Object.keys(tokens['component-themes']);
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Content Spotlight/Portrait',
+  title: 'Molecules/Content Spotlight',
   parameters: {
     layout: 'fullscreen',
   },

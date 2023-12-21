@@ -16,6 +16,8 @@ $component-content-spotlight-themes: map.deep-get(
 
   &[data-component-theme='default'] {
     @include tokens.spacing-page-section;
+
+    margin-block-start: var(--spacing-page-section);
   }
 
   // if we're using a component theme, add padding and set background-color and color;
@@ -26,7 +28,7 @@ $component-content-spotlight-themes: map.deep-get(
     color: var(--color-text);
     margin-block-start: var(--spacing-page-section);
 
-    + .content-spotlight-portrait {
+    + .content-spotlight-portrait:not([data-component-theme='default']) {
       margin-block-start: 0;
     }
   }
@@ -48,6 +50,7 @@ $component-content-spotlight-themes: map.deep-get(
       // override text-shadow color for links in component themes
       .link {
         --color-text-shadow: var(--color-spotlight-text-shadow);
+        --color-link-hover: var(--color-link-hover);
       }
     }
   }
@@ -105,6 +108,7 @@ $component-content-spotlight-themes: map.deep-get(
 .content-spotlight-portrait__inner {
   display: flex;
   flex-flow: column nowrap;
+  gap: var(--size-spacing-6);
 
   @media (min-width: tokens.$break-mobile) {
     flex-flow: row nowrap;
