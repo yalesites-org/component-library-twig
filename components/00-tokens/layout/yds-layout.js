@@ -3,7 +3,11 @@ Drupal.behaviors.layout = {
     // Classes.
     // This array of classes should not have the preceding `.` so that we can
     // check for them in `classList.contains` below.
-    const classesToCheck = ['text-field', 'wrapped-image'];
+    const classesToCheck = [
+      'text-field',
+      'wrapped-image',
+      'content-spotlight-portrait',
+    ];
     // Generate a string of the above classes with preceding `.` for the
     // querySelectorAll below.
     const bodyCopyClasses = classesToCheck.map((i) => `.${i}`);

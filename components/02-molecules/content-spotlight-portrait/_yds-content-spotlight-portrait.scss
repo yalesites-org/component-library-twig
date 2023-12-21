@@ -11,17 +11,24 @@ $component-content-spotlight-themes: map.deep-get(
 
 // Content Spotlight
 .content-spotlight-portrait {
-  @include tokens.spacing-page-section;
-
   // used by a element for animated hover underline
   --color-text-shadow: var(--color-basic-white);
 
+  &[data-component-theme='default'] {
+    @include tokens.spacing-page-section;
+  }
+
   // if we're using a component theme, add padding and set background-color and color;
   &:not([data-component-theme='default']) {
-    padding-block-start: var(--size-spacing-12);
-    padding-block-end: var(--size-spacing-12);
+    padding-block-start: var(--size-spacing-10);
+    padding-block-end: var(--size-spacing-10);
     background-color: var(--color-background);
     color: var(--color-text);
+    margin-block-start: var(--spacing-page-section);
+
+    + .content-spotlight-portrait {
+      margin-block-start: 0;
+    }
   }
 
   // Component themes defaults: iterate over each component theme to establish
