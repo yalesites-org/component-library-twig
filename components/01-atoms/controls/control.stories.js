@@ -159,7 +159,7 @@ export const textLink = () => `
     link__type: 'normal',
   })}<br />
   ${linkTwig({
-    link__url: '#',
+    link__url: 'https://google.com',
     link__content: 'This is an "external" link',
     link__style: 'underline-with-icon',
     link__type: 'external',
@@ -171,7 +171,7 @@ export const textLink = () => `
     link__type: 'target-blank',
   })}
   ${linkTwig({
-    link__url: '#',
+    link__url: 'https://google.com/download.pdf',
     link__content: 'This is a "download" link',
     link__style: 'underline-with-icon',
     link__type: 'download',
