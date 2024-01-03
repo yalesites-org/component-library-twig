@@ -23,12 +23,12 @@
 
 {% set control__url_type = control__url_type|default(url_type(link__url)|default('internal')) %}
 
-{% if link__type == '' and control__url_type != '' %}
-  {% set link__type = control__url_type %}
-{% endif %}
+{% set link__type = link__type|default(control__url_type) %}
+{% set link__style = link_style|default('underline') %}
 
 {% if link__type == 'external' or link__type == 'target-blank' or link__type == 'download' or link__type == 'with-chevron' %}
   {% set link__modifiers = ['with-icon'] %}
+  {% set link__style = link__style ~ "-with-icon" %}
 {% endif %}
 
 {% set link__attributes = link__attributes|merge({
