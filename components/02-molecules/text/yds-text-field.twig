@@ -12,6 +12,9 @@
   class: bem(text_field__base_class, text_field__modifiers, text_field__blockname, text_field__extra_classes),
 } %}
 
+{# capture all links from text #}
+{% set text_field__links = text_field__content|extract_links %}
+
 <div {{ add_attributes(text_field__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}
