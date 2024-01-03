@@ -34,12 +34,12 @@ items:
           - title: 'Freeing Students from Debt and for Vocation'
             url: '#'
       - title: 'Sustainability'
-        url: '#'
+        url: 'https://google.com'
       - title: 'Staff Directory'
         url: '#'
         is_active: true
       - title: 'Mission & History'
-        url: '#'
+        url: 'https://google.com/download.pdf'
         below:
           - title: 'The YDS Shield'
             url: '#'
