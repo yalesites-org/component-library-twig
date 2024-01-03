@@ -181,6 +181,7 @@ export const textLink = () => `
     link__content: 'This is a link with chevron',
     link__style: 'underline-with-icon',
     link__type: 'with-chevron',
+    control__url_type: 'chevron',
   })}
   ${linkTwig({
     link__url: '#',
