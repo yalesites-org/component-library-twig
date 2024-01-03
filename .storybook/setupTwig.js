@@ -11,6 +11,7 @@ module.exports.namespaces = {
   'page-examples': resolve(__dirname, '../', 'components/05-page-examples'),
 };
 
+/* Adds a twig function to find the type of URL given */
 function twigUrl(twigInstance) {
   const urlHasCurrentDomain = (url) =>
     url.indexOf(document.location.hostname) > -1;
@@ -72,7 +73,6 @@ function twigUrl(twigInstance) {
       return undefined;
     }
 
-    // Given a url, find the first type that returns true and get the key.
     const found = Object.keys(types).find((key) => types[key](url));
     return found;
   };
