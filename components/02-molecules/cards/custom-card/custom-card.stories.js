@@ -50,7 +50,7 @@ export const customCard = ({ heading, snippet, withImage, featured }) => `
           ...imageData.responsive_images['3x2'],
           custom_card__heading: heading,
           custom_card__snippet: snippet,
-          custom_card__url: '#',
+          custom_card__url: 'https://google.com',
           custom_card__image: withImage ? 'true' : 'false',
         })}
       </ul>

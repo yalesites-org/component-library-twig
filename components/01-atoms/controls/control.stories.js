@@ -169,6 +169,7 @@ export const textLink = () => `
     link__content: 'This is a "new target" link',
     link__style: 'underline-with-icon',
     link__type: 'target-blank',
+    control__url_type: 'target_blank',
   })}
   ${linkTwig({
     link__url: 'https://google.com/download.pdf',
@@ -200,12 +201,12 @@ export const CtaExamples = ({ globalTheme, componentTheme }) =>
     <div class="cta-group">
       ${ctaTwig({
         cta__content: ctaText,
-        cta__href: '#',
+        cta__href: 'https://google.com',
         cta__component_theme: componentTheme,
       })}
       ${ctaTwig({
         cta__content: ctaText,
-        cta__href: '#',
+        cta__href: 'https://google.com/download.pdf',
         cta__radius: 'soft',
         cta__component_theme: componentTheme,
       })}
@@ -344,7 +345,7 @@ export const LinkExamples = ({ globalTheme, componentTheme }) =>
         link__type: 'normal',
       })}<br />
       ${linkTwig({
-        link__url: '#',
+        link__url: 'https://google.com',
         link__content: 'This is an "external" link',
         link__style: 'underline-with-icon',
         link__type: 'external',
@@ -354,9 +355,10 @@ export const LinkExamples = ({ globalTheme, componentTheme }) =>
         link__content: 'This is a "new target" link',
         link__style: 'underline-with-icon',
         link__type: 'target-blank',
+        control__url_type: 'target_blank',
       })}
       ${linkTwig({
-        link__url: '#',
+        link__url: 'https://google.com/download.pdf',
         link__content: 'This is a "download" link',
         link__style: 'underline-with-icon',
         link__type: 'download',
@@ -366,6 +368,7 @@ export const LinkExamples = ({ globalTheme, componentTheme }) =>
         link__content: 'This is a link with chevron',
         link__style: 'underline-with-icon',
         link__type: 'with-chevron',
+        control__url_type: 'chevron',
       })}
       ${linkTwig({
         link__url: '#',
