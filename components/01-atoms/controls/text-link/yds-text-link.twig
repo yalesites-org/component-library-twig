@@ -21,6 +21,12 @@
 {% set link__base_class = link__base_class|default('link') %}
 {% set link__attributes = link__attributes|default({}) %}
 
+{% set control__url_type = url_type(link__url)|default('internal') %}
+
+{% if link__type == '' and control__url_type != '' %}
+  {% set link__type = control__url_type %}
+{% endif %}
+
 {% if link__type == 'external' or link__type == 'target-blank' or link__type == 'download' or link__type == 'with-chevron' %}
   {% set link__modifiers = ['with-icon'] %}
 {% endif %}
@@ -36,40 +42,7 @@
   {% block link__content %}
     {{- link__content -}}
   {% endblock %}
-  {# if link__type is external, target-blank, download, or with-chevron we add icons #}
-  {% if link__type == 'external' %}
-    {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
-      fa_icon__title: 'Arrow Up Right',
-      fa_icon__extra_class: ['fa-solid fa-arrow-up-right'],
-      fa_icon__decorative: true,
-      fa_icon__sr_title: '(link is external)',
-      } 
-    %}
-  {% endif %}
-  {% if link__type == 'target-blank' %}
-    {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
-      fa_icon__title: 'Up Right',
-      fa_icon__extra_class: ['fa-solid fa-arrow-up-right-from-square'],
-      fa_icon__decorative: true,
-      fa_icon__sr_title: '(opens in a new window/tab)',
-      } 
-    %}
-  {% endif %}
-  {% if link__type == 'download' %} 
-    {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
-      fa_icon__title: 'Circle Down',
-      fa_icon__extra_class: ['fa-regular fa-circle-down'],
-      fa_icon__decorative: true,
-      fa_icon__sr_title: '(file download)',
-      } 
-    %}
-  {% endif %}
-  {% if link__type == 'with-chevron' %}
-    {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
-      fa_icon__title: 'Angle Right',
-      fa_icon__extra_class: ['fa-solid fa-angle-right'],
-      fa_icon__decorative: true,
-      } 
-    %}
-  {% endif %}
+  {% include "@atoms/controls/base/yds-control-icon.twig" with {
+    control__url_type: control__url_type,
+  } %}
 </a>
