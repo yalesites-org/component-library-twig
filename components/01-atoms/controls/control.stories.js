@@ -28,7 +28,7 @@ export const Cta = ({ componentTheme }) => `
   <div class="cta-group">
     ${ctaTwig({
       cta__content: ctaText,
-      cta__href: '#',
+      cta__href: 'https://google.com',
       cta__component_theme: componentTheme,
     })}
     ${ctaTwig({
@@ -39,7 +39,7 @@ export const Cta = ({ componentTheme }) => `
     })}
     ${ctaTwig({
       cta__content: ctaText,
-      cta__href: '#',
+      cta__href: 'https://google.com/test.pdf',
       cta__radius: 'pill',
       cta__component_theme: componentTheme,
     })}
