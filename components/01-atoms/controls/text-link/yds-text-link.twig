@@ -21,7 +21,7 @@
 {% set link__base_class = link__base_class|default('link') %}
 {% set link__attributes = link__attributes|default({}) %}
 
-{% set control__url_type = url_type(link__url)|default('internal') %}
+{% set control__url_type = control__url_type|default(url_type(link__url)|default('internal')) %}
 
 {% if link__type == '' and control__url_type != '' %}
   {% set link__type = control__url_type %}
