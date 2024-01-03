@@ -1,12 +1,24 @@
-{%
-  set control_icon__names = {
-    'external': 'fa-arrow-up-right',
-    'download': 'fa-circle-down',
-    'target_blank': 'fa-arrow-up-right-from-square',
-  }
-%}
+{% set control_icon__names = {
+    'external': {
+      fa_icon__title: 'Arrow Up Right',
+      fa_icon__extra_class: ['fa-solid fa-arrow-up-right'],
+      fa_icon__decorative: true,
+      fa_icon__sr_title: '(link is external)',
+    },
+    'download': {
+      fa_icon__title: 'Circle Down',
+      fa_icon__extra_class: ['fa-regular fa-circle-down'],
+      fa_icon__decorative: true,
+      fa_icon__sr_title: '(file download)',
+    },
+    'target_blank': {
+      fa_icon__title: 'Up Right',
+      fa_icon__extra_class: ['fa-solid fa-arrow-up-right-from-square'],
+      fa_icon__decorative: true,
+      fa_icon__sr_title: '(opens in a new window/tab)',
+    },
+} %}
 
 {% if control__url_type != 'internal' %}
-  <span class="sr-only"></span>
-  <i class="fa-icon fa-solid {{ control_icon__names[control__url_type] }}"></i>
+  {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with control_icon__names[control__url_type] %}
 {% endif %}
