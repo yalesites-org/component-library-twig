@@ -144,6 +144,10 @@ $alert-fade-speed: var(--animation-speed-slow);
   [data-alert-state='collapsed'] & {
     display: none;
   }
+
+  & > i.fa-icon {
+    padding-right: var(--size-spacing-3);
+  }
 }
 
 .alert__toggle {
