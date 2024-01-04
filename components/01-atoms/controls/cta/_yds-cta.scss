@@ -328,7 +328,7 @@ $cta-outline-weights: (
   }
 
   // A cta link with a font-icon should have more padding
-  & > i.fa-icon {
+  &:has(> i.fa-icon) {
     padding-right: var(--size-spacing-5);
   }
 }

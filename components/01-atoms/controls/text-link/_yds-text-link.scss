@@ -96,7 +96,7 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 
   // Make the underline link encompass the icon as well.
-  & > i.fa-icon {
+  &:has(> i.fa-icon) {
     padding-right: var(--size-spacing-6);
   }
 }
@@ -221,11 +221,6 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
     &:visited {
       color: var(--color-link-visited-base);
     }
-
-    // Make the underline link encompass the icon as well.
-    & > i.fa-icon {
-      padding-right: var(--size-spacing-5);
-    }
   }
 
   // Style the heading link when the component is focused.
@@ -242,6 +237,11 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
     &:visited {
       color: var(--color-link-visited-hover);
     }
+  }
+
+  // Make the underline link encompass the icon as well.
+  & [class*='__heading-link']:has(> i.fa-icon) {
+    padding-right: var(--size-spacing-5);
   }
 }
 
