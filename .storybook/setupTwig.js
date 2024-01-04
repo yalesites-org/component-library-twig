@@ -77,7 +77,7 @@ function twigUrl(twigInstance) {
     return found;
   };
 
-  twigInstance.extendFunction('url_type', urlType);
+  twigInstance.extendFunction('getUrlType', urlType);
 }
 
 /**
