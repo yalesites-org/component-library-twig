@@ -148,6 +148,10 @@ $alert-fade-speed: var(--animation-speed-slow);
   & > i.fa-icon {
     padding-right: var(--size-spacing-3);
   }
+
+  &:visited {
+    color: var(--color-alert-text);
+  }
 }
 
 .alert__toggle {
