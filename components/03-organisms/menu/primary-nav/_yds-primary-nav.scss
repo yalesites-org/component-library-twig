@@ -396,6 +396,16 @@ $menu-sub-max-width: 19rem;
         background-color: var(--color-gray-200);
       }
     }
+
+    // Top level links with icons shouldn't have line underneath and spaced
+    // correctly.
+    &.primary-nav__link--level-0 {
+      padding: 0 var(--size-spacing-5);
+
+      &::after {
+        content: unset;
+      }
+    }
   }
 
   [data-menu-variation='mega'] & {
