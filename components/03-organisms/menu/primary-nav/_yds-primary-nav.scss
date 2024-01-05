@@ -395,12 +395,6 @@ $menu-sub-max-width: 19rem;
         height: var(--border-thickness-1);
         background-color: var(--color-gray-200);
       }
-
-      // last element should not have a visible bottom border
-      :last-child > &::after {
-        margin-bottom: 0;
-        background-color: transparent;
-      }
     }
   }
 
