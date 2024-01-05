@@ -20,6 +20,7 @@
 
 {% set link__base_class = link__base_class|default('link') %}
 {% set link__attributes = link__attributes|default({}) %}
+{% set link_modifiers = link_modifiers|default([]) %}
 
 {% set control__url_type = control__url_type|default(getUrlType(link__url|default('#'))|default('internal')) %}
 
@@ -27,7 +28,7 @@
 {% set link__style = link_style|default('underline') %}
 
 {% if link__type == 'external' or link__type == 'target-blank' or link__type == 'download' or link__type == 'with-chevron' %}
-  {% set link__modifiers = ['with-icon'] %}
+  {% set link__modifiers = link__modifiers|merge(['with-icon']) %}
   {% set link__style = link__style ~ "-with-icon" %}
 {% endif %}
 
