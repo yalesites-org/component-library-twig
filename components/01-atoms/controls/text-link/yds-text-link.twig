@@ -20,7 +20,7 @@
 
 {% set link__base_class = link__base_class|default('link') %}
 {% set link__attributes = link__attributes|default({}) %}
-{% set link__modifiers = link_modifiers|default("")|split('')|filter(value => value is not empty) %}
+{% set link__modifiers = link__modifiers|default([]) %}
 
 {% if link__url is defined and link__url is not null and link__url|length > 0 %}
   {% set control__url_type = control__url_type|default(getUrlType(link__url)|default('internal')) %}
