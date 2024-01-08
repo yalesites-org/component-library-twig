@@ -1,5 +1,5 @@
 /* Adds a twig function to find the type of URL given */
-module.exports.twigUrl = function(twigInstance) {
+module.exports = function twigUrl(twigInstance) {
   const urlHasCurrentDomain = (url) =>
     url.indexOf(document.location.hostname) > -1;
 
