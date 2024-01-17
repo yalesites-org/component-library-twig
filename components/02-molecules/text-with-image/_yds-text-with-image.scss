@@ -193,6 +193,8 @@ $component-content-spotlight-themes: map.deep-get(
 
   a {
     @include atoms.link;
+
+    text-shadow: inherit;
   }
 
   > *:last-child {
