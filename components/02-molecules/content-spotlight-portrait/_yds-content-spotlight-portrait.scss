@@ -120,6 +120,7 @@ $component-content-spotlight-port-themes: map.deep-get(
   @media (min-width: tokens.$break-mobile) {
     flex-flow: row nowrap;
     gap: var(--size-spacing-8);
+    align-items: center;
 
     // When offset, vertically center the content with the image
     [data-image-style='offset'] & {
@@ -128,7 +129,6 @@ $component-content-spotlight-port-themes: map.deep-get(
       );
 
       max-width: 100%;
-      align-items: center;
     }
   }
 }
