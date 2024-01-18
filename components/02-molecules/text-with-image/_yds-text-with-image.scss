@@ -194,7 +194,7 @@ $component-content-spotlight-themes: map.deep-get(
   a {
     @include atoms.link;
 
-    text-shadow: inherit;
+    text-shadow: var(--color-spotlight-text-shadow);
   }
 
   > *:last-child {
