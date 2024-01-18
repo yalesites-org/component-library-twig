@@ -214,3 +214,8 @@ $component-content-spotlight-port-themes: map.deep-get(
     margin-bottom: 0;
   }
 }
+
+.content-spotlight-portrait:not([data-component-theme='default'])
+  + .content-spotlight-portrait__test:not([data-component-theme='default']) {
+  margin-block-start: 0;
+}
