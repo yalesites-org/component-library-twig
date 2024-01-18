@@ -7,7 +7,7 @@
 {% set control__attributes = control__attributes|default({}) %}
 
 {% if control__url|length > 0 %}
-  {% set control__url_type = control__url_type|default(getUrlType(control__url)|default("internal")) %}
+  {% set control__url_type = control__url_type|default(getUrlType(control__url, control__attributes)) %}
   {% set control__base_class = control__base_class|default('link') %}
   {% set control__element = 'a' %}
   {% set control__attributes = control__attributes|merge({

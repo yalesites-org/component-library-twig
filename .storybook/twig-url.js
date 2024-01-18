@@ -13,8 +13,11 @@ module.exports = function twigUrl(twigInstance) {
     return url.startsWith("mailto:");
   };
 
-  const urlType = (url) => {
+  const urlType = (url, attributes = {}) => {
     const types = {
+      'target-blank': (_url) => {
+        return attributes.target === '_blank';
+      },
       download: (url) => {
         const fileExtensions = [
           'pdf',
