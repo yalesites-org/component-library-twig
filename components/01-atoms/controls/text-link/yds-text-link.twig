@@ -23,7 +23,7 @@
 {% set link__modifiers = link__modifiers|default([]) %}
 
 {% if link__url is defined and link__url is not null and link__url|length > 0 %}
-  {% set link__url_type = link__url_type|default(getUrlType(link__url)|default('internal')) %}
+  {% set link__url_type = link__url_type|default(getUrlType(link__url)) %}
 {% else %}
   {% set link__url_type = "internal" %}
 {% endif %}

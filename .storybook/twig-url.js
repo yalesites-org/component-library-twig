@@ -57,7 +57,7 @@ module.exports = function twigUrl(twigInstance) {
     };
 
     if (!url) {
-      return undefined;
+      return "internal";
     }
 
     const found = Object.keys(types).find((key) => types[key](url));
