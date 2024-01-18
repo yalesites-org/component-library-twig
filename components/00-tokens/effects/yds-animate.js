@@ -6,7 +6,7 @@ Drupal.behaviors.animateItems = {
     // Set variable to check that the animation theme isn't the default.
     const siteAnimationEnabled = siteAnimationTheme
       ? siteAnimationTheme.getAttribute('data-site-animation') !== 'default'
-      : true;
+      : false;
 
     // Select all elements with [data-animate-item] attribute
     const elementsToAnimate = context.querySelectorAll(
