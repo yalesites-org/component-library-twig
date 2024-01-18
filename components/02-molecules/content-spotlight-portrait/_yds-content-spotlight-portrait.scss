@@ -208,6 +208,8 @@ $component-content-spotlight-port-themes: map.deep-get(
 
   a {
     @include atoms.link;
+
+    text-shadow: var(--color-spotlight-text-shadow);
   }
 
   > *:last-child {
