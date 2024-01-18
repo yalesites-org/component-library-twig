@@ -148,9 +148,6 @@ export const textLink = () => `
   ${linkTwig({
     link__url: 'http://localhost:6006',
     link__content: 'This is a default link',
-    link__attributes: {
-      target: '_blank',
-    },
   })}<br />
   ${linkTwig({
     link__url: '#',
@@ -169,7 +166,9 @@ export const textLink = () => `
     link__content: 'This is a "new target" link',
     link__style: 'underline-with-icon',
     link__type: 'target-blank',
-    control__url_type: 'target_blank',
+    link__attributes: {
+      target: '_blank',
+    },
   })}
   ${linkTwig({
     link__url: 'https://google.com/download.pdf',
@@ -182,7 +181,7 @@ export const textLink = () => `
     link__content: 'This is a link with chevron',
     link__style: 'underline-with-icon',
     link__type: 'with-chevron',
-    control__url_type: 'chevron',
+    link__url_type: 'chevron',
   })}
   ${linkTwig({
     link__url: '#',
@@ -334,9 +333,6 @@ export const LinkExamples = ({ globalTheme, componentTheme }) =>
       ${linkTwig({
         link__url: 'http://localhost:6006',
         link__content: 'This is a default link',
-        link__attributes: {
-          target: '_blank',
-        },
       })}<br />
       ${linkTwig({
         link__url: '#',
@@ -355,7 +351,9 @@ export const LinkExamples = ({ globalTheme, componentTheme }) =>
         link__content: 'This is a "new target" link',
         link__style: 'underline-with-icon',
         link__type: 'target-blank',
-        control__url_type: 'target_blank',
+        link__attributes: {
+          target: '_blank',
+        },
       })}
       ${linkTwig({
         link__url: 'https://google.com/download.pdf',
@@ -368,7 +366,7 @@ export const LinkExamples = ({ globalTheme, componentTheme }) =>
         link__content: 'This is a link with chevron',
         link__style: 'underline-with-icon',
         link__type: 'with-chevron',
-        control__url_type: 'chevron',
+        link__url_type: 'chevron',
       })}
       ${linkTwig({
         link__url: '#',
