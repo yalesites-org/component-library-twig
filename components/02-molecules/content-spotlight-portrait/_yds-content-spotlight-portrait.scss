@@ -52,7 +52,7 @@ $component-content-spotlight-port-themes: map.deep-get(
 
       // override text-shadow color for links in component themes
       .link,
-      .text-with-image__text {
+      .content-spotlight-portrait__text {
         --color-text-shadow: var(--color-spotlight-text-shadow);
         --color-link-hover: var(--color-link-hover);
       }
