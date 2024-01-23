@@ -178,13 +178,3 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
     }
   }
 }
-
-.custom-card__image img {
-  [data-collection-featured='false'] & {
-    display: none;
-
-    @media (min-width: tokens.$break-s) {
-      display: block;
-    }
-  }
-}
