@@ -43,6 +43,12 @@
   href: link__url,
 }) %}
 
+{% if link__url_type == 'download' %}
+  {% set link__attributes = link__attributes|merge({
+    download: '',
+  }) %}
+{% endif %}
+
 <a {{ add_attributes(link__attributes) }}>
   {% block link__content %}
     {{- link__content -}}
