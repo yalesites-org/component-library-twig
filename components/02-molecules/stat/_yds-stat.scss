@@ -1,0 +1,103 @@
+@use '../../00-tokens/tokens';
+@use '../../00-tokens/functions/map';
+
+$global-stat-themes: map.deep-get(tokens.$tokens, 'global-themes');
+$stat-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
+
+.stat {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: var(--size-spacing-6);
+  width: 100%;
+  max-width: 20rem;
+
+  // Component themes defaults: iterate over each component theme to establish
+  // default variables.
+  @each $theme, $value in $stat-component-themes {
+    &[data-component-theme='#{$theme}'] {
+      // prettier-ignore
+      --color-slot-one: var(--component-themes-#{$theme}-slot-one);
+      --color-slot-two: var(--component-themes-#{$theme}-slot-two);
+      --color-slot-three: var(--component-themes-#{$theme}-slot-three);
+      --color-slot-four: var(--component-themes-#{$theme}-slot-four);
+      --color-slot-five: var(--component-themes-#{$theme}-slot-five);
+      --color-slot-six: var(--component-themes-#{$theme}-slot-six);
+      --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
+      --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
+      --color-stat-theme: var(--color-slot-one);
+      --color-stat-content: var(--color-slot-eight);
+
+      background-color: var(--color-stat-theme);
+      color: var(--color-stat-content);
+    }
+  }
+
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
+  @each $globalTheme, $value in $global-stat-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
+      --color-slot-three: var(
+        --global-themes-#{$globalTheme}-colors-slot-three
+      );
+      --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-slot-six: var(--global-themes-#{$globalTheme}-colors-slot-six);
+      --color-slot-seven: var(
+        --global-themes-#{$globalTheme}-colors-slot-seven
+      );
+      --color-slot-eight: var(
+        --global-themes-#{$globalTheme}-colors-slot-eight
+      );
+    }
+  }
+
+  // Component theme overrides: set specific component themes overrides
+  /// define component name spaced variables and map them to global theme slots.
+  &[data-component-theme='one'] {
+    --color-stat-theme: var(--color-slot-one);
+    --color-stat-content: var(--color-slot-eight);
+  }
+
+  &[data-component-theme='two'] {
+    --color-stat-theme: var(--color-slot-two);
+    --color-stat-content: var(--color-slot-eight);
+  }
+
+  &[data-component-theme='three'] {
+    --color-stat-theme: var(--color-slot-three);
+    --color-stat-content: var(--color-slot-seven);
+  }
+
+  &__inner {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    width: 100%;
+
+    [data-component-alignment='left'] & {
+      justify-content: flex-start;
+    }
+
+    [data-component-alignment='center'] & {
+      justify-content: center;
+    }
+  }
+}
+
+.stat__stat {
+  @include tokens.h3-yale-new;
+
+  // change font-variant-numeric to normal from the default of oldstyle-nums in the h3-yale-new mixin
+  [data-stat-font-style='normal'] & {
+    font-variant-numeric: normal;
+  }
+}
+
+.stat__content {
+  @include tokens.body-default;
+}

@@ -1,0 +1,35 @@
+{#
+ # Available Props:
+ # - stat__style: bar-left, bar-right, or quote-left
+ # - animate__item: defaults to `enabled`, will only animate if site_animate_components (lever / config) is not `default`
+ #
+ # Available Variables:
+ # - stat__stat (required)
+ # - stat__content
+ #}
+
+{% set stat__base_class = 'stat' %}
+{% set stat__style = stat__style|default('basic') %}
+{% set stat__font_style = stat__font_style|default('numeric-oldstyle') %}
+
+{# If stat__attributes is not defined, set it to an empty object by default #}
+{% set stat__attributes = stat__attributes|default({}) %}
+
+{% set stat__attributes = stat__attributes|merge({
+  'data-stat-style': stat__style,
+  'data-stat-font-style': stat__font_style,
+  'data-component-alignment': stat__alignment|default('center'),
+	'data-component-theme': stat__theme|default('one'),
+  class: bem(stat__base_class, stat__modifiers),
+}) %}
+
+<div {{ add_attributes(stat__attributes) }}>
+	<div {{ bem('inner', [], stat__base_class) }}>
+			<div {{ bem('stat', [], stat__base_class) }}>
+				{{ stat__stat }}
+			</div>
+      <div {{ bem('content', [], stat__base_class) }}>
+				{{ stat__content }}
+			</div>
+	</div>
+</div>
