@@ -23,12 +23,12 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
   column-gap: var(--size-spacing-6);
   grid-template-areas: 'image content';
 
-  [data-collection-featured='false'] &,
   &[data-with-image='false'] {
     grid-template-areas:
       'image'
       'content';
     grid-template-columns: 1fr;
+    border: var(--card-border);
   }
 
   &:hover {
@@ -58,10 +58,6 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
     }
   }
 
-  &[data-with-image='false'] {
-    border: var(--card-border);
-  }
-
   // Global themes: set color slots for each theme
   // This establishes `--color-slot-` variables name-spaced to the selector
   // in which it is used. We can map component-level variables to global-level
@@ -85,8 +81,7 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
   padding: var(--size-spacing-5) 0;
   grid-area: content;
 
-  [data-with-image='false'] &,
-  [data-collection-featured='false'] [data-with-image='true'] & {
+  [data-with-image='false'] & {
     padding: var(--size-spacing-5);
 
     @media (min-width: tokens.$break-m) {
@@ -97,10 +92,6 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   @media (min-width: tokens.$break-m) {
     padding: var(--size-spacing-5) var(--size-spacing-6);
-
-    [data-collection-featured='false'] {
-      padding: var(--size-spacing-5);
-    }
 
     [data-with-image='true'] & {
       border-top: 0;
