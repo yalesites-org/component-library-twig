@@ -149,8 +149,8 @@ $alert-fade-speed: var(--animation-speed-slow);
     color: var(--color-alert-text);
   }
 
-  &:has(> i.fa-icon) {
-    padding-right: var(--size-spacing-3);
+  &:has(> .fa-icon-svg) {
+    padding-right: 0;
   }
 }
 

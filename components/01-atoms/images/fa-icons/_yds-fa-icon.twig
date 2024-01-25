@@ -8,37 +8,11 @@
  # - fa_icon__class: font awesome classes
  #}
 
-{% set fa_icon__base_class = fa_icon__base_class|default('fa-icon') %}
-{% set fa_icon__attributes = fa_icon__attributes|default({}) %}
+{% set fa_icon__url = directory ? '/' ~ directory ~ '/node_modules/@yalesites-org/component-library-twig/dist/' %}
 
-{% set fa_icon__attributes = fa_icon__attributes|merge({
-  class: bem(fa_icon__base_class, fa_icon__modifiers, fa_icon__blockname, fa_icon__extra_class),
-}) %}
-
-{% set unique_name = fa_icon__title|lower|replace({' ': '-'}) ~ '-' ~ random() %}
-
-<i {{ add_attributes(fa_icon__attributes) }}
-
-  {% if fa_icon__decorative %}
-    aria-hidden="true" role="img"
-  {% elseif fa_icon__role %}
-    role="{{ fa_icon__role }}"
-  {% endif %}
-  {% if fa_icon__title %}
-    aria-labelledby="title-{{ unique_name }}"
-  {% endif %}
-
-  {% if fa_icon__desc %}
-    aria-describedby="desc-{{ unique_name }}"
-  {% endif %}
->
-  {% if fa_icon__title %}
-    <title id="title-{{ unique_name }}">{{ fa_icon__title }}</title>
-  {% endif %}
-  {% if fa_icon__desc %}
-    <desc id="desc-{{ unique_name }}">{{ fa_icon__desc }}</desc>
-  {% endif %}
-</i>
+<svg class="fa-icon-svg" width="1em" height="1em">
+  <use xlink:href="{{ fa_icon__url }}/fonts/fontawesome/sprites/solid.svg#{{ fa_icon__name }}"></use>
+</svg>
 {% if fa_icon__sr_title %}
   <span class="sr-only">{{fa_icon__sr_title}}</span>
 {% endif %}

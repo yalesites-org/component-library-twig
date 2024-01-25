@@ -348,8 +348,8 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
 
   flex: 0 0 auto;
 
-  &:has(> i.fa-icon) {
-    padding-right: var(--size-spacing-7);
+  &:has(> .fa-icon-svg) {
+    padding-right: var(--size-spacing-6);
   }
 }
 
