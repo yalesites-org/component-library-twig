@@ -15,6 +15,9 @@
 
 .fa-icon-svg {
   margin-left: var(--size-spacing-3);
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
 
   a:has(> &) {
     padding-right: var(--size-spacing-3);
