@@ -23,5 +23,5 @@ export const TextField = ({ variation }) => `
 ${textFieldTwig({
   text_field__content: textData.text_field__content,
   text_field__variation: variation,
-})};
+})}
 `;
