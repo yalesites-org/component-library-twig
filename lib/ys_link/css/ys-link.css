@@ -25,10 +25,14 @@ table a.ys_linked.link {
 /* CKE text with punctuations after look strange.  This attempts to override
 * the padding such that it shows closer to the link, making the punctuation
 * look better. */
-a.link--with-icon.ys_linked.link.ys_punctuation-after {
-  padding-right: var(--ys-link--punctuation-padding-closer);
+a.link--with-icon.ys_linked.link.ys_punctuation-after > svg.fa-icon-svg {
+  margin-right: var(--ys-link--punctuation-padding-closer);
 }
 
-a.link--with-icon.ys_linked.link.ys_download.ys_punctuation-after {
-  padding-right: var(--ys-link--punctuation-padding);
+a.link--with-icon.ys_linked.link.ys_download.ys_punctuation-after > svg.fa-icon-svg {
+  margin-right: var(--ys-link--punctuation-padding);
+}
+
+a.link--with-icon.ys_linked.link:has(> svg.fa-icon-svg) {
+  margin-right: var(--size-spacing-3);
 }
