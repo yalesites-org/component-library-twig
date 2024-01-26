@@ -6,13 +6,17 @@
  # - fa_icon__desc: a11y description
  # - fa_icon__decorative: "hide" the icon from screen readers
  # - fa_icon__class: font awesome classes
+ # - fa_icon__svg: The sprite svg being used (solid, regular, brands)
+ # - fa_icon__url: The url to the sprite svg
+ # - fa_icon__name: The name of the icon inside of the svg
  #}
 
+{% set fa_icon__svg = fa_icon__svg|default('solid') %}
 {% set fa_icon__url = directory ? '/' ~ directory ~ '/node_modules/@yalesites-org/component-library-twig/dist/' %}
 
-<svg class="fa-icon-svg" width="1em" height="1em">
-  <use xlink:href="{{ fa_icon__url }}/fonts/fontawesome/sprites/solid.svg#{{ fa_icon__name }}"></use>
+<svg class="fa-icon-svg">
+  <use xlink:href="{{ fa_icon__url }}/fonts/fontawesome/sprites/{{ fa_icon__svg }}.svg#{{ fa_icon__name }}"></use>
 </svg>
 {% if fa_icon__sr_title %}
-  <span class="sr-only">{{fa_icon__sr_title}}</span>
+  <span class="sr-only">{{ fa_icon__sr_title }}</span>
 {% endif %}
