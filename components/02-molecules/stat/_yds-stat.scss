@@ -10,7 +10,8 @@ $stat-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   align-items: center;
   padding: var(--size-spacing-6);
   width: 100%;
-  max-width: 20rem;
+
+  --eyebrow-width: var(--size-spacing-11);
 
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
@@ -77,14 +78,16 @@ $stat-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    width: 100%;
+    padding: var(--size-spacing-6) 0;
 
     [data-component-alignment='left'] & {
       justify-content: flex-start;
+      text-align: left;
     }
 
     [data-component-alignment='center'] & {
       justify-content: center;
+      text-align: center;
     }
   }
 }
@@ -92,12 +95,32 @@ $stat-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 .stat__stat {
   @include tokens.h3-yale-new;
 
+  width: 100%;
+  position: relative;
+
   // change font-variant-numeric to normal from the default of oldstyle-nums in the h3-yale-new mixin
   [data-stat-font-style='normal'] & {
     font-variant-numeric: normal;
+  }
+
+  // add eyebrow above stat
+  &::before {
+    content: '';
+    display: block;
+    position: relative;
+    width: var(--eyebrow-width);
+    border-bottom: var(--size-spacing-1) solid var(--color-basic-white);
+    margin-bottom: var(--size-spacing-4);
+
+    // set eyebrow width var to 100% if stat is centered
+    [data-component-alignment='center'] & {
+      --eyebrow-width: 100%;
+    }
   }
 }
 
 .stat__content {
   @include tokens.body-default;
+
+  width: 100%;
 }

@@ -1,7 +1,7 @@
 {#
  # Available Props:
- # - stat__style: bar-left, bar-right, or quote-left
- # - animate__item: defaults to `enabled`, will only animate if site_animate_components (lever / config) is not `default`
+ # - stat__presentation_style: basic, with-icon, icon-only
+ # - stat__font_style: numeric-oldstyle, normal
  #
  # Available Variables:
  # - stat__stat (required)
@@ -9,14 +9,14 @@
  #}
 
 {% set stat__base_class = 'stat' %}
-{% set stat__style = stat__style|default('basic') %}
+{% set stat__presentation_style = stat__presentation_style|default('basic') %}
 {% set stat__font_style = stat__font_style|default('numeric-oldstyle') %}
 
 {# If stat__attributes is not defined, set it to an empty object by default #}
 {% set stat__attributes = stat__attributes|default({}) %}
 
 {% set stat__attributes = stat__attributes|merge({
-  'data-stat-style': stat__style,
+  'data-stat-style': stat__presentation_style,
   'data-stat-font-style': stat__font_style,
   'data-component-alignment': stat__alignment|default('center'),
 	'data-component-theme': stat__theme|default('one'),
