@@ -43,6 +43,10 @@ module.exports = {
   CopyWebpackPlugin,
   CleanWebpackPlugin: new CleanWebpackPlugin({
     cleanOnceBeforeBuildPatterns: ['!*.{png,jpg,gif,svg}'],
-    cleanAfterEveryBuildPatterns: ['remove/**', '!js', '!*.{png,jpg,gif,svg}'],
+    cleanAfterEveryBuildPatterns: [
+      'remove/**',
+      '!js',
+      '!**/*.{png,jpg,gif,svg}',
+    ],
   }),
 };
