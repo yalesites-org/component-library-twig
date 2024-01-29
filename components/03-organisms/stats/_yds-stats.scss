@@ -1,21 +1,17 @@
 @use '../../00-tokens/tokens';
 @use '../../00-tokens/functions/map';
+@use '../../01-atoms/atoms';
 
-$global-stat-themes: map.deep-get(tokens.$tokens, 'global-themes');
-$stat-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
+$global-stats-themes: map.deep-get(tokens.$tokens, 'global-themes');
+$stats-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
-.stat {
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  padding-block: var(--size-spacing-6);
+.stats {
+  padding-block: var(--size-spacing-8);
   width: 100%;
-
-  --eyebrow-width: var(--size-spacing-11);
 
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
-  @each $theme, $value in $stat-component-themes {
+  @each $theme, $value in $stats-component-themes {
     &[data-component-theme='#{$theme}'] {
       // prettier-ignore
       --color-slot-one: var(--component-themes-#{$theme}-slot-one);
@@ -38,7 +34,7 @@ $stat-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   // This establishes `--color-slot-` variables name-spaced to the selector
   // in which it is used. We can map component-level variables to global-level
   // `--color-slot-` variables.
-  @each $globalTheme, $value in $global-stat-themes {
+  @each $globalTheme, $value in $global-stats-themes {
     [data-global-theme='#{$globalTheme}'] & {
       --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
       --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
@@ -73,72 +69,30 @@ $stat-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-stat-theme: var(--color-slot-three);
     --color-stat-content: var(--color-slot-seven);
   }
-
-  &__inner {
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    padding: var(--size-spacing-6) 0;
-
-    [data-component-alignment='left'] & {
-      justify-content: flex-start;
-      text-align: left;
-    }
-
-    [data-component-alignment='center'] & {
-      justify-content: center;
-      text-align: center;
-    }
-  }
 }
 
-.stat__stat {
-  @include tokens.h3-yale-new;
-
+.stats__inner {
   width: 100%;
-  position: relative;
-
-  // change font-variant-numeric to normal from the default of oldstyle-nums in the h3-yale-new mixin
-  [data-stat-font-style='normal'] & {
-    font-variant-numeric: normal;
-  }
-
-  // add eyebrow above stat
-  [data-stat-style='basic'] & {
-    &::before {
-      content: '';
-      display: block;
-      position: relative;
-      width: var(--eyebrow-width);
-      border-bottom: var(--size-spacing-1) solid var(--color-stat-content);
-      margin-bottom: var(--size-spacing-4);
-    }
-  }
-
-  // set eyebrow width var to 100% if stat is centered
-  [data-component-alignment='center'] & {
-    --eyebrow-width: 100%;
-  }
+  max-width: var(--component-width);
 }
 
-.stat__icon {
-  align-self: flex-start;
-  margin-bottom: var(--size-spacing-2);
+.stats__stats {
+  @include atoms.list-reset;
 
-  [data-component-alignment='center'] & {
-    align-self: center;
-  }
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
 }
 
-// svg
-.stat__stat-icon {
-  max-width: var(--size-spacing-9); // max-width 48px
-  max-height: var(--size-spacing-9); // max-height 48px
-  fill: var(--color-stat-content);
+.stats__heading {
+  @include tokens.h2-yale-new;
+
+  color: var(--color-stat-content);
 }
 
-.stat__content {
+.stats__content {
   @include tokens.body-default;
 
-  width: 100%;
+  font-style: italic;
+  color: var(--color-stat-content);
 }

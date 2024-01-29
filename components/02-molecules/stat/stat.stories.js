@@ -20,7 +20,7 @@ export default {
     },
     presentationStyle: {
       name: 'Presentation Style',
-      options: ['basic', 'with-icon', 'icon-only'],
+      options: ['basic', 'icon-only'],
       type: 'select',
       defaultValue: 'basic',
     },
@@ -42,6 +42,11 @@ export default {
       type: 'select',
       defaultValue: 'one',
     },
+    statIcon: {
+      name: 'Stat Icon',
+      type: 'boolean',
+      defaultValue: false,
+    },
   },
 };
 
@@ -52,34 +57,43 @@ export const Stat = ({
   fontStyle,
   alignment,
   themeColor,
+  statIcon,
 }) => `
+  <ul class='stats'>
   ${statTwig({
     stat__stat: statData.stat__stat,
     stat__content: statData.stat__content,
     stat__presentation_style: 'basic',
+    stat__has_icon: 'false',
     stat__alignment: 'center',
   })}
   ${statTwig({
     stat__stat: statData.stat__stat,
-    stat__presentation_style: 'with-icon',
+    stat__presentation_style: 'basic',
+    stat__has_icon: 'true',
     stat__alignment: 'left',
   })}
   ${statTwig({
     stat__stat: statData.stat__stat,
     stat__content: statData.stat__content,
-    stat__presentation_style: 'no-icon',
+    stat__presentation_style: 'basic',
     stat__alignment: 'center',
+    stat__has_icon: 'true',
   })}
+  </ul>
   <div>
     <h2>Playground</h2>
     <p>Use the StoryBook controls to see the stat below implement the available variations.</p>
-    ${statTwig({
-      stat__stat: stat,
-      stat__content: content,
-      stat__presentation_style: presentationStyle,
-      stat__font_style: fontStyle,
-      stat__alignment: alignment,
-      stat__theme: themeColor,
-    })}
+    <ul class='stats'>
+      ${statTwig({
+        stat__stat: stat,
+        stat__content: content,
+        stat__presentation_style: presentationStyle,
+        stat__font_style: fontStyle,
+        stat__alignment: alignment,
+        stat__theme: themeColor,
+        stat__has_icon: statIcon ? 'true' : 'false',
+      })}
+    </ul>
   </div>
 `;
