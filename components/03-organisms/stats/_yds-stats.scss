@@ -1,6 +1,7 @@
 @use '../../00-tokens/tokens';
 @use '../../00-tokens/functions/map';
 @use '../../01-atoms/atoms';
+@use '../grid-mixins' as grid;
 
 $global-stats-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $stats-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
@@ -8,6 +9,7 @@ $stats-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 .stats {
   padding-block: var(--size-spacing-8);
   width: 100%;
+  position: relative;
 
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
@@ -58,6 +60,8 @@ $stats-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &[data-component-theme='one'] {
     --color-stat-theme: var(--color-slot-one);
     --color-stat-content: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 
   &[data-component-theme='two'] {
@@ -68,6 +72,8 @@ $stats-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &[data-component-theme='three'] {
     --color-stat-theme: var(--color-slot-three);
     --color-stat-content: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 }
 
@@ -77,11 +83,45 @@ $stats-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 }
 
 .stats__stats {
-  @include atoms.list-reset;
+  @include grid.base;
 
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  --grid-gutter: var(--spacing-component-gutter-secondary);
+
+  > * {
+    @media (min-width: tokens.$break-s) {
+      flex: 0 1 calc(50% - calc(var(--grid-gutter) * 2 / 3));
+    }
+
+    @media (min-width: tokens.$break-m) {
+      flex: 0 1 calc(33.33% - calc(var(--grid-gutter) * 2 / 3));
+    }
+
+    @media (min-width: tokens.$break-l) {
+      flex: 0 1 calc(25% - calc(var(--grid-gutter) * 3 / 4));
+    }
+  }
+}
+
+.stats__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
   width: 100%;
+  background-blend-mode: multiply;
+  background-color: var(--color-stat-theme);
+  opacity: 0.15;
+
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+.stats__content-wrap {
+  position: relative;
+  z-index: 1;
 }
 
 .stats__heading {
@@ -93,6 +133,15 @@ $stats-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 .stats__content {
   @include tokens.body-default;
 
-  font-style: italic;
   color: var(--color-stat-content);
+}
+
+.stats__cta {
+  @include atoms.plain-link;
+
+  color: var(--color-stat-content);
+
+  &:hover {
+    color: var(--color-stat-content);
+  }
 }

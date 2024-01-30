@@ -1,5 +1,7 @@
 stats__heading: 'Stats'
 stats__content: 'This is a group of Stats'
+stats__link__content: 'This is a link'
+stats__link__url: 'https://www.bing.com'
 stats:
   - stat__stat: '$52,300'
     stat__content: 'Card 1 content goes here.'

@@ -45,6 +45,16 @@ export default {
       type: 'string',
       defaultValue: statsData.stats__content,
     },
+    statsLink: {
+      name: 'Stats Link',
+      type: 'string',
+      defaultValue: statsData.stats__link__content,
+    },
+    image: {
+      name: 'With image',
+      type: 'boolean',
+      defaultValue: true,
+    },
     statsIcons: {
       name: 'Stats Icons',
       type: 'boolean',
@@ -80,6 +90,7 @@ export const Stats = ({
   fontStyle,
   alignment,
   themeColor,
+  image,
 }) => {
   return `
     <div class="wrap-for-global-theme" data-global-theme="${globalTheme}">
@@ -92,6 +103,7 @@ export const Stats = ({
         stats__presentation_style: presentationStyle,
         stats__font_style: fontStyle,
         stats__theme: themeColor,
+        stats__bg_image: image,
         ...statsData,
         ...imageData.responsive_images['16x9'],
       })}
