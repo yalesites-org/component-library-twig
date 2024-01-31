@@ -7,7 +7,7 @@ $global-stats-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $stats-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .stats {
-  padding-block: var(--size-spacing-8);
+  padding-block: var(--size-spacing-11);
   width: 100%;
   position: relative;
 
@@ -65,13 +65,13 @@ $stats-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 
   &[data-component-theme='two'] {
-    --color-stat-theme: var(--color-slot-two);
-    --color-stat-content: var(--color-slot-eight);
+    --color-stat-theme: var(--color-slot-four);
+    --color-stat-content: var(--color-slot-seven);
   }
 
   &[data-component-theme='three'] {
-    --color-stat-theme: var(--color-slot-three);
-    --color-stat-content: var(--color-slot-seven);
+    --color-stat-theme: var(--color-slot-five);
+    --color-stat-content: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
@@ -84,6 +84,10 @@ $stats-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .stats__stats {
   @include grid.base;
+
+  // position relative added to use z-index and make sure the image is behind the content
+  position: relative;
+  z-index: 1;
 
   --grid-gutter: var(--spacing-component-gutter-secondary);
 
