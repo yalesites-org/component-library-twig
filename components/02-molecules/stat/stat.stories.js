@@ -59,32 +59,33 @@ export const Stat = ({
   themeColor,
   statIcon,
 }) => `
-  <ul class='stats'>
-  ${statTwig({
-    stat__stat: statData.stat__stat,
-    stat__content: statData.stat__content,
-    stat__presentation_style: 'basic',
-    stat__has_icon: 'false',
-    stat__alignment: 'center',
-  })}
-  ${statTwig({
-    stat__stat: statData.stat__stat,
-    stat__presentation_style: 'basic',
-    stat__has_icon: 'true',
-    stat__alignment: 'left',
-  })}
-  ${statTwig({
-    stat__stat: statData.stat__stat,
-    stat__content: statData.stat__content,
-    stat__presentation_style: 'basic',
-    stat__alignment: 'center',
-    stat__has_icon: 'true',
-  })}
+
+  <ul class='stats__stats'>
+    ${statTwig({
+      stat__stat: statData.stat__stat,
+      stat__content: statData.stat__content,
+      stat__presentation_style: 'basic',
+      stat__has_icon: 'false',
+      stat__alignment: 'center',
+    })}
+    ${statTwig({
+      stat__stat: statData.stat__stat,
+      stat__presentation_style: 'basic',
+      stat__has_icon: 'true',
+      stat__alignment: 'left',
+    })}
+    ${statTwig({
+      stat__stat: statData.stat__stat,
+      stat__content: statData.stat__content,
+      stat__presentation_style: 'basic',
+      stat__alignment: 'center',
+      stat__has_icon: 'true',
+    })}
   </ul>
-  <div>
-    <h2>Playground</h2>
+  <div class="wrap-for-global-theme" data-global-theme="one">
+  <h2>Playground</h2>
     <p>Use the StoryBook controls to see the stat below implement the available variations.</p>
-    <ul class='stats'>
+    <ul class='stats__stats'>
       ${statTwig({
         stat__stat: stat,
         stat__content: content,

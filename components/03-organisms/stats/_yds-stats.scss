@@ -7,6 +7,8 @@ $global-stats-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $stats-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .stats {
+  @include tokens.spacing-page-section($banner-spacing: true);
+
   padding-block: var(--size-spacing-11);
   width: 100%;
   position: relative;
