@@ -9,8 +9,10 @@ module.exports = function twigUrl(twigInstance) {
 
   const isData = (url) => url.startsWith('data:');
 
+  const isQueryString = (url) => url.startsWith('?');
+
   const isMailToLink = (url) => {
-    return url.startsWith("mailto:");
+    return url.startsWith('mailto:');
   };
 
   const urlType = (url, attributes = {}) => {
@@ -38,6 +40,7 @@ module.exports = function twigUrl(twigInstance) {
       internal: (url) => {
         return (
           urlHasCurrentDomain(url) ||
+          isQueryString(url) ||
           isAnchor(url) ||
           isRelative(url) ||
           isData(url)
@@ -53,14 +56,14 @@ module.exports = function twigUrl(twigInstance) {
           url.indexOf(document.location.hostname) > -1 ||
           url.startsWith('/') ||
           url.startsWith('#') ||
+          url.startsWith('?') ||
           url.startsWith('data:')
         );
       },
-
     };
 
     if (!url) {
-      return "internal";
+      return 'internal';
     }
 
     const found = Object.keys(types).find((key) => types[key](url));
@@ -68,4 +71,4 @@ module.exports = function twigUrl(twigInstance) {
   };
 
   twigInstance.extendFunction('getUrlType', urlType);
-}
+};
