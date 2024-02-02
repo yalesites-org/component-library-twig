@@ -384,7 +384,7 @@ $menu-sub-max-width: 19rem;
   }
 
   // this is used for the explore bar link
-  &--with-icon {
+  &--with-icon.primary-nav__link--explore-bar {
     [data-menu-variation='mega'] & {
       font: var(--font-style-nav-primary-1);
       color: var(--color-heading);
