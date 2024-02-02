@@ -327,7 +327,9 @@ $menu-sub-max-width: 19rem;
   }
 
   [data-menu-variation='mega']
-    &.primary-nav__link--level-1.primary-nav__link--with-icon {
+    // Targets the explore link to the right of a dropdown menu.
+    // Only it should be capitalized.
+    &.primary-nav__link--level-1.primary-nav__link--with-icon.primary-nav__link--explore-bar {
     @media (min-width: tokens.$break-mobile) {
       @include tokens.h6-mallory-compact-medium;
     }
