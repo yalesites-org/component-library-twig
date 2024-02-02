@@ -376,34 +376,24 @@ $menu-sub-max-width: 19rem;
 
   // this is used for the explore bar link
   &--with-icon {
-    [data-menu-variation='basic'] & {
-      &:visited {
-        color: var(--color-heading);
+    [data-menu-variation='mega'] & {
+      font: var(--font-style-nav-primary-1);
+      color: var(--color-heading);
+      margin-bottom: var(--size-spacing-3);
+      padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2)
+        calc(var(--size-spacing-2) + var(--size-spacing-1));
+      z-index: 1;
+
+      &:hover {
+        color: var(--menu-link-color);
       }
 
-      padding: var(--size-spacing-5) var(--size-spacing-6) var(--size-spacing-4);
-      position: relative;
-      margin-bottom: var(--size-spacing-0);
+      @media (min-width: tokens.$break-mobile) {
+        @include tokens.h6-mallory-compact-medium;
 
-      // basic menu items have a bottom border
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: var(--size-spacing-5);
-        right: var(--size-spacing-5);
-        height: var(--border-thickness-1);
-        background-color: var(--color-gray-200);
-      }
-    }
-
-    // Top level links with icons shouldn't have line underneath and spaced
-    // correctly.
-    &.primary-nav__link--level-0 {
-      padding: 0 var(--size-spacing-5);
-
-      &::after {
-        content: unset;
+        flex: 0 1 auto;
+        margin-bottom: 0;
+        color: inherit;
       }
     }
   }
