@@ -326,6 +326,13 @@ $menu-sub-max-width: 19rem;
     }
   }
 
+  [data-menu-variation='mega']
+    &.primary-nav__link--level-1.primary-nav__link--with-icon {
+    @media (min-width: tokens.$break-mobile) {
+      @include tokens.h6-mallory-compact-medium;
+    }
+  }
+
   &--level-1 {
     font: var(--font-style-nav-primary-1);
     color: var(--color-heading);
@@ -389,8 +396,6 @@ $menu-sub-max-width: 19rem;
       }
 
       @media (min-width: tokens.$break-mobile) {
-        @include tokens.h6-mallory-compact-medium;
-
         flex: 0 1 auto;
         margin-bottom: 0;
         color: inherit;
