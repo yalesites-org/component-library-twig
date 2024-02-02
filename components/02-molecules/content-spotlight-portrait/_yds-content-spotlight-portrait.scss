@@ -19,8 +19,6 @@ $component-content-spotlight-port-themes: map.deep-get(
 
   &[data-component-theme='default'] {
     @include tokens.spacing-page-section;
-
-    margin-block-start: var(--spacing-page-section);
   }
 
   // if we're using a component theme, add padding and set background-color and color;
@@ -29,11 +27,7 @@ $component-content-spotlight-port-themes: map.deep-get(
     padding-block-end: var(--size-spacing-10);
     background-color: var(--color-background);
     color: var(--color-text);
-    margin-block-start: var(--spacing-page-section);
-
-    + .content-spotlight-portrait:not([data-component-theme='default']) {
-      margin-block-start: 0;
-    }
+    margin: 0;
   }
 
   // Component themes defaults: iterate over each component theme to establish
