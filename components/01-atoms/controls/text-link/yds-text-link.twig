@@ -20,9 +20,20 @@
 
 {% set link__base_class = link__base_class|default('link') %}
 {% set link__attributes = link__attributes|default({}) %}
+{% set link__modifiers = link__modifiers|default([]) %}
+
+{% if link__url is defined and link__url is not null and link__url|length > 0 %}
+  {% set link__url_type = link__url_type|default(getUrlType(link__url, link__attributes)) %}
+{% else %}
+  {% set link__url_type = "internal" %}
+{% endif %}
+
+{% set link__type = link__type|default(link__url_type) %}
+{% set link__style = link_style|default('underline') %}
 
 {% if link__type == 'external' or link__type == 'target-blank' or link__type == 'download' or link__type == 'with-chevron' %}
-  {% set link__modifiers = ['with-icon'] %}
+  {% set link__modifiers = link__modifiers|merge(['with-icon']) %}
+  {% set link__style = link__style ~ "-with-icon" %}
 {% endif %}
 
 {% set link__attributes = link__attributes|merge({
@@ -32,44 +43,17 @@
   href: link__url,
 }) %}
 
+{% if link__url_type == 'download' %}
+  {% set link__attributes = link__attributes|merge({
+    download: '',
+  }) %}
+{% endif %}
+
 <a {{ add_attributes(link__attributes) }}>
   {% block link__content %}
     {{- link__content -}}
   {% endblock %}
-  {# if link__type is external, target-blank, download, or with-chevron we add icons #}
-  {% if link__type == 'external' %}
-    {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
-      fa_icon__title: 'Arrow Up Right',
-      fa_icon__extra_class: ['fa-solid fa-arrow-up-right'],
-      fa_icon__decorative: true,
-      fa_icon__sr_title: '(link is external)',
-      } 
-    %}
-  {% endif %}
-  {% if link__type == 'target-blank' %}
-    {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
-      fa_icon__title: 'Up Right',
-      fa_icon__extra_class: ['fa-solid fa-arrow-up-right-from-square'],
-      fa_icon__decorative: true,
-      fa_icon__sr_title: '(opens in a new window/tab)',
-      } 
-    %}
-  {% endif %}
-  {% if link__type == 'download' %} 
-    {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
-      fa_icon__title: 'Circle Down',
-      fa_icon__extra_class: ['fa-regular fa-circle-down'],
-      fa_icon__decorative: true,
-      fa_icon__sr_title: '(file download)',
-      } 
-    %}
-  {% endif %}
-  {% if link__type == 'with-chevron' %}
-    {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
-      fa_icon__title: 'Angle Right',
-      fa_icon__extra_class: ['fa-solid fa-angle-right'],
-      fa_icon__decorative: true,
-      } 
-    %}
-  {% endif %}
+  {% include "@atoms/controls/base/yds-control-icon.twig" with {
+    control_icon__url_type: link__url_type,
+  } %}
 </a>

@@ -18,6 +18,12 @@ function getEntries(pattern) {
 
   entries.svgSprite = path.resolve(webpackDir, 'svgSprite.js');
   entries.css = path.resolve(webpackDir, 'css.js');
+  glob.sync(pattern).forEach((file) => {
+    const filePath = file.split('components/')[1];
+    const newfilePath = `js/${filePath.replace('.js', '')}`;
+    entries[newfilePath] = file;
+  });
+  entries['js/ys-link'] = path.resolve(rootDir, 'lib/ys_link/index.js');
 
   return entries;
 }

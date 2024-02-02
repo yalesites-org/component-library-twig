@@ -107,7 +107,7 @@ ${alertTwig({
   alert__heading: heading,
   alert__content: content,
   alert__link__content: linkContent,
-  alert__link__url: alertData.alert__link__url,
+  alert__link__url: '#',
   alert__id: '456',
 })}<br />
 ${textFieldTwig({
