@@ -32,6 +32,7 @@ module.exports = function twigUrl(twigInstance) {
           'zip',
           'csv',
           'xml',
+          'rtf',
         ].map((ext) => ext.toLowerCase());
         const extension = url.split('.').pop()?.toLowerCase();
         return fileExtensions.includes(extension);
