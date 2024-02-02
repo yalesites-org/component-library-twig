@@ -44,7 +44,7 @@ items:
           - title: 'The YDS Shield'
             url: '#'
           - title: 'Art on Campus'
-            url: '#'
+            url: 'https://google.com'
           - title: 'Who is that bulldog'
             url: '#'
       - title: 'YDS Bulletin & Policies'

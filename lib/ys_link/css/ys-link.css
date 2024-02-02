@@ -14,7 +14,7 @@
  * inline-flex in order to keep that from happening in these situations.
  */
 a.link--with-icon.ys_linked {
-  display: inline-flex;
+  display: inline;
 }
 
 /* Table links must show inline with the text */
