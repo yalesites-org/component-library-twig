@@ -21,9 +21,13 @@ Drupal.behaviors.siteHeader = {
      * @description Set the `--site-header-height` variable.
      */
     const setHeaderHeight = () => {
+      if (!header || !header.offsetHeight) {
+        return;
+      }
+
       body.style.setProperty(
         '--site-header-height',
-        `${header.offsetHeight}px`,
+        `${header.offsetHeight || 0}px`,
       );
     };
 
