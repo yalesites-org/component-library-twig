@@ -11,6 +11,12 @@
 
 {% set stats__width = stats__width|default('site') %}
 
+{% if stat__collection__type %}
+  {% set stats__attributes = stats__attributes|merge({
+    'data-stat-collection-type': stat__collection__type,
+  }) %}
+{% endif %}
+
 {% set stats__attributes = {
   'data-component-width': stats__width,
   'data-stat-style': stats__presentation_style|default('basic'),

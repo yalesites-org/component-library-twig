@@ -60,7 +60,7 @@ export const Stat = ({
   statIcon,
 }) => `
 
-  <ul class='stats__stats'>
+  <ul class='stats__stats' data-stat-collection-type='single'>
     ${statTwig({
       stat__stat: statData.stat__stat,
       stat__content: statData.stat__content,
@@ -85,7 +85,7 @@ export const Stat = ({
   <div class="wrap-for-global-theme" data-global-theme="one">
   <h2>Playground</h2>
     <p>Use the StoryBook controls to see the stat below implement the available variations.</p>
-    <ul class='stats__stats'>
+    <ul class='stats__stats' data-stat-collection-type='single'>
       ${statTwig({
         stat__stat: stat,
         stat__content: content,
