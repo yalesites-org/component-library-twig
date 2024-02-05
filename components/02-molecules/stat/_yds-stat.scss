@@ -78,6 +78,7 @@ $stat-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     flex-flow: column nowrap;
     align-items: center;
     padding: var(--size-spacing-8) 0;
+    height: 100%;
 
     [data-component-alignment='left'] & {
       justify-content: flex-start;
