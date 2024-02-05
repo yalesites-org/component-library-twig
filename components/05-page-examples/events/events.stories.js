@@ -170,7 +170,7 @@ export const EventGrid = ({
       'BINYA! A celebration of the legacy of Binyavanga Wainaina at Yale',
     reference_card__snippet:
       'A panel celebrating the legacy of author Binyavanga Wainaina.',
-    reference_card__url: '#',
+    reference_card__url: 'https://google.com',
     reference_card__date: '2022-03-30 13:00',
     format: 'Online',
     ...socialLinksData,

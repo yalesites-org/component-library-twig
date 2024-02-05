@@ -7,7 +7,7 @@ link_group__links_one:
     link_group__link__content: 'This is another link'
   - link_group__link__url: '#'
     link_group__link__content: 'This is a very long link that will wrap lines'
-  - link_group__link__url: '#'
+  - link_group__link__url: 'https://google.com'
     link_group__link__content: 'Link #4'
 link_group__links_two:
   - link_group__link__url: '#'
@@ -16,5 +16,5 @@ link_group__links_two:
     link_group__link__content: 'This is another link'
   - link_group__link__url: '#'
     link_group__link__content: 'This is a very long link that will wrap lines'
-  - link_group__link__url: '#'
+  - link_group__link__url: 'https://google.com/download.pdf'
     link_group__link__content: 'Link #4'
