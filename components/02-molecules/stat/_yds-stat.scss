@@ -77,7 +77,7 @@ $stat-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    padding: var(--size-spacing-10) 0;
+    padding: var(--size-spacing-8) 0;
 
     [data-component-alignment='left'] & {
       justify-content: flex-start;
@@ -91,7 +91,7 @@ $stat-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
     // if we're using a single stat, add padding to the stat item inner
     [data-stat-collection-type='single'] & {
-      padding: var(--size-spacing-10);
+      padding: var(--size-spacing-8);
     }
   }
 }

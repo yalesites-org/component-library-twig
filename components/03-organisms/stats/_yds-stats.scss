@@ -128,6 +128,7 @@ $stats-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 .stats__content-wrap {
   position: relative;
   z-index: 1;
+  margin-bottom: var(--size-spacing-8);
 }
 
 .stats__heading {
