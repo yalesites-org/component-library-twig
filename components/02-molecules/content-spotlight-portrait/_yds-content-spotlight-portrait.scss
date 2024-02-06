@@ -28,6 +28,14 @@ $component-content-spotlight-port-themes: map.deep-get(
     background-color: var(--color-background);
     color: var(--color-text);
     margin: 0;
+
+    &.spotlight-item--first {
+      margin-top: var(--size-spacing-10);
+    }
+
+    &.spotlight-item--last {
+      margin-bottom: var(--size-spacing-10);
+    }
   }
 
   // Component themes defaults: iterate over each component theme to establish
