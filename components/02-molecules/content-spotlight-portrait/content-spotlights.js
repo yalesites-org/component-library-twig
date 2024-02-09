@@ -1,6 +1,7 @@
 Drupal.behaviors.contentSpotlights = {
   attach(context) {
-    // Find the first and last spotlights in a group.
+    // Select all spotlight components
+    // those with the classes '.text-with-image' and '.content-spotlight-portrait'
     const contentSpotlights = context.querySelectorAll(
       '.text-with-image, .content-spotlight-portrait',
     );
