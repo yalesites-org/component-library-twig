@@ -326,6 +326,11 @@ $cta-outline-weights: (
       text-decoration: underline;
     }
   }
+
+  // A cta link with a font-icon should have more padding
+  &:has(> i.fa-icon) {
+    padding-right: var(--size-spacing-8);
+  }
 }
 
 .cta {

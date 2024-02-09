@@ -1,0 +1,37 @@
+/**
+ * @file
+ * Styles for ys_links
+ */
+
+:root {
+  --ys-link--punctuation-padding: var(--size-spacing-5);
+  --ys-link--punctuation-padding-closer: var(--size-spacing-4);
+}
+
+/*
+ * Default style for a decorated link is to flex, causing a newline look.
+ * Inside of inline text like a CKEditor message,
+ * this is not good. While we attempted to use inline-flex, it started to make
+ * links not wrap properly. We switched this to inline and so far it seems to
+ * work. If it becomes a problem, inline-flex works as well, but we will need
+ * to address the no-wrap of the links in inline text.
+ */
+a.link--with-icon.ys_linked {
+  display: inline;
+}
+
+/* Table links must show inline with the text */
+table a.ys_linked.link {
+  display: inline;
+}
+
+/* CKE text with punctuations after look strange.  This attempts to override
+* the padding such that it shows closer to the link, making the punctuation
+* look better. */
+a.link--with-icon.ys_linked.link.ys_punctuation-after {
+  padding-right: var(--ys-link--punctuation-padding-closer);
+}
+
+a.link--with-icon.ys_linked.link.ys_download.ys_punctuation-after {
+  padding-right: var(--ys-link--punctuation-padding);
+}
