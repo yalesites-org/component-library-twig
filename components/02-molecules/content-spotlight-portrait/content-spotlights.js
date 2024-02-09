@@ -8,7 +8,7 @@ Drupal.behaviors.contentSpotlights = {
     // Set an empty array to hold the current group of spotlights.
     let currentGroup = [];
 
-    // Add classes to the first and last spotlights in a group.
+    // Check if the group contains any elements
     function markFirstAndLast(group) {
       if (group.length > 0) {
         // Add classes to the first and last spotlights in a group.
@@ -22,20 +22,21 @@ Drupal.behaviors.contentSpotlights = {
       // Get the previous sibling of the current element.
       const prevSibling = element.previousElementSibling;
 
+      // Check if the previous sibling of the current element matches one of the target classes
       if (
-        // If the previous sibling exists and is a spotlight.
         prevSibling &&
         prevSibling.matches('.text-with-image, .content-spotlight-portrait')
       ) {
-        // If the previous sibling is a spotlight, add the current element to the group.
+        // Add the current element to the current group
         currentGroup.push(element);
       } else {
-        // start a new group.
+        // If the previous sibling does not match, mark the first and last elements of the previous group
         markFirstAndLast(currentGroup);
+        // Start a new group with the current element
         currentGroup = [element];
       }
 
-      // If this is the last spotlight group, add classes to the first and last spotlights in the group.
+      // If this is the last element, mark the first and last elements of the last group
       if (index === contentSpotlights.length - 1) {
         markFirstAndLast(currentGroup);
       }
