@@ -51,6 +51,7 @@ export const Event = ({
     event_meta__cta_primary__content: ctaText,
     event_meta__cta_primary__href: '#',
     event_meta__cta_secondary__content: 'Add to calendar',
+    event_meta__cta_secondary__href: '#',
     event_meta__all_day: allDay,
   });
 Event.argTypes = {

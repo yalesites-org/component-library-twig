@@ -106,4 +106,8 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   text-align: left;
   font-weight: var(--font-weights-mallory-book);
   color: var(--color-link-base);
+
+  &:has(> i.fa-icon) {
+    padding-right: var(--size-spacing-4);
+  }
 }

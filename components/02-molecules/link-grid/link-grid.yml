@@ -3,9 +3,9 @@ link_grid__links_one:
     link_grid__link__content: 'This is a link'
   - link_grid__link__url: '#'
     link_grid__link__content: 'This is another link'
-  - link_grid__link__url: '#'
+  - link_grid__link__url: 'https://google.com'
     link_grid__link__content: 'This is a very long link that will wrap lines'
-  - link_grid__link__url: '#'
+  - link_grid__link__url: 'https://google.com/download.pdf'
     link_grid__link__content: 'Link #4'
 link_grid__links_two:
   - link_grid__link__url: '#'
