@@ -7,6 +7,8 @@ import contentSpotlightPortraitTwig from './yds-content-spotlight-portrait.twig'
 import imageData from '../../01-atoms/images/image/image.yml';
 import contentSpotlightPortraitData from './content-spotlight-portrait.yml';
 
+import './content-spotlights';
+
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
 /**

@@ -25,38 +25,5 @@ Drupal.behaviors.layout = {
         component.classList.add('no-page-spacing');
       }
     });
-
-    // Find the first and last spotlights in a group and add classes to them.
-    const contentSpotlights = document.querySelectorAll(
-      '.text-with-image, .content-spotlight-portrait',
-    );
-    let currentGroup = [];
-
-    // Add classes to the first and last spotlights in a group.
-    function markFirstAndLast(group) {
-      if (group.length > 0) {
-        group[0].classList.add('spotlights--first');
-        group[group.length - 1].classList.add('spotlights--last');
-      }
-    }
-
-    // Loop through the spotlights and group them.
-    contentSpotlights.forEach((element, index) => {
-      const prevSibling = element.previousElementSibling;
-
-      if (
-        prevSibling &&
-        prevSibling.matches('.text-with-image, .content-spotlight-portrait')
-      ) {
-        currentGroup.push(element);
-      } else {
-        markFirstAndLast(currentGroup);
-        currentGroup = [element];
-      }
-
-      if (index === contentSpotlights.length - 1) {
-        markFirstAndLast(currentGroup);
-      }
-    });
   },
 };

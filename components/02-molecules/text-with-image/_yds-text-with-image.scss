@@ -13,10 +13,18 @@ $component-content-spotlight-themes: map.deep-get(
   // used by a element for animated hover underline
   --color-text-shadow: var(--color-basic-white);
 
-  margin-bottom: var(--size-spacing-10);
+  // if we're not using a component theme, add top and bottom margin
+  &[data-component-theme='default'] {
+    @include tokens.spacing-page-section;
+  }
 
-  &[data-remove-bottom-space='true'] {
-    margin-bottom: 0;
+  // We're using JavaScript to evaluate the last and first spotlights in a group of spotlights
+  &.spotlights--first {
+    margin-top: var(--size-spacing-10);
+  }
+
+  &.spotlights--last {
+    margin-bottom: var(--size-spacing-10);
   }
 
   // if we're using a component theme, add padding and set background-color and color;
