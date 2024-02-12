@@ -21,7 +21,7 @@ Drupal.behaviors.contentSpotlights = {
         element.setAttribute('data-spotlights-position', 'first');
       }
 
-      // Add "spotlights--last" class if the current element is the last element in a group
+      // Sets data-spotlights-position to "last" if the current element is the first element in a group
       if (isLast) {
         element.setAttribute('data-spotlights-position', 'last');
       }
