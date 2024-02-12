@@ -126,13 +126,11 @@ $component-content-spotlight-port-themes: map.deep-get(
     gap: var(--size-spacing-8);
     align-items: center;
 
-    // When offset, vertically center the content with the image
+    // When offset, increase the
     [data-image-style='offset'] & {
       --component-width: calc(
         var(--size-component-layout-width-site) + var(--size-spacing-10)
       );
-
-      max-width: 100%;
     }
   }
 }
