@@ -16,14 +16,14 @@ Drupal.behaviors.contentSpotlights = {
         !element.nextElementSibling ||
         !element.nextElementSibling.matches(selectorsToCheck);
 
-      // Add "spotlights--first" class if the current element is the first element in a group
+      // Sets data-spotlights-position to "first" if the current element is the first element in a group
       if (isFirst) {
-        element.classList.add('spotlights--first');
+        element.setAttribute('data-spotlights-position', 'first');
       }
 
       // Add "spotlights--last" class if the current element is the last element in a group
       if (isLast) {
-        element.classList.add('spotlights--last');
+        element.setAttribute('data-spotlights-position', 'last');
       }
     });
   },

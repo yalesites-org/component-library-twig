@@ -23,11 +23,11 @@ $component-content-spotlight-port-themes: map.deep-get(
   }
 
   // We're using JavaScript to evaluate the last and first spotlights in a group of spotlights
-  &.spotlights--first {
+  &[data-spotlights-position='first'] {
     margin-top: var(--size-spacing-10);
   }
 
-  &.spotlights--last {
+  &[data-spotlights-position='last'] {
     margin-bottom: var(--size-spacing-10);
   }
 
