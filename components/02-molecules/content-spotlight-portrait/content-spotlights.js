@@ -25,6 +25,10 @@ Drupal.behaviors.contentSpotlights = {
       if (isLast) {
         element.setAttribute('data-spotlights-position', 'last');
       }
+
+      if (isFirst && isLast) {
+        element.setAttribute('data-spotlights-position', 'single');
+      }
     });
   },
 };

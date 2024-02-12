@@ -14,7 +14,8 @@ $component-content-spotlight-themes: map.deep-get(
   --color-text-shadow: var(--color-basic-white);
 
   // if we're not using a component theme, add top and bottom margin
-  &[data-component-theme='default'] {
+  &[data-component-theme='default'],
+  &[data-spotlights-position='single'] {
     @include tokens.spacing-page-section;
   }
 
