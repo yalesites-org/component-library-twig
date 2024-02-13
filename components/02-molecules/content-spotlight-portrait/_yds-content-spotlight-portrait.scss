@@ -18,8 +18,9 @@ $component-content-spotlight-port-themes: map.deep-get(
   --color-text-shadow: var(--color-basic-white);
 
   // if we're not using a component theme, add top and bottom margin
+  // Or if the spotlight is the only spotlight on the page
   &[data-component-theme='default'],
-  &[data-spotlights-position='single'] {
+  &[data-spotlights-position='first-and-last'] {
     @include tokens.spacing-page-section;
   }
 
@@ -32,7 +33,7 @@ $component-content-spotlight-port-themes: map.deep-get(
     margin-bottom: var(--size-spacing-10);
   }
 
-  // if we're using a component theme, add padding and set background-color and color;
+  // If we're using a component theme, add padding and set background-color and color;
   &:not([data-component-theme='default']) {
     padding-block-start: var(--size-spacing-10);
     padding-block-end: var(--size-spacing-10);
