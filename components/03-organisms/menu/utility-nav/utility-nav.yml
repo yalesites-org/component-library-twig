@@ -2,9 +2,9 @@ items:
   - title: 'About'
     url: '#'
   - title: 'Events'
-    url: '#'
+    url: 'https://google.com'
   - title: 'Post'
-    url: '#'
+    url: 'https://google.com/download.pdf'
 utility_nav__link__content: 'Apply Now'
 utility_nav__link__url: '#'
 utility_nav__search: true
