@@ -2,6 +2,7 @@ const { resolve } = require('path');
 const twigDrupal = require('twig-drupal-filters');
 const twigBEM = require('bem-twig-extension');
 const twigAddAttributes = require('add-attributes-twig-extension');
+const twigUrl = require('./twig-url');
 
 module.exports.namespaces = {
   atoms: resolve(__dirname, '../', 'components/01-atoms'),
@@ -23,5 +24,6 @@ module.exports.setupTwig = function setupTwig(twig) {
   twigDrupal(twig);
   twigBEM(twig);
   twigAddAttributes(twig);
+  twigUrl(twig);
   return twig;
 };

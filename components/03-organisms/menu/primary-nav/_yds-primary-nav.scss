@@ -326,6 +326,15 @@ $menu-sub-max-width: 19rem;
     }
   }
 
+  [data-menu-variation='mega']
+    // Targets the explore link to the right of a dropdown menu.
+    // Only it should be capitalized.
+    &.primary-nav__link--level-1.primary-nav__link--with-icon.primary-nav__link--explore-bar {
+    @media (min-width: tokens.$break-mobile) {
+      @include tokens.h6-mallory-compact-medium;
+    }
+  }
+
   &--level-1 {
     font: var(--font-style-nav-primary-1);
     color: var(--color-heading);
@@ -375,7 +384,7 @@ $menu-sub-max-width: 19rem;
   }
 
   // this is used for the explore bar link
-  &--with-icon {
+  &--with-icon.primary-nav__link--explore-bar {
     [data-menu-variation='mega'] & {
       font: var(--font-style-nav-primary-1);
       color: var(--color-heading);
@@ -389,8 +398,6 @@ $menu-sub-max-width: 19rem;
       }
 
       @media (min-width: tokens.$break-mobile) {
-        @include tokens.h6-mallory-compact-medium;
-
         flex: 0 1 auto;
         margin-bottom: 0;
         color: inherit;
