@@ -41,11 +41,13 @@
         } %}
       {% endif %}
       {# Heading #}
-      {% include "@atoms/typography/headings/yds-heading.twig" with {
-        heading: text_with_image__heading,
-        heading__level: '2',
-        heading__blockname: text_with_image__base_class,
-      } %}
+      {% if text_with_image__heading %}
+        {% include "@atoms/typography/headings/yds-heading.twig" with {
+          heading: text_with_image__heading,
+          heading__level: '2',
+          heading__blockname: text_with_image__base_class,
+        } %}
+      {% endif %}
       {# Subheading #}
       {% if text_with_image__subheading %}
         {% include "@atoms/typography/text/yds-text.twig" with {
