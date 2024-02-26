@@ -41,11 +41,13 @@
         } %}
       {% endif %}
       {# Heading #}
-      {% include "@atoms/typography/headings/yds-heading.twig" with {
-        heading: content_spotlight_portrait__heading,
-        heading__level: '2',
-        heading__blockname: content_spotlight_portrait__base_class,
-      } %}
+      {% if content_spotlight_portrait__heading %}
+        {% include "@atoms/typography/headings/yds-heading.twig" with {
+          heading: content_spotlight_portrait__heading,
+          heading__level: '2',
+          heading__blockname: content_spotlight_portrait__base_class,
+        } %}
+      {% endif %}
       {# Subheading #}
       {% if content_spotlight_portrait__subheading %}
         {% include "@atoms/typography/text/yds-text.twig" with {
