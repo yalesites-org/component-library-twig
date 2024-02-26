@@ -1,5 +1,6 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
+@use '../../../01-atoms/controls/text-link/yds-text-link' as link;
 
 $break-directory-card-collection-max: tokens.$break-m - 0.05;
 $break-directory-card-collection-list-image-max: tokens.$break-s - 0.05;
@@ -125,6 +126,10 @@ $break-directory-card-collection-list-image-max: tokens.$break-s - 0.05;
     & {
     @include tokens.body-s-condensed;
   }
+}
+
+.directory-listing-card__link {
+  @include link.plain-link;
 }
 
 .directory-listing-card__email {

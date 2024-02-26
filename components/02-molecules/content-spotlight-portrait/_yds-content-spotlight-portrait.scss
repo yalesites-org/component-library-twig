@@ -17,23 +17,28 @@ $component-content-spotlight-port-themes: map.deep-get(
   // used by a element for animated hover underline
   --color-text-shadow: var(--color-basic-white);
 
-  &[data-component-theme='default'] {
+  // if we're not using a component theme, add top and bottom margin
+  // Or if the spotlight is the only spotlight on the page
+  &[data-component-theme='default'],
+  &[data-spotlights-position='first-and-last'] {
     @include tokens.spacing-page-section;
-
-    margin-block-start: var(--spacing-page-section);
   }
 
-  // if we're using a component theme, add padding and set background-color and color;
+  // We're using JavaScript to evaluate the last and first spotlights in a group of spotlights
+  &[data-spotlights-position='first'] {
+    margin-top: var(--size-spacing-10);
+  }
+
+  &[data-spotlights-position='last'] {
+    margin-bottom: var(--size-spacing-10);
+  }
+
+  // If we're using a component theme, add padding and set background-color and color;
   &:not([data-component-theme='default']) {
     padding-block-start: var(--size-spacing-10);
     padding-block-end: var(--size-spacing-10);
     background-color: var(--color-background);
     color: var(--color-text);
-    margin-block-start: var(--spacing-page-section);
-
-    + .content-spotlight-portrait:not([data-component-theme='default']) {
-      margin-block-start: 0;
-    }
   }
 
   // Component themes defaults: iterate over each component theme to establish
@@ -123,13 +128,11 @@ $component-content-spotlight-port-themes: map.deep-get(
     gap: var(--size-spacing-8);
     align-items: center;
 
-    // When offset, vertically center the content with the image
+    // When offset, increase the
     [data-image-style='offset'] & {
       --component-width: calc(
         var(--size-component-layout-width-site) + var(--size-spacing-10)
       );
-
-      max-width: 100%;
     }
   }
 }
