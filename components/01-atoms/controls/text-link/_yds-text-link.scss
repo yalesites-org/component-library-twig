@@ -264,6 +264,12 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
     align-items: center;
     width: fit-content;
     background-size: calc(100% - var(--size-spacing-3)) var(--thickness);
+
+    // Footer elements with a dark background can't have white shadows
+    // so this overrides it to match the current background color of the footer.
+    .site-footer__secondary & {
+      --color-text-shadow: var(--color-site-footer-background-color);
+    }
   }
 
   &[data-link-style='no-underline'] {
