@@ -39,7 +39,7 @@ Drupal.behaviors.menuToggle = {
     // Function to toggle the open/closed state of the main menu.
     function toggleMenuState(target, attribute) {
       const newMenuState =
-        target.getAttribute(attribute) === 'closed' ? 'open' : 'closed';
+        target.getAttribute(attribute) === 'open' ? 'closed' : 'open';
       const ariaButtonState =
         target.getAttribute(attribute) === 'closed' ? 'true' : 'false';
 
