@@ -64,11 +64,22 @@ Drupal.behaviors.menuToggle = {
       }
     }
 
+    // Retrieve the current menu state of the menu
+    function getMenuState(target, attribute) {
+      return target.getAttribute(attribute);
+    }
+
     // Show/Hide menu on toggle click.
     if (menuToggle) {
       menuToggle.addEventListener('click', () => {
         toggleMenuState(header, mainMenuState);
         trapKeyboard(header);
+      });
+
+      window.addEventListener('resize', () => {
+        if (getMenuState(header, mainMenuState) === 'closed') {
+          header.setAttribute(mainMenuState, 'loaded');
+        }
       });
     }
 
