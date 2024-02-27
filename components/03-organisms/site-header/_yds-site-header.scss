@@ -254,6 +254,10 @@ $background-image-max-width: 100rem;
     [data-main-menu-state='loaded'] & {
       visibility: hidden;
       transform: translateY(-100%);
+
+      & svg.primary-nav__toggle-icon {
+        display: none;
+      }
     }
 
     [data-main-menu-state='closed'] & {
