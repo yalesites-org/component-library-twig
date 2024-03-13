@@ -64,6 +64,12 @@ export default {
       options: ['one', 'two', 'three'],
       defaultValue: 'one',
     },
+    pageTitleDisplay: {
+      name: 'Page Title Display',
+      type: 'select',
+      options: ['display', 'hidden', 'visually-hidden'],
+      defaultValue: 'display',
+    },
   },
 };
 
@@ -71,6 +77,7 @@ export default {
 export const Basic = ({
   siteName,
   pageTitle,
+  pageTitleDisplay,
   allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
   globalTheme = localStorage.getItem('yds-cl-twig-global-theme'),
   menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
@@ -97,6 +104,8 @@ export const Basic = ({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: null,
+    page_title__display: pageTitleDisplay,
+    page_title__additional_classes: [pageTitleDisplay],
     site_animate_components: allowAnimatedItems,
     site_global__theme: globalTheme,
     site_header__border_thickness: headerBorderThickness,
