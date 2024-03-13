@@ -39,7 +39,7 @@ Drupal.behaviors.menuToggle = {
     // Function to toggle the open/closed state of the main menu.
     function toggleMenuState(target, attribute) {
       const newMenuState =
-        target.getAttribute(attribute) === 'closed' ? 'open' : 'closed';
+        target.getAttribute(attribute) === 'open' ? 'closed' : 'open';
       const ariaButtonState =
         target.getAttribute(attribute) === 'closed' ? 'true' : 'false';
 
@@ -64,11 +64,22 @@ Drupal.behaviors.menuToggle = {
       }
     }
 
+    // Retrieve the current menu state of the menu
+    function getMenuState(target, attribute) {
+      return target.getAttribute(attribute);
+    }
+
     // Show/Hide menu on toggle click.
     if (menuToggle) {
       menuToggle.addEventListener('click', () => {
         toggleMenuState(header, mainMenuState);
         trapKeyboard(header);
+      });
+
+      window.addEventListener('resize', () => {
+        if (getMenuState(header, mainMenuState) === 'closed') {
+          header.setAttribute(mainMenuState, 'loaded');
+        }
       });
     }
 
