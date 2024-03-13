@@ -41,10 +41,6 @@
     }
   }
 
-  button& {
-    color: var(--color-basic-white);
-  }
-
   [data-media-grid-variation='interactive'] & {
     position: relative;
     background-color: var(--color-basic-black);
@@ -53,6 +49,15 @@
       cursor: pointer;
     }
   }
+}
+
+/*
+ * This is specific to a media grid item that would have no image.  In this
+ * case, we display text conveying this to the user, but it must be legible on
+ * the background.
+ */
+button.media-grid__image {
+  color: var(--color-basic-white);
 }
 
 .media-grid__image {
