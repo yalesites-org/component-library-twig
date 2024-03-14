@@ -28,7 +28,7 @@ export default {
     collectionType: {
       name: 'Collection Type',
       type: 'select',
-      options: ['grid', 'list', 'condensed'],
+      options: ['grid', 'list', 'condensed', 'single'],
       defaultValue: 'grid',
     },
     featured: {
