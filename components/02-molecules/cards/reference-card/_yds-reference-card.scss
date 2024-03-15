@@ -67,10 +67,11 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     display: flex;
     background-color: var(--color-card-single-bg);
     border-bottom: var(--border-thickness-8) solid var(--color-blue-light);
+    padding-bottom: var(--size-spacing-8);
 
     @media (min-width: tokens.$break-xl) {
       flex-flow: row-reverse wrap;
-      padding-bottom: var(--size-spacing-8);
+      padding-bottom: var(--size-spacing-11);
     }
   }
 
@@ -209,7 +210,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     }
 
     @media (min-width: tokens.$break-xl) {
-      flex: 1 0 calc(50% - var(--size-spacing-4));
+      flex: 1 0 calc(48% - var(--size-spacing-4));
     }
   }
 }
@@ -218,18 +219,20 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   width: 100%;
 
   [data-collection-type='single'] & {
-    padding: var(--size-spacing-8);
     color: var(--color-card-single-text);
   }
 
   [data-collection-type='single'][data-collection-featured='false'] & {
+    padding: var(--size-spacing-8) var(--size-spacing-8) 0;
+
     @media (min-width: tokens.$break-xl) {
-      flex: 0 0 calc(50% - var(--size-spacing-11));
+      flex: 1 0 calc(50% - var(--size-spacing-11));
       align-self: end;
     }
   }
 
   [data-collection-type='single'][data-collection-featured='true'] & {
+    padding: var(--size-spacing-8);
     position: relative;
     background-color: var(--color-card-single-bg);
 
