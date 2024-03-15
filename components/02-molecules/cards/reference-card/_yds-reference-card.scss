@@ -39,6 +39,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     --color-text-shadow: var(--color-blue-yale);
     --color-card-single-bg: var(--color-blue-yale);
     --color-card-single-text: var(--color-basic-white);
+    --color-heading: var(--color-card-single-text);
   }
 
   // Condensed card collection
