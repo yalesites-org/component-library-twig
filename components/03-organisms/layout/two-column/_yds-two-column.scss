@@ -40,6 +40,7 @@ $break-layout-two-column-max: $break-layout-two-column - 0.05;
 }
 
 .yds-two-column__secondary {
+  // set container name to use in _yds-reference-card.scss
   container: sidebar / inline-size;
 
   @media (max-width: $break-layout-two-column-max) {

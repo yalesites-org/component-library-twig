@@ -4,6 +4,7 @@
 $break-card-collection-max: tokens.$break-m - 0.05;
 $break-card-collection-list-image-max: tokens.$break-s - 0.05;
 $break-single-card-collection-max: tokens.$break-xl - 0.05;
+$break-single-card-collection-in-sidebar: tokens.$break-s - 150;
 
 .reference-card {
   @include atoms.clickable-component-heading-link;
@@ -63,8 +64,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       grid-template-rows: repeat(6, 1fr);
     }
 
-    // when in sidebar container context - min-width 300px
-    @container sidebar (min-width: 300px) {
+    // when in sidebar container context
+    @container sidebar (inline-size < #{$break-single-card-collection-in-sidebar}) {
       display: flex;
       flex-flow: column-reverse nowrap;
       padding-bottom: var(--size-spacing-8);
@@ -84,8 +85,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       padding-bottom: var(--size-spacing-11);
     }
 
-    // when in sidebar container context - min-width 300px
-    @container sidebar (min-width: 300px) {
+    // when in sidebar container context
+    @container sidebar (inline-size < #{$break-single-card-collection-in-sidebar}) {
       flex-flow: column-reverse nowrap;
       padding-bottom: var(--size-spacing-8);
     }
@@ -214,8 +215,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       grid-row: 1 / -1;
     }
 
-    // when in sidebar container context - min-width 300px
-    @container sidebar (min-width: 300px) {
+    // when in sidebar container context
+    @container sidebar (inline-size < #{$break-single-card-collection-in-sidebar}) {
       flex: 1 auto;
     }
   }
@@ -234,8 +235,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       flex: 1 0 calc(48% - var(--size-spacing-4));
     }
 
-    // when in sidebar container context - min-width 300px
-    @container sidebar (min-width: 300px) {
+    // when in sidebar container context
+    @container sidebar (inline-size < #{$break-single-card-collection-in-sidebar}) {
       margin-inline-start: var(--size-spacing-8);
       margin-inline-end: var(--size-spacing-8);
       margin-block-start: calc(var(--size-spacing-11) * -1);
@@ -260,8 +261,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       align-self: end;
     }
 
-    // when in sidebar container context - min-width 300px
-    @container sidebar (min-width: 300px) {
+    // when in sidebar container context
+    @container sidebar (inline-size < #{$break-single-card-collection-in-sidebar}) {
       padding: var(--size-spacing-8) var(--size-spacing-8) 0;
       flex: 1 auto;
       order: 2;
@@ -284,8 +285,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       align-self: center;
     }
 
-    // when in sidebar container context - min-width 300px
-    @container sidebar (min-width: 300px) {
+    // when in sidebar container context
+    @container sidebar (inline-size < #{$break-single-card-collection-in-sidebar}) {
       margin: calc(var(--size-spacing-13) * -1) auto 0;
       max-width: 90%;
       padding: var(--size-spacing-8);
@@ -374,7 +375,11 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
     font-weight: var(--font-weights-yalenew-bold);
 
-    @container sidebar (min-width: 300px) {
+    // when in sidebar container context
+    // We need to manually set the font size for the heading in the sidebar context because
+    // the token breakpoint-font-size widths are based on viewport and not container size
+    // so they don't apply in this context.
+    @container sidebar (inline-size < #{$break-single-card-collection-in-sidebar}) {
       @include tokens.h5-yale-new;
     }
   }
