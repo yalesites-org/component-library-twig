@@ -40,6 +40,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     --color-card-single-bg: var(--color-blue-yale);
     --color-card-single-text: var(--color-basic-white);
     --color-heading: var(--color-card-single-text);
+
+    margin-block-start: var(--size-spacing-11);
   }
 
   // Condensed card collection
@@ -60,6 +62,13 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       grid-template-columns: repeat(5, 1fr);
       grid-template-rows: repeat(6, 1fr);
     }
+
+    // when in sidebar container context - min-width 300px
+    @container sidebar (min-width: 300px) {
+      display: flex;
+      flex-flow: column-reverse nowrap;
+      padding-bottom: var(--size-spacing-8);
+    }
   }
 
   // Single cardc collection non-featured
@@ -73,6 +82,12 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     @media (min-width: tokens.$break-xl) {
       flex-flow: row-reverse wrap;
       padding-bottom: var(--size-spacing-11);
+    }
+
+    // when in sidebar container context - min-width 300px
+    @container sidebar (min-width: 300px) {
+      flex-flow: column-reverse nowrap;
+      padding-bottom: var(--size-spacing-8);
     }
   }
 
@@ -198,6 +213,11 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       grid-column: 1 / 4;
       grid-row: 1 / -1;
     }
+
+    // when in sidebar container context - min-width 300px
+    @container sidebar (min-width: 300px) {
+      flex: 1 auto;
+    }
   }
 
   // Single card collection non-featured
@@ -212,6 +232,15 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
     @media (min-width: tokens.$break-xl) {
       flex: 1 0 calc(48% - var(--size-spacing-4));
+    }
+
+    // when in sidebar container context - min-width 300px
+    @container sidebar (min-width: 300px) {
+      margin-inline-start: var(--size-spacing-8);
+      margin-inline-end: var(--size-spacing-8);
+      margin-block-start: calc(var(--size-spacing-11) * -1);
+      flex: 1 auto;
+      max-width: 90%;
     }
   }
 }
@@ -230,6 +259,13 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       flex: 1 0 calc(50% - var(--size-spacing-11));
       align-self: end;
     }
+
+    // when in sidebar container context - min-width 300px
+    @container sidebar (min-width: 300px) {
+      padding: var(--size-spacing-8) var(--size-spacing-8) 0;
+      flex: 1 auto;
+      order: 2;
+    }
   }
 
   [data-collection-type='single'][data-collection-featured='true'] & {
@@ -246,6 +282,14 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       grid-column: 3 / -1;
       grid-row: 2 / 7;
       align-self: center;
+    }
+
+    // when in sidebar container context - min-width 300px
+    @container sidebar (min-width: 300px) {
+      margin: calc(var(--size-spacing-13) * -1) auto 0;
+      max-width: 90%;
+      padding: var(--size-spacing-8);
+      flex: 1 auto;
     }
   }
 
@@ -329,6 +373,10 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     @include tokens.h3-yale-new;
 
     font-weight: var(--font-weights-yalenew-bold);
+
+    @container sidebar (min-width: 300px) {
+      @include tokens.h5-yale-new;
+    }
   }
 
   [data-collection-type='grid'][data-collection-featured='true'] & {

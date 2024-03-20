@@ -44,6 +44,10 @@
     padding: 0;
   }
 
+  [data-collection-type='single'][data-collection-featured='false'] & {
+    padding-block-start: var(--size-spacing-11);
+  }
+
   [data-collection-type='grid'][data-collection-featured='true'] & {
     @include grid.primary;
   }
