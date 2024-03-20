@@ -421,6 +421,16 @@ $break-single-card-collection-in-sidebar: tokens.$break-s - 150;
       left: -0.225rem;
     }
   }
+
+  [data-collection-type='single'] & {
+    // when in sidebar container context
+    // We need to manually set the font size for the heading in the sidebar context because
+    // the token breakpoint-font-size widths are based on viewport and not container size
+    // so they don't apply in this context.
+    @container sidebar (inline-size < #{$break-single-card-collection-in-sidebar}) {
+      @include tokens.body-s-condensed;
+    }
+  }
 }
 
 .reference-card__snippet {
@@ -428,5 +438,15 @@ $break-single-card-collection-in-sidebar: tokens.$break-s - 150;
 
   [data-collection-featured='false'] & {
     @include tokens.body-default-condensed;
+  }
+
+  [data-collection-type='single'] & {
+    // when in sidebar container context
+    // We need to manually set the font size for the heading in the sidebar context because
+    // the token breakpoint-font-size widths are based on viewport and not container size
+    // so they don't apply in this context.
+    @container sidebar (inline-size < #{$break-single-card-collection-in-sidebar}) {
+      @include tokens.body-s-condensed;
+    }
   }
 }
