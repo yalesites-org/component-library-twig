@@ -2,6 +2,9 @@ import statsItemTwig from './yds-stats-item.twig';
 
 import statsItemData from './stats-item.yml';
 
+// Image atom component - generic images for demo
+import imageData from '../../01-atoms/images/image/image.yml';
+
 /**
  * Storybook Definition.
  */
@@ -41,6 +44,11 @@ export default {
       type: 'boolean',
       defaultValue: false,
     },
+    image: {
+      name: 'With image',
+      type: 'boolean',
+      defaultValue: true,
+    },
   },
 };
 
@@ -51,9 +59,10 @@ export const StatsItem = ({
   themeColor,
   statsItemIcon,
   alignment,
+  image,
 }) => `
 
-  <ul class='stats__item__group__wrap' data-stats-item-collection-type='single'>
+  <ul class='stats__wrap' data-stats-item-collection-type='single'>
     ${statsItemTwig({
       stats__item__number: statsItemData.stats__item__number,
       stats__item__content: statsItemData.stats__item__content,
@@ -78,7 +87,7 @@ export const StatsItem = ({
   <div class="wrap-for-global-theme" data-global-theme="one">
   <h2>Playground</h2>
     <p>Use the StoryBook controls to see the stats item below implement the available variations.</p>
-    <ul class='stats__group__wrap' data-stats-item-collection-type='single'>
+    <ul class='stats__wrap' data-stats-item-collection-type='single'>
       ${statsItemTwig({
         stats__item__number: number,
         stats__item__content: content,
@@ -86,6 +95,8 @@ export const StatsItem = ({
         stats__item__presentation_style: presentationStyle,
         stats__item__theme: themeColor,
         stats__item__has_icon: statsItemIcon ? 'true' : 'false',
+        stats__item__bg_image: image,
+        ...imageData.responsive_images['1x1'],
       })}
     </ul>
   </div>

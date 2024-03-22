@@ -45,5 +45,12 @@
       <div {{ bem('content', [], stats__item__base_class) }}>
 				{{ stats__item__content }}
 			</div>
+    {% if stats__item__bg_image %}
+      <div {{ bem('image', [], stats__item__base_class) }}>
+        {% block stats__item__image %}
+          {% include "@atoms/images/image/_responsive-image.twig" %}
+        {% endblock %}
+      </div>
+    {% endif %} 
 	</div>
 </li>

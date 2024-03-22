@@ -1,24 +1,21 @@
 @use '../../00-tokens/tokens';
 @use '../../00-tokens/functions/map';
+@use '../../01-atoms/atoms';
+@use '../grid-mixins' as grid;
 
-$global-stats-item-themes: map.deep-get(tokens.$tokens, 'global-themes');
-$stats-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
+$global-stats-group-themes: map.deep-get(tokens.$tokens, 'global-themes');
+$stats-group-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
-.stats__item {
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  position: relative;
+.stats {
+  @include tokens.spacing-page-section($banner-spacing: true);
+
+  padding-block: var(--size-spacing-11);
   width: 100%;
-  z-index: 0;
-
-  [data-stats-item-collection-type='single'] & {
-    max-width: 30%;
-  }
+  position: relative;
 
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
-  @each $theme, $value in $stats-item-component-themes {
+  @each $theme, $value in $stats-group-component-themes {
     &[data-component-theme='#{$theme}'] {
       // prettier-ignore
       --color-slot-one: var(--component-themes-#{$theme}-slot-one);
@@ -29,11 +26,11 @@ $stats-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       --color-slot-six: var(--component-themes-#{$theme}-slot-six);
       --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
       --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
-      --color-stats-item-theme: var(--color-slot-one);
-      --color-stats-item-content: var(--color-slot-eight);
+      --color-stats-theme: var(--color-slot-one);
+      --color-stats-content: var(--color-slot-eight);
 
-      background-color: var(--color-stats-item-theme);
-      color: var(--color-stats-item-content);
+      background-color: var(--color-stats-theme);
+      color: var(--color-stats-content);
     }
   }
 
@@ -41,7 +38,7 @@ $stats-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   // This establishes `--color-slot-` variables name-spaced to the selector
   // in which it is used. We can map component-level variables to global-level
   // `--color-slot-` variables.
-  @each $globalTheme, $value in $global-stats-item-themes {
+  @each $globalTheme, $value in $global-stats-group-themes {
     [data-global-theme='#{$globalTheme}'] & {
       --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
       --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
@@ -63,78 +60,50 @@ $stats-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
-    --color-stats-item-theme: var(--color-slot-one);
-    --color-stats-item-content: var(--color-slot-eight);
+    --color-stats-theme: var(--color-slot-one);
+    --color-stats-content: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 
   &[data-component-theme='two'] {
-    --color-stats-item-theme: var(--color-slot-two);
-    --color-stats-item-content: var(--color-slot-eight);
+    --color-stats-theme: var(--color-slot-four);
+    --color-stats-content: var(--color-slot-seven);
   }
 
   &[data-component-theme='three'] {
-    --color-stats-item-theme: var(--color-slot-three);
-    --color-stats-item-content: var(--color-slot-seven);
-  }
-
-  &__inner {
-    display: flex;
-    flex-flow: column nowrap;
-    padding: var(--size-spacing-8);
-    height: 100%;
-    align-items: flex-start;
-
-    [data-component-alignment='right'] & {
-      align-items: flex-end;
-    }
+    --color-stats-theme: var(--color-slot-five);
+    --color-stats-content: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 }
 
-.stats__item__number {
-  @include tokens.h3-yale-new;
-
+.stats__inner {
   width: 100%;
+  max-width: var(--component-width);
+}
+
+.stats__wrap {
+  @include grid.base;
+
+  // position relative added to use z-index and make sure the image is behind the content
   position: relative;
-}
+  z-index: 1;
 
-.stats__item__icon {
-  margin-bottom: var(--size-spacing-2);
-}
+  --grid-gutter: var(--spacing-component-gutter-secondary);
 
-// svg
-.stats__item__stats__item-icon {
-  max-width: var(--size-spacing-9); // max-width 48px
-  max-height: var(--size-spacing-9); // max-height 48px
-  fill: var(--color-stats-item-content);
-}
+  > * {
+    @media (min-width: tokens.$break-s) {
+      flex: 0 1 calc(50% - calc(var(--grid-gutter) * 2 / 3));
+    }
 
-.stats__item__content {
-  @include tokens.body-default;
-}
+    @media (min-width: tokens.$break-m) {
+      flex: 0 1 calc(33.33% - calc(var(--grid-gutter) * 2 / 3));
+    }
 
-.stats__item__image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: var(--color-stats-item-theme);
-    opacity: 0.85;
+    @media (min-width: tokens.$break-l) {
+      flex: 0 1 calc(25% - calc(var(--grid-gutter) * 3 / 4));
+    }
   }
 }
