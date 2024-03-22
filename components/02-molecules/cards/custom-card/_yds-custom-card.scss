@@ -133,6 +133,7 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
     @media (min-width: tokens.$break-m) {
       min-height: 0.375rem;
+      margin-bottom: tokens.$size-spacing-5;
     }
   }
 
