@@ -51,6 +51,15 @@
   }
 }
 
+/*
+ * This is specific to a media grid item that would have no image.  In this
+ * case, we display text conveying this to the user, but it must be legible on
+ * the background.
+ */
+button.media-grid__image {
+  color: var(--color-basic-white);
+}
+
 .media-grid__image {
   @include atoms.button-reset;
   @include tokens.animate(opacity, var(--animation-speed-default));

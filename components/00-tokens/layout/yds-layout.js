@@ -10,6 +10,9 @@ Drupal.behaviors.layout = {
     // Selectors.
     const bodyCopyComponents = context.querySelectorAll(bodyCopyClasses);
 
+    // tables
+    const tableElement = context.querySelectorAll('table');
+
     bodyCopyComponents.forEach((component) => {
       const nextElement = component.nextElementSibling;
 
@@ -24,6 +27,14 @@ Drupal.behaviors.layout = {
         // Add the `no-page-spacing` class to the component.
         component.classList.add('no-page-spacing');
       }
+    });
+
+    // Wrap table elements in a wrapping div to control overflow
+    tableElement.forEach((table) => {
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('table-wrapper');
+      table.parentNode.insertBefore(wrapper, table);
+      wrapper.appendChild(table);
     });
   },
 };
