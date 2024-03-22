@@ -56,11 +56,13 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   }
 
   // Single card collection featured
-  [data-collection-type='single'][data-collection-featured='true'] & {
-    @media (min-width: tokens.$break-xl) {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      grid-template-rows: repeat(6, 1fr);
+  &[data-component-has-image='true'] {
+    [data-collection-type='single'][data-collection-featured='true'] & {
+      @media (min-width: tokens.$break-xl) {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+      }
     }
   }
 
