@@ -18,7 +18,7 @@ const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Infographic Group',
+  title: 'Organisms/Stats',
   parameters: {
     layout: 'fullscreen',
   },
@@ -36,7 +36,7 @@ export default {
       defaultValue: 'one',
     },
     statsIcons: {
-      name: 'Infographic Group Icons',
+      name: 'Stats Icons',
       type: 'boolean',
       defaultValue: false,
     },
@@ -54,20 +54,17 @@ export default {
     },
     alignment: {
       name: 'Alignment',
-      options: ['left', 'center'],
+      options: ['left', 'right'],
       type: 'select',
       defaultValue: 'left',
     },
   },
 };
 
-export const InfographicGroup = ({
-  statsHeading,
-  statsContent,
+export const Stats = ({
   statsIcons,
   globalTheme,
   presentationStyle,
-  fontStyle,
   alignment,
   themeColor,
   image,
@@ -76,12 +73,9 @@ export const InfographicGroup = ({
     <div class="wrap-for-global-theme" data-global-theme="${globalTheme}">
       ${statsTwig({
         site_global__theme: globalTheme,
-        stats__heading: statsHeading,
-        stats__content: statsContent,
         stats__has_icon: statsIcons ? 'true' : 'false',
         stats__alignment: alignment,
         stats__presentation_style: presentationStyle,
-        stats__font_style: fontStyle,
         stats__theme: themeColor,
         stats__bg_image: image,
         ...statsData,
