@@ -24,6 +24,8 @@ $break-directory-card-collection-list-image-max: tokens.$break-s - 0.05;
 
 .directory-listing-card__image {
   @media (max-width: $break-directory-card-collection-list-image-max) {
+    margin-bottom: tokens.$size-spacing-5;
+
     [data-collection-type='directory-listing'] & {
       max-width: 50%;
     }
