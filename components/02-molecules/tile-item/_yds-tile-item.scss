@@ -1,5 +1,6 @@
 @use '../../00-tokens/tokens';
 @use '../../00-tokens/functions/map';
+@use '../../01-atoms/atoms';
 
 $global-tile-item-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
@@ -7,13 +8,23 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 .tile__item {
   display: flex;
   flex-flow: column nowrap;
-  align-items: center;
+  justify-content: flex-start;
   position: relative;
   width: 100%;
   z-index: 0;
+  aspect-ratio: 3/2;
 
   [data-tile-item-collection-type='single'] & {
     max-width: 30%;
+  }
+
+  [data-component-grid-count='two'] & {
+    aspect-ratio: 4 / 2;
+  }
+
+  // if in a 4-column grid, make the aspect ratio 1:1
+  [data-component-grid-count='four'] & {
+    aspect-ratio: 1 / 1;
   }
 
   // Component themes defaults: iterate over each component theme to establish
@@ -31,6 +42,10 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
       --color-tile-item-theme: var(--color-slot-one);
       --color-tile-item-content: var(--color-slot-eight);
+      --color-link-base: var(--color-tile-item-content);
+      --color-link-hover: var(--color-tile-item-content);
+      --color-link-visited-base: var(--color-link-visited-light);
+      --color-link-visited-hover: var(--color-link-visited-light-hover);
 
       background-color: var(--color-tile-item-theme);
       color: var(--color-tile-item-content);
@@ -87,6 +102,15 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     [data-component-alignment='right'] & {
       align-items: flex-end;
     }
+
+    [data-component-tile-style='text-only'] & {
+      justify-content: flex-start;
+    }
+
+    [data-component-tile-style='text-only'][data-component-vertical-alignment='bottom']
+      & {
+      justify-content: flex-end;
+    }
   }
 }
 
@@ -94,10 +118,20 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   @include tokens.h1-yale-new;
 
   position: relative;
+  flex: 0 auto;
+
+  [data-component-vertical-alignment='bottom'] & {
+    flex: 1 auto;
+  }
 }
 
 .tile__item__icon {
   margin-bottom: var(--size-spacing-2);
+  flex: 0 auto;
+
+  [data-component-vertical-alignment='bottom'] & {
+    flex: 1 auto;
+  }
 }
 
 // svg
@@ -108,7 +142,18 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 }
 
 .tile__item__content {
-  @include tokens.body-default;
+  @include tokens.h4-yale-new;
+
+  flex: 1 auto;
+  text-align: left;
+
+  [data-component-vertical-alignment='bottom'] & {
+    flex: 0 auto;
+  }
+
+  [data-component-alignment='right'] & {
+    text-align: right;
+  }
 }
 
 .tile__item__image {
@@ -135,5 +180,17 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     width: 100%;
     background-color: var(--color-tile-item-theme);
     opacity: 0.85;
+
+    .tile__item:hover & {
+      opacity: 0.95;
+    }
+  }
+}
+
+.tile__item__link {
+  @include atoms.plain-link;
+
+  &:hover {
+    --color-link-hover: var(--color-tile-item-content);
   }
 }

@@ -31,7 +31,7 @@ export default {
     },
     presentationStyle: {
       name: 'Presentation Style',
-      options: ['number', 'icon-only'],
+      options: ['number', 'icon', 'text-only'],
       type: 'select',
       defaultValue: 'number',
     },
@@ -40,6 +40,12 @@ export default {
       options: ['left', 'right'],
       type: 'select',
       defaultValue: 'left',
+    },
+    verticalAlignment: {
+      name: 'Vertical Alignment',
+      options: ['top', 'bottom'],
+      type: 'select',
+      defaultValue: 'top',
     },
     gridCount: {
       name: 'Grid Count',
@@ -59,6 +65,7 @@ export const Tiles = ({
   globalTheme,
   presentationStyle,
   alignment,
+  verticalAlignment,
   gridCount,
   image,
 }) => {
@@ -67,6 +74,7 @@ export const Tiles = ({
       ${tilesTwig({
         site_global__theme: globalTheme,
         tiles__alignment: alignment,
+        tiles__vertical_alignment: verticalAlignment,
         tiles__presentation_style: presentationStyle,
         tiles__grid_count: gridCount,
         tiles__with__image: image ? 'true' : 'false',
