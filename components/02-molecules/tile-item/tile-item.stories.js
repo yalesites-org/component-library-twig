@@ -55,44 +55,52 @@ export const TileItem = ({
   alignment,
   image,
 }) => `
-
-  <ul class='tile__wrap' data-component-grid-count='three'>
-    ${tileItemTwig({
-      tile__item__number: tileItemData.tile__item__number,
-      tile__item__content: tileItemData.tile__item__content,
-      tile__item__presentation_style: 'number',
-      tile__item__alignment: 'left',
-      tile__item__bg_image: 'true',
-      ...imageData.responsive_images['1x1'],
-    })}
-    ${tileItemTwig({
-      tile__item__number: tileItemData.tile__item__number,
-      tile__item__presentation_style: 'icon-only',
-      tile__item__alignment: 'right',
-      tile__item__bg_image: 'false',
-    })}
-    ${tileItemTwig({
-      tile__item__number: tileItemData.tile__item__number,
-      tile__item__content: tileItemData.tile__item__content,
-      tile__item__presentation_style: 'number',
-      tile__item__alignment: 'left',
-      tile__item__bg_image: 'true',
-      ...imageData.responsive_images['1x1'],
-    })}
-  </ul>
+  <div class="tiles" data-component-grid-count='three' data-component-width="site">
+    <div class='tiles__inner'>
+      <ul class='tiles__wrap'>
+        ${tileItemTwig({
+          tile__item__number: tileItemData.tile__item__number,
+          tile__item__content: tileItemData.tile__item__content,
+          tile__item__presentation_style: 'number',
+          tile__item__alignment: 'left',
+          tile__item__bg_image: 'true',
+          ...imageData.responsive_images['1x1'],
+        })}
+        ${tileItemTwig({
+          tile__item__number: tileItemData.tile__item__number,
+          tile__item__presentation_style: 'icon-only',
+          tile__item__alignment: 'right',
+          tile__item__bg_image: 'false',
+        })}
+        ${tileItemTwig({
+          tile__item__number: tileItemData.tile__item__number,
+          tile__item__content: tileItemData.tile__item__content,
+          tile__item__presentation_style: 'number',
+          tile__item__alignment: 'left',
+          tile__item__bg_image: 'true',
+          ...imageData.responsive_images['1x1'],
+        })}
+      </ul>
+    </div>
+  </div>
   <div class="wrap-for-global-theme" data-global-theme="one">
   <h2>Playground</h2>
     <p>Use the StoryBook controls to see the tile item below implement the available variations.</p>
-    <ul class='tile__wrap' data-component-grid-count='three'>
-      ${tileItemTwig({
-        tile__item__number: number,
-        tile__item__content: content,
-        tile__item__alignment: alignment,
-        tile__item__presentation_style: presentationStyle,
-        tile__item__theme: themeColor,
-        tile__item__bg_image: image ? 'true' : 'false',
-        ...imageData.responsive_images['1x1'],
-      })}
-    </ul>
+
+    <div class="tiles" data-component-grid-count='three' data-component-width="site">
+      <div class='tiles__inner'>
+        <ul class='tiles__wrap' data-component-grid-count='three'>
+          ${tileItemTwig({
+            tile__item__number: number,
+            tile__item__content: content,
+            tile__item__alignment: alignment,
+            tile__item__presentation_style: presentationStyle,
+            tile__item__theme: themeColor,
+            tile__item__bg_image: image ? 'true' : 'false',
+            ...imageData.responsive_images['1x1'],
+          })}
+        </ul>
+      </div>
+    </div>
   </div>
 `;

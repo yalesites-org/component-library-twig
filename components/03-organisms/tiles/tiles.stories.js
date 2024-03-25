@@ -68,7 +68,7 @@ export const Tiles = ({
         site_global__theme: globalTheme,
         tiles__alignment: alignment,
         tiles__presentation_style: presentationStyle,
-        tiles__grid__count: gridCount,
+        tiles__grid_count: gridCount,
         tiles__with__image: image ? 'true' : 'false',
         ...tilesData,
         ...imageData.responsive_images['1x1'],
