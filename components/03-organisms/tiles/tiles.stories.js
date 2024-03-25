@@ -2,11 +2,11 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 // get global themes as `label` : `key` values to pass into options as array.
 import getGlobalThemes from '../../00-tokens/colors/color-global-themes';
 
-// stats twig
-import statsTwig from './yds-stats.twig';
+// tiles twig
+import tilesTwig from './yds-tiles.twig';
 
 // Stat default data
-import statsData from './stats.yml';
+import tilesData from './tiles.yml';
 
 // Image atom component - generic images for demo
 import imageData from '../../01-atoms/images/image/image.yml';
@@ -18,7 +18,7 @@ const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Stats',
+  title: 'Organisms/Tiles',
   parameters: {
     layout: 'fullscreen',
   },
@@ -29,28 +29,11 @@ export default {
       type: 'select',
       defaultValue: 'one',
     },
-    themeColor: {
-      name: 'Component Theme (dial)',
-      options: ['one', 'two', 'three'],
-      type: 'select',
-      defaultValue: 'one',
-    },
-    statsIcons: {
-      name: 'Stats Icons',
-      type: 'boolean',
-      defaultValue: false,
-    },
     presentationStyle: {
       name: 'Presentation Style',
-      options: ['basic', 'icon-only'],
+      options: ['number', 'icon-only'],
       type: 'select',
-      defaultValue: 'basic',
-    },
-    fontStyle: {
-      name: 'Font Style',
-      options: ['normal', 'numeric-oldstyle'],
-      type: 'select',
-      defaultValue: 'normal',
+      defaultValue: 'number',
     },
     alignment: {
       name: 'Alignment',
@@ -58,28 +41,37 @@ export default {
       type: 'select',
       defaultValue: 'left',
     },
+    gridCount: {
+      name: 'Grid Count',
+      options: ['two', 'three', 'four'],
+      type: 'select',
+      defaultValue: 'three',
+    },
+    image: {
+      name: 'With image',
+      type: 'boolean',
+      defaultValue: false,
+    },
   },
 };
 
-export const Stats = ({
-  statsIcons,
+export const Tiles = ({
   globalTheme,
   presentationStyle,
   alignment,
-  themeColor,
+  gridCount,
   image,
 }) => {
   return `
     <div class="wrap-for-global-theme" data-global-theme="${globalTheme}">
-      ${statsTwig({
+      ${tilesTwig({
         site_global__theme: globalTheme,
-        stats__has_icon: statsIcons ? 'true' : 'false',
-        stats__alignment: alignment,
-        stats__presentation_style: presentationStyle,
-        stats__theme: themeColor,
-        stats__bg_image: image,
-        ...statsData,
-        ...imageData.responsive_images['16x9'],
+        tiles__alignment: alignment,
+        tiles__presentation_style: presentationStyle,
+        tiles__grid__count: gridCount,
+        tiles__with__image: image ? 'true' : 'false',
+        ...tilesData,
+        ...imageData.responsive_images['1x1'],
       })}
     </div>
     `;
