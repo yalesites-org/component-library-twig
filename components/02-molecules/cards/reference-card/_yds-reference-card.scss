@@ -66,7 +66,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     }
   }
 
-  // Single cardc collection non-featured
+  // Single card collection non-featured
   [data-collection-type='single'][data-collection-featured='false'] & {
     position: relative;
     display: flex;
@@ -225,6 +225,15 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   [data-collection-type='single'] & {
     color: var(--color-card-single-text);
+  }
+
+  // limit width of card content for a single card collection item without an image.
+  [data-component-has-image='false'] & {
+    @media (min-width: tokens.$break-xl) {
+      > * {
+        max-width: 70%;
+      }
+    }
   }
 
   [data-collection-type='single'][data-collection-featured='false'] & {
