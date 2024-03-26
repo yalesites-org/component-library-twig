@@ -43,14 +43,7 @@
     > * {
       @media (min-width: tokens.$break-s) {
         flex: 0 1 calc(50% - var(--grid-gutter));
-      }
-
-      @media (min-width: tokens.$break-m) {
-        flex: 0 1 calc(25% - var(--grid-gutter));
-      }
-
-      @media (min-width: tokens.$break-l) {
-        flex: 0 1 calc(50% - var(--grid-gutter));
+        max-width: calc(50% - var(--grid-gutter));
       }
     }
   }
@@ -58,15 +51,16 @@
   [data-component-grid-count='three'] & {
     > * {
       @media (min-width: tokens.$break-s) {
-        flex: 0 1 calc(50% - var(--grid-gutter));
+        flex: 0 calc(50% - var(--grid-gutter));
       }
 
       @media (min-width: tokens.$break-m) {
-        flex: 0 1 calc(25% - var(--grid-gutter));
+        flex: 1 0 calc(25% - var(--grid-gutter));
       }
 
       @media (min-width: tokens.$break-l) {
-        flex: 0 1 calc(33.33% - var(--grid-gutter));
+        flex: 1 0 calc(33.33% - var(--grid-gutter));
+        max-width: calc(33.33% - var(--grid-gutter));
       }
     }
   }
@@ -74,15 +68,16 @@
   [data-component-grid-count='four'] & {
     > * {
       @media (min-width: tokens.$break-s) {
-        flex: 0 1 calc(50% - var(--grid-gutter));
+        flex: 0 calc(50% - var(--grid-gutter));
       }
 
       @media (min-width: tokens.$break-m) {
-        flex: 0 1 calc(25% - var(--grid-gutter));
+        flex: 1 0 calc(25% - var(--grid-gutter));
       }
 
       @media (min-width: tokens.$break-l) {
-        flex: 0 1 calc(25% - var(--grid-gutter));
+        flex: 1 0 calc(25% - var(--grid-gutter));
+        max-width: calc(25% - var(--grid-gutter));
       }
     }
   }

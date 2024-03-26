@@ -11,20 +11,28 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   justify-content: flex-start;
   position: relative;
   width: 100%;
+  max-width: 100%;
   z-index: 0;
-  aspect-ratio: 3/2;
+
+  @media (min-width: tokens.$break-l) {
+    aspect-ratio: 3/2;
+  }
 
   [data-tile-item-collection-type='single'] & {
     max-width: 30%;
   }
 
   [data-component-grid-count='two'] & {
-    aspect-ratio: 4 / 2;
+    @media (min-width: tokens.$break-l) {
+      aspect-ratio: 4 / 2;
+    }
   }
 
   // if in a 4-column grid, make the aspect ratio 1:1
   [data-component-grid-count='four'] & {
-    aspect-ratio: 1 / 1;
+    @media (min-width: tokens.$break-s) {
+      aspect-ratio: 1 / 1;
+    }
   }
 
   // Component themes defaults: iterate over each component theme to establish
@@ -95,7 +103,7 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &__inner {
     display: flex;
     flex-flow: column nowrap;
-    padding: var(--size-spacing-8);
+    padding: var(--size-spacing-6);
     height: 100%;
     align-items: flex-start;
 
