@@ -99,7 +99,7 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &__inner {
     display: flex;
     flex-flow: column nowrap;
-    padding: var(--size-spacing-6);
+    padding: var(--size-spacing-8) var(--size-spacing-6);
     height: 100%;
     align-items: flex-start;
 

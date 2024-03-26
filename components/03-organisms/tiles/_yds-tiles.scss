@@ -55,10 +55,6 @@
       }
 
       @media (min-width: tokens.$break-m) {
-        flex: 1 0 calc(25% - var(--grid-gutter));
-      }
-
-      @media (min-width: tokens.$break-l) {
         flex: 1 0 calc(33.33% - var(--grid-gutter));
         max-width: calc(33.33% - var(--grid-gutter));
       }
