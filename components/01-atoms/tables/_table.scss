@@ -9,6 +9,10 @@ table {
   width: 100%;
 }
 
+.table-wrapper {
+  overflow-x: auto;
+}
+
 table caption {
   text-align: left;
   margin-top: var(--size-spacing-4);
