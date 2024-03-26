@@ -18,10 +18,6 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     aspect-ratio: 3/2;
   }
 
-  [data-tile-item-collection-type='single'] & {
-    max-width: 30%;
-  }
-
   [data-component-grid-count='two'] & {
     @media (min-width: tokens.$break-l) {
       aspect-ratio: 4 / 2;
@@ -109,10 +105,6 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
     [data-component-alignment='right'] & {
       align-items: flex-end;
-    }
-
-    [data-component-tile-style='text-only'] & {
-      justify-content: flex-start;
     }
 
     [data-component-tile-style='text-only'][data-component-vertical-alignment='bottom']
