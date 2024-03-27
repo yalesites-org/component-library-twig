@@ -105,7 +105,6 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
     // if the tile item is a link, make the whole tile item clickable
     [data-component-linked-tile='true'] & {
-      @include atoms.clickable-component-heading-link;
       @include atoms.clickable-component-image;
     }
 
