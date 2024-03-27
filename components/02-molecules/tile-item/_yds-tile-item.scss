@@ -195,6 +195,7 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .tile__item__link {
   @include atoms.plain-link;
+  @include tokens.h4-yale-new;
 
   &:hover {
     --color-link-hover: var(--color-tile-item-content);
