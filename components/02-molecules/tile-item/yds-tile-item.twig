@@ -15,6 +15,12 @@
 {# If tile__item__attributes is not defined, set it to an empty object by default #}
 {% set tile__item__attributes = tile__item__attributes|default({}) %}
 
+{% if tile__item__content_link and tile__item__content %}
+{% set tile__item__attributes = tile__item__attributes|merge({
+  'data-component-linked-tile': 'true',
+}) %}
+{% endif %}
+
 {% set tile__item__attributes = tile__item__attributes|merge({
   'data-component-tile-style': tile__item__presentation_style,
   'data-component-alignment': tile__item__alignment|default('left'),

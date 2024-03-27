@@ -103,6 +103,12 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     height: 100%;
     align-items: flex-start;
 
+    // if the tile item is a link, make the whole tile item clickable
+    [data-component-linked-tile='true'] & {
+      @include atoms.clickable-component-heading-link;
+      @include atoms.clickable-component-image;
+    }
+
     [data-component-alignment='right'] & {
       align-items: flex-end;
     }

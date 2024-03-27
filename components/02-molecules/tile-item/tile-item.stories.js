@@ -5,6 +5,8 @@ import tileItemData from './tile-item.yml';
 // Image atom component - generic images for demo
 import imageData from '../../01-atoms/images/image/image.yml';
 
+import './yds-tile-item';
+
 /**
  * Storybook Definition.
  */
