@@ -196,6 +196,10 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   @include atoms.plain-link;
   @include tokens.h4-yale-new;
 
+  &:hover {
+    color: var(--color-tile-item-content);
+  }
+
   // when hovering over the tile item, remove the underline on the link
   .tile__item:hover & {
     text-decoration: none;
