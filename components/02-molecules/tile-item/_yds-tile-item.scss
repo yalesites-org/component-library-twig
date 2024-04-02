@@ -186,7 +186,7 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     background-color: var(--color-tile-item-theme);
     opacity: 0.85;
 
-    .tile__item:hover & {
+    .tile__item[data-component-linked-tile='true']:hover & {
       opacity: 0.95;
     }
   }
