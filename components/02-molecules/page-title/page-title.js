@@ -5,7 +5,7 @@ Drupal.behaviors.bannerHeading = {
     const pageTitle = context.querySelector('.page-title');
 
     // If there is no page title or the page title is present but not visible, add an attribute to the body element
-    if (pageTitle === null || !pageTitle.contains('visible')) {
+    if (pageTitle === null || !pageTitle.classList.contains('visible')) {
       bodyElement.setAttribute('page-title-hidden', 'true');
     }
   },
