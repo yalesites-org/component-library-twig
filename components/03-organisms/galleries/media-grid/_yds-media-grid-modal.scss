@@ -232,11 +232,11 @@ $modal-speed: var(--animation-speed-slow);
     gap: var(--size-spacing-5);
   }
 
-  &[aria-expanded] {
+  &[is-expanded] {
     background-color: var(--color-gray-800);
   }
 
-  &[aria-expanded='true'] {
+  &[is-expanded='true'] {
     @include tokens.animate(max-height, var(--animation-speed-slow));
 
     overflow: auto;
