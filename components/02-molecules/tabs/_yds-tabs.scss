@@ -32,7 +32,12 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
     max-width: var(--size-component-layout-width-content);
   }
 
-  // center aligned and site width
+  // max width
+  [data-component-width='max'] & {
+    max-width: var(--size-component-layout-width-max);
+  }
+
+  // site width
   [data-component-width='site'] & {
     max-width: var(--size-component-layout-width-site);
   }

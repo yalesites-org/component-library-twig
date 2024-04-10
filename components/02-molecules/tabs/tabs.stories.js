@@ -12,7 +12,7 @@ export default {
   argTypes: {
     width: {
       name: 'Component width',
-      options: ['site', 'content'],
+      options: ['site', 'content', 'max'],
       type: 'select',
       defaultValue: 'site',
     },
