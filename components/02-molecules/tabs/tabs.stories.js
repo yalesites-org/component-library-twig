@@ -14,13 +14,13 @@ export default {
       name: 'Component width',
       options: ['site', 'content'],
       type: 'select',
-      defaultValue: 'site',
+      defaultValue: 'content',
     },
     alignment: {
       name: 'Component alignment',
       options: ['left', 'center'],
       type: 'select',
-      defaultValue: 'left',
+      defaultValue: 'center',
     },
   },
 };
