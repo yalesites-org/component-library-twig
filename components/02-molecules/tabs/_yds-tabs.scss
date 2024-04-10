@@ -26,6 +26,11 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
     margin: 0 auto;
   }
 
+  [data-component-alignment='center'][data-component-width='site'] & {
+    max-width: var(--size-component-layout-width-site);
+    margin: 0 auto;
+  }
+
   // Global themes: set color slots for each theme
   // This establishes `--color-slot-` variables name-spaced to the selector
   // in which it is used. We can map component-level variables to global-level
