@@ -17,12 +17,12 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   --color-tabs-accent: --color-gray-500;
   --size-tabs-control: 4rem;
 
-  [data-component-alignment='left'] & {
+  [data-component-alignment='left'][data-component-width='site'] & {
     max-width: var(--size-component-layout-width-content);
   }
 
-  [data-component-width='site'] & {
-    max-width: var(--size-component-layout-width-site);
+  [data-component-alignment='center'][data-component-width='content'] & {
+    max-width: var(--size-component-layout-width-content);
     margin: 0 auto;
   }
 
