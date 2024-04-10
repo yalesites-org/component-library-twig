@@ -14,7 +14,7 @@ export default {
       name: 'Component width',
       options: ['site', 'content'],
       type: 'select',
-      defaultValue: 'content',
+      defaultValue: 'site',
     },
     alignment: {
       name: 'Component alignment',

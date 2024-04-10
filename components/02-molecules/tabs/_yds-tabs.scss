@@ -17,18 +17,24 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   --color-tabs-accent: --color-gray-500;
   --size-tabs-control: 4rem;
 
-  [data-component-alignment='left'][data-component-width='site'] & {
+  // content width when left aligned
+  [data-component-alignment='left'] & {
     max-width: var(--size-component-layout-width-content);
   }
 
-  [data-component-alignment='center'][data-component-width='content'] & {
-    max-width: var(--size-component-layout-width-content);
+  // centered when center aligned
+  [data-component-alignment='center'] & {
     margin: 0 auto;
   }
 
-  [data-component-alignment='center'][data-component-width='site'] & {
+  // content-width
+  [data-component-width='content'] & {
+    max-width: var(--size-component-layout-width-content);
+  }
+
+  // center aligned and site width
+  [data-component-width='site'] & {
     max-width: var(--size-component-layout-width-site);
-    margin: 0 auto;
   }
 
   // Global themes: set color slots for each theme
