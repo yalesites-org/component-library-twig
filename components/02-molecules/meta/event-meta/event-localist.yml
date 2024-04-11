@@ -1,0 +1,35 @@
+event_meta__day: Thursday, May 15th, 2024
+event_meta__time: 1:30 pm to 2:00 pm ET
+event_dates:
+  - formatted_start_date: 2024-05-01 00:00:00
+    formatted_end_date: 2024-05-04 23:59:59
+    formatted_start_time: 12:00 am
+    formatted_end_time: 11:59 pm
+  - formatted_start_date: 2024-05-05 00:00:00
+    formatted_end_date: 2024-05-06 23:59:59
+    formatted_start_time: 12:00 am
+    formatted_end_time: 11:59 pm
+  - formatted_start_date: 2024-05-07 00:00:00
+    formatted_end_date: 2024-05-08 23:59:59
+    formatted_start_time: 12:00 am
+    formatted_end_time: 11:59 pm
+  - formatted_start_date: 2024-05-09 00:00:00
+    formatted_end_date: 2024-05-10 23:59:59
+    formatted_start_time: 12:00 am
+    formatted_end_time: 11:59 pm
+  - formatted_start_date: 2024-05-11 00:00:00
+    formatted_end_date: 2024-05-12 23:59:59
+    formatted_start_time: 12:00 am
+    formatted_end_time: 11:59 pm
+ticket_cost: $40 pre registration, $60 at the door
+event_website: https://www.example.com
+event_types:
+  - name: Music
+  - name: Lecture
+place:
+  address: 1120 East Fort Avenue
+  city: Baltimore
+  state: MD
+  postal_code: 21230
+  latitude: 39.2704
+  longitude: -76.6122

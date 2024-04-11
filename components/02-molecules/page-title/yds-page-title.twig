@@ -19,6 +19,7 @@
 {% if 'hidden' not in [page_title__display] %}
   <div {{ add_attributes(page_title__attributes) }}>
     <div {{ bem('inner', [], page_title__base_class) }}>
+      {% block page_title__overline %}{% endblock %}
       {% include "@atoms/typography/headings/yds-heading.twig" with {
         heading__level: '1',
         heading: page_title__heading,
