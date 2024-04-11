@@ -36,13 +36,19 @@
 {# Set the event title prefix based on event status #}
 {% set event_title__prefix = event_has_passed ? 'Past Event: ' : '' %}
 
+{% set latLong = place.latitude ~ ',' ~ place.longitude %}
+{% set get_directions__url = place ? 'https://www.google.com/maps/dir/Current+Location/' ~ latLong : '' %}
+
+
 {# Use in more-dates-link #}
-{% set event_more_dates_link__icon %}
+{% set event__more_dates_link__icon %}
   {% include "@atoms/images/icons/_yds-icon.twig" with {
     icon__name: 'circle-plus',
     icon__decorative: true,
     icon__blockname: event_meta__base_class,
     icon__modifiers: ['expand-more-dates'],
+    icon__visual_title: 'Show More Dates',
+    icon__visual_title__modifiers: ['show-more-dates'],
   } %}
   {# collapse minus #}
     {% include "@atoms/images/icons/_yds-icon.twig" with {
@@ -50,6 +56,8 @@
     icon__decorative: true,
     icon__blockname: event_meta__base_class,
     icon__modifiers: ['collapse-more-dates'],
+    icon__visual_title: 'Hide More Dates',
+    icon__visual_title__modifiers: ['hide-more-dates'],
   } %}
 {% endset %}
 
@@ -60,6 +68,17 @@
     icon__decorative: true,
     icon__blockname: event_meta__base_class,
     icon__modifiers: ['expand-show-map'],
+    icon__visual_title: 'Show Map',
+    icon__visual_title__modifiers: ['show-map'],
+  } %}
+  {# collapse minus #}
+  {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'angle-down',
+    icon__decorative: true,
+    icon__blockname: event_meta__base_class,
+    icon__modifiers: ['collapse-show-map'],
+    icon__visual_title: 'Hide Map',
+    icon__visual_title__modifiers: ['hide-map'],
   } %}
 {% endset %}
 
@@ -112,7 +131,7 @@
           {% if event_dates.length > 1 %}
             <div {{ bem('more-dates-link', [], event_meta__base_class) }}>
               {% include "@atoms/controls/cta/yds-cta.twig" with {
-                cta__content: event_more_dates_link__icon ~ event_meta__more_dates_link|default('Show more dates'),
+                cta__content: event__more_dates_link__icon,
                 cta__href: '#',
                 cta__blockname: event_meta__base_class,
                 cta__modifiers: ['show-more-dates'],
@@ -169,7 +188,7 @@
               <label {{ bem('event__label', [], event_meta__base_class) }}>Event Website</label>
               <div {{ bem('event-website-link', [], event_meta__base_class) }}>
               {% include "@atoms/controls/cta/yds-cta.twig" with {
-                cta__content: event_website ,
+                cta__content: event_website,
                 cta__href: event_website,
                 cta__blockname: event_meta__base_class,
                 cta__style: 'outline',
@@ -208,7 +227,7 @@
             <li {{ bem('location__long', [], event_meta__base_class) }}>Long: {{ place.longitude }}</li> #}
             <div {{ bem('event-show-map', [], event_meta__base_class) }} is-expanded="false">
               {% include "@atoms/controls/cta/yds-cta.twig" with {
-                cta__content: 'Show map' ~ event__show_map__icon,
+                cta__content: event__show_map__icon,
                 cta__href: '#',
                 cta__blockname: event_meta__base_class,
                 cta__modifiers: ['show-map'],
@@ -219,7 +238,7 @@
                 
               {% include "@atoms/controls/cta/yds-cta.twig" with {
                 cta__content: 'Get Directions',
-                cta__href: 'https://www.google.com/maps/dir/Current+Location/' ~ place.latitude, place.longitude,
+                cta__href: get_directions__url,
                 cta__blockname: event_meta__base_class,
                 cta__modifiers: ['directions-link'],
                 cta__style: 'outline',

@@ -1,14 +1,15 @@
 Drupal.behaviors.toggleLinks = {
   attach(context) {
+    // Get the elements
     const showMoreDatesWrapper = context.querySelector(
       '.event-meta__all-dates',
     );
     const showMoreDatesButton = context.querySelector(
       '.event-meta__cta--show-more-dates',
     );
-
     const showMapWrapper = context.querySelector('.event-meta__event-show-map');
     const showMapButton = context.querySelector('.event-meta__cta--show-map');
+    const mapElementWrapper = context.querySelector('.event-meta__map');
 
     // Function to toggle aria-expanded attribute
     const toggleAriaExpanded = (element) => {
@@ -26,7 +27,7 @@ Drupal.behaviors.toggleLinks = {
     // Handle Show More Dates button click
     function handleShowMoreDatesClick(event) {
       const button = event.target;
-      toggleAriaExpanded(button);
+      toggleAriaExpanded(showMoreDatesButton);
       toggleIsExpanded(showMoreDatesWrapper);
 
       const targetDiv = button.closest(
@@ -38,29 +39,17 @@ Drupal.behaviors.toggleLinks = {
         targetDiv.hasAttribute('aria-expanded')
       ) {
         toggleAriaExpanded(targetDiv);
-        button.childNodes[4].textContent =
-          button.childNodes[4].textContent.includes('Show more dates')
-            ? 'Collapse more dates'
-            : 'Show more dates';
       }
     }
 
     // Handle Show Map button click
-    function handleShowMapClick(event) {
-      const button = event.target;
-      toggleAriaExpanded(button);
+    function handleShowMapClick() {
+      toggleAriaExpanded(showMapButton);
       toggleIsExpanded(showMapWrapper);
-
-      const siblingDiv = button.nextElementSibling;
-      if (siblingDiv && siblingDiv.hasAttribute('aria-expanded')) {
-        toggleAriaExpanded(siblingDiv);
-        button.childNodes[0].textContent =
-          button.childNodes[0].textContent.includes('Show map')
-            ? 'Hide map'
-            : 'Show map';
-      }
+      toggleAriaExpanded(mapElementWrapper);
     }
 
+    // Use the buttons
     if (showMoreDatesButton) {
       showMoreDatesButton.setAttribute('aria-expanded', 'false');
       showMoreDatesButton.addEventListener('click', handleShowMoreDatesClick);
@@ -69,6 +58,7 @@ Drupal.behaviors.toggleLinks = {
     if (showMapButton) {
       showMapButton.setAttribute('aria-expanded', 'false');
       showMapButton.addEventListener('click', handleShowMapClick);
+      mapElementWrapper.setAttribute('aria-expanded', 'false');
     }
   },
 };

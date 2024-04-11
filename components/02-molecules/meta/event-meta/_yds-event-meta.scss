@@ -59,11 +59,13 @@
   }
 }
 
+// cost
 .event-meta__cost {
   display: flex;
   flex-direction: column;
 }
 
+// all event meta labels
 .event-meta__event__label {
   @include tokens.body-s;
 
@@ -71,6 +73,7 @@
   color: var(--color-gray-800);
 }
 
+// event types
 .event-meta__event-types {
   @include atoms.list-reset;
 
@@ -94,6 +97,7 @@
   color: var(--color-text);
 }
 
+// overline for 'online', 'in-person', or `hybrid`
 .event-meta__format--overline {
   @include tokens.body-s;
 
@@ -106,6 +110,7 @@
   letter-spacing: 0.5px;
 }
 
+// website link field
 .event-meta__event-website-link a {
   @include atoms.plain-link;
   @include tokens.body-s;
@@ -118,12 +123,12 @@
   display: flex;
   flex-direction: column;
   gap: var(--size-spacing-6);
-  visibility: visible;
-  height: auto;
+  background-color: var(--color-gray-100);
+  padding: var(--size-spacing-3);
+  color: var(--color-gray-800);
 
   &[aria-expanded='false'] {
-    visibility: hidden;
-    height: 0;
+    display: none;
   }
 }
 
@@ -142,21 +147,28 @@
   gap: var(--size-spacing-3);
 }
 
-svg.event-meta__icon--expand-more-dates {
-  width: var(--size-spacing-6);
-  height: var(--size-spacing-6);
+.event-meta__icon--show-more-dates {
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-3);
 
   [aria-expanded='true'] & {
     display: none;
   }
 }
 
-svg.event-meta__icon--collapse-more-dates {
+.event-meta__cta--show-more-dates svg {
   width: var(--size-spacing-6);
   height: var(--size-spacing-6);
+}
 
-  [aria-expanded='false'] & {
-    display: none;
+.event-meta__icon--hide-more-dates {
+  display: none;
+
+  [aria-expanded='true'] & {
+    display: flex;
+    align-items: center;
+    gap: var(--size-spacing-3);
   }
 }
 
@@ -164,8 +176,8 @@ svg.event-meta__icon--collapse-more-dates {
 .event-meta__map {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: var(--size-spacing-6);
+  padding-top: var(--size-spacing-6);
 
   &[aria-expanded='false'] {
     visibility: hidden;
@@ -182,12 +194,28 @@ svg.event-meta__icon--collapse-more-dates {
   gap: var(--size-spacing-3);
 }
 
-svg.event-meta__icon--expand-show-map {
+.event-meta__cta--show-map svg {
   width: var(--size-spacing-6);
   height: var(--size-spacing-6);
+}
+
+.event-meta__icon--hide-map svg {
+  transform: rotate(180deg);
+}
+
+.event-meta__icon--show-map {
+  [aria-expanded='true'] & {
+    display: none;
+  }
+}
+
+.event-meta__icon--hide-map {
+  display: none;
 
   [aria-expanded='true'] & {
-    transform: rotate(180deg);
+    display: flex;
+    align-items: center;
+    gap: var(--size-spacing-3);
   }
 }
 
