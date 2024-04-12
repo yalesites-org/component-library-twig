@@ -1,0 +1,10 @@
+font:
+  style:
+    nav:
+      primary:
+        0:
+          value: "{ font.weights.mallory-book.value } { fontSize.20.value }/1.65 { fontFamilies.mallory-compact.value }"
+        1:
+          value: "{ font.weights.mallory-book.value } { fontSize.19.value }/1.65 { fontFamilies.mallory-compact.value }"
+        2:
+          value: "{ font.weights.mallory-book.value } { fontSize.17.value }/1.18 { fontFamilies.mallory-compact.value }"

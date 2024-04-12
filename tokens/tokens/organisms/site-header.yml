@@ -1,0 +1,104 @@
+site-header-themes:
+  one:
+    background:
+      value: "{color.basic.white.value}"
+    yale-branding:
+      value: "{color.blue.yale.value}"
+    site-branding:
+      value: "{color.blue.yale.value}"
+    border-color:
+      value: "{color.blue.yale.value}"
+    divider-color:
+      value: "{color.gray.300.value}"
+    slot-one:
+      value: "{color.blue.yale.value}"
+    slot-two:
+      value: "{color.blue.medium.value}"
+    slot-three:
+      value: "{color.blue.light.value}"
+    slot-four:
+      value: "{color.blue.pewter.value}"
+    slot-five:
+      value: "{color.gray.hale.value}"
+    slot-six:
+      value: "{color.blue.yale.value}"
+    slot-seven:
+      value: "{color.gray.800.value}"
+    slot-eight:
+      value: "{color.basic.white.value}"
+  two:
+    background:
+      value: "{color.gray.800.value}"
+    yale-branding:
+      value: "{color.blue.royal.value}"
+    site-branding:
+      value: "{color.basic.white.value}"
+    border-color:
+      value: "{color.blue.royal.value}"
+    divider-color:
+      value: "{color.gray.500.value}"
+    slot-one:
+      value: "{color.gray.700.value}"
+    slot-two:
+      value: "{color.green.basil.value}"
+    slot-three:
+      value: "{color.green.ground.value}"
+    slot-four:
+      value: "{color.green.fog.value}"
+    slot-five:
+      value: "{color.green.pine.value}"
+    slot-six:
+      value: "{color.blue.yale.value}"
+    slot-seven:
+      value: "{color.gray.800.value}"
+    slot-eight:
+      value: "{color.basic.white.value}"
+  three:
+    background:
+      value: "{color.blue.yale.value}"
+    yale-branding:
+      value: "{color.blue.royal.value}"
+    site-branding:
+      value: "{color.basic.white.value}"
+    border-color:
+      value: "{color.blue.royal.value}"
+    divider-color:
+      value: "{color.gray.500.value}"
+    slot-one:
+      value: "{color.blue.yale.value}"
+    slot-two:
+      value: "{color.blue.royal.value}"
+    slot-three:
+      value: "{color.orange.peach.value}"
+    slot-four:
+      value: "{color.yellow.umbrella.value}"
+    slot-five:
+      value: "{color.blue.slate.value}"
+    slot-six:
+      value: "{color.blue.yale.value}"
+    slot-seven:
+      value: "{color.gray.800.value}"
+    slot-eight:
+      value: "{color.basic.white.value}"
+site-header-layout:
+  left:
+    justify:
+      value: "{layout.flex-position.left}"
+    align:
+      value: "{layout.flex-position.left}"
+    flex-direction:
+      value: "column"
+  center:
+    justify:
+      value: "{layout.flex-position.center}"
+    align:
+      value: "{layout.flex-position.center}"
+    flex-direction:
+      value: "column"
+  right:
+    justify:
+      value: "{layout.flex-position.space-between}"
+    align:
+      value: "{layout.flex-position.right}"
+    flex-direction:
+      value: "row"

@@ -1,0 +1,32 @@
+layout:
+  width:
+    25:
+      value: "25%"
+    50:
+      value: "50%"
+    75:
+      value: "75%"
+    100:
+      value: "100%"
+  flex-position:
+    left:
+      value: "flex-start"
+    center:
+      value: "center"
+    right:
+      value: "flex-end"
+    baseline:
+      value: "baseline"
+    space-between:
+      value: "space-between"
+size:
+  component-layout:
+    width:
+      max:
+        value: "100"
+      site:
+        value: "84"
+      highlight:
+        value: "70"
+      content:
+        value: "56"

@@ -1,0 +1,42 @@
+link:
+  underline-size:
+    default:
+      value: "{size.thickness.2}"
+    thick:
+      value: "{size.thickness.8}"
+color:
+  link:
+    base:
+      value: "{color.blue.medium}"
+    hover:
+      value: "{color.gray.700}"
+    visited:
+      base:
+        value: "{color.purple.visited.value}"
+      hover:
+        value: "{color.purple.visited-hover.value}"
+      light:
+        value: "{color.purple.visited-light.value}"
+      light-hover:
+        value: "{color.purple.visited-light-hover.value}"
+    theme:
+      gray-800:
+        base:
+          value: "{color.basic.white.value}"
+        hover:
+          value: "{color.blue.light.value}"
+      blue-yale:
+        base:
+          value: "{color.basic.white.value}"
+        hover:
+          value: "{color.blue.light.value}"
+      gray-700:
+        base:
+          value: "{color.basic.white.value}"
+        hover:
+          value: "{color.gray.300.value}"
+      gray-200:
+        base:
+          value: "{color.blue.yale.value}"
+        hover:
+          value: "{color.gray.700.value}"

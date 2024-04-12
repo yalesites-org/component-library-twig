@@ -1,0 +1,16 @@
+border:
+  thickness:
+    0:
+      value: "{size.thickness.0.value}"
+    "hairline":
+      value: "{size.thickness.hairline.value}"
+    1:
+      value: "{size.thickness.1.value}"
+    2:
+      value: "{size.thickness.2.value}"
+    4:
+      value: "{size.thickness.4.value}"
+    6:
+      value: "{size.thickness.6.value}"
+    8:
+      value: "{size.thickness.8.value}"

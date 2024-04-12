@@ -1,0 +1,82 @@
+site-footer-themes:
+  one:
+    background-color:
+      value: "{color.basic.white.value}"
+    yale-branding:
+      value: "{color.blue.yale.value}"
+    border-color:
+      value: "{color.blue.yale.value}"
+    divider-color:
+      value: "{color.gray.300.value}"
+    text-color:
+      value: "{color.basic.black.value}"
+    slot-one:
+      value: "{color.blue.yale.value}"
+    slot-two:
+      value: "{color.blue.medium.value}"
+    slot-three:
+      value: "{color.blue.light.value}"
+    slot-four:
+      value: "{color.blue.pewter.value}"
+    slot-five:
+      value: "{color.gray.hale.value}"
+    slot-six:
+      value: "{color.blue.yale.value}"
+    slot-seven:
+      value: "{color.gray.800.value}"
+    slot-eight:
+      value: "{color.basic.white.value}"
+  two:
+    background-color:
+      value: "{color.basic.white.value}"
+    yale-branding:
+      value: "{color.blue.yale.value}"
+    border-color:
+      value: "{color.blue.yale.value}"
+    divider-color:
+      value: "{color.gray.300.value}"
+    text-color:
+      value: "{color.basic.black.value}"
+    slot-one:
+      value: "{color.gray.700.value}"
+    slot-two:
+      value: "{color.green.basil.value}"
+    slot-three:
+      value: "{color.green.ground.value}"
+    slot-four:
+      value: "{color.green.fog.value}"
+    slot-five:
+      value: "{color.green.pine.value}"
+    slot-six:
+      value: "{color.blue.yale.value}"
+    slot-seven:
+      value: "{color.gray.800.value}"
+    slot-eight:
+      value: "{color.basic.white.value}"
+  three:
+    background-color:
+      value: "{color.gray.100.value}"
+    yale-branding:
+      value: "{color.blue.light.value}"
+    border-color:
+      value: "{color.blue.light.value}"
+    divider-color:
+      value: "{color.gray.500.value}"
+    text-color:
+      value: "{color.basic.black.value}"
+    slot-one:
+      value: "{color.blue.yale.value}"
+    slot-two:
+      value: "{color.blue.royal.value}"
+    slot-three:
+      value: "{color.orange.peach.value}"
+    slot-four:
+      value: "{color.yellow.umbrella.value}"
+    slot-five:
+      value: "{color.blue.slate.value}"
+    slot-six:
+      value: "{color.blue.yale.value}"
+    slot-seven:
+      value: "{color.gray.800.value}"
+    slot-eight:
+      value: "{color.basic.white.value}"

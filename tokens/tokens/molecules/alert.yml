@@ -1,0 +1,19 @@
+color:
+  alert:
+    emergency:
+      background-color:
+        value: "#D62020"
+      text:
+        value: "white"
+      border-color:
+        value: "{ color.basic.white.value }"
+    announcement:
+      background-color:
+        value: "#FEDC38"
+      border-color:
+        value: "{ color.gray.500.value }"
+    marketing:
+      background-color:
+        value: "#B3E8FF"
+      border-color:
+        value: "{ color.gray.500.value }"
