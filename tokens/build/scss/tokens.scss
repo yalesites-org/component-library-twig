@@ -1,0 +1,1319 @@
+
+/**
+ * Do not edit directly
+ * Generated on Fri, 12 Apr 2024 13:59:49 GMT
+ */
+
+$link-underline-size-default: 0.125rem !default;
+$link-underline-size-thick: 0.5rem !default;
+$color-link-base: hsl(213, 66%, 45%) !default;
+$color-link-hover: hsl(0, 0%, 25%) !default;
+$color-link-visited-base: hsl(259, 54%, 37%) !default;
+$color-link-visited-hover: hsl(259, 55%, 49%) !default;
+$color-link-visited-light: hsl(258, 74%, 90%) !default;
+$color-link-visited-light-hover: hsl(259, 82%, 87%) !default;
+$color-link-theme-gray-800-base: hsl(0, 0%, 100%) !default;
+$color-link-theme-gray-800-hover: hsl(213, 100%, 69%) !default;
+$color-link-theme-blue-yale-base: hsl(0, 0%, 100%) !default;
+$color-link-theme-blue-yale-hover: hsl(213, 100%, 69%) !default;
+$color-link-theme-gray-700-base: hsl(0, 0%, 100%) !default;
+$color-link-theme-gray-700-hover: hsl(0, 0%, 73%) !default;
+$color-link-theme-gray-200-base: hsl(210, 100%, 21%) !default;
+$color-link-theme-gray-200-hover: hsl(0, 0%, 25%) !default;
+$color-background: hsl(0, 0%, 100%) !default;
+$color-text: hsl(0, 0%, 25%) !default;
+$color-heading: hsl(0, 0%, 13%) !default;
+$color-alert-emergency-background-color: hsl(0, 74%, 48%) !default;
+$color-alert-emergency-text: hsl(0, 0%, 100%) !default;
+$color-alert-emergency-border-color: hsl(0, 0%, 100%) !default;
+$color-alert-announcement-background-color: hsl(50, 99%, 61%) !default;
+$color-alert-announcement-border-color: hsl(0, 0%, 46%) !default;
+$color-alert-marketing-background-color: hsl(198, 100%, 85%) !default;
+$color-alert-marketing-border-color: hsl(0, 0%, 46%) !default;
+$color-blue-yale: hsl(210, 100%, 21%) !default;
+$color-blue-medium: hsl(213, 66%, 45%) !default;
+$color-blue-light: hsl(213, 100%, 69%) !default;
+$color-blue-horizon: hsl(210, 47%, 46%) !default;
+$color-blue-shale: hsl(199, 27%, 58%) !default;
+$color-blue-pewter: hsl(183, 16%, 75%) !default;
+$color-blue-royal: hsl(221, 47%, 40%) !default;
+$color-blue-slate: hsl(188, 14%, 32%) !default;
+$color-green-basil: hsl(100, 13%, 36%) !default;
+$color-green-ground: hsl(87, 12%, 57%) !default;
+$color-green-fog: hsl(52, 26%, 83%) !default;
+$color-green-pine: hsl(148, 16%, 19%) !default;
+$color-orange-peach: hsl(36, 59%, 61%) !default;
+$color-yellow-umbrella: hsl(43, 64%, 68%) !default;
+$color-basic-white: hsl(0, 0%, 100%) !default;
+$color-basic-black: hsl(0, 0%, 0%) !default;
+$color-basic-brown-gray: hsl(28, 7%, 44%) !default;
+$color-gray-100: hsl(0, 0%, 97%) !default;
+$color-gray-200: hsl(0, 0%, 85%) !default;
+$color-gray-300: hsl(0, 0%, 73%) !default;
+$color-gray-400: hsl(0, 0%, 61%) !default;
+$color-gray-500: hsl(0, 0%, 46%) !default;
+$color-gray-600: hsl(0, 0%, 37%) !default;
+$color-gray-700: hsl(0, 0%, 25%) !default;
+$color-gray-800: hsl(0, 0%, 13%) !default;
+$color-gray-hale: hsl(215, 12%, 30%) !default;
+$color-purple-visited: hsl(259, 54%, 37%) !default;
+$color-purple-visited-hover: hsl(259, 55%, 49%) !default;
+$color-purple-visited-light: hsl(258, 74%, 90%) !default;
+$color-purple-visited-light-hover: hsl(259, 82%, 87%) !default;
+$color-temp-optiona1: hsl(160, 100%, 20%) !default;
+$color-temp-optiona2: hsl(104, 80%, 29%) !default;
+$color-temp-optiona3: hsl(104, 80%, 29%) !default;
+$color-temp-optiona4: hsl(105, 80%, 94%) !default;
+$color-temp-optiona5: hsl(148, 16%, 19%) !default;
+$color-temp-optionb1: hsl(105, 80%, 12%) !default;
+$color-temp-optionb2: hsl(148, 76%, 28%) !default;
+$color-temp-optionb3: hsl(148, 78%, 39%) !default;
+$color-temp-optionb4: hsl(149, 56%, 92%) !default;
+$color-temp-optionb5: hsl(0, 0%, 37%) !default;
+$color-temp-optionc1: hsl(213, 66%, 45%) !default;
+$color-temp-optionc2: hsl(104, 80%, 29%) !default;
+$color-temp-optionc3: hsl(104, 80%, 29%) !default;
+$color-temp-optionc4: hsl(92, 100%, 97%) !default;
+$color-temp-optionc5: hsl(0, 0%, 37%) !default;
+$color-heraldry-optiona1: hsl(213, 66%, 45%) !default;
+$color-heraldry-optiona2: hsl(104, 80%, 29%) !default;
+$color-heraldry-optiona3: hsl(52, 93%, 49%) !default;
+$color-heraldry-optiona4: hsl(0, 0%, 97%) !default;
+$color-heraldry-optiona5: hsl(0, 0%, 25%) !default;
+$color-heraldry-optionb1: hsl(210, 100%, 21%) !default;
+$color-heraldry-optionb2: hsl(213, 66%, 45%) !default;
+$color-heraldry-optionb3: hsl(47, 84%, 50%) !default;
+$color-heraldry-optionb4: hsl(52, 26%, 83%) !default;
+$color-heraldry-optionb5: hsl(0, 0%, 13%) !default;
+$color-heraldry-optionc1: hsl(210, 100%, 21%) !default;
+$color-heraldry-optionc2: hsl(359, 62%, 26%) !default;
+$color-heraldry-optionc3: hsl(22, 100%, 46%) !default;
+$color-heraldry-optionc4: hsl(50, 100%, 84%) !default;
+$color-heraldry-optionc5: hsl(0, 0%, 25%) !default;
+$break-s: 576px !default;
+$break-m: 768px !default;
+$break-l: 992px !default;
+$break-xl: 1200px !default;
+$break-2xl: 1400px !default;
+$break-max-width: 2400px !default;
+$break-mobile: 992px !default;
+$break-mobile-max: 992px - 0.05 !default;
+$component-themes-one-background: hsl(210, 100%, 21%) !default;
+$component-themes-one-text: hsl(0, 0%, 100%) !default;
+$component-themes-one-heading: hsl(0, 0%, 100%) !default;
+$component-themes-one-slot-one: hsl(210, 100%, 21%) !default;
+$component-themes-one-slot-two: hsl(213, 66%, 45%) !default;
+$component-themes-one-slot-three: hsl(213, 100%, 69%) !default;
+$component-themes-one-slot-four: hsl(0, 0%, 97%) !default;
+$component-themes-one-slot-five: hsl(0, 0%, 13%) !default;
+$component-themes-one-slot-six: hsl(210, 100%, 21%) !default;
+$component-themes-one-slot-seven: hsl(0, 0%, 13%) !default;
+$component-themes-one-slot-eight: hsl(0, 0%, 100%) !default;
+$component-themes-two-background: hsl(0, 0%, 25%) !default;
+$component-themes-two-text: hsl(0, 0%, 100%) !default;
+$component-themes-two-heading: hsl(0, 0%, 100%) !default;
+$component-themes-two-slot-one: hsl(0, 0%, 25%) !default;
+$component-themes-two-slot-two: hsl(100, 13%, 36%) !default;
+$component-themes-two-slot-three: hsl(87, 12%, 57%) !default;
+$component-themes-two-slot-four: hsl(52, 26%, 83%) !default;
+$component-themes-two-slot-five: hsl(148, 16%, 19%) !default;
+$component-themes-two-slot-six: hsl(210, 100%, 21%) !default;
+$component-themes-two-slot-seven: hsl(0, 0%, 13%) !default;
+$component-themes-two-slot-eight: hsl(0, 0%, 100%) !default;
+$component-themes-three-background: hsl(210, 100%, 21%) !default;
+$component-themes-three-text: hsl(0, 0%, 100%) !default;
+$component-themes-three-heading: hsl(0, 0%, 100%) !default;
+$component-themes-three-slot-one: hsl(210, 100%, 21%) !default;
+$component-themes-three-slot-two: hsl(221, 47%, 40%) !default;
+$component-themes-three-slot-three: hsl(36, 59%, 61%) !default;
+$component-themes-three-slot-four: hsl(43, 64%, 68%) !default;
+$component-themes-three-slot-five: hsl(188, 14%, 32%) !default;
+$component-themes-three-slot-six: hsl(210, 100%, 21%) !default;
+$component-themes-three-slot-seven: hsl(0, 0%, 13%) !default;
+$component-themes-three-slot-eight: hsl(0, 0%, 100%) !default;
+$global-themes-one-label: Old Blues !default;
+$global-themes-one-colors-slot-one: hsl(210, 100%, 21%) !default;
+$global-themes-one-colors-slot-two: hsl(213, 66%, 45%) !default;
+$global-themes-one-colors-slot-three: hsl(213, 100%, 69%) !default;
+$global-themes-one-colors-slot-four: hsl(0, 0%, 97%) !default;
+$global-themes-one-colors-slot-five: hsl(0, 0%, 13%) !default;
+$global-themes-one-colors-slot-six: hsl(210, 100%, 21%) !default;
+$global-themes-one-colors-slot-seven: hsl(0, 0%, 13%) !default;
+$global-themes-one-colors-slot-eight: hsl(0, 0%, 100%) !default;
+$global-themes-two-label: New Haven Green !default;
+$global-themes-two-colors-slot-one: hsl(0, 0%, 25%) !default;
+$global-themes-two-colors-slot-two: hsl(100, 13%, 36%) !default;
+$global-themes-two-colors-slot-three: hsl(87, 12%, 57%) !default;
+$global-themes-two-colors-slot-four: hsl(52, 26%, 83%) !default;
+$global-themes-two-colors-slot-five: hsl(148, 16%, 19%) !default;
+$global-themes-two-colors-slot-six: hsl(210, 100%, 21%) !default;
+$global-themes-two-colors-slot-seven: hsl(0, 0%, 13%) !default;
+$global-themes-two-colors-slot-eight: hsl(0, 0%, 100%) !default;
+$global-themes-three-label: Shoreline Summer !default;
+$global-themes-three-colors-slot-one: hsl(210, 100%, 21%) !default;
+$global-themes-three-colors-slot-two: hsl(221, 47%, 40%) !default;
+$global-themes-three-colors-slot-three: hsl(36, 59%, 61%) !default;
+$global-themes-three-colors-slot-four: hsl(43, 64%, 68%) !default;
+$global-themes-three-colors-slot-five: hsl(188, 14%, 32%) !default;
+$global-themes-three-colors-slot-six: hsl(210, 100%, 21%) !default;
+$global-themes-three-colors-slot-seven: hsl(0, 0%, 13%) !default;
+$global-themes-three-colors-slot-eight: hsl(0, 0%, 100%) !default;
+$global-themes-four-label: Monochrome !default;
+$global-themes-four-colors-slot-one: hsl(0, 0%, 13%) !default;
+$global-themes-four-colors-slot-two: hsl(0, 0%, 37%) !default;
+$global-themes-four-colors-slot-three: hsl(0, 0%, 61%) !default;
+$global-themes-four-colors-slot-four: hsl(0, 0%, 97%) !default;
+$global-themes-four-colors-slot-five: hsl(0, 0%, 25%) !default;
+$global-themes-four-colors-slot-six: hsl(0, 0%, 13%) !default;
+$global-themes-four-colors-slot-seven: hsl(0, 0%, 13%) !default;
+$global-themes-four-colors-slot-eight: hsl(0, 0%, 100%) !default;
+$global-themes-five-label: New Green !default;
+$global-themes-five-colors-slot-one: hsl(0, 0%, 25%) !default;
+$global-themes-five-colors-slot-two: hsl(100, 13%, 36%) !default;
+$global-themes-five-colors-slot-three: hsl(87, 12%, 57%) !default;
+$global-themes-five-colors-slot-four: hsl(52, 26%, 83%) !default;
+$global-themes-five-colors-slot-five: hsl(148, 16%, 19%) !default;
+$global-themes-five-colors-slot-six: hsl(210, 100%, 21%) !default;
+$global-themes-five-colors-slot-seven: hsl(0, 0%, 13%) !default;
+$global-themes-five-colors-slot-eight: hsl(0, 0%, 100%) !default;
+$global-themes-six-label: New Green Option A !default;
+$global-themes-six-colors-slot-one: hsl(160, 100%, 20%) !default;
+$global-themes-six-colors-slot-two: hsl(104, 80%, 29%) !default;
+$global-themes-six-colors-slot-three: hsl(104, 80%, 29%) !default;
+$global-themes-six-colors-slot-four: hsl(105, 80%, 94%) !default;
+$global-themes-six-colors-slot-five: hsl(148, 16%, 19%) !default;
+$global-themes-six-colors-slot-six: hsl(210, 100%, 21%) !default;
+$global-themes-six-colors-slot-seven: hsl(0, 0%, 13%) !default;
+$global-themes-six-colors-slot-eight: hsl(0, 0%, 100%) !default;
+$global-themes-seven-label: New Green Option B !default;
+$global-themes-seven-colors-slot-one: hsl(105, 80%, 12%) !default;
+$global-themes-seven-colors-slot-two: hsl(148, 76%, 28%) !default;
+$global-themes-seven-colors-slot-three: hsl(148, 78%, 39%) !default;
+$global-themes-seven-colors-slot-four: hsl(149, 56%, 92%) !default;
+$global-themes-seven-colors-slot-five: hsl(0, 0%, 37%) !default;
+$global-themes-seven-colors-slot-six: hsl(210, 100%, 21%) !default;
+$global-themes-seven-colors-slot-seven: hsl(0, 0%, 13%) !default;
+$global-themes-seven-colors-slot-eight: hsl(0, 0%, 100%) !default;
+$global-themes-eight-label: New Green Option C !default;
+$global-themes-eight-colors-slot-one: hsl(213, 66%, 45%) !default;
+$global-themes-eight-colors-slot-two: hsl(104, 80%, 29%) !default;
+$global-themes-eight-colors-slot-three: hsl(104, 80%, 29%) !default;
+$global-themes-eight-colors-slot-four: hsl(92, 100%, 97%) !default;
+$global-themes-eight-colors-slot-five: hsl(0, 0%, 37%) !default;
+$global-themes-eight-colors-slot-six: hsl(210, 100%, 21%) !default;
+$global-themes-eight-colors-slot-seven: hsl(0, 0%, 13%) !default;
+$global-themes-eight-colors-slot-eight: hsl(0, 0%, 100%) !default;
+$global-themes-nine-label: Yale Heraldry Option A !default;
+$global-themes-nine-colors-slot-one: hsl(213, 66%, 45%) !default;
+$global-themes-nine-colors-slot-two: hsl(104, 80%, 29%) !default;
+$global-themes-nine-colors-slot-three: hsl(52, 93%, 49%) !default;
+$global-themes-nine-colors-slot-four: hsl(0, 0%, 97%) !default;
+$global-themes-nine-colors-slot-five: hsl(0, 0%, 25%) !default;
+$global-themes-nine-colors-slot-six: hsl(210, 100%, 21%) !default;
+$global-themes-nine-colors-slot-seven: hsl(0, 0%, 13%) !default;
+$global-themes-nine-colors-slot-eight: hsl(0, 0%, 100%) !default;
+$global-themes-ten-label: Yale Heraldry Option B !default;
+$global-themes-ten-colors-slot-one: hsl(210, 100%, 21%) !default;
+$global-themes-ten-colors-slot-two: hsl(213, 66%, 45%) !default;
+$global-themes-ten-colors-slot-three: hsl(47, 84%, 50%) !default;
+$global-themes-ten-colors-slot-four: hsl(52, 26%, 83%) !default;
+$global-themes-ten-colors-slot-five: hsl(0, 0%, 13%) !default;
+$global-themes-ten-colors-slot-six: hsl(210, 100%, 21%) !default;
+$global-themes-ten-colors-slot-seven: hsl(0, 0%, 13%) !default;
+$global-themes-ten-colors-slot-eight: hsl(0, 0%, 100%) !default;
+$global-themes-eleven-label: Yale Heraldry Option C !default;
+$global-themes-eleven-colors-slot-one: hsl(210, 100%, 21%) !default;
+$global-themes-eleven-colors-slot-two: hsl(359, 62%, 26%) !default;
+$global-themes-eleven-colors-slot-three: hsl(22, 100%, 46%) !default;
+$global-themes-eleven-colors-slot-four: hsl(50, 100%, 84%) !default;
+$global-themes-eleven-colors-slot-five: hsl(0, 0%, 25%) !default;
+$global-themes-eleven-colors-slot-six: hsl(210, 100%, 21%) !default;
+$global-themes-eleven-colors-slot-seven: hsl(0, 0%, 13%) !default;
+$global-themes-eleven-colors-slot-eight: hsl(0, 0%, 100%) !default;
+$basic-themes-gray-800-background: hsl(0, 0%, 13%) !default;
+$basic-themes-gray-800-text: hsl(0, 0%, 100%) !default;
+$basic-themes-gray-800-heading: hsl(0, 0%, 100%) !default;
+$basic-themes-gray-700-background: hsl(0, 0%, 25%) !default;
+$basic-themes-gray-700-text: hsl(0, 0%, 100%) !default;
+$basic-themes-gray-700-heading: hsl(0, 0%, 100%) !default;
+$basic-themes-gray-200-background: hsl(0, 0%, 85%) !default;
+$basic-themes-gray-200-text: hsl(0, 0%, 25%) !default;
+$basic-themes-gray-200-heading: hsl(0, 0%, 13%) !default;
+$basic-themes-gray-100-background: hsl(0, 0%, 97%) !default;
+$basic-themes-gray-100-text: hsl(0, 0%, 25%) !default;
+$basic-themes-gray-100-heading: hsl(0, 0%, 13%) !default;
+$basic-themes-white-background: hsl(0, 0%, 100%) !default;
+$basic-themes-white-text: hsl(0, 0%, 25%) !default;
+$basic-themes-white-heading: hsl(0, 0%, 13%) !default;
+$basic-themes-blue-yale-background: hsl(210, 100%, 21%) !default;
+$basic-themes-blue-yale-text: hsl(0, 0%, 100%) !default;
+$basic-themes-blue-yale-heading: hsl(0, 0%, 100%) !default;
+$button-cta-themes-one-background: hsl(210, 100%, 21%) !default;
+$button-cta-themes-one-text: hsl(0, 0%, 100%) !default;
+$button-cta-themes-one-slot-one: hsl(210, 100%, 21%) !default;
+$button-cta-themes-one-slot-two: hsl(213, 66%, 45%) !default;
+$button-cta-themes-one-slot-three: hsl(213, 100%, 69%) !default;
+$button-cta-themes-one-slot-four: hsl(183, 16%, 75%) !default;
+$button-cta-themes-one-slot-five: hsl(215, 12%, 30%) !default;
+$button-cta-themes-one-slot-six: hsl(210, 100%, 21%) !default;
+$button-cta-themes-one-slot-seven: hsl(0, 0%, 13%) !default;
+$button-cta-themes-one-slot-eight: hsl(0, 0%, 100%) !default;
+$button-cta-themes-two-background: hsl(213, 66%, 45%) !default;
+$button-cta-themes-two-text: hsl(0, 0%, 100%) !default;
+$button-cta-themes-two-slot-one: hsl(210, 100%, 21%) !default;
+$button-cta-themes-two-slot-two: hsl(213, 66%, 45%) !default;
+$button-cta-themes-two-slot-three: hsl(213, 100%, 69%) !default;
+$button-cta-themes-two-slot-four: hsl(183, 16%, 75%) !default;
+$button-cta-themes-two-slot-five: hsl(215, 12%, 30%) !default;
+$button-cta-themes-two-slot-six: hsl(210, 100%, 21%) !default;
+$button-cta-themes-two-slot-seven: hsl(0, 0%, 13%) !default;
+$button-cta-themes-two-slot-eight: hsl(0, 0%, 100%) !default;
+$button-cta-themes-three-background: hsl(213, 100%, 69%) !default;
+$button-cta-themes-three-text: hsl(0, 0%, 100%) !default;
+$button-cta-themes-three-slot-one: hsl(210, 100%, 21%) !default;
+$button-cta-themes-three-slot-two: hsl(213, 66%, 45%) !default;
+$button-cta-themes-three-slot-three: hsl(213, 100%, 69%) !default;
+$button-cta-themes-three-slot-four: hsl(183, 16%, 75%) !default;
+$button-cta-themes-three-slot-five: hsl(215, 12%, 30%) !default;
+$button-cta-themes-three-slot-six: hsl(210, 100%, 21%) !default;
+$button-cta-themes-three-slot-seven: hsl(0, 0%, 13%) !default;
+$button-cta-themes-three-slot-eight: hsl(0, 0%, 100%) !default;
+$button-cta-themes-four-background: hsl(183, 16%, 75%) !default;
+$button-cta-themes-four-text: hsl(0, 0%, 100%) !default;
+$button-cta-themes-four-slot-one: hsl(210, 100%, 21%) !default;
+$button-cta-themes-four-slot-two: hsl(213, 66%, 45%) !default;
+$button-cta-themes-four-slot-three: hsl(213, 100%, 69%) !default;
+$button-cta-themes-four-slot-four: hsl(183, 16%, 75%) !default;
+$button-cta-themes-four-slot-five: hsl(215, 12%, 30%) !default;
+$button-cta-themes-four-slot-six: hsl(210, 100%, 21%) !default;
+$button-cta-themes-four-slot-seven: hsl(0, 0%, 13%) !default;
+$button-cta-themes-four-slot-eight: hsl(0, 0%, 100%) !default;
+$button-cta-themes-five-background: hsl(215, 12%, 30%) !default;
+$button-cta-themes-five-text: hsl(0, 0%, 100%) !default;
+$button-cta-themes-five-slot-one: hsl(210, 100%, 21%) !default;
+$button-cta-themes-five-slot-two: hsl(213, 66%, 45%) !default;
+$button-cta-themes-five-slot-three: hsl(213, 100%, 69%) !default;
+$button-cta-themes-five-slot-four: hsl(183, 16%, 75%) !default;
+$button-cta-themes-five-slot-five: hsl(215, 12%, 30%) !default;
+$button-cta-themes-five-slot-six: hsl(210, 100%, 21%) !default;
+$button-cta-themes-five-slot-seven: hsl(0, 0%, 13%) !default;
+$button-cta-themes-five-slot-eight: hsl(0, 0%, 100%) !default;
+$button-cta-themes-six-background: hsl(0, 0%, 13%) !default;
+$button-cta-themes-six-text: hsl(0, 0%, 100%) !default;
+$button-cta-themes-six-slot-one: hsl(210, 100%, 21%) !default;
+$button-cta-themes-six-slot-two: hsl(213, 66%, 45%) !default;
+$button-cta-themes-six-slot-three: hsl(213, 100%, 69%) !default;
+$button-cta-themes-six-slot-four: hsl(183, 16%, 75%) !default;
+$button-cta-themes-six-slot-five: hsl(215, 12%, 30%) !default;
+$button-cta-themes-six-slot-six: hsl(210, 100%, 21%) !default;
+$button-cta-themes-six-slot-seven: hsl(0, 0%, 13%) !default;
+$button-cta-themes-six-slot-eight: hsl(0, 0%, 100%) !default;
+$button-cta-themes-seven-background: hsl(210, 100%, 21%) !default;
+$button-cta-themes-seven-text: hsl(0, 0%, 100%) !default;
+$button-cta-themes-seven-slot-one: hsl(210, 100%, 21%) !default;
+$button-cta-themes-seven-slot-two: hsl(213, 66%, 45%) !default;
+$button-cta-themes-seven-slot-three: hsl(213, 100%, 69%) !default;
+$button-cta-themes-seven-slot-four: hsl(183, 16%, 75%) !default;
+$button-cta-themes-seven-slot-five: hsl(215, 12%, 30%) !default;
+$button-cta-themes-seven-slot-six: hsl(210, 100%, 21%) !default;
+$button-cta-themes-seven-slot-seven: hsl(0, 0%, 13%) !default;
+$button-cta-themes-seven-slot-eight: hsl(0, 0%, 100%) !default;
+$animation-speed-default: 200ms !default;
+$animation-speed-medium: 500ms !default;
+$animation-speed-slow: 800ms !default;
+$layout-width-25: 25% !default;
+$layout-width-50: 50% !default;
+$layout-width-75: 75% !default;
+$layout-width-100: 100% !default;
+$layout-flex-position-left: flex-start !default;
+$layout-flex-position-center: center !default;
+$layout-flex-position-right: flex-end !default;
+$layout-flex-position-baseline: baseline !default;
+$layout-flex-position-space-between: space-between !default;
+$size-component-layout-width-max: 100rem !default;
+$size-component-layout-width-site: 84rem !default;
+$size-component-layout-width-highlight: 70rem !default;
+$size-component-layout-width-content: 56rem !default;
+$size-click-target-minimum: 2.75rem !default;
+$size-spacing-0: 0rem !default;
+$size-spacing-1: 0.125rem !default;
+$size-spacing-2: 0.25rem !default;
+$size-spacing-3: 0.5rem !default;
+$size-spacing-4: 0.75rem !default;
+$size-spacing-5: 1rem !default;
+$size-spacing-6: 1.5rem !default;
+$size-spacing-7: 2rem !default;
+$size-spacing-8: 2.5rem !default;
+$size-spacing-9: 3rem !default;
+$size-spacing-10: 4rem !default;
+$size-spacing-11: 5rem !default;
+$size-spacing-12: 6rem !default;
+$size-spacing-13: 10rem !default;
+$size-thickness-0: 0rem !default;
+$size-thickness-1: 0.063rem !default;
+$size-thickness-2: 0.125rem !default;
+$size-thickness-4: 0.25rem !default;
+$size-thickness-6: 0.375rem !default;
+$size-thickness-8: 0.5rem !default;
+$size-thickness-hairline: 0.031rem !default;
+$border-thickness-0: 0rem !default;
+$border-thickness-1: 0.063rem !default;
+$border-thickness-2: 0.125rem !default;
+$border-thickness-4: 0.25rem !default;
+$border-thickness-6: 0.375rem !default;
+$border-thickness-8: 0.5rem !default;
+$border-thickness-hairline: 0.031rem !default;
+$font-style-nav-primary-0: 400 1.25rem/1.65 'Mallory Compact', sans-serif !default;
+$font-style-nav-primary-1: 400 1.1875rem/1.65 'Mallory Compact', sans-serif !default;
+$font-style-nav-primary-2: 400 1.0625rem/1.18 'Mallory Compact', sans-serif !default;
+$font-style-heading-h1-yale-new: 400 clamp(2.6875rem, calc(2.32vw + 1.8574rem), 3.875rem)/1.1 YaleNew, serif !default;
+$font-style-heading-h2-yale-new: 400 clamp(2.25rem, calc(1.94vw + 1.5510rem), 3.25rem)/1.1 YaleNew, serif !default;
+$font-style-heading-h3-yale-new: 400 clamp(1.8125rem, calc(1.46vw + 1.2882rem), 2.5625rem)/1.14 YaleNew, serif !default;
+$font-style-heading-h4-yale-new: 400 clamp(1.5rem, calc(0.73vw + 1.2379rem), 1.875rem)/1.14 YaleNew, serif !default;
+$font-style-heading-h5-yale-new: 400 clamp(1.3125rem, calc(0.49vw + 1.1377rem), 1.5625rem)/1.14 YaleNew, serif !default;
+$font-style-heading-h6-yale-new: 400 clamp(1rem, calc(0.36vw + 0.8689rem), 1.1875rem)/1.05 YaleNew, serif !default;
+$font-style-heading-h1-mallory-compact-medium: 500 clamp(2.5625rem, calc(2.06vw + 1.8198rem), 3.625rem)/1 'Mallory Compact', sans-serif !default;
+$font-style-heading-h2-mallory-compact-medium: 500 clamp(2.0625rem, calc(1.58vw + 1.4945rem), 2.875rem)/1 'Mallory Compact', sans-serif !default;
+$font-style-heading-h3-mallory-compact-medium: 500 clamp(1.6875rem, calc(1.09vw + 1.2943rem), 2.25rem)/1.05 'Mallory Compact', sans-serif !default;
+$font-style-heading-h4-mallory-compact-medium: 500 clamp(1.4375rem, calc(0.73vw + 1.1754rem), 1.8125rem)/1.10 'Mallory Compact', sans-serif !default;
+$font-style-heading-h5-mallory-compact-medium: 500 clamp(1.25rem, calc(0.49vw + 1.0752rem), 1.5rem)/1.15 'Mallory Compact', sans-serif !default;
+$font-style-heading-h6-mallory-compact-medium: 500 clamp(0.9375rem, calc(0.36vw + 0.8064rem), 1.125rem)/1.05 'Mallory Compact', sans-serif !default;
+$font-style-heading-h1-mallory-compact-book: 400 clamp(2.5625rem, calc(2.06vw + 1.8198rem), 3.625rem)/1 'Mallory Compact', sans-serif !default;
+$font-style-heading-h2-mallory-compact-book: 400 clamp(2.0625rem, calc(1.58vw + 1.4945rem), 2.875rem)/1 'Mallory Compact', sans-serif !default;
+$font-style-heading-h3-mallory-compact-book: 400 clamp(1.6875rem, calc(1.09vw + 1.2943rem), 2.25rem)/1.05 'Mallory Compact', sans-serif !default;
+$font-style-heading-h4-mallory-compact-book: 400 clamp(1.4375rem, calc(0.73vw + 1.1754rem), 1.8125rem)/1.10 'Mallory Compact', sans-serif !default;
+$font-style-heading-h5-mallory-compact-book: 400 clamp(1.25rem, calc(0.49vw + 1.0752rem), 1.5rem)/1.15 'Mallory Compact', sans-serif !default;
+$font-style-heading-h6-mallory-compact-book: 400 clamp(0.9375rem, calc(0.36vw + 0.8064rem), 1.125rem)/1.05 'Mallory Compact', sans-serif !default;
+$font-style-body-xl: 400 clamp(1.4375rem, calc(0.73vw + 1.1754rem), 1.8125rem)/1.5 'Mallory Compact', sans-serif !default;
+$font-style-body-l: 400 clamp(1.25rem, calc(0.73vw + 0.9879rem), 1.625rem)/1.7 'Mallory Compact', sans-serif !default;
+$font-style-body-default: 400 clamp(1.0625rem, calc(0.36vw + 0.9314rem), 1.25rem)/1.7 'Mallory Compact', sans-serif !default;
+$font-style-body-default-condensed: 400 clamp(1.0625rem, calc(0.36vw + 0.9314rem), 1.25rem)/1.4 'Mallory Compact', sans-serif !default;
+$font-style-body-s: 400 clamp(0.9375rem, calc(0.12vw + 0.8938rem), 1rem)/1.7 'Mallory Compact', sans-serif !default;
+$font-style-body-s-condensed: 400 clamp(0.9375rem, calc(0.12vw + 0.8938rem), 1rem)/1.4 'Mallory Compact', sans-serif !default;
+$font-style-body-xs: 400 clamp(0.8125rem, calc(0.12vw + 0.7688rem), 0.875rem)/1.4 'Mallory Compact', sans-serif !default;
+$font-style-branding-yale: 400 clamp(1.0625rem, calc(0.36vw + 0.9314rem), 1.25rem)/1.05 YaleNew, serif !default;
+$font-style-branding-site: 400 clamp(2.25rem, calc(1.58vw + 1.6820rem), 3.0625rem)/1 YaleNew, serif !default;
+$font-style-branding-site-mobile: 400 1.8125rem/1 YaleNew, serif !default;
+$font-weights-mallory-book: 400 !default;
+$font-weights-mallory-medium: 500 !default;
+$font-weights-yalenew-roman: 400 !default;
+$font-weights-yalenew-bold: 700 !default;
+$font-scale-43-62: clamp(2.6875rem, calc(2.32vw + 1.8574rem), 3.875rem) !default;
+$font-scale-41-58: clamp(2.5625rem, calc(2.06vw + 1.8198rem), 3.625rem) !default;
+$font-scale-38-55: clamp(2.375rem, calc(2.06vw + 1.6323rem), 3.4375rem) !default;
+$font-scale-36-52: clamp(2.25rem, calc(1.94vw + 1.5510rem), 3.25rem) !default;
+$font-scale-33-46: clamp(2.0625rem, calc(1.58vw + 1.4945rem), 2.875rem) !default;
+$font-scale-29-41: clamp(1.8125rem, calc(1.46vw + 1.2882rem), 2.5625rem) !default;
+$font-scale-27-36: clamp(1.6875rem, calc(1.09vw + 1.2943rem), 2.25rem) !default;
+$font-scale-24-30: clamp(1.5rem, calc(0.73vw + 1.2379rem), 1.875rem) !default;
+$font-scale-23-29: clamp(1.4375rem, calc(0.73vw + 1.1754rem), 1.8125rem) !default;
+$font-scale-21-25: clamp(1.3125rem, calc(0.49vw + 1.1377rem), 1.5625rem) !default;
+$font-scale-20-26: clamp(1.25rem, calc(0.73vw + 0.9879rem), 1.625rem) !default;
+$font-scale-20-24: clamp(1.25rem, calc(0.49vw + 1.0752rem), 1.5rem) !default;
+$font-scale-17-20: clamp(1.0625rem, calc(0.36vw + 0.9314rem), 1.25rem) !default;
+$font-scale-16-19: clamp(1rem, calc(0.36vw + 0.8689rem), 1.1875rem) !default;
+$font-scale-15-18: clamp(0.9375rem, calc(0.36vw + 0.8064rem), 1.125rem) !default;
+$font-scale-15-16: clamp(0.9375rem, calc(0.12vw + 0.8938rem), 1rem) !default;
+$font-scale-13-14: clamp(0.8125rem, calc(0.12vw + 0.7688rem), 0.875rem) !default;
+$font-letter-spacing-h6-yale-new: 0.03em !default;
+$font-letter-spacing-h1-mallory-compact-medium: -0.01em !default;
+$font-letter-spacing-h2-mallory-compact-medium: -0.01em !default;
+$font-letter-spacing-h6-mallory-compact-medium: 0.02em !default;
+$font-letter-spacing-h1-mallory-compact-book: -0.01em !default;
+$font-letter-spacing-h2-mallory-compact-book: -0.01em !default;
+$font-letter-spacing-h6-mallory-compact-book: 0.02em !default;
+$font-letter-spacing-yalenew-bold: 0.01em !default;
+$font-text-transform-h6-yale-new: uppercase !default;
+$font-text-transform-h6-mallory-compact-medium: uppercase !default;
+$font-text-transform-h6-mallory-compact-book: uppercase !default;
+$font-spacing-paragraph: 1em !default;
+$site-footer-themes-one-background-color: hsl(0, 0%, 100%) !default;
+$site-footer-themes-one-yale-branding: hsl(210, 100%, 21%) !default;
+$site-footer-themes-one-border-color: hsl(210, 100%, 21%) !default;
+$site-footer-themes-one-divider-color: hsl(0, 0%, 73%) !default;
+$site-footer-themes-one-text-color: hsl(0, 0%, 0%) !default;
+$site-footer-themes-one-slot-one: hsl(210, 100%, 21%) !default;
+$site-footer-themes-one-slot-two: hsl(213, 66%, 45%) !default;
+$site-footer-themes-one-slot-three: hsl(213, 100%, 69%) !default;
+$site-footer-themes-one-slot-four: hsl(183, 16%, 75%) !default;
+$site-footer-themes-one-slot-five: hsl(215, 12%, 30%) !default;
+$site-footer-themes-one-slot-six: hsl(210, 100%, 21%) !default;
+$site-footer-themes-one-slot-seven: hsl(0, 0%, 13%) !default;
+$site-footer-themes-one-slot-eight: hsl(0, 0%, 100%) !default;
+$site-footer-themes-two-background-color: hsl(0, 0%, 100%) !default;
+$site-footer-themes-two-yale-branding: hsl(210, 100%, 21%) !default;
+$site-footer-themes-two-border-color: hsl(210, 100%, 21%) !default;
+$site-footer-themes-two-divider-color: hsl(0, 0%, 73%) !default;
+$site-footer-themes-two-text-color: hsl(0, 0%, 0%) !default;
+$site-footer-themes-two-slot-one: hsl(0, 0%, 25%) !default;
+$site-footer-themes-two-slot-two: hsl(100, 13%, 36%) !default;
+$site-footer-themes-two-slot-three: hsl(87, 12%, 57%) !default;
+$site-footer-themes-two-slot-four: hsl(52, 26%, 83%) !default;
+$site-footer-themes-two-slot-five: hsl(148, 16%, 19%) !default;
+$site-footer-themes-two-slot-six: hsl(210, 100%, 21%) !default;
+$site-footer-themes-two-slot-seven: hsl(0, 0%, 13%) !default;
+$site-footer-themes-two-slot-eight: hsl(0, 0%, 100%) !default;
+$site-footer-themes-three-background-color: hsl(0, 0%, 97%) !default;
+$site-footer-themes-three-yale-branding: hsl(213, 100%, 69%) !default;
+$site-footer-themes-three-border-color: hsl(213, 100%, 69%) !default;
+$site-footer-themes-three-divider-color: hsl(0, 0%, 46%) !default;
+$site-footer-themes-three-text-color: hsl(0, 0%, 0%) !default;
+$site-footer-themes-three-slot-one: hsl(210, 100%, 21%) !default;
+$site-footer-themes-three-slot-two: hsl(221, 47%, 40%) !default;
+$site-footer-themes-three-slot-three: hsl(36, 59%, 61%) !default;
+$site-footer-themes-three-slot-four: hsl(43, 64%, 68%) !default;
+$site-footer-themes-three-slot-five: hsl(188, 14%, 32%) !default;
+$site-footer-themes-three-slot-six: hsl(210, 100%, 21%) !default;
+$site-footer-themes-three-slot-seven: hsl(0, 0%, 13%) !default;
+$site-footer-themes-three-slot-eight: hsl(0, 0%, 100%) !default;
+$site-header-themes-one-background: hsl(0, 0%, 100%) !default;
+$site-header-themes-one-yale-branding: hsl(210, 100%, 21%) !default;
+$site-header-themes-one-site-branding: hsl(210, 100%, 21%) !default;
+$site-header-themes-one-border-color: hsl(210, 100%, 21%) !default;
+$site-header-themes-one-divider-color: hsl(0, 0%, 73%) !default;
+$site-header-themes-one-slot-one: hsl(210, 100%, 21%) !default;
+$site-header-themes-one-slot-two: hsl(213, 66%, 45%) !default;
+$site-header-themes-one-slot-three: hsl(213, 100%, 69%) !default;
+$site-header-themes-one-slot-four: hsl(183, 16%, 75%) !default;
+$site-header-themes-one-slot-five: hsl(215, 12%, 30%) !default;
+$site-header-themes-one-slot-six: hsl(210, 100%, 21%) !default;
+$site-header-themes-one-slot-seven: hsl(0, 0%, 13%) !default;
+$site-header-themes-one-slot-eight: hsl(0, 0%, 100%) !default;
+$site-header-themes-two-background: hsl(0, 0%, 13%) !default;
+$site-header-themes-two-yale-branding: hsl(221, 47%, 40%) !default;
+$site-header-themes-two-site-branding: hsl(0, 0%, 100%) !default;
+$site-header-themes-two-border-color: hsl(221, 47%, 40%) !default;
+$site-header-themes-two-divider-color: hsl(0, 0%, 46%) !default;
+$site-header-themes-two-slot-one: hsl(0, 0%, 25%) !default;
+$site-header-themes-two-slot-two: hsl(100, 13%, 36%) !default;
+$site-header-themes-two-slot-three: hsl(87, 12%, 57%) !default;
+$site-header-themes-two-slot-four: hsl(52, 26%, 83%) !default;
+$site-header-themes-two-slot-five: hsl(148, 16%, 19%) !default;
+$site-header-themes-two-slot-six: hsl(210, 100%, 21%) !default;
+$site-header-themes-two-slot-seven: hsl(0, 0%, 13%) !default;
+$site-header-themes-two-slot-eight: hsl(0, 0%, 100%) !default;
+$site-header-themes-three-background: hsl(210, 100%, 21%) !default;
+$site-header-themes-three-yale-branding: hsl(221, 47%, 40%) !default;
+$site-header-themes-three-site-branding: hsl(0, 0%, 100%) !default;
+$site-header-themes-three-border-color: hsl(221, 47%, 40%) !default;
+$site-header-themes-three-divider-color: hsl(0, 0%, 46%) !default;
+$site-header-themes-three-slot-one: hsl(210, 100%, 21%) !default;
+$site-header-themes-three-slot-two: hsl(221, 47%, 40%) !default;
+$site-header-themes-three-slot-three: hsl(36, 59%, 61%) !default;
+$site-header-themes-three-slot-four: hsl(43, 64%, 68%) !default;
+$site-header-themes-three-slot-five: hsl(188, 14%, 32%) !default;
+$site-header-themes-three-slot-six: hsl(210, 100%, 21%) !default;
+$site-header-themes-three-slot-seven: hsl(0, 0%, 13%) !default;
+$site-header-themes-three-slot-eight: hsl(0, 0%, 100%) !default;
+$site-header-layout-left-justify: flex-start !default;
+$site-header-layout-left-align: flex-start !default;
+$site-header-layout-left-flex-direction: column !default;
+$site-header-layout-center-justify: center !default;
+$site-header-layout-center-align: center !default;
+$site-header-layout-center-flex-direction: column !default;
+$site-header-layout-right-justify: space-between !default;
+$site-header-layout-right-align: flex-end !default;
+$site-header-layout-right-flex-direction: row !default;
+$font-families-mallory-compact: 'Mallory Compact', sans-serif !default;
+$font-families-mallory: Mallory, sans-serif !default;
+$font-families-yalenew: YaleNew, serif !default;
+$font-size-13: 0.8125rem !default;
+$font-size-14: 0.875rem !default;
+$font-size-15: 0.9375rem !default;
+$font-size-16: 1rem !default;
+$font-size-17: 1.0625rem !default;
+$font-size-18: 1.125rem !default;
+$font-size-19: 1.1875rem !default;
+$font-size-20: 1.25rem !default;
+$font-size-21: 1.3125rem !default;
+$font-size-23: 1.4375rem !default;
+$font-size-24: 1.5rem !default;
+$font-size-25: 1.5625rem !default;
+$font-size-26: 1.625rem !default;
+$font-size-27: 1.6875rem !default;
+$font-size-29: 1.8125rem !default;
+$font-size-30: 1.875rem !default;
+$font-size-33: 2.0625rem !default;
+$font-size-36: 2.25rem !default;
+$font-size-38: 2.375rem !default;
+$font-size-41: 2.5625rem !default;
+$font-size-43: 2.6875rem !default;
+$font-size-46: 2.875rem !default;
+$font-size-49: 3.0625rem !default;
+$font-size-52: 3.25rem !default;
+$font-size-55: 3.4375rem !default;
+$font-size-58: 3.625rem !default;
+$font-size-62: 3.875rem !default;
+$drop-shadow-level-1: 0px 1px 2px 0px #00000029,0px 4px 4px 0px #00000017,0px 6px 8px 0px #00000021 !default;
+$drop-shadow-level-1-bottom-shadow-only: 0px 8px 6px -6px #00000029 !default;
+$drop-shadow-level-2: 0px 0.5985091924667358px 0.7980122566223145px 0px #00000014,0px 2.010267734527588px 2.680356979370117px 0px #0000001c,0px 9px 12px 0px #00000030 !default;
+$drop-shadow-level-3: 0px 0.33000001311302185px 1.7290265560150146px 0px #0000001a,0px 2.4700000286102295px 2.809999942779541px 0px #0000001f,0px 16px 23px 0px #00000038 !default;
+$drop-shadow-level-4: 0px 0.9975153207778931px 1.9285296201705933px 0px #00000012,0px 3.3504464626312256px 6.477529525756836px 0px #00000012,0px 15px 28px 0px #00000059 !default;
+$radius-0: 0rem !default;
+$radius-4: 0.25rem !default;
+$radius-10: 0.625rem !default;
+$radius-20: 1.25rem !default;
+
+$tokens: (
+  'link': (
+    'underline-size': (
+      'default': $link-underline-size-default,
+      'thick': $link-underline-size-thick
+    )
+  ),
+  'color': (
+    'link': (
+      'base': $color-link-base,
+      'hover': $color-link-hover,
+      'visited': (
+        'base': $color-link-visited-base,
+        'hover': $color-link-visited-hover,
+        'light': $color-link-visited-light,
+        'light-hover': $color-link-visited-light-hover
+      ),
+      'theme': (
+        'gray-800': (
+          'base': $color-link-theme-gray-800-base,
+          'hover': $color-link-theme-gray-800-hover
+        ),
+        'blue-yale': (
+          'base': $color-link-theme-blue-yale-base,
+          'hover': $color-link-theme-blue-yale-hover
+        ),
+        'gray-700': (
+          'base': $color-link-theme-gray-700-base,
+          'hover': $color-link-theme-gray-700-hover
+        ),
+        'gray-200': (
+          'base': $color-link-theme-gray-200-base,
+          'hover': $color-link-theme-gray-200-hover
+        )
+      )
+    ),
+    'background': $color-background,
+    'text': $color-text,
+    'heading': $color-heading,
+    'alert': (
+      'emergency': (
+        'background-color': $color-alert-emergency-background-color,
+        'text': $color-alert-emergency-text,
+        'border-color': $color-alert-emergency-border-color
+      ),
+      'announcement': (
+        'background-color': $color-alert-announcement-background-color,
+        'border-color': $color-alert-announcement-border-color
+      ),
+      'marketing': (
+        'background-color': $color-alert-marketing-background-color,
+        'border-color': $color-alert-marketing-border-color
+      )
+    ),
+    'blue': (
+      'yale': $color-blue-yale,
+      'medium': $color-blue-medium,
+      'light': $color-blue-light,
+      'horizon': $color-blue-horizon,
+      'shale': $color-blue-shale,
+      'pewter': $color-blue-pewter,
+      'royal': $color-blue-royal,
+      'slate': $color-blue-slate
+    ),
+    'green': (
+      'basil': $color-green-basil,
+      'ground': $color-green-ground,
+      'fog': $color-green-fog,
+      'pine': $color-green-pine
+    ),
+    'orange': (
+      'peach': $color-orange-peach
+    ),
+    'yellow': (
+      'umbrella': $color-yellow-umbrella
+    ),
+    'basic': (
+      'white': $color-basic-white,
+      'black': $color-basic-black,
+      'brown-gray': $color-basic-brown-gray
+    ),
+    'gray': (
+      '100': $color-gray-100,
+      '200': $color-gray-200,
+      '300': $color-gray-300,
+      '400': $color-gray-400,
+      '500': $color-gray-500,
+      '600': $color-gray-600,
+      '700': $color-gray-700,
+      '800': $color-gray-800,
+      'hale': $color-gray-hale
+    ),
+    'purple': (
+      'visited': $color-purple-visited,
+      'visited-hover': $color-purple-visited-hover,
+      'visited-light': $color-purple-visited-light,
+      'visited-light-hover': $color-purple-visited-light-hover
+    ),
+    'temp': (
+      'optiona1': $color-temp-optiona1,
+      'optiona2': $color-temp-optiona2,
+      'optiona3': $color-temp-optiona3,
+      'optiona4': $color-temp-optiona4,
+      'optiona5': $color-temp-optiona5,
+      'optionb1': $color-temp-optionb1,
+      'optionb2': $color-temp-optionb2,
+      'optionb3': $color-temp-optionb3,
+      'optionb4': $color-temp-optionb4,
+      'optionb5': $color-temp-optionb5,
+      'optionc1': $color-temp-optionc1,
+      'optionc2': $color-temp-optionc2,
+      'optionc3': $color-temp-optionc3,
+      'optionc4': $color-temp-optionc4,
+      'optionc5': $color-temp-optionc5
+    ),
+    'heraldry': (
+      'optiona1': $color-heraldry-optiona1,
+      'optiona2': $color-heraldry-optiona2,
+      'optiona3': $color-heraldry-optiona3,
+      'optiona4': $color-heraldry-optiona4,
+      'optiona5': $color-heraldry-optiona5,
+      'optionb1': $color-heraldry-optionb1,
+      'optionb2': $color-heraldry-optionb2,
+      'optionb3': $color-heraldry-optionb3,
+      'optionb4': $color-heraldry-optionb4,
+      'optionb5': $color-heraldry-optionb5,
+      'optionc1': $color-heraldry-optionc1,
+      'optionc2': $color-heraldry-optionc2,
+      'optionc3': $color-heraldry-optionc3,
+      'optionc4': $color-heraldry-optionc4,
+      'optionc5': $color-heraldry-optionc5
+    )
+  ),
+  'break': (
+    's': $break-s,
+    'm': $break-m,
+    'l': $break-l,
+    'xl': $break-xl,
+    '2xl': $break-2xl,
+    'max-width': $break-max-width,
+    'mobile': $break-mobile,
+    'mobile-max': $break-mobile-max
+  ),
+  'component-themes': (
+    'one': (
+      'background': $component-themes-one-background,
+      'text': $component-themes-one-text,
+      'heading': $component-themes-one-heading,
+      'slot-one': $component-themes-one-slot-one,
+      'slot-two': $component-themes-one-slot-two,
+      'slot-three': $component-themes-one-slot-three,
+      'slot-four': $component-themes-one-slot-four,
+      'slot-five': $component-themes-one-slot-five,
+      'slot-six': $component-themes-one-slot-six,
+      'slot-seven': $component-themes-one-slot-seven,
+      'slot-eight': $component-themes-one-slot-eight
+    ),
+    'two': (
+      'background': $component-themes-two-background,
+      'text': $component-themes-two-text,
+      'heading': $component-themes-two-heading,
+      'slot-one': $component-themes-two-slot-one,
+      'slot-two': $component-themes-two-slot-two,
+      'slot-three': $component-themes-two-slot-three,
+      'slot-four': $component-themes-two-slot-four,
+      'slot-five': $component-themes-two-slot-five,
+      'slot-six': $component-themes-two-slot-six,
+      'slot-seven': $component-themes-two-slot-seven,
+      'slot-eight': $component-themes-two-slot-eight
+    ),
+    'three': (
+      'background': $component-themes-three-background,
+      'text': $component-themes-three-text,
+      'heading': $component-themes-three-heading,
+      'slot-one': $component-themes-three-slot-one,
+      'slot-two': $component-themes-three-slot-two,
+      'slot-three': $component-themes-three-slot-three,
+      'slot-four': $component-themes-three-slot-four,
+      'slot-five': $component-themes-three-slot-five,
+      'slot-six': $component-themes-three-slot-six,
+      'slot-seven': $component-themes-three-slot-seven,
+      'slot-eight': $component-themes-three-slot-eight
+    )
+  ),
+  'global-themes': (
+    'one': (
+      'label': $global-themes-one-label,
+      'colors': (
+        'slot-one': $global-themes-one-colors-slot-one,
+        'slot-two': $global-themes-one-colors-slot-two,
+        'slot-three': $global-themes-one-colors-slot-three,
+        'slot-four': $global-themes-one-colors-slot-four,
+        'slot-five': $global-themes-one-colors-slot-five,
+        'slot-six': $global-themes-one-colors-slot-six,
+        'slot-seven': $global-themes-one-colors-slot-seven,
+        'slot-eight': $global-themes-one-colors-slot-eight
+      )
+    ),
+    'two': (
+      'label': $global-themes-two-label,
+      'colors': (
+        'slot-one': $global-themes-two-colors-slot-one,
+        'slot-two': $global-themes-two-colors-slot-two,
+        'slot-three': $global-themes-two-colors-slot-three,
+        'slot-four': $global-themes-two-colors-slot-four,
+        'slot-five': $global-themes-two-colors-slot-five,
+        'slot-six': $global-themes-two-colors-slot-six,
+        'slot-seven': $global-themes-two-colors-slot-seven,
+        'slot-eight': $global-themes-two-colors-slot-eight
+      )
+    ),
+    'three': (
+      'label': $global-themes-three-label,
+      'colors': (
+        'slot-one': $global-themes-three-colors-slot-one,
+        'slot-two': $global-themes-three-colors-slot-two,
+        'slot-three': $global-themes-three-colors-slot-three,
+        'slot-four': $global-themes-three-colors-slot-four,
+        'slot-five': $global-themes-three-colors-slot-five,
+        'slot-six': $global-themes-three-colors-slot-six,
+        'slot-seven': $global-themes-three-colors-slot-seven,
+        'slot-eight': $global-themes-three-colors-slot-eight
+      )
+    ),
+    'four': (
+      'label': $global-themes-four-label,
+      'colors': (
+        'slot-one': $global-themes-four-colors-slot-one,
+        'slot-two': $global-themes-four-colors-slot-two,
+        'slot-three': $global-themes-four-colors-slot-three,
+        'slot-four': $global-themes-four-colors-slot-four,
+        'slot-five': $global-themes-four-colors-slot-five,
+        'slot-six': $global-themes-four-colors-slot-six,
+        'slot-seven': $global-themes-four-colors-slot-seven,
+        'slot-eight': $global-themes-four-colors-slot-eight
+      )
+    ),
+    'five': (
+      'label': $global-themes-five-label,
+      'colors': (
+        'slot-one': $global-themes-five-colors-slot-one,
+        'slot-two': $global-themes-five-colors-slot-two,
+        'slot-three': $global-themes-five-colors-slot-three,
+        'slot-four': $global-themes-five-colors-slot-four,
+        'slot-five': $global-themes-five-colors-slot-five,
+        'slot-six': $global-themes-five-colors-slot-six,
+        'slot-seven': $global-themes-five-colors-slot-seven,
+        'slot-eight': $global-themes-five-colors-slot-eight
+      )
+    ),
+    'six': (
+      'label': $global-themes-six-label,
+      'colors': (
+        'slot-one': $global-themes-six-colors-slot-one,
+        'slot-two': $global-themes-six-colors-slot-two,
+        'slot-three': $global-themes-six-colors-slot-three,
+        'slot-four': $global-themes-six-colors-slot-four,
+        'slot-five': $global-themes-six-colors-slot-five,
+        'slot-six': $global-themes-six-colors-slot-six,
+        'slot-seven': $global-themes-six-colors-slot-seven,
+        'slot-eight': $global-themes-six-colors-slot-eight
+      )
+    ),
+    'seven': (
+      'label': $global-themes-seven-label,
+      'colors': (
+        'slot-one': $global-themes-seven-colors-slot-one,
+        'slot-two': $global-themes-seven-colors-slot-two,
+        'slot-three': $global-themes-seven-colors-slot-three,
+        'slot-four': $global-themes-seven-colors-slot-four,
+        'slot-five': $global-themes-seven-colors-slot-five,
+        'slot-six': $global-themes-seven-colors-slot-six,
+        'slot-seven': $global-themes-seven-colors-slot-seven,
+        'slot-eight': $global-themes-seven-colors-slot-eight
+      )
+    ),
+    'eight': (
+      'label': $global-themes-eight-label,
+      'colors': (
+        'slot-one': $global-themes-eight-colors-slot-one,
+        'slot-two': $global-themes-eight-colors-slot-two,
+        'slot-three': $global-themes-eight-colors-slot-three,
+        'slot-four': $global-themes-eight-colors-slot-four,
+        'slot-five': $global-themes-eight-colors-slot-five,
+        'slot-six': $global-themes-eight-colors-slot-six,
+        'slot-seven': $global-themes-eight-colors-slot-seven,
+        'slot-eight': $global-themes-eight-colors-slot-eight
+      )
+    ),
+    'nine': (
+      'label': $global-themes-nine-label,
+      'colors': (
+        'slot-one': $global-themes-nine-colors-slot-one,
+        'slot-two': $global-themes-nine-colors-slot-two,
+        'slot-three': $global-themes-nine-colors-slot-three,
+        'slot-four': $global-themes-nine-colors-slot-four,
+        'slot-five': $global-themes-nine-colors-slot-five,
+        'slot-six': $global-themes-nine-colors-slot-six,
+        'slot-seven': $global-themes-nine-colors-slot-seven,
+        'slot-eight': $global-themes-nine-colors-slot-eight
+      )
+    ),
+    'ten': (
+      'label': $global-themes-ten-label,
+      'colors': (
+        'slot-one': $global-themes-ten-colors-slot-one,
+        'slot-two': $global-themes-ten-colors-slot-two,
+        'slot-three': $global-themes-ten-colors-slot-three,
+        'slot-four': $global-themes-ten-colors-slot-four,
+        'slot-five': $global-themes-ten-colors-slot-five,
+        'slot-six': $global-themes-ten-colors-slot-six,
+        'slot-seven': $global-themes-ten-colors-slot-seven,
+        'slot-eight': $global-themes-ten-colors-slot-eight
+      )
+    ),
+    'eleven': (
+      'label': $global-themes-eleven-label,
+      'colors': (
+        'slot-one': $global-themes-eleven-colors-slot-one,
+        'slot-two': $global-themes-eleven-colors-slot-two,
+        'slot-three': $global-themes-eleven-colors-slot-three,
+        'slot-four': $global-themes-eleven-colors-slot-four,
+        'slot-five': $global-themes-eleven-colors-slot-five,
+        'slot-six': $global-themes-eleven-colors-slot-six,
+        'slot-seven': $global-themes-eleven-colors-slot-seven,
+        'slot-eight': $global-themes-eleven-colors-slot-eight
+      )
+    )
+  ),
+  'basic-themes': (
+    'gray-800': (
+      'background': $basic-themes-gray-800-background,
+      'text': $basic-themes-gray-800-text,
+      'heading': $basic-themes-gray-800-heading
+    ),
+    'gray-700': (
+      'background': $basic-themes-gray-700-background,
+      'text': $basic-themes-gray-700-text,
+      'heading': $basic-themes-gray-700-heading
+    ),
+    'gray-200': (
+      'background': $basic-themes-gray-200-background,
+      'text': $basic-themes-gray-200-text,
+      'heading': $basic-themes-gray-200-heading
+    ),
+    'gray-100': (
+      'background': $basic-themes-gray-100-background,
+      'text': $basic-themes-gray-100-text,
+      'heading': $basic-themes-gray-100-heading
+    ),
+    'white': (
+      'background': $basic-themes-white-background,
+      'text': $basic-themes-white-text,
+      'heading': $basic-themes-white-heading
+    ),
+    'blue-yale': (
+      'background': $basic-themes-blue-yale-background,
+      'text': $basic-themes-blue-yale-text,
+      'heading': $basic-themes-blue-yale-heading
+    )
+  ),
+  'button-cta-themes': (
+    'one': (
+      'background': $button-cta-themes-one-background,
+      'text': $button-cta-themes-one-text,
+      'slot-one': $button-cta-themes-one-slot-one,
+      'slot-two': $button-cta-themes-one-slot-two,
+      'slot-three': $button-cta-themes-one-slot-three,
+      'slot-four': $button-cta-themes-one-slot-four,
+      'slot-five': $button-cta-themes-one-slot-five,
+      'slot-six': $button-cta-themes-one-slot-six,
+      'slot-seven': $button-cta-themes-one-slot-seven,
+      'slot-eight': $button-cta-themes-one-slot-eight
+    ),
+    'two': (
+      'background': $button-cta-themes-two-background,
+      'text': $button-cta-themes-two-text,
+      'slot-one': $button-cta-themes-two-slot-one,
+      'slot-two': $button-cta-themes-two-slot-two,
+      'slot-three': $button-cta-themes-two-slot-three,
+      'slot-four': $button-cta-themes-two-slot-four,
+      'slot-five': $button-cta-themes-two-slot-five,
+      'slot-six': $button-cta-themes-two-slot-six,
+      'slot-seven': $button-cta-themes-two-slot-seven,
+      'slot-eight': $button-cta-themes-two-slot-eight
+    ),
+    'three': (
+      'background': $button-cta-themes-three-background,
+      'text': $button-cta-themes-three-text,
+      'slot-one': $button-cta-themes-three-slot-one,
+      'slot-two': $button-cta-themes-three-slot-two,
+      'slot-three': $button-cta-themes-three-slot-three,
+      'slot-four': $button-cta-themes-three-slot-four,
+      'slot-five': $button-cta-themes-three-slot-five,
+      'slot-six': $button-cta-themes-three-slot-six,
+      'slot-seven': $button-cta-themes-three-slot-seven,
+      'slot-eight': $button-cta-themes-three-slot-eight
+    ),
+    'four': (
+      'background': $button-cta-themes-four-background,
+      'text': $button-cta-themes-four-text,
+      'slot-one': $button-cta-themes-four-slot-one,
+      'slot-two': $button-cta-themes-four-slot-two,
+      'slot-three': $button-cta-themes-four-slot-three,
+      'slot-four': $button-cta-themes-four-slot-four,
+      'slot-five': $button-cta-themes-four-slot-five,
+      'slot-six': $button-cta-themes-four-slot-six,
+      'slot-seven': $button-cta-themes-four-slot-seven,
+      'slot-eight': $button-cta-themes-four-slot-eight
+    ),
+    'five': (
+      'background': $button-cta-themes-five-background,
+      'text': $button-cta-themes-five-text,
+      'slot-one': $button-cta-themes-five-slot-one,
+      'slot-two': $button-cta-themes-five-slot-two,
+      'slot-three': $button-cta-themes-five-slot-three,
+      'slot-four': $button-cta-themes-five-slot-four,
+      'slot-five': $button-cta-themes-five-slot-five,
+      'slot-six': $button-cta-themes-five-slot-six,
+      'slot-seven': $button-cta-themes-five-slot-seven,
+      'slot-eight': $button-cta-themes-five-slot-eight
+    ),
+    'six': (
+      'background': $button-cta-themes-six-background,
+      'text': $button-cta-themes-six-text,
+      'slot-one': $button-cta-themes-six-slot-one,
+      'slot-two': $button-cta-themes-six-slot-two,
+      'slot-three': $button-cta-themes-six-slot-three,
+      'slot-four': $button-cta-themes-six-slot-four,
+      'slot-five': $button-cta-themes-six-slot-five,
+      'slot-six': $button-cta-themes-six-slot-six,
+      'slot-seven': $button-cta-themes-six-slot-seven,
+      'slot-eight': $button-cta-themes-six-slot-eight
+    ),
+    'seven': (
+      'background': $button-cta-themes-seven-background,
+      'text': $button-cta-themes-seven-text,
+      'slot-one': $button-cta-themes-seven-slot-one,
+      'slot-two': $button-cta-themes-seven-slot-two,
+      'slot-three': $button-cta-themes-seven-slot-three,
+      'slot-four': $button-cta-themes-seven-slot-four,
+      'slot-five': $button-cta-themes-seven-slot-five,
+      'slot-six': $button-cta-themes-seven-slot-six,
+      'slot-seven': $button-cta-themes-seven-slot-seven,
+      'slot-eight': $button-cta-themes-seven-slot-eight
+    )
+  ),
+  'animation': (
+    'speed': (
+      'default': $animation-speed-default,
+      'medium': $animation-speed-medium,
+      'slow': $animation-speed-slow
+    )
+  ),
+  'layout': (
+    'width': (
+      '25': $layout-width-25,
+      '50': $layout-width-50,
+      '75': $layout-width-75,
+      '100': $layout-width-100
+    ),
+    'flex-position': (
+      'left': $layout-flex-position-left,
+      'center': $layout-flex-position-center,
+      'right': $layout-flex-position-right,
+      'baseline': $layout-flex-position-baseline,
+      'space-between': $layout-flex-position-space-between
+    )
+  ),
+  'size': (
+    'component-layout': (
+      'width': (
+        'max': $size-component-layout-width-max,
+        'site': $size-component-layout-width-site,
+        'highlight': $size-component-layout-width-highlight,
+        'content': $size-component-layout-width-content
+      )
+    ),
+    'click-target-minimum': $size-click-target-minimum,
+    'spacing': (
+      '0': $size-spacing-0,
+      '1': $size-spacing-1,
+      '2': $size-spacing-2,
+      '3': $size-spacing-3,
+      '4': $size-spacing-4,
+      '5': $size-spacing-5,
+      '6': $size-spacing-6,
+      '7': $size-spacing-7,
+      '8': $size-spacing-8,
+      '9': $size-spacing-9,
+      '10': $size-spacing-10,
+      '11': $size-spacing-11,
+      '12': $size-spacing-12,
+      '13': $size-spacing-13
+    ),
+    'thickness': (
+      '0': $size-thickness-0,
+      '1': $size-thickness-1,
+      '2': $size-thickness-2,
+      '4': $size-thickness-4,
+      '6': $size-thickness-6,
+      '8': $size-thickness-8,
+      'hairline': $size-thickness-hairline
+    )
+  ),
+  'border': (
+    'thickness': (
+      '0': $border-thickness-0,
+      '1': $border-thickness-1,
+      '2': $border-thickness-2,
+      '4': $border-thickness-4,
+      '6': $border-thickness-6,
+      '8': $border-thickness-8,
+      'hairline': $border-thickness-hairline
+    )
+  ),
+  'font': (
+    'style': (
+      'nav': (
+        'primary': (
+          '0': $font-style-nav-primary-0,
+          '1': $font-style-nav-primary-1,
+          '2': $font-style-nav-primary-2
+        )
+      ),
+      'heading': (
+        'h1-yale-new': $font-style-heading-h1-yale-new,
+        'h2-yale-new': $font-style-heading-h2-yale-new,
+        'h3-yale-new': $font-style-heading-h3-yale-new,
+        'h4-yale-new': $font-style-heading-h4-yale-new,
+        'h5-yale-new': $font-style-heading-h5-yale-new,
+        'h6-yale-new': $font-style-heading-h6-yale-new,
+        'h1-mallory-compact-medium': $font-style-heading-h1-mallory-compact-medium,
+        'h2-mallory-compact-medium': $font-style-heading-h2-mallory-compact-medium,
+        'h3-mallory-compact-medium': $font-style-heading-h3-mallory-compact-medium,
+        'h4-mallory-compact-medium': $font-style-heading-h4-mallory-compact-medium,
+        'h5-mallory-compact-medium': $font-style-heading-h5-mallory-compact-medium,
+        'h6-mallory-compact-medium': $font-style-heading-h6-mallory-compact-medium,
+        'h1-mallory-compact-book': $font-style-heading-h1-mallory-compact-book,
+        'h2-mallory-compact-book': $font-style-heading-h2-mallory-compact-book,
+        'h3-mallory-compact-book': $font-style-heading-h3-mallory-compact-book,
+        'h4-mallory-compact-book': $font-style-heading-h4-mallory-compact-book,
+        'h5-mallory-compact-book': $font-style-heading-h5-mallory-compact-book,
+        'h6-mallory-compact-book': $font-style-heading-h6-mallory-compact-book
+      ),
+      'body': (
+        'xl': $font-style-body-xl,
+        'l': $font-style-body-l,
+        'default': $font-style-body-default,
+        'default-condensed': $font-style-body-default-condensed,
+        's': $font-style-body-s,
+        's-condensed': $font-style-body-s-condensed,
+        'xs': $font-style-body-xs
+      ),
+      'branding': (
+        'yale': $font-style-branding-yale,
+        'site': $font-style-branding-site,
+        'site-mobile': $font-style-branding-site-mobile
+      )
+    ),
+    'weights': (
+      'mallory-book': $font-weights-mallory-book,
+      'mallory-medium': $font-weights-mallory-medium,
+      'yalenew-roman': $font-weights-yalenew-roman,
+      'yalenew-bold': $font-weights-yalenew-bold
+    ),
+    'scale': (
+      '43-62': $font-scale-43-62,
+      '41-58': $font-scale-41-58,
+      '38-55': $font-scale-38-55,
+      '36-52': $font-scale-36-52,
+      '33-46': $font-scale-33-46,
+      '29-41': $font-scale-29-41,
+      '27-36': $font-scale-27-36,
+      '24-30': $font-scale-24-30,
+      '23-29': $font-scale-23-29,
+      '21-25': $font-scale-21-25,
+      '20-26': $font-scale-20-26,
+      '20-24': $font-scale-20-24,
+      '17-20': $font-scale-17-20,
+      '16-19': $font-scale-16-19,
+      '15-18': $font-scale-15-18,
+      '15-16': $font-scale-15-16,
+      '13-14': $font-scale-13-14
+    ),
+    'letterSpacing': (
+      'h6-yale-new': $font-letter-spacing-h6-yale-new,
+      'h1-mallory-compact-medium': $font-letter-spacing-h1-mallory-compact-medium,
+      'h2-mallory-compact-medium': $font-letter-spacing-h2-mallory-compact-medium,
+      'h6-mallory-compact-medium': $font-letter-spacing-h6-mallory-compact-medium,
+      'h1-mallory-compact-book': $font-letter-spacing-h1-mallory-compact-book,
+      'h2-mallory-compact-book': $font-letter-spacing-h2-mallory-compact-book,
+      'h6-mallory-compact-book': $font-letter-spacing-h6-mallory-compact-book,
+      'yalenew-bold': $font-letter-spacing-yalenew-bold
+    ),
+    'textTransform': (
+      'h6-yale-new': $font-text-transform-h6-yale-new,
+      'h6-mallory-compact-medium': $font-text-transform-h6-mallory-compact-medium,
+      'h6-mallory-compact-book': $font-text-transform-h6-mallory-compact-book
+    ),
+    'spacing': (
+      'paragraph': $font-spacing-paragraph
+    )
+  ),
+  'site-footer-themes': (
+    'one': (
+      'background-color': $site-footer-themes-one-background-color,
+      'yale-branding': $site-footer-themes-one-yale-branding,
+      'border-color': $site-footer-themes-one-border-color,
+      'divider-color': $site-footer-themes-one-divider-color,
+      'text-color': $site-footer-themes-one-text-color,
+      'slot-one': $site-footer-themes-one-slot-one,
+      'slot-two': $site-footer-themes-one-slot-two,
+      'slot-three': $site-footer-themes-one-slot-three,
+      'slot-four': $site-footer-themes-one-slot-four,
+      'slot-five': $site-footer-themes-one-slot-five,
+      'slot-six': $site-footer-themes-one-slot-six,
+      'slot-seven': $site-footer-themes-one-slot-seven,
+      'slot-eight': $site-footer-themes-one-slot-eight
+    ),
+    'two': (
+      'background-color': $site-footer-themes-two-background-color,
+      'yale-branding': $site-footer-themes-two-yale-branding,
+      'border-color': $site-footer-themes-two-border-color,
+      'divider-color': $site-footer-themes-two-divider-color,
+      'text-color': $site-footer-themes-two-text-color,
+      'slot-one': $site-footer-themes-two-slot-one,
+      'slot-two': $site-footer-themes-two-slot-two,
+      'slot-three': $site-footer-themes-two-slot-three,
+      'slot-four': $site-footer-themes-two-slot-four,
+      'slot-five': $site-footer-themes-two-slot-five,
+      'slot-six': $site-footer-themes-two-slot-six,
+      'slot-seven': $site-footer-themes-two-slot-seven,
+      'slot-eight': $site-footer-themes-two-slot-eight
+    ),
+    'three': (
+      'background-color': $site-footer-themes-three-background-color,
+      'yale-branding': $site-footer-themes-three-yale-branding,
+      'border-color': $site-footer-themes-three-border-color,
+      'divider-color': $site-footer-themes-three-divider-color,
+      'text-color': $site-footer-themes-three-text-color,
+      'slot-one': $site-footer-themes-three-slot-one,
+      'slot-two': $site-footer-themes-three-slot-two,
+      'slot-three': $site-footer-themes-three-slot-three,
+      'slot-four': $site-footer-themes-three-slot-four,
+      'slot-five': $site-footer-themes-three-slot-five,
+      'slot-six': $site-footer-themes-three-slot-six,
+      'slot-seven': $site-footer-themes-three-slot-seven,
+      'slot-eight': $site-footer-themes-three-slot-eight
+    )
+  ),
+  'site-header-themes': (
+    'one': (
+      'background': $site-header-themes-one-background,
+      'yale-branding': $site-header-themes-one-yale-branding,
+      'site-branding': $site-header-themes-one-site-branding,
+      'border-color': $site-header-themes-one-border-color,
+      'divider-color': $site-header-themes-one-divider-color,
+      'slot-one': $site-header-themes-one-slot-one,
+      'slot-two': $site-header-themes-one-slot-two,
+      'slot-three': $site-header-themes-one-slot-three,
+      'slot-four': $site-header-themes-one-slot-four,
+      'slot-five': $site-header-themes-one-slot-five,
+      'slot-six': $site-header-themes-one-slot-six,
+      'slot-seven': $site-header-themes-one-slot-seven,
+      'slot-eight': $site-header-themes-one-slot-eight
+    ),
+    'two': (
+      'background': $site-header-themes-two-background,
+      'yale-branding': $site-header-themes-two-yale-branding,
+      'site-branding': $site-header-themes-two-site-branding,
+      'border-color': $site-header-themes-two-border-color,
+      'divider-color': $site-header-themes-two-divider-color,
+      'slot-one': $site-header-themes-two-slot-one,
+      'slot-two': $site-header-themes-two-slot-two,
+      'slot-three': $site-header-themes-two-slot-three,
+      'slot-four': $site-header-themes-two-slot-four,
+      'slot-five': $site-header-themes-two-slot-five,
+      'slot-six': $site-header-themes-two-slot-six,
+      'slot-seven': $site-header-themes-two-slot-seven,
+      'slot-eight': $site-header-themes-two-slot-eight
+    ),
+    'three': (
+      'background': $site-header-themes-three-background,
+      'yale-branding': $site-header-themes-three-yale-branding,
+      'site-branding': $site-header-themes-three-site-branding,
+      'border-color': $site-header-themes-three-border-color,
+      'divider-color': $site-header-themes-three-divider-color,
+      'slot-one': $site-header-themes-three-slot-one,
+      'slot-two': $site-header-themes-three-slot-two,
+      'slot-three': $site-header-themes-three-slot-three,
+      'slot-four': $site-header-themes-three-slot-four,
+      'slot-five': $site-header-themes-three-slot-five,
+      'slot-six': $site-header-themes-three-slot-six,
+      'slot-seven': $site-header-themes-three-slot-seven,
+      'slot-eight': $site-header-themes-three-slot-eight
+    )
+  ),
+  'site-header-layout': (
+    'left': (
+      'justify': $site-header-layout-left-justify,
+      'align': $site-header-layout-left-align,
+      'flex-direction': $site-header-layout-left-flex-direction
+    ),
+    'center': (
+      'justify': $site-header-layout-center-justify,
+      'align': $site-header-layout-center-align,
+      'flex-direction': $site-header-layout-center-flex-direction
+    ),
+    'right': (
+      'justify': $site-header-layout-right-justify,
+      'align': $site-header-layout-right-align,
+      'flex-direction': $site-header-layout-right-flex-direction
+    )
+  ),
+  'fontFamilies': (
+    'mallory-compact': $font-families-mallory-compact,
+    'mallory': $font-families-mallory,
+    'yalenew': $font-families-yalenew
+  ),
+  'fontSize': (
+    '13': $font-size-13,
+    '14': $font-size-14,
+    '15': $font-size-15,
+    '16': $font-size-16,
+    '17': $font-size-17,
+    '18': $font-size-18,
+    '19': $font-size-19,
+    '20': $font-size-20,
+    '21': $font-size-21,
+    '23': $font-size-23,
+    '24': $font-size-24,
+    '25': $font-size-25,
+    '26': $font-size-26,
+    '27': $font-size-27,
+    '29': $font-size-29,
+    '30': $font-size-30,
+    '33': $font-size-33,
+    '36': $font-size-36,
+    '38': $font-size-38,
+    '41': $font-size-41,
+    '43': $font-size-43,
+    '46': $font-size-46,
+    '49': $font-size-49,
+    '52': $font-size-52,
+    '55': $font-size-55,
+    '58': $font-size-58,
+    '62': $font-size-62
+  ),
+  'dropShadow': (
+    'Level 1': $drop-shadow-level-1,
+    'Level 1 - Bottom Shadow Only': $drop-shadow-level-1-bottom-shadow-only,
+    'Level 2': $drop-shadow-level-2,
+    'Level 3': $drop-shadow-level-3,
+    'Level 4': $drop-shadow-level-4
+  ),
+  'radius': (
+    '0': $radius-0,
+    '4': $radius-4,
+    '10': $radius-10,
+    '20': $radius-20
+  )
+);
