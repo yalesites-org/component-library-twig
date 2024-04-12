@@ -71,8 +71,10 @@ export const EventLocalist = ({
   address,
   ctaText,
   allDay,
+  withImage,
 }) =>
   eventLocalistMetaTwig({
+    ...imageData.responsive_images['3x2'],
     event_title__heading: pageTitle,
     event_dates: eventLocalistData.event_dates,
     formatted_start_date: eventLocalistData.formatted_start_date,
@@ -83,6 +85,7 @@ export const EventLocalist = ({
     event_meta__cta_primary__href: '#',
     event_meta__cta_secondary__content: 'Add to calendar',
     event_meta__cta_secondary__href: '#',
+    event_meta__image: withImage ? 'true' : 'false',
     event_meta__all_day: allDay,
     ...eventLocalistData,
   });

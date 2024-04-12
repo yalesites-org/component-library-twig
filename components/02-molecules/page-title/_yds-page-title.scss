@@ -23,6 +23,36 @@
   margin-top: var(--size-spacing-7);
 }
 
+.page-title__top {
+  [data-component-variation='event'] & {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--size-spacing-6);
+
+    @media (min-width: tokens.$break-l) {
+      flex-direction: row;
+    }
+  }
+}
+
+.page-title__title-wrap {
+  [data-component-variation='event'] & {
+    @media (min-width: tokens.$break-l) {
+      flex: 1 0 50%;
+    }
+  }
+}
+
+.page-title__image {
+  [data-component-variation='event'] & {
+    @media (min-width: tokens.$break-l) {
+      flex: 1 0 50%;
+    }
+  }
+}
+
 // Add margin to the following page-title display types:
 //   - visually-hidden
 //   - hidden (when no page-title div exists after the breadcrumbs__wrapper

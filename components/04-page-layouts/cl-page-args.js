@@ -67,15 +67,10 @@ export const eventArgTypes = {
 };
 
 export const eventLocalistArgTypes = {
-  startDate: {
-    name: 'Start Date/Time',
-    type: 'string',
-    defaultValue: '2022-04-01T08:00',
-  },
-  endDate: {
-    name: 'End Date/Time',
-    type: 'string',
-    defaultValue: '2022-04-01T11:30',
+  withImage: {
+    name: 'With Image',
+    type: 'boolean',
+    defaultValue: true,
   },
   format: {
     name: 'Format',
