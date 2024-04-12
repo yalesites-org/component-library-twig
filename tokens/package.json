@@ -19,9 +19,6 @@
   "scripts": {
     "build": "npm run transform && npm run style-dictionary:build",
     "develop": "chokidar 'tokens' -c 'npm run build' -i 'tokens/figma-transformed-tokens.json'",
-    "husky:commit-msg": "commitlint --edit $1",
-    "husky:pre-commit": "lint-staged",
-    "prepare": "husky install",
     "prettier": "prettier tokens --ignore-unknown",
     "semantic-release": "semantic-release",
     "style-dictionary:build": "style-dictionary build --config ./sd.config.js",
@@ -35,7 +32,6 @@
     "@semantic-release/npm": "^8.0.3",
     "@yalesites-org/eslint-config-and-other-formatting": "^1.3.1",
     "chokidar-cli": "^3.0.0",
-    "husky": "^7.0.4",
     "lint-staged": "^12.1.6",
     "semantic-release": "^18.0.1",
     "style-dictionary": "^3.1.1",
