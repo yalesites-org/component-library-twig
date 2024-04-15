@@ -26,6 +26,7 @@ Drupal.behaviors.toggleLinks = {
 
     // Handle Show More Dates button click
     function handleShowMoreDatesClick(event) {
+      event.preventDefault(); // or return false;
       const button = event.target;
       toggleAriaExpanded(showMoreDatesButton);
       toggleIsExpanded(showMoreDatesWrapper);
@@ -43,7 +44,8 @@ Drupal.behaviors.toggleLinks = {
     }
 
     // Handle Show Map button click
-    function handleShowMapClick() {
+    function handleShowMapClick(event) {
+      event.preventDefault(); // or return false;
       toggleAriaExpanded(showMapButton);
       toggleIsExpanded(showMapWrapper);
       toggleAriaExpanded(mapElementWrapper);

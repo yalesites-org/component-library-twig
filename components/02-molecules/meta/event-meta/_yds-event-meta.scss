@@ -1,14 +1,6 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
 
-.event-meta__inner:not(.localist) {
-  > * {
-    border-bottom: var(--border-thickness-1) solid var(--color-divider);
-    padding-block-start: var(--size-spacing-6);
-    padding-block-end: var(--size-spacing-6);
-  }
-}
-
 .event-meta {
   color: var(--color-basic-brown-gray);
 }
@@ -26,6 +18,11 @@
   @media (min-width: tokens.$break-mobile) {
     flex-direction: row;
     align-items: center;
+  }
+
+  [data-event-meta-style='localist'] & {
+    margin-top: var(--size-spacing-6);
+    margin-bottom: var(--size-spacing-6);
   }
 }
 
@@ -50,12 +47,54 @@
 // localist
 .event-meta__details-wrapper {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: var(--size-spacing-6);
+  border-top: var(--border-thickness-1) solid var(--color-divider);
+  border-bottom: var(--border-thickness-1) solid var(--color-divider);
 
   @media (min-width: tokens.$break-l) {
     flex-flow: row nowrap;
     justify-content: space-between;
+    align-items: center;
+  }
+
+  > * {
+    flex: 1 1 auto;
+
+    @media (min-width: tokens.$break-l) {
+      &:not(:last-child) {
+        margin-right: var(--size-spacing-7);
+        padding-right: var(--size-spacing-7);
+        position: relative;
+
+        &::after {
+          content: '';
+          border-right: var(--border-thickness-1) solid var(--color-gray-200);
+          position: absolute;
+          right: 0;
+          top: 0;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+
+// Inner
+.event-meta__inner {
+  &:not(.event-meta__inner--localist) {
+    > * {
+      border-bottom: var(--border-thickness-1) solid var(--color-divider);
+      padding-block-start: var(--size-spacing-6);
+      padding-block-end: var(--size-spacing-6);
+    }
+  }
+
+  [data-event-meta-style='localist'] & {
+    > * {
+      padding-block-start: var(--size-spacing-6);
+      padding-block-end: var(--size-spacing-6);
+    }
   }
 }
 
@@ -128,6 +167,7 @@
   background-color: var(--color-gray-100);
   padding: var(--size-spacing-3);
   color: var(--color-gray-800);
+  margin-top: var(--size-spacing-3);
 
   &[aria-expanded='false'] {
     display: none;
@@ -184,6 +224,11 @@
   &[aria-expanded='false'] {
     visibility: hidden;
     height: 0;
+  }
+
+  iframe {
+    border: none;
+    width: 100%;
   }
 }
 
