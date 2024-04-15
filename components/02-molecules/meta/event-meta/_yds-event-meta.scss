@@ -137,6 +137,27 @@
 }
 
 // overline for 'online', 'in-person', or `hybrid`
+.event-meta__overline-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-3);
+  width: 100%;
+}
+
+.event-meta__audience {
+  @include tokens.body-s;
+
+  margin-top: 0;
+  margin-bottom: var(--size-spacing-3);
+  color: var(--color-gray-500);
+  font-variant-caps: small-caps;
+  font-variant-numeric: oldstyle-nums;
+  text-transform: lowercase;
+  letter-spacing: 0.5px;
+  flex: 0 auto;
+  position: relative;
+}
+
 .event-meta__format--overline {
   @include tokens.body-s;
 
@@ -147,8 +168,12 @@
   font-variant-numeric: oldstyle-nums;
   text-transform: lowercase;
   letter-spacing: 0.5px;
-  width: 100%;
-  flex: 1 1 auto;
+  flex: 0 auto;
+
+  + .event-meta__audience {
+    padding-left: var(--size-spacing-3);
+    border-left: var(--border-thickness-1) solid var(--color-divider);
+  }
 }
 
 // website link field

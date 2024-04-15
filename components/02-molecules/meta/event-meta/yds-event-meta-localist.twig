@@ -20,20 +20,6 @@
   {# {% set ics_url = calendar_link('ics', event_title__heading, start_datetime, end_datetime, event_dates.0.is_all_day, 'description', calendar_location_text) %} #}
 {% endif %}
 
-{% if event_meta__format.0 or event_meta__format %}
-  {% set page_title__overline %}
-    {% block page_title__overline %}
-      <p {{ bem('format', ['overline'], event_meta__base_class) }}>
-        {% include "@molecules/cards/reference-card/event/_yds-event-format.twig" with {
-          format: event_meta__format,
-        } %}
-      </p>
-    {% endblock %}
-  {% endset %}
-{% endif %}
-
-{{dd(event_meta__format)}}
-
 {% if localist_image_url or teaser_media %}
   {% set event_meta__image = 'true' %}
 {% endif %}
@@ -56,6 +42,9 @@
 {% set latLong = place.latitude ~ ',' ~ place.longitude %}
 {% set get_directions__url = place ? 'https://www.google.com/maps/dir/Current+Location/' ~ latLong : '' %}
 
+{% if event_experience %}
+  {% set event_meta__format = event_experience %}
+{% endif %}
 
 {# Use in more-dates-link #}
 {% set event__more_dates_link__icon %}
@@ -136,6 +125,10 @@
 
     {# Overline #}
     {% block page_title__overline %}
+      {% if event_meta__format or event_meta__audience %}
+        <div {{ bem('overline-wrap', [], event_meta__base_class) }}>
+      {% endif %}
+
       {% if event_meta__format.0 or event_meta__format %}
         <p {{ bem('format', ['overline'], event_meta__base_class) }}>
           {% include "@molecules/cards/reference-card/event/_yds-event-format.twig" with {
@@ -143,6 +136,17 @@
           } %}
         </p>
       {% endif %}
+
+      {% if event_meta__audience.0 or event_meta__audience %}
+        <p {{ bem('audience', ['overline'], event_meta__base_class) }}>
+          {{ event_meta__audience }}
+        </p>
+      {% endif %}
+
+      {% if event_meta__format or event_meta__audience %}
+        </div>
+      {% endif %}
+
     {% endblock %}
 
     {% block page_title__extra %}
