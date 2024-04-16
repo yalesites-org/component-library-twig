@@ -125,28 +125,15 @@
 
     {# Overline #}
     {% block page_title__overline %}
-      {% if event_meta__format or event_meta__audience %}
-        <div {{ bem('overline-wrap', [], event_meta__base_class) }}>
-      {% endif %}
-
       {% if event_meta__format.0 or event_meta__format %}
-        <p {{ bem('format', ['overline'], event_meta__base_class) }}>
-          {% include "@molecules/cards/reference-card/event/_yds-event-format.twig" with {
-            format: event_meta__format,
-          } %}
-        </p>
-      {% endif %}
-
-      {% if event_meta__audience.0 or event_meta__audience %}
-        <p {{ bem('audience', ['overline'], event_meta__base_class) }}>
-          {{ event_meta__audience }}
-        </p>
-      {% endif %}
-
-      {% if event_meta__format or event_meta__audience %}
+        <div {{ bem('overline-wrap', [], event_meta__base_class) }}>
+          <p {{ bem('format', ['overline'], event_meta__base_class) }}>
+            {% include "@molecules/cards/reference-card/event/_yds-event-format.twig" with {
+              format: event_meta__format,
+            } %}
+          </p>
         </div>
       {% endif %}
-
     {% endblock %}
 
     {% block page_title__extra %}
@@ -285,6 +272,15 @@
             </div>
           </div>
         </div>
+        {% endif %}
+
+        {% if event_meta__audience.0 or event_meta__audience %}
+          <div {{ bem('audience-wrapper', [], event_meta__base_class) }}>
+            <label {{ bem('event__label', [], event_meta__base_class) }}>Audience</label>
+            <p {{ bem('audience', [], event_meta__base_class) }}>
+              {{ event_meta__audience }}
+            </p>
+          </div>
         {% endif %}
         {% if description %}
           <div {{ bem('description', [], event_meta__base_class) }}>
