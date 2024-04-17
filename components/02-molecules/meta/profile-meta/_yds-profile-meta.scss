@@ -103,8 +103,8 @@ $break-profile-banner-max: $break-profile-banner - 0.05;
 
   @media (min-width: $break-profile-banner) {
     [data-component-image-style='outdent'] & {
-      margin-top: var(--size-spacing-5);
-      margin-bottom: calc(var(--size-spacing-5) * -1);
+      margin-top: var(--size-spacing-7);
+      margin-bottom: calc(var(--size-spacing-7) * -1);
     }
   }
 
