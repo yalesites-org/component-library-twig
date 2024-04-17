@@ -5,6 +5,14 @@ Drupal.behaviors.customCard = {
     // https://inclusive-components.design/cards/#theredundantclickevent
     // Selectors
     const customCards = context.querySelectorAll('.custom-card');
+    const leftClick = 0;
+
+    // Capture info about the browser to better know how to react to clicks.
+    const isMac = /Macintosh/.test(navigator.userAgent);
+    const openNewTab = (link) => {
+      window.open(link.href, '_blank');
+    };
+    const newTabModifier = isMac ? 'metaKey' : 'ctrlKey';
 
     customCards.forEach((customCard) => {
       const card = customCard;
@@ -22,12 +30,18 @@ Drupal.behaviors.customCard = {
           // Calculate when the "click" starts.
           down = +new Date();
         };
-        card.onmouseup = () => {
+        card.onmouseup = (event) => {
           // Calculate when the "click" ends.
           up = +new Date();
-          // If the click "duration" is less than 200ms, trigger a click.
-          if (up - down < 200) {
-            link.click();
+          // If the left click "duration" is less than 200ms, trigger a click.
+          if (up - down < 200 && event.button === leftClick) {
+            // If the user is holding the "new tab" modifier, open the link in a
+            // new tab. Otherwise, open the link in the same tab.
+            if (event[newTabModifier] === true) {
+              openNewTab(link);
+            } else {
+              link.click();
+            }
           }
         };
       }
