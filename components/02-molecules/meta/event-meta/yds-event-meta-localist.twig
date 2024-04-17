@@ -207,26 +207,28 @@
           </div>
         </div>
 
-        {% if ticket_cost or event_types %}
+        {# Start Grid of fields #}
+        {% if ticket_cost or event_types or event_meta__cta_primary__href or place or event_audience or event_topics %}
           <div {{ bem('details-wrapper', [], event_meta__base_class) }}>
           {% if ticket_cost %}
-          <div {{ bem('cost', [], event_meta__base_class) }}>
-            <label {{ bem('event__label', [], event_meta__base_class) }}>
-              Cost
-            </label>
-            {{ ticket_cost }}
-          </div>
+            <div {{ bem('cost', [], event_meta__base_class) }}>
+              <label {{ bem('event__label', [], event_meta__base_class) }}>
+                Cost
+              </label>
+              {{ ticket_cost }}
+            </div>
           {% endif %}
+
           {% if event_meta__cta_primary__href %}
             <div {{ bem('website', [], event_meta__base_class) }}>
               <label {{ bem('event__label', [], event_meta__base_class) }}>Event Website</label>
               <div {{ bem('event-website-link', [], event_meta__base_class) }}>
-              {% include "@atoms/controls/cta/yds-cta.twig" with {
-                cta__content: event_meta__cta_primary__content|default('Event Website'),
-                cta__href: event_meta__cta_primary__href,
-                cta__blockname: event_meta__base_class,
-                cta__style: 'outline',
-              } %}
+                {% include "@atoms/controls/cta/yds-cta.twig" with {
+                  cta__content: event_meta__cta_primary__content|default('Event Website'),
+                  cta__href: event_meta__cta_primary__href,
+                  cta__blockname: event_meta__base_class,
+                  cta__style: 'outline',
+                } %}
               </div>
             </div>
           {% endif %}
@@ -244,47 +246,67 @@
               </ul>
             </div>
           {% endif %}
-          </div>
-        {% endif %}
 
-        {% if place %}
-        <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
-          <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
-          <div {{ bem('location', [], event_meta__base_class) }}>
-            {{ place.address }}
-            {{ place.city }}, {{ place.state }} {{ place.postal_code }}
-            <div {{ bem('event-show-map', [], event_meta__base_class) }} is-expanded="false">
-              {% include "@atoms/controls/cta/yds-cta.twig" with {
-                cta__content: event__show_map__icon,
-                cta__href: '#',
-                cta__blockname: event_meta__base_class,
-                cta__modifiers: ['show-map'],
-                cta__style: 'outline',
-              } %}
-              <div {{ bem('map', [], event_meta__base_class) }} aria-expanded="false">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d12355.08068326396!2d{{ place.longitude }}!3d{{ place.latitude }}!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1712273181159!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                
-              {% include "@atoms/controls/cta/yds-cta.twig" with {
-                cta__content: 'Get Directions',
-                cta__href: get_directions__url,
-                cta__blockname: event_meta__base_class,
-                cta__modifiers: ['directions-link'],
-                cta__style: 'outline',
-              } %}
+          {% if place %}
+            <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
+              <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
+              <div {{ bem('location', [], event_meta__base_class) }}>
+                {{ place.address }}
+                {{ place.city }}, {{ place.state }} {{ place.postal_code }}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if event_audience %}
+            <div {{ bem('audience-wrapper', [], event_meta__base_class) }}>
+              <label {{ bem('event__label', [], event_meta__base_class) }}>Audience</label>
+              <p {{ bem('audience', [], event_meta__base_class) }}>
+                {{ event_audience }}
+              </p>
+            </div>
+          {% endif %}
+
+          {% if event_topics %}
+            <div {{ bem('event-topics-wrapper', [], event_meta__base_class) }}>
+              <label {{ bem('event__label', [], event_meta__base_class) }}>Event Topic</label>
+              <ul {{ bem('event-topics', [], event_meta__base_class) }}>
+                {% for event_topic in event_topics %}
+                  <li {{ bem('event-topics__topic', [], event_meta__base_class) }}>
+                    <a href="{{ event_topic.url }}">
+                      {{ event_topic.name }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          {% if place %}
+            <div {{ bem('event-map-wrapper', [], event_meta__base_class) }}>
+              <div {{ bem('event-show-map', [], event_meta__base_class) }} is-expanded="false">
+                {% include "@atoms/controls/cta/yds-cta.twig" with {
+                  cta__content: event__show_map__icon,
+                  cta__href: '#',
+                  cta__blockname: event_meta__base_class,
+                  cta__modifiers: ['show-map'],
+                  cta__style: 'outline',
+                } %}
+                <div {{ bem('map', [], event_meta__base_class) }} aria-expanded="false">
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d12355.08068326396!2d{{ place.longitude }}!3d{{ place.latitude }}!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1712273181159!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                  
+                  {% include "@atoms/controls/cta/yds-cta.twig" with {
+                    cta__content: 'Get Directions',
+                    cta__href: get_directions__url,
+                    cta__blockname: event_meta__base_class,
+                    cta__modifiers: ['directions-link'],
+                    cta__style: 'outline',
+                  } %}
+                </div>
               </div>
             </div>
           </div>
-        </div>
         {% endif %}
-
-        {% if event_meta__audience.0 or event_meta__audience %}
-          <div {{ bem('audience-wrapper', [], event_meta__base_class) }}>
-            <label {{ bem('event__label', [], event_meta__base_class) }}>Audience</label>
-            <p {{ bem('audience', [], event_meta__base_class) }}>
-              {{ event_meta__audience }}
-            </p>
-          </div>
-        {% endif %}
+      {% endif %}
         {% if description %}
           <div {{ bem('description', [], event_meta__base_class) }}>
             {{ description }}
