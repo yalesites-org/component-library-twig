@@ -64,6 +64,7 @@ export const Profile = ({
   titleLine,
   subTitle,
   department,
+  profileImageOrientation,
 }) =>
   profileMetaTwig({
     ...imageData.responsive_images['3x2'],
@@ -72,6 +73,11 @@ export const Profile = ({
     profile_meta__subtitle_line: subTitle,
     profile_meta__department: department,
     profile_meta__background: bgColor,
+    profile_meta__image_orientation: profileImageOrientation,
+    image__srcset__1: imageData.responsive_images['2x3'].image__srcset,
+    image__sizes__1: imageData.responsive_images['2x3'].image__sizes,
+    image__alt__1: imageData.responsive_images['2x3'].image__alt,
+    image__src__1: imageData.responsive_images['2x3'].image__src,
   });
 Profile.argTypes = {
   heading: {
@@ -99,5 +105,11 @@ Profile.argTypes = {
     type: 'select',
     options: colorPairingsData,
     defaultValue: 'one',
+  },
+  profileImageOrientation: {
+    name: 'Profile Image Orientation',
+    type: 'select',
+    options: ['landscape', 'portrait'],
+    defaultValue: 'landscape',
   },
 };
