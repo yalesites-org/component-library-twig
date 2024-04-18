@@ -256,3 +256,10 @@ $break-card-collection-list-image-max: tokens.$break-s - 0.05;
     @include tokens.body-default-condensed;
   }
 }
+
+.reference-card__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-spacing-4);
+  margin-top: var(--size-spacing-7);
+}

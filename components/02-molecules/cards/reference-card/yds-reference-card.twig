@@ -45,6 +45,26 @@
         text__content: reference_card__snippet,
       } %}
     {% endif %}
+    {# CTAs #}
+    <div {{ bem('ctas', [], reference_card__base_class) }}>
+      {# Primary CTA #}
+      {% if reference_card__cta_primary__content and reference_card__cta_primary__href %}
+        {% include "@atoms/controls/cta/yds-cta.twig" with {
+          cta__content: reference_card__cta_primary__content,
+          cta__href: reference_card__cta_primary__href,
+          cta__component_theme: cta__component_theme|default('one'),
+        } %}
+      {% endif %}
+      {# Add to calendar #}
+      {% if reference_card__cta_secondary__content and reference_card__cta_secondary__href %}
+        {% include "@atoms/controls/cta/yds-cta.twig" with {
+          cta__content: reference_card__cta_secondary__content,
+          cta__href: reference_card__cta_secondary__href,
+          cta__style: 'outline',
+          cta__component_theme: cta__component_theme|default('one'),
+        } %}
+      {% endif %}
+    </div>
   </div>
   {% if reference_card__image == 'true' %}
     <a {{ bem('image-link', [], reference_card__base_class) }} href="{{reference_card__url}}" aria-label="{{reference_card__heading}}" aria-hidden="true">
