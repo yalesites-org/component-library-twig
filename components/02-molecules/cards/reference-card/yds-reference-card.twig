@@ -47,10 +47,12 @@
     {% endif %}
   </div>
   {% if reference_card__image == 'true' %}
-    <div {{ bem('image', [], reference_card__base_class) }}>
-      {% block reference_card__image %}
-        {% include "@atoms/images/image/_responsive-image.twig" %}
-      {% endblock %}
-    </div>
+    <a {{ bem('image-link', [], reference_card__base_class) }} href="{{reference_card__url}}" aria-label="{{reference_card__heading}}" aria-hidden="true">
+      <div {{ bem('image', [], reference_card__base_class) }}>
+        {% block reference_card__image %}
+          {% include "@atoms/images/image/_responsive-image.twig" %}
+        {% endblock %}
+      </div>
+    </a>
   {% endif %}
 </li>

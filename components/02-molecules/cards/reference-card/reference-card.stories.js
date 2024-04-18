@@ -4,8 +4,6 @@ import referenceCardData from './examples/post-card.yml';
 import referenceProfileCardData from './examples/profile-card.yml';
 import imageData from '../../../01-atoms/images/image/image.yml';
 
-import './yds-reference-card';
-
 /**
  * Storybook Definition.
  */
