@@ -1,0 +1,15 @@
+@use '../../components/01-atoms/atoms';
+
+.quick-links__link-wrapper {
+  @include atoms.cta;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-thickness-cta, var(--border-thickness-2)) solid white !important;
+}
+
+.quick-links__cta {
+  border: none;
+  display: initial;
+}
