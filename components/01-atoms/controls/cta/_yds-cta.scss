@@ -136,6 +136,12 @@ $cta-outline-weights: (
       --color-cta-text: var(--color-action);
       --color-cta-text-hover: var(--color-cta-action-secondary);
     }
+
+    [data-collection-type='single'] & {
+      --color-cta-action: var(--color-slot-eight);
+      --color-cta-action-secondary: var(--color-slot-eight);
+      --color-cta-text-hover: var(--color-slot-one);
+    }
   }
 
   &[data-cta-theme='two'] {
