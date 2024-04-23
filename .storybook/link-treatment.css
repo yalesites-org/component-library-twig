@@ -1,0 +1,15 @@
+/* This was not the width/height we wanted */
+.link-purpose-icon {
+  display: inline-block;
+  width: 1.25em !important;
+  height: auto !important;
+  min-height: auto !important;
+  margin: auto !important;
+  font-size: inherit !important;
+  vertical-align: initial;
+}
+
+/* This cut into the text on the left of it */
+.link-purpose-nobreak {
+  margin-left: 0.25em;
+}

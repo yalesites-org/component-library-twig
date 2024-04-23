@@ -44,6 +44,16 @@ module.exports = {
       loaders.SVGSpriteLoader,
       loaders.ImageLoader,
       loaders.JSLoader,
+      {
+        test: require.resolve(
+          rootDir,
+          'node_modules/linkpurpose/js/linkpurpose.js',
+        ),
+        loader: 'exports-loader',
+        options: {
+          exports: 'LinkPurpose',
+        },
+      },
     ],
   },
   plugins: [
