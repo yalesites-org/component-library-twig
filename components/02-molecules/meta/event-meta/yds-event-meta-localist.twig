@@ -109,7 +109,6 @@
 
     {# Image #}
     {% block page_title__image %}
-
       {% if event_meta__image == 'true' %}
         <div {{ bem('image', [], event_meta__base_class) }}>
           {% if localist_image_url %}
@@ -158,30 +157,29 @@
 
       {# Inner #}
       <div {{ bem('inner', ['localist'], event_meta__base_class) }}>
-
-      {# Event Dates #}
-      {% if event_dates %}
-        <div {{ bem('all-dates', [], event_meta__base_class) }} is-expanded="false">
-          {% if event_dates|length > 1 %}
-            <div {{ bem('more-dates-link', [], event_meta__base_class) }}>
-              {% include "@atoms/controls/cta/yds-cta.twig" with {
-                cta__content: event__more_dates_link__icon,
-                cta__href: '#',
-                cta__blockname: event_meta__base_class,
-                cta__modifiers: ['show-more-dates'],
-                cta__style: 'outline',
-              } %}
-            </div>
-          {% endif %}
-          <ul {{ bem('multiple-dates', [], event_meta__base_class) }} aria-expanded="false">
-            {% for event_date in event_dates %}
-              <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
-                {{ event_date.formatted_start_date }} {{ event_date.formatted_start_time }} to {{ event_date.formatted_end_date }} {{ event_date.formatted_end_time }}
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
+        {# Event Dates #}
+        {% if event_dates %}
+          <div {{ bem('all-dates', [], event_meta__base_class) }} is-expanded="false">
+            {% if event_dates|length > 1 %}
+              <div {{ bem('more-dates-link', [], event_meta__base_class) }}>
+                {% include "@atoms/controls/cta/yds-cta.twig" with {
+                  cta__content: event__more_dates_link__icon,
+                  cta__href: '#',
+                  cta__blockname: event_meta__base_class,
+                  cta__modifiers: ['show-more-dates'],
+                  cta__style: 'outline',
+                } %}
+              </div>
+            {% endif %}
+            <ul {{ bem('multiple-dates', [], event_meta__base_class) }} aria-expanded="false">
+              {% for event_date in event_dates %}
+                <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
+                  {{ event_date.formatted_start_date }} {{ event_date.formatted_start_time }} to {{ event_date.formatted_end_date }} {{ event_date.formatted_end_time }}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
         
         {# Event Details #}
         <div {{ bem('details', [], event_meta__base_class) }}>
@@ -209,7 +207,7 @@
 
         {# Start Grid of fields #}
         {% if ticket_cost or event_types or event_meta__cta_primary__href or place or event_audience or event_topics %}
-          <div {{ bem('details-wrapper', [], event_meta__base_class) }}>
+        <div {{ bem('details-wrapper', [], event_meta__base_class) }}>
           {% if ticket_cost %}
             <div {{ bem('cost', [], event_meta__base_class) }}>
               <label {{ bem('event__label', [], event_meta__base_class) }}>
@@ -254,6 +252,26 @@
                 {{ place.address }}
                 {{ place.city }}, {{ place.state }} {{ place.postal_code }}
               </div>
+              <div {{ bem('event-show-map', [], event_meta__base_class) }} is-expanded="false">
+                {% include "@atoms/controls/cta/yds-cta.twig" with {
+                  cta__content: event__show_map__icon,
+                  cta__href: '#',
+                  cta__blockname: event_meta__base_class,
+                  cta__modifiers: ['show-map'],
+                  cta__style: 'outline',
+                } %}
+                <div {{ bem('map', [], event_meta__base_class) }} aria-expanded="false">
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d12355.08068326396!2d{{ place.longitude }}!3d{{ place.latitude }}!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1712273181159!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                  
+                  {% include "@atoms/controls/cta/yds-cta.twig" with {
+                    cta__content: 'Get Directions',
+                    cta__href: get_directions__url,
+                    cta__blockname: event_meta__base_class,
+                    cta__modifiers: ['directions-link'],
+                    cta__style: 'outline',
+                  } %}
+                </div>
+              </div>
             </div>
           {% endif %}
 
@@ -280,39 +298,14 @@
               </ul>
             </div>
           {% endif %}
-
-          {% if place %}
-            <div {{ bem('event-map-wrapper', [], event_meta__base_class) }}>
-              <div {{ bem('event-show-map', [], event_meta__base_class) }} is-expanded="false">
-                {% include "@atoms/controls/cta/yds-cta.twig" with {
-                  cta__content: event__show_map__icon,
-                  cta__href: '#',
-                  cta__blockname: event_meta__base_class,
-                  cta__modifiers: ['show-map'],
-                  cta__style: 'outline',
-                } %}
-                <div {{ bem('map', [], event_meta__base_class) }} aria-expanded="false">
-                  <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d12355.08068326396!2d{{ place.longitude }}!3d{{ place.latitude }}!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1712273181159!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                  
-                  {% include "@atoms/controls/cta/yds-cta.twig" with {
-                    cta__content: 'Get Directions',
-                    cta__href: get_directions__url,
-                    cta__blockname: event_meta__base_class,
-                    cta__modifiers: ['directions-link'],
-                    cta__style: 'outline',
-                  } %}
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endif %}
+        </div> {# end details-wrapper #}
       {% endif %}
         {% if description %}
           <div {{ bem('description', [], event_meta__base_class) }}>
             {{ description }}
           </div>
         {% endif %}
-      </div>
+      </div> {# end inner #}
     {% endblock %}
   {% endembed %}
 </div>

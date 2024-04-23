@@ -1,6 +1,8 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
 
+$event-meta-borders-max: tokens.$break-l - 0.5;
+
 .event-meta {
   color: var(--color-basic-brown-gray);
 }
@@ -62,7 +64,6 @@
 
     .event-meta__details-wrapper {
       display: grid;
-      padding-block-start: var(--size-spacing-6);
       grid-template-columns: 1fr;
       border-top: var(--border-thickness-1) solid var(--color-divider);
 
@@ -74,47 +75,42 @@
         position: relative;
         padding: var(--size-spacing-6);
 
-        // border-bottom to first three items only
-        &:nth-child(-n + 3) {
+        @media (max-width: $event-meta-borders-max) {
           border-bottom: var(--border-thickness-1) solid var(--color-divider);
         }
 
+        // border-bottom to first three items only
         @media (min-width: tokens.$break-l) {
-          &:not(.event-meta__event-show-map)::after {
-            content: '';
-            position: absolute;
-            background-color: var(--color-divider);
-            z-index: 1;
-          }
+          border-bottom: var(--border-thickness-1) solid var(--color-divider);
 
-          &:not(:nth-child(3n)):not(:has(.event-meta__event-show-map)) {
+          &:not(:nth-child(3n)):not(.event-meta__location-wrapper) {
             &::after {
               content: '';
               border-right: var(--border-thickness-1) solid
                 var(--color-gray-200);
               position: absolute;
               right: 0;
-              top: 10%;
-              height: 80%;
+              top: var(--size-spacing-6);
+              bottom: var(--size-spacing-6);
+              height: 50%;
             }
           }
         }
       }
 
-      + .event-meta__details-wrapper {
-        padding-block-end: 0;
-        border-bottom: none;
+      // make the location wrapper span all columns
+      .event-meta__location-wrapper {
+        @media (min-width: tokens.$break-l) {
+          grid-column: 1/-1;
+          border-bottom: var(--border-thickness-1) solid var(--color-divider);
+        }
       }
-    }
 
-    .event-meta__location-wrapper {
-      border-bottom: none;
-    }
-
-    .event-meta__event-map-wrapper {
-      grid-column: 1/-1; /* span all the possible columns */
-      padding-top: 0;
-      border-bottom: none;
+      .event-meta__event-topics-wrapper {
+        @media (min-width: tokens.$break-l) {
+          grid-column: auto / span 2;
+        }
+      }
     }
   }
 }
@@ -305,8 +301,6 @@
 // WYSIWYG description text
 .event-meta__description {
   @include tokens.body-default;
-
-  border-top: var(--border-thickness-1) solid var(--color-divider);
 }
 
 // Audience
