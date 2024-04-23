@@ -92,7 +92,7 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
               right: 0;
               top: var(--size-spacing-6);
               bottom: var(--size-spacing-6);
-              height: 50%;
+              height: calc(100% - var(--size-spacing-6) * 2);
             }
           }
         }
@@ -248,8 +248,7 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
   padding-top: var(--size-spacing-6);
 
   &[aria-expanded='false'] {
-    visibility: hidden;
-    height: 0;
+    display: none;
   }
 
   iframe {
@@ -258,13 +257,15 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
   }
 }
 
-.event-meta__event-show-map a {
-  @include atoms.plain-link;
-  @include tokens.body-default;
-
+.event-meta__icon {
   display: flex;
   align-items: center;
   gap: var(--size-spacing-3);
+}
+
+.event-meta__event-show-map a {
+  @include atoms.plain-link;
+  @include tokens.body-default;
 }
 
 .event-meta__cta--show-map svg {

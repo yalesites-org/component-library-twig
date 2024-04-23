@@ -82,6 +82,11 @@
       <span class="format-inline">{{ format }}</span>
     {% endset %}
     {% set reference_card__subheading = reference_card__date__formatted ~ reference_card__time__formatted ~ format %}
+  {% elseif card_collection__type == 'single' %}
+    {% set reference_card__cta_primary__href = null %}
+    {% set reference_card__cta_primary__content = null %}
+    {% set reference_card__cta_secondary__href = null %}
+    {% set reference_card__cta_secondary__content = null %}
   {% else %}
     {# If event and list put the date and time in the subheading. #}
     {% set reference_card__subheading = reference_card__date__formatted ~ multi_day_text ~ reference_card__time__formatted %}
