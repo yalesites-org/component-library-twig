@@ -411,4 +411,30 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   flex-wrap: wrap;
   gap: var(--size-spacing-4);
   margin-top: var(--size-spacing-6);
+
+  // Component theme overrides: set specific component themes overrides
+  /// define component name spaced variables and map them to global theme slots.
+  [data-collection-type='single'] & {
+    .cta[data-cta-theme='one'][data-cta-style='filled'] {
+      --color-cta-bg: var(--color-basic-white);
+      --color-cta-bg-hover: transparent;
+      --color-cta-border: var(--color-basic-white);
+      --color-cta-text: var(--color-slot-one);
+
+      &:hover {
+        --color-cta-text-hover: var(--color-basic-white);
+      }
+    }
+
+    .cta[data-cta-theme='one'][data-cta-style='outline'] {
+      --color-cta-action: var(--color-basic-white);
+      --color-cta-action-secondary: var(--color-slot-one);
+      --color-link-base: var(--color-basic-white);
+      --color-link-hover: var(--color-basic-white);
+
+      &:hover {
+        --color-cta-text-hover: var(--color-cta-action-secondary);
+      }
+    }
+  }
 }
