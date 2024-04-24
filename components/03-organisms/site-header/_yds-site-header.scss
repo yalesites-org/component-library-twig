@@ -506,6 +506,8 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
 
     &--mobile {
       > * {
+        width: 100%;
+        max-width: $site-name-as-logo-width; // 400px
         max-height: $site-name-as-logo-height-sm; // 100px
       }
 
