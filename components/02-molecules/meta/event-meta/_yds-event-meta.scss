@@ -257,10 +257,14 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
   }
 }
 
-.event-meta__icon {
+.event-meta__icon--show-map {
   display: flex;
   align-items: center;
   gap: var(--size-spacing-3);
+
+  [aria-expanded='true'] & {
+    display: none;
+  }
 }
 
 .event-meta__event-show-map a {
@@ -275,12 +279,6 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 
 .event-meta__icon--hide-map svg {
   transform: rotate(180deg);
-}
-
-.event-meta__icon--show-map {
-  [aria-expanded='true'] & {
-    display: none;
-  }
 }
 
 .event-meta__icon--hide-map {
