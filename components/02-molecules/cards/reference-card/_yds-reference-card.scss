@@ -414,6 +414,9 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
+  /// Set these to white and blue for the single card collection.
+  /// If we include themes for reference cards, we should refactor this
+  /// and maybe move it to /01-atoms/controls/cta/_yds-cta.scss
   [data-collection-type='single'] & {
     .cta[data-cta-theme='one'][data-cta-style='filled'] {
       --color-cta-bg: var(--color-basic-white);
