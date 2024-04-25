@@ -14,12 +14,6 @@
   class: bem(event_meta__base_class, event_meta__modifiers, event_meta__blockname, event_meta__extra_class),
 }) %}
 
-{% if not ics_url and event_dates %}
-  {% set start_datetime = date(event_dates.0.value|date_modify('+0 hour')) %}
-  {% set end_datetime = date(event_dates.0.end_value|date_modify('+0 hour')) %}
-  {# {% set ics_url = calendar_link('ics', event_title__heading, start_datetime, end_datetime, event_dates.0.is_all_day, 'description', calendar_location_text) %} #}
-{% endif %}
-
 {% if localist_image_url or teaser_media %}
   {% set event_meta__image = 'true' %}
 {% endif %}
@@ -46,7 +40,7 @@
 {% set get_directions__url = place ? 'https://www.google.com/maps/dir/Current+Location/' ~ latLong : '' %}
 
 {% if event_experience %}
-  {% set event_meta__format = event_experience %}
+  {% set event_meta__format = event_experience.0.name %}
 {% endif %}
 
 {# Use in more-dates-link #}
@@ -114,7 +108,7 @@
           {% if localist_image_url %}
             {% include "@atoms/images/image/_responsive-image.twig" with {
               image__src: localist_image_url,
-              image__alt: ' ',
+              image__alt: localist_image_alt,
             }%}
           {% elseif teaser_media %}
             {{ teaser_media }}
@@ -180,13 +174,13 @@
             </ul>
           </div>
         {% endif %}
-        
+
         {# Event Details #}
         <div {{ bem('details', [], event_meta__base_class) }}>
           {# CTAs #}
           <div {{ bem('ctas', [], event_meta__base_class) }}>
             {# Primary CTA #}
-            {% if event_meta__cta_primary__content and event_meta__cta_primary__href %}
+            {% if ticket_url or event_meta__cta_primary__href %}
               {% include "@atoms/controls/cta/yds-cta.twig" with {
                 cta__content: 'Buy Tickets',
                 cta__href: ticket_url ? ticket_url : event_meta__cta_primary__href,
@@ -262,7 +256,7 @@
                 } %}
                 <div {{ bem('map', [], event_meta__base_class) }} aria-expanded="false">
                   <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d12355.08068326396!2d{{ place.longitude }}!3d{{ place.latitude }}!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1712273181159!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                  
+
                   {% include "@atoms/controls/cta/yds-cta.twig" with {
                     cta__content: 'Get Directions',
                     cta__href: get_directions__url,
