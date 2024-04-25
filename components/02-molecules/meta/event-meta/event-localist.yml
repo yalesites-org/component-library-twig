@@ -25,7 +25,11 @@ place:
   postal_code: 21230
   latitude: 39.2704
   longitude: -76.6122
-event_audience: Audience Name
+event_audience:
+  - Audience Name one
+  - Audience Name two
+  - Audience Name three
+  - Audience Name four
 event_topics:
   - name: Topic One
   - name: Topic Two

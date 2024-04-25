@@ -278,9 +278,13 @@
           {% if event_audience %}
             <div {{ bem('audience-wrapper', [], event_meta__base_class) }}>
               <label {{ bem('event__label', [], event_meta__base_class) }}>Audience</label>
-              <p {{ bem('audience', [], event_meta__base_class) }}>
-                {{ event_audience }}
-              </p>
+              <ul {{ bem('audience', [], event_meta__base_class) }}>
+              {% for audience in event_audience %}
+                <li {{ bem('audience-item', [], event_meta__base_class) }}>
+                  {{ audience }}
+                </li>
+              {% endfor %}
+              </ul>
             </div>
           {% endif %}
 
