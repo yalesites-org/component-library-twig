@@ -14,12 +14,6 @@
   class: bem(event_meta__base_class, event_meta__modifiers, event_meta__blockname, event_meta__extra_class),
 }) %}
 
-{% if not ics_url and event_dates %}
-  {% set start_datetime = date(event_dates.0.value|date_modify('+0 hour')) %}
-  {% set end_datetime = date(event_dates.0.end_value|date_modify('+0 hour')) %}
-  {# {% set ics_url = calendar_link('ics', event_title__heading, start_datetime, end_datetime, event_dates.0.is_all_day, 'description', calendar_location_text) %} #}
-{% endif %}
-
 {% if localist_image_url or teaser_media %}
   {% set event_meta__image = 'true' %}
 {% endif %}
@@ -114,7 +108,7 @@
           {% if localist_image_url %}
             {% include "@atoms/images/image/_responsive-image.twig" with {
               image__src: localist_image_url,
-              image__alt: ' ',
+              image__alt: localist_image_alt,
             }%}
           {% elseif teaser_media %}
             {{ teaser_media }}
@@ -186,7 +180,7 @@
           {# CTAs #}
           <div {{ bem('ctas', [], event_meta__base_class) }}>
             {# Primary CTA #}
-            {% if event_meta__cta_primary__content and event_meta__cta_primary__href %}
+            {% if ticket_url or event_meta__cta_primary__href %}
               {% include "@atoms/controls/cta/yds-cta.twig" with {
                 cta__content: 'Buy Tickets',
                 cta__href: ticket_url ? ticket_url : event_meta__cta_primary__href,
