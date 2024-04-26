@@ -83,13 +83,12 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
         @media (min-width: tokens.$break-l) {
           border-bottom: var(--border-thickness-1) solid var(--color-divider);
 
-          &:not(:nth-child(3n)):not(.event-meta__location-wrapper) {
-            &::after {
+          &:not(:first-child):not(.event-meta__location-wrapper):not(.event-meta__audience-wrapper) {
+            &::before {
               content: '';
-              border-right: var(--border-thickness-1) solid
-                var(--color-gray-200);
+              border-left: var(--border-thickness-1) solid var(--color-gray-200);
               position: absolute;
-              right: 0;
+              left: 0;
               top: var(--size-spacing-6);
               bottom: var(--size-spacing-6);
               height: calc(100% - var(--size-spacing-6) * 2);
