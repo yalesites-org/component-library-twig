@@ -13,6 +13,9 @@
 // Tokens.
 @import '~@yalesites-org/tokens/build/css/tokens.css';
 
+@import '~linkpurpose/css/linkpurpose.css';
+@import '../lib/link-treatment/link-treatment.css';
+
 html {
   box-sizing: border-box;
 }
