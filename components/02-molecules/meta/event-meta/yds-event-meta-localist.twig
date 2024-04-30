@@ -180,10 +180,10 @@
           {# CTAs #}
           <div {{ bem('ctas', [], event_meta__base_class) }}>
             {# Primary CTA #}
-            {% if ticket_url or event_meta__cta_primary__href %}
+            {% if ticket_url %}
               {% include "@atoms/controls/cta/yds-cta.twig" with {
                 cta__content: 'Buy Tickets',
-                cta__href: ticket_url ? ticket_url : event_meta__cta_primary__href,
+                cta__href: ticket_url,
                 cta__component_theme: cta__component_theme|default('one'),
               } %}
             {% endif %}
@@ -211,13 +211,13 @@
             </div>
           {% endif %}
 
-          {% if event_meta__cta_primary__href %}
+          {% if event_meta__cta_primary__href or external_website_url %}
             <div {{ bem('website', [], event_meta__base_class) }}>
               <label {{ bem('event__label', [], event_meta__base_class) }}>Event Website</label>
               <div {{ bem('event-website-link', [], event_meta__base_class) }}>
                 {% include "@atoms/controls/cta/yds-cta.twig" with {
-                  cta__content: event_meta__cta_primary__content|default('Event Website'),
-                  cta__href: event_meta__cta_primary__href,
+                  cta__content: event_meta__cta_primary__content ? event_meta__cta_primary__content : external_website_title|default('Event Website'),
+                  cta__href: event_meta__cta_primary__href ? event_meta__cta_primary__href : external_website_url,
                   cta__blockname: event_meta__base_class,
                   cta__style: 'outline',
                 } %}
