@@ -1,7 +1,10 @@
-.quick-links__cta {
-  flex-direction: column;
+/*
+ * Make the SVG the same color as a visited link
+ */
+.card-collection a:visited svg {
+  fill: var(--color-link-visited-base);
 }
 
-.link-purpose {
-  white-space: pre-wrap;
+.quick-links__cta {
+  flex-direction: column;
 }
