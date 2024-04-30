@@ -1,3 +1,7 @@
 .quick-links__cta {
   flex-direction: column;
 }
+
+.link-purpose {
+  white-space: pre-wrap;
+}
