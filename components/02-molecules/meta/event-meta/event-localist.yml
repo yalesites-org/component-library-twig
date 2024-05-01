@@ -26,10 +26,10 @@ place:
   latitude: 39.2704
   longitude: -76.6122
 event_audience:
-  - Audience Name one
-  - Audience Name two
-  - Audience Name three
-  - Audience Name four
+  - name: Audience Name one
+  - name: Audience Name two
+  - name: Audience Name three
+  - name: Audience Name four
 event_topics:
   - name: Topic One
   - name: Topic Two
