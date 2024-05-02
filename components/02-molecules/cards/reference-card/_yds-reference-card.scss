@@ -220,6 +220,29 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       flex: 1 0 calc(48% - var(--size-spacing-4));
     }
   }
+
+  // Localist default image - enforce 3x2 ratio
+  .image--localist-3-2 {
+    > * {
+      aspect-ratio: 3/2;
+      object-fit: cover;
+
+      // Safari 14 fix for aspect-ratio
+      @supports not (aspect-ratio: 3 / 2) {
+        &::before {
+          float: left;
+          padding-top: 66.66%;
+          content: '';
+        }
+
+        &::after {
+          display: block;
+          content: '';
+          clear: both;
+        }
+      }
+    }
+  }
 }
 
 .reference-card__content {

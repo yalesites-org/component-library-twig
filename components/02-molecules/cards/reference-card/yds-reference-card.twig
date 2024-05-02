@@ -15,6 +15,7 @@
 
 {% set reference_card__base_class = 'reference-card' %}
 {% set reference_card__image = reference_card__image|default('true') %}
+{% set reference_card__image_aria = reference_card__image_aria|default(reference_card__heading) %}
 
 {# If stats__item__attributes is not defined, set it to an empty object by default #}
 {% set reference_card__attributes = {
@@ -76,7 +77,7 @@
   </div>
   {% if reference_card__image == 'true' %}
     <div {{ bem('image', [], reference_card__base_class) }}>
-      <a {{ bem('image-link', [], reference_card__base_class) }} href="{{reference_card__url}}" aria-label="{{reference_card__heading}}" tabindex="-1" aria-hidden="true">
+      <a {{ bem('image-link', [], reference_card__base_class) }} href="{{reference_card__url}}" aria-label="{{reference_card__image_aria}}" tabindex="-1" aria-hidden="true">
         {% block reference_card__image %}
           {% include "@atoms/images/image/_responsive-image.twig" %}
         {% endblock %}
