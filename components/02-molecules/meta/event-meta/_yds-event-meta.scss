@@ -302,6 +302,11 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 // WYSIWYG description text
 .event-meta__description {
   @include tokens.body-default;
+
+  // image in description
+  img {
+    width: auto;
+  }
 }
 
 // Audience
