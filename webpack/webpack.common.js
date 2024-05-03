@@ -50,8 +50,8 @@ module.exports = {
       loaders.CSSLoader,
       loaders.SVGSpriteLoader,
       loaders.ImageLoader,
-      // loaders.ExportsLoader,
       loaders.JSLoader,
+      loaders.ExportsLoader,
     ],
   },
   plugins: [
