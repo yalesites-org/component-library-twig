@@ -210,6 +210,13 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
 }
 
 .quick-links__list-item {
+  // Make the li look like the button so that we can not have to flex, allowing
+  // the span in a link to look like it's part of the link properly in Safari.
+  @include atoms.cta-wrapper;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100%;
 
   [data-quick-links-variation='promotional'] & {
@@ -227,10 +234,6 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .quick-links__cta {
   @include atoms.cta;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
   // in subtle variartion, inline-flex the links
   [data-quick-links-variation='subtle'] & {

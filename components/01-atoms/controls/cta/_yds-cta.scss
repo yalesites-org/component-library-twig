@@ -16,7 +16,7 @@ $cta-outline-weights: (
   '4': var(--border-thickness-4),
 );
 
-@mixin cta {
+@mixin cta-wrapper {
   // prettier-ignore
   border: var(--border-thickness-cta, var(--border-thickness-2)) solid var(--color-cta-border);
   border-radius: var(--border-radius-cta, var(--radius-0));
@@ -27,6 +27,10 @@ $cta-outline-weights: (
   text-decoration: none;
   text-align: center;
   min-height: var(--size-click-target-minimum);
+}
+
+@mixin cta {
+  @include cta-wrapper;
 
   &:hover {
     background-color: var(--color-cta-bg-hover);
