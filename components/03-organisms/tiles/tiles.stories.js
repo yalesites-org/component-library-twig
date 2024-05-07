@@ -31,13 +31,13 @@ export default {
     },
     presentationStyle: {
       name: 'Presentation Style',
-      options: ['number', 'icon', 'text-only'],
+      options: ['heading', 'icon', 'text-only'],
       type: 'select',
-      defaultValue: 'number',
+      defaultValue: 'heading',
     },
     alignment: {
       name: 'Alignment',
-      options: ['left', 'right'],
+      options: ['left', 'center', 'right'],
       type: 'select',
       defaultValue: 'left',
     },

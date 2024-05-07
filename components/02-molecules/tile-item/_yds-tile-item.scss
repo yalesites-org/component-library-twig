@@ -112,6 +112,10 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       align-items: flex-end;
     }
 
+    [data-component-alignment='center'] & {
+      align-items: center;
+    }
+
     [data-component-tile-style='text-only'][data-component-vertical-alignment='bottom']
       & {
       justify-content: flex-end;
@@ -119,7 +123,7 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 }
 
-.tile__item__number {
+.tile__item__heading {
   @include tokens.h1-yale-new;
 
   position: relative;
@@ -158,6 +162,10 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   [data-component-alignment='right'] & {
     text-align: right;
+  }
+
+  [data-component-alignment='center'] & {
+    text-align: center;
   }
 }
 
