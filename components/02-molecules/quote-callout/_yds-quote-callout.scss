@@ -1,8 +1,8 @@
 @use '../../00-tokens/tokens';
 @use '../../00-tokens/functions/map';
 
-$global-standalone-quote-themes: map.deep-get(tokens.$tokens, 'global-themes');
-$standalone-quote-component-themes: map.deep-get(
+$global-quote-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
+$quote-callout-component-themes: map.deep-get(
   tokens.$tokens,
   'component-themes'
 );
@@ -11,9 +11,9 @@ blockquote {
   margin: 0;
 }
 
-.standalone-quote {
-  --color-standalone-quote-quote: var(--color-gray-800);
-  --color-standalone-quote-attribution: var(--color-basic-brown-gray);
+.quote-callout {
+  --color-quote-callout-quote: var(--color-gray-800);
+  --color-quote-callout-attribution: var(--color-basic-brown-gray);
 
   @include tokens.spacing-page-section;
 
@@ -33,7 +33,7 @@ blockquote {
 
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
-  @each $theme, $value in $standalone-quote-component-themes {
+  @each $theme, $value in $quote-callout-component-themes {
     &[data-component-theme='#{$theme}'] {
       // prettier-ignore
       --color-slot-one: var(--component-themes-#{$theme}-slot-one);
@@ -44,12 +44,10 @@ blockquote {
       --color-slot-six: var(--component-themes-#{$theme}-slot-six);
       --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
       --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
-      --color-standalone-quote-accent: var(--color-standalone-quote-accent);
-      --color-standalone-quote-background: var(
-        --color-standalone-quote-background
-      );
+      --color-quote-callout-accent: var(--color-quote-callout-accent);
+      --color-quote-callout-background: var(--color-quote-callout-background);
 
-      background-color: var(--color-standalone-quote-background);
+      background-color: var(--color-quote-callout-background);
     }
   }
 
@@ -57,7 +55,7 @@ blockquote {
   // This establishes `--color-slot-` variables name-spaced to the selector
   // in which it is used. We can map component-level variables to global-level
   // `--color-slot-` variables.
-  @each $globalTheme, $value in $global-standalone-quote-themes {
+  @each $globalTheme, $value in $global-quote-callout-themes {
     [data-global-theme='#{$globalTheme}'] & {
       --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
       --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
@@ -79,40 +77,40 @@ blockquote {
   // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
-    --color-standalone-quote-background: var(--color-slot-one);
-    --color-standalone-quote-accent: var(--color-slot-eight);
-    --color-standalone-quote-quote: var(--color-slot-eight);
-    --color-standalone-quote-attribution: var(--color-slot-eight);
+    --color-quote-callout-background: var(--color-slot-one);
+    --color-quote-callout-accent: var(--color-slot-eight);
+    --color-quote-callout-quote: var(--color-slot-eight);
+    --color-quote-callout-attribution: var(--color-slot-eight);
   }
 
   &[data-component-theme='two'] {
-    --color-standalone-quote-background: var(--color-slot-three);
-    --color-standalone-quote-accent: var(--color-slot-seven);
-    --color-standalone-quote-quote: var(--color-slot-seven);
-    --color-standalone-quote-attribution: var(--color-slot-seven);
+    --color-quote-callout-background: var(--color-slot-three);
+    --color-quote-callout-accent: var(--color-slot-seven);
+    --color-quote-callout-quote: var(--color-slot-seven);
+    --color-quote-callout-attribution: var(--color-slot-seven);
   }
 
   &[data-component-theme='three'] {
-    --color-standalone-quote-background: var(--color-slot-five);
-    --color-standalone-quote-accent: var(--color-slot-eight);
-    --color-standalone-quote-quote: var(--color-slot-eight);
-    --color-standalone-quote-attribution: var(--color-slot-eight);
+    --color-quote-callout-background: var(--color-slot-five);
+    --color-quote-callout-accent: var(--color-slot-eight);
+    --color-quote-callout-quote: var(--color-slot-eight);
+    --color-quote-callout-attribution: var(--color-slot-eight);
   }
 }
 
-.standalone-quote__figure {
-  --standalone-quote-border-height: 100%;
+.quote-callout__figure {
+  --quote-callout-border-height: 100%;
 
   @media (min-width: tokens.$break-mobile) {
     max-width: calc(var(--size-component-layout-width-content) - 11rem);
   }
 
   // with image
-  [data-standalone-quote-style='image'] & {
+  [data-quote-callout-style='image'] & {
     flex: 1 0 calc(75% - var(--size-spacing-8));
   }
 
-  [data-standalone-quote-style='bar'][data-standalone-quote-quote-alignment='left']
+  [data-quote-callout-style='bar'][data-quote-callout-quote-alignment='left']
     & {
     position: relative;
     padding-left: var(--size-spacing-6);
@@ -126,13 +124,13 @@ blockquote {
       position: absolute;
       left: calc(var(--border-thickness-4) * -1);
       bottom: 0;
-      height: var(--standalone-quote-border-height);
+      height: var(--quote-callout-border-height);
       width: var(--border-thickness-4);
-      background-color: var(--color-standalone-quote-accent);
+      background-color: var(--color-quote-callout-accent);
     }
   }
 
-  [data-standalone-quote-style='bar'][data-standalone-quote-quote-alignment='right']
+  [data-quote-callout-style='bar'][data-quote-callout-quote-alignment='right']
     & {
     position: relative;
     padding-right: var(--size-spacing-6);
@@ -147,13 +145,13 @@ blockquote {
       position: absolute;
       right: calc(var(--border-thickness-4) * -1);
       bottom: 0;
-      height: var(--standalone-quote-border-height);
+      height: var(--quote-callout-border-height);
       width: var(--border-thickness-4);
-      background-color: var(--color-standalone-quote-accent);
+      background-color: var(--color-quote-callout-accent);
     }
   }
 
-  [data-standalone-quote-style='quote'][data-standalone-quote-quote-alignment='left']
+  [data-quote-callout-style='quote'][data-quote-callout-quote-alignment='left']
     & {
     position: relative;
     padding-left: var(--size-spacing-8);
@@ -166,7 +164,7 @@ blockquote {
       left: 0;
       font-size: 4em;
       line-height: 0.8;
-      color: var(--color-standalone-quote-accent);
+      color: var(--color-quote-callout-accent);
     }
 
     @media (min-width: tokens.$break-mobile) {
@@ -174,7 +172,7 @@ blockquote {
     }
   }
 
-  [data-standalone-quote-style='quote'][data-standalone-quote-quote-alignment='right']
+  [data-quote-callout-style='quote'][data-quote-callout-quote-alignment='right']
     & {
     position: relative;
     padding-left: var(--size-spacing-8);
@@ -192,22 +190,22 @@ blockquote {
       left: 0;
       font-size: 4em;
       line-height: 0.8;
-      color: var(--color-standalone-quote-accent);
+      color: var(--color-quote-callout-accent);
     }
   }
 
   // if animation is active, animate bar variation
   // prettier-ignore
-  [data-site-animation='artistic'] [data-standalone-quote-style='bar'][data-standalone-quote-quote-alignment='left'][data-animate-item='true'] &,
-  [data-site-animation='artistic'] [data-standalone-quote-style='bar'][data-standalone-quote-quote-alignment='right'][data-animate-item='true'] & {
+  [data-site-animation='artistic'] [data-quote-callout-style='bar'][data-quote-callout-quote-alignment='left'][data-animate-item='true'] &,
+  [data-site-animation='artistic'] [data-quote-callout-style='bar'][data-quote-callout-quote-alignment='right'][data-animate-item='true'] & {
     @include tokens.animate($duration: var(--animation-speed-default));
 
-    --standalone-quote-border-height: 0;
+    --quote-callout-border-height: 0;
 
     &::before {
       --animation-speed-mid-slow: 400ms;
 
-      height: var(--standalone-quote-border-height);
+      height: var(--quote-callout-border-height);
 
       @include tokens.animate(
         $property: height,
@@ -219,18 +217,18 @@ blockquote {
 
   // when the animate class is added, animate the quote bar height.
   // prettier-ignore
-  [data-site-animation='artistic'] [data-standalone-quote-style='bar'][data-animate-item='true'].animate & {
-    --standalone-quote-border-height: 100%;
+  [data-site-animation='artistic'] [data-quote-callout-style='bar'][data-animate-item='true'].animate & {
+    --quote-callout-border-height: 100%;
 
     &::before {      
-      @include tokens.expand-height(--standalone-quote-border-height);
+      @include tokens.expand-height(--quote-callout-border-height);
     }
   }
 }
 
-.standalone-quote__inner {
+.quote-callout__inner {
   // image variaton
-  [data-standalone-quote-style='image'] & {
+  [data-quote-callout-style='image'] & {
     display: flex;
     flex-flow: column nowrap;
     gap: var(--size-spacing-8);
@@ -240,7 +238,7 @@ blockquote {
     }
   }
 
-  [data-standalone-quote-style='image'][data-standalone-quote-quote-alignment='right']
+  [data-quote-callout-style='image'][data-quote-callout-quote-alignment='right']
     & {
     @media (min-width: tokens.$break-mobile) {
       flex-direction: row-reverse;
@@ -253,9 +251,9 @@ blockquote {
   }
 }
 
-.standalone-quote__quote {
+.quote-callout__quote {
   font: var(--font-style-body-xl);
-  color: var(--color-standalone-quote-quote);
+  color: var(--color-quote-callout-quote);
 
   > *:last-child {
     margin-top: 0;
@@ -263,13 +261,13 @@ blockquote {
   }
 }
 
-.standalone-quote__attribution {
+.quote-callout__attribution {
   font: var(--font-style-body-default);
-  color: var(--color-standalone-quote-attribution);
+  color: var(--color-quote-callout-attribution);
   margin-top: 0.4em;
 }
 
-.standalone-quote__image {
+.quote-callout__image {
   width: 100%;
   max-width: 25%;
   align-self: flex-start;
