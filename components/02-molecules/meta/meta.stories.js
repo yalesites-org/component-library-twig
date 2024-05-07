@@ -65,6 +65,8 @@ export const Profile = ({
   subTitle,
   department,
   profileImageOrientation,
+  profileImageAlignment,
+  profileImageStyle,
 }) =>
   profileMetaTwig({
     ...imageData.responsive_images['3x2'],
@@ -78,6 +80,8 @@ export const Profile = ({
     image__sizes__1: imageData.responsive_images['2x3'].image__sizes,
     image__alt__1: imageData.responsive_images['2x3'].image__alt,
     image__src__1: imageData.responsive_images['2x3'].image__src,
+    profile_meta__image_style: profileImageStyle,
+    profile_meta__image_alignment: profileImageAlignment,
   });
 Profile.argTypes = {
   heading: {
@@ -111,5 +115,17 @@ Profile.argTypes = {
     type: 'select',
     options: ['landscape', 'portrait'],
     defaultValue: 'landscape',
+  },
+  profileImageAlignment: {
+    name: 'Profile Image Alignment',
+    type: 'select',
+    options: ['left', 'right'],
+    defaultValue: 'right',
+  },
+  profileImageStyle: {
+    name: 'Profile Image Style',
+    type: 'select',
+    options: ['inline', 'outdent'],
+    defaultValue: 'inline',
   },
 };
