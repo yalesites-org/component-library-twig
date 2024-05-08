@@ -265,6 +265,11 @@ blockquote {
   font: var(--font-style-body-default);
   color: var(--color-quote-callout-attribution);
   margin-top: 0.4em;
+  display: inline-flex;
+
+  > p {
+    margin: 0;
+  }
 }
 
 .quote-callout__image {
