@@ -204,6 +204,14 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   @include atoms.plain-link;
   @include tokens.h4-yale-new;
 
+  [data-component-alignment='center'] & {
+    text-align: center;
+  }
+
+  [data-component-alignment='right'] & {
+    text-align: right;
+  }
+
   &:hover {
     color: var(--color-tile-item-content);
   }

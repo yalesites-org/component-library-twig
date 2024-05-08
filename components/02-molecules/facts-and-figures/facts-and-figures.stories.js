@@ -60,7 +60,7 @@ export const FactsAndFigures = ({
   factsAndFiguresIcon,
 }) => `
 
-  <ul class='facts-and-figures__group__wrap' data-factsAndFigures-collection-type='single'>
+  <ul class='facts-and-figures__group__wrap' data-facts-and-figures-collection-type="single">
     ${factsAndFiguresTwig({
       facts_and_figures__stat: factsAndFiguresData.facts_and_figures__stat,
       facts_and_figures__content:
