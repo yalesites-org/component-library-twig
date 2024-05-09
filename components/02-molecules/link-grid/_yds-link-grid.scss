@@ -85,7 +85,7 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 
   // first column gets wider border
-  &--one {
+  &:first-of-type {
     border-width: var(--size-thickness-4);
   }
 }
