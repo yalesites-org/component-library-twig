@@ -19,6 +19,7 @@
 
 {% set facts_and_figures__group__attributes = {
   'data-component-width': facts_and_figures__group__width,
+  'data-component-grid-count': facts_and_figures__group__grid_count|default('four'),
   'dats-facts-and-figures-style': facts_and_figures__group__presentation_style|default('basic'),
   'dats-facts-and-figures-font-style': facts_and_figures__group__font_style|default('normal'),
   'dats-facts-and-figures-has-icon': facts_and_figures__group__has_icon == 'true' ? 'true' : 'false',

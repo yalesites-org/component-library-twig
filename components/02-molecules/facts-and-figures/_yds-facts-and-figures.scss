@@ -79,17 +79,16 @@ $facts-and-figures-component-themes: map.deep-get(
   &__inner {
     display: flex;
     flex-flow: column nowrap;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     padding: var(--size-spacing-8) 0;
     height: 100%;
 
     [data-component-alignment='left'] & {
-      justify-content: flex-start;
       text-align: left;
     }
 
     [data-component-alignment='center'] & {
-      justify-content: center;
       text-align: center;
     }
 

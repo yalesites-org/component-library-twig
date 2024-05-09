@@ -73,6 +73,12 @@ export default {
       type: 'select',
       defaultValue: 'normal',
     },
+    gridCount: {
+      name: 'Grid Count',
+      options: ['two', 'three', 'four'],
+      type: 'select',
+      defaultValue: 'three',
+    },
     alignment: {
       name: 'Alignment',
       options: ['left', 'center'],
@@ -89,6 +95,7 @@ export const FactsAndFiguresGroup = ({
   globalTheme,
   presentationStyle,
   fontStyle,
+  gridCount,
   alignment,
   themeColor,
   image,
@@ -102,6 +109,7 @@ export const FactsAndFiguresGroup = ({
         facts_and_figures__group__has_icon: factsAndFiguresGroupIcons
           ? 'true'
           : 'false',
+        facts_and_figures__group__grid_count: gridCount,
         facts_and_figures__group__alignment: alignment,
         facts_and_figures__group__presentation_style: presentationStyle,
         facts_and_figures__group__font_style: fontStyle,
