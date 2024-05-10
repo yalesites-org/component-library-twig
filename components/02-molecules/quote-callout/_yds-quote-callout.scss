@@ -15,10 +15,22 @@ blockquote {
   --color-quote-callout-quote: var(--color-gray-800);
   --color-quote-callout-attribution: var(--color-basic-brown-gray);
 
-  @include tokens.spacing-page-section;
+  padding-block-start: var(--size-spacing-10);
+  padding-block-end: var(--size-spacing-10);
 
-  padding-top: var(--size-spacing-11);
-  padding-bottom: var(--size-spacing-11);
+  // Or if the spotlight is the only spotlight on the page
+  &[data-spotlights-position='first-and-last'] {
+    @include tokens.spacing-page-section;
+  }
+
+  // We're using JavaScript to evaluate the last and first spotlights in a group of spotlights
+  &[data-spotlights-position='first'] {
+    margin-top: var(--size-spacing-10);
+  }
+
+  &[data-spotlights-position='last'] {
+    margin-bottom: var(--size-spacing-10);
+  }
 
   // if animation is active
   [data-site-animation='artistic'] & {

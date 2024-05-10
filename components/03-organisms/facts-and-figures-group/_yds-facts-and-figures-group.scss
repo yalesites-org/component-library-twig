@@ -13,11 +13,24 @@ $facts-and-figures-group-component-themes: map.deep-get(
 );
 
 .facts-and-figures__group {
-  @include tokens.spacing-page-section($banner-spacing: true);
-
-  padding-block: var(--size-spacing-11);
   width: 100%;
   position: relative;
+  padding-block-start: var(--size-spacing-10);
+  padding-block-end: var(--size-spacing-10);
+
+  // Or if the spotlight is the only spotlight on the page
+  &[data-spotlights-position='first-and-last'] {
+    @include tokens.spacing-page-section;
+  }
+
+  // We're using JavaScript to evaluate the last and first spotlights in a group of spotlights
+  &[data-spotlights-position='first'] {
+    margin-top: var(--size-spacing-10);
+  }
+
+  &[data-spotlights-position='last'] {
+    margin-bottom: var(--size-spacing-10);
+  }
 
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
