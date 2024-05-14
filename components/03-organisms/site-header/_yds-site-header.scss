@@ -7,6 +7,9 @@ $site-header-layout: map.deep-get(tokens.$tokens, 'site-header-layout');
 $global-site-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $site-max-width: 84rem;
 $background-image-max-width: 100rem;
+$site-name-as-logo-width: 25rem; // 400px
+$site-name-as-logo-height: 12.5rem; // 200px
+$site-name-as-logo-height-sm: 6.25rem; // 100px
 
 :root {
   --site-header-animation-speed: var(--animation-speed-slow);
@@ -492,8 +495,8 @@ $background-image-max-width: 100rem;
     &--desktop {
       > * {
         height: auto;
-        max-height: 200px;
-        max-width: 200px;
+        max-height: $site-name-as-logo-height; // 200px
+        max-width: $site-name-as-logo-width; // 400px
       }
 
       @media (max-width: tokens.$break-mobile-max) {
@@ -503,7 +506,9 @@ $background-image-max-width: 100rem;
 
     &--mobile {
       > * {
-        max-height: 100px;
+        width: 100%;
+        max-width: $site-name-as-logo-width; // 400px
+        max-height: $site-name-as-logo-height-sm; // 100px
       }
 
       @media (min-width: tokens.$break-mobile) {
