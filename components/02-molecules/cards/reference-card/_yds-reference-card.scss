@@ -42,6 +42,15 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     --color-heading: var(--color-card-single-text);
 
     margin-block-start: var(--size-spacing-11);
+
+    // Overload the color to be the single text color to fix contrast issues.
+    & a.reference-card__heading-link {
+      color: var(--color-card-single-text);
+
+      &:visited {
+        color: var(--color-card-single-text);
+      }
+    }
   }
 
   // Condensed card collection
