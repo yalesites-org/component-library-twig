@@ -23,4 +23,12 @@ text_field__content: '<h2>H2 About YDS</h2>
   <s>This text has a strike-through</s><br />
   Superscript<sup>1 2</sup><br />
   Subscript for things like H<sub>2</sub>O<br />
-  <code>This is what inline code looks like.</code></p>'
+  <code>This is what inline code looks like.</code>
+  <pre><code>
+    This is what a block of code code looks like.<br />
+    {<br />
+      &nbsp; &nbsp; padding: 0 var(--size-spacing-3);<br />
+      &nbsp; &nbsp; background-color: var(--color-code-background);<br />
+    }
+  </code></pre>
+  </p>'

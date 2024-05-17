@@ -6,6 +6,11 @@ p {
   p:last-child {
     margin-bottom: 0;
   }
+
+  pre code {
+    display: block;
+    padding: 20px;
+  }
 }
 
 strong {
