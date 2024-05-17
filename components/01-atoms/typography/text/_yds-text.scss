@@ -7,9 +7,10 @@ p {
     margin-bottom: 0;
   }
 
+  // Code blocks.
   pre code {
     display: block;
-    padding: 20px;
+    padding: var(--size-spacing-3);
   }
 }
 

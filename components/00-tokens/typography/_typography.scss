@@ -20,6 +20,11 @@ code {
     --color-code-border: var(--color-gray-800);
     --color-code-background: var(--color-gray-600);
   }
+
+  // Remove the border style in code blocks within ckeditor.
+  .ck-content pre & {
+    border: 0;
+  }
 }
 
 // Heading mixins
