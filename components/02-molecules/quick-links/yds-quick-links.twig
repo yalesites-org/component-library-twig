@@ -26,20 +26,11 @@
   'class': bem(quick_links__base_class),
 } %}
 
-{% if quick_links__variation == 'promotional' %}
-  {% set quick_links__attributes = quick_links__attributes|merge({
-    'data-component-width': 'site',
-    'data-component-theme': quick_links__background_color|default('one'),
-    'data-quick-links-layout': quick_links__layout|default('stacked'),
-  }) %}
-{% endif %}
-
-{% if quick_links__variation == 'subtle' %}
-  {% set quick_links__attributes = quick_links__attributes|merge({
-    'data-component-width': quick_links__width|default('site'),
-    'data-component-alignment': quick_links__alignment|default('left'),
-  }) %}
-{% endif %}
+{% set quick_links__attributes = quick_links__attributes|merge({
+  'data-component-width': 'site',
+  'data-component-theme': quick_links__background_color|default('one'),
+  'data-quick-links-layout': quick_links__layout|default('stacked'),
+}) %}
 
 <div {{ add_attributes(quick_links__attributes) }}>
   {% block prefix_suffix %}
