@@ -6,6 +6,11 @@ p {
   p:last-child {
     margin-bottom: 0;
   }
+
+  .oldstyle-nums {
+    font: var(--font-style-branding-yale);
+    font-variant-numeric: oldstyle-nums;
+  }
 }
 
 strong {
