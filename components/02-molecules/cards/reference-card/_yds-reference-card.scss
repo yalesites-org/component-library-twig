@@ -375,6 +375,12 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     @include tokens.h3-yale-new;
 
     font-weight: var(--font-weights-yalenew-bold);
+
+    // Override hover link color since slot 2 could cause contrast issues
+    // with the darker background.
+    & .reference-card__heading-link {
+      --color-link-hover: var(--color-link-hover);
+    }
   }
 
   [data-collection-type='grid'][data-collection-featured='true'] & {
