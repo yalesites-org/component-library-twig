@@ -1,18 +1,39 @@
-import hljs from 'highlight.js';
+import hljs from 'highlight.js/lib/core';
+
+import css from 'highlight.js/lib/languages/css';
+import html from 'highlight.js/lib/languages/vbscript-html';
+import javascript from 'highlight.js/lib/languages/javascript';
+import php from 'highlight.js/lib/languages/php';
+import python from 'highlight.js/lib/languages/python';
+import twig from 'highlight.js/lib/languages/twig';
+import typescript from 'highlight.js/lib/languages/typescript';
+import scss from 'highlight.js/lib/languages/scss';
+import yaml from 'highlight.js/lib/languages/yaml';
+
 import 'highlight.js/styles/monokai-sublime.css';
+
+// Register the languages we need
+hljs.registerLanguage('css', css);
+hljs.registerLanguage('html', html);
+hljs.registerLanguage('javascript', javascript);
+hljs.registerLanguage('php', php);
+hljs.registerLanguage('python', python);
+hljs.registerLanguage('twig', twig);
+hljs.registerLanguage('typescript', typescript);
+hljs.registerLanguage('scss', scss);
+hljs.registerLanguage('yaml', yaml);
 
 hljs.configure({
   languages: [
+    'css',
+    'html',
+    'javascript',
     'php',
     'python',
-    'javascript',
-    'typescript',
-    'json',
-    'scss',
-    'css',
-    'yml',
     'twig',
-    'html',
+    'typescript',
+    'scss',
+    'yaml',
   ],
 });
 
