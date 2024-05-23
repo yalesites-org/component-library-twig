@@ -243,6 +243,7 @@
             <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
               <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
               <div {{ bem('location', [], event_meta__base_class) }}>
+                {{ place.name }}<br>
                 {{ place.address }}
                 {{ place.city }}, {{ place.state }} {{ place.postal_code }}
               </div>
@@ -267,7 +268,7 @@
                 </div>
               </div>
             </div>
-          {% endif %} 
+          {% endif %}
 
           {% if event_audience %}
             <div {{ bem('audience-wrapper', [], event_meta__base_class) }}>
