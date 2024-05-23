@@ -9,6 +9,7 @@ import twig from 'highlight.js/lib/languages/twig';
 import typescript from 'highlight.js/lib/languages/typescript';
 import scss from 'highlight.js/lib/languages/scss';
 import yaml from 'highlight.js/lib/languages/yaml';
+import xml from 'highlight.js/lib/languages/xml';
 
 import 'highlight.js/styles/monokai-sublime.css';
 
@@ -22,6 +23,7 @@ hljs.registerLanguage('twig', twig);
 hljs.registerLanguage('typescript', typescript);
 hljs.registerLanguage('scss', scss);
 hljs.registerLanguage('yaml', yaml);
+hljs.registerLanguage('xml', xml);
 
 hljs.configure({
   languages: [
@@ -34,6 +36,7 @@ hljs.configure({
     'typescript',
     'scss',
     'yaml',
+    'xml',
   ],
 });
 
