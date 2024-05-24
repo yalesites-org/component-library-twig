@@ -19,7 +19,7 @@ $cta-outline-weights: (
 @mixin cta {
   // prettier-ignore
   border: var(--border-thickness-cta, var(--border-thickness-2)) solid var(--color-cta-border);
-  border-radius: var(--border-radius-cta, var(--radius-0));
+  border-radius: var(--border-radius-cta, var(--radius-20));
   background-color: var(--color-cta-bg);
   color: var(--color-cta-text);
   font-weight: var(--font-weights-mallory-medium);
