@@ -11,8 +11,6 @@ import scss from 'highlight.js/lib/languages/scss';
 import yaml from 'highlight.js/lib/languages/yaml';
 import xml from 'highlight.js/lib/languages/xml';
 
-import 'highlight.js/styles/monokai-sublime.css';
-
 // Register the languages we need
 hljs.registerLanguage('css', css);
 hljs.registerLanguage('html', html);
