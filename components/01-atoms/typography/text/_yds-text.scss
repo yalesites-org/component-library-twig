@@ -9,6 +9,9 @@ p {
 
   // Code blocks.
   pre code {
+    display: block;
+    padding: 1em;
+
     // from highlightjs Monokai Sublime
     // @see highlight.js/styles/monokai-sublime.css
 
@@ -19,9 +22,7 @@ p {
     &.hljs {
       background: #23241f;
       color: #f8f8f2;
-      display: block;
       overflow-x: auto;
-      padding: 1em;
     }
 
     .hljs-tag,
