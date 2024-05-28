@@ -64,7 +64,7 @@
           } %}
         {% endif %}
         {# Add to calendar #}
-        {% if reference_card__cta_secondary__content and reference_card__cta_secondary__href %}
+        {% if reference_card__cta_secondary__content and reference_card__cta_secondary__href and not event_has_passed %}
           {% include "@atoms/controls/cta/yds-cta.twig" with {
             cta__content: reference_card__cta_secondary__content,
             cta__href: reference_card__cta_secondary__href,

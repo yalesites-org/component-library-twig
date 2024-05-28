@@ -188,7 +188,7 @@
               } %}
             {% endif %}
             {# Add to calendar #}
-            {% if event_meta__cta_secondary__content %}
+            {% if event_meta__cta_secondary__content and not event_has_passed %}
               {% include "@atoms/controls/cta/yds-cta.twig" with {
                 cta__content: event_meta__cta_secondary__content,
                 cta__href: ics_url ? ics_url : event_meta__cta_secondary__href,
