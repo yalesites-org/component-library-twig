@@ -30,8 +30,8 @@
 }) %}
 
 <{{ control__element }} {{ add_attributes(control__attributes) }}>
-  {{- control__content -}}
-  {%- include "@atoms/controls/base/yds-control-icon.twig" with {
-    control_icon__url_type: control__url_type,
+  {%- include "@atoms/controls/base/yds-control-wrapper.twig" with {
+	control_wrapper__url_type: control__url_type,
+	control_wrapper__content: control__content,
   } %}
 </{{ control__element }}>

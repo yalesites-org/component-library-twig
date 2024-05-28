@@ -1,0 +1,18 @@
+{#
+ # Available Variables:
+ # - control_wrapper__url_type: The type of icon to use if any.
+ # - control_wrapper__content
+ # - control_wrapper__element: The element to wrap with (default: span)
+ # - control_wrapper__attributes: The attributes for the wrapper (default: class: 'link-wrapper')
+ #}
+
+{% set control_wrapper__attributes = control_wrapper__attributes|default({class: 'link-wrapper'}) %}
+
+{% set control_wrapper__element = control_wrapper__element|default('span') %}
+
+<{{ control_wrapper__element }} {{ add_attributes(control__wrapper_attributes) }}>
+  {{- control_wrapper__content -}}
+  {%- include "@atoms/controls/base/yds-control-icon.twig" with {
+    control_icon__url_type: control_wrapper__url_type,
+  } %}
+</{{ control_wrapper__element }}>
