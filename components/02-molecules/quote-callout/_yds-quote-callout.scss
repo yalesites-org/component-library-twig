@@ -119,7 +119,7 @@ blockquote {
 
   // with image
   [data-quote-callout-style='image'] & {
-    flex: 1 0 calc(75% - var(--size-spacing-8));
+    flex: 1 0 calc(70% - var(--size-spacing-8));
   }
 
   [data-quote-callout-style='bar'][data-quote-callout-quote-alignment='left']
@@ -174,8 +174,8 @@ blockquote {
       position: absolute;
       top: 0;
       left: 0;
-      font-size: 4em;
-      line-height: 0.8;
+      font-size: var(--size-spacing-12);
+      line-height: 1;
       color: var(--color-quote-callout-accent);
     }
 
@@ -200,8 +200,8 @@ blockquote {
       position: absolute;
       top: 0;
       left: 0;
-      font-size: 4em;
-      line-height: 0.8;
+      font-size: var(--size-spacing-12);
+      line-height: 1;
       color: var(--color-quote-callout-accent);
     }
   }
@@ -276,7 +276,7 @@ blockquote {
 .quote-callout__attribution {
   font: var(--font-style-body-default);
   color: var(--color-quote-callout-attribution);
-  margin-top: 0.4em;
+  margin-top: var(--size-spacing-3);
   display: inline-flex;
 
   > p {
@@ -286,11 +286,11 @@ blockquote {
 
 .quote-callout__image {
   width: 100%;
-  max-width: 25%;
+  max-width: 60%;
   align-self: flex-start;
 
   @media (min-width: tokens.$break-mobile) {
-    flex: 1 0 calc(25% - var(--size-spacing-8));
+    flex: 1 0 calc(30% - var(--size-spacing-8));
 
     // push the image down a bit to align with the quote text
     margin-top: var(--size-spacing-4);
