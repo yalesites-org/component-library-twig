@@ -23,12 +23,6 @@ export default {
       type: 'string',
       defaultValue: quickLinksData.quick_links__description,
     },
-    variation: {
-      name: 'Variation',
-      type: 'select',
-      options: ['promotional', 'subtle'],
-      defaultValue: 'promotional',
-    },
     image: {
       name: 'With image',
       type: 'boolean',
