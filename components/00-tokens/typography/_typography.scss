@@ -36,6 +36,14 @@ code {
 @mixin h3-yale-new {
   font: var(--font-style-heading-h3-yale-new);
   font-variant-numeric: oldstyle-nums;
+
+  // container query for container defined in
+  // component-library-twig/components/03-organisms/layout/two-column/_yds-two-column.scss
+  /* stylelint-disable */
+  @container sidebar-col-2 (min-width: 300px) {
+    font-size: clamp(1.5rem, 7cqi, 2.5rem);
+  }
+  /* stylelint-enable */
 }
 
 @mixin h4-yale-new {
