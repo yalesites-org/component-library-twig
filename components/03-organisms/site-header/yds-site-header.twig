@@ -130,7 +130,9 @@
         } %}
       {% endif %}
       {# Mobile Menu Toggle #}
-      {% include "@molecules/menu/menu-toggle/yds-menu-toggle.twig" %}
+      {% if utility_nav__search is not null or elements['utility_navigation']['content']['#items'] is not empty or elements['main_navigation']['content']['#items'] is not empty %}
+        {% include "@molecules/menu/menu-toggle/yds-menu-toggle.twig" %}
+      {% endif %}
     </div>
     <div {{ bem('menu-wrapper', [], site_header__base_class) }}>
     {# If header type is simple, load the simple component #}
