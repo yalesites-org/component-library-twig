@@ -40,7 +40,7 @@ code {
   // container query for container defined in
   // component-library-twig/components/03-organisms/layout/two-column/_yds-two-column.scss
   /* stylelint-disable */
-  @container sidebar-col-2 (min-width: 300px) {
+  @container sidebar-col-2 (min-width: 18.75rem) {
     font-size: clamp(1.5rem, 7cqi, 2.5rem);
   }
   /* stylelint-enable */
@@ -141,10 +141,26 @@ code {
 
 @mixin body-default {
   font: var(--font-style-body-default);
+
+  // container query for container defined in
+  // component-library-twig/components/03-organisms/layout/two-column/_yds-two-column.scss
+  /* stylelint-disable */
+  @container sidebar-col-2 (min-width: 18.75rem) {
+    font-size: clamp(1rem, 7cqi, 1.2rem);
+  }
+  /* stylelint-enable */
 }
 
 @mixin body-default-condensed {
   font: var(--font-style-body-default-condensed);
+
+  // container query for container defined in
+  // component-library-twig/components/03-organisms/layout/two-column/_yds-two-column.scss
+  /* stylelint-disable */
+  @container sidebar-col-2 (min-width: 18.75rem) {
+    font-size: clamp(1rem, 7cqi, 1.2rem);
+  }
+  /* stylelint-enable */
 }
 
 @mixin body-s {
