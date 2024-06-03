@@ -22,6 +22,13 @@
 
 <div {{ add_attributes(link_grid__attributes) }}>
   <div {{ bem('inner', [], link_grid__base_class) }}>
+  {% if link_grid__heading is not empty %}
+    {% include "@atoms/typography/headings/yds-heading.twig" with {
+      heading__level: '2',
+      heading__blockname: link_grid__base_class,
+      heading: link_grid__heading,
+    } %}
+  {% endif %}
   {% if link_grid__links_one %}
     <ul {{ bem('links-column', ['one'], link_grid__base_class) }}>
       {% block link_grid__links_one %}
