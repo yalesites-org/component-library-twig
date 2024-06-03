@@ -14,23 +14,6 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   max-width: 100%;
   z-index: 0;
 
-  @media (min-width: tokens.$break-l) {
-    aspect-ratio: 3/2;
-  }
-
-  [data-component-grid-count='two'] & {
-    @media (min-width: tokens.$break-l) {
-      aspect-ratio: 4 / 2;
-    }
-  }
-
-  // if in a 4-column grid, make the aspect ratio 1:1
-  [data-component-grid-count='four'] & {
-    @media (min-width: tokens.$break-s) {
-      aspect-ratio: 1 / 1;
-    }
-  }
-
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
   @each $theme, $value in $tile-item-component-themes {
