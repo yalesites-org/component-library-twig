@@ -39,7 +39,8 @@
 }
 
 // Used for exposed filter forms
-.ys-filter-form {
+.ys-filter-form,
+.content-moderation-entity-moderation-form {
   align-items: flex-end;
   display: flex;
   gap: 1rem;
