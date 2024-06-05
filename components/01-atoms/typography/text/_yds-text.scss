@@ -1,3 +1,17 @@
+// Code highlighting color variables
+
+:root {
+  --color-hljs-text: #f8f8f2;
+  --color-hljs-background: #23241f;
+  --color-hljs-strong: #a8a8a2;
+  --color-hljs-highlight: #ae81ff;
+  --color-hljs-code: #a6e22e;
+  --color-hljs-keyword: #f92672;
+  --color-hljs-symbol: #66d9ef;
+  --color-hljs-string: #e6db74;
+  --color-hljs-comment: #75715e;
+}
+
 p {
   margin-block-end: var(--font-spacing-paragraph);
 }
@@ -10,7 +24,7 @@ p {
   // Code blocks.
   pre code {
     display: block;
-    padding: 1em;
+    padding: var(--size-spacing-5);
 
     // from highlightjs Monokai Sublime
     // @see highlight.js/styles/monokai-sublime.css
@@ -20,19 +34,19 @@ p {
     */
 
     &.hljs {
-      background: #23241f;
-      color: #f8f8f2;
+      background: var(--color-hljs-background);
+      color: var(--color-hljs-text);
       overflow-x: auto;
     }
 
     .hljs-tag,
     .hljs-subst {
-      color: #f8f8f2;
+      color: var(--color-hljs-text);
     }
 
     .hljs-strong,
     .hljs-emphasis {
-      color: #a8a8a2;
+      color: var(--color-hljs-strong);
     }
 
     .hljs-bullet,
@@ -41,14 +55,14 @@ p {
     .hljs-regexp,
     .hljs-literal,
     .hljs-link {
-      color: #ae81ff;
+      color: var(--color-hljs-highlight);
     }
 
     .hljs-code,
     .hljs-title,
     .hljs-section,
     .hljs-selector-class {
-      color: #a6e22e;
+      color: var(--color-hljs-code);
     }
 
     .hljs-strong {
@@ -63,18 +77,18 @@ p {
     .hljs-selector-tag,
     .hljs-name,
     .hljs-attr {
-      color: #f92672;
+      color: var(--color-hljs-keyword);
     }
 
     .hljs-symbol,
     .hljs-attribute {
-      color: #66d9ef;
+      color: var(--color-hljs-symbol);
     }
 
     .hljs-params,
     .hljs-title.class_,
     .hljs-class .hljs-title {
-      color: #f8f8f2;
+      color: var(--color-hljs-text);
     }
 
     .hljs-string,
@@ -86,13 +100,13 @@ p {
     .hljs-addition,
     .hljs-variable,
     .hljs-template-variable {
-      color: #e6db74;
+      color: var(--color-hljs-string);
     }
 
     .hljs-comment,
     .hljs-deletion,
     .hljs-meta {
-      color: #75715e;
+      color: var(--color-hljs-comment);
     }
   }
 }
