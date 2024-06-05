@@ -239,6 +239,25 @@
             </div>
           {% endif %}
 
+          {% if stream_url %}
+            <div {{ bem('event-stream-wrapper', [], event_meta__base_class) }}>
+              <label {{ bem('event__label', [], event_meta__base_class) }}>Event Streaming URL</label>
+              <div {{ bem('event-website-link', [], event_meta__base_class) }}>
+                {% include "@atoms/controls/cta/yds-cta.twig" with {
+                  cta__content: stream_url,
+                  cta__href: stream_url,
+                  cta__blockname: event_meta__base_class,
+                  cta__style: 'outline',
+                } %}
+                {% if stream_embed_code %}
+                <div {{ bem('embed-code', [], event_meta__base_class) }}>
+                  {{stream_embed_code}}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+
           {% if place %}
             <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
               <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
