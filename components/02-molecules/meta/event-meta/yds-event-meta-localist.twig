@@ -182,8 +182,8 @@
             {# Primary CTA #}
             {% if ticket_url %}
               {% include "@atoms/controls/cta/yds-cta.twig" with {
-                cta__content: ticket_cost ? 'Buy Tickets' : 'Register',
-                cta__href: has_register ? localist_url ~ '#tickets=1' : ticket_url,
+                cta__content: cost_button_text,
+                cta__href: ticket_url,
                 cta__component_theme: cta__component_theme|default('one'),
               } %}
             {% endif %}
@@ -207,7 +207,15 @@
               <label {{ bem('event__label', [], event_meta__base_class) }}>
                 Cost
               </label>
-              {{ ticket_cost }}
+              {% if has_register %}
+                <ul>
+                  {% for cost in ticket_cost %}
+                    <li>{{ cost }}</li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                {{ ticket_cost }}
+              {% endif %}
             </div>
           {% endif %}
 
