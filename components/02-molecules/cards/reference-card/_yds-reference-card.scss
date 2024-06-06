@@ -360,7 +360,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 }
 
 .reference-card__prefix {
-  @include tokens.h2-mallory-compact-book;
+  @include tokens.h3-mallory-compact-book;
 
   color: var(--color-basic-brown-gray);
   text-transform: uppercase;
