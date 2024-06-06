@@ -82,6 +82,7 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 
         // border-bottom to first three items only
         @media (min-width: tokens.$break-l) {
+          max-width: 33.33%;
           border-bottom: var(--border-thickness-1) solid var(--color-divider);
 
           &.event-meta__website,
@@ -98,13 +99,13 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
             }
           }
         }
-      }
 
-      // if the fourth item is event stream, make it 100% width
-      :nth-child(4):has(.event-meta__event-stream-wrapper) {
-        @media (min-width: tokens.$break-l) {
-          flex: 1 0 100%;
-          border-bottom: var(--border-thickness-1) solid var(--color-divider);
+        // if the fourth item is event stream, make it 100% width
+        &:nth-child(4):has(.event-meta__event-stream-wrapper) {
+          @media (min-width: tokens.$break-l) {
+            flex: 1 0 100%;
+            border-bottom: var(--border-thickness-1) solid var(--color-divider);
+          }
         }
       }
 
