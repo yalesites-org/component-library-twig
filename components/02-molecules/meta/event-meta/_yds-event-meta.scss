@@ -82,12 +82,13 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 
         // border-bottom to first three items only
         @media (min-width: tokens.$break-l) {
-          max-width: 33.33%;
           border-bottom: var(--border-thickness-1) solid var(--color-divider);
+          flex: 1 0 33.33%;
 
           &.event-meta__website,
           &.event-meta__event-types-wrapper,
-          &.event-meta__event-stream-wrapper:not(:nth-child(4)) {
+          &.event-meta__event-stream-wrapper:not(:nth-child(4)),
+          &.event-meta__audience-wrapper + .event-meta__event-topics-wrapper {
             &::before {
               content: '';
               border-left: var(--border-thickness-1) solid var(--color-gray-200);
@@ -125,6 +126,18 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
       .event-meta__audience-wrapper {
         @media (min-width: tokens.$break-l) {
           flex: 1 0 60%;
+        }
+      }
+
+      .event-meta__event-topics-wrapper {
+        @media (min-width: tokens.$break-l) {
+          flex: 1 1 40%;
+        }
+      }
+
+      .event-meta__event-stream-wrapper {
+        @media (min-width: tokens.$break-l) {
+          flex: 1 0 33.33%;
         }
       }
     }
