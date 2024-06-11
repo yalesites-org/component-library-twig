@@ -28,7 +28,27 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes,
+  argTypes: {
+    ...argTypes,
+    profileImageOrientation: {
+      name: 'Profile Image Orientation',
+      type: 'select',
+      options: ['landscape', 'portrait'],
+      defaultValue: 'landscape',
+    },
+    profileImageAlignment: {
+      name: 'Profile Image Alignment',
+      type: 'select',
+      options: ['left', 'right'],
+      defaultValue: 'right',
+    },
+    profileImageStyle: {
+      name: 'Profile Image Style',
+      type: 'select',
+      options: ['inline', 'outdent'],
+      defaultValue: 'inline',
+    },
+  },
 };
 
 export const ProfilePage = ({
@@ -52,6 +72,9 @@ export const ProfilePage = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
+  profileImageOrientation,
+  profileImageAlignment,
+  profileImageStyle,
 }) =>
   profilePageTwig({
     site_name: siteName,
@@ -72,7 +95,14 @@ export const ProfilePage = ({
     utility_nav__link__url: '#',
     utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
+    profile_meta__image_orientation: profileImageOrientation,
+    profile_meta__image_style: profileImageStyle,
+    profile_meta__image_alignment: profileImageAlignment,
     ...imageData.responsive_images['3x2'],
+    image__srcset__1: imageData.responsive_images['2x3'].image__srcset,
+    image__sizes__1: imageData.responsive_images['2x3'].image__sizes,
+    image__alt__1: imageData.responsive_images['2x3'].image__alt,
+    image__src__1: imageData.responsive_images['2x3'].image__src,
     ...textWithImageData,
     ...referenceCardData,
     ...socialLinksData,
