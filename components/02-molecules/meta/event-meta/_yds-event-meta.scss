@@ -63,17 +63,18 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
     }
 
     .event-meta__details-wrapper {
-      display: grid;
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-flow: column wrap;
       border-top: var(--border-thickness-1) solid var(--color-divider);
 
       @media (min-width: tokens.$break-l) {
-        grid-template-columns: repeat(3, 1fr);
+        flex-flow: row wrap;
       }
 
       > * {
         position: relative;
         padding: var(--size-spacing-6);
+        flex: 1 auto;
 
         @media (max-width: $event-meta-borders-max) {
           border-bottom: var(--border-thickness-1) solid var(--color-divider);
@@ -82,8 +83,12 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
         // border-bottom to first three items only
         @media (min-width: tokens.$break-l) {
           border-bottom: var(--border-thickness-1) solid var(--color-divider);
+          flex: 1 0 33.33%;
 
-          &:not(:first-child):not(.event-meta__location-wrapper):not(.event-meta__audience-wrapper) {
+          &.event-meta__website,
+          &.event-meta__event-types-wrapper,
+          &.event-meta__event-stream-wrapper:not(:nth-child(4)),
+          &.event-meta__audience-wrapper + .event-meta__event-topics-wrapper {
             &::before {
               content: '';
               border-left: var(--border-thickness-1) solid var(--color-gray-200);
@@ -95,19 +100,44 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
             }
           }
         }
+
+        // if the fourth item is event stream, make it 100% width
+        &:nth-child(4):has(.event-meta__event-stream-wrapper) {
+          @media (min-width: tokens.$break-l) {
+            flex: 1 0 100%;
+            border-bottom: var(--border-thickness-1) solid var(--color-divider);
+          }
+        }
+      }
+
+      .event-meta__event-website-link {
+        display: flex;
+        flex-flow: column wrap;
       }
 
       // make the location wrapper span all columns
       .event-meta__location-wrapper {
         @media (min-width: tokens.$break-l) {
-          grid-column: 1/-1;
+          flex: 1 0 100%;
           border-bottom: var(--border-thickness-1) solid var(--color-divider);
         }
       }
 
       .event-meta__audience-wrapper {
         @media (min-width: tokens.$break-l) {
-          grid-column: auto / span 2;
+          flex: 1 0 60%;
+        }
+      }
+
+      .event-meta__event-topics-wrapper {
+        @media (min-width: tokens.$break-l) {
+          flex: 1 1 40%;
+        }
+      }
+
+      .event-meta__event-stream-wrapper {
+        @media (min-width: tokens.$break-l) {
+          flex: 1 0 33.33%;
         }
       }
     }

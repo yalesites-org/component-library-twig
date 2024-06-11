@@ -359,6 +359,13 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   }
 }
 
+.reference-card__prefix {
+  @include tokens.h3-mallory-compact-book;
+
+  color: var(--color-basic-brown-gray);
+  text-transform: uppercase;
+}
+
 .reference-card__heading {
   [data-collection-featured='false'] & {
     @include tokens.h5-yale-new;

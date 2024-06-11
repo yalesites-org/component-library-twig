@@ -34,3 +34,5 @@ event_topics:
   - name: Topic One
   - name: Topic Two
 description: '<p>Vel quasi dicta ut fugit molestiae ea sint voluptatem soluta repellendus quod qui fugit dolores illo. Tempora exercitationem laboriosam rerum dolores quisquam. Quasi vero error atque quisquam sed consectetur qui blanditiis aliquam.</p><p>Ipsam eligendi nam nisi facilis et sit fugiat sint eius ut dolorem sunt. Ut ut aliquid est dolorem nihil sunt debitis ad saepe. Asperiores voluptatem inventore sint doloremque nam.</p>'
+stream_url: https://www.example.com
+stream_embed_code: Watch the event

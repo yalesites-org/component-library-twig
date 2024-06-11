@@ -88,6 +88,7 @@ export const EventCard = ({
   secondaryCTAContent,
   secondaryCTAURL,
   multiDayEvent,
+  headingPrefix,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -98,6 +99,7 @@ export const EventCard = ({
         ...imageData.responsive_images['3x2'],
         format,
         reference_card__heading: heading,
+        reference_card__prefix: headingPrefix,
         reference_card__snippet: snippet,
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
@@ -118,6 +120,11 @@ EventCard.argTypes = {
     control: 'check',
     options: ['In-person', 'Online'],
     defaultValue: 'In-person',
+  },
+  headingPrefix: {
+    name: 'Heading Prefix',
+    type: 'string',
+    defaultValue: '',
   },
   primaryCTAContent: {
     name: 'Primary CTA Content',
