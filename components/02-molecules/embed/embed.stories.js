@@ -70,3 +70,13 @@ export const EmbedPowerBI = ({ width, type, loading }) =>
     embed__loading: loading,
     embed__type: type,
   });
+
+export const EmbedMicrosoftForms = ({ width, type, loading }) =>
+  embedTwig({
+    embed__src:
+      'https://forms.office.com/Pages/ResponsePage.aspx?id=u76M3Tkh-E20EU4-h6vrXJ-OMhrDFtBEifIUjjt2g_xURUVBU1IyUVlTVFFFNjJQQzJXM1pNMVozVi4u&embed=true',
+    embed__width: width,
+    embed__height: '100%',
+    embed__loading: loading,
+    embed__type: type,
+  });
