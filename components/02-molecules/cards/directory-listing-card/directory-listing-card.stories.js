@@ -48,6 +48,15 @@ export default {
       defaultValue: directoryCardData.directory_listing_card__overline,
     },
   },
+  args: {
+    heading: directoryCardData.directory_listing_card__heading,
+    subheading: directoryCardData.directory_listing_card__subheading,
+    snippet: directoryCardData.directory_listing_card__snippet,
+    email: directoryCardData.directory_listing_card__email,
+    phone: directoryCardData.directory_listing_card__phone,
+    featured: true,
+    overline: directoryCardData.directory_listing_card__overline,
+  },
 };
 
 export const ProfileCardDirectoryListing = ({

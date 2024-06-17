@@ -27,23 +27,25 @@ export default {
       name: 'Global Theme (lever)',
       options: siteGlobalThemeOptions,
       type: 'select',
-      defaultValue: 'one',
     },
     customCardCollectionHeading: {
       name: 'Collection Heading',
       type: 'string',
-      defaultValue: 'Custom Card Collection Heading',
     },
     featured: {
       name: 'Featured',
       type: 'boolean',
-      defaultValue: true,
     },
     withImage: {
       name: 'With Images',
       type: 'boolean',
-      defaultValue: true,
     },
+  },
+  args: {
+    customCardCollectionHeading: 'Custom Card Collection Heading',
+    featured: true,
+    withImage: true,
+    globalTheme: 'one',
   },
 };
 

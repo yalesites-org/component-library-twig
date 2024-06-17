@@ -10,20 +10,22 @@ export default {
       name: 'Width',
       type: 'select',
       options: ['max', 'site', 'hightlight', 'content'],
-      defaultValue: 'site',
     },
     type: {
       name: 'Type',
       options: ['form', 'audio'],
       type: 'select',
-      defaultValue: 'form',
     },
     loading: {
       name: 'Loading',
       options: ['lazy', 'eager'],
       type: 'select',
-      defaultValue: 'lazy',
     },
+  },
+  args: {
+    width: 'site',
+    type: 'form',
+    loading: 'lazy',
   },
 };
 

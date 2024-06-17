@@ -18,18 +18,20 @@ export default {
     heading: {
       name: 'Alert Heading',
       type: 'string',
-      defaultValue: alertData.alert__heading,
     },
     content: {
       name: 'Alert Content',
       type: 'string',
-      defaultValue: alertData.alert__content,
     },
     linkContent: {
       name: 'Alert Link Text',
       type: 'string',
-      defaultValue: alertData.alert__link__content,
     },
+  },
+  args: {
+    heading: alertData.alert__heading,
+    content: alertData.alert__content,
+    linkContent: alertData.alert__link__content,
   },
 };
 

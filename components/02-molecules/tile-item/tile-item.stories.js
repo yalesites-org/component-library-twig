@@ -16,47 +16,49 @@ export default {
     number: {
       name: 'Number',
       type: 'string',
-      defaultValue: tileItemData.tile__item__number,
     },
     content: {
       name: 'Content',
       type: 'string',
-      defaultValue: tileItemData.tile__item__content,
     },
     contentLink: {
       name: 'Content Link',
       type: 'string',
-      defaultValue: '',
     },
     presentationStyle: {
       name: 'Presentation Style',
       options: ['number', 'icon', 'text-only'],
       type: 'select',
-      defaultValue: 'number',
     },
     alignment: {
       name: 'Alignment',
       options: ['left', 'right'],
       type: 'select',
-      defaultValue: 'left',
     },
     verticalAlignment: {
       name: 'Vertical Alignment',
       options: ['top', 'bottom'],
       type: 'select',
-      defaultValue: 'top',
     },
     themeColor: {
       name: 'Component Theme (dial)',
       options: ['one', 'two', 'three'],
       type: 'select',
-      defaultValue: 'one',
     },
     image: {
       name: 'With image',
       type: 'boolean',
-      defaultValue: true,
     },
+  },
+  args: {
+    number: tileItemData.tile__item__number,
+    content: tileItemData.tile__item__content,
+    contentLink: 'https://www.yale.edu',
+    presentationStyle: 'number',
+    alignment: 'left',
+    verticalAlignment: 'top',
+    themeColor: 'one',
+    image: true,
   },
 };
 

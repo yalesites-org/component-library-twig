@@ -14,37 +14,39 @@ export default {
     quote: {
       name: 'Quote',
       type: 'string',
-      defaultValue: standaloneQuoteData.standalone_quote__quote,
     },
     attribution: {
       name: 'Attribution',
       type: 'string',
-      defaultValue: standaloneQuoteData.standalone_quote__attribution,
     },
     style: {
       name: 'Style',
       options: ['bar', 'quote'],
       type: 'select',
-      defaultValue: 'bar',
     },
     quoteAlignment: {
       name: 'Quote Alignment',
       options: ['left', 'right'],
       type: 'select',
-      defaultValue: 'left',
     },
     accentColor: {
       name: 'Component Theme (dial)',
       options: ['one', 'two', 'three'],
       type: 'select',
-      defaultValue: 'one',
     },
     quoteImage: {
       name: 'Quote Image',
       options: ['with-image', 'no-image'],
       type: 'select',
-      defaultValue: 'no-image',
     },
+  },
+  args: {
+    quote: standaloneQuoteData.standalone_quote__quote,
+    attribution: standaloneQuoteData.standalone_quote__attribution,
+    style: 'bar',
+    quoteAlignment: 'left',
+    accentColor: 'one',
+    quoteImage: 'no-image',
   },
 };
 

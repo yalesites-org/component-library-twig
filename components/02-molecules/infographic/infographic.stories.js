@@ -11,42 +11,44 @@ export default {
     infographic: {
       name: 'infographic',
       type: 'string',
-      defaultValue: infographicData.infographic__stat,
     },
     content: {
       name: 'Content',
       type: 'string',
-      defaultValue: infographicData.infographic__content,
     },
     presentationStyle: {
       name: 'Presentation Style',
       options: ['basic', 'icon-only'],
       type: 'select',
-      defaultValue: 'basic',
     },
     fontStyle: {
       name: 'Font Style',
       options: ['normal', 'numeric-oldstyle'],
       type: 'select',
-      defaultValue: 'normal',
     },
     alignment: {
       name: 'Alignment',
       options: ['left', 'center'],
       type: 'select',
-      defaultValue: 'left',
     },
     themeColor: {
       name: 'Component Theme (dial)',
       options: ['one', 'two', 'three'],
       type: 'select',
-      defaultValue: 'one',
     },
     infographicIcon: {
       name: 'infographic Icon',
       type: 'boolean',
-      defaultValue: false,
     },
+  },
+  args: {
+    infographic: infographicData.infographic__stat,
+    content: infographicData.infographic__content,
+    presentationStyle: 'basic',
+    fontStyle: 'normal',
+    alignment: 'left',
+    themeColor: 'one',
+    infographicIcon: false,
   },
 };
 
