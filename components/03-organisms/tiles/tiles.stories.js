@@ -30,12 +30,12 @@ export default {
     },
     presentationStyle: {
       name: 'Presentation Style',
-      options: ['number', 'icon', 'text-only'],
+      options: ['heading', 'icon', 'text-only'],
       type: 'select',
     },
     alignment: {
       name: 'Alignment',
-      options: ['left', 'right'],
+      options: ['left', 'center', 'right'],
       type: 'select',
     },
     verticalAlignment: {
@@ -43,8 +43,8 @@ export default {
       options: ['top', 'bottom'],
       type: 'select',
     },
-    gridCount: {
-      name: 'Grid Count',
+    columnCount: {
+      name: 'Column Count',
       options: ['two', 'three', 'four'],
       type: 'select',
     },
@@ -55,10 +55,10 @@ export default {
   },
   args: {
     globalTheme: 'one',
-    presentationStyle: 'number',
+    presentationStyle: 'heading',
     alignment: 'left',
     verticalAlignment: 'top',
-    gridCount: 'three',
+    columnCount: 'three',
     image: false,
   },
 };
@@ -68,7 +68,7 @@ export const Tiles = ({
   presentationStyle,
   alignment,
   verticalAlignment,
-  gridCount,
+  columnCount,
   image,
 }) => {
   return `
@@ -78,7 +78,7 @@ export const Tiles = ({
         tiles__alignment: alignment,
         tiles__vertical_alignment: verticalAlignment,
         tiles__presentation_style: presentationStyle,
-        tiles__grid_count: gridCount,
+        tiles__grid_count: columnCount,
         tiles__with__image: image ? 'true' : 'false',
         ...tilesData,
         ...imageData.responsive_images['1x1'],

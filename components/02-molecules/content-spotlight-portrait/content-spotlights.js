@@ -1,7 +1,8 @@
 Drupal.behaviors.contentSpotlights = {
   attach(context) {
     // Define the selectors to check and store them in a variable
-    const selectorsToCheck = '.text-with-image, .content-spotlight-portrait';
+    const selectorsToCheck =
+      '.text-with-image, .content-spotlight-portrait, .quote-callout, .facts-and-figures__group, .tiles';
     // Select all elements with class "text-with-image" or "content-spotlight-portrait"
     const contentSpotlights = context.querySelectorAll(selectorsToCheck);
 

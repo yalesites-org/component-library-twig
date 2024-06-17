@@ -1,3 +1,4 @@
+link_grid__heading: 'This is a link grid'
 link_grid__links_one:
   - link_grid__link__url: '#'
     link_grid__link__content: 'This is a link'

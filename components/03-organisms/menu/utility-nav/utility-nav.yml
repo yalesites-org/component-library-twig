@@ -8,3 +8,4 @@ items:
 utility_nav__link__content: 'Apply Now'
 utility_nav__link__url: '#'
 utility_nav__search: true
+utility_nav__cta__theme: 'one'

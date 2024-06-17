@@ -5,15 +5,13 @@ import tileItemData from './tile-item.yml';
 // Image atom component - generic images for demo
 import imageData from '../../01-atoms/images/image/image.yml';
 
-import './yds-tile-item';
-
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Tile Item',
   argTypes: {
-    number: {
+    heading: {
       name: 'Number',
       type: 'string',
     },
@@ -27,12 +25,12 @@ export default {
     },
     presentationStyle: {
       name: 'Presentation Style',
-      options: ['number', 'icon', 'text-only'],
+      options: ['heading', 'icon', 'text-only'],
       type: 'select',
     },
     alignment: {
       name: 'Alignment',
-      options: ['left', 'right'],
+      options: ['left', 'center', 'right'],
       type: 'select',
     },
     verticalAlignment: {
@@ -63,7 +61,7 @@ export default {
 };
 
 export const TileItem = ({
-  number,
+  heading,
   content,
   contentLink,
   presentationStyle,
@@ -76,27 +74,27 @@ export const TileItem = ({
     <div class='tiles__inner'>
       <ul class='tiles__wrap'>
         ${tileItemTwig({
-          tile__item__number: tileItemData.tile__item__number,
+          tile__item__heading: tileItemData.tile__item__heading,
           tile__item__content: tileItemData.tile__item__content,
           tile__item__content_link: 'https://www.yale.edu',
-          tile__item__presentation_style: 'number',
+          tile__item__presentation_style: 'heading',
           tile__item__alignment: 'left',
           tile__item__vertical_alignment: 'top',
           tile__item__bg_image: 'true',
           ...imageData.responsive_images['1x1'],
         })}
         ${tileItemTwig({
-          tile__item__number: tileItemData.tile__item__number,
+          tile__item__heading: tileItemData.tile__item__heading,
           tile__item__presentation_style: 'icon',
           tile__item__alignment: 'right',
           tile__item__bg_image: 'false',
         })}
         ${tileItemTwig({
-          tile__item__number: tileItemData.tile__item__number,
+          tile__item__heading: tileItemData.tile__item__heading,
           tile__item__content: tileItemData.tile__item__content,
           tile__item__content_link: 'https://www.yale.edu',
           tile__item__vertical_alignment: 'bottom',
-          tile__item__presentation_style: 'number',
+          tile__item__presentation_style: 'heading',
           tile__item__alignment: 'left',
           tile__item__bg_image: 'true',
           ...imageData.responsive_images['1x1'],
@@ -112,7 +110,7 @@ export const TileItem = ({
       <div class='tiles__inner'>
         <ul class='tiles__wrap' data-component-grid-count='three'>
           ${tileItemTwig({
-            tile__item__number: number,
+            tile__item__heading: heading,
             tile__item__content: content,
             tile__item__content_link: contentLink,
             tile__item__alignment: alignment,
