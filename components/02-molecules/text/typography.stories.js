@@ -16,8 +16,10 @@ export default {
       name: 'Text Field Variation',
       options: ['default', 'emphasized'],
       type: 'select',
-      defaultValue: 'default',
     },
+  },
+  args: {
+    variation: 'default',
   },
 };
 

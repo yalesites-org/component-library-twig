@@ -23,51 +23,53 @@ export default {
       name: 'Component Theme (dial)',
       type: 'select',
       options: colorPairingsData,
-      defaultValue: 'default',
     },
     width: {
       name: 'Width',
       type: 'select',
       options: ['highlight', 'site'],
-      defaultValue: 'site',
     },
     position: {
       name: 'Image Position',
       type: 'select',
       options: ['image-left', 'image-right'],
-      defaultValue: 'image-left',
     },
     focus: {
       name: 'Focus',
       type: 'select',
       options: ['image', 'equal'],
-      defaultValue: 'equal',
     },
     overline: {
       name: 'Overline (optional)',
       type: 'string',
-      defaultValue: null,
     },
     heading: {
       name: 'Heading',
       type: 'string',
-      defaultValue: textWithImageData.text_with_image__heading,
     },
     subheading: {
       name: 'Subheading (optional)',
       type: 'string',
-      defaultValue: textWithImageData.text_with_image__subheading,
     },
     text: {
       name: 'Text',
       type: 'string',
-      defaultValue: textWithImageData.text_with_image__text,
     },
     linkContent: {
       name: 'Link Content (optional)',
       type: 'string',
-      defaultValue: textWithImageData.text_with_image__link__content,
     },
+  },
+  args: {
+    componentTheme: 'default',
+    width: 'site',
+    position: 'image-left',
+    focus: 'equal',
+    overline: null,
+    heading: textWithImageData.text_with_image__heading,
+    subheading: textWithImageData.text_with_image__subheading,
+    text: textWithImageData.text_with_image__text,
+    linkContent: textWithImageData.text_with_image__link__content,
   },
 };
 

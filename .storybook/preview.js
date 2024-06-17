@@ -1,5 +1,4 @@
-import { addDecorator } from '@storybook/html';
-import { useEffect } from '@storybook/client-api';
+import { useEffect } from '@storybook/preview-api';
 import Twig from 'twig';
 import { setupTwig } from './setupTwig';
 
@@ -15,16 +14,25 @@ import '../fonts/fontawesome/css/regular.css';
 import '../fonts/fontawesome/css/solid.css';
 
 // Global link treatment
-import '../lib/ys_link/index';
-import '../lib/ys_link/css/ys-link.css';
+// import '../lib/ys_link/index';
+// import '../lib/ys_link/css/ys-link.css';
 
 // If in a Drupal project, it's recommended to import a symlinked version of drupal.js.
 import './_drupal.js';
 
-// addDecorator deprecated, but not sure how to use this otherwise.
-addDecorator((storyFn, context) => {
-  useEffect(() => Drupal.attachBehaviors(), [context]);
-  return storyFn(context);
-});
+export const decorators = [
+  (Story, { args }) => {
+    // Usual emulsify hack to add Drupal behaviors.
+    useEffect(() => {
+      Drupal.attachBehaviors();
+    }, [args]);
+    return Story();
+  },
+];
 
 setupTwig(Twig);
+
+export const tags = ['autodocs', 'autodocs'];
+export const parameters = {
+  actions: { argTypesRegex: '^on.*' },
+};
