@@ -1,4 +1,5 @@
-import { useEffect } from '@storybook/client-api';
+import { useEffect } from '@storybook/preview-api';
+
 import Twig from 'twig';
 import { setupTwig } from './setupTwig';
 
@@ -14,8 +15,8 @@ import '../fonts/fontawesome/css/regular.css';
 import '../fonts/fontawesome/css/solid.css';
 
 // Global link treatment
-import '../lib/ys_link/index';
-import '../lib/ys_link/css/ys-link.css';
+// import '../lib/ys_link/index';
+// import '../lib/ys_link/css/ys-link.css';
 
 // If in a Drupal project, it's recommended to import a symlinked version of drupal.js.
 import './_drupal.js';
@@ -46,3 +47,8 @@ export const globalTypes = {
     },
   }
 }
+
+export const tags = ['autodocs', 'autodocs'];
+export const parameters = {
+  actions: { argTypesRegex: '^on.*' },
+};
