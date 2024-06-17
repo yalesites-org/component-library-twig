@@ -27,8 +27,6 @@ $heights: (
 // so we're using a percentage-based padding-bottom hack instead.
 .embed__inner:has(iframe[data-embed-type='video']) {
   position: relative;
-  width: 100%;
-  max-width: 100%;
   padding-bottom: 56.25%; // 16:9 aspect ratio
   height: 0;
   overflow: visible;
