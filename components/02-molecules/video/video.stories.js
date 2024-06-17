@@ -32,6 +32,10 @@ export default {
     heading: videoData.video__heading,
     text: videoData.video__text,
   },
+  args: {
+    heading: videoData.video__heading,
+    text: videoData.video__text,
+  },
 };
 
 export const video = ({ heading, text, placement }) =>
