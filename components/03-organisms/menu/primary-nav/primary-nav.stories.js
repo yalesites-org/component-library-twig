@@ -24,14 +24,16 @@ export default {
       name: 'Site Header Theme',
       options: siteHeaderThemeOptions,
       type: 'select',
-      defaultValue: 'white',
     },
     menuVariation: {
       name: 'Menu Variation',
       options: ['basic', 'mega', 'focus'],
       type: 'select',
-      defaultValue: 'basic',
     },
+  },
+  args: {
+    siteHeaderTheme: 'one',
+    menuVariation: 'basic',
   },
 };
 

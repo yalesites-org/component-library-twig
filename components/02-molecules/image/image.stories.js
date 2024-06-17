@@ -11,14 +11,16 @@ export default {
     caption: {
       name: 'Caption',
       type: 'string',
-      defaultValue: 'This is the caption for the 16:9 image above.',
     },
     width: {
       name: 'Component Width',
       type: 'select',
       options: ['content', 'highlight', 'site', 'max'],
-      defaultValue: 'content',
     },
+  },
+  args: {
+    caption: 'This is the caption for the 16:9 image above.',
+    width: 'content',
   },
 };
 

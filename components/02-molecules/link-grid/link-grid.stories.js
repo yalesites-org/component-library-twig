@@ -16,8 +16,10 @@ export default {
       name: 'Component Theme (dial)',
       type: 'select',
       options: colorPairingsData,
-      defaultValue: 'one',
     },
+  },
+  args: {
+    themeColor: 'one',
   },
 };
 

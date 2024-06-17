@@ -27,37 +27,39 @@ export default {
       name: 'Global Theme (lever)',
       options: siteGlobalThemeOptions,
       type: 'select',
-      defaultValue: 'one',
     },
     presentationStyle: {
       name: 'Presentation Style',
       options: ['heading', 'icon', 'text-only'],
       type: 'select',
-      defaultValue: 'heading',
     },
     alignment: {
       name: 'Alignment',
       options: ['left', 'center', 'right'],
       type: 'select',
-      defaultValue: 'left',
     },
     verticalAlignment: {
       name: 'Vertical Alignment',
       options: ['top', 'bottom'],
       type: 'select',
-      defaultValue: 'top',
     },
     columnCount: {
       name: 'Column Count',
       options: ['two', 'three', 'four'],
       type: 'select',
-      defaultValue: 'three',
     },
     image: {
       name: 'With image',
       type: 'boolean',
-      defaultValue: false,
     },
+  },
+  args: {
+    globalTheme: 'one',
+    presentationStyle: 'number',
+    alignment: 'left',
+    verticalAlignment: 'top',
+    gridCount: 'three',
+    image: false,
   },
 };
 

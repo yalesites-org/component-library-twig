@@ -27,51 +27,41 @@ export default {
       name: 'Global Theme (lever)',
       options: siteGlobalThemeOptions,
       type: 'select',
-      defaultValue: 'one',
     },
     themeColor: {
       name: 'Component Theme (dial)',
       options: ['one', 'two', 'three'],
       type: 'select',
-      defaultValue: 'one',
     },
     factsAndFiguresGroupHeading: {
       name: 'Infographic Group Heading',
       type: 'string',
-      defaultValue: factsAndFiguresGroupData.facts_and_figures__group__heading,
     },
     factsAndFiguresGroupContent: {
       name: 'Infographic Group Content',
       type: 'string',
-      defaultValue: factsAndFiguresGroupData.facts_and_figures__group__content,
     },
     factsAndFiguresGroupLink: {
       name: 'Infographic Group Link',
       type: 'string',
-      defaultValue:
-        factsAndFiguresGroupData.facts_and_figures__group__link__content,
     },
     image: {
       name: 'With image',
       type: 'boolean',
-      defaultValue: true,
     },
     factsAndFiguresGroupIcons: {
       name: 'Infographic Group Icons',
       type: 'boolean',
-      defaultValue: false,
     },
     presentationStyle: {
       name: 'Presentation Style',
       options: ['basic', 'icon-only'],
       type: 'select',
-      defaultValue: 'basic',
     },
     fontStyle: {
       name: 'Font Style',
       options: ['normal', 'numeric-oldstyle'],
       type: 'select',
-      defaultValue: 'normal',
     },
     columnCount: {
       name: 'Column Count',
@@ -83,8 +73,20 @@ export default {
       name: 'Alignment',
       options: ['left', 'center'],
       type: 'select',
-      defaultValue: 'left',
     },
+  },
+  args: {
+    globalTheme: 'one',
+    themeColor: 'one',
+    infographicGroupHeading: infographicGroupData.infographic__group__heading,
+    infographicGroupContent: infographicGroupData.infographic__group__content,
+    infographicGroupLink:
+      infographicGroupData.infographic__group__link__content,
+    image: true,
+    infographicGroupIcons: false,
+    presentationStyle: 'basic',
+    fontStyle: 'normal',
+    alignment: 'left',
   },
 };
 

@@ -14,18 +14,20 @@ export default {
     heading: {
       name: 'Heading',
       type: 'string',
-      defaultValue: searchResultData.search_result__title,
     },
     highlighted: {
       name: 'Search Results Highlighted',
       type: 'string',
-      defaultValue: searchResultData.search_result__highlighted,
     },
     teaser: {
       name: 'Search Results Teaser',
       type: 'string',
-      defaultValue: searchResultData.search_result__teaser,
     },
+  },
+  args: {
+    heading: searchResultData.search_result__title,
+    highlighted: searchResultData.search_result__highlighted,
+    teaser: searchResultData.search_result__teaser,
   },
 };
 

@@ -19,8 +19,10 @@ export default {
     gridHeading: {
       name: 'Gallery heading',
       type: 'string',
-      defaultValue: mediaGridData.media_grid__heading,
     },
+  },
+  args: {
+    gridHeading: mediaGridData.media_grid__heading,
   },
 };
 
