@@ -15,8 +15,8 @@ import '../fonts/fontawesome/css/regular.css';
 import '../fonts/fontawesome/css/solid.css';
 
 // Global link treatment
-import '../lib/ys_link/index';
-import '../lib/ys_link/css/ys-link.css';
+// import '../lib/ys_link/index';
+// import '../lib/ys_link/css/ys-link.css';
 
 // If in a Drupal project, it's recommended to import a symlinked version of drupal.js.
 import './_drupal.js';
