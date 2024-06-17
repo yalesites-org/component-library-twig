@@ -42,6 +42,12 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
+  args: {
+    heading: bannerData.banner__heading,
+    snippet: bannerData.banner__snippet,
+    linkContent: bannerData.banner__link__content,
+    linkContentTwo: bannerData.banner__link__content_two,
+  },
   argTypes: {
     bgColor: {
       name: 'Component Theme (dial)',
