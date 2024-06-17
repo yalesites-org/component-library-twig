@@ -1,5 +1,4 @@
 import { useEffect } from '@storybook/preview-api';
-
 import Twig from 'twig';
 import { setupTwig } from './setupTwig';
 
