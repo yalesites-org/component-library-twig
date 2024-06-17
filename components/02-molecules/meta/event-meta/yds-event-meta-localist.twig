@@ -85,6 +85,15 @@
   } %}
 {% endset %}
 
+{% if is_conference %}
+  {% include "@molecules/alert/yds-alert.twig" with {
+     alert__id: 'event-' ~ nid,
+     alert__type: 'marketing',
+     alert__content: 'This is a part of a Conference',
+     alert__link__content: 'Visit Conference page',
+     alert__link__url: localist_url,
+  } %}
+{% endif %}
 
 {# Event meta localist component #}
 <div {{ add_attributes(event_meta__attributes) }} data-event-status="{{ event_status }}">
