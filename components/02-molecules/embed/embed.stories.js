@@ -73,6 +73,7 @@ export const EmbedPowerBI = ({ width, type, loading }) =>
 
 export const EmbedMicrosoftForms = ({ width, type, loading }) =>
   embedTwig({
+    embed__title: 'Example Microsoft Form',
     embed__src:
       'https://forms.office.com/Pages/ResponsePage.aspx?id=u76M3Tkh-E20EU4-h6vrXJ-OMhrDFtBEifIUjjt2g_xURUVBU1IyUVlTVFFFNjJQQzJXM1pNMVozVi4u&embed=true',
     embed__width: width,
