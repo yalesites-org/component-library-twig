@@ -26,9 +26,11 @@ $component-inline-message-themes: map.deep-get(
       --color-slot-six: var(--component-themes-#{$theme}-slot-six);
       --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
       --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
+      --color-inline-message-background: var(--color-slot-four);
+      --color-inline-message-text: var(--color-slot-six);
 
-      background-color: var(--color-slot-four);
-      color: var(--color-slot-six);
+      background-color: var(--color-inline-message-background);
+      color: var(--color-inline-message-text);
     }
   }
 
@@ -54,13 +56,23 @@ $component-inline-message-themes: map.deep-get(
       );
     }
   }
+
+  &[data-component-theme='two'] {
+    --color-inline-message-background: var(--color-slot-one);
+    --color-inline-message-text: var(--color-slot-eight);
+  }
+
+  &[data-component-theme='three'] {
+    --color-inline-message-background: var(--color-slot-two);
+    --color-inline-message-text: var(--color-slot-eight);
+  }
 }
 
 .inline-message__inner {
   display: flex;
   align-items: flex-start;
-  padding-block-start: var(--size-spacing-5);
-  padding-block-end: var(--size-spacing-5);
+  padding-block-start: var(--size-spacing-6);
+  padding-block-end: var(--size-spacing-6);
 }
 
 .inline-message__icon {
@@ -106,6 +118,15 @@ $component-inline-message-themes: map.deep-get(
 
   > *:last-child {
     margin-bottom: 0;
+  }
+
+  // if the component theme is dial two or three, change the color of the text to slot eight (white)
+  [data-component-theme='two'] & {
+    color: var(--color-slot-eight);
+  }
+
+  [data-component-theme='three'] & {
+    color: var(--color-slot-eight);
   }
 }
 
