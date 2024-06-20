@@ -14,7 +14,7 @@
 {# Set emergency icons #}
 {% if inline_message__type == 'general' %}
   {% set inline_message__icon = 'circle-info' %}
-{# Set marketign icon #}
+{# Set marketing icon #}
 {% else %}
   {% set inline_message__icon = 'circle-exclamation' %}
 {% endif %}
@@ -40,11 +40,13 @@
     {% endif %}
     <div {{ bem('content', [], inline_message__base_class) }}>
       <div {{ bem('content-inner', [], inline_message__base_class) }}>
-        {% include "@atoms/typography/headings/yds-heading.twig" with {
-          heading__level: inline_message__heading_level|default('2'),
-          heading__blockname: inline_message__base_class,
-          heading: inline_message__heading,
-        } %}
+        {% if inline_message__heading %}
+          {% include "@atoms/typography/headings/yds-heading.twig" with {
+            heading__level: inline_message__heading_level|default('2'),
+            heading__blockname: inline_message__base_class,
+            heading: inline_message__heading,
+          } %}
+        {% endif %}
         {% if inline_message__content %}
           {% include "@atoms/typography/text/yds-text.twig" with {
             text__element: 'div',
@@ -53,13 +55,6 @@
           } %}
         {% endif %}
       </div>
-      {% if inline_message__link__content and inline_message__link__url %}
-        {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-          link__content: inline_message__link__content,
-          link__url: inline_message__link__url,
-          link__blockname: inline_message__base_class,
-        } %}
-      {% endif %}
     </div>
   </div>
 </section>
