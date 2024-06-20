@@ -23,7 +23,14 @@ function getEntries(pattern) {
     const newfilePath = `js/${filePath.replace('.js', '')}`;
     entries[newfilePath] = file;
   });
-  entries['js/ys-link'] = path.resolve(rootDir, 'lib/ys_link/index.js');
+  entries['js/link-treatment'] = path.resolve(
+    rootDir,
+    'lib/link-treatment/link-treatment.js',
+  );
+  // entries['js/linkpurpose'] = path.resolve(
+  //   rootDir,
+  //   'lib/linkpurpose/js/linkpurpose.js',
+  // );
 
   return entries;
 }
@@ -44,6 +51,7 @@ module.exports = {
       loaders.SVGSpriteLoader,
       loaders.ImageLoader,
       loaders.JSLoader,
+      loaders.ExportsLoader,
     ],
   },
   plugins: [
