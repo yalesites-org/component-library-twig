@@ -129,20 +129,3 @@ $component-inline-message-themes: map.deep-get(
     color: var(--color-slot-eight);
   }
 }
-
-.inline-message__link {
-  @include atoms.link;
-  @include tokens.body-s;
-
-  --position: 0 1.3em;
-
-  margin-bottom: var(--size-spacing-2);
-
-  &:visited {
-    color: var(--color-slot-six);
-  }
-
-  &:has(> i.fa-icon) {
-    padding-right: var(--size-spacing-3);
-  }
-}
