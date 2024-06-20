@@ -125,10 +125,6 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
   @media (min-width: tokens.$break-xl) {
     gap: var(--size-spacing-6);
   }
-
-  [data-quick-links-variation='subtle'][data-component-alignment='left'] & {
-    max-width: var(--size-component-layout-width-content);
-  }
 }
 
 .quick-links__heading {
@@ -163,15 +159,6 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
   row-gap: var(--size-spacing-6);
   column-gap: var(--size-spacing-7);
 
-  [data-quick-links-variation='subtle'] & {
-    grid-template-columns: 1fr 1fr;
-    justify-items: start;
-
-    @media (min-width: tokens.$break-s) {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
-  }
-
   [data-quick-links-variation='promotional'] & {
     @media (min-width: tokens.$break-s) {
       grid-template-columns: 1fr 1fr;
@@ -203,10 +190,6 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
       grid-template-columns: 1fr 1fr 1fr;
     }
   }
-
-  [data-quick-links-variation='subtle'][data-component-alignment='left'] & {
-    max-width: var(--size-component-layout-width-content);
-  }
 }
 
 .quick-links__list-item {
@@ -219,10 +202,6 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .quick-links__link {
   @include atoms.link;
-
-  [data-quick-links-variation='subtle'] & {
-    --color-text-shadow: var(--color-basic-white);
-  }
 }
 
 .quick-links__cta {
@@ -231,12 +210,6 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
   display: flex;
   align-items: center;
   justify-content: center;
-
-  // in subtle variartion, inline-flex the links
-  [data-quick-links-variation='subtle'] & {
-    display: inline-flex;
-    text-align: left;
-  }
 }
 
 .quick-links__image {
@@ -255,9 +228,5 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
       width: 100%;
       object-fit: cover;
     }
-  }
-
-  [data-quick-links-variation='subtle'][data-component-alignment='left'] & {
-    max-width: var(--size-component-layout-width-content);
   }
 }
