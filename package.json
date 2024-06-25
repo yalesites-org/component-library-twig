@@ -18,7 +18,6 @@
     "postinstall": "npx patch-package",
     "prepare": "husky install",
     "prettier": "prettier components --ignore-unknown --list-different",
-    "semantic-release": "semantic-release",
     "storybook": "storybook dev --ci ./dist, ./images -p 6006",
     "storybook:build": "npm run build && storybook build ./dist, ./images -o .out",
     "storybook:deploy": "storybook-to-ghpages -o .out",
