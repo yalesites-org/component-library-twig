@@ -39,22 +39,20 @@
       </div>
     {% endif %}
     <div {{ bem('content', [], inline_message__base_class) }}>
-      <div {{ bem('content-inner', [], inline_message__base_class) }}>
-        {% if inline_message__heading %}
-          {% include "@atoms/typography/headings/yds-heading.twig" with {
-            heading__level: inline_message__heading_level|default('2'),
-            heading__blockname: inline_message__base_class,
-            heading: inline_message__heading,
-          } %}
-        {% endif %}
-        {% if inline_message__content %}
-          {% include "@atoms/typography/text/yds-text.twig" with {
-            text__element: 'div',
-            text__content: inline_message__content,
-            text__blockname: inline_message__base_class,
-          } %}
-        {% endif %}
-      </div>
+      {% if inline_message__heading %}
+        {% include "@atoms/typography/headings/yds-heading.twig" with {
+          heading__level: inline_message__heading_level|default('2'),
+          heading__blockname: inline_message__base_class,
+          heading: inline_message__heading,
+        } %}
+      {% endif %}
+      {% if inline_message__content %}
+        {% include "@atoms/typography/text/yds-text.twig" with {
+          text__element: 'div',
+          text__content: inline_message__content,
+          text__blockname: inline_message__base_class,
+        } %}
+      {% endif %}
     </div>
   </div>
 </section>
