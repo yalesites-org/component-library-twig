@@ -16,6 +16,7 @@ import '../fonts/fontawesome/css/solid.css';
 // Global link treatment
 import '../lib/link-treatment/link-treatment.js';
 import 'linkpurpose/css/linkpurpose.css';
+import '../lib/link-treatment/link-treatment.scss';
 
 // If in a Drupal project, it's recommended to import a symlinked version of drupal.js.
 import './_drupal.js';

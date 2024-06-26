@@ -63,6 +63,11 @@ const ExportsLoader = {
   },
 };
 
+const ExportsLoader = {
+  test: /linkpurpose\/js\/linkpurpose(\.js)?$/,
+  loader: 'exports-loader?exports=default%20LinkPurpose',
+};
+
 module.exports = {
   CSSLoader,
   ImageLoader,
