@@ -119,6 +119,12 @@ $component-inline-message-themes: map.deep-get(
     margin-bottom: 0;
   }
 
+  // if there is 1 p element in the text element, remove the margin
+  // do not remove the margin if there are multiple p elements
+  > p:not(p + p) {
+    margin: 0;
+  }
+
   // if the component theme is dial two or three, change the color of the text to slot eight (white)
   [data-component-theme='two'] & {
     color: var(--color-slot-eight);
