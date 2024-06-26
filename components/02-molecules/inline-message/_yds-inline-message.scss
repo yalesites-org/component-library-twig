@@ -102,17 +102,16 @@ $component-inline-message-themes: map.deep-get(
 }
 
 .inline-message__content {
-  flex: 1 1 auto;
   display: flex;
+  flex: 1 1 auto;
   flex-flow: column nowrap;
-  gap: var(--size-spacing-1);
+  gap: var(--size-spacing-2);
   align-items: flex-start;
 }
 
 .inline-message__text {
   @include tokens.body-s-condensed;
 
-  margin-top: var(--size-spacing-2);
   max-width: var(--size-component-layout-width-content);
   color: var(--color-gray-700);
 
