@@ -20,6 +20,10 @@ const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
  */
 export default {
   title: 'Atoms/Controls',
+  args: {
+    componentTheme: 'one',
+    globalTheme: 'one',
+  },
 };
 
 const ctaText = 'Call to action';
@@ -133,14 +137,13 @@ export const Cta = ({ componentTheme }) => `
       cta__component_theme: componentTheme,
     })}
   </div>
-`;
+  `;
 
 Cta.argTypes = {
   componentTheme: {
     name: 'Component Theme (dial)',
     options: componentThemeOptions,
     type: 'select',
-    defaultValue: 'one',
   },
 };
 
@@ -313,13 +316,11 @@ CtaExamples.argTypes = {
     name: 'Global Theme (lever)',
     options: siteGlobalThemeOptions,
     type: 'select',
-    defaultValue: 'one',
   },
   componentTheme: {
     name: 'Component Theme (dial)',
     options: componentThemeOptions,
     type: 'select',
-    defaultValue: 'one',
   },
 };
 
@@ -396,12 +397,10 @@ textCopyButtonExamples.argTypes = {
     name: 'Global Theme (lever)',
     options: siteGlobalThemeOptions,
     type: 'select',
-    defaultValue: 'one',
   },
   componentTheme: {
     name: 'Component Theme (dial)',
     options: componentThemeOptions,
     type: 'select',
-    defaultValue: 'one',
   },
 };

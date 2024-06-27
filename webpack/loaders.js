@@ -17,6 +17,9 @@ const CSSLoader = {
       loader: 'postcss-loader',
       options: {
         sourceMap: true,
+        postcssOptions: {
+          plugins: [['autoprefixer']],
+        },
       },
     },
     {

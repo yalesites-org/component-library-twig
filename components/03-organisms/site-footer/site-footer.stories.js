@@ -34,8 +34,14 @@ export default {
     borderThickness: {
       options: borderThicknessOptions,
       type: 'select',
-      defaultValue: '8',
     },
+  },
+  args: {
+    borderThickness: '8',
+    siteFooterAccent: 'one',
+    siteFooterTheme: 'one',
+    siteFooterVariation: 'basic',
+    globalTheme: 'one',
   },
 };
 
@@ -58,19 +64,16 @@ Footer.argTypes = {
   siteFooterTheme: {
     options: siteFooterThemeOptions,
     type: 'select',
-    defaultValue: 'one',
   },
   siteFooterAccent: {
     name: 'Footer Accent Color (dial)',
     options: siteFooterAccents,
     type: 'select',
-    defaultValue: 'one',
   },
   siteFooterVariation: {
     name: 'Footer Variation (dial)',
     options: ['basic', 'mega'],
     type: 'select',
-    defaultValue: 'basic',
   },
 };
 
@@ -96,18 +99,15 @@ FooterExamples.argTypes = {
     name: 'Global Theme (lever)',
     options: siteGlobalThemeOptions,
     type: 'select',
-    defaultValue: 'one',
   },
   siteFooterAccent: {
     name: 'Footer Accent Color (dial)',
     options: siteFooterAccents,
     type: 'select',
-    defaultValue: 'one',
   },
   siteFooterVariation: {
     name: 'Footer Variation (dial)',
     options: ['basic', 'mega'],
     type: 'select',
-    defaultValue: 'basic',
   },
 };

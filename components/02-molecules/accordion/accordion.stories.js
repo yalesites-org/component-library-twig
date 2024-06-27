@@ -13,18 +13,20 @@ export default {
     accordionHeading: {
       name: 'Accordion Heading',
       type: 'string',
-      defaultValue: accordionData.accordion__heading,
     },
     heading: {
       name: 'Heading',
       type: 'string',
-      defaultValue: accordionData.accordion__item__heading,
     },
     content: {
       name: 'Content',
       type: 'string',
-      defaultValue: accordionData.accordion__item__content,
     },
+  },
+  args: {
+    accordionHeading: accordionData.accordion__heading,
+    heading: accordionData.accordion__item__heading,
+    content: accordionData.accordion__item__content,
   },
 };
 
