@@ -146,15 +146,23 @@ $component-inline-message-themes: map.deep-get(
   [data-component-theme='two'] & {
     --color-link-base: var(--color-slot-eight);
     --color-link-hover: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-slot-eight);
+    --color-link-visited-hover: var(--color-slot-eight);
   }
 
   [data-component-theme='three'] & {
     --color-link-base: var(--color-slot-eight);
     --color-link-hover: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-slot-eight);
+    --color-link-visited-hover: var(--color-slot-eight);
   }
 
   &:visited {
-    color: var(--color-slot-six);
+    color: var(--color-link-visited-base);
+
+    &:hover {
+      color: var(--color-link-visited-hover);
+    }
   }
 
   &:has(> i.fa-icon) {
