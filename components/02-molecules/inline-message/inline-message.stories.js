@@ -27,19 +27,38 @@ export default {
       options: ['one', 'two', 'three'],
       type: 'select',
     },
+    linkContent: {
+      name: 'Link Content',
+      type: 'string',
+    },
+    linkUrl: {
+      name: 'Link URL',
+      type: 'string',
+    },
   },
   args: {
     type: 'general',
     heading: 'This is a general message heading',
     content: 'This is a general message content',
     themeColor: 'one',
+    linkContent: 'This is a link',
+    linkUrl: '#',
   },
 };
 
-export const InlineMessage = ({ type, heading, content, themeColor }) =>
+export const InlineMessage = ({
+  type,
+  heading,
+  content,
+  themeColor,
+  linkContent,
+  linkUrl,
+}) =>
   inlineMessageTwig({
     inline_message__heading: heading,
     inline_message__content: content,
     inline_message__type: type,
     inline_message__theme: themeColor,
+    inline_message__link__content: linkContent,
+    inline_message__link__url: linkUrl,
   });

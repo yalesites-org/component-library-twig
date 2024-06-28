@@ -1,6 +1,5 @@
 {#
  # Available Variables:
- # - inline-message__id: unique id (must be unique to each site)
  # - inline-message__type:  general (default), marketing
  # - inline-message__heading
  # - inline-message__content
@@ -21,7 +20,6 @@
 
 {% set inline_message__attributes = {
   'data-component-width': 'site',
-  'data-inline-message-id': 'ys-inline-message-id-' ~ inline_message__id,
   'data-inline-message-type': inline_message__type,
   'aria-label': 'information',
   'data-component-theme': inline_message__theme|default('one'),
@@ -51,6 +49,13 @@
           text__element: 'div',
           text__content: inline_message__content,
           text__blockname: inline_message__base_class,
+        } %}
+      {% endif %}
+      {% if inline_message__link__content and inline_message__link__url %}
+        {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+          link__content: inline_message__link__content,
+          link__url: inline_message__link__url,
+          link__blockname: inline_message__base_class,
         } %}
       {% endif %}
     </div>
