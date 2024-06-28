@@ -134,3 +134,30 @@ $component-inline-message-themes: map.deep-get(
     color: var(--color-slot-eight);
   }
 }
+
+.inline-message__link {
+  @include atoms.link;
+  @include tokens.body-s;
+
+  --position: 0 1.3em;
+
+  margin-bottom: var(--size-spacing-2);
+
+  [data-component-theme='two'] & {
+    --color-link-base: var(--color-slot-eight);
+    --color-link-hover: var(--color-slot-eight);
+  }
+
+  [data-component-theme='three'] & {
+    --color-link-base: var(--color-slot-eight);
+    --color-link-hover: var(--color-slot-eight);
+  }
+
+  &:visited {
+    color: var(--color-slot-six);
+  }
+
+  &:has(> i.fa-icon) {
+    padding-right: var(--size-spacing-3);
+  }
+}
