@@ -344,6 +344,7 @@ $cta-outline-weights: (
 // @TODO: Temporary place for this
 .cta-group {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--size-spacing-7);
   margin-bottom: var(--size-spacing-7);
 
