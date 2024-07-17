@@ -13,11 +13,13 @@
 
 {% set site_header__base_class = 'site-header' %}
 
-{% set site_header__hamburger = 'no' %}
+{% set site_header__hamburger = 'yes' %}
 
+{#
 {% if utility_nav__items or primary_nav__items %}
   {% set site_header__hamburger = 'yes' %}
 {% endif %}
+#}
 
 {% set site_header__attributes = {
   'data-main-menu-state': 'loaded',
