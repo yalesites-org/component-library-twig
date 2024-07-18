@@ -1,20 +1,5 @@
 Drupal.behaviors.layout = {
   attach(context) {
-    // When no primary nav or utility nav items exist on the page, it makes no
-    // sense to still show the hamburger and provide that functionality.  This
-    // removes it through javascript since doing this through atomic seemed to
-    // produce inconsistent results.
-    const hideMenu = () => {
-      const menuItems = context.querySelectorAll(
-        'nav.primary-nav ul li.primary-nav__item, nav.utility-nav ul li.utility-nav__item',
-      );
-      const hamburger = context.querySelector('button.menu-toggle');
-
-      if (hamburger && menuItems.length === 0) {
-        hamburger.remove();
-      }
-    };
-
     // Classes.
     // This array of classes should not have the preceding `.` so that we can
     // check for them in `classList.contains` below.
@@ -51,8 +36,5 @@ Drupal.behaviors.layout = {
       table.parentNode.insertBefore(wrapper, table);
       wrapper.appendChild(table);
     });
-
-    // Hide the menu if there are no menu items to show.
-    hideMenu();
   },
 };
