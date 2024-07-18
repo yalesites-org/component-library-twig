@@ -15,10 +15,11 @@
 
 {% set site_header__hamburger = 'no' %}
 
-{% if utility_nav__items or primary_nav__items %}
+{% if utility_nav__items is not empty or primary_nav__items is not empty %}
   {% set site_header__hamburger = 'yes' %}
 {% endif %}
 
+{# Set the site_header__attributes variable with the default attributes #}  
 {% set site_header__attributes = {
   'data-main-menu-state': 'loaded',
   'data-component-width': 'site',
