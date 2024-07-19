@@ -72,3 +72,7 @@ ol {
   margin-top: var(--size-spacing-4);
   text-transform: capitalize;
 }
+
+.taxonomy-list__item--more {
+  text-transform: none;
+}

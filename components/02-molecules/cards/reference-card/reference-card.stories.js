@@ -43,7 +43,7 @@ export default {
       name: 'Categories',
       type: 'array',
       defaultValue: referenceCardData.reference_card__categories,
-      if: { arg: 'show_categories' },
+      if: { arg: 'showCategories' },
     },
     showTags: {
       name: 'Show Tags',
@@ -54,7 +54,7 @@ export default {
       name: 'Tags',
       type: 'array',
       defaultValue: referenceCardData.reference_card__tags,
-      if: { arg: 'show_tags' },
+      if: { arg: 'showTags' },
     },
     withImage: {
       name: 'With Image',
