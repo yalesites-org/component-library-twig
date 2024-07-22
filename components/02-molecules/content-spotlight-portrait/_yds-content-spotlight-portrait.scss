@@ -159,6 +159,10 @@ $component-content-spotlight-port-themes: map.deep-get(
 }
 
 .content-spotlight-portrait__content {
+  .link--second {
+    margin-top: var(--size-spacing-5);
+  }
+
   @media (max-width: tokens.$break-mobile-max) {
     order: 1;
   }
