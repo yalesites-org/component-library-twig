@@ -22,7 +22,7 @@
   {% set alert__icon = 'circle-info' %}
   {% set alert__toggle = 'xmark' %}
   {% set alert__toggle__text = 'Close alert' %}
-{# Set marketign icon #}
+{# Set marketing icon #}
 {% else %}
   {% set alert__toggle = 'xmark' %}
   {% set alert__toggle__text = 'Close alert' %}
@@ -49,11 +49,13 @@
     {% endif %}
     <div {{ bem('content', [], alert__base_class) }}>
       <div {{ bem('content-inner', [], alert__base_class) }}>
-        {% include "@atoms/typography/headings/yds-heading.twig" with {
-          heading__level: '2',
-          heading__blockname: alert__base_class,
-          heading: alert__heading,
-        } %}
+        {% if alert__heading %}
+          {% include "@atoms/typography/headings/yds-heading.twig" with {
+            heading__level: '2',
+            heading__blockname: alert__base_class,
+            heading: alert__heading,
+          } %}
+        {% endif %}
         {% if alert__content %}
           {% include "@atoms/typography/text/yds-text.twig" with {
             text__element: 'div',
