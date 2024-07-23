@@ -1,5 +1,6 @@
 @use '../../00-tokens/tokens';
 @use '../../00-tokens/functions/map';
+@use '../../01-atoms/controls/text-link/_yds-text-link' as text-link;
 
 $global-facts-and-figures-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $facts-and-figures-component-themes: map.deep-get(
@@ -149,4 +150,27 @@ $facts-and-figures-component-themes: map.deep-get(
   @include tokens.body-default;
 
   width: 100%;
+}
+
+// fix shadow to be background of component, not theme.
+// also make the colors match the text in the component.
+.facts-and-figures__group__content {
+  --color-link-base: var(--color-facts-and-figures-content);
+  --color-link-hover: var(--color-link-base);
+
+  & a {
+    @include text-link.link;
+
+    &:hover {
+      --color-link-hover: var(--color-link-base);
+    }
+  }
+
+  & .link[data-link-style='underline-with-icon'] {
+    --color-text-shadow: var(--color-facts-and-figures-theme);
+
+    &:hover {
+      --color-link-hover: var(--color-link-base);
+    }
+  }
 }
