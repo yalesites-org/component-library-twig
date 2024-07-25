@@ -271,31 +271,12 @@ blockquote {
 }
 
 .quote-callout__quote {
-  --color-link-base: var(--color-quote-callback-quote);
-  --color-link-hover: var(--color-link-base);
-
   font: var(--font-style-body-xl);
   color: var(--color-quote-callout-quote);
 
   > *:last-child {
     margin-top: 0;
     margin-bottom: 0;
-  }
-
-  & a {
-    @include text-link.link;
-
-    &:hover {
-      --color-link-hover: var(--color-link-base);
-    }
-  }
-
-  & .link[data-link-style='underline-with-icon'] {
-    --color-text-shadow: var(--color-facts-and-figures-theme);
-
-    &:hover {
-      --color-link-hover: var(--color-link-base);
-    }
   }
 }
 

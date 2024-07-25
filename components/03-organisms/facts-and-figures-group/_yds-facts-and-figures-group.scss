@@ -57,6 +57,16 @@ $facts-and-figures-group-component-themes: map.deep-get(
         --color-text-shadow: var(--color-facts-and-figures-theme);
         --color-link-hover: var(--color-link-hover);
       }
+
+      a:not([data-link-style]) {
+        @include atoms.link;
+
+        color: var(--color-link-base);
+
+        &:hover {
+          color: var(--color-facts-and-figures-content);
+        }
+      }
     }
   }
 
