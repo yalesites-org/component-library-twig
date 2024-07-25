@@ -50,6 +50,13 @@ $facts-and-figures-group-component-themes: map.deep-get(
 
       background-color: var(--color-facts-and-figures-theme);
       color: var(--color-facts-and-figures-content);
+
+      .link,
+      a,
+      facts-and-figures__group_content {
+        --color-text-shadow: var(--color-facts-and-figures-theme);
+        --color-link-hover: var(--color-link-hover);
+      }
     }
   }
 
@@ -83,11 +90,15 @@ $facts-and-figures-group-component-themes: map.deep-get(
     --color-facts-and-figures-content: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
+    --color-link-base: var(--color-slot-eight);
+    --color-link-hover: var(--color-slot-eight);
   }
 
   &[data-component-theme='two'] {
     --color-facts-and-figures-theme: var(--color-slot-four);
     --color-facts-and-figures-content: var(--color-slot-seven);
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
   }
 
   &[data-component-theme='three'] {
@@ -95,6 +106,8 @@ $facts-and-figures-group-component-themes: map.deep-get(
     --color-facts-and-figures-content: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
+    --color-link-base: var(--color-slot-eight);
+    --color-link-hover: var(--color-slot-eight);
   }
 }
 
