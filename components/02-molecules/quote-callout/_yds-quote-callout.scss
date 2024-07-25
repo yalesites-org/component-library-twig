@@ -1,6 +1,6 @@
 @use '../../00-tokens/tokens';
 @use '../../00-tokens/functions/map';
-@use '../../01-atoms/controls/text-link/_yds-text-link' as text-link;
+@use '../../01-atoms/atoms';
 
 $global-quote-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $quote-callout-component-themes: map.deep-get(
@@ -61,6 +61,22 @@ blockquote {
       --color-quote-callout-background: var(--color-quote-callout-background);
 
       background-color: var(--color-quote-callout-background);
+
+      .link,
+      .quote-callout__quote {
+        --color-text-shadow: var(--color-quote-callout-background);
+        --color-link-hover: var(--color-link-hover);
+      }
+
+      a:not([data-link-style]) {
+        @include atoms.link;
+
+        color: var(--color-link-base);
+
+        &:hover {
+          color: var(--color-quote-callout-accent);
+        }
+      }
     }
   }
 
@@ -96,6 +112,8 @@ blockquote {
     --color-quote-callout-attribution: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
+    --color-link-base: var(--color-quote-callout-accent);
+    --color-link-hover: var(--color-quote-callout-accent);
   }
 
   &[data-component-theme='two'] {
@@ -114,6 +132,8 @@ blockquote {
     --color-quote-callout-attribution: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
+    --color-link-base: var(--color-quote-callout-accent);
+    --color-link-hover: var(--color-quote-callout-accent);
   }
 }
 
