@@ -21,12 +21,9 @@ import '../fonts/fontawesome/css/solid.css';
 import './_drupal.js';
 
 export const decorators = [
-  (Story, { args }) => {
-    // Usual emulsify hack to add Drupal behaviors.
-    useEffect(() => {
-      Drupal.attachBehaviors();
-    }, [args]);
-    return Story();
+  (StoryFn, context) => {
+    useEffect(() => Drupal.attachBehaviors(), [context]);
+    return `<div data-global-theme="${context.globals.globalTheme}">${StoryFn(context)}</div>`;
   },
 ];
 
@@ -36,3 +33,15 @@ export const tags = ['autodocs', 'autodocs'];
 export const parameters = {
   actions: { argTypesRegex: '^on.*' },
 };
+
+export const globalTypes = {
+  globalTheme: {
+    name: 'Global Theme',
+    description: 'Choose a global color palette.',
+    defaultValue: 'one',
+    toolbar: {
+      items: ['one', 'two', 'three', 'four'],
+      showName: true,
+    },
+  }
+}
