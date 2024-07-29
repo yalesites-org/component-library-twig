@@ -21,10 +21,23 @@ import '../lib/ys_link/css/ys-link.css';
 // If in a Drupal project, it's recommended to import a symlinked version of drupal.js.
 import './_drupal.js';
 
-// addDecorator deprecated, but not sure how to use this otherwise.
-addDecorator((storyFn, context) => {
-  useEffect(() => Drupal.attachBehaviors(), [context]);
-  return storyFn(context);
-});
+export const decorators = [
+  (StoryFn, context) => {
+    useEffect(() => Drupal.attachBehaviors(), [context]);
+    return `<div data-global-theme="${context.globals.globalTheme}">${StoryFn(context)}</div>`;
+  },
+];
 
 setupTwig(Twig);
+
+export const globalTypes = {
+  globalTheme: {
+    name: 'Global Theme',
+    description: 'Choose a global color palette.',
+    defaultValue: 'one',
+    toolbar: {
+      items: ['one', 'two', 'three', 'four'],
+      showName: true,
+    },
+  }
+}
