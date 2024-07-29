@@ -100,6 +100,14 @@ blockquote {
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+
+      @if $globalTheme == 'four' {
+        // Switch colors slot in order to have the selected background colors per component theme.
+        --color-slot-two: var(--global-themes-four-colors-slot-five);
+        --color-slot-five: var(--global-themes-four-colors-slot-two);
+        // Set color slot for the text on light background.
+        --color-slot-seven: var(--global-themes-four-colors-slot-six);
+      }
     }
   }
 
@@ -259,7 +267,7 @@ blockquote {
   [data-site-animation='artistic'] [data-quote-callout-style='bar'][data-animate-item='true'].animate & {
     --quote-callout-border-height: 100%;
 
-    &::before {      
+    &::before {
       @include tokens.expand-height(--quote-callout-border-height);
     }
   }
