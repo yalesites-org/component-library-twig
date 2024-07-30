@@ -39,8 +39,8 @@ export const eventArgTypes = {
   },
   format: {
     name: 'Format',
-    control: 'check',
-    options: ['In-person', 'Online'],
+    control: 'select',
+    options: ['In-person', 'Online', 'Hybrid'],
     defaultValue: 'In-person',
   },
   address: {
@@ -74,8 +74,8 @@ export const eventLocalistArgTypes = {
   },
   format: {
     name: 'Format',
-    control: 'check',
-    options: ['In-person', 'Online'],
+    control: 'select',
+    options: ['In-person', 'Online', 'Hybrid'],
     defaultValue: 'In-person',
   },
   address: {
