@@ -169,8 +169,7 @@
             <ul {{ bem('multiple-dates', [], event_meta__base_class) }} aria-expanded="false">
               {% for event_date in event_dates %}
                 <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
-          {{ event_dates.0.formatted_start_date }} {{ event_dates.0.formatted_start_time }} - {{ event_dates.0.formatted_end_time }}
-git                 </li>
+          {{ event_dates.0.formatted_start_date }} {{ event_dates.0.formatted_start_time }} - {{ event_dates.0.formatted_end_time }}                 </li>
               {% endfor %}
             </ul>
           </div>
