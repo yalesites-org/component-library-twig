@@ -1,16 +1,16 @@
 event_dates:
-  - formatted_start_date: Friday May 3rd 2024
+  - formatted_start_date: Friday, May 3rd, 2024
     formatted_end_date: Friday, May 3rd, 2024
-    formatted_start_time: 8:30am 
-    formatted_end_time: 9:30am
-  - formatted_start_date: Saturday May 4th 2024
+    formatted_start_time: 8:30 am EDT
+    formatted_end_time: 9:30 am EDT
+  - formatted_start_date: Saturday, May 4th, 2024
     formatted_end_date: Saturday, May 4th, 2024
-    formatted_start_time: 8:30am
-    formatted_end_time: 9:30am
-  - formatted_start_date: Sunday May 5th 2024
+    formatted_start_time: 8:30 am EDT
+    formatted_end_time: 9:30 am EDT
+  - formatted_start_date: Sunday, May 5th, 2024
     formatted_end_date: Sunday, May 5th, 2024
-    formatted_start_time: 8:30am
-    formatted_end_time: 9:30am
+    formatted_start_time: 8:30 am EDT
+    formatted_end_time: 9:30 am EDT
 ticket_cost: $40 pre registration, $60 at the door
 ticket_url: https://www.yale.edu
 event_meta__cta_primary__content: Event Name Website
