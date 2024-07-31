@@ -135,8 +135,9 @@
     {% block page_title__extra %}
       {# Date #}
       {% if event_dates %}
+            {#Friday July 13th 1:00pm - 2:00pm#}
         <div {{ bem('date', [], event_meta__base_class) }}>
-          {{ event_dates.0.formatted_start_date }} {{ event_dates.0.formatted_start_time }} to {{ event_dates.0.formatted_end_date }} {{ event_dates.0.formatted_end_time }}
+          {{ event_dates.0.formatted_start_date }} {{ event_dates.0.formatted_start_time }} - {{ event_dates.0.formatted_end_time }}
         </div>
       {% endif %}
     {% endblock %}
@@ -168,8 +169,8 @@
             <ul {{ bem('multiple-dates', [], event_meta__base_class) }} aria-expanded="false">
               {% for event_date in event_dates %}
                 <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
-                  {{ event_date.formatted_start_date }} {{ event_date.formatted_start_time }} to {{ event_date.formatted_end_date }} {{ event_date.formatted_end_time }}
-                </li>
+          {{ event_dates.0.formatted_start_date }} {{ event_dates.0.formatted_start_time }} - {{ event_dates.0.formatted_end_time }}
+git                 </li>
               {% endfor %}
             </ul>
           </div>
