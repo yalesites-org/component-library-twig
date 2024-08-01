@@ -135,9 +135,21 @@
     {% block page_title__extra %}
       {# Date #}
       {% if event_dates %}
-            {#Friday July 13th 1:00pm - 2:00pm#}
         <div {{ bem('date', [], event_meta__base_class) }}>
-          {{ event_dates.0.formatted_start_date }} {{ event_dates.0.formatted_start_time }} - {{ event_dates.0.formatted_end_time }}
+					{% if event_dates.0.formatted_start_date == event_dates.0.formatted_end_date %}
+						{{event_dates.0.formatted_start_date| date('l, F j, Y')}}
+						{{ event_dates.0.formatted_start_time| date('h:i a') }}
+						-
+						{{ event_dates.0.formatted_end_time| date('h:i a') }}
+						{# {{ event_dates.0.formatted_start_date }} {{ event_dates.0.formatted_start_time }} - {{ event_dates.0.formatted_end_time }} #}
+					{% else %}
+          	{{ event_dates.0.formatted_start_date }}
+						{{ event_dates.0.formatted_start_time }}
+						-
+						{{ event_dates.0.formatted_end_date }}
+						{{ event_dates.0.formatted_end_time }}
+					{% endif %}
+
         </div>
       {% endif %}
     {% endblock %}
