@@ -57,6 +57,14 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &[data-component-theme='three'] {
     --color-link-grid-action: var(--color-slot-five);
   }
+
+  &[data-component-theme='four'] {
+    --color-link-grid-action: var(--color-slot-four);
+  }
+
+  &[data-component-theme='five'] {
+    --color-link-grid-action: var(--color-slot-two);
+  }
 }
 
 .link-grid__heading {
