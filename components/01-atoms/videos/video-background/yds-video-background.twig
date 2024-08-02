@@ -14,7 +14,7 @@
 
 <div {{ bem(video_background__base_class, video_background__modifiers, video_background__blockname) }} data-component-theme={{ video_background__button__background_color }}>
   {% block video_background__content %}
-    <video muted>
+    <video muted playsinline>
       <source src="{{ video_background__content }}" type="video/mp4">
     </video>
   {% endblock %}
