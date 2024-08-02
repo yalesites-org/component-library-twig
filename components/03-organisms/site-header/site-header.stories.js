@@ -67,6 +67,16 @@ export default {
       type: 'boolean',
       defaultValue: false,
     },
+    siteWideHeaderName: {
+      name: 'Site Wide Header Name',
+      type: 'string',
+      defaultValue: 'Yale University',
+    },
+    siteWideHeaderUrl: {
+      name: 'Site Wide Header URL',
+      type: 'string',
+      defaultValue: 'https://www.yale.edu',
+    },
   },
 };
 
@@ -78,6 +88,8 @@ export const Header = ({
   siteHeaderImage,
   siteHeaderSiteNameImage,
   siteHeaderAccent,
+  siteWideHeaderName,
+  siteWideHeaderUrl,
 }) =>
   siteHeaderTwig({
     ...imageData.responsive_images['16x9'],
@@ -89,6 +101,8 @@ export const Header = ({
     site_header__menu__variation: menuVariation,
     site_header__background_image: siteHeaderImage,
     site_header__site_name_is_image: siteHeaderSiteNameImage,
+    site_header__branding_name: siteWideHeaderName,
+    site_header__branding_link: siteWideHeaderUrl,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
   });
@@ -121,6 +135,8 @@ export const HeaderExamples = ({
   siteHeaderAccent,
   siteHeaderImage,
   siteHeaderSiteNameImage,
+  siteWideHeaderName,
+  siteWideHeaderUrl,
 }) =>
   siteHeaderExamples({
     ...siteGlobalThemes,
@@ -135,6 +151,8 @@ export const HeaderExamples = ({
     site_header__menu__variation: menuVariation,
     site_header__background_image: siteHeaderImage,
     site_header__site_name_is_image: siteHeaderSiteNameImage,
+    site_header__branding_name: siteWideHeaderName,
+    site_header__branding_link: siteWideHeaderUrl,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
   });
