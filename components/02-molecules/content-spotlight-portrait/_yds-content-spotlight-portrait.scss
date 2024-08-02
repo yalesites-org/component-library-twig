@@ -89,8 +89,6 @@ $component-content-spotlight-port-themes: map.deep-get(
         // Switch colors slot in order to have the selected background colors per component theme.
         --color-slot-two: var(--global-themes-four-colors-slot-five);
         --color-slot-five: var(--global-themes-four-colors-slot-two);
-        --color-slot-three: var(--global-themes-four-colors-slot-four);
-        --color-slot-four: var(--global-themes-four-colors-slot-three);
         // Set color slot for the text on light background.
         --color-slot-seven: var(--global-themes-four-colors-slot-six);
       }
@@ -125,6 +123,34 @@ $component-content-spotlight-port-themes: map.deep-get(
     --color-link-hover: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
+  }
+
+  &[data-component-theme='four'] {
+    --color-background: var(--color-slot-three);
+    --color-text: var(--color-slot-seven);
+    --color-heading: var(--color-slot-seven);
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
+  }
+
+  &[data-component-theme='five'] {
+    --color-background: var(--color-slot-two);
+    --color-text: var(--color-slot-eight);
+    --color-heading: var(--color-slot-eight);
+    --color-link-base: var(--color-slot-eight);
+    --color-link-hover: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
+
+    [data-global-theme='four'] & {
+      --color-background: var(--component-themes-five-background);
+      --color-text: var(--component-themes-five-text);
+      --color-heading: var(--component-themes-five-heading);
+      --color-link-base: var(--color-slot-one);
+      --color-link-hover: var(--color-slot-one);
+      --color-link-visited-base: var(--color-purple-visited);
+      --color-link-visited-hover: var(--color-purple-visited-hover);
+    }
   }
 
   // spotlights inside of the banner should behave slightly different in that

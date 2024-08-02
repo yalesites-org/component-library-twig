@@ -81,6 +81,16 @@ $facts-and-figures-component-themes: map.deep-get(
     --color-facts-and-figures-content: var(--color-slot-seven);
   }
 
+  &[data-component-theme='four'] {
+    --color-facts-and-figures-theme: var(--color-slot-four);
+    --color-facts-and-figures-content: var(--color-slot-seven);
+  }
+
+  &[data-component-theme='five'] {
+    --color-facts-and-figures-theme: var(--color-slot-five);
+    --color-facts-and-figures-content: var(--color-slot-eight);
+  }
+
   &__inner {
     display: flex;
     flex-flow: column nowrap;
