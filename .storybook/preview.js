@@ -36,11 +36,16 @@ export const parameters = {
 
 export const globalTypes = {
   globalTheme: {
-    name: 'Global Theme',
+    name: 'Site: Global Theme (lever)',
     description: 'Choose a global color palette.',
     defaultValue: 'one',
     toolbar: {
-      items: ['one', 'two', 'three', 'four'],
+      items: [
+        { value: 'one', title: 'Old Blues' },
+        { value: 'two', title: 'New Haven Green' },
+        { value: 'three', title: 'Shoreline Summer' },
+        { value: 'four', title: 'Onha' },
+      ],
       showName: true,
     },
   }

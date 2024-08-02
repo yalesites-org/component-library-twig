@@ -1,6 +1,4 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-// get global themes as `label` : `key` values to pass into options as array.
-import getGlobalThemes from '../../00-tokens/colors/color-global-themes';
 
 // facts_and_figures__group twig
 import factsAndFiguresGroupTwig from './yds-facts-and-figures-group.twig';
@@ -11,9 +9,7 @@ import factsAndFiguresGroupData from './facts-and-figures-group.yml';
 // Image atom component - generic images for demo
 import imageData from '../../01-atoms/images/image/image.yml';
 
-// Get global theme options
-const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
-
+const colorPairingsData = Object.keys(tokens['component-themes']);
 /**
  * Storybook Definition.
  */
@@ -30,7 +26,7 @@ export default {
     },
     themeColor: {
       name: 'Component Theme (dial)',
-      options: ['one', 'two', 'three'],
+      options: colorPairingsData,
       type: 'select',
     },
     factsAndFiguresGroupHeading: {
@@ -96,7 +92,6 @@ export const FactsAndFiguresGroup = ({
   factsAndFiguresGroupHeading,
   factsAndFiguresGroupContent,
   factsAndFiguresGroupIcons,
-  globalTheme,
   presentationStyle,
   fontStyle,
   columnCount,
@@ -105,9 +100,8 @@ export const FactsAndFiguresGroup = ({
   image,
 }) => {
   return `
-    <div class="wrap-for-global-theme" data-global-theme="${globalTheme}">
+    <div class="wrap-for-global-theme">
       ${factsAndFiguresGroupTwig({
-        site_global__theme: globalTheme,
         facts_and_figures__group__heading: factsAndFiguresGroupHeading,
         facts_and_figures__group__content: factsAndFiguresGroupContent,
         facts_and_figures__group__has_icon: factsAndFiguresGroupIcons

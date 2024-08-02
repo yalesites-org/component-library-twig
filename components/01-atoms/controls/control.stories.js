@@ -1,5 +1,4 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-import getGlobalThemes from '../../00-tokens/colors/color-global-themes';
 import ctaTwig from './cta/yds-cta.twig';
 import linkTwig from './text-link/yds-text-link.twig';
 
@@ -10,10 +9,8 @@ import './text-copy-button/yds-text-copy-button';
 
 import themeExamplesTwig from './cta/_yds-cta-examples.twig';
 
-const siteGlobalThemes = { themes: tokens['global-themes'] };
 const componentThemes = { themes: tokens['button-cta-themes'] };
 const componentThemeOptions = Object.keys(tokens['button-cta-themes']);
-const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
 
 /**
  * Storybook Definition.
@@ -193,11 +190,9 @@ export const textLink = () => `
   })}<br/>
 `;
 
-export const CtaExamples = ({ globalTheme, componentTheme }) =>
+export const CtaExamples = ({ componentTheme }) =>
   themeExamplesTwig({
-    ...siteGlobalThemes,
     ...componentThemes,
-    site_global__theme: globalTheme,
     example_content: `
     <h2>Filled</h2>
     <div class="cta-group">
@@ -312,11 +307,6 @@ export const CtaExamples = ({ globalTheme, componentTheme }) =>
   });
 
 CtaExamples.argTypes = {
-  globalTheme: {
-    name: 'Global Theme (lever)',
-    options: siteGlobalThemeOptions,
-    type: 'select',
-  },
   componentTheme: {
     name: 'Component Theme (dial)',
     options: componentThemeOptions,
@@ -326,7 +316,6 @@ CtaExamples.argTypes = {
 
 export const LinkExamples = ({ globalTheme, componentTheme }) =>
   themeExamplesTwig({
-    ...siteGlobalThemes,
     ...componentThemes,
     site_global__theme: globalTheme,
     example_content: `
@@ -380,7 +369,6 @@ export const LinkExamples = ({ globalTheme, componentTheme }) =>
 
 export const textCopyButtonExamples = ({ globalTheme, componentTheme }) =>
   themeExamplesTwig({
-    ...siteGlobalThemes,
     ...componentThemes,
     site_global__theme: globalTheme,
     example_content: `
@@ -393,11 +381,6 @@ export const textCopyButtonExamples = ({ globalTheme, componentTheme }) =>
   });
 
 textCopyButtonExamples.argTypes = {
-  globalTheme: {
-    name: 'Global Theme (lever)',
-    options: siteGlobalThemeOptions,
-    type: 'select',
-  },
   componentTheme: {
     name: 'Component Theme (dial)',
     options: componentThemeOptions,
