@@ -180,6 +180,8 @@
             <ul {{ bem('multiple-dates', [], event_meta__base_class) }} aria-expanded="false">
               {% for event_date in event_dates %}
                 <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
+                {{ event_date.formatted_start_date }} {{ event_date.formatted_start_time }} to {{ event_date.formatted_end_date }} {{ event_date.formatted_end_time }}
+                </li>
               {% endfor %}
             </ul>
           </div>
