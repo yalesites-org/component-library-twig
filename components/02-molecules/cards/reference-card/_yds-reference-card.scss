@@ -63,6 +63,15 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
         grid-template-columns: repeat(5, 1fr);
         grid-template-rows: repeat(6, 1fr);
       }
+
+      // container query for container defined in
+      // component-library-twig/components/03-organisms/layout/two-column/_yds-two-column.scss
+      /* stylelint-disable */
+      @container sidebar-col-2 (min-width: 18.75rem) {
+        display: flex;
+        flex-flow: column-reverse nowrap;
+      }
+      /* stylelint-enable */
     }
   }
 
@@ -285,6 +294,16 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       grid-row: 2 / 7;
       align-self: center;
     }
+
+    // container query for container defined in
+    // component-library-twig/components/03-organisms/layout/two-column/_yds-two-column.scss
+    /* stylelint-disable */
+    @container sidebar-col-2 (min-width: 18.75rem) {
+      padding: var(--size-spacing-6);
+      margin: calc(var(--size-spacing-13) * -1) auto 0;
+      max-width: 90%;
+    }
+    /* stylelint-enable */
   }
 
   [data-collection-type='list'][data-collection-featured='false'] & {
@@ -435,6 +454,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 }
 
 .reference-card__snippet {
+  @include tokens.body-default;
+
   margin-top: var(--size-spacing-3);
 
   [data-collection-featured='false'] & {
