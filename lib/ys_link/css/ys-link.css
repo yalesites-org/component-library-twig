@@ -35,3 +35,7 @@ a.link--with-icon.ys_linked.link.ys_punctuation-after {
 a.link--with-icon.ys_linked.link.ys_download.ys_punctuation-after {
   padding-right: var(--ys-link--punctuation-padding);
 }
+
+.tile__item__inner a p:last-of-type {
+  display: inline;
+}

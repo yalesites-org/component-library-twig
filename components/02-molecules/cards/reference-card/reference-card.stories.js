@@ -117,8 +117,8 @@ export const EventCard = ({
 EventCard.argTypes = {
   format: {
     name: 'Format',
-    control: 'check',
-    options: ['In-person', 'Online'],
+    control: 'select',
+    options: ['In-person', 'Online', 'Hybrid'],
     defaultValue: 'In-person',
   },
   headingPrefix: {
