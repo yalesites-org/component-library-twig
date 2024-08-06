@@ -171,10 +171,18 @@ $component-content-spotlight-themes: map.deep-get(
     [data-image-position='image-right'] & {
       grid-area: primary;
     }
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   > *:not(:last-child) {
     margin-bottom: var(--size-spacing-5);
+  }
+
+  .link--second {
+    margin-top: auto;
   }
 }
 

@@ -68,6 +68,13 @@
           link__url: content_spotlight_portrait__link__url,
         } %}
       {% endif %}
+      {% if content_spotlight_portrait__link_two__content and content_spotlight_portrait__link_two__url %}
+        {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+          link__content: content_spotlight_portrait__link_two__content,
+          link__url: content_spotlight_portrait__link_two__url,
+          link__modifiers: ['second'],
+        } %}
+      {% endif %}
     </div>
     {# Image #}
     <div {{ bem('image', [], content_spotlight_portrait__base_class) }}>
