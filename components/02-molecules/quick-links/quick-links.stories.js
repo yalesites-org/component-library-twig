@@ -16,18 +16,20 @@ export default {
     heading: {
       name: 'Heading',
       type: 'string',
-      defaultValue: quickLinksData.quick_links__heading,
     },
     description: {
       name: 'Description',
       type: 'string',
-      defaultValue: quickLinksData.quick_links__description,
     },
     image: {
       name: 'With image',
       type: 'boolean',
-      defaultValue: true,
     },
+  },
+  args: {
+    heading: quickLinksData.quick_links__heading,
+    description: quickLinksData.quick_links__description,
+    image: true,
   },
 };
 

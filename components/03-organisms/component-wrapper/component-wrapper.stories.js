@@ -13,8 +13,10 @@ export default {
       name: 'Component Width',
       type: 'select',
       options: ['content', 'highlight', 'site', 'max'],
-      defaultValue: 'content',
     },
+  },
+  args: {
+    componentWidth: 'content',
   },
 };
 

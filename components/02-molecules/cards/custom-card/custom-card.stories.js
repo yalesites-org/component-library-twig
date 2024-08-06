@@ -19,23 +19,25 @@ export default {
     heading: {
       name: 'Heading',
       type: 'string',
-      defaultValue: customCardData.custom_card__heading,
     },
     snippet: {
       name: 'Snippet',
       type: 'string',
-      defaultValue: customCardData.custom_card__snippet,
     },
     withImage: {
       name: 'With Image',
       type: 'boolean',
-      defaultValue: true,
     },
     featured: {
       name: 'Featured',
       type: 'boolean',
-      defaultValue: true,
     },
+  },
+  args: {
+    heading: customCardData.custom_card__heading,
+    snippet: customCardData.custom_card__snippet,
+    withImage: true,
+    featured: true,
   },
 };
 
