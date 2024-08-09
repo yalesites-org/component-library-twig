@@ -53,6 +53,14 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+
+      @if $globalTheme == 'four' {
+        // Switch colors slot in order to have the selected background colors per component theme.
+        --color-slot-two: var(--global-themes-four-colors-slot-five);
+        --color-slot-five: var(--global-themes-four-colors-slot-two);
+        // Switch color slot for the text on light background.
+        --color-slot-seven: var(--global-themes-four-colors-slot-six);
+      }
     }
   }
 
@@ -76,6 +84,12 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-text: var(--color-gray-800);
     --color-heading: var(--color-gray-800);
     --color-link-base: var(--color-slot-seven);
+
+    [data-global-theme='four'] & {
+      --color-action: var(--color-slot-six);
+      --color-text: var(--color-slot-six);
+      --color-heading: var(--color-slot-six);
+    }
   }
 
   &[data-component-theme='three'] {
@@ -86,6 +100,36 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-text: var(--color-basic-white);
     --color-heading: var(--color-basic-white);
     --color-link-base: var(--color-slot-eight);
+  }
+
+  &[data-component-theme='four'] {
+    --color-callouts-background: var(--color-slot-three);
+    --color-text-shadow: var(--color-slot-one);
+    --color-action: var(--color-gray-800);
+    --color-action-secondary: var(--color-basic-white);
+    --color-text: var(--color-gray-800);
+    --color-heading: var(--color-gray-800);
+    --color-link-base: var(--color-slot-seven);
+  }
+
+  &[data-component-theme='five'] {
+    --color-callouts-background: var(--color-slot-two);
+    --color-text-shadow: var(--color-slot-one);
+    --color-action: var(--color-basic-white);
+    --color-action-secondary: var(--color-slot-one);
+    --color-text: var(--color-basic-white);
+    --color-heading: var(--color-basic-white);
+    --color-link-base: var(--color-slot-eight);
+
+    [data-global-theme='four'] & {
+      --color-callouts-background: var(--component-themes-five-background);
+      --color-text: var(--component-themes-five-text);
+      --color-heading: var(--component-themes-five-heading);
+      --color-action: var(--color-slot-seven);
+      --color-action-secondary: var(--color-slot-eight);
+      --color-link-visited-base: var(--color-purple-visited);
+      --color-link-visited-hover: var(--color-purple-visited-hover);
+    }
   }
 }
 

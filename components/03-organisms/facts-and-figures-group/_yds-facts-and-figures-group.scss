@@ -90,6 +90,14 @@ $facts-and-figures-group-component-themes: map.deep-get(
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+
+      @if $globalTheme == 'four' {
+        // Switch colors slot in order to have the selected background colors per component theme.
+        --color-slot-two: var(--global-themes-four-colors-slot-five);
+        --color-slot-five: var(--global-themes-four-colors-slot-two);
+        // Set color slot for the text on light background.
+        --color-slot-seven: var(--global-themes-four-colors-slot-six);
+      }
     }
   }
 
@@ -118,6 +126,23 @@ $facts-and-figures-group-component-themes: map.deep-get(
     --color-link-visited-hover: var(--color-link-visited-light-hover);
     --color-link-base: var(--color-slot-eight);
     --color-link-hover: var(--color-slot-eight);
+  }
+
+  &[data-component-theme='four'] {
+    --color-facts-and-figures-theme: var(--color-slot-two);
+    --color-facts-and-figures-content: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
+
+    [data-global-theme='four'] & {
+      --color-facts-and-figures-theme: var(--component-themes-five-background);
+      --color-facts-and-figures-content: var(--color-slot-seven);
+    }
+  }
+
+  &[data-component-theme='five'] {
+    --color-facts-and-figures-theme: var(--color-slot-three);
+    --color-facts-and-figures-content: var(--color-slot-seven);
   }
 }
 
