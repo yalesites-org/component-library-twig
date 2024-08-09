@@ -1,0 +1,73 @@
+@use '../../../00-tokens/tokens';
+
+.filter-items--inline-desktop {
+  display: flex;
+  gap: 1.5rem;
+  flex-direction: column;
+
+  @media (min-width: tokens.$break-l) {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 1.125rem;
+
+    &.filter-items--1 {
+      .form-item {
+        max-width: 50%;
+      }
+    }
+  }
+
+  .form-item__label {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+
+    @media (min-width: tokens.$break-l) {
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  .form-item {
+    flex-grow: 1;
+    flex-basis: 0;
+    margin-bottom: 0;
+    max-width: none;
+  }
+
+  .form-item-search {
+    position: relative;
+
+    .form-text {
+      padding-right: var(--size-spacing-8);
+      height: 3.125rem;
+    }
+
+    .form-item__icon {
+      position: absolute;
+      right: 0625rem;
+      height: 1.25rem;
+      width: 1.25rem;
+      top: 100%;
+      margin-top: -2.1875rem;
+    }
+  }
+
+  .form-item__select {
+    min-width: auto;
+  }
+
+  .form-item__dropdown {
+    height: 3.125rem;
+  }
+
+  .button {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding-inline: 2rem;
+    width: auto;
+
+    @media (min-width: tokens.$break-l) {
+      font-size: 1.125rem;
+    }
+  }
+}
