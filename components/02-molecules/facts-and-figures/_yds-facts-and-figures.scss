@@ -1,5 +1,6 @@
 @use '../../00-tokens/tokens';
 @use '../../00-tokens/functions/map';
+@use '../../01-atoms/controls/text-link/_yds-text-link' as text-link;
 
 $global-facts-and-figures-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $facts-and-figures-component-themes: map.deep-get(
