@@ -1,9 +1,0 @@
-{% set filter_items = element['#info']|length > 3 ? '3' : element['#info']|length %}
-{% set classes = [
-    'filter-items--inline-desktop',
-    'filter-items--' ~ filter_items
-] %}
-
-<form{{ attributes.addClass(classes) }}>
-    {{ children }}
-</form>
