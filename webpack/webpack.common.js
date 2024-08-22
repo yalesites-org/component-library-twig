@@ -42,7 +42,10 @@ function getEntries(scssPattern, jsPattern) {
     entries[newfilePath] = file;
   });
 
-  entries['js/ys-link'] = path.resolve(rootDir, 'lib/ys_link/index.js');
+  entries['js/link-treatment'] = path.resolve(
+    rootDir,
+    'lib/link-treatment/link-treatment.js',
+  );
 
   return entries;
 }
