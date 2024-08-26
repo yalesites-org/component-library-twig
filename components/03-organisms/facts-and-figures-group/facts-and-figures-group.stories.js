@@ -78,12 +78,14 @@ export default {
   args: {
     globalTheme: 'one',
     themeColor: 'one',
-    infographicGroupHeading: infographicGroupData.infographic__group__heading,
-    infographicGroupContent: infographicGroupData.infographic__group__content,
-    infographicGroupLink:
-      infographicGroupData.infographic__group__link__content,
+    factsAndFiguresGroupHeading:
+      factsAndFiguresGroupData.facts_and_figures__group__heading,
+    factsAndFiguresGroupContent:
+      factsAndFiguresGroupData.facts_and_figures__group__content,
+    factsAndFiguresGroupLink:
+      factsAndFiguresGroupData.facts_and_figures__group__link__content,
     image: true,
-    infographicGroupIcons: false,
+    factsAndFiguresGroupIcons: false,
     presentationStyle: 'basic',
     fontStyle: 'normal',
     alignment: 'left',
