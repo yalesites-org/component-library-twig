@@ -178,7 +178,15 @@ $component-inline-message-themes: map.deep-get(
     }
   }
 
+  &:visited {
+    color: var(--color-link-visited-base);
+  }
+
   &:has(> i.fa-icon) {
     padding-right: var(--size-spacing-3);
+  }
+
+  &:visited:hover {
+    color: var(--color-link-visited-hover);
   }
 }
