@@ -88,16 +88,16 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   &:visited {
     color: var(--color-link-visited-base);
-
-    &:focus,
-    &:hover {
-      color: var(--color-link-visited-hover);
-    }
   }
 
   // Make the underline link encompass the icon as well.
   &:has(> i.fa-icon) {
     padding-right: var(--size-spacing-6);
+  }
+
+  &:visited:focus,
+  &:visited:hover {
+    color: var(--color-link-visited-hover);
   }
 }
 
@@ -233,10 +233,15 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
     @include tokens.underline-slide-end('no-underline');
 
     color: var(--color-link-hover);
+  }
 
-    &:visited {
-      color: var(--color-link-visited-hover);
-    }
+  // Make the underline link encompass the icon as well.
+  & [class*='__heading-link']:has(> i.fa-icon) {
+    padding-right: var(--size-spacing-5);
+  }
+
+  &:hover [class*='__heading-link']:visited {
+    color: var(--color-link-visited-hover);
   }
 
   // Make the underline link encompass the icon as well.
