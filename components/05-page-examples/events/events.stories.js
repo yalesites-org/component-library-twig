@@ -17,9 +17,6 @@ import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
 
-// Storybook helper to map arguments to the new args key pair
-import args2StorybookArgs from '../../utility';
-
 // Utility to convert dates to unix timestamps
 const toUnixTimeStamp = (date) => {
   return Math.floor(Date.parse(date) / 1000);
@@ -47,10 +44,6 @@ export default {
       type: 'boolean',
       defaultValue: true,
     },
-  },
-  args: {
-    ...args2StorybookArgs(eventArgTypes),
-    ...args2StorybookArgs(argTypes),
   },
 };
 
