@@ -65,12 +65,10 @@ export default {
     siteWideHeaderName: {
       name: 'Site Wide Header Name',
       type: 'string',
-      defaultValue: 'Yale University',
     },
     siteWideHeaderUrl: {
       name: 'Site Wide Header URL',
       type: 'string',
-      defaultValue: 'https://www.yale.edu',
     },
   },
   args: {
@@ -81,6 +79,8 @@ export default {
     siteHeaderSiteNameImage: false,
     siteHeaderTheme: 'one',
     siteHeaderAccent: 'one',
+    siteWideHeaderName: 'Yale University',
+    siteWideHeaderUrl: 'https://www.yale.edu',
   },
 };
 
