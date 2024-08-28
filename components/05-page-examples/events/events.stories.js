@@ -45,6 +45,10 @@ export default {
       defaultValue: true,
     },
   },
+  args: {
+    startDate: '2022-04-01T08:00',
+    endDate: '2022-04-01T11:30',
+  },
 };
 
 export const EventPage = ({
@@ -74,8 +78,19 @@ export const EventPage = ({
   address,
   ctaText,
   showBreadcrumbs,
-}) =>
-  eventPageTwig({
+}) => {
+  let unixStartDate = toUnixTimeStamp(startDate);
+  let unixEndDate = toUnixTimeStamp(endDate);
+
+  if (unixStartDate === 'NaN') {
+    unixStartDate = null;
+  }
+
+  if (unixEndDate === 'NaN') {
+    unixEndDate = null;
+  }
+
+  return eventPageTwig({
     site_name: siteName,
     event_title__heading: eventPageTitle,
     site_animate_components: allowAnimatedItems,
@@ -95,8 +110,8 @@ export const EventPage = ({
     utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
     ...imageData.responsive_images['4x3'],
-    event_meta__date_start: toUnixTimeStamp(startDate),
-    event_meta__date_end: toUnixTimeStamp(endDate),
+    event_meta__date_start: unixStartDate,
+    event_meta__date_end: unixEndDate,
     event_meta__format: format,
     event_meta__address: address,
     event_meta__cta_primary__content: ctaText,
@@ -106,6 +121,7 @@ export const EventPage = ({
     ...socialLinksData,
     show_breadcrumbs: showBreadcrumbs,
   });
+};
 EventPage.argTypes = {
   pageTitle: {
     table: {
