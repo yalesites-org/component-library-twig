@@ -138,9 +138,9 @@
         <div {{ bem('date', [], event_meta__base_class) }}>
           {% if event_dates.0.formatted_start_date == event_dates.0.formatted_end_date %}
             {{event_dates.0.formatted_start_date| date('D M j, Y')}}
-            {{ event_dates.0.formatted_start_time| date('g:ia') }}
+            {{ event_dates.0.formatted_start_time| date('g:ia T', false) }}
             -
-            {{ event_dates.0.formatted_end_time| date('g:ia') }}
+            {{ event_dates.0.formatted_end_time| date('g:ia T', false) }}
           {% else %}
             {{ event_dates.0.formatted_start_date }}
             {{ event_dates.0.formatted_start_time }}
