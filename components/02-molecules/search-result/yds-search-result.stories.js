@@ -26,14 +26,20 @@ export default {
       type: 'string',
       defaultValue: searchResultData.search_result__teaser,
     },
+    contentType: {
+      name: 'Search Results Content Type',
+      type: 'string',
+      defaultValue: searchResultData.search_result__content_type,
+    },
   },
 };
 
-export const SearchResult = ({ heading, highlighted, teaser }) =>
+export const SearchResult = ({ heading, highlighted, teaser, contentType }) =>
   searchResultTwig({
     search_result__teaser: teaser,
     search_result__title: heading,
     search_result__url: '#',
     search_result__highlighted: highlighted,
     breadcrumbs__items: breadcrumbData.items,
+    search_result__content_type: contentType,
   });
