@@ -83,13 +83,16 @@ export const EventPage = ({
   let unixStartDate = toUnixTimeStamp(startDate);
   let unixEndDate = toUnixTimeStamp(endDate);
 
-  if (unixStartDate === 'NaN') {
-    unixStartDate = null;
-  }
+  // Convert 'NaN' to null so that it is not rendered in the template
+  const nanToNull = (value) => {
+    if (value === 'NaN') {
+      return null;
+    }
+    return value;
+  };
 
-  if (unixEndDate === 'NaN') {
-    unixEndDate = null;
-  }
+  unixStartDate = nanToNull(unixStartDate);
+  unixEndDate = nanToNull(unixEndDate);
 
   return eventPageTwig({
     site_name: siteName,
