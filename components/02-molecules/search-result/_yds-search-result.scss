@@ -60,11 +60,12 @@
 
   --color-text-shadow: var(--color-basic-white);
 
-  padding: var(--size-spacing-5) 0;
+  padding: var(--size-spacing-6) 0;
   border-bottom: 1px solid var(--color-gray-300);
 
   @media (min-width: tokens.$break-mobile-max) {
     max-width: var(--size-component-layout-width-content);
+    padding: var(--size-spacing-7) 0;
   }
 
   &:hover {
@@ -91,4 +92,18 @@
 
 .search-result__teaser {
   color: var(--color-gray-600);
+
+  p:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.search-result__content-type {
+  @include tokens.body-s;
+
+  color: tokens.$color-blue-yale;
+  font-size: 1rem;
+  font-weight: var(--font-weights-mallory-medium);
+  text-transform: capitalize;
+  margin-bottom: var(--size-spacing-3);
 }
