@@ -99,6 +99,7 @@ export const EventLocalist = ({
     event_meta__address: address,
     event_meta__cta_primary__content: ctaText,
     event_meta__cta_primary__href: '#',
+    cost_button_text: ctaText,
     event_meta__cta_secondary__content: 'Add to calendar',
     event_meta__cta_secondary__href: '#',
     event_meta__image: withImage ? 'true' : 'false',
