@@ -243,11 +243,6 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   &:hover [class*='__heading-link']:visited {
     color: var(--color-link-visited-hover);
   }
-
-  // Make the underline link encompass the icon as well.
-  & [class*='__heading-link']:has(> i.fa-icon) {
-    padding-right: var(--size-spacing-5);
-  }
 }
 
 .link {
