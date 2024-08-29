@@ -61,19 +61,24 @@
         text__content: content_spotlight_portrait__text,
         text__blockname: content_spotlight_portrait__base_class,
       } %}
-      {# Link #}
-      {% if content_spotlight_portrait__link__content and content_spotlight_portrait__link__url %}
-        {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-          link__content: content_spotlight_portrait__link__content,
-          link__url: content_spotlight_portrait__link__url,
-        } %}
-      {% endif %}
-      {% if content_spotlight_portrait__link_two__content and content_spotlight_portrait__link_two__url %}
-        {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-          link__content: content_spotlight_portrait__link_two__content,
-          link__url: content_spotlight_portrait__link_two__url,
-          link__modifiers: ['second'],
-        } %}
+      {% if (content_spotlight_portrait__link__content and content_spotlight_portrait__link__url) or (content_spotlight_portrait__link_two__content and content_spotlight_portrait__link_two__url) %}
+        <div {{ bem('ctas', [], content_spotlight_portrait__base_class) }}>
+          {# Link #}
+          {% if content_spotlight_portrait__link__content and content_spotlight_portrait__link__url %}
+            {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+              link__content: content_spotlight_portrait__link__content,
+              link__url: content_spotlight_portrait__link__url,
+            } %}
+          {% endif %}
+          {% if content_spotlight_portrait__link_two__content and content_spotlight_portrait__link_two__url %}
+            {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+              link__content: content_spotlight_portrait__link_two__content,
+              link__url: content_spotlight_portrait__link_two__url,
+              link__modifiers: ['second'],
+            } %}
+          {% endif %}
+        </div>
+
       {% endif %}
     </div>
     {# Image #}
