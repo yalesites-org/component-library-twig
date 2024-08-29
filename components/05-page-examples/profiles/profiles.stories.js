@@ -79,6 +79,7 @@ export const ProfilePage = ({
     site_name: siteName,
     site_animate_components: allowAnimatedItems,
     site_header__border_thickness: headerBorderThickness,
+    site_header__branding_link: 'https://www.yale.edu',
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
     site_header__accent: siteHeaderAccent,
