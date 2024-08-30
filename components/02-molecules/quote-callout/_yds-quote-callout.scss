@@ -100,6 +100,14 @@ blockquote {
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+
+      @if $globalTheme == 'four' {
+        // Switch colors slot in order to have the selected background colors per component theme.
+        --color-slot-two: var(--global-themes-four-colors-slot-five);
+        --color-slot-five: var(--global-themes-four-colors-slot-two);
+        // Set color slot for the text on light background.
+        --color-slot-seven: var(--global-themes-four-colors-slot-six);
+      }
     }
   }
 
@@ -134,6 +142,27 @@ blockquote {
     --color-link-visited-hover: var(--color-link-visited-light-hover);
     --color-link-base: var(--color-quote-callout-accent);
     --color-link-hover: var(--color-quote-callout-accent);
+  }
+
+  &[data-component-theme='four'] {
+    --color-quote-callout-background: var(--color-slot-four);
+    --color-quote-callout-accent: var(--color-slot-seven);
+    --color-quote-callout-quote: var(--color-slot-seven);
+    --color-quote-callout-attribution: var(--color-slot-seven);
+  }
+
+  &[data-component-theme='five'] {
+    --color-quote-callout-background: var(--color-slot-two);
+    --color-quote-callout-accent: var(--color-slot-eight);
+    --color-quote-callout-quote: var(--color-slot-eight);
+    --color-quote-callout-attribution: var(--color-slot-eight);
+
+    [data-global-theme='four'] & {
+      --color-quote-callout-background: var(--component-themes-five-background);
+      --color-quote-callout-accent: var(--color-slot-seven);
+      --color-quote-callout-quote: var(--color-slot-seven);
+      --color-quote-callout-attribution: var(--color-slot-seven);
+    }
   }
 }
 
@@ -259,7 +288,7 @@ blockquote {
   [data-site-animation='artistic'] [data-quote-callout-style='bar'][data-animate-item='true'].animate & {
     --quote-callout-border-height: 100%;
 
-    &::before {      
+    &::before {
       @include tokens.expand-height(--quote-callout-border-height);
     }
   }
