@@ -1,10 +1,8 @@
+import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import quoteCalloutTwig from './yds-quote-callout.twig';
-
 import quoteCalloutData from './quote-callout.yml';
-
 // Image atom component - generic images for demo
 import imageData from '../../01-atoms/images/image/image.yml';
-import tokens from "@yalesites-org/tokens/build/json/tokens.json";
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
