@@ -58,6 +58,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
         // Switch colors slot in order to have the selected background colors per component theme.
         --color-slot-two: var(--global-themes-four-colors-slot-five);
         --color-slot-five: var(--global-themes-four-colors-slot-two);
+
         // Switch color slot for the text on light background.
         --color-slot-seven: var(--global-themes-four-colors-slot-six);
       }

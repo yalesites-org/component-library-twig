@@ -105,6 +105,7 @@ blockquote {
         // Switch colors slot in order to have the selected background colors per component theme.
         --color-slot-two: var(--global-themes-four-colors-slot-five);
         --color-slot-five: var(--global-themes-four-colors-slot-two);
+
         // Set color slot for the text on light background.
         --color-slot-seven: var(--global-themes-four-colors-slot-six);
       }
