@@ -5,7 +5,7 @@
 // for all other use cases yds-button should be used.
 @mixin button-submit {
   transition: color,
-  background-color var(--animation-speed-default) ease-in-out 0ms;
+    background-color var(--animation-speed-default) ease-in-out 0ms;
 
   --color-action-secondary: var(--color-basic-white);
   --color-button-bg: var(--color-action);
@@ -16,7 +16,8 @@
   --border-thickness-button: var(--border-thickness-2);
   --border-radius-button: 100vmax;
 
-  border: var(--border-thickness-button, var(--border-thickness-2)) solid var(--color-button-border);
+  border: var(--border-thickness-button, var(--border-thickness-2)) solid
+    var(--color-button-border);
   border-radius: var(--border-radius-button, var(--radius-0));
   background-color: var(--color-button-bg);
   color: var(--color-button-text);
@@ -117,11 +118,11 @@
     padding: 0;
 
     li.search-choice {
-      background-color: rgba(0, 54, 107, 0.1)
+      background-color: hsl(210deg 100% 21% / 10%);
     }
 
     li.search-field {
-      input[type="text"] {
+      input[type='text'] {
         font-family: inherit;
         padding: 0;
       }
