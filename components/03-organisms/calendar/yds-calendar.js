@@ -186,7 +186,7 @@ Drupal.behaviors.eventsCalendar = {
         }
       });
 
-      mql.addEventListener('change', (ev) => {
+      mql.addEventListener('change', () => {
         if (mql.matches) {
           // Clear mobile events container when resizing above 992px.
           mobileEventsContainer.innerHTML = '';
@@ -195,7 +195,7 @@ Drupal.behaviors.eventsCalendar = {
           showWeek(0);
           MicroModal.close();
         }
-      })
+      });
     });
   },
 };
