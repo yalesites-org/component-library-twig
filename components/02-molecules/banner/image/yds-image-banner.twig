@@ -1,0 +1,41 @@
+{#
+ # Available Props:
+ # - banner__content__layout: bottom (default), left, or right
+ #
+ # Available Variables:
+ # - banner__heading
+ # - banner__snippet
+ # - banner__link__content
+ # - banner__link__url
+ #
+ # Available Blocks:
+ # - banner__image
+ #}
+
+{% set banner__base_class = 'cta-banner' %}
+{% set banner__content__background = banner__content__background|default('one') %}
+
+{% set banner__attributes = {
+  'data-banner-content-layout': banner__content__layout|default('bottom'),
+  'data-component-theme': banner__content__background,
+  class: bem(banner__base_class),
+} %}
+
+{% if banner__width %}
+  {% set banner__attributes = banner__attributes|merge({
+    'data-banner-width' : banner__width,
+  }) %}
+{% endif %}
+
+<div {{ add_attributes(banner__attributes) }}>
+  {% block prefix_suffix %}
+  {% endblock %}
+  <div {{ bem('content-wrapper', [], banner__base_class) }}>
+    <div {{ bem('image', [], banner__base_class) }}>
+      {% block banner__image %}
+        {% include "@atoms/images/image/_responsive-image.twig" %}
+      {% endblock %}
+    </div>
+  </div>
+</div>
+
