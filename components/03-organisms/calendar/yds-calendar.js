@@ -20,6 +20,9 @@ Drupal.behaviors.eventsCalendar = {
     const dayEventsContainer = '.calendar__day-events';
     const prevButton = '.calendar__nav-btn--prev';
     const nextButton = '.calendar__nav-btn--next';
+    const mobileNav = '.calendar__nav--mobile';
+    const desktopNav = '.calendar__nav--desktop';
+
     // Selectors.
     const calendars = context.querySelectorAll(calendar);
     const eventsToggle = context.querySelectorAll(eventToggle);
@@ -41,8 +44,18 @@ Drupal.behaviors.eventsCalendar = {
       const modalTitle = c.querySelector(modalTitleSelector);
       const mobileEventsContainer = c.querySelector(mobileEvents);
       const today = c.querySelector(todaySelector);
-      const calendarPrevBtn = c.querySelector(prevButton);
-      const calendarNextBtn = c.querySelector(nextButton);
+      const mobileCalendarPrevBtn = c
+        .querySelector(mobileNav)
+        .querySelector(prevButton);
+      const mobileCalendarNextBtn = c
+        .querySelector(mobileNav)
+        .querySelector(nextButton);
+      const desktopCalendarPrevBtn = c
+        .querySelector(desktopNav)
+        .querySelector(prevButton);
+      const desktopCalendarNextBtn = c
+        .querySelector(desktopNav)
+        .querySelector(nextButton);
       let activeDayIndex = 0;
 
       // Handle the 'More events' button click.
@@ -143,39 +156,56 @@ Drupal.behaviors.eventsCalendar = {
         });
       };
       // Handle calendar navigation.
-      const handleCalendarNavigation = () => {
+      const handleMobileCalendarNavigation = () => {
         const getVisibleWeekIndex = () =>
           Array.from(calendarWeeks).findIndex((item) =>
             item.classList.contains('is-visible'),
           );
-        calendarPrevBtn.addEventListener('click', () => {
+        mobileCalendarPrevBtn.addEventListener('click', () => {
           const currentIndex = getVisibleWeekIndex();
           if (currentIndex > 0) {
             showWeek(currentIndex - 1);
           } else {
-            // @TODO: add here the function call that loads dynamically from the server data for the PREVIOUS month.
+            // @TODO: remove alert and add here the function call that loads dynamically from the server data for the PREVIOUS month.
+            alert('load prev Month calendar data');
           }
         });
 
-        calendarNextBtn.addEventListener('click', () => {
+        mobileCalendarNextBtn.addEventListener('click', () => {
           const currentIndex = getVisibleWeekIndex();
           if (currentIndex < calendarWeeks.length - 1) {
             showWeek(currentIndex + 1);
           } else {
-            // @TODO: add here the function call that loads dynamically from the server data for the NEXT month.
+            // @TODO: remove alert and add here the function call that loads dynamically from the server data for the NEXT month.
+            alert('load next Month calendar data');
           }
+        });
+      };
+
+      const handleDesktopCalendarNavigation = () => {
+        desktopCalendarPrevBtn.addEventListener('click', () => {
+          // @TODO: remove alert and add here the function call that loads dynamically from the server data for the PREV month.
+          alert('load prev Month calendar data');
+        });
+
+        desktopCalendarNextBtn.addEventListener('click', () => {
+          // @TODO: remove alert and add here the function call that loads dynamically from the server data for the NEXT month.
+          alert('load next Month calendar data');
         });
       };
 
       calendarDays.forEach((d) => {
         d.addEventListener('click', handleDayClick);
       });
-      handleCalendarNavigation();
+      handleMobileCalendarNavigation();
+      handleDesktopCalendarNavigation();
 
       // On mobile make the current week the visible week by default.
       if (today) {
         today.closest(week).classList.add(visibleClass);
         today.click();
+      } else {
+        showWeek(0);
       }
 
       // Handle dynamic resizing.
