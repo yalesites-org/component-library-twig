@@ -2,28 +2,21 @@
  # Available Props:
  # - banner__content__layout: bottom (default), left, or right
  #
- # Available Variables:
- # - banner__heading
- # - banner__snippet
- # - banner__link__content
- # - banner__link__url
- #
  # Available Blocks:
  # - banner__image
  #}
 
-{% set banner__base_class = 'cta-banner' %}
-{% set banner__content__background = banner__content__background|default('one') %}
+{% set banner__base_class = 'image-banner' %}
+{% set image_banner__content__background = image_banner__content__background|default('one') %}
 
 {% set banner__attributes = {
-  'data-banner-content-layout': banner__content__layout|default('bottom'),
-  'data-component-theme': banner__content__background,
+  'data-component-theme': image_banner__content__background,
   class: bem(banner__base_class),
 } %}
 
 {% if banner__width %}
   {% set banner__attributes = banner__attributes|merge({
-    'data-banner-width' : banner__width,
+    'data-banner-width': banner__width,
   }) %}
 {% endif %}
 
@@ -31,11 +24,22 @@
   {% block prefix_suffix %}
   {% endblock %}
   <div {{ bem('content-wrapper', [], banner__base_class) }}>
-    <div {{ bem('image', [], banner__base_class) }}>
-      {% block banner__image %}
-        {% include "@atoms/images/image/_responsive-image.twig" %}
+    {% if image_banner__video == 'true' %}
+    <div {{ bem('video', [], banner__base_class) }}>
+      {% block banner__video %}
+        {% include "@atoms/videos/video-background/yds-video-background.twig" with {
+          video_background__content: video_background__content|default('https://ia800301.us.archive.org/17/items/VjmorphVjLoops4/SequinSparkle02.mp4'),
+          video_background__button__background_color: image_banner__content__background,
+        } %}
       {% endblock %}
     </div>
+    {% else %}
+      <div {{ bem('image', [], banner__base_class) }}>
+        {% block banner__image %}
+          {% include "@atoms/images/image/_responsive-image.twig" %}
+        {% endblock %}
+      </div>
+    {% endif %}
   </div>
 </div>
 

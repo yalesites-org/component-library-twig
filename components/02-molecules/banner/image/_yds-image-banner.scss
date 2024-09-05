@@ -5,10 +5,10 @@
 // get global themes
 $global-banner-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $component-banner-themes: map.deep-get(tokens.$tokens, 'component-themes');
-$break-cta-banner: tokens.$break-l;
-$break-cta-banner-max: $break-cta-banner - 0.05;
+$break-image-banner: tokens.$break-l;
+$break-image-banner-max: $break-image-banner - 0.05;
 
-.cta-banner {
+.image-banner {
   @include tokens.spacing-page-section(
     $flush-top: true,
     $flush-bottom: true,
@@ -103,10 +103,10 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   }
 }
 
-.cta-banner__content-wrapper {
+.image-banner__content-wrapper {
   position: relative;
 
-  @media (min-width: $break-cta-banner) {
+  @media (min-width: $break-image-banner) {
     aspect-ratio: 16 / 5;
 
     // Safari 14 fix for aspect-ratio
@@ -122,20 +122,12 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
         content: '';
         clear: both;
       }
-    }
-  }
-
-  [data-banner-content-layout='bottom'] & {
-    @media (min-width: $break-cta-banner) {
-      display: flex;
-      align-items: flex-end;
-      padding-top: var(--size-spacing-12);
     }
   }
 }
 
-.cta-banner__image {
-  @media (max-width: $break-cta-banner - 0.05) {
+.image-banner__image {
+  @media (max-width: $break-image-banner - 0.05) {
     aspect-ratio: 16 / 5;
 
     // Safari 14 fix for aspect-ratio
@@ -154,7 +146,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     }
   }
 
-  @media (min-width: $break-cta-banner) {
+  @media (min-width: $break-image-banner) {
     position: absolute;
     top: 0;
     left: 0;
@@ -169,101 +161,18 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   }
 }
 
-.cta-banner__content {
-  display: flex;
-  position: relative;
-  color: var(--color-text);
-
-  // Override the background to transparent, so we can add an opacity to it via
-  // the `::before` element below.
-  background-color: transparent;
-
-  > * {
-    position: relative;
-  }
-
-  [data-banner-content-layout='bottom'] & {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  [data-banner-content-layout='left'] & {
-    // prettier-ignore
-    max-width: calc(var(--size-component-layout-width-max) + (var(--size-spacing-10)));
-
-    @media (min-width: $break-cta-banner) {
-      width: 100%;
-
-      // prettier-ignore
-      max-width: calc(var(--size-component-layout-width-max) + (var(--size-spacing-site-gutter) * 2));
-      min-height: 100%;
-      justify-content: flex-start;
-      align-items: center;
-      margin: 0 auto;
-    }
-  }
-
-  [data-banner-content-layout='right'] & {
-    // prettier-ignore
-    max-width: calc(var(--size-component-layout-width-max) + (var(--size-spacing-10)));
-
-    @media (min-width: $break-cta-banner) {
-      width: 100%;
-
-      // prettier-ignore
-      max-width: calc(var(--size-component-layout-width-max) + (var(--size-spacing-site-gutter) * 2));
-      min-height: 100%;
-      justify-content: flex-end;
-      align-items: center;
-      margin: 0 auto;
-    }
-  }
-
-  [data-banner-width='site'][data-banner-content-layout='right'] &,
-  [data-banner-width='site'][data-banner-content-layout='left'] & {
-    // prettier-ignore
-    max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-10)));
-
-    @media (min-width: $break-cta-banner) {
-      // prettier-ignore
-      max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-site-gutter) * 2));
-      margin: 0 auto;
-    }
-  }
-
-  &::before {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    content: '';
-    background-color: var(--color-banner-background);
-
-    @media (min-width: $break-cta-banner) {
-      opacity: 0.85;
-    }
-
-    [data-banner-content-layout='left'] &,
-    [data-banner-content-layout='right'] & {
-      @media (min-width: $break-cta-banner) {
-        max-width: var(--banner-content-max-width);
-      }
-    }
-  }
-}
-
-.cta-banner__outer-wrap {
+.image-banner__outer-wrap {
   width: 100%;
 
   [data-banner-content-layout='left'] &,
   [data-banner-content-layout='right'] & {
-    @media (min-width: $break-cta-banner) {
+    @media (min-width: $break-image-banner) {
       max-width: var(--banner-content-max-width);
     }
   }
 }
 
-.cta-banner__wrap {
+.image-banner__wrap {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -279,7 +188,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   }
 
   [data-banner-content-layout='bottom'] & {
-    @media (min-width: $break-cta-banner) {
+    @media (min-width: $break-image-banner) {
       gap: var(--size-spacing-5);
       flex-basis: 100%;
       flex-direction: row;
@@ -294,7 +203,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     }
   }
 
-  @media (min-width: $break-cta-banner) {
+  @media (min-width: $break-image-banner) {
     padding: var(--size-spacing-6) var(--size-spacing-site-gutter)
       var(--size-spacing-7);
   }
@@ -303,50 +212,10 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     // prettier-ignore
     max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-10)));
 
-    @media (min-width: $break-cta-banner) {
+    @media (min-width: $break-image-banner) {
       // prettier-ignore
       max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-site-gutter) * 2));
       margin: 0 auto;
     }
   }
-}
-
-.cta-banner__heading {
-  @include tokens.h2-yale-new;
-
-  margin-bottom: var(--size-spacing-2);
-}
-
-.cta-banner__snippet {
-  @include tokens.body-default-condensed;
-
-  [data-banner-content-layout='bottom'] & {
-    @media (min-width: $break-cta-banner) {
-      > *:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-}
-
-.cta-banner__cta {
-  @include atoms.cta;
-
-  flex: 0 0 auto;
-
-  &:has(> i.fa-icon) {
-    padding-right: var(--size-spacing-7);
-  }
-}
-
-.cta-banner__link {
-  @include atoms.link;
-
-  flex: 0 0 auto;
-}
-
-.cta-banner__button-group {
-  display: flex;
-  flex-flow: row wrap;
-  gap: var(--size-spacing-5);
 }
