@@ -20,6 +20,7 @@ import '../lib/ys_link/css/ys-link.css';
 
 // If in a Drupal project, it's recommended to import a symlinked version of drupal.js.
 import './_drupal.js';
+import './jquery-global.js';
 
 // addDecorator deprecated, but not sure how to use this otherwise.
 addDecorator((storyFn, context) => {

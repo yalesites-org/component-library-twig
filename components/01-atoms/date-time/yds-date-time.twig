@@ -21,20 +21,10 @@
 {% set format__iso = 'c' %} {# 2022-04-01T08:34:42+00:00 #}
 {% set format__html_date = 'Y-m-d' %} {# 2022-04-01 #}
 {% set format__date = 'F j, Y' %} {# April 1, 2022 #}
-{% set format__day__full__start = 'l, F j' %} {# Friday, April 1 #}
-{% set format__day__full = 'l, F j, Y' %} {# Friday, April 1, 2022 #}
-{# If minutes == ":00" don't show them #}
-{% if date_time__start|date('i') == '00' %}
-  {% set format__time__start = 'g-' %} {# 8- #}
-{% else %}
-  {% set format__time__start = 'g:i-' %} {# 8:30- #}
-{% endif %}
-{% if date_time__end|date('i') == '00' %}
-  {% set format__time = 'g a T' %} {# 11 pm ET #}
-{% else %}
-  {% set format__time = 'g:i a T' %} {# 11:30 pm ET #}
-{% endif %}
-
+{% set format__day__full__start = 'D M j' %} {# Fri Apr 1 #}
+{% set format__day__full = 'D M j, Y' %} {# Fri Apr, 1 2022 #}
+{% set format__time__start = 'g:ia - ' %} {# 8:30pm - #}
+{% set format__time = 'g:ia' %} {# 11:30pm #}
 
 {% if date_time__all_day == true %}
   All Day

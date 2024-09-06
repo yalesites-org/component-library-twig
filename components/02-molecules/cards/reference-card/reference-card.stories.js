@@ -34,6 +34,28 @@ export default {
       type: 'boolean',
       defaultValue: true,
     },
+    showCategories: {
+      name: 'Show Categories/Affiliations',
+      type: 'boolean',
+      defaultValue: false,
+    },
+    categories: {
+      name: 'Categories',
+      type: 'array',
+      defaultValue: referenceCardData.reference_card__categories,
+      if: { arg: 'showCategories' },
+    },
+    showTags: {
+      name: 'Show Tags',
+      type: 'boolean',
+      defaultValue: false,
+    },
+    tags: {
+      name: 'Tags',
+      type: 'array',
+      defaultValue: referenceCardData.reference_card__tags,
+      if: { arg: 'showTags' },
+    },
     withImage: {
       name: 'With Image',
       type: 'boolean',
@@ -49,6 +71,10 @@ export const PostCard = ({
   collectionType,
   featured,
   withImage,
+  categories,
+  showCategories,
+  tags,
+  showTags,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -63,6 +89,10 @@ export const PostCard = ({
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referenceCardData.reference_card__url,
+        reference_card__categories: categories,
+        show_categories: showCategories,
+        reference_card__tags: tags,
+        show_tags: showTags,
       })}
     </ul>
   </div>
@@ -89,6 +119,10 @@ export const EventCard = ({
   secondaryCTAURL,
   multiDayEvent,
   headingPrefix,
+  categories,
+  showCategories,
+  tags,
+  showTags,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -109,6 +143,10 @@ export const EventCard = ({
         reference_card__cta_secondary__href: secondaryCTAURL,
         reference_card__cta_secondary__content: secondaryCTAContent,
         multi_day_event: multiDayEvent,
+        reference_card__categories: categories,
+        show_categories: showCategories,
+        reference_card__tags: tags,
+        show_tags: showTags,
       })}
     </ul>
   </div>
@@ -117,8 +155,8 @@ export const EventCard = ({
 EventCard.argTypes = {
   format: {
     name: 'Format',
-    control: 'check',
-    options: ['In-person', 'Online'],
+    control: 'select',
+    options: ['In-person', 'Online', 'Hybrid'],
     defaultValue: 'In-person',
   },
   headingPrefix: {
@@ -153,7 +191,15 @@ EventCard.argTypes = {
   },
 };
 
-export const ProfileCard = ({ collectionType, featured, withImage }) => `
+export const ProfileCard = ({
+  collectionType,
+  featured,
+  withImage,
+  categories,
+  showCategories,
+  tags,
+  showTags,
+}) => `
 <div class='card-collection' data-component-width='site' data-collection-source='profile' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
@@ -170,6 +216,10 @@ export const ProfileCard = ({ collectionType, featured, withImage }) => `
         reference_card__snippet:
           referenceProfileCardData.reference_card__snippet,
         reference_card__url: referenceProfileCardData.reference_card__url,
+        reference_card__categories: categories,
+        show_categories: showCategories,
+        reference_card__tags: tags,
+        show_tags: showTags,
       })}
     </ul>
   </div>
