@@ -19,11 +19,7 @@ $break-image-banner-max: $break-image-banner - 0.05;
   // default variables.
   @each $theme, $value in $component-banner-themes {
     &[data-component-theme='#{$theme}'] {
-      --color-text: var(--color-banner-text);
       --color-backgound: var(--color-banner-background);
-      --color-heading: var(--color-banner-heading);
-      --color-action: var(--color-banner-action);
-      --color-action-secondary: var(--color-banner-action-secondary);
       --color-slot-one: var(--component-themes-#{$theme}-slot-one);
       --color-slot-two: var(--component-themes-#{$theme}-slot-two);
       --color-slot-three: var(--component-themes-#{$theme}-slot-three);
@@ -70,36 +66,14 @@ $break-image-banner-max: $break-image-banner - 0.05;
   /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
     --color-banner-background: var(--color-slot-one);
-    --color-banner-text: var(--color-slot-eight);
-    --color-banner-heading: var(--color-slot-eight);
-    --color-banner-action: var(--color-slot-eight);
-    --color-banner-action-secondary: var(--color-slot-one);
-    --color-link-base: var(--color-banner-heading);
-    --color-link-hover: var(--color-banner-heading);
-    --color-link-visited-base: var(--color-link-visited-light);
-    --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 
   &[data-component-theme='two'] {
     --color-banner-background: var(--color-slot-four);
-    --color-banner-text: var(--color-slot-seven);
-    --color-banner-heading: var(--color-slot-seven);
-    --color-banner-action: var(--color-slot-seven);
-    --color-banner-action-secondary: var(--color-slot-eight);
-    --color-link-base: var(--color-banner-heading);
-    --color-link-hover: var(--color-banner-heading);
   }
 
   &[data-component-theme='three'] {
     --color-banner-background: var(--color-slot-five);
-    --color-banner-text: var(--color-slot-eight);
-    --color-banner-heading: var(--color-slot-eight);
-    --color-banner-action: var(--color-slot-eight);
-    --color-banner-action-secondary: var(--color-slot-one);
-    --color-link-base: var(--color-banner-heading);
-    --color-link-hover: var(--color-banner-heading);
-    --color-link-visited-base: var(--color-link-visited-light);
-    --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 }
 
@@ -127,7 +101,7 @@ $break-image-banner-max: $break-image-banner - 0.05;
 }
 
 .image-banner__image {
-  @media (max-width: $break-image-banner - 0.05) {
+  @media (max-width: ($break-image-banner - 0.05)) {
     aspect-ratio: 16 / 5;
 
     // Safari 14 fix for aspect-ratio
