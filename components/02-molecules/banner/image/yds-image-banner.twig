@@ -1,6 +1,8 @@
 {#
  # Available Props:
  # - image_banner__content__layout: bottom (default), left, or right
+ # - image_banner__video: false (default) or true
+ # - image_banner__content_background: one (default), two, three
  #
  # Available Blocks:
  # - image_banner__image
@@ -11,7 +13,7 @@
 
 {% set image_banner__attributes = {
   'data-component-theme': image_banner__content__background,
-  class: bem(banner__base_class),
+  class: bem(image_banner__base_class),
 } %}
 
 {% if image_banner__width %}
@@ -20,7 +22,7 @@
   }) %}
 {% endif %}
 
-<div {{ add_attributes(banner__attributes) }}>
+<div {{ add_attributes(image_banner__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}
   <div {{ bem('content-wrapper', [], image_banner__base_class) }}>
