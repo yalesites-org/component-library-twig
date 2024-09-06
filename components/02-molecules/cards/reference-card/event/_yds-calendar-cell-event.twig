@@ -11,12 +11,16 @@
   {% endif %}
   <div>
     <time>{{ time }}</time>
-    {% include "@atoms/typography/text/yds-text.twig" with {
-      text__element: 'span',
-      text__base_class: 'type',
-      text__blockname: event__base_class,
-      text__content: type,
+    {% embed "@atoms/lists/taxonomy/yds-tags-list.twig" with {
+      items: type,
+      visible_items: 2,
+      url: url,
     } %}
+
+      {% block list_item %}
+        {{ item }}
+      {% endblock %}
+    {% endembed %}
   </div>
   {% if description %}
     {% include "@atoms/typography/text/yds-text.twig" with {

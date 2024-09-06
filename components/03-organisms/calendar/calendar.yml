@@ -122,7 +122,8 @@
         title: 'Yale Pathways to Science Summer Scholars 2024'
         url: '/'
         time: 09:00am to 9:45am
-        type: 'Public Event'
+        type:
+          - 'Public Event'
         optional_link__content: 'Optional link'
         optional_link__url: '/'
   - date:
@@ -164,14 +165,16 @@
         title: 'Information for Citizens Thinkers Writers at Yale'
         url: '/'
         time: '09:00am to 9:45am'
-        type: 'Public Event'
+        type:
+          - 'Public Event'
         optional_link__content: 'Optional link'
         optional_link__url: 'https://britishart.yale.edu/exhibitions-programs/bridget-riley-perceptual-abstraction'
       - category: 'computer science'
         title: 'Application DUE: Ulysses S. Grant Summer Program'
         url: '/'
         time: '09:00am to 9:45am'
-        type: 'Public Event'
+        type:
+          - 'Public Event'
   - date:
       day: 26
       month: '06'
@@ -196,14 +199,16 @@
         title: 'Information for Citizens Thinkers Writers at Yale'
         url: '/'
         time: '09:00am to 9:45am'
-        type: 'Public Event'
+        type:
+          - 'Public Event'
         optional_link__content: 'Optional link'
         optional_link__url: 'https://britishart.yale.edu/exhibitions-programs/bridget-riley-perceptual-abstraction'
       - category: 'computer science'
         title: 'Application DUE: Ulysses S. Grant Summer Program'
         url: '/'
         time: '09:00am to 9:45am'
-        type: 'Public Event'
+        type:
+          - 'Public Event'
 - - date:
       day: 30
       month: '06'
@@ -213,20 +218,25 @@
         title: 'Yale Pathways to Science Summer Scholars 2024'
         url: '/'
         time: '09:00am to 9:45am'
-        type: 'Public Event'
+        type:
+          - 'Public Event'
         optional_link__content: 'Optional link'
         optional_link__url: '/'
       - category: 'computer science'
         title: 'Ulysses S. Grant Summer Program'
         url: '/'
         time: '09:00am to 9:45am'
-        type: 'Public Event'
+        type:
+          - 'Public Event'
+          - 'Community Event'
         description: 'Lin Zhong, professor of computer science, has been named a fellow of the Association for Computing Machinery (ACM).'
       - category: 'computer science'
         title: 'Music in Schools Initiative - Morse Summer Music Academy'
         url: '/'
         time: '09:00am to 9:45am'
-        type: 'Public Event'
+        type:
+          - 'Public Event'
+          - 'Art Event'
         description: 'The Yale Collection of Musical Instruments acquires, preserves, and exhibits musical instruments from antiquity to the present'
   - date:
       day: 1

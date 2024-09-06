@@ -28,7 +28,7 @@ Drupal.behaviors.eventsCalendar = {
     const eventsToggle = context.querySelectorAll(eventToggle);
 
     // Create a MediaQueryList.
-    const mql = window.matchMedia(`(min-width: 992px )`);
+    const mql = window.matchMedia(`(min-width: 1200px )`);
 
     // Create a temporary div element to parse the HTML content.
     const tempDiv = document.createElement('div');
