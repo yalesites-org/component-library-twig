@@ -347,7 +347,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 .reference-card__overline {
   @include tokens.body-s;
 
-  margin-bottom: var(--size-spacing-3);
+  margin-top: var(--size-spacing-3);
   color: var(--color-gray-500);
   font-variant-caps: small-caps;
   font-variant-numeric: oldstyle-nums;
