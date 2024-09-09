@@ -25,13 +25,6 @@
 
 <li {{ add_attributes(reference_card__attributes) }}>
   <div {{ bem('content', [], reference_card__base_class) }}>
-    {% if reference_card__overline %}
-      {% include "@atoms/typography/text/yds-text.twig" with {
-        text__base_class: 'overline',
-        text__blockname: reference_card__base_class,
-        text__content: reference_card__overline,
-      } %}
-    {% endif %}
     {% if show_categories %}
       {% block reference_card__categories %}
         {% include "@atoms/lists/taxonomy/yds-categories-list.twig" with {
@@ -52,6 +45,13 @@
         text__blockname: reference_card__base_class,
         text__base_class: 'subheading',
         text__content: reference_card__subheading,
+      } %}
+    {% endif %}
+    {% if reference_card__overline %}
+      {% include "@atoms/typography/text/yds-text.twig" with {
+        text__base_class: 'overline',
+        text__blockname: reference_card__base_class,
+        text__content: reference_card__overline,
       } %}
     {% endif %}
     {% if show_tags %}
