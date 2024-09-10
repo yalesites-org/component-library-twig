@@ -38,5 +38,5 @@ export const video = ({ heading, text, placement }) =>
     video__heading: heading,
     video__text: text,
     video__alignment: placement,
-    site_header__branding_link: 'https://www.yale.edu',
+    video__width: 'site',
   });
