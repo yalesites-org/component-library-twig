@@ -23,12 +23,20 @@ export default {
       type: 'string',
       defaultValue: videoData.video__text,
     },
+    placement: {
+      name: 'Video Placement',
+      type: 'select',
+      options: ['left', 'center'],
+      defaultValue: videoData.video__placement,
+    },
   },
 };
 
-export const video = ({ heading, text }) =>
+export const video = ({ heading, text, placement }) =>
   videoTwig({
     ...videoData,
     video__heading: heading,
     video__text: text,
+    video__alignment: placement,
+    site_header__branding_link: 'https://www.yale.edu',
   });
