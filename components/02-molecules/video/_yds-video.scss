@@ -9,7 +9,7 @@
   gap: var(--size-spacing-3);
 
   [data-component-alignment='center'] & {
-    margin-inline-end: 0;
+    place-items: center;
   }
 }
 
@@ -32,5 +32,6 @@
   [data-component-alignment='center'] &,
   [data-component-alignment='left'] & {
     max-width: var(--size-component-layout-width-content);
+    width: 100%;
   }
 }
