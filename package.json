@@ -63,6 +63,7 @@
     "highlight.js": "^11.9.0",
     "imagemin-webpack-plugin": "^2.4.2",
     "jquery": "^3.7.1",
+    "micromodal": "^0.4.10",
     "mini-css-extract-plugin": "^1.6.2",
     "node-sass-glob-importer": "^5.3.2",
     "normalize.css": "^8.0.1",

@@ -1,0 +1,317 @@
+@use '../../00-tokens/tokens';
+@use '../../01-atoms/atoms';
+
+.calendar {
+  ul {
+    @include atoms.list-reset;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+.calendar__weekdays,
+.calendar__week {
+  border-collapse: collapse;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 1px;
+
+  @media (min-width: tokens.$break-xl) {
+    border-bottom: 1px solid var(--color-gray-300);
+
+    & > li,
+    & > li:focus:not(:focus-visible) {
+      outline: 1px solid var(--color-gray-300);
+      padding: var(--size-spacing-4);
+    }
+  }
+}
+
+.calendar__weekdays {
+  font-family: var(--font-families-mallory);
+  font-size: var(--font-size-13);
+  font-weight: 700;
+  color: var(--color-gray-700);
+  text-transform: uppercase;
+
+  abbr {
+    text-decoration: none;
+  }
+
+  @media (min-width: tokens.$break-xl) {
+    @include tokens.h1-mallory-compact-book;
+
+    font-size: var(--font-size-16);
+  }
+}
+
+.calendar__day {
+  color: var(--color-basic-black);
+  font-family: var(--font-families-mallory);
+  font-weight: 500;
+  font-size: var(--font-size-14);
+  line-height: 1.2;
+
+  & > time {
+    @include tokens.h5-yale-new;
+
+    font-variant-numeric: normal;
+  }
+
+  .calendar__day-events {
+    padding: var(--size-spacing-3) 0;
+  }
+
+  @media (min-width: tokens.$break-xl) {
+    word-break: break-word; // Ensure the equal calendar cell width.
+    min-height: 12rem;
+
+    .calendar-event:not(:first-of-type) {
+      display: none;
+    }
+
+    .calendar__day-events {
+      .taxonomy-list--tags {
+        display: inline-block;
+        margin: var(--size-spacing-3) 0;
+        font: inherit;
+
+        li {
+          display: inline; // Ensure a compact display in a cell.
+        }
+
+        .taxonomy-list__divider {
+          margin: 0 var(--size-spacing-2);
+
+          &:last-of-type {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.calendar__day--today {
+  color: var(--color-blue-yale);
+
+  & > time {
+    font-weight: var(--font-weights-yalenew-bold);
+  }
+
+  @media (min-width: tokens.$break-xl) {
+    border: 1px solid var(--color-blue-yale);
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: var(--color-blue-yale);
+      opacity: 0.05;
+      z-index: -1;
+    }
+  }
+}
+
+.calendar__nav {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--size-spacing-6) 0;
+
+  @media (min-width: tokens.$break-xl) {
+    padding-bottom: var(--size-spacing-8);
+  }
+}
+
+.calendar__nav--mobile {
+  @media (min-width: tokens.$break-xl) {
+    display: none;
+  }
+}
+
+.calendar__nav--desktop {
+  @media (max-width: tokens.$break-xl) {
+    display: none;
+  }
+}
+
+.calendar__nav-time {
+  @include tokens.h4-yale-new;
+
+  font-variant-numeric: normal;
+  color: var(--color-gray-800);
+}
+
+.calendar__nav-btn {
+  @include atoms.button-reset;
+  @include tokens.body-s;
+
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-3);
+}
+
+// Mobile specific styles.
+@media (max-width: tokens.$break-xl) {
+  .calendar__day-name,
+  .calendar__day {
+    line-height: 1;
+    padding: var(--size-spacing-3) 0;
+    text-align: center;
+
+    &.is-active {
+      color: var(--color-basic-white);
+      background-color: var(--color-blue-yale);
+    }
+  }
+
+  .calendar__day {
+    padding-top: 0;
+    position: relative;
+
+    & > time {
+      font-size: var(--font-size-27);
+      line-height: 1;
+    }
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: calc(100% + 1.8rem); // Contains the day name's height.
+    }
+  }
+
+  .calendar__day--today {
+    &::before {
+      background-color: var(--color-blue-yale);
+      opacity: 0.05;
+    }
+  }
+
+  .calendar__week {
+    display: none;
+
+    &.is-visible {
+      display: grid;
+    }
+  }
+
+  .calendar__day-events {
+    display: none;
+
+    .calendar__mobile-events & {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  ul.calendar__mobile-events {
+    padding: var(--size-spacing-7) 0 var(--size-spacing-8);
+  }
+
+  .calendar__content {
+    padding: var(--size-spacing-2) 0;
+  }
+}
+
+.calendar__day--disabled {
+  color: var(--color-gray-500);
+}
+
+// Calendar events.
+.calendar-event {
+  color: var(--color-basic-black);
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-2);
+}
+
+.calendar-event__toggle {
+  @include atoms.button-reset;
+  @include atoms.link;
+
+  @media (max-width: tokens.$break-xl) {
+    display: none;
+  }
+}
+
+.calendar-event__category {
+  color: var(--color-gray-500);
+  font-family: var(--font-families-mallory);
+  font-weight: 500;
+  font-size: var(--font-size-15);
+  line-height: 1.1;
+  text-transform: uppercase;
+
+  @media (min-width: tokens.$break-xl) {
+    display: none;
+  }
+}
+
+.calendar-event__type {
+  color: var(--color-blue-yale);
+  display: block;
+  margin-top: var(--size-spacing-3);
+}
+
+.calendar-event__optional-link {
+  .calendar__day-events & {
+    display: none;
+  }
+}
+
+.calendar-event--mobile {
+  gap: var(--size-spacing-3);
+
+  .calendar-event__title {
+    font-size: var(--font-size-30);
+  }
+}
+
+.calendar-event--modal {
+  color: var(--color-gray-700);
+  font-family: var(--font-families-mallory);
+  gap: var(--size-spacing-4);
+
+  .calendar-event__title {
+    font-size: var(--font-size-27);
+  }
+
+  .calendar-event__category {
+    display: inline-flex;
+    font-size: var(--font-size-16);
+  }
+
+  .calendar-event__type {
+    display: inline;
+    padding-left: var(--size-spacing-6);
+  }
+}
+
+.calendar-event--mobile,
+.calendar-event--modal {
+  border-bottom: 1px solid var(--color-gray-400);
+  font-size: var(--font-size-16);
+  margin-bottom: var(--size-spacing-6);
+  padding-bottom: var(--size-spacing-6);
+
+  &:last-of-type {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .calendar-event__title {
+    @include tokens.h5-yale-new;
+  }
+}
