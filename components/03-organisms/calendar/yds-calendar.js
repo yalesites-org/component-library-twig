@@ -155,42 +155,63 @@ Drupal.behaviors.eventsCalendar = {
           }
         });
       };
+
+      // Helper function to find the closest calendar-wrapper with an ID that starts with 'calendar-wrapper'.
+      const getCalendarWrapper = (clickEvent) =>
+        clickEvent.target.closest('[id^="calendar-wrapper"]');
+
+      // Function to refresh the calendar data via AJAX based on the given button (prev/next) and calendarWrapper.
+      const refreshCalendarData = (calendarWrapper, button) => {
+        if (!calendarWrapper) return; // If no calendarWrapper found, exit the function.
+
+        // Use Drupal's AJAX system to refresh the calendar data.
+        Drupal.ajax({
+          url: '/events-calendar',
+          submit: {
+            calendar_id: `#${calendarWrapper.id}`, // Pass the calendar wrapper ID.
+            month: button.dataset.month, // Pass the selected month from the button.
+            year: button.dataset.year, // Pass the selected year from the button.
+          },
+          progress: { type: 'fullscreen' }, // Show a fullscreen progress indicator during the refresh.
+        }).execute();
+      };
+
       // Handle calendar navigation.
       const handleMobileCalendarNavigation = () => {
         const getVisibleWeekIndex = () =>
           Array.from(calendarWeeks).findIndex((item) =>
             item.classList.contains('is-visible'),
           );
-        mobileCalendarPrevBtn.addEventListener('click', () => {
+        mobileCalendarPrevBtn.addEventListener('click', (clickEvent) => {
           const currentIndex = getVisibleWeekIndex();
           if (currentIndex > 0) {
             showWeek(currentIndex - 1);
           } else {
-            // @TODO: remove alert and add here the function call that loads dynamically from the server data for the PREVIOUS month.
-            alert('load prev Month calendar data');
+            const calendarWrapper = getCalendarWrapper(clickEvent);
+            refreshCalendarData(calendarWrapper, mobileCalendarPrevBtn);
           }
         });
 
-        mobileCalendarNextBtn.addEventListener('click', () => {
+        mobileCalendarNextBtn.addEventListener('click', (clickEvent) => {
           const currentIndex = getVisibleWeekIndex();
           if (currentIndex < calendarWeeks.length - 1) {
             showWeek(currentIndex + 1);
           } else {
-            // @TODO: remove alert and add here the function call that loads dynamically from the server data for the NEXT month.
-            alert('load next Month calendar data');
+            const calendarWrapper = getCalendarWrapper(clickEvent);
+            refreshCalendarData(calendarWrapper, mobileCalendarNextBtn);
           }
         });
       };
 
       const handleDesktopCalendarNavigation = () => {
-        desktopCalendarPrevBtn.addEventListener('click', () => {
-          // @TODO: remove alert and add here the function call that loads dynamically from the server data for the PREV month.
-          alert('load prev Month calendar data');
+        desktopCalendarPrevBtn.addEventListener('click', (clickEvent) => {
+          const calendarWrapper = getCalendarWrapper(clickEvent);
+          refreshCalendarData(calendarWrapper, desktopCalendarPrevBtn);
         });
 
-        desktopCalendarNextBtn.addEventListener('click', () => {
-          // @TODO: remove alert and add here the function call that loads dynamically from the server data for the NEXT month.
-          alert('load next Month calendar data');
+        desktopCalendarNextBtn.addEventListener('click', (clickEvent) => {
+          const calendarWrapper = getCalendarWrapper(clickEvent);
+          refreshCalendarData(calendarWrapper, desktopCalendarNextBtn);
         });
       };
 

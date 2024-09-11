@@ -70,92 +70,109 @@
 {% set calendar__attributes = {
   class: bem(calendar__base_class),
 } %}
+{% set calendar_wrapper__attributes = {
+  id: calendar__base_class ~ '-wrapper'|clean_unique_id,
+} %}
 
-<div {{ add_attributes(calendar__attributes) }}>
-  <div {{ bem('header', [], calendar__base_class) }}>
-    <nav {{ bem('nav', ['mobile'], calendar__base_class) }}>
-      <button {{ bem('nav-btn', ['prev'], calendar__base_class) }} aria-label="prev calendar data">
-        {%- include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
-          fa_icon__base_class: 'fa',
-          fa_icon__title: 'Angle Left',
-          fa_icon__extra_class: ['fa-solid fa-angle-left fa-lg'],
-          fa_icon__decorative: true,
-        } %}
-        <span aria-label="" class="sr-only"></span>
-      </button>
-      <time {{ bem('nav-time', [], calendar__base_class) }}
-          datetime="{{ current_year ~ '-' ~ current_month_string }}"
-      >
-        {{ monthMap[current_month - 1] }}<span data-week-days=""></span>, {{ current_year }}
-      </time>
-      <button {{ bem('nav-btn', ['next'], calendar__base_class) }} aria-label="next calendar data">
-        <span aria-label="" class="sr-only"></span>
-        {%- include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
-          fa_icon__base_class: 'fa',
-          fa_icon__title: 'Angle Right',
-          fa_icon__extra_class: ['fa-solid fa-angle-right fa-lg'],
-          fa_icon__decorative: true,
-        } %}
-      </button>
-    </nav>
-    <nav {{ bem('nav', ['desktop'], calendar__base_class) }}>
-      <button {{ bem('nav-btn', ['prev'], calendar__base_class) }} aria-label="prev calendar data">
-        {%- include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
-          fa_icon__base_class: 'fa',
-          fa_icon__title: 'Angle Left',
-          fa_icon__extra_class: ['fa-solid fa-angle-left fa-lg'],
-          fa_icon__decorative: true,
-        } %}
-        <span>{{ monthMap[prev_month - 1] }}, {{ prev_year }}</span>
-      </button>
-      <time {{ bem('nav-time', [], calendar__base_class) }}
-          datetime="{{ current_year ~ '-' ~ current_month_string }}">
-        {{ monthMap[current_month - 1] }}, {{ current_year }}
-      </time>
-      <button {{ bem('nav-btn', ['next'], calendar__base_class) }} aria-label="next calendar data">
-        <span>{{ monthMap[next_month - 1] }}, {{ next_year }}</span>
-        {%- include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
-          fa_icon__base_class: 'fa',
-          fa_icon__title: 'Angle Right',
-          fa_icon__extra_class: ['fa-solid fa-angle-right fa-lg'],
-          fa_icon__decorative: true,
-        } %}
-      </button>
-    </nav>
-  </div>
-  <div {{ bem('content', [], calendar__base_class) }}>
-    <ul {{ bem('weekdays', [], calendar__base_class) }}>
-      <li {{ bem('day-name', [], calendar__base_class) }}><abbr title="Sunday">Sun</abbr></li>
-      <li {{ bem('day-name', [], calendar__base_class) }}><abbr title="Monday">Mon</abbr></li>
-      <li {{ bem('day-name', [], calendar__base_class) }}><abbr title="Tuesday">Tue</abbr></li>
-      <li {{ bem('day-name', [], calendar__base_class) }}><abbr title="Wednesday">Wed</abbr></li>
-      <li {{ bem('day-name', [], calendar__base_class) }}><abbr title="Thursday">Thu</abbr></li>
-      <li {{ bem('day-name', [], calendar__base_class) }}><abbr title="Friday">Fri</abbr></li>
-      <li {{ bem('day-name', [], calendar__base_class) }}><abbr title="Saturday">Sat</abbr></li>
-    </ul>
-    <div {{ bem('month', [], calendar__base_class) }}>
-      {% for week in month %}
-        <ul {{ bem('week', [], calendar__base_class) }}>
-          {% for datum in week %}
-            {% set is_today = datum.date.year == todayObject.year and datum.date.month == todayObject.month and datum.date.day == todayObject.day %}
-            {% set is_disabled = datum.date.month != current_month_string %}
-
-            {% include "@organisms/calendar/_yds-calendar-cell.twig" with {
-              day: datum.date.day,
-              month: datum.date.month,
-              month_name: monthMap[current_month - 1],
-              year: datum.date.year,
-              events: datum.events,
-              is_today: is_today,
-              is_disabled: is_disabled,
-            } %}
-          {% endfor %}
-        </ul>
-      {% endfor %}
+<div {{ add_attributes(calendar_wrapper__attributes) }}>
+  <div {{ add_attributes(calendar__attributes) }}>
+    <div {{ bem('header', [], calendar__base_class) }}>
+      <nav {{ bem('nav', ['mobile'], calendar__base_class) }}>
+        <button {{ bem('nav-btn', ['prev'], calendar__base_class) }}
+            aria-label="prev calendar data"
+            data-month="{{ prev_month }}"
+            data-year="{{ prev_year }}">
+          {%- include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
+            fa_icon__base_class: 'fa',
+            fa_icon__title: 'Angle Left',
+            fa_icon__extra_class: ['fa-solid fa-angle-left fa-lg'],
+            fa_icon__decorative: true,
+          } %}
+          <span aria-label="" class="sr-only"></span>
+        </button>
+        <time {{ bem('nav-time', [], calendar__base_class) }}
+            datetime="{{ current_year ~ '-' ~ current_month_string }}"
+        >
+          {{ monthMap[current_month - 1] }}<span data-week-days=""></span>, {{ current_year }}
+        </time>
+        <button {{ bem('nav-btn', ['next'], calendar__base_class) }}
+            aria-label="next calendar data"
+            data-month="{{ next_month }}"
+            data-year="{{ next_year }}">
+          <span aria-label="" class="sr-only"></span>
+          {%- include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
+            fa_icon__base_class: 'fa',
+            fa_icon__title: 'Angle Right',
+            fa_icon__extra_class: ['fa-solid fa-angle-right fa-lg'],
+            fa_icon__decorative: true,
+          } %}
+        </button>
+      </nav>
+      <nav {{ bem('nav', ['desktop'], calendar__base_class) }}>
+        <button {{ bem('nav-btn', ['prev'], calendar__base_class) }}
+            aria-label="prev calendar data"
+            data-month="{{ prev_month }}"
+            data-year="{{ prev_year }}">
+          {%- include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
+            fa_icon__base_class: 'fa',
+            fa_icon__title: 'Angle Left',
+            fa_icon__extra_class: ['fa-solid fa-angle-left fa-lg'],
+            fa_icon__decorative: true,
+          } %}
+          <span>{{ monthMap[prev_month - 1] }}, {{ prev_year }}</span>
+        </button>
+        <time {{ bem('nav-time', [], calendar__base_class) }}
+            datetime="{{ current_year ~ '-' ~ current_month_string }}">
+          {{ monthMap[current_month - 1] }}, {{ current_year }}
+        </time>
+        <button {{ bem('nav-btn', ['next'], calendar__base_class) }}
+            aria-label="next calendar data"
+            data-month="{{ next_month }}"
+            data-year="{{ next_year }}">
+          <span>{{ monthMap[next_month - 1] }}, {{ next_year }}</span>
+          {%- include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
+            fa_icon__base_class: 'fa',
+            fa_icon__title: 'Angle Right',
+            fa_icon__extra_class: ['fa-solid fa-angle-right fa-lg'],
+            fa_icon__decorative: true,
+          } %}
+        </button>
+      </nav>
     </div>
+    <div {{ bem('content', [], calendar__base_class) }}>
+      <ul {{ bem('weekdays', [], calendar__base_class) }}>
+        <li {{ bem('day-name', [], calendar__base_class) }}><abbr title="Sunday">Sun</abbr></li>
+        <li {{ bem('day-name', [], calendar__base_class) }}><abbr title="Monday">Mon</abbr></li>
+        <li {{ bem('day-name', [], calendar__base_class) }}><abbr title="Tuesday">Tue</abbr></li>
+        <li {{ bem('day-name', [], calendar__base_class) }}><abbr title="Wednesday">Wed</abbr></li>
+        <li {{ bem('day-name', [], calendar__base_class) }}><abbr title="Thursday">Thu</abbr></li>
+        <li {{ bem('day-name', [], calendar__base_class) }}><abbr title="Friday">Fri</abbr></li>
+        <li {{ bem('day-name', [], calendar__base_class) }}><abbr title="Saturday">Sat</abbr></li>
+      </ul>
+      <div {{ bem('month', [], calendar__base_class) }}>
+        {% for week in month %}
+          <ul {{ bem('week', [], calendar__base_class) }}>
+            {% for datum in week %}
+              {% set is_today = datum.date.year == todayObject.year and datum.date.month == todayObject.month and datum.date.day == todayObject.day %}
+              {% set is_disabled = datum.date.month != current_month_string %}
+
+              {% include "@organisms/calendar/_yds-calendar-cell.twig" with {
+                day: datum.date.day,
+                month: datum.date.month,
+                month_name: monthMap[current_month - 1],
+                year: datum.date.year,
+                events: datum.events,
+                is_today: is_today,
+                is_disabled: is_disabled,
+              } %}
+            {% endfor %}
+          </ul>
+        {% endfor %}
+      </div>
+    </div>
+    <ul {{ bem('mobile-events', [], calendar__base_class) }}></ul>
+    {% include "@molecules/modal/yds-modal.twig" with {
+      id: 'calendar-modal',
+    } %}
   </div>
-  <ul {{ bem('mobile-events', [], calendar__base_class) }}></ul>
-  {% include "@molecules/modal/yds-modal.twig" with {
-    id: 'calendar-modal',
-  } %}
 </div>
