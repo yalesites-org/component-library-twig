@@ -47,6 +47,12 @@ blockquote {
       );
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+
+      @if $globalTheme == 'four' {
+        // Switch colors slot in order to have the selected background colors per component theme.
+        --color-slot-two: var(--global-themes-four-colors-slot-five);
+        --color-slot-five: var(--global-themes-four-colors-slot-two);
+      }
     }
   }
 
@@ -158,7 +164,7 @@ blockquote {
   [data-site-animation='artistic'] [data-pull-quote-style='bar-right'][data-animate-item='true'].animate & {
     --pull-quote-border-height: 100%;
 
-    &::before {      
+    &::before {
       @include tokens.expand-height(--pull-quote-border-height);
     }
   }
