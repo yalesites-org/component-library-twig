@@ -50,6 +50,11 @@ export default {
       type: 'boolean',
       defaultValue: false,
     },
+    showThumbnail: {
+      name: 'Show Thumbnail',
+      type: 'boolean',
+      defaultValue: true,
+    },
     tags: {
       name: 'Tags',
       type: 'array',
@@ -75,6 +80,7 @@ export const PostCard = ({
   showCategories,
   tags,
   showTags,
+  showThumbnail,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -93,6 +99,7 @@ export const PostCard = ({
         show_categories: showCategories,
         reference_card__tags: tags,
         show_tags: showTags,
+        show_thumbnail: showThumbnail,
       })}
     </ul>
   </div>
@@ -123,6 +130,7 @@ export const EventCard = ({
   showCategories,
   tags,
   showTags,
+  showThumbnail,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -147,6 +155,7 @@ export const EventCard = ({
         show_categories: showCategories,
         reference_card__tags: tags,
         show_tags: showTags,
+        show_thumbnail: showThumbnail,
       })}
     </ul>
   </div>
@@ -199,6 +208,7 @@ export const ProfileCard = ({
   showCategories,
   tags,
   showTags,
+  showThumbnail,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-source='profile' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -220,6 +230,7 @@ export const ProfileCard = ({
         show_categories: showCategories,
         reference_card__tags: tags,
         show_tags: showTags,
+        show_thumbnail: showThumbnail,
       })}
     </ul>
   </div>
