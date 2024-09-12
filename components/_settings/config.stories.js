@@ -1,6 +1,5 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import setAttributes from './config';
-import getGlobalThemes from '../00-tokens/colors/color-global-themes';
 
 // Twig files.
 import configTwig from './config.twig';
@@ -17,7 +16,6 @@ const widths = Object.keys(tokens.layout.width);
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
-const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
 const siteAnimationOptions = ['artistic', 'default'];
 const siteFooterVariations = ['basic', 'mega'];
 
@@ -42,12 +40,6 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: {
-    globalTheme: {
-      name: 'Site: Global Theme (lever)',
-      options: siteGlobalThemeOptions,
-      type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-global-theme'),
-    },
     allowAnimatedItems: {
       name: 'Site: Animation Theme',
       options: siteAnimationOptions,
@@ -176,7 +168,6 @@ export const GlobalConfig = ({
   siteFooterAccent,
   footerBorderThickness,
   menuVariation,
-  globalTheme,
   allowAnimatedItems,
   siteFooterVariation,
 }) => {
@@ -189,7 +180,6 @@ export const GlobalConfig = ({
     '--color-theme-action': `var(--color-${actionColor})`,
   };
   const dataAttributes = {
-    'yds-cl-twig-global-theme': globalTheme,
     'yds-cl-twig-menu-variation': menuVariation,
     'yds-cl-twig-primary-nav-position': primaryNavPosition,
     'yds-cl-twig-site-header-theme': siteHeaderTheme,
@@ -232,7 +222,6 @@ export const GlobalConfig = ({
     config_page__intro: intro,
     site_animate_components: allowAnimatedItems,
     primary_nav__items: primaryNavData.items,
-    site_global__theme: globalTheme,
     site_header__menu__variation: menuVariation,
     site_header__background_image: siteHeaderImage,
     site_header__site_name_is_image: siteHeaderSiteNameImage,
