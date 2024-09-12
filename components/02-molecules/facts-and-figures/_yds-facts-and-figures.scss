@@ -57,6 +57,11 @@ $facts-and-figures-component-themes: map.deep-get(
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+
+      @if $globalTheme == 'four' {
+        // Set color slot for the text on light background.
+        --color-slot-seven: var(--global-themes-four-colors-slot-six);
+      }
     }
   }
 
@@ -75,6 +80,16 @@ $facts-and-figures-component-themes: map.deep-get(
   &[data-component-theme='three'] {
     --color-facts-and-figures-theme: var(--color-slot-three);
     --color-facts-and-figures-content: var(--color-slot-seven);
+  }
+
+  &[data-component-theme='four'] {
+    --color-facts-and-figures-theme: var(--color-slot-four);
+    --color-facts-and-figures-content: var(--color-slot-seven);
+  }
+
+  &[data-component-theme='five'] {
+    --color-facts-and-figures-theme: var(--color-slot-five);
+    --color-facts-and-figures-content: var(--color-slot-eight);
   }
 
   &__inner {
