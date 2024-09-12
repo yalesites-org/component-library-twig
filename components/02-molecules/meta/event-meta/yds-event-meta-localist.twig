@@ -141,11 +141,11 @@
           {#Replace am to a.m. and pm to p.m.#}
 
             {{ event_dates.0.original_start|date('D M j, Y') }}
-            {{ event_dates.0.original_start|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}-{{ event_dates.0.formatted_end_time|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
+            {{ event_dates.0.original_start|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}-{{ event_dates.0.original_end|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
           {% else %}
-            {{ event_dates.0.original_start|date('D M j, Y g:i a') }}
+            {{ event_dates.0.original_start|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
             -
-            {{ event_dates.0.original_end|date('D M j, Y g:i a') }}
+            {{ event_dates.0.original_end|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
           {% endif %}
         </div>
       {% endif %}
@@ -180,11 +180,11 @@
                 <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
                   {% if event_date.formatted_start_date == event_date.formatted_end_date %}
                     {{ event_date.original_start|date('D M j, Y') }}
-                    {{ event_date.original_start|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}-{{- event_date.formatted_end_time|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}
+                    {{ event_date.original_start|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}-{{- event_date.original_end|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}
                   {% else %}
-                    {{ event_date.original_start|date('D M j, Y g:ia') }}
+                    {{ event_date.original_start|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
                     -
-                    {{ event_date.original_end|date('D M j, Y g:ia') }}
+                    {{ event_date.original_end|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
                   {% endif %}
                 </li>
 
