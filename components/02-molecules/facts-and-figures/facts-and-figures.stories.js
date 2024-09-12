@@ -1,7 +1,8 @@
+import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import factsAndFiguresTwig from './yds-facts-and-figures.twig';
-
 import factsAndFiguresData from './facts-and-figures.yml';
 
+const colorPairingsData = Object.keys(tokens['component-themes']);
 /**
  * Storybook Definition.
  */
@@ -38,7 +39,7 @@ export default {
     },
     themeColor: {
       name: 'Component Theme (dial)',
-      options: ['one', 'two', 'three'],
+      options: colorPairingsData,
       type: 'select',
       defaultValue: 'one',
     },
