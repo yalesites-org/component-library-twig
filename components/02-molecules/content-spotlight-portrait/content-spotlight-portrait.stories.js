@@ -67,6 +67,12 @@ export default {
       defaultValue:
         contentSpotlightPortraitData.content_spotlight_portrait__link__content,
     },
+    linkTwoContent: {
+      name: 'Second Link Content (optional)',
+      type: 'string',
+      defaultValue:
+        contentSpotlightPortraitData.content_spotlight_portrait__link_two__content,
+    },
   },
 };
 
@@ -77,6 +83,7 @@ export const ContentSpotlightPortrait = ({
   subheading,
   text,
   linkContent,
+  linkTwoContent,
   componentTheme,
   imageStyle,
 }) =>
@@ -92,4 +99,7 @@ export const ContentSpotlightPortrait = ({
     content_spotlight_portrait__link__content: linkContent,
     content_spotlight_portrait__link__url:
       contentSpotlightPortraitData.content_spotlight_portrait__link__url,
+    content_spotlight_portrait__link_two__content: linkTwoContent,
+    content_spotlight_portrait__link_two__url:
+      contentSpotlightPortraitData.content_spotlight_portrait__link_two__url,
   });

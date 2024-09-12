@@ -1,9 +1,10 @@
+import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import quoteCalloutTwig from './yds-quote-callout.twig';
-
 import quoteCalloutData from './quote-callout.yml';
-
 // Image atom component - generic images for demo
 import imageData from '../../01-atoms/images/image/image.yml';
+
+const colorPairingsData = Object.keys(tokens['component-themes']);
 
 /**
  * Storybook Definition.
@@ -35,7 +36,7 @@ export default {
     },
     accentColor: {
       name: 'Component Theme (dial)',
-      options: ['one', 'two', 'three'],
+      options: colorPairingsData,
       type: 'select',
       defaultValue: 'one',
     },
