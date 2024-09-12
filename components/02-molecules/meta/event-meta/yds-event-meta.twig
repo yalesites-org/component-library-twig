@@ -67,7 +67,7 @@
 
           {# Time #}
           <div {{ bem('time', [], event_meta__base_class) }}>
-            {{ event_meta__time |replace({'am': 'a.m.', 'pm': 'p.m.'}) }} {# 8:30 pm- to 8:30 p.m.- #} 
+            {{ event_meta__time|replace({'am': 'a.m.', 'pm': 'p.m.'}) }} {# 8:30 pm- to 8:30 p.m.- #} 
             {#Replace am to a.m. and pm to p.m.#}
           </div>
         </div>
