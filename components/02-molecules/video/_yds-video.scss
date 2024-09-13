@@ -7,6 +7,10 @@
 .video__inner {
   display: grid;
   gap: var(--size-spacing-3);
+
+  [data-component-alignment='center'] & {
+    place-items: center;
+  }
 }
 
 .video__heading {
@@ -25,7 +29,9 @@
 
 .video__video,
 .video__content {
+  [data-component-alignment='center'] &,
   [data-component-alignment='left'] & {
     max-width: var(--size-component-layout-width-content);
+    width: 100%;
   }
 }
