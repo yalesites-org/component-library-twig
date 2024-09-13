@@ -117,7 +117,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   // List featured and non-featured
   @media (min-width: tokens.$break-m) {
-    margin-bottom: tokens.$size-spacing-5;
+    margin-bottom: tokens.$size-spacing-0;
 
     [data-collection-type='list'][data-collection-featured='false'] & {
       flex: 0 1 40%;

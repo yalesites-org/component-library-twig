@@ -61,12 +61,23 @@
         text__content: text_with_image__text,
         text__blockname: text_with_image__base_class,
       } %}
-      {# Link #}
-      {% if text_with_image__link__content and text_with_image__link__url %}
-        {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-          link__content: text_with_image__link__content,
-          link__url: text_with_image__link__url,
-        } %}
+      {% if (text_with_image__link__content and text_with_image__link__url) or (text_with_image__link_two__content and text_with_image__link_two__url) %}
+        <div {{ bem('ctas', [], text_with_image__base_class) }}>
+          {# Link #}
+          {% if text_with_image__link__content and text_with_image__link__url %}
+            {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+              link__content: text_with_image__link__content,
+              link__url: text_with_image__link__url,
+            } %}
+          {% endif %}
+          {% if text_with_image__link_two__content and text_with_image__link_two__url %}
+            {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+              link__content: text_with_image__link_two__content,
+              link__url: text_with_image__link_two__url,
+              link__modifiers: ['second'],
+            } %}
+          {% endif %}
+        </div>
       {% endif %}
     </div>
     {# Image #}

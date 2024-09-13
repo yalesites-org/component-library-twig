@@ -68,6 +68,11 @@ export default {
       type: 'string',
       defaultValue: textWithImageData.text_with_image__link__content,
     },
+    linkTwoContent: {
+      name: 'Second Link Content (optional)',
+      type: 'string',
+      defaultValue: textWithImageData.text_with_image__link_two__content,
+    },
   },
 };
 
@@ -80,6 +85,7 @@ export const ContentSpotlightLandscape = ({
   subheading,
   text,
   linkContent,
+  linkTwoContent,
   componentTheme,
 }) =>
   textWithImageTwig({
@@ -94,4 +100,7 @@ export const ContentSpotlightLandscape = ({
     text_with_image__text: text,
     text_with_image__link__content: linkContent,
     text_with_image__link__url: textWithImageData.text_with_image__link__url,
+    text_with_image__link_two__content: linkTwoContent,
+    text_with_image__link_two__url:
+      textWithImageData.text_with_image__link_two__url,
   });
