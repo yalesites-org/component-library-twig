@@ -106,8 +106,11 @@ $form-item-icon-size: 1.7rem;
   color: var(--color-form-item-error);
 }
 
+// Form submit receives button's attributes in the ys_themes.module(line 236), that ensures submit button styles.
 .form-actions {
   .webform-button--submit {
-    @include forms.button-submit;
+    @include forms.cta-submit;
+
+    border-radius: 100vmax; // Keep webform submit button rounded.
   }
 }
