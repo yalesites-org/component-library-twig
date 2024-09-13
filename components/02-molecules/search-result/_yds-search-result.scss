@@ -1,5 +1,6 @@
 @use '../../01-atoms/atoms';
 @use '../../00-tokens/tokens';
+@use '../../01-atoms/forms/yds-form' as forms;
 
 .search-results--summary {
   font-style: italic;
@@ -11,6 +12,10 @@
   display: flex;
   gap: var(--size-spacing-5);
   margin-bottom: var(--size-spacing-8);
+
+  button[type='submit'] {
+    @include forms.cta-submit;
+  }
 }
 
 .search-result {

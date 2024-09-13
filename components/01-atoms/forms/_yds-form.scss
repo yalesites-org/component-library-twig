@@ -34,16 +34,28 @@
   }
 }
 
+// Adjust the form-submit that has the 'cta' class. See ys_themes.module where form submit receives CTA attributes.
+@mixin cta-submit {
+  transition: color,
+    background-color var(--animation-speed-default) ease-in-out 0ms;
+  border: var(--border-thickness-cta) solid var(--color-action);
+  font-weight: var(--font-weights-mallory-medium);
+  padding: var(--size-spacing-3) var(--size-spacing-6);
+  min-height: var(--size-click-target-minimum);
+  width: auto;
+
+  // Mimic the opposite of "Deep" (five) for the "Subtle" (four) button theme.
+  &.cta[data-cta-theme='four'] {
+    --color-cta-border: var(--color-cta-text);
+    --color-cta-bg-hover: var(--color-cta-text);
+    --color-cta-text-hover: var(--color-cta-bg);
+
+    border: var(--border-thickness-cta) solid var(--color-cta-border);
+  }
+}
+
 .webform-submission-form {
   max-width: 80rem;
-
-  // Mimic the opposite of "Deep" (five) for the "Subtle" (four) button theme
-  & input.cta[data-cta-theme='four'][type='submit'] {
-    --color-button-text: var(--color-cta-text);
-    --color-button-border: var(--color-cta-text);
-    --color-button-bg-hover: var(--color-cta-text);
-    --color-button-text-hover: var(--color-button-bg);
-  }
 }
 
 // Used for exposed filter forms
@@ -64,10 +76,9 @@
     height: 3rem;
   }
 
+  // Form submit receives button's attributes in the ys_themes.module(line 236), that ensures submit button styles.
   .form-submit {
-    @include button-submit;
-
-    --border-radius-button: var(--radius-0);
+    @include cta-submit;
 
     min-height: var(--size-spacing-9);
   }
