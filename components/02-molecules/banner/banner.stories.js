@@ -2,6 +2,7 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
 import bannerTwig from './action/yds-action-banner.twig';
 import grandHeroTwig from './grand-hero/yds-grand-hero.twig';
+import imageBannerTwig from './image/yds-image-banner.twig';
 
 import bannerData from './banner.yml';
 import grandHeroData from './grand-hero.yml';
@@ -9,6 +10,29 @@ import grandHeroData from './grand-hero.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
+
+const bannerArgTypes = {
+  heading: {
+    name: 'Heading',
+    type: 'string',
+    defaultValue: bannerData.banner__heading,
+  },
+  snippet: {
+    name: 'Snippet',
+    type: 'string',
+    defaultValue: bannerData.banner__snippet,
+  },
+  linkContent: {
+    name: 'Link Content',
+    type: 'string',
+    defaultValue: bannerData.banner__link__content,
+  },
+  linkContentTwo: {
+    name: 'Link Content Two',
+    type: 'string',
+    defaultValue: bannerData.banner__link__content_two,
+  },
+};
 
 /**
  * Storybook Definition.
@@ -19,26 +43,6 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: {
-    heading: {
-      name: 'Heading',
-      type: 'string',
-      defaultValue: bannerData.banner__heading,
-    },
-    snippet: {
-      name: 'Snippet',
-      type: 'string',
-      defaultValue: bannerData.banner__snippet,
-    },
-    linkContent: {
-      name: 'Link Content',
-      type: 'string',
-      defaultValue: bannerData.banner__link__content,
-    },
-    linkContentTwo: {
-      name: 'Link Content Two',
-      type: 'string',
-      defaultValue: bannerData.banner__link__content_two,
-    },
     bgColor: {
       name: 'Component Theme (dial)',
       type: 'select',
@@ -70,6 +74,7 @@ export const ActionBanner = ({
     banner__content__background: bgColor,
   });
 ActionBanner.argTypes = {
+  ...bannerArgTypes,
   linkStyle: {
     name: 'Link Style',
     type: 'select',
@@ -108,6 +113,7 @@ export const GrandHeroBanner = ({
     grand_hero__video: withVideo ? 'true' : 'false',
   });
 GrandHeroBanner.argTypes = {
+  ...bannerArgTypes,
   overlayVariation: {
     name: 'Content Overlay',
     type: 'select',
@@ -120,6 +126,19 @@ GrandHeroBanner.argTypes = {
     options: ['reduced', 'full'],
     defaultValue: 'full',
   },
+  withVideo: {
+    name: 'With Video',
+    type: 'boolean',
+    defaultValue: false,
+  },
+};
+export const ImageBanner = ({ withVideo, bgColor }) =>
+  imageBannerTwig({
+    ...imageData.responsive_images['16x9'],
+    image_banner__video: withVideo ? 'true' : 'false',
+    image_banner__content__background: bgColor,
+  });
+ImageBanner.argTypes = {
   withVideo: {
     name: 'With Video',
     type: 'boolean',
