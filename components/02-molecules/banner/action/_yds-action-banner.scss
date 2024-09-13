@@ -109,6 +109,12 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     --color-link-hover: var(--color-banner-heading);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
+
+    // For accessibility reason set lighter visited links color.
+    [data-global-theme='four'] & {
+      --color-link-visited-base: var(--color-gray-100);
+      --color-link-visited-hover: var(--color-slot-eight);
+    }
   }
 
   &[data-component-theme='four'] {

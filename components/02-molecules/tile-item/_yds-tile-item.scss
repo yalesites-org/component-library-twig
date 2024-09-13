@@ -77,11 +77,31 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &[data-component-theme='two'] {
     --color-tile-item-theme: var(--color-slot-two);
     --color-tile-item-content: var(--color-slot-eight);
+
+    // For accessibility reason set lighter visited links color.
+    [data-global-theme='four'] & {
+      --color-link-visited-base: var(--color-gray-100);
+      --color-link-visited-hover: var(--color-slot-eight);
+    }
   }
 
   &[data-component-theme='three'] {
     --color-tile-item-theme: var(--color-slot-three);
     --color-tile-item-content: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-link-visited);
+    --color-link-visited-hover: var(--color-link-visited-hover);
+  }
+
+  &[data-component-theme='four'] {
+    --color-tile-item-theme: var(--color-slot-four);
+    --color-tile-item-content: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-link-visited);
+    --color-link-visited-hover: var(--color-link-visited-hover);
+  }
+
+  &[data-component-theme='five'] {
+    --color-tile-item-theme: var(--color-slot-five);
+    --color-tile-item-content: var(--color-slot-eight);
   }
 
   &__inner {
