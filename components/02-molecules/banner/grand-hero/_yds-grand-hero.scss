@@ -124,6 +124,12 @@ $break-grand-hero-banner: tokens.$break-m;
     --color-link-hover: var(--color-grand-hero-text);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
+
+    // For accessibility reason set lighter visited links color.
+    [data-global-theme='four'] & {
+      --color-link-visited-base: var(--color-gray-100);
+      --color-link-visited-hover: var(--color-slot-eight);
+    }
   }
 
   &[data-component-theme='four'] {
