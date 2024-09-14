@@ -153,7 +153,7 @@ $menu-sub-max-width: 19rem;
       top: calc(100% - var(--border-thickness-1));
 
       [aria-expanded='false'] ~ & {
-        visibility: hidden;
+        display: none;
       }
     }
 
