@@ -7,6 +7,7 @@
  # Available variables:
  # - content_spotlight_portrait__overline (optional)
  # - content_spotlight_portrait__heading
+ # - content_spotlight_portrait__heading_level (optional)
  # - content_spotlight_portrait__subheading (optional)
  # - content_spotlight_portrait__text
  # - content_spotlight_portrait__link__content (optional)
@@ -17,6 +18,8 @@
  #}
 
 {% set content_spotlight_portrait__base_class = 'content-spotlight-portrait' %}
+
+{% set content_spotlight_portrait__heading_level = content_spotlight_portrait__heading_level|default('2') %}
 
 {% set content_spotlight_portrait__attributes = {
   'data-image-position': content_spotlight_portrait__position|default('image-left'),
@@ -44,7 +47,7 @@
       {% if content_spotlight_portrait__heading %}
         {% include "@atoms/typography/headings/yds-heading.twig" with {
           heading: content_spotlight_portrait__heading,
-          heading__level: '2',
+          heading__level: content_spotlight_portrait__heading_level,
           heading__blockname: content_spotlight_portrait__base_class,
         } %}
       {% endif %}
