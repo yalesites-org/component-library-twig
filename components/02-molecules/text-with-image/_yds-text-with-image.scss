@@ -270,3 +270,10 @@ $component-content-spotlight-themes: map.deep-get(
     margin-bottom: 0;
   }
 }
+
+.text-with-image__ctas {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-5);
+}
