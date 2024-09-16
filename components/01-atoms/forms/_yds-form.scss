@@ -182,6 +182,10 @@
         display: flex;
       }
 
+      li.no-results {
+        display: list-item;
+      }
+
       .highlighted {
         background-color: var(--color-blue-yale);
       }
