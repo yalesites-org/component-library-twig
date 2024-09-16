@@ -19,6 +19,7 @@ import '../lib/ys_link/css/ys-link.css';
 
 // If in a Drupal project, it's recommended to import a symlinked version of drupal.js.
 import './_drupal.js';
+import './jquery-global.js';
 
 export const decorators = [
   (StoryFn, context) => {
