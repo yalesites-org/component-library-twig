@@ -1,17 +1,17 @@
 {#
- # Available Props:
- # - reference_card__image: boolean used to evaluate whether or not to show the image
- #
- # Available Variables:
- # - reference_card__overline
- # - reference_card__heading
- # - reference_card__subheading
- # - reference_card__url
- # - reference_card__snippet
- #
- # Available Blocks:
- # - reference_card__image
- #}
+# Available Props:
+# - reference_card__image: boolean used to evaluate whether or not to show the image
+#
+# Available Variables:
+# - reference_card__overline
+# - reference_card__heading
+# - reference_card__subheading
+# - reference_card__url
+# - reference_card__snippet
+#
+# Available Blocks:
+# - reference_card__image
+#}
 
 {% set reference_card__base_class = 'reference-card' %}
 {% set reference_card__image = reference_card__image|default('true') %}
@@ -25,12 +25,12 @@
 
 <li {{ add_attributes(reference_card__attributes) }}>
   <div {{ bem('content', [], reference_card__base_class) }}>
-    {% if reference_card__overline %}
-      {% include "@atoms/typography/text/yds-text.twig" with {
-        text__base_class: 'overline',
-        text__blockname: reference_card__base_class,
-        text__content: reference_card__overline,
-      } %}
+    {% if show_categories %}
+      {% block reference_card__categories %}
+        {% include "@atoms/lists/taxonomy/yds-categories-list.twig" with {
+          items: reference_card__categories,
+        } %}
+      {% endblock %}
     {% endif %}
     {% include "@atoms/typography/headings/yds-heading.twig" with {
       heading__prefix__base_class: reference_card__base_class,
@@ -46,6 +46,21 @@
         text__base_class: 'subheading',
         text__content: reference_card__subheading,
       } %}
+    {% endif %}
+    {% if reference_card__overline %}
+      {% include "@atoms/typography/text/yds-text.twig" with {
+        text__base_class: 'overline',
+        text__blockname: reference_card__base_class,
+        text__content: reference_card__overline,
+      } %}
+    {% endif %}
+    {% if show_tags %}
+      {% block reference_card__tags %}
+        {% include "@atoms/lists/taxonomy/yds-tags-list.twig" with {
+          items: reference_card__tags,
+          url: reference_card__url,
+        } %}
+      {% endblock %}
     {% endif %}
     {% if reference_card__snippet %}
       {% include "@atoms/typography/text/yds-text.twig" with {
@@ -78,12 +93,16 @@
     {% endif %}
   </div>
   {% if reference_card__image == 'true' %}
-    <div {{ bem('image', [], reference_card__base_class) }}>
-      <a {{ bem('image-link', [], reference_card__base_class) }} href="{{reference_card__url}}" aria-label="{{reference_card__image_aria}}" tabindex="-1" aria-hidden="true">
-        {% block reference_card__image %}
-          {% include "@atoms/images/image/_responsive-image.twig" %}
-        {% endblock %}
-      </a>
-    </div>
+    {% if show_thumbnail != '0' %}
+      <div {{ bem('image', [], reference_card__base_class) }}>
+        <a {{ bem('image-link', [], reference_card__base_class) }} href="{{ reference_card__url }}"
+                                                                   aria-label="{{ reference_card__image_aria }}"
+                                                                   tabindex="-1" aria-hidden="true">
+          {% block reference_card__image %}
+            {% include "@atoms/images/image/_responsive-image.twig" %}
+          {% endblock %}
+        </a>
+      </div>
+    {% endif %}
   {% endif %}
 </li>
