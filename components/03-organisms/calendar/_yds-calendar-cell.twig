@@ -8,7 +8,9 @@
 {% endif %}
 <li {{ bem('day', modifier_classes, 'calendar') }} tabindex="-1">
   {% if year and month and day %}
-    <time datetime="{{ year ~ '-' ~ month ~ '-' ~ day }}">{{ day }} <span class="sr-only">{{ month_name }}, {{ year }}</span></time>
+    <time datetime="{{ year ~ '-' ~ month ~ '-' ~ day }}">
+      <span aria-hidden="true">{{ day }}</span>
+      <span class="sr-only">{{ month_name }} {{ day }}, {{ year }}</span></time>
   {% endif %}
   {% if events is not empty %}
     <ul {{ bem('day-events', [], 'calendar') }}>

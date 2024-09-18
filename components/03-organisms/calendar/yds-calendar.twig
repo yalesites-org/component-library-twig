@@ -70,8 +70,15 @@
 {% set calendar__attributes = {
   class: bem(calendar__base_class),
 } %}
+
+{% if clean_unique_id is defined %}
+  {% set calendar_id = (calendar__base_class ~ '-wrapper')|clean_unique_id %}
+{% else %}
+  {% set calendar_id = calendar__base_class ~ '-wrapper' %}
+{% endif %}
+
 {% set calendar_wrapper__attributes = {
-  id: calendar__base_class ~ '-wrapper'|clean_unique_id,
+  id: calendar_id,
 } %}
 
 <div {{ add_attributes(calendar_wrapper__attributes) }}>
@@ -79,7 +86,7 @@
     <div {{ bem('header', [], calendar__base_class) }}>
       <nav {{ bem('nav', ['mobile'], calendar__base_class) }}>
         <button {{ bem('nav-btn', ['prev'], calendar__base_class) }}
-            aria-label="prev calendar data"
+            aria-label="previous week"
             data-month="{{ prev_month }}"
             data-year="{{ prev_year }}">
           {%- include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
@@ -88,7 +95,6 @@
             fa_icon__extra_class: ['fa-solid fa-angle-left fa-lg'],
             fa_icon__decorative: true,
           } %}
-          <span aria-label="" class="sr-only"></span>
         </button>
         <time {{ bem('nav-time', [], calendar__base_class) }}
             datetime="{{ current_year ~ '-' ~ current_month_string }}"
@@ -96,10 +102,9 @@
           {{ monthMap[current_month - 1] }}<span data-week-days=""></span>, {{ current_year }}
         </time>
         <button {{ bem('nav-btn', ['next'], calendar__base_class) }}
-            aria-label="next calendar data"
+            aria-label="next week"
             data-month="{{ next_month }}"
             data-year="{{ next_year }}">
-          <span aria-label="" class="sr-only"></span>
           {%- include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
             fa_icon__base_class: 'fa',
             fa_icon__title: 'Angle Right',
@@ -110,7 +115,6 @@
       </nav>
       <nav {{ bem('nav', ['desktop'], calendar__base_class) }}>
         <button {{ bem('nav-btn', ['prev'], calendar__base_class) }}
-            aria-label="prev calendar data"
             data-month="{{ prev_month }}"
             data-year="{{ prev_year }}">
           {%- include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
@@ -126,7 +130,6 @@
           {{ monthMap[current_month - 1] }}, {{ current_year }}
         </time>
         <button {{ bem('nav-btn', ['next'], calendar__base_class) }}
-            aria-label="next calendar data"
             data-month="{{ next_month }}"
             data-year="{{ next_year }}">
           <span>{{ monthMap[next_month - 1] }}, {{ next_year }}</span>
