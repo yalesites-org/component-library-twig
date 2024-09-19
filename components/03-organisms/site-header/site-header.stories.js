@@ -82,15 +82,6 @@ export default {
     siteWideHeaderName: 'Yale University',
     siteWideHeaderUrl: 'https://www.yale.edu',
   },
-  args: {
-    borderThickness: '8',
-    primaryNavPosition: 'left',
-    menuVariation: 'basic',
-    siteHeaderImage: false,
-    siteHeaderSiteNameImage: false,
-    siteHeaderTheme: 'one',
-    siteHeaderAccent: 'one',
-  },
 };
 
 export const Header = ({
