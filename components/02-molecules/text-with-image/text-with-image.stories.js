@@ -76,17 +76,6 @@ export default {
     text: textWithImageData.text_with_image__text,
     linkContent: textWithImageData.text_with_image__link__content,
   },
-  args: {
-    componentTheme: 'default',
-    width: 'site',
-    position: 'image-left',
-    focus: 'equal',
-    overline: null,
-    heading: textWithImageData.text_with_image__heading,
-    subheading: textWithImageData.text_with_image__subheading,
-    text: textWithImageData.text_with_image__text,
-    linkContent: textWithImageData.text_with_image__link__content,
-  },
 };
 
 export const ContentSpotlightLandscape = ({
