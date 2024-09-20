@@ -43,6 +43,7 @@ export const globalTypes = {
         { value: 'four', title: 'Onha' },
       ],
       showName: true,
+      title: 'Site: Global Theme (lever)',
     },
   }
 }
