@@ -74,18 +74,6 @@ export default {
     linkContent:
       contentSpotlightPortraitData.content_spotlight_portrait__link__content,
   },
-  args: {
-    componentTheme: 'default',
-    position: 'image-left',
-    imageStyle: 'inline',
-    overline: null,
-    heading: contentSpotlightPortraitData.content_spotlight_portrait__heading,
-    subheading:
-      contentSpotlightPortraitData.content_spotlight_portrait__subheading,
-    text: contentSpotlightPortraitData.content_spotlight_portrait__text,
-    linkContent:
-      contentSpotlightPortraitData.content_spotlight_portrait__link__content,
-  },
 };
 
 export const ContentSpotlightPortrait = ({
