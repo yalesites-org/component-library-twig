@@ -170,12 +170,6 @@ $component-inline-message-themes: map.deep-get(
     --color-link-hover: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
-
-    // For accessibility reason set lighter visited links color.
-    [data-global-theme='four'] & {
-      --color-link-visited-base: var(--color-gray-100);
-      --color-link-visited-hover: var(--color-slot-eight);
-    }
   }
 
   &:visited {
@@ -184,6 +178,12 @@ $component-inline-message-themes: map.deep-get(
 
   &:has(> i.fa-icon) {
     padding-right: var(--size-spacing-3);
+  }
+
+  // For accessibility reason set lighter visited links color.
+  [data-global-theme='four'] [data-component-theme='three'] & {
+    --color-link-visited-base: var(--color-gray-100);
+    --color-link-visited-hover: var(--color-slot-eight);
   }
 
   &:visited:hover {
