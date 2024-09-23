@@ -3,6 +3,7 @@
  # - image_banner__content__layout: bottom (default), left, or right
  # - image_banner__video: false (default) or true
  # - image_banner__content_background: one (default), two, three
+ # - image_banner__image_size: large (default), small
  #
  # Available Blocks:
  # - image_banner__image
@@ -15,6 +16,12 @@
   'data-component-theme': image_banner__content__background,
   class: bem(image_banner__base_class),
 } %}
+
+{% if image_banner__image_size %}
+  {% set image_banner__attributes = image_banner__attributes|merge({
+    'data-banner-size': image_banner__image_size,
+  }) %}
+{% endif %}
 
 {% if image_banner__width %}
   {% set image_banner__attributes = image_banner__attributes|merge({
