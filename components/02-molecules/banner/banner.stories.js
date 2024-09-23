@@ -132,16 +132,23 @@ GrandHeroBanner.argTypes = {
     defaultValue: false,
   },
 };
-export const ImageBanner = ({ withVideo, bgColor }) =>
+export const ImageBanner = ({ withVideo, bgColor, styleVariation }) =>
   imageBannerTwig({
     ...imageData.responsive_images['16x9'],
     image_banner__video: withVideo ? 'true' : 'false',
     image_banner__content__background: bgColor,
+    image_banner__image_size: styleVariation,
   });
 ImageBanner.argTypes = {
   withVideo: {
     name: 'With Video',
     type: 'boolean',
     defaultValue: false,
+  },
+  styleVariation: {
+    name: 'Size',
+    type: 'select',
+    options: ['small', 'large'],
+    defaultValue: 'large',
   },
 };
