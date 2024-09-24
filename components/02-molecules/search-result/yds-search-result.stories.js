@@ -34,11 +34,6 @@ export default {
     highlighted: searchResultData.search_result__highlighted,
     teaser: searchResultData.search_result__teaser,
   },
-  args: {
-    heading: searchResultData.search_result__title,
-    highlighted: searchResultData.search_result__highlighted,
-    teaser: searchResultData.search_result__teaser,
-  },
 };
 
 export const SearchResult = ({ heading, highlighted, teaser, contentType }) =>
