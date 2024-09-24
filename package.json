@@ -46,7 +46,7 @@
     "lint-staged": "^12.1.6",
     "sass": "^1.47.0",
     "sass-loader": "^10.2.0",
-    "semantic-release": "^18.0.1",
+    "semantic-release": "^24.1.1",
     "style-loader": "^2.0.0",
     "twig-loader": "https://github.com/fourkitchens/twig-loader",
     "webpack-cli": "^4.9.2"
