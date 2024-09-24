@@ -132,23 +132,24 @@ GrandHeroBanner.argTypes = {
     defaultValue: false,
   },
 };
-export const ImageBanner = ({ withVideo, bgColor, styleVariation }) =>
+export const ImageBanner = ({ bgColor, size, withVideo }) =>
   imageBannerTwig({
     ...imageData.responsive_images['16x9'],
-    image_banner__video: withVideo ? 'true' : 'false',
     image_banner__content__background: bgColor,
-    image_banner__image_size: styleVariation,
+    image_banner__overlay_variation: 'full',
+    image_banner__size: size,
+    image_banner__video: withVideo ? 'true' : 'false',
   });
 ImageBanner.argTypes = {
+  size: {
+    name: 'Image Size',
+    type: 'select',
+    options: ['large', 'small'],
+    defaultValue: 'large',
+  },
   withVideo: {
     name: 'With Video',
     type: 'boolean',
     defaultValue: false,
-  },
-  styleVariation: {
-    name: 'Size',
-    type: 'select',
-    options: ['small', 'large'],
-    defaultValue: 'large',
   },
 };
