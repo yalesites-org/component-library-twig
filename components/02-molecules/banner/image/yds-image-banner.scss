@@ -29,11 +29,11 @@ $break-image-banner: tokens.$break-m;
     align-items: center;
   }
 
-  &[data-image-banner-size='small'] {
+  &[data-image-banner-size='short'] {
     min-height: 28rem;
   }
 
-  &[data-image-banner-size='large'] {
+  &[data-image-banner-size='tall'] {
     min-height: calc(95vh - var(--site-header-height));
   }
 
@@ -180,11 +180,11 @@ $break-image-banner: tokens.$break-m;
     height: 100%;
     object-fit: cover;
 
-    [data-image-banner-size='large'] & {
+    [data-image-banner-size='tall'] & {
       min-height: calc(95vh - var(--site-header-height));
     }
 
-    [data-image-banner-size='small'] & {
+    [data-image-banner-size='short'] & {
       min-height: 28rem;
     }
   }

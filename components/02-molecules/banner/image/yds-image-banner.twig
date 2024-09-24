@@ -4,10 +4,6 @@
  # - image_banner__overlay_variation: contained (default), full
  #
  # Available Variables:
- # - image_banner__heading
- # - image_banner__snippet
- # - image_banner__link__content
- # - image_banner__link__url
  # - video_background__button__background_color
  #
  # Available Blocks:
@@ -17,7 +13,7 @@
 {% set image_banner__base_class = 'image-banner' %}
 {% set image_banner__content__background = image_banner__content__background|default('one') %}
 {% set image_banner__overlay_variation = image_banner__overlay_variation|default('contained') %}
-{% set image_banner__size = image_banner__size|default('full') %}
+{% set image_banner__size = image_banner__size|default('tall') %}
 
 {% set image_banner__attributes = {
   'data-image-banner-overlay-variation': image_banner__overlay_variation,

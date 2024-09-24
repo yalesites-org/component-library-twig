@@ -144,8 +144,8 @@ ImageBanner.argTypes = {
   size: {
     name: 'Image Size',
     type: 'select',
-    options: ['large', 'small'],
-    defaultValue: 'large',
+    options: ['tall', 'short'],
+    defaultValue: 'tall',
   },
   withVideo: {
     name: 'With Video',
