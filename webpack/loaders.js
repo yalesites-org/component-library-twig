@@ -54,18 +54,13 @@ const SVGSpriteLoader = {
     extract: true,
     spriteFilename: '../dist/icons.svg',
   },
-}
+};
 
 const ExportsLoader = {
   test: /linkpurpose\/js\/linkpurpose(\.js)?$/,
   use: {
     loader: 'exports-loader?exports=default%20LinkPurpose',
   },
-};
-
-const ExportsLoader = {
-  test: /linkpurpose\/js\/linkpurpose(\.js)?$/,
-  loader: 'exports-loader?exports=default%20LinkPurpose',
 };
 
 module.exports = {
