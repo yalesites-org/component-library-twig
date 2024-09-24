@@ -2,28 +2,38 @@
 @use '../../../01-atoms/atoms';
 @use '../../../00-tokens/functions/map';
 
-// get global themes
 $global-image-banner-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $component-image-banner-themes: map.deep-get(
   tokens.$tokens,
   'component-themes'
 );
-$break-image-banner-banner: tokens.$break-l;
-$break-image-banner-banner-max: $break-image-banner-banner;
+$break-image-banner: tokens.$break-m;
 
 .image-banner {
-  border: 1px solid red;
   @include tokens.spacing-page-section(
     $flush-top: true,
     $flush-bottom: true,
     $banner-spacing: true
   );
 
-  &[data-banner-size='small'] {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  align-items: end;
+  width: 100%;
+  max-width: tokens.$break-max-width;
+  margin: 0 auto;
+  background-color: var(--color-image-banner-background);
+
+  @media (min-width: $break-image-banner) {
+    align-items: center;
+  }
+
+  &[data-image-banner-size='small'] {
     min-height: 28rem;
   }
 
-  &[data-banner-size='large'] {
+  &[data-image-banner-size='large'] {
     min-height: calc(95vh - var(--site-header-height));
   }
 
@@ -31,7 +41,11 @@ $break-image-banner-banner-max: $break-image-banner-banner;
   // default variables.
   @each $theme, $value in $component-image-banner-themes {
     &[data-component-theme='#{$theme}'] {
-      --color-backgound: var(--color-banner-background);
+      --color-text: var(--color-image-banner-text);
+      --color-backgound: var(--color-image-banner-background);
+      --color-heading: var(--color-image-banner-heading);
+      --color-action: var(--color-image-banner-action);
+      --color-action-secondary: var(--color-image-banner-action-secondary);
       --color-slot-one: var(--component-themes-#{$theme}-slot-one);
       --color-slot-two: var(--component-themes-#{$theme}-slot-two);
       --color-slot-three: var(--component-themes-#{$theme}-slot-three);
@@ -63,153 +77,129 @@ $break-image-banner-banner-max: $break-image-banner-banner;
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+
+      @if $globalTheme == 'four' {
+        // Switch colors slot in order to have the selected background colors per component theme.
+        --color-slot-two: var(--global-themes-four-colors-slot-five);
+        --color-slot-five: var(--global-themes-four-colors-slot-two);
+
+        // Switch color slot for the text on light background.
+        --color-slot-seven: var(--global-themes-four-colors-slot-six);
+      }
     }
   }
-
-  max-width: tokens.$break-max-width;
-  margin-inline-start: auto;
-  margin-inline-end: auto;
-  padding: 0;
-  background-color: var(--color-banner-background);
-
-  --banner-content-max-width: 37rem;
 
   // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
-    --color-banner-background: var(--color-slot-one);
+    --color-image-banner-background: var(--color-slot-one);
+    --color-image-banner-text: var(--color-slot-eight);
+    --color-image-banner-heading: var(--color-slot-eight);
+    --color-image-banner-action: var(--color-slot-eight);
+    --color-image-banner-action-secondary: var(--color-slot-one);
+    --color-link-base: var(--color-image-banner-text);
+    --color-link-hover: var(--color-image-banner-text);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 
   &[data-component-theme='two'] {
-    --color-banner-background: var(--color-slot-four);
+    --color-image-banner-background: var(--color-slot-four);
+    --color-image-banner-text: var(--color-slot-seven);
+    --color-image-banner-heading: var(--color-slot-seven);
+    --color-image-banner-action: var(--color-slot-seven);
+    --color-image-banner-action-secondary: var(--color-slot-eight);
+    --color-link-base: var(--color-image-banner-text);
+    --color-link-hover: var(--color-image-banner-text);
+
+    p > a {
+      color: var(--color-slot-seven);
+    }
   }
 
   &[data-component-theme='three'] {
-    --color-banner-background: var(--color-slot-five);
+    --color-image-banner-background: var(--color-slot-five);
+    --color-image-banner-text: var(--color-slot-eight);
+    --color-image-banner-heading: var(--color-slot-eight);
+    --color-image-banner-action: var(--color-slot-eight);
+    --color-image-banner-action-secondary: var(--color-slot-one);
+    --color-link-base: var(--color-image-banner-text);
+    --color-link-hover: var(--color-image-banner-text);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
+
+    // For accessibility reason set lighter visited links color.
+    [data-global-theme='four'] & {
+      --color-link-visited-base: var(--color-gray-100);
+      --color-link-visited-hover: var(--color-slot-eight);
+    }
   }
-}
 
-.image-banner__content-wrapper {
-  position: relative;
+  &[data-component-theme='four'] {
+    --color-image-banner-background: var(--color-slot-three);
+    --color-image-banner-text: var(--color-slot-seven);
+    --color-image-banner-heading: var(--color-slot-seven);
+    --color-image-banner-action: var(--color-slot-seven);
+    --color-image-banner-action-secondary: var(--color-slot-eight);
+    --color-link-base: var(--color-image-banner-heading);
+    --color-link-hover: var(--color-image-banner-heading);
+  }
 
-  @media (min-width: $break-image-banner-banner) {
-    aspect-ratio: 16 / 5;
+  &[data-component-theme='five'] {
+    --color-image-banner-background: var(--color-slot-two);
+    --color-image-banner-text: var(--color-slot-eight);
+    --color-image-banner-heading: var(--color-slot-eight);
+    --color-image-banner-action: var(--color-slot-eight);
+    --color-image-banner-action-secondary: var(--color-slot-one);
+    --color-link-base: var(--color-image-banner-heading);
+    --color-link-hover: var(--color-image-banner-heading);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
 
-    // Safari 14 fix for aspect-ratio
-    @supports not (aspect-ratio: 16 / 5) {
-      &::before {
-        float: left;
-        padding-top: 26.25%;
-        content: '';
-      }
-
-      &::after {
-        display: block;
-        content: '';
-        clear: both;
-      }
+    [data-global-theme='four'] & {
+      --color-image-banner-background: var(--component-themes-five-background);
+      --color-image-banner-text: var(--component-themes-five-text);
+      --color-image-banner-heading: var(--component-themes-five-heading);
+      --color-image-banner-action: var(--color-slot-seven);
+      --color-image-banner-action-secondary: var(--color-slot-eight);
+      --color-link-visited-base: var(--color-purple-visited);
+      --color-link-visited-hover: var(--color-purple-visited-hover);
     }
   }
 }
 
 .image-banner__image {
-  @media (max-width: ($break-image-banner-banner - 0.05)) {
-    aspect-ratio: 16 / 5;
-
-    // Safari 14 fix for aspect-ratio
-    @supports not (aspect-ratio: 16 / 5) {
-      &::before {
-        float: left;
-        padding-top: 26.25%;
-        content: '';
-      }
-
-      &::after {
-        display: block;
-        content: '';
-        clear: both;
-      }
-    }
-  }
-
-  @media (min-width: $break-image-banner-banner) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-  }
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 
   img {
-    object-fit: cover;
-    height: 100%;
     width: 100%;
+    height: 100%;
+    object-fit: cover;
 
-    [data-banner-size='small'] & {
-      min-height: 28rem;
-    }
-
-    [data-banner-size='large'] & {
+    [data-image-banner-size='large'] & {
       min-height: calc(95vh - var(--site-header-height));
     }
+
+    [data-image-banner-size='small'] & {
+      min-height: 28rem;
+    }
   }
 }
 
-.image-banner__outer-wrap {
+.image-banner__video {
+  top: 0;
+  left: 0;
   width: 100%;
-
-  [data-banner-content-layout='left'] &,
-  [data-banner-content-layout='right'] & {
-    @media (min-width: $break-image-banner-banner) {
-      max-width: var(--banner-content-max-width);
-    }
-  }
-}
-
-.image-banner__wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
   height: 100%;
+  position: absolute;
 
-  // prettier-ignore
-  padding: var(--size-spacing-6) var(--size-spacing-7) var(--size-spacing-7);
-
-  [data-banner-content-layout='left'] &,
-  [data-banner-content-layout='right'] & {
+  video {
     width: 100%;
-    max-width: var(--size-component-layout-width-content);
-  }
-
-  [data-banner-content-layout='bottom'] & {
-    @media (min-width: $break-image-banner-banner) {
-      gap: var(--size-spacing-5);
-      flex-basis: 100%;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      padding-block-start: var(--size-spacing-5);
-      padding-block-end: var(--size-spacing-5);
-      min-height: auto;
-      width: 100%;
-      max-width: 108rem; // 1728px
-      margin: 0 auto;
-    }
-  }
-
-  @media (min-width: $break-image-banner-banner) {
-    padding: var(--size-spacing-6) var(--size-spacing-site-gutter)
-      var(--size-spacing-7);
-  }
-
-  [data-banner-width='site'] & {
-    // prettier-ignore
-    max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-10)));
-
-    @media (min-width: $break-image-banner-banner) {
-      // prettier-ignore
-      max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-site-gutter) * 2));
-      margin: 0 auto;
-    }
+    height: 100%;
+    object-fit: cover;
   }
 }
