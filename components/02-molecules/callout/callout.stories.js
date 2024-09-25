@@ -4,6 +4,8 @@ import calloutTwig from './yds-callout.twig';
 
 import calloutData from './callout.yml';
 
+import './callout';
+
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
 /**

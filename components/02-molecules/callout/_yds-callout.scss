@@ -15,6 +15,14 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
   color: var(--color-text);
   background-color: var(--color-callouts-background);
 
+  // Remove white spaces between callouts and quickLinks
+  &[data-callout-position='first'],
+  &[data-callout-position='last'],
+  &[data-callout-position='first-and-last'] {
+    margin-top: var(--size-spacing-0);
+    margin-bottom: var(--size-spacing-0);
+  }
+
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
   @each $theme, $value in $component-callout-themes {
@@ -247,4 +255,15 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
   @include atoms.cta;
 
   margin-top: var(--size-spacing-6);
+}
+
+// Remove white spaces between quickLinks and callouts
+
+.quick-links {
+  &[data-quicklinks-position='first'],
+  &[data-quicklinks-position='last'],
+  &[data-quicklinks-position='first-and-last'] {
+    margin-top: var(--size-spacing-0);
+    margin-bottom: var(--size-spacing-0);
+  }
 }
