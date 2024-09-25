@@ -58,8 +58,9 @@ const SVGSpriteLoader = {
 
 const ExportsLoader = {
   test: /linkpurpose\/js\/linkpurpose(\.js)?$/,
-  use: {
-    loader: 'exports-loader?exports=default%20LinkPurpose',
+  loader: 'exports-loader',
+  options: {
+    exports: 'default LinkPurpose',
   },
 };
 
