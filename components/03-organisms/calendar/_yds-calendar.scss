@@ -295,3 +295,11 @@
     padding-left: var(--size-spacing-6);
   }
 }
+
+.calendar__no-events-message {
+  display: none;
+
+  &.is-visible {
+    display: block;
+  }
+}

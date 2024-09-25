@@ -6,6 +6,7 @@ Drupal.behaviors.eventsCalendar = {
     const calendar = '.calendar';
     const event = '.calendar-event';
     const eventClass = 'calendar-event';
+    const visibleClass = 'is-visible';
     const day = '.calendar__day';
     const modalContent = '.modal__calendar-events';
     const modalTitleSelector = '.modal__title';
@@ -14,6 +15,8 @@ Drupal.behaviors.eventsCalendar = {
     const nextButton = '.calendar__nav-btn--next';
     const desktopNav = '.calendar__nav--desktop';
     const dialogTitle = '.calendar__dialog-title';
+    const dayEvents = '.calendar__day--events';
+    const noEvents = '.calendar__no-events-message';
 
     // Selectors.
     const calendars = context.querySelectorAll(calendar);
@@ -37,7 +40,14 @@ Drupal.behaviors.eventsCalendar = {
       const desktopCalendarNextBtn = c
         .querySelector(desktopNav)
         .querySelector(nextButton);
-
+      const calendarEvents = c.querySelectorAll(dayEvents);
+      const calendarNoEvents = c.querySelector(noEvents);
+      const handleNoMonthEvents = () => {
+        // If there are no events in the current month, show the 'No Events' text on mobile.
+        if (!calendarEvents.length) {
+          calendarNoEvents.classList.add(visibleClass);
+        }
+      };
       // Handle the 'More events' button click.
       eventsToggle.forEach((el) => {
         el.addEventListener('click', () => {
@@ -90,8 +100,14 @@ Drupal.behaviors.eventsCalendar = {
         });
       };
       handleDesktopCalendarNavigation();
+      if (!mql.matches) {
+        handleNoMonthEvents();
+      }
       mql.addEventListener('change', () => {
-        if (!mql.matches) {
+        if (mql.matches) {
+          calendarNoEvents.classList.remove(visibleClass);
+        } else {
+          handleNoMonthEvents();
           MicroModal.close();
         }
       });
