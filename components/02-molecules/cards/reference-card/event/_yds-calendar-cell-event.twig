@@ -9,19 +9,17 @@
       } %}
     </div>
   {% endif %}
-  <div>
-    <time>{{ time }}</time>
-    {% embed "@atoms/lists/taxonomy/yds-tags-list.twig" with {
-      items: type,
-      visible_items: 2,
-      url: url,
-    } %}
+  <time>{{ time }}</time>
+  {% embed "@atoms/lists/taxonomy/yds-tags-list.twig" with {
+    items: type,
+    visible_items: 2,
+    url: url,
+  } %}
 
-      {% block list_item %}
-        {{ item }}
-      {% endblock %}
-    {% endembed %}
-  </div>
+    {% block list_item %}
+      {{ item }}
+    {% endblock %}
+  {% endembed %}
   {% if description %}
     {% include "@atoms/typography/text/yds-text.twig" with {
       text__base_class: 'description',
