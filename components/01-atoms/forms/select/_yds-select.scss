@@ -28,6 +28,11 @@
     /* These hacks make the select behind the arrow clickable in some browsers */
     pointer-events: none;
     display: none;
+
+    // Remove the arrow for the views basic scaffold form when Chosen is used.
+    .ys-filter-form--scaffold & {
+      content: none;
+    }
   }
 
   &:hover,

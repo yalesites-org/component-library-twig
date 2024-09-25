@@ -66,6 +66,16 @@ $component-inline-message-themes: map.deep-get(
     --color-inline-message-background: var(--color-slot-two);
     --color-inline-message-text: var(--color-slot-eight);
   }
+
+  &[data-component-theme='four'] {
+    --color-inline-message-background: var(--color-slot-three);
+    --color-inline-message-text: var(--color-slot-seven);
+  }
+
+  &[data-component-theme='five'] {
+    --color-inline-message-background: var(--color-slot-five);
+    --color-inline-message-text: var(--color-slot-eight);
+  }
 }
 
 .inline-message__inner {
@@ -113,7 +123,7 @@ $component-inline-message-themes: map.deep-get(
   @include tokens.body-s-condensed;
 
   max-width: var(--size-component-layout-width-content);
-  color: var(--color-gray-700);
+  color: var(--color-inline-message-text);
 
   > *:last-child {
     margin-bottom: 0;
@@ -123,15 +133,6 @@ $component-inline-message-themes: map.deep-get(
   // do not remove the margin if there are multiple p elements
   > p:not(p + p) {
     margin: 0;
-  }
-
-  // if the component theme is dial two or three, change the color of the text to slot eight (white)
-  [data-component-theme='two'] & {
-    color: var(--color-slot-eight);
-  }
-
-  [data-component-theme='three'] & {
-    color: var(--color-slot-eight);
   }
 }
 
@@ -146,22 +147,34 @@ $component-inline-message-themes: map.deep-get(
   [data-component-theme='two'] & {
     --color-link-base: var(--color-slot-eight);
     --color-link-hover: var(--color-slot-eight);
-    --color-link-visited-base: var(--color-slot-eight);
-    --color-link-visited-hover: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
+  }
+
+  [data-component-theme='four'] & {
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-slot-seven);
+    --color-link-visited-hover: var(--color-slot-seven);
+  }
+
+  [data-component-theme='five'] & {
+    --color-link-base: var(--color-slot-eight);
+    --color-link-hover: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 
   [data-component-theme='three'] & {
     --color-link-base: var(--color-slot-eight);
     --color-link-hover: var(--color-slot-eight);
-    --color-link-visited-base: var(--color-slot-eight);
-    --color-link-visited-hover: var(--color-slot-eight);
-  }
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
 
-  &:visited {
-    color: var(--color-link-visited-base);
-
-    &:hover {
-      color: var(--color-link-visited-hover);
+    // For accessibility reason set lighter visited links color.
+    [data-global-theme='four'] & {
+      --color-link-visited-base: var(--color-gray-100);
+      --color-link-visited-hover: var(--color-slot-eight);
     }
   }
 

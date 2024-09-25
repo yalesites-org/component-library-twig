@@ -74,6 +74,15 @@ $break-grand-hero-banner: tokens.$break-m;
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+
+      @if $globalTheme == 'four' {
+        // Switch colors slot in order to have the selected background colors per component theme.
+        --color-slot-two: var(--global-themes-four-colors-slot-five);
+        --color-slot-five: var(--global-themes-four-colors-slot-two);
+
+        // Switch color slot for the text on light background.
+        --color-slot-seven: var(--global-themes-four-colors-slot-six);
+      }
     }
   }
 
@@ -115,6 +124,44 @@ $break-grand-hero-banner: tokens.$break-m;
     --color-link-hover: var(--color-grand-hero-text);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
+
+    // For accessibility reason set lighter visited links color.
+    [data-global-theme='four'] & {
+      --color-link-visited-base: var(--color-gray-100);
+      --color-link-visited-hover: var(--color-slot-eight);
+    }
+  }
+
+  &[data-component-theme='four'] {
+    --color-grand-hero-background: var(--color-slot-three);
+    --color-grand-hero-text: var(--color-slot-seven);
+    --color-grand-hero-heading: var(--color-slot-seven);
+    --color-grand-hero-action: var(--color-slot-seven);
+    --color-grand-hero-action-secondary: var(--color-slot-eight);
+    --color-link-base: var(--color-grand-hero-heading);
+    --color-link-hover: var(--color-grand-hero-heading);
+  }
+
+  &[data-component-theme='five'] {
+    --color-grand-hero-background: var(--color-slot-two);
+    --color-grand-hero-text: var(--color-slot-eight);
+    --color-grand-hero-heading: var(--color-slot-eight);
+    --color-grand-hero-action: var(--color-slot-eight);
+    --color-grand-hero-action-secondary: var(--color-slot-one);
+    --color-link-base: var(--color-grand-hero-heading);
+    --color-link-hover: var(--color-grand-hero-heading);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
+
+    [data-global-theme='four'] & {
+      --color-grand-hero-background: var(--component-themes-five-background);
+      --color-grand-hero-text: var(--component-themes-five-text);
+      --color-grand-hero-heading: var(--component-themes-five-heading);
+      --color-grand-hero-action: var(--color-slot-seven);
+      --color-grand-hero-action-secondary: var(--color-slot-eight);
+      --color-link-visited-base: var(--color-purple-visited);
+      --color-link-visited-hover: var(--color-purple-visited-hover);
+    }
   }
 }
 

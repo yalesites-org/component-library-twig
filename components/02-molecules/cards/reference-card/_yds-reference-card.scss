@@ -85,6 +85,12 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     @include tokens.animate($property: 'transform');
     @include tokens.rise-effect;
   }
+
+  // Ensure the date styles are the same on all cards, irrespective of its wrapper.
+  .date-time {
+    color: var(--color-text);
+    font-size: clamp(1.0625rem, calc(0.36vw + 0.9314rem), 1.25rem);
+  }
 }
 
 .reference-card__image {
@@ -111,7 +117,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   // List featured and non-featured
   @media (min-width: tokens.$break-m) {
-    margin-bottom: tokens.$size-spacing-5;
+    margin-bottom: tokens.$size-spacing-0;
 
     [data-collection-type='list'][data-collection-featured='false'] & {
       flex: 0 1 40%;

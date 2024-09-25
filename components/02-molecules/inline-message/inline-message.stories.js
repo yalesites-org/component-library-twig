@@ -24,7 +24,7 @@ export default {
     },
     themeColor: {
       name: 'Component Theme (dial)',
-      options: ['one', 'two', 'three'],
+      options: ['one', 'two', 'three', 'four', 'five'],
       type: 'select',
     },
     linkContent: {

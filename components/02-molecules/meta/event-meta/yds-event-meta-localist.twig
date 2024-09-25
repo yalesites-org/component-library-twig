@@ -6,6 +6,9 @@
  # - event_meta__address
  #}
 
+{# Use a variable to ensure emdash is properly placed consistently #}
+{% set em_dash = '—' %}
+
 {% set event_meta__base_class = 'event-meta' %}
 {% set event_meta__attributes = event_meta__attributes|default({}) %}
 
@@ -136,19 +139,17 @@
       {# Date #}
       {% if event_dates %}
         <div {{ bem('date', [], event_meta__base_class) }}>
-          {% if event_dates.0.formatted_start_date == event_dates.0.formatted_end_date %}
-            {{event_dates.0.formatted_start_date| date('D M j, Y')}}
-            {{ event_dates.0.formatted_start_time| date('g:ia') }}
-            -
-            {{ event_dates.0.formatted_end_time| date('g:ia') }}
-          {% else %}
-            {{ event_dates.0.formatted_start_date }}
-            {{ event_dates.0.formatted_start_time }}
-            -
-            {{ event_dates.0.formatted_end_date }}
-            {{ event_dates.0.formatted_end_time }}
-          {% endif %}
 
+          {% if event_dates.0.formatted_start_date == event_dates.0.formatted_end_date %}
+          {#Replace am to a.m. and pm to p.m.#}
+
+            {{ event_dates.0.original_start|date('D M j, Y') }}
+            {{ event_dates.0.original_start|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}{{ em_dash }}{{ event_dates.0.original_end|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
+          {% else %}
+            {{ event_dates.0.original_start|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
+            {{ em_dash }}
+            {{ event_dates.0.original_end|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
+          {% endif %}
         </div>
       {% endif %}
     {% endblock %}
@@ -181,16 +182,12 @@
               {% for event_date in event_dates %}
                 <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
                   {% if event_date.formatted_start_date == event_date.formatted_end_date %}
-                    {{event_date.formatted_start_date| date('D M j, Y')}}
-                    {{ event_date.formatted_start_time| date('g:ia') }}
-                    -
-                    {{ event_date.formatted_end_time| date('g:ia') }}
+                    {{ event_date.original_start|date('D M j, Y') }}
+                    {{ event_date.original_start|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}{{ em_dash }}{{- event_date.original_end|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}
                   {% else %}
-                    {{ event_date.formatted_start_date }}
-                    {{ event_date.formatted_start_time }}
-                    -
-                    {{ event_date.formatted_end_date }}
-                    {{ event_date.formatted_end_time }}
+                    {{ event_date.original_start|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
+                    {{ em_dash }}
+                    {{ event_date.original_end|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
                   {% endif %}
                 </li>
 
