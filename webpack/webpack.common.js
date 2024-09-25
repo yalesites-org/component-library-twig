@@ -42,6 +42,7 @@ function getEntries(scssPattern, jsPattern) {
     entries[newfilePath] = file;
   });
 
+  // Link treatments
   entries['js/link-treatment'] = path.resolve(
     rootDir,
     'lib/link-treatment/link-treatment.js',
