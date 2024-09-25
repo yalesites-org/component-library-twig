@@ -2,15 +2,18 @@
 {% if is_today %}
   {% set modifier_classes = modifier_classes|merge(['today']) %}
 {% endif %}
-
+{% if events is not empty %}
+  {% set modifier_classes = modifier_classes|merge(['events']) %}
+{% endif %}
 {% if is_disabled %}
   {% set modifier_classes = modifier_classes|merge(['disabled']) %}
 {% endif %}
-<li {{ bem('day', modifier_classes, 'calendar') }} tabindex="-1">
+<li {{ bem('day', modifier_classes, 'calendar') }} tabindex="-1" data-day="{{ data_day }}">
   {% if year and month and day %}
     <time datetime="{{ year ~ '-' ~ month ~ '-' ~ day }}">
-      <span aria-hidden="true">{{ day }}</span>
-      <span class="sr-only">{{ month_name }} {{ day }}, {{ year }}</span></time>
+      <span {{ bem('day-name', [], 'calendar') }} aria-hidden="true" >{{ data_day }}</span>
+      <span {{ bem('day-date', [], 'calendar') }} aria-hidden="true">{{ day }}</span>
+      <span {{ bem('dialog-title', [], 'calendar', ['sr-only']) }}>{{ day }} {{ month_name }}, {{ year }}</span></time>
   {% endif %}
   {% if events is not empty %}
     <ul {{ bem('day-events', [], 'calendar') }}>
