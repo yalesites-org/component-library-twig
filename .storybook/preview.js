@@ -13,14 +13,14 @@ import '../fonts/fontawesome/css/fontawesome.css';
 import '../fonts/fontawesome/css/regular.css';
 import '../fonts/fontawesome/css/solid.css';
 
+// If in a Drupal project, it's recommended to import a symlinked version of drupal.js.
+import './_drupal.js';
+import './jquery-global.js';
+
 // Global link treatment
 import '../lib/link-treatment/link-treatment.js';
 import 'linkpurpose/css/linkpurpose.css';
 import '../lib/link-treatment/link-treatment.scss';
-
-// If in a Drupal project, it's recommended to import a symlinked version of drupal.js.
-import './_drupal.js';
-import './jquery-global.js';
 
 export const decorators = [
   (StoryFn, context) => {
