@@ -4,6 +4,8 @@ import quickLinksData from './quick-links.yml';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 
+import '../callout/callout';
+
 /**
  * Storybook Definition.
  */
