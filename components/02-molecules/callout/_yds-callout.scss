@@ -16,9 +16,9 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
   background-color: var(--color-callouts-background);
 
   // Remove white spaces between callouts and quickLinks
-  &[data-callout-position='first'],
-  &[data-callout-position='last'],
-  &[data-callout-position='first-and-last'] {
+  &[data-callouts-position='first'],
+  &[data-callouts-position='last'],
+  &[data-callouts-position='first-and-last'] {
     margin-top: var(--size-spacing-0);
     margin-bottom: var(--size-spacing-0);
   }
@@ -260,9 +260,9 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 // Remove white spaces between quickLinks and callouts
 
 .quick-links {
-  &[data-quicklinks-position='first'],
-  &[data-quicklinks-position='last'],
-  &[data-quicklinks-position='first-and-last'] {
+  &[data-quick-links-position='first'],
+  &[data-quick-links-position='last'],
+  &[data-quick-links-position='first-and-last'] {
     margin-top: var(--size-spacing-0);
     margin-bottom: var(--size-spacing-0);
   }
