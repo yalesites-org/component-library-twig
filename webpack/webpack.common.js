@@ -47,6 +47,10 @@ function getEntries(scssPattern, jsPattern) {
     rootDir,
     'lib/link-treatment/link-treatment.js',
   );
+  entries['css/link-treatment'] = path.resolve(
+    rootDir,
+    'lib/link-treatment/link-treatment.scss',
+  );
 
   return entries;
 }
@@ -64,6 +68,7 @@ module.exports = {
       loaders.CSSLoader,
       loaders.SVGSpriteLoader,
       loaders.ImageLoader,
+      loaders.ExportsLoader,
       loaders.JSLoader,
     ],
   },
