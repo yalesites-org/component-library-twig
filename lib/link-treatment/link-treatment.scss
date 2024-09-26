@@ -1,0 +1,4 @@
+// For visited links, mirror the link color itself.
+a:visited .link-purpose-icon svg {
+  fill: var(--color-link-visited-base);
+}
