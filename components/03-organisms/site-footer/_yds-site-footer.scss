@@ -302,6 +302,14 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
         margin-top: 0;
       }
     }
+
+    & a {
+      color: var(--color-link-base);
+    }
+
+    & a:visited {
+      color: var(--color-link-visited-base);
+    }
   }
 }
 

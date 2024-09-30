@@ -43,40 +43,44 @@ export default {
       name: 'Navigation Border Thickness',
       options: borderThicknessOptions,
       type: 'select',
-      defaultValue: '8',
     },
     primaryNavPosition: {
       name: 'Navigation Position',
       options: ['left', 'center', 'right'],
       type: 'select',
-      defaultValue: 'left',
     },
     menuVariation: {
       name: 'Menu Variation',
       options: ['basic', 'mega', 'focus'],
       type: 'select',
-      defaultValue: 'basic',
     },
     siteHeaderImage: {
       name: 'Header With Image',
       type: 'boolean',
-      defaultValue: false,
     },
     siteHeaderSiteNameImage: {
       name: 'Site Name is an Image',
       type: 'boolean',
-      defaultValue: false,
     },
     siteWideHeaderName: {
       name: 'Site Wide Header Name',
       type: 'string',
-      defaultValue: 'Yale University',
     },
     siteWideHeaderUrl: {
       name: 'Site Wide Header URL',
       type: 'string',
-      defaultValue: 'https://www.yale.edu',
     },
+  },
+  args: {
+    borderThickness: '8',
+    primaryNavPosition: 'left',
+    menuVariation: 'basic',
+    siteHeaderImage: false,
+    siteHeaderSiteNameImage: false,
+    siteHeaderTheme: 'one',
+    siteHeaderAccent: 'one',
+    siteWideHeaderName: 'Yale University',
+    siteWideHeaderUrl: 'https://www.yale.edu',
   },
 };
 
@@ -112,18 +116,15 @@ Header.argTypes = {
     name: 'Header Theme (dial)',
     options: siteHeaderThemeOptions,
     type: 'select',
-    defaultValue: 'one',
   },
   siteHeaderAccent: {
     name: 'Header Accent Color (dial)',
     options: siteHeaderAccents,
     type: 'select',
-    defaultValue: 'one',
   },
   siteHeaderImage: {
     name: 'With image',
     type: 'boolean',
-    defaultValue: false,
   },
 };
 
@@ -162,17 +163,14 @@ HeaderExamples.argTypes = {
     name: 'Global Theme (lever)',
     options: siteGlobalThemeOptions,
     type: 'select',
-    defaultValue: 'one',
   },
   siteHeaderAccent: {
     name: 'Header Accent Color (dial)',
     options: siteHeaderAccents,
     type: 'select',
-    defaultValue: 'one',
   },
   siteHeaderImage: {
     name: 'Header With Image',
     type: 'boolean',
-    defaultValue: false,
   },
 };

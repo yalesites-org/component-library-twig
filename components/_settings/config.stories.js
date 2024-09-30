@@ -222,6 +222,7 @@ export const GlobalConfig = ({
     config_page__intro: intro,
     site_animate_components: allowAnimatedItems,
     primary_nav__items: primaryNavData.items,
+    site_header__branding_link: 'https://www.yale.edu',
     site_header__menu__variation: menuVariation,
     site_header__background_image: siteHeaderImage,
     site_header__site_name_is_image: siteHeaderSiteNameImage,
