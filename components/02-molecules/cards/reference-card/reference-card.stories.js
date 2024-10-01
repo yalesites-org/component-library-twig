@@ -45,6 +45,11 @@ export default {
       defaultValue: referenceCardData.reference_card__categories,
       if: { arg: 'showCategories' },
     },
+    showPronouns: {
+      name: 'Show Pronouns',
+      type: 'boolean',
+      defaultValue: false,
+    },
     showTags: {
       name: 'Show Tags',
       type: 'boolean',
@@ -206,6 +211,7 @@ export const ProfileCard = ({
   withImage,
   categories,
   showCategories,
+  showPronouns,
   tags,
   showTags,
   showThumbnail,
@@ -221,6 +227,8 @@ export const ProfileCard = ({
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__heading:
           referenceProfileCardData.reference_card__heading,
+        reference_card__heading_extra:
+          referenceProfileCardData.reference_card__pronouns,
         reference_card__subheading:
           referenceProfileCardData.reference_card__subheading,
         reference_card__snippet:
@@ -228,6 +236,7 @@ export const ProfileCard = ({
         reference_card__url: referenceProfileCardData.reference_card__url,
         reference_card__categories: categories,
         show_categories: showCategories,
+        show_pronouns: showPronouns,
         reference_card__tags: tags,
         show_tags: showTags,
         show_thumbnail: showThumbnail,
