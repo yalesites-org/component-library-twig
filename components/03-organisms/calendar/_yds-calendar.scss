@@ -54,8 +54,6 @@
 
   & > time {
     @include tokens.h5-yale-new;
-
-    font-variant-numeric: normal;
   }
 
   @media (min-width: tokens.$break-xl) {
@@ -126,7 +124,6 @@
 .calendar__nav-time {
   @include tokens.h4-yale-new;
 
-  font-variant-numeric: normal;
   color: var(--color-gray-800);
 }
 
