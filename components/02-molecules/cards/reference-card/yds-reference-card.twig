@@ -40,6 +40,13 @@
       heading: reference_card__heading,
       heading__url: reference_card__url,
     } %}
+    {% if show_pronouns %}
+      {% include "@atoms/typography/text/yds-text.twig" with {
+        text__blockname: reference_card__base_class,
+        text__base_class: 'pronouns',
+        text__content: reference_card__heading_extra,
+      } %}
+    {% endif %}
     {% if reference_card__subheading %}
       {% include "@atoms/typography/text/yds-text.twig" with {
         text__blockname: reference_card__base_class,

@@ -34,10 +34,18 @@
     </div>
 
     <div {{ bem('content', [], profile_meta__base_class) }}>
-      {% include "@molecules/page-title/yds-page-title.twig" with {
+      {% embed "@molecules/page-title/yds-page-title.twig" with {
         page_title__heading: profile_meta__heading,
         page_title__blockname: 'profile-title',
       }%}
+        {% block page_title__meta %}
+          {% include "@atoms/typography/text/yds-text.twig" with {
+            text__blockname: profile_meta__base_class,
+            text__content: profile_meta__pronouns,
+            text__base_class: 'pronouns-line',
+          } %}
+        {% endblock %}
+      {% endembed %}
       
       {% if profile_meta__title_line %}
         {% include "@atoms/typography/text/yds-text.twig" with {
