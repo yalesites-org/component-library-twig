@@ -99,6 +99,7 @@ export const Profile = ({
   titleLine,
   subTitle,
   department,
+  pronouns,
   profileImageOrientation,
   profileImageAlignment,
   profileImageStyle,
@@ -109,6 +110,7 @@ export const Profile = ({
     profile_meta__title_line: titleLine,
     profile_meta__subtitle_line: subTitle,
     profile_meta__department: department,
+    profile_meta__pronouns: pronouns,
     profile_meta__background: bgColor,
     profile_meta__image_orientation: profileImageOrientation,
     image__srcset__1: imageData.responsive_images['2x3'].image__srcset,
@@ -138,6 +140,11 @@ Profile.argTypes = {
     name: 'Profile department',
     type: 'string',
     defaultValue: 'Department name',
+  },
+  pronouns: {
+    name: 'Profile pronouns',
+    type: 'string',
+    defaultValue: 'They/They/Them',
   },
   bgColor: {
     name: 'Component Theme (dial)',
