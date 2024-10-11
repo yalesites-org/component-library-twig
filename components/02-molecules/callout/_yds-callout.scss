@@ -256,14 +256,3 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   margin-top: var(--size-spacing-6);
 }
-
-// Remove white spaces between quickLinks and callouts
-
-.quick-links {
-  &[data-quick-links-position='first'],
-  &[data-quick-links-position='last'],
-  &[data-quick-links-position='first-and-last'] {
-    margin-top: var(--size-spacing-0);
-    margin-bottom: var(--size-spacing-0);
-  }
-}
