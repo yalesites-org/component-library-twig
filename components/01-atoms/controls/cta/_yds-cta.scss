@@ -29,8 +29,12 @@ $cta-outline-weights: (
   text-align: center;
   min-height: var(--size-click-target-minimum);
 
+  &:visited .link-purpose-icon svg {
+    fill: var(--color-cta-text);
+  }
+
   &:hover,
-  &:hover svg {
+  &:hover .link-purpose-icon svg {
     background-color: var(--color-cta-bg-hover);
     color: var(--color-cta-text-hover);
     fill: var(--color-cta-text-hover);
