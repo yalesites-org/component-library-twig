@@ -75,6 +75,8 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-text: var(--color-basic-white);
     --color-heading: var(--color-basic-white);
     --color-link-base: var(--color-slot-eight);
+    --color-link-visited-hover: var(--color-basic-white);
+    --color-link-visited-base: var(--color-link-visited-light);
   }
 
   &[data-component-theme='two'] {
