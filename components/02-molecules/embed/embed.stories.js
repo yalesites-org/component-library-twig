@@ -1,4 +1,5 @@
 import embedTwig from './yds-embed.twig';
+import deprecatedEmbedTwig from './yds-deprecated.twig';
 
 /**
  * Storybook Definition.
@@ -30,7 +31,7 @@ export default {
 };
 
 export const EmbedQualtrics = ({ width, type, loading }) =>
-  embedTwig({
+  deprecatedEmbedTwig({
     embed__src:
       'https://yalesurvey.ca1.qualtrics.com/jfe/form/SV_cDezt2JVsNok77o',
     embed__title: 'Example Qualtrics Form',
