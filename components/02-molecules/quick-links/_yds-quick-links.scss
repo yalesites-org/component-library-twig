@@ -153,6 +153,9 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
 .quick-links__links {
   @include atoms.list-reset;
 
+  // To allow the link purpose SVGs to color properly
+  --color-link-visited-base: var(--color-cta-text-active);
+
   position: relative;
   display: grid;
   align-items: start;
