@@ -22,15 +22,18 @@ $cta-outline-weights: (
   border-radius: var(--border-radius-cta, var(--radius-0));
   background-color: var(--color-cta-bg);
   color: var(--color-cta-text);
+  fill: var(--color-cta-text);
   font-weight: var(--font-weights-mallory-medium);
   padding: var(--size-spacing-3) var(--size-spacing-6);
   text-decoration: none;
   text-align: center;
   min-height: var(--size-click-target-minimum);
 
-  &:hover {
+  &:hover,
+  &:hover svg {
     background-color: var(--color-cta-bg-hover);
     color: var(--color-cta-text-hover);
+    fill: var(--color-cta-text-hover);
   }
 
   // Radius options
