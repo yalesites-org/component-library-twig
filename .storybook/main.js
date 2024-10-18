@@ -29,14 +29,14 @@ module.exports = {
         ],
       },
     },
-    '@storybook/addon-webpack5-compiler-babel'
+    '@storybook/addon-webpack5-compiler-babel',
+    '@chromatic-com/storybook'
   ],
   framework: {
     name: '@storybook/html-webpack5',
     options: {}
   },
-
   docs: {
     autodocs: false,
-  },
+  }
 };
