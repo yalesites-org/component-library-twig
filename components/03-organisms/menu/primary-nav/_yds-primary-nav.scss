@@ -303,6 +303,10 @@ $menu-sub-max-width: 19rem;
   display: block;
   text-decoration: none;
 
+  & .link-purpose-icon {
+    --color-link-visited-base: var(--color-heading);
+  }
+
   &:focus-visible {
     outline-offset: -2px;
   }
@@ -310,6 +314,10 @@ $menu-sub-max-width: 19rem;
   &:hover {
     color: var(--menu-link-color);
     text-decoration: underline;
+
+    & .link-purpose-icon {
+      --color-link-visited-base: var(--menu-link-color);
+    }
   }
 
   &--level-0 {
