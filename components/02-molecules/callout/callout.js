@@ -19,10 +19,23 @@ Drupal.behaviors.callout = {
 
     // Iterate over each element
     calloutsAndQuickLinks.forEach((element) => {
+      // Define previous and next sibling elements
+      const prevElement = element.previousElementSibling;
+      let nextElement = element.nextElementSibling;
+
+      // Check if current element has contextual element
+      if (
+        nextElement.classList.contains('contextual') ||
+        prevElement.classList.contains('contextual')
+      ) {
+        nextElement = nextElement.nextElementSibling;
+      }
+
       // Check if the current element is the first element in a group
       const isFirst =
         !element.previousElementSibling ||
         !element.previousElementSibling.matches(selectorsToCheck);
+
       // Check if the current element is the last element in a group
       const isLast =
         !element.nextElementSibling ||
