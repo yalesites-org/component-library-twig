@@ -103,16 +103,16 @@
             fa_icon__extra_class: ['fa-solid fa-angle-left fa-lg'],
             fa_icon__decorative: true,
           } %}
-          <span>{{ monthMap[prev_month - 1] }}, {{ prev_year }}</span>
+          <span>{{ monthMap[prev_month - 1] }} {{ prev_year }}</span>
         </button>
         <time {{ bem('nav-time', [], calendar__base_class) }}
             datetime="{{ current_year ~ '-' ~ current_month_string }}">
-          {{ monthMap[current_month - 1] }}, {{ current_year }}
+          {{ monthMap[current_month - 1] }} {{ current_year }}
         </time>
         <button {{ bem('nav-btn', ['next'], calendar__base_class) }}
             data-month="{{ next_month }}"
             data-year="{{ next_year }}">
-          <span>{{ monthMap[next_month - 1] }}, {{ next_year }}</span>
+          <span>{{ monthMap[next_month - 1] }} {{ next_year }}</span>
           {%- include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
             fa_icon__base_class: 'fa',
             fa_icon__title: 'Angle Right',
