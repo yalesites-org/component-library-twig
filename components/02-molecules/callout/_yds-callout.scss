@@ -132,6 +132,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
       --color-heading: var(--component-themes-five-heading);
       --color-action: var(--color-slot-seven);
       --color-action-secondary: var(--color-slot-eight);
+      --color-link-base: var(--color-slot-eight);
       --color-link-visited-base: var(--color-purple-visited);
       --color-link-visited-hover: var(--color-purple-visited-hover);
     }
