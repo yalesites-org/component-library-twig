@@ -113,6 +113,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-text: var(--color-gray-800);
     --color-heading: var(--color-gray-800);
     --color-link-base: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-gray-800);
   }
 
   &[data-component-theme='five'] {
