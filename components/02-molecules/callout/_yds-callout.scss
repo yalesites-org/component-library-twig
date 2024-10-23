@@ -74,9 +74,9 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-action-secondary: var(--color-slot-one);
     --color-text: var(--color-basic-white);
     --color-heading: var(--color-basic-white);
-    --color-link-base: var(--color-slot-eight);
+    --color-link-base: var(--color-slot-white);
     --color-link-visited-hover: var(--color-basic-white);
-    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-base: var(--color-basic-white);
   }
 
   &[data-component-theme='two'] {
@@ -87,6 +87,8 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-text: var(--color-gray-800);
     --color-heading: var(--color-gray-800);
     --color-link-base: var(--color-slot-seven);
+    --color-link-visited-hover: var(--color-gray-800);
+    --color-link-visited-base: var(--color-gray-800);
 
     [data-global-theme='four'] & {
       --color-action: var(--color-slot-six);
@@ -97,12 +99,14 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   &[data-component-theme='three'] {
     --color-callouts-background: var(--color-slot-five);
-    --color-text-shadow: var(--color-slot-one);
+    --color-text-shadow: var(--color-slot-five);
     --color-action: var(--color-basic-white);
     --color-action-secondary: var(--color-slot-one);
     --color-text: var(--color-basic-white);
     --color-heading: var(--color-basic-white);
-    --color-link-base: var(--color-slot-eight);
+    --color-link-base: var(--color-basic-white);
+    --color-link-visited-hover: var(--color-basic-white);
+    --color-link-visited-base: var(--color-basic-white);
   }
 
   &[data-component-theme='four'] {
@@ -114,6 +118,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-heading: var(--color-gray-800);
     --color-link-base: var(--color-slot-seven);
     --color-link-visited-base: var(--color-gray-800);
+    --color-link-visited-hover: var(--color-gray-800);
   }
 
   &[data-component-theme='five'] {
