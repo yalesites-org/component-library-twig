@@ -81,7 +81,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   &[data-component-theme='two'] {
     --color-callouts-background: var(--color-slot-four);
-    --color-text-shadow: var(--color-slot-one);
+    --color-text-shadow: var(--color-slot-four);
     --color-action: var(--color-gray-800);
     --color-action-secondary: var(--color-basic-white);
     --color-text: var(--color-gray-800);
@@ -117,7 +117,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   &[data-component-theme='five'] {
     --color-callouts-background: var(--color-slot-two);
-    --color-text-shadow: var(--color-slot-one);
+    --color-text-shadow: var(--color-slot-two);
     --color-action: var(--color-basic-white);
     --color-action-secondary: var(--color-slot-one);
     --color-text: var(--color-basic-white);
@@ -126,6 +126,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
     [data-global-theme='four'] & {
       --color-callouts-background: var(--component-themes-five-background);
+      --color-text-shadow: var(--component-themes-five-background);
       --color-text: var(--component-themes-five-text);
       --color-heading: var(--component-themes-five-heading);
       --color-action: var(--color-slot-seven);
