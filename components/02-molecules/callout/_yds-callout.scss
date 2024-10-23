@@ -124,6 +124,8 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-text: var(--color-basic-white);
     --color-heading: var(--color-basic-white);
     --color-link-base: var(--color-slot-eight);
+    --color-link-visited-hover: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-slot-eight);
 
     [data-global-theme='four'] & {
       --color-callouts-background: var(--component-themes-five-background);
