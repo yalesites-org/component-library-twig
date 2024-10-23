@@ -124,6 +124,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-text: var(--color-basic-white);
     --color-heading: var(--color-basic-white);
     --color-link-base: var(--color-slot-eight);
+    --color-link-hover: var(--color-basic-white);
     --color-link-visited-hover: var(--color-slot-eight);
     --color-link-visited-base: var(--color-slot-eight);
 
@@ -223,6 +224,10 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   a {
     @include atoms.link;
+
+    &:hover {
+      --color-link-hover: var(--color-text);
+    }
   }
 
   p:last-child {
