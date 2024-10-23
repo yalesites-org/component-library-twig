@@ -107,7 +107,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   &[data-component-theme='four'] {
     --color-callouts-background: var(--color-slot-three);
-    --color-text-shadow: var(--color-slot-one);
+    --color-text-shadow: var(--color-slot-three);
     --color-action: var(--color-gray-800);
     --color-action-secondary: var(--color-basic-white);
     --color-text: var(--color-gray-800);
