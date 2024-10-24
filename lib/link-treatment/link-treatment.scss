@@ -4,9 +4,12 @@
 a.link-purpose {
   & svg,
   &:hover svg,
+  &:focus svg,
+  &:active svg,
+  &:visited svg,
   &:visited:hover svg,
   &:visited:focus svg,
-  &:visited svg {
+  &:visited:active svg {
     fill: currentColor;
     color: inherit;
   }
