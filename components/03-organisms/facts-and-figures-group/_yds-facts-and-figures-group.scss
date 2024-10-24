@@ -65,10 +65,6 @@ $facts-and-figures-group-component-themes: map.deep-get(
 
         &:hover {
           color: var(--color-facts-and-figures-content);
-
-          & .link-purpose-icon svg {
-            fill: var(--color-facts-and-figures-content);
-          }
         }
       }
     }
@@ -261,9 +257,5 @@ $facts-and-figures-group-component-themes: map.deep-get(
 
   &:hover {
     color: var(--color-facts-and-figures-content);
-
-    & .link-purpose-icon svg {
-      fill: var(--color-facts-and-figures-content);
-    }
   }
 }

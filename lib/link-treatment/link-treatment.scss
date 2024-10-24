@@ -10,7 +10,23 @@ a.link-purpose {
   &:visited:hover svg,
   &:visited:focus svg,
   &:visited:active svg {
-    fill: currentColor;
     color: inherit;
+  }
+}
+
+.quick-links__list-item {
+  // Specific to link-purpose, this allows the extra spans to display correctly
+  // when it line-breaks. Before, some resolutions would look terrible because
+  // two words would hang off the last line, but since the last word is link
+  // purposed to be with the icon, it leaves the first word on a line, and
+  // then the last word and the icon on another line.  This makes sure they
+  // appear next to each other.
+  & a:has(span.link-purpose-spacer) {
+    flex-direction: column;
+    white-space: nowrap;
+
+    & span.link-purpose-spacer {
+      display: none;
+    }
   }
 }

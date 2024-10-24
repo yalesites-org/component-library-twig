@@ -16,15 +16,7 @@
   font-weight: var(--font-weights-mallory-book);
   letter-spacing: 0.2px;
 
-  & .link-purpose-icon {
-    --color-link-visited-base: var(--color-text);
-  }
-
   &:hover {
     color: var(--menu-link-color);
-
-    & .link-purpose-icon svg {
-      fill: var(--menu-link-color);
-    }
   }
 }
