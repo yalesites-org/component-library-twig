@@ -1,6 +1,11 @@
 @import '../../node_modules/linkpurpose/css/linkpurpose';
 
 // For visited links, mirror the link color itself.
-a:visited .link-purpose-icon svg {
-  fill: var(--color-link-visited-base);
+a {
+  & .link-purpose-icon svg,
+  &:hover .link-purpose-icon svg,
+  &:visited:hover .link-purpose-icon svg,
+  &:visited .link-purpose-icon svg {
+    fill: currentColor;
+  }
 }
