@@ -9,6 +9,10 @@ a.link-purpose {
 
   & .link-purpose-nobreak {
     margin-right: 0.25em;
+
+    &:has(.fa-circle-down) {
+      margin-right: 0.35em;
+    }
   }
 }
 
