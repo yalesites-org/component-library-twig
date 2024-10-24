@@ -413,7 +413,10 @@ $menu-sub-max-width: 19rem;
   text-decoration-thickness: var(--border-thickness-2);
 }
 
-.primary-nav__link:not(.primary-nav__link--level-0):not(.primary-nav__link--explore-bar).primary-nav__link--active {
+.primary-nav__link:not(
+    .primary-nav__link--level-0,
+    .primary-nav__link--explore-bar
+  ).primary-nav__link--active {
   position: relative;
   border-left: var(--border-thickness-4) solid var(--color-navigation-border);
 

@@ -45,6 +45,10 @@ export default {
       defaultValue: true,
     },
   },
+  args: {
+    startDate: '2022-04-01T08:00',
+    endDate: '2022-04-01T11:30',
+  },
 };
 
 export const EventPage = ({
@@ -74,12 +78,27 @@ export const EventPage = ({
   address,
   ctaText,
   showBreadcrumbs,
-}) =>
-  eventPageTwig({
+}) => {
+  let unixStartDate = toUnixTimeStamp(startDate);
+  let unixEndDate = toUnixTimeStamp(endDate);
+
+  // Convert 'NaN' to null so that it is not rendered in the template
+  const nanToNull = (value) => {
+    if (value === 'NaN') {
+      return null;
+    }
+    return value;
+  };
+
+  unixStartDate = nanToNull(unixStartDate);
+  unixEndDate = nanToNull(unixEndDate);
+
+  return eventPageTwig({
     site_name: siteName,
     event_title__heading: eventPageTitle,
     site_animate_components: allowAnimatedItems,
     site_header__border_thickness: headerBorderThickness,
+    site_header__branding_link: 'https://www.yale.edu',
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
     site_header__accent: siteHeaderAccent,
@@ -95,8 +114,8 @@ export const EventPage = ({
     utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
     ...imageData.responsive_images['4x3'],
-    event_meta__date_start: toUnixTimeStamp(startDate),
-    event_meta__date_end: toUnixTimeStamp(endDate),
+    event_meta__date_start: unixStartDate,
+    event_meta__date_end: unixEndDate,
     event_meta__format: format,
     event_meta__address: address,
     event_meta__cta_primary__content: ctaText,
@@ -106,6 +125,7 @@ export const EventPage = ({
     ...socialLinksData,
     show_breadcrumbs: showBreadcrumbs,
   });
+};
 EventPage.argTypes = {
   pageTitle: {
     table: {
@@ -147,6 +167,7 @@ export const EventGrid = ({
     page_title__meta: null,
     site_animate_components: allowAnimatedItems,
     site_header__border_thickness: headerBorderThickness,
+    site_header__branding_link: 'https://www.yale.edu',
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
     site_header__accent: siteHeaderAccent,
@@ -207,6 +228,7 @@ export const EventList = ({
     page_title__meta: null,
     site_animate_components: allowAnimatedItems,
     site_header__border_thickness: headerBorderThickness,
+    site_header__branding_link: 'https://www.yale.edu',
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
     site_header__accent: siteHeaderAccent,

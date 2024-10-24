@@ -16,23 +16,19 @@ export default {
     heading: {
       name: 'Heading',
       type: 'string',
-      defaultValue: referenceCardData.reference_card__heading,
     },
     snippet: {
       name: 'Snippet',
       type: 'string',
-      defaultValue: referenceCardData.reference_card__snippet,
     },
     collectionType: {
       name: 'Collection Type',
       type: 'select',
       options: ['grid', 'list', 'condensed', 'single'],
-      defaultValue: 'grid',
     },
     featured: {
       name: 'Featured',
       type: 'boolean',
-      defaultValue: true,
     },
     showCategories: {
       name: 'Show Categories/Affiliations',
@@ -69,8 +65,14 @@ export default {
     withImage: {
       name: 'With Image',
       type: 'boolean',
-      defaultValue: true,
     },
+  },
+  args: {
+    heading: referenceCardData.reference_card__heading,
+    snippet: referenceCardData.reference_card__snippet,
+    collectionType: 'grid',
+    featured: true,
+    withImage: true,
   },
 };
 
