@@ -80,10 +80,6 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
     @include tokens.underline-slide-end($variation: #{$style});
 
     color: var(--color-link-hover);
-
-    & svg {
-      fill: var(--color-link-hover);
-    }
   }
 
   // Remove underline when focus is visible.
@@ -93,10 +89,6 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   &:visited {
     color: var(--color-link-visited-base);
-
-    & svg {
-      fill: var(--color-link-visited-base);
-    }
   }
 
   // Make the underline link encompass the icon as well.
@@ -107,10 +99,6 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   &:visited:focus,
   &:visited:hover {
     color: var(--color-link-visited-hover);
-
-    & svg {
-      fill: var(--color-link-visited-hover);
-    }
   }
 }
 

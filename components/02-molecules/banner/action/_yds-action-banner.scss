@@ -378,10 +378,6 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   @include atoms.cta;
 
   flex: 0 0 auto;
-
-  &:has(> i.fa-icon) {
-    padding-right: var(--size-spacing-7);
-  }
 }
 
 .cta-banner__link {

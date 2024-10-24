@@ -2,15 +2,13 @@
 
 // For visited links, mirror the link color itself.
 a.link-purpose {
-  & svg,
-  &:hover svg,
-  &:focus svg,
-  &:active svg,
-  &:visited svg,
-  &:visited:hover svg,
-  &:visited:focus svg,
-  &:visited:active svg {
-    color: inherit;
+  & .link-purpose-icon {
+    margin-left: 0;
+    padding-left: var(--size-spacing-2);
+  }
+
+  & .link-purpose-nobreak {
+    margin-right: 0.25em;
   }
 }
 

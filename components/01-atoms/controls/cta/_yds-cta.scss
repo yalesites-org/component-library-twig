@@ -29,12 +29,7 @@ $cta-outline-weights: (
   text-align: center;
   min-height: var(--size-click-target-minimum);
 
-  &:visited .link-purpose-icon svg {
-    fill: var(--color-cta-text);
-  }
-
-  &:hover,
-  &:hover .link-purpose-icon svg {
+  &:hover {
     background-color: var(--color-cta-bg-hover);
     color: var(--color-cta-text-hover);
     fill: var(--color-cta-text-hover);
@@ -332,11 +327,6 @@ $cta-outline-weights: (
     &:focus-visible {
       text-decoration: underline;
     }
-  }
-
-  // A cta link with a font-icon should have more padding
-  &:has(> i.fa-icon) {
-    padding-right: var(--size-spacing-8);
   }
 }
 
