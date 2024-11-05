@@ -7,23 +7,50 @@ const webpackDir = path.resolve(__dirname);
 const rootDir = path.resolve(__dirname, '..');
 const distDir = path.resolve(rootDir, 'dist');
 
-function getEntries(pattern) {
+// Glob pattern for scss files that ignore file names prefixed with underscore.
+const scssPattern = path.resolve(rootDir, 'components/**/*.scss');
+// Glob pattern for JS files.
+const jsPattern = path.resolve(
+  rootDir,
+  'components/**/!(*.stories|*.component|*.min|*.test).js',
+);
+
+// Prepare list of scss and js file for "entry".
+function getEntries(scssPattern, jsPattern) {
   const entries = {};
 
-  glob.sync(pattern).forEach((file) => {
+  // SCSS entries
+  glob.sync(scssPattern).forEach((file) => {
+    const filePath = file.split('components/')[1];
+    const newfilePath = `css/${filePath.replace('.scss', '')}`;
+    entries[newfilePath] = file;
+  });
+
+  // JS entries
+  glob.sync(jsPattern).forEach((file) => {
     const filePath = file.split('components/')[1];
     const newfilePath = `js/${filePath.replace('.js', '')}`;
     entries[newfilePath] = file;
   });
 
   entries.svgSprite = path.resolve(webpackDir, 'svgSprite.js');
-  entries.css = path.resolve(webpackDir, 'css.js');
-  glob.sync(pattern).forEach((file) => {
-    const filePath = file.split('components/')[1];
-    const newfilePath = `js/${filePath.replace('.js', '')}`;
+
+  // CSS Files.
+  glob.sync(`${webpackDir}/css/*js`).forEach((file) => {
+    const baseFileName = path.basename(file);
+    const newfilePath = `css/${baseFileName.replace('.js', '')}`;
     entries[newfilePath] = file;
   });
-  entries['js/ys-link'] = path.resolve(rootDir, 'lib/ys_link/index.js');
+
+  // Link treatments
+  entries['js/link-treatment'] = path.resolve(
+    rootDir,
+    'lib/link-treatment/link-treatment.js',
+  );
+  entries['css/link-treatment'] = path.resolve(
+    rootDir,
+    'lib/link-treatment/link-treatment.scss',
+  );
 
   return entries;
 }
@@ -32,17 +59,16 @@ module.exports = {
   stats: {
     errorDetails: true,
   },
-  entry: getEntries(
-    path.resolve(
-      rootDir,
-      'components/**/!(*.stories|*.component|*.min|*.test).js',
-    ),
-  ),
+  watchOptions: {
+    ignored: /node_modules/,
+  },
+  entry: getEntries(scssPattern, jsPattern),
   module: {
     rules: [
       loaders.CSSLoader,
       loaders.SVGSpriteLoader,
       loaders.ImageLoader,
+      loaders.ExportsLoader,
       loaders.JSLoader,
     ],
   },

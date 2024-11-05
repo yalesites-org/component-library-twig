@@ -30,6 +30,7 @@ export const fullWidth = ({
   fullWidthTwig({
     site_name: siteName,
     site_header__border_thickness: headerBorderThickness,
+    site_header__branding_link: 'https://www.yale.edu',
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
     site_footer__border_thickness: footerBorderThickness,

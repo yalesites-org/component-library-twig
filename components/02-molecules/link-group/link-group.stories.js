@@ -11,8 +11,10 @@ export default {
     heading: {
       name: 'Heading',
       type: 'string',
-      defaultValue: linkGroupData.link_group__heading,
     },
+  },
+  args: {
+    heading: linkGroupData.link_group__heading,
   },
 };
 

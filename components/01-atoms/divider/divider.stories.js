@@ -37,6 +37,12 @@ export default {
       defaultValue: 'center',
     },
   },
+  args: {
+    thickness: 'hairline',
+    dividerColor: 'gray-500',
+    width: 'View-All',
+    position: 'center',
+  },
 };
 
 export const Dividers = ({ position, thickness, dividerColor, width }) => {
