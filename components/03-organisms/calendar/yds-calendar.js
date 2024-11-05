@@ -17,10 +17,14 @@ Drupal.behaviors.eventsCalendar = {
     const dialogTitle = '.calendar__dialog-title';
     const dayEvents = '.calendar__day--events';
     const noEvents = '.calendar__no-events-message';
+    const storybook = '.sb-show-main';
 
     // Selectors.
     const calendars = context.querySelectorAll(calendar);
     const eventsToggle = context.querySelectorAll(eventToggle);
+
+    // Determines if we're in storybook (no drupal endpoints)
+    const isStorybook = !(context.querySelector(storybook) === null);
 
     // Create a MediaQueryList.
     const mql = window.matchMedia(`(min-width: 1200px )`);
@@ -74,6 +78,7 @@ Drupal.behaviors.eventsCalendar = {
 
       // Function to refresh the calendar data via AJAX based on the given button (prev/next) and calendarWrapper.
       const refreshCalendarData = (calendarWrapper, button) => {
+        if (isStorybook) return; // If we're in storybook, we don't have access to /events-calendar
         if (!calendarWrapper) return; // If no calendarWrapper found, exit the function.
 
         // Use Drupal's AJAX system to refresh the calendar data.

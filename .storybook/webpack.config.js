@@ -1,5 +1,6 @@
 const globImporter = require('node-sass-glob-importer');
 const { namespaces } = require('./setupTwig');
+const loaders = require('../webpack/loaders');
 
 module.exports = async ({ config }) => {
   // Twig
@@ -45,6 +46,9 @@ module.exports = async ({ config }) => {
     test: /\.ya?ml$/,
     loader: 'js-yaml-loader',
   });
+
+  // exports-loader
+  config.module.rules.push(loaders.ExportsLoader);
 
   return config;
 };

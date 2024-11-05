@@ -17,6 +17,9 @@ const CSSLoader = {
       loader: 'postcss-loader',
       options: {
         sourceMap: true,
+        postcssOptions: {
+          plugins: [['autoprefixer']],
+        },
       },
     },
     {
@@ -53,9 +56,18 @@ const SVGSpriteLoader = {
   },
 };
 
+const ExportsLoader = {
+  test: /linkpurpose\/js\/linkpurpose(\.js)?$/,
+  loader: 'exports-loader',
+  options: {
+    exports: 'default LinkPurpose',
+  },
+};
+
 module.exports = {
   CSSLoader,
   ImageLoader,
+  ExportsLoader,
   JSLoader,
   SVGSpriteLoader,
 };
