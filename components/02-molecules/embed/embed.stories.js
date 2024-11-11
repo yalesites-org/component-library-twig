@@ -1,5 +1,4 @@
 import embedTwig from './yds-embed.twig';
-import deprecatedEmbedTwig from './yds-deprecated.twig';
 
 /**
  * Storybook Definition.
@@ -11,27 +10,25 @@ export default {
       name: 'Width',
       type: 'select',
       options: ['max', 'site', 'hightlight', 'content'],
+      defaultValue: 'site',
     },
     type: {
       name: 'Type',
       options: ['form', 'audio'],
       type: 'select',
+      defaultValue: 'form',
     },
     loading: {
       name: 'Loading',
       options: ['lazy', 'eager'],
       type: 'select',
+      defaultValue: 'lazy',
     },
-  },
-  args: {
-    width: 'site',
-    type: 'form',
-    loading: 'lazy',
   },
 };
 
 export const EmbedQualtrics = ({ width, type, loading }) =>
-  deprecatedEmbedTwig({
+  embedTwig({
     embed__src:
       'https://yalesurvey.ca1.qualtrics.com/jfe/form/SV_cDezt2JVsNok77o',
     embed__title: 'Example Qualtrics Form',

@@ -11,27 +11,25 @@ export default {
     quote: {
       name: 'Quote',
       type: 'string',
+      defaultValue: pullQuoteData.pull_quote__quote,
     },
     attribution: {
       name: 'Attribution',
       type: 'string',
+      defaultValue: pullQuoteData.pull_quote__attribution,
     },
     style: {
       name: 'Style',
       options: ['bar-left', 'bar-right', 'quote-left'],
       type: 'select',
+      defaultValue: 'bar-left',
     },
     accentColor: {
       name: 'Component Theme (dial)',
       options: ['one', 'two', 'three'],
       type: 'select',
+      defaultValue: 'one',
     },
-  },
-  args: {
-    quote: pullQuoteData.pull_quote__quote,
-    attribution: pullQuoteData.pull_quote__attribution,
-    style: 'bar-left',
-    accentColor: 'one',
   },
 };
 

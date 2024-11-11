@@ -1,5 +1,6 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
+@forward 'resource-card/yds-resource-card';
 
 $break-card-collection-max: tokens.$break-m - 0.05;
 $break-card-collection-list-image-max: tokens.$break-s - 0.05;
@@ -88,8 +89,20 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   // Ensure the date styles are the same on all cards, irrespective of its wrapper.
   .date-time {
-    color: var(--color-card-single-text);
+    color: var(--color-text);
     font-size: clamp(1.0625rem, calc(0.36vw + 0.9314rem), 1.25rem);
+  }
+
+  &.reference-card--campus-group-event {
+    .reference-card__image {
+      aspect-ratio: unset;
+      .image--localist-3-2  {
+        img {
+        aspect-ratio: unset;
+        object-fit: contain;
+        }
+      }
+    }
   }
 }
 
@@ -422,7 +435,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   flex-wrap: wrap;
   margin-top: var(--size-spacing-3);
 
-  > *:not(:first-child, .multi-day-event) {
+  > *:not(:first-child):not(.multi-day-event) {
     margin-left: var(--size-spacing-5);
     padding-left: var(--size-spacing-5);
     position: relative;

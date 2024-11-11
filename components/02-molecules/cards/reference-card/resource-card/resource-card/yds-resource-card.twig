@@ -1,0 +1,61 @@
+{#
+# Available Props:
+#
+# Available Variables:
+# - reference_card__overline
+# - reference_card__heading
+# - reference_card__subheading
+# - reference_card__url
+# - reference_card__snippet
+#
+# Available Blocks:
+# - reference_card__categories
+#}
+
+{% set reference_card__base_class = 'resource-card' %}
+
+{# Ensure flag is passed and set a default #}
+{% set flag_type = reference_card__flag|default('') %}
+
+{# Set reference_card__attributes including data-flag-type #}
+{% set reference_card__attributes = {
+  class: bem(reference_card__base_class, reference_card__modifiers),
+  'data-flag-type': flag_type
+} %}
+
+<li {{ add_attributes(reference_card__attributes) }}>
+
+	<div {{ bem('content', [], reference_card__base_class) }}>
+
+		{% if flag_type == 'popular' %}
+			{% include "@atoms/typography/text/yds-text.twig" with {
+        text__base_class: 'flag',
+        text__blockname: reference_card__base_class,
+        text__content: flag_type,
+      } %}
+		{% endif %}
+
+		{% include "@atoms/typography/headings/yds-heading.twig" with {
+      heading__prefix__base_class: reference_card__base_class,
+      heading__prefix: reference_card__prefix,
+      heading__level: reference_card__heading_level|default('3'),
+      heading__blockname: reference_card__base_class,
+      heading: reference_card__heading,
+      heading__url: reference_card__url,
+    } %}
+
+		{% if reference_card__snippet %}
+			{% include "@atoms/typography/text/yds-text.twig" with {
+        text__base_class: 'snippet',
+        text__blockname: reference_card__base_class,
+        text__content: reference_card__snippet,
+      } %}
+		{% endif %}
+
+		{% block reference_card__categories %}
+			{% include "@atoms/lists/taxonomy/yds-categories-list.twig" with {
+        items: reference_card__categories,
+      } %}
+		{% endblock %}
+	</div>
+</li>

@@ -59,7 +59,7 @@
     color: var(--color-link-base);
   }
 
-  &:not([class*='--previous'], [class*='--next']) {
+  &:not([class*='--previous']):not([class*='--next']) {
     border-radius: 100%;
 
     &:not(.is-active):hover {

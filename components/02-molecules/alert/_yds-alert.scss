@@ -10,7 +10,6 @@ $alert-fade-speed: var(--animation-speed-slow);
   --size-icon: 1.25rem;
   --color-link-base: currentcolor;
   --color-link-hover: currentcolor;
-  --color-link-visited-hover: currentcolor;
 
   position: relative;
   z-index: 3;
@@ -148,6 +147,10 @@ $alert-fade-speed: var(--animation-speed-slow);
 
   &:visited {
     color: var(--color-alert-text);
+  }
+
+  &:has(> i.fa-icon) {
+    padding-right: var(--size-spacing-3);
   }
 }
 
