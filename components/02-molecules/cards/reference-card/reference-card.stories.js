@@ -252,7 +252,7 @@ export const ResourceCard = ({
   heading,
   snippet,
   categories,
-  flag
+  flag,
 }) => `
   <div class='card-collection' data-component-width='site' data-collection-featured="${featured}">
     <div class='card-collection__inner'>
