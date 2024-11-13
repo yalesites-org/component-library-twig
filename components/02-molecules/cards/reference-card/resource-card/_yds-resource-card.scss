@@ -8,17 +8,18 @@ $break-x-large: 1201px;
 $break-large: 1025px;
 $break-medium: 700px;
 
+// Starting with less specific selectors and gradually increasing specificity
+
 .resource-card {
   @include atoms.clickable-component-heading-link;
-  background-color: var(--color-basic-white);
 
+  background-color: var(--color-basic-white);
 
   --color-text-shadow: var(--color-basic-white);
   --card-border: 1px solid var(--color-gray-200);
   --size-spacing-5_5: 1.25rem;
   --size-spacing--5_5: -1.25rem;
   --line-height--mallory: 1.5rem;
-
 
   display: flex;
   flex-flow: column-reverse;
@@ -30,6 +31,47 @@ $break-medium: 700px;
     }
   }
 
+  // Snippet styles
+  &__snippet {
+    @include tokens.body-default-condensed;
+
+    padding-top: var(--size-spacing-3);
+    margin-bottom: var(--size-spacing-4);
+
+    @media screen and (min-width: $break-large) {
+      margin-bottom: var(--size-spacing-2);
+    }
+
+    [data-collection-type='grid'] &,
+    [data-collection-type='list'][data-collection-featured='false'] &,
+    [data-collection-type='condensed'][data-collection-featured='false'] & {
+      font-size: var(--font-size-14);
+      line-height: 1.05rem;
+
+      @media screen and (min-width: $break-medium) {
+        font-size: var(--font-size-17);
+        line-height: 1.2rem;
+      }
+    }
+
+    > *:last-child {
+      margin-bottom: 0;
+    }
+
+    p {
+      margin: var(--size-spacing-0);
+    }
+
+    a {
+      @include atoms.link;
+
+      &:has(> i.fa-icon) {
+        padding-right: var(--size-spacing-5) !important;
+      }
+    }
+  }
+
+  // Category taxonomy list styles
   .taxonomy-list--categories {
     margin-top: auto;
     margin-bottom: 0;
@@ -59,20 +101,16 @@ $break-medium: 700px;
     }
   }
 
-  &[data-flag-type="series"] {
-    .resource-card__heading {
-      a {
-        &:before {
-          content: '\e178';
-          font-family: 'Font Awesome 6 Pro';
-          margin-right: var(--size-spacing-2);
-          font-size: var(--font-size-17);
-        }
-      }
-    }
+  // Specific styling for flag-type='series'
+  &[data-flag-type='series'] .resource-card__heading a::before {
+    content: '\e178';
+    font-family: 'Font Awesome 6 Pro', sans-serif;
+    margin-right: var(--size-spacing-2);
+    font-size: var(--font-size-17);
   }
 }
 
+// Resource card content styling
 .resource-card__content {
   width: 100%;
 
@@ -96,12 +134,12 @@ $break-medium: 700px;
     padding: var(--size-spacing-5_5);
   }
 
-  [data-flag-type="popular"] & {
+  [data-flag-type='popular'] & {
     padding-top: var(--size-spacing-0);
   }
 }
 
-
+// Heading styling, ordered for no-descending-specificity
 .resource-card__heading {
   border-bottom: var(--card-border);
   padding-bottom: var(--size-spacing-4);
@@ -110,6 +148,7 @@ $break-medium: 700px;
     padding-bottom: var(--size-spacing-3);
   }
 
+  // Single collection heading styling
   [data-collection-type='single'] & {
     --color-link-base: var(--color-basic-white);
     --color-link-hover: var(--color-basic-white);
@@ -119,18 +158,12 @@ $break-medium: 700px;
     @include tokens.h3-yale-new;
 
     font-weight: var(--font-weights-yalenew-bold);
-
-    // Override hover link color since slot 2 could cause contrast issues
-    // with the darker background.
-    & .resource-card__heading-link {
-      --color-link-hover: var(--color-link-hover);
-    }
   }
 
   [data-collection-type='grid'][data-collection-featured='true'] & {
     @include tokens.h5-mallory-compact-medium;
-    line-height: --line-height--mallory;
 
+    line-height: var(--line-height--mallory);
     font-weight: var(--font-weights-yalenew-bold);
   }
 
@@ -142,48 +175,12 @@ $break-medium: 700px;
 
   [data-collection-type='condensed'][data-collection-featured='true'] & {
     @include tokens.h4-yale-new;
+
     font-weight: var(--font-weights-yalenew-bold);
   }
 }
 
-.resource-card__snippet {
-  @include tokens.body-default-condensed;
-  padding-top: var(--size-spacing-3);
-  margin-bottom: var(--size-spacing-4);
-
-  @media screen and (min-width: $break-large) {
-    margin-bottom: var(--size-spacing-2);
-  }
-
-  [data-collection-type='grid'] &,
-  [data-collection-type='list'][data-collection-featured='false'] &,
-  [data-collection-type='condensed'][data-collection-featured='false'] & {
-    font-size: var(--font-size-14);
-    line-height: 1.05rem;
-
-    @media screen and (min-width: $break-medium) {
-      font-size: var(--font-size-17);
-      line-height: 1.2rem;
-    }
-  }
-
-  >*:last-child {
-    margin-bottom: 0;
-  }
-
-  p {
-    margin: var(--size-spacing-0);
-  }
-
-  a {
-    @include atoms.link;
-
-    &:has(> i.fa-icon) {
-      padding-right: var(--size-spacing-5);
-    }
-  }
-}
-
+// Flag styling
 .resource-card__flag {
   background: var(--color-blue-yale);
   color: var(--color-basic-white);

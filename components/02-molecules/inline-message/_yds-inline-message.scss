@@ -178,7 +178,7 @@ $component-inline-message-themes: map.deep-get(
     }
   }
 
-  &:has(> i.fa-icon) {
+  @at-root &:has(> i.fa-icon) {
     padding-right: var(--size-spacing-3);
   }
 }
