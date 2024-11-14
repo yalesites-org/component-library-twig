@@ -4,8 +4,8 @@ resources_block__form__heading: 'Start Your Search'
 resources_block__card__heading: 'Popular Resources'
 resources_block__group__link__content: 'Resource Library'
 resources_block__group__link__url: 'https://www.google.com'
-resources_block__group__form:
-  '<form class="ys-filter-form">
+resources_block__group__form: '
+<form class="ys-filter-form">
     <div class="form-item js-form-type-textfield">
         <input placeholder="Search by Title or Tags" type="text" value="" size="30" maxlength="128" class="form-item__textfield">
     </div>
@@ -42,4 +42,5 @@ resources_block__group__form:
         <input class="cta button js-form-submit form-submit" type="submit" value="Search">
         <input type="submit" name="op" value="Reset" class="button js-form-submit form-submit">
     </div>
-</form>'
+</form>
+'
