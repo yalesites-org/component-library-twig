@@ -409,7 +409,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   flex-wrap: wrap;
   margin-top: var(--size-spacing-3);
 
-  > *:not(:first-child):not(.multi-day-event) {
+  > *:not(:first-child, .multi-day-event) {
     margin-left: var(--size-spacing-5);
     padding-left: var(--size-spacing-5);
     position: relative;
