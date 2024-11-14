@@ -1,5 +1,5 @@
 import ResourcesBlockTwig from './yds-resources-block.twig';
-import { ResorceCardCollection } from '../card-collection/card-collection.stories.js'; // Import the card collection
+import { ResorceCardCollection } from '../card-collection/card-collection.stories'; // Import the card collection
 
 // Import any necessary data (image, resource data, etc.)
 import ResourcesBlockGroupData from './_yds-resources-block.yml';
