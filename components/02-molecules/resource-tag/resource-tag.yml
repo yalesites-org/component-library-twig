@@ -1,5 +1,0 @@
-resource_tag__content: '<div class="views-resource_tag">
-  <span class="views-field views-field-field-audience">
-  <span class="views-label views-label-field-audience">Audience</span>
-   <span class="field-content"> <a href="#" class="ys_internal ys_linked">Undergraduates</a>,
-    <a href="#" class="ys_internal ys_linked">Graduates</a> </span> </span> <span class="views-field views-field-field-type"> <span class="views-label views-label-field-type">Type</span> <span class="field-content"> <a href="#" class="ys_internal ys_linked">How To</a> </span> </span> <span class="views-field views-field-field-category"> <span class="views-label views-label-field-category">Category</span> <span class="field-content"> <a href="#" class="ys_internal ys_linked">Learning</a> </span> </span> <span class="views-field views-field-field-tags"> <span class="views-label views-label-field-tags">Tags</span> <span class="field-content"> First Year at Yale, Lorem Ipsum Tag </span> </span> </div>'
