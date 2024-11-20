@@ -55,4 +55,5 @@ export const SearchResult = ({
     breadcrumbs__items: breadcrumbData.items,
     search_result__content_type: contentType,
     search_result__prefix__icon: isCas ? 'lock-solid' : '',
+    is_cas: isCas,
   });
