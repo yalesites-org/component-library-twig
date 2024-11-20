@@ -1,7 +1,9 @@
+import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import wrappedCalloutTwig from './yds-wrapped-callout.twig';
 import textFieldTwig from '../text/yds-text-field.twig';
-
 import wrappedCalloutData from './wrapped-callout.yml';
+
+const colorPairingsData = Object.keys(tokens['component-themes']);
 
 /**
  * Storybook Definition.
@@ -25,6 +27,12 @@ export default {
       name: 'Callout Callout',
       type: 'string',
     },
+    themeColor: {
+      name: 'Component Theme (dial)',
+      options: colorPairingsData,
+      type: 'select',
+      defaultValue: 'one',
+    },
   },
   args: {
     calloutAlignment: 'left',
@@ -37,6 +45,7 @@ export const wrappedCallout = ({
   calloutAlignment,
   calloutContent,
   calloutCallout,
+  themeColor,
 }) => `
   ${textFieldTwig({
     text_field__content: wrappedCalloutData.text_one,
@@ -47,5 +56,6 @@ export const wrappedCallout = ({
     wrapped_callout__alignment: calloutAlignment,
     wrapped_callout__content: calloutContent,
     wrapped_callout__callout: calloutCallout,
+    wrapped_callout__theme: themeColor,
   })}
 `;
