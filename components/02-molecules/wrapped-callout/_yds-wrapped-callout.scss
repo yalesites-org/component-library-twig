@@ -1,0 +1,26 @@
+@use '../../00-tokens/tokens';
+@use '../../01-atoms/atoms';
+
+.wrapped-callout__callout {
+  width: 100%;
+  max-width: 100%;
+  padding: var(--size-spacing-8) var(--size-spacing-6);
+  border: var(--border-thickness-2) solid var(--color-slot-two);
+
+  // if callout has left/right alignment and the wrapped callout has content, limit the width of the callout
+  @media (min-width: tokens.$break-l) {
+    [data-wrapped-callout-alignment='left']:has(.wrapped-callout__content) & {
+      max-width: 35%;
+      float: left;
+      margin-right: 2%;
+      margin-bottom: 2%;
+    }
+
+    [data-wrapped-callout-alignment='right']:has(.wrapped-callout__content) & {
+      max-width: 35%;
+      float: right;
+      margin-left: 2%;
+      margin-bottom: 2%;
+    }
+  }
+}
