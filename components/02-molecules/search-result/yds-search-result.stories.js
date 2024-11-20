@@ -28,6 +28,10 @@ export default {
       type: 'string',
       defaultValue: searchResultData.search_result__content_type,
     },
+    isCas: {
+      name: 'Is CAS',
+      type: 'boolean',
+    },
   },
   args: {
     heading: searchResultData.search_result__title,
@@ -36,7 +40,13 @@ export default {
   },
 };
 
-export const SearchResult = ({ heading, highlighted, teaser, contentType }) =>
+export const SearchResult = ({
+  heading,
+  highlighted,
+  teaser,
+  contentType,
+  isCas,
+}) =>
   searchResultTwig({
     search_result__teaser: teaser,
     search_result__title: heading,
@@ -44,4 +54,5 @@ export const SearchResult = ({ heading, highlighted, teaser, contentType }) =>
     search_result__highlighted: highlighted,
     breadcrumbs__items: breadcrumbData.items,
     search_result__content_type: contentType,
+    search_result__prefix__icon: isCas ? 'lock-solid' : '',
   });

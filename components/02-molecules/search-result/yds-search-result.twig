@@ -17,13 +17,15 @@
     <div {{ bem('content-type', [], search_result__base_class) }}>
       {{ search_result__content_type }}
     </div>
+
     {% include "@atoms/typography/headings/yds-heading.twig" with {
       heading__level: '2',
       heading__blockname: search_result__base_class,
       heading: search_result__title,
       heading__url: search_result__url,
+      heading__prefix__icon: search_result__prefix__icon,
     } %}
-
+    {{'hello, are you here?'}}
     {% include "@organisms/menu/breadcrumbs/yds-breadcrumbs.twig" with {
       breadcrumbs__modifiers: search_result__base_class
     } %}
