@@ -34,6 +34,108 @@ const themesOneToEight = [
 const siteHeaderAccents = themesOneToEight;
 const siteFooterAccents = themesOneToEight;
 
+const valueConfig = {
+  allowAnimatedItems: {
+    storage: 'yds-cl-twig-animate-items',
+    defaultValue: 'default',
+  },
+  thickness: {
+    defaultValue: 'hairline',
+  },
+  dividerColor: {
+    defaultValue: 'gray-500',
+  },
+  dividerWidth: {
+    defaultValue: '100',
+  },
+  dividerPosition: {
+    defaultValue: 'center',
+  },
+  actionColor: {
+    defaultValue: 'blue-yale',
+  },
+  menuVariation: {
+    storage: 'yds-cl-twig-menu-variation',
+    defaultValue: 'mega',
+  },
+  primaryNavPosition: {
+    storage: 'yds-cl-twig-primary-nav-position',
+    defaultValue: 'left',
+  },
+  siteHeaderTheme: {
+    storage: 'yds-cl-twig-site-header-theme',
+    defaultValue: 'one',
+  },
+  siteHeaderAccent: {
+    storage: 'yds-cl-twig-site-header-accent',
+    defaultValue: 'one',
+  },
+  siteHeaderImage: {
+    defaultValue: false,
+  },
+  siteHeaderSiteNameImage: {
+    defaultValue: false,
+  },
+  headerBorderThickness: {
+    storage: 'yds-cl-twig-header-border-thickness',
+    defaultValue: 'hairline',
+  },
+  siteFooterVariation: {
+    storage: 'yds-cl-twig-site-footer-variation',
+    defaultValue: 'basic',
+  },
+  siteFooterTheme: {
+    storage: 'yds-cl-twig-site-footer-theme',
+    defaultValue: 'one',
+  },
+  siteFooterAccent: {
+    storage: 'yds-cl-twig-site-footer-accent',
+    defaultValue: 'one',
+  },
+  footerBorderThickness: {
+    storage: 'yds-cl-twig-footer-border-thickness',
+    defaultValue: 'hairline',
+  },
+};
+
+// Returns a function that knows about the config to look up values.
+const getLookupFor = (config) => {
+  return (key) => {
+    const { storage, defaultValue } = config[key];
+
+    if (storage) {
+      const value = localStorage.getItem(storage);
+
+      if (value && value !== undefined && value !== 'undefined') {
+        return value;
+      }
+    }
+    return defaultValue;
+  };
+};
+
+const getValueFor = getLookupFor(valueConfig);
+
+const config = {
+  allowAnimatedItems: getValueFor('allowAnimatedItems'),
+  thickness: getValueFor('thickness'),
+  dividerColor: getValueFor('dividerColor'),
+  dividerWidth: getValueFor('dividerWidth'),
+  dividerPosition: getValueFor('dividerPosition'),
+  actionColor: getValueFor('actionColor'),
+  menuVariation: getValueFor('menuVariation'),
+  primaryNavPosition: getValueFor('primaryNavPosition'),
+  siteHeaderTheme: getValueFor('siteHeaderTheme'),
+  siteHeaderAccent: getValueFor('siteHeaderAccent'),
+  siteHeaderImage: getValueFor('siteHeaderImage'),
+  siteHeaderSiteNameImage: getValueFor('siteHeaderSiteNameImage'),
+  headerBorderThickness: getValueFor('headerBorderThickness'),
+  siteFooterVariation: getValueFor('siteFooterVariation'),
+  siteFooterTheme: getValueFor('siteFooterTheme'),
+  siteFooterAccent: getValueFor('siteFooterAccent'),
+  footerBorderThickness: getValueFor('footerBorderThickness'),
+};
+
 export default {
   title: 'Config',
   parameters: {
@@ -44,103 +146,87 @@ export default {
       name: 'Site: Animation Theme',
       options: siteAnimationOptions,
       type: 'select',
-      defaultValue: 'default',
     },
     thickness: {
       name: 'Site: Line thickness',
       options: thicknessOptions,
       type: 'select',
-      defaultValue: 'hairline',
     },
     dividerColor: {
       name: 'Site: Line color',
       options: ['gray-500', 'blue-yale', 'basic-brown-gray'],
       type: 'select',
-      defaultValue: 'gray-500',
     },
     dividerWidth: {
       name: 'Site: Divider width',
       options: [...widths],
       type: 'select',
-      defaultValue: '100',
     },
     dividerPosition: {
       name: 'Site: Divider position',
       options: layoutOptions,
       type: 'select',
-      defaultValue: 'center',
     },
     actionColor: {
       name: 'Action Color',
       options: ['blue-yale', 'basic-black'],
       type: 'select',
-      defaultValue: 'blue-yale',
     },
     menuVariation: {
       name: 'Site: Menu Variation',
       options: ['mega', 'basic', 'focus'],
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-menu-variation'),
     },
     primaryNavPosition: {
       name: 'Site: Navigation Position',
       options: ['left', 'center', 'right'],
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-primary-nav-position'),
     },
     siteHeaderTheme: {
       name: 'Header: Theme',
       options: siteHeaderThemeOptions,
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-site-header-theme'),
     },
     siteHeaderAccent: {
       name: 'Header: Accent Color (dial)',
       options: siteHeaderAccents,
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-site-header-accent'),
     },
     siteHeaderImage: {
       name: 'Header: With Image',
       type: 'boolean',
-      defaultValue: false,
     },
     siteHeaderSiteNameImage: {
       name: 'Header: Site Name Is An Image',
       type: 'boolean',
-      defaultValue: false,
     },
     headerBorderThickness: {
       name: 'Header: Border Thickness',
       options: borderThicknessOptions,
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-header-border-thickness'),
     },
     siteFooterVariation: {
       name: 'Footer: Variation',
       options: siteFooterVariations,
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-site-footer-variation'),
     },
     siteFooterTheme: {
       name: 'Footer: Theme',
       options: siteFooterThemeOptions,
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-site-footer-theme'),
     },
     siteFooterAccent: {
       name: 'Footer: Accent Color (dial)',
       options: siteFooterAccents,
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-site-footer-accent'),
     },
     footerBorderThickness: {
       name: 'Footer: Border thickness',
       options: borderThicknessOptions,
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-footer-border-thickness'),
     },
   },
+  args: config,
 };
 
 const intro = `
@@ -205,8 +291,7 @@ export const GlobalConfig = ({
 
   return `
   <script>
-  console.log(allowAnimatedItems);
-    const resetAttributes = () => {
+    window.resetAttributes = () => {
       Object.keys(localStorage).forEach((key) => {
         if (key.substring(0, 12) === 'yds-cl-twig-') {
           localStorage.removeItem(key);
