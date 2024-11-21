@@ -205,7 +205,6 @@ export const GlobalConfig = ({
 
   return `
   <script>
-  console.log(allowAnimatedItems);
     const resetAttributes = () => {
       Object.keys(localStorage).forEach((key) => {
         if (key.substring(0, 12) === 'yds-cl-twig-') {
