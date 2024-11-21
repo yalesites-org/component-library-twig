@@ -44,102 +44,113 @@ export default {
       name: 'Site: Animation Theme',
       options: siteAnimationOptions,
       type: 'select',
-      defaultValue: 'default',
     },
     thickness: {
       name: 'Site: Line thickness',
       options: thicknessOptions,
       type: 'select',
-      defaultValue: 'hairline',
     },
     dividerColor: {
       name: 'Site: Line color',
       options: ['gray-500', 'blue-yale', 'basic-brown-gray'],
       type: 'select',
-      defaultValue: 'gray-500',
     },
     dividerWidth: {
       name: 'Site: Divider width',
       options: [...widths],
       type: 'select',
-      defaultValue: '100',
     },
     dividerPosition: {
       name: 'Site: Divider position',
       options: layoutOptions,
       type: 'select',
-      defaultValue: 'center',
     },
     actionColor: {
       name: 'Action Color',
       options: ['blue-yale', 'basic-black'],
       type: 'select',
-      defaultValue: 'blue-yale',
     },
     menuVariation: {
       name: 'Site: Menu Variation',
       options: ['mega', 'basic', 'focus'],
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-menu-variation'),
     },
     primaryNavPosition: {
       name: 'Site: Navigation Position',
       options: ['left', 'center', 'right'],
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-primary-nav-position'),
     },
     siteHeaderTheme: {
       name: 'Header: Theme',
       options: siteHeaderThemeOptions,
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-site-header-theme'),
     },
     siteHeaderAccent: {
       name: 'Header: Accent Color (dial)',
       options: siteHeaderAccents,
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-site-header-accent'),
     },
     siteHeaderImage: {
       name: 'Header: With Image',
       type: 'boolean',
-      defaultValue: false,
     },
     siteHeaderSiteNameImage: {
       name: 'Header: Site Name Is An Image',
       type: 'boolean',
-      defaultValue: false,
     },
     headerBorderThickness: {
       name: 'Header: Border Thickness',
       options: borderThicknessOptions,
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-header-border-thickness'),
     },
     siteFooterVariation: {
       name: 'Footer: Variation',
       options: siteFooterVariations,
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-site-footer-variation'),
     },
     siteFooterTheme: {
       name: 'Footer: Theme',
       options: siteFooterThemeOptions,
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-site-footer-theme'),
     },
     siteFooterAccent: {
       name: 'Footer: Accent Color (dial)',
       options: siteFooterAccents,
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-site-footer-accent'),
     },
     footerBorderThickness: {
       name: 'Footer: Border thickness',
       options: borderThicknessOptions,
       type: 'select',
-      defaultValue: localStorage.getItem('yds-cl-twig-footer-border-thickness'),
     },
+  },
+  args: {
+    allowAnimatedItems:
+      localStorage.getItem('yds-cl-twig-animate-items') || 'default',
+    thickness: 'hairline',
+    dividerColor: 'gray-500',
+    dividerWidth: '100',
+    dividerPosition: 'center',
+    actionColor: 'blue-yale',
+    menuVariation: localStorage.getItem('yds-cl-twig-menu-variation') || 'mega',
+    primaryNavPosition:
+      localStorage.getItem('yds-cl-twig-primary-nav-position') || 'left',
+    siteHeaderTheme:
+      localStorage.getItem('yds-cl-twig-site-header-theme') || 'one',
+    siteHeaderAccent:
+      localStorage.getItem('yds-cl-twig-site-header-accent') || 'one',
+    siteHeaderImage: false,
+    siteHeaderSiteNameImage: false,
+    headerBorderThickness:
+      localStorage.getItem('yds-cl-twig-header-border-thickness') || 'hairline',
+    siteFooterVariation:
+      localStorage.getItem('yds-cl-twig-site-footer-variation') || 'basic',
+    siteFooterTheme:
+      localStorage.getItem('yds-cl-twig-site-footer-theme') || 'one',
+    siteFooterAccent:
+      localStorage.getItem('yds-cl-twig-site-footer-accent') || 'one',
+    footerBorderThickness:
+      localStorage.getItem('yds-cl-twig-footer-border-thickness') || 'hairline',
   },
 };
 
