@@ -136,8 +136,6 @@ const config = {
   footerBorderThickness: getValueFor('footerBorderThickness'),
 };
 
-console.log(config);
-
 export default {
   title: 'Config',
   parameters: {
