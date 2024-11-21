@@ -31,13 +31,13 @@ export default {
       name: 'Component Theme (dial)',
       options: colorPairingsData,
       type: 'select',
-      defaultValue: 'one',
     },
   },
   args: {
     calloutAlignment: 'left',
     calloutContent: wrappedCalloutData.text_two,
     calloutCallout: wrappedCalloutData.text_three,
+    themeColor: 'one',
   },
 };
 

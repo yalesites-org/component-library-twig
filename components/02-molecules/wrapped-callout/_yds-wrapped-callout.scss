@@ -1,6 +1,7 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
 @use '../../00-tokens/functions/map';
+@use '../../01-atoms/controls/text-link/yds-text-link' as link;
 
 $global-wrapped-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $wrapped-callout-component-themes: map.deep-get(
@@ -104,5 +105,9 @@ $wrapped-callout-component-themes: map.deep-get(
 
   h2 {
     @include tokens.h4-yale-new;
+  }
+
+  a {
+    @include link.plain-link;
   }
 }
