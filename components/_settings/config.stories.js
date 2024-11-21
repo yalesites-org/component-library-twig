@@ -293,7 +293,7 @@ export const GlobalConfig = ({
 
   return `
   <script>
-    const resetAttributes = () => {
+    window.resetAttributes = () => {
       Object.keys(localStorage).forEach((key) => {
         if (key.substring(0, 12) === 'yds-cl-twig-') {
           localStorage.removeItem(key);
