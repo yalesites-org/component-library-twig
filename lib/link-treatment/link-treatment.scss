@@ -1,4 +1,4 @@
-@import '../../node_modules/linkpurpose/css/linkpurpose';
+@use '../../node_modules/linkpurpose/css/linkpurpose';
 
 // For visited links, mirror the link color itself.
 a.link-purpose {
