@@ -24,9 +24,11 @@ export default {
   },
 };
 
-export const ContentImage = ({ caption, width }) =>
-  contentImageTwig({
-    ...imageData.responsive_images['16x9'],
-    content_image__caption: caption,
-    content_image__width: width,
-  });
+export const ContentImage = {
+  render: ({ caption, width }) =>
+    contentImageTwig({
+      ...imageData.responsive_images['16x9'],
+      content_image__caption: caption,
+      content_image__width: width,
+    }),
+};

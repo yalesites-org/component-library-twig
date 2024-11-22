@@ -45,69 +45,73 @@ export default {
   },
 };
 
-export const Footer = ({
-  borderThickness,
-  siteFooterTheme,
-  siteFooterVariation,
-  siteFooterAccent,
-}) =>
-  siteFooterTwig({
-    ...socialLinksData,
-    ...siteFooterAccents,
-    site_footer__border_thickness: borderThickness,
-    site_footer__theme: siteFooterTheme,
-    site_footer__accent: siteFooterAccent,
-    site_footer__variation: siteFooterVariation,
-  });
+export const Footer = {
+  render: ({
+    borderThickness,
+    siteFooterTheme,
+    siteFooterVariation,
+    siteFooterAccent,
+  }) =>
+    siteFooterTwig({
+      ...socialLinksData,
+      ...siteFooterAccents,
+      site_footer__border_thickness: borderThickness,
+      site_footer__theme: siteFooterTheme,
+      site_footer__accent: siteFooterAccent,
+      site_footer__variation: siteFooterVariation,
+    }),
 
-Footer.argTypes = {
-  siteFooterTheme: {
-    options: siteFooterThemeOptions,
-    type: 'select',
-  },
-  siteFooterAccent: {
-    name: 'Footer Accent Color (dial)',
-    options: siteFooterAccents,
-    type: 'select',
-  },
-  siteFooterVariation: {
-    name: 'Footer Variation (dial)',
-    options: ['basic', 'mega'],
-    type: 'select',
+  argTypes: {
+    siteFooterTheme: {
+      options: siteFooterThemeOptions,
+      type: 'select',
+    },
+    siteFooterAccent: {
+      name: 'Footer Accent Color (dial)',
+      options: siteFooterAccents,
+      type: 'select',
+    },
+    siteFooterVariation: {
+      name: 'Footer Variation (dial)',
+      options: ['basic', 'mega'],
+      type: 'select',
+    },
   },
 };
 
-export const FooterExamples = ({
-  borderThickness,
-  globalTheme,
-  siteFooterVariation,
-  siteFooterAccent,
-}) =>
-  siteFooterExamples({
-    ...socialLinksData,
-    ...siteFooterThemes,
-    ...siteGlobalThemes,
-    ...siteFooterAccents,
-    site_global__theme: globalTheme,
-    site_footer__accent: siteFooterAccent,
-    site_footer__border_thickness: borderThickness,
-    site_footer__variation: siteFooterVariation,
-  });
+export const FooterExamples = {
+  render: ({
+    borderThickness,
+    globalTheme,
+    siteFooterVariation,
+    siteFooterAccent,
+  }) =>
+    siteFooterExamples({
+      ...socialLinksData,
+      ...siteFooterThemes,
+      ...siteGlobalThemes,
+      ...siteFooterAccents,
+      site_global__theme: globalTheme,
+      site_footer__accent: siteFooterAccent,
+      site_footer__border_thickness: borderThickness,
+      site_footer__variation: siteFooterVariation,
+    }),
 
-FooterExamples.argTypes = {
-  globalTheme: {
-    name: 'Global Theme (lever)',
-    options: siteGlobalThemeOptions,
-    type: 'select',
-  },
-  siteFooterAccent: {
-    name: 'Footer Accent Color (dial)',
-    options: siteFooterAccents,
-    type: 'select',
-  },
-  siteFooterVariation: {
-    name: 'Footer Variation (dial)',
-    options: ['basic', 'mega'],
-    type: 'select',
+  argTypes: {
+    globalTheme: {
+      name: 'Global Theme (lever)',
+      options: siteGlobalThemeOptions,
+      type: 'select',
+    },
+    siteFooterAccent: {
+      name: 'Footer Accent Color (dial)',
+      options: siteFooterAccents,
+      type: 'select',
+    },
+    siteFooterVariation: {
+      name: 'Footer Variation (dial)',
+      options: ['basic', 'mega'],
+      type: 'select',
+    },
   },
 };

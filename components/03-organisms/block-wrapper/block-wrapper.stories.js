@@ -20,6 +20,8 @@ export default {
   },
 };
 
-export const BlockWrapper = ({ blockContent }) => {
-  return blockWrapperTwig({ block_wrapper__content: blockContent });
+export const BlockWrapper = {
+  render: ({ blockContent }) => {
+    return blockWrapperTwig({ block_wrapper__content: blockContent });
+  },
 };

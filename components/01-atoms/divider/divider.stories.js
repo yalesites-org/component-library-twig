@@ -45,49 +45,51 @@ export default {
   },
 };
 
-export const Dividers = ({ position, thickness, dividerColor, width }) => {
-  const customProperties = {
-    '--thickness-theme-divider': `var(--size-thickness-${thickness})`,
-  };
+export const Dividers = {
+  render: ({ position, thickness, dividerColor, width }) => {
+    const customProperties = {
+      '--thickness-theme-divider': `var(--size-thickness-${thickness})`,
+    };
 
-  const root = document.documentElement;
-  Object.entries(customProperties).forEach((entry) => {
-    const [key, value] = entry;
-    root.style.setProperty(key, value);
-  });
+    const root = document.documentElement;
+    Object.entries(customProperties).forEach((entry) => {
+      const [key, value] = entry;
+      root.style.setProperty(key, value);
+    });
 
-  const viewAll = width === 'View-All';
+    const viewAll = width === 'View-All';
 
-  return `
-  <div style="--thickness-divider: var(--size-thickness-hairline)">${dividerTwig()}</div>
-  <div style="--thickness-divider: var(--size-thickness-1)">${dividerTwig()}</div>
-  <div style="--thickness-divider: var(--size-thickness-2)">${dividerTwig()}</div>
-  <div style="--thickness-divider: var(--size-thickness-4)">${dividerTwig()}</div>
-  <div style="--thickness-divider: var(--size-thickness-6)">${dividerTwig()}</div>
-  <div style="--thickness-divider: var(--size-thickness-8)">${dividerTwig()}</div>
-  <div class="cl-divider-playground" style="
-    --color-divider: var(--color-${dividerColor});
-    --width-theme-divider: var(--layout-width-${width});
-  ">
-    <h2>Playground</h2>
-    <p>Use the StoryBook controls to see the dividers below implement the available positions, thicknesses, and colors.</p>
-    ${dividerTwig({
-      divider__width: `${viewAll ? '25' : width}`,
-      divider__position: `${position}`,
-    })}
-    ${dividerTwig({
-      divider__width: `${viewAll ? '50' : width}`,
-      divider__position: `${position}`,
-    })}
-    ${dividerTwig({
-      divider__width: `${viewAll ? '75' : width}`,
-      divider__position: `${position}`,
-    })}
-    ${dividerTwig({
-      divider__width: `${viewAll ? '100' : width}`,
-      divider__position: `${position}`,
-    })}
-  </div>
-  <div class="padding-to-see-dividers-above">&nbsp;</div>
-  `;
+    return `
+    <div style="--thickness-divider: var(--size-thickness-hairline)">${dividerTwig()}</div>
+    <div style="--thickness-divider: var(--size-thickness-1)">${dividerTwig()}</div>
+    <div style="--thickness-divider: var(--size-thickness-2)">${dividerTwig()}</div>
+    <div style="--thickness-divider: var(--size-thickness-4)">${dividerTwig()}</div>
+    <div style="--thickness-divider: var(--size-thickness-6)">${dividerTwig()}</div>
+    <div style="--thickness-divider: var(--size-thickness-8)">${dividerTwig()}</div>
+    <div class="cl-divider-playground" style="
+      --color-divider: var(--color-${dividerColor});
+      --width-theme-divider: var(--layout-width-${width});
+    ">
+      <h2>Playground</h2>
+      <p>Use the StoryBook controls to see the dividers below implement the available positions, thicknesses, and colors.</p>
+      ${dividerTwig({
+        divider__width: `${viewAll ? '25' : width}`,
+        divider__position: `${position}`,
+      })}
+      ${dividerTwig({
+        divider__width: `${viewAll ? '50' : width}`,
+        divider__position: `${position}`,
+      })}
+      ${dividerTwig({
+        divider__width: `${viewAll ? '75' : width}`,
+        divider__position: `${position}`,
+      })}
+      ${dividerTwig({
+        divider__width: `${viewAll ? '100' : width}`,
+        divider__position: `${position}`,
+      })}
+    </div>
+    <div class="padding-to-see-dividers-above">&nbsp;</div>
+    `;
+  },
 };

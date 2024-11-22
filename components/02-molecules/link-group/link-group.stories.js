@@ -18,8 +18,10 @@ export default {
   },
 };
 
-export const linkGroup = ({ heading }) =>
-  linkGroupTwig({
-    ...linkGroupData,
-    link_group__heading: heading,
-  });
+export const linkGroup = {
+  render: ({ heading }) =>
+    linkGroupTwig({
+      ...linkGroupData,
+      link_group__heading: heading,
+    }),
+};

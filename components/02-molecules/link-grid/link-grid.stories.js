@@ -23,8 +23,10 @@ export default {
   },
 };
 
-export const linkGrid = ({ themeColor }) =>
-  linkGridTwig({
-    link_grid__theme: themeColor,
-    ...linkGridData,
-  });
+export const linkGrid = {
+  render: ({ themeColor }) =>
+    linkGridTwig({
+      link_grid__theme: themeColor,
+      ...linkGridData,
+    }),
+};

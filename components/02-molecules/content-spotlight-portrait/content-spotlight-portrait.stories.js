@@ -76,30 +76,32 @@ export default {
   },
 };
 
-export const ContentSpotlightPortrait = ({
-  position,
-  overline,
-  heading,
-  subheading,
-  text,
-  linkContent,
-  linkTwoContent,
-  componentTheme,
-  imageStyle,
-}) =>
-  contentSpotlightPortraitTwig({
-    ...imageData.responsive_images['2x3'],
-    content_spotlight_portrait__theme: componentTheme,
-    content_spotlight_portrait__position: position,
-    content_spotlight_portrait__style: imageStyle,
-    content_spotlight_portrait__overline: overline,
-    content_spotlight_portrait__heading: heading,
-    content_spotlight_portrait__subheading: subheading,
-    content_spotlight_portrait__text: text,
-    content_spotlight_portrait__link__content: linkContent,
-    content_spotlight_portrait__link__url:
-      contentSpotlightPortraitData.content_spotlight_portrait__link__url,
-    content_spotlight_portrait__link_two__content: linkTwoContent,
-    content_spotlight_portrait__link_two__url:
-      contentSpotlightPortraitData.content_spotlight_portrait__link_two__url,
-  });
+export const ContentSpotlightPortrait = {
+  render: ({
+    position,
+    overline,
+    heading,
+    subheading,
+    text,
+    linkContent,
+    linkTwoContent,
+    componentTheme,
+    imageStyle,
+  }) =>
+    contentSpotlightPortraitTwig({
+      ...imageData.responsive_images['2x3'],
+      content_spotlight_portrait__theme: componentTheme,
+      content_spotlight_portrait__position: position,
+      content_spotlight_portrait__style: imageStyle,
+      content_spotlight_portrait__overline: overline,
+      content_spotlight_portrait__heading: heading,
+      content_spotlight_portrait__subheading: subheading,
+      content_spotlight_portrait__text: text,
+      content_spotlight_portrait__link__content: linkContent,
+      content_spotlight_portrait__link__url:
+        contentSpotlightPortraitData.content_spotlight_portrait__link__url,
+      content_spotlight_portrait__link_two__content: linkTwoContent,
+      content_spotlight_portrait__link_two__url:
+        contentSpotlightPortraitData.content_spotlight_portrait__link_two__url,
+    }),
+};

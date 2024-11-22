@@ -36,12 +36,14 @@ export default {
   },
 };
 
-export const SearchResult = ({ heading, highlighted, teaser, contentType }) =>
-  searchResultTwig({
-    search_result__teaser: teaser,
-    search_result__title: heading,
-    search_result__url: '#',
-    search_result__highlighted: highlighted,
-    breadcrumbs__items: breadcrumbData.items,
-    search_result__content_type: contentType,
-  });
+export const SearchResult = {
+  render: ({ heading, highlighted, teaser, contentType }) =>
+    searchResultTwig({
+      search_result__teaser: teaser,
+      search_result__title: heading,
+      search_result__url: '#',
+      search_result__highlighted: highlighted,
+      breadcrumbs__items: breadcrumbData.items,
+      search_result__content_type: contentType,
+    }),
+};

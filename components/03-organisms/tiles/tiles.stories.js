@@ -51,24 +51,26 @@ export default {
   },
 };
 
-export const Tiles = ({
-  presentationStyle,
-  alignment,
-  verticalAlignment,
-  columnCount,
-  image,
-}) => {
-  return `
-    <div class="wrap-for-global-theme">
-      ${tilesTwig({
-        tiles__alignment: alignment,
-        tiles__vertical_alignment: verticalAlignment,
-        tiles__presentation_style: presentationStyle,
-        tiles__grid_count: columnCount,
-        tiles__with__image: image ? 'true' : 'false',
-        ...tilesData,
-        ...imageData.responsive_images['1x1'],
-      })}
-    </div>
-    `;
+export const Tiles = {
+  render: ({
+    presentationStyle,
+    alignment,
+    verticalAlignment,
+    columnCount,
+    image,
+  }) => {
+    return `
+      <div class="wrap-for-global-theme">
+        ${tilesTwig({
+          tiles__alignment: alignment,
+          tiles__vertical_alignment: verticalAlignment,
+          tiles__presentation_style: presentationStyle,
+          tiles__grid_count: columnCount,
+          tiles__with__image: image ? 'true' : 'false',
+          ...tilesData,
+          ...imageData.responsive_images['1x1'],
+        })}
+      </div>
+      `;
+  },
 };

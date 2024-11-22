@@ -30,9 +30,11 @@ export default {
   },
 };
 
-export const PageTitle = ({ meta, prefix }) =>
-  pageTitleTwig({
-    page_title__heading: 'Davis Team Project Wins Award for Research',
-    page_title__meta: meta,
-    page_title__prefix: prefix,
-  });
+export const PageTitle = {
+  render: ({ meta, prefix }) =>
+    pageTitleTwig({
+      page_title__heading: 'Davis Team Project Wins Award for Research',
+      page_title__meta: meta,
+      page_title__prefix: prefix,
+    }),
+};

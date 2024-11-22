@@ -49,31 +49,33 @@ export default {
   },
 };
 
-export const customCardCollection = ({
-  heading,
-  snippet,
-  url,
-  customCardCollectionHeading,
-  withImage,
-  featured,
-  globalTheme,
-}) => {
-  const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
+export const customCardCollection = {
+  render: ({
+    heading,
+    snippet,
+    url,
+    customCardCollectionHeading,
+    withImage,
+    featured,
+    globalTheme,
+  }) => {
+    const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
 
-  return `
-    <div class="wrap-for-global-theme" data-global-theme="${globalTheme}">
-      ${customCardCollectionTwig({
-        site_global__theme: globalTheme,
-        custom_card_collection__heading: customCardCollectionHeading,
-        custom_card__heading: heading,
-        custom_card__snippet: snippet,
-        custom_card__url: url,
-        custom_card__image: withImage ? 'true' : 'false',
-        custom_card_collection__featured: featured ? 'true' : 'false',
-        custom_card_collection__cards: items,
-        ...customCardData,
-        ...imageData.responsive_images['3x2'],
-      })}
-    </div>
-  `;
+    return `
+      <div class="wrap-for-global-theme" data-global-theme="${globalTheme}">
+        ${customCardCollectionTwig({
+          site_global__theme: globalTheme,
+          custom_card_collection__heading: customCardCollectionHeading,
+          custom_card__heading: heading,
+          custom_card__snippet: snippet,
+          custom_card__url: url,
+          custom_card__image: withImage ? 'true' : 'false',
+          custom_card_collection__featured: featured ? 'true' : 'false',
+          custom_card_collection__cards: items,
+          ...customCardData,
+          ...imageData.responsive_images['3x2'],
+        })}
+      </div>
+    `;
+  },
 };

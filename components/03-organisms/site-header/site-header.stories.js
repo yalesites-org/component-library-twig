@@ -84,93 +84,97 @@ export default {
   },
 };
 
-export const Header = ({
-  borderThickness,
-  primaryNavPosition,
-  siteHeaderTheme,
-  menuVariation,
-  siteHeaderImage,
-  siteHeaderSiteNameImage,
-  siteHeaderAccent,
-  siteWideHeaderName,
-  siteWideHeaderUrl,
-}) =>
-  siteHeaderTwig({
-    ...imageData.responsive_images['16x9'],
-    site_name: 'Department of Chemistry',
-    site_header__border_thickness: borderThickness,
-    site_header__nav_position: primaryNavPosition,
-    site_header__theme: siteHeaderTheme,
-    site_header__accent: siteHeaderAccent,
-    site_header__menu__variation: menuVariation,
-    site_header__background_image: siteHeaderImage,
-    site_header__site_name_is_image: siteHeaderSiteNameImage,
-    site_header__branding_name: siteWideHeaderName,
-    site_header__branding_link: siteWideHeaderUrl,
-    utility_nav__items: utilityNavData.items,
-    primary_nav__items: primaryNavData.items,
-  });
+export const Header = {
+  render: ({
+    borderThickness,
+    primaryNavPosition,
+    siteHeaderTheme,
+    menuVariation,
+    siteHeaderImage,
+    siteHeaderSiteNameImage,
+    siteHeaderAccent,
+    siteWideHeaderName,
+    siteWideHeaderUrl,
+  }) =>
+    siteHeaderTwig({
+      ...imageData.responsive_images['16x9'],
+      site_name: 'Department of Chemistry',
+      site_header__border_thickness: borderThickness,
+      site_header__nav_position: primaryNavPosition,
+      site_header__theme: siteHeaderTheme,
+      site_header__accent: siteHeaderAccent,
+      site_header__menu__variation: menuVariation,
+      site_header__background_image: siteHeaderImage,
+      site_header__site_name_is_image: siteHeaderSiteNameImage,
+      site_header__branding_name: siteWideHeaderName,
+      site_header__branding_link: siteWideHeaderUrl,
+      utility_nav__items: utilityNavData.items,
+      primary_nav__items: primaryNavData.items,
+    }),
 
-Header.argTypes = {
-  siteHeaderTheme: {
-    name: 'Header Theme (dial)',
-    options: siteHeaderThemeOptions,
-    type: 'select',
-  },
-  siteHeaderAccent: {
-    name: 'Header Accent Color (dial)',
-    options: siteHeaderAccents,
-    type: 'select',
-  },
-  siteHeaderImage: {
-    name: 'With image',
-    type: 'boolean',
+  argTypes: {
+    siteHeaderTheme: {
+      name: 'Header Theme (dial)',
+      options: siteHeaderThemeOptions,
+      type: 'select',
+    },
+    siteHeaderAccent: {
+      name: 'Header Accent Color (dial)',
+      options: siteHeaderAccents,
+      type: 'select',
+    },
+    siteHeaderImage: {
+      name: 'With image',
+      type: 'boolean',
+    },
   },
 };
 
-export const HeaderExamples = ({
-  borderThickness,
-  primaryNavPosition,
-  menuVariation,
-  globalTheme,
-  siteHeaderAccent,
-  siteHeaderImage,
-  siteHeaderSiteNameImage,
-  siteWideHeaderName,
-  siteWideHeaderUrl,
-}) =>
-  siteHeaderExamples({
-    ...siteGlobalThemes,
-    ...siteHeaderThemes,
-    ...siteHeaderAccents,
-    ...imageData.responsive_images['16x9'],
-    site_name: 'Department of Chemistry',
-    site_global__theme: globalTheme,
-    site_header__accent: siteHeaderAccent,
-    site_header__border_thickness: borderThickness,
-    site_header__nav_position: primaryNavPosition,
-    site_header__menu__variation: menuVariation,
-    site_header__background_image: siteHeaderImage,
-    site_header__site_name_is_image: siteHeaderSiteNameImage,
-    site_header__branding_name: siteWideHeaderName,
-    site_header__branding_link: siteWideHeaderUrl,
-    utility_nav__items: utilityNavData.items,
-    primary_nav__items: primaryNavData.items,
-  });
+export const HeaderExamples = {
+  render: ({
+    borderThickness,
+    primaryNavPosition,
+    menuVariation,
+    globalTheme,
+    siteHeaderAccent,
+    siteHeaderImage,
+    siteHeaderSiteNameImage,
+    siteWideHeaderName,
+    siteWideHeaderUrl,
+  }) =>
+    siteHeaderExamples({
+      ...siteGlobalThemes,
+      ...siteHeaderThemes,
+      ...siteHeaderAccents,
+      ...imageData.responsive_images['16x9'],
+      site_name: 'Department of Chemistry',
+      site_global__theme: globalTheme,
+      site_header__accent: siteHeaderAccent,
+      site_header__border_thickness: borderThickness,
+      site_header__nav_position: primaryNavPosition,
+      site_header__menu__variation: menuVariation,
+      site_header__background_image: siteHeaderImage,
+      site_header__site_name_is_image: siteHeaderSiteNameImage,
+      site_header__branding_name: siteWideHeaderName,
+      site_header__branding_link: siteWideHeaderUrl,
+      utility_nav__items: utilityNavData.items,
+      primary_nav__items: primaryNavData.items,
+    }),
 
-HeaderExamples.argTypes = {
-  globalTheme: {
-    name: 'Global Theme (lever)',
-    options: siteGlobalThemeOptions,
-    type: 'select',
-  },
-  siteHeaderAccent: {
-    name: 'Header Accent Color (dial)',
-    options: siteHeaderAccents,
-    type: 'select',
-  },
-  siteHeaderImage: {
-    name: 'Header With Image',
-    type: 'boolean',
+  argTypes: {
+    globalTheme: {
+      name: 'Global Theme (lever)',
+      options: siteGlobalThemeOptions,
+      type: 'select',
+    },
+    siteHeaderAccent: {
+      name: 'Header Accent Color (dial)',
+      options: siteHeaderAccents,
+      type: 'select',
+    },
+    siteHeaderImage: {
+      name: 'Header With Image',
+      type: 'boolean',
+    },
   },
 };

@@ -83,34 +83,36 @@ export default {
   },
 };
 
-export const FactsAndFiguresGroup = ({
-  factsAndFiguresGroupHeading,
-  factsAndFiguresGroupContent,
-  factsAndFiguresGroupIcons,
-  presentationStyle,
-  fontStyle,
-  columnCount,
-  alignment,
-  themeColor,
-  image,
-}) => {
-  return `
-    <div class="wrap-for-global-theme">
-      ${factsAndFiguresGroupTwig({
-        facts_and_figures__group__heading: factsAndFiguresGroupHeading,
-        facts_and_figures__group__content: factsAndFiguresGroupContent,
-        facts_and_figures__group__has_icon: factsAndFiguresGroupIcons
-          ? 'true'
-          : 'false',
-        facts_and_figures__group__grid_count: columnCount,
-        facts_and_figures__group__alignment: alignment,
-        facts_and_figures__group__presentation_style: presentationStyle,
-        facts_and_figures__group__font_style: fontStyle,
-        facts_and_figures__group__theme: themeColor,
-        facts_and_figures__group__bg_image: image,
-        ...factsAndFiguresGroupData,
-        ...imageData.responsive_images['16x9'],
-      })}
-    </div>
-    `;
+export const FactsAndFiguresGroup = {
+  render: ({
+    factsAndFiguresGroupHeading,
+    factsAndFiguresGroupContent,
+    factsAndFiguresGroupIcons,
+    presentationStyle,
+    fontStyle,
+    columnCount,
+    alignment,
+    themeColor,
+    image,
+  }) => {
+    return `
+      <div class="wrap-for-global-theme">
+        ${factsAndFiguresGroupTwig({
+          facts_and_figures__group__heading: factsAndFiguresGroupHeading,
+          facts_and_figures__group__content: factsAndFiguresGroupContent,
+          facts_and_figures__group__has_icon: factsAndFiguresGroupIcons
+            ? 'true'
+            : 'false',
+          facts_and_figures__group__grid_count: columnCount,
+          facts_and_figures__group__alignment: alignment,
+          facts_and_figures__group__presentation_style: presentationStyle,
+          facts_and_figures__group__font_style: fontStyle,
+          facts_and_figures__group__theme: themeColor,
+          facts_and_figures__group__bg_image: image,
+          ...factsAndFiguresGroupData,
+          ...imageData.responsive_images['16x9'],
+        })}
+      </div>
+      `;
+  },
 };

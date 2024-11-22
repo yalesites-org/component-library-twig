@@ -46,19 +46,14 @@ export default {
   },
 };
 
-export const InlineMessage = ({
-  type,
-  heading,
-  content,
-  themeColor,
-  linkContent,
-  linkUrl,
-}) =>
-  inlineMessageTwig({
-    inline_message__heading: heading,
-    inline_message__content: content,
-    inline_message__type: type,
-    inline_message__theme: themeColor,
-    inline_message__link__content: linkContent,
-    inline_message__link__url: linkUrl,
-  });
+export const InlineMessage = {
+  render: ({ type, heading, content, themeColor, linkContent, linkUrl }) =>
+    inlineMessageTwig({
+      inline_message__heading: heading,
+      inline_message__content: content,
+      inline_message__type: type,
+      inline_message__theme: themeColor,
+      inline_message__link__content: linkContent,
+      inline_message__link__url: linkUrl,
+    }),
+};

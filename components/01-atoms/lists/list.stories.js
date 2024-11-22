@@ -22,7 +22,10 @@ export const OrderedList = () => `
 </div>
 `;
 
-export const TagsList = (args) => listTagsTwig({ ...listTagsData, ...args });
+export const TagsList = {
+  render: (args) => listTagsTwig({ ...listTagsData, ...args }),
+};
 
-export const CategoriesList = (args) =>
-  listCategoriesTwig({ ...listCategoriesData, ...args });
+export const CategoriesList = {
+  render: (args) => listCategoriesTwig({ ...listCategoriesData, ...args }),
+};

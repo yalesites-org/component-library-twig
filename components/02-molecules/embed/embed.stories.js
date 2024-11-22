@@ -30,30 +30,34 @@ export default {
   },
 };
 
-export const EmbedQualtrics = ({ width, type, loading }) =>
-  deprecatedEmbedTwig({
-    embed__src:
-      'https://yalesurvey.ca1.qualtrics.com/jfe/form/SV_cDezt2JVsNok77o',
-    embed__title: 'Example Qualtrics Form',
-    embed__width: width,
-    embed__height: '100%',
-    embed__type: type,
-    embed__loading: loading,
-  });
+export const EmbedQualtrics = {
+  render: ({ width, type, loading }) =>
+    deprecatedEmbedTwig({
+      embed__src:
+        'https://yalesurvey.ca1.qualtrics.com/jfe/form/SV_cDezt2JVsNok77o',
+      embed__title: 'Example Qualtrics Form',
+      embed__width: width,
+      embed__height: '100%',
+      embed__type: type,
+      embed__loading: loading,
+    }),
+};
 
-export const EmbedSoundCloud = ({ width, type, loading }) =>
-  embedTwig({
-    embed__src:
-      'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/320687463',
-    embed__title: 'Example SoundCloud Track',
-    embed__width: width,
-    embed__height: '100%',
-    embed__type: type,
-    embed__loading: loading,
-  });
+export const EmbedSoundCloud = {
+  render: ({ width, type, loading }) =>
+    embedTwig({
+      embed__src:
+        'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/320687463',
+      embed__title: 'Example SoundCloud Track',
+      embed__width: width,
+      embed__height: '100%',
+      embed__type: type,
+      embed__loading: loading,
+    }),
 
-EmbedSoundCloud.args = {
-  type: 'audio',
+  args: {
+    type: 'audio',
+  },
 };
 
 export const EmbedInstagram = () => {
@@ -64,23 +68,27 @@ export const EmbedX = () => {
   return `<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Yale scientists find a common weed harbors important clues about how to create drought resistant crops in a world beset by climate change.<a href="https://twitter.com/yale_eeb?ref_src=twsrc%5Etfw">@yale_eeb</a> <a href="https://twitter.com/hashtag/Yale?src=hash&amp;ref_src=twsrc%5Etfw">#Yale</a><a href="https://t.co/IsOLJ9hAbh">https://t.co/IsOLJ9hAbh</a></p>&mdash; Yale University (@Yale) <a href="https://twitter.com/Yale/status/1586724355089776640?ref_src=twsrc%5Etfw">October 30, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>`;
 };
 
-export const EmbedPowerBI = ({ width, type, loading }) =>
-  embedTwig({
-    embed__src:
-      'https://app.powerbi.com/view?r=eyJrIjoiYzQ1ODA0ZjEtZjc5YS00OTgyLWIzOTItNmJmNDY2YmRiODQ2IiwidCI6ImRkOGNiZWJiLTIxMzktNGRmOC1iNDExLTRlM2U4N2FiZWI1YyIsImMiOjF9&pageName=ReportSection2ac2649f17189885d376',
-    embed__width: width,
-    embed__height: '100%',
-    embed__loading: loading,
-    embed__type: type,
-  });
+export const EmbedPowerBI = {
+  render: ({ width, type, loading }) =>
+    embedTwig({
+      embed__src:
+        'https://app.powerbi.com/view?r=eyJrIjoiYzQ1ODA0ZjEtZjc5YS00OTgyLWIzOTItNmJmNDY2YmRiODQ2IiwidCI6ImRkOGNiZWJiLTIxMzktNGRmOC1iNDExLTRlM2U4N2FiZWI1YyIsImMiOjF9&pageName=ReportSection2ac2649f17189885d376',
+      embed__width: width,
+      embed__height: '100%',
+      embed__loading: loading,
+      embed__type: type,
+    }),
+};
 
-export const EmbedMicrosoftForms = ({ width, type, loading }) =>
-  embedTwig({
-    embed__title: 'Example Microsoft Form',
-    embed__src:
-      'https://forms.office.com/Pages/ResponsePage.aspx?id=u76M3Tkh-E20EU4-h6vrXJ-OMhrDFtBEifIUjjt2g_xURUVBU1IyUVlTVFFFNjJQQzJXM1pNMVozVi4u&embed=true',
-    embed__width: width,
-    embed__height: '100%',
-    embed__loading: loading,
-    embed__type: type,
-  });
+export const EmbedMicrosoftForms = {
+  render: ({ width, type, loading }) =>
+    embedTwig({
+      embed__title: 'Example Microsoft Form',
+      embed__src:
+        'https://forms.office.com/Pages/ResponsePage.aspx?id=u76M3Tkh-E20EU4-h6vrXJ-OMhrDFtBEifIUjjt2g_xURUVBU1IyUVlTVFFFNjJQQzJXM1pNMVozVi4u&embed=true',
+      embed__width: width,
+      embed__height: '100%',
+      embed__loading: loading,
+      embed__type: type,
+    }),
+};

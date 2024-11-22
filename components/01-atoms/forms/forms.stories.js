@@ -15,10 +15,6 @@ import selectOptionsData from './select/select.yml';
  */
 export default { title: 'Atoms/Forms' };
 
-// export const checkboxes = () => checkbox(checkboxData);
-
-// export const radioButtons = () => radio(radioData);
-
 export const selectDropdowns = () => select(selectOptionsData);
 
 export const textfieldsExamples = () => textfields();

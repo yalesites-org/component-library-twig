@@ -6,9 +6,11 @@ export default {
   title: 'Molecules/Modal',
 };
 
-export const Modal = (args) => {
-  return `
-    <button class="" data-micromodal-trigger="yds-modal" role="button"> Demo Modal </button>
-    ${modalTwig({ ...modalData, ...args })}
-`;
+export const Modal = {
+  render: (args) => {
+    return `
+      <button class="" data-micromodal-trigger="yds-modal" role="button"> Demo Modal </button>
+      ${modalTwig({ ...modalData, ...args })}
+  `;
+  },
 };

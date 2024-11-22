@@ -33,119 +33,116 @@ export default {
   },
 };
 
-export const PostCardCollection = ({
-  heading,
-  collectionType,
-  featured,
-  withImages,
-}) => {
-  const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
+export const PostCardCollection = {
+  render: ({ heading, collectionType, featured, withImages }) => {
+    const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
 
-  return cardCollectionTwig({
-    card_collection__source_type: 'post',
-    card_collection__type: collectionType,
-    card_collection__heading: heading,
-    card_collection__featured: featured ? 'true' : 'false',
-    card_collection__with_images: withImages ? 'true' : 'false',
-    card_collection__cards: items,
-    ...postCardData,
-    ...imageData.responsive_images['3x2'],
-  });
-};
-PostCardCollection.argTypes = {
-  withImages: {
-    name: 'With Images',
-    type: 'boolean',
+    return cardCollectionTwig({
+      card_collection__source_type: 'post',
+      card_collection__type: collectionType,
+      card_collection__heading: heading,
+      card_collection__featured: featured ? 'true' : 'false',
+      card_collection__with_images: withImages ? 'true' : 'false',
+      card_collection__cards: items,
+      ...postCardData,
+      ...imageData.responsive_images['3x2'],
+    });
   },
-  heading: {
-    name: 'Heading',
-    type: 'string',
+
+  argTypes: {
+    withImages: {
+      name: 'With Images',
+      type: 'boolean',
+    },
+    heading: {
+      name: 'Heading',
+      type: 'string',
+    },
   },
 };
 
-export const EventCardCollection = ({
-  heading,
-  collectionType,
-  featured,
-  withImages,
-}) => {
-  const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
+export const EventCardCollection = {
+  render: ({ heading, collectionType, featured, withImages }) => {
+    const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
 
-  return cardCollectionTwig({
-    card_collection__source_type: 'event',
-    format: 'Online',
-    card_collection__type: collectionType,
-    card_collection__heading: heading,
-    card_collection__featured: featured ? 'true' : 'false',
-    card_collection__with_images: withImages ? 'true' : 'false',
-    card_collection__cards: items,
-    ...eventCardData,
-    ...imageData.responsive_images['3x2'],
-  });
-};
-EventCardCollection.argTypes = {
-  withImages: {
-    name: 'With Images',
-    type: 'boolean',
+    return cardCollectionTwig({
+      card_collection__source_type: 'event',
+      format: 'Online',
+      card_collection__type: collectionType,
+      card_collection__heading: heading,
+      card_collection__featured: featured ? 'true' : 'false',
+      card_collection__with_images: withImages ? 'true' : 'false',
+      card_collection__cards: items,
+      ...eventCardData,
+      ...imageData.responsive_images['3x2'],
+    });
   },
-  heading: {
-    name: 'Heading',
-    type: 'string',
+
+  argTypes: {
+    withImages: {
+      name: 'With Images',
+      type: 'boolean',
+    },
+    heading: {
+      name: 'Heading',
+      type: 'string',
+    },
   },
 };
 
-export const ProfileCardCollection = ({
-  heading,
-  collectionType,
-  featured,
-  withImages,
-}) => {
-  const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
+export const ProfileCardCollection = {
+  render: ({ heading, collectionType, featured, withImages }) => {
+    const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
 
-  return cardCollectionTwig({
-    card_collection__source_type: 'profile',
-    card_collection__type: collectionType,
-    card_collection__heading: heading,
-    card_collection__featured: featured ? 'true' : 'false',
-    card_collection__with_images: withImages ? 'true' : 'false',
-    card_collection__cards: items,
-    ...profileCardData,
-    ...imageData.responsive_images['1x1'],
-  });
-};
-ProfileCardCollection.argTypes = {
-  heading: {
-    name: 'Heading',
-    type: 'string',
+    return cardCollectionTwig({
+      card_collection__source_type: 'profile',
+      card_collection__type: collectionType,
+      card_collection__heading: heading,
+      card_collection__featured: featured ? 'true' : 'false',
+      card_collection__with_images: withImages ? 'true' : 'false',
+      card_collection__cards: items,
+      ...profileCardData,
+      ...imageData.responsive_images['1x1'],
+    });
   },
-  withImages: {
-    name: 'With Images',
-    type: 'boolean',
+
+  argTypes: {
+    heading: {
+      name: 'Heading',
+      type: 'string',
+    },
+    withImages: {
+      name: 'With Images',
+      type: 'boolean',
+    },
   },
 };
 
-export const DirectoryListingCardCollection = ({ featured, heading }) => {
-  const items = featured ? [1, 2, 3, 4] : [1, 2, 3, 4, 5, 6];
+export const DirectoryListingCardCollection = {
+  render: ({ featured, heading }) => {
+    const items = featured ? [1, 2, 3, 4] : [1, 2, 3, 4, 5, 6];
 
-  return cardCollectionTwig({
-    card_collection__source_type: 'directory-listing',
-    card_collection__type: 'profile-directory',
-    card_collection__heading: 'Directory Listing',
-    card_collection__featured: featured ? 'true' : 'false',
-    card_collection__cards: items,
-    directory_listing_card__heading: heading,
-    ...directoryCardData,
-    ...imageData.responsive_images['1x1'],
-  });
-};
-DirectoryListingCardCollection.argTypes = {
-  heading: {
-    name: 'Heading',
-    type: 'string',
+    return cardCollectionTwig({
+      card_collection__source_type: 'directory-listing',
+      card_collection__type: 'profile-directory',
+      card_collection__heading: 'Directory Listing',
+      card_collection__featured: featured ? 'true' : 'false',
+      card_collection__cards: items,
+      directory_listing_card__heading: heading,
+      ...directoryCardData,
+      ...imageData.responsive_images['1x1'],
+    });
   },
-  collectionType: {
-    name: 'Collection Type',
-    type: 'select',
-    options: ['profile-directory'],
+
+  argTypes: {
+    heading: {
+      name: 'Heading',
+      type: 'string',
+    },
+    collectionType: {
+      name: 'Collection Type',
+      type: 'select',
+      options: ['profile-directory'],
+    },
   },
 };

@@ -20,8 +20,10 @@ export default {
   },
 };
 
-export const ComponentWrapper = ({ componentWidth }) => {
-  return componentWrapperTwig({
-    component_width: componentWidth,
-  });
+export const ComponentWrapper = {
+  render: ({ componentWidth }) => {
+    return componentWrapperTwig({
+      component_width: componentWidth,
+    });
+  },
 };

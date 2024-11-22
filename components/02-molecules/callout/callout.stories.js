@@ -50,47 +50,49 @@ export default {
   },
 };
 
-export const Callout = ({
-  heading,
-  text,
-  linkText,
-  linkType,
-  backgroundColor,
-  calloutAlignment,
-}) => `
-  <h2>One Callout</h2>
-  ${calloutTwig({
-    callout__background_color: backgroundColor,
-    callout__alignment: calloutAlignment,
-    callouts: [
-      {
-        callout__heading: heading,
-        callout__text: text,
-        callout__link__content: linkText,
-        callout__link__url: calloutData.callout__link__url,
-        callout__link__type: linkType,
-      },
-    ],
-  })}
-  <h2>Two Callouts</h2>
-  ${calloutTwig({
-    callout__background_color: backgroundColor,
-    callout__alignment: calloutAlignment,
-    callouts: [
-      {
-        callout__heading: heading,
-        callout__text: text,
-        callout__link__content: linkText,
-        callout__link__url: calloutData.callout__link__url,
-        callout__link__type: linkType,
-      },
-      {
-        callout__heading: calloutData.callout__heading,
-        callout__text: calloutData.callout__text,
-        callout__link__content: calloutData.callout__link__content,
-        callout__link__url: calloutData.callout__link__url,
-        callout__link__type: linkType,
-      },
-    ],
-  })}
-`;
+export const Callout = {
+  render: ({
+    heading,
+    text,
+    linkText,
+    linkType,
+    backgroundColor,
+    calloutAlignment,
+  }) => `
+    <h2>One Callout</h2>
+    ${calloutTwig({
+      callout__background_color: backgroundColor,
+      callout__alignment: calloutAlignment,
+      callouts: [
+        {
+          callout__heading: heading,
+          callout__text: text,
+          callout__link__content: linkText,
+          callout__link__url: calloutData.callout__link__url,
+          callout__link__type: linkType,
+        },
+      ],
+    })}
+    <h2>Two Callouts</h2>
+    ${calloutTwig({
+      callout__background_color: backgroundColor,
+      callout__alignment: calloutAlignment,
+      callouts: [
+        {
+          callout__heading: heading,
+          callout__text: text,
+          callout__link__content: linkText,
+          callout__link__url: calloutData.callout__link__url,
+          callout__link__type: linkType,
+        },
+        {
+          callout__heading: calloutData.callout__heading,
+          callout__text: calloutData.callout__text,
+          callout__link__content: calloutData.callout__link__content,
+          callout__link__url: calloutData.callout__link__url,
+          callout__link__type: linkType,
+        },
+      ],
+    })}
+  `,
+};

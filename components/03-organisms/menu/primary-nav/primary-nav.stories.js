@@ -37,8 +37,10 @@ export default {
   },
 };
 
-export const PrimaryNav = ({ siteHeaderTheme, menuVariation }) => `
-  <div style="position: relative; padding-top: var(--size-spacing-site-gutter);" data-site-header-nav-position='left' data-component-width="max" data-header-theme="${siteHeaderTheme}">
-    ${primaryNavTwig({ ...primaryNavData, menu__variation: menuVariation })}
-  </div>
-`;
+export const PrimaryNav = {
+  render: ({ siteHeaderTheme, menuVariation }) => `
+    <div style="position: relative; padding-top: var(--size-spacing-site-gutter);" data-site-header-nav-position='left' data-component-width="max" data-header-theme="${siteHeaderTheme}">
+      ${primaryNavTwig({ ...primaryNavData, menu__variation: menuVariation })}
+    </div>
+  `,
+};

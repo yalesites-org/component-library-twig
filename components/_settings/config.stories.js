@@ -238,89 +238,91 @@ ${ctaTwig({
 })}
 `;
 
-export const GlobalConfig = ({
-  dividerPosition,
-  thickness,
-  dividerColor,
-  dividerWidth,
-  actionColor,
-  primaryNavPosition,
-  siteHeaderTheme,
-  siteHeaderAccent,
-  siteHeaderImage,
-  siteHeaderSiteNameImage,
-  headerBorderThickness,
-  siteFooterTheme,
-  siteFooterAccent,
-  footerBorderThickness,
-  menuVariation,
-  allowAnimatedItems,
-  siteFooterVariation,
-}) => {
-  const root = document.documentElement;
-  const customProperties = {
-    '--thickness-theme-divider': `var(--size-thickness-${thickness})`,
-    '--width-theme-divider': `var(--layout-width-${dividerWidth})`,
-    '--color-theme-divider': `var(--color-${dividerColor})`,
-    '--position-theme-divider': `var(--layout-flex-position-${dividerPosition})`,
-    '--color-theme-action': `var(--color-${actionColor})`,
-  };
-  const dataAttributes = {
-    'yds-cl-twig-menu-variation': menuVariation,
-    'yds-cl-twig-primary-nav-position': primaryNavPosition,
-    'yds-cl-twig-site-header-theme': siteHeaderTheme,
-    'yds-cl-twig-site-header-accent': siteHeaderAccent,
-    'yds-cl-twig-header-border-thickness': headerBorderThickness,
-    'yds-cl-twig-site-footer-theme': siteFooterTheme,
-    'yds-cl-twig-site-footer-accent': siteFooterAccent,
-    'yds-cl-twig-footer-border-thickness': footerBorderThickness,
-    'yds-cl-twig-animate-items': allowAnimatedItems,
-    'yds-cl-twig-site-footer-variation': siteFooterVariation,
-  };
-
-  // Set properties that are stored as custom properties to the root element.
-  // @TODO: Ideally these would also live in local storage so that they persist
-  // page refreshes.
-  Object.entries(customProperties).forEach((entry) => {
-    const [key, value] = entry;
-    root.style.setProperty(key, value);
-  });
-
-  // Set properties that are stored as data-attributes to localStorage.
-  setAttributes(dataAttributes);
-
-  return `
-  <script>
-    window.resetAttributes = () => {
-      Object.keys(localStorage).forEach((key) => {
-        if (key.substring(0, 12) === 'yds-cl-twig-') {
-          localStorage.removeItem(key);
-        }
-      });
-
-      location.reload();
+export const GlobalConfig = {
+  render: ({
+    dividerPosition,
+    thickness,
+    dividerColor,
+    dividerWidth,
+    actionColor,
+    primaryNavPosition,
+    siteHeaderTheme,
+    siteHeaderAccent,
+    siteHeaderImage,
+    siteHeaderSiteNameImage,
+    headerBorderThickness,
+    siteFooterTheme,
+    siteFooterAccent,
+    footerBorderThickness,
+    menuVariation,
+    allowAnimatedItems,
+    siteFooterVariation,
+  }) => {
+    const root = document.documentElement;
+    const customProperties = {
+      '--thickness-theme-divider': `var(--size-thickness-${thickness})`,
+      '--width-theme-divider': `var(--layout-width-${dividerWidth})`,
+      '--color-theme-divider': `var(--color-${dividerColor})`,
+      '--position-theme-divider': `var(--layout-flex-position-${dividerPosition})`,
+      '--color-theme-action': `var(--color-${actionColor})`,
     };
-  </script>
+    const dataAttributes = {
+      'yds-cl-twig-menu-variation': menuVariation,
+      'yds-cl-twig-primary-nav-position': primaryNavPosition,
+      'yds-cl-twig-site-header-theme': siteHeaderTheme,
+      'yds-cl-twig-site-header-accent': siteHeaderAccent,
+      'yds-cl-twig-header-border-thickness': headerBorderThickness,
+      'yds-cl-twig-site-footer-theme': siteFooterTheme,
+      'yds-cl-twig-site-footer-accent': siteFooterAccent,
+      'yds-cl-twig-footer-border-thickness': footerBorderThickness,
+      'yds-cl-twig-animate-items': allowAnimatedItems,
+      'yds-cl-twig-site-footer-variation': siteFooterVariation,
+    };
 
-  ${configTwig({
-    site_name: 'Global Settings',
-    config_page__intro: intro,
-    site_animate_components: allowAnimatedItems,
-    primary_nav__items: primaryNavData.items,
-    site_header__branding_link: 'https://www.yale.edu',
-    site_header__menu__variation: menuVariation,
-    site_header__background_image: siteHeaderImage,
-    site_header__site_name_is_image: siteHeaderSiteNameImage,
-    site_header__border_thickness: headerBorderThickness,
-    site_header__nav_position: primaryNavPosition,
-    site_header__theme: siteHeaderTheme,
-    site_header__accent: siteHeaderAccent,
-    site_footer__variation: siteFooterVariation,
-    site_footer__border_thickness: footerBorderThickness,
-    site_footer__theme: siteFooterTheme,
-    site_footer__accent: siteFooterAccent,
-    ...tabsData,
-    ...imageData.responsive_images['16x9'],
-  })}
-  `;
+    // Set properties that are stored as custom properties to the root element.
+    // @TODO: Ideally these would also live in local storage so that they persist
+    // page refreshes.
+    Object.entries(customProperties).forEach((entry) => {
+      const [key, value] = entry;
+      root.style.setProperty(key, value);
+    });
+
+    // Set properties that are stored as data-attributes to localStorage.
+    setAttributes(dataAttributes);
+
+    return `
+    <script>
+      window.resetAttributes = () => {
+        Object.keys(localStorage).forEach((key) => {
+          if (key.substring(0, 12) === 'yds-cl-twig-') {
+            localStorage.removeItem(key);
+          }
+        });
+
+        location.reload();
+      };
+    </script>
+
+    ${configTwig({
+      site_name: 'Global Settings',
+      config_page__intro: intro,
+      site_animate_components: allowAnimatedItems,
+      primary_nav__items: primaryNavData.items,
+      site_header__branding_link: 'https://www.yale.edu',
+      site_header__menu__variation: menuVariation,
+      site_header__background_image: siteHeaderImage,
+      site_header__site_name_is_image: siteHeaderSiteNameImage,
+      site_header__border_thickness: headerBorderThickness,
+      site_header__nav_position: primaryNavPosition,
+      site_header__theme: siteHeaderTheme,
+      site_header__accent: siteHeaderAccent,
+      site_footer__variation: siteFooterVariation,
+      site_footer__border_thickness: footerBorderThickness,
+      site_footer__theme: siteFooterTheme,
+      site_footer__accent: siteFooterAccent,
+      ...tabsData,
+      ...imageData.responsive_images['16x9'],
+    })}
+    `;
+  },
 };

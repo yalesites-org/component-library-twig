@@ -78,31 +78,33 @@ export default {
   },
 };
 
-export const ContentSpotlightLandscape = ({
-  width,
-  position,
-  focus,
-  overline,
-  heading,
-  subheading,
-  text,
-  linkContent,
-  linkTwoContent,
-  componentTheme,
-}) =>
-  textWithImageTwig({
-    ...imageData.responsive_images['3x2'],
-    text_with_image__theme: componentTheme,
-    text_with_image__width: width,
-    text_with_image__position: position,
-    text_with_image__focus: focus,
-    text_with_image__overline: overline,
-    text_with_image__heading: heading,
-    text_with_image__subheading: subheading,
-    text_with_image__text: text,
-    text_with_image__link__content: linkContent,
-    text_with_image__link__url: textWithImageData.text_with_image__link__url,
-    text_with_image__link_two__content: linkTwoContent,
-    text_with_image__link_two__url:
-      textWithImageData.text_with_image__link_two__url,
-  });
+export const ContentSpotlightLandscape = {
+  render: ({
+    width,
+    position,
+    focus,
+    overline,
+    heading,
+    subheading,
+    text,
+    linkContent,
+    linkTwoContent,
+    componentTheme,
+  }) =>
+    textWithImageTwig({
+      ...imageData.responsive_images['3x2'],
+      text_with_image__theme: componentTheme,
+      text_with_image__width: width,
+      text_with_image__position: position,
+      text_with_image__focus: focus,
+      text_with_image__overline: overline,
+      text_with_image__heading: heading,
+      text_with_image__subheading: subheading,
+      text_with_image__text: text,
+      text_with_image__link__content: linkContent,
+      text_with_image__link__url: textWithImageData.text_with_image__link__url,
+      text_with_image__link_two__content: linkTwoContent,
+      text_with_image__link_two__url:
+        textWithImageData.text_with_image__link_two__url,
+    }),
+};

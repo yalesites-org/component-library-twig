@@ -41,18 +41,20 @@ export default {
   },
 };
 
-export const customCard = ({ heading, snippet, withImage, featured }) => `
-  <div class='custom-card-collection' data-component-width='site' data-collection-featured="${featured}">
-    <div class='custom-card-collection__inner'>
-      <ul class='custom-card-collection__cards'>
-        ${customCardTwig({
-          ...imageData.responsive_images['3x2'],
-          custom_card__heading: heading,
-          custom_card__snippet: snippet,
-          custom_card__url: 'https://google.com',
-          custom_card__image: withImage ? 'true' : 'false',
-        })}
-      </ul>
+export const customCard = {
+  render: ({ heading, snippet, withImage, featured }) => `
+    <div class='custom-card-collection' data-component-width='site' data-collection-featured="${featured}">
+      <div class='custom-card-collection__inner'>
+        <ul class='custom-card-collection__cards'>
+          ${customCardTwig({
+            ...imageData.responsive_images['3x2'],
+            custom_card__heading: heading,
+            custom_card__snippet: snippet,
+            custom_card__url: 'https://google.com',
+            custom_card__image: withImage ? 'true' : 'false',
+          })}
+        </ul>
+      </div>
     </div>
-  </div>
-`;
+  `,
+};

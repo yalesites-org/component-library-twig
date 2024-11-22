@@ -34,11 +34,13 @@ export default {
   },
 };
 
-export const video = ({ heading, text, placement }) =>
-  videoTwig({
-    ...videoData,
-    video__heading: heading,
-    video__text: text,
-    video__alignment: placement,
-    video__width: 'site',
-  });
+export const video = {
+  render: ({ heading, text, placement }) =>
+    videoTwig({
+      ...videoData,
+      video__heading: heading,
+      video__text: text,
+      video__alignment: placement,
+      video__width: 'site',
+    }),
+};

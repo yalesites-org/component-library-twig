@@ -26,22 +26,26 @@ export default {
   },
 };
 
-export const ImageGrid = ({ gridHeading }) => {
-  return mediaGridTwig({
-    ...mediaGridData,
-    media_grid__heading: gridHeading,
-  });
+export const ImageGrid = {
+  render: ({ gridHeading }) => {
+    return mediaGridTwig({
+      ...mediaGridData,
+      media_grid__heading: gridHeading,
+    });
+  },
 };
 
-export const InteractiveGrid = ({ gridHeading }) => `
-  ${mediaGridTwig({
-    ...mediaGridData,
-    media_grid__variation: 'interactive',
-    media_grid__heading: gridHeading,
-  })}
-  ${mediaGridTwig({
-    ...mediaGridData,
-    media_grid__variation: 'interactive',
-    media_grid__heading: gridHeading,
-  })}
-`;
+export const InteractiveGrid = {
+  render: ({ gridHeading }) => `
+    ${mediaGridTwig({
+      ...mediaGridData,
+      media_grid__variation: 'interactive',
+      media_grid__heading: gridHeading,
+    })}
+    ${mediaGridTwig({
+      ...mediaGridData,
+      media_grid__variation: 'interactive',
+      media_grid__heading: gridHeading,
+    })}
+  `,
+};

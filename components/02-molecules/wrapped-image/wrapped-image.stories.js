@@ -35,17 +35,19 @@ export default {
   },
 };
 
-export const WrappedImage = ({ caption, imageAlignment, imageStyle }) => `
-  ${textFieldTwig({
-    text_field__content: WrappedImageData.text_one,
-    text_field__width: 'site',
-    text_field__alignment: 'left',
-  })}
-  ${wrappedImageTwig({
-    ...imageData.responsive_images['3x2'],
-    wrapped_image__caption: caption,
-    wrapped_image__alignment: imageAlignment,
-    wrapped_image__style: imageStyle,
-    wrapped_image__content: WrappedImageData.text_two,
-  })}
-`;
+export const WrappedImage = {
+  render: ({ caption, imageAlignment, imageStyle }) => `
+    ${textFieldTwig({
+      text_field__content: WrappedImageData.text_one,
+      text_field__width: 'site',
+      text_field__alignment: 'left',
+    })}
+    ${wrappedImageTwig({
+      ...imageData.responsive_images['3x2'],
+      wrapped_image__caption: caption,
+      wrapped_image__alignment: imageAlignment,
+      wrapped_image__style: imageStyle,
+      wrapped_image__content: WrappedImageData.text_two,
+    })}
+  `,
+};

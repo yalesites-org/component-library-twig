@@ -33,12 +33,14 @@ export default {
   },
 };
 
-export const quickLinks = ({ heading, description, variation, image }) =>
-  quickLinksTwig({
-    ...quickLinksData,
-    ...imageData.responsive_images['16x9'],
-    quick_links__heading: heading,
-    quick_links__description: description,
-    quick_links__variation: variation,
-    quick_links__image: image,
-  });
+export const quickLinks = {
+  render: ({ heading, description, variation, image }) =>
+    quickLinksTwig({
+      ...quickLinksData,
+      ...imageData.responsive_images['16x9'],
+      quick_links__heading: heading,
+      quick_links__description: description,
+      quick_links__variation: variation,
+      quick_links__image: image,
+    }),
+};

@@ -44,74 +44,79 @@ ${ctaTwig({
 })}
 `;
 
-export const Alert = ({ type, heading, content, linkContent }) => `
-<script>
-  const resetAlerts = () => {
-    Object.keys(localStorage).forEach((key) => {
-      if (key.substring(0, 12) === 'ys-alert-id-') {
-        localStorage.removeItem(key);
-      }
-    });
+export const Alert = {
+  render: ({ type, heading, content, linkContent }) => `
+  <script>
+    const resetAlerts = () => {
+      Object.keys(localStorage).forEach((key) => {
+        if (key.substring(0, 12) === 'ys-alert-id-') {
+          localStorage.removeItem(key);
+        }
+      });
 
-    location.reload();
-  };
-</script>
-${alertTwig({
-  alert__type: type,
-  alert__heading: heading,
-  alert__content: content,
-  alert__link__content: linkContent,
-  alert__link__url: alertData.alert__link__url,
-  alert__id: '123',
-})}<br />
-${textFieldTwig({
-  text_field__content: alertResetInstructions,
-})}`;
-Alert.argTypes = {
-  type: {
-    name: 'Alert Type',
-    type: 'select',
-    options: ['emergency', 'announcement', 'marketing'],
-    defaultValue: 'announcement',
+      location.reload();
+    };
+  </script>
+  ${alertTwig({
+    alert__type: type,
+    alert__heading: heading,
+    alert__content: content,
+    alert__link__content: linkContent,
+    alert__link__url: alertData.alert__link__url,
+    alert__id: '123',
+  })}<br />
+  ${textFieldTwig({
+    text_field__content: alertResetInstructions,
+  })}`,
+
+  argTypes: {
+    type: {
+      name: 'Alert Type',
+      type: 'select',
+      options: ['emergency', 'announcement', 'marketing'],
+      defaultValue: 'announcement',
+    },
   },
 };
 
-export const AlertExamples = ({ heading, content, linkContent }) => `
-<script>
-  const resetAlerts = () => {
-    Object.keys(localStorage).forEach((key) => {
-      if (key.substring(0, 12) === 'ys-alert-id-') {
-        localStorage.removeItem(key);
-      }
-    });
+export const AlertExamples = {
+  render: ({ heading, content, linkContent }) => `
+  <script>
+    const resetAlerts = () => {
+      Object.keys(localStorage).forEach((key) => {
+        if (key.substring(0, 12) === 'ys-alert-id-') {
+          localStorage.removeItem(key);
+        }
+      });
 
-    location.reload();
-  };
-</script>
-${alertTwig({
-  alert__type: 'emergency',
-  alert__heading: heading,
-  alert__content: content,
-  alert__link__content: linkContent,
-  alert__link__url: alertData.alert__link__url,
-  alert__id: '234',
-})}
-${alertTwig({
-  alert__type: 'announcement',
-  alert__heading: heading,
-  alert__content: content,
-  alert__link__content: linkContent,
-  alert__link__url: alertData.alert__link__url,
-  alert__id: '345',
-})}
-${alertTwig({
-  alert__type: 'marketing',
-  alert__heading: heading,
-  alert__content: content,
-  alert__link__content: linkContent,
-  alert__link__url: '#',
-  alert__id: '456',
-})}<br />
-${textFieldTwig({
-  text_field__content: alertResetInstructions,
-})}`;
+      location.reload();
+    };
+  </script>
+  ${alertTwig({
+    alert__type: 'emergency',
+    alert__heading: heading,
+    alert__content: content,
+    alert__link__content: linkContent,
+    alert__link__url: alertData.alert__link__url,
+    alert__id: '234',
+  })}
+  ${alertTwig({
+    alert__type: 'announcement',
+    alert__heading: heading,
+    alert__content: content,
+    alert__link__content: linkContent,
+    alert__link__url: alertData.alert__link__url,
+    alert__id: '345',
+  })}
+  ${alertTwig({
+    alert__type: 'marketing',
+    alert__heading: heading,
+    alert__content: content,
+    alert__link__content: linkContent,
+    alert__link__url: '#',
+    alert__id: '456',
+  })}<br />
+  ${textFieldTwig({
+    text_field__content: alertResetInstructions,
+  })}`,
+};
