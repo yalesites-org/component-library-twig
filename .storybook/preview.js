@@ -49,8 +49,7 @@ export const globalTypes = {
   }
 }
 
-export const tags = ['autodocs', 'autodocs'];
+export const tags = ['!autodocs'];
 export const parameters = {
-  actions: { argTypesRegex: '^on.*' },
   controls: { disableSaveFromUI: true },
 };
