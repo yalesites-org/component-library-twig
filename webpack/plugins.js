@@ -30,11 +30,10 @@ const SpriteLoaderPlugin = new _SpriteLoaderPlugin({
 
 const ProgressPlugin = new webpack.ProgressPlugin();
 
-const CopyWebpackPlugin = new _CopyWebpackPlugin({
-  patterns: [{
+const CopyWebpackPlugin = new _CopyWebpackPlugin([{
   from: './fonts',
   to: './fonts',
-}]});
+}]);
 
 module.exports = {
   ProgressPlugin,
