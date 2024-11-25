@@ -1,0 +1,24 @@
+{#
+ # In this file, we're checking `if directory` in order to determine if the
+ # active environment is a Drupal site. We need to do this because Drupal's
+ # drag-and-drop interface needs specific attributes on the wrapper elements
+ # that would not make sense, or even cause errors in environments like
+ # Storybook.
+ #}
+
+{% set fifty_fifty__base_class = 'yds-fifty-fifty' %}
+
+<div {{ bem(fifty_fifty__base_class) }} data-component-width='site' data-embedded-components data-component-has-divider='{{layout_divider|default('false')}}' data-component-theme="{{component_theme|default('default')}}">
+  <div {{ bem('inner', [], fifty_fifty__base_class) }}>
+      <div {{ bem('primary', [], fifty_fifty__base_class) }}>
+      {% block fifty_fifty__primary %}
+        {{ content.primary }}
+      {% endblock %}
+    </div>
+    <div {{ bem('secondary', [], fifty_fifty__base_class) }}>
+      {% block fifty_fifty__secondary %}
+        {{ content.secondary }}
+      {% endblock %}
+    </div>
+  </div>
+</div>

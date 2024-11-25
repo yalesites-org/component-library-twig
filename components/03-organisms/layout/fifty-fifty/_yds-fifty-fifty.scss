@@ -1,0 +1,179 @@
+@use '../../../00-tokens/tokens';
+@use '../../../00-tokens/functions/map';
+@use '../../../01-atoms/atoms';
+@use '../../grid-mixins' as grid;
+
+$global-fifty-fifty-themes: map.deep-get(tokens.$tokens, 'global-themes');
+$fifty-fifty-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
+$break-layout-fifty-fifty: tokens.$break-2xl;
+$break-layout-fifty-fifty-max: $break-layout-fifty-fifty - 0.05;
+
+.yds-fifty-fifty {
+  @include tokens.spacing-page-section;
+
+  // Component themes defaults: iterate over each component theme to establish
+  // default variables.
+  @each $theme, $value in $fifty-fifty-component-themes {
+    &[data-component-theme='#{$theme}'] {
+      // prettier-ignore
+      --color-slot-one: var(--component-themes-#{$theme}-slot-one);
+      --color-slot-two: var(--component-themes-#{$theme}-slot-two);
+      --color-slot-three: var(--component-themes-#{$theme}-slot-three);
+      --color-slot-four: var(--component-themes-#{$theme}-slot-four);
+      --color-slot-five: var(--component-themes-#{$theme}-slot-five);
+      --color-slot-six: var(--component-themes-#{$theme}-slot-six);
+      --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
+      --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
+      --color-fifty-fifty-theme: var(--color-slot-one);
+      --color-fifty-fifty-content: var(--color-slot-eight);
+
+      background-color: var(--color-fifty-fifty-theme);
+      color: var(--color-fifty-fifty-content);
+
+      .link,
+      a,
+      facts-and-figures__group_content {
+        --color-text-shadow: var(--color-fifty-fifty-theme);
+        --color-link-hover: var(--color-link-hover);
+      }
+
+      a:not([data-link-style]) {
+        @include atoms.link;
+
+        color: var(--color-link-base);
+
+        &:hover {
+          color: var(--color-fifty-fifty-content);
+        }
+      }
+    }
+  }
+
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
+  @each $globalTheme, $value in $global-fifty-fifty-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
+      --color-slot-three: var(
+        --global-themes-#{$globalTheme}-colors-slot-three
+      );
+      --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-slot-six: var(--global-themes-#{$globalTheme}-colors-slot-six);
+      --color-slot-seven: var(
+        --global-themes-#{$globalTheme}-colors-slot-seven
+      );
+      --color-slot-eight: var(
+        --global-themes-#{$globalTheme}-colors-slot-eight
+      );
+
+      @if $globalTheme == 'four' {
+        // Switch colors slot in order to have the selected background colors per component theme.
+        --color-slot-two: var(--global-themes-four-colors-slot-five);
+        --color-slot-five: var(--global-themes-four-colors-slot-two);
+
+        // Set color slot for the text on light background.
+        --color-slot-seven: var(--global-themes-four-colors-slot-six);
+      }
+    }
+  }
+
+  // Component theme overrides: set specific component themes overrides
+  /// define component name spaced variables and map them to global theme slots.
+  &[data-component-theme='one'] {
+    --color-fifty-fifty-theme: var(--color-slot-one);
+    --color-fifty-fifty-content: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
+    --color-link-base: var(--color-slot-eight);
+    --color-link-hover: var(--color-slot-eight);
+  }
+
+  &[data-component-theme='two'] {
+    --color-fifty-fifty-theme: var(--color-slot-four);
+    --color-fifty-fifty-content: var(--color-slot-seven);
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
+    --color-heading: var(--color-slot-six);
+  }
+
+  &[data-component-theme='three'] {
+    --color-fifty-fifty-theme: var(--color-slot-five);
+    --color-fifty-fifty-content: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
+    --color-link-base: var(--color-slot-eight);
+    --color-link-hover: var(--color-slot-eight);
+  }
+
+  &[data-component-theme='four'] {
+    --color-fifty-fifty-theme: var(--color-slot-two);
+    --color-fifty-fifty-content: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
+    --color-heading: var(--color-slot-six);
+
+    [data-global-theme='four'] & {
+      --color-fifty-fifty-theme: var(--component-themes-five-background);
+      --color-fifty-fifty-content: var(--color-slot-seven);
+    }
+  }
+}
+
+.yds-fifty-fifty__inner {
+  padding-block-start: var(--size-spacing-10);
+  padding-block-end: var(--size-spacing-10);
+
+  @media (min-width: $break-layout-fifty-fifty) {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--spacing-page-inner);
+  }
+
+  // Flex sets `min-width` of children to `auto` by default... but this breaks
+  // some of our base layout styles (causes horizontal scrolling), so we need to
+  // reset it to `0`.
+  > * {
+    min-width: 0;
+
+    // Then, some of our components that are intended to be "full-page-width"
+    // will expand outside of the layout columns, so we need to set a max-width
+    // on those to keep them contained within the section columns.
+    > * {
+      max-width: 100%;
+    }
+  }
+}
+
+.yds-fifty-fifty__primary {
+  @media (max-width: $break-layout-fifty-fifty-max) {
+    margin-bottom: var(--spacing-page-inner);
+  }
+
+  @media (min-width: $break-layout-fifty-fifty) {
+    flex: 0 1 calc(var(--size-component-layout-width-site) / 2);
+  }
+}
+
+.yds-fifty-fifty__secondary {
+  display: flex;
+
+  @media (min-width: $break-layout-fifty-fifty) {
+    flex: 0 1 calc(var(--size-component-layout-width-site) / 2);
+  }
+
+  [data-component-has-divider='true'] & {
+    @media (min-width: $break-layout-fifty-fifty) {
+      &::before {
+        content: '';
+        border-left: var(--border-thickness-2) solid var(--color-gray-300);
+        align-self: stretch;
+        padding-left: var(--spacing-page-inner);
+      }
+    }
+  }
+}
