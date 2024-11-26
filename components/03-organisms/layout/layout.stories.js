@@ -27,7 +27,7 @@ export default {
     layoutOption: {
       name: 'Layout',
       type: 'select',
-      options: ['fifty-fifty', 'thirty-thirty-thirty'],
+      options: ['fifty-fifty', 'thirty-thirty-thirty', 'two-thirds-one-thirds'],
       control: { type: 'select' },
     },
     theme: {
