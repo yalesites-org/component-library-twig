@@ -154,6 +154,12 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   align-self: stretch;
   background-color: var(--color-layout-border);
   width: var(--border-thickness-2);
+
+  @media (max-width: $break-layout-layout-max) {
+    width: 100%;
+    height: var(--border-thickness-2);
+    margin-bottom: var(--spacing-page-inner);
+  }
 }
 
 .yds-layout__primary {
