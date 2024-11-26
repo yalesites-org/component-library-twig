@@ -1,6 +1,6 @@
 // Markup.
 import twoColumnTwig from './two-column/_two-column--example.twig';
-import fiftyFiftyTwig from './fifty-fifty/_fifty-fifty--example.twig';
+import layoutTwig from './layout/_layout--example.twig';
 
 // Data files
 import textData from '../../02-molecules/text/text-field.yml';
@@ -12,7 +12,7 @@ import '../../02-molecules/accordion/yds-accordion';
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Layout/Two Column',
+  title: 'Organisms/Layouts',
   parameters: {
     layout: 'fullscreen',
   },
@@ -20,6 +20,12 @@ export default {
     divider: {
       name: 'Divider',
       type: 'boolean',
+    },
+    layoutOption: {
+      name: 'Layout',
+      type: 'select',
+      options: ['fifty-fifty', 'thirty'],
+      control: { type: 'select' },
     },
     theme: {
       name: 'Component Theme',
@@ -30,14 +36,17 @@ export default {
   },
   args: {
     divider: false,
+    layout: 'fifty-fifty',
+    theme: 'one',
   },
 };
 
 export const TwoColumn = () => twoColumnTwig(textData);
-export const FiftyFifty = ({ divider, theme }) =>
-  fiftyFiftyTwig({
+export const layout = ({ divider, theme, layoutOption }) =>
+  layoutTwig({
     ...textData,
     ...accordionData,
-    layout_divider: divider,
-    component_theme: theme,
+    layout__divider: divider ? 'true' : 'false',
+    component__theme: theme,
+    component__layout: layoutOption,
   });

@@ -1,0 +1,39 @@
+{#
+ # In this file, we're checking `if directory` in order to determine if the
+ # active environment is a Drupal site. We need to do this because Drupal's
+ # drag-and-drop interface needs specific attributes on the wrapper elements
+ # that would not make sense, or even cause errors in environments like
+ # Storybook.
+ #}
+
+{% set layout__base_class = 'yds-layout' %}
+
+{% set layout__attributes = {
+  'data-component-has-divider': layout__divider == 'true' ? 'true' : 'false',
+  'data-component-theme': component__theme|default('default'),
+  'data-component-layout': component__layout|default('fifty-fifty'),
+  'data-component-width': component__width|default('site'),
+  'class': bem(layout__base_class),
+} %}
+
+<div {{ add_attributes(layout__attributes) }} data-embedded-components>
+  <div {{ bem('inner', [], layout__base_class) }}>
+    <div {{ bem('primary', [], layout__base_class) }}>
+      {% block layout__primary %}
+        {{ content.primary }}
+      {% endblock %}
+    </div>
+    <div {{ bem('secondary', [], layout__base_class) }}>
+      {% block layout__secondary %}
+        {{ content.secondary }}
+      {% endblock %}
+    </div>
+    {% if component__layout == 'thirty' %}
+      <div {{ bem('tertiary', [], layout__base_class) }}>
+        {% block layout__tertiary %}
+          {{ content.tertiary }}
+        {% endblock %}
+      </div>
+    {% endif %}
+  </div>
+</div>

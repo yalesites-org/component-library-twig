@@ -3,17 +3,17 @@
 @use '../../../01-atoms/atoms';
 @use '../../grid-mixins' as grid;
 
-$global-fifty-fifty-themes: map.deep-get(tokens.$tokens, 'global-themes');
-$fifty-fifty-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
-$break-layout-fifty-fifty: tokens.$break-2xl;
-$break-layout-fifty-fifty-max: $break-layout-fifty-fifty - 0.05;
+$global-layout-themes: map.deep-get(tokens.$tokens, 'global-themes');
+$layout-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
+$break-layout-layout: tokens.$break-2xl;
+$break-layout-layout-max: $break-layout-layout - 0.05;
 
-.yds-fifty-fifty {
+.yds-layout {
   @include tokens.spacing-page-section;
 
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
-  @each $theme, $value in $fifty-fifty-component-themes {
+  @each $theme, $value in $layout-component-themes {
     &[data-component-theme='#{$theme}'] {
       // prettier-ignore
       --color-slot-one: var(--component-themes-#{$theme}-slot-one);
@@ -24,16 +24,15 @@ $break-layout-fifty-fifty-max: $break-layout-fifty-fifty - 0.05;
       --color-slot-six: var(--component-themes-#{$theme}-slot-six);
       --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
       --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
-      --color-fifty-fifty-theme: var(--color-slot-one);
-      --color-fifty-fifty-content: var(--color-slot-eight);
+      --color-layout-theme: var(--color-slot-one);
+      --color-layout-content: var(--color-slot-eight);
 
-      background-color: var(--color-fifty-fifty-theme);
-      color: var(--color-fifty-fifty-content);
+      background-color: var(--color-layout-theme);
+      color: var(--color-layout-content);
 
       .link,
-      a,
-      facts-and-figures__group_content {
-        --color-text-shadow: var(--color-fifty-fifty-theme);
+      a {
+        --color-text-shadow: var(--color-layout-theme);
         --color-link-hover: var(--color-link-hover);
       }
 
@@ -43,7 +42,7 @@ $break-layout-fifty-fifty-max: $break-layout-fifty-fifty - 0.05;
         color: var(--color-link-base);
 
         &:hover {
-          color: var(--color-fifty-fifty-content);
+          color: var(--color-layout-content);
         }
       }
     }
@@ -53,7 +52,7 @@ $break-layout-fifty-fifty-max: $break-layout-fifty-fifty - 0.05;
   // This establishes `--color-slot-` variables name-spaced to the selector
   // in which it is used. We can map component-level variables to global-level
   // `--color-slot-` variables.
-  @each $globalTheme, $value in $global-fifty-fifty-themes {
+  @each $globalTheme, $value in $global-layout-themes {
     [data-global-theme='#{$globalTheme}'] & {
       --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
       --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
@@ -84,8 +83,8 @@ $break-layout-fifty-fifty-max: $break-layout-fifty-fifty - 0.05;
   // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
-    --color-fifty-fifty-theme: var(--color-slot-one);
-    --color-fifty-fifty-content: var(--color-slot-eight);
+    --color-layout-theme: var(--color-slot-one);
+    --color-layout-content: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
     --color-link-base: var(--color-slot-eight);
@@ -93,16 +92,16 @@ $break-layout-fifty-fifty-max: $break-layout-fifty-fifty - 0.05;
   }
 
   &[data-component-theme='two'] {
-    --color-fifty-fifty-theme: var(--color-slot-four);
-    --color-fifty-fifty-content: var(--color-slot-seven);
+    --color-layout-theme: var(--color-slot-four);
+    --color-layout-content: var(--color-slot-seven);
     --color-link-base: var(--color-slot-seven);
     --color-link-hover: var(--color-slot-seven);
     --color-heading: var(--color-slot-six);
   }
 
   &[data-component-theme='three'] {
-    --color-fifty-fifty-theme: var(--color-slot-five);
-    --color-fifty-fifty-content: var(--color-slot-eight);
+    --color-layout-theme: var(--color-slot-five);
+    --color-layout-content: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
     --color-link-base: var(--color-slot-eight);
@@ -110,24 +109,20 @@ $break-layout-fifty-fifty-max: $break-layout-fifty-fifty - 0.05;
   }
 
   &[data-component-theme='four'] {
-    --color-fifty-fifty-theme: var(--color-slot-two);
-    --color-fifty-fifty-content: var(--color-slot-eight);
+    --color-layout-theme: var(--color-slot-two);
+    --color-layout-content: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
-    --color-heading: var(--color-slot-six);
-
-    [data-global-theme='four'] & {
-      --color-fifty-fifty-theme: var(--component-themes-five-background);
-      --color-fifty-fifty-content: var(--color-slot-seven);
-    }
+    --color-link-base: var(--color-slot-eight);
+    --color-link-hover: var(--color-slot-eight);
   }
 }
 
-.yds-fifty-fifty__inner {
+.yds-layout__inner {
   padding-block-start: var(--size-spacing-10);
   padding-block-end: var(--size-spacing-10);
 
-  @media (min-width: $break-layout-fifty-fifty) {
+  @media (min-width: $break-layout-layout) {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -149,25 +144,62 @@ $break-layout-fifty-fifty-max: $break-layout-fifty-fifty - 0.05;
   }
 }
 
-.yds-fifty-fifty__primary {
-  @media (max-width: $break-layout-fifty-fifty-max) {
+.yds-layout__primary {
+  @media (max-width: $break-layout-layout-max) {
     margin-bottom: var(--spacing-page-inner);
   }
 
-  @media (min-width: $break-layout-fifty-fifty) {
-    flex: 0 1 calc(var(--size-component-layout-width-site) / 2);
+  [data-component-layout='fifty-fifty'] & {
+    @media (min-width: $break-layout-layout) {
+      flex: 0 1 calc(var(--size-component-layout-width-site) / 2);
+    }
+  }
+
+  [data-component-layout='thirty'] & {
+    @media (min-width: $break-layout-layout) {
+      flex: 0 1 calc(var(--size-component-layout-width-site) / 3);
+    }
   }
 }
 
-.yds-fifty-fifty__secondary {
+.yds-layout__secondary {
   display: flex;
 
-  @media (min-width: $break-layout-fifty-fifty) {
-    flex: 0 1 calc(var(--size-component-layout-width-site) / 2);
+  [data-component-layout='fifty-fifty'] & {
+    @media (min-width: $break-layout-layout) {
+      flex: 0 1 calc(var(--size-component-layout-width-site) / 2);
+    }
+  }
+
+  [data-component-layout='thirty'] & {
+    @media (min-width: $break-layout-layout) {
+      flex: 0 1 calc(var(--size-component-layout-width-site) / 3);
+    }
   }
 
   [data-component-has-divider='true'] & {
-    @media (min-width: $break-layout-fifty-fifty) {
+    @media (min-width: $break-layout-layout) {
+      &::before {
+        content: '';
+        border-left: var(--border-thickness-2) solid var(--color-gray-300);
+        align-self: stretch;
+        padding-left: var(--spacing-page-inner);
+      }
+    }
+  }
+}
+
+.yds-layout__tertiary {
+  display: flex;
+
+  [data-component-layout='thirty'] & {
+    @media (min-width: $break-layout-layout) {
+      flex: 0 1 calc(var(--size-component-layout-width-site) / 3);
+    }
+  }
+
+  [data-component-has-divider='true'] & {
+    @media (min-width: $break-layout-layout) {
       &::before {
         content: '';
         border-left: var(--border-thickness-2) solid var(--color-gray-300);
