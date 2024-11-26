@@ -6,6 +6,9 @@ import layoutTwig from './layout/_layout--example.twig';
 import textData from '../../02-molecules/text/text-field.yml';
 import accordionData from '../../02-molecules/accordion/accordion.yml';
 
+// Image atom component - generic images for demo
+import imageData from '../../01-atoms/images/image/image.yml';
+
 import '../../02-molecules/accordion/yds-accordion';
 
 /**
@@ -24,7 +27,7 @@ export default {
     layoutOption: {
       name: 'Layout',
       type: 'select',
-      options: ['fifty-fifty', 'thirty'],
+      options: ['fifty-fifty', 'thirty-thirty-thirty'],
       control: { type: 'select' },
     },
     theme: {
@@ -36,7 +39,7 @@ export default {
   },
   args: {
     divider: false,
-    layout: 'fifty-fifty',
+    layoutOption: 'fifty-fifty',
     theme: 'one',
   },
 };
@@ -46,6 +49,7 @@ export const layout = ({ divider, theme, layoutOption }) =>
   layoutTwig({
     ...textData,
     ...accordionData,
+    ...imageData.responsive_images['4x3'],
     layout__divider: divider ? 'true' : 'false',
     component__theme: theme,
     component__layout: layoutOption,
