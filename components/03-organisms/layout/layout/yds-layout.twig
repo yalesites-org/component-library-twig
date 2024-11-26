@@ -23,11 +23,17 @@
         {{ content.primary }}
       {% endblock %}
     </div>
+    {% if layout__divider == 'true' %}
+      <div class="{{ layout__base_class }}__divider"></div>
+    {% endif %}
     <div {{ bem('secondary', [], layout__base_class) }}>
       {% block layout__secondary %}
         {{ content.secondary }}
       {% endblock %}
     </div>
+    {% if layout__divider == 'true' and component__layout == 'thirty-thirty-thirty' %}
+      <div class="{{ layout__base_class }}__divider"></div>
+    {% endif %}
     {% if component__layout == 'thirty-thirty-thirty' %}
       <div {{ bem('tertiary', [], layout__base_class) }}>
         {% block layout__tertiary %}
