@@ -1,9 +1,14 @@
 {#
- # In this file, we're checking `if directory` in order to determine if the
- # active environment is a Drupal site. We need to do this because Drupal's
- # drag-and-drop interface needs specific attributes on the wrapper elements
- # that would not make sense, or even cause errors in environments like
- # Storybook.
+ # Available Variables:
+ # - component__theme (string): 'default' by default
+ # - layout__divider: (boolean) false by default
+ # - component__layout (string): 'fifty-fifty' by default
+ # - component__width (string): 'site' by default 
+
+ # Available Blocks:
+ # - layout_primary
+ # - layout_secondary
+ # - layout_tertiary
  #}
 
 {% set layout__base_class = 'yds-layout' %}
@@ -24,7 +29,7 @@
       {% endblock %}
     </div>
     {% if layout__divider == 'true' %}
-      <div class="{{ layout__base_class }}__divider"></div>
+      <div {{ bem('divider', [], layout__base_class) }}></div>
     {% endif %}
     <div {{ bem('secondary', [], layout__base_class) }}>
       {% block layout__secondary %}
@@ -32,7 +37,7 @@
       {% endblock %}
     </div>
     {% if layout__divider == 'true' and component__layout == 'thirty-thirty-thirty' %}
-      <div class="{{ layout__base_class }}__divider"></div>
+      <div {{ bem('divider', [], layout__base_class) }}></div>
     {% endif %}
     {% if component__layout == 'thirty-thirty-thirty' %}
       <div {{ bem('tertiary', [], layout__base_class) }}>
