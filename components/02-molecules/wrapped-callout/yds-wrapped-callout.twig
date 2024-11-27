@@ -28,7 +28,7 @@
       {# Callout #}
       {% if wrapped_callout__callout %}
         {% include "@atoms/typography/text/yds-text.twig" with {
-          text_field__alignment: 'left', 
+          text_field__alignment: 'left',
           text__content: wrapped_callout__callout,
           text__blockname: wrapped_callout__base_class,
           text__base_class: 'callout',
@@ -37,11 +37,12 @@
       {# Text #}
       {% if wrapped_callout__content %}
         {% include "@atoms/typography/text/yds-text.twig" with {
-          text_field__alignment: 'left', 
+          text_field__alignment: 'left',
           text__content: wrapped_callout__content,
           text__blockname: wrapped_callout__base_class,
           text__base_class: 'content',
         } %}
       {% endif %}
+    </div>
   </div>
 </div>
