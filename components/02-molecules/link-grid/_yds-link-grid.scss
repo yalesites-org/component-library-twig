@@ -110,6 +110,14 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &:first-of-type {
     border-width: var(--size-thickness-4);
   }
+
+  // if used in fifty-fifty layout and min-width 2xl
+  // make the columns 50% width
+  [data-component-layout='fifty-fifty'] & {
+    @media (min-width: tokens.$break-2xl) {
+      flex: 1 1 50%;
+    }
+  }
 }
 
 .link-grid__list-item {
