@@ -15,6 +15,15 @@
 {% set heading__base_class = heading__base_class|default('heading') %}
 
 <h{{ heading__level }} {{ bem(heading__base_class, heading__modifiers, heading__blockname) }}>
+  {% if heading__prefix__icon %}
+    <span {{ bem('prefix-icon', [], heading__base_class) }}>
+      {% include "@atoms/images/icons/_yds-icon.twig" with {
+        icon__name: heading__prefix__icon,
+        icon__modifiers: heading__prefix__icon__modifiers,
+        icon__blockname: heading__prefix__icon__blockname|default(heading__blockname),
+      } %}
+    </span>
+  {% endif %}
   {% if heading__prefix %}
     <span {{ bem('prefix', [], heading__prefix__base_class) }}>
       {{ heading__prefix }}
