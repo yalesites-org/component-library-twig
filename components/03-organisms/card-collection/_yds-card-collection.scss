@@ -6,13 +6,17 @@
 // The collection main wrapper.
 .card-collection {
   @include tokens.spacing-page-section;
+
+  .ys-view & {
+    margin-block-start: 0;
+  }
 }
 
 // The collection heading.
 .card-collection__heading {
   @include tokens.h2-yale-new;
 
-  margin-bottom: var(--spacing-page-section);
+  margin-bottom: var(--size-spacing-7);
 }
 
 // The actual collection of cards.
