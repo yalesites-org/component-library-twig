@@ -68,6 +68,9 @@ PostCardCollection.argTypes = {
     type: 'string',
   },
 };
+PostCardCollection.args = {
+  externalSourceLabel: 'Yale News',
+};
 
 export const EventCardCollection = ({
   heading,

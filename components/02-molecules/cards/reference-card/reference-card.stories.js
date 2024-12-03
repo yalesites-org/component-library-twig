@@ -127,10 +127,12 @@ PostCard.argTypes = {
   externalSourceLabel: {
     name: 'External source label',
     type: 'string',
+    defaultValue: 'Yale News',
   },
 };
 PostCard.args = {
   date: referenceCardData.reference_card__date,
+  externalSourceLabel: 'Yale News',
 };
 
 export const EventCard = ({
