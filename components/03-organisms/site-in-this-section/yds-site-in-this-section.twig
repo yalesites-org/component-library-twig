@@ -1,0 +1,30 @@
+{#
+ # Available Props:
+ # - site_section_wrap__theme
+ # - site_section_wrap__border_thickness
+ # - site_section_wrap__nav_position
+ #
+ # Available Variables
+ # - site_name
+ #
+ # Available Blocks
+ # - site_section_wrap__primary_nav
+ #}
+
+{% set site_section_wrap__base_class = 'in-this-section' %}
+
+{% set site_section_wrap__attributes = {
+  'data-main-menu-state': 'loaded',
+  'data-component-theme': site_section_wrap__theme|default('one'),
+  class: bem(site_section_wrap__base_class),
+} %}
+
+  {% include "@molecules/menu/menu-in-this-section-toggle/yds-menu-in-this-section-toggle.twig" %}
+
+  <div {{ bem('wrap', [], site_section_wrap__base_class) }}>
+    <div {{ bem('secondary-nav', [], site_section_wrap__base_class) }}>
+      {% block site_section_wrap__primary_nav %}
+        {% include "@organisms/menu/secondary-nav/yds-secondary-nav.twig" %}
+      {% endblock %}
+    </div>
+</div>
