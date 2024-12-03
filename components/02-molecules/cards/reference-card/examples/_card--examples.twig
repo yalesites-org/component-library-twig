@@ -1,3 +1,4 @@
+{% set card_collection__show_external_source = card_collection__show_external_source|default(false) %}
 {% if multi_day_event == true %}
   {% set multi_day_text %}
     {% include "@atoms/typography/text/yds-text.twig" with {
@@ -23,6 +24,10 @@
 
 {# Post Card #}
 {% if card_collection__source_type == 'post' %}
+  {% if card_collection__show_external_source == false %}
+    {% set reference_card__external_source_label = null %}
+  {% endif %}
+
   {% set reference_card__overline = reference_card__date__formatted %}
   {# If post, list, and not freatured, hide snippet. #}
   {% if card_collection__type == 'list' and card_collection__featured == 'false' %}

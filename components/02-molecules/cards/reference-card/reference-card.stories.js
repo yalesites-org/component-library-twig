@@ -88,6 +88,7 @@ export const PostCard = ({
   tags,
   showTags,
   showThumbnail,
+  showExternalSource,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -95,6 +96,7 @@ export const PostCard = ({
       ${referenceCardTwig({
         card_collection__source_type: 'post',
         card_collection__type: collectionType,
+        card_collection__show_external_source: showExternalSource,
         ...imageData.responsive_images['3x2'],
         reference_card__date: date,
         reference_card__heading: heading,
@@ -103,6 +105,8 @@ export const PostCard = ({
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referenceCardData.reference_card__url,
         reference_card__categories: categories,
+        reference_card__external_source_label:
+          referenceCardData.reference_card__external_source_label,
         show_categories: showCategories,
         reference_card__tags: tags,
         show_tags: showTags,
@@ -118,6 +122,14 @@ PostCard.argTypes = {
     type: 'string',
     defaultValue: referenceCardData.reference_card__date,
   },
+  showExternalSource: {
+    name: 'Show External Source',
+    type: 'boolean',
+    defaultValue: false,
+  },
+};
+PostCard.args = {
+  showExternalSource: false,
 };
 
 export const EventCard = ({

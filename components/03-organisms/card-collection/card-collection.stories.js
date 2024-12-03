@@ -38,6 +38,7 @@ export const PostCardCollection = ({
   collectionType,
   featured,
   withImages,
+  showExternalSource,
 }) => {
   const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
 
@@ -48,6 +49,7 @@ export const PostCardCollection = ({
     card_collection__featured: featured ? 'true' : 'false',
     card_collection__with_images: withImages ? 'true' : 'false',
     card_collection__cards: items,
+    card_collection__show_external_source: showExternalSource,
     ...postCardData,
     ...imageData.responsive_images['3x2'],
   });
@@ -61,6 +63,14 @@ PostCardCollection.argTypes = {
     name: 'Heading',
     type: 'string',
   },
+  showExternalSource: {
+    name: 'Show External Source',
+    type: 'boolean',
+    defaultValue: false,
+  },
+};
+PostCardCollection.args = {
+  showExternalSource: false,
 };
 
 export const EventCardCollection = ({
