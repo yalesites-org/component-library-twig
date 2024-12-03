@@ -73,6 +73,10 @@ export default {
     collectionType: 'grid',
     featured: true,
     withImage: true,
+    showCategories: false,
+    showPronouns: false,
+    showTags: false,
+    showThumbnail: true,
   },
 };
 
@@ -124,6 +128,9 @@ PostCard.argTypes = {
     name: 'External source label',
     type: 'string',
   },
+};
+PostCard.args = {
+  date: referenceCardData.reference_card__date,
 };
 
 export const EventCard = ({
