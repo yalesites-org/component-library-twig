@@ -19,9 +19,9 @@
   class: bem(site_section_wrap__base_class),
 } %}
 
-  {% include "@molecules/menu/menu-in-this-section-toggle/yds-menu-in-this-section-toggle.twig" %}
+  <div {{add_attributes(site_section_wrap__attributes)}}>
+    {% include "@molecules/menu/menu-in-this-section-toggle/yds-menu-in-this-section-toggle.twig" %}
 
-  <div {{ bem('wrap', [], site_section_wrap__base_class) }}>
     <div {{ bem('secondary-nav', [], site_section_wrap__base_class) }}>
       {% block site_section_wrap__primary_nav %}
         {% include "@organisms/menu/secondary-nav/yds-secondary-nav.twig" %}
