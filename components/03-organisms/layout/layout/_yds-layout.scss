@@ -188,7 +188,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     }
   }
 
-  [data-component-layout='two-thirds-one-thirds'] & {
+  [data-component-layout='seventy-thirty'] & {
     @media (min-width: $break-layout-layout) {
       flex: 1 0 var(--size-component-layout-width-content);
     }
@@ -211,7 +211,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     }
   }
 
-  [data-component-layout='two-thirds-one-thirds'] & {
+  [data-component-layout='seventy-thirty'] & {
     @media (min-width: $break-layout-layout) {
       flex: 0 1 calc(37.5rem + var(--spacing-component-gutter));
     }
@@ -231,21 +231,21 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
 
 // Update font-size for headings based on layout
 h2 {
-  [data-component-layout='two-thirds-one-thirds'] &,
+  [data-component-layout='seventy-thirty'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
     @include tokens.h3-yale-new;
   }
 }
 
 h3 {
-  [data-component-layout='two-thirds-one-thirds'] &,
+  [data-component-layout='seventy-thirty'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
     @include tokens.h4-yale-new;
   }
 }
 
 h4 {
-  [data-component-layout='two-thirds-one-thirds'] &,
+  [data-component-layout='seventy-thirty'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
     @include tokens.h5-yale-new;
   }
