@@ -3,6 +3,7 @@ import siteSectionTwig from './yds-site-in-this-section.twig';
 
 import secondaryNavData from '../menu/secondary-nav/secondary-nav.yml';
 
+import '../menu/secondary-nav/yds-secondary-nav';
 import '../../02-molecules/menu/menu-in-this-section-toggle/yds-menu-in-this-section-toggle';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);

@@ -1,19 +1,13 @@
 @use '../../../00-tokens/tokens';
-@use '../../../00-tokens/functions/map';
 @use '../../../01-atoms/atoms';
 
-$global-secondary-nav-themes: map.deep-get(tokens.$tokens, 'global-themes');
-$secondary-nav-component-themes: map.deep-get(
-  tokens.$tokens,
-  'component-themes'
-);
 $secondary-menu-sub-max-width: 19rem;
 
 @mixin secondary-nav-item-level-0 {
-  font: var(--font-style-nav-secondary-0);
+  font: var(--font-style-nav-primary-0);
   color: var(--color-heading);
   text-align: left;
-  padding: 0 var(--size-spacing-5);
+  padding: var(--size-spacing-3) var(--size-spacing-5);
 
   &[aria-expanded='true'] {
     color: var(--color-navigation-expanded-item);
@@ -31,11 +25,11 @@ $secondary-menu-sub-max-width: 19rem;
     [data-menu-variation='mega'] & {
       border: var(--border-thickness-1) solid transparent;
 
-      .secondary-nav__item--level-0:first-child & {
+      .primary-nav__item--level-0:first-child & {
         padding-left: 0;
       }
 
-      .secondary-nav__item--level-0:last-child & {
+      .primary-nav__item--level-0:last-child & {
         padding-right: 0;
       }
     }
@@ -60,106 +54,16 @@ $secondary-menu-sub-max-width: 19rem;
 
 .secondary-nav {
   position: relative;
-
-  // Component themes defaults: iterate over each component theme to establish
-  // default variables.
-  @each $theme, $value in $secondary-nav-component-themes {
-    &[data-component-theme='#{$theme}'] {
-      // prettier-ignore
-      --color-slot-one: var(--component-themes-#{$theme}-slot-one);
-      --color-slot-two: var(--component-themes-#{$theme}-slot-two);
-      --color-slot-three: var(--component-themes-#{$theme}-slot-three);
-      --color-slot-four: var(--component-themes-#{$theme}-slot-four);
-      --color-slot-five: var(--component-themes-#{$theme}-slot-five);
-      --color-slot-six: var(--component-themes-#{$theme}-slot-six);
-      --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
-      --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
-
-      background-color: var(--color-background);
-
-      .link,
-      a {
-        --color-text-shadow: var(--color-background);
-        --color-link-hover: var(--color-link-hover);
-      }
-
-      a:not([data-link-style]) {
-        @include atoms.link;
-
-        color: var(--color-link-base);
-
-        &:hover {
-          color: var(--color-link-hover);
-        }
-      }
-    }
-  }
-
-  // Global themes: set color slots for each theme
-  // This establishes `--color-slot-` variables name-spaced to the selector
-  // in which it is used. We can map component-level variables to global-level
-  // `--color-slot-` variables.
-  @each $globalTheme, $value in $global-secondary-nav-themes {
-    [data-global-theme='#{$globalTheme}'] & {
-      --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
-      --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
-      --color-slot-three: var(
-        --global-themes-#{$globalTheme}-colors-slot-three
-      );
-      --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
-      --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
-      --color-slot-six: var(--global-themes-#{$globalTheme}-colors-slot-six);
-      --color-slot-seven: var(
-        --global-themes-#{$globalTheme}-colors-slot-seven
-      );
-      --color-slot-eight: var(
-        --global-themes-#{$globalTheme}-colors-slot-eight
-      );
-      --color-heading: var(--color-slot-six);
-      --color-background: var(--color-slot-eight);
-      --color-navigation-border: var(--color-slot-three);
-    }
-  }
-
-  // Component theme overrides: set specific component themes overrides
-  /// define component name spaced variables and map them to global theme slots.
-  [data-component-theme='one'] & {
-    --color-link-visited-base: var(--color-link-visited-light);
-    --color-link-visited-hover: var(--color-link-visited-light-hover);
-    --color-link-base: var(--color-slot-eight);
-    --color-link-hover: var(--color-slot-eight);
-    --color-navigation-border: var(--color-slot-one);
-  }
-
-  [data-component-theme='two'] & {
-    --color-link-base: var(--color-slot-seven);
-    --color-link-hover: var(--color-slot-seven);
-    --color-navigation-border: var(--color-slot-two);
-  }
-
-  [data-component-theme='three'] & {
-    --color-link-visited-base: var(--color-link-visited-light);
-    --color-link-visited-hover: var(--color-link-visited-light-hover);
-    --color-link-base: var(--color-slot-eight);
-    --color-link-hover: var(--color-slot-eight);
-    --color-navigation-border: var(--color-slot-three);
-  }
-
-  [data-component-theme='four'] & {
-    --color-link-visited-base: var(--color-link-visited-light);
-    --color-link-visited-hover: var(--color-link-visited-light-hover);
-    --color-navigation-border: var(--color-slot-four);
-  }
-
-  [data-component-theme='five'] & {
-    --color-secondary-nav-theme: var(--color-slot-three);
-    --color-secondary-nav-content: var(--color-slot-seven);
-    --color-navigation-border: var(--color-slot-five);
-  }
 }
 
 .secondary-nav__menu {
   @include atoms.list-reset;
+
+  [data-secondary-menu-state='closed'] & {
+    @media (max-width: tokens.$break-mobile-max) {
+      visibility: hidden;
+    }
+  }
 
   &--level-0 {
     @media (min-width: tokens.$break-mobile) {
@@ -209,6 +113,42 @@ $secondary-menu-sub-max-width: 19rem;
 
       [aria-expanded='false'] ~ & {
         display: none;
+      }
+    }
+
+    [data-menu-variation='mega'] & {
+      @media (min-width: tokens.$break-mobile) {
+        border: var(--border-thickness-1) solid var(--color-navigation-border);
+        border-bottom-width: var(--border-thickness-4);
+        padding: var(--size-spacing-7) var(--size-spacing-site-gutter);
+        width: calc(100vw - calc(var(--size-spacing-site-gutter) * 2));
+        max-width: var(--size-component-layout-width-site);
+        column-count: 3;
+
+        [data-site-header-nav-position='center'] &,
+        [data-site-header-nav-position='left'] & {
+          left: 0;
+        }
+
+        // increase max-width if mega menu is left-aligned
+        // to align the menu item text with the site name.
+        [data-site-header-nav-position='left'] & {
+          width: calc(100vw - var(--size-spacing-site-gutter) * 1.2);
+        }
+
+        [data-site-header-nav-position='right'] & {
+          right: 0;
+        }
+      }
+
+      @media (min-width: tokens.$break-2xl) {
+        column-count: 4;
+
+        [data-site-header-nav-position='left'] & {
+          max-width: calc(
+            var(--size-component-layout-width-site) + var(--size-spacing-5)
+          );
+        }
       }
     }
 
@@ -299,6 +239,39 @@ $secondary-menu-sub-max-width: 19rem;
   &--level-2 {
     margin-bottom: var(--size-spacing-5);
   }
+
+  &--explore-bar {
+    [data-menu-variation='mega'] & {
+      @media (min-width: tokens.$break-mobile) {
+        display: flex;
+        column-span: all;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        padding-bottom: var(--size-spacing-2);
+        border-bottom: var(--border-thickness-1) solid
+          var(--color-navigation-border);
+        margin-bottom: var(--size-spacing-6);
+      }
+    }
+  }
+}
+
+.secondary-nav__heading {
+  [data-menu-variation='mega'] & {
+    // hide heading on mobile
+    display: none;
+
+    @media (min-width: tokens.$break-mobile) {
+      @include tokens.h5-mallory-compact-medium;
+
+      display: block;
+      padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2)
+        calc(var(--size-spacing-2) + var(--size-spacing-1));
+      flex: 1 auto;
+      color: var(--color-heading);
+    }
+  }
 }
 
 .secondary-nav__link {
@@ -319,6 +292,15 @@ $secondary-menu-sub-max-width: 19rem;
 
     &.secondary-nav__link--with-sub {
       display: none;
+    }
+  }
+
+  [data-menu-variation='mega']
+    // Targets the explore link to the right of a dropdown menu.
+    // Only it should be capitalized.
+    &.secondary-nav__link--level-1.secondary-nav__link--with-icon.secondary-nav__link--explore-bar {
+    @media (min-width: tokens.$break-mobile) {
+      @include tokens.h6-mallory-compact-medium;
     }
   }
 
@@ -364,10 +346,32 @@ $secondary-menu-sub-max-width: 19rem;
   }
 
   &--level-2 {
-    font: var(--font-style-nav-secondary-2);
+    font: var(--font-style-nav-primary-2);
     color: var(--color-muted);
     padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2)
       calc(var(--size-spacing-2) + var(--size-spacing-1));
+  }
+
+  // this is used for the explore bar link
+  &--with-icon.secondary-nav__link--explore-bar {
+    [data-menu-variation='mega'] & {
+      font: var(--font-style-nav-primary-1);
+      color: var(--color-heading);
+      margin-bottom: var(--size-spacing-3);
+      padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2)
+        calc(var(--size-spacing-2) + var(--size-spacing-1));
+      z-index: 1;
+
+      &:hover {
+        color: var(--menu-link-color);
+      }
+
+      @media (min-width: tokens.$break-mobile) {
+        flex: 0 1 auto;
+        margin-bottom: 0;
+        color: inherit;
+      }
+    }
   }
 }
 
