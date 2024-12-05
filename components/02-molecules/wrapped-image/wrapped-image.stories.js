@@ -16,22 +16,20 @@ export default {
     caption: {
       name: 'Caption',
       type: 'string',
+      defaultValue: 'This is the caption for the 16:9 image above.',
     },
     imageAlignment: {
       name: 'Image Alignment',
       type: 'select',
       options: ['left', 'right'],
+      defaultValue: 'left',
     },
     imageStyle: {
       name: 'Image Style',
       type: 'select',
       options: ['floated', 'offset'],
+      defaultValue: 'floated',
     },
-  },
-  args: {
-    caption: 'This is the caption for the 16:9 image above.',
-    imageAlignment: 'left',
-    imageStyle: 'floated',
   },
 };
 

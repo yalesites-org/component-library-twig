@@ -209,7 +209,7 @@
               } %}
             {% endif %}
             {# Add to calendar #}
-            {% if event_meta__cta_secondary__content and not event_has_passed %}
+            {% if event_meta__cta_secondary__content and not event_has_passed and is_campus_group == 0 %}
               {% include "@atoms/controls/cta/yds-cta.twig" with {
                 cta__content: event_meta__cta_secondary__content,
                 cta__href: ics_url ? ics_url : event_meta__cta_secondary__href,
@@ -287,7 +287,7 @@
             </div>
           {% endif %}
 
-          {% if place %}
+          {% if place and is_campus_group == 0 %}
             <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
               <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
               <div {{ bem('location', [], event_meta__base_class) }}>
@@ -314,6 +314,15 @@
                     cta__style: 'outline',
                   } %}
                 </div>
+              </div>
+            </div>
+          {% endif %}
+
+          {% if event_status_field and is_campus_group == 1 %}
+            <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
+              <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
+               <div {{ bem('location', [], event_meta__base_class) }}>
+                {{ event_status_field }}<br>
               </div>
             </div>
           {% endif %}
