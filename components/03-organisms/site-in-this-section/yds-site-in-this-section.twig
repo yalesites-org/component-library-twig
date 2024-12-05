@@ -13,9 +13,28 @@
 
 {% set site_section_wrap__base_class = 'in-this-section' %}
 
+{% set icon_left %}
+  {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'angle-down',
+    icon__blockname: site_section_wrap__base_class,
+    icon__modifiers: ['left'],
+    icon__decorative: true,
+  } %}
+{% endset %}
+
+{% set icon_right %}
+  {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'angle-down',
+    icon__blockname: site_section_wrap__base_class,
+    icon__modifiers: ['right'],
+    icon__decorative: true,
+  } %}
+{% endset %}
+
 {% set site_section_wrap__attributes = {
   'data-secondary-menu-state': 'open',
   'data-component-theme': site_section_wrap__theme|default('one'),
+  'data-overflow': 'none',
   class: bem(site_section_wrap__base_class),
 } %}
 
