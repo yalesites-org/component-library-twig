@@ -161,6 +161,13 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   align-self: stretch;
   background-color: var(--color-layout-border);
   width: var(--border-thickness-2);
+  opacity: 0.5;
+
+  // gap affects the width of the divider, so we can increase the width of the
+  // divider in this instance.
+  [data-component-layout='seventy-thirty'] & {
+    width: calc(var(--border-thickness-2) + var(--border-thickness-1));
+  }
 
   @media (max-width: $break-layout-layout-max) {
     width: 100%;
