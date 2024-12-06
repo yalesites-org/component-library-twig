@@ -3,7 +3,7 @@
 
 {#
  # Logic Variables:
- # - date_time__format: 'time', 'date', or null (default. Returns date and time.)
+ # - date_time__format: 'time', 'date', 'day__full', or null (default. Returns date and time.)
  #
  # Available Variables:
  # - date_time__all_day
@@ -62,6 +62,7 @@ format__day__long = Thursday, December 3, 2024
   "date": "format__date",
   "date_and_time": "format__day__full",
   "all_day": "format__all_day",
+  "day__full": "format__day__full",
   } %}
 
 {% set used_format = date_time__format_override|default(format_defaults[date_time__format]) %}
