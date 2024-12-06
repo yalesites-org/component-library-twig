@@ -54,12 +54,3 @@ export const parameters = {
   actions: { argTypesRegex: '^on.*' },
   controls: { disableSaveFromUI: true },
 };
-
-// Global helper to convert argTypes with defaultValues to new args version.
-const argTypesToArgs = (argTypes) => {
-  return Object.fromEntries(
-    Object.entries(argTypes).map(([key, value]) => [key, value.defaultValue])
-  );
-};
-
-window.argTypesToArgs = argTypesToArgs;
