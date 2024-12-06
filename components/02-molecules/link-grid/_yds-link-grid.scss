@@ -65,6 +65,11 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &[data-component-theme='five'] {
     --color-link-grid-action: var(--color-slot-two);
   }
+
+  // if used in the layout component, remove the top margin
+  [data-component-layout] & {
+    margin-block-start: 0;
+  }
 }
 
 .link-grid__heading {
@@ -109,6 +114,14 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   // first column gets wider border
   &:first-of-type {
     border-width: var(--size-thickness-4);
+  }
+
+  // if used in fifty-fifty layout and min-width 2xl
+  // make the columns 50% width
+  [data-component-layout='fifty-fifty'] & {
+    @media (min-width: tokens.$break-2xl) {
+      flex: 1 1 50%;
+    }
   }
 }
 
