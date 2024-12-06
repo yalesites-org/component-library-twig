@@ -24,36 +24,48 @@ export default {
       name: 'Component Theme (dial)',
       type: 'select',
       options: colorPairingsData,
+      defaultValue: 'default',
     },
     position: {
       name: 'Image Position',
       type: 'select',
       options: ['image-left', 'image-right'],
+      defaultValue: 'image-left',
     },
     imageStyle: {
       name: 'Image Style',
       type: 'select',
       options: ['inline', 'offset'],
+      defaultValue: 'inline',
     },
     overline: {
       name: 'Overline (optional)',
       type: 'string',
+      defaultValue: null,
     },
     heading: {
       name: 'Heading',
       type: 'string',
+      defaultValue:
+        contentSpotlightPortraitData.content_spotlight_portrait__heading,
     },
     subheading: {
       name: 'Subheading (optional)',
       type: 'string',
+      defaultValue:
+        contentSpotlightPortraitData.content_spotlight_portrait__subheading,
     },
     text: {
       name: 'Text',
       type: 'string',
+      defaultValue:
+        contentSpotlightPortraitData.content_spotlight_portrait__text,
     },
     linkContent: {
       name: 'Link Content (optional)',
       type: 'string',
+      defaultValue:
+        contentSpotlightPortraitData.content_spotlight_portrait__link__content,
     },
     linkTwoContent: {
       name: 'Second Link Content (optional)',
@@ -61,18 +73,6 @@ export default {
       defaultValue:
         contentSpotlightPortraitData.content_spotlight_portrait__link_two__content,
     },
-  },
-  args: {
-    componentTheme: 'default',
-    position: 'image-left',
-    imageStyle: 'inline',
-    overline: null,
-    heading: contentSpotlightPortraitData.content_spotlight_portrait__heading,
-    subheading:
-      contentSpotlightPortraitData.content_spotlight_portrait__subheading,
-    text: contentSpotlightPortraitData.content_spotlight_portrait__text,
-    linkContent:
-      contentSpotlightPortraitData.content_spotlight_portrait__link__content,
   },
 };
 

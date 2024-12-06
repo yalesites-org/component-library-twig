@@ -16,10 +16,12 @@ export default {
     heading: {
       name: 'Heading',
       type: 'string',
+      defaultValue: videoData.video__heading,
     },
     text: {
       name: 'Text',
       type: 'string',
+      defaultValue: videoData.video__text,
     },
     placement: {
       name: 'Video Placement',
@@ -27,10 +29,6 @@ export default {
       options: ['left', 'center'],
       defaultValue: videoData.video__placement,
     },
-  },
-  args: {
-    heading: videoData.video__heading,
-    text: videoData.video__text,
   },
 };
 
