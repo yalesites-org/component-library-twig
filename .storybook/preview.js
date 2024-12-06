@@ -25,7 +25,9 @@ import '../lib/link-treatment/link-treatment.scss';
 export const decorators = [
   (StoryFn, context) => {
     useEffect(() => Drupal.attachBehaviors(), [context]);
-    return `<div data-global-theme="${context.globals.globalTheme}">${StoryFn(context)}</div>`;
+    return `<div data-global-theme="${context.globals.globalTheme}">${StoryFn(
+      context,
+    )}</div>`;
   },
 ];
 
@@ -42,12 +44,13 @@ export const globalTypes = {
         { value: 'two', title: 'New Haven Green' },
         { value: 'three', title: 'Shoreline Summer' },
         { value: 'four', title: 'Onha' },
+        { value: 'five', title: 'It\'s Your Yale'},
       ],
       showName: true,
       title: 'Site: Global Theme (lever)',
     },
-  }
-}
+  },
+};
 
 export const tags = ['autodocs', 'autodocs'];
 export const parameters = {
