@@ -35,7 +35,9 @@
             heading__prefix: page_title__prefix,
             heading__prefix__base_class: page_title__base_class,
           } %}
-          {% block page_title__extra %}{% endblock %}
+          {% block page_title__extra %}
+            {{ page_title__extra }}
+          {% endblock %}
         </div>
         {% block page_title__image %}{% endblock %}
       </div>

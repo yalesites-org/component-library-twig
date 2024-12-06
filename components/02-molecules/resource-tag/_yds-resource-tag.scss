@@ -1,0 +1,92 @@
+@use '../../00-tokens/tokens';
+@use '../../01-atoms/atoms';
+
+$break-small: 699px;
+
+.resource-tag {
+  @include tokens.spacing-page-inner;
+
+  background-color: var(--color-gray-100);
+
+  // used by a element for animated hover underline
+  --color-text-shadow: var(--color-basic-white);
+  --component-width: var(--size-component-layout-width-site);
+  --font-weights-mallory-bold: 600;
+  --font-size-12: 0.75rem;
+
+  a {
+    @include atoms.link;
+  }
+
+  // emphasized: intro text variation
+  &[data-component-variation='emphasized'] {
+    @include tokens.body-xl;
+  }
+}
+
+.resource-tag__content {
+  width: 100%;
+  max-width: var(--component-width);
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  padding: 18px 0;
+
+  .views-resource_tag {
+    display: flex;
+    flex-wrap: wrap;
+
+    @media screen and (max-width: $break-small) {
+      gap: 0.5rem;
+    }
+  }
+
+  .views-field {
+    margin-right: 2.3rem;
+
+    @media screen and (max-width: $break-small) {
+      width: 100%;
+      display: flex;
+      margin-right: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .views-label {
+    font-family: var(--font-families-mallory-compact);
+    font-weight: var(--font-weights-mallory-bold);
+    font-size: var(--font-size-16);
+    text-transform: var(--font-text-transform-h6-mallory-compact-medium);
+    margin-right: 0.313rem;
+
+    @media screen and (max-width: $break-small) {
+      min-width: 4.375rem;
+      font-size: var(--font-size-12);
+    }
+  }
+
+  .field-content {
+    font-family: var(--font-families-mallory-compact);
+    font-size: var(--font-size-15);
+    font-weight: 400;
+    letter-spacing: var(--font-letter-spacing-h6-mallory-compact-book);
+
+    @media screen and (max-width: $break-small) {
+      font-size: var(--font-size-14);
+    }
+
+    // Added blank line before 'a' selector
+    a {
+      @include atoms.link;
+
+      font-family: var(--font-families-mallory-compact);
+      margin-left: 0.188rem;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}

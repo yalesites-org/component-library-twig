@@ -1,5 +1,6 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
+@forward 'resource-card/yds-resource-card';
 
 $break-card-collection-max: tokens.$break-m - 0.05;
 $break-card-collection-list-image-max: tokens.$break-s - 0.05;
@@ -15,7 +16,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   flex-flow: column-reverse;
   gap: var(--size-spacing-4);
 
-  // from small to media, both grid and list render using a horizontal layout.
+  // Grid and list horizontal layout for small to medium screens
   [data-collection-type='grid'] &,
   [data-collection-type='list'] & {
     @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
@@ -25,7 +26,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     }
   }
 
-  // List
+  // List specific styling
   [data-collection-type='list'] & {
     @media (min-width: tokens.$break-m) {
       flex-flow: row-reverse nowrap;
@@ -34,7 +35,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     }
   }
 
-  // Single card collection
+  // Single card collection styles
   [data-collection-type='single'] & {
     --color-text-shadow: var(--color-blue-yale);
     --color-card-single-bg: var(--color-blue-yale);
@@ -44,7 +45,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     margin-block-start: var(--size-spacing-11);
   }
 
-  // Condensed card collection
+  // Condensed card collection styles
   [data-collection-type='condensed'] & {
     padding-bottom: var(--size-spacing-6);
     border-bottom: var(--border-thickness-1) solid var(--color-divider);
@@ -55,7 +56,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     }
   }
 
-  // Single card collection featured
+  // Single card collection with image, featured style
   &[data-component-has-image='true'] {
     [data-collection-type='single'][data-collection-featured='true'] & {
       @media (min-width: tokens.$break-xl) {
@@ -66,7 +67,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     }
   }
 
-  // Single card collection non-featured
+  // Single card collection, non-featured style
   [data-collection-type='single'][data-collection-featured='false'] & {
     position: relative;
     display: flex;
@@ -80,60 +81,114 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     }
   }
 
-  // only animate if animation is enabled in site configuration.
+  // Animation styles if enabled
   [data-site-animation='artistic'] [data-animate-item='enabled'] & {
     @include tokens.animate($property: 'transform');
     @include tokens.rise-effect;
   }
 
-  // Ensure the date styles are the same on all cards, irrespective of its wrapper.
+  // Date styling for consistency
   .date-time {
-    color: var(--color-card-single-text);
+    color: var(--color-text);
     font-size: clamp(1.0625rem, calc(0.36vw + 0.9314rem), 1.25rem);
   }
-}
 
-.reference-card__image {
-  // List and grid
-  @media (max-width: $break-card-collection-list-image-max) {
-    [data-collection-type='list'] &,
-    [data-collection-type='grid'][data-collection-featured='false'] & {
-      max-width: 50%;
-    }
-  }
-
-  // List and Grid non-featured
-  @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
-    [data-collection-type='grid'][data-collection-featured='false'] &,
-    [data-collection-type='list'][data-collection-featured='false'] & {
-      flex: 0 33%;
+  .reference-card__image {
+    // Default image styles for list and grid
+    @media (max-width: $break-card-collection-list-image-max) {
+      [data-collection-type='list'] &,
+      [data-collection-type='grid'][data-collection-featured='false'] & {
+        max-width: 50%;
+      }
     }
 
-    [data-collection-type='grid'][data-collection-featured='true'] &,
-    [data-collection-type='list'][data-collection-featured='true'] & {
-      flex: 0 1 50%;
+    // Grid and List non-featured images for small to medium screens
+    @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
+      [data-collection-type='grid'][data-collection-featured='false'] &,
+      [data-collection-type='list'][data-collection-featured='false'] & {
+        flex: 0 33%;
+      }
+
+      [data-collection-type='grid'][data-collection-featured='true'] &,
+      [data-collection-type='list'][data-collection-featured='true'] & {
+        flex: 0 1 50%;
+      }
     }
-  }
 
-  // List featured and non-featured
-  @media (min-width: tokens.$break-m) {
-    margin-bottom: tokens.$size-spacing-0;
+    // List featured and non-featured styles for medium screens and up
+    @media (min-width: tokens.$break-m) {
+      margin-bottom: tokens.$size-spacing-0;
 
-    [data-collection-type='list'][data-collection-featured='false'] & {
-      flex: 0 1 40%;
+      [data-collection-type='list'][data-collection-featured='false'] & {
+        flex: 0 1 40%;
+      }
+
+      [data-collection-type='list'][data-collection-featured='true'] & {
+        flex: 0 1 50%;
+      }
     }
 
-    [data-collection-type='list'][data-collection-featured='true'] & {
-      flex: 0 1 50%;
-    }
-  }
+    // Grid and Profile specific styles
+    @media (min-width: tokens.$break-mobile) {
+      [data-collection-type='grid'] & {
+        aspect-ratio: 3/2;
 
-  // Grid
-  @media (min-width: tokens.$break-mobile) {
-    [data-collection-type='grid'] & {
+        // Safari fix
+        @supports not (aspect-ratio: 3 / 2) {
+          &::before {
+            float: left;
+            padding-top: 66.66%;
+            content: '';
+          }
+
+          &::after {
+            display: block;
+            content: '';
+            clear: both;
+          }
+        }
+      }
+
+      // List specific styles for grid aspect ratio
+      [data-collection-type='list'] & {
+        flex: 0 0 33%;
+      }
+
+      // Profile grid aspect ratio and Safari fix
+      [data-collection-type='grid'][data-collection-source='profile'] & {
+        aspect-ratio: 1/1;
+
+        @supports not (aspect-ratio: 1 / 1) {
+          &::before {
+            float: left;
+            padding-top: 66.66%;
+            content: '';
+          }
+
+          &::after {
+            display: block;
+            content: '';
+            clear: both;
+          }
+        }
+      }
+
+      // Profile list non-featured and featured basis
+      [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='false']
+        & {
+        flex-basis: 10%;
+      }
+
+      [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='true']
+        & {
+        flex-basis: 15%;
+      }
+    }
+
+    // Single card collection featured
+    [data-collection-type='single'][data-collection-featured='true'] & {
       aspect-ratio: 3/2;
 
-      // Safari 14 fix for aspect-ratio
       @supports not (aspect-ratio: 3 / 2) {
         &::before {
           float: left;
@@ -147,105 +202,37 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
           clear: both;
         }
       }
-    }
 
-    // List
-    [data-collection-type='list'] & {
-      flex: 0 0 33%;
-    }
-
-    // Profile grid
-    [data-collection-type='grid'][data-collection-source='profile'] & {
-      aspect-ratio: 1/1;
-
-      // Safari 14 fix for aspect-ratio
-      @supports not (aspect-ratio: 1 / 1) {
-        &::before {
-          float: left;
-          padding-top: 66.66%;
-          content: '';
-        }
-
-        &::after {
-          display: block;
-          content: '';
-          clear: both;
-        }
+      @media (min-width: tokens.$break-xl) {
+        grid-column: 1 / 4;
+        grid-row: 1 / -1;
       }
     }
 
-    // Profile list non-featured
-    [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='false']
-      & {
-      flex-basis: 10%;
-    }
+    // Single card collection non-featured
+    [data-collection-type='single'][data-collection-featured='false'] & {
+      margin-inline-start: var(--size-spacing-8);
+      margin-block-start: calc(var(--size-spacing-11) * -1);
+      align-self: flex-start;
 
-    // Profile list featured
-    [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='true']
-      & {
-      flex-basis: 15%;
-    }
-  }
-
-  // Single card collection featured
-  [data-collection-type='single'][data-collection-featured='true'] & {
-    aspect-ratio: 3/2;
-
-    // Safari 14 fix for aspect-ratio
-    @supports not (aspect-ratio: 3 / 2) {
-      &::before {
-        float: left;
-        padding-top: 66.66%;
-        content: '';
+      @media (max-width: $break-single-card-collection-max) {
+        margin-inline-end: var(--size-spacing-8);
       }
 
-      &::after {
-        display: block;
-        content: '';
-        clear: both;
+      @media (min-width: tokens.$break-xl) {
+        flex: 1 0 calc(48% - var(--size-spacing-4));
       }
     }
-
-    @media (min-width: tokens.$break-xl) {
-      grid-column: 1 / 4;
-      grid-row: 1 / -1;
-    }
   }
 
-  // Single card collection non-featured
-  [data-collection-type='single'][data-collection-featured='false'] & {
-    margin-inline-start: var(--size-spacing-8);
-    margin-block-start: calc(var(--size-spacing-11) * -1);
-    align-self: flex-start;
+  // Campus group event specific styling using @at-root to separate and avoid specificity conflict
+  @at-root &.reference-card--campus-group-event {
+    .reference-card__image {
+      aspect-ratio: unset;
 
-    @media (max-width: $break-single-card-collection-max) {
-      margin-inline-end: var(--size-spacing-8);
-    }
-
-    @media (min-width: tokens.$break-xl) {
-      flex: 1 0 calc(48% - var(--size-spacing-4));
-    }
-  }
-
-  // Localist default image - enforce 3x2 ratio
-  .image--localist-3-2 {
-    > * {
-      aspect-ratio: 3/2;
-      object-fit: cover;
-
-      // Safari 14 fix for aspect-ratio
-      @supports not (aspect-ratio: 3 / 2) {
-        &::before {
-          float: left;
-          padding-top: 66.66%;
-          content: '';
-        }
-
-        &::after {
-          display: block;
-          content: '';
-          clear: both;
-        }
+      img {
+        aspect-ratio: unset;
+        object-fit: contain;
       }
     }
   }

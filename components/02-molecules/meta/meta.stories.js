@@ -26,26 +26,6 @@ const toUnixTimeStamp = (date) => {
  */
 export default {
   title: 'Molecules/Meta',
-  args: {
-    meta: `<span>By Charlyn Paradis</span>${dateTimeTwig({
-      date_time__start: '2022-01-25',
-      date_time__format: 'day__full',
-    })}`,
-    startDate: '2022-01-25',
-    endDate: '2022-01-25',
-    address: 'New Haven, CT',
-    pageTitle: 'Event Title',
-    heading: 'Meta Title',
-    titleLine: 'Professional Title',
-    subTitle: 'Subtitle',
-    department: 'Department name',
-    bgColor: 'one',
-    profileImageOrientation: 'landscape',
-    profileImageAlignment: 'right',
-    profileImageStyle: 'inline',
-    ctaText: 'Register',
-    allDay: false,
-  },
 };
 
 export const Basic = ({ meta }) => basicMetaTwig({ basic_meta: meta });
@@ -53,6 +33,10 @@ Basic.argTypes = {
   meta: {
     name: 'Meta',
     type: 'string',
+    defaultValue: `<span>By Charlyn Paradis</span>${dateTimeTwig({
+      date_time__start: '2022-01-25',
+      date_time__format: 'day__full',
+    })}`,
   },
 };
 
@@ -99,7 +83,6 @@ export const EventLocalist = ({
     event_meta__address: address,
     event_meta__cta_primary__content: ctaText,
     event_meta__cta_primary__href: '#',
-    cost_button_text: ctaText,
     event_meta__cta_secondary__content: 'Add to calendar',
     event_meta__cta_secondary__href: '#',
     event_meta__image: withImage ? 'true' : 'false',

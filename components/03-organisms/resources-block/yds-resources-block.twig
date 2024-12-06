@@ -1,0 +1,121 @@
+{#
+ # Available Variables:
+ # - resources_block__heading
+ # - resources_block__bg_image: (boolean) false by default
+
+ # Available Blocks:
+ # - resources_block__group__cards
+ #}
+
+{% set resources_block__group__base_class = 'resources-block__group' %}
+
+{% set resources_block__group__width = resources_block__group__width|default('site') %}
+
+{% set block_type = resources_block__group__type|default('full') %}
+
+{% if resources_block__collection__type %}
+	{% set resources_block__group__attributes = resources_block__group__attributes|merge({
+    'resources-block-collection-type': resources_block__collection__type,
+  }) %}
+{% endif %}
+
+{% set resources_block__group__attributes = {
+  'data-component-width': resources_block__group__width,
+	'data-component-theme': resources_block__group__theme|default('one'),
+	'data-component-type': resources_block__group__type|default('full'),
+  'class': bem(resources_block__group__base_class),
+} %}
+
+<div {{ add_attributes(resources_block__group__attributes) }}> {% block prefix_suffix %}{% endblock %}
+	<div {{ bem('inner', [], resources_block__group__base_class) }}>
+		{% if resources_block__group__heading is not empty or resources_block__group__content is not empty or resources_block__group__link__url is not empty %}
+			<div {{ bem('content-wrap', [], resources_block__group__base_class) }}>
+				{% if resources_block__group__heading is not empty %}
+					{% include "@atoms/typography/headings/yds-heading.twig" with {
+            heading__level: '2',
+            heading__blockname: resources_block__group__base_class,
+            heading: resources_block__group__heading,
+          } %} 
+				{% endif %}
+				{% if resources_block__group__content is not empty %}
+					{% include "@atoms/typography/text/yds-text.twig" with {
+            text__blockname: resources_block__group__base_class,
+            text__content: resources_block__group__content,
+            text__base_class: 'content',
+          } %}
+				{% endif %}
+			</div>
+		{% endif %}
+
+		{# Resource Card Collection (newly added) #}
+		{% if resource_card_collection is not empty %}
+			<div {{ bem('wrap', [], resources_block__group__base_class) }}>
+
+				{% if block_type == 'full' %}
+					<div {{ bem('full', [], resources_block__group__base_class) }}>
+						{% if resources_block__group__form is not empty %}
+							{% include "@atoms/typography/text/yds-text.twig" with {
+                  text__blockname: resources_block__group__base_class,
+                  text__content: resources_block__group__form,
+                  text__base_class: 'form',
+          		} %}
+						{% endif %}
+						{{ resource_card_collection | raw }}
+					</div>
+				{% elseif block_type == 'compact' %}
+					<div {{ bem('compact', [], resources_block__group__base_class) }}>
+						<div {{ bem('left', [], resources_block__group__base_class) }}>
+							<div {{ bem('form-title', [], resources_block__group__base_class) }}>
+								{% if resources_block__form__heading is not empty %}
+									{% include "@atoms/typography/headings/yds-heading.twig" with {
+										heading__level: '3',
+										heading__blockname: resources_block__group__base_class,
+										heading: resources_block__form__heading,
+									} %}
+								{% endif %}
+							</div>
+							{% if resources_block__group__form is not empty %}
+								{% include "@atoms/typography/text/yds-text.twig" with {
+                  text__blockname: resources_block__group__base_class,
+                  text__content: resources_block__group__form,
+                  text__base_class: 'form',
+          		} %}
+							{% endif %}
+						</div>
+						<div {{ bem('right', [], resources_block__group__base_class) }}>
+							<div {{ bem('card-title', [], resources_block__group__base_class) }}>
+								{% if resources_block__card__heading is not empty %}
+									{% include "@atoms/typography/headings/yds-heading.twig" with {
+										heading__level: '3',
+										heading__blockname: resources_block__group__base_class,
+										heading: resources_block__card__heading,
+									} %}
+								{% endif %}
+							</div>
+							{{ resource_card_collection | raw }}
+							{% if resources_block__group__link__content %}
+								{% include "@atoms/controls/cta/yds-cta.twig" with {
+									control__base_class: cta__base_class,
+									cta__content: resources_block__group__link__content|default(resources_block__group__link__content),
+									cta__href: resources_block__group__link__url|default(resources_block__group__link__url),
+									cta__blockname: resources_block__group__base_class,
+									cta__style: 'filled',
+									cta__component_theme: 'one',
+								} %}
+							{% endif %}
+						</div>
+					</div>
+				{% endif %}
+			</div>
+		{% endif %}
+
+
+		{% if resources_block__group__bg_image %}
+			<div {{ bem('image', [], resources_block__group__base_class) }}>
+				{% block resources_block__group__image %}
+					{% include "@atoms/images/image/_responsive-image.twig" %}
+				{% endblock %}
+			</div>
+		{% endif %}
+	</div>
+</div>
