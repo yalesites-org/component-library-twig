@@ -6,6 +6,67 @@
   {% endblock %}
   {% block layout__secondary %}
     {% if component__layout == 'fifty-fifty' %}
+    {% include "@molecules/link-grid/yds-link-grid.twig" with {
+      link_grid__heading: 'Quick Links',
+      link_grid__theme: 'default',
+      link_grid__links_one: [
+        {
+          link_grid__link__content: 'Undergraduate Handbook',
+          link_grid__link__url: '#'
+        },
+        {
+          link_grid__link__content: 'Course List',
+          link_grid__link__url: '#'
+        },
+        {
+          link_grid__link__content: 'Placement Exams',
+          link_grid__link__url: '#'
+        },
+      ],
+      link_grid__links_two: [
+        {
+          link_grid__link__content: 'Laboratory Registration',
+          link_grid__link__url: '#'
+        },
+        {
+          link_grid__link__content: 'Premedical Students',
+          link_grid__link__url: '#'
+        },
+        {
+          link_grid__link__content: 'Major Requirements',
+          link_grid__link__url: '#'
+        },
+      ],
+      link_grid__links_three: [
+        {
+          link_grid__link__content: 'Yale College Programs of Study',
+          link_grid__link__url: '#'
+        },
+        {
+          link_grid__link__content: 'Yale College Programs of Study',
+          link_grid__link__url: '#'
+        },
+        {
+          link_grid__link__content: 'Yale College Programs of Study',
+          link_grid__link__url: '#'
+        },
+      ],
+      link_grid__links_four: [
+        {
+          link_grid__link__content: 'Yale College Programs of Study',
+          link_grid__link__url: '#'
+        },
+        {
+          link_grid__link__content: 'Yale College Programs of Study',
+          link_grid__link__url: '#'
+        },
+        {
+          link_grid__link__content: 'Yale College Programs of Study',
+          link_grid__link__url: '#'
+        },
+      ],
+    }%}
+
 	  {% include "@molecules/accordion/yds-accordion.twig" with {
       accordion__heading: 'Accordion Group',
       accordion__width: 'site',

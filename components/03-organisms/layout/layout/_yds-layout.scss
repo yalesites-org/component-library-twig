@@ -91,6 +91,8 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-base: var(--color-slot-eight);
     --color-link-hover: var(--color-slot-eight);
     --color-layout-border: var(--color-slot-four);
+    --color-heading: var(--color-slot-eight);
+    --color-link-grid-action: var(--color-slot-eight);
   }
 
   &[data-component-theme='two'] {
@@ -100,6 +102,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-hover: var(--color-slot-seven);
     --color-heading: var(--color-slot-six);
     --color-layout-border: var(--color-slot-six);
+    --color-link-grid-action: var(--color-slot-six);
   }
 
   &[data-component-theme='three'] {
@@ -110,6 +113,8 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-base: var(--color-slot-eight);
     --color-link-hover: var(--color-slot-eight);
     --color-layout-border: var(--color-slot-four);
+    --color-heading: var(--color-slot-eight);
+    --color-link-grid-action: var(--color-slot-four);
   }
 
   &[data-component-theme='four'] {
@@ -120,6 +125,8 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-base: var(--color-slot-eight);
     --color-link-hover: var(--color-slot-eight);
     --color-layout-border: var(--color-slot-four);
+    --color-heading: var(--color-slot-eight);
+    --color-link-grid-action: var(--color-slot-four);
   }
 }
 
@@ -154,6 +161,13 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   align-self: stretch;
   background-color: var(--color-layout-border);
   width: var(--border-thickness-2);
+  opacity: 0.5;
+
+  // gap affects the width of the divider, so we can increase the width of the
+  // divider in this instance.
+  [data-component-layout='seventy-thirty'] & {
+    width: calc(var(--border-thickness-2) + var(--border-thickness-1));
+  }
 
   @media (max-width: $break-layout-layout-max) {
     width: 100%;
@@ -163,6 +177,8 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
 }
 
 .yds-layout__primary {
+  flex-flow: column nowrap;
+
   @media (max-width: $break-layout-layout-max) {
     margin-bottom: var(--spacing-page-inner);
   }
@@ -179,7 +195,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     }
   }
 
-  [data-component-layout='two-thirds-one-thirds'] & {
+  [data-component-layout='seventy-thirty'] & {
     @media (min-width: $break-layout-layout) {
       flex: 1 0 var(--size-component-layout-width-content);
     }
@@ -188,6 +204,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
 
 .yds-layout__secondary {
   display: flex;
+  flex-flow: column nowrap;
 
   [data-component-layout='fifty-fifty'] & {
     @media (min-width: $break-layout-layout) {
@@ -201,7 +218,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     }
   }
 
-  [data-component-layout='two-thirds-one-thirds'] & {
+  [data-component-layout='seventy-thirty'] & {
     @media (min-width: $break-layout-layout) {
       flex: 0 1 calc(37.5rem + var(--spacing-component-gutter));
     }
@@ -210,6 +227,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
 
 .yds-layout__tertiary {
   display: flex;
+  flex-flow: column nowrap;
 
   [data-component-layout='thirty-thirty-thirty'] & {
     @media (min-width: $break-layout-layout) {
@@ -220,21 +238,21 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
 
 // Update font-size for headings based on layout
 h2 {
-  [data-component-layout='two-thirds-one-thirds'] &,
+  [data-component-layout='seventy-thirty'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
     @include tokens.h3-yale-new;
   }
 }
 
 h3 {
-  [data-component-layout='two-thirds-one-thirds'] &,
+  [data-component-layout='seventy-thirty'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
     @include tokens.h4-yale-new;
   }
 }
 
 h4 {
-  [data-component-layout='two-thirds-one-thirds'] &,
+  [data-component-layout='seventy-thirty'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
     @include tokens.h5-yale-new;
   }
