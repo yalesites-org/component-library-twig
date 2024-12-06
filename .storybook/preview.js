@@ -1,4 +1,4 @@
-import { useEffect } from '@storybook/client-api';
+import { useEffect } from '@storybook/preview-api';
 import Twig from 'twig';
 import { setupTwig } from './setupTwig';
 
@@ -13,13 +13,14 @@ import '../fonts/fontawesome/css/fontawesome.css';
 import '../fonts/fontawesome/css/regular.css';
 import '../fonts/fontawesome/css/solid.css';
 
-// Global link treatment
-import '../lib/ys_link/index';
-import '../lib/ys_link/css/ys-link.css';
-
 // If in a Drupal project, it's recommended to import a symlinked version of drupal.js.
 import './_drupal.js';
 import './jquery-global.js';
+
+// Global link treatment
+import '../lib/link-treatment/link-treatment.js';
+import 'linkpurpose/css/linkpurpose.css';
+import '../lib/link-treatment/link-treatment.scss';
 
 export const decorators = [
   (StoryFn, context) => {
@@ -43,6 +44,13 @@ export const globalTypes = {
         { value: 'four', title: 'Onha' },
       ],
       showName: true,
+      title: 'Site: Global Theme (lever)',
     },
   }
 }
+
+export const tags = ['autodocs', 'autodocs'];
+export const parameters = {
+  actions: { argTypesRegex: '^on.*' },
+  controls: { disableSaveFromUI: true },
+};

@@ -17,36 +17,38 @@ export default {
     heading: {
       name: 'Heading',
       type: 'string',
-      defaultValue: calloutData.callout__heading,
     },
     text: {
       name: 'Text',
       type: 'string',
-      defaultValue: calloutData.callout__text,
     },
     linkText: {
       name: 'Link Text',
       type: 'string',
-      defaultValue: calloutData.callout__link__content,
     },
     linkType: {
       name: 'Link Type',
       type: 'select',
       options: ['button', 'link'],
-      defaultValue: calloutData.callout__link__type,
     },
     backgroundColor: {
       name: 'Callout Theme (dial)',
       type: 'select',
       options: colorPairingsData,
-      defaultValue: 'one',
     },
     calloutAlignment: {
       name: 'Callout Alignment',
       type: 'select',
       options: ['left', 'center'],
-      defaultValue: 'center',
     },
+  },
+  args: {
+    heading: calloutData.callout__heading,
+    text: calloutData.callout__text,
+    linkText: calloutData.callout__link__content,
+    linkType: calloutData.callout__link__type,
+    backgroundColor: 'one',
+    calloutAlignment: 'center',
   },
 };
 

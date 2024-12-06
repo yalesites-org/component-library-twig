@@ -16,23 +16,19 @@ export default {
     heading: {
       name: 'Heading',
       type: 'string',
-      defaultValue: referenceCardData.reference_card__heading,
     },
     snippet: {
       name: 'Snippet',
       type: 'string',
-      defaultValue: referenceCardData.reference_card__snippet,
     },
     collectionType: {
       name: 'Collection Type',
       type: 'select',
       options: ['grid', 'list', 'condensed', 'single'],
-      defaultValue: 'grid',
     },
     featured: {
       name: 'Featured',
       type: 'boolean',
-      defaultValue: true,
     },
     showCategories: {
       name: 'Show Categories/Affiliations',
@@ -44,6 +40,11 @@ export default {
       type: 'array',
       defaultValue: referenceCardData.reference_card__categories,
       if: { arg: 'showCategories' },
+    },
+    showPronouns: {
+      name: 'Show Pronouns',
+      type: 'boolean',
+      defaultValue: false,
     },
     showTags: {
       name: 'Show Tags',
@@ -64,8 +65,14 @@ export default {
     withImage: {
       name: 'With Image',
       type: 'boolean',
-      defaultValue: true,
     },
+  },
+  args: {
+    heading: referenceCardData.reference_card__heading,
+    snippet: referenceCardData.reference_card__snippet,
+    collectionType: 'grid',
+    featured: true,
+    withImage: true,
   },
 };
 
@@ -206,6 +213,7 @@ export const ProfileCard = ({
   withImage,
   categories,
   showCategories,
+  showPronouns,
   tags,
   showTags,
   showThumbnail,
@@ -221,6 +229,8 @@ export const ProfileCard = ({
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__heading:
           referenceProfileCardData.reference_card__heading,
+        reference_card__heading_extra:
+          referenceProfileCardData.reference_card__pronouns,
         reference_card__subheading:
           referenceProfileCardData.reference_card__subheading,
         reference_card__snippet:
@@ -228,6 +238,7 @@ export const ProfileCard = ({
         reference_card__url: referenceProfileCardData.reference_card__url,
         reference_card__categories: categories,
         show_categories: showCategories,
+        show_pronouns: showPronouns,
         reference_card__tags: tags,
         show_tags: showTags,
         show_thumbnail: showThumbnail,

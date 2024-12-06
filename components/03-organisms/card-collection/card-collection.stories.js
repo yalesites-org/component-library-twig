@@ -19,13 +19,17 @@ export default {
       name: 'Collection Type',
       type: 'select',
       options: ['grid', 'list', 'condensed'],
-      defaultValue: 'grid',
     },
     featured: {
       name: 'Featured',
       type: 'boolean',
-      defaultValue: true,
     },
+  },
+  args: {
+    collectionType: 'grid',
+    featured: true,
+    withImages: true,
+    heading: 'Card Collection',
   },
 };
 
@@ -52,12 +56,10 @@ PostCardCollection.argTypes = {
   withImages: {
     name: 'With Images',
     type: 'boolean',
-    defaultValue: true,
   },
   heading: {
     name: 'Heading',
     type: 'string',
-    defaultValue: 'Post Card Grid Heading',
   },
 };
 
@@ -85,12 +87,10 @@ EventCardCollection.argTypes = {
   withImages: {
     name: 'With Images',
     type: 'boolean',
-    defaultValue: true,
   },
   heading: {
     name: 'Heading',
     type: 'string',
-    defaultValue: 'Event Card Grid Heading',
   },
 };
 
@@ -117,12 +117,10 @@ ProfileCardCollection.argTypes = {
   heading: {
     name: 'Heading',
     type: 'string',
-    defaultValue: 'Profile Card Grid Heading',
   },
   withImages: {
     name: 'With Images',
     type: 'boolean',
-    defaultValue: true,
   },
 };
 
@@ -144,12 +142,10 @@ DirectoryListingCardCollection.argTypes = {
   heading: {
     name: 'Heading',
     type: 'string',
-    defaultValue: directoryCardData.directory_listing_card__heading,
   },
   collectionType: {
     name: 'Collection Type',
     type: 'select',
     options: ['profile-directory'],
-    defaultValue: 'profile-directory',
   },
 };
