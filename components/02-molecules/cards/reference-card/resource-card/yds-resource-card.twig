@@ -15,8 +15,9 @@
 {% set reference_card__base_class = 'resource-card' %}
 
 {# Ensure flag is passed and set a default #}
-
-{% if not highlight_pinned_content and reference_card__flag == "popular" %}
+{% if not highlight_pinned_content and reference_card__flag == "popular-series" %}
+  {% set flag_type = 'series' %}
+{% elseif not highlight_pinned_content and reference_card__flag == "popular" %}
   {% set flag_type = '' %}
 {% else %}
   {% set flag_type = reference_card__flag|default('') %}
@@ -31,7 +32,7 @@
 
 	<div {{ bem('content', [], reference_card__base_class) }}>
 
-		{% if highlight_pinned_content and flag_type == 'popular' %}
+		{% if highlight_pinned_content and (flag_type == 'popular' or  flag_type == 'popular-series') %}
     {% if highlight_content_label %}
       {% set flag_text = highlight_content_label %}
     {% else %}

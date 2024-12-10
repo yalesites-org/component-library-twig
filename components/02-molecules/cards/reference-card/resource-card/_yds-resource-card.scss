@@ -108,6 +108,13 @@ $break-medium: 700px;
     margin-right: var(--size-spacing-2);
     font-size: var(--font-size-17);
   }
+
+  &[data-flag-type='popular-series'] .resource-card__heading a::before {
+    content: '\e178';
+    font-family: 'Font Awesome 6 Pro', sans-serif;
+    margin-right: var(--size-spacing-2);
+    font-size: var(--font-size-17);
+  }
 }
 
 // Resource card content styling
@@ -135,6 +142,10 @@ $break-medium: 700px;
   }
 
   [data-flag-type='popular'] & {
+    padding-top: var(--size-spacing-0);
+  }
+
+  [data-flag-type='popular-series'] & {
     padding-top: var(--size-spacing-0);
   }
 }
