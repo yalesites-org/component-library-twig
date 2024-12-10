@@ -2,6 +2,7 @@ import referenceCardTwig from './examples/_card--examples.twig';
 
 import referenceCardData from './examples/post-card.yml';
 import referenceProfileCardData from './examples/profile-card.yml';
+import referenceResourceCardData from './examples/resource-card.yml';
 import imageData from '../../../01-atoms/images/image/image.yml';
 
 /**
@@ -16,19 +17,23 @@ export default {
     heading: {
       name: 'Heading',
       type: 'string',
+      defaultValue: referenceCardData.reference_card__heading,
     },
     snippet: {
       name: 'Snippet',
       type: 'string',
+      defaultValue: referenceCardData.reference_card__snippet,
     },
     collectionType: {
       name: 'Collection Type',
       type: 'select',
       options: ['grid', 'list', 'condensed', 'single'],
+      defaultValue: 'grid',
     },
     featured: {
       name: 'Featured',
       type: 'boolean',
+      defaultValue: true,
     },
     showCategories: {
       name: 'Show Categories/Affiliations',
@@ -65,14 +70,8 @@ export default {
     withImage: {
       name: 'With Image',
       type: 'boolean',
+      defaultValue: true,
     },
-  },
-  args: {
-    heading: referenceCardData.reference_card__heading,
-    snippet: referenceCardData.reference_card__snippet,
-    collectionType: 'grid',
-    featured: true,
-    withImage: true,
   },
 };
 
@@ -247,3 +246,46 @@ export const ProfileCard = ({
   </div>
 </div>
 `;
+
+export const ResourceCard = ({
+  featured,
+  heading,
+  snippet,
+  categories,
+  flag,
+}) => `
+  <div class='card-collection' data-component-width='site' data-collection-featured="${featured}">
+    <div class='card-collection__inner'>
+      <ul class='card-collection__cards'>
+        ${referenceCardTwig({
+          card_collection__source_type: 'resource',
+          reference_card__featured: featured ? 'true' : 'false',
+          reference_card__heading: heading,
+          reference_card__snippet: snippet,
+          reference_card__url: referenceResourceCardData.reference_card__url,
+          reference_card__categories: categories,
+          reference_card__flag: flag,
+        })}
+      </ul>
+    </div>
+  </div>
+  `;
+ResourceCard.argTypes = {
+  heading: {
+    name: 'Heading',
+    type: 'string',
+    defaultValue: referenceResourceCardData.reference_card__heading,
+  },
+  categories: {
+    name: 'Categories',
+    type: 'array',
+    defaultValue: referenceResourceCardData.reference_card__categories,
+    if: { arg: 'showCategories' },
+  },
+  flag: {
+    name: 'Flag',
+    type: 'select',
+    options: ['default', 'popular', 'series'],
+    defaultValue: '',
+  },
+};

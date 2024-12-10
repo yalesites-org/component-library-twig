@@ -118,6 +118,10 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   a {
     @include atoms.link;
+
+    &:has(> i.fa-icon) {
+      padding-right: var(--size-spacing-5);
+    }
   }
 }
 

@@ -3,6 +3,7 @@ import postCardData from '../../02-molecules/cards/reference-card/examples/post-
 import eventCardData from '../../02-molecules/cards/reference-card/examples/event-card.yml';
 import directoryCardData from '../../02-molecules/cards/directory-listing-card/yds-directory-listing-card.yml';
 import profileCardData from '../../02-molecules/cards/reference-card/examples/profile-card.yml';
+import resourceCardData from '../../02-molecules/cards/reference-card/examples/resource-card.yml';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 
@@ -19,17 +20,13 @@ export default {
       name: 'Collection Type',
       type: 'select',
       options: ['grid', 'list', 'condensed'],
+      defaultValue: 'grid',
     },
     featured: {
       name: 'Featured',
       type: 'boolean',
+      defaultValue: true,
     },
-  },
-  args: {
-    collectionType: 'grid',
-    featured: true,
-    withImages: true,
-    heading: 'Card Collection',
   },
 };
 
@@ -56,10 +53,12 @@ PostCardCollection.argTypes = {
   withImages: {
     name: 'With Images',
     type: 'boolean',
+    defaultValue: true,
   },
   heading: {
     name: 'Heading',
     type: 'string',
+    defaultValue: 'Post Card Grid Heading',
   },
 };
 
@@ -87,10 +86,12 @@ EventCardCollection.argTypes = {
   withImages: {
     name: 'With Images',
     type: 'boolean',
+    defaultValue: true,
   },
   heading: {
     name: 'Heading',
     type: 'string',
+    defaultValue: 'Event Card Grid Heading',
   },
 };
 
@@ -117,10 +118,12 @@ ProfileCardCollection.argTypes = {
   heading: {
     name: 'Heading',
     type: 'string',
+    defaultValue: 'Profile Card Grid Heading',
   },
   withImages: {
     name: 'With Images',
     type: 'boolean',
+    defaultValue: true,
   },
 };
 
@@ -142,10 +145,36 @@ DirectoryListingCardCollection.argTypes = {
   heading: {
     name: 'Heading',
     type: 'string',
+    defaultValue: directoryCardData.directory_listing_card__heading,
   },
   collectionType: {
     name: 'Collection Type',
     type: 'select',
     options: ['profile-directory'],
+    defaultValue: 'profile-directory',
+  },
+};
+
+export const ResorceCardCollection = ({
+  heading,
+  collectionType,
+  featured,
+}) => {
+  const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
+
+  return cardCollectionTwig({
+    card_collection__source_type: 'resource',
+    card_collection__type: collectionType,
+    card_collection__heading: heading,
+    card_collection__featured: featured ? 'true' : 'false',
+    card_collection__cards: items,
+    ...resourceCardData,
+  });
+};
+ResorceCardCollection.argTypes = {
+  heading: {
+    name: 'Heading',
+    type: 'string',
+    defaultValue: 'Resources Card Grid Heading',
   },
 };
