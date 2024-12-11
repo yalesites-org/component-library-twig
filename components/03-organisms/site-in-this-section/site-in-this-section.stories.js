@@ -5,6 +5,7 @@ import secondaryNavData from '../menu/secondary-nav/secondary-nav.yml';
 
 import '../menu/secondary-nav/yds-secondary-nav';
 import '../../02-molecules/menu/menu-in-this-section-toggle/yds-menu-in-this-section-toggle';
+import './yds-site-in-this-section';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 

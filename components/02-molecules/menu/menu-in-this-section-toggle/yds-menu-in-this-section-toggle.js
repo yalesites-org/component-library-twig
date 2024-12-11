@@ -2,9 +2,7 @@ Drupal.behaviors.secondaryMenuToggle = {
   attach(context) {
     // Selectors.
     const secondaryMenuToggle = context.querySelector('.secondary-menu-toggle');
-    const sectionMenu = context.querySelector(
-      '.in-this-section__secondary-nav',
-    );
+    const sectionMenu = context.querySelector('.in-this-section__inner');
     const sectionWrapper = context.querySelector('.in-this-section');
     const sectionMenuToggleText = context.querySelector(
       '.secondary-menu-toggle__text',

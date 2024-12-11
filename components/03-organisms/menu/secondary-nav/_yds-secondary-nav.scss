@@ -21,6 +21,9 @@ $secondary-menu-sub-max-width: 19rem;
 
   @media (min-width: tokens.$break-mobile) {
     position: relative;
+    display: flex;
+    align-items: center;
+    height: var(--size-in-this-section-control);
 
     [data-menu-variation='mega'] & {
       border: var(--border-thickness-1) solid transparent;
@@ -76,6 +79,21 @@ $secondary-menu-sub-max-width: 19rem;
         position: relative;
       }
     }
+
+    .in-this-section & {
+      @media (min-width: tokens.$break-mobile) {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow: auto;
+        scroll-behavior: smooth;
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+    }
   }
 
   &--level-1 {
@@ -103,13 +121,15 @@ $secondary-menu-sub-max-width: 19rem;
     }
 
     @media (min-width: tokens.$break-mobile) {
-      position: absolute;
+      position: fixed;
       background-color: var(--color-background);
       max-width: $secondary-menu-sub-max-width;
 
       // Subtract enough to place it just behind an "open" toggle and hide the
       // top border. To give it the "tab" effect.
-      top: calc(100% - var(--border-thickness-1));
+      top: calc(
+        var(--size-in-this-section-control) - var(--border-thickness-1)
+      );
 
       [aria-expanded='false'] ~ & {
         display: none;
@@ -198,10 +218,6 @@ $secondary-menu-sub-max-width: 19rem;
   }
 
   .secondary-nav__menu--level-1 {
-    [data-menu-variation='basic'] & {
-      padding-top: var(--size-spacing-4);
-    }
-
     [data-menu-variation='basic'] :not(:last-child) > & {
       // prettier-ignore
       border-top: var(--border-thickness-1) solid var(--color-navigation-border);
@@ -223,6 +239,18 @@ $secondary-menu-sub-max-width: 19rem;
 }
 
 .secondary-nav__item {
+  &--level-0 {
+    .in-this-section & {
+      @include tokens.body-s;
+
+      @media (min-width: tokens.$break-mobile) {
+        position: relative;
+        flex-shrink: 0;
+        display: flex;
+      }
+    }
+  }
+
   &--level-0:not(:last-child) {
     @media (max-width: tokens.$break-mobile-max) {
       border-bottom: var(--border-thickness-1) solid var(--color-gray-200);
@@ -252,6 +280,14 @@ $secondary-menu-sub-max-width: 19rem;
         border-bottom: var(--border-thickness-1) solid
           var(--color-navigation-border);
         margin-bottom: var(--size-spacing-6);
+      }
+    }
+  }
+
+  .in-this-section & {
+    @media (max-width: tokens.$break-mobile-max) {
+      [data-in-this-section-overflow='hidden'] & {
+        display: none;
       }
     }
   }
@@ -315,7 +351,7 @@ $secondary-menu-sub-max-width: 19rem;
     }
 
     [data-menu-variation='basic'] & {
-      padding: var(--size-spacing-5) var(--size-spacing-6) var(--size-spacing-4);
+      padding: var(--size-spacing-2) var(--size-spacing-6);
       position: relative;
       margin-bottom: var(--size-spacing-0);
 
@@ -330,11 +366,11 @@ $secondary-menu-sub-max-width: 19rem;
         background-color: var(--color-gray-200);
       }
 
-      :last-child > & {
+      &:last-child > & {
         margin-bottom: 0;
       }
 
-      :first-child > & {
+      &:first-child > & {
         padding-top: 0;
       }
     }
@@ -425,6 +461,10 @@ $secondary-menu-sub-max-width: 19rem;
 
   &--level-0 {
     @include secondary-nav-item-level-0;
+  }
+
+  @media (min-width: tokens.$break-mobile) {
+    height: var(--size-in-this-section-control);
   }
 }
 

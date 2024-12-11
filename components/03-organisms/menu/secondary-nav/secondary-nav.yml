@@ -2,10 +2,6 @@ items:
   - title: 'About YDS'
     url: '#'
     below:
-      - title: 'About YDS'
-        list__item__is_heading: true
-        heading_cta: 'Explore All'
-        url: '#'
       - title: "Dean's Office"
         url: '#'
       - title: 'Virtual Backgrounds with a lot more text entered to test max-width'
@@ -86,4 +82,14 @@ items:
   - title: 'Life at YDS'
     url: '#'
   - title: 'Faculty & Research'
+    url: '#'
+  - title: 'Another Link'
+    url: '#'
+  - title: 'And Another Link'
+    url: '#'
+  - title: 'Making This Menu Longer'
+    url: '#'
+  - title: 'There Is More To Go'
+    url: '#'
+  - title: 'Getting Closer'
     url: '#'

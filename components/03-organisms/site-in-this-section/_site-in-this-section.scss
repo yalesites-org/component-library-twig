@@ -6,6 +6,10 @@ $global-section-nav-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .in-this-section {
+  position: relative;
+
+  --size-in-this-section-control: 4rem;
+
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
   @each $theme, $value in $section-nav-component-themes {
@@ -120,7 +124,10 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 }
 
-.in-this-section__secondary-nav {
+.in-this-section__inner {
+  position: relative;
+  display: flex;
+
   @media (max-width: tokens.$break-mobile-max) {
     &[data-secondary-menu-state='closed'] {
       visibility: hidden;
@@ -137,5 +144,70 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       border-top: var(--border-thickness-2) solid var(--color-navigation-border);
       margin-top: var(--size-spacing-3);
     }
+  }
+}
+
+.in-this-section__control {
+  @include tokens.animate(opacity);
+  @include atoms.button-reset;
+
+  position: absolute;
+  top: var(--size-spacing-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--size-click-target-minimum);
+  width: var(--size-click-target-minimum);
+  background-color: var(--color-background);
+  opacity: 0;
+  padding: var(--size-spacing-3);
+
+  // Don't show controls on small screens when the items are hidden behind the
+  // "expand" button.
+  @media (max-width: tokens.$break-mobile-max) {
+    [data-in-this-section-overflow='hidden'] & {
+      display: none;
+    }
+  }
+
+  &--left {
+    left: 0;
+    transform: rotate(90deg);
+    z-index: 2;
+
+    [data-scroll-indicator='left'] &,
+    [data-scroll-indicator='both'] & {
+      opacity: 1;
+    }
+
+    [data-scroll-indicator='none'],
+    [data-scroll-indicator='right'] {
+      @include tokens.animate-hidden;
+    }
+  }
+
+  &--right {
+    right: 0;
+    transform: rotate(-90deg);
+    z-index: 2;
+
+    [data-scroll-indicator='right'] &,
+    [data-scroll-indicator='both'] & {
+      opacity: 1;
+    }
+
+    [data-scroll-indicator='none'] &,
+    [data-scroll-indicator='left'] & {
+      @include tokens.animate-hidden;
+    }
+  }
+
+  &:hover {
+    color: var(--color-link-base);
+  }
+
+  svg {
+    height: 1.5em;
+    width: 1.5em;
   }
 }
