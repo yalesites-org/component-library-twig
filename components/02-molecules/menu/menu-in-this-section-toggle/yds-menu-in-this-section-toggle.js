@@ -16,19 +16,18 @@ Drupal.behaviors.secondaryMenuToggle = {
         // set default state
         sectionMenu.setAttribute('aria-expanded', false);
         sectionMenu.setAttribute('aria-hidden', true);
-        sectionMenu.setAttribute('data-secondary-menu-state', 'closed');
         sectionWrapper.setAttribute('data-secondary-menu-state', 'closed');
 
         // Event listener.
         secondaryMenuToggle.addEventListener('click', () => {
           const state =
-            sectionMenu.getAttribute('data-secondary-menu-state') === 'closed'
+            sectionWrapper.getAttribute('data-secondary-menu-state') ===
+            'closed'
               ? 'open'
               : 'closed';
 
           sectionMenu.setAttribute('aria-expanded', state === 'open');
           sectionMenu.setAttribute('aria-hidden', state === 'closed');
-          sectionMenu.setAttribute('data-secondary-menu-state', state);
           secondaryMenuToggle.setAttribute('aria-expanded', state === 'open');
           sectionWrapper.setAttribute('data-secondary-menu-state', state);
           sectionMenuToggleText.innerHTML =
@@ -37,8 +36,7 @@ Drupal.behaviors.secondaryMenuToggle = {
       } else {
         sectionMenu.setAttribute('aria-expanded', true);
         sectionMenu.removeAttribute('aria-hidden');
-        sectionMenu.removeAttribute('data-secondary-menu-state');
-        sectionWrapper.removeAttribute('data-secondary-menu-state');
+        sectionWrapper.setAttribute('data-secondary-menu-state', 'loaded');
         sectionWrapper.setAttribute(
           'data-in-this-section-overflow',
           'expanded',

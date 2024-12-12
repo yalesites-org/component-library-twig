@@ -5,10 +5,18 @@
 $global-section-nav-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
-.in-this-section {
-  position: relative;
+:root {
+  --site-in-this-section-animation-speed: var(--animation-speed-slow);
+}
 
+.in-this-section {
+  --section-toggle-height: 4rem;
   --size-in-this-section-control: 4rem;
+
+  position: relative;
+  background-color: var(--color-basic-white);
+  margin-inline-start: calc(var(--size-spacing-site-gutter) * -1);
+  margin-inline-end: calc(var(--size-spacing-site-gutter) * -1);
 
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
@@ -111,11 +119,14 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
     @media (max-width: tokens.$break-mobile-max) {
       display: flex;
-    }
-  }
+      position: relative;
+      z-index: 1;
+      background-color: var(--color-basic-white);
 
-  &[data-secondary-menu-state='open'] {
-    background-color: var(--color-gray-100);
+      &[aria-expanded='true'] {
+        background-color: var(--color-gray-100);
+      }
+    }
   }
 
   @media (min-width: tokens.$break-mobile) {
@@ -127,18 +138,9 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 .in-this-section__inner {
   position: relative;
   display: flex;
+  flex-direction: column;
 
   @media (max-width: tokens.$break-mobile-max) {
-    &[data-secondary-menu-state='closed'] {
-      visibility: hidden;
-    }
-
-    &[data-secondary-menu-state='open'] {
-      border-bottom: var(--border-thickness-4) solid
-        var(--color-navigation-border);
-      padding-bottom: var(--size-spacing-4);
-    }
-
     // when used in in-this-section, add a top border
     [aria-expanded='false'] & {
       border-top: var(--border-thickness-2) solid var(--color-navigation-border);

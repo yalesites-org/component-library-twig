@@ -45,9 +45,9 @@
 } %}
 
 <div {{add_attributes(site_section_wrap__attributes)}}>
+  <div {{add_attributes(site_section_inner__attributes)}}>
   {% include "@molecules/menu/menu-in-this-section-toggle/yds-menu-in-this-section-toggle.twig" %}
 
-  <div {{add_attributes(site_section_inner__attributes)}}>
     {% block site_section_wrap__primary_nav %}
       {% include "@organisms/menu/secondary-nav/yds-secondary-nav.twig" %}
     {% endblock %}

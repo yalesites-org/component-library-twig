@@ -1,12 +1,6 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
 
-@mixin secondary-menu-is-open {
-  [data-secondary-menu-state='open'] & {
-    @content;
-  }
-}
-
 .secondary-menu-toggle {
   @include atoms.button-reset;
 
