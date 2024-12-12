@@ -160,7 +160,6 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   width: var(--size-click-target-minimum);
   background-color: var(--color-background);
   opacity: 0;
-  padding: var(--size-spacing-3);
 
   // Don't show controls on small screens when the items are hidden behind the
   // "expand" button.
@@ -173,7 +172,7 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &--left {
     left: 0;
     transform: rotate(90deg);
-    z-index: 2;
+    z-index: 5;
 
     [data-scroll-indicator='left'] &,
     [data-scroll-indicator='both'] & {
@@ -189,7 +188,7 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &--right {
     right: 0;
     transform: rotate(-90deg);
-    z-index: 2;
+    z-index: 5;
 
     [data-scroll-indicator='right'] &,
     [data-scroll-indicator='both'] & {

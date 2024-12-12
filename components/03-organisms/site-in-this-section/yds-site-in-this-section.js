@@ -17,65 +17,11 @@ Drupal.behaviors.InThisSection = {
     const inThisSectionLinks = context.querySelectorAll(
       '.secondary-nav__link--level-0',
     );
-    const inThisSectionButton = context.querySelector('.secondary-menu-toggle');
     const inThisSectionInner = context.querySelector('.in-this-section__inner');
     const controlsWidth = context.querySelector(
       '.in-this-section__control--left',
     ).offsetWidth;
     let scrollIndicatorDir;
-
-    /**
-     * getFirstVisible
-     * @description Get the first item that is visible (not overflown).
-     * @returns The value of the left edge of the first fully visible item plus
-     * the width of the controls so that things aren't visually hidden by the
-     * absolutely positioned elements.
-     */
-    function getFirstVisible() {
-      const secondaryNavLeft = secondaryNav.getBoundingClientRect().left;
-      const secondaryNavItems = secondaryNav.querySelectorAll(
-        '.secondary-nav__item--level-0',
-      );
-      const visibleItems = [];
-
-      secondaryNavItems.forEach((item) => {
-        if (
-          item.getBoundingClientRect().right >
-          secondaryNavLeft + controlsWidth
-        ) {
-          visibleItems.push(item);
-        }
-      });
-
-      return visibleItems[1].offsetLeft - controlsWidth;
-    }
-
-    /**
-     * getLastHidden
-     * @description Get the last item that is overflown (not visible).
-     * @returns The value of the left edge of the first partially hidden item
-     * minus the width of the controls so that things aren't visually hidden by
-     * the absolutely positioned elements.
-     */
-    function getLastHidden() {
-      const secondaryNavLeft = secondaryNav.getBoundingClientRect().left;
-      const secondaryNavItems = secondaryNav.querySelectorAll(
-        '.secondary-nav__item--level-0',
-      );
-      const hiddenItems = [];
-
-      secondaryNavItems.forEach((item) => {
-        if (item.getBoundingClientRect().left < secondaryNavLeft) {
-          hiddenItems.push(item);
-        }
-      });
-
-      // @TODO: if the user clicks the left arrow twice quickly when only the
-      // first item is hidden (and before the arrow can disappear), this line
-      // throws a js error. Not a huge deal, but could probably be refactored to
-      // prevent it from happening.
-      return hiddenItems[hiddenItems.length - 1].offsetLeft - controlsWidth;
-    }
 
     /**
      * setOverflow
@@ -128,8 +74,9 @@ Drupal.behaviors.InThisSection = {
      * @description Support mouse navigation when horizontal scrolling occurs.
      */
     function mouseNav(direction) {
-      secondaryNavMenu.scrollLeft =
-        direction === 'right' ? getFirstVisible() : getLastHidden();
+      const scrollAmount = 200; // move 200px at a time.
+      secondaryNavMenu.scrollLeft +=
+        direction === 'right' ? scrollAmount : -scrollAmount;
     }
 
     /**
@@ -170,23 +117,6 @@ Drupal.behaviors.InThisSection = {
             item.parentElement.offsetLeft - controlsWidth;
         }
       }
-    }
-
-    /**
-     * showAllin-this-section
-     * @description remove in-this-section-overflow value.
-     */
-    function showAllSectionItems() {
-      inThisSection.setAttribute('data-in-this-section-overflow', 'expanded');
-      inThisSection.setAttribute('aria-expanded', 'true');
-    }
-
-    // Show all in-this-section on mobile.
-    if (inThisSectionButton) {
-      inThisSectionButton.addEventListener('click', () => {
-        showAllSectionItems();
-        setOverflow();
-      });
     }
 
     /**
