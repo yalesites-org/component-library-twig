@@ -13,7 +13,7 @@ Drupal.behaviors.secondaryNav = {
       toggle.setAttribute('aria-expanded', true);
       nav.style.setProperty('--open-nav-height', `${nav.scrollHeight}px`);
 
-      // Position the submenu because it is position fixed due to the secondary menu being used inside of
+      // Position the submenu to align it with its parent because it is position fixed due to the secondary menu being used inside of
       // the in-this-section component and needing to scroll left/right depending on how many items are in the menu.
       const parentLi = toggle.closest('li');
       const submenu = parentLi.querySelector('.secondary-nav__menu--level-1');
