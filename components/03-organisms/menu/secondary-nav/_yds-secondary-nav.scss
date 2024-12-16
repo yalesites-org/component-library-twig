@@ -4,7 +4,8 @@
 $secondary-menu-sub-max-width: 19rem;
 
 @mixin secondary-nav-item-level-0 {
-  font: var(--font-style-nav-primary-0);
+  @include tokens.body-s;
+
   color: var(--color-heading);
   text-align: left;
   padding: var(--size-spacing-3) var(--size-spacing-5);
@@ -23,7 +24,6 @@ $secondary-menu-sub-max-width: 19rem;
     position: relative;
     display: flex;
     align-items: center;
-    height: var(--size-in-this-section-control);
 
     [data-menu-variation='mega'] & {
       border: var(--border-thickness-1) solid transparent;
@@ -57,6 +57,7 @@ $secondary-menu-sub-max-width: 19rem;
 
 .secondary-nav {
   position: relative;
+  max-width: 100%;
 
   .in-this-section__inner & {
     @media (max-width: tokens.$break-mobile-max) {
@@ -107,6 +108,7 @@ $secondary-menu-sub-max-width: 19rem;
     [data-menu-variation='basic'] & {
       @media (min-width: tokens.$break-mobile) {
         position: relative;
+        clip: auto;
       }
     }
 
@@ -154,12 +156,11 @@ $secondary-menu-sub-max-width: 19rem;
       position: fixed;
       background-color: var(--color-background);
       max-width: $secondary-menu-sub-max-width;
+      z-index: 1;
 
       // Subtract enough to place it just behind an "open" toggle and hide the
       // top border. To give it the "tab" effect.
-      top: calc(
-        var(--size-in-this-section-control) - var(--border-thickness-1)
-      );
+      top: calc(var(--size-spacing-7) + var(--size-spacing-4));
 
       [aria-expanded='false'] ~ & {
         display: none;
@@ -231,6 +232,7 @@ $secondary-menu-sub-max-width: 19rem;
         border-right: var(--border-thickness-1) solid
           var(--color-navigation-border);
         border-bottom: var(--border-thickness-1) solid var(--color-background);
+        background-color: var(--color-basic-white);
       }
     }
 
@@ -491,10 +493,6 @@ $secondary-menu-sub-max-width: 19rem;
 
   &--level-0 {
     @include secondary-nav-item-level-0;
-  }
-
-  @media (min-width: tokens.$break-mobile) {
-    height: var(--size-in-this-section-control);
   }
 }
 

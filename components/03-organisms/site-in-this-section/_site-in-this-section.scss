@@ -15,8 +15,11 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   position: relative;
   background-color: var(--color-basic-white);
-  margin-inline-start: calc(var(--size-spacing-site-gutter) * -1);
-  margin-inline-end: calc(var(--size-spacing-site-gutter) * -1);
+
+  @media (max-width: tokens.$break-mobile-max) {
+    margin-inline-start: calc(var(--size-spacing-site-gutter) * -1);
+    margin-inline-end: calc(var(--size-spacing-site-gutter) * -1);
+  }
 
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
@@ -120,8 +123,8 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     @media (max-width: tokens.$break-mobile-max) {
       display: flex;
       position: relative;
-      z-index: 1;
       background-color: var(--color-basic-white);
+      z-index: 2;
 
       &[aria-expanded='true'] {
         background-color: var(--color-gray-100);
@@ -132,13 +135,15 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   @media (min-width: tokens.$break-mobile) {
     border-bottom: var(--border-thickness-1) solid
       var(--color-navigation-border);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
 .in-this-section__inner {
   position: relative;
   display: flex;
-  flex-direction: column;
 
   @media (max-width: tokens.$break-mobile-max) {
     // when used in in-this-section, add a top border
@@ -146,6 +151,8 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       border-top: var(--border-thickness-2) solid var(--color-navigation-border);
       margin-top: var(--size-spacing-3);
     }
+
+    flex-direction: column;
   }
 }
 
@@ -154,7 +161,7 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   @include atoms.button-reset;
 
   position: absolute;
-  top: var(--size-spacing-4);
+  top: 0;
   display: flex;
   align-items: center;
   justify-content: center;

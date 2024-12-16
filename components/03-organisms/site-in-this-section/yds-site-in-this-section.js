@@ -1,4 +1,4 @@
-Drupal.behaviors.InThisSection = {
+Drupal.behaviors.inThisSection = {
   attach(context) {
     // Selectors.
     const inThisSection = context.querySelector('.in-this-section');
@@ -25,7 +25,7 @@ Drupal.behaviors.InThisSection = {
 
     /**
      * setOverflow
-     * @description Get the positions of the in-this-section to determine whether an
+     * @description Get the positions of the secondaryNav to determine whether an
      * overflow situation is in play.
      */
     function setOverflow() {
@@ -41,28 +41,28 @@ Drupal.behaviors.InThisSection = {
       );
 
       if (firstSecondaryNavLeft < secondaryNavLeft) {
-        // If left side of first in-this-section is < left side of in-this-section.
-        // And right side of last in-this-section is > right side of in-this-section.
+        // If left side of first secondaryNav is < left side of secondaryNav.
+        // And right side of last secondaryNav is > right side of secondaryNav.
         if (lastSecondaryNavRight > secondaryNavRight) {
           if (scrollIndicatorDir !== 'both') {
             scrollIndicatorDir = 'both';
             inThisSectionInner.setAttribute('data-scroll-indicator', 'both');
           }
-          // If left side of first in-this-section is < left side of in-this-section.
-          // But right side of last in-this-section is <= right side of in-this-section.
+          // If left side of first secondaryNav is < left side of secondaryNav.
+          // But right side of last secondaryNav is <= right side of secondaryNav.
         } else if (scrollIndicatorDir !== 'left') {
           scrollIndicatorDir = 'left';
           inThisSectionInner.setAttribute('data-scroll-indicator', 'left');
         }
-        // If left side of first in-this-section is >= left side of in-this-section.
-        // And right side of last in-this-section is > right side of in-this-section.
+        // If left side of first secondaryNav is >= left side of secondaryNav.
+        // And right side of last secondaryNav is > right side of secondaryNav.
       } else if (lastSecondaryNavRight > secondaryNavRight) {
         if (scrollIndicatorDir !== 'right') {
           scrollIndicatorDir = 'right';
           inThisSectionInner.setAttribute('data-scroll-indicator', 'right');
         }
-        // If left side of first in-this-section is >= left side of in-this-section.
-        // And right side of last in-this-section is <= right side of in-this-section.
+        // If left side of first secondaryNav is >= left side of secondaryNav.
+        // And right side of last secondaryNav is <= right side of secondaryNav.
       } else {
         scrollIndicatorDir = 'none';
         inThisSectionInner.setAttribute('data-scroll-indicator', 'none');
@@ -74,7 +74,9 @@ Drupal.behaviors.InThisSection = {
      * @description Support mouse navigation when horizontal scrolling occurs.
      */
     function mouseNav(direction) {
-      const scrollAmount = 200; // move 200px at a time.
+      const scrollAmount =
+        secondaryNavMenu.querySelector('.secondary-nav__item--level-0')
+          .offsetWidth * 2;
       secondaryNavMenu.scrollLeft +=
         direction === 'right' ? scrollAmount : -scrollAmount;
     }
