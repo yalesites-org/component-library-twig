@@ -27,24 +27,19 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       --color-layout-theme: var(--color-slot-one);
       --color-layout-content: var(--color-slot-eight);
       --color-layout-border: var(--color-slot-four);
+      --color-link-base: var(--color-link-base);
+      --color-link-hover: var(--color-link-hover);
 
       background-color: var(--color-layout-theme);
       color: var(--color-layout-content);
 
+      // override text-shadow color for links in component themes
       .link,
-      a {
+      .text-field a,
+      .link-grid__link {
         --color-text-shadow: var(--color-layout-theme);
         --color-link-hover: var(--color-link-hover);
-      }
-
-      a:not([data-link-style]) {
-        @include atoms.link;
-
-        color: var(--color-link-base);
-
-        &:hover {
-          color: var(--color-layout-content);
-        }
+        --color-link-base: var(--color-link-base);
       }
     }
   }
