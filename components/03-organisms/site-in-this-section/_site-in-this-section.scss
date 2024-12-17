@@ -133,8 +133,6 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 
   @media (min-width: tokens.$break-mobile) {
-    border-bottom: var(--border-thickness-1) solid
-      var(--color-navigation-border);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -144,6 +142,11 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 .in-this-section__inner {
   position: relative;
   display: flex;
+
+  @media (min-width: tokens.$break-mobile) {
+    border-bottom: var(--border-thickness-1) solid
+      var(--color-navigation-border);
+  }
 
   @media (max-width: tokens.$break-mobile-max) {
     // when used in in-this-section, add a top border
