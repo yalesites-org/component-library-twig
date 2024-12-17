@@ -379,9 +379,9 @@ $secondary-menu-sub-max-width: 19rem;
 
 .secondary-nav__item {
   &--level-0 {
-    .in-this-section & {
-      @include tokens.body-s;
+    @include tokens.body-s;
 
+    .in-this-section & {
       @media (min-width: tokens.$break-mobile) {
         position: relative;
         flex-shrink: 0;
