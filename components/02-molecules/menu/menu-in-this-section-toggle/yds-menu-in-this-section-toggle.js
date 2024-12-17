@@ -17,7 +17,7 @@ Drupal.behaviors.secondaryMenuToggle = {
         sectionMenu.setAttribute('aria-expanded', false);
         sectionMenu.setAttribute('aria-hidden', true);
         sectionWrapper.setAttribute('data-secondary-menu-state', 'closed');
-
+        sectionWrapper.setAttribute('data-in-this-section-overflow', 'hidden');
         // Event listener.
         secondaryMenuToggle.addEventListener('click', () => {
           const state =

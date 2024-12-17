@@ -26,11 +26,16 @@
 }
 
 .secondary-menu-toggle__icon {
+  @include tokens.animate(
+    transform,
+    var(--site-in-this-section-animation-speed)
+  );
+
   max-width: var(--size-spacing-9);
   max-height: var(--size-spacing-9);
   z-index: 1;
 
   [aria-expanded='true'] & {
-    transform: rotate(180deg);
+    transform: rotate(-180deg);
   }
 }
