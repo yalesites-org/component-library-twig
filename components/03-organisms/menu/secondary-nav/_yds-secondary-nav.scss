@@ -1,6 +1,12 @@
 @use '../../../00-tokens/tokens';
+@use '../../../00-tokens/functions/map';
 @use '../../../01-atoms/atoms';
 
+$global-secondary-nav-themes: map.deep-get(tokens.$tokens, 'global-themes');
+$secondary-nav-component-themes: map.deep-get(
+  tokens.$tokens,
+  'component-themes'
+);
 $secondary-menu-sub-max-width: 19rem;
 
 @mixin secondary-nav-item-level-0 {
@@ -38,7 +44,7 @@ $secondary-menu-sub-max-width: 19rem;
     }
 
     &[aria-expanded='true'] {
-      z-index: 1;
+      z-index: 2;
       border-color: var(--color-navigation-border);
       border-bottom-color: var(--color-background);
 
@@ -58,6 +64,103 @@ $secondary-menu-sub-max-width: 19rem;
 .secondary-nav {
   position: relative;
   max-width: 100%;
+  background-color: var(--color-basic-white);
+
+  // Component themes defaults: iterate over each component theme to establish
+  // default variables.
+  @each $theme, $value in $secondary-nav-component-themes {
+    [data-component-theme='#{$theme}'] & {
+      // prettier-ignore
+      --color-slot-one: var(--component-themes-#{$theme}-slot-one);
+      --color-slot-two: var(--component-themes-#{$theme}-slot-two);
+      --color-slot-three: var(--component-themes-#{$theme}-slot-three);
+      --color-slot-four: var(--component-themes-#{$theme}-slot-four);
+      --color-slot-five: var(--component-themes-#{$theme}-slot-five);
+      --color-slot-six: var(--component-themes-#{$theme}-slot-six);
+      --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
+      --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
+
+      background-color: var(--color-background);
+
+      .link,
+      a {
+        --color-text-shadow: var(--color-background);
+        --color-link-hover: var(--color-link-hover);
+      }
+
+      a:not([data-link-style]) {
+        @include atoms.link;
+
+        color: var(--color-link-base);
+
+        &:hover {
+          color: var(--color-link-hover);
+        }
+      }
+    }
+  }
+
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
+  @each $globalTheme, $value in $global-secondary-nav-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
+      --color-slot-three: var(
+        --global-themes-#{$globalTheme}-colors-slot-three
+      );
+      --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-slot-six: var(--global-themes-#{$globalTheme}-colors-slot-six);
+      --color-slot-seven: var(
+        --global-themes-#{$globalTheme}-colors-slot-seven
+      );
+      --color-slot-eight: var(
+        --global-themes-#{$globalTheme}-colors-slot-eight
+      );
+      --color-heading: var(--color-slot-six);
+      --color-background: var(--color-slot-eight);
+      --color-navigation-border: var(--color-slot-three);
+    }
+  }
+
+  // Component theme overrides: set specific component themes overrides
+  /// define component name spaced variables and map them to global theme slots.
+  [data-component-theme='one'] & {
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
+    --color-link-base: var(--color-slot-one);
+    --color-link-hover: var(--color-slot-eight);
+    --color-navigation-border: var(--color-slot-one);
+  }
+
+  [data-component-theme='two'] & {
+    --color-link-base: var(--color-slot-one);
+    --color-link-hover: var(--color-slot-seven);
+    --color-navigation-border: var(--color-slot-two);
+  }
+
+  [data-component-theme='three'] & {
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
+    --color-link-base: var(--color-slot-one);
+    --color-link-hover: var(--color-slot-eight);
+    --color-navigation-border: var(--color-slot-three);
+  }
+
+  [data-component-theme='four'] & {
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
+    --color-navigation-border: var(--color-slot-four);
+  }
+
+  [data-component-theme='five'] & {
+    --color-section-nav-theme: var(--color-slot-three);
+    --color-section-nav-content: var(--color-slot-seven);
+    --color-navigation-border: var(--color-slot-five);
+  }
 
   .in-this-section__inner & {
     @media (max-width: tokens.$break-mobile-max) {
@@ -108,7 +211,6 @@ $secondary-menu-sub-max-width: 19rem;
     [data-menu-variation='basic'] & {
       @media (min-width: tokens.$break-mobile) {
         position: relative;
-        clip: auto;
       }
     }
 
@@ -220,9 +322,7 @@ $secondary-menu-sub-max-width: 19rem;
 @media (min-width: tokens.$break-mobile) {
   .secondary-nav__toggle {
     [data-menu-variation='basic'] :not(:last-child) > & {
-      border-top: var(--border-thickness-1) solid transparent;
-      border-left: var(--border-thickness-1) solid transparent;
-      border-right: var(--border-thickness-1) solid transparent;
+      border: var(--border-thickness-1) solid transparent;
 
       &[aria-expanded='true'] {
         // prettier-ignore

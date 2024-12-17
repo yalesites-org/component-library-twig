@@ -181,7 +181,7 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &--left {
     left: 0;
     transform: rotate(90deg);
-    z-index: 5;
+    z-index: 0;
 
     [data-scroll-indicator='left'] &,
     [data-scroll-indicator='both'] & {
@@ -197,7 +197,7 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &--right {
     right: 0;
     transform: rotate(-90deg);
-    z-index: 5;
+    z-index: 0;
 
     [data-scroll-indicator='right'] &,
     [data-scroll-indicator='both'] & {
