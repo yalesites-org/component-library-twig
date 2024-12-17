@@ -20,7 +20,7 @@ Drupal.behaviors.secondaryNav = {
       if (submenu) {
         const parentRect = parentLi.getBoundingClientRect();
         submenu.style.left = `${parentRect.left}px`;
-        submenu.style.top = `${parentRect.bottom - 2}px`;
+        submenu.style.top = `${parentRect.bottom - 1}px`;
       }
     };
 
