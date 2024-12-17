@@ -82,6 +82,11 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
 .link-grid__inner {
   --color-link-grid-border: var(--color-link-grid-action);
 
+  // set the border color to the color slot one so there is a default set
+  [data-component-theme='default'] & {
+    --color-link-grid-action: var(--color-slot-one);
+  }
+
   display: flex;
   flex-flow: column nowrap;
   width: 100%;

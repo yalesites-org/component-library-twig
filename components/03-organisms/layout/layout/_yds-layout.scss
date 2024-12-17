@@ -9,6 +9,8 @@ $break-layout-layout: tokens.$break-2xl;
 $break-layout-layout-max: $break-layout-layout - 0.05;
 
 .yds-layout {
+  --color-layout-border: var(--color-slot-one);
+
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
   @each $theme, $value in $layout-component-themes {

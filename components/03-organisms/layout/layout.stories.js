@@ -33,14 +33,14 @@ export default {
     theme: {
       name: 'Component Theme',
       type: 'select',
-      options: ['one', 'two', 'three', 'four'],
+      options: ['default', 'one', 'two', 'three', 'four'],
       control: { type: 'select' },
     },
   },
   args: {
     divider: false,
     layoutOption: 'fifty-fifty',
-    theme: 'one',
+    theme: 'default',
   },
 };
 
