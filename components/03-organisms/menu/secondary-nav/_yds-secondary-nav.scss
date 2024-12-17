@@ -260,8 +260,15 @@ $secondary-menu-sub-max-width: 19rem;
       max-width: $secondary-menu-sub-max-width;
       z-index: 1;
 
-      // Subtract enough to place it just behind an "open" toggle and hide the
-      // top border. To give it the "tab" effect.
+      // Initial top value to place the submenu below the active item.
+      // Note: This value is updated in JS to position the submenu correctly.
+      // Because the submenu is fixed instead of absolute, it is not affected by the parent's
+      // position. This position needs to be updated using JS.
+      // It needs to be position: fixed so its taken out of the flow and can be positioned
+      // relative to the viewport, instead of its parent, so the menu can overflow left/right.
+      // You can not use position: absolute because it will be relative to the parent and the
+      // submenu will not be visible because its overflow is hidden by its parent.
+      // See: component-library-twig/components/03-organisms/menu/secondary-nav/yds-secondary-nav.js
       top: calc(var(--size-spacing-7) + var(--size-spacing-4));
 
       [aria-expanded='false'] ~ & {
