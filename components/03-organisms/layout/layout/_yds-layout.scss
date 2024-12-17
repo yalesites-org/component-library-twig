@@ -9,8 +9,6 @@ $break-layout-layout: tokens.$break-2xl;
 $break-layout-layout-max: $break-layout-layout - 0.05;
 
 .yds-layout {
-  @include tokens.spacing-page-section;
-
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
   @each $theme, $value in $layout-component-themes {
@@ -122,6 +120,22 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-layout-border: var(--color-slot-four);
     --color-heading: var(--color-slot-eight);
     --color-link-grid-action: var(--color-slot-four);
+  }
+
+  // if we're not using a component theme, add top and bottom margin
+  // Or if the spotlight is the only spotlight on the page
+  &[data-component-theme='default'],
+  &[data-spotlights-position='first-and-last'] {
+    @include tokens.spacing-page-section;
+  }
+
+  // We're using JavaScript to evaluate the last and first spotlights in a group of spotlights
+  &[data-spotlights-position='first'] {
+    margin-top: var(--size-spacing-10);
+  }
+
+  &[data-spotlights-position='last'] {
+    margin-bottom: var(--size-spacing-10);
   }
 }
 
