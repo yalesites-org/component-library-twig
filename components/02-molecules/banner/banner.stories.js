@@ -47,13 +47,13 @@ export default {
     snippet: bannerData.banner__snippet,
     linkContent: bannerData.banner__link__content,
     linkContentTwo: bannerData.banner__link__content_two,
+    bgColor: 'one',
   },
   argTypes: {
     bgColor: {
       name: 'Component Theme (dial)',
       type: 'select',
       options: colorPairingsData,
-      defaultValue: 'one',
     },
   },
 };
@@ -85,14 +85,17 @@ ActionBanner.argTypes = {
     name: 'Link Style',
     type: 'select',
     options: ['cta', 'text-link'],
-    defaultValue: 'cta',
   },
   contentLayout: {
     name: 'Content Layout',
     type: 'select',
     options: ['bottom', 'left', 'right'],
-    defaultValue: 'bottom',
   },
+};
+
+ActionBanner.args = {
+  linkStyle: 'cta',
+  contentLayout: 'bottom',
 };
 
 export const GrandHeroBanner = ({
@@ -124,27 +127,32 @@ GrandHeroBanner.argTypes = {
     name: 'Content Overlay',
     type: 'select',
     options: ['contained', 'full'],
-    defaultValue: 'full',
   },
   size: {
     name: 'Content Size',
     type: 'select',
     options: ['reduced', 'full'],
-    defaultValue: 'full',
   },
   withVideo: {
     name: 'With Video',
     type: 'boolean',
-    defaultValue: false,
   },
 };
-export const ImageBanner = ({ bgColor, size, withVideo }) =>
+
+GrandHeroBanner.args = {
+  overlayVariation: 'full',
+  size: 'full',
+  withVideo: false,
+};
+
+export const ImageBanner = ({ bgColor, size, withVideo, imageCaption }) =>
   imageBannerTwig({
     ...imageData.responsive_images['16x9'],
     image_banner__content__background: bgColor,
     image_banner__overlay_variation: 'full',
     image_banner__size: size,
     image_banner__video: withVideo ? 'true' : 'false',
+    image_banner__caption: imageCaption,
   });
 ImageBanner.argTypes = {
   size: {
@@ -156,6 +164,15 @@ ImageBanner.argTypes = {
   withVideo: {
     name: 'With Video',
     type: 'boolean',
-    defaultValue: false,
   },
+  imageCaption: {
+    name: 'Image Caption',
+    type: 'string',
+  },
+};
+
+ImageBanner.args = {
+  size: 'tall',
+  withVideo: false,
+  imageCaption: 'Image Caption',
 };
