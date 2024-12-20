@@ -6,6 +6,12 @@
   @include tokens.spacing-page-section;
 
   --color-text-shadow: var(--color-basic-white);
+
+  // remove margin from the top and bottom of the accordion in a fifty-fifty layout
+  [data-component-layout='fifty-fifty'] & {
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }
 }
 
 .accordion__heading {

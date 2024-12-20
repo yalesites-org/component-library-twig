@@ -19,15 +19,23 @@ body[data-body-frozen] {
   }
 }
 
+// The last item inside the `.main-content` area should have some space between
+// it and the site footer (size-spacing-12 below) - unless it is designated as
+// `$flush-bottom` above. Then it will have no bottom-margin separating it from
+// the site footer.
+.main-content > *:last-child {
+  margin-bottom: var(--main-content-bottom-margin, var(--size-spacing-13));
+}
+
 // The first item inside the `.main-content` area should have some space between
 // it and the site header (size-spacing-6 and 9 below) - unless it is designated
 // as `$flush-top` above. Then it will have no top-margin separating it from the
 // site header.
-.main-content > *:first-child {
+.main-content > *:first-child:not(.page-meta, .layout--banner) {
   margin-top: var(--main-content-top-margin, var(--size-spacing-6));
 }
 
-.main-content .page-title {
+.main-content .page-title:not(.visually-hidden) {
   margin-top: var(--size-spacing-10); // 4rem
 
   @media (max-width: tokens.$break-l) {
@@ -54,14 +62,6 @@ body[data-body-frozen] {
   @media (max-width: tokens.$break-s) {
     margin-bottom: calc(var(--size-spacing-5) - var(--size-spacing-7));
   }
-}
-
-// The last item inside the `.main-content` area should have some space between
-// it and the site footer (size-spacing-12 below) - unless it is designated as
-// `$flush-bottom` above. Then it will have no bottom-margin separating it from
-// the site footer.
-.main-content > *:last-child {
-  margin-bottom: var(--main-content-bottom-margin, var(--size-spacing-13));
 }
 
 body {
