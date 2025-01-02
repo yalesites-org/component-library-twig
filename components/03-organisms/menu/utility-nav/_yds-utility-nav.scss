@@ -10,7 +10,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--utility-bar-gap);
-  align-items: start;
 
   @media (max-width: tokens.$break-mobile-max) {
     --utility-bar-gap: var(--size-spacing-6);
@@ -133,21 +132,20 @@
 }
 
 .utility-nav__dropdown {
-  display: flex;
-  flex-direction: column;
   position: relative;
-
-  &[aria-expanded='true'] {
-    border: var(--border-thickness-2) solid;
-  }
 }
 
 .utility-nav__dropdown-content {
   display: none;
+  position: fixed;
+  top: var(--size-spacing-10); // this gets overridden in JS
+  border: var(--border-thickness-2) solid transparent;
 
   [aria-expanded='true'] & {
-    display: block;
     padding: var(--size-spacing-4);
+    display: flex;
+    border-color: inherit;
+    background-color: var(--color-basic-white);
   }
 }
 
@@ -159,14 +157,19 @@
   display: flex;
   align-items: center;
   gap: var(--size-spacing-3);
+  position: relative;
 
   [aria-expanded='true'] & {
-    border-color: transparent;
     background-color: transparent;
     color: var(--color-action);
+    border-color: inherit;
+    border-radius: 0;
+    border-bottom-color: var(--color-basic-white);
+    z-index: 1;
   }
 }
 
+// rotate the icon when the dropdown is open
 .cta__icon {
   [data-cta-control-type='dropdown'][aria-expanded='true'] & {
     transform: rotate(180deg);

@@ -11,6 +11,27 @@
     {% include "@organisms/menu/utility-nav/_utility-nav--menu.twig" %}
   {% endif %}
 
+  {# Dropdown Button #}
+  {% if utility_nav__dropdown_link__content and utility_nav__dropdown_link__url %}
+    <div {{ bem('dropdown', [], utility_nav__base_class) }} aria-expanded="false" aria-haspopup="true">
+      {% include "@atoms/controls/cta/yds-cta.twig" with {
+        cta__blockname: utility_nav__base_class,
+        cta__content: utility_nav__dropdown_link__content,
+        cta__href: utility_nav__dropdown_link__url,
+        cta__component_theme: utility_nav__cta__theme|default('none'),
+        cta__radius: 'pill',
+        cta__control_type: 'dropdown',
+      } %}
+      <div class="utility-nav__dropdown-content" aria-hidden="true">
+        {% if drupal_utility__dropdown_nav %}
+          {{ drupal_utility_dropdown_nav }}
+        {% else %}
+          {% include "@organisms/menu/utility-nav/_utility-nav--dropdown-menu.twig" %}
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
   {# Search #}
   {% if utility_nav__search %}
     <div {{ bem('search', [], utility_nav__base_class) }}>
@@ -42,25 +63,5 @@
       cta__component_theme: utility_nav__cta__theme|default('none'),
       cta__radius: 'pill',
     } %}
-  {% endif %}
-
-  {% if utility_nav__dropdown_link__content and utility_nav__dropdown_link__url %}
-    <div {{ bem('dropdown', [], utility_nav__base_class) }} aria-expanded="false">
-      {% include "@atoms/controls/cta/yds-cta.twig" with {
-        cta__blockname: utility_nav__base_class,
-        cta__content: utility_nav__dropdown_link__content,
-        cta__href: utility_nav__dropdown_link__url,
-        cta__component_theme: utility_nav__cta__theme|default('none'),
-        cta__radius: 'pill',
-        cta__control_type: 'dropdown',
-      } %}
-      <div class="utility-nav__dropdown-content">
-        {% if drupal_utility__dropdown_nav %}
-          {{ drupal_utility_dropdown_nav }}
-        {% else %}
-          {% include "@organisms/menu/utility-nav/_utility-nav--dropdown-menu.twig" %}
-        {% endif %}
-      </div>
-    </div>
   {% endif %}
 </div>
