@@ -137,9 +137,14 @@
 
 .utility-nav__dropdown-content {
   display: none;
-  position: fixed;
-  top: var(--size-spacing-10); // this gets overridden in JS
   border: var(--border-thickness-2) solid transparent;
+  position: fixed;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    position: relative;
+    top: 0;
+    border-top: 0;
+  }
 
   [aria-expanded='true'] & {
     padding: var(--size-spacing-4);
@@ -166,6 +171,10 @@
     border-radius: 0;
     border-bottom-color: var(--color-basic-white);
     z-index: 1;
+
+    @media (max-width: tokens.$break-mobile-max) {
+      border-bottom: 0;
+    }
   }
 }
 

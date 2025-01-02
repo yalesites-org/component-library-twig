@@ -5,10 +5,11 @@ Drupal.behaviors.utilityDropdownNav = {
     const utilityDropdownNavToggle = context.querySelectorAll(
       '.utility-nav__cta[data-cta-control-type="dropdown"]',
     );
-
     const utilityDropdownNavContent = context.querySelector(
       '.utility-nav__dropdown-content',
     );
+
+    const maxWidth = 990;
 
     // Event Listeners
     utilityDropdownNavToggle.forEach((toggle) => {
@@ -20,7 +21,9 @@ Drupal.behaviors.utilityDropdownNav = {
         utilityDropdownNav.setAttribute('aria-expanded', !isExpanded);
         toggle.setAttribute('aria-expanded', !isExpanded);
         utilityDropdownNavContent.setAttribute('aria-hidden', isExpanded);
-        utilityDropdownNavContent.style.top = `${14 + toggleHeight}px`;
+        if (window.innerWidth > maxWidth) {
+          utilityDropdownNavContent.style.top = `${14 + toggleHeight}px`;
+        }
       });
 
       toggle.addEventListener('keydown', (event) => {
