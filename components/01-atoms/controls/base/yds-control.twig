@@ -2,11 +2,12 @@
  # Available Variables:
  # - control__url: If provided, sets the element to 'a' and adds `href`
  # - control__content
+ # - control__dropdown_content
  #}
 
 {% set control__attributes = control__attributes|default({}) %}
 
-{% if control__url|length > 0 %}
+{% if control__url|length > 0 and control__type != 'dropdown' %}
   {% set control__url_type = control__url_type|default(getUrlType(control__url, control__attributes)) %}
   {% set control__base_class = control__base_class|default('link') %}
   {% set control__element = 'a' %}
@@ -17,6 +18,11 @@
   {% set control__url_type = control__url_type|default("internal") %}
   {% set control__base_class = control__base_class|default('button') %}
   {% set control__element = control__element|default('button') %}
+  
+  {# for control__type ('link' by default), if 'dropdown' set control__url_type to 'dropdown` #}
+  {% if control__type == 'dropdown' %}
+    {% set control__url_type = control__url_type|default("dropdown") %}
+  {% endif %}
 
   {% if aria_expanded %}
     {% set control__attributes = control__attributes|merge({
