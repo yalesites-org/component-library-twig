@@ -37,4 +37,11 @@
 
 <{{ control__element }} {{ add_attributes(control__attributes) }}>
   {{- control__content -}}
+
+  {% if control__type == 'dropdown' %}
+    {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'angle-down',
+    icon__blockname: control__base_class,
+    } %}
+  {% endif %}
 </{{ control__element }}>

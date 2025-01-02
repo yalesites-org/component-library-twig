@@ -338,6 +338,13 @@ $cta-outline-weights: (
   }
 }
 
+.cta__icon {
+  [data-cta-control-type='dropdown'] & {
+    width: var(--size-spacing-5);
+    height: var(--size-spacing-5);
+  }
+}
+
 // @TODO: Temporary place for this
 .cta-group {
   display: flex;
