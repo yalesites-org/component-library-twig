@@ -147,7 +147,7 @@
   }
 
   [aria-expanded='true'] & {
-    padding: var(--size-spacing-4);
+    padding: var(--size-spacing-4) var(--size-spacing-7);
     display: flex;
     border-color: inherit;
     background-color: var(--color-basic-white);
@@ -174,7 +174,7 @@
     color: var(--color-action);
     border-color: inherit;
     border-radius: 0;
-    border-bottom-color: var(--color-basic-white);
+    border-bottom: 0;
     z-index: 1;
 
     @media (max-width: tokens.$break-mobile-max) {
@@ -184,6 +184,17 @@
     svg {
       // rotate the icon when the dropdown is open
       transform: rotate(180deg);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: var(--color-basic-white);
     }
   }
 }
