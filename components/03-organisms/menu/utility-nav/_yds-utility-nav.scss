@@ -176,8 +176,11 @@
     border-color: inherit;
     border-radius: 0;
     border-bottom-color: transparent;
-    padding-bottom: var(--size-spacing-6);
     z-index: 1;
+
+    @media (min-width: tokens.$break-mobile) {
+      padding-bottom: var(--size-spacing-6);
+    }
 
     @media (max-width: tokens.$break-mobile-max) {
       border-bottom-color: transparent;
