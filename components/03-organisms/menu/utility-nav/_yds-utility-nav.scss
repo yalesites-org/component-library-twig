@@ -10,6 +10,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--utility-bar-gap);
+  align-items: first baseline;
 
   @media (max-width: tokens.$break-mobile-max) {
     --utility-bar-gap: var(--size-spacing-6);
@@ -174,11 +175,12 @@
     color: var(--color-action);
     border-color: inherit;
     border-radius: 0;
-    border-bottom: 0;
+    border-bottom-color: transparent;
+    padding-bottom: var(--size-spacing-6);
     z-index: 1;
 
     @media (max-width: tokens.$break-mobile-max) {
-      border-bottom: 0;
+      border-bottom-color: transparent;
     }
 
     svg {
@@ -190,10 +192,10 @@
       content: '';
       position: absolute;
       width: 100%;
-      bottom: 0;
+      bottom: calc(var(--size-spacing-1) * -1);
       left: 0;
       right: 0;
-      height: 2px;
+      height: var(--size-spacing-1);
       background-color: var(--color-basic-white);
     }
   }

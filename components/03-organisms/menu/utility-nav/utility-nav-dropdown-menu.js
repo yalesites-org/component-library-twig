@@ -23,7 +23,7 @@ Drupal.behaviors.utilityDropdownNav = {
         toggle.setAttribute('aria-expanded', !isExpanded);
         utilityDropdownNavContent.setAttribute('aria-hidden', isExpanded);
         if (window.innerWidth > maxWidth) {
-          utilityDropdownNavContent.style.top = `${14 + toggleHeight}px`;
+          utilityDropdownNavContent.style.top = `${29 + toggleHeight}px`;
         }
 
         window.addEventListener('resize', () => {
