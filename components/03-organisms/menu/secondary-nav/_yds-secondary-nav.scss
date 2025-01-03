@@ -333,13 +333,19 @@ $secondary-menu-sub-max-width: 19rem;
 
       &[aria-expanded='true'] {
         // prettier-ignore
-        border-top: var(--border-thickness-1) solid var(--color-navigation-border);
-        border-left: var(--border-thickness-1) solid
-          var(--color-navigation-border);
-        border-right: var(--border-thickness-1) solid
-          var(--color-navigation-border);
-        border-bottom: var(--border-thickness-1) solid var(--color-background);
+        border-color: var(--color-navigation-border);
         background-color: var(--color-basic-white);
+
+        &::before {
+          content: '';
+          position: absolute;
+          width: 100%;
+          bottom: -1px;
+          left: 0;
+          right: 0;
+          height: var(--border-thickness-1);
+          background-color: var(--color-background);
+        }
       }
     }
 
