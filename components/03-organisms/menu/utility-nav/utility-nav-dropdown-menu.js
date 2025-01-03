@@ -9,6 +9,7 @@ Drupal.behaviors.utilityDropdownNav = {
       '.utility-nav__dropdown-content',
     );
 
+    // menu breakpoint
     const maxWidth = 990;
 
     // Event Listeners
@@ -24,6 +25,14 @@ Drupal.behaviors.utilityDropdownNav = {
         if (window.innerWidth > maxWidth) {
           utilityDropdownNavContent.style.top = `${14 + toggleHeight}px`;
         }
+
+        window.addEventListener('resize', () => {
+          if (window.innerWidth > maxWidth) {
+            utilityDropdownNavContent.style.top = `${14 + toggleHeight}px`;
+          } else {
+            utilityDropdownNavContent.style.top = '';
+          }
+        });
       });
 
       toggle.addEventListener('keydown', (event) => {

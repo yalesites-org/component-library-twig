@@ -163,6 +163,11 @@
   align-items: center;
   gap: var(--size-spacing-3);
   position: relative;
+  justify-content: center;
+
+  svg {
+    @include tokens.animate;
+  }
 
   [aria-expanded='true'] & {
     background-color: transparent;
@@ -175,13 +180,11 @@
     @media (max-width: tokens.$break-mobile-max) {
       border-bottom: 0;
     }
-  }
-}
 
-// rotate the icon when the dropdown is open
-.cta__icon {
-  [data-cta-control-type='dropdown'][aria-expanded='true'] & {
-    transform: rotate(180deg);
+    svg {
+      // rotate the icon when the dropdown is open
+      transform: rotate(180deg);
+    }
   }
 }
 
@@ -194,4 +197,8 @@
     flex-direction: column;
     gap: var(--size-spacing-4);
   }
+}
+
+.utility-nav-dropdown__link {
+  @include molecules.menu-link;
 }
