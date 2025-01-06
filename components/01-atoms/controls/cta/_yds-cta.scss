@@ -302,7 +302,7 @@ $cta-outline-weights: (
     }
   }
 
-  &:active {
+  &:not([data-cta-control-type='dropdown']):active {
     --color-cta-bg-active: var(--color-gray-700);
     --color-cta-border-active: var(--color-gray-700);
     --color-cta-text-active: var(--color-basic-white);
