@@ -82,6 +82,17 @@
   @include tokens.h4-yale-new;
 
   color: var(--color-gray-800);
+
+  &:has(.heading__prefix-icon) {
+    display: flex;
+    align-items: center;
+    gap: var(--size-spacing-3);
+  }
+}
+
+.search-result__icon {
+  width: var(--size-spacing-5);
+  height: var(--size-spacing-5);
 }
 
 .search-result__highlighted,
