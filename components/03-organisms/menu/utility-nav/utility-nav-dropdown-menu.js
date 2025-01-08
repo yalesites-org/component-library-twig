@@ -1,53 +1,43 @@
 Drupal.behaviors.utilityDropdownNav = {
-  attach(context) {
+  attach() {
     // Selectors
-    const utilityDropdownNav = context.querySelector('.utility-nav__dropdown');
-    const utilityDropdownNavToggle = context.querySelectorAll(
+    const utilityDropdownNav = document.querySelector('.utility-nav__dropdown');
+    const utilityDropdownNavToggles = document.querySelectorAll(
       '.utility-nav__cta[data-cta-control-type="dropdown"]',
     );
-    const utilityDropdownNavContent = context.querySelector(
+    const utilityDropdownNavContent = document.querySelector(
       '.utility-nav__dropdown-content',
     );
 
-    // menu breakpoint
-    const maxWidth = 990;
+    // Function to toggle dropdown
+    const toggleDropdown = (toggle) => {
+      const isExpanded =
+        utilityDropdownNav.getAttribute('aria-expanded') === 'true';
+      utilityDropdownNav.setAttribute('aria-expanded', !isExpanded);
+      toggle.setAttribute('aria-expanded', !isExpanded);
+      utilityDropdownNavContent.setAttribute('aria-hidden', isExpanded);
+    };
+
+    // Function to close dropdown
+    const closeDropdown = (toggle) => {
+      utilityDropdownNav.setAttribute('aria-expanded', false);
+      toggle.setAttribute('aria-expanded', false);
+      utilityDropdownNavContent.setAttribute('aria-hidden', true);
+    };
 
     // Event Listeners
-    utilityDropdownNavToggle.forEach((toggle) => {
-      const toggleHeight = toggle.offsetHeight;
-
-      toggle.addEventListener('click', () => {
-        const isExpanded =
-          utilityDropdownNav.getAttribute('aria-expanded') === 'true';
-        utilityDropdownNav.setAttribute('aria-expanded', !isExpanded);
-        toggle.setAttribute('aria-expanded', !isExpanded);
-        utilityDropdownNavContent.setAttribute('aria-hidden', isExpanded);
-        if (window.innerWidth > maxWidth) {
-          utilityDropdownNavContent.style.top = `${29 + toggleHeight}px`;
-        }
-
-        window.addEventListener('resize', () => {
-          if (window.innerWidth > maxWidth) {
-            utilityDropdownNavContent.style.top = `${14 + toggleHeight}px`;
-          } else {
-            utilityDropdownNavContent.style.top = '';
-          }
-        });
-      });
+    utilityDropdownNavToggles.forEach((toggle) => {
+      toggle.addEventListener('click', () => toggleDropdown(toggle));
 
       toggle.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
-          utilityDropdownNav.setAttribute('aria-expanded', false);
-          toggle.setAttribute('aria-expanded', false);
-          utilityDropdownNavContent.setAttribute('aria-hidden', true);
+          closeDropdown(toggle);
         }
       });
 
       utilityDropdownNavContent.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
-          utilityDropdownNav.setAttribute('aria-expanded', false);
-          toggle.setAttribute('aria-expanded', false);
-          utilityDropdownNavContent.setAttribute('aria-hidden', true);
+          closeDropdown(toggle);
           toggle.focus();
         }
       });

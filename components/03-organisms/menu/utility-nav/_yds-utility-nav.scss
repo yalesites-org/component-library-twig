@@ -139,12 +139,18 @@
 .utility-nav__dropdown-content {
   display: none;
   border: var(--border-thickness-2) solid transparent;
-  position: fixed;
 
   @media (max-width: tokens.$break-mobile-max) {
     position: relative;
-    top: 0;
     border-top: 0;
+    top: calc(var(--border-thickness-2) * -1);
+  }
+
+  @media (min-width: tokens.$break-mobile) {
+    position: absolute;
+    width: calc(100vw - var(--size-spacing-site-gutter) * 1.2);
+    max-width: calc(var(--size-component-layout-width-site) / 2);
+    top: calc(100% - var(--border-thickness-1));
   }
 
   [aria-expanded='true'] & {
@@ -152,6 +158,10 @@
     display: flex;
     border-color: inherit;
     background-color: var(--color-basic-white);
+
+    [data-header-theme] & {
+      background-color: var(--color-background);
+    }
   }
 }
 
@@ -175,11 +185,25 @@
     color: var(--color-action);
     border-color: inherit;
     border-radius: 0;
-    border-bottom-color: transparent;
     z-index: 1;
 
     @media (min-width: tokens.$break-mobile) {
       padding-bottom: var(--size-spacing-6);
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        bottom: calc(var(--size-spacing-2) * -1);
+        left: 0;
+        right: 0;
+        height: var(--size-spacing-2);
+        background-color: var(--color-basic-white);
+
+        [data-header-theme] & {
+          background-color: var(--color-background);
+        }
+      }
     }
 
     @media (max-width: tokens.$break-mobile-max) {
@@ -189,17 +213,6 @@
     svg {
       // rotate the icon when the dropdown is open
       transform: rotate(180deg);
-    }
-
-    &::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      bottom: calc(var(--size-spacing-1) * -1);
-      left: 0;
-      right: 0;
-      height: var(--size-spacing-1);
-      background-color: var(--color-basic-white);
     }
   }
 }
