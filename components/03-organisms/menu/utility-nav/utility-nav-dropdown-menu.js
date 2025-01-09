@@ -1,43 +1,57 @@
 Drupal.behaviors.utilityDropdownNav = {
   attach() {
     // Selectors
-    const utilityDropdownNav = document.querySelector('.utility-nav__dropdown');
+    const utilityDropdownNavs = document.querySelectorAll(
+      '.utility-nav__dropdown',
+    );
     const utilityDropdownNavToggles = document.querySelectorAll(
       '.utility-nav__cta[data-cta-control-type="dropdown"]',
     );
-    const utilityDropdownNavContent = document.querySelector(
+    const utilityDropdownNavContents = document.querySelectorAll(
       '.utility-nav__dropdown-content',
     );
 
     // Function to toggle dropdown
-    const toggleDropdown = (toggle) => {
-      const isExpanded =
-        utilityDropdownNav.getAttribute('aria-expanded') === 'true';
-      utilityDropdownNav.setAttribute('aria-expanded', !isExpanded);
+    const toggleDropdown = (toggle, nav, content) => {
+      const isExpanded = nav.getAttribute('aria-expanded') === 'true';
+      nav.setAttribute('aria-expanded', !isExpanded);
       toggle.setAttribute('aria-expanded', !isExpanded);
-      utilityDropdownNavContent.setAttribute('aria-hidden', isExpanded);
+      content.setAttribute('aria-hidden', isExpanded);
     };
 
     // Function to close dropdown
-    const closeDropdown = (toggle) => {
-      utilityDropdownNav.setAttribute('aria-expanded', false);
+    const closeDropdown = (toggle, nav, content) => {
+      nav.setAttribute('aria-expanded', false);
       toggle.setAttribute('aria-expanded', false);
-      utilityDropdownNavContent.setAttribute('aria-hidden', true);
+      content.setAttribute('aria-hidden', true);
     };
 
     // Event Listeners
-    utilityDropdownNavToggles.forEach((toggle) => {
-      toggle.addEventListener('click', () => toggleDropdown(toggle));
+    utilityDropdownNavToggles.forEach((toggle, index) => {
+      const nav = utilityDropdownNavs[index];
+      const content = utilityDropdownNavContents[index];
+      const utilityDropdownMenu = content.querySelector(
+        '.utility-nav-dropdown__menu',
+      );
+
+      if (utilityDropdownMenu) {
+        const dropdownWidth = utilityDropdownMenu.offsetWidth;
+        utilityDropdownMenu.style.width = `${dropdownWidth + 40}px`;
+      }
+
+      toggle.addEventListener('click', () =>
+        toggleDropdown(toggle, nav, content),
+      );
 
       toggle.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
-          closeDropdown(toggle);
+          closeDropdown(toggle, nav, content);
         }
       });
 
-      utilityDropdownNavContent.addEventListener('keydown', (event) => {
+      content.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
-          closeDropdown(toggle);
+          closeDropdown(toggle, nav, content);
           toggle.focus();
         }
       });
