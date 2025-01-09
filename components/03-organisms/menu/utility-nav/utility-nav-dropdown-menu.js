@@ -34,10 +34,21 @@ Drupal.behaviors.utilityDropdownNav = {
         '.utility-nav-dropdown__menu',
       );
 
-      if (utilityDropdownMenu) {
-        const dropdownWidth = utilityDropdownMenu.offsetWidth;
-        utilityDropdownMenu.style.width = `${dropdownWidth + 40}px`;
-      }
+      const adjustDropdownWidth = () => {
+        if (window.innerWidth >= 990 && utilityDropdownMenu) {
+          utilityDropdownMenu.style.width = 'auto'; // Reset width to auto before recalculating
+          const dropdownWidth = utilityDropdownMenu.offsetWidth;
+          utilityDropdownMenu.style.width = `${dropdownWidth + 40}px`;
+        } else if (utilityDropdownMenu) {
+          utilityDropdownMenu.style.width = 'auto';
+        }
+      };
+
+      // Initial adjustment
+      adjustDropdownWidth();
+
+      // Adjust on window resize
+      window.addEventListener('resize', adjustDropdownWidth);
 
       toggle.addEventListener('click', () =>
         toggleDropdown(toggle, nav, content),
