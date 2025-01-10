@@ -35,12 +35,14 @@ Drupal.behaviors.utilityDropdownNav = {
       const contentRect = content.getBoundingClientRect();
       const overflowRight = contentRect.right - siteHeaderRect.right;
 
+      // Reset position if dropdown is not expanded
       if (!isExpanded) {
         contentElement.style.left = '';
         contentElement.style.right = '';
         return;
       }
 
+      // Adjust dropdown position based on overflow
       if (overflowRight > 0) {
         contentElement.style.left = 'auto';
         contentElement.style.right = '0';
@@ -54,6 +56,7 @@ Drupal.behaviors.utilityDropdownNav = {
     const adjustDropdownWidth = (content, utilityDropdownMenu) => {
       const menuWidthStyle = utilityDropdownMenu;
 
+      // Adjust dropdown width based on window size
       if (window.innerWidth >= 990 && utilityDropdownMenu) {
         const dropdownWidth = utilityDropdownMenu.offsetWidth;
 
