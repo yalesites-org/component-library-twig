@@ -234,11 +234,10 @@
 }
 
 .utility-nav-dropdown__item {
-  display: inline-block;
+  display: block;
   width: max-content;
 
   @media (max-width: tokens.$break-mobile-max) {
-    display: block;
     width: 100%;
   }
 }
