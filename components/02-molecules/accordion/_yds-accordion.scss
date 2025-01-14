@@ -54,14 +54,22 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 
   &[data-component-theme='one'] {
-    --color-accordion-accent: var(--color-slot-two);
+    --color-accordion-accent: var(--color-slot-one);
   }
 
   &[data-component-theme='two'] {
-    --color-accordion-accent: var(--color-slot-three);
+    --color-accordion-accent: var(--color-slot-two);
   }
 
   &[data-component-theme='three'] {
+    --color-accordion-accent: var(--color-slot-three);
+  }
+
+  &[data-component-theme='four'] {
+    --color-accordion-accent: var(--color-slot-four);
+  }
+
+  &[data-component-theme='five'] {
     --color-accordion-accent: var(--color-slot-five);
   }
 }
@@ -120,7 +128,7 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     max-width: var(--size-component-layout-width-content);
   }
 
-  :not([data-component-theme='default']) & {
+  [data-component-theme]:not([data-component-theme='default']) & {
     border-bottom: none;
     background-color: var(--color-gray-100);
     padding: var(--size-spacing-3) var(--size-spacing-4);
@@ -189,5 +197,9 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     @include tokens.animate-hidden(var(--animation-speed-slow));
 
     max-height: 0;
+  }
+
+  > *:first-child {
+    margin-top: var(--size-spacing-5);
   }
 }

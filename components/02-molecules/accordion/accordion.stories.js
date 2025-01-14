@@ -1,10 +1,7 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import accordionTwig from './yds-accordion.twig';
 import accordionData from './accordion.yml';
 
 import './yds-accordion';
-
-const colorPairingsData = Object.keys(tokens['component-themes']);
 
 /**
  * Storybook Definition.
@@ -26,7 +23,7 @@ export default {
     },
     themeColor: {
       name: 'Component Theme (dial)',
-      options: colorPairingsData,
+      options: ['one', 'two', 'three', 'four', 'five'],
       type: 'select',
     },
   },
