@@ -199,7 +199,10 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     max-height: 0;
   }
 
-  > *:first-child {
-    margin-top: var(--size-spacing-5);
+  // for accordions using themes, the content needs top margin
+  [data-component-theme]:not([data-component-theme='default']) & {
+    > *:first-child {
+      margin-top: var(--size-spacing-5);
+    }
   }
 }
