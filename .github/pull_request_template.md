@@ -11,8 +11,7 @@
 - [ ] Verify you can install the component with the CLI
 
 ### Design Review
-- [ ] Verify the designs match the [Figma Designs](https://www.figma.com/file/OVfmCW5s1gI7xnrM8ibX2y/UI-Kit-Alpha-%5BYaleSites%5D)
-- [ ] Review any new [Percy builds](https://percy.io/95144ff9/component-library-twig)
+- [ ] Verify the designs match the [Figma Designs](https://www.figma.com/design/bTjNHdiy1OdgHrP3b9m7uc/Yale-UI-Kit?node-id=11249-6771)
 
 ### Accessibility Review
 - [ ] Verify the component meets Accessibility requirements
