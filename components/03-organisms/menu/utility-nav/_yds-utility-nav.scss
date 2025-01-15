@@ -41,6 +41,10 @@
 
 .utility-nav__link {
   @include molecules.menu-link;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .utility-nav__cta {
@@ -276,4 +280,8 @@
 
 .utility-nav-dropdown__link {
   @include molecules.menu-link;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
