@@ -28,7 +28,7 @@ Drupal.behaviors.utilityDropdownNav = {
     };
 
     // Function to adjust dropdown position
-    const adjustDropdownPosition = (content) => {
+    const adjustDropdownPosition = (content, toggle) => {
       const isExpanded = content.getAttribute('aria-hidden') === 'false';
       const contentElement = content;
       const siteHeaderRect = siteHeader.getBoundingClientRect();
@@ -39,6 +39,8 @@ Drupal.behaviors.utilityDropdownNav = {
       if (!isExpanded) {
         contentElement.style.left = '';
         contentElement.style.right = '';
+        toggle.classList.remove('utility-nav__dropdown-direction-left');
+        toggle.classList.remove('utility-nav__dropdown-direction-right');
         return;
       }
 
@@ -46,14 +48,18 @@ Drupal.behaviors.utilityDropdownNav = {
       if (overflowRight > 0) {
         contentElement.style.left = 'auto';
         contentElement.style.right = '0';
+        toggle.classList.remove('utility-nav__dropdown-direction-right');
+        toggle.classList.add('utility-nav__dropdown-direction-left');
       } else {
         contentElement.style.left = '';
         contentElement.style.right = '';
+        toggle.classList.add('utility-nav__dropdown-direction-right');
+        toggle.classList.remove('utility-nav__dropdown-direction-left');
       }
     };
 
     // Function to adjust dropdown width based on window size
-    const adjustDropdownWidth = (content, utilityDropdownMenu) => {
+    const adjustDropdownWidth = (content, utilityDropdownMenu, toggle) => {
       const menuWidthStyle = utilityDropdownMenu;
 
       // Adjust dropdown width based on window size
@@ -68,7 +74,7 @@ Drupal.behaviors.utilityDropdownNav = {
 
       // Adjust dropdown position if inside the siteHeader
       if (siteHeader) {
-        adjustDropdownPosition(content);
+        adjustDropdownPosition(content, toggle);
       }
     };
 
@@ -90,7 +96,7 @@ Drupal.behaviors.utilityDropdownNav = {
       );
 
       // Initial adjustment
-      adjustDropdownWidth(content, utilityDropdownMenu);
+      adjustDropdownWidth(content, utilityDropdownMenu, toggle);
 
       // Adjust on window resize with debounce
       window.addEventListener(
@@ -103,7 +109,7 @@ Drupal.behaviors.utilityDropdownNav = {
         toggleDropdown(toggle, nav, content);
         // Adjust dropdown position if inside the siteHeader
         if (siteHeader) {
-          adjustDropdownPosition(content);
+          adjustDropdownPosition(content, toggle);
         }
       });
 

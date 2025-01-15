@@ -53,8 +53,6 @@
   }
 }
 
-// @TODO: Temporary styles until the search is 'officially' created
-// @LINK: https://yaleits.atlassian.net/browse/YALB-424.
 .utility-nav__search {
   display: flex;
   align-items: center;
@@ -149,7 +147,7 @@
 
   @media (min-width: tokens.$break-mobile) {
     position: absolute;
-    top: calc(100% - var(--border-thickness-1));
+    top: calc(var(--size-spacing-9) - var(--border-thickness-2));
   }
 
   [aria-expanded='true'] & {
@@ -191,21 +189,55 @@
     z-index: 2;
 
     @media (min-width: tokens.$break-mobile) {
-      padding-top: var(--size-spacing-4);
-      padding-bottom: var(--size-spacing-6);
-
       &::before {
         content: '';
         position: absolute;
         width: 100%;
-        bottom: calc(var(--size-spacing-2) * -1);
-        left: 0;
-        right: 0;
-        height: var(--size-spacing-2);
+        bottom: calc(var(--size-spacing-5) * -1);
+        left: calc(var(--border-thickness-2) * -1);
+        height: var(--size-spacing-5);
+        border-left: var(--border-thickness-2) solid;
         background-color: var(--color-basic-white);
 
+        // re-map the background color to the header theme.
         [data-header-theme] & {
           background-color: var(--color-background);
+        }
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+
+        // math to get to 0.4rem from the bottom of the dropdown.
+        bottom: calc((var(--size-spacing-3) - 0.1rem) * -1);
+        right: calc(var(--border-thickness-2) * -1);
+        height: var(--size-spacing-3);
+        border-right: var(--border-thickness-2) solid;
+        background-color: var(--color-basic-white);
+
+        // re-map the background color to the header theme.
+        [data-header-theme] & {
+          background-color: var(--color-background);
+        }
+      }
+
+      // flip the border sides for the left dropdown.
+      &.utility-nav__dropdown-direction-left {
+        &::before {
+          // math to get to 0.4rem from the bottom of the dropdown.
+          bottom: calc((var(--size-spacing-3) - 0.1rem) * -1);
+          left: calc(var(--border-thickness-2) * -1);
+          height: var(--size-spacing-3);
+          border-left: var(--border-thickness-2) solid;
+        }
+
+        &::after {
+          bottom: calc(var(--size-spacing-5) * -1);
+          right: calc(var(--border-thickness-2) * -1);
+          height: var(--size-spacing-5);
+          border-right: var(--border-thickness-2) solid;
         }
       }
     }
