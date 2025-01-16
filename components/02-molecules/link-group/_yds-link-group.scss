@@ -102,12 +102,12 @@ $break-link-group-max: $break-link-group - 0.05;
 
   // used in footer context, we need theme colors for hover
   .site-footer__columns-inner & {
-    [data-footer-theme='one'] &,
-    [data-footer-theme='two'] &,
-    [data-footer-theme='three'] & {
+    [data-footer-theme='one'] & {
       --color-link-group-hover: var(--color-slot-two);
     }
 
+    [data-footer-theme='two'] &,
+    [data-footer-theme='three'] &,
     [data-footer-theme='four'] &,
     [data-footer-theme='five'] & {
       --color-link-group-hover: var(--color-slot-four);
