@@ -6,11 +6,13 @@ import {
 
 import eventLocalistData from './event-meta/event-localist.yml';
 import basicMetaTwig from './basic-meta/yds-basic-meta.twig';
+import basicWithSharingMetaTwig from './basic-with-sharing-meta/yds-basic-with-sharing-meta.twig';
 import eventMetaTwig from './event-meta/yds-event-meta.twig';
 import eventLocalistMetaTwig from './event-meta/yds-event-meta-localist.twig';
 import dateTimeTwig from '../../01-atoms/date-time/yds-date-time.twig';
 import profileMetaTwig from './profile-meta/yds-profile-meta.twig';
 import imageData from '../../01-atoms/images/image/image.yml';
+import socialLinksData from '../social-links/social-links.yml';
 
 import './event-meta/event-meta-localist';
 
@@ -52,6 +54,18 @@ export const Basic = ({ meta }) => basicMetaTwig({ basic_meta: meta });
 Basic.argTypes = {
   meta: {
     name: 'Meta',
+    type: 'string',
+  },
+};
+
+export const BasicWithSharing = ({ meta }) =>
+  basicWithSharingMetaTwig({
+    basic_meta_with_sharing: meta,
+    ...socialLinksData,
+  });
+BasicWithSharing.argTypes = {
+  meta: {
+    name: 'Meta With Sharing',
     type: 'string',
   },
 };
