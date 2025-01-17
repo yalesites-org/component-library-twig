@@ -12,6 +12,24 @@
   }
 }
 
+.page-title__inner {
+  display: flex;
+  flex-flow: column nowrap;
+
+  @media (min-width: tokens.$break-l) {
+    flex-flow: row wrap;
+  }
+}
+
+.page-title__social-links {
+  display: flex;
+
+  @media (min-width: tokens.$break-l) {
+    flex: 1 auto;
+    justify-content: flex-end;
+  }
+}
+
 .page-title__prefix {
   @include tokens.h2-mallory-compact-book;
 
@@ -24,6 +42,8 @@
 }
 
 .page-title__top {
+  flex: 1 0 100%;
+
   [data-component-variation='event'] & {
     display: flex;
     flex-direction: column;
