@@ -5,6 +5,7 @@ import siteFooterTwig from './yds-site-footer.twig';
 import siteFooterExamples from './_site-footer--examples.twig';
 
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
+import linkGroupData from '../../02-molecules/link-group/link-group.yml';
 
 const siteFooterThemes = { themes: tokens['site-footer-themes'] };
 const siteGlobalThemes = { themes: tokens['global-themes'] };
@@ -54,10 +55,13 @@ export const Footer = ({
   siteFooterTwig({
     ...socialLinksData,
     ...siteFooterAccents,
+    ...linkGroupData,
     site_footer__border_thickness: borderThickness,
     site_footer__theme: siteFooterTheme,
     site_footer__accent: siteFooterAccent,
     site_footer__variation: siteFooterVariation,
+    site_footer__content_text:
+      'This is <a href="https://example.com">example text</a> for footer content with a link.',
   });
 
 Footer.argTypes = {
