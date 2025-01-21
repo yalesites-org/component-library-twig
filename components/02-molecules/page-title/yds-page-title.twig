@@ -10,6 +10,7 @@
 #}
 
 {% set page_title__base_class = 'page-title' %}
+{% set page_title__show_social_links = page_title__show_social_links|default('false') %}
 
 {% set page_title__attributes = {
   'data-component-width': page_title__width|default('site'),
