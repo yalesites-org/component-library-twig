@@ -38,7 +38,6 @@ export default {
   args: {
     borderThickness: '8',
     siteFooterAccent: 'one',
-    siteFooterTheme: 'one',
     siteFooterVariation: 'basic',
   },
 };
@@ -60,6 +59,10 @@ export const Footer = ({
     site_footer__content_text:
       'This is <a href="https://example.com">example text</a> for footer content <a href="https://example.com/blah">with a link</a>.',
   });
+
+Footer.args = {
+  siteFooterTheme: 'one',
+};
 
 Footer.argTypes = {
   siteFooterTheme: {
