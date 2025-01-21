@@ -299,7 +299,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     flex: 1 1 30%;
 
     & a {
-      color: var(--color-text);
+      @include atoms.plain-link;
     }
 
     @media (min-width: tokens.$break-l) {
