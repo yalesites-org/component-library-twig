@@ -1,5 +1,4 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-import getGlobalThemes from '../../00-tokens/colors/color-global-themes';
 
 import siteFooterTwig from './yds-site-footer.twig';
 import siteFooterExamples from './_site-footer--examples.twig';
@@ -11,7 +10,6 @@ const siteFooterThemes = { themes: tokens['site-footer-themes'] };
 const siteGlobalThemes = { themes: tokens['global-themes'] };
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
-const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
 const siteFooterAccents = [
   'one',
   'two',
@@ -42,7 +40,6 @@ export default {
     siteFooterAccent: 'one',
     siteFooterTheme: 'one',
     siteFooterVariation: 'basic',
-    globalTheme: 'one',
   },
 };
 
@@ -61,11 +58,12 @@ export const Footer = ({
     site_footer__accent: siteFooterAccent,
     site_footer__variation: siteFooterVariation,
     site_footer__content_text:
-      'This is <a href="https://example.com">example text</a> for footer content with a link.',
+      'This is <a href="https://example.com">example text</a> for footer content <a href="https://example.com/blah">with a link</a>.',
   });
 
 Footer.argTypes = {
   siteFooterTheme: {
+    name: 'Footer Theme (dial)',
     options: siteFooterThemeOptions,
     type: 'select',
   },
@@ -83,7 +81,6 @@ Footer.argTypes = {
 
 export const FooterExamples = ({
   borderThickness,
-  globalTheme,
   siteFooterVariation,
   siteFooterAccent,
 }) =>
@@ -92,18 +89,12 @@ export const FooterExamples = ({
     ...siteFooterThemes,
     ...siteGlobalThemes,
     ...siteFooterAccents,
-    site_global__theme: globalTheme,
     site_footer__accent: siteFooterAccent,
     site_footer__border_thickness: borderThickness,
     site_footer__variation: siteFooterVariation,
   });
 
 FooterExamples.argTypes = {
-  globalTheme: {
-    name: 'Global Theme (lever)',
-    options: siteGlobalThemeOptions,
-    type: 'select',
-  },
   siteFooterAccent: {
     name: 'Footer Accent Color (dial)',
     options: siteFooterAccents,
