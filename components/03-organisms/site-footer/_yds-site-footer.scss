@@ -300,7 +300,7 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     flex: 1 1 30%;
 
     & a {
-      @include atoms.plain-link;
+      color: var(--color-text);
     }
 
     @media (min-width: tokens.$break-l) {
