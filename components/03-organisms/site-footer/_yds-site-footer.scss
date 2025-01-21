@@ -90,6 +90,8 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-site-footer-border-color: var(--color-slot-one);
     --color-site-footer-background-color: var(--color-basic-white);
     --color-site-footer-text-color: var(--color-site-footer-heading);
+    --color-link-visited-light: var(--color-slot-two);
+    --color-link-visited-light-hover: var(--color-slot-two);
   }
 
   &[data-footer-theme='two'] {
@@ -98,8 +100,8 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-site-footer-background-color: var(--color-gray-800);
     --color-site-footer-text-color: var(--color-basic-white);
     --color-site-footer-divider-color: var(--color-basic-white);
-    --color-link-visited-base: var(--color-link-visited-light);
-    --color-link-visited-hover: var(--color-link-visited-light-hover);
+    --color-link-visited-light: var(--color-slot-four);
+    --color-link-visited-light-hover: var(--color-slot-four);
   }
 
   &[data-footer-theme='three'] {
@@ -108,9 +110,12 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-site-footer-background-color: var(--color-blue-yale);
     --color-site-footer-divider-color: var(--color-basic-white);
     --color-site-footer-text-color: var(--color-basic-white);
-    --color-link-visited-base: var(--color-link-visited-light);
-    --color-link-visited-hover: var(--color-link-visited-light-hover);
+    --color-link-visited-light: var(--color-slot-four);
+    --color-link-visited-light-hover: var(--color-slot-four);
   }
+
+  --color-link-visited-base: var(--color-link-visited-light);
+  --color-link-visited-hover: var(--color-link-visited-light-hover);
 
   // Footer accents
   // Set border colors for each accent
