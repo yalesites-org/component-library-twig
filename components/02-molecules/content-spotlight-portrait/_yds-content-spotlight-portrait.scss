@@ -199,6 +199,19 @@ $component-content-spotlight-port-themes: map.deep-get(
         var(--size-component-layout-width-site) + var(--size-spacing-10)
       );
     }
+
+    // Vertical alignment options
+    [data-content-vertical-align='top'] & {
+      align-items: flex-start;
+    }
+
+    [data-content-vertical-align='middle'] & {
+      align-items: center;
+    }
+
+    [data-content-vertical-align='bottom'] & {
+      align-items: flex-end;
+    }
   }
 }
 
