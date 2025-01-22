@@ -30,6 +30,11 @@ export default {
       type: 'select',
       options: ['image-left', 'image-right'],
     },
+    contentVerticalAlignment: {
+      name: 'Content Vertical Alignment',
+      type: 'select',
+      options: ['top', 'middle', 'bottom'],
+    },
     imageStyle: {
       name: 'Image Style',
       type: 'select',
@@ -65,6 +70,7 @@ export default {
   args: {
     componentTheme: 'default',
     position: 'image-left',
+    contentVerticalAlignment: 'middle',
     imageStyle: 'inline',
     overline: null,
     heading: contentSpotlightPortraitData.content_spotlight_portrait__heading,
@@ -78,6 +84,7 @@ export default {
 
 export const ContentSpotlightPortrait = ({
   position,
+  contentVerticalAlignment,
   overline,
   heading,
   subheading,
@@ -91,6 +98,7 @@ export const ContentSpotlightPortrait = ({
     ...imageData.responsive_images['2x3'],
     content_spotlight_portrait__theme: componentTheme,
     content_spotlight_portrait__position: position,
+    content_spotlight_portrait__vertical_align: contentVerticalAlignment,
     content_spotlight_portrait__style: imageStyle,
     content_spotlight_portrait__overline: overline,
     content_spotlight_portrait__heading: heading,
