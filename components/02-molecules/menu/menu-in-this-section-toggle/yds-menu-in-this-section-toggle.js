@@ -1,13 +1,11 @@
 Drupal.behaviors.secondaryMenuToggle = {
   attach(context) {
-    const toggleMenu = (context) => {
+    const toggleMenu = (ctx) => {
       // Selectors.
-      const secondaryMenuToggle = context.querySelector(
-        '.secondary-menu-toggle',
-      );
-      const sectionMenu = context.querySelector('.in-this-section__inner');
-      const sectionWrapper = context.querySelector('.in-this-section');
-      const sectionMenuToggleText = context.querySelector(
+      const secondaryMenuToggle = ctx.querySelector('.secondary-menu-toggle');
+      const sectionMenu = ctx.querySelector('.in-this-section__inner');
+      const sectionWrapper = ctx.querySelector('.in-this-section');
+      const sectionMenuToggleText = ctx.querySelector(
         '.secondary-menu-toggle__text',
       );
 
@@ -20,7 +18,7 @@ Drupal.behaviors.secondaryMenuToggle = {
         sectionWrapper.setAttribute('data-in-this-section-overflow', 'hidden');
         secondaryMenuToggle.setAttribute('aria-expanded', false);
         sectionMenuToggleText.innerHTML = 'In This Section';
-  
+
         // Remove existing event listener if any
         const newToggleMenuClickHandler = () => {
           const state =
@@ -37,8 +35,14 @@ Drupal.behaviors.secondaryMenuToggle = {
             state === 'open' ? 'Close' : 'In This Section';
         };
 
-        secondaryMenuToggle.removeEventListener('click', newToggleMenuClickHandler);
-        secondaryMenuToggle.addEventListener('click', newToggleMenuClickHandler);
+        secondaryMenuToggle.removeEventListener(
+          'click',
+          newToggleMenuClickHandler,
+        );
+        secondaryMenuToggle.addEventListener(
+          'click',
+          newToggleMenuClickHandler,
+        );
       } else {
         sectionMenu.setAttribute('aria-expanded', true);
         sectionMenu.removeAttribute('aria-hidden');
