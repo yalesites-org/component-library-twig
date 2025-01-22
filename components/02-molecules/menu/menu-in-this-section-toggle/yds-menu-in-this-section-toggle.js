@@ -1,6 +1,6 @@
 Drupal.behaviors.secondaryMenuToggle = {
   attach(context) {
-    const toggleMenu = () => {
+    const toggleMenu = (context) => {
       // Selectors.
       const secondaryMenuToggle = context.querySelector(
         '.secondary-menu-toggle',
@@ -18,8 +18,11 @@ Drupal.behaviors.secondaryMenuToggle = {
         sectionMenu.setAttribute('aria-hidden', true);
         sectionWrapper.setAttribute('data-secondary-menu-state', 'closed');
         sectionWrapper.setAttribute('data-in-this-section-overflow', 'hidden');
-        // Event listener.
-        secondaryMenuToggle.addEventListener('click', () => {
+        secondaryMenuToggle.setAttribute('aria-expanded', false);
+        sectionMenuToggleText.innerHTML = 'In This Section';
+  
+        // Remove existing event listener if any
+        const newToggleMenuClickHandler = () => {
           const state =
             sectionWrapper.getAttribute('data-secondary-menu-state') ===
             'closed'
@@ -32,7 +35,10 @@ Drupal.behaviors.secondaryMenuToggle = {
           sectionWrapper.setAttribute('data-secondary-menu-state', state);
           sectionMenuToggleText.innerHTML =
             state === 'open' ? 'Close' : 'In This Section';
-        });
+        };
+
+        secondaryMenuToggle.removeEventListener('click', newToggleMenuClickHandler);
+        secondaryMenuToggle.addEventListener('click', newToggleMenuClickHandler);
       } else {
         sectionMenu.setAttribute('aria-expanded', true);
         sectionMenu.removeAttribute('aria-hidden');
@@ -45,9 +51,9 @@ Drupal.behaviors.secondaryMenuToggle = {
     };
 
     // Initial call
-    toggleMenu();
+    toggleMenu(context);
 
     // Call on resize
-    window.addEventListener('resize', toggleMenu);
+    window.addEventListener('resize', () => toggleMenu(context));
   },
 };

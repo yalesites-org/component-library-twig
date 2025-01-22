@@ -6,7 +6,7 @@ $global-section-nav-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 :root {
-  --site-in-this-section-animation-speed: var(--animation-speed-slow);
+  --site-in-this-section-animation-speed: var(--animation-speed-default);
 }
 
 .in-this-section {
@@ -143,11 +143,6 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   position: relative;
   display: flex;
 
-  @media (min-width: tokens.$break-mobile) {
-    border-bottom: var(--border-thickness-1) solid
-      var(--color-navigation-border);
-  }
-
   @media (max-width: tokens.$break-mobile-max) {
     // when used in in-this-section, add a top border
     [aria-expanded='false'] & {
@@ -156,6 +151,11 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     }
 
     flex-direction: column;
+  }
+
+  @media (min-width: tokens.$break-mobile) {
+    border-bottom: var(--border-thickness-1) solid
+      var(--color-navigation-border);
   }
 }
 
