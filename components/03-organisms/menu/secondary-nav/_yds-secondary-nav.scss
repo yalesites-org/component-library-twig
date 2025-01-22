@@ -164,7 +164,6 @@ $secondary-menu-sub-max-width: 19rem;
 
   .in-this-section__inner & {
     @media (max-width: tokens.$break-mobile-max) {
-
       [data-secondary-menu-state='open'] & {
         border-bottom: var(--border-thickness-4) solid
           var(--color-navigation-border);
