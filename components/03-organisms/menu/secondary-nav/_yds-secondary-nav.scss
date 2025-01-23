@@ -315,7 +315,7 @@ $secondary-menu-sub-max-width: 19rem;
 // basic menu variation: border application
 @media (min-width: tokens.$break-mobile) {
   .secondary-nav__toggle {
-    [data-menu-variation='basic'] :not(:last-child) > & {
+    [data-menu-variation='basic'] & {
       border: var(--border-thickness-1) solid transparent;
 
       &[aria-expanded='true'] {
@@ -333,18 +333,6 @@ $secondary-menu-sub-max-width: 19rem;
           height: var(--border-thickness-1);
           background-color: var(--color-background);
         }
-      }
-    }
-
-    [data-menu-variation='basic'] :last-child > & {
-      border-left: var(--border-thickness-1) solid transparent;
-      border-right: var(--border-thickness-1) solid transparent;
-
-      &[aria-expanded='true'] {
-        border-left: var(--border-thickness-1) solid
-          var(--color-navigation-border);
-        border-right: var(--border-thickness-1) solid
-          var(--color-navigation-border);
       }
     }
   }
