@@ -62,7 +62,6 @@ $secondary-menu-sub-max-width: 19rem;
 }
 
 .secondary-nav {
-  position: relative;
   max-width: 100%;
   background-color: var(--color-basic-white);
 
@@ -195,12 +194,6 @@ $secondary-menu-sub-max-width: 19rem;
       flex-wrap: wrap;
     }
 
-    [data-menu-variation='basic'] & {
-      @media (min-width: tokens.$break-mobile) {
-        position: relative;
-      }
-    }
-
     .in-this-section & {
       @media (min-width: tokens.$break-mobile) {
         display: flex;
@@ -242,7 +235,7 @@ $secondary-menu-sub-max-width: 19rem;
     }
 
     @media (min-width: tokens.$break-mobile) {
-      position: fixed;
+      position: absolute;
       background-color: var(--color-background);
       max-width: $secondary-menu-sub-max-width;
       z-index: 1;
@@ -364,7 +357,6 @@ $secondary-menu-sub-max-width: 19rem;
 
     .in-this-section & {
       @media (min-width: tokens.$break-mobile) {
-        position: relative;
         flex-shrink: 0;
         display: flex;
       }

@@ -140,6 +140,8 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 }
 
 .in-this-section__inner {
+  // the secondary menu submenu items are positioned absolutely based on the relative position of this container.
+  // No other wrapping element has position: relative set so that the submenu items are positioned relative to the entire menu.
   position: relative;
   display: flex;
 

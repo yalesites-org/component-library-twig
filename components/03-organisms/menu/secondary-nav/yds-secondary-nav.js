@@ -19,8 +19,10 @@ Drupal.behaviors.secondaryNav = {
       const submenu = parentLi.querySelector('.secondary-nav__menu--level-1');
       if (submenu) {
         const parentRect = parentLi.getBoundingClientRect();
-        submenu.style.left = `${parentRect.left}px`;
-        submenu.style.top = `${parentRect.bottom - 1}px`;
+        // in-this-section__inner is the container which is positioned relative.
+        const inThisSectionInner = parentLi.closest('.in-this-section__inner');
+        const sectionRect = inThisSectionInner.getBoundingClientRect();
+        submenu.style.left = `${parentRect.left - sectionRect.left}px`;
       }
     };
 
