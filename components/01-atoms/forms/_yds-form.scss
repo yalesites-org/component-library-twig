@@ -210,5 +210,15 @@
     .form-item {
       max-width: 50%;
     }
+
+    // If there are more than 4 children it should wrap.
+    &:has(> :nth-child(5)) {
+      flex-wrap: wrap;
+
+      .form-item {
+        flex-basis: fit-content;
+        min-width: 32%;
+      }
+    }
   }
 }
