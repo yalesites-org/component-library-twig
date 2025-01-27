@@ -33,12 +33,10 @@ export default {
     showCategories: {
       name: 'Show Categories/Affiliations',
       type: 'boolean',
-      defaultValue: false,
     },
     showTags: {
       name: 'Show Tags',
       type: 'boolean',
-      defaultValue: false,
     },
     tags: {
       name: 'Tags',
