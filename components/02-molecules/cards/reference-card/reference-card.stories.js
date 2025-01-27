@@ -38,12 +38,6 @@ export default {
       name: 'Show Tags',
       type: 'boolean',
     },
-    tags: {
-      name: 'Tags',
-      type: 'array',
-      defaultValue: referenceCardData.reference_card__tags,
-      if: { arg: 'showTags' },
-    },
     withImage: {
       name: 'With Image',
       type: 'boolean',
@@ -66,7 +60,6 @@ export const PostCard = ({
   featured,
   withImage,
   showCategories,
-  tags,
   showTags,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
@@ -85,7 +78,7 @@ export const PostCard = ({
         reference_card__categories:
           referenceCardData.reference_card__categories,
         show_categories: showCategories,
-        reference_card__tags: tags,
+        reference_card__tags: referenceCardData.reference_card__tags,
         show_tags: showTags,
       })}
     </ul>
@@ -114,7 +107,6 @@ export const EventCard = ({
   multiDayEvent,
   headingPrefix,
   showCategories,
-  tags,
   showTags,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
@@ -139,7 +131,7 @@ export const EventCard = ({
         reference_card__categories:
           referenceCardData.reference_card__categories,
         show_categories: showCategories,
-        reference_card__tags: tags,
+        reference_card__tags: referenceCardData.reference_card__tags,
         show_tags: showTags,
       })}
     </ul>
@@ -191,7 +183,6 @@ export const ProfileCard = ({
   withImage,
   showCategories,
   showPronouns,
-  tags,
   showTags,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-source='profile' data-collection-type='${collectionType}' data-collection-featured="${featured}">
@@ -216,7 +207,7 @@ export const ProfileCard = ({
           referenceProfileCardData.reference_card__categories,
         show_categories: showCategories,
         show_pronouns: showPronouns,
-        reference_card__tags: tags,
+        reference_card__tags: referenceProfileCardData.reference_card__tags,
         show_tags: showTags,
       })}
     </ul>
