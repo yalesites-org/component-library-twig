@@ -35,12 +35,6 @@ export default {
       type: 'boolean',
       defaultValue: false,
     },
-    categories: {
-      name: 'Categories',
-      type: 'array',
-      defaultValue: referenceCardData.reference_card__categories,
-      if: { arg: 'showCategories' },
-    },
     showTags: {
       name: 'Show Tags',
       type: 'boolean',
@@ -78,7 +72,6 @@ export const PostCard = ({
   collectionType,
   featured,
   withImage,
-  categories,
   showCategories,
   tags,
   showTags,
@@ -97,7 +90,8 @@ export const PostCard = ({
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referenceCardData.reference_card__url,
-        reference_card__categories: categories,
+        reference_card__categories:
+          referenceCardData.reference_card__categories,
         show_categories: showCategories,
         reference_card__tags: tags,
         show_tags: showTags,
@@ -128,7 +122,6 @@ export const EventCard = ({
   secondaryCTAURL,
   multiDayEvent,
   headingPrefix,
-  categories,
   showCategories,
   tags,
   showTags,
@@ -153,7 +146,8 @@ export const EventCard = ({
         reference_card__cta_secondary__href: secondaryCTAURL,
         reference_card__cta_secondary__content: secondaryCTAContent,
         multi_day_event: multiDayEvent,
-        reference_card__categories: categories,
+        reference_card__categories:
+          referenceCardData.reference_card__categories,
         show_categories: showCategories,
         reference_card__tags: tags,
         show_tags: showTags,
@@ -206,7 +200,6 @@ export const ProfileCard = ({
   collectionType,
   featured,
   withImage,
-  categories,
   showCategories,
   showPronouns,
   tags,
@@ -231,7 +224,8 @@ export const ProfileCard = ({
         reference_card__snippet:
           referenceProfileCardData.reference_card__snippet,
         reference_card__url: referenceProfileCardData.reference_card__url,
-        reference_card__categories: categories,
+        reference_card__categories:
+          referenceProfileCardData.reference_card__categories,
         show_categories: showCategories,
         show_pronouns: showPronouns,
         reference_card__tags: tags,
