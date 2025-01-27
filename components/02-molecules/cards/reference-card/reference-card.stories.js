@@ -41,11 +41,6 @@ export default {
       defaultValue: referenceCardData.reference_card__categories,
       if: { arg: 'showCategories' },
     },
-    showPronouns: {
-      name: 'Show Pronouns',
-      type: 'boolean',
-      defaultValue: false,
-    },
     showTags: {
       name: 'Show Tags',
       type: 'boolean',
@@ -247,3 +242,11 @@ export const ProfileCard = ({
   </div>
 </div>
 `;
+
+ProfileCard.argTypes = {
+  showPronouns: {
+    name: 'Show Pronouns',
+    type: 'boolean',
+    defaultValue: false,
+  },
+};
