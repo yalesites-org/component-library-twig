@@ -217,7 +217,7 @@
 
       .form-item {
         flex-basis: fit-content;
-        min-width: 29.6%;
+        min-width: 29.5%;
       }
 
       .form-item.form-item-search {
@@ -229,7 +229,7 @@
     &:has(> :nth-child(6)) {
       .form-item {
         flex-basis: fit-content;
-        min-width: 21.9%;
+        min-width: 21.8%;
       }
     }
   }
