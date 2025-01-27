@@ -49,6 +49,9 @@ export default {
     collectionType: 'grid',
     featured: true,
     withImage: true,
+    showCategories: false,
+    showTags: false,
+    date: referenceCardData.reference_card__date,
   },
 };
 
