@@ -12,22 +12,9 @@
   }
 }
 
-.page-title__inner {
-  display: flex;
-  flex-flow: column nowrap;
-
-  @media (min-width: tokens.$break-l) {
-    flex-flow: row wrap;
-  }
-}
-
 .page-title__social-links {
   display: flex;
-
-  @media (min-width: tokens.$break-l) {
-    flex: 1 auto;
-    justify-content: flex-end;
-  }
+  margin-top: var(--size-spacing-3);
 }
 
 .page-title__prefix {
@@ -42,8 +29,6 @@
 }
 
 .page-title__top {
-  flex: 1 0 100%;
-
   [data-component-variation='event'] & {
     display: flex;
     flex-direction: column;
