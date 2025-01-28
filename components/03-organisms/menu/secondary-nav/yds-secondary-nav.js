@@ -17,12 +17,14 @@ Drupal.behaviors.secondaryNav = {
       // the in-this-section component and needing to scroll left/right depending on how many items are in the menu.
       const parentLi = toggle.closest('li');
       const submenu = parentLi.querySelector('.secondary-nav__menu--level-1');
+      const parentLiWidth = parentLi.offsetWidth;
       if (submenu) {
         const parentRect = parentLi.getBoundingClientRect();
         // in-this-section__inner is the container which is positioned relative.
         const inThisSectionInner = parentLi.closest('.in-this-section__inner');
         const sectionRect = inThisSectionInner.getBoundingClientRect();
         submenu.style.left = `${parentRect.left - sectionRect.left}px`;
+        submenu.style.maxWidth = `${parentLiWidth + 150}px`;
       }
     };
 
