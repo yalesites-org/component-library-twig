@@ -212,6 +212,7 @@
       max-width: 50%;
     }
 
+    // If there are more than 4 children it should wrap.
     &:has(> :nth-child(5)) {
       flex-wrap: wrap;
 
@@ -220,12 +221,12 @@
         min-width: 29.5%;
       }
 
+      // Search field should take the full width.
       .form-item.form-item-search {
         min-width: 100%;
       }
     }
 
-    // If there are more than 4 children it should wrap.
     &:has(> :nth-child(6)) {
       .form-item {
         flex-basis: fit-content;
