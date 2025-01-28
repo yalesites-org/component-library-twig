@@ -18,44 +18,16 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
   --color-card-bar-long: var(--color-blue-shale);
   --color-card-bar-short: var(--color-blue-horizon);
 
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  column-gap: var(--size-spacing-6);
-  grid-template-areas: 'image content';
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column-reverse;
 
   &[data-with-image='false'] {
-    grid-template-areas:
-      'image'
-      'content';
-    grid-template-columns: 1fr;
     border: var(--card-border);
   }
 
   &:hover {
     cursor: pointer;
-  }
-
-  @media (min-width: tokens.$break-s) {
-    &[data-with-image='true'] {
-      [data-collection-featured='true'] & {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      [data-collection-featured='false'] & {
-        grid-template-columns: 1fr 2fr;
-        grid-template-areas: 'image content';
-      }
-    }
-  }
-
-  @media (min-width: tokens.$break-m) or (max-width: tokens.$break-s) {
-    flex-basis: 100%;
-    display: flex;
-    flex-direction: column-reverse;
-
-    &:hover {
-      box-shadow: var(--drop-shadow-level-1);
-    }
   }
 
   // Global themes: set color slots for each theme
@@ -90,7 +62,7 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
     }
   }
 
-  @media (min-width: tokens.$break-m) or (max-width: tokens.$break-s) {
+  @media (min-width: tokens.$break-m) {
     padding: var(--size-spacing-5) var(--size-spacing-6);
 
     [data-with-image='true'] & {
