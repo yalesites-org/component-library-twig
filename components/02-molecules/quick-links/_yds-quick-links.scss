@@ -82,6 +82,13 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
+
+  &[data-quick-links-position='first'],
+  &[data-quick-links-position='last'],
+  &[data-quick-links-position='first-and-last'] {
+    margin-top: var(--size-spacing-0);
+    margin-bottom: var(--size-spacing-0);
+  }
 }
 
 .quick-links__inner {
@@ -231,12 +238,5 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
       width: 100%;
       object-fit: cover;
     }
-  }
-
-  &[data-quick-links-position='first'],
-  &[data-quick-links-position='last'],
-  &[data-quick-links-position='first-and-last'] {
-    margin-top: var(--size-spacing-0);
-    margin-bottom: var(--size-spacing-0);
   }
 }
