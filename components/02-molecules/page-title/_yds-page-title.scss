@@ -28,20 +28,6 @@
     flex: 1 auto;
     justify-content: flex-end;
   }
-
-  .share-links__link {
-    .share-links__icon {
-      fill: var(--color-gray-900);
-      width: var(--size-spacing-6);
-      height: var(--size-spacing-6);
-    }
-
-    &:hover {
-      .share-links__icon {
-        fill: var(--color-gray-600);
-      }
-    }
-  }
 }
 
 .page-title__prefix {
