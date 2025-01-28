@@ -76,6 +76,13 @@
         text__content: reference_card__snippet,
       } %}
     {% endif %}
+    {% if reference_card__external_source_label %}
+      {% include "@atoms/typography/text/yds-text.twig" with {
+        text__base_class: 'overline',
+        text__blockname: reference_card__base_class,
+        text__content: reference_card__external_source_label,
+      } %}
+    {% endif %}
     {% if reference_card__cta_primary__content and reference_card__cta_primary__href or reference_card__cta_secondary__content and reference_card__cta_secondary__href %}
       {# CTAs #}
       <div {{ bem('ctas', [], reference_card__base_class) }}>

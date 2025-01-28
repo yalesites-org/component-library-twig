@@ -73,6 +73,10 @@ export default {
     collectionType: 'grid',
     featured: true,
     withImage: true,
+    showCategories: false,
+    showPronouns: false,
+    showTags: false,
+    showThumbnail: true,
   },
 };
 
@@ -88,6 +92,7 @@ export const PostCard = ({
   tags,
   showTags,
   showThumbnail,
+  externalSourceLabel,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -103,6 +108,7 @@ export const PostCard = ({
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referenceCardData.reference_card__url,
         reference_card__categories: categories,
+        reference_card__external_source_label: externalSourceLabel,
         show_categories: showCategories,
         reference_card__tags: tags,
         show_tags: showTags,
@@ -118,6 +124,15 @@ PostCard.argTypes = {
     type: 'string',
     defaultValue: referenceCardData.reference_card__date,
   },
+  externalSourceLabel: {
+    name: 'External source label',
+    type: 'string',
+    defaultValue: 'Yale News',
+  },
+};
+PostCard.args = {
+  date: referenceCardData.reference_card__date,
+  externalSourceLabel: 'Yale News',
 };
 
 export const EventCard = ({

@@ -38,6 +38,7 @@ export const PostCardCollection = ({
   collectionType,
   featured,
   withImages,
+  externalSourceLabel,
 }) => {
   const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
 
@@ -50,6 +51,7 @@ export const PostCardCollection = ({
     card_collection__cards: items,
     ...postCardData,
     ...imageData.responsive_images['3x2'],
+    reference_card__external_source_label: externalSourceLabel,
   });
 };
 PostCardCollection.argTypes = {
@@ -61,6 +63,13 @@ PostCardCollection.argTypes = {
     name: 'Heading',
     type: 'string',
   },
+  externalSourceLabel: {
+    name: 'External Source Label',
+    type: 'string',
+  },
+};
+PostCardCollection.args = {
+  externalSourceLabel: 'Yale News',
 };
 
 export const EventCardCollection = ({
