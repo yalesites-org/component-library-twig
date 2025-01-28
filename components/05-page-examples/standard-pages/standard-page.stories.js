@@ -31,6 +31,7 @@ import contentSpotlightPortraitData from '../../02-molecules/content-spotlight-p
 
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
+import '../../02-molecules/callout/callout';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
