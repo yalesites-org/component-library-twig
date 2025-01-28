@@ -48,7 +48,7 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
     }
   }
 
-  @media (min-width: tokens.$break-m) {
+  @media (min-width: tokens.$break-m) or (max-width: tokens.$break-s) {
     flex-basis: 100%;
     display: flex;
     flex-direction: column-reverse;
@@ -90,7 +90,7 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
     }
   }
 
-  @media (min-width: tokens.$break-m) {
+  @media (min-width: tokens.$break-m) or (max-width: tokens.$break-s) {
     padding: var(--size-spacing-5) var(--size-spacing-6);
 
     [data-with-image='true'] & {
