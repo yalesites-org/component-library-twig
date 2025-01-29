@@ -8,6 +8,7 @@
 # - reference_card__subheading
 # - reference_card__url
 # - reference_card__snippet
+# - refreence_card__overlay
 #
 # Available Blocks:
 # - reference_card__image
@@ -16,6 +17,17 @@
 {% set reference_card__base_class = 'reference-card' %}
 {% set reference_card__image = reference_card__image|default('true') %}
 {% set reference_card__image_aria = reference_card__image_aria|default(reference_card__heading) %}
+{% if reference_card__overlay %}
+  {% set reference_card__overlay_text %}
+    {% include "@atoms/typography/text/yds-text.twig" with {
+      text__base_class: 'overlay',
+      text__blockname: reference_card__base_class,
+      text__content: reference_card__overlay,
+    } %}
+  {% endset %}
+{% else %}
+  {% set reference_card__overlay_text = '' %}
+{% endif %}
 
 {# If stats__item__attributes is not defined, set it to an empty object by default #}
 {% set reference_card__attributes = {
@@ -106,10 +118,13 @@
                                                                    aria-label="{{ reference_card__image_aria }}"
                                                                    tabindex="-1" aria-hidden="true">
           {% block reference_card__image %}
+            {{ reference_card__overlay_text }}
             {% include "@atoms/images/image/_responsive-image.twig" %}
           {% endblock %}
         </a>
       </div>
     {% endif %}
+  {% else %}
+    {{ reference_card__overlay_text }}
   {% endif %}
 </li>

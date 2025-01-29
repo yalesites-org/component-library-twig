@@ -94,6 +94,23 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 }
 
 .reference-card__image {
+  position: relative;
+
+  & .reference-card__overlay {
+    background-color: var(--color-blue-yale);
+    color: var(--color-basic-white);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    z-index: 1;
+    padding-left: var(--size-spacing-3);
+    margin-bottom: var(--size-spacing-3);
+    font-variant-caps: all-small-caps;
+    font-variant-numeric: oldstyle-nums;
+  }
+
   // List and grid
   @media (max-width: $break-card-collection-list-image-max) {
     [data-collection-type='list'] &,

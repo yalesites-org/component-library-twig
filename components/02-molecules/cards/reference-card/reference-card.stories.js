@@ -42,6 +42,10 @@ export default {
       name: 'With Image',
       type: 'boolean',
     },
+    overlayText: {
+      name: 'Overlay Text',
+      type: 'string',
+    },
   },
   args: {
     heading: referenceCardData.reference_card__heading,
@@ -64,6 +68,7 @@ export const PostCard = ({
   withImage,
   showCategories,
   showTags,
+  overlayText,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -83,6 +88,7 @@ export const PostCard = ({
         show_categories: showCategories,
         reference_card__tags: referenceCardData.reference_card__tags,
         show_tags: showTags,
+        reference_card__overlay: overlayText,
       })}
     </ul>
   </div>
@@ -111,6 +117,7 @@ export const EventCard = ({
   headingPrefix,
   showCategories,
   showTags,
+  overlayText,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -136,6 +143,7 @@ export const EventCard = ({
         show_categories: showCategories,
         reference_card__tags: referenceCardData.reference_card__tags,
         show_tags: showTags,
+        reference_card__overlay: overlayText,
       })}
     </ul>
   </div>
@@ -187,6 +195,7 @@ export const ProfileCard = ({
   showCategories,
   showPronouns,
   showTags,
+  overlayText,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-source='profile' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -212,6 +221,7 @@ export const ProfileCard = ({
         show_pronouns: showPronouns,
         reference_card__tags: referenceProfileCardData.reference_card__tags,
         show_tags: showTags,
+        reference_card__overlay: overlayText,
       })}
     </ul>
   </div>
