@@ -92,7 +92,7 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
     margin-top: var(--font-spacing-paragraph-extra);
   }
 
-  &:not(.no-page-spacing) {
+  &:not(.no-page-spacing, .visually-hidden) {
     margin-bottom: var(--spacing-page-inner);
   }
 }
