@@ -365,6 +365,17 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   }
 }
 
+.reference-card__eyebrow {
+  @include tokens.body-l;
+
+  margin-top: var(--size-spacing-3);
+  color: var(--color-blue-medium);
+  font-variant-caps: small-caps;
+  font-variant-numeric: oldstyle-nums;
+  text-transform: lowercase;
+  letter-spacing: 0.5px;
+}
+
 .reference-card__prefix {
   @include tokens.h3-mallory-compact-book;
 

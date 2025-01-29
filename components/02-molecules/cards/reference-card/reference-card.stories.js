@@ -13,9 +13,19 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: {
+    eyebrow: {
+      name: 'Eyebrow',
+      type: 'string',
+      if: { arg: 'showEyebrow' },
+    },
     heading: {
       name: 'Heading',
       type: 'string',
+    },
+    pronouns: {
+      name: 'Pronouns',
+      type: 'string',
+      if: { arg: 'showPronouns' },
     },
     snippet: {
       name: 'Snippet',
@@ -33,33 +43,31 @@ export default {
     showCategories: {
       name: 'Show Categories/Affiliations',
       type: 'boolean',
-      defaultValue: false,
     },
     categories: {
       name: 'Categories',
       type: 'array',
-      defaultValue: referenceCardData.reference_card__categories,
       if: { arg: 'showCategories' },
+    },
+    showEyebrow: {
+      name: 'Show Eyebrow',
+      type: 'boolean',
     },
     showPronouns: {
       name: 'Show Pronouns',
       type: 'boolean',
-      defaultValue: false,
     },
     showTags: {
       name: 'Show Tags',
       type: 'boolean',
-      defaultValue: false,
     },
     showThumbnail: {
       name: 'Show Thumbnail',
       type: 'boolean',
-      defaultValue: true,
     },
     tags: {
       name: 'Tags',
       type: 'array',
-      defaultValue: referenceCardData.reference_card__tags,
       if: { arg: 'showTags' },
     },
     withImage: {
@@ -70,15 +78,25 @@ export default {
   args: {
     heading: referenceCardData.reference_card__heading,
     snippet: referenceCardData.reference_card__snippet,
+    categories: referenceCardData.reference_card__categories,
+    tags: referenceCardData.reference_card__tags,
+    pronouns: referenceProfileCardData.reference_card__pronouns,
     collectionType: 'grid',
     featured: true,
     withImage: true,
+    showEyebrow: false,
+    showCategories: false,
+    showTags: false,
+    showThumbnail: true,
+    showPronouns: false,
   },
 };
 
 export const PostCard = ({
   date,
+  eyebrow,
   heading,
+  pronouns,
   snippet,
   collectionType,
   featured,
@@ -86,8 +104,10 @@ export const PostCard = ({
   categories,
   showCategories,
   tags,
+  showEyebrow,
   showTags,
   showThumbnail,
+  showPronouns,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -97,16 +117,20 @@ export const PostCard = ({
         card_collection__type: collectionType,
         ...imageData.responsive_images['3x2'],
         reference_card__date: date,
+        reference_card__eyebrow: eyebrow,
         reference_card__heading: heading,
+        reference_card__pronouns: pronouns,
         reference_card__snippet: snippet,
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referenceCardData.reference_card__url,
         reference_card__categories: categories,
-        show_categories: showCategories,
+        show_categories: showCategories ? 'true' : 'false',
         reference_card__tags: tags,
-        show_tags: showTags,
-        show_thumbnail: showThumbnail,
+        show_eyebrow: showEyebrow ? 'true' : 'false',
+        show_tags: showTags ? 'true' : 'false',
+        show_thumbnail: showThumbnail ? 'true' : 'false',
+        show_pronouns: showPronouns ? 'true' : 'false',
       })}
     </ul>
   </div>
