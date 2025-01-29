@@ -93,6 +93,11 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   }
 }
 
+.reference-card__overlay {
+  font-variant-caps: all-small-caps;
+  font-variant-numeric: oldstyle-nums;
+}
+
 .reference-card__image {
   position: relative;
 
@@ -107,8 +112,6 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     z-index: 1;
     padding-left: var(--size-spacing-3);
     margin-bottom: var(--size-spacing-3);
-    font-variant-caps: all-small-caps;
-    font-variant-numeric: oldstyle-nums;
   }
 
   // List and grid
