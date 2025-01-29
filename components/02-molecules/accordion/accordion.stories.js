@@ -1,5 +1,4 @@
 import accordionTwig from './yds-accordion.twig';
-
 import accordionData from './accordion.yml';
 
 import './yds-accordion';
@@ -22,19 +21,31 @@ export default {
       name: 'Content',
       type: 'string',
     },
+    themeColor: {
+      name: 'Component Theme (dial)',
+      options: ['one', 'two', 'three', 'four', 'five'],
+      type: 'select',
+    },
   },
   args: {
     accordionHeading: accordionData.accordion__heading,
     heading: accordionData.accordion__item__heading,
     content: accordionData.accordion__item__content,
+    themeColor: 'default',
   },
 };
 
-export const Accordion = ({ accordionHeading, heading, content }) => {
+export const Accordion = ({
+  accordionHeading,
+  heading,
+  content,
+  themeColor,
+}) => {
   return `
   <h2>With multiple items</h2>
   <div>
     ${accordionTwig({
+      accordion__theme: themeColor,
       accordion__heading: accordionHeading,
       accordion__items: [
         {
@@ -55,6 +66,7 @@ export const Accordion = ({ accordionHeading, heading, content }) => {
   <h2>With one item</h2>
   <div>
     ${accordionTwig({
+      accordion__theme: themeColor,
       accordion__heading: accordionHeading,
       accordion__items: [
         {
