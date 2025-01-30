@@ -44,4 +44,11 @@
     icon__blockname: control__base_class,
     } %}
   {% endif %}
+
+  {% if control__type == 'chat-app' %}
+    {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'comments-regular',
+    icon__blockname: control__base_class,
+    } %}
+  {% endif %}
 </{{ control__element }}>

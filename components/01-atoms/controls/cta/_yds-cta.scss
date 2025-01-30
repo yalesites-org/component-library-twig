@@ -336,12 +336,23 @@ $cta-outline-weights: (
   .form--inline & {
     height: 100%;
   }
+
+  &[data-cta-control-type='chat-app'] {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: var(--size-spacing-3);
+  }
 }
 
 .cta__icon {
   [data-cta-control-type='dropdown'] & {
     width: var(--size-spacing-5);
     height: var(--size-spacing-5);
+  }
+
+  [data-cta-control-type='chat-app'] & {
+    width: var(--size-spacing-7);
+    height: var(--size-spacing-7);
   }
 }
 
