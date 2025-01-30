@@ -53,7 +53,7 @@ export const PostCardCollection = ({
     card_collection__featured: featured ? 'true' : 'false',
     card_collection__with_images: withImages ? 'true' : 'false',
     card_collection__cards: items,
-    reference_card__overlay: withOverlay ? 'Popular' : '',
+    reference_card__overlay: withOverlay ? 'Pinned' : '',
     ...postCardData,
     ...imageData.responsive_images['3x2'],
   });
