@@ -17,6 +17,7 @@
 {% set reference_card__base_class = 'reference-card' %}
 {% set reference_card__image = reference_card__image|default('true') %}
 {% set reference_card__image_aria = reference_card__image_aria|default(reference_card__heading) %}
+
 {% if reference_card__overlay %}
   {% set reference_card__overlay_text %}
     {% include "@atoms/typography/text/yds-text.twig" with {
@@ -115,7 +116,6 @@
     {% if show_thumbnail != '0' %}
       <div {{ bem('image', [], reference_card__base_class) }}>
         <a {{ bem('image-link', [], reference_card__base_class) }} href="{{ reference_card__url }}"
-                                                                   aria-label="{{ reference_card__image_aria }}"
                                                                    tabindex="-1" aria-hidden="true">
           {% block reference_card__image %}
             {{ reference_card__overlay_text }}
@@ -123,6 +123,8 @@
           {% endblock %}
         </a>
       </div>
+    {% else %}
+      {{ reference_card__overlay_text }}
     {% endif %}
   {% else %}
     {{ reference_card__overlay_text }}
