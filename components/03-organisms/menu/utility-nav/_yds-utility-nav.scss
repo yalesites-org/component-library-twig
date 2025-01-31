@@ -10,6 +10,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--utility-bar-gap);
+  align-items: baseline;
 
   @media (max-width: tokens.$break-mobile-max) {
     --utility-bar-gap: var(--size-spacing-6);
@@ -40,6 +41,10 @@
 
 .utility-nav__link {
   @include molecules.menu-link;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .utility-nav__cta {
@@ -52,8 +57,6 @@
   }
 }
 
-// @TODO: Temporary styles until the search is 'officially' created
-// @LINK: https://yaleits.atlassian.net/browse/YALB-424.
 .utility-nav__search {
   display: flex;
   align-items: center;
@@ -129,4 +132,156 @@
 .utility-nav__icon--search {
   height: 1rem;
   width: 1rem;
+}
+
+.utility-nav__dropdown {
+  position: relative;
+}
+
+.utility-nav__dropdown-content {
+  visibility: hidden;
+  border: var(--border-thickness-2) solid transparent;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    position: relative;
+    border-top: 0;
+    top: calc(var(--border-thickness-2) * -1);
+    height: 0;
+  }
+
+  @media (min-width: tokens.$break-mobile) {
+    position: absolute;
+    top: calc(var(--size-spacing-9) - var(--border-thickness-2));
+  }
+
+  [aria-expanded='true'] & {
+    visibility: visible;
+    height: auto;
+    padding: var(--size-spacing-4) var(--size-spacing-7);
+    display: flex;
+    border-color: inherit;
+    background-color: var(--color-basic-white);
+
+    [data-header-theme] & {
+      background-color: var(--color-background);
+      border-color: var(--color-action);
+      z-index: 1;
+    }
+  }
+}
+
+.utility-nav-dropdown__menu {
+  @include atoms.list-reset;
+}
+
+.utility-nav__cta[data-cta-control-type='dropdown'] {
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-3);
+  position: relative;
+  justify-content: center;
+
+  svg {
+    @include tokens.animate;
+  }
+
+  [aria-expanded='true'] & {
+    background-color: transparent;
+    color: var(--color-action);
+    border-color: inherit;
+    border-radius: 0;
+    z-index: 2;
+
+    @media (min-width: tokens.$break-mobile) {
+      &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        bottom: calc(var(--size-spacing-5) * -1);
+        left: calc(var(--border-thickness-2) * -1);
+        height: var(--size-spacing-5);
+        border-left: var(--border-thickness-2) solid;
+        background-color: var(--color-basic-white);
+
+        // re-map the background color to the header theme.
+        [data-header-theme] & {
+          background-color: var(--color-background);
+        }
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+
+        // math to get to 0.4rem from the bottom of the dropdown.
+        bottom: calc((var(--size-spacing-3) - 0.1rem) * -1);
+        right: calc(var(--border-thickness-2) * -1);
+        height: var(--size-spacing-3);
+        border-right: var(--border-thickness-2) solid;
+        background-color: var(--color-basic-white);
+
+        // re-map the background color to the header theme.
+        [data-header-theme] & {
+          background-color: var(--color-background);
+        }
+      }
+
+      // flip the border sides for the left dropdown.
+      &.utility-nav__dropdown-direction-left {
+        &::before {
+          // math to get to 0.4rem from the bottom of the dropdown.
+          bottom: calc((var(--size-spacing-3) - 0.1rem) * -1);
+          left: calc(var(--border-thickness-2) * -1);
+          height: var(--size-spacing-3);
+          border-left: var(--border-thickness-2) solid;
+        }
+
+        &::after {
+          bottom: calc(var(--size-spacing-5) * -1);
+          right: calc(var(--border-thickness-2) * -1);
+          height: var(--size-spacing-5);
+          border-right: var(--border-thickness-2) solid;
+        }
+      }
+    }
+
+    @media (max-width: tokens.$break-mobile-max) {
+      border-bottom-color: transparent;
+    }
+
+    svg {
+      // rotate the icon when the dropdown is open
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.utility-nav-dropdown__menu--level-0 {
+  column-count: 2;
+  column-fill: balance;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-spacing-4);
+    width: 100%;
+  }
+}
+
+.utility-nav-dropdown__item {
+  display: block;
+  width: max-content;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    width: 100%;
+  }
+}
+
+.utility-nav-dropdown__link {
+  @include molecules.menu-link;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
