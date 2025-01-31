@@ -290,7 +290,9 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   width: 100%;
 
   @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
-    padding-top: var(--size-spacing-7);
+    [data-component-has-image='true'][data-component-has-overlay='true'] & {
+      padding-top: var(--size-spacing-7);
+    }
   }
 
   [data-collection-type='single'] & {

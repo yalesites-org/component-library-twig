@@ -21,6 +21,7 @@
 {# If stats__item__attributes is not defined, set it to an empty object by default #}
 {% set reference_card__attributes = {
   'data-component-has-image': reference_card__image,
+  'data-component-has-overlay': reference_card__overlay ? 'true' : 'false',
   class: bem(reference_card__base_class, reference_card__modifiers),
 } %}
 
