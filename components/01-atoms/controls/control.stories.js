@@ -44,6 +44,13 @@ export const Cta = ({ componentTheme }) => `
       cta__radius: 'pill',
       cta__component_theme: componentTheme,
     })}
+    ${ctaTwig({
+      cta__content: ctaText,
+      cta__href: '#',
+      cta__radius: 'pill',
+      cta__component_theme: componentTheme,
+      cta__control_type: 'dropdown',
+    })}
   </div>
   <h2>Outline</h2>
   <div class="cta-group">
@@ -66,6 +73,13 @@ export const Cta = ({ componentTheme }) => `
       cta__radius: 'pill',
       cta__style: 'outline',
       cta__component_theme: componentTheme,
+    })}
+    ${ctaTwig({
+      cta__content: ctaText,
+      cta__href: '#',
+      cta__radius: 'outline',
+      cta__component_theme: componentTheme,
+      cta__control_type: 'dropdown',
     })}
   </div>
   <h2>Outline Weights</h2>
@@ -213,6 +227,13 @@ export const CtaExamples = ({ componentTheme }) =>
         cta__radius: 'pill',
         cta__component_theme: componentTheme,
       })}
+      ${ctaTwig({
+        cta__content: ctaText,
+        cta__href: '#',
+        cta__radius: 'pill',
+        cta__component_theme: componentTheme,
+        cta__control_type: 'dropdown',
+      })}
     </div>
     <h2>Outline</h2>
     <div class="cta-group">
@@ -235,6 +256,13 @@ export const CtaExamples = ({ componentTheme }) =>
         cta__radius: 'pill',
         cta__style: 'outline',
         cta__component_theme: componentTheme,
+      })}
+      ${ctaTwig({
+        cta__content: ctaText,
+        cta__href: '#',
+        cta__radius: 'outline',
+        cta__component_theme: componentTheme,
+        cta__control_type: 'dropdown',
       })}
     </div>
     <h2>Outline Weights</h2>
