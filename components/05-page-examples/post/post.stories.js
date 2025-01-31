@@ -16,6 +16,9 @@ import referenceCardData from '../../02-molecules/cards/reference-card/examples/
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
 
+// Utility for converting argTypes to args
+import argTypesToArgs from '../../utility';
+
 /**
  * Storybook Definition.
  */
@@ -25,6 +28,7 @@ export default {
     layout: 'fullscreen',
   },
   argTypes,
+  args: argTypesToArgs(argTypes),
 };
 
 export const PostArticle = ({
