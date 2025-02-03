@@ -6,6 +6,7 @@ import textCopyButton from './text-copy-button/yds-text-copy-button.twig';
 
 import './text-link/yds-text-link';
 import './text-copy-button/yds-text-copy-button';
+import './cta/yds-cta';
 
 import themeExamplesTwig from './cta/_yds-cta-examples.twig';
 
@@ -86,14 +87,16 @@ export const Cta = ({ componentTheme }) => `
     ${ctaTwig({
       cta__content: ctaText,
       cta__href: '#',
-      cta__radius: 'outline',
+      cta__radius: 'pill',
+      cta__style: 'outline',
       cta__component_theme: componentTheme,
       cta__control_type: 'dropdown',
     })}
     ${ctaTwig({
       cta__content: askYaleCtaText,
       cta__href: '#launch-chat',
-      cta__radius: 'outline',
+      cta__radius: 'pill',
+      cta__style: 'outline',
       cta__component_theme: componentTheme,
       cta__control_type: 'chat-app',
     })}
@@ -283,14 +286,16 @@ export const CtaExamples = ({ componentTheme }) =>
       ${ctaTwig({
         cta__content: ctaText,
         cta__href: '#',
-        cta__radius: 'outline',
+        cta__radius: 'pill',
+        cta__style: 'outline',
         cta__component_theme: componentTheme,
         cta__control_type: 'dropdown',
       })}
       ${ctaTwig({
         cta__content: askYaleCtaText,
         cta__href: '#launch-chat',
-        cta__radius: 'outline',
+        cta__radius: 'pill',
+        cta__style: 'outline',
         cta__component_theme: componentTheme,
         cta__control_type: 'chat-app',
       })}
