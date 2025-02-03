@@ -50,6 +50,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     padding-bottom: var(--size-spacing-6);
     border-bottom: var(--border-thickness-1) solid var(--color-divider);
     margin-bottom: var(--size-spacing-5);
+    gap: var(--size-spacing-1);
 
     &:hover {
       box-shadow: var(--drop-shadow-level-1-bottom-shadow-only);
@@ -110,7 +111,6 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   [data-component-has-image='false'] & {
     position: relative;
-    width: 100%;
 
     @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
       [data-collection-type='grid'][data-collection-featured='true'] &,
