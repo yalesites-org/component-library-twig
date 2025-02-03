@@ -388,10 +388,6 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       margin-inline-end: auto;
     }
 
-    [data-collection-type='list'] [data-component-has-image='false'] & {
-      flex: 0 1 100%;
-    }
-
     [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='false']
       & {
       flex-basis: 90%;
