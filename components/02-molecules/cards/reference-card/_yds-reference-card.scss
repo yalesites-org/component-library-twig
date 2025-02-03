@@ -106,7 +106,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   left: 0;
   right: 0;
   bottom: auto;
-  z-index: 1;
+  z-index: 2;
 
   [data-component-has-image='false'] & {
     position: relative;
@@ -295,6 +295,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   [data-collection-type='single'] & {
     color: var(--color-card-single-text);
+    z-index: 1;
   }
 
   // limit width of card content for a single card collection item without an image.
