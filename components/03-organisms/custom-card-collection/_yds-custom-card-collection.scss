@@ -9,7 +9,7 @@
 .custom-card-collection__heading {
   @include tokens.h2-yale-new;
 
-  margin-bottom: var(--spacing-page-section);
+  margin-bottom: var(--size-spacing-7);
 }
 
 .custom-card-collection__cards {

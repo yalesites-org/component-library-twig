@@ -190,6 +190,19 @@ $component-content-spotlight-themes: map.deep-get(
     grid-template: 'primary secondary';
     gap: var(--size-spacing-8);
 
+    // Vertical alignment options
+    [data-content-vertical-align='top'] & {
+      align-items: flex-start;
+    }
+
+    [data-content-vertical-align='middle'] & {
+      align-items: center;
+    }
+
+    [data-content-vertical-align='bottom'] & {
+      align-items: flex-end;
+    }
+
     // Focus Options
     [data-component-focus='equal'] & {
       grid-template-columns: 1fr 1fr;

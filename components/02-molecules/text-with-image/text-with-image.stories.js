@@ -34,6 +34,11 @@ export default {
       type: 'select',
       options: ['image-left', 'image-right'],
     },
+    contentVerticalAlignment: {
+      name: 'Content Vertical Alignment',
+      type: 'select',
+      options: ['top', 'middle', 'bottom'],
+    },
     focus: {
       name: 'Focus',
       type: 'select',
@@ -69,6 +74,7 @@ export default {
     componentTheme: 'default',
     width: 'site',
     position: 'image-left',
+    contentVerticalAlignment: 'top',
     focus: 'equal',
     overline: null,
     heading: textWithImageData.text_with_image__heading,
@@ -81,6 +87,7 @@ export default {
 export const ContentSpotlightLandscape = ({
   width,
   position,
+  contentVerticalAlignment,
   focus,
   overline,
   heading,
@@ -95,6 +102,7 @@ export const ContentSpotlightLandscape = ({
     text_with_image__theme: componentTheme,
     text_with_image__width: width,
     text_with_image__position: position,
+    text_with_image__vertical_align: contentVerticalAlignment,
     text_with_image__focus: focus,
     text_with_image__overline: overline,
     text_with_image__heading: heading,
