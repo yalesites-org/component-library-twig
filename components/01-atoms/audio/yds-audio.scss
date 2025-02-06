@@ -1,0 +1,126 @@
+@use '../../00-tokens/tokens';
+@use '../../01-atoms/controls/button/yds-button' as button;
+
+.audio-embed {
+  @include tokens.spacing-page-section;
+}
+
+.audio-embed__content {
+  @include tokens.body-s;
+}
+
+.audio-embed__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-4);
+  padding: var(--size-spacing-4);
+  background-color: var(--color-gray-100);
+}
+
+.audio-embed__player {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--size-spacing-4);
+}
+
+.audio-embed__controls {
+  display: flex;
+  flex-direction: row;
+  flex: 0 auto;
+}
+
+.audio-embed__control {
+  @include button.reset;
+}
+
+.audio-embed__control svg {
+  width: var(--size-spacing-7);
+  height: var(--size-spacing-7);
+}
+
+.audio-embed__control--play {
+  [is-playing='true'] & {
+    display: none;
+  }
+}
+
+.audio-embed__control--pause {
+  display: none;
+
+  [is-playing='true'] & {
+    display: block;
+  }
+}
+
+.audio-embed__time {
+  display: flex;
+  flex-direction: row;
+}
+
+.audio-embed__progress {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--size-spacing-4);
+  height: var(--border-thickness-4);
+  background-color: var(--color-gray-400);
+  width: 100%;
+}
+
+.audio-embed__progress-bar {
+  flex: 0 auto;
+  width: 0;
+  height: 100%;
+  background-color: var(--color-blue-medium);
+  position: relative;
+  padding-left: var(--size-spacing-4);
+}
+
+.audio-embed__progress-bar__icon {
+  display: block;
+  position: absolute;
+  top: calc(var(--size-spacing-2) * -1);
+  left: auto;
+  right: 0;
+  height: var(--size-spacing-4);
+  width: var(--size-spacing-4);
+  background-color: var(--color-blue-medium);
+  border-radius: 100%;
+}
+
+.audio-embed__speed {
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-4);
+  flex: 0 100px;
+  padding: var(--size-spacing-2) var(--size-spacing-3);
+  border: var(--border-thickness-1) solid var(--color-gray-400);
+}
+
+.audio-embed__speed-control {
+  @include button.reset;
+  @include tokens.body-s;
+
+  &.active {
+    color: var(--color-blue-medium);
+    font-weight: 700;
+  }
+}
+
+.audio-embed__volume {
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-4);
+  flex: 0 100px;
+
+  input {
+    width: 90px;
+  }
+}
+
+.audio-embed__icon--speed,
+.audio-embed__icon--volume {
+  height: var(--size-spacing-5);
+  width: var(--size-spacing-5);
+}
