@@ -11,84 +11,94 @@
 
 {% set audio_embed__base_class = audio_embed__base_class|default('audio-embed') %}
 
-<div {{ bem(audio_embed__base_class, audio_embed__modifiers, audio_embed__blockname) }} data-component-width="content" >
+{% set audio_embed__attibutes = {
+  'data-component-width': audio_embed__width|default('content'),
+  'data-component-alignment': audio_embed__alighment|default('left'),
+  class: bem(audio_embed__base_class, audio_embed__modifiers, audio_embed__blockname),
+} %}
+
+
+<div {{ add_attributes(audio_embed__attibutes) }} >
   <div {{ bem('inner', [], audio_embed__base_class) }}>
+    <div {{ bem('content-wrapper', [], audio_embed__base_class) }}>
+      {# audio embed content #}
+      <div {{ bem('content', [], audio_embed__base_class) }}>
+        {{audio_embed__content}}
 
-    {# audio embed content #}
-    <div {{ bem('content', [], audio_embed__base_class) }}>
-      {{audio_embed__content}}
-    </div>
-
-    {# audio embed element #}
-    <audio>
-      <source src="{{ audio_embed__url|raw }}" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio> 
-
-    {# audio embed custom player #}
-    <div {{ bem('player', [], audio_embed__base_class) }}>
-
-      {# audio embed controls #}
-      <div {{ bem('controls', [], audio_embed__base_class) }}>
-        <button {{ bem('control', ['play'], audio_embed__base_class) }}>
-          <span {{ bem('visually-hidden') }}>{{ 'Play the Audio File'|t }}</span>
-          {% include "@atoms/images/icons/_yds-icon.twig" with {
-            icon__name: 'circle-play-regular',
-            icon__decorative: true,
-            icon__blockname: audio_embed__base_class,
-            icon__modifiers: ['play'],
-          } %}
-        </button>
-        <button {{ bem('control', ['pause'], audio_embed__base_class) }}>
-          <span {{ bem('visually-hidden') }}>{{ 'Pause the Audio File'|t }}</span>
-          {% include "@atoms/images/icons/_yds-icon.twig" with {
-            icon__name: 'circle-pause-regular',
-            icon__decorative: true,
-            icon__blockname: audio_embed__base_class,
-            icon__modifiers: ['pause'],
-          } %}
-        </button>
+        {# audio embed element #}
+        {% block audio_embed__source %}
+          <audio>
+            <source src="{{ audio_embed__url|raw }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio> 
+        {% endblock %}
       </div>
 
-      {# audio embed progress bar #}
-      <div {{ bem('progress', [], audio_embed__base_class) }}>
-        <div {{ bem('progress-bar', [], audio_embed__base_class) }} id='progress-bar'>
-          <div {{ bem('progress-bar__icon', [], audio_embed__base_class) }}></div>
+      {# audio embed custom player #}
+      <div {{ bem('player', [], audio_embed__base_class) }}>
+
+        {# audio embed controls #}
+        <div {{ bem('controls', [], audio_embed__base_class) }}>
+          <button {{ bem('control', ['play'], audio_embed__base_class) }}>
+            <span {{ bem('visually-hidden') }}>{{ 'Play the Audio File'|t }}</span>
+            {% include "@atoms/images/icons/_yds-icon.twig" with {
+              icon__name: 'circle-play-regular',
+              icon__decorative: true,
+              icon__blockname: audio_embed__base_class,
+              icon__modifiers: ['play'],
+            } %}
+          </button>
+          <button {{ bem('control', ['pause'], audio_embed__base_class) }}>
+            <span {{ bem('visually-hidden') }}>{{ 'Pause the Audio File'|t }}</span>
+            {% include "@atoms/images/icons/_yds-icon.twig" with {
+              icon__name: 'circle-pause-regular',
+              icon__decorative: true,
+              icon__blockname: audio_embed__base_class,
+              icon__modifiers: ['pause'],
+            } %}
+          </button>
         </div>
-      </div>
 
-      {# audio embed time #}
-      <div {{ bem('time', [], audio_embed__base_class) }}>
-        <div {{ bem('time--current', [], audio_embed__base_class) }} id='time-current'>0:00</div>
-        <span {{ bem('time--separator', [], audio_embed__base_class) }}> / </span>
-        <div {{ bem('time--total', [], audio_embed__base_class) }} id='time-total'>0:00</div>
-      </div>
+        {# audio embed progress bar #}
+        <div {{ bem('progress', [], audio_embed__base_class) }}>
+          <div {{ bem('progress-bar', [], audio_embed__base_class) }} id='progress-bar'>
+            <div {{ bem('progress-bar__icon', [], audio_embed__base_class) }}></div>
+          </div>
+        </div>
 
-      {# audio embed speed control #}
-      <div {{ bem('speed', [], audio_embed__base_class) }}>
-        <label class="visually-hidden" for="speed-control">{{ 'Speed'|t }}</label>
-          {% include "@atoms/images/icons/_yds-icon.twig" with {
-            icon__name: 'gauge-solid',
-            icon__decorative: true,
-            icon__blockname: audio_embed__base_class,
-            icon__modifiers: ['speed'],
-          } %}
-        <button {{ bem('speed-control', ['half'], audio_embed__base_class) }}>0.5x</button>
-        <button {{ bem('speed-control', ['normal'], audio_embed__base_class) }}>1x</button>
-        <button {{ bem('speed-control', ['double'], audio_embed__base_class) }}>2x</button>
-        {# <input id="speed-control" type="number" min="0.1" max="5" step="0.1" value="1"> #}
-      </div>
+        {# audio embed time #}
+        <div {{ bem('time', [], audio_embed__base_class) }}>
+          <div {{ bem('time--current', [], audio_embed__base_class) }} id='time-current'>0:00</div>
+          <span {{ bem('time--separator', [], audio_embed__base_class) }}> / </span>
+          <div {{ bem('time--total', [], audio_embed__base_class) }} id='time-total'>0:00</div>
+        </div>
 
-      {# audio embed volume control #}
-      <div {{ bem('volume', [], audio_embed__base_class) }}>
-        <label class="visually-hidden" for="volume-control">{{ 'Volume'|t }}</label>
-          {% include "@atoms/images/icons/_yds-icon.twig" with {
-            icon__name: 'volume-high-solid',
-            icon__decorative: true,
-            icon__blockname: audio_embed__base_class,
-            icon__modifiers: ['volume'],
-          } %}
-        <input type="range" id="volume-control" min="0" max="1" step="0.01" value="0.5" />
+        {# audio embed speed control #}
+        <div {{ bem('speed', [], audio_embed__base_class) }}>
+          <label class="visually-hidden" for="speed-control">{{ 'Speed'|t }}</label>
+            {% include "@atoms/images/icons/_yds-icon.twig" with {
+              icon__name: 'gauge-solid',
+              icon__decorative: true,
+              icon__blockname: audio_embed__base_class,
+              icon__modifiers: ['speed'],
+            } %}
+          <button {{ bem('speed-control', ['half'], audio_embed__base_class) }}>0.5x</button>
+          <button {{ bem('speed-control', ['normal'], audio_embed__base_class) }}>1x</button>
+          <button {{ bem('speed-control', ['double'], audio_embed__base_class) }}>2x</button>
+          {# <input id="speed-control" type="number" min="0.1" max="5" step="0.1" value="1"> #}
+        </div>
+
+        {# audio embed volume control #}
+        <div {{ bem('volume', [], audio_embed__base_class) }}>
+          <label class="visually-hidden" for="volume-control">{{ 'Volume'|t }}</label>
+            {% include "@atoms/images/icons/_yds-icon.twig" with {
+              icon__name: 'volume-high-solid',
+              icon__decorative: true,
+              icon__blockname: audio_embed__base_class,
+              icon__modifiers: ['volume'],
+            } %}
+          <input type="range" id="volume-control" min="0" max="1" step="0.01" value="0.5" />
+        </div>
       </div>
     </div>
   </div>

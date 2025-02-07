@@ -9,12 +9,19 @@
   @include tokens.body-s;
 }
 
+.audio-embed__content-wrapper {
+  background-color: var(--color-gray-100);
+  padding: var(--size-spacing-4) var(--size-spacing-5);
+
+  [data-component-alignment='left'] & {
+    max-width: var(--size-component-layout-width-content);
+  }
+}
+
 .audio-embed__inner {
   display: flex;
   flex-direction: column;
   gap: var(--size-spacing-4);
-  padding: var(--size-spacing-4) var(--size-spacing-5);
-  background-color: var(--color-gray-100);
 }
 
 // Player
@@ -62,6 +69,8 @@
 
 // Time elapsed and total time
 .audio-embed__time {
+  @include tokens.body-xs;
+
   display: flex;
   flex-direction: row;
 }
@@ -126,7 +135,6 @@
 
   input {
     appearance: none;
-    appearance: none;
     background: transparent;
     cursor: pointer;
     width: var(--size-spacing-10);
@@ -143,7 +151,6 @@
     // Slider thumb
     &::-webkit-slider-thumb,
     &::-moz-range-thumb {
-      appearance: none;
       appearance: none;
       width: var(--size-spacing-3);
       height: var(--size-spacing-3);

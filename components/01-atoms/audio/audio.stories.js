@@ -2,7 +2,7 @@ import audioEmbedTwig from './yds-audio.twig';
 
 import audioEmbedData from './audio.yml';
 
-import './audio-player';
+import './yds-audio-player';
 
 /**
  * Storybook Definition.
