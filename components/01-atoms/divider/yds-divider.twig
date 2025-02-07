@@ -4,15 +4,20 @@
  #
  # Available Variables:
  # - divider__width: available options are 100% (default), 75%, 50%, and 25%
- # - divider__thickness: available options are 1 (default), 2, 3, 4, 5, and 6
+ # - divider__thickness: available options are 1 (default), 0, 2, 4, 6, and 8
  # - divider__position: available options are center (default), left, and right
+ # - divider__color: available color options
+ # - divider__margin: "Default" (false) or "Removed" (true), applies padding/margin adjustments when "Removed"
  #}
 
 {% set divider__base_class = 'divider' %}
 {% set divider__position = divider__position|default('center')|lower %}
 {% set divider__width = divider__width|default('100') %}
 {% set divider__component_width = divider__component_width|default('site') %}
+{% set divider__color = divider__color|default('gray-500') %} 
+{% set divider__thickness = divider__thickness|default('1') %} 
 {% set divider__attributes = divider__attributes|default({}) %}
+{% set divider__margin = divider__margin|default('Default') %}
 
 {% set divider__wrapper__attributes = {
   'data-component-width': divider__component_width,
@@ -31,6 +36,8 @@
 {% set divider__attributes = divider__attributes|merge({
   class: bem(divider__base_class),
   'data-divider-width': divider__width,
+  'data-divider-thickness': divider__thickness,
+  'style': 'background-color: var(--color-' ~ divider__color ~ '); height: var(--size-thickness-' ~ divider__thickness ~ ');'
 }) %}
 
 <div {{ add_attributes(divider__wrapper__attributes) }}> {% block prefix_suffix %}{% endblock %}

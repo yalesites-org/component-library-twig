@@ -20,7 +20,15 @@ export default {
     },
     dividerColor: {
       name: 'Line Color',
-      options: ['gray-500', 'blue-yale', 'basic-brown-gray', 'red-beinecke'],
+      options: [
+        'gray-500',
+        'blue-yale',
+        'basic-brown-gray',
+        'one',
+        'two',
+        'three',
+        'four',
+      ],
       type: 'select',
       defaultValue: 'gray-500',
     },
@@ -74,18 +82,26 @@ export const Dividers = ({ position, thickness, dividerColor, width }) => {
     ${dividerTwig({
       divider__width: `${viewAll ? '25' : width}`,
       divider__position: `${position}`,
+      divider__thickness: `${thickness}`,
+      divider__color: `${dividerColor}`,
     })}
     ${dividerTwig({
       divider__width: `${viewAll ? '50' : width}`,
       divider__position: `${position}`,
+      divider__thickness: `${thickness}`,
+      divider__color: `${dividerColor}`,
     })}
     ${dividerTwig({
       divider__width: `${viewAll ? '75' : width}`,
       divider__position: `${position}`,
+      divider__thickness: `${thickness}`,
+      divider__color: `${dividerColor}`,
     })}
     ${dividerTwig({
       divider__width: `${viewAll ? '100' : width}`,
       divider__position: `${position}`,
+      divider__thickness: `${thickness}`,
+      divider__color: `${dividerColor}`,
     })}
   </div>
   <div class="padding-to-see-dividers-above">&nbsp;</div>
