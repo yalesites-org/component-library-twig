@@ -92,6 +92,10 @@ Drupal.behaviors.audioPlayer = {
           }
         });
         speedControl.setAttribute('options-open', isOpen ? 'false' : 'true');
+        speedControlOptions.setAttribute(
+          'aria-expanded',
+          isOpen ? 'false' : 'true',
+        );
       });
 
       // Set speed control event listeners
@@ -122,6 +126,7 @@ Drupal.behaviors.audioPlayer = {
             ].filter((elem) => elem.style.display !== 'none');
             if (visibleControls.length === 1) {
               speedControl.setAttribute('options-open', 'false');
+              speedControlOptions.setAttribute('aria-expanded', 'false');
             }
           });
         });

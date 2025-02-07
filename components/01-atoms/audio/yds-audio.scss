@@ -192,13 +192,13 @@
 }
 
 .audio-embed__icon--volume {
-  height: var(--size-spacing-5);
-  width: var(--size-spacing-5);
+  height: var(--size-spacing-6);
+  width: var(--size-spacing-6);
 }
 
 .audio-embed__icon--speed {
-  height: var(--size-spacing-5);
-  width: var(--size-spacing-5);
+  height: var(--size-spacing-6);
+  width: var(--size-spacing-6);
 
   [options-open='true'] & {
     fill: var(--color-blue-medium);
