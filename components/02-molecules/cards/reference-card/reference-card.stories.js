@@ -33,34 +33,10 @@ export default {
     showCategories: {
       name: 'Show Categories/Affiliations',
       type: 'boolean',
-      defaultValue: false,
-    },
-    categories: {
-      name: 'Categories',
-      type: 'array',
-      defaultValue: referenceCardData.reference_card__categories,
-      if: { arg: 'showCategories' },
-    },
-    showPronouns: {
-      name: 'Show Pronouns',
-      type: 'boolean',
-      defaultValue: false,
     },
     showTags: {
       name: 'Show Tags',
       type: 'boolean',
-      defaultValue: false,
-    },
-    showThumbnail: {
-      name: 'Show Thumbnail',
-      type: 'boolean',
-      defaultValue: true,
-    },
-    tags: {
-      name: 'Tags',
-      type: 'array',
-      defaultValue: referenceCardData.reference_card__tags,
-      if: { arg: 'showTags' },
     },
     withImage: {
       name: 'With Image',
@@ -73,6 +49,9 @@ export default {
     collectionType: 'grid',
     featured: true,
     withImage: true,
+    showCategories: false,
+    showTags: false,
+    date: referenceCardData.reference_card__date,
   },
 };
 
@@ -83,11 +62,8 @@ export const PostCard = ({
   collectionType,
   featured,
   withImage,
-  categories,
   showCategories,
-  tags,
   showTags,
-  showThumbnail,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -102,11 +78,11 @@ export const PostCard = ({
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referenceCardData.reference_card__url,
-        reference_card__categories: categories,
+        reference_card__categories:
+          referenceCardData.reference_card__categories,
         show_categories: showCategories,
-        reference_card__tags: tags,
+        reference_card__tags: referenceCardData.reference_card__tags,
         show_tags: showTags,
-        show_thumbnail: showThumbnail,
       })}
     </ul>
   </div>
@@ -133,11 +109,8 @@ export const EventCard = ({
   secondaryCTAURL,
   multiDayEvent,
   headingPrefix,
-  categories,
   showCategories,
-  tags,
   showTags,
-  showThumbnail,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -158,11 +131,11 @@ export const EventCard = ({
         reference_card__cta_secondary__href: secondaryCTAURL,
         reference_card__cta_secondary__content: secondaryCTAContent,
         multi_day_event: multiDayEvent,
-        reference_card__categories: categories,
+        reference_card__categories:
+          referenceCardData.reference_card__categories,
         show_categories: showCategories,
-        reference_card__tags: tags,
+        reference_card__tags: referenceCardData.reference_card__tags,
         show_tags: showTags,
-        show_thumbnail: showThumbnail,
       })}
     </ul>
   </div>
@@ -211,12 +184,9 @@ export const ProfileCard = ({
   collectionType,
   featured,
   withImage,
-  categories,
   showCategories,
   showPronouns,
-  tags,
   showTags,
-  showThumbnail,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-source='profile' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -236,14 +206,22 @@ export const ProfileCard = ({
         reference_card__snippet:
           referenceProfileCardData.reference_card__snippet,
         reference_card__url: referenceProfileCardData.reference_card__url,
-        reference_card__categories: categories,
+        reference_card__categories:
+          referenceProfileCardData.reference_card__categories,
         show_categories: showCategories,
         show_pronouns: showPronouns,
-        reference_card__tags: tags,
+        reference_card__tags: referenceProfileCardData.reference_card__tags,
         show_tags: showTags,
-        show_thumbnail: showThumbnail,
       })}
     </ul>
   </div>
 </div>
 `;
+
+ProfileCard.argTypes = {
+  showPronouns: {
+    name: 'Show Pronouns',
+    type: 'boolean',
+    defaultValue: false,
+  },
+};
