@@ -13,15 +13,16 @@
   display: flex;
   flex-direction: column;
   gap: var(--size-spacing-4);
-  padding: var(--size-spacing-4);
+  padding: var(--size-spacing-4) var(--size-spacing-5);
   background-color: var(--color-gray-100);
 }
 
+// Player
 .audio-embed__player {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: var(--size-spacing-4);
+  gap: var(--size-spacing-5);
 }
 
 .audio-embed__controls {
@@ -34,11 +35,13 @@
   @include button.reset;
 }
 
-.audio-embed__control svg {
+// Play and pause buttons SVG
+.audio-embed__icon {
   width: var(--size-spacing-7);
   height: var(--size-spacing-7);
 }
 
+// Play and pause buttons
 .audio-embed__control--play {
   [is-playing='true'] & {
     display: none;
@@ -53,11 +56,17 @@
   }
 }
 
+.audio-embed__icon--pause {
+  fill: var(--color-blue-medium);
+}
+
+// Time elapsed and total time
 .audio-embed__time {
   display: flex;
   flex-direction: row;
 }
 
+// Progress bar
 .audio-embed__progress {
   display: flex;
   flex-direction: row;
@@ -89,6 +98,7 @@
   border-radius: 100%;
 }
 
+// Speed and volume controls
 .audio-embed__speed {
   display: flex;
   align-items: center;
@@ -100,7 +110,7 @@
 
 .audio-embed__speed-control {
   @include button.reset;
-  @include tokens.body-s;
+  @include tokens.body-xs;
 
   &.active {
     color: var(--color-blue-medium);
@@ -115,7 +125,33 @@
   flex: 0 100px;
 
   input {
-    width: 90px;
+    appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: var(--size-spacing-10);
+
+    // Slider track
+    &::-webkit-slider-runnable-track,
+    &::-moz-range-track {
+      width: 100%;
+      height: var(--border-thickness-2);
+      cursor: pointer;
+      background: var(--color-gray-400);
+    }
+
+    // Slider thumb
+    &::-webkit-slider-thumb,
+    &::-moz-range-thumb {
+      appearance: none;
+      appearance: none;
+      width: var(--size-spacing-3);
+      height: var(--size-spacing-3);
+      background: var(--color-blue-medium);
+      cursor: pointer;
+      border-radius: 100%;
+      border-color: var(--color-blue-medium);
+    }
   }
 }
 

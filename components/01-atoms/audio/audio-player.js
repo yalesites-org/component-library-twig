@@ -38,8 +38,10 @@ Drupal.behaviors.audioPlayer = {
         audio.volume = volumeControl.value;
       });
 
+      // Set initial volume to 50%
       speedControlSpeedNormal.classList.add('active');
 
+      // Set speed controls
       function setActiveSpeedControl(activeControl) {
         [
           speedControlSpeedHalf,
@@ -51,36 +53,46 @@ Drupal.behaviors.audioPlayer = {
         activeControl.classList.add('active');
       }
 
+      // Set speed control to half speed
       speedControlSpeedHalf.addEventListener('click', () => {
         audio.playbackRate = 0.5;
         setActiveSpeedControl(speedControlSpeedHalf);
       });
 
+      // Set speed control to normal speed
       speedControlSpeedNormal.addEventListener('click', () => {
         audio.playbackRate = 1;
         setActiveSpeedControl(speedControlSpeedNormal);
       });
 
+      // Set speed control to double speed
       speedControlSpeedDouble.addEventListener('click', () => {
         audio.playbackRate = 2;
         setActiveSpeedControl(speedControlSpeedDouble);
       });
 
+      // Set initial total play time from the audio file
+      audio.addEventListener('loadedmetadata', () => {
+        const { duration } = audio;
+        const totalMinutes = Math.floor(duration / 60);
+        const totalSeconds = Math.floor(duration % 60);
+
+        totalTimeDisplay.textContent = `${totalMinutes}:${
+          totalSeconds < 10 ? '0' : ''
+        }${totalSeconds}`;
+      });
+
+      // Update current play time and progress bar
       audio.addEventListener('timeupdate', () => {
         const { currentTime } = audio;
         const { duration } = audio;
 
         const currentMinutes = Math.floor(currentTime / 60);
         const currentSeconds = Math.floor(currentTime % 60);
-        const totalMinutes = Math.floor(duration / 60);
-        const totalSeconds = Math.floor(duration % 60);
 
         currentTimeDisplay.textContent = `${currentMinutes}:${
           currentSeconds < 10 ? '0' : ''
         }${currentSeconds}`;
-        totalTimeDisplay.textContent = `${totalMinutes}:${
-          totalSeconds < 10 ? '0' : ''
-        }${totalSeconds}`;
 
         const progress = (currentTime / duration) * 100;
         progressBar.style.width = `${progress}%`;
