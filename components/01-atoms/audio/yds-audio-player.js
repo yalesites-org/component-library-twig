@@ -14,6 +14,10 @@ Drupal.behaviors.audioPlayer = {
       const progressBar = audioPlayer.querySelector('#progress-bar');
       const currentTimeDisplay = audioPlayer.querySelector('#time-current');
       const totalTimeDisplay = audioPlayer.querySelector('#time-total');
+      const speedControl = audioPlayer.querySelector('.audio-embed__speed');
+      const speedControlOptions = audioPlayer.querySelector(
+        '.audio-embed__speed-options-control',
+      );
       const speedControlSpeedHalf = audioPlayer.querySelector(
         '.audio-embed__speed-control--half',
       );
@@ -24,6 +28,7 @@ Drupal.behaviors.audioPlayer = {
         '.audio-embed__speed-control--double',
       );
 
+      // Event listeners
       playButton.addEventListener('click', () => {
         audio.play();
         audioPlayer.setAttribute('is-playing', true);
@@ -38,48 +43,105 @@ Drupal.behaviors.audioPlayer = {
         audio.volume = volumeControl.value;
       });
 
+      progressBar.addEventListener('input', () => {
+        const { value } = progressBar;
+        const { duration } = audio;
+
+        const progress = (value / 100) * duration;
+        audio.currentTime = progress;
+      });
+
       // Set initial volume to 50%
       speedControlSpeedNormal.classList.add('active');
 
+      // Hide the other speed controls initially
+      [speedControlSpeedHalf, speedControlSpeedDouble].forEach((control) => {
+        const controlElement = control;
+        controlElement.style.display = 'none';
+      });
+
       // Set speed controls
       function setActiveSpeedControl(activeControl) {
+        const activeElement = activeControl;
         [
           speedControlSpeedHalf,
           speedControlSpeedNormal,
           speedControlSpeedDouble,
         ].forEach((control) => {
-          control.classList.remove('active');
+          const controlElement = control;
+          controlElement.classList.remove('active');
+          controlElement.style.display = 'none';
         });
-        activeControl.classList.add('active');
+        activeElement.classList.add('active');
+        activeElement.style.display = 'block';
       }
 
-      // Set speed control to half speed
-      speedControlSpeedHalf.addEventListener('click', () => {
-        audio.playbackRate = 0.5;
-        setActiveSpeedControl(speedControlSpeedHalf);
+      // Toggle visibility of speed controls
+      speedControlOptions.addEventListener('click', () => {
+        const isOpen = speedControl.getAttribute('options-open') === 'true';
+
+        [
+          speedControlSpeedHalf,
+          speedControlSpeedNormal,
+          speedControlSpeedDouble,
+        ].forEach((control) => {
+          const controlElement = control;
+          if (!controlElement.classList.contains('active')) {
+            controlElement.style.display =
+              controlElement.style.display === 'none' ? 'block' : 'none';
+          }
+        });
+        speedControl.setAttribute('options-open', isOpen ? 'false' : 'true');
       });
 
-      // Set speed control to normal speed
-      speedControlSpeedNormal.addEventListener('click', () => {
-        audio.playbackRate = 1;
-        setActiveSpeedControl(speedControlSpeedNormal);
-      });
+      // Set speed control event listeners
+      const speedControls = [
+        { control: speedControlSpeedHalf, rate: 0.5 },
+        { control: speedControlSpeedNormal, rate: 1 },
+        { control: speedControlSpeedDouble, rate: 2 },
+      ];
 
-      // Set speed control to double speed
-      speedControlSpeedDouble.addEventListener('click', () => {
-        audio.playbackRate = 2;
-        setActiveSpeedControl(speedControlSpeedDouble);
+      speedControls.forEach(({ control, rate }) => {
+        control.addEventListener('click', () => {
+          audio.playbackRate = rate;
+          setActiveSpeedControl(control);
+          [
+            speedControlSpeedHalf,
+            speedControlSpeedNormal,
+            speedControlSpeedDouble,
+          ].forEach((otherControl) => {
+            const controlElement = otherControl;
+            if (controlElement !== control)
+              controlElement.style.display = 'none';
+
+            // Close the speed control options if only one speed control is visible
+            const visibleControls = [
+              speedControlSpeedHalf,
+              speedControlSpeedNormal,
+              speedControlSpeedDouble,
+            ].filter((elem) => elem.style.display !== 'none');
+            if (visibleControls.length === 1) {
+              speedControl.setAttribute('options-open', 'false');
+            }
+          });
+        });
       });
 
       // Set initial total play time from the audio file
       audio.addEventListener('loadedmetadata', () => {
         const { duration } = audio;
+        const { currentTime } = audio;
+
         const totalMinutes = Math.floor(duration / 60);
         const totalSeconds = Math.floor(duration % 60);
 
         totalTimeDisplay.textContent = `${totalMinutes}:${
           totalSeconds < 10 ? '0' : ''
         }${totalSeconds}`;
+
+        if (currentTime === 0) {
+          progressBar.value = 0;
+        }
       });
 
       // Update current play time and progress bar
@@ -95,7 +157,7 @@ Drupal.behaviors.audioPlayer = {
         }${currentSeconds}`;
 
         const progress = (currentTime / duration) * 100;
-        progressBar.style.width = `${progress}%`;
+        progressBar.value = progress;
       });
     });
   },

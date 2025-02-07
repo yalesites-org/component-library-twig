@@ -10,6 +10,9 @@
 }
 
 .audio-embed__content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-4);
   background-color: var(--color-gray-100);
   padding: var(--size-spacing-4) var(--size-spacing-5);
 
@@ -80,41 +83,63 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: var(--size-spacing-4);
-  height: var(--border-thickness-4);
-  background-color: var(--color-gray-400);
   width: 100%;
 }
 
 .audio-embed__progress-bar {
-  flex: 0 auto;
-  width: 0;
-  height: 100%;
-  background-color: var(--color-blue-medium);
-  position: relative;
-  padding-left: var(--size-spacing-4);
-}
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
 
-.audio-embed__progress-bar__icon {
-  display: block;
-  position: absolute;
-  top: calc(var(--size-spacing-2) * -1);
-  left: auto;
-  right: 0;
-  height: var(--size-spacing-4);
-  width: var(--size-spacing-4);
-  background-color: var(--color-blue-medium);
-  border-radius: 100%;
+  input {
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 100%;
+
+    // Slider track
+    &::-webkit-slider-runnable-track,
+    &::-moz-range-track {
+      width: 100%;
+      height: var(--border-thickness-4);
+      cursor: pointer;
+      background: var(--color-gray-400);
+    }
+
+    // Slider thumb
+    &::-webkit-slider-thumb,
+    &::-moz-range-thumb {
+      appearance: none;
+      width: var(--size-spacing-3);
+      height: var(--size-spacing-3);
+      background: var(--color-blue-medium);
+      cursor: pointer;
+      border-radius: 100%;
+      border-color: var(--color-blue-medium);
+    }
+  }
 }
 
 // Speed and volume controls
 .audio-embed__speed {
+  @include tokens.animate(
+    $property: 'width',
+    $duration: var(--animation-speed-default)
+  );
+
   display: flex;
   align-items: center;
   gap: var(--size-spacing-4);
-  flex: 0 100px;
+  flex: 0 auto;
   padding: var(--size-spacing-2) var(--size-spacing-3);
   border: var(--border-thickness-1) solid var(--color-gray-400);
+}
+
+.audio-embed__speed-options {
+  display: flex;
+  flex: 0 auto;
+  gap: var(--size-spacing-4);
 }
 
 .audio-embed__speed-control {
@@ -125,6 +150,10 @@
     color: var(--color-blue-medium);
     font-weight: 700;
   }
+}
+
+.audio-embed__speed-options-control {
+  @include button.reset;
 }
 
 .audio-embed__volume {
@@ -162,8 +191,16 @@
   }
 }
 
-.audio-embed__icon--speed,
 .audio-embed__icon--volume {
   height: var(--size-spacing-5);
   width: var(--size-spacing-5);
+}
+
+.audio-embed__icon--speed {
+  height: var(--size-spacing-5);
+  width: var(--size-spacing-5);
+
+  [options-open='true'] & {
+    fill: var(--color-blue-medium);
+  }
 }
