@@ -11,11 +11,17 @@
   } %}
     {% block list__content %}
       {% for item in taxonomy_display__item__terms %}
-        {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-          link__blockname: taxonomy_display__base_class,
-          link__content: item.taxonomy_display__link__content ?? item['#title'],
-          link__url: item.taxonomy_display__link__url ?? item['#url'].toString(),
+        {% embed "@atoms/lists/_yds-list-item.twig" with {
+          list__item__blockname: taxonomy_display__base_class,
         } %}
+          {% block list__item__content %}
+            {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+              link__blockname: taxonomy_display__base_class,
+              link__content: item.taxonomy_display__link__content ?? item['#title'],
+              link__url: item.taxonomy_display__link__url ?? item['#url'].toString(),
+            } %}
+          {% endblock %}
+        {% endembed %}
       {% endfor %}
     {% endblock %}
   {% endembed %}
