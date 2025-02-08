@@ -1,7 +1,7 @@
 {% set taxonomy_display__base_class = 'taxonomy-display' %}
 {% set taxonomy_display__modifiers = taxonomy_display__modifiers|default([]) %}
-{% set taxonomy_display__item__terms = taxonomy_display__item__terms|default(terms) %}
-{% set taxonomy_display__item__label = taxonomy_display__item__label|default(label) %}
+{% set taxonomy_display__item__terms = taxonomy_display__item__terms ?? terms %}
+{% set taxonomy_display__item__label = taxonomy_display__item__label ?? label %}
 
 {% set taxonomy_terms__list %}
   {% embed "@atoms/lists/yds-list.twig" with {
@@ -13,8 +13,8 @@
       {% for item in taxonomy_display__item__terms %}
         {% include "@atoms/controls/text-link/yds-text-link.twig" with {
           link__blockname: taxonomy_display__base_class,
-          link__content: item.taxonomy_display__link__content|default(item['#title']),
-          link__url: item.taxonomy_display__link__url|default(item['#url'].toString()),
+          link__content: item.taxonomy_display__link__content ?? item['#title'],
+          link__url: item.taxonomy_display__link__url ?? item['#url'].toString(),
         } %}
       {% endfor %}
     {% endblock %}
