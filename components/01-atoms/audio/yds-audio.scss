@@ -89,7 +89,7 @@
   width: 100%;
 
   @media (max-width: tokens.$break-mobile-max) {
-    flex: 1 calc(100% - (var(--size-spacing-7) + var(--size-spacing-5)));
+    flex: 1 calc(100% - (var(--size-spacing-7) + var(--size-spacing-13)));
   }
 }
 
@@ -189,10 +189,6 @@
       cursor: pointer;
       border-radius: 100%;
       border-color: var(--color-blue-medium);
-    }
-
-    @media (max-width: tokens.$break-mobile-max) {
-      max-width: calc(100% - var(--size-spacing-8));
     }
   }
 
