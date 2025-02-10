@@ -44,15 +44,15 @@ Drupal.behaviors.audioPlayer = {
       });
 
       // Set initial total play time from the audio file
-      audio.addEventListener('loadedmetadata', () => {
+      audio.addEventListener('loadedmetadata', async () => {
         let { duration } = audio;
-        const { currentTime } = audio;
 
-        // store the duration in local storage
-        if (duration > 0) {
-          localStorage.setItem('audioDuration', duration);
-        } else {
+        if (!duration || duration === Infinity) {
+          // Fetch duration from localStorage if available
           duration = localStorage.getItem('audioDuration') || 0;
+        } else {
+          // Save duration to localStorage
+          localStorage.setItem('audioDuration', duration);
         }
 
         if (duration > 0) {
@@ -63,7 +63,7 @@ Drupal.behaviors.audioPlayer = {
             totalSeconds < 10 ? '0' : ''
           }${totalSeconds}`;
 
-          if (currentTime === 0) {
+          if (audio.currentTime === 0) {
             progressBar.value = 0;
           }
         } else {
