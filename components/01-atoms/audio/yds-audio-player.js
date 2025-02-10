@@ -45,32 +45,43 @@ Drupal.behaviors.audioPlayer = {
 
       // Set initial total play time from the audio file
       audio.addEventListener('loadedmetadata', () => {
-        const duration =
-          audio.duration || localStorage.getItem('audioDuration') || 0;
+        const audioSrc = audio.currentSrc;
 
-        if (duration && duration !== Infinity) {
-          localStorage.setItem('audioDuration', duration);
-        }
+        if (audioSrc) {
+          const fileId = btoa(audioSrc); // Use base64 encoding of audioSrc as unique ID
 
-        const totalMinutes = Math.floor(duration / 60);
-        const totalSeconds = Math.floor(duration % 60);
-        totalTimeDisplay.textContent = `${totalMinutes}:${
-          totalSeconds < 10 ? '0' : ''
-        }${totalSeconds}`;
+          let { duration } = audio;
 
-        if (audio.currentTime === 0) {
-          progressBar.value = 0;
+          if (duration && duration !== Infinity) {
+            localStorage.setItem(`audioDuration_${fileId}`, duration);
+          } else {
+            duration = localStorage.getItem(`audioDuration_${fileId}`) || 0;
+          }
+
+          const totalMinutes = Math.floor(duration / 60);
+          const totalSeconds = Math.floor(duration % 60);
+          totalTimeDisplay.textContent = `${totalMinutes}:${
+            totalSeconds < 10 ? '0' : ''
+          }${totalSeconds}`;
+
+          if (audio.currentTime === 0) {
+            progressBar.value = 0;
+          }
         }
       });
 
       // Fetch duration from localStorage when the audio element is added to the DOM
-      const storedDuration = localStorage.getItem('audioDuration');
-      if (storedDuration) {
-        const totalMinutes = Math.floor(storedDuration / 60);
-        const totalSeconds = Math.floor(storedDuration % 60);
-        totalTimeDisplay.textContent = `${totalMinutes}:${
-          totalSeconds < 10 ? '0' : ''
-        }${totalSeconds}`;
+      const audioSrc = audio.currentSrc;
+      if (audioSrc) {
+        const fileId = btoa(audioSrc);
+        const storedDuration = localStorage.getItem(`audioDuration_${fileId}`);
+        if (storedDuration) {
+          const totalMinutes = Math.floor(storedDuration / 60);
+          const totalSeconds = Math.floor(storedDuration % 60);
+          totalTimeDisplay.textContent = `${totalMinutes}:${
+            totalSeconds < 10 ? '0' : ''
+          }${totalSeconds}`;
+        }
       }
 
       progressBar.addEventListener('input', () => {
