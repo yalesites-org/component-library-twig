@@ -44,33 +44,34 @@ Drupal.behaviors.audioPlayer = {
       });
 
       // Set initial total play time from the audio file
-      audio.addEventListener('loadedmetadata', async () => {
-        let { duration } = audio;
+      audio.addEventListener('loadedmetadata', () => {
+        const duration =
+          audio.duration || localStorage.getItem('audioDuration') || 0;
 
-        if (!duration || duration === Infinity) {
-          // Fetch duration from localStorage if available
-          duration = localStorage.getItem('audioDuration') || 0;
-        } else {
-          // Save duration to localStorage
+        if (duration && duration !== Infinity) {
           localStorage.setItem('audioDuration', duration);
         }
 
-        if (duration > 0) {
-          const totalMinutes = Math.floor(duration / 60);
-          const totalSeconds = Math.floor(duration % 60);
+        const totalMinutes = Math.floor(duration / 60);
+        const totalSeconds = Math.floor(duration % 60);
+        totalTimeDisplay.textContent = `${totalMinutes}:${
+          totalSeconds < 10 ? '0' : ''
+        }${totalSeconds}`;
 
-          totalTimeDisplay.textContent = `${totalMinutes}:${
-            totalSeconds < 10 ? '0' : ''
-          }${totalSeconds}`;
-
-          if (audio.currentTime === 0) {
-            progressBar.value = 0;
-          }
-        } else {
-          // Handle the case where duration is 0
-          totalTimeDisplay.textContent = '0:00';
+        if (audio.currentTime === 0) {
+          progressBar.value = 0;
         }
       });
+
+      // Fetch duration from localStorage when the audio element is added to the DOM
+      const storedDuration = localStorage.getItem('audioDuration');
+      if (storedDuration) {
+        const totalMinutes = Math.floor(storedDuration / 60);
+        const totalSeconds = Math.floor(storedDuration % 60);
+        totalTimeDisplay.textContent = `${totalMinutes}:${
+          totalSeconds < 10 ? '0' : ''
+        }${totalSeconds}`;
+      }
 
       progressBar.addEventListener('input', () => {
         const { value } = progressBar;
