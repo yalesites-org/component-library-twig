@@ -101,7 +101,7 @@ Drupal.behaviors.audioPlayer = {
         controlElement.style.display = 'none';
       });
 
-      // Set speed controls
+      // Set speed active speed control
       function setActiveSpeedControl(activeControl) {
         const activeElement = activeControl;
         [
@@ -117,16 +117,18 @@ Drupal.behaviors.audioPlayer = {
         activeElement.style.display = 'block';
       }
 
-      // Toggle visibility of speed controls
+      // Toggle visibility of speed control buttons
+      // when the speed control options button is clicked
       speedControlOptions.addEventListener('click', () => {
         const isOpen = speedControl.getAttribute('options-open') === 'true';
-
         [
           speedControlSpeedHalf,
           speedControlSpeedNormal,
           speedControlSpeedDouble,
         ].forEach((control) => {
           const controlElement = control;
+          // only one speed can be active at a time
+          // if the control is not active, toggle its visibility
           if (!controlElement.classList.contains('active')) {
             controlElement.style.display =
               controlElement.style.display === 'none' ? 'block' : 'none';
@@ -140,12 +142,14 @@ Drupal.behaviors.audioPlayer = {
       });
 
       // Set speed control event listeners
+      // Speed controls are an array of objects with the control element and the playback rate
       const speedControls = [
         { control: speedControlSpeedHalf, rate: 0.5 },
         { control: speedControlSpeedNormal, rate: 1 },
         { control: speedControlSpeedDouble, rate: 2 },
       ];
 
+      // Change playback speed when a speed control is clicked
       speedControls.forEach(({ control, rate }) => {
         control.addEventListener('click', () => {
           audio.playbackRate = rate;
