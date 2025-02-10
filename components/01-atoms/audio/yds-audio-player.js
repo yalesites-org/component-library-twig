@@ -45,18 +45,30 @@ Drupal.behaviors.audioPlayer = {
 
       // Set initial total play time from the audio file
       audio.addEventListener('loadedmetadata', () => {
-        const { duration } = audio;
+        let { duration } = audio;
         const { currentTime } = audio;
 
-        const totalMinutes = Math.floor(duration / 60);
-        const totalSeconds = Math.floor(duration % 60);
+        // store the duration in local storage
+        if (duration > 0) {
+          localStorage.setItem('audioDuration', duration);
+        } else {
+          duration = localStorage.getItem('audioDuration') || 0;
+        }
 
-        totalTimeDisplay.textContent = `${totalMinutes}:${
-          totalSeconds < 10 ? '0' : ''
-        }${totalSeconds}`;
+        if (duration > 0) {
+          const totalMinutes = Math.floor(duration / 60);
+          const totalSeconds = Math.floor(duration % 60);
 
-        if (currentTime === 0) {
-          progressBar.value = 0;
+          totalTimeDisplay.textContent = `${totalMinutes}:${
+            totalSeconds < 10 ? '0' : ''
+          }${totalSeconds}`;
+
+          if (currentTime === 0) {
+            progressBar.value = 0;
+          }
+        } else {
+          // Handle the case where duration is 0
+          totalTimeDisplay.textContent = '0:00';
         }
       });
 
