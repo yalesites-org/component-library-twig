@@ -293,6 +293,13 @@ $global-footer-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
     flex: 1 1 30%;
 
+    & a,
+    & a:visited,
+    & a:hover,
+    & a:hover:visited {
+      color: var(--color-text);
+    }
+
     @media (min-width: tokens.$break-l) {
       grid-area: content;
       padding-inline-start: var(--size-spacing-8);
