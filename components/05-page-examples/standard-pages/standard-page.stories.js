@@ -31,6 +31,7 @@ import contentSpotlightPortraitData from '../../02-molecules/content-spotlight-p
 
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
+import '../../02-molecules/callout/callout';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
@@ -214,7 +215,6 @@ export const BasicSpotlights = ({
     page_title__meta: null,
     site_animate_components: allowAnimatedItems,
     site_header__border_thickness: headerBorderThickness,
-    site_header__branding_link: 'https://www.yale.edu',
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
     site_header__accent: siteHeaderAccent,
@@ -223,6 +223,7 @@ export const BasicSpotlights = ({
     site_footer__theme: siteFooterTheme,
     site_footer__accent: siteFooterAccent,
     utility_nav__items: utilityNavData.items,
+    site_header__branding_link: 'https://www.yale.edu',
     primary_nav__items: primaryNavData.items,
     site_header__menu__variation: menuVariation,
     utility_nav__link__content: utilityNavLinkContent,
@@ -280,10 +281,10 @@ export const WithBanner = ({
     page_title__meta: null,
     site_animate_components: allowAnimatedItems,
     site_header__border_thickness: headerBorderThickness,
-    site_header__branding_link: 'https://www.yale.edu',
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
     site_header__accent: siteHeaderAccent,
+    site_header__branding_link: 'https://www.yale.edu',
     site_footer__variation: siteFooterVariation,
     site_footer__border_thickness: footerBorderThickness,
     site_footer__theme: siteFooterTheme,
@@ -426,7 +427,6 @@ export const WithSidebar = ({
     page_title__meta: null,
     site_animate_components: allowAnimatedItems,
     site_header__border_thickness: headerBorderThickness,
-    site_header__branding_link: 'https://www.yale.edu',
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
     site_header__accent: siteHeaderAccent,
@@ -482,7 +482,6 @@ export const WithQuickLinks = ({
     page_title__meta: null,
     site_animate_components: allowAnimatedItems,
     site_header__border_thickness: headerBorderThickness,
-    site_header__branding_link: 'https://www.yale.edu',
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
     site_header__accent: siteHeaderAccent,
@@ -492,6 +491,7 @@ export const WithQuickLinks = ({
     site_footer__accent: siteFooterAccent,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
+    site_header__branding_link: 'https://www.yale.edu',
     site_header__menu__variation: menuVariation,
     utility_nav__link__content: utilityNavLinkContent,
     utility_nav__link__url: '#',
