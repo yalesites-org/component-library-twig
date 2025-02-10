@@ -43,6 +43,23 @@ Drupal.behaviors.audioPlayer = {
         audio.volume = volumeControl.value;
       });
 
+      // Set initial total play time from the audio file
+      audio.addEventListener('loadedmetadata', () => {
+        const { duration } = audio;
+        const { currentTime } = audio;
+
+        const totalMinutes = Math.floor(duration / 60);
+        const totalSeconds = Math.floor(duration % 60);
+
+        totalTimeDisplay.textContent = `${totalMinutes}:${
+          totalSeconds < 10 ? '0' : ''
+        }${totalSeconds}`;
+
+        if (currentTime === 0) {
+          progressBar.value = 0;
+        }
+      });
+
       progressBar.addEventListener('input', () => {
         const { value } = progressBar;
         const { duration } = audio;
@@ -130,23 +147,6 @@ Drupal.behaviors.audioPlayer = {
             }
           });
         });
-      });
-
-      // Set initial total play time from the audio file
-      audio.addEventListener('loadedmetadata', () => {
-        const { duration } = audio;
-        const { currentTime } = audio;
-
-        const totalMinutes = Math.floor(duration / 60);
-        const totalSeconds = Math.floor(duration % 60);
-
-        totalTimeDisplay.textContent = `${totalMinutes}:${
-          totalSeconds < 10 ? '0' : ''
-        }${totalSeconds}`;
-
-        if (currentTime === 0) {
-          progressBar.value = 0;
-        }
       });
 
       // Update current play time and progress bar
