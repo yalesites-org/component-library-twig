@@ -105,12 +105,7 @@ $break-link-group-max: $break-link-group - 0.05;
     [data-footer-theme='one'] &,
     [data-footer-theme='two'] &,
     [data-footer-theme='three'] & {
-      --color-link-group-hover: var(--color-slot-two);
-    }
-
-    [data-footer-theme='four'] &,
-    [data-footer-theme='five'] & {
-      --color-link-group-hover: var(--color-slot-four);
+      --color-link-group-hover: var(--color-site-footer-text-color);
     }
 
     &:hover {
