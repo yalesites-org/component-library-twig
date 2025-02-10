@@ -1,5 +1,9 @@
 @use '../../00-tokens/tokens';
+@use '../../00-tokens/functions/map';
 
+// get global themes
+$global-quick-links-themes: map.deep-get(tokens.$tokens, 'global-themes');
+$component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
 $divider-widths: 100, 75, 50, 25;
 
 @each $divider-width in $divider-widths {
@@ -30,6 +34,37 @@ $divider-positions: left, center;
   width: var(--width-divider);
   height: var(--thickness-divider);
 
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
+  @each $globalTheme, $value in $global-quick-links-themes {
+    [data-divider-color='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
+      --color-slot-three: var(
+        --global-themes-#{$globalTheme}-colors-slot-three
+      );
+      --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
+    }
+  }
+
+  &[data-divider-color='one'] {
+    background: var(--color-slot-one);
+  }
+
+  &[data-divider-color='two'] {
+    background: var(--color-slot-two);
+  }
+
+  &[data-divider-color='three'] {
+    background: var(--color-slot-three);
+  }
+
+  &[data-divider-color='four'] {
+    background: var(--color-slot-four);
+  }
+
   // if animation is active
   [data-site-animation='artistic'] & {
     &[data-animate-item='enabled'] {
@@ -40,6 +75,10 @@ $divider-positions: left, center;
       @include tokens.expand-out;
     }
   }
+}
+
+body:has(.layout--banner .divider) header {
+  border-bottom: none !important;
 }
 
 .layout--banner {
