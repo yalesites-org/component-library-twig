@@ -21,24 +21,22 @@
   }
 }
 
-.audio-embed__inner {
-  display: flex;
-  flex-direction: column;
-  gap: var(--size-spacing-4);
-}
-
 // Player
 .audio-embed__player {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: var(--size-spacing-5);
+
+  @media (max-width: tokens.$break-mobile-max) {
+    flex-flow: row wrap;
+  }
 }
 
 .audio-embed__controls {
   display: flex;
   flex-direction: row;
-  flex: 0 auto;
+  flex: 0 var(--size-spacing-7);
 }
 
 .audio-embed__control {
@@ -76,6 +74,11 @@
 
   display: flex;
   flex-direction: row;
+  flex: 0 auto;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    flex: 0 1 var(--size-spacing-10);
+  }
 }
 
 // Progress bar
@@ -84,6 +87,10 @@
   flex-direction: row;
   align-items: center;
   width: 100%;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    flex: 1 calc(100% - (var(--size-spacing-7) + var(--size-spacing-5)));
+  }
 }
 
 .audio-embed__progress-bar {
@@ -123,11 +130,6 @@
 
 // Speed and volume controls
 .audio-embed__speed {
-  @include tokens.animate(
-    $property: 'width',
-    $duration: var(--animation-speed-default)
-  );
-
   display: flex;
   align-items: center;
   gap: var(--size-spacing-4);
@@ -160,13 +162,13 @@
   display: flex;
   align-items: center;
   gap: var(--size-spacing-4);
-  flex: 0 100px;
+  flex: 1 auto;
 
   input {
     appearance: none;
     background: transparent;
     cursor: pointer;
-    width: var(--size-spacing-10);
+    max-width: var(--size-spacing-13);
 
     // Slider track
     &::-webkit-slider-runnable-track,
@@ -188,15 +190,26 @@
       border-radius: 100%;
       border-color: var(--color-blue-medium);
     }
+
+    @media (max-width: tokens.$break-mobile-max) {
+      max-width: calc(100% - var(--size-spacing-8));
+    }
+  }
+
+  @media (max-width: tokens.$break-mobile-max) {
+    flex: 1 auto;
+    justify-content: flex-end;
   }
 }
 
 .audio-embed__icon--volume {
+  flex: 0 var(--size-spacing-5);
   height: var(--size-spacing-5);
   width: var(--size-spacing-5);
 }
 
 .audio-embed__icon--speed {
+  flex: 0 var(--size-spacing-5);
   height: var(--size-spacing-5);
   width: var(--size-spacing-5);
 
