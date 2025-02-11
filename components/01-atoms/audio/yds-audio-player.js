@@ -10,6 +10,8 @@ Drupal.behaviors.audioPlayer = {
       const pauseButton = audioPlayer.querySelector(
         '.audio-embed__control--pause',
       );
+
+      const volumeElement = audioPlayer.querySelector('.audio-embed__volume');
       const volumeControl = audioPlayer.querySelector('#volume-control');
       const progressBar = audioPlayer.querySelector('#progress-bar');
       const currentTimeDisplay = audioPlayer.querySelector('#time-current');
@@ -50,7 +52,7 @@ Drupal.behaviors.audioPlayer = {
         /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
       if (isIOS) {
-        volumeControl.display = 'none';
+        volumeElement.style.display = 'none';
       } else {
         volumeControl.addEventListener('input', () => {
           audio.volume = volumeControl.value;
