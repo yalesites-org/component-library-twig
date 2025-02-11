@@ -24,6 +24,10 @@ export default {
       name: 'Featured',
       type: 'boolean',
     },
+    withOverlay: {
+      name: 'Overlay',
+      type: 'boolean',
+    },
   },
   args: {
     collectionType: 'grid',
@@ -38,6 +42,7 @@ export const PostCardCollection = ({
   collectionType,
   featured,
   withImages,
+  withOverlay,
 }) => {
   const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
 
@@ -48,6 +53,7 @@ export const PostCardCollection = ({
     card_collection__featured: featured ? 'true' : 'false',
     card_collection__with_images: withImages ? 'true' : 'false',
     card_collection__cards: items,
+    reference_card__overlay: withOverlay ? 'Pinned' : '',
     ...postCardData,
     ...imageData.responsive_images['3x2'],
   });
