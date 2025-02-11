@@ -64,7 +64,12 @@ html {
 $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 
 [data-component-width] {
-  &:not([data-embedded-components] [data-component-width]) {
+  // if a component has nested components, we don't want to apply the padding to the nested components
+  // we also don't want to apply the padding to components with the data-full-width-component attribute
+  &:not(
+      [data-embedded-components] [data-component-width],
+      [data-full-width-component]
+    ) {
     padding-inline-start: var(--size-spacing-site-gutter);
     padding-inline-end: var(--size-spacing-site-gutter);
   }
