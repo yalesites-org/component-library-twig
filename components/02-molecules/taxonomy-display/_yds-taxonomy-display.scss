@@ -3,47 +3,37 @@
 @use '../../00-tokens/functions/map';
 
 // get global themes
-$global-content-spotlight-port-themes: map.deep-get(
+$global-taxonomy-display-port-themes: map.deep-get(
   tokens.$tokens,
   'global-themes'
 );
-$component-content-spotlight-port-themes: map.deep-get(
+$component-taxonomy-display-port-themes: map.deep-get(
   tokens.$tokens,
   'component-themes'
 );
 
-// Content Spotlight
-.content-spotlight-portrait {
+// Taxonomy Display
+.taxonomy-display {
   // used by a element for animated hover underline
   --color-text-shadow: var(--color-basic-white);
 
   // if we're not using a component theme, add top and bottom margin
   // Or if the spotlight is the only spotlight on the page
-  &[data-component-theme='default'],
-  &[data-spotlights-position='first-and-last'] {
-    @include tokens.spacing-page-section;
-  }
-
-  // We're using JavaScript to evaluate the last and first spotlights in a group of spotlights
-  &[data-spotlights-position='first'] {
-    margin-top: var(--size-spacing-10);
-  }
-
-  &[data-spotlights-position='last'] {
-    margin-bottom: var(--size-spacing-10);
+  &[data-component-theme='default'] {
+    padding-block: var(--size-spacing-6);
+    background-color: var(--color-gray-100);
   }
 
   // If we're using a component theme, add padding and set background-color and color;
   &:not([data-component-theme='default']) {
-    padding-block-start: var(--size-spacing-10);
-    padding-block-end: var(--size-spacing-10);
+    padding-block: var(--size-spacing-6);
     background-color: var(--color-background);
     color: var(--color-text);
   }
 
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
-  @each $theme, $value in $component-content-spotlight-port-themes {
+  @each $theme, $value in $component-taxonomy-display-port-themes {
     &[data-component-theme='#{$theme}'] {
       --color-slot-one: var(--component-themes-#{$theme}-slot-one);
       --color-slot-two: var(--component-themes-#{$theme}-slot-two);
@@ -56,8 +46,7 @@ $component-content-spotlight-port-themes: map.deep-get(
       --color-spotlight-text-shadow: var(--color-background);
 
       // override text-shadow color for links in component themes
-      .link,
-      .content-spotlight-portrait__text {
+      .taxonomy-display__link {
         --color-text-shadow: var(--color-spotlight-text-shadow);
         --color-link-hover: var(--color-link-hover);
       }
@@ -68,7 +57,7 @@ $component-content-spotlight-port-themes: map.deep-get(
   // This establishes `--color-slot-` variables name-spaced to the selector
   // in which it is used. We can map component-level variables to global-level
   // `--color-slot-` variables.
-  @each $globalTheme, $value in $global-content-spotlight-port-themes {
+  @each $globalTheme, $value in $global-taxonomy-display-port-themes {
     [data-global-theme='#{$globalTheme}'] & {
       --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
       --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
@@ -101,7 +90,6 @@ $component-content-spotlight-port-themes: map.deep-get(
   &[data-component-theme='one'] {
     --color-background: var(--color-slot-one);
     --color-text: var(--color-slot-eight);
-    --color-heading: var(--color-slot-eight);
     --color-link-base: var(--color-slot-eight);
     --color-link-hover: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
@@ -111,7 +99,6 @@ $component-content-spotlight-port-themes: map.deep-get(
   &[data-component-theme='two'] {
     --color-background: var(--color-slot-four);
     --color-text: var(--color-slot-seven);
-    --color-heading: var(--color-slot-seven);
     --color-link-base: var(--color-slot-seven);
     --color-link-hover: var(--color-slot-seven);
   }
@@ -119,7 +106,6 @@ $component-content-spotlight-port-themes: map.deep-get(
   &[data-component-theme='three'] {
     --color-background: var(--color-slot-five);
     --color-text: var(--color-slot-eight);
-    --color-heading: var(--color-slot-eight);
     --color-link-base: var(--color-slot-eight);
     --color-link-hover: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
@@ -135,7 +121,6 @@ $component-content-spotlight-port-themes: map.deep-get(
   &[data-component-theme='four'] {
     --color-background: var(--color-slot-three);
     --color-text: var(--color-slot-seven);
-    --color-heading: var(--color-slot-seven);
     --color-link-base: var(--color-slot-seven);
     --color-link-hover: var(--color-slot-seven);
   }
@@ -143,7 +128,6 @@ $component-content-spotlight-port-themes: map.deep-get(
   &[data-component-theme='five'] {
     --color-background: var(--color-slot-two);
     --color-text: var(--color-slot-eight);
-    --color-heading: var(--color-slot-eight);
     --color-link-base: var(--color-slot-eight);
     --color-link-hover: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
@@ -152,91 +136,20 @@ $component-content-spotlight-port-themes: map.deep-get(
     [data-global-theme='four'] & {
       --color-background: var(--component-themes-five-background);
       --color-text: var(--component-themes-five-text);
-      --color-heading: var(--component-themes-five-heading);
       --color-link-base: var(--color-slot-one);
       --color-link-hover: var(--color-slot-one);
       --color-link-visited-base: var(--color-purple-visited);
       --color-link-visited-hover: var(--color-purple-visited-hover);
     }
   }
-
-  // spotlights inside of the banner should behave slightly different in that
-  // first-and-last and first should have zero top margin to allow it to bump up to
-  // the header.
-  .layout--banner & {
-    &[data-component-theme='default'],
-    &[data-spotlights-position='first-and-last'] {
-      @include tokens.spacing-page-section;
-
-      margin-top: 0;
-      margin-bottom: var(--size-spacing-10);
-    }
-
-    // We're using JavaScript to evaluate the last and first spotlights in a group of spotlights
-    &[data-spotlights-position='first'] {
-      margin-top: 0;
-    }
-
-    &[data-spotlights-position='last'] {
-      margin-bottom: var(--size-spacing-10);
-    }
-  }
 }
 
-.content-spotlight-portrait__inner {
+.taxonomy-display__inner {
   display: flex;
   flex-flow: column nowrap;
-  gap: var(--size-spacing-6);
-
-  @media (min-width: tokens.$break-mobile) {
-    flex-flow: row nowrap;
-    gap: var(--size-spacing-8);
-    align-items: center;
-
-    // When offset, increase the
-    [data-image-style='offset'] & {
-      --component-width: calc(
-        var(--size-component-layout-width-site) + var(--size-spacing-10)
-      );
-    }
-
-    // Vertical alignment options
-    [data-content-vertical-align='top'] & {
-      align-items: flex-start;
-    }
-
-    [data-content-vertical-align='middle'] & {
-      align-items: center;
-    }
-
-    [data-content-vertical-align='bottom'] & {
-      align-items: flex-end;
-    }
-  }
 }
 
-.content-spotlight-portrait__image {
-  @media (max-width: tokens.$break-mobile-max) {
-    max-width: 50%;
-  }
-
-  @media (min-width: tokens.$break-mobile) {
-    margin-top: var(--size-spacing-2);
-    width: 100%;
-    max-width: 20%;
-
-    // Layout Options
-    [data-image-position='image-left'] & {
-      order: 1;
-    }
-
-    [data-image-position='image-right'] & {
-      order: 2;
-    }
-  }
-}
-
-.content-spotlight-portrait__content {
+.taxonomy-display__content {
   @media (max-width: tokens.$break-mobile-max) {
     order: 1;
   }
@@ -244,24 +157,6 @@ $component-content-spotlight-port-themes: map.deep-get(
   @media (min-width: tokens.$break-mobile) {
     width: 100%;
     max-width: 80%;
-
-    // Layout Options
-    [data-image-position='image-left'] & {
-      order: 2;
-    }
-
-    [data-image-position='image-right'] & {
-      order: 1;
-    }
-
-    // if offset, balance out the image offset with a margin on content
-    [data-image-style='offset'][data-image-position='image-right'] & {
-      margin-inline-start: var(--size-spacing-8);
-    }
-
-    [data-image-style='offset'][data-image-position='image-left'] & {
-      margin-inline-end: var(--size-spacing-8);
-    }
   }
 
   > *:not(:last-child) {
@@ -269,37 +164,57 @@ $component-content-spotlight-port-themes: map.deep-get(
   }
 }
 
-.content-spotlight-portrait__overline {
-  @include tokens.h6-mallory-compact-book;
+.taxonomy-display__list {
+  @include atoms.list-reset;
 
-  color: var(--color-text);
-}
+  display: inline-flex;
+  flex-wrap: wrap;
+  column-gap: var(--size-spacing-8);
+  row-gap: var(--size-spacing-6);
 
-.content-spotlight-portrait__heading {
-  @include tokens.h3-yale-new;
-}
-
-.content-spotlight-portrait__subheading {
-  @include tokens.h5-mallory-compact-book;
-
-  color: var(--color-text);
-}
-
-.content-spotlight-portrait__text {
-  color: var(--color-text);
-
-  a {
-    @include atoms.link;
-  }
-
-  > *:last-child {
-    margin-bottom: 0;
+  @media (max-width: tokens.$break-mobile) {
+    column-gap: var(--size-spacing-6);
+    row-gap: var(--size-spacing-4);
   }
 }
 
-.content-spotlight-portrait__ctas {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
+.taxonomy-display__item {
+  display: inline-flex;
   gap: var(--size-spacing-5);
+  align-items: center;
+
+  .taxonomy-display__item & {
+    display: initial;
+
+    &:not(:last-child)::after {
+      content: ',';
+    }
+  }
+}
+
+.taxonomy-display__item__label {
+  text-transform: uppercase;
+  font-weight: var(--font-weights-yalenew-bold);
+  font-family: var(--font-families-mallory);
+  font-size: var(--font-size-14);
+}
+
+.taxonomy-display__item__list {
+  @include atoms.list-reset;
+
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--size-spacing-3);
+  padding-bottom: var(--size-spacing-3);
+}
+
+.taxonomy-display__link {
+  @include atoms.link;
+
+  font-size: var(--font-size-15);
+  font-weight: var(--font-weights-mallory-book);
+  color: var(--color-link-base);
 }
