@@ -3,9 +3,11 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import bannerTwig from './action/yds-action-banner.twig';
 import grandHeroTwig from './grand-hero/yds-grand-hero.twig';
 import imageBannerTwig from './image/yds-image-banner.twig';
+import videoBannerTwig from './video/yds-video-banner.twig';
 
 import bannerData from './banner.yml';
 import grandHeroData from './grand-hero.yml';
+import videoBannerData from '../../01-atoms/videos/video-embed/video-embed.yml';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 
@@ -175,4 +177,20 @@ ImageBanner.args = {
   size: 'tall',
   withVideo: false,
   imageCaption: 'Image Caption',
+};
+
+export const VideoBanner = ({ width }) =>
+  videoBannerTwig({
+    video_banner__content: videoBannerData.video_embed__content,
+    video_banner__width: width,
+  });
+VideoBanner.argTypes = {
+  width: {
+    name: 'Video Width',
+    type: 'select',
+    options: ['max', 'full'],
+  },
+};
+VideoBanner.args = {
+  width: 'max',
 };
