@@ -94,13 +94,21 @@
 
         {# audio embed volume control #}
         <div {{ bem('volume', [], audio_embed__base_class) }}>
-          <label class="visually-hidden" for="volume-control">{{ 'Volume'|t }}</label>
+          <button {{ bem('volume-control-option', [], audio_embed__base_class) }} aria-pressed="false">
+            <label class="visually-hidden" for="volume-control">{{ 'Volume'|t }}</label>
             {% include "@atoms/images/icons/_yds-icon.twig" with {
               icon__name: 'volume-high-solid',
               icon__decorative: true,
               icon__blockname: audio_embed__base_class,
               icon__modifiers: ['volume'],
             } %}
+            {% include "@atoms/images/icons/_yds-icon.twig" with {
+              icon__name: 'volume-xmark-solid',
+              icon__decorative: true,
+              icon__blockname: audio_embed__base_class,
+              icon__modifiers: ['volume-muted'],
+            } %}
+          </button>
           <input type="range" id="volume-control" min="0" max="1" step="0.01" value="0.5" />
         </div>
       </div>

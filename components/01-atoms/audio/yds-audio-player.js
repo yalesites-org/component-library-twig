@@ -13,6 +13,9 @@ Drupal.behaviors.audioPlayer = {
 
       const volumeElement = audioPlayer.querySelector('.audio-embed__volume');
       const volumeControl = audioPlayer.querySelector('#volume-control');
+      const volumeControlButton = audioPlayer.querySelector(
+        '.audio-embed__volume-control-option',
+      );
       const progressBar = audioPlayer.querySelector('#progress-bar');
       const currentTimeDisplay = audioPlayer.querySelector('#time-current');
       const totalTimeDisplay = audioPlayer.querySelector('#time-total');
@@ -29,6 +32,8 @@ Drupal.behaviors.audioPlayer = {
       const speedControlSpeedDouble = audioPlayer.querySelector(
         '.audio-embed__speed-control--double',
       );
+      const isIOS =
+        /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
       // Event listeners
       playButton.addEventListener('click', () => {
@@ -45,12 +50,13 @@ Drupal.behaviors.audioPlayer = {
       pauseButton.addEventListener('click', () => {
         audio.pause();
         audioPlayer.setAttribute('is-playing', false);
+
+        if (document.activeElement === pauseButton) {
+          playButton.focus();
+        }
       });
 
       // Check if the device is iOS
-      const isIOS =
-        /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
       if (isIOS) {
         volumeElement.style.display = 'none';
       } else {
@@ -58,6 +64,22 @@ Drupal.behaviors.audioPlayer = {
           audio.volume = volumeControl.value;
         });
       }
+
+      // Set initial volume based on aria-pressed attribute
+      const initialPressed =
+        volumeControlButton.getAttribute('aria-pressed') === 'true';
+      audio.volume = initialPressed ? 0 : 0.5;
+      volumeControl.value = initialPressed ? 0 : 0.5;
+
+      // Toggle volume control button - muted and unmuted
+      volumeControlButton.addEventListener('click', () => {
+        const isPressed =
+          volumeControlButton.getAttribute('aria-pressed') === 'true';
+        const newVolume = isPressed ? 0.5 : 0;
+        volumeControl.value = newVolume;
+        audio.volume = newVolume;
+        volumeControlButton.setAttribute('aria-pressed', !isPressed);
+      });
 
       // Set initial total play time from the audio file
       audio.addEventListener('loadedmetadata', () => {
