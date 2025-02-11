@@ -193,14 +193,14 @@
     // Slider track
     &::-webkit-slider-runnable-track {
       width: 100%;
-      height: var(--border-thickness-2);
+      height: var(--border-thickness-4);
       cursor: pointer;
       background: var(--color-gray-400);
     }
 
     &::-moz-range-track {
       width: 100%;
-      height: var(--border-thickness-2);
+      height: var(--border-thickness-4);
       cursor: pointer;
       background: var(--color-gray-400);
     }
