@@ -32,7 +32,12 @@ Drupal.behaviors.audioPlayer = {
       playButton.addEventListener('click', () => {
         audio.play();
         audioPlayer.setAttribute('is-playing', true);
-        pauseButton.focus();
+
+        // Check if the user is using keyboard navigation
+        // If play button is pressed using keyboard navigation, focus the pause button
+        if (document.activeElement === playButton) {
+          pauseButton.focus();
+        }
       });
 
       pauseButton.addEventListener('click', () => {
