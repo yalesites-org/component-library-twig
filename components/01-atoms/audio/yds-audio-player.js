@@ -45,9 +45,17 @@ Drupal.behaviors.audioPlayer = {
         audioPlayer.setAttribute('is-playing', false);
       });
 
-      volumeControl.addEventListener('input', () => {
-        audio.volume = volumeControl.value;
-      });
+      // Check if the device is iOS
+      const isIOS =
+        /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+      if (isIOS) {
+        volumeControl.display = 'none';
+      } else {
+        volumeControl.addEventListener('input', () => {
+          audio.volume = volumeControl.value;
+        });
+      }
 
       // Set initial total play time from the audio file
       audio.addEventListener('loadedmetadata', () => {
