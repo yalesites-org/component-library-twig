@@ -102,7 +102,6 @@
 
   input[type='range'] {
     appearance: none;
-    appearance: none;
     background: transparent;
     cursor: pointer;
     width: 100%;
@@ -136,7 +135,6 @@
 
     // Slider thumb
     &::-webkit-slider-thumb {
-      appearance: none;
       appearance: none;
       width: var(--size-spacing-4);
       height: var(--size-spacing-4);
@@ -241,7 +239,6 @@
 
     // Slider thumb
     &::-webkit-slider-thumb {
-      appearance: none;
       appearance: none;
       width: var(--size-spacing-4);
       height: var(--size-spacing-4);
