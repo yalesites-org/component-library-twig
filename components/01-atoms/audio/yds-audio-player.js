@@ -32,6 +32,7 @@ Drupal.behaviors.audioPlayer = {
       playButton.addEventListener('click', () => {
         audio.play();
         audioPlayer.setAttribute('is-playing', true);
+        pauseButton.focus();
       });
 
       pauseButton.addEventListener('click', () => {

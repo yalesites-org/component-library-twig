@@ -100,23 +100,42 @@
   align-items: center;
   width: 100%;
 
-  input {
+  input[type='range'] {
     appearance: none;
     background: transparent;
     cursor: pointer;
     width: 100%;
+    box-sizing: border-box;
 
     // Slider track
-    &::-webkit-slider-runnable-track,
+    &::-webkit-slider-runnable-track {
+      width: 100%;
+      height: var(--border-thickness-4);
+      cursor: pointer;
+      background: var(--color-gray-400);
+      position: relative;
+    }
+
     &::-moz-range-track {
       width: 100%;
       height: var(--border-thickness-4);
       cursor: pointer;
       background: var(--color-gray-400);
+      position: relative;
     }
 
     // Slider thumb
-    &::-webkit-slider-thumb,
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: var(--size-spacing-4);
+      height: var(--size-spacing-4);
+      background: var(--color-blue-medium);
+      cursor: pointer;
+      border-radius: 100%;
+      border-color: var(--color-blue-medium);
+      margin-top: calc(var(--size-spacing-2) / -1);
+    }
+
     &::-moz-range-thumb {
       appearance: none;
       width: var(--size-spacing-3);
@@ -165,14 +184,20 @@
   gap: var(--size-spacing-4);
   flex: 1 auto;
 
-  input {
+  input[type='range'] {
     appearance: none;
     background: transparent;
     cursor: pointer;
     max-width: var(--size-spacing-12);
 
     // Slider track
-    &::-webkit-slider-runnable-track,
+    &::-webkit-slider-runnable-track {
+      width: 100%;
+      height: var(--border-thickness-2);
+      cursor: pointer;
+      background: var(--color-gray-400);
+    }
+
     &::-moz-range-track {
       width: 100%;
       height: var(--border-thickness-2);
@@ -181,7 +206,17 @@
     }
 
     // Slider thumb
-    &::-webkit-slider-thumb,
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: var(--size-spacing-4);
+      height: var(--size-spacing-4);
+      background: var(--color-blue-medium);
+      cursor: pointer;
+      border-radius: 100%;
+      border-color: var(--color-blue-medium);
+      margin-top: calc(var(--size-spacing-2) / -1);
+    }
+
     &::-moz-range-thumb {
       appearance: none;
       width: var(--size-spacing-3);
