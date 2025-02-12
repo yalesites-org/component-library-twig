@@ -11,10 +11,11 @@ Drupal.behaviors.ReadTime = {
     const mainContentSplit = cleanedContent.split(' ').length;
 
     // Calculate the read time in minutes.
-    if (mainContentSplit > 0) {
+    if (mainContentSplit > wordsPerMinute) {
       const minutes = mainContentSplit / wordsPerMinute;
       readTime.textContent = Math.ceil(minutes).toString();
     } else {
+      // If the content is less than the average reading speed, display less than 1 minute.
       readTime.textContent = 'less than 1';
     }
   },
