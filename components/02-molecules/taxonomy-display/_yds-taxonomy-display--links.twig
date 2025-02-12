@@ -10,19 +10,27 @@
     list__base_class: 'item__list'
   } %}
     {% block list__content %}
-      {% for item in taxonomy_display__item__terms %}
-        {% embed "@atoms/lists/_yds-list-item.twig" with {
-          list__item__blockname: taxonomy_display__base_class,
+      {% if taxonomy_display__item__terms|length > 0 %}
+        {% for item in taxonomy_display__item__terms %}
+          {% embed "@atoms/lists/_yds-list-item.twig" with {
+            list__item__blockname: taxonomy_display__base_class,
+          } %}
+            {% block list__item__content %}
+              {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+                link__blockname: taxonomy_display__base_class,
+                link__content: item.taxonomy_display__link__content ?? item['#title'],
+                link__url: item.taxonomy_display__link__url ?? item['#url'].toString(),
+              } %}
+            {% endblock %}
+          {% endembed %}
+        {% endfor %}
+      {% else %}
+        {% include "@atoms/typography/text/yds-text.twig" with {
+          text__blockname: taxonomy_display__base_class,
+          text__content: 'None',
+          text__base_class: 'item__label',
         } %}
-          {% block list__item__content %}
-            {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-              link__blockname: taxonomy_display__base_class,
-              link__content: item.taxonomy_display__link__content ?? item['#title'],
-              link__url: item.taxonomy_display__link__url ?? item['#url'].toString(),
-            } %}
-          {% endblock %}
-        {% endembed %}
-      {% endfor %}
+      {% endif %}
     {% endblock %}
   {% endembed %}
 {% endset %}

@@ -197,6 +197,10 @@ $component-taxonomy-display-port-themes: map.deep-get(
   font-weight: var(--font-weights-yalenew-bold);
   font-family: var(--font-families-mallory);
   font-size: var(--font-size-14);
+
+  &::after {
+    content: ':';
+  }
 }
 
 .taxonomy-display__item__list {
@@ -209,6 +213,16 @@ $component-taxonomy-display-port-themes: map.deep-get(
   flex-wrap: wrap;
   gap: var(--size-spacing-3);
   padding-bottom: var(--size-spacing-3);
+
+  &:has(.taxonomy-display__item__label) {
+    padding-bottom: 0;
+  }
+
+  & .taxonomy-display__item__label {
+    &::after {
+      content: '';
+    }
+  }
 }
 
 .taxonomy-display__link {
