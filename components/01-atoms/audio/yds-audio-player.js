@@ -81,21 +81,32 @@ Drupal.behaviors.audioPlayer = {
         volumeControlButton.setAttribute('aria-pressed', !isPressed);
       });
 
+      // Function to get audio duration from localStorage or set it if not present
+      function getAudioDuration(audioElement) {
+        return new Promise((resolve) => {
+          const audioSrc = audioElement.currentSrc;
+          if (audioSrc) {
+            const fileId = btoa(audioSrc);
+            const { duration } = audio;
+
+            if (duration && duration !== Infinity) {
+              localStorage.setItem(`audioDuration_${fileId}`, duration);
+              resolve(duration);
+            } else {
+              const storedDuration = localStorage.getItem(
+                `audioDuration_${fileId}`,
+              );
+              resolve(storedDuration || 0);
+            }
+          } else {
+            resolve(0);
+          }
+        });
+      }
+
       // Set initial total play time from the audio file
       audio.addEventListener('loadedmetadata', () => {
-        const audioSrc = audio.currentSrc;
-
-        if (audioSrc) {
-          const fileId = btoa(audioSrc); // Use base64 encoding of audioSrc as unique ID
-
-          let { duration } = audio;
-
-          if (duration && duration !== Infinity) {
-            localStorage.setItem(`audioDuration_${fileId}`, duration);
-          } else {
-            duration = localStorage.getItem(`audioDuration_${fileId}`) || 0;
-          }
-
+        getAudioDuration(audio).then((duration) => {
           const totalMinutes = Math.floor(duration / 60);
           const totalSeconds = Math.floor(duration % 60);
           totalTimeDisplay.textContent = `${totalMinutes}:${
@@ -105,22 +116,17 @@ Drupal.behaviors.audioPlayer = {
           if (audio.currentTime === 0) {
             progressBar.value = 0;
           }
-        }
+        });
       });
 
       // Fetch duration from localStorage when the audio element is added to the DOM
-      const audioSrc = audio.currentSrc;
-      if (audioSrc) {
-        const fileId = btoa(audioSrc);
-        const storedDuration = localStorage.getItem(`audioDuration_${fileId}`);
-        if (storedDuration) {
-          const totalMinutes = Math.floor(storedDuration / 60);
-          const totalSeconds = Math.floor(storedDuration % 60);
-          totalTimeDisplay.textContent = `${totalMinutes}:${
-            totalSeconds < 10 ? '0' : ''
-          }${totalSeconds}`;
-        }
-      }
+      getAudioDuration(audio).then((duration) => {
+        const totalMinutes = Math.floor(duration / 60);
+        const totalSeconds = Math.floor(duration % 60);
+        totalTimeDisplay.textContent = `${totalMinutes}:${
+          totalSeconds < 10 ? '0' : ''
+        }${totalSeconds}`;
+      });
 
       progressBar.addEventListener('input', () => {
         const { value } = progressBar;
