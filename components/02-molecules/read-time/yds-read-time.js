@@ -2,19 +2,20 @@ Drupal.behaviors.ReadTime = {
   attach(context) {
     const mainContent = context.querySelector('#main-content');
     const readTime = context.querySelector('#read_time');
-    const wordsPerMinute = 150;
+    // Average reading speed in words per minute. This is reportedly on the low end of the average reading speed for adults in the US.
+    const wordsPerMinute = 200;
 
-    const mainContentSplit = mainContent.textContent.split(' ').length;
+    // Calculate the read time based on the number of words in the main content.
+    // Remove extra whitespace and count the number of words.
+    const cleanedContent = mainContent.textContent.replace(/\s+/g, ' ').trim();
+    const mainContentSplit = cleanedContent.split(' ').length;
 
-    if (mainContentSplit > 1) {
-      const mn = Math.floor(mainContentSplit / wordsPerMinute);
-      if (mn === 0) {
-        readTime.textContent = '1';
-      } else {
-        readTime.textContent = mn;
-      }
-    } else if (mainContentSplit === 1) {
-      readTime.textContent = '0';
+    // Calculate the read time in minutes.
+    if (mainContentSplit > 0) {
+      const minutes = mainContentSplit / wordsPerMinute;
+      readTime.textContent = Math.ceil(minutes).toString();
+    } else {
+      readTime.textContent = 'less than 1';
     }
   },
 };
