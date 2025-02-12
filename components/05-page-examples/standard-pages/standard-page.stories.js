@@ -28,9 +28,14 @@ import accordionData from '../../02-molecules/accordion/accordion.yml';
 import tabData from '../../02-molecules/tabs/tabs.yml';
 import mediaGridData from '../../03-organisms/galleries/media-grid/media-grid.yml';
 import contentSpotlightPortraitData from '../../02-molecules/content-spotlight-portrait/content-spotlight-portrait.yml';
+import secondaryNavItems from '../../03-organisms/menu/secondary-nav/secondary-nav.yml';
 
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
+import '../../03-organisms/menu/breadcrumbs/yds-breadcrumbs';
+import '../../03-organisms/menu/secondary-nav/yds-secondary-nav';
+import '../../02-molecules/menu/menu-in-this-section-toggle/yds-menu-in-this-section-toggle';
+import '../../03-organisms/site-in-this-section/yds-site-in-this-section';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
@@ -182,6 +187,7 @@ export const BasicShort = ({
     ...textWithImageData,
     ...referenceCardData,
     ...socialLinksData,
+    ...secondaryNavItems,
   });
 
 // Spotlight page

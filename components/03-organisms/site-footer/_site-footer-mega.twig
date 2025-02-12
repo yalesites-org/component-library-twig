@@ -29,10 +29,14 @@
   {# WYSIWYG #}
   <div {{ bem('content', [], site_footer__base_class) }}>
     {% block site_footer__content %}
-      {% include "@page-layouts/placeholder/yds-placeholder.twig" with {
-        placeholder: 'Content',
-        placeholder__type: 'element',
-      } %}
+      {% if site_footer__content_text %}
+        {{ site_footer__content_text }}
+      {% else %}
+        {% include "@page-layouts/placeholder/yds-placeholder.twig" with {
+          placeholder: 'Content',
+          placeholder__type: 'element',
+        } %}
+      {% endif %}
     {% endblock %}
   </div>
   {# Columns #}

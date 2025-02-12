@@ -1,6 +1,13 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
+@use '../../../00-tokens/functions/map';
 
+// get global themes
+$global-reference-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
+$component-reference-card-themes: map.deep-get(
+  tokens.$tokens,
+  'component-themes'
+);
 $break-card-collection-max: tokens.$break-m - 0.05;
 $break-card-collection-list-image-max: tokens.$break-s - 0.05;
 $break-single-card-collection-max: tokens.$break-xl - 0.05;
@@ -14,6 +21,32 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   display: flex;
   flex-flow: column-reverse;
   gap: var(--size-spacing-4);
+  position: relative;
+
+  // Global themes: set color slots for each theme
+  // This establishes `--color-slot-` variables name-spaced to the selector
+  // in which it is used. We can map component-level variables to global-level
+  // `--color-slot-` variables.
+  @each $globalTheme, $value in $global-reference-card-themes {
+    [data-global-theme='#{$globalTheme}'] & {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
+      --color-slot-three: var(
+        --global-themes-#{$globalTheme}-colors-slot-three
+      );
+      --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-slot-six: var(--global-themes-#{$globalTheme}-colors-slot-six);
+      --color-slot-seven: var(
+        --global-themes-#{$globalTheme}-colors-slot-seven
+      );
+      --color-slot-eight: var(
+        --global-themes-#{$globalTheme}-colors-slot-eight
+      );
+    }
+  }
+
+  --color-overlay-background: var(--color-slot-one);
 
   // from small to media, both grid and list render using a horizontal layout.
   [data-collection-type='grid'] &,
@@ -49,6 +82,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     padding-bottom: var(--size-spacing-6);
     border-bottom: var(--border-thickness-1) solid var(--color-divider);
     margin-bottom: var(--size-spacing-5);
+    gap: var(--size-spacing-1);
 
     &:hover {
       box-shadow: var(--drop-shadow-level-1-bottom-shadow-only);
@@ -93,7 +127,44 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   }
 }
 
+.reference-card__overlay {
+  background-color: var(--color-overlay-background);
+  color: var(--color-basic-white);
+  padding-left: var(--size-spacing-3);
+  margin-bottom: var(--size-spacing-3);
+  font-variant-caps: all-small-caps;
+  font-variant-numeric: oldstyle-nums;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: auto;
+  z-index: 2;
+
+  [data-component-has-image='false'] & {
+    position: relative;
+
+    @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
+      [data-collection-type='grid'][data-collection-featured='true'] &,
+      [data-collection-type='list'][data-collection-featured='true'] & {
+        position: absolute;
+      }
+    }
+  }
+
+  [data-collection-type='list'] [data-component-has-image='false'] & {
+    position: absolute;
+  }
+}
+
+.reference-card__content,
 .reference-card__image {
+  z-index: 0;
+}
+
+.reference-card__image {
+  position: relative;
+
   // List and grid
   @media (max-width: $break-card-collection-list-image-max) {
     [data-collection-type='list'] &,
@@ -256,6 +327,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   [data-collection-type='single'] & {
     color: var(--color-card-single-text);
+    z-index: 1;
   }
 
   // limit width of card content for a single card collection item without an image.
@@ -265,6 +337,10 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
         max-width: 70%;
       }
     }
+  }
+
+  [data-collection-type='list'] [data-component-has-overlay='true'] & {
+    padding-top: var(--size-spacing-7);
   }
 
   [data-collection-type='single'][data-collection-featured='false'] & {
@@ -302,6 +378,12 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     & {
     @media (min-width: tokens.$break-xl) {
       align-self: center;
+    }
+  }
+
+  @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
+    [data-component-has-overlay='true'] & {
+      padding-top: var(--size-spacing-7);
     }
   }
 

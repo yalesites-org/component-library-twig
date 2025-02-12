@@ -74,6 +74,10 @@ export default {
       name: 'With Image',
       type: 'boolean',
     },
+    overlayText: {
+      name: 'Overlay Text',
+      type: 'string',
+    },
   },
   args: {
     heading: referenceCardData.reference_card__heading,
@@ -89,6 +93,7 @@ export default {
     showTags: false,
     showThumbnail: true,
     showPronouns: false,
+    date: referenceCardData.reference_card__date,
   },
 };
 
@@ -101,13 +106,13 @@ export const PostCard = ({
   collectionType,
   featured,
   withImage,
-  categories,
   showCategories,
   tags,
   showEyebrow,
   showTags,
   showThumbnail,
   showPronouns,
+  overlayText,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -131,6 +136,10 @@ export const PostCard = ({
         show_tags: showTags ? 'true' : 'false',
         show_thumbnail: showThumbnail ? 'true' : 'false',
         show_pronouns: showPronouns ? 'true' : 'false',
+        reference_card__categories:
+          referenceCardData.reference_card__categories,
+        reference_card__tags: referenceCardData.reference_card__tags,
+        reference_card__overlay: overlayText,
       })}
     </ul>
   </div>
@@ -157,11 +166,9 @@ export const EventCard = ({
   secondaryCTAURL,
   multiDayEvent,
   headingPrefix,
-  categories,
   showCategories,
-  tags,
   showTags,
-  showThumbnail,
+  overlayText,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -182,11 +189,12 @@ export const EventCard = ({
         reference_card__cta_secondary__href: secondaryCTAURL,
         reference_card__cta_secondary__content: secondaryCTAContent,
         multi_day_event: multiDayEvent,
-        reference_card__categories: categories,
+        reference_card__categories:
+          referenceCardData.reference_card__categories,
         show_categories: showCategories,
-        reference_card__tags: tags,
+        reference_card__tags: referenceCardData.reference_card__tags,
         show_tags: showTags,
-        show_thumbnail: showThumbnail,
+        reference_card__overlay: overlayText,
       })}
     </ul>
   </div>
@@ -235,12 +243,10 @@ export const ProfileCard = ({
   collectionType,
   featured,
   withImage,
-  categories,
   showCategories,
   showPronouns,
-  tags,
   showTags,
-  showThumbnail,
+  overlayText,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-source='profile' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -260,14 +266,23 @@ export const ProfileCard = ({
         reference_card__snippet:
           referenceProfileCardData.reference_card__snippet,
         reference_card__url: referenceProfileCardData.reference_card__url,
-        reference_card__categories: categories,
+        reference_card__categories:
+          referenceProfileCardData.reference_card__categories,
         show_categories: showCategories,
         show_pronouns: showPronouns,
-        reference_card__tags: tags,
+        reference_card__tags: referenceProfileCardData.reference_card__tags,
         show_tags: showTags,
-        show_thumbnail: showThumbnail,
+        reference_card__overlay: overlayText,
       })}
     </ul>
   </div>
 </div>
 `;
+
+ProfileCard.argTypes = {
+  showPronouns: {
+    name: 'Show Pronouns',
+    type: 'boolean',
+    defaultValue: false,
+  },
+};
