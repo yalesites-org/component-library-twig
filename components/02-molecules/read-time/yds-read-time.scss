@@ -1,0 +1,8 @@
+@use '../../00-tokens/tokens';
+
+.read-time {
+  @include tokens.body-s;
+
+  color: var(--color-gray-600);
+  margin-top: var(--size-spacing-4);
+}
