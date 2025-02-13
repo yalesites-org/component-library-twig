@@ -219,6 +219,8 @@ $component-taxonomy-display-port-themes: map.deep-get(
   }
 
   & .taxonomy-display__item__label {
+    font-weight: inherit;
+
     &::after {
       content: '';
     }
