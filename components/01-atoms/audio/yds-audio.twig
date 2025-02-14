@@ -27,8 +27,7 @@
 
         {# audio embed element #}
         {% block audio_embed__source %}
-          <audio>
-            <source src="{{ audio_embed__url|raw }}" type="audio/mpeg">
+          <audio src="{{ audio_embed__url|raw }}">
             Your browser does not support the audio element.
           </audio> 
         {% endblock %}

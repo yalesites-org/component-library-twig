@@ -64,10 +64,16 @@ const ExportsLoader = {
   },
 };
 
+const AudioLoader = {
+  test: /\.(mp3|wav)$/i,
+  loader: 'file-loader',
+};
+
 module.exports = {
   CSSLoader,
   ImageLoader,
   ExportsLoader,
   JSLoader,
   SVGSpriteLoader,
+  AudioLoader,
 };

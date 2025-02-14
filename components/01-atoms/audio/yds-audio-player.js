@@ -10,8 +10,6 @@ Drupal.behaviors.audioPlayer = {
       const pauseButton = audioPlayer.querySelector(
         '.audio-embed__control--pause',
       );
-
-      const volumeElement = audioPlayer.querySelector('.audio-embed__volume');
       const volumeControl = audioPlayer.querySelector('#volume-control');
       const volumeControlButton = audioPlayer.querySelector(
         '.audio-embed__volume-control-option',
@@ -32,8 +30,20 @@ Drupal.behaviors.audioPlayer = {
       const speedControlSpeedDouble = audioPlayer.querySelector(
         '.audio-embed__speed-control--double',
       );
-      const isIOS =
-        /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+      // Create AudioContext and MediaElementSource
+      const audioContext = new (window.AudioContext ||
+        window.webkitAudioContext)();
+      const mediaElementSource = audioContext.createMediaElementSource(audio);
+
+      // Create gain node for volume control
+      const gainNode = audioContext.createGain();
+      mediaElementSource.connect(gainNode).connect(audioContext.destination);
+
+      // Ensure the audio context is resumed
+      if (audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
 
       // Event listeners
       playButton.addEventListener('click', () => {
@@ -57,18 +67,22 @@ Drupal.behaviors.audioPlayer = {
       });
 
       // Check if the device is iOS
-      if (isIOS) {
-        volumeElement.style.display = 'none';
-      } else {
-        volumeControl.addEventListener('input', () => {
-          audio.volume = volumeControl.value;
-        });
-      }
+      // if (isIOS) {
+      //   volumeElement.style.display = 'none';
+      // } else {
+      //   volumeControl.addEventListener('input', () => {
+      //     gainNode.gain.value = volumeControl.value;
+      //   });
+      // }
+
+      volumeControl.addEventListener('input', () => {
+        gainNode.gain.value = volumeControl.value;
+      });
 
       // Set initial volume based on aria-pressed attribute
       const initialPressed =
         volumeControlButton.getAttribute('aria-pressed') === 'true';
-      audio.volume = initialPressed ? 0 : 0.5;
+      gainNode.gain.value = initialPressed ? 0 : 0.5;
       volumeControl.value = initialPressed ? 0 : 0.5;
 
       // Toggle volume control button - muted and unmuted
@@ -77,7 +91,7 @@ Drupal.behaviors.audioPlayer = {
           volumeControlButton.getAttribute('aria-pressed') === 'true';
         const newVolume = isPressed ? 0.5 : 0;
         volumeControl.value = newVolume;
-        audio.volume = newVolume;
+        gainNode.gain.value = newVolume;
         volumeControlButton.setAttribute('aria-pressed', !isPressed);
       });
 

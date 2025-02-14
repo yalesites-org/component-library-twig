@@ -70,6 +70,7 @@ module.exports = {
       loaders.ImageLoader,
       loaders.ExportsLoader,
       loaders.JSLoader,
+      loaders.AudioLoader,
     ],
   },
   plugins: [
