@@ -8,7 +8,8 @@
   display: none;
 
   // only show read time if there is a js or yds-storybook-cl class on the html element
-  html:has(.js, .yds-storybook-cl) & {
+  html:has(.yds-storybook-cl) &,
+  html.js & {
     display: block;
   }
 }
