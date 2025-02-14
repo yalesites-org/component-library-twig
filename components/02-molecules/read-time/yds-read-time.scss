@@ -5,4 +5,9 @@
 
   color: var(--color-gray-600);
   margin-top: var(--size-spacing-4);
+  display: none;
+
+  html:has(.js, .yds-storybook-cl) & {
+    display: block;
+  }
 }

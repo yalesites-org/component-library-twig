@@ -25,6 +25,7 @@ import '../lib/link-treatment/link-treatment.scss';
 export const decorators = [
   (StoryFn, context) => {
     useEffect(() => Drupal.attachBehaviors(), [context]);
+    document.body.classList.add('yds-storybook-cl');
     return `<div data-global-theme="${context.globals.globalTheme}">${StoryFn(context)}</div>`;
   },
 ];
