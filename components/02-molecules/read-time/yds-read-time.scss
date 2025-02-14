@@ -7,6 +7,7 @@
   margin-top: var(--size-spacing-4);
   display: none;
 
+  // only show read time if there is a js or yds-storybook-cl class on the html element
   html:has(.js, .yds-storybook-cl) & {
     display: block;
   }
