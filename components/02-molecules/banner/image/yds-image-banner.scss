@@ -188,6 +188,16 @@ $break-image-banner: tokens.$break-m;
       min-height: 28rem;
     }
   }
+
+  figcaption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-basic-white);
+    padding: var(--size-spacing-2);
+    text-align: center;
+  }
 }
 
 .image-banner__video {
