@@ -40,6 +40,10 @@ export default {
       name: 'With image',
       type: 'boolean',
     },
+    withAnimation: {
+      name: 'With Animation',
+      type: 'boolean',
+    },
   },
   args: {
     globalTheme: 'one',
@@ -48,6 +52,7 @@ export default {
     verticalAlignment: 'top',
     gridCount: 'three',
     image: false,
+    withAnimation: false,
   },
 };
 
@@ -57,6 +62,7 @@ export const Tiles = ({
   verticalAlignment,
   columnCount,
   image,
+  withAnimation,
 }) => {
   return `
     <div class="wrap-for-global-theme">
@@ -66,6 +72,7 @@ export const Tiles = ({
         tiles__presentation_style: presentationStyle,
         tiles__grid_count: columnCount,
         tiles__with__image: image ? 'true' : 'false',
+        tiles__with__animation: withAnimation ? 'true' : 'false',
         ...tilesData,
         ...imageData.responsive_images['1x1'],
       })}
