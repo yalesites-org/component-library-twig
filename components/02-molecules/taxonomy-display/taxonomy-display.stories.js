@@ -22,14 +22,21 @@ export default {
       type: 'select',
       options: colorPairingsData,
     },
+    showTaxonomy: {
+      name: 'Show Taxonomy',
+      type: 'boolean',
+    },
   },
   args: {
     componentTheme: 'default',
+    showTaxonomy: true,
   },
 };
 
-export const TaxonomyDisplay = ({ componentTheme }) =>
+export const TaxonomyDisplay = ({ componentTheme, showTaxonomy }) =>
   taxonomyDisplayTwig({
     taxonomy_display__theme: componentTheme,
-    taxonomy_display__items: taxonomyDisplayData.taxonomy_display__items,
+    taxonomy_display__items: showTaxonomy
+      ? taxonomyDisplayData.taxonomy_display__items
+      : taxonomyDisplayData.taxonomy_display__empty_items,
   });

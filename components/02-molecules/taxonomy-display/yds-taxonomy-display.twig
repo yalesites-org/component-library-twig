@@ -34,13 +34,10 @@
   {% endblock %}
 {% endset %}
 
-{# Only show if there is more than 1 item. #}
-{% if taxonomy_display__items|length %}
-  <div {{ add_attributes(taxonomy_display__attributes) }}>
-    <div {{ bem('inner', [], taxonomy_display__base_class) }}>
-      <div {{ bem('content', [], taxonomy_display__base_class) }}>
-        {{ taxonomy_display }}
-      </div>
+<div {{ add_attributes(taxonomy_display__attributes) }}>
+  <div {{ bem('inner', [], taxonomy_display__base_class) }}>
+    <div {{ bem('content', [], taxonomy_display__base_class) }}>
+      {{ taxonomy_display }}
     </div>
   </div>
-{% endif %}
+</div>
