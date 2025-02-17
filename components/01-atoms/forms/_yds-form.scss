@@ -201,7 +201,7 @@
     }
   }
 
-  @media (min-width: tokens.$break-l) {
+  @media (min-width: calc(tokens.$break-2xl + tokens.$size-spacing-10)) {
     flex-wrap: nowrap;
 
     .chosen-container {
@@ -231,6 +231,40 @@
       .form-item {
         flex-basis: fit-content;
         min-width: 21.8%;
+      }
+    }
+  }
+
+  @media (min-width: tokens.$break-l) and (max-width: calc(tokens.$break-2xl + tokens.$size-spacing-10)) {
+    flex-wrap: nowrap;
+
+    .chosen-container {
+      min-width: 15rem; // Considering the maximum of 3 filters width.
+    }
+
+    .form-item {
+      max-width: 50%;
+    }
+
+    // If there are more than 4 children it should wrap.
+    &:has(> :nth-child(5)) {
+      flex-wrap: wrap;
+
+      .form-item {
+        flex-basis: fit-content;
+        min-width: 29.5%;
+      }
+
+      // Search field should take the full width.
+      .form-item.form-item-search {
+        min-width: 100%;
+      }
+    }
+
+    &:has(> :nth-child(6)) {
+      .form-item {
+        flex-basis: fit-content;
+        min-width: 32.5%;
       }
     }
   }
