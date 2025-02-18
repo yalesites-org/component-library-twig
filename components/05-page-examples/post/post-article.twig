@@ -10,9 +10,15 @@
         {title: page_title__heading, url: '#', is_active: true},
       ],
     } %}
-    {% include "@molecules/page-title/yds-page-title.twig" with {
+    {% embed "@molecules/page-title/yds-page-title.twig" with {
         page_title__width: 'content',
     }%}
+      {% block page_title__meta__extra %}
+        {% include "@molecules/read-time/yds-read-time.twig" with {
+          read_time__label: 'Estimated read time',
+        }%}
+      {% endblock %}
+    {% endembed %}
     {% include "@molecules/image/yds-content-image.twig" with {
       content_image__width: 'content',
       content_image__alignment: 'center',
