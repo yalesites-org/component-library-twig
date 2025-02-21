@@ -44,11 +44,6 @@ export default {
       name: 'Show Categories/Affiliations',
       type: 'boolean',
     },
-    categories: {
-      name: 'Categories',
-      type: 'array',
-      if: { arg: 'showCategories' },
-    },
     showEyebrow: {
       name: 'Show Eyebrow',
       type: 'boolean',
@@ -64,11 +59,6 @@ export default {
     showThumbnail: {
       name: 'Show Thumbnail',
       type: 'boolean',
-    },
-    tags: {
-      name: 'Tags',
-      type: 'array',
-      if: { arg: 'showTags' },
     },
     withImage: {
       name: 'With Image',
@@ -107,7 +97,6 @@ export const PostCard = ({
   featured,
   withImage,
   showCategories,
-  tags,
   showEyebrow,
   showTags,
   showThumbnail,
@@ -129,9 +118,7 @@ export const PostCard = ({
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referenceCardData.reference_card__url,
-        reference_card__categories: categories,
         show_categories: showCategories ? 'true' : 'false',
-        reference_card__tags: tags,
         show_eyebrow: showEyebrow ? 'true' : 'false',
         show_tags: showTags ? 'true' : 'false',
         show_thumbnail: showThumbnail ? 'true' : 'false',
