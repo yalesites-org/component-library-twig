@@ -3,9 +3,11 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import bannerTwig from './action/yds-action-banner.twig';
 import grandHeroTwig from './grand-hero/yds-grand-hero.twig';
 import imageBannerTwig from './image/yds-image-banner.twig';
+import videoBannerTwig from './video/yds-video-banner.twig';
 
 import bannerData from './banner.yml';
 import grandHeroData from './grand-hero.yml';
+import videoBannerData from '../../01-atoms/videos/video-embed/video-embed.yml';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 
@@ -47,13 +49,13 @@ export default {
     snippet: bannerData.banner__snippet,
     linkContent: bannerData.banner__link__content,
     linkContentTwo: bannerData.banner__link__content_two,
+    bgColor: 'one',
   },
   argTypes: {
     bgColor: {
       name: 'Component Theme (dial)',
       type: 'select',
       options: colorPairingsData,
-      defaultValue: 'one',
     },
   },
 };
@@ -85,14 +87,17 @@ ActionBanner.argTypes = {
     name: 'Link Style',
     type: 'select',
     options: ['cta', 'text-link'],
-    defaultValue: 'cta',
   },
   contentLayout: {
     name: 'Content Layout',
     type: 'select',
     options: ['bottom', 'left', 'right'],
-    defaultValue: 'bottom',
   },
+};
+
+ActionBanner.args = {
+  linkStyle: 'cta',
+  contentLayout: 'bottom',
 };
 
 export const GrandHeroBanner = ({
@@ -124,27 +129,32 @@ GrandHeroBanner.argTypes = {
     name: 'Content Overlay',
     type: 'select',
     options: ['contained', 'full'],
-    defaultValue: 'full',
   },
   size: {
     name: 'Content Size',
     type: 'select',
     options: ['reduced', 'full'],
-    defaultValue: 'full',
   },
   withVideo: {
     name: 'With Video',
     type: 'boolean',
-    defaultValue: false,
   },
 };
-export const ImageBanner = ({ bgColor, size, withVideo }) =>
+
+GrandHeroBanner.args = {
+  overlayVariation: 'full',
+  size: 'full',
+  withVideo: false,
+};
+
+export const ImageBanner = ({ bgColor, size, withVideo, imageCaption }) =>
   imageBannerTwig({
     ...imageData.responsive_images['16x9'],
     image_banner__content__background: bgColor,
     image_banner__overlay_variation: 'full',
     image_banner__size: size,
     image_banner__video: withVideo ? 'true' : 'false',
+    image_banner__caption: imageCaption,
   });
 ImageBanner.argTypes = {
   size: {
@@ -156,6 +166,31 @@ ImageBanner.argTypes = {
   withVideo: {
     name: 'With Video',
     type: 'boolean',
-    defaultValue: false,
   },
+  imageCaption: {
+    name: 'Image Caption',
+    type: 'string',
+  },
+};
+
+ImageBanner.args = {
+  size: 'tall',
+  withVideo: false,
+  imageCaption: 'Image Caption',
+};
+
+export const VideoBanner = ({ width }) =>
+  videoBannerTwig({
+    video_banner__content: videoBannerData.video_embed__content,
+    video_banner__width: width,
+  });
+VideoBanner.argTypes = {
+  width: {
+    name: 'Video Width',
+    type: 'select',
+    options: ['max', 'full'],
+  },
+};
+VideoBanner.args = {
+  width: 'max',
 };

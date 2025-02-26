@@ -12,6 +12,11 @@
   }
 }
 
+.page-title__social-links {
+  display: flex;
+  margin-top: var(--size-spacing-5);
+}
+
 .page-title__prefix {
   @include tokens.h2-mallory-compact-book;
 
