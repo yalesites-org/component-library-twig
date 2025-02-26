@@ -43,12 +43,13 @@ export const globalTypes = {
         { value: 'two', title: 'New Haven Green' },
         { value: 'three', title: 'Shoreline Summer' },
         { value: 'four', title: 'Onha' },
+        { value: 'five', title: 'It\'s Your Yale'},
       ],
       showName: true,
       title: 'Site: Global Theme (lever)',
     },
-  }
-}
+  },
+};
 
 export const tags = ['autodocs', 'autodocs'];
 export const parameters = {

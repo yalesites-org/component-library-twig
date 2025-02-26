@@ -10,6 +10,7 @@
 #}
 
 {% set page_title__base_class = 'page-title' %}
+{% set page_title__show_social_links = page_title__show_social_links|default('false') %}
 
 {% set page_title__attributes = {
   'data-component-width': page_title__width|default('site'),
@@ -47,6 +48,13 @@
         {% endif %}
       {% endblock %}
       {% block page_title__meta__extra %}{% endblock %}
+      {% if page_title__show_social_links == 'true' %}
+        <div {{ bem('social-links', [], page_title__base_class) }}>
+          {% block page_title__social_links %}
+            {% include "@molecules/social-links/yds-social-links.twig" %}
+          {% endblock %}
+        </div>
+      {% endif %}
     </div>
   </div>
 {% endif %}

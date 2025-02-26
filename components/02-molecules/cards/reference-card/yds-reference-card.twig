@@ -34,6 +34,13 @@
         } %}
       {% endblock %}
     {% endif %}
+    {% if show_eyebrow and reference_card__eyebrow %}
+      {% include "@atoms/typography/text/yds-text.twig" with {
+        text__base_class: 'eyebrow',
+        text__blockname: reference_card__base_class,
+        text__content: reference_card__eyebrow,
+    }%}
+    {% endif %}
     {% if reference_card__overlay %}
       {% set heading__attributes = {
         'class': bem('heading', [], reference_card__base_class),
@@ -53,7 +60,7 @@
       {% include "@atoms/typography/text/yds-text.twig" with {
         text__blockname: reference_card__base_class,
         text__base_class: 'pronouns',
-        text__content: reference_card__heading_extra,
+        text__content: reference_card__pronouns,
       } %}
     {% endif %}
     {% if reference_card__subheading %}

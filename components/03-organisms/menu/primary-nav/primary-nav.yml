@@ -12,6 +12,7 @@ items:
         url: '#'
       - title: 'Partners on the Quad'
         url: '#'
+        is_cas: true
       - title: 'Inclusivity'
         url: '#'
         below:
