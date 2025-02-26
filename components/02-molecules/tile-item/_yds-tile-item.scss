@@ -33,6 +33,7 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       --color-link-hover: var(--color-tile-item-content);
       --color-link-visited-base: var(--color-link-visited-light);
       --color-link-visited-hover: var(--color-link-visited-light-hover);
+      --color-tile-animation-border: var(--color-slot-three);
 
       background-color: var(--color-tile-item-theme);
       color: var(--color-tile-item-content);
@@ -72,11 +73,25 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &[data-component-theme='one'] {
     --color-tile-item-theme: var(--color-slot-one);
     --color-tile-item-content: var(--color-slot-eight);
+    --color-tile-animation-border: var(--color-slot-two);
+
+    [data-global-theme='one'] & {
+      --color-tile-animation-border: var(--color-slot-three);
+    }
+
+    [data-global-theme='three'] & {
+      --color-tile-animation-border: var(--color-slot-three);
+    }
+
+    [data-global-theme='four'] & {
+      --color-tile-animation-border: var(--color-slot-three);
+    }
   }
 
   &[data-component-theme='two'] {
     --color-tile-item-theme: var(--color-slot-two);
     --color-tile-item-content: var(--color-slot-eight);
+    --color-tile-animation-border: var(--color-slot-three);
 
     // For accessibility reason set lighter visited links color.
     [data-global-theme='four'] & {
@@ -90,6 +105,11 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-tile-item-content: var(--color-slot-seven);
     --color-link-visited-base: var(--color-link-visited);
     --color-link-visited-hover: var(--color-link-visited-hover);
+    --color-tile-animation-border: var(--color-slot-two);
+
+    [data-global-theme='three'] & {
+      --color-tile-animation-border: var(--color-slot-one);
+    }
   }
 
   &[data-component-theme='four'] {
@@ -97,11 +117,13 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-tile-item-content: var(--color-slot-seven);
     --color-link-visited-base: var(--color-link-visited);
     --color-link-visited-hover: var(--color-link-visited-hover);
+    --color-tile-animation-border: var(--color-slot-five);
   }
 
   &[data-component-theme='five'] {
     --color-tile-item-theme: var(--color-slot-five);
     --color-tile-item-content: var(--color-slot-eight);
+    --color-tile-animation-border: var(--color-slot-three);
   }
 
   &__inner {
@@ -127,6 +149,32 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     [data-component-tile-style='text-only'][data-component-vertical-alignment='bottom']
       & {
       justify-content: flex-end;
+    }
+  }
+
+  &[data-component-animation='true'] {
+    &::before {
+      @include tokens.animate(
+        $property: 'width',
+        $duration: var(--animation-speed-default)
+      );
+
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--border-thickness-6);
+      width: 0;
+      background-color: var(--color-tile-animation-border);
+      z-index: 1;
+    }
+
+    &:hover {
+      &::before {
+        width: 100%;
+      }
     }
   }
 }

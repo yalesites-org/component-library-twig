@@ -32,6 +32,10 @@ figure {
       color: var(--color-gray-800);
     }
   }
+
+  [data-component-layout] & {
+    color: var(--color-layout-content);
+  }
 }
 
 @mixin clickable-component-image {

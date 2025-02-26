@@ -8,7 +8,6 @@
   @media (max-width: tokens.$break-mobile-max) {
     @include tokens.body-s;
 
-    display: flex;
     flex-direction: column;
   }
 
