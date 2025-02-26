@@ -17,7 +17,6 @@
 {% set reference_card__base_class = 'reference-card' %}
 {% set reference_card__image = reference_card__image|default('true') %}
 {% set reference_card__image_aria = reference_card__image_aria|default(reference_card__heading) %}
-{% set reference_card__heading = reference_card__heading.0['#context']['value']|default(reference_card__heading|default('')) %}
 
 {# If stats__item__attributes is not defined, set it to an empty object by default #}
 {% set reference_card__attributes = {
@@ -38,7 +37,7 @@
     {% if reference_card__overlay %}
       {% set heading__attributes = {
         'class': bem('heading', [], reference_card__base_class),
-        'aria-label': reference_card__overlay ~ ': ' ~ reference_card__heading,
+        'aria-label': reference_card__overlay ~ ': ' ~ reference_card__heading.0['#context']['value']|default(reference_card__heading|default('')),
       } %}
     {% endif %}
     {% include "@atoms/typography/headings/yds-heading.twig" with {
