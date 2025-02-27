@@ -6,11 +6,14 @@ import textCopyButton from './text-copy-button/yds-text-copy-button.twig';
 
 import './text-link/yds-text-link';
 import './text-copy-button/yds-text-copy-button';
+import './cta/yds-cta';
 
 import themeExamplesTwig from './cta/_yds-cta-examples.twig';
 
 const componentThemes = { themes: tokens['button-cta-themes'] };
 const componentThemeOptions = Object.keys(tokens['button-cta-themes']);
+
+const askYaleCtaText = 'askYale ChatBot';
 
 /**
  * Storybook Definition.
@@ -51,6 +54,13 @@ export const Cta = ({ componentTheme }) => `
       cta__component_theme: componentTheme,
       cta__control_type: 'dropdown',
     })}
+    ${ctaTwig({
+      cta__content: askYaleCtaText,
+      cta__href: '#launch-chat',
+      cta__radius: 'pill',
+      cta__component_theme: componentTheme,
+      cta__control_type: 'chat-app',
+    })}
   </div>
   <h2>Outline</h2>
   <div class="cta-group">
@@ -77,9 +87,18 @@ export const Cta = ({ componentTheme }) => `
     ${ctaTwig({
       cta__content: ctaText,
       cta__href: '#',
-      cta__radius: 'outline',
+      cta__radius: 'pill',
+      cta__style: 'outline',
       cta__component_theme: componentTheme,
       cta__control_type: 'dropdown',
+    })}
+    ${ctaTwig({
+      cta__content: askYaleCtaText,
+      cta__href: '#launch-chat',
+      cta__radius: 'pill',
+      cta__style: 'outline',
+      cta__component_theme: componentTheme,
+      cta__control_type: 'chat-app',
     })}
   </div>
   <h2>Outline Weights</h2>
@@ -234,6 +253,13 @@ export const CtaExamples = ({ componentTheme }) =>
         cta__component_theme: componentTheme,
         cta__control_type: 'dropdown',
       })}
+      ${ctaTwig({
+        cta__content: askYaleCtaText,
+        cta__href: '#launch-chat',
+        cta__radius: 'pill',
+        cta__component_theme: componentTheme,
+        cta__control_type: 'chat-app',
+      })}
     </div>
     <h2>Outline</h2>
     <div class="cta-group">
@@ -260,9 +286,18 @@ export const CtaExamples = ({ componentTheme }) =>
       ${ctaTwig({
         cta__content: ctaText,
         cta__href: '#',
-        cta__radius: 'outline',
+        cta__radius: 'pill',
+        cta__style: 'outline',
         cta__component_theme: componentTheme,
         cta__control_type: 'dropdown',
+      })}
+      ${ctaTwig({
+        cta__content: askYaleCtaText,
+        cta__href: '#launch-chat',
+        cta__radius: 'pill',
+        cta__style: 'outline',
+        cta__component_theme: componentTheme,
+        cta__control_type: 'chat-app',
       })}
     </div>
     <h2>Outline Weights</h2>
