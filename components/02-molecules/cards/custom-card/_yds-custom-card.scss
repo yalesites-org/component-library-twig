@@ -63,7 +63,7 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 
   @media (min-width: tokens.$break-m) {
-    padding: var(--size-spacing-5) var(--size-spacing-6);
+    padding: var(--size-spacing-6) var(--size-spacing-6);
 
     [data-with-image='true'] & {
       border-top: 0;
@@ -83,6 +83,11 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
 .custom-card__snippet {
   @include tokens.body-default-condensed;
+
+  /* The content is actually within a paragraph tag inside of snippet */
+  & p {
+    margin-top: var(--size-spacing-3);
+  }
 
   > *:last-child {
     margin-bottom: 0;
