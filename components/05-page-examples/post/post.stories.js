@@ -15,6 +15,7 @@ import referenceCardData from '../../02-molecules/cards/reference-card/examples/
 
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
+import '../../02-molecules/read-time/yds-read-time';
 
 // Utility for converting argTypes to args
 import argTypesToArgs from '../../utility';

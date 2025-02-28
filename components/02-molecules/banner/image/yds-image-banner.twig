@@ -43,7 +43,10 @@
   {% else %}
     <div {{ bem('image', [], image_banner__base_class) }}>
       {% block image_banner__image %}
-        {% include "@atoms/images/image/_responsive-image.twig" %}
+        {% embed "@atoms/images/image/yds-image.twig" with {
+          figure__caption: image_banner__caption,
+        } %}
+        {% endembed %}
       {% endblock %}
     </div>
   {% endif %}
