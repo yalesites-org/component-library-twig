@@ -215,6 +215,11 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     }
   }
 
+  &[aria-hidden='true'] {
+    user-select: none;
+    pointer-events: none;
+  }
+
   &:hover {
     color: var(--color-link-base);
   }
