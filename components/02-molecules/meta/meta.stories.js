@@ -88,6 +88,7 @@ export const EventLocalist = ({
   ctaText,
   allDay,
   withImage,
+  withCalendar,
 }) =>
   eventLocalistMetaTwig({
     ...imageData.responsive_images['3x2'],
@@ -102,11 +103,17 @@ export const EventLocalist = ({
     cost_button_text: ctaText,
     event_meta__cta_secondary__content: 'Add to calendar',
     event_meta__cta_secondary__href: '#',
+    event_meta__with_calendar: !!withCalendar,
     event_meta__image: withImage ? 'true' : 'false',
     event_meta__all_day: allDay,
     ...eventLocalistData,
   });
 EventLocalist.argTypes = {
+  withCalendar: {
+    name: 'With Add to Calendar button',
+    type: 'boolean',
+    defaultValue: true,
+  },
   ...eventLocalistArgTypes,
 };
 
