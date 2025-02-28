@@ -47,6 +47,10 @@ export default {
       name: 'With image',
       type: 'boolean',
     },
+    withAnimation: {
+      name: 'With Animation',
+      type: 'boolean',
+    },
   },
   args: {
     number: tileItemData.tile__item__number,
@@ -57,6 +61,7 @@ export default {
     verticalAlignment: 'top',
     themeColor: 'one',
     image: true,
+    withAnimation: false,
   },
 };
 
@@ -69,6 +74,7 @@ export const TileItem = ({
   alignment,
   verticalAlignment,
   image,
+  withAnimation,
 }) => `
   <div class="tiles" data-component-grid-count='three' data-component-width="site">
     <div class='tiles__inner'>
@@ -82,12 +88,14 @@ export const TileItem = ({
           tile__item__vertical_alignment: 'top',
           tile__item__bg_image: 'true',
           ...imageData.responsive_images['1x1'],
+          tile__item__animation: withAnimation ? 'true' : 'false',
         })}
         ${tileItemTwig({
           tile__item__heading: tileItemData.tile__item__heading,
           tile__item__presentation_style: 'icon',
           tile__item__alignment: 'right',
           tile__item__bg_image: 'false',
+          tile__item__animation: withAnimation ? 'true' : 'false',
         })}
         ${tileItemTwig({
           tile__item__heading: tileItemData.tile__item__heading,
@@ -98,6 +106,7 @@ export const TileItem = ({
           tile__item__alignment: 'left',
           tile__item__bg_image: 'true',
           ...imageData.responsive_images['1x1'],
+          tile__item__animation: withAnimation ? 'true' : 'false',
         })}
       </ul>
     </div>
@@ -119,6 +128,7 @@ export const TileItem = ({
             tile__item__theme: themeColor,
             tile__item__bg_image: image ? 'true' : 'false',
             ...imageData.responsive_images['1x1'],
+            tile__item__animation: withAnimation ? 'true' : 'false',
           })}
         </ul>
       </div>
