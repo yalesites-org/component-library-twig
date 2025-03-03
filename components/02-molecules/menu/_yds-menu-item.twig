@@ -1,7 +1,7 @@
 {#
  # In this file, we're checking `if directory` in order to determine if the
  # active environment is a Drupal site. We need to do this because Drupal
- # returns a complex object, and in order to get the path, we use `.toStrong`,
+ # returns a complex object, and in order to get the path, we use `.toString`,
  # which, unfortunately, breaks environments like Storybook.
  #}
 
@@ -17,6 +17,10 @@
 {% endif %}
 {% if item.below %}
   {% set item__modifiers = item__modifiers|merge(['with-sub']) %}
+{% endif %}
+
+{% if item.is_cas %}
+  {% set item__modifiers = item__modifiers|merge(['cas-content']) %}
 {% endif %}
 
 {# Cta Modifiers #}
@@ -62,6 +66,11 @@
     {% set link__type = 'with-chevron' %}
     {% set link__url_type = 'chevron' %}
   {% endif %}
+
+{% if item.is_cas %}
+    {% set link__type = 'cas-content' %}
+    {% set link__url_type = 'cas' %}
+{% endif %}
 
   {% if menu__variation == 'basic'
      and menu__level == 1
