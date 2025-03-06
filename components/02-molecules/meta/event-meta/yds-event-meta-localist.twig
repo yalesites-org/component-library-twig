@@ -32,7 +32,8 @@
 {% set event_meta__with_calendar = event_meta__with_calendar ?? TRUE %}
 
 {# Check if event has passed - if passed in localist, the event_dates array will be empty #}
-{% set event_has_passed = event_dates is empty %}
+{# But in the event the featured date has already passed, we should already know about it as well #}
+{% set event_has_passed = event_dates is empty or (event_featured_date and event_featured_date.is_passed_event) %}
 
 {# Set the event status based on event_has_passed variable #}
 {% set event_status = event_has_passed ? 'passed' : 'current' %}
