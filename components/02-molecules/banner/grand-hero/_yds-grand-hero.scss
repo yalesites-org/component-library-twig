@@ -324,3 +324,7 @@ $break-grand-hero-banner: tokens.$break-m;
   flex-flow: row wrap;
   gap: var(--size-spacing-7);
 }
+
+.grand-hero-banner__overlay-image img {
+  width: auto;
+}
