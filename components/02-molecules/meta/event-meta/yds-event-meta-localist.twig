@@ -184,6 +184,9 @@
             <ul {{ bem('multiple-dates', [], event_meta__base_class) }} aria-expanded="false">
               {% for event_date in event_dates %}
                 <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
+                  {% if event_date.is_passed_event %}
+                    Past Event: 
+                  {% endif %}
                   {% if event_date.formatted_start_date == event_date.formatted_end_date %}
                     {{ event_date.original_start|date('D M j, Y') }}
                     {{ event_date.original_start|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}{{ em_dash }}{{- event_date.original_end|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}
