@@ -33,7 +33,7 @@
 
 {# Check if event has passed - if passed in localist, the event_dates array will be empty #}
 {# But in the event the featured date has already passed, we should already know about it as well #}
-{% set event_has_passed = event_dates is empty or (event_featured_date and event_featured_date.is_passed_event) %}
+{% set event_has_passed = event_dates is empty or (event_featured_date and event_featured_date.is_past_event) %}
 
 {# Set the event status based on event_has_passed variable #}
 {% set event_status = event_has_passed ? 'passed' : 'current' %}
@@ -185,7 +185,7 @@
             <ul {{ bem('multiple-dates', [], event_meta__base_class) }} aria-expanded="false">
               {% for event_date in event_dates %}
                 <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
-                  {% if event_date.is_passed_event %}
+                  {% if event_date.is_past_event %}
                     Past Event: 
                   {% endif %}
                   {% if event_date.formatted_start_date == event_date.formatted_end_date %}
