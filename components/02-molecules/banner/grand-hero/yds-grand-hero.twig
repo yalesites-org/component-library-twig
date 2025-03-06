@@ -63,7 +63,7 @@
                 {% set overlay_url = overlay_media.field_media_image.entity.uri.value|file_url %}
                 {% set overlay_alt = overlay_media.field_media_image.alt|default('Overlay Image') %}
 
-                <div {{ bem('overlay-image', [], grand_hero__base_class) }} style="max-width: 100%; height: auto;">
+                <div {{ bem('overlay-image', [], grand_hero__base_class) }}>
                   {% include "@atoms/images/image/_responsive-image.twig" with {
                     image__src: overlay_url,
                     image__alt: overlay_alt,
