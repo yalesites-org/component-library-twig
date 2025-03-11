@@ -20,6 +20,7 @@
   'data-component-vertical-alignment': tiles__vertical_alignment|default('left'),
   'data-component-grid-count': tiles__grid_count|default('three'),
   'data-component-tiles-have-images': tiles__with__image|default('false'),
+  'data-component-tiles-have-animation': tiles__with__animation|default('false'),
   'class': bem(tiles__base_class),
 } %}
 
@@ -40,6 +41,7 @@
               tile__item__presentation_style: tiles__presentation_style,
               tile__item__theme: tile.tile__item__theme,
               tile__item__bg_image: tiles__with__image,
+              tile__item__animation: tiles__with__animation,
               }
             %}
           {% endfor %}

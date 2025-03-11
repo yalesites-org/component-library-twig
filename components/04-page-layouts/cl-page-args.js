@@ -99,6 +99,11 @@ export const eventLocalistArgTypes = {
     type: 'string',
     defaultValue: 'Davis Team Project Wins Award for Research',
   },
+  withCalendar: {
+    name: 'With Add to Calendar button',
+    type: 'boolean',
+    defaultValue: true,
+  },
 };
 
 export default argTypes;

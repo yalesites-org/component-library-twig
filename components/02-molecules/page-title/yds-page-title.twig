@@ -47,6 +47,7 @@
           } %}
         {% endif %}
       {% endblock %}
+      {% block page_title__meta__extra %}{% endblock %}
       {% if page_title__show_social_links == 'true' %}
         <div {{ bem('social-links', [], page_title__base_class) }}>
           {% block page_title__social_links %}

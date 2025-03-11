@@ -456,6 +456,10 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   font-variant-numeric: oldstyle-nums;
   text-transform: lowercase;
   letter-spacing: 0.5px;
+
+  [data-collection-type='single'] & {
+    color: var(--color-card-single-text);
+  }
 }
 
 .reference-card__prefix {
