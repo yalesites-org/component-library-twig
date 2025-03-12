@@ -327,7 +327,7 @@ $secondary-menu-sub-max-width: 19rem;
   }
 
   .secondary-nav__menu--level-1 {
-    [data-menu-variation='basic'] :not(:last-child) > & {
+    [data-menu-variation='basic'] & {
       // prettier-ignore
       border-top: var(--border-thickness-1) solid var(--color-navigation-border);
       border-left: var(--border-thickness-1) solid
@@ -340,9 +340,6 @@ $secondary-menu-sub-max-width: 19rem;
 
     [data-menu-variation='basic'] :last-child > & {
       right: 0;
-
-      // prettier-ignore
-      border-right: var(--border-thickness-1) solid var(--color-navigation-border);
     }
   }
 }
