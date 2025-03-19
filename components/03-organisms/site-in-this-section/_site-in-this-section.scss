@@ -199,9 +199,12 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       opacity: 1;
     }
 
-    [data-scroll-indicator='none'],
-    [data-scroll-indicator='right'] {
+    [data-scroll-indicator='none'] &,
+    [data-scroll-indicator='right'] & {
       @include tokens.animate-hidden;
+
+      pointer-events: none;
+      user-select: none;
     }
   }
 
@@ -218,6 +221,9 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     [data-scroll-indicator='none'] &,
     [data-scroll-indicator='left'] & {
       @include tokens.animate-hidden;
+
+      pointer-events: none;
+      user-select: none;
     }
   }
 
