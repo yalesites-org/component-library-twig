@@ -115,6 +115,7 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   display: flex;
   gap: var(--size-spacing-3);
   align-items: center;
+  cursor: pointer;
 
   &:hover {
     color: var(--color-link-base);
@@ -135,11 +136,26 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 
   [data-component-theme]:not([data-component-theme='default']) & {
+    --color-link-base: var(--color-gray-700);
+    --color-heading: var(--color-gray-700);
+
     border-bottom: none;
     background-color: var(--color-gray-100);
     padding: var(--size-spacing-3) var(--size-spacing-4);
     border-left: var(--border-thickness-6) solid var(--color-accordion-accent);
     margin-bottom: var(--size-spacing-5);
+    color: var(--color-gray-700);
+
+    .text-field a {
+      --color-text-shadow: var(--color-gray-100);
+      --color-link-hover: var(--color-gray-700);
+      --color-link-base: var(--color-gray-700);
+    }
+  }
+
+  [data-global-theme='one'] [data-component-theme='two'] .accordion &,
+  [data-global-theme='five'] [data-component-theme='two'] .accordion & {
+    background-color: var(--color-basic-white);
   }
 }
 
@@ -161,6 +177,7 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   width: 100%;
   padding: var(--size-spacing-3) var(--size-spacing-4) var(--size-spacing-3) 0;
   text-align: left;
+  cursor: pointer;
 
   &:hover {
     color: var(--color-link-base);
