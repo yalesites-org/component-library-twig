@@ -78,6 +78,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   [data-component-theme]:not([data-component-theme='default']) & {
     --color-tabs-background: var(--color-layout-theme);
     --color-tabs-selected: var(--color-layout-theme);
+    --color-action: var(--color-layout-border);
   }
 }
 
