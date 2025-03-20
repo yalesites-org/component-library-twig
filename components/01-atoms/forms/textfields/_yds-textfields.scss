@@ -30,6 +30,13 @@ $form-item-icon-size: 1.7rem;
     margin: calc(var(--size-spacing-4) * 1) 0 0 0.2em;
     content: '*';
   }
+
+  [data-component-theme]:not([data-component-theme='default'], [data-component-theme='two'])
+    & {
+    &::after {
+      color: var(--color-basic-white);
+    }
+  }
 }
 
 .form-item__textfield {
@@ -37,6 +44,10 @@ $form-item-icon-size: 1.7rem;
   padding: var(--size-spacing-4);
   width: 100%;
   max-width: 100%;
+
+  &:not([type='submit']) {
+    background-color: var(--color-basic-white);
+  }
 
   .form--inline & {
     height: 100%;
@@ -112,5 +123,17 @@ $form-item-icon-size: 1.7rem;
     @include forms.cta-submit;
 
     border-radius: 100vmax; // Keep webform submit button rounded.
+
+    [data-component-theme]:not([data-component-theme='default'], [data-component-theme='two'])
+      & {
+      background: transparent;
+      color: var(--color-basic-white);
+      border-color: var(--color-basic-white);
+
+      &:hover {
+        background: var(--color-basic-white);
+        color: var(--color-layout-theme);
+      }
+    }
   }
 }

@@ -28,6 +28,7 @@ $cta-outline-weights: (
   text-decoration: none;
   text-align: center;
   min-height: var(--size-click-target-minimum);
+  cursor: pointer;
 
   &:hover {
     background-color: var(--color-cta-bg-hover);
