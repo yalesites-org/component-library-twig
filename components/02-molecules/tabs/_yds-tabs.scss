@@ -45,6 +45,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
       --color-tabs-accent: var(--color-tabs-accent);
       --color-action: var(--color-tabs-action);
       --color-background: var(--color-tabs-background);
+      --color-selected: var(--color-tabs-selected);
     }
   }
 
@@ -53,22 +54,30 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &[data-component-theme='one'] {
     --color-tabs-accent: var(--color-slot-one);
     --color-tabs-action: var(--color-slot-one);
-    --color-tabs-background: var(--color-basic-white);
+    --color-tabs-background: var(--color-gray-100);
+    --color-tabs-selected: var(--color-basic-white);
     --color-heading: var(--color-gray-700);
   }
 
   &[data-component-theme='two'] {
     --color-tabs-accent: var(--color-slot-two);
     --color-tabs-action: var(--color-slot-two);
-    --color-tabs-background: var(--color-basic-white);
+    --color-tabs-background: var(--color-gray-100);
+    --color-tabs-selected: var(--color-basic-white);
     --color-heading: var(--color-gray-700);
   }
 
   &[data-component-theme='three'] {
     --color-tabs-accent: var(--color-slot-five);
     --color-tabs-action: var(--color-slot-five);
-    --color-tabs-background: var(--color-basic-white);
+    --color-tabs-background: var(--color-gray-100);
+    --color-tabs-selected: var(--color-basic-white);
     --color-heading: var(--color-gray-700);
+  }
+
+  [data-component-theme]:not([data-component-theme='default']) & {
+    --color-tabs-background: var(--color-layout-theme);
+    --color-tabs-selected: var(--color-layout-theme);
   }
 }
 
@@ -102,7 +111,8 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   height: calc(var(--size-tabs-control) - var(--size-thickness-2));
   background-color: var(--color-background);
   opacity: 0;
-  border: var(--size-thickness-1) solid var(--color-gray-700);
+  border: var(--size-thickness-1) solid var(--color-gray-400);
+  color: inherit;
 
   &--left {
     left: 0;
@@ -174,9 +184,9 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   position: relative;
   text-decoration: none;
   padding: var(--size-spacing-3) var(--size-spacing-7) var(--size-spacing-5);
-  color: var(--color-gray-700);
+  color: inherit;
   border-top: var(--size-thickness-6) solid transparent;
-  background-color: var(--color-gray-100);
+  background-color: var(--color-background);
   height: 100%;
 
   &:hover {
@@ -189,9 +199,8 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   // Active tab.
   &[aria-selected='true'] {
-    color: var(--color-action);
     border-color: var(--color-action);
-    background-color: var(--color-basic-white);
+    background-color: var(--color-selected);
 
     &::before {
       content: '';
@@ -200,7 +209,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
       left: 0;
       right: 0;
       bottom: 0;
-      border-bottom: var(--size-spacing-3) solid var(--color-basic-white);
+      border-bottom: var(--size-spacing-3) solid var(--color-selected);
       z-index: 1;
     }
   }
