@@ -81,6 +81,12 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     }
   }
 
+  // Increases z-index only when expanded
+  // to prevent overlap with other components.
+  &:has([aria-expanded='true']) {
+    z-index: 500;
+  }
+
   // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
@@ -193,9 +199,12 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       opacity: 1;
     }
 
-    [data-scroll-indicator='none'],
-    [data-scroll-indicator='right'] {
+    [data-scroll-indicator='none'] &,
+    [data-scroll-indicator='right'] & {
       @include tokens.animate-hidden;
+
+      pointer-events: none;
+      user-select: none;
     }
   }
 
@@ -212,6 +221,9 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     [data-scroll-indicator='none'] &,
     [data-scroll-indicator='left'] & {
       @include tokens.animate-hidden;
+
+      pointer-events: none;
+      user-select: none;
     }
   }
 
