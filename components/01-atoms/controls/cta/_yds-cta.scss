@@ -329,6 +329,39 @@ $cta-outline-weights: (
       text-decoration: underline;
     }
   }
+
+  [data-component-theme]:not([data-component-theme='default']) & {
+    // &[data-cta-style='outline'] {
+    //   --color-cta-bg: transparent;
+    //   --color-cta-bg-hover: var(--color-action);
+    //   --color-cta-border: var(--color-action);
+    //   --color-cta-text: var(--color-action);
+    //   --color-cta-text-hover: var(--color-action-secondary);
+    // }
+    &[data-cta-style='filled'] {
+      --color-cta-text: var(--color-layout-theme);
+      --color-cta-text-hover: var(--color-layout-border);
+      --color-cta-bg: var(--color-layout-border);
+      --color-cta-bg-hover: transparent;
+      --color-cta-border: var(--color-layout-border);
+    }
+
+    &[data-cta-style='outline'] {
+      --color-cta-text: var(--color-layout-border);
+      --color-cta-text-hover: var(--color-layout-theme);
+      --color-cta-border: var(--color-layout-border);
+      --color-cta-bg-hover: var(--color-layout-border);
+    }
+
+    // background: transparent;
+    // color: var(--color-basic-white);
+    // border-color: var(--color-basic-white);
+
+    // &:hover {
+    //   background: var(--color-basic-white);
+    //   color: var(--color-layout-theme);
+    // }
+  }
 }
 
 .cta {
