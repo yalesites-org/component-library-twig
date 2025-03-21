@@ -106,4 +106,12 @@ export const eventLocalistArgTypes = {
   },
 };
 
+export const eventLocalistArgs = {
+  address: 'New Haven, CT',
+  pageTitle: 'Event Title',
+  ctaText: 'Register',
+  allDay: false,
+  withCalendar: true,
+};
+
 export default argTypes;
