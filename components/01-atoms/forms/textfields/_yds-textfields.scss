@@ -31,7 +31,10 @@ $form-item-icon-size: 1.7rem;
     content: '*';
   }
 
-  [data-component-theme]:not([data-component-theme='default'], [data-component-theme='two'])
+  [data-component-theme]:not(
+      [data-component-theme='default'],
+      [data-component-theme='two']
+    )
     & {
     &::after {
       color: var(--color-basic-white);
@@ -124,7 +127,10 @@ $form-item-icon-size: 1.7rem;
 
     border-radius: 100vmax; // Keep webform submit button rounded.
 
-    [data-component-theme]:not([data-component-theme='default'], [data-component-theme='two'])
+    [data-component-theme]:not(
+        [data-component-theme='default'],
+        [data-component-theme='two']
+      )
       & {
       background: transparent;
       color: var(--color-basic-white);
