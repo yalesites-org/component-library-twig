@@ -18,6 +18,10 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   position: relative;
   border-bottom: var(--size-thickness-1) solid var(--color-border-selected);
 
+  .gin--dark-mode & {
+    border-color: var(--color-border-selected);
+  }
+
   [data-component-alignment='left'] & {
     max-width: var(--size-component-layout-width-content);
   }
