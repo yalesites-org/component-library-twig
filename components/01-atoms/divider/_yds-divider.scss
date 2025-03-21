@@ -40,4 +40,8 @@ $divider-positions: left, center;
       @include tokens.expand-out;
     }
   }
+
+  [data-component-theme]:not([data-component-theme='default']) & {
+    --color-divider: var(--color-layout-border);
+  }
 }

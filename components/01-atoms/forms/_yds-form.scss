@@ -38,7 +38,7 @@
 @mixin cta-submit {
   transition: color,
     background-color var(--animation-speed-default) ease-in-out 0ms;
-  border: var(--border-thickness-cta) solid var(--color-action);
+  border: var(--border-thickness-cta) solid var(--color-cta-border);
   font-weight: var(--font-weights-mallory-medium);
   padding: var(--size-spacing-3) var(--size-spacing-6);
   min-height: var(--size-click-target-minimum);

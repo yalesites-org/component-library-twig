@@ -139,6 +139,11 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   &[data-spotlights-position='last'] {
     margin-bottom: var(--size-spacing-10);
   }
+
+  // Styles applied only if the HTML element has the 'yds-storybook-cl' class  html:has(.yds-storybook-cl) &,
+  html:has(.yds-storybook-cl) & {
+    margin-block: 0;
+  }
 }
 
 .yds-layout__inner {
