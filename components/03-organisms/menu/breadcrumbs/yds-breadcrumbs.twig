@@ -32,8 +32,12 @@
   } %}
 {% endset %}
 
-{# Only show breadbrumbs if there are three or more items or if always_show_breadcrumbs is set. #}
-{% if breadcrumbs__items.2 or always_show_breadcrumbs %}
+{% if breadcrumbs__items.1 and breadcrumbs__deep %}
+  {% set breadcrumbs__items = breadcrumbs__items|slice(breadcrumbs__deep * -1) %}
+{% endif %}
+
+{# Only show breadbrumbs if there are three or more items. #}
+{% if breadcrumbs__items.1 %}
   <div {{ add_attributes(breadcrumbs__attributes) }}>
     {% set control__content %}
       <span {{ bem('visually-hidden') }}>Show all breadcrumbs</span>
