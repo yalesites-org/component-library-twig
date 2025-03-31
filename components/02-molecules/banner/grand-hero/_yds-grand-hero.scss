@@ -196,7 +196,8 @@ $break-grand-hero-banner: tokens.$break-m;
 .grand-hero-banner__outer-wrap {
   width: 100%;
 
-  [data-grand-hero-overlay-variation='contained'] & {
+  [data-grand-hero-overlay-variation='contained'],
+  [data-grand-hero-overlay-variation='contained-narrow'] & {
     align-items: flex-end;
 
     @media (min-width: $break-grand-hero-banner) {
@@ -251,6 +252,14 @@ $break-grand-hero-banner: tokens.$break-m;
     @media (min-width: $break-grand-hero-banner) {
       width: auto;
       max-width: var(--size-component-layout-width-content);
+    }
+  }
+
+  [data-grand-hero-overlay-variation='contained-narrow'] & {
+    width: 100%;
+
+    @media (min-width: $break-grand-hero-banner) {
+      max-width: 28rem;
     }
   }
 
