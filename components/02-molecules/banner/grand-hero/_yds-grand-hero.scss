@@ -218,7 +218,8 @@ $break-grand-hero-banner: tokens.$break-m;
   width: 100%;
   margin: 0 auto;
 
-  [data-grand-hero-overlay-variation='contained'] & {
+  [data-grand-hero-overlay-variation='contained'] &,
+  [data-grand-hero-overlay-variation='contained-narrow'] & {
     // prettier-ignore
     max-width: calc(var(--size-component-layout-width-max) + (var(--size-spacing-site-gutter) * 2) );
   }
@@ -259,7 +260,8 @@ $break-grand-hero-banner: tokens.$break-m;
     width: 100%;
 
     @media (min-width: $break-grand-hero-banner) {
-      max-width: 28rem;
+      width: auto;
+      max-width: calc(var(--size-component-layout-width-content) / 2);
     }
   }
 
@@ -332,4 +334,9 @@ $break-grand-hero-banner: tokens.$break-m;
   display: flex;
   flex-flow: row wrap;
   gap: var(--size-spacing-7);
+
+  [data-grand-hero-overlay-variation='contained-narrow'] & {
+    gap: var(--size-spacing-5);
+    margin-top: 1rem;
+  }
 }
