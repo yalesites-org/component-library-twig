@@ -46,6 +46,7 @@ export default {
     heading: accordionData.accordion__item__heading,
     content: accordionData.accordion__item__content,
     themeColor: 'default',
+    sectionTheme: 'default',
     itemsToDisplay: 3,
   },
 };
