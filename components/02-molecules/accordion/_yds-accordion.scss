@@ -89,6 +89,7 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       [data-component-theme='default'],
       [data-component-theme='two']
     )
+    .accordion
     & {
     color: var(--color-basic-white);
   }
@@ -143,7 +144,7 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     max-width: var(--size-component-layout-width-content);
   }
 
-  [data-component-theme]:not([data-component-theme='default']) & {
+  .accordion[data-component-theme]:not([data-component-theme='default']) & {
     --color-link-base: var(--color-gray-700);
     --color-heading: var(--color-gray-700);
 
