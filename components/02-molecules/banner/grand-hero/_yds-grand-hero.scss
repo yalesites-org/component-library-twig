@@ -229,7 +229,8 @@ $break-grand-hero-banner: tokens.$break-m;
     align-items: center;
   }
 
-  [data-grand-hero-overlay-variation='contained'][data-grand-hero-width='site']
+  [data-grand-hero-overlay-variation='contained'][data-grand-hero-width='site'],
+  [data-grand-hero-overlay-variation='contained'][data-grand-hero-width='contained-narrow']
     & {
     // prettier-ignore
     max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-site-gutter) * 2));
