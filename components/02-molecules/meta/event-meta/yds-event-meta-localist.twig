@@ -29,6 +29,7 @@
 
 {# Set secondary CTA content #}
 {% set event_meta__cta_secondary__content = 'Add to Calendar' %}
+{% set event_meta__with_calendar = event_meta__with_calendar ?? TRUE %}
 
 {# Check if event has passed - if passed in localist, the event_dates array will be empty #}
 {% set event_has_passed = event_dates is empty %}
@@ -209,7 +210,7 @@
               } %}
             {% endif %}
             {# Add to calendar #}
-            {% if event_meta__cta_secondary__content and not event_has_passed %}
+            {% if event_meta__with_calendar and event_meta__cta_secondary__content and not event_has_passed %}
               {% include "@atoms/controls/cta/yds-cta.twig" with {
                 cta__content: event_meta__cta_secondary__content,
                 cta__href: ics_url ? ics_url : event_meta__cta_secondary__href,
