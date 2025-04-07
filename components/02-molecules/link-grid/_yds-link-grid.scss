@@ -140,8 +140,10 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   // if used in thirty-thirty-thirty layout and min-width 2xl
   // make the columns 100% width
-  [data-component-layout='thirty-thirty-thirty'] & {
+  [data-component-layout='thirty-thirty-thirty'] &,
+  .yds-two-column .yds-two-column__secondary & {
     @media (min-width: tokens.$break-2xl) {
+      border-width: var(--size-thickness-4);
       margin-bottom: 0;
       flex: 1 1 100%;
     }
