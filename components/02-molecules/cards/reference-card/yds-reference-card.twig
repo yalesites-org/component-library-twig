@@ -116,16 +116,14 @@
     {% endif %}
   </div>
   {% if reference_card__image == 'true' %}
-    {% if show_thumbnail != '0' %}
-      <div {{ bem('image', [], reference_card__base_class) }}>
-        <a {{ bem('image-link', [], reference_card__base_class) }} href="{{ reference_card__url }}"
-                                                                   tabindex="-1" aria-hidden="true">
-          {% block reference_card__image %}
-            {% include "@atoms/images/image/_responsive-image.twig" %}
-          {% endblock %}
-        </a>
-      </div>
-    {% endif %}
+    <div {{ bem('image', [], reference_card__base_class) }}>
+      <a {{ bem('image-link', [], reference_card__base_class) }} href="{{ reference_card__url }}"
+                                                                  tabindex="-1" aria-hidden="true">
+        {% block reference_card__image %}
+          {% include "@atoms/images/image/_responsive-image.twig" %}
+        {% endblock %}
+      </a>
+    </div>
   {% endif %}
   {% if reference_card__overlay %}
     {% include "@atoms/typography/text/yds-text.twig" with {
