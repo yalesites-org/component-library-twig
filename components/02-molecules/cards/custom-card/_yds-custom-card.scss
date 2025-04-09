@@ -63,8 +63,8 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 
   @media (min-width: tokens.$break-m) {
-    padding: var(--size-spacing-7) var(--size-spacing-6) var(--size-spacing-6)
-      var(--size-spacing-6);
+    padding: var(--size-spacing-6) var(--size-spacing-5) var(--size-spacing-5)
+      var(--size-spacing-5);
 
     [data-with-image='true'] & {
       border-top: 0;
