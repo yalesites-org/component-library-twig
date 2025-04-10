@@ -39,6 +39,11 @@ export default {
       type: 'select',
       options: ['top', 'middle', 'bottom'],
     },
+    imageStyle: {
+      name: 'Image Style',
+      type: 'select',
+      options: ['inline', 'offset'],
+    },
     focus: {
       name: 'Focus',
       type: 'select',
@@ -75,6 +80,7 @@ export default {
     width: 'site',
     position: 'image-left',
     contentVerticalAlignment: 'top',
+    imageStyle: 'inline',
     focus: 'equal',
     overline: null,
     heading: textWithImageData.text_with_image__heading,
@@ -96,6 +102,7 @@ export const ContentSpotlightLandscape = ({
   linkContent,
   linkTwoContent,
   componentTheme,
+  imageStyle,
 }) =>
   textWithImageTwig({
     ...imageData.responsive_images['3x2'],
@@ -103,6 +110,7 @@ export const ContentSpotlightLandscape = ({
     text_with_image__width: width,
     text_with_image__position: position,
     text_with_image__vertical_align: contentVerticalAlignment,
+    text_with_image__style: imageStyle,
     text_with_image__focus: focus,
     text_with_image__overline: overline,
     text_with_image__heading: heading,
