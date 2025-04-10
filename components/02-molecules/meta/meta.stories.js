@@ -1,12 +1,11 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import {
-  eventArgTypes,
+  eventLocalistArgs,
   eventLocalistArgTypes,
 } from '../../04-page-layouts/cl-page-args';
 
 import eventLocalistData from './event-meta/event-localist.yml';
 import basicMetaTwig from './basic-meta/yds-basic-meta.twig';
-import eventMetaTwig from './event-meta/yds-event-meta.twig';
 import eventLocalistMetaTwig from './event-meta/yds-event-meta-localist.twig';
 import dateTimeTwig from '../../01-atoms/date-time/yds-date-time.twig';
 import profileMetaTwig from './profile-meta/yds-profile-meta.twig';
@@ -16,36 +15,11 @@ import './event-meta/event-meta-localist';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
-// Utility to convert dates to unix timestamps
-const toUnixTimeStamp = (date) => {
-  return Math.floor(Date.parse(date) / 1000);
-};
-
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Meta',
-  args: {
-    meta: `<span>By Charlyn Paradis</span>${dateTimeTwig({
-      date_time__start: '2022-01-25',
-      date_time__format: 'day__full',
-    })}`,
-    startDate: '2022-01-25',
-    endDate: '2022-01-25',
-    address: 'New Haven, CT',
-    pageTitle: 'Event Title',
-    heading: 'Meta Title',
-    titleLine: 'Professional Title',
-    subTitle: 'Subtitle',
-    department: 'Department name',
-    bgColor: 'one',
-    profileImageOrientation: 'landscape',
-    profileImageAlignment: 'right',
-    profileImageStyle: 'inline',
-    ctaText: 'Register',
-    allDay: false,
-  },
 };
 
 export const Basic = ({ meta }) => basicMetaTwig({ basic_meta: meta });
@@ -55,33 +29,14 @@ Basic.argTypes = {
     type: 'string',
   },
 };
-
-export const Event = ({
-  pageTitle,
-  startDate,
-  endDate,
-  format,
-  address,
-  ctaText,
-  allDay,
-}) =>
-  eventMetaTwig({
-    event_title__heading: pageTitle,
-    event_meta__date_start: toUnixTimeStamp(startDate),
-    event_meta__date_end: toUnixTimeStamp(endDate),
-    event_meta__format: format,
-    event_meta__address: address,
-    event_meta__cta_primary__content: ctaText,
-    event_meta__cta_primary__href: '#',
-    event_meta__cta_secondary__content: 'Add to calendar',
-    event_meta__cta_secondary__href: '#',
-    event_meta__all_day: allDay,
-  });
-Event.argTypes = {
-  ...eventArgTypes,
+Basic.args = {
+  meta: `<span>By Charlyn Paradis</span>${dateTimeTwig({
+    date_time__start: '2022-01-25',
+    date_time__format: 'day__full',
+  })}`,
 };
 
-export const EventLocalist = ({
+export const Event = ({
   pageTitle,
   format,
   address,
@@ -108,7 +63,7 @@ export const EventLocalist = ({
     event_meta__all_day: allDay,
     ...eventLocalistData,
   });
-EventLocalist.argTypes = {
+Event.argTypes = {
   withCalendar: {
     name: 'With Add to Calendar button',
     type: 'boolean',
@@ -116,6 +71,7 @@ EventLocalist.argTypes = {
   },
   ...eventLocalistArgTypes,
 };
+Event.args = eventLocalistArgs;
 
 export const Profile = ({
   heading,
@@ -194,4 +150,15 @@ Profile.argTypes = {
     options: ['inline', 'outdent'],
     defaultValue: 'inline',
   },
+};
+Profile.args = {
+  heading: 'Person Namerton',
+  titleLine: 'Professional Title',
+  subTitle: 'Subtitle',
+  department: 'Department name',
+  pronouns: 'They/They/Them',
+  bgColor: 'one',
+  profileImageOrientation: 'landscape',
+  profileImageAlignment: 'right',
+  profileImageStyle: 'inline',
 };
