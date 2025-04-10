@@ -81,6 +81,12 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     }
   }
 
+  // Increases z-index only when expanded
+  // to prevent overlap with other components.
+  &:has([aria-expanded='true']) {
+    z-index: 500;
+  }
+
   // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {

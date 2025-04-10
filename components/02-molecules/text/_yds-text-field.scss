@@ -13,12 +13,16 @@
     }
   }
 
-  a {
-    @include atoms.link;
-  }
-
   // emphasized: intro text variation
   &[data-component-variation='emphasized'] {
     @include tokens.body-xl;
+  }
+
+  &:first-child {
+    margin-top: var(--spacing-page-inner);
+  }
+
+  a {
+    @include atoms.link;
   }
 }
