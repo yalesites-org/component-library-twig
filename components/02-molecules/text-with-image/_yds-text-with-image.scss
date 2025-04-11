@@ -203,6 +203,13 @@ $component-content-spotlight-themes: map.deep-get(
       align-items: flex-end;
     }
 
+    // Image Style Variatoins
+    [data-image-style='offset'] & {
+      --component-width: calc(
+        var(--size-component-layout-width-site) + var(--size-spacing-10)
+      );
+    }
+
     // Focus Options
     [data-component-focus='equal'] & {
       grid-template-columns: 1fr 1fr;
@@ -248,6 +255,15 @@ $component-content-spotlight-themes: map.deep-get(
 
     [data-image-position='image-right'] & {
       grid-area: primary;
+    }
+
+    // if offset, balance out the image offset with a margin on content
+    [data-image-style='offset'][data-image-position='image-right'] & {
+      margin-inline-start: var(--size-spacing-8);
+    }
+
+    [data-image-style='offset'][data-image-position='image-left'] & {
+      margin-inline-end: var(--size-spacing-8);
     }
   }
 
