@@ -14,11 +14,11 @@ export default {
   title: 'Organisms/Menu/Breadcrumbs',
   argTypes: {
     withDeep: {
-      name: 'With deep',
+      name: 'Limit Items',
       type: 'boolean',
     },
     deepLevel: {
-      name: 'Deep Level',
+      name: 'Trail Level',
       type: 'number',
       if: {
         arg: 'withDeep',
