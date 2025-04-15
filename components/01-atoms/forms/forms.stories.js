@@ -23,4 +23,33 @@ export const selectDropdowns = () => select(selectOptionsData);
 
 export const textfieldsExamples = () => textfields();
 
-export const exampleForm = () => formExample();
+export const exampleForm = ({ buttonTheme, sectionTheme }) => `
+  <div data-component-has-divider="false" data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
+    <div class="yds-layout__inner">
+      <div class="yds-layout__primary">
+        <h2>Pre-Built Form</h2>
+        ${formExample({ buttonTheme })}
+      </div>
+    </div>
+  </div>
+`;
+
+exampleForm.argTypes = {
+  sectionTheme: {
+    name: 'Section Theme',
+    type: 'select',
+    options: ['default', 'one', 'two', 'three', 'four'],
+    control: { type: 'select' },
+  },
+  buttonTheme: {
+    name: 'Button Theme',
+    type: 'select',
+    options: ['one', 'two', 'three', 'four', 'five', 'six', 'seven'],
+    control: { type: 'select' },
+  },
+};
+
+exampleForm.args = {
+  sectionTheme: 'default',
+  buttonTheme: 'one',
+};

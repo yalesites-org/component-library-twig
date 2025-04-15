@@ -363,7 +363,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     }
 
     @media (min-width: tokens.$break-xl) {
-      grid-column: 3 / -1;
+      grid-column: 2 / -1;
       grid-row: 2 / 7;
       align-self: center;
     }
