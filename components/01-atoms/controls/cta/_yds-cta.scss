@@ -28,6 +28,7 @@ $cta-outline-weights: (
   text-decoration: none;
   text-align: center;
   min-height: var(--size-click-target-minimum);
+  cursor: pointer;
 
   &:hover {
     background-color: var(--color-cta-bg-hover);
@@ -345,7 +346,6 @@ $cta-outline-weights: (
   }
 }
 
-// @TODO: Temporary place for this
 .cta-group {
   display: flex;
   flex-wrap: wrap;
