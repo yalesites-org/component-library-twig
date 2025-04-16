@@ -32,8 +32,8 @@
   } %}
 {% endset %}
 
-{% if breadcrumbs__items.1 and breadcrumbs__deep %}
-  {% set breadcrumbs__items = breadcrumbs__items|slice(breadcrumbs__deep * -1) %}
+{% if breadcrumbs__items.1 and breadcrumbs__trail_level %}
+  {% set breadcrumbs__items = breadcrumbs__items|slice(breadcrumbs__trail_level * -1) %}
 {% endif %}
 
 {# Only show breadbrumbs if there are two or more items. #}
