@@ -29,32 +29,19 @@ Drupal.behaviors.utilityDropdownNav = {
 
     // Function to adjust dropdown position
     const adjustDropdownPosition = (content, toggle) => {
-      const isExpanded = content.getAttribute('aria-hidden') === 'false';
       const contentElement = content;
-      const siteHeaderRect = siteHeader.getBoundingClientRect();
-      const contentRect = content.getBoundingClientRect();
-      const overflowRight = contentRect.right - siteHeaderRect.right;
+      const toggleRect = toggle.getBoundingClientRect();
 
-      // Reset position if dropdown is not expanded
-      if (!isExpanded) {
-        contentElement.style.left = '';
-        contentElement.style.right = '';
-        toggle.classList.remove('utility-nav__dropdown-direction-left');
-        toggle.classList.remove('utility-nav__dropdown-direction-right');
-        return;
-      }
-
-      // Adjust dropdown position based on overflow
-      if (overflowRight > 0) {
-        contentElement.style.left = 'auto';
-        contentElement.style.right = '0';
-        toggle.classList.remove('utility-nav__dropdown-direction-right');
-        toggle.classList.add('utility-nav__dropdown-direction-left');
-      } else {
+      if (toggleRect.left < window.innerWidth / 2) {
         contentElement.style.left = '';
         contentElement.style.right = '';
         toggle.classList.add('utility-nav__dropdown-direction-right');
         toggle.classList.remove('utility-nav__dropdown-direction-left');
+      } else {
+        contentElement.style.left = 'auto';
+        contentElement.style.right = '0';
+        toggle.classList.remove('utility-nav__dropdown-direction-right');
+        toggle.classList.add('utility-nav__dropdown-direction-left');
       }
     };
 
@@ -64,10 +51,20 @@ Drupal.behaviors.utilityDropdownNav = {
 
       // Adjust dropdown width based on window size
       if (window.innerWidth >= 990 && utilityDropdownMenu) {
-        const dropdownWidth = utilityDropdownMenu.offsetWidth;
+        const dropdownRect = utilityDropdownMenu.getBoundingClientRect();
+        const toggleRect = toggle.getBoundingClientRect();
+        const toggleRight = toggleRect.x + toggleRect.width;
 
         menuWidthStyle.style.width = 'auto'; // Reset width to auto before recalculating
-        menuWidthStyle.style.width = `${dropdownWidth + 40}px`;
+        menuWidthStyle.style.width = `${dropdownRect.width + 40}px`;
+
+        if (toggleRect.x < window.innerWidth / 2) {
+          menuWidthStyle.style.maxWidth = `${
+            window.innerWidth - toggleRight - 16
+          }px`;
+        } else {
+          menuWidthStyle.style.maxWidth = `${toggleRight - 114}px`;
+        }
       } else if (utilityDropdownMenu) {
         menuWidthStyle.style.width = 'auto';
       }
@@ -101,16 +98,15 @@ Drupal.behaviors.utilityDropdownNav = {
       // Adjust on window resize with debounce
       window.addEventListener(
         'resize',
-        debounce(() => adjustDropdownWidth(content, utilityDropdownMenu), 200),
+        debounce(
+          () => adjustDropdownWidth(content, utilityDropdownMenu, toggle),
+          200,
+        ),
       );
 
       // Event listeners: 'click'
       toggle.addEventListener('click', () => {
         toggleDropdown(toggle, nav, content);
-        // Adjust dropdown position if inside the siteHeader
-        if (siteHeader) {
-          adjustDropdownPosition(content, toggle);
-        }
       });
 
       // Event listeners: 'keydown' (for accessibility)
