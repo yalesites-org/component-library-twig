@@ -46,15 +46,17 @@ format__day__long = Thursday, December 3, 2024
     'format__iso': 'c',
     'format__html_date': 'Y-m-d',
     'format__date': 'F j, Y',
-    'format__date__start': 'F j, Y' ~ em_dash,
+    'format__date__start': 'F j, Y',
     'format__day__full__start': "D M j \t\o",
     'format__day__full': 'D M j, Y',
-    'format__time__start': 'g:i a' ~ em_dash,
+    'format__time__start': 'g:i a',
     'format__time': 'g:i a',
     'format__all_day': "\\A\\l\\l \\D\\a\\y",
     'format__all_day__start': '',
     'format__day__long': 'l, F j, Y',
-    'format__day__long__start': 'l, F j, Y' ~ em_dash,
+    'format__day__long__start': 'l, F j, Y',
+    'format__same_day_diff_time__start': "D M j \t\o g:i a",
+    'format__same_day_diff_time': 'g:i a',
   } %}
 
 {% set format_defaults = {
@@ -63,14 +65,18 @@ format__day__long = Thursday, December 3, 2024
   "date_and_time": "format__day__full",
   "all_day": "format__all_day",
   "day__full": "format__day__full",
+  "same_day_diff_time": "format__same_day_diff_time",
   } %}
 
+{% set same_date = date_time__start|date(formats['format__html_date']) == date_time__end|date(formats['format__html_date']) %}
 {% set used_format = date_time__format_override|default(format_defaults[date_time__format]) %}
 
 {% if same_start_and_end %}
   {% set date_time = date_time__start|date(formats[used_format]) %}
+{% elseif same_date %}
+  {% set date_time = date_time__start|date(formats[used_format ~ "__start"]) ~ em_dash ~ date_time__end|date(formats[used_format]) %}
 {% else %}
-  {% set date_time = date_time__start|date(formats[used_format ~ "__start"]) ~ date_time__end|date(formats[used_format]) %}
+  {% set date_time = date_time__start|date(formats[used_format ~ "__start"]) ~ em_dash ~ date_time__end|date(formats[used_format ~ "__start"]) %}
 {% endif %}
 
 {# Add attributes #}
