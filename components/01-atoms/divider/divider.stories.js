@@ -36,16 +36,29 @@ export default {
       type: 'select',
       defaultValue: 'center',
     },
+    sectionTheme: {
+      name: 'Section Theme',
+      type: 'select',
+      options: ['default', 'one', 'two', 'three', 'four'],
+      control: { type: 'select' },
+    },
   },
   args: {
     thickness: 'hairline',
     dividerColor: 'gray-500',
     width: 'View-All',
     position: 'center',
+    sectionTheme: 'default',
   },
 };
 
-export const Dividers = ({ position, thickness, dividerColor, width }) => {
+export const Dividers = ({
+  position,
+  thickness,
+  dividerColor,
+  width,
+  sectionTheme,
+}) => {
   const customProperties = {
     '--thickness-theme-divider': `var(--size-thickness-${thickness})`,
   };
@@ -65,28 +78,33 @@ export const Dividers = ({ position, thickness, dividerColor, width }) => {
   <div style="--thickness-divider: var(--size-thickness-4)">${dividerTwig()}</div>
   <div style="--thickness-divider: var(--size-thickness-6)">${dividerTwig()}</div>
   <div style="--thickness-divider: var(--size-thickness-8)">${dividerTwig()}</div>
-  <div class="cl-divider-playground" style="
-    --color-divider: var(--color-${dividerColor});
-    --width-theme-divider: var(--layout-width-${width});
-  ">
-    <h2>Playground</h2>
-    <p>Use the StoryBook controls to see the dividers below implement the available positions, thicknesses, and colors.</p>
-    ${dividerTwig({
-      divider__width: `${viewAll ? '25' : width}`,
-      divider__position: `${position}`,
-    })}
-    ${dividerTwig({
-      divider__width: `${viewAll ? '50' : width}`,
-      divider__position: `${position}`,
-    })}
-    ${dividerTwig({
-      divider__width: `${viewAll ? '75' : width}`,
-      divider__position: `${position}`,
-    })}
-    ${dividerTwig({
-      divider__width: `${viewAll ? '100' : width}`,
-      divider__position: `${position}`,
-    })}
+  <div class="yds-layout cl-divider-playground" data-component-theme="${sectionTheme}">
+    <div class="yds-layout__inner" data-component-width="site" style="
+      --color-divider: var(--color-${dividerColor});
+      --width-theme-divider: var(--layout-width-${width});
+    ">
+      <div class="yds-layout__primary">
+        <h2>Playground</h2>
+        <p>Use the StoryBook controls to see the dividers below implement the available positions, thicknesses, and colors.</p>
+
+        ${dividerTwig({
+          divider__width: `${viewAll ? '25' : width}`,
+          divider__position: `${position}`,
+        })}
+        ${dividerTwig({
+          divider__width: `${viewAll ? '50' : width}`,
+          divider__position: `${position}`,
+        })}
+        ${dividerTwig({
+          divider__width: `${viewAll ? '75' : width}`,
+          divider__position: `${position}`,
+        })}
+        ${dividerTwig({
+          divider__width: `${viewAll ? '100' : width}`,
+          divider__position: `${position}`,
+        })}
+      </div>
+    </div>
   </div>
   <div class="padding-to-see-dividers-above">&nbsp;</div>
   `;

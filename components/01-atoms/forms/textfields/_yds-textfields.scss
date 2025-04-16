@@ -30,6 +30,16 @@ $form-item-icon-size: 1.7rem;
     margin: calc(var(--size-spacing-4) * 1) 0 0 0.2em;
     content: '*';
   }
+
+  [data-component-theme]:not(
+      [data-component-theme='default'],
+      [data-component-theme='two']
+    )
+    & {
+    &::after {
+      color: var(--color-basic-white);
+    }
+  }
 }
 
 .form-item__textfield {
@@ -37,6 +47,10 @@ $form-item-icon-size: 1.7rem;
   padding: var(--size-spacing-4);
   width: 100%;
   max-width: 100%;
+
+  &:not([type='submit']) {
+    background-color: var(--color-basic-white);
+  }
 
   .form--inline & {
     height: 100%;
