@@ -8,23 +8,14 @@
 
 {% if event_meta__date_start %}
 
-  {% set event_meta__day %}
+  {% set event_meta__date %}
     {% include "@atoms/date-time/yds-date-time.twig" with {
       date_time__start: event_meta__date_start,
       date_time__end: event_meta__date_end,
-      date_time__format: 'day__full',
+      date_time__format: 'same_day_diff_time',
     } %}
   {% endset %}
-
-  {% set event_meta__time %}
-    {% include "@atoms/date-time/yds-date-time.twig" with {
-      date_time__start: event_meta__date_start,
-      date_time__end: event_meta__date_end,
-      date_time__format: 'time',
-      date_time__all_day: event_meta__all_day,
-    } %}
-  {% endset %}
-
+      
 {% endif %}
 
 {% set event_meta__base_class = 'event-meta' %}
@@ -60,16 +51,10 @@
         {# Date #}
         <div {{ bem('date', [], event_meta__base_class) }}>
 
-          {# Day #}
           <div {{ bem('day', [], event_meta__base_class) }}>
-            {{ event_meta__day }} 
+            {{ event_meta__date }}
           </div>
 
-          {# Time #}
-          <div {{ bem('time', [], event_meta__base_class) }}>
-            {{ event_meta__time|replace({'am': 'a.m.', 'pm': 'p.m.'}) }} {# 8:30 pm- to 8:30 p.m.- #} 
-            {#Replace am to a.m. and pm to p.m.#}
-          </div>
         </div>
         {# Event Details #}
         <div {{ bem('details', [], event_meta__base_class) }}>
