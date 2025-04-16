@@ -329,6 +329,23 @@ $cta-outline-weights: (
       text-decoration: underline;
     }
   }
+
+  .yds-layout[data-component-theme]:not([data-component-theme='default']) & {
+    &[data-cta-style='filled'] {
+      --color-cta-text: var(--color-layout-theme);
+      --color-cta-text-hover: var(--color-layout-border);
+      --color-cta-bg: var(--color-layout-border);
+      --color-cta-bg-hover: transparent;
+      --color-cta-border: var(--color-layout-border);
+    }
+
+    &[data-cta-style='outline'] {
+      --color-cta-text: var(--color-layout-border);
+      --color-cta-text-hover: var(--color-layout-theme);
+      --color-cta-border: var(--color-layout-border);
+      --color-cta-bg-hover: var(--color-layout-border);
+    }
+  }
 }
 
 .cta {
@@ -346,6 +363,7 @@ $cta-outline-weights: (
   }
 }
 
+// @TODO: Temporary place for this
 .cta-group {
   display: flex;
   flex-wrap: wrap;

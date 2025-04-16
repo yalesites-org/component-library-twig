@@ -100,6 +100,7 @@ export const Cta = ({ componentTheme, sectionTheme }) =>
       cta__content: ctaText,
       cta__href: '#',
       cta__radius: 'outline',
+      cta__style: 'outline',
       cta__component_theme: componentTheme,
       cta__control_type: 'dropdown',
     })}
