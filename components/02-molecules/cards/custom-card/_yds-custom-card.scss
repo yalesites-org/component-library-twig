@@ -63,7 +63,8 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 
   @media (min-width: tokens.$break-m) {
-    padding: var(--size-spacing-5) var(--size-spacing-6);
+    padding: var(--size-spacing-6) var(--size-spacing-5) var(--size-spacing-5)
+      var(--size-spacing-5);
 
     [data-with-image='true'] & {
       border-top: 0;
@@ -78,11 +79,16 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
 .custom-card__heading {
   @include tokens.h4-yale-new;
 
-  margin-bottom: var(--size-spacing-3);
+  margin-bottom: var(--size-spacing-0);
 }
 
 .custom-card__snippet {
   @include tokens.body-default-condensed;
+
+  /* The content is actually within a paragraph tag inside of snippet */
+  & p {
+    margin-top: 0;
+  }
 
   > *:last-child {
     margin-bottom: 0;
