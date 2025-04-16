@@ -271,6 +271,7 @@
 
 .utility-nav-dropdown__item {
   display: block;
+  max-width: 100%;
   width: max-content;
 
   @media (max-width: tokens.$break-mobile-max) {
