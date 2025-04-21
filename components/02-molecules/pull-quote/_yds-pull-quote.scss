@@ -59,7 +59,7 @@ blockquote {
   // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
-    --color-pull-quote-accent: var(--color-slot-one);
+    --color-pull-quote-accent: var(--color-slot-two);
   }
 
   &[data-component-theme='two'] {
