@@ -21,16 +21,17 @@ export default {
       options: ['bar-left', 'bar-right', 'quote-left'],
       type: 'select',
     },
-    accentColor: {
-      name: 'Component Theme (dial)',
-      options: ['one', 'two', 'three'],
-      type: 'select',
-    },
     sectionTheme: {
       name: 'Section Theme',
       type: 'select',
       options: ['default', 'one', 'two', 'three', 'four'],
       control: { type: 'select' },
+    },
+    accentColor: {
+      name: 'Component Theme (dial)',
+      options: ['one', 'two', 'three'],
+      type: 'select',
+      if: { arg: 'sectionTheme', eq: 'default' },
     },
   },
   args: {
