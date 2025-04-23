@@ -31,7 +31,8 @@ body[data-body-frozen] {
 // it and the site header (size-spacing-6 and 9 below) - unless it is designated
 // as `$flush-top` above. Then it will have no top-margin separating it from the
 // site header.
-.main-content > *:first-child:not(.page-meta, .layout--banner) {
+.main-content
+  > *:first-child:not(.page-meta, .layout--banner, .breadcrumbs__wrapper) {
   margin-top: var(--main-content-top-margin, var(--size-spacing-6));
 }
 
@@ -50,8 +51,6 @@ body[data-body-frozen] {
 // Subtract to have a negative numbers so that the margin-top of the page
 // title does not affect the spacing when there are breadcrumbs.
 .main-content .breadcrumbs__wrapper {
-  margin-top: var(--main-content-top-margin, var(--size-spacing-6));
-
   // Subtract 2rem to the 4rem
   margin-bottom: var(--size-spacing-0);
 
