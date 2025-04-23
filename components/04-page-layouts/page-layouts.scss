@@ -31,12 +31,13 @@ body[data-body-frozen] {
 // it and the site header (size-spacing-6 and 9 below) - unless it is designated
 // as `$flush-top` above. Then it will have no top-margin separating it from the
 // site header.
-.main-content > *:first-child:not(.page-meta, .layout--banner) {
+.main-content
+  > *:first-child:not(.page-meta, .layout--banner, .breadcrumbs__wrapper) {
   margin-top: var(--main-content-top-margin, var(--size-spacing-6));
 }
 
 .main-content .page-title:not(.visually-hidden) {
-  margin-top: var(--size-spacing-10); // 4rem
+  margin-top: var(--size-spacing-0); // 4rem
 
   @media (max-width: tokens.$break-l) {
     margin-top: var(--size-spacing-8); // 2.5rem large breakpoints
@@ -51,7 +52,7 @@ body[data-body-frozen] {
 // title does not affect the spacing when there are breadcrumbs.
 .main-content .breadcrumbs__wrapper {
   // Subtract 2rem to the 4rem
-  margin-bottom: calc(var(--size-spacing-7) - var(--size-spacing-10));
+  margin-bottom: var(--size-spacing-0);
 
   // Subtract 1.5rem to the 2.5rem
   @media (max-width: tokens.$break-l) {
@@ -61,6 +62,20 @@ body[data-body-frozen] {
   // Subtract 1rem to the 2rem
   @media (max-width: tokens.$break-s) {
     margin-bottom: calc(var(--size-spacing-5) - var(--size-spacing-7));
+  }
+}
+
+// .main-conent .page-meta that does not contain a .breadcrumbs__wrapper div
+// should have a top padding.
+.main-content .page-meta:not(:has(.breadcrumbs__wrapper)) {
+  margin-top: var(--main-content-top-margin, var(--size-spacing-6));
+
+  @media (max-width: tokens.$break-l) {
+    margin-top: var(--size-spacing-8); // 2.5rem large breakpoints
+  }
+
+  @media (max-width: tokens.$break-s) {
+    margin-top: var(--size-spacing-7); // 2rem small breakpoints
   }
 }
 
