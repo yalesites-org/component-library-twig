@@ -78,6 +78,12 @@ blockquote {
     --color-pull-quote-quote: var(--color-basic-white);
     --color-pull-quote-attribution: var(--color-basic-white);
   }
+
+  // If the yds-layout theme is not default, we assume we are inside of a
+  // colored layout, and so we match the layout border.
+  .yds-layout:not([data-component-theme='default']) & {
+    --color-pull-quote-accent: var(--color-layout-border);
+  }
 }
 
 .pull-quote__figure {
