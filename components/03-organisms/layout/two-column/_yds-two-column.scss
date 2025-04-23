@@ -5,6 +5,16 @@ $break-layout-two-column-max: $break-layout-two-column - 0.05;
 
 .yds-two-column {
   @include tokens.spacing-page-section;
+
+  &[data-component-padding='no-top'],
+  &[data-component-padding='no-padding'] {
+    margin-top: 0;
+  }
+
+  &[data-component-padding='no-bottom'],
+  &[data-component-padding='no-padding'] {
+    margin-bottom: 0;
+  }
 }
 
 .yds-two-column__inner {
