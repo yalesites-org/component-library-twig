@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
 @use '../../../02-molecules/molecules';
@@ -54,6 +55,106 @@
     align-self: center;
     width: 100%;
     max-width: 25rem;
+  }
+
+  &[data-cta-control-type='dropdown'] {
+    display: flex;
+    align-items: center;
+    gap: var(--size-spacing-3);
+    position: relative;
+    justify-content: center;
+
+    svg {
+      @include tokens.animate;
+    }
+
+    [data-header-theme] & {
+      color: var(--color-text);
+      border-color: var(--color-text);
+    }
+
+    [data-header-theme]:not([data-header-theme='one']) & {
+      background-color: transparent;
+    }
+
+    [data-header-theme='one'] & {
+      background-color: var(--color-gray-100);
+    }
+
+    [aria-expanded='true'] & {
+      background-color: transparent;
+      color: var(--color-action);
+      border-color: inherit;
+      border-radius: 0;
+      z-index: 2;
+
+      @media (max-width: tokens.$break-mobile-max) {
+        border-bottom-color: transparent;
+      }
+
+      svg {
+        transform: rotate(180deg);
+      }
+
+      @media (min-width: tokens.$break-mobile) {
+        &::before,
+        &::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+        }
+
+        &::before {
+          bottom: calc(var(--size-spacing-5) * -1);
+          left: calc(var(--border-thickness-2) * -1);
+          height: var(--size-spacing-5);
+          border-left: var(--border-thickness-2) solid;
+          background-color: var(--color-background);
+        }
+
+        &::after {
+          bottom: calc((var(--size-spacing-3) - 0.1rem) * -1);
+          right: calc(var(--border-thickness-2) * -1);
+          height: var(--size-spacing-3);
+          border-right: var(--border-thickness-2) solid;
+          background-color: var(--color-background);
+        }
+
+        &.utility-nav__dropdown-direction-left {
+          &::before {
+            bottom: calc((var(--size-spacing-3) - 0.1rem) * -1);
+            left: calc(var(--border-thickness-2) * -1);
+            height: var(--size-spacing-3);
+            border-left: var(--border-thickness-2) solid;
+          }
+
+          &::after {
+            bottom: calc(var(--size-spacing-5) * -1);
+            right: calc(var(--border-thickness-2) * -1);
+            height: var(--size-spacing-5);
+            border-right: var(--border-thickness-2) solid;
+          }
+        }
+      }
+    }
+
+    [data-header-theme='one'] [aria-expanded='true'] & {
+      background-color: var(--color-gray-100);
+      border-color: var(--menu-link-color);
+      color: var(--menu-link-color);
+
+      @media (min-width: tokens.$break-mobile) {
+        &::before {
+          background-color: var(--color-gray-100);
+          border-color: var(--menu-link-color) !important;
+        }
+
+        &::after {
+          background-color: var(--color-gray-100);
+          border-color: var(--menu-link-color) !important;
+        }
+      }
+    }
   }
 }
 
@@ -167,94 +268,15 @@
       border-color: var(--color-action);
       z-index: 1;
     }
+
+    [data-header-theme='one'] & {
+      background-color: var(--color-gray-100);
+    }
   }
 }
 
 .utility-nav-dropdown__menu {
   @include atoms.list-reset;
-}
-
-.utility-nav__cta[data-cta-control-type='dropdown'] {
-  display: flex;
-  align-items: center;
-  gap: var(--size-spacing-3);
-  position: relative;
-  justify-content: center;
-
-  svg {
-    @include tokens.animate;
-  }
-
-  [aria-expanded='true'] & {
-    background-color: transparent;
-    color: var(--color-action);
-    border-color: inherit;
-    border-radius: 0;
-    z-index: 2;
-
-    @media (min-width: tokens.$break-mobile) {
-      &::before {
-        content: '';
-        position: absolute;
-        width: 100%;
-        bottom: calc(var(--size-spacing-5) * -1);
-        left: calc(var(--border-thickness-2) * -1);
-        height: var(--size-spacing-5);
-        border-left: var(--border-thickness-2) solid;
-        background-color: var(--color-basic-white);
-
-        // re-map the background color to the header theme.
-        [data-header-theme] & {
-          background-color: var(--color-background);
-        }
-      }
-
-      &::after {
-        content: '';
-        position: absolute;
-        width: 100%;
-
-        // math to get to 0.4rem from the bottom of the dropdown.
-        bottom: calc((var(--size-spacing-3) - 0.1rem) * -1);
-        right: calc(var(--border-thickness-2) * -1);
-        height: var(--size-spacing-3);
-        border-right: var(--border-thickness-2) solid;
-        background-color: var(--color-basic-white);
-
-        // re-map the background color to the header theme.
-        [data-header-theme] & {
-          background-color: var(--color-background);
-        }
-      }
-
-      // flip the border sides for the left dropdown.
-      &.utility-nav__dropdown-direction-left {
-        &::before {
-          // math to get to 0.4rem from the bottom of the dropdown.
-          bottom: calc((var(--size-spacing-3) - 0.1rem) * -1);
-          left: calc(var(--border-thickness-2) * -1);
-          height: var(--size-spacing-3);
-          border-left: var(--border-thickness-2) solid;
-        }
-
-        &::after {
-          bottom: calc(var(--size-spacing-5) * -1);
-          right: calc(var(--border-thickness-2) * -1);
-          height: var(--size-spacing-5);
-          border-right: var(--border-thickness-2) solid;
-        }
-      }
-    }
-
-    @media (max-width: tokens.$break-mobile-max) {
-      border-bottom-color: transparent;
-    }
-
-    svg {
-      // rotate the icon when the dropdown is open
-      transform: rotate(180deg);
-    }
-  }
 }
 
 .utility-nav-dropdown__menu--level-0 {
@@ -271,6 +293,7 @@
 
 .utility-nav-dropdown__item {
   display: block;
+  max-width: 100%;
   width: max-content;
 
   @media (max-width: tokens.$break-mobile-max) {
@@ -283,5 +306,27 @@
 
   &:hover {
     text-decoration: underline;
+  }
+}
+
+.utility-nav--examples {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-5);
+
+  .site-header:nth-child(1) {
+    z-index: 3;
+  }
+
+  .site-header:nth-child(2) {
+    z-index: 2;
+  }
+
+  .site-header:nth-child(3) {
+    z-index: 1;
+  }
+
+  .site-header__secondary {
+    border-width: 0;
   }
 }
