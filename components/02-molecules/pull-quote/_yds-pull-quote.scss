@@ -113,6 +113,10 @@ blockquote {
 
     @media (min-width: tokens.$break-mobile) {
       margin-left: 9rem;
+
+      .yds-two-column & {
+        margin-left: 0;
+      }
     }
 
     &::before {
