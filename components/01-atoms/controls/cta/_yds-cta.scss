@@ -28,6 +28,7 @@ $cta-outline-weights: (
   text-decoration: none;
   text-align: center;
   min-height: var(--size-click-target-minimum);
+  cursor: pointer;
 
   &:hover {
     background-color: var(--color-cta-bg-hover);
@@ -326,6 +327,23 @@ $cta-outline-weights: (
     &:hover,
     &:focus-visible {
       text-decoration: underline;
+    }
+  }
+
+  .yds-layout[data-component-theme]:not([data-component-theme='default']) & {
+    &[data-cta-style='filled'] {
+      --color-cta-text: var(--color-layout-theme);
+      --color-cta-text-hover: var(--color-layout-border);
+      --color-cta-bg: var(--color-layout-border);
+      --color-cta-bg-hover: transparent;
+      --color-cta-border: var(--color-layout-border);
+    }
+
+    &[data-cta-style='outline'] {
+      --color-cta-text: var(--color-layout-border);
+      --color-cta-text-hover: var(--color-layout-theme);
+      --color-cta-border: var(--color-layout-border);
+      --color-cta-bg-hover: var(--color-layout-border);
     }
   }
 }

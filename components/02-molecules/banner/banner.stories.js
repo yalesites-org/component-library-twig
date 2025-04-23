@@ -128,7 +128,7 @@ GrandHeroBanner.argTypes = {
   overlayVariation: {
     name: 'Content Overlay',
     type: 'select',
-    options: ['contained', 'full'],
+    options: ['contained', 'contained-narrow', 'full'],
   },
   size: {
     name: 'Content Size',

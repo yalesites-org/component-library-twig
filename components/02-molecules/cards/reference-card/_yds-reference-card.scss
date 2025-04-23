@@ -366,6 +366,10 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       grid-column: 3 / -1;
       grid-row: 2 / 7;
       align-self: center;
+
+      .yds-two-column & {
+        grid-column: 2 / -1;
+      }
     }
   }
 
