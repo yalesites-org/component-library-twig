@@ -20,10 +20,12 @@ table caption {
 
 tr:nth-child(even) {
   background-color: var(--color-gray-100);
+  color: var(--color-basic-black);
 }
 
 th {
   background-color: var(--color-gray-200);
+  color: var(--color-basic-black);
   padding: var(--size-spacing-3) var(--size-spacing-5);
   font-weight: var(--font-weights-mallory-medium);
   border: var(--size-thickness-1) solid var(--color-gray-200);
