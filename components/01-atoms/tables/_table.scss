@@ -79,9 +79,33 @@ th {
   }
 
   tbody & {
-    left: 0;
-    border-right: var(--size-thickness-2) solid var(--header-cell-border);
-    border-bottom-color: var(--header-row-border);
+    left: -1px;
+    border-bottom: none;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: var(--size-thickness-2);
+      background-color: var(--header-cell-border);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      right: -1px;
+      width: var(--size-thickness-2);
+      height: calc(100% + #{var(--size-thickness-2)});
+      background-color: var(--header-cell-border);
+    }
+  }
+
+  table:has(tbody th) thead &:first-child,
+  tbody tr:last-child &:first-child {
+    border-bottom: var(--size-thickness-1) solid var(--header-cell-border);
   }
 }
 
