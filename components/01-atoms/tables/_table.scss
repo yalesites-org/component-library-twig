@@ -3,10 +3,22 @@
 table {
   @include tokens.body-s-condensed;
 
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
   caption-side: bottom;
   border-collapse: collapse;
   text-align: left;
-  width: 100%;
+
+  --header-cell-border: var(--color-gray-700);
+  --header-row-border: var(--color-gray-300);
+  --header-cell-bg: var(--color-gray-200);
+  --header-row-bg: var(--color-gray-200);
+
+  [data-component-theme]:not([data-component-theme='default']) & {
+    --header-cell-border: var(--color-gray-200);
+    --header-row-border: var(--color-gray-400);
+  }
 }
 
 .table-wrapper {
@@ -18,31 +30,9 @@ table caption {
   margin-top: var(--size-spacing-4);
 }
 
-tr:nth-child(even) {
-  background-color: var(--color-gray-100);
-}
-
-th {
-  background-color: var(--color-gray-200);
-  padding: var(--size-spacing-3) var(--size-spacing-5);
-  font-weight: var(--font-weights-mallory-medium);
-  border: var(--size-thickness-1) solid var(--color-gray-200);
-  position: sticky;
-
-  thead & {
-    top: 0;
-    border-bottom: var(--size-thickness-2) solid var(--color-gray-700);
-  }
-
-  tbody & {
-    left: 0;
-    border-right: var(--size-thickness-2) solid var(--color-gray-700);
-  }
-}
-
 td {
   padding: var(--size-spacing-3) var(--size-spacing-5);
-  border: var(--size-thickness-1) solid var(--color-gray-300);
+  border: var(--size-thickness-1) solid var(--header-row-border);
   min-width: 8rem;
 
   &:first-child {
@@ -52,8 +42,51 @@ td {
   &:last-child {
     border-right: none;
   }
+}
 
-  tbody tr:last-child & {
-    border-bottom: var(--size-thickness-2) solid var(--color-gray-700);
+tr {
+  color: var(--color-gray-700);
+  background-color: transparent;
+
+  &:nth-child(even) td {
+    background-color: var(--header-row-bg);
   }
+
+  [data-component-theme]:not(
+      [data-component-theme='default'],
+      [data-component-theme='two']
+    )
+    & {
+    color: var(--color-basic-white);
+  }
+
+  tbody &:last-child td {
+    border-bottom: var(--size-thickness-2) solid var(--header-cell-border);
+  }
+}
+
+th {
+  background-color: var(--header-cell-bg);
+  padding: var(--size-spacing-3) var(--size-spacing-5);
+  font-weight: var(--font-weights-mallory-medium);
+  border: var(--size-thickness-1) solid var(--header-cell-border);
+  position: sticky;
+  color: inherit;
+
+  thead & {
+    top: 0;
+    border-bottom: var(--size-thickness-2) solid var(--header-cell-border);
+  }
+
+  tbody & {
+    left: 0;
+    border-right: var(--size-thickness-2) solid var(--header-cell-border);
+    border-bottom-color: var(--header-row-border);
+  }
+}
+
+.gin--dark-mode .table-wrapper tr:hover,
+.gin--dark-mode .table-wrapper tr:focus-within {
+  background: unset;
+  color: unset;
 }
