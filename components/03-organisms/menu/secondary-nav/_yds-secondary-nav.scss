@@ -353,6 +353,12 @@ $secondary-menu-sub-max-width: 19rem;
         flex-shrink: 0;
         display: flex;
       }
+
+      &:has([class$='nav__item--active'])
+        button.secondary-nav__toggle--with-sub {
+        border-bottom: var(--border-thickness-4) solid
+          var(--color-navigation-border);
+      }
     }
   }
 
@@ -519,8 +525,13 @@ $secondary-menu-sub-max-width: 19rem;
 // Active trail styles.
 .secondary-nav__link.secondary-nav__link--active {
   color: var(--menu-link-color);
-  text-decoration: underline;
   text-decoration-thickness: var(--border-thickness-2);
+
+  &.secondary-nav__link--level-0 {
+    // Provide underline treatment on the border instead of on the link.
+    border-bottom: var(--border-thickness-4) solid
+      var(--color-navigation-border);
+  }
 }
 
 .secondary-nav__link:not(
