@@ -356,12 +356,8 @@ $secondary-menu-sub-max-width: 19rem;
 
       &:has([class$='nav__item--active'])
         button.secondary-nav__toggle--with-sub {
-        font-weight: var(--font-weights-yalenew-bold);
-
-        &[aria-expanded='false'] {
-          border-bottom: var(--border-thickness-4) solid
-            var(--color-navigation-border);
-        }
+        border-bottom: var(--border-thickness-4) solid
+          var(--color-navigation-border);
       }
     }
   }
