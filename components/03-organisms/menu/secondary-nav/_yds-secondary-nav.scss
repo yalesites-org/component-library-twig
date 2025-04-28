@@ -334,7 +334,7 @@ $secondary-menu-sub-max-width: 19rem;
         var(--color-navigation-border);
       border-right: var(--border-thickness-1) solid
         var(--color-navigation-border);
-      border-bottom: var(--border-thickness-4) solid
+      border-bottom: var(--border-thickness-1) solid
         var(--color-navigation-border);
     }
 
@@ -347,6 +347,17 @@ $secondary-menu-sub-max-width: 19rem;
 .secondary-nav__item {
   &--level-0 {
     @include tokens.body-s;
+
+    &:has(.secondary-nav__item--active),
+    &.secondary-nav__item--active {
+      border-bottom: var(--border-thickness-2) solid
+        var(--color-navigation-border);
+
+      & button,
+      & a.secondary-nav__link--active {
+        font-weight: var(--font-weights-yalenew-bold);
+      }
+    }
 
     .in-this-section & {
       @media (min-width: tokens.$break-mobile) {
