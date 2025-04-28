@@ -83,7 +83,7 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   // Increases z-index only when expanded
   // to prevent overlap with other components.
-  &:has([aria-expanded='true']) {
+  &:has(.secondary-nav__toggle[aria-expanded='true']) {
     z-index: 500;
   }
 
