@@ -182,6 +182,10 @@ $secondary-menu-sub-max-width: 19rem;
         margin-top: var(--size-spacing-3);
       }
     }
+
+    // & ul:first-of-type {
+    //   margin-left: calc(var(--size-spacing-5) * -1);
+    // }
   }
 }
 
@@ -350,9 +354,6 @@ $secondary-menu-sub-max-width: 19rem;
 
     &:has(.secondary-nav__item--active),
     &.secondary-nav__item--active {
-      border-bottom: var(--border-thickness-2) solid
-        var(--color-navigation-border);
-
       & button,
       & a.secondary-nav__link--active {
         font-weight: var(--font-weights-yalenew-bold);
