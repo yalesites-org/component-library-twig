@@ -9,6 +9,7 @@
  # - grand_hero__link__content
  # - grand_hero__link__url
  # - video_background__button__background_color
+ # - grand_hero__replace_heading: Yes, No (default)
  #
  # Available Blocks:
  # - grand_hero__media
@@ -17,7 +18,7 @@
 {% set grand_hero__base_class = 'grand-hero-banner' %}
 {% set grand_hero__content__background = grand_hero__content__background|default('one') %}
 {% set grand_hero__overlay_variation = grand_hero__overlay_variation|default('contained') %}
-{% set grand_hero__display__mode = grand_hero__display__mode|default('text') %}
+{% set grand_hero__replace_heading = grand_hero__replace_heading|default('No') %}
 
 {% set grand_hero__size = grand_hero__size|default('full') %}
 
@@ -59,7 +60,7 @@
         <div {{ bem('content', [], grand_hero__base_class) }}>
           <div {{ bem('content-inner', [], grand_hero__base_class) }}>
 
-            {% if content.field_overlay_png.0['#media'] is defined and grand_hero__display__mode == 'Image' %}
+            {% if content.field_overlay_png.0['#media'] is defined and grand_hero__replace_heading == 'Yes' %}
               {% set overlay_media = content.field_overlay_png.0['#media'] %}
               {% if overlay_media.field_media_image.entity is defined %}
                 {% set overlay_url = overlay_media.field_media_image.entity.uri.value|image_style('grand_hero_overlay_image') %}
@@ -75,7 +76,7 @@
               {% endif %}
             {% endif %}
 
-            {% if grand_hero__heading is not empty and grand_hero__display__mode == 'Text' %}
+            {% if grand_hero__heading is not empty and grand_hero__replace_heading == 'No' %}
               {% include "@atoms/typography/headings/yds-heading.twig" with {
                 heading__level: grand_hero__heading__level|default('2'),
                 heading__blockname: grand_hero__base_class,
