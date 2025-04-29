@@ -15,7 +15,16 @@ table {
   --header-cell-bg: var(--color-gray-200);
   --header-row-bg: var(--color-gray-200);
 
-  [data-component-theme]:not([data-component-theme='default']) & {
+  [data-component-theme='two'] & {
+    --header-cell-border: var(--color-gray-600);
+    --header-row-border: var(--color-gray-500);
+  }
+
+  [data-component-theme]:not(
+      [data-component-theme='default'],
+      [data-component-theme='two']
+    )
+    & {
     --header-cell-border: var(--color-gray-200);
     --header-row-border: var(--color-gray-400);
   }
@@ -88,7 +97,7 @@ th {
       bottom: -1px;
       left: 0;
       right: 0;
-      height: var(--size-thickness-2);
+      height: var(--size-thickness-1);
       background-color: var(--header-cell-border);
     }
 

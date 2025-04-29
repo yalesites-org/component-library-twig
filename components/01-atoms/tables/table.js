@@ -28,8 +28,15 @@ Drupal.behaviors.table = {
       const table = item.querySelector('table');
       const bg = styles.backgroundColor;
 
-      table.style.setProperty('--header-cell-bg', darkenRgb(bg, 0.6));
-      table.style.setProperty('--header-row-bg', darkenRgb(bg, 0.7));
+      const { componentTheme } = layout.dataset;
+
+      if (componentTheme !== 'two') {
+        table.style.setProperty('--header-cell-bg', darkenRgb(bg, 0.6));
+        table.style.setProperty('--header-row-bg', darkenRgb(bg, 0.7));
+      } else {
+        table.style.setProperty('--header-cell-bg', darkenRgb(bg, 0.9));
+        table.style.setProperty('--header-row-bg', darkenRgb(bg, 0.9));
+      }
     });
   },
 };
