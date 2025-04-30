@@ -29,7 +29,9 @@ Drupal.behaviors.inThisSection = {
      * overflow situation is in play.
      */
     function setOverflow() {
-      const secondaryNavLeft = secondaryNav.getBoundingClientRect().left;
+      const leftNavOffset = '16';
+      const secondaryNavLeft =
+        secondaryNav.getBoundingClientRect().left - leftNavOffset;
       const secondaryNavRight = secondaryNav.getBoundingClientRect().right;
       const firstSecondaryNavLeft = secondaryNav
         .querySelector('.secondary-nav__item--level-0:first-child')
