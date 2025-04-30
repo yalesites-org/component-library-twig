@@ -83,7 +83,7 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   // Increases z-index only when expanded
   // to prevent overlap with other components.
-  &:has([aria-expanded='true']) {
+  &:has(.secondary-nav__toggle[aria-expanded='true']) {
     z-index: 500;
   }
 
@@ -164,6 +164,10 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   @media (min-width: tokens.$break-mobile) {
     border-bottom: var(--border-thickness-1) solid
       var(--color-navigation-border);
+  }
+
+  & .secondary-nav__menu--level-0:first-of-type {
+    margin-left: calc(var(--size-spacing-5) * -1);
   }
 }
 

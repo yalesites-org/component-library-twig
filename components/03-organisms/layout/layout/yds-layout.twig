@@ -15,6 +15,7 @@
 
 {% set layout__attributes = {
   'data-component-has-divider': layout__divider == 'true' ? 'true' : 'false',
+  'data-component-padding': layout__padding|default('default'),
   'data-component-theme': component__theme|default('default'),
   'data-component-layout': component__layout|default('fifty-fifty'),
   'data-component-width': component__width|default('site'),
