@@ -76,7 +76,7 @@
               {% endif %}
             {% endif %}
 
-            {% if grand_hero__heading is not empty and grand_hero__replace_heading == 'No' %}
+            {% if grand_hero__heading is not empty and grand_hero__replace_heading == 'No' or grand_hero__heading is not empty and grand_hero__replace_heading == 'Yes' and content.field_overlay_png.0['#media'] is not defined %}
               {% include "@atoms/typography/headings/yds-heading.twig" with {
                 heading__level: grand_hero__heading__level|default('2'),
                 heading__blockname: grand_hero__base_class,
