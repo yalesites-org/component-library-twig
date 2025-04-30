@@ -26,6 +26,10 @@ $wrapped-image-offset-max: 1550px;
     padding-inline-start: 0;
     padding-inline-end: 0;
   }
+
+  .page-meta + .layout &:first-child {
+    margin-block-start: var(--spacing-page-section);
+  }
 }
 
 .wrapped-image__inner {

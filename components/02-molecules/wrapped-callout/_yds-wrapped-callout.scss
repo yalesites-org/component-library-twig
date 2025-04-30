@@ -74,6 +74,10 @@ $wrapped-callout-component-themes: map.deep-get(
   &[data-component-theme='five'] {
     --color-wrapped-callout-theme: var(--color-slot-five);
   }
+
+  .page-meta + .layout &:first-child {
+    margin-block-start: var(--spacing-page-section);
+  }
 }
 
 .wrapped-callout__content-wrapper {

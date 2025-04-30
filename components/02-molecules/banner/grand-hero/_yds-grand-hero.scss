@@ -163,6 +163,10 @@ $break-grand-hero-banner: tokens.$break-m;
       --color-link-visited-hover: var(--color-purple-visited-hover);
     }
   }
+
+  .page-meta + .layout &:first-child {
+    margin-block-start: var(--spacing-page-section);
+  }
 }
 
 .grand-hero-banner__image {

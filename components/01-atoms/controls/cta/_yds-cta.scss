@@ -374,3 +374,9 @@ $cta-outline-weights: (
     margin-bottom: 0;
   }
 }
+
+.component-wrapper--cta-group {
+  .page-meta + .layout &:first-child {
+    margin-block-start: var(--spacing-page-section);
+  }
+}

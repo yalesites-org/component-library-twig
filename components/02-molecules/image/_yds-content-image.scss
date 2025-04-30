@@ -9,4 +9,8 @@
       max-width: var(--size-component-layout-width-content);
     }
   }
+
+  .page-meta + .layout &:first-child {
+    margin-block-start: var(--spacing-page-section);
+  }
 }

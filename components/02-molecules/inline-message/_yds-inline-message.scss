@@ -76,6 +76,10 @@ $component-inline-message-themes: map.deep-get(
     --color-inline-message-background: var(--color-slot-five);
     --color-inline-message-text: var(--color-slot-eight);
   }
+
+  .page-meta + .layout &:first-child {
+    margin-block-start: var(--spacing-page-section);
+  }
 }
 
 .inline-message__inner {
