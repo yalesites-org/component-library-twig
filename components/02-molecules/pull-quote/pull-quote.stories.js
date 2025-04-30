@@ -21,10 +21,17 @@ export default {
       options: ['bar-left', 'bar-right', 'quote-left'],
       type: 'select',
     },
+    sectionTheme: {
+      name: 'Section Theme',
+      type: 'select',
+      options: ['default', 'one', 'two', 'three', 'four'],
+      control: { type: 'select' },
+    },
     accentColor: {
       name: 'Component Theme (dial)',
       options: ['one', 'two', 'three'],
       type: 'select',
+      if: { arg: 'sectionTheme', eq: 'default' },
     },
   },
   args: {
@@ -32,10 +39,17 @@ export default {
     attribution: pullQuoteData.pull_quote__attribution,
     style: 'bar-left',
     accentColor: 'one',
+    sectionTheme: 'default',
   },
 };
 
-export const pullQuote = ({ style, accentColor, quote, attribution }) => `
+export const pullQuote = ({
+  style,
+  accentColor,
+  quote,
+  attribution,
+  sectionTheme,
+}) => `
   ${pullQuoteTwig({
     pull_quote__quote: pullQuoteData.pull_quote__quote,
     pull_quote__attribution: pullQuoteData.pull_quote__attribution,
@@ -49,14 +63,19 @@ export const pullQuote = ({ style, accentColor, quote, attribution }) => `
     pull_quote__attribution: pullQuoteData.pull_quote__attribution,
     pull_quote__style: 'quote-left',
   })}
-  <div style="--color-pull-quote-accent: var(--color-${accentColor})">
-    <h2>Playground</h2>
-    <p>Use the StoryBook controls to see the quote below implement the available variations and colors.</p>
-    ${pullQuoteTwig({
-      pull_quote__quote: quote,
-      pull_quote__attribution: attribution,
-      pull_quote__style: style,
-      pull_quote__accent_theme: accentColor,
-    })}
+  <div data-component-has-divider="false" data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
+    <div class="yds-layout__inner" style="--color-pull-quote-accent: var(--color-${accentColor})">
+      <div class="yds-layout__primary">
+        <h2>Playground</h2>
+        <p>Use the StoryBook controls to see the quote below implement the available variations and colors.</p>
+
+        ${pullQuoteTwig({
+          pull_quote__quote: quote,
+          pull_quote__attribution: attribution,
+          pull_quote__style: style,
+          pull_quote__accent_theme: accentColor,
+        })}
+      </div>
+    </div>
   </div>
 `;

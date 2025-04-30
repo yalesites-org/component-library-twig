@@ -3,6 +3,7 @@
  # - text_with_image__width: feature (default) or highlight
  # - text_with_image__position: image-left (default) or image-right
  # - text_with_image__focus: equal (default), image, or text
+ # - text_with_image__style: inline (default) or offset
  #
  # Available variables:
  # - text_with_image__overline (optional)
@@ -26,6 +27,7 @@
   'data-image-position': text_with_image__position|default('image-left'),
   'data-component-width': text_with_image__width|default('site'),
   'data-component-theme': text_with_image__theme|default('default'),
+  'data-image-style': text_with_image__style|default('inline'),
   'data-content-vertical-align': text_with_image__vertical_align|default('top'),
   class: bem(text_with_image__base_class)
 } %}

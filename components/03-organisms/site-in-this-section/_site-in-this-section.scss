@@ -81,6 +81,12 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     }
   }
 
+  // Increases z-index only when expanded
+  // to prevent overlap with other components.
+  &:has([aria-expanded='true']) {
+    z-index: 500;
+  }
+
   // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
@@ -159,6 +165,10 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     border-bottom: var(--border-thickness-1) solid
       var(--color-navigation-border);
   }
+
+  & .secondary-nav__menu--level-0:first-of-type {
+    margin-left: calc(var(--size-spacing-5) * -1);
+  }
 }
 
 .in-this-section__control {
@@ -193,9 +203,12 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       opacity: 1;
     }
 
-    [data-scroll-indicator='none'],
-    [data-scroll-indicator='right'] {
+    [data-scroll-indicator='none'] &,
+    [data-scroll-indicator='right'] & {
       @include tokens.animate-hidden;
+
+      pointer-events: none;
+      user-select: none;
     }
   }
 
@@ -212,6 +225,9 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     [data-scroll-indicator='none'] &,
     [data-scroll-indicator='left'] & {
       @include tokens.animate-hidden;
+
+      pointer-events: none;
+      user-select: none;
     }
   }
 
