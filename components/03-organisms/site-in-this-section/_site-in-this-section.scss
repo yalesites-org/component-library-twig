@@ -165,6 +165,10 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     border-bottom: var(--border-thickness-1) solid
       var(--color-navigation-border);
   }
+
+  & .secondary-nav__menu--level-0:first-of-type {
+    margin-left: calc(var(--size-spacing-5) * -1);
+  }
 }
 
 .in-this-section__control {
