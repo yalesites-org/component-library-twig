@@ -346,3 +346,7 @@ $break-grand-hero-banner: tokens.$break-m;
     margin-top: var(--size-spacing-6);
   }
 }
+
+.grand-hero-banner__overlay-image img {
+  width: auto;
+}

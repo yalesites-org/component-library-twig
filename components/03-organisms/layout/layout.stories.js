@@ -30,6 +30,17 @@ export default {
       options: ['fifty-fifty', 'thirty-thirty-thirty', 'seventy-thirty'],
       control: { type: 'select' },
     },
+    layoutPadding: {
+      name: 'Padding',
+      type: 'select',
+      options: {
+        'Default (current padding)': 'default',
+        'No top padding': 'no-top',
+        'No bottom padding': 'no-bottom',
+        'No padding (top and bottom)': 'no-padding',
+      },
+      control: { type: 'select' },
+    },
     theme: {
       name: 'Component Theme',
       type: 'select',
@@ -40,17 +51,19 @@ export default {
   args: {
     divider: false,
     layoutOption: 'fifty-fifty',
+    layoutPadding: 'default',
     theme: 'default',
   },
 };
 
 export const TwoColumn = () => twoColumnTwig(textData);
-export const layout = ({ divider, theme, layoutOption }) =>
+export const layout = ({ divider, theme, layoutOption, layoutPadding }) =>
   layoutTwig({
     ...textData,
     ...accordionData,
     ...imageData.responsive_images['4x3'],
     layout__divider: divider ? 'true' : 'false',
+    layout__padding: layoutPadding,
     component__theme: theme,
     component__layout: layoutOption,
   });

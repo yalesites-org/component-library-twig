@@ -140,6 +140,16 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     margin-bottom: var(--size-spacing-10);
   }
 
+  &[data-component-padding='no-top'],
+  &[data-component-padding='no-padding'] {
+    margin-top: 0;
+  }
+
+  &[data-component-padding='no-bottom'],
+  &[data-component-padding='no-padding'] {
+    margin-bottom: 0;
+  }
+
   // Styles applied only if the HTML element has the 'yds-storybook-cl' class  html:has(.yds-storybook-cl) &,
   html:has(.yds-storybook-cl) & {
     margin-block: 0;
@@ -149,6 +159,16 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
 .yds-layout__inner {
   padding-block-start: var(--size-spacing-10);
   padding-block-end: var(--size-spacing-10);
+
+  [data-component-padding='no-top'] > &,
+  [data-component-padding='no-padding'] > & {
+    padding-block-start: 0;
+  }
+
+  [data-component-padding='no-bottom'] > &,
+  [data-component-padding='no-padding'] > & {
+    padding-block-end: 0;
+  }
 
   @media (min-width: $break-layout-layout) {
     display: flex;
