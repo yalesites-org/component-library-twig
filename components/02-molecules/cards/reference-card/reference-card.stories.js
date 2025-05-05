@@ -57,10 +57,6 @@ export default {
       name: 'Show Tags',
       type: 'boolean',
     },
-    showThumbnail: {
-      name: 'Show Thumbnail',
-      type: 'boolean',
-    },
     withImage: {
       name: 'With Image',
       type: 'boolean',
@@ -82,7 +78,6 @@ export default {
     showEyebrow: false,
     showCategories: false,
     showTags: false,
-    showThumbnail: true,
     showPronouns: false,
     date: referenceCardData.reference_card__date,
   },
@@ -100,7 +95,6 @@ export const PostCard = ({
   showCategories,
   showEyebrow,
   showTags,
-  showThumbnail,
   showPronouns,
   overlayText,
 }) => `
@@ -122,7 +116,6 @@ export const PostCard = ({
         show_categories: showCategories ? 'true' : 'false',
         show_eyebrow: showEyebrow ? 'true' : 'false',
         show_tags: showTags ? 'true' : 'false',
-        show_thumbnail: showThumbnail ? 'true' : 'false',
         show_pronouns: showPronouns ? 'true' : 'false',
         reference_card__categories:
           referenceCardData.reference_card__categories,
