@@ -57,8 +57,14 @@ tr {
   color: var(--color-gray-700);
   background-color: transparent;
 
-  &:nth-child(even) td {
-    background-color: var(--header-row-bg);
+  tbody &:last-child td {
+    border-bottom: var(--size-thickness-2) solid var(--header-cell-border);
+  }
+
+  .yds-layout & {
+    &:nth-child(even) td {
+      background-color: var(--header-row-bg);
+    }
   }
 
   [data-component-theme]:not(
@@ -67,10 +73,6 @@ tr {
     )
     & {
     color: var(--color-basic-white);
-  }
-
-  tbody &:last-child td {
-    border-bottom: var(--size-thickness-2) solid var(--header-cell-border);
   }
 }
 
