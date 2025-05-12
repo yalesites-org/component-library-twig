@@ -15,113 +15,90 @@ table {
   --header-cell-bg: var(--color-gray-200);
   --header-row-bg: var(--color-gray-200);
 
-  [data-component-theme='two'] & {
-    --header-cell-border: var(--color-gray-600);
-    --header-row-border: var(--color-gray-500);
-  }
+  --table-header-row-bg: var(--color-gray-200);
+  --table-header-row-fg: var(--color-gray-800);
 
-  [data-component-theme]:not(
-      [data-component-theme='default'],
-      [data-component-theme='two']
-    )
-    & {
-    --header-cell-border: var(--color-gray-200);
-    --header-row-border: var(--color-gray-400);
-  }
-}
+  --table-cell-row-bg: var(--color-basic-white);
+  --table-cell-row-fg: var(--table-header-row-fg);
+  --table-cell-row-bg-alt: var(--color-gray-100);
 
-.table-wrapper {
-  overflow-x: auto;
-}
+  tr {
+    background-color: var(--table-cell-row-bg);
 
-table caption {
-  text-align: left;
-  margin-top: var(--size-spacing-4);
-}
+    &:nth-child(odd) {
+      background-color: var(--table-cell-row-bg-alt);
+    }
 
-td {
-  padding: var(--size-spacing-3) var(--size-spacing-5);
-  border: var(--size-thickness-1) solid var(--header-row-border);
-  min-width: 8rem;
+    &:last-child td, thead &:first-of-type th, tbody &:last-child th {
+      border-bottom: var(--size-thickness-2) solid var(--header-cell-border);
+    }
 
-  &:first-child {
-    border-left: none;
-  }
-
-  &:last-child {
-    border-right: none;
-  }
-}
-
-tr {
-  tbody &:last-child td {
-    border-bottom: var(--size-thickness-2) solid var(--header-cell-border);
-  }
-
-  .yds-layout & {
-    color: var(--color-gray-700);
-    background-color: transparent;
-
-    &:nth-child(even) td {
-      background-color: var(--header-row-bg);
+    tbody & {
+      &:first-of-type td {
+        border-bottom: none;
+      }
     }
   }
 
-  [data-component-theme]:not(
-      [data-component-theme='default'],
-      [data-component-theme='two']
-    )
-    & {
-    color: var(--color-basic-white);
-  }
-}
+  th {
+    background-color: var(--header-cell-bg);
+    padding: var(--size-spacing-3) var(--size-spacing-5);
+    font-weight: var(--font-weights-mallory-medium);
+    border: none;
+    position: sticky;
+    color: inherit;
 
-th {
-  background-color: var(--header-cell-bg);
-  padding: var(--size-spacing-3) var(--size-spacing-5);
-  font-weight: var(--font-weights-mallory-medium);
-  border: var(--size-thickness-1) solid var(--header-cell-border);
-  position: sticky;
-  color: inherit;
-
-  thead & {
-    top: 0;
-    border-bottom: var(--size-thickness-2) solid var(--header-cell-border);
-  }
-
-  tbody & {
-    left: -1px;
-    border-bottom: none;
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      right: 0;
-      height: var(--size-thickness-1);
-      background-color: var(--header-cell-border);
+    thead & {
+      top: 0;
+      border-bottom: var(--size-thickness-2) solid var(--header-cell-border);
     }
 
-    &::before {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      right: -1px;
-      width: var(--size-thickness-2);
-      height: calc(100% + #{var(--size-thickness-2)});
-      background-color: var(--header-cell-border);
+    tbody tr & {
+      left: -1px;
+      border-bottom: none;
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: var(--size-thickness-1);
+        background-color: var(--header-cell-border);
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        right: -1px;
+        width: var(--size-thickness-2);
+        height: calc(100% + #{var(--size-thickness-2)});
+        background-color: var(--header-cell-border);
+      }
     }
   }
 
-  table:has(tbody th) thead &:first-child,
-  tbody tr:last-child &:first-child {
-    border-bottom: var(--size-thickness-1) solid var(--header-cell-border);
-  }
-}
+  td {
+    padding: var(--size-spacing-3) var(--size-spacing-5);
+    font-weight: var(--font-weights-mallory-compact);
+    border: var(--size-thickness-1) solid var(--header-row-border);
+    min-width: 8rem;
 
-.gin--dark-mode .table-wrapper tr:hover,
-.gin--dark-mode .table-wrapper tr:focus-within {
-  background: unset;
-  color: unset;
+    &:first-child {
+      border-left: none;
+    }
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  table caption {
+    text-align: left;
+    margin-top: var(--size-spacing-4);
+  }
 }

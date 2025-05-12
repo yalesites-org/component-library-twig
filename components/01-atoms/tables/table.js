@@ -30,13 +30,43 @@ Drupal.behaviors.table = {
 
       const { componentTheme } = layout.dataset;
 
-      if (componentTheme !== 'two') {
-        table.style.setProperty('--header-cell-bg', darkenRgb(bg, 0.6));
-        table.style.setProperty('--header-row-bg', darkenRgb(bg, 0.7));
-      } else {
-        table.style.setProperty('--header-cell-bg', darkenRgb(bg, 0.9));
-        table.style.setProperty('--header-row-bg', darkenRgb(bg, 0.9));
-      }
+      const accordionItem = item.closest('.accordion-item');
+      const accordionStyles = window.getComputedStyle(accordionItem);
+      const accordionBg = accordionStyles.backgroundColor;
+
+      console.log('layout', layout);
+      console.log('componentTheme', componentTheme);
+      console.log('bg', bg);
+      console.log('styles', styles);
+      console.log('table', table);
+      console.log('darkenRgb', darkenRgb(bg, 0.6));
+      console.log('darkenRgb', darkenRgb(bg, 0.7));
+      console.log('darkenRgb', darkenRgb(bg, 0.9));
+    
+
+      console.log('accordionItem', accordionItem);
+      console.log('accordionStyles', accordionStyles);
+      console.log('accordionBg', accordionBg);
+
+      // if (componentTheme !== 'two') {
+      //   if (accordionItem) {
+      //     table.style.setProperty('--header-cell-bg', accordionBg, 0.6);
+      //     table.style.setProperty('--header-row-bg', accordionBg, 0.7);
+      //   }
+      //   else {
+      //     table.style.setProperty('--header-cell-bg', darkenRgb(bg, 0.6));
+      //     table.style.setProperty('--header-row-bg', darkenRgb(bg, 0.7));
+      //   }
+      // } else {
+      //   if (accordionItem) {
+      //     table.style.setProperty('--header-cell-bg', accordionBg, 0.9);
+      //     table.style.setProperty('--header-row-bg', accordionBg, 0.9);
+      //   }
+      //   else {
+      //     table.style.setProperty('--header-cell-bg', darkenRgb(bg, 0.9));
+      //     table.style.setProperty('--header-row-bg', darkenRgb(bg, 0.9));
+      //   }
+      // }
     });
   },
 };

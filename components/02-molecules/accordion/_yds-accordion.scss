@@ -26,6 +26,8 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
       --color-accordion-accent: var(--color-slot-one);
       --color-heading: var(--color-gray-800);
+      --table-cell-bg: var(--color-accordion-accent);
+      --table-cell-fg: var(--color-heading);
     }
   }
 
