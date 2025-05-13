@@ -54,11 +54,15 @@ export const PostArticle = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
+  showSocialMediaSharingLinks = false,
 }) =>
   postArticleTwig({
     site_name: siteName,
     page_title__heading: pageTitle,
     page_title__meta: meta,
+    page_title__show_social_media_sharing_links: showSocialMediaSharingLinks
+      ? 'true'
+      : 'false',
     site_animate_components: allowAnimatedItems,
     site_header__border_thickness: headerBorderThickness,
     site_header__branding_link: 'https://www.yale.edu',
@@ -88,6 +92,16 @@ export const PostArticle = ({
     ...socialLinksData,
     ...referenceCardData,
   });
+PostArticle.argTypes = {
+  showSocialMediaSharingLinks: {
+    name: 'Show Social Media Sharing Links',
+    type: 'boolean',
+    defaultValue: false,
+  },
+};
+PostArticle.args = {
+  showSocialMediaSharingLinks: false,
+};
 
 export const postGridCustom = ({
   allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
