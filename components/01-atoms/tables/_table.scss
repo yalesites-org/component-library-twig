@@ -1,5 +1,9 @@
 @use '../../00-tokens/tokens';
 
+.table-wrapper {
+  overflow-x: auto;
+}
+
 table {
   @include tokens.body-s-condensed;
 
@@ -20,108 +24,52 @@ table {
     --header-row-border: var(--color-gray-500);
   }
 
-  [data-component-theme]:not(
-      [data-component-theme='default'],
-      [data-component-theme='two']
-    )
-    & {
-    --header-cell-border: var(--color-gray-200);
-    --header-row-border: var(--color-gray-400);
-  }
-}
-
-.table-wrapper {
-  overflow-x: auto;
-}
-
-table caption {
-  text-align: left;
-  margin-top: var(--size-spacing-4);
-}
-
-td {
-  padding: var(--size-spacing-3) var(--size-spacing-5);
-  border: var(--size-thickness-1) solid var(--header-row-border);
-  min-width: 8rem;
-
-  &:first-child {
-    border-left: none;
+  caption {
+    text-align: left;
+    margin-top: var(--size-spacing-4);
   }
 
-  &:last-child {
-    border-right: none;
-  }
-}
-
-tr {
-  tbody &:last-child td {
-    border-bottom: var(--size-thickness-2) solid var(--header-cell-border);
+  th,
+  td {
+    padding: var(--size-spacing-3) var(--size-spacing-5);
+    min-width: 8rem;
   }
 
-  .yds-layout & {
+  tbody th {
+    background-color: var(--header-row-bg);
     color: var(--color-gray-700);
-    background-color: transparent;
+    font-weight: var(--font-weights-mallory-medium);
+    border-right: var(--size-thickness-2) solid var(--header-cell-border);
+    border-bottom: none;
+  }
 
-    &:nth-child(even) td {
-      background-color: var(--header-row-bg);
+  thead tr {
+    background-color: var(--header-row-bg);
+    color: var(--color-gray-700);
+    font-weight: var(--font-weights-mallory-medium);
+    border-bottom: var(--size-thickness-2) solid var(--header-cell-border);
+
+    & th {
+      font-weight: var(--font-weights-mallory-medium);
     }
   }
 
-  [data-component-theme]:not(
-      [data-component-theme='default'],
-      [data-component-theme='two']
-    )
-    & {
-    color: var(--color-basic-white);
+  td {
+    border-bottom: var(--size-thickness-1) solid var(--header-row-border);
   }
-}
 
-th {
-  background-color: var(--header-cell-bg);
-  padding: var(--size-spacing-3) var(--size-spacing-5);
-  font-weight: var(--font-weights-mallory-medium);
-  border: var(--size-thickness-1) solid var(--header-cell-border);
-  position: sticky;
-  color: inherit;
+  tr:nth-child(odd) td {
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-700);
+  }
 
-  thead & {
-    top: 0;
+  tr:nth-child(even) td {
+    background-color: var(--color-basic-white);
+    color: var(--color-basic-black);
+  }
+
+  tbody tr:last-child td,
+  tbody tr:last-child th {
     border-bottom: var(--size-thickness-2) solid var(--header-cell-border);
   }
-
-  tbody & {
-    left: -1px;
-    border-bottom: none;
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      right: 0;
-      height: var(--size-thickness-1);
-      background-color: var(--header-cell-border);
-    }
-
-    &::before {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      right: -1px;
-      width: var(--size-thickness-2);
-      height: calc(100% + #{var(--size-thickness-2)});
-      background-color: var(--header-cell-border);
-    }
-  }
-
-  table:has(tbody th) thead &:first-child,
-  tbody tr:last-child &:first-child {
-    border-bottom: var(--size-thickness-1) solid var(--header-cell-border);
-  }
-}
-
-.gin--dark-mode .table-wrapper tr:hover,
-.gin--dark-mode .table-wrapper tr:focus-within {
-  background: unset;
-  color: unset;
 }
