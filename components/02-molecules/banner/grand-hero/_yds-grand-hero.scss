@@ -221,7 +221,7 @@ $break-grand-hero-banner: tokens.$break-m;
   [data-grand-hero-overlay-variation='contained'] &,
   [data-grand-hero-overlay-variation='contained-narrow'] & {
     // prettier-ignore
-    max-width: calc(var(--size-component-layout-width-max) + (var(--size-spacing-site-gutter) * 2) );
+    max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-site-gutter) * 2) );
   }
 
   [data-grand-hero-overlay-variation='full'] & {
@@ -345,4 +345,8 @@ $break-grand-hero-banner: tokens.$break-m;
     gap: var(--size-spacing-5);
     margin-top: var(--size-spacing-6);
   }
+}
+
+.grand-hero-banner__overlay-image img {
+  width: auto;
 }
