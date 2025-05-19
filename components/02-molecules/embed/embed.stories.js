@@ -14,7 +14,7 @@ export default {
     },
     type: {
       name: 'Type',
-      options: ['form', 'audio'],
+      options: ['form', 'audio', 'map'],
       type: 'select',
     },
     loading: {
@@ -84,3 +84,17 @@ export const EmbedMicrosoftForms = ({ width, type, loading }) =>
     embed__loading: loading,
     embed__type: type,
   });
+
+export const GoogleMaps = ({ width, type, loading }) =>
+  embedTwig({
+    embed__src:
+      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5993.31404257508!2d-72.92491802386455!3d41.316324371308916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e7d9b6cd624945%3A0xae34a2c4b4d30427!2sYale%20University!5e0!3m2!1sen!2sca!4v1746124034200!5m2!1sen!2sca',
+    embed__width: width,
+    embed__height: '100%',
+    embed__loading: loading,
+    embed__type: type,
+  });
+
+GoogleMaps.args = {
+  type: 'map',
+};
