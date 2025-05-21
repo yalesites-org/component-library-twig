@@ -22,6 +22,9 @@ import '../lib/link-treatment/link-treatment.js';
 import 'linkpurpose/css/linkpurpose.css';
 import '../lib/link-treatment/link-treatment.scss';
 
+// For global theme setting
+import tokens from '@yalesites-org/tokens/build/json/tokens.json';
+
 export const decorators = [
   (StoryFn, context) => {
     useEffect(() => Drupal.attachBehaviors(), [context]);
@@ -32,19 +35,33 @@ export const decorators = [
 
 setupTwig(Twig);
 
+/*
+ * This function parses the global themes from the tokens
+ * such that we do not need to hard code the values as
+ * new global themes are added.
+ */
+const globalThemesArray = function(themeData) {
+  let globalThemes = [];
+  for (const [key, value] of Object.entries(themeData)) {
+    globalThemes.push({
+      value: key,
+      title: value.label,
+    });
+  }
+
+  return globalThemes;
+}
+
+const colorGlobalThemeData = tokens['global-themes'];
+const globalThemes = globalThemesArray(colorGlobalThemeData);
 export const globalTypes = {
+
   globalTheme: {
     name: 'Site: Global Theme (lever)',
     description: 'Choose a global color palette.',
     defaultValue: 'one',
     toolbar: {
-      items: [
-        { value: 'one', title: 'Old Blues' },
-        { value: 'two', title: 'New Haven Green' },
-        { value: 'three', title: 'Shoreline Summer' },
-        { value: 'four', title: 'Onha' },
-        { value: 'five', title: 'It\'s Your Yale'},
-      ],
+      items: globalThemes,
       showName: true,
       title: 'Site: Global Theme (lever)',
     },
