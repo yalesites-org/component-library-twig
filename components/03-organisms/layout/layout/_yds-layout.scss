@@ -98,6 +98,18 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-heading: var(--color-slot-six);
     --color-layout-border: var(--color-slot-six);
     --color-link-grid-action: var(--color-slot-six);
+
+    [data-global-theme='six'] & {
+      --color-heading: var(--color-slot-five);
+      --color-layout-content: var(--color-slot-five);
+      --color-link-base: var(--color-slot-eight);
+      --color-link-visited-base: var(--color-slot-five);
+      --color-link-visited-hover: var(--color-gray-200);
+
+      & [data-component-theme]:not[data-component-theme='two'] {
+        --color-heading: var(--color-slot-five);
+      }
+    }
   }
 
   &[data-component-theme='three'] {
