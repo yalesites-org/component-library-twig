@@ -1,61 +1,75 @@
 @use '../../00-tokens/tokens';
 
-table {
-  @include tokens.body-s-condensed;
-
-  caption-side: bottom;
-  border-collapse: collapse;
-  text-align: left;
-  width: 100%;
-}
-
 .table-wrapper {
   overflow-x: auto;
 }
 
-table caption {
+table {
+  @include tokens.body-s-condensed;
+
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  caption-side: bottom;
+  border-collapse: collapse;
   text-align: left;
-  margin-top: var(--size-spacing-4);
-}
 
-tr:nth-child(even) {
-  background-color: var(--color-gray-100);
-  color: var(--color-basic-black);
-}
+  --header-cell-border: var(--color-gray-700);
+  --header-row-border: var(--color-gray-300);
+  --header-cell-bg: var(--color-gray-200);
+  --header-row-bg: var(--color-gray-200);
 
-th {
-  background-color: var(--color-gray-200);
-  color: var(--color-basic-black);
-  padding: var(--size-spacing-3) var(--size-spacing-5);
-  font-weight: var(--font-weights-mallory-medium);
-  border: var(--size-thickness-1) solid var(--color-gray-200);
-  position: sticky;
-
-  thead & {
-    top: 0;
-    border-bottom: var(--size-thickness-2) solid var(--color-gray-700);
+  [data-component-theme='two'] & {
+    --header-cell-border: var(--color-gray-600);
+    --header-row-border: var(--color-gray-500);
   }
 
-  tbody & {
-    left: 0;
-    border-right: var(--size-thickness-2) solid var(--color-gray-700);
-  }
-}
-
-td {
-  padding: var(--size-spacing-3) var(--size-spacing-5);
-  border: var(--size-thickness-1) solid var(--color-gray-300);
-  min-width: 8rem;
-
-  &:first-child {
-    border-left: none;
+  caption {
+    text-align: left;
+    margin-top: var(--size-spacing-4);
   }
 
-  &:last-child {
-    border-right: none;
+  th,
+  td {
+    padding: var(--size-spacing-3) var(--size-spacing-5);
+    min-width: 8rem;
   }
 
-  tbody tr:last-child & {
-    border-bottom: var(--size-thickness-2) solid var(--color-gray-700);
+  tbody th {
+    background-color: var(--header-row-bg);
+    color: var(--color-gray-700);
+    font-weight: var(--font-weights-mallory-medium);
+    border-right: var(--size-thickness-2) solid var(--header-cell-border);
+    border-bottom: none;
+  }
+
+  thead tr {
+    background-color: var(--header-row-bg);
+    color: var(--color-gray-700);
+    font-weight: var(--font-weights-mallory-medium);
+    border-bottom: var(--size-thickness-2) solid var(--header-cell-border);
+
+    & th {
+      font-weight: var(--font-weights-mallory-medium);
+    }
+  }
+
+  td {
+    border-bottom: var(--size-thickness-1) solid var(--header-row-border);
+  }
+
+  tr:nth-child(odd) td {
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-700);
+  }
+
+  tr:nth-child(even) td {
+    background-color: var(--color-basic-white);
+    color: var(--color-basic-black);
+  }
+
+  tbody tr:last-child td,
+  tbody tr:last-child th {
+    border-bottom: var(--size-thickness-2) solid var(--header-cell-border);
   }
 }
