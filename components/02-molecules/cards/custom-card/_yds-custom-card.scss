@@ -79,7 +79,7 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
 .custom-card__heading {
   @include tokens.h4-yale-new;
 
-  margin-bottom: var(--size-spacing-0);
+  margin-bottom: var(--size-spacing-3);
 }
 
 .custom-card__snippet {
