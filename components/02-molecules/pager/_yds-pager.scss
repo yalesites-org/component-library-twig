@@ -86,10 +86,12 @@
   height: 0.8em;
   width: 0.8em;
 
+  &--first,
   &--previous {
     transform: rotate(90deg);
   }
 
+  &--last,
   &--next {
     transform: rotate(-90deg);
   }
