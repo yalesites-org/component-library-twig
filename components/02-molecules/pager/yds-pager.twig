@@ -2,6 +2,7 @@
 
 {% set total_pages = pager['#total_pages']|default(items.pages|length) %}
 {% set show_first_last_links = total_pages >= 5 %}
+{% set last_page_shown_already = FALSE %}
 
 {% if items %}
   <nav {{ bem(pager__base_class) }} role="navigation" aria-label="Pagination">
@@ -32,6 +33,9 @@
       {% endif %}
       {# Now generate the actual pager piece. #}
       {% for key, item in items.pages %}
+        {% if key == total_pages %}
+          {% set last_page_shown_already = TRUE %}
+        {% endif %}
         {% if current == key %}
           <li {{ bem('item', ['desktop'], pager__base_class, ['is-active']) }}>
             <span {{ bem('link', ['current'], pager__base_class, ['is-active']) }} {{ item.attributes|without('href', 'title') }}>
@@ -50,7 +54,7 @@
         {% endif %}
       {% endfor %}
       {# Print last item if we are not on the last page. #}
-      {% if items.last and show_first_last_links %}
+      {% if items.last and show_first_last_links and not last_page_shown_already %}
         <li {{ bem('item', ['desktop', 'last'], pager__base_class) }}>
           <a {{ bem('link', ['last'], pager__base_class) }} href="{{ items.last.href }}" title="{{ 'Go to last page'|t }}"{{ items.last.attributes|without('href', 'title') }}>
             <span {{ bem('visually-hidden') }}>{{ 'Last page'|t }}</span>
