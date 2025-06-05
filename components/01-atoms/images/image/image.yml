@@ -35,3 +35,8 @@ responsive_images:
     image__sizes: '100vw'
     image__src: 'https://picsum.photos/213/320'
     image__alt: 'A 2 by 3 image'
+  pattern:
+    output_image_tag: true
+    image__sizes: '100vw'
+    image__src: '/images/patterns/wavy.png'
+    image__alt: 'Overlay'
