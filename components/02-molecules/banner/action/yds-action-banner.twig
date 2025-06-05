@@ -10,6 +10,7 @@
  #
  # Available Blocks:
  # - banner__image
+ # - banner__overlay_background_image
  #}
 
 {% set banner__base_class = 'cta-banner' %}
@@ -37,6 +38,26 @@
       {% endblock %}
     </div>
     <div {{ bem('content', [], banner__base_class) }}>
+      {# Check if overlay background image is set #}
+      {% set banner__overlay_background_image = banner__overlay_background_image|default(false) %}
+      {# If overlay background image is set, render it #}
+      {% if banner__overlay_background_image %}
+        <div {{ bem('overlay_image', [], banner__base_class) }}>
+          {% block banner__overlay_background_image  %}
+            {% include "@atoms/images/image/_responsive-image.twig" with {
+              image__srcset: banner__overlay_background_image.image__srcset|default(''),
+              image__src: banner__overlay_background_image.image__src,
+              image__alt: banner__overlay_background_image_alt|default(''),
+              image__title: banner__overlay_background_image_title|default(''),
+              image__sizes: banner__overlay_background_image.image__sizes|default(''),
+              image__blockname: banner__base_class,
+              image__attributes: {
+                'data-banner-overlay-background-image': true,
+              },  
+            } %}
+          {% endblock %}
+        </div>
+      {% endif %}
       <div {{ bem('outer-wrap', [], banner__base_class) }}>
         <div {{ bem('wrap', [], banner__base_class) }}>
           <div {{ bem('text', [], banner__base_class) }}>
