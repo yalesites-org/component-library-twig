@@ -407,36 +407,28 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     width: 100%;
 
     // Default: horizontal gradient (for 'bottom' layout)
+    /* stylelint-disable declaration-block-no-duplicate-properties */
     mask-image: linear-gradient(
       to right,
       transparent 0%,
       transparent 50%,
       black 100%
     );
-    mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      transparent 50%,
-      black 100%
-    );
+    /* stylelint-enable declaration-block-no-duplicate-properties */
   }
 
   [data-banner-content-layout='bottom'] & img {
     height: 100%;
     width: 100%;
     object-fit: cover;
+    /* stylelint-disable declaration-block-no-duplicate-properties */
     mask-image: linear-gradient(
       to right,
       transparent,
       transparent 40%,
       black 70%
     );
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      transparent 40%,
-      black 70%
-    );
+    /* stylelint-enable declaration-block-no-duplicate-properties */
   }
 
   [data-banner-content-layout='right'] & {
@@ -462,17 +454,13 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   // Override for left and right layouts: vertical gradient
   [data-banner-content-layout='right'] & img,
   [data-banner-content-layout='left'] & img {
+    /* stylelint-disable declaration-block-no-duplicate-properties */
     mask-image: linear-gradient(
       to bottom,
       transparent 0%,
       transparent 50%,
       black 100%
     );
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      transparent 50%,
-      black 100%
-    );
+    /* stylelint-enable declaration-block-no-duplicate-properties */
   }
 }
