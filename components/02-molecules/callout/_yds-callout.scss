@@ -278,6 +278,11 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
   pointer-events: none;
   z-index: 1;
 
+  picture {
+    height: 100%;
+    min-height: 100%;
+  }
+
   img {
     object-fit: cover;
     height: 100%;
