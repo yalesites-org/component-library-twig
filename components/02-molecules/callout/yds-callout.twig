@@ -28,19 +28,38 @@
 <div {{ add_attributes(callouts__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}
-  <div {{ bem('wrap', [], callouts__base_class) }}>
-    <div {{ bem('inner', [], callouts__base_class) }}>
-      {% block callout__items %}
-        {% for callout in callouts %}
-          {% include "@molecules/callout/_yds-callout.twig" with {
-            callout__heading: callout.callout__heading,
-            callout__text: callout.callout__text,
-            callout__link__content: callout.callout__link__content,
-            callout__link__url: callout.callout__link__url,
-            callout__link__type: callout.callout__link__type,
-          } %}
-        {% endfor %}
+  {# Overlay background image block #}
+  {% set callout__overlay_background_image = callout__overlay_background_image|default(false) %}
+  {% if callout__overlay_background_image %}
+    <div class="callouts__overlay_image">
+      {% block callout__overlay_background_image %}
+        {% include "@atoms/images/image/_responsive-image.twig" with {
+          image__srcset: callout__overlay_background_image.image__srcset|default(''),
+          image__src: callout__overlay_background_image.image__src,
+          image__alt: callout__overlay_background_image_alt|default(''),
+          image__title: callout__overlay_background_image_title|default(''),
+          image__sizes: callout__overlay_background_image.image__sizes|default(''),
+          image__blockname: callouts__base_class,
+          image__attributes: {
+            'data-callout-overlay-background-image': true,
+          },
+        } %}
       {% endblock %}
     </div>
-  </div>
+  {% endif %}
+    <div {{ bem('wrap', [], callouts__base_class) }}>
+      <div {{ bem('inner', [], callouts__base_class) }}>
+        {% block callout__items %}
+          {% for callout in callouts %}
+            {% include "@molecules/callout/_yds-callout.twig" with {
+              callout__heading: callout.callout__heading,
+              callout__text: callout.callout__text,
+              callout__link__content: callout.callout__link__content,
+              callout__link__url: callout.callout__link__url,
+              callout__link__type: callout.callout__link__type,
+            } %}
+          {% endfor %}
+        {% endblock %}
+      </div>
+    </div>
 </div>

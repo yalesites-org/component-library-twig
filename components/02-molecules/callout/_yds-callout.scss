@@ -14,6 +14,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   color: var(--color-text);
   background-color: var(--color-callouts-background);
+  position: relative;
 
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
@@ -264,4 +265,34 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
   @include atoms.cta;
 
   margin-top: var(--size-spacing-6);
+}
+
+.callouts__overlay_image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-blend-mode: multiply;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 1;
+
+  img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      transparent 50%,
+      black 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      transparent 50%,
+      black 100%
+    );
+  }
 }
