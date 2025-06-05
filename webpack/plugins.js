@@ -56,6 +56,7 @@ module.exports = {
       'css/**/*.js', // Remove all unwanted, auto generated JS files from dist/css folder.
       'css/**/*.js.map',
       '!*.{png,jpg,gif,svg}',
+      '!images/**/*.{png,jpg,gif,svg}',
       '!fonts/**',
     ],
   }),
