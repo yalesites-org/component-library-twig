@@ -274,8 +274,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
   height: 100%;
   width: 100%;
   background-blend-mode: multiply;
-  opacity: 0.1;
-  pointer-events: none;
+  opacity: 0.15;
   z-index: 1;
 
   picture {
