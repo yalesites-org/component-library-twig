@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding-bottom: calc(var(--size-spacing-7) + var(--size-spacing-1));
 
   [data-embedded-components] & {
     margin-bottom: 0;

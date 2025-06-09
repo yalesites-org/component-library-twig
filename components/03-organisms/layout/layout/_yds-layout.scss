@@ -199,6 +199,16 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   width: var(--border-thickness-2);
   opacity: 0.5;
 
+  [data-component-padding='no-top'] &,
+  [data-component-padding='no-padding'] & {
+    margin-top: var(--spacing-page-inner);
+  }
+
+  [data-component-padding='no-bottom'] &,
+  [data-component-padding='no-padding'] & {
+    margin-bottom: var(--spacing-page-inner);
+  }
+
   // gap affects the width of the divider, so we can increase the width of the
   // divider in this instance.
   [data-component-layout='seventy-thirty'] & {
