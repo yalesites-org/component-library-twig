@@ -12,25 +12,6 @@ import './yds-breadcrumbs';
  */
 export default {
   title: 'Organisms/Menu/Breadcrumbs',
-  argTypes: {
-    limitItems: {
-      name: 'Limit Items',
-      type: 'boolean',
-    },
-    trailLevel: {
-      name: 'Trail Level',
-      type: 'number',
-      if: {
-        arg: 'limitItems',
-        truthy: true,
-      },
-    },
-  },
-  args: {
-    limitItems: false,
-    trailLevel: 2,
-  },
 };
 
-export const Breadcrumbs = ({ trailLevel }) =>
-  breadcrumbsTwig({ ...breadcrumbsData, breadcrumbs__trail_level: trailLevel });
+export const Breadcrumbs = () => breadcrumbsTwig({ ...breadcrumbsData });
