@@ -42,19 +42,9 @@
       {% set banner__overlay_background_image = banner__overlay_background_image|default(false) %}
       {# If overlay background image is set, render it #}
       {% if banner__overlay_background_image %}
-        <div {{ bem('overlay_image', [], banner__base_class) }}>
-          {% block banner__overlay_background_image  %}
-            {% include "@atoms/images/image/_responsive-image.twig" with {
-              image__srcset: banner__overlay_background_image.image__srcset|default(''),
-              image__src: banner__overlay_background_image.image__src,
-              image__alt: banner__overlay_background_image_alt|default(''),
-              image__title: banner__overlay_background_image_title|default(''),
-              image__sizes: banner__overlay_background_image.image__sizes|default(''),
-              image__blockname: banner__base_class,
-              image__attributes: {
-                'data-banner-overlay-background-image': true,
-              },  
-            } %}
+        <div {{ bem('overlay_image', [], banner__base_class) }}{% if banner__overlay_background_image.image__src %} style="--overlay-bg-image: url('{{ banner__overlay_background_image.image__src }}');"{% endif %}>
+          {% block banner__overlay_background_image %}
+            {# No img tag needed - CSS background will handle the image display #}
           {% endblock %}
         </div>
       {% endif %}
