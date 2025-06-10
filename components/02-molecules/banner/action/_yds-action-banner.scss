@@ -104,7 +104,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     --color-banner-text: var(--color-slot-eight);
     --color-banner-heading: var(--color-slot-eight);
     --color-banner-action: var(--color-slot-eight);
-    --color-banner-action-secondary: var(--color-slot-one);
+    --color-banner-action-secondary: var(--color-one);
     --color-link-base: var(--color-banner-heading);
     --color-link-hover: var(--color-banner-heading);
     --color-link-visited-base: var(--color-link-visited-light);
@@ -298,6 +298,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
 }
 
 .cta-banner__outer-wrap {
+  position: relative;
   width: 100%;
 
   [data-banner-content-layout='left'] &,
@@ -392,6 +393,15 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   gap: var(--size-spacing-5);
 }
 
+/**
+ * Overlay image for CTA Banner
+ *
+ * - Absolutely positioned to cover the content area.
+ * - Uses a CSS background image with blend mode and mask gradients for fade effects.
+ * - Responsive: adapts to layout (bottom, left, right) and breakpoint.
+ * - Anchored to bottom left for pattern consistency.
+ * - Overlay only covers the intended content area, not the full section.
+ */
 .cta-banner__overlay_image {
   position: absolute;
   top: 0;
@@ -399,13 +409,15 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   height: 100%;
   width: 100%;
   background-image: var(--overlay-bg-image);
-  background-size: auto; // Keep original pattern size consistently
+  background-size: auto; // Pattern fills overlay area
   background-repeat: repeat;
-  background-position: center;
   background-blend-mode: multiply;
+  background-position: left bottom; // Anchor pattern to bottom left
   opacity: 0.15;
+  pointer-events: none;
+  z-index: 1;
 
-  // Default: horizontal gradient (for 'bottom' layout)
+  // Default: horizontal mask gradient for 'bottom' layout
   /* stylelint-disable declaration-block-no-duplicate-properties */
   mask-image: linear-gradient(
     to right,
@@ -415,18 +427,13 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   );
   /* stylelint-enable declaration-block-no-duplicate-properties */
 
-  /* 
-   * In drupal, it prepends a div that doesn't take up the full
-   * height/width of the banner.  This ensures it now does in the overlay.
-   */
+  // Ensure overlay fills full area if Drupal prepends a div
   & > div {
     width: 100%;
     height: 100%;
   }
 
-  // Remove the responsive background-size override entirely
-  // This keeps the pattern at its original size across all breakpoints
-
+  // Responsive mask for 'bottom' layout at large breakpoints
   [data-banner-content-layout='bottom'] & {
     /* stylelint-disable declaration-block-no-duplicate-properties */
     mask-image: linear-gradient(
@@ -438,5 +445,38 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     /* stylelint-enable declaration-block-no-duplicate-properties */
   }
 
-  // ... rest of your existing layout code
+  // For 'left' and 'right' layouts at large breakpoints:
+  // - Limit overlay width to content area
+  // - Use vertical mask gradient for fade effect
+  [data-banner-content-layout='right'] &,
+  [data-banner-content-layout='left'] & {
+    max-width: var(--banner-content-max-width);
+    /* stylelint-disable declaration-block-no-duplicate-properties */
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 50%,
+      black 100%
+    );
+    /* stylelint-enable declaration-block-no-duplicate-properties */
+
+    @media (max-width: #{$break-cta-banner - 0.05}) {
+      right: 0;
+      left: auto;
+      /* stylelint-disable declaration-block-no-duplicate-properties */
+      mask-image: linear-gradient(
+        to right,
+        transparent,
+        transparent 60%,
+        black 70%
+      );
+      /* stylelint-enable declaration-block-no-duplicate-properties */
+    }
+  }
+
+  // For 'right' layout, align overlay to right at large breakpoints
+  [data-banner-content-layout='right'] & {
+    right: 0;
+    left: auto;
+  }
 }

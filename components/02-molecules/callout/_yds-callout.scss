@@ -273,18 +273,20 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
   left: 0;
   height: 100%;
   width: 100%;
+  background-image: var(--overlay-bg-image);
+  background-size: cover;
+  background-repeat: repeat;
   background-blend-mode: multiply;
   opacity: 0.15;
+  pointer-events: none;
   z-index: 1;
 
-  picture {
-    height: 100%;
-    min-height: 100%;
-  }
-
-  img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
+  /* stylelint-disable declaration-block-no-duplicate-properties */
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    transparent 50%,
+    black 100%
+  );
+  /* stylelint-enable declaration-block-no-duplicate-properties */
 }
