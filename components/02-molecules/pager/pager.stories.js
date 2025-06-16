@@ -216,9 +216,9 @@ Interactive.args = {
   totalPages: 10,
   storyInfo: {
     title: 'Interactive Demo',
-    pattern: 'Pattern varies based on controls above',
+    pattern: 'Pattern varies based on controls section',
     useCase:
-      'General testing and demonstration of all pagination behaviors. Use the controls above to test different Current page and Total pages values.',
+      'General testing and demonstration of all pagination behaviors. Use the controls section to test different Current page and Total pages values.',
   },
 };
 
