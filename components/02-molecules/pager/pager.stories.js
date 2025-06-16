@@ -1,4 +1,5 @@
 import pager from './yds-pager.twig';
+import inlineMessage from '../inline-message/yds-inline-message.twig';
 
 // Demo JS.
 import './cl-pager';
@@ -58,16 +59,21 @@ window.PagerManager = {
       // Update args for next interaction
       const updatedArgs = { ...args, currentPage: targetPage };
 
-      // Create a temporary container to avoid iframe issues
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = newWrappedHtml;
-      const replacementContainer = tempDiv.firstElementChild;
+      // Add documentation if it exists in the args
+      let newDocumentedHtml = newWrappedHtml;
+      if (updatedArgs.storyInfo) {
+        const messageData = {
+          inline_message__type: 'general',
+          inline_message__heading: updatedArgs.storyInfo.title,
+          inline_message__content: `<strong>Pattern:</strong> ${updatedArgs.storyInfo.pattern}<br><br><strong>Use Case:</strong> ${updatedArgs.storyInfo.useCase}`,
+        };
 
-      // Replace the old container
-      currentContainer.parentNode.replaceChild(
-        replacementContainer,
-        currentContainer,
-      );
+        const docDiv = inlineMessage(messageData);
+        newDocumentedHtml = docDiv + newWrappedHtml;
+      }
+
+      // Replace the old container content with new content
+      currentContainer.parentNode.innerHTML = newDocumentedHtml;
 
       // Re-attach enhancement after a short delay
       setTimeout(() => {
@@ -176,28 +182,13 @@ const Template = (args) => {
   // Add documentation div if story has documentation
   let documentedHtml = wrappedHtml;
   if (args.storyInfo) {
-    const docDiv = `
-      <div style="
-        background: #f8f9fa;
-        border: 1px solid #dee2e6;
-        border-radius: 6px;
-        padding: 16px;
-        margin-bottom: 20px;
-        font-family: system-ui, -apple-system, sans-serif;
-        font-size: 14px;
-        line-height: 1.5;
-      ">
-        <h4 style="margin: 0 0 8px 0; color: #495057; font-size: 16px; font-weight: 600;">
-          ${args.storyInfo.title}
-        </h4>
-        <p style="margin: 0 0 12px 0; color: #6c757d; font-weight: 500;">
-          ${args.storyInfo.pattern}
-        </p>
-        <p style="margin: 0; color: #495057;">
-          <strong>Use Case:</strong> ${args.storyInfo.useCase}
-        </p>
-      </div>
-    `;
+    const messageData = {
+      inline_message__type: 'general',
+      inline_message__heading: args.storyInfo.title,
+      inline_message__content: `<strong>Pattern:</strong> ${args.storyInfo.pattern}<br><br><strong>Use Case:</strong> ${args.storyInfo.useCase}`,
+    };
+
+    const docDiv = inlineMessage(messageData);
     documentedHtml = docDiv + wrappedHtml;
   }
 
@@ -216,9 +207,9 @@ Interactive.args = {
   totalPages: 10,
   storyInfo: {
     title: 'Interactive Demo',
-    pattern: 'Pattern varies based on controls section',
+    pattern: 'Pattern varies based on controls',
     useCase:
-      'General testing and demonstration of all pagination behaviors. Use the controls section to test different Current page and Total pages values.',
+      'General testing and demonstration of all pagination behaviors. Use the controls to test different Current page and Total pages values.',
   },
 };
 
