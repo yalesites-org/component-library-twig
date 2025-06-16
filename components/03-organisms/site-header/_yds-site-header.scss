@@ -366,6 +366,14 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
     @media (max-width: tokens.$break-mobile-max) {
       display: none;
     }
+
+    [data-font-pairing='yalenew'] & {
+      font-family: var(--font-families-yalenew);
+    }
+
+    [data-font-pairing='mallory'] & {
+      font-family: var(--font-families-mallory);
+    }
   }
 
   // if right alignment, limit the branding width
