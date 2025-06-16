@@ -160,3 +160,53 @@ code {
   -webkit-line-clamp: $lines;
   overflow: hidden;
 }
+
+@mixin heading($level, $style: null) {
+  [data-font-pairing='yalenew'] & {
+    @if $level == 'h1' {
+      @include h1-yale-new;
+    } @else if $level == 'h2' {
+      @include h2-yale-new;
+    } @else if $level == 'h3' {
+      @include h3-yale-new;
+    } @else if $level == 'h4' {
+      @include h4-yale-new;
+    } @else if $level == 'h5' {
+      @include h5-yale-new;
+    } @else if $level == 'h6' {
+      @include h6-yale-new;
+    }
+  }
+
+  [data-font-pairing='mallory'] & {
+    @if $style == 'book' {
+      @if $level == 'h1' {
+        @include h1-mallory-compact-book;
+      } @else if $level == 'h2' {
+        @include h2-mallory-compact-book;
+      } @else if $level == 'h3' {
+        @include h3-mallory-compact-book;
+      } @else if $level == 'h4' {
+        @include h4-mallory-compact-book;
+      } @else if $level == 'h5' {
+        @include h5-mallory-compact-book;
+      } @else if $level == 'h6' {
+        @include h6-mallory-compact-book;
+      }
+    } @else {
+      @if $level == 'h1' {
+        @include h1-mallory-compact-medium;
+      } @else if $level == 'h2' {
+        @include h2-mallory-compact-medium;
+      } @else if $level == 'h3' {
+        @include h3-mallory-compact-medium;
+      } @else if $level == 'h4' {
+        @include h4-mallory-compact-medium;
+      } @else if $level == 'h5' {
+        @include h5-mallory-compact-medium;
+      } @else if $level == 'h6' {
+        @include h6-mallory-compact-medium;
+      }
+    }
+  }
+}
