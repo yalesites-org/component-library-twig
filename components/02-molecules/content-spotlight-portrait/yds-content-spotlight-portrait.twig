@@ -87,9 +87,12 @@
     </div>
     {# Image #}
     <div {{ bem('image', [], content_spotlight_portrait__base_class) }}>
-      {% block content_spotlight_portrait__image %}
-        {% include "@atoms/images/image/yds-image.twig" %}
+    {% embed "@atoms/images/image/yds-image.twig" with {
+      figure__caption: content_spotlight_portrait__caption,
+    } %}
+      {% block image__image %}
+        {{ content_spotlight_portrait__image }}
       {% endblock %}
-    </div>
+    {% endembed %}
   </div>
 </div>
