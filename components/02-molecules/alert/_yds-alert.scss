@@ -114,7 +114,7 @@ $alert-fade-speed: var(--animation-speed-slow);
 }
 
 .alert__heading {
-  @include tokens.heading(h5, 'medium');
+  @include tokens.heading(h5);
 
   color: inherit;
 }
