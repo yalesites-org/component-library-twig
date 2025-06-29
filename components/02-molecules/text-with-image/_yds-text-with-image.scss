@@ -306,3 +306,7 @@ $component-content-spotlight-themes: map.deep-get(
   flex-direction: column;
   gap: var(--size-spacing-5);
 }
+
+.text-with-image__caption {
+  color: red;
+}
