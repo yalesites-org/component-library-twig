@@ -162,7 +162,8 @@ code {
 }
 
 @mixin heading($level, $style: null) {
-  [data-font-pairing='yalenew'] & {
+  body[data-font-pairing='yalenew'] &,
+  body:not([data-font-pairing]) & {
     @if $level == 'h1' {
       @include h1-yale-new;
     } @else if $level == 'h2' {
@@ -178,7 +179,7 @@ code {
     }
   }
 
-  [data-font-pairing='mallory'] & {
+  body[data-font-pairing='mallory'] & {
     @if $style == 'book' {
       @if $level == 'h1' {
         @include h1-mallory-compact-book;
