@@ -1,0 +1,89 @@
+# Facts and Figures Icon Configuration
+#
+# This file defines all available icons for Facts and Figures components.
+# This is the SINGLE SOURCE OF TRUTH for icon options.
+#
+# Used by:
+# - Storybook (for interactive controls)
+# - Drupal (via FactsAndFiguresIconManager service)
+# - Any other consumers of the Facts and Figures component
+#
+# To add new icons:
+# 1. Add the icon SVG file to images/icons/ directory
+# 2. Add the icon definition below in the appropriate category
+# 3. Rebuild component library: npm run build
+# 4. Clear Drupal cache: drush cr
+
+# Configuration metadata
+config:
+  version: '1.0'
+  default_value: '_none'
+  none_label: '- None -'
+  description: 'Available icons for Facts and Figures components'
+
+# Icon categories and definitions
+categories:
+  academic:
+    label: 'Academic'
+    description: 'Education, learning, and academic achievements'
+    icons:
+      graduation-cap-solid: 'Graduation Cap'
+      book-solid: 'Book'
+      university-solid: 'University Building'
+      user-graduate-solid: 'Graduate Student'
+      chalkboard-teacher-solid: 'Teacher'
+      certificate-solid: 'Certificate'
+      scroll-solid: 'Scroll/Diploma'
+      brain-solid: 'Brain/Learning'
+
+  achievement:
+    label: 'Achievement'
+    description: 'Awards, recognition, and accomplishments'
+    icons:
+      trophy-solid: 'Trophy'
+      medal-solid: 'Medal'
+      award-solid: 'Award'
+      star-solid: 'Star'
+      crown-solid: 'Crown'
+      thumbs-up-solid: 'Thumbs Up'
+      check-circle-solid: 'Success/Checkmark'
+
+  global_impact:
+    label: 'Global Impact'
+    description: 'Worldwide reach, community impact, and social good'
+    icons:
+      globe-solid: 'Globe'
+      heart-solid: 'Heart'
+      leaf-solid: 'Leaf/Environment'
+      users-solid: 'Community/People'
+
+  research:
+    label: 'Research'
+    description: 'Scientific research, discovery, and innovation'
+    icons:
+      microscope-solid: 'Microscope'
+      flask-solid: 'Laboratory Flask'
+      lightbulb-solid: 'Innovation/Ideas'
+      cog-solid: 'Process/System'
+
+  community:
+    label: 'Community'
+    description: 'Local impact, events, and community engagement'
+    icons:
+      home-solid: 'Home/Community'
+      building-solid: 'Building/Institution'
+      comments-solid: 'Communication'
+
+  innovation:
+    label: 'Innovation'
+    description: 'Technology, forward-thinking, and cutting-edge work'
+    icons:
+      rocket-solid: 'Rocket/Launch'
+      seedling-solid: 'Growth/Development'
+
+# Cache configuration (for Drupal consumers)
+cache:
+  tags:
+    - 'component_library_icons'
+    - 'facts_and_figures_icons'
+  max_age: 3600 # 1 hour

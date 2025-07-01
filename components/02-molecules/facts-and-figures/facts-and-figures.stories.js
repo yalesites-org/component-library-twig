@@ -1,8 +1,17 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import factsAndFiguresTwig from './yds-facts-and-figures.twig';
 import factsAndFiguresData from './facts-and-figures.yml';
+import factsAndFiguresIconsData from './facts-and-figures-icons.yml';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
+
+// Process icon data for Storybook controls
+const iconOptions = [];
+Object.values(factsAndFiguresIconsData.categories).forEach((category) => {
+  Object.keys(category.icons).forEach((iconKey) => {
+    iconOptions.push(iconKey);
+  });
+});
 /**
  * Storybook Definition.
  */
@@ -44,9 +53,16 @@ export default {
       defaultValue: 'one',
     },
     factsAndFiguresIcon: {
-      name: 'factsAndFigures Icon',
+      name: 'Show Icon',
       type: 'boolean',
       defaultValue: false,
+    },
+    iconName: {
+      name: 'Icon Selection',
+      options: iconOptions,
+      type: 'select',
+      // defaultValue: factsAndFiguresIconsData.config.none_label,
+      if: { arg: 'factsAndFiguresIcon', eq: true },
     },
   },
 };
@@ -59,6 +75,7 @@ export const FactsAndFigures = ({
   alignment,
   themeColor,
   factsAndFiguresIcon,
+  iconName,
 }) => `
 
   <ul class='facts-and-figures__group__wrap' data-facts-and-figures-collection-type="single">
@@ -97,6 +114,11 @@ export const FactsAndFigures = ({
         facts_and_figures__alignment: alignment,
         facts_and_figures__theme: themeColor,
         facts_and_figures__has_icon: factsAndFiguresIcon ? 'true' : 'false',
+        facts_and_figures__icon_name:
+          factsAndFiguresIcon &&
+          iconName !== factsAndFiguresIconsData.config.none_label
+            ? iconName
+            : null,
       })}
     </ul>
   </div>
