@@ -21,65 +21,35 @@ config:
   none_label: '- None -'
   description: 'Available icons for Facts and Figures components'
 
-# Icon categories and definitions
-categories:
-  academic:
-    label: 'Academic'
-    description: 'Education, learning, and academic achievements'
-    icons:
-      graduation-cap-solid: 'Graduation Cap'
-      book-solid: 'Book'
-      university-solid: 'University Building'
-      user-graduate-solid: 'Graduate Student'
-      chalkboard-teacher-solid: 'Teacher'
-      certificate-solid: 'Certificate'
-      scroll-solid: 'Scroll/Diploma'
-      brain-solid: 'Brain/Learning'
-
-  achievement:
-    label: 'Achievement'
-    description: 'Awards, recognition, and accomplishments'
-    icons:
-      trophy-solid: 'Trophy'
-      medal-solid: 'Medal'
-      award-solid: 'Award'
-      star-solid: 'Star'
-      crown-solid: 'Crown'
-      thumbs-up-solid: 'Thumbs Up'
-      check-circle-solid: 'Success/Checkmark'
-
-  global_impact:
-    label: 'Global Impact'
-    description: 'Worldwide reach, community impact, and social good'
-    icons:
-      globe-solid: 'Globe'
-      heart-solid: 'Heart'
-      leaf-solid: 'Leaf/Environment'
-      users-solid: 'Community/People'
-
-  research:
-    label: 'Research'
-    description: 'Scientific research, discovery, and innovation'
-    icons:
-      microscope-solid: 'Microscope'
-      flask-solid: 'Laboratory Flask'
-      lightbulb-solid: 'Innovation/Ideas'
-      cog-solid: 'Process/System'
-
-  community:
-    label: 'Community'
-    description: 'Local impact, events, and community engagement'
-    icons:
-      home-solid: 'Home/Community'
-      building-solid: 'Building/Institution'
-      comments-solid: 'Communication'
-
-  innovation:
-    label: 'Innovation'
-    description: 'Technology, forward-thinking, and cutting-edge work'
-    icons:
-      rocket-solid: 'Rocket/Launch'
-      seedling-solid: 'Growth/Development'
+# Available icons (alphabetically sorted)
+icons:
+  award-solid: 'Award'
+  book-solid: 'Book'
+  brain-solid: 'Brain/Learning'
+  building-solid: 'Building/Institution'
+  certificate-solid: 'Certificate'
+  chalkboard-teacher-solid: 'Teacher'
+  check-circle-solid: 'Success/Checkmark'
+  cog-solid: 'Process/System'
+  comments-solid: 'Communication'
+  envelope-solid: 'Contact/Outreach'
+  globe-solid: 'Globe'
+  graduation-cap-solid: 'Graduation Cap'
+  heart-solid: 'Heart'
+  home-solid: 'Home/Community'
+  lightbulb-solid: 'Innovation/Ideas'
+  lock-solid: 'Security/Privacy'
+  medal-solid: 'Medal'
+  microscope-solid: 'Microscope'
+  rocket-solid: 'Rocket/Launch'
+  sack-dollar-solid: 'Funding/Financial Impact'
+  scroll-solid: 'Scroll/Diploma'
+  star-solid: 'Star'
+  thumbs-up-solid: 'Thumbs Up'
+  trophy-solid: 'Trophy'
+  university-solid: 'University Building'
+  user-graduate-solid: 'Graduate Student'
+  users-solid: 'Community/People'
 
 # Cache configuration (for Drupal consumers)
 cache:
