@@ -14,6 +14,9 @@ import imageData from '../../01-atoms/images/image/image.yml';
 
 import './event-meta/event-meta-localist';
 
+// Data files.
+import resourceMetaData from './resource-meta/resource-meta.yml';
+
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
 /**
@@ -164,14 +167,13 @@ Profile.args = {
   profileImageStyle: 'inline',
 };
 
-export const Resource = ({ heading, category, date }) =>
+export const Resource = ({ heading, category }) =>
   resourceMetaTwig({
     resource_meta__heading: heading,
     resource_meta__category: category,
-    resource_meta__date_formatted: date,
+    resource_meta__metadata: resourceMetaData.resource_meta__metadata,
   });
 Resource.args = {
   heading: 'Resource Title',
   category: 'Video',
-  date: 'Tuesday, Jul 1, 2025',
 };
