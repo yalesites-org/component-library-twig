@@ -6,10 +6,17 @@ import factsAndFiguresGroupTwig from './yds-facts-and-figures-group.twig';
 // Stat default data
 import factsAndFiguresGroupData from './facts-and-figures-group.yml';
 
+// Icon data for individual facts and figures
+import factsAndFiguresIconsData from '../../02-molecules/facts-and-figures/facts-and-figures-icons.yml';
+
 // Image atom component - generic images for demo
 import imageData from '../../01-atoms/images/image/image.yml';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
+
+// Process icon data for Storybook controls
+const iconOptions = ['', ...Object.keys(factsAndFiguresIconsData.icons || {})];
+
 /**
  * Storybook Definition.
  */
@@ -65,6 +72,12 @@ export default {
       options: ['left', 'center'],
       type: 'select',
     },
+    iconName: {
+      name: 'Icon Selection',
+      options: iconOptions,
+      type: 'select',
+      if: { arg: 'factsAndFiguresGroupIcons', eq: true },
+    },
   },
   args: {
     globalTheme: 'one',
@@ -93,7 +106,27 @@ export const FactsAndFiguresGroup = ({
   alignment,
   themeColor,
   image,
+  iconName,
 }) => {
+  // Create custom data with the same icon for all items
+  const customGroupData = {
+    ...factsAndFiguresGroupData,
+    facts_and_figures__group:
+      factsAndFiguresGroupData.facts_and_figures__group.map((item) => {
+        return {
+          ...item,
+          facts_and_figures__has_icon: factsAndFiguresGroupIcons
+            ? 'true'
+            : 'false',
+          facts_and_figures__icon_name:
+            factsAndFiguresGroupIcons && iconName ? iconName : null,
+          facts_and_figures__presentation_style: presentationStyle,
+          facts_and_figures__font_style: fontStyle,
+          facts_and_figures__alignment: alignment,
+        };
+      }),
+  };
+
   return `
     <div class="wrap-for-global-theme">
       ${factsAndFiguresGroupTwig({
@@ -108,7 +141,7 @@ export const FactsAndFiguresGroup = ({
         facts_and_figures__group__font_style: fontStyle,
         facts_and_figures__group__theme: themeColor,
         facts_and_figures__group__bg_image: image,
-        ...factsAndFiguresGroupData,
+        ...customGroupData,
         ...imageData.responsive_images['16x9'],
       })}
     </div>

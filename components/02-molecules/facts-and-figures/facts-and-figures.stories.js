@@ -6,12 +6,7 @@ import factsAndFiguresIconsData from './facts-and-figures-icons.yml';
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
 // Process icon data for Storybook controls
-const iconOptions = [];
-Object.values(factsAndFiguresIconsData.categories).forEach((category) => {
-  Object.keys(category.icons).forEach((iconKey) => {
-    iconOptions.push(iconKey);
-  });
-});
+const iconOptions = Object.keys(factsAndFiguresIconsData.icons || {});
 /**
  * Storybook Definition.
  */
@@ -115,10 +110,7 @@ export const FactsAndFigures = ({
         facts_and_figures__theme: themeColor,
         facts_and_figures__has_icon: factsAndFiguresIcon ? 'true' : 'false',
         facts_and_figures__icon_name:
-          factsAndFiguresIcon &&
-          iconName !== factsAndFiguresIconsData.config.none_label
-            ? iconName
-            : null,
+          factsAndFiguresIcon && iconName ? iconName : null,
       })}
     </ul>
   </div>
