@@ -3,6 +3,7 @@
 
 {% set resource_meta__attributes = {
   'data-component-width': resource_meta__width|default('site'),
+  'data-component-resource-type': resource_meta__resource_type,
   class: bem(resource_meta__base_class, [], resource_meta__blockname, resource_meta__additional_classes),
 } %}
 
@@ -41,5 +42,20 @@
         </div>
       {% endblock %}
     {% endembed %}
+  </div>
+
+  <div {{ bem('media', [], resource_meta__base_class) }}>
+    {% if resource_meta__resource_type == 'document' %}
+      image here
+      {% include "@atoms/controls/cta/yds-cta.twig" with {
+        cta__content: resource_meta__download_label,
+        cta__href: resource_meta__download_url,
+        cta__component_theme: cta__component_theme|default('one'),
+      } %}
+    {% elseif resource_meta__resource_type == 'video' %}
+      <div {{ bem('inner', [], resource_meta__base_class) }}>
+        {{ drupal_entity('media', resource_meta__media_id, 'default') }}
+      </div>
+    {% endif %}
   </div>
 </div>

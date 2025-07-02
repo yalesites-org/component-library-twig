@@ -167,13 +167,23 @@ Profile.args = {
   profileImageStyle: 'inline',
 };
 
-export const Resource = ({ heading, category }) =>
+export const Resource = ({ heading, category, resourceType }) =>
   resourceMetaTwig({
     resource_meta__heading: heading,
     resource_meta__category: category,
     resource_meta__metadata: resourceMetaData.resource_meta__metadata,
+    resource_meta__resource_type: resourceType,
   });
+Resource.argTypes = {
+  resourceType: {
+    name: 'Resource Type',
+    type: 'select',
+    options: ['video', 'document'],
+    defaultValue: 'landscape',
+  },
+};
 Resource.args = {
   heading: 'Resource Title',
   category: 'Video',
+  resourceType: 'video',
 };
