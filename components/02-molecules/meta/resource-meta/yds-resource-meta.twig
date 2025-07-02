@@ -1,0 +1,40 @@
+{% set resource_meta__base_class = 'resource-meta' %}
+
+{% set resource_meta__attributes = {
+  'data-component-width': resource_meta__width|default('site'),
+  class: bem(resource_meta__base_class, [], resource_meta__blockname, resource_meta__additional_classes),
+} %}
+
+{% if resource_meta__date_formatted %}
+  {% set resource_meta__date %}
+    Published on: {{ resource_meta__date_formatted|date("l, F j, Y") }}
+  {% endset %}
+{% endif %}
+
+<div {{ add_attributes(resource_meta__attributes) }} data-embedded-components>
+  <div {{ bem('content', [], resource_meta__base_class) }}>
+    {% embed "@molecules/page-title/yds-page-title.twig" with {
+      page_title__heading: resource_meta__heading,
+      page_title__blockname: 'resource-title',
+    }%}
+
+      {% block page_title__overline %}
+        {% include "@atoms/typography/text/yds-text.twig" with {
+          text__blockname: resource_meta__base_class,
+          text__content: resource_meta__category,
+          text__base_class: 'category',
+        } %}
+      {% endblock %}
+
+      {% block page_title__meta %}
+        {% include "@atoms/typography/text/yds-text.twig" with {
+          text__blockname: resource_meta__base_class,
+          text__content: resource_meta__date,
+          text__base_class: 'published-on',
+        } %}
+      {% endblock %}
+
+    {% endembed %}
+  </div>
+
+</div>

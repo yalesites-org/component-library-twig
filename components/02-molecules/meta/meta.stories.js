@@ -9,6 +9,7 @@ import basicMetaTwig from './basic-meta/yds-basic-meta.twig';
 import eventLocalistMetaTwig from './event-meta/yds-event-meta-localist.twig';
 import dateTimeTwig from '../../01-atoms/date-time/yds-date-time.twig';
 import profileMetaTwig from './profile-meta/yds-profile-meta.twig';
+import resourceMetaTwig from './resource-meta/yds-resource-meta.twig';
 import imageData from '../../01-atoms/images/image/image.yml';
 
 import './event-meta/event-meta-localist';
@@ -161,4 +162,16 @@ Profile.args = {
   profileImageOrientation: 'landscape',
   profileImageAlignment: 'right',
   profileImageStyle: 'inline',
+};
+
+export const Resource = ({ heading, category, date }) =>
+  resourceMetaTwig({
+    resource_meta__heading: heading,
+    resource_meta__category: category,
+    resource_meta__date_formatted: date,
+  });
+Resource.args = {
+  heading: 'Resource Title',
+  category: 'Video',
+  date: 'Tuesday, Jul 1, 2025',
 };
