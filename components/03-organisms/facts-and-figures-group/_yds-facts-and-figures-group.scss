@@ -239,7 +239,7 @@ $facts-and-figures-group-component-themes: map.deep-get(
 }
 
 .facts-and-figures__group__heading {
-  @include tokens.h2-yale-new;
+  @include tokens.heading(h2);
 
   color: var(--color-facts-and-figures-content);
 }

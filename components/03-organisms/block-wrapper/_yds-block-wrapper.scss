@@ -11,5 +11,5 @@
 }
 
 .block-wrapper__heading {
-  @include tokens.h4-yale-new;
+  @include tokens.heading(h4);
 }
