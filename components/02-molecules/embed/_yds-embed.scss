@@ -39,3 +39,20 @@ $heights: (
     height: 100%;
   }
 }
+
+// Map embeds use a 3:2 aspect ratio
+.embed__inner:has(iframe[data-embed-type='map']) {
+  & iframe {
+    position: static;
+    width: 100%;
+    margin-right: auto;
+    aspect-ratio: 3 / 2;
+    height: auto;
+  }
+
+  .layout--onecol & {
+    iframe {
+      width: 50%;
+    }
+  }
+}
