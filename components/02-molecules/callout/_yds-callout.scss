@@ -220,7 +220,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 }
 
 .callout__heading {
-  @include tokens.h3-yale-new;
+  @include tokens.heading(h3);
 
   margin-bottom: var(--size-spacing-4);
 }

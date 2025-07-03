@@ -273,17 +273,17 @@ $component-content-spotlight-themes: map.deep-get(
 }
 
 .text-with-image__overline {
-  @include tokens.h6-mallory-compact-book;
+  @include tokens.heading(h6, 'book');
 
   color: var(--color-gray-500);
 }
 
 .text-with-image__heading {
-  @include tokens.h3-yale-new;
+  @include tokens.heading(h3);
 }
 
 .text-with-image__subheading {
-  @include tokens.h5-mallory-compact-book;
+  @include tokens.heading(h5, 'book');
 
   color: var(--color-text);
 }

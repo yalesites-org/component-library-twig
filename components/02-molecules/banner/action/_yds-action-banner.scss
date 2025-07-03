@@ -180,7 +180,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
 }
 
 .cta-banner__image {
-  @media (max-width: $break-cta-banner - 0.05) {
+  @media (max-width: $break-cta-banner-max) {
     aspect-ratio: 16 / 5;
 
     // Safari 14 fix for aspect-ratio
@@ -358,7 +358,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
 }
 
 .cta-banner__heading {
-  @include tokens.h2-yale-new;
+  @include tokens.heading(h2);
 
   margin-bottom: var(--size-spacing-2);
 }
