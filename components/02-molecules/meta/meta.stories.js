@@ -9,13 +9,14 @@ import basicMetaTwig from './basic-meta/yds-basic-meta.twig';
 import eventLocalistMetaTwig from './event-meta/yds-event-meta-localist.twig';
 import dateTimeTwig from '../../01-atoms/date-time/yds-date-time.twig';
 import profileMetaTwig from './profile-meta/yds-profile-meta.twig';
-import resourceMetaTwig from './resource-meta/yds-resource-meta.twig';
 import imageData from '../../01-atoms/images/image/image.yml';
+import videoEmbedData from '../../01-atoms/videos/video-embed/video-embed.yml';
 
 import './event-meta/event-meta-localist';
 
-// Data files.
+// Resource Meta files.
 import resourceMetaData from './resource-meta/resource-meta.yml';
+import resourceMetaTwig from './resource-meta/yds-resource-meta.twig';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
@@ -167,23 +168,42 @@ Profile.args = {
   profileImageStyle: 'inline',
 };
 
-export const Resource = ({ heading, category, resourceType }) =>
+export const Resource = ({
+  heading,
+  category,
+  resourceType,
+  downloadLabel,
+  publishDateLabel,
+  publishDate,
+}) =>
   resourceMetaTwig({
     resource_meta__heading: heading,
     resource_meta__category: category,
+    resource_meta__publish_date_label: publishDateLabel,
+    resource_meta__publish_date: publishDate,
     resource_meta__metadata: resourceMetaData.resource_meta__metadata,
     resource_meta__resource_type: resourceType,
+    resource_meta__download_label: downloadLabel,
+    resource_meta__download_url: '#.pdf',
+    image__srcset__1: imageData.responsive_images['1x1'].image__srcset,
+    image__sizes__1: imageData.responsive_images['1x1'].image__sizes,
+    image__alt__1: imageData.responsive_images['1x1'].image__alt,
+    image__src__1: imageData.responsive_images['1x1'].image__src,
+    video_embed__content__1: videoEmbedData.video_embed__content,
   });
 Resource.argTypes = {
   resourceType: {
     name: 'Resource Type',
     type: 'select',
     options: ['video', 'document'],
-    defaultValue: 'landscape',
+    defaultValue: 'video',
   },
 };
 Resource.args = {
   heading: 'Resource Title',
   category: 'Video',
   resourceType: 'video',
+  downloadLabel: 'Download',
+  publishDateLabel: 'Published On',
+  publishDate: 'July 1, 2025',
 };
