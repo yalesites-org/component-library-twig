@@ -28,19 +28,23 @@
 <div {{ add_attributes(callouts__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}
-  <div {{ bem('wrap', [], callouts__base_class) }}>
-    <div {{ bem('inner', [], callouts__base_class) }}>
-      {% block callout__items %}
-        {% for callout in callouts %}
-          {% include "@molecules/callout/_yds-callout.twig" with {
-            callout__heading: callout.callout__heading,
-            callout__text: callout.callout__text,
-            callout__link__content: callout.callout__link__content,
-            callout__link__url: callout.callout__link__url,
-            callout__link__type: callout.callout__link__type,
-          } %}
-        {% endfor %}
-      {% endblock %}
+  {% if callout__overlay_background_image %}
+    <div class="callouts__overlay_image" style="--overlay-bg-image: url('{{ callout__overlay_background_image.image__src|default(callout__overlay_background_image) }}');"></div>
+  {% endif %}
+    <div {{ bem('wrap', [], callouts__base_class) }}>
+      <div {{ bem('inner', [], callouts__base_class) }}>
+        {% block callout__items %}
+          {% for callout in callouts %}
+            {% include "@molecules/callout/_yds-callout.twig" with {
+              callout__heading: callout.callout__heading,
+              callout__text: callout.callout__text,
+              callout__link__content: callout.callout__link__content,
+              callout__link__url: callout.callout__link__url,
+              callout__link__type: callout.callout__link__type,
+              callout__overlay_background_image: callout__overlay_background_image,
+            } %}
+          {% endfor %}
+        {% endblock %}
+      </div>
     </div>
-  </div>
 </div>

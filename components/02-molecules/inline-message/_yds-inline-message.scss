@@ -106,7 +106,7 @@ $component-inline-message-themes: map.deep-get(
 }
 
 .inline-message__heading {
-  @include tokens.h5-mallory-compact-medium;
+  @include tokens.heading(h5);
 
   color: inherit;
 }

@@ -116,7 +116,7 @@ $facts-and-figures-component-themes: map.deep-get(
 }
 
 .facts-and-figures__stat {
-  @include tokens.h3-yale-new;
+  @include tokens.heading(h3);
 
   width: 100%;
   position: relative;

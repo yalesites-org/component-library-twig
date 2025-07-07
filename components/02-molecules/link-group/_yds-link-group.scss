@@ -40,7 +40,7 @@ $break-link-group-max: $break-link-group - 0.05;
 }
 
 .link-group__heading {
-  @include tokens.h6-mallory-compact-medium;
+  @include tokens.heading(h6);
 
   border-left: var(--thickness-divider) solid var(--color-link-group-border);
   padding: 0 var(--size-spacing-6) var(--size-spacing-3);

@@ -10,10 +10,12 @@
  #
  # Available Blocks:
  # - banner__image
+ # - banner__overlay_background_image
  #}
 
 {% set banner__base_class = 'cta-banner' %}
 {% set banner__content__background = banner__content__background|default('one') %}
+{% set banner__overlay_background_image = banner__overlay_background_image.image__src|default(banner__overlay_background_image) %}
 
 {% set banner__attributes = {
   'data-banner-content-layout': banner__content__layout|default('bottom'),
@@ -37,6 +39,14 @@
       {% endblock %}
     </div>
     <div {{ bem('content', [], banner__base_class) }}>
+      {# If overlay background image is set, render it #}
+      {% if banner__overlay_background_image %}
+        <div {{ bem('overlay_image', [], banner__base_class) }}{% if banner__overlay_background_image %} style="--overlay-bg-image: url('{{ banner__overlay_background_image }}');"{% endif %}>
+          {% block banner__overlay_background_image %}
+            {# No img tag needed - CSS background will handle the image display #}
+          {% endblock %}
+        </div>
+      {% endif %}
       <div {{ bem('outer-wrap', [], banner__base_class) }}>
         <div {{ bem('wrap', [], banner__base_class) }}>
           <div {{ bem('text', [], banner__base_class) }}>

@@ -81,7 +81,7 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 }
 
 .accordion__heading {
-  @include tokens.h2-yale-new;
+  @include tokens.heading(h2);
 
   margin-bottom: var(--size-spacing-5);
 
