@@ -8,13 +8,14 @@
 
   &[data-component-resource-type='document'] {
     @media (min-width: tokens.$break-s) {
-      grid-template-columns: 1fr min-content;
+      grid-template-columns: 1fr 175px;
     }
   }
 }
 
 .resource-meta__image {
   margin-bottom: var(--size-spacing-3);
+  border: 1px solid currentcolor;
 }
 
 .resource-meta__cta a {
