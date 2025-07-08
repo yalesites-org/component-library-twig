@@ -86,6 +86,15 @@
     {# If event and list put the date and time in the subheading. #}
     {% set reference_card__subheading = reference_card__date__formatted ~ multi_day_text ~ reference_card__time__formatted %}
   {% endif %}
+
+{# Resource Card #}
+{% elseif card_collection__source_type == 'resource' %}
+  {% set reference_card__overline = reference_card__date__formatted %}
+  
+  {# If resource, list, and not freatured, hide snippet. #}
+  {% if card_collection__type == 'list' and card_collection__featured == 'false' %}
+    {% set reference_card__snippet = null %}
+  {% endif %}
 {% endif %}
 
 {% if card_collection__source_type == 'directory-listing' %}
