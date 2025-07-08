@@ -23,33 +23,7 @@ config:
 
 # Available icons (alphabetically sorted)
 icons:
-  award-solid: 'Award'
-  book-solid: 'Book'
-  brain-solid: 'Brain/Learning'
-  building-solid: 'Building/Institution'
-  certificate-solid: 'Certificate'
-  chalkboard-teacher-solid: 'Teacher'
-  check-circle-solid: 'Success/Checkmark'
-  cog-solid: 'Process/System'
-  comments-solid: 'Communication'
-  envelope-solid: 'Contact/Outreach'
-  globe-solid: 'Globe'
-  graduation-cap-solid: 'Graduation Cap'
-  heart-solid: 'Heart'
-  home-solid: 'Home/Community'
-  lightbulb-solid: 'Innovation/Ideas'
-  lock-solid: 'Security/Privacy'
-  medal-solid: 'Medal'
-  microscope-solid: 'Microscope'
-  rocket-solid: 'Rocket/Launch'
   sack-dollar-solid: 'Funding/Financial Impact'
-  scroll-solid: 'Scroll/Diploma'
-  star-solid: 'Star'
-  thumbs-up-solid: 'Thumbs Up'
-  trophy-solid: 'Trophy'
-  university-solid: 'University Building'
-  user-graduate-solid: 'Graduate Student'
-  users-solid: 'Community/People'
 
 # Cache configuration (for Drupal consumers)
 cache:
