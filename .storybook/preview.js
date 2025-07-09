@@ -24,9 +24,15 @@ import '../lib/link-treatment/link-treatment.scss';
 
 export const decorators = [
   (StoryFn, context) => {
-    useEffect(() => Drupal.attachBehaviors(), [context]);
-    document.body.classList.add('yds-storybook-cl');
-    return `<div data-global-theme="${context.globals.globalTheme}">${StoryFn(context)}</div>`;
+    useEffect(() => {
+      Drupal.attachBehaviors();
+
+      // Update body attributes for theme + heading typography
+      document.body.setAttribute('data-global-theme', context.globals.globalTheme);
+      document.body.setAttribute('data-font-pairing', context.globals.headingTypography || 'yalenew');
+    }, [context]);
+
+    return StoryFn(context);
   },
 ];
 
@@ -47,6 +53,22 @@ export const globalTypes = {
       ],
       showName: true,
       title: 'Site: Global Theme (lever)',
+    },
+  },
+
+  headingTypography: {
+    name: 'Typography: Heading Fonts',
+    description: 'Choose a heading font pairing.',
+    defaultValue: 'yalenew',
+    toolbar: {
+      icon: 'paragraph',
+      items: [
+        { value: 'yalenew', title: 'Headings: YaleNew' },
+        { value: 'mallory', title: 'Headings: Mallory' },
+      ],
+      showName: true,
+      dynamicTitle: true,
+      title: 'Typography: Heading Fonts',
     },
   },
 };

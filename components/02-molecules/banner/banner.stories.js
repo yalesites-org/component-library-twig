@@ -68,36 +68,47 @@ export const ActionBanner = ({
   linkStyle,
   contentLayout,
   bgColor,
+  overlayBackgroundImage,
 }) =>
   bannerTwig({
     ...imageData.responsive_images['16x9'],
     banner__heading: heading,
     banner__snippet: snippet,
     banner__link__content: linkContent,
-    banner__link__url: bannerData.banner__link__url,
-    banner__link__content_two: linkContentTwo,
-    banner__link__url_two: bannerData.banner__link__url_two,
+    banner__link__url: linkStyle !== 'none' ? bannerData.banner__link__url : '',
+    banner__link__content_two: linkStyle !== 'none' ? linkContentTwo : '',
+    banner__link__url_two:
+      linkStyle !== 'none' ? bannerData.banner__link__url_two : '',
     banner__link__style: linkStyle,
     banner__content__layout: contentLayout,
     banner__content__background: bgColor,
+    banner__overlay_background_image: overlayBackgroundImage
+      ? imageData.responsive_images.pattern
+      : '',
   });
 ActionBanner.argTypes = {
   ...bannerArgTypes,
   linkStyle: {
     name: 'Link Style',
     type: 'select',
-    options: ['cta', 'text-link'],
+    options: ['cta', 'text-link', 'none'],
   },
   contentLayout: {
     name: 'Content Layout',
     type: 'select',
     options: ['bottom', 'left', 'right'],
   },
+  overlayBackgroundImage: {
+    name: 'Overlay Background Image',
+    type: 'boolean',
+    defaultValue: false,
+  },
 };
 
 ActionBanner.args = {
   linkStyle: 'cta',
   contentLayout: 'bottom',
+  overlayBackgroundImage: false,
 };
 
 export const GrandHeroBanner = ({
