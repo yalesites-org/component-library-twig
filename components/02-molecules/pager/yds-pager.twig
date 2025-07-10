@@ -24,11 +24,18 @@
 #}
 
 {# 
-   Simple Pagination: For 1-3 pages, show all numbers
+   Single Page: Hide pagination when only one page exists
+   Business Case: No pagination needed when there's only one page - 
+   reduces visual clutter and follows UX best practices
+#}
+{% set is_single_page = total_pages == 1 %}
+
+{# 
+   Simple Pagination: For 2-3 pages, show all numbers
    Business Case: With few pages, users benefit from seeing all options
    at once. No cognitive load from ellipsis or hidden pages.
 #}
-{% set is_simple = total_pages < 4 %}
+{% set is_simple = total_pages > 1 and total_pages < 4 %}
 
 {# 
    Exactly Four Pages: Special case to avoid redundant ellipsis
@@ -141,7 +148,7 @@
   {% endif %}
 {% endif %}
 
-{% if items %}
+{% if items and not is_single_page %}
   <nav {{ bem(pager__base_class) }} role="navigation" aria-label="Pagination">
     <ul {{ bem('items', [], pager__base_class, ['js-pager__items']) }}>
       
