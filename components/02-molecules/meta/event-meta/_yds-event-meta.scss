@@ -8,7 +8,7 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 }
 
 .event-meta__date {
-  @include tokens.h3-mallory-compact-book;
+  @include tokens.heading(h3, 'book');
 }
 
 .event-meta__details {

@@ -35,3 +35,9 @@ responsive_images:
     image__sizes: '100vw'
     image__src: 'https://picsum.photos/213/320'
     image__alt: 'A 2 by 3 image'
+  pattern:
+    output_image_tag: true
+    image__srcset: '/images/patterns/wavy.png 320w, /images/patterns/wavy.png 480w, /images/patterns/wavy.png 640w, /images/patterns/wavy.png 800w, /images/patterns/wavy.png 960w, /images/patterns/wavy.png 1120w, /images/patterns/wavy.png 1280w, /images/patterns/wavy.png 1440w, /images/patterns/wavy.png 1600w, /images/patterns/wavy.png 1760w, /images/patterns/wavy.png 1920w, /images/patterns/wavy.png 2080w, /images/patterns/wavy.png 2240w, /images/patterns/wavy.png 2400w'
+    image__sizes: '100vw'
+    image__src: '/images/patterns/wavy.png'
+    image__alt: 'Overlay'
