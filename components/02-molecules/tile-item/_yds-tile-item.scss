@@ -180,7 +180,7 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 }
 
 .tile__item__heading {
-  @include tokens.h1-yale-new;
+  @include tokens.heading(h1);
 
   position: relative;
   flex: 0 auto;
@@ -207,7 +207,7 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 }
 
 .tile__item__content {
-  @include tokens.h4-yale-new;
+  @include tokens.heading(h4);
 
   flex: 1 auto;
   text-align: left;
@@ -258,7 +258,7 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .tile__item__link {
   @include atoms.plain-link;
-  @include tokens.h4-yale-new;
+  @include tokens.heading(h4);
 
   [data-component-alignment='center'] & {
     text-align: center;

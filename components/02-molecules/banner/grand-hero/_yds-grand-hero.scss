@@ -319,7 +319,7 @@ $break-grand-hero-banner: tokens.$break-m;
 }
 
 .grand-hero-banner__heading {
-  @include tokens.h2-yale-new;
+  @include tokens.heading(h2);
 }
 
 .grand-hero-banner__link {

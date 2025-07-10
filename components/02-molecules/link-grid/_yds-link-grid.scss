@@ -73,7 +73,7 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
 }
 
 .link-grid__heading {
-  @include tokens.h2-yale-new;
+  @include tokens.heading(h2);
 
   flex: 1 0 100%;
   margin-bottom: var(--size-spacing-6);

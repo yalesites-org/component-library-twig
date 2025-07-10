@@ -412,7 +412,7 @@ $secondary-menu-sub-max-width: 19rem;
     display: none;
 
     @media (min-width: tokens.$break-mobile) {
-      @include tokens.h5-mallory-compact-medium;
+      @include tokens.heading(h5);
 
       display: block;
       padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2)
@@ -449,7 +449,7 @@ $secondary-menu-sub-max-width: 19rem;
     // Only it should be capitalized.
     &.secondary-nav__link--level-1.secondary-nav__link--with-icon.secondary-nav__link--explore-bar {
     @media (min-width: tokens.$break-mobile) {
-      @include tokens.h6-mallory-compact-medium;
+      @include tokens.heading(h6);
     }
   }
 
