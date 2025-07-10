@@ -32,6 +32,12 @@
   class: bem(text_with_image__base_class)
 } %}
 
+{% set text_with_image__image %}
+  {% block text_with_image__image %}
+    {% include "@atoms/images/image/_responsive-image.twig" %}
+  {% endblock %}
+{% endset %}
+
 <div {{ add_attributes(text_with_image__attributes) }}>
   {% block prefix_suffix %}
   {% endblock %}
@@ -88,9 +94,13 @@
     </div>
     {# Image #}
     <div {{ bem('image', [], text_with_image__base_class) }}>
-      {% block text_with_image__image %}
-        {% include "@atoms/images/image/yds-image.twig" %}
-      {% endblock %}
+      {% embed "@atoms/images/image/yds-image.twig" with {
+        figure__caption: text_with_image__caption,
+      } %}
+        {% block image__image %}
+          {{ text_with_image__image }}
+        {% endblock %}
+      {% endembed %}
     </div>
   </div>
 </div>
