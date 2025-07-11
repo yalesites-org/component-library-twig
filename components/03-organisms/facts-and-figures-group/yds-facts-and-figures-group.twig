@@ -66,7 +66,8 @@
             {% include "@molecules/facts-and-figures/yds-facts-and-figures.twig" with {
               facts_and_figures__stat: stat.facts_and_figures__group__stat,
               facts_and_figures__content: stat.facts_and_figures__group__content,
-              facts_and_figures__has_icon: facts_and_figures__group__has_icon,
+              facts_and_figures__has_icon: stat.facts_and_figures__has_icon|default(facts_and_figures__group__has_icon),
+              facts_and_figures__icon_name: stat.facts_and_figures__icon_name,
               facts_and_figures__font_style: facts_and_figures__group__font_style,
               facts_and_figures__alignment: facts_and_figures__group__alignment,
               facts_and_figures__presentation_style: facts_and_figures__group__presentation_style,

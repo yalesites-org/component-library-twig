@@ -6,10 +6,19 @@ import factsAndFiguresGroupTwig from './yds-facts-and-figures-group.twig';
 // Stat default data
 import factsAndFiguresGroupData from './facts-and-figures-group.yml';
 
+// Icon data for individual facts and figures
+import factsAndFiguresIconsData from '../../02-molecules/facts-and-figures/facts-and-figures-icons.yml';
+
 // Image atom component - generic images for demo
 import imageData from '../../01-atoms/images/image/image.yml';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
+
+// Process icon data for Storybook controls
+const iconOptions = [
+  '- None -',
+  ...Object.keys(factsAndFiguresIconsData.icons || {}),
+];
 /**
  * Storybook Definition.
  */
@@ -40,10 +49,6 @@ export default {
       name: 'With image',
       type: 'boolean',
     },
-    factsAndFiguresGroupIcons: {
-      name: 'Infographic Group Icons',
-      type: 'boolean',
-    },
     presentationStyle: {
       name: 'Presentation Style',
       options: ['basic', 'icon-only'],
@@ -65,6 +70,11 @@ export default {
       options: ['left', 'center'],
       type: 'select',
     },
+    iconName: {
+      name: 'Icon Selection',
+      options: iconOptions,
+      type: 'select',
+    },
   },
   args: {
     globalTheme: 'one',
@@ -76,39 +86,56 @@ export default {
     factsAndFiguresGroupLink:
       factsAndFiguresGroupData.facts_and_figures__group__link__content,
     image: true,
-    factsAndFiguresGroupIcons: false,
     presentationStyle: 'basic',
     fontStyle: 'normal',
     alignment: 'left',
+    iconName: '- None -',
   },
 };
 
 export const FactsAndFiguresGroup = ({
   factsAndFiguresGroupHeading,
   factsAndFiguresGroupContent,
-  factsAndFiguresGroupIcons,
   presentationStyle,
   fontStyle,
   columnCount,
   alignment,
   themeColor,
   image,
+  iconName,
 }) => {
+  // Determine if icons should be shown based on icon selection
+  const hasIcon = iconName && iconName !== '- None -';
+
+  // Create custom data with the same icon for all items
+  const customGroupData = {
+    ...factsAndFiguresGroupData,
+    facts_and_figures__group:
+      factsAndFiguresGroupData.facts_and_figures__group.map((item) => {
+        return {
+          ...item,
+          facts_and_figures__has_icon: hasIcon ? 'true' : 'false',
+          facts_and_figures__icon_name: hasIcon ? iconName : null,
+          facts_and_figures__presentation_style: presentationStyle,
+          facts_and_figures__font_style: fontStyle,
+          facts_and_figures__alignment: alignment,
+        };
+      }),
+  };
+
   return `
     <div class="wrap-for-global-theme">
       ${factsAndFiguresGroupTwig({
         facts_and_figures__group__heading: factsAndFiguresGroupHeading,
         facts_and_figures__group__content: factsAndFiguresGroupContent,
-        facts_and_figures__group__has_icon: factsAndFiguresGroupIcons
-          ? 'true'
-          : 'false',
+        facts_and_figures__group__has_icon: hasIcon ? 'true' : 'false',
         facts_and_figures__group__grid_count: columnCount,
         facts_and_figures__group__alignment: alignment,
         facts_and_figures__group__presentation_style: presentationStyle,
         facts_and_figures__group__font_style: fontStyle,
         facts_and_figures__group__theme: themeColor,
         facts_and_figures__group__bg_image: image,
-        ...factsAndFiguresGroupData,
+        ...customGroupData,
         ...imageData.responsive_images['16x9'],
       })}
     </div>

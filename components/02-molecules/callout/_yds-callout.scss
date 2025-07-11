@@ -14,6 +14,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   color: var(--color-text);
   background-color: var(--color-callouts-background);
+  position: relative;
 
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
@@ -219,7 +220,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 }
 
 .callout__heading {
-  @include tokens.h3-yale-new;
+  @include tokens.heading(h3);
 
   margin-bottom: var(--size-spacing-4);
 }
@@ -264,4 +265,19 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
   @include atoms.cta;
 
   margin-top: var(--size-spacing-6);
+}
+
+.callouts__overlay_image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: var(--overlay-bg-image);
+  background-size: cover;
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 1;
 }

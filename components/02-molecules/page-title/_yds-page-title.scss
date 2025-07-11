@@ -5,7 +5,7 @@
 }
 
 .page-title__heading {
-  @include tokens.h1-yale-new;
+  @include tokens.heading(h1);
 
   [data-component-width='site'] & {
     max-width: var(--size-component-layout-width-highlight);
@@ -18,7 +18,7 @@
 }
 
 .page-title__prefix {
-  @include tokens.h2-mallory-compact-book;
+  @include tokens.heading(h2, 'book');
 
   color: var(--color-basic-brown-gray);
   text-transform: uppercase;
