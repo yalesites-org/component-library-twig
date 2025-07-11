@@ -387,3 +387,7 @@ ResourceCard.argTypes = {
     defaultValue: referenceResourceData.reference_card__date,
   },
 };
+ResourceCard.args = {
+  showCategories: true,
+  date: referenceResourceData.reference_card__date,
+};
