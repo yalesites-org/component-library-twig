@@ -12,6 +12,10 @@ $component-inline-message-themes: map.deep-get(
 
 .inline-message {
   --size-icon: 1.5rem;
+  --color-link-base: var(--color-inline-message-text);
+
+  margin-block-start: var(--size-spacing-10);
+  margin-block-end: var(--size-spacing-10);
 
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
@@ -28,6 +32,8 @@ $component-inline-message-themes: map.deep-get(
       --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
       --color-inline-message-background: var(--color-slot-four);
       --color-inline-message-text: var(--color-slot-six);
+      --color-link-visited-light: var(--color-slot-eight);
+      --color-link-visited-light-hover: var(--color-slot-eight);
 
       background-color: var(--color-inline-message-background);
       color: var(--color-inline-message-text);
@@ -57,24 +63,62 @@ $component-inline-message-themes: map.deep-get(
     }
   }
 
+  & a {
+    @include atoms.link;
+
+    &:hover {
+      --color-link-hover: var(--color-link-hover);
+    }
+
+    &:visited {
+      color: var(--color-link-visited-base);
+    }
+
+    &:visited:hover {
+      color: var(--color-link-visited-hover);
+    }
+  }
+
+  // For accessibility reason set lighter visited links color.
+  [data-global-theme='four'] [data-component-theme='three'] & {
+    --color-link-visited-base: var(--color-gray-100);
+    --color-link-visited-hover: var(--color-slot-eight);
+  }
+
   &[data-component-theme='two'] {
     --color-inline-message-background: var(--color-slot-one);
     --color-inline-message-text: var(--color-slot-eight);
+    --color-link-base: var(--color-slot-eight);
+    --color-link-hover: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 
   &[data-component-theme='three'] {
     --color-inline-message-background: var(--color-slot-two);
     --color-inline-message-text: var(--color-slot-eight);
+    --color-link-base: var(--color-slot-eight);
+    --color-link-hover: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 
   &[data-component-theme='four'] {
     --color-inline-message-background: var(--color-slot-three);
     --color-inline-message-text: var(--color-slot-seven);
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-slot-seven);
+    --color-link-visited-hover: var(--color-slot-seven);
   }
 
   &[data-component-theme='five'] {
     --color-inline-message-background: var(--color-slot-five);
     --color-inline-message-text: var(--color-slot-eight);
+    --color-link-base: var(--color-slot-eight);
+    --color-link-hover: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 }
 
@@ -137,52 +181,9 @@ $component-inline-message-themes: map.deep-get(
 }
 
 .inline-message__link {
-  @include atoms.link;
   @include tokens.body-s;
 
   --position: 0 1.3em;
 
   margin-bottom: var(--size-spacing-2);
-
-  [data-component-theme='two'] & {
-    --color-link-base: var(--color-slot-eight);
-    --color-link-hover: var(--color-slot-eight);
-    --color-link-visited-base: var(--color-link-visited-light);
-    --color-link-visited-hover: var(--color-link-visited-light-hover);
-  }
-
-  [data-component-theme='four'] & {
-    --color-link-base: var(--color-slot-seven);
-    --color-link-hover: var(--color-slot-seven);
-    --color-link-visited-base: var(--color-slot-seven);
-    --color-link-visited-hover: var(--color-slot-seven);
-  }
-
-  [data-component-theme='five'] & {
-    --color-link-base: var(--color-slot-eight);
-    --color-link-hover: var(--color-slot-eight);
-    --color-link-visited-base: var(--color-link-visited-light);
-    --color-link-visited-hover: var(--color-link-visited-light-hover);
-  }
-
-  [data-component-theme='three'] & {
-    --color-link-base: var(--color-slot-eight);
-    --color-link-hover: var(--color-slot-eight);
-    --color-link-visited-base: var(--color-link-visited-light);
-    --color-link-visited-hover: var(--color-link-visited-light-hover);
-  }
-
-  &:visited {
-    color: var(--color-link-visited-base);
-  }
-
-  // For accessibility reason set lighter visited links color.
-  [data-global-theme='four'] [data-component-theme='three'] & {
-    --color-link-visited-base: var(--color-gray-100);
-    --color-link-visited-hover: var(--color-slot-eight);
-  }
-
-  &:visited:hover {
-    color: var(--color-link-visited-hover);
-  }
 }
