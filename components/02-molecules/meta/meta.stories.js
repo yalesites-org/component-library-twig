@@ -172,7 +172,6 @@ export const Resource = ({
   heading,
   category,
   resourceType,
-  downloadLabel,
   publishDateLabel,
   publishDate,
 }) =>
@@ -183,12 +182,13 @@ export const Resource = ({
     resource_meta__publish_date: publishDate,
     resource_meta__metadata: resourceMetaData.resource_meta__metadata,
     resource_meta__resource_type: resourceType,
-    resource_meta__download_label: downloadLabel,
+    resource_meta__download_label: 'Download',
+    resource_meta__download_aria_label: 'Download file',
     resource_meta__download_url: '#.pdf',
-    image__srcset__1: imageData.responsive_images['1x1'].image__srcset,
-    image__sizes__1: imageData.responsive_images['1x1'].image__sizes,
-    image__alt__1: imageData.responsive_images['1x1'].image__alt,
-    image__src__1: imageData.responsive_images['1x1'].image__src,
+    image__srcset__1: imageData.responsive_images['2x3'].image__srcset,
+    image__sizes__1: imageData.responsive_images['2x3'].image__sizes,
+    image__alt__1: imageData.responsive_images['2x3'].image__alt,
+    image__src__1: imageData.responsive_images['2x3'].image__src,
     video_embed__content__1: videoEmbedData.video_embed__content,
   });
 Resource.argTypes = {
@@ -203,7 +203,6 @@ Resource.args = {
   heading: 'Resource Title',
   category: 'Video',
   resourceType: 'video',
-  downloadLabel: 'Download',
   publishDateLabel: 'Published On',
   publishDate: 'July 1, 2025',
 };

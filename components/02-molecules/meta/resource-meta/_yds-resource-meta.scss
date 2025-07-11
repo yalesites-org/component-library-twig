@@ -8,18 +8,23 @@
 
   &[data-component-resource-type='document'] {
     @media (min-width: tokens.$break-s) {
-      grid-template-columns: 1fr 175px;
+      grid-template-columns: 1fr auto;
     }
   }
 }
 
 .resource-meta__image {
+  width: 175px;
   margin-bottom: var(--size-spacing-3);
   border: 1px solid currentcolor;
 }
 
-.resource-meta__cta a {
-  display: block;
+.resource-meta__cta {
+  display: inline-block;
+
+  a {
+    display: block;
+  }
 }
 
 .resource-meta__category {
