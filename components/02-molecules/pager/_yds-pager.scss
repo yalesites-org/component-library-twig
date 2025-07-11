@@ -41,6 +41,12 @@
   &--next {
     margin-left: var(--size-spacing-6);
   }
+
+  &--ellipsis {
+    @media (max-width: tokens.$break-mobile-max) {
+      display: none;
+    }
+  }
 }
 
 .pager__link {
@@ -54,14 +60,14 @@
   text-decoration: none;
   border: var(--size-thickness-2) solid transparent;
   padding: var(--size-spacing-2) var(--size-spacing-2);
+  border-radius: 4px; // Apply rounded corners to ALL links
 
   &:focus-visible {
     color: var(--color-link-base);
   }
 
+  // Page number links (not previous/next arrows)
   &:not([class*='--previous'], [class*='--next']) {
-    border-radius: 100%;
-
     &:not(.is-active):hover {
       background-color: var(--color-link-base);
       border-color: var(--color-link-base);
@@ -69,6 +75,7 @@
     }
   }
 
+  // Arrow buttons should not have background on hover, just color change
   &--previous,
   &--next {
     &:hover {
@@ -80,6 +87,18 @@
     color: var(--color-basic-brown-gray);
     border-color: var(--color-basic-brown-gray);
   }
+}
+
+.pager__ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--size-click-target-minimum);
+  min-width: var(--size-click-target-minimum);
+  color: var(--color-text);
+  font-weight: 600;
+  pointer-events: none;
+  user-select: none;
 }
 
 .pager__icon {
