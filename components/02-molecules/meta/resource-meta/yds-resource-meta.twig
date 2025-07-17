@@ -8,10 +8,11 @@
 } %}
 
 <div {{ add_attributes(resource_meta__attributes) }} data-embedded-components>
+  <div {{ bem('inner', [], resource_meta__base_class) }}>
   <div {{ bem('content', [], resource_meta__base_class) }}>
     {% embed "@molecules/page-title/yds-page-title.twig" with {
       page_title__heading: resource_meta__heading,
-      page_title__blockname: 'resource-title',
+      page_title__blockname: 'resource-meta',
     }%}
       {% block page_title__overline %}
         {% if resource_meta__category %}
@@ -25,18 +26,20 @@
 
       {% block page_title__meta %}
         <div {{ bem('metadata', [], resource_meta__base_class) }}>
-          <div {{ bem('published-on', [], resource_meta__base_class) }}>
-            {% include "@atoms/typography/text/yds-text.twig" with {
-              text__blockname: resource_meta__base_class,
-              text__content: resource_meta__publish_date_label,
-              text__base_class: 'published-on__label',
-            } %}
-            {% include "@atoms/typography/text/yds-text.twig" with {
-              text__blockname: resource_meta__base_class,
-              text__content: resource_meta__publish_date,
-              text__base_class: 'published-on__value',
-            } %}
-          </div>
+          {% if resource_meta__publish_date %}
+            <div {{ bem('published-on', [], resource_meta__base_class) }}>
+              {% include "@atoms/typography/text/yds-text.twig" with {
+                text__blockname: resource_meta__base_class,
+                text__content: resource_meta__publish_date_label,
+                text__base_class: 'published-on__label',
+              } %}
+              {% include "@atoms/typography/text/yds-text.twig" with {
+                text__blockname: resource_meta__base_class,
+                text__content: resource_meta__publish_date,
+                text__base_class: 'published-on__value',
+              } %}
+            </div>
+          {% endif %}
 
           {% if resource_meta__metadata|length %}
             {% embed "@atoms/lists/yds-list.twig" with {
@@ -95,4 +98,5 @@
       {% endif %}
     </div>
   {% endif %}
+  </div>
 </div>

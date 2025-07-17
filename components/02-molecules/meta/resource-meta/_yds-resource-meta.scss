@@ -1,20 +1,23 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
 
-.resource-meta {
-  font-size: var(--font-size-14);
+.resource-meta__inner {
   display: grid;
   row-gap: var(--size-spacing-4);
 
-  &[data-component-resource-type='document'] {
+  [data-component-resource-type='document'] & {
     @media (min-width: tokens.$break-s) {
       grid-template-columns: 1fr auto;
     }
   }
 }
 
+.resource-meta__page-title {
+  font-size: var(--font-size-14);
+}
+
 .resource-meta__image {
-  width: 175px;
+  width: 200px;
   margin-bottom: var(--size-spacing-3);
   border: 1px solid currentcolor;
 }
