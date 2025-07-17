@@ -15,12 +15,8 @@ function generatePagerData(currentPage, totalPages) {
   );
   const safeCurrentPage = Math.max(1, Math.floor(Math.abs(currentPage || 1)));
 
-  // Ensure current page doesn't exceed total pages
-  const correctedCurrentPage =
-    safeCurrentPage > safeTotalPages ? 1 : safeCurrentPage;
-
   const data = {
-    current: correctedCurrentPage,
+    current: safeCurrentPage,
     items: {
       pages: {},
     },
@@ -30,13 +26,13 @@ function generatePagerData(currentPage, totalPages) {
     data.items.pages[i] = { href: `#page-${i}` };
   }
 
-  if (correctedCurrentPage > 1) {
-    data.items.previous = { href: `#page-${correctedCurrentPage - 1}` };
+  if (safeCurrentPage > 1) {
+    data.items.previous = { href: `#page-${safeCurrentPage - 1}` };
     data.items.first = { href: '#page-1' };
   }
 
-  if (correctedCurrentPage < safeTotalPages) {
-    data.items.next = { href: `#page-${correctedCurrentPage + 1}` };
+  if (safeCurrentPage < safeTotalPages) {
+    data.items.next = { href: `#page-${safeCurrentPage + 1}` };
     data.items.last = { href: `#page-${safeTotalPages}` };
   }
 
@@ -119,11 +115,7 @@ window.PagerManager = {
           if (pageMatch) {
             const targetPage = parseInt(pageMatch[1], 10);
 
-            if (
-              targetPage >= 1 &&
-              targetPage <= args.totalPages &&
-              targetPage !== args.currentPage
-            ) {
+            if (targetPage !== args.currentPage) {
               // Update the component using the global manager
               window.PagerManager.updatePager(
                 container,
