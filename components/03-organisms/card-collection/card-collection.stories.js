@@ -3,6 +3,7 @@ import postCardData from '../../02-molecules/cards/reference-card/examples/post-
 import eventCardData from '../../02-molecules/cards/reference-card/examples/event-card.yml';
 import directoryCardData from '../../02-molecules/cards/directory-listing-card/yds-directory-listing-card.yml';
 import profileCardData from '../../02-molecules/cards/reference-card/examples/profile-card.yml';
+import resourceCardData from '../../02-molecules/cards/reference-card/examples/resource-card.yml';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 
@@ -153,5 +154,37 @@ DirectoryListingCardCollection.argTypes = {
     name: 'Collection Type',
     type: 'select',
     options: ['profile-directory'],
+  },
+};
+
+export const ResourceCardCollection = ({
+  heading,
+  collectionType,
+  featured,
+  withImages,
+  withOverlay,
+}) => {
+  const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
+
+  return cardCollectionTwig({
+    card_collection__source_type: 'resource',
+    card_collection__type: collectionType,
+    card_collection__heading: heading,
+    card_collection__featured: featured ? 'true' : 'false',
+    card_collection__with_images: withImages ? 'true' : 'false',
+    card_collection__cards: items,
+    reference_card__overlay: withOverlay ? 'Pinned' : '',
+    ...resourceCardData,
+    ...imageData.responsive_images['3x2'],
+  });
+};
+ResourceCardCollection.argTypes = {
+  withImages: {
+    name: 'With Images',
+    type: 'boolean',
+  },
+  heading: {
+    name: 'Heading',
+    type: 'string',
   },
 };
