@@ -193,6 +193,17 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
     font-weight: var(--font-weights-yalenew-bold);
     letter-spacing: var(--font-letter-spacing-yalenew-bold);
 
+    // When inside headings, inherit typography from parent heading to respect font-pairing
+    h1 &,
+    h2 &,
+    h3 &,
+    h4 &,
+    h5 &,
+    h6 & {
+      font-weight: inherit;
+      letter-spacing: inherit;
+    }
+
     // adjust position so the text-shadow aligns nicely with the text.
     --position: 0 1.05em;
 
