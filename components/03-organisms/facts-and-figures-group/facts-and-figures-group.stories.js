@@ -15,10 +15,29 @@ import imageData from '../../01-atoms/images/image/image.yml';
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
 // Process icon data for Storybook controls
-const iconOptions = [
-  '- None -',
-  ...Object.keys(factsAndFiguresIconsData.icons || {}),
-];
+// The goal is to create an object like:
+// {
+//   '- None -': '- None -',
+//   'Human Readable Name 1': 'icon-name-1',
+//   'Human Readable Name 2': 'icon-name-2',
+//   ...
+// }
+const iconDisplayToValueMap = {
+  '- None -': '- None -', // Default option to display 'None' and pass 'None'
+};
+
+// Check if factsAndFiguresIconsData.icons exists and is an object
+if (
+  factsAndFiguresIconsData.icons &&
+  typeof factsAndFiguresIconsData.icons === 'object'
+) {
+  Object.entries(factsAndFiguresIconsData.icons).forEach(
+    ([iconName, humanReadableName]) => {
+      iconDisplayToValueMap[humanReadableName] = iconName;
+    },
+  );
+}
+
 /**
  * Storybook Definition.
  */
@@ -72,8 +91,9 @@ export default {
     },
     iconName: {
       name: 'Icon Selection',
-      options: iconOptions,
+      options: iconDisplayToValueMap,
       type: 'select',
+      defaultValue: '- None -',
     },
   },
   args: {
