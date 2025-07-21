@@ -7,16 +7,13 @@
 
 {# Extract basic pagination data from Drupal's pager array #}
 {% set total_pages = pager['#total_pages']|default(items.pages|length) %}
-{% set raw_current_page = current|default(1) %}
+{% set current_page = current|default(1) %}
 
-{# 
-   AUTO-CORRECTION: Ensure current page stays within valid bounds
-   Business Case: When admins change content or filters are applied, 
-   the current page might exceed the new total. Rather than showing 
-   an error, we gracefully redirect to the last available page.
-   Example: User is on page 10, but filtering reduces results to 5 pages
-#}
-{% set current_page = raw_current_page > total_pages ? total_pages : (raw_current_page < 1 ? 1 : raw_current_page) %}
+{# Page label variables - centralized for easy customization #}
+{% set page_label = 'Page '|t %}
+{% set current_page_label = 'Current page'|t %}
+{% set previous_page_label = 'Previous page'|t %}
+{% set next_page_label = 'Next page'|t %}
 
 {# 
    PAGINATION PATTERN DETECTION
@@ -165,7 +162,7 @@
       {% if items.previous %}
         <li {{ bem('item', ['previous'], pager__base_class) }}>
           <a {{ bem('link', ['previous'], pager__base_class) }} href="{{ items.previous.href }}" title="{{ 'Go to previous page'|t }}" rel="prev"{{ items.previous.attributes|without('href', 'title', 'rel') }}>
-            <span {{ bem('visually-hidden') }}>{{ 'Previous page'|t }}</span>
+            <span {{ bem('visually-hidden') }}>{{ previous_page_label }}</span>
             {% include "@atoms/images/icons/_yds-icon.twig" with {
               icon__name: 'angle-down',
               icon__decorative: true,
@@ -192,13 +189,13 @@
           {% if current_page == page %}
             <li {{ bem('item', ['desktop'], pager__base_class, ['is-active']) }}>
               <span {{ bem('link', ['current'], pager__base_class, ['is-active']) }}>
-                <span {{ bem('visually-hidden') }}>{{ 'Current page'|t }}</span>
+                <span {{ bem('visually-hidden') }}>{{ current_page_label }}</span>
                 {{ page }}
               </span>
             </li>
           {% else %}
             <li {{ bem('item', ['desktop'], pager__base_class) }}>
-              <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[page].href }}" aria-label="{{ 'Page '|t ~ page }}">
+              <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[page].href }}" aria-label="{{ page_label ~ page }}">
                 {{ page }}
               </a>
             </li>
@@ -216,13 +213,13 @@
           {% if current_page == page %}
             <li {{ bem('item', ['desktop'], pager__base_class, ['is-active']) }}>
               <span {{ bem('link', ['current'], pager__base_class, ['is-active']) }}>
-                <span {{ bem('visually-hidden') }}>{{ 'Current page'|t }}</span>
+                <span {{ bem('visually-hidden') }}>{{ current_page_label }}</span>
                 {{ page }}
               </span>
             </li>
           {% else %}
             <li {{ bem('item', ['desktop'], pager__base_class) }}>
-              <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[page].href }}" aria-label="{{ 'Page '|t ~ page }}">
+              <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[page].href }}" aria-label="{{ page_label ~ page }}">
                 {{ page }}
               </a>
             </li>
@@ -240,13 +237,13 @@
           {% if current_page == page %}
             <li {{ bem('item', ['desktop'], pager__base_class, ['is-active']) }}>
               <span {{ bem('link', ['current'], pager__base_class, ['is-active']) }}>
-                <span {{ bem('visually-hidden') }}>{{ 'Current page'|t }}</span>
+                <span {{ bem('visually-hidden') }}>{{ current_page_label }}</span>
                 {{ page }}
               </span>
             </li>
           {% else %}
             <li {{ bem('item', ['desktop'], pager__base_class) }}>
-              <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[page].href }}" aria-label="{{ 'Page '|t ~ page }}">
+              <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[page].href }}" aria-label="{{ page_label ~ page }}">
                 {{ page }}
               </a>
             </li>
@@ -256,7 +253,7 @@
           <span {{ bem('ellipsis', [], pager__base_class) }} aria-hidden="true">...</span>
         </li>
         <li {{ bem('item', ['desktop'], pager__base_class) }}>
-          <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[total_pages].href }}" aria-label="{{ 'Page '|t ~ total_pages }}">
+          <a {{ bem('link', [], pager__base_class) }} href="{{ items.last.href|default(items.pages[total_pages].href) }}" aria-label="{{ page_label ~ total_pages }}">
             {{ total_pages }}
           </a>
         </li>
@@ -272,13 +269,13 @@
           {% if current_page == page %}
             <li {{ bem('item', ['desktop'], pager__base_class, ['is-active']) }}>
               <span {{ bem('link', ['current'], pager__base_class, ['is-active']) }}>
-                <span {{ bem('visually-hidden') }}>{{ 'Current page'|t }}</span>
+                <span {{ bem('visually-hidden') }}>{{ current_page_label }}</span>
                 {{ page }}
               </span>
             </li>
           {% else %}
             <li {{ bem('item', ['desktop'], pager__base_class) }}>
-              <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[page].href }}" aria-label="{{ 'Page '|t ~ page }}">
+              <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[page].href }}" aria-label="{{ page_label ~ page }}">
                 {{ page }}
               </a>
             </li>
@@ -288,7 +285,7 @@
           <span {{ bem('ellipsis', [], pager__base_class) }} aria-hidden="true">...</span>
         </li>
         <li {{ bem('item', ['desktop'], pager__base_class) }}>
-          <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[total_pages].href }}" aria-label="{{ 'Page '|t ~ total_pages }}">
+          <a {{ bem('link', [], pager__base_class) }} href="{{ items.last.href|default(items.pages[total_pages].href) }}" aria-label="{{ page_label ~ total_pages }}">
             {{ total_pages }}
           </a>
         </li>
@@ -301,7 +298,7 @@
            UX Benefit: Users near end can see their position and easily return to beginning
         #}
         <li {{ bem('item', ['desktop'], pager__base_class) }}>
-          <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[1].href }}" aria-label="{{ 'Page 1'|t }}">
+          <a {{ bem('link', [], pager__base_class) }} href="{{ items.first.href|default(items.pages[1].href) }}" aria-label="{{ page_label ~ '1' }}">
             1
           </a>
         </li>
@@ -312,13 +309,13 @@
           {% if current_page == page %}
             <li {{ bem('item', ['desktop'], pager__base_class, ['is-active']) }}>
               <span {{ bem('link', ['current'], pager__base_class, ['is-active']) }}>
-                <span {{ bem('visually-hidden') }}>{{ 'Current page'|t }}</span>
+                <span {{ bem('visually-hidden') }}>{{ current_page_label }}</span>
                 {{ page }}
               </span>
             </li>
           {% else %}
             <li {{ bem('item', ['desktop'], pager__base_class) }}>
-              <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[page].href }}" aria-label="{{ 'Page '|t ~ page }}">
+              <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[page].href }}" aria-label="{{ page_label ~ page }}">
                 {{ page }}
               </a>
             </li>
@@ -333,7 +330,7 @@
            UX Benefit: Mirror of extended_start - users can easily go back one page
         #}
         <li {{ bem('item', ['desktop'], pager__base_class) }}>
-          <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[1].href }}" aria-label="{{ 'Page 1'|t }}">
+          <a {{ bem('link', [], pager__base_class) }} href="{{ items.first.href|default(items.pages[1].href) }}" aria-label="{{ page_label ~ '1' }}">
             1
           </a>
         </li>
@@ -344,13 +341,13 @@
           {% if current_page == page %}
             <li {{ bem('item', ['desktop'], pager__base_class, ['is-active']) }}>
               <span {{ bem('link', ['current'], pager__base_class, ['is-active']) }}>
-                <span {{ bem('visually-hidden') }}>{{ 'Current page'|t }}</span>
+                <span {{ bem('visually-hidden') }}>{{ current_page_label }}</span>
                 {{ page }}
               </span>
             </li>
           {% else %}
             <li {{ bem('item', ['desktop'], pager__base_class) }}>
-              <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[page].href }}" aria-label="{{ 'Page '|t ~ page }}">
+              <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[page].href }}" aria-label="{{ page_label ~ page }}">
                 {{ page }}
               </a>
             </li>
@@ -365,7 +362,7 @@
            UX Benefit: Users see where they are and can navigate incrementally or jump to boundaries
         #}
         <li {{ bem('item', ['desktop'], pager__base_class) }}>
-          <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[1].href }}" aria-label="{{ 'Page 1'|t }}">
+          <a {{ bem('link', [], pager__base_class) }} href="{{ items.first.href|default(items.pages[1].href) }}" aria-label="{{ page_label ~ '1' }}">
             1
           </a>
         </li>
@@ -376,13 +373,13 @@
           {% if current_page == page %}
             <li {{ bem('item', ['desktop'], pager__base_class, ['is-active']) }}>
               <span {{ bem('link', ['current'], pager__base_class, ['is-active']) }}>
-                <span {{ bem('visually-hidden') }}>{{ 'Current page'|t }}</span>
+                <span {{ bem('visually-hidden') }}>{{ current_page_label }}</span>
                 {{ page }}
               </span>
             </li>
           {% else %}
             <li {{ bem('item', ['desktop'], pager__base_class) }}>
-              <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[page].href }}" aria-label="{{ 'Page '|t ~ page }}">
+              <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[page].href }}" aria-label="{{ page_label ~ page }}">
                 {{ page }}
               </a>
             </li>
@@ -392,7 +389,7 @@
           <span {{ bem('ellipsis', [], pager__base_class) }} aria-hidden="true">...</span>
         </li>
         <li {{ bem('item', ['desktop'], pager__base_class) }}>
-          <a {{ bem('link', [], pager__base_class) }} href="{{ items.pages[total_pages].href }}" aria-label="{{ 'Page '|t ~ total_pages }}">
+          <a {{ bem('link', [], pager__base_class) }} href="{{ items.last.href|default(items.pages[total_pages].href) }}" aria-label="{{ page_label ~ total_pages }}">
             {{ total_pages }}
           </a>
         </li>
@@ -425,7 +422,7 @@
       {% if items.next %}
         <li {{ bem('item', ['next'], pager__base_class) }}>
           <a {{ bem('link', ['next'], pager__base_class) }} href="{{ items.next.href }}" title="{{ 'Go to next page'|t }}" rel="next"{{ items.next.attributes|without('href', 'title', 'rel') }}>
-            <span {{ bem('visually-hidden') }}>{{ 'Next page'|t }}</span>
+            <span {{ bem('visually-hidden') }}>{{ next_page_label }}</span>
             {% include "@atoms/images/icons/_yds-icon.twig" with {
               icon__name: 'angle-down',
               icon__decorative: true,
