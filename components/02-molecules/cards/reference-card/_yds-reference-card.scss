@@ -258,6 +258,11 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     }
   }
 
+  // Resource thumbnail show top of the PDF file
+  [data-collection-source='resource'] & {
+    overflow: hidden;
+  }
+
   // Single card collection featured
   [data-collection-type='single'][data-collection-featured='true'] & {
     aspect-ratio: 3/2;
