@@ -439,6 +439,10 @@ $secondary-menu-sub-max-width: 19rem;
   &--level-0 {
     @include secondary-nav-item-level-0;
 
+    &:hover {
+      background-color: var(--color-gray-100);
+    }
+
     &.secondary-nav__link--with-sub {
       display: none;
     }
@@ -574,6 +578,10 @@ $secondary-menu-sub-max-width: 19rem;
 
   &--level-0 {
     @include secondary-nav-item-level-0;
+
+    &:hover {
+      background-color: var(--color-gray-100);
+    }
   }
 }
 
