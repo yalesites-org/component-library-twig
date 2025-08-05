@@ -162,6 +162,7 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 
   @media (min-width: tokens.$break-mobile) {
+    border-top: var(--border-thickness-1) solid var(--color-navigation-border);
     border-bottom: var(--border-thickness-1) solid
       var(--color-navigation-border);
   }
