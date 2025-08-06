@@ -133,12 +133,16 @@ $secondary-menu-sub-max-width: 19rem;
     --color-link-base: var(--color-slot-one);
     --color-link-hover: var(--color-slot-eight);
     --color-navigation-border: var(--color-slot-one);
+    --color-hover-background: var(--color-slot-one);
+    --color-hover-text: var(--color-slot-eight);
   }
 
   [data-component-theme='two'] & {
     --color-link-base: var(--color-slot-one);
     --color-link-hover: var(--color-slot-seven);
     --color-navigation-border: var(--color-slot-two);
+    --color-hover-background: var(--color-slot-two);
+    --color-hover-text: var(--color-slot-eight);
   }
 
   [data-component-theme='three'] & {
@@ -147,18 +151,24 @@ $secondary-menu-sub-max-width: 19rem;
     --color-link-base: var(--color-slot-one);
     --color-link-hover: var(--color-slot-eight);
     --color-navigation-border: var(--color-slot-three);
+    --color-hover-background: var(--color-slot-three);
+    --color-hover-text: var(--color-slot-eight);
   }
 
   [data-component-theme='four'] & {
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
     --color-navigation-border: var(--color-slot-four);
+    --color-hover-background: var(--color-slot-three);
+    --color-hover-text: var(--color-slot-eight);
   }
 
   [data-component-theme='five'] & {
     --color-section-nav-theme: var(--color-slot-three);
     --color-section-nav-content: var(--color-slot-seven);
     --color-navigation-border: var(--color-slot-five);
+    --color-hover-background: var(--color-slot-three);
+    --color-hover-text: var(--color-slot-eight);
   }
 
   .in-this-section__inner & {
@@ -440,7 +450,14 @@ $secondary-menu-sub-max-width: 19rem;
     @include secondary-nav-item-level-0;
 
     &:hover {
-      background-color: var(--color-gray-100);
+      background-color: var(--color-hover-background);
+      color: var(--color-hover-text);
+    }
+
+    // Ensure active links also show accent hover states when hovered
+    &.secondary-nav__link--active:hover {
+      background-color: var(--color-hover-background);
+      color: var(--color-hover-text);
     }
 
     &.secondary-nav__link--with-sub {
@@ -580,7 +597,14 @@ $secondary-menu-sub-max-width: 19rem;
     @include secondary-nav-item-level-0;
 
     &:hover {
-      background-color: var(--color-gray-100);
+      background-color: var(--color-hover-background);
+      color: var(--color-hover-text);
+    }
+
+    // Ensure active toggle buttons also show accent hover states when hovered
+    &[aria-expanded='true']:hover {
+      background-color: var(--color-hover-background);
+      color: var(--color-hover-text);
     }
   }
 }

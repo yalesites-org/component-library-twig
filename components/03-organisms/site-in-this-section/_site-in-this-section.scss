@@ -95,12 +95,16 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-link-base: var(--color-slot-one);
     --color-link-hover: var(--color-slot-eight);
     --color-navigation-border: var(--color-slot-one);
+    --color-hover-background: var(--color-slot-one);
+    --color-hover-text: var(--color-slot-eight);
   }
 
   &[data-component-theme='two'] {
     --color-link-base: var(--color-slot-one);
     --color-link-hover: var(--color-slot-seven);
     --color-navigation-border: var(--color-slot-two);
+    --color-hover-background: var(--color-slot-two);
+    --color-hover-text: var(--color-slot-eight);
   }
 
   &[data-component-theme='three'] {
@@ -109,18 +113,24 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-link-base: var(--color-slot-one);
     --color-link-hover: var(--color-slot-eight);
     --color-navigation-border: var(--color-slot-three);
+    --color-hover-background: var(--color-slot-three);
+    --color-hover-text: var(--color-slot-eight);
   }
 
   &[data-component-theme='four'] {
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
     --color-navigation-border: var(--color-slot-four);
+    --color-hover-background: var(--color-slot-three);
+    --color-hover-text: var(--color-slot-eight);
   }
 
   &[data-component-theme='five'] {
     --color-section-nav-theme: var(--color-slot-three);
     --color-section-nav-content: var(--color-slot-seven);
     --color-navigation-border: var(--color-slot-five);
+    --color-hover-background: var(--color-slot-three);
+    --color-hover-text: var(--color-slot-eight);
   }
 
   .secondary-menu-toggle {
@@ -133,7 +143,8 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       z-index: 2;
 
       &[aria-expanded='true'] {
-        background-color: var(--color-gray-100);
+        background-color: var(--color-hover-background);
+        color: var(--color-hover-text);
       }
     }
   }
