@@ -328,12 +328,8 @@ $menu-sub-max-width: 19rem;
 
   [data-menu-variation='mega']
     // Targets the explore link to the right of a dropdown menu.
-    // Only it should be capitalized.
-    &.primary-nav__link--level-1.primary-nav__link--with-icon.primary-nav__link--explore-bar {
-    @media (min-width: tokens.$break-mobile) {
-      @include tokens.heading(h6);
-    }
-  }
+    // Font styling is handled by --font-style-nav-primary-1 variable below.
+    // Removed heading(h6) mixin to prevent global font setting from affecting this element.
 
   &--level-1 {
     font: var(--font-style-nav-primary-1);
