@@ -19,7 +19,7 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 // Mixin for generic links.
 // Style options are "default" or "no-underline" or "no-animation".
 // The style name indicates the initial appearance.
-@mixin link($style: default, $family-weight: 'mallory-medium') {
+@mixin link($style: default, $family-weight: 'mallory-book') {
   // Global themes: set color slots for each theme
   // This establishes `--color-slot-` variables name-spaced to the selector
   // in which it is used. We can map component-level variables to global-level
@@ -130,7 +130,7 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   color: var(--color-link-base);
   text-decoration: underline;
   text-decoration-thickness: 0.1em;
-  font-weight: var(--font-weights-mallory-medium);
+  font-weight: var(--font-weights-mallory-book);
   line-height: normal;
 
   &:hover {
