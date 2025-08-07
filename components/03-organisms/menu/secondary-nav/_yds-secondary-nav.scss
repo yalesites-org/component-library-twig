@@ -598,6 +598,12 @@ $secondary-menu-sub-max-width: 19rem;
 }
 
 .secondary-nav__toggle-icon {
+  @include tokens.animate;
+
   height: 1em;
   width: 1em;
+}
+
+.secondary-nav__toggle[aria-expanded='true'] .secondary-nav__toggle-icon {
+  transform: rotate(180deg);
 }
