@@ -11,7 +11,10 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .in-this-section {
   --section-toggle-height: 4rem;
-  --size-in-this-section-control: 4rem;
+  --in-this-section-control-vertical-offset: calc(
+    var(--size-click-target-minimum) + 0.625rem
+  );
+  --in-this-section-control-width: 3.15rem;
 
   position: relative;
   background-color: var(--color-basic-white);
@@ -162,8 +165,10 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 
   @media (min-width: tokens.$break-mobile) {
+    border-top: var(--border-thickness-1) solid var(--color-navigation-border);
     border-bottom: var(--border-thickness-1) solid
       var(--color-navigation-border);
+    padding-left: var(--size-spacing-5);
   }
 
   & .secondary-nav__menu--level-0:first-of-type {
@@ -180,8 +185,8 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   display: flex;
   align-items: center;
   justify-content: center;
-  height: var(--size-click-target-minimum);
-  width: var(--size-click-target-minimum);
+  height: var(--in-this-section-control-vertical-offset);
+  width: var(--in-this-section-control-width);
   background-color: var(--color-background);
   opacity: 0;
 
@@ -196,7 +201,7 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &--left {
     left: 0;
     transform: rotate(90deg);
-    z-index: 0;
+    z-index: 1;
 
     [data-scroll-indicator='left'] &,
     [data-scroll-indicator='both'] & {
