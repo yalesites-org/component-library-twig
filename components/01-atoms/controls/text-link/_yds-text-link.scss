@@ -257,6 +257,25 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 }
 
+// Override for Mallory font pairing - separate from mixin to avoid specificity issues
+body[data-font-pairing='mallory'] {
+  [class*='__heading-link'] {
+    font-weight: var(--font-weights-mallory-book);
+    letter-spacing: normal;
+
+    // Also override when inside headings to prevent inheriting Medium weight
+    h1 &,
+    h2 &,
+    h3 &,
+    h4 &,
+    h5 &,
+    h6 & {
+      font-weight: var(--font-weights-mallory-book);
+      letter-spacing: normal;
+    }
+  }
+}
+
 .link {
   &[data-link-style='underline'] {
     @include link;
