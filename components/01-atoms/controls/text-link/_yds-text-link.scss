@@ -233,11 +233,6 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
     &:visited {
       color: var(--color-link-visited-base);
     }
-
-    // The underline effect was too close to the text on Mallory, so adjust it.
-    [data-font-pairing='mallory'] & {
-      --position: 0 1.15em;
-    }
   }
 
   // Style the heading link when the component is focused.
