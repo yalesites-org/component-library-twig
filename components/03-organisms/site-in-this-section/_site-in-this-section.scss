@@ -11,10 +11,10 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .in-this-section {
   --section-toggle-height: 4rem;
-  --size-in-this-section-control: 4rem;
-  --size-in-this-section-control-enhanced: calc(
-    var(--size-click-target-minimum) + 4px
+  --in-this-section-control-vertical-offset: calc(
+    var(--size-click-target-minimum) + 0.625rem
   );
+  --in-this-section-control-width: 3.15rem;
 
   position: relative;
   background-color: var(--color-basic-white);
@@ -185,8 +185,8 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   display: flex;
   align-items: center;
   justify-content: center;
-  height: var(--size-in-this-section-control-enhanced);
-  width: var(--size-click-target-minimum);
+  height: var(--in-this-section-control-vertical-offset);
+  width: var(--in-this-section-control-width);
   background-color: var(--color-background);
   opacity: 0;
 
