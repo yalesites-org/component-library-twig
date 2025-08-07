@@ -14,7 +14,7 @@ $secondary-menu-sub-max-width: 19rem;
 
   color: var(--color-heading);
   text-align: left;
-  padding: var(--size-spacing-3) var(--size-spacing-5);
+  padding: var(--secondary-nav-padding-vertical) var(--size-spacing-5);
 
   &[aria-expanded='true'] {
     color: var(--color-navigation-expanded-item);
@@ -64,6 +64,7 @@ $secondary-menu-sub-max-width: 19rem;
 .secondary-nav {
   --secondary-nav-hover-bg: var(--color-gray-200);
   --secondary-nav-hover-color: var(--color-slot-seven);
+  --secondary-nav-padding-vertical: calc(var(--size-spacing-3) + 2px);
 
   max-width: 100%;
   background-color: var(--color-basic-white);
