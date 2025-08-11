@@ -382,6 +382,7 @@ $menu-sub-max-width: 19rem;
     [data-menu-variation='mega'] & {
       font: var(--font-style-nav-primary-1);
       color: var(--color-heading);
+      text-transform: uppercase;
       margin-bottom: var(--size-spacing-3);
       padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2)
         calc(var(--size-spacing-2) + var(--size-spacing-1));

@@ -64,7 +64,9 @@ $secondary-menu-sub-max-width: 19rem;
 .secondary-nav {
   --secondary-nav-hover-bg: var(--color-gray-200);
   --secondary-nav-hover-color: var(--color-slot-seven);
-  --secondary-nav-padding-vertical: calc(var(--size-spacing-3) + 2px);
+  --secondary-nav-padding-vertical: calc(
+    var(--size-spacing-3) + var(--size-spacing-1)
+  );
 
   max-width: 100%;
   background-color: var(--color-basic-white);
@@ -243,13 +245,19 @@ $secondary-menu-sub-max-width: 19rem;
       background-color: var(--color-background);
       max-width: $secondary-menu-sub-max-width;
       z-index: 1;
+      /* stylelint-disable scss/operator-no-newline-after */
       top: calc(
-        var(--size-spacing-9) + var(--size-spacing-10) - var(--size-spacing-2)
+        var(--size-spacing-9) + var(--size-spacing-10) - var(--size-spacing-2) +
+          var(--size-spacing-3) + var(--size-spacing-1)
       );
 
       .in-this-section & {
-        top: calc(var(--size-spacing-7) + var(--size-spacing-4));
+        top: calc(
+          var(--size-spacing-7) + var(--size-spacing-4) + var(--size-spacing-3) +
+            var(--size-spacing-1)
+        );
       }
+      /* stylelint-enable scss/operator-no-newline-after */
 
       [aria-expanded='false'] ~ & {
         display: none;
