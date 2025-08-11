@@ -326,10 +326,8 @@ $menu-sub-max-width: 19rem;
     }
   }
 
-  [data-menu-variation='mega']
-    // Targets the explore link to the right of a dropdown menu.
-    // Font styling is handled by --font-style-nav-primary-1 variable below.
-    // Removed heading(h6) mixin to prevent global font setting from affecting this element.
+  // Targets the explore link to the right of a dropdown menu.
+  // Font styling is handled by --font-style-nav-primary-1 variable below.
 
   &--level-1 {
     font: var(--font-style-nav-primary-1);
@@ -384,6 +382,7 @@ $menu-sub-max-width: 19rem;
     [data-menu-variation='mega'] & {
       font: var(--font-style-nav-primary-1);
       color: var(--color-heading);
+      text-transform: uppercase;
       margin-bottom: var(--size-spacing-3);
       padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2)
         calc(var(--size-spacing-2) + var(--size-spacing-1));
