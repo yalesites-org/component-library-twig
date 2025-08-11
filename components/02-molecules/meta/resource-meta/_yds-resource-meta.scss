@@ -4,6 +4,7 @@
 .resource-meta__inner {
   display: grid;
   row-gap: var(--size-spacing-4);
+  justify-content: start;
 
   [data-component-resource-type='document'] & {
     @media (min-width: tokens.$break-s) {
@@ -16,6 +17,10 @@
   font-size: var(--font-size-14);
 }
 
+.resource-meta__media {
+  width: max-content;
+}
+
 .resource-meta__image {
   width: 200px;
   margin-bottom: var(--size-spacing-3);
@@ -23,8 +28,6 @@
 }
 
 .resource-meta__cta {
-  display: inline-block;
-
   a {
     display: block;
   }
