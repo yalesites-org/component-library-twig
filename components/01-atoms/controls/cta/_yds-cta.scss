@@ -114,6 +114,19 @@ $cta-outline-weights: (
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+
+      @if $globalTheme == 'one' {
+        --color-cta-text-hover: var(--color-slot-five);
+      }
+      @if $globalTheme == 'three' {
+        --color-cta-text-hover: var(--color-slot-five);
+      }
+      @if $globalTheme == 'four' {
+        --color-cta-text-hover: var(--color-slot-two);
+      }
+      @if $globalTheme == 'five' {
+        --color-cta-text-hover: var(--color-slot-five);
+      }
     }
   }
 

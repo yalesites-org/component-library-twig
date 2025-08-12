@@ -12,9 +12,9 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 .in-this-section {
   --section-toggle-height: 4rem;
   --in-this-section-control-vertical-offset: calc(
-    var(--size-click-target-minimum) + 0.625rem
+    var(--size-click-target-minimum) + 0.325rem
   );
-  --in-this-section-control-width: 3.15rem;
+  --in-this-section-control-width: 3rem;
 
   position: relative;
   background-color: var(--color-basic-white);
