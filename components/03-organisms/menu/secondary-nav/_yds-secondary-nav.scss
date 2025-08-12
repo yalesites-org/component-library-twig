@@ -10,7 +10,7 @@ $secondary-nav-component-themes: map.deep-get(
 $secondary-menu-sub-max-width: 19rem;
 
 @mixin secondary-nav-item-level-0 {
-  @include tokens.body-default;
+  @include tokens.body-s;
 
   color: var(--color-heading);
   text-align: left;
