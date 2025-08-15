@@ -24,7 +24,9 @@
   @media (min-width: tokens.$break-xl) {
     @include tokens.heading(h1, 'book');
 
-    font-size: var(--font-size-16);
+    .calendar .calendar__content & {
+      font-size: var(--font-size-16);
+    }
   }
 }
 

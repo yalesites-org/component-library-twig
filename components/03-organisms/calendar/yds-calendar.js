@@ -46,12 +46,39 @@ Drupal.behaviors.eventsCalendar = {
         .querySelector(nextButton);
       const calendarEvents = c.querySelectorAll(dayEvents);
       const calendarNoEvents = c.querySelector(noEvents);
+      const getNearestFilterForm = () =>
+        c.closest('form') || document.querySelector('form.ys-filter-form');
       const handleNoMonthEvents = () => {
         // If there are no events in the current month, show the 'No Events' text on mobile.
         if (!calendarEvents.length) {
           calendarNoEvents.classList.add(visibleClass);
         }
       };
+      // Intercept unintended submits on the nearest filter form when navigating.
+      const installFormSubmitGuard = () => {
+        const form = getNearestFilterForm();
+        if (!form || form.dataset.ysCalendarSubmitGuardInstalled === 'true')
+          return;
+        form.addEventListener(
+          'submit',
+          (ev) => {
+            const activeEl = document.activeElement;
+            if (
+              activeEl &&
+              activeEl.closest &&
+              activeEl.closest('.calendar__nav-btn')
+            ) {
+              ev.preventDefault();
+              if (ev.stopImmediatePropagation) ev.stopImmediatePropagation();
+              if (ev.stopPropagation) ev.stopPropagation();
+            }
+          },
+          true, // capture phase to beat other submit handlers
+        );
+        form.dataset.ysCalendarSubmitGuardInstalled = 'true';
+      };
+      installFormSubmitGuard();
+
       // Handle the 'More events' button click.
       eventsToggle.forEach((el) => {
         el.addEventListener('click', () => {
@@ -72,37 +99,130 @@ Drupal.behaviors.eventsCalendar = {
         });
       });
 
-      // Helper function to find the closest calendar-wrapper with an ID that starts with 'calendar-wrapper'.
-      const getCalendarWrapper = (clickEvent) =>
-        clickEvent.target.closest('[id^="calendar-wrapper"]');
+      // Helper function to find the closest calendar wrapper element from a node.
+      const getCalendarWrapperFromEl = (el) =>
+        el &&
+        el.closest &&
+        el.closest(
+          '#event-calendar-wrapper-static, [id^="event-calendar-wrapper"], [id^="calendar-wrapper"]',
+        );
 
       // Function to refresh the calendar data via AJAX based on the given button (prev/next) and calendarWrapper.
       const refreshCalendarData = (calendarWrapper, button) => {
         if (isStorybook) return; // If we're in storybook, we don't have access to /events-calendar
         if (!calendarWrapper) return; // If no calendarWrapper found, exit the function.
 
+        // Try to find the exposed filter form near the calendar; fallback to first matching filter form.
+        const form =
+          calendarWrapper.closest('form') ||
+          document.querySelector('form.ys-filter-form');
+
+        const submitData = {
+          calendar_id: `#${calendarWrapper.id}`,
+          month: button.dataset.month,
+          year: button.dataset.year,
+        };
+
+        if (form) {
+          // Ensure hidden fields on the form reflect the navigated month/year so
+          // subsequent filter submissions stay on the same month.
+          const setHidden = (name, value) => {
+            let el = form.querySelector(`[name="${name}"]`);
+            if (!el) {
+              el = document.createElement('input');
+              el.type = 'hidden';
+              el.name = name;
+              form.appendChild(el);
+            }
+            el.value = value;
+          };
+          setHidden('calendar_month', button.dataset.month);
+          setHidden('calendar_year', button.dataset.year);
+
+          // Helper to read multi-select values.
+          const readMulti = (name) =>
+            Array.from(
+              form.querySelectorAll(`[name="${name}[]"] option:checked`),
+            ).map((o) => o.value);
+          // Helper to read hidden/single values.
+          const readSingle = (name) => {
+            const el = form.querySelector(`[name="${name}"]`);
+            return el ? el.value : undefined;
+          };
+
+          const cat = readMulti('category_included_terms');
+          const aud = readMulti('audience_included_terms');
+          const cv = readMulti('custom_vocab_included_terms');
+
+          // Encode arrays as JSON strings to avoid non-scalar input rejection.
+          submitData.category_included_terms = JSON.stringify(cat);
+          submitData.audience_included_terms = JSON.stringify(aud);
+          submitData.custom_vocab_included_terms = JSON.stringify(cv);
+
+          // Hidden singles can be posted as-is; if they become arrays, encode similarly.
+          submitData.terms_include = readSingle('terms_include') ?? '';
+          submitData.terms_exclude = readSingle('terms_exclude') ?? '';
+          submitData.term_operator = readSingle('term_operator') || '+';
+          // Also submit navigated month/year for completeness.
+          submitData.calendar_month = readSingle('calendar_month');
+          submitData.calendar_year = readSingle('calendar_year');
+        }
+
         // Use Drupal's AJAX system to refresh the calendar data.
         Drupal.ajax({
           url: '/events-calendar',
-          submit: {
-            calendar_id: `#${calendarWrapper.id}`, // Pass the calendar wrapper ID.
-            month: button.dataset.month, // Pass the selected month from the button.
-            year: button.dataset.year, // Pass the selected year from the button.
-          },
-          progress: { type: 'fullscreen' }, // Show a fullscreen progress indicator during the refresh.
+          submit: submitData,
+          progress: { type: 'fullscreen' },
         }).execute();
       };
 
-      const handleDesktopCalendarNavigation = () => {
-        desktopCalendarPrevBtn.addEventListener('click', (clickEvent) => {
-          const calendarWrapper = getCalendarWrapper(clickEvent);
-          refreshCalendarData(calendarWrapper, desktopCalendarPrevBtn);
-        });
+      const preventAndNavigate = (ev, btn) => {
+        // Block default navigation and other handlers that may submit/follow links.
+        ev.preventDefault();
+        if (ev.stopImmediatePropagation) ev.stopImmediatePropagation();
+        if (ev.stopPropagation) ev.stopPropagation();
+        const wrapper = getCalendarWrapperFromEl(btn);
+        refreshCalendarData(wrapper, btn);
+        return false;
+      };
 
-        desktopCalendarNextBtn.addEventListener('click', (clickEvent) => {
-          const calendarWrapper = getCalendarWrapper(clickEvent);
-          refreshCalendarData(calendarWrapper, desktopCalendarNextBtn);
-        });
+      const handleDesktopCalendarNavigation = () => {
+        // Ensure buttons do not submit the surrounding form.
+        if (desktopCalendarPrevBtn)
+          desktopCalendarPrevBtn.setAttribute('type', 'button');
+        if (desktopCalendarNextBtn)
+          desktopCalendarNextBtn.setAttribute('type', 'button');
+
+        if (desktopCalendarPrevBtn) {
+          desktopCalendarPrevBtn.addEventListener(
+            'click',
+            (clickEvent) =>
+              preventAndNavigate(clickEvent, desktopCalendarPrevBtn),
+            { capture: true },
+          );
+          // Keyboard support without form submission.
+          desktopCalendarPrevBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              preventAndNavigate(e, desktopCalendarPrevBtn);
+            }
+          });
+        }
+        if (desktopCalendarNextBtn) {
+          desktopCalendarNextBtn.addEventListener(
+            'click',
+            (clickEvent) =>
+              preventAndNavigate(clickEvent, desktopCalendarNextBtn),
+            { capture: true },
+          );
+          // Keyboard support without form submission.
+          desktopCalendarNextBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              preventAndNavigate(e, desktopCalendarNextBtn);
+            }
+          });
+        }
       };
       handleDesktopCalendarNavigation();
       if (!mql.matches) {
