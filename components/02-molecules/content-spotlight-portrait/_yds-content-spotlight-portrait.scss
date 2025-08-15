@@ -270,17 +270,17 @@ $component-content-spotlight-port-themes: map.deep-get(
 }
 
 .content-spotlight-portrait__overline {
-  @include tokens.h6-mallory-compact-book;
+  @include tokens.heading(h6, 'book');
 
   color: var(--color-text);
 }
 
 .content-spotlight-portrait__heading {
-  @include tokens.h3-yale-new;
+  @include tokens.heading(h3);
 }
 
 .content-spotlight-portrait__subheading {
-  @include tokens.h5-mallory-compact-book;
+  @include tokens.heading(h5, 'book');
 
   color: var(--color-text);
 }

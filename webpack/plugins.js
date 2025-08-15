@@ -30,10 +30,16 @@ const SpriteLoaderPlugin = new _SpriteLoaderPlugin({
 
 const ProgressPlugin = new webpack.ProgressPlugin();
 
-const CopyWebpackPlugin = new _CopyWebpackPlugin([{
+const CopyWebpackPlugin = new _CopyWebpackPlugin([
+  {
   from: './fonts',
   to: './fonts',
-}]);
+  },
+  {
+    from: './images/patterns',
+    to: './images/patterns',
+  }
+]);
 
 module.exports = {
   ProgressPlugin,
@@ -50,6 +56,7 @@ module.exports = {
       'css/**/*.js', // Remove all unwanted, auto generated JS files from dist/css folder.
       'css/**/*.js.map',
       '!*.{png,jpg,gif,svg}',
+      '!images/**/*.{png,jpg,gif,svg}',
       '!fonts/**',
     ],
   }),

@@ -22,7 +22,7 @@
   }
 
   @media (min-width: tokens.$break-xl) {
-    @include tokens.h1-mallory-compact-book;
+    @include tokens.heading(h1, 'book');
 
     font-size: var(--font-size-16);
   }
@@ -53,7 +53,7 @@
   line-height: 1.2;
 
   & > time {
-    @include tokens.h5-yale-new;
+    @include tokens.heading(h5);
   }
 
   @media (min-width: tokens.$break-xl) {
@@ -122,7 +122,7 @@
 }
 
 .calendar__nav-time {
-  @include tokens.h4-yale-new;
+  @include tokens.heading(h4);
 
   color: var(--color-gray-800);
 }
@@ -228,7 +228,7 @@
     }
 
     .calendar-event__title {
-      @include tokens.h3-yale-new;
+      @include tokens.heading(h3);
     }
   }
 
@@ -279,7 +279,7 @@
   }
 
   .calendar-event__title {
-    @include tokens.h4-yale-new;
+    @include tokens.heading(h4);
   }
 
   .calendar-event__category {

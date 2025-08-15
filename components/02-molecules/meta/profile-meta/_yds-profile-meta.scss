@@ -218,13 +218,13 @@ $break-profile-banner-max: $break-profile-banner - 0.05;
 }
 
 .profile-meta__title-line {
-  @include tokens.h3-yale-new;
+  @include tokens.heading(h3);
 
   margin-bottom: var(--size-spacing-6);
 }
 
 .profile-meta__subtitle-line {
-  @include tokens.h4-yale-new;
+  @include tokens.heading(h4);
 
   margin-bottom: var(--size-spacing-6);
 }

@@ -77,7 +77,7 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
 }
 
 .custom-card__heading {
-  @include tokens.h4-yale-new;
+  @include tokens.heading(h4);
 
   margin-bottom: var(--size-spacing-3);
 }

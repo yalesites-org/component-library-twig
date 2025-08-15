@@ -1,8 +1,34 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import factsAndFiguresTwig from './yds-facts-and-figures.twig';
 import factsAndFiguresData from './facts-and-figures.yml';
+import factsAndFiguresIconsData from './facts-and-figures-icons.yml';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
+
+// Process icon data for Storybook controls
+// The goal is to create an object like:
+// {
+//   '- None -': '- None -',
+//   'Human Readable Name 1': 'icon-name-1',
+//   'Human Readable Name 2': 'icon-name-2',
+//   ...
+// }
+const iconDisplayToValueMap = {
+  '- None -': '- None -', // Default option to display 'None' and pass 'None'
+};
+
+// Check if factsAndFiguresIconsData.icons exists and is an object
+if (
+  factsAndFiguresIconsData.icons &&
+  typeof factsAndFiguresIconsData.icons === 'object'
+) {
+  Object.entries(factsAndFiguresIconsData.icons).forEach(
+    ([iconName, humanReadableName]) => {
+      iconDisplayToValueMap[humanReadableName] = iconName;
+    },
+  );
+}
+
 /**
  * Storybook Definition.
  */
@@ -43,10 +69,11 @@ export default {
       type: 'select',
       defaultValue: 'one',
     },
-    factsAndFiguresIcon: {
-      name: 'factsAndFigures Icon',
-      type: 'boolean',
-      defaultValue: false,
+    iconName: {
+      name: 'Icon Selection',
+      options: iconDisplayToValueMap,
+      type: 'select',
+      defaultValue: '- None -',
     },
   },
 };
@@ -58,8 +85,13 @@ export const FactsAndFigures = ({
   fontStyle,
   alignment,
   themeColor,
-  factsAndFiguresIcon,
-}) => `
+  iconName,
+}) => {
+  // Determine if icons should be shown based on icon selection.
+  // 'iconName' will now directly contain the icon-name (e.g., 'home', or '- None -').
+  const hasIcon = iconName && iconName !== '- None -';
+
+  return `
 
   <ul class='facts-and-figures__group__wrap' data-facts-and-figures-collection-type="single">
     ${factsAndFiguresTwig({
@@ -96,8 +128,10 @@ export const FactsAndFigures = ({
         facts_and_figures__font_style: fontStyle,
         facts_and_figures__alignment: alignment,
         facts_and_figures__theme: themeColor,
-        facts_and_figures__has_icon: factsAndFiguresIcon ? 'true' : 'false',
+        facts_and_figures__has_icon: hasIcon ? 'true' : 'false',
+        facts_and_figures__icon_name: hasIcon ? iconName : null,
       })}
     </ul>
   </div>
 `;
+};

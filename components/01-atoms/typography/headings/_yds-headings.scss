@@ -24,27 +24,27 @@ h6 {
 // "interface" headings that are not a part of a design system component, as
 // well as headings that appear in a wysiwyg without a class.
 h1:not([class]) {
-  @include tokens.h1-yale-new;
+  @include tokens.heading(h1);
   @include text-field-header-spacing;
 }
 
 h2:not([class]) {
-  @include tokens.h2-yale-new;
+  @include tokens.heading(h2);
   @include text-field-header-spacing;
 }
 
 h3:not([class]) {
-  @include tokens.h3-yale-new;
+  @include tokens.heading(h3);
   @include text-field-header-spacing;
 }
 
 h4:not([class]) {
-  @include tokens.h4-yale-new;
+  @include tokens.heading(h4);
   @include text-field-header-spacing;
 }
 
 h5:not([class]) {
-  @include tokens.h5-yale-new;
+  @include tokens.heading(h5);
   @include text-field-header-spacing;
 
   // h5 needs a bit more top margin
@@ -54,11 +54,23 @@ h5:not([class]) {
 }
 
 h6:not([class]) {
-  @include tokens.h6-yale-new;
+  @include tokens.heading(h6);
   @include text-field-header-spacing;
 
   // h6 needs more top margin
   &:not(:first-child) {
     margin-top: 2em;
+  }
+}
+
+// Fix mixed typography issue for Mallory font pairing
+body[data-font-pairing='mallory'] {
+  h1:not([class]),
+  h2:not([class]),
+  h3:not([class]),
+  h4:not([class]),
+  h5:not([class]),
+  h6:not([class]) {
+    font-weight: var(--font-weights-mallory-book);
   }
 }

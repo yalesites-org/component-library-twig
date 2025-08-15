@@ -286,20 +286,20 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
 h2 {
   [data-component-layout='seventy-thirty'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
-    @include tokens.h3-yale-new;
+    @include tokens.heading(h3);
   }
 }
 
 h3 {
   [data-component-layout='seventy-thirty'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
-    @include tokens.h4-yale-new;
+    @include tokens.heading(h4);
   }
 }
 
 h4 {
   [data-component-layout='seventy-thirty'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
-    @include tokens.h5-yale-new;
+    @include tokens.heading(h5);
   }
 }

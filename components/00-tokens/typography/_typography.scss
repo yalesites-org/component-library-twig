@@ -160,3 +160,56 @@ code {
   -webkit-line-clamp: $lines;
   overflow: hidden;
 }
+
+@mixin heading($level, $style: null) {
+  body[data-font-pairing='yalenew'] &,
+  body:not([data-font-pairing]) & {
+    @if $level == 'h1' {
+      @include h1-yale-new;
+    } @else if $level == 'h2' {
+      @include h2-yale-new;
+    } @else if $level == 'h3' {
+      @include h3-yale-new;
+    } @else if $level == 'h4' {
+      @include h4-yale-new;
+    } @else if $level == 'h5' {
+      @include h5-yale-new;
+    } @else if $level == 'h6' {
+      @include h6-yale-new;
+    }
+  }
+
+  body[data-font-pairing='mallory'] & {
+    @if $style == 'medium' {
+      // Original behavior: Medium weight (500) - now requires explicit 'medium' parameter
+      @if $level == 'h1' {
+        @include h1-mallory-compact-medium;
+      } @else if $level == 'h2' {
+        @include h2-mallory-compact-medium;
+      } @else if $level == 'h3' {
+        @include h3-mallory-compact-medium;
+      } @else if $level == 'h4' {
+        @include h4-mallory-compact-medium;
+      } @else if $level == 'h5' {
+        @include h5-mallory-compact-medium;
+      } @else if $level == 'h6' {
+        @include h6-mallory-compact-medium;
+      }
+    } @else {
+      // New default behavior: Book weight (400) - was previously Medium weight (500)
+      @if $level == 'h1' {
+        @include h1-mallory-compact-book;
+      } @else if $level == 'h2' {
+        @include h2-mallory-compact-book;
+      } @else if $level == 'h3' {
+        @include h3-mallory-compact-book;
+      } @else if $level == 'h4' {
+        @include h4-mallory-compact-book;
+      } @else if $level == 'h5' {
+        @include h5-mallory-compact-book;
+      } @else if $level == 'h6' {
+        @include h6-mallory-compact-book;
+      }
+    }
+  }
+}
