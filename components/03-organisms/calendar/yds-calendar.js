@@ -77,7 +77,7 @@ Drupal.behaviors.eventsCalendar = {
           if (ev.target?.matches?.('.ys-events-search-input')) {
             triggerSearchIfReady(ev.target);
           }
-        }, 250);
+        }, 500);
 
         // Attach event listeners
         form.addEventListener('input', debouncedHandler, true);
