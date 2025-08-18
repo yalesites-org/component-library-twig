@@ -2,7 +2,7 @@ import MicroModal from 'micromodal';
 
 Drupal.behaviors.eventsCalendar = {
   attach(context) {
-    // Classes and selectors
+    // Classes and selectors.
     const calendar = '.calendar';
     const event = '.calendar-event';
     const eventClass = 'calendar-event';
@@ -19,23 +19,23 @@ Drupal.behaviors.eventsCalendar = {
     const noEvents = '.calendar__no-events-message';
     const storybook = '.sb-show-main';
 
-    // Query elements
+    // Query elements.
     const calendars = context.querySelectorAll(calendar);
     const eventsToggle = context.querySelectorAll(eventToggle);
 
-    // Environment check
+    // Environment check.
     const isStorybook = !(context.querySelector(storybook) === null);
 
-    // Media query for responsive behavior
+    // Media query for responsive behavior.
     const mql = window.matchMedia(`(min-width: 1200px )`);
 
-    // Temporary div for HTML parsing
+    // Temporary div for HTML parsing.
     const tempDiv = document.createElement('div');
 
-    // Initialize MicroModal
+    // Initialize MicroModal.
     MicroModal.init();
 
-    // Debounce utility
+    // Debounce utility.
     const debounce = (fn, wait) => {
       let timeout;
       return (...args) => {
@@ -44,7 +44,7 @@ Drupal.behaviors.eventsCalendar = {
       };
     };
 
-    // Setup search handling for calendar forms
+    // Setup search handling for calendar forms.
     const setupSearchHandling = () => {
       const forms = context.querySelectorAll('form');
 
@@ -79,7 +79,7 @@ Drupal.behaviors.eventsCalendar = {
           }
         }, 500);
 
-        // Attach event listeners
+        // Attach event listeners.
         form.addEventListener('input', debouncedHandler, true);
         form.addEventListener(
           'search',
@@ -91,7 +91,7 @@ Drupal.behaviors.eventsCalendar = {
           true,
         );
 
-        // Initial trigger for existing search value
+        // Initial trigger for existing search value.
         const existingSearchInput = form.querySelector(
           '.ys-events-search-input',
         );
@@ -106,7 +106,7 @@ Drupal.behaviors.eventsCalendar = {
 
     setupSearchHandling();
 
-    // Process each calendar
+    // Process each calendar.
     calendars.forEach((calendarElement) => {
       const moreEventsContainer = calendarElement.querySelector(modalContent);
       const modalTitle = calendarElement.querySelector(modalTitleSelector);
@@ -120,7 +120,7 @@ Drupal.behaviors.eventsCalendar = {
         calendarElement.querySelectorAll(dayEvents);
       const calendarNoEvents = calendarElement.querySelector(noEvents);
 
-      // Utility functions
+      // Utility functions.
       const getNearestForm = () =>
         calendarElement.closest('form') ||
         document.querySelector('form.ys-filter-form');
@@ -131,7 +131,7 @@ Drupal.behaviors.eventsCalendar = {
         }
       };
 
-      // Prevent form submission from nav buttons
+      // Prevent form submission from nav buttons.
       const installFormSubmitGuard = () => {
         const form = getNearestForm();
         if (!form || form.dataset.ysCalendarSubmitGuardInstalled === 'true')
@@ -156,17 +156,17 @@ Drupal.behaviors.eventsCalendar = {
 
       installFormSubmitGuard();
 
-      // Handle "More events" modal
+      // Handle "More events" modal.
       eventsToggle.forEach((toggle) => {
         toggle.addEventListener('click', () => {
           const dayElement = toggle.closest(day);
           const dayEventElements = dayElement.querySelectorAll(event);
 
-          // Set modal title
+          // Set modal title.
           tempDiv.innerHTML = dayElement.querySelector(dialogTitle).innerHTML;
           modalTitle.innerHTML = tempDiv.textContent || tempDiv.innerText;
 
-          // Clear and populate modal content
+          // Clear and populate modal content.
           moreEventsContainer.innerHTML = '';
           dayEventElements.forEach((eventElement) => {
             const clonedEvent = eventElement.cloneNode(true);
@@ -176,13 +176,13 @@ Drupal.behaviors.eventsCalendar = {
         });
       });
 
-      // Calendar wrapper finder
+      // Calendar wrapper finder.
       const getCalendarWrapper = (element) =>
         element?.closest?.(
           '#event-calendar-wrapper-static, [id^="event-calendar-wrapper"], [id^="calendar-wrapper"]',
         );
 
-      // Form field readers with robust name handling
+      // Form field readers with robust name handling.
       const createFieldReaders = (form) => {
         const queryByNames = (base, isMultiple = false) => {
           const selectors = [
@@ -217,11 +217,11 @@ Drupal.behaviors.eventsCalendar = {
         };
       };
 
-      // AJAX calendar refresh
+      // AJAX calendar refresh.
       const refreshCalendarData = (wrapper, button) => {
         if (isStorybook || !wrapper) return;
 
-        // Prevent search interference
+        // Prevent search interference.
         window.YS_CALENDAR_NAV_IN_PROGRESS = true;
         setTimeout(() => {
           window.YS_CALENDAR_NAV_IN_PROGRESS = false;
@@ -241,11 +241,11 @@ Drupal.behaviors.eventsCalendar = {
         if (form) {
           const { readMulti, readSingle, setHidden } = createFieldReaders(form);
 
-          // Update hidden fields for month persistence
+          // Update hidden fields for month persistence.
           setHidden('calendar_month', button.dataset.month);
           setHidden('calendar_year', button.dataset.year);
 
-          // Read all filter values
+          // Read all filter values.
           submitData.category_included_terms = JSON.stringify(
             readMulti('category_included_terms'),
           );
@@ -263,7 +263,7 @@ Drupal.behaviors.eventsCalendar = {
           submitData.search = readSingle('search');
         }
 
-        // Execute AJAX request
+        // Execute AJAX request.
         Drupal.ajax({
           url: '/events-calendar',
           submit: submitData,
@@ -271,7 +271,7 @@ Drupal.behaviors.eventsCalendar = {
         }).execute();
       };
 
-      // Navigation event handler
+      // Navigation event handler.
       const handleNavigation = (navEvent, button) => {
         navEvent.preventDefault();
         navEvent.stopImmediatePropagation?.();
@@ -282,14 +282,14 @@ Drupal.behaviors.eventsCalendar = {
         return false;
       };
 
-      // Setup navigation
+      // Setup navigation.
       const setupNavigation = () => {
-        // Ensure buttons don't submit forms
+        // Ensure buttons don't submit forms.
         [prevBtn, nextBtn].forEach((btn) => {
           if (btn) btn.setAttribute('type', 'button');
         });
 
-        // Click handlers
+        // Click handlers.
         prevBtn?.addEventListener(
           'click',
           (e) => handleNavigation(e, prevBtn),
@@ -301,7 +301,7 @@ Drupal.behaviors.eventsCalendar = {
           { capture: true },
         );
 
-        // Keyboard support
+        // Keyboard support.
         [prevBtn, nextBtn].forEach((btn) => {
           btn?.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -314,7 +314,7 @@ Drupal.behaviors.eventsCalendar = {
 
       setupNavigation();
 
-      // Responsive behavior
+      // Responsive behavior.
       if (!mql.matches) {
         handleNoMonthEvents();
       }
