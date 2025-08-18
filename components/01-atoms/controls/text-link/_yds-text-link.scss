@@ -19,7 +19,7 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 // Mixin for generic links.
 // Style options are "default" or "no-underline" or "no-animation".
 // The style name indicates the initial appearance.
-@mixin link($style: default, $family-weight: 'mallory-medium') {
+@mixin link($style: default, $family-weight: 'mallory-book') {
   // Global themes: set color slots for each theme
   // This establishes `--color-slot-` variables name-spaced to the selector
   // in which it is used. We can map component-level variables to global-level
@@ -130,7 +130,7 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   color: var(--color-link-base);
   text-decoration: underline;
   text-decoration-thickness: 0.1em;
-  font-weight: var(--font-weights-mallory-medium);
+  font-weight: var(--font-weights-mallory-book);
   line-height: normal;
 
   &:hover {
@@ -233,6 +233,11 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
     &:visited {
       color: var(--color-link-visited-base);
     }
+
+    // The underline effect was too close to the text on Mallory, so adjust it.
+    [data-font-pairing='mallory'] & {
+      --position: 0 1.15em;
+    }
   }
 
   // Style the heading link when the component is focused.
@@ -254,6 +259,25 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   &:hover [class*='__heading-link']:visited {
     color: var(--color-link-visited-hover);
+  }
+}
+
+// Override for Mallory font pairing - separate from mixin to avoid specificity issues
+body[data-font-pairing='mallory'] {
+  [class*='__heading-link'] {
+    font-weight: var(--font-weights-mallory-book);
+    letter-spacing: normal;
+
+    // Also override when inside headings to prevent inheriting Medium weight
+    h1 &,
+    h2 &,
+    h3 &,
+    h4 &,
+    h5 &,
+    h6 & {
+      font-weight: var(--font-weights-mallory-book);
+      letter-spacing: normal;
+    }
   }
 }
 
