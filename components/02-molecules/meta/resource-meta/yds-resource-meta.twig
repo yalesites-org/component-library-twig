@@ -1,0 +1,102 @@
+{% set resource_meta__base_class = 'resource-meta' %}
+{% set resource_meta__modifiers = resource_meta__modifiers|default([]) %}
+
+{% set resource_meta__attributes = {
+  'data-component-width': resource_meta__width|default('site'),
+  'data-component-resource-type': resource_meta__resource_type,
+  class: bem(resource_meta__base_class, [], resource_meta__blockname, resource_meta__additional_classes),
+} %}
+
+<div {{ add_attributes(resource_meta__attributes) }} data-embedded-components>
+  <div {{ bem('inner', [], resource_meta__base_class) }}>
+  <div {{ bem('content', [], resource_meta__base_class) }}>
+    {% embed "@molecules/page-title/yds-page-title.twig" with {
+      page_title__heading: resource_meta__heading,
+      page_title__blockname: 'resource-meta',
+    }%}
+      {% block page_title__overline %}
+        {% if resource_meta__category %}
+          {% include "@atoms/typography/text/yds-text.twig" with {
+            text__blockname: resource_meta__base_class,
+            text__content: resource_meta__category,
+            text__base_class: 'category',
+          } %}
+        {% endif %}
+      {% endblock %}
+
+      {% block page_title__meta %}
+        <div {{ bem('metadata', [], resource_meta__base_class) }}>
+          {% if resource_meta__publish_date %}
+            <div {{ bem('published-on', [], resource_meta__base_class) }}>
+              {% include "@atoms/typography/text/yds-text.twig" with {
+                text__blockname: resource_meta__base_class,
+                text__content: 'Published',
+                text__base_class: 'published-on__label',
+              } %}
+              {% include "@atoms/typography/text/yds-text.twig" with {
+                text__blockname: resource_meta__base_class,
+                text__content: resource_meta__publish_date,
+                text__base_class: 'published-on__value',
+              } %}
+            </div>
+          {% endif %}
+
+          {% if resource_meta__metadata|length %}
+            {% embed "@atoms/lists/yds-list.twig" with {
+              list__modifiers: resource_meta__modifiers,
+              list__blockname: resource_meta__base_class,
+            } %}
+              {% block list__content %}
+                {% for item in resource_meta__metadata %}
+                  {% include "@molecules/meta/resource-meta/_yds-resource-meta--metadata.twig" with item %}
+                {% endfor %}
+              {% endblock %}
+            {% endembed %}
+          {% endif %}
+        </div>
+      {% endblock %}
+    {% endembed %}
+  </div>
+
+  {% if resource_meta__resource_type %}
+    <div {{ bem('media', [], resource_meta__base_class) }}>
+      {% if resource_meta__resource_type == 'document' %}
+        <div {{ bem('image', [], resource_meta__base_class) }}>
+          {% block resource_meta__image %}
+            {% include "@atoms/images/image/_responsive-image.twig" with {
+              image__srcset: image__srcset__1,
+              image__sizes: image__sizes__1,
+              image__alt: image__alt__1,
+              image__src: image__src__1,
+            }%}
+          {% endblock %}
+        </div>
+
+        {% if 
+          resource_meta__download_url and 
+          resource_meta__download_aria_label
+        %}
+          <div {{ bem('cta', [], resource_meta__base_class) }}>
+            {% include "@atoms/controls/cta/yds-cta.twig" with {
+              cta__content: resource_meta__download_label,
+              cta__href: resource_meta__download_url,
+              cta__component_theme: cta__component_theme|default('one'),
+              cta__attributes: {
+                'aria-label': resource_meta__download_aria_label,
+              }
+            } %}
+          </div>
+        {% endif %}
+      {% elseif resource_meta__resource_type == 'video' %}
+        <div {{ bem('inner', [], resource_meta__base_class) }}>
+          {% block resource_meta__video %}
+            {% include "@atoms/videos/video-embed/yds-video-embed.twig" with {
+              video_embed__content: video_embed__content__1,
+            } %}
+          {% endblock %}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+  </div>
+</div>
