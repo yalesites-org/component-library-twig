@@ -50,10 +50,30 @@ $heights: (
     aspect-ratio: 3 / 2;
     height: auto;
   }
+}
 
-  .layout--onecol & {
+// Calendar embeds need a little more width to be useful
+.embed__inner:has(iframe[data-embed-type='calendar']) {
+  & iframe {
+    position: static;
+    width: 100%;
+    margin-right: auto;
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
+}
+
+// Layout-specific overrides (higher specificity selectors go last)
+.layout--onecol {
+  .embed__inner:has(iframe[data-embed-type='map']) {
     iframe {
       width: 50%;
+    }
+  }
+
+  .embed__inner:has(iframe[data-embed-type='calendar']) {
+    iframe {
+      width: 66%;
     }
   }
 }

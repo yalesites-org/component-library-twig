@@ -111,7 +111,7 @@ export const EmbedGoogleCalendar = ({ width, type, loading }) =>
   });
 
 EmbedGoogleCalendar.args = {
-  type: 'form',
+  type: 'calendar',
 };
 
 export const EmbedBluesky = () => {
