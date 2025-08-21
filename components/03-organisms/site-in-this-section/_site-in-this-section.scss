@@ -133,7 +133,7 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       display: flex;
       position: relative;
       background-color: var(--color-basic-white);
-      z-index: 2;
+      z-index: 1;
 
       &[aria-expanded='true'] {
         background-color: var(--color-gray-100);
