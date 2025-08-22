@@ -186,6 +186,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
   padding-inline-end: var(--size-spacing-7);
   flex: 1 1 50%;
   text-align: center;
+  z-index: 2;
 
   &:nth-child(2n) {
     &::before {
