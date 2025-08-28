@@ -24,7 +24,7 @@ Drupal.behaviors.eventsCalendar = {
     const eventsToggle = context.querySelectorAll(eventToggle);
 
     // Environment check.
-    const isStorybook = !(context.querySelector(storybook) === null);
+    const isStorybook = !!context.querySelector(storybook);
 
     // Media query for responsive behavior.
     const mql = window.matchMedia(`(min-width: 1200px )`);
@@ -105,6 +105,23 @@ Drupal.behaviors.eventsCalendar = {
     };
 
     setupSearchHandling();
+
+    // Helper functions.
+    const getSelectedValues = (select) =>
+      Array.from(select.options)
+        .filter((option) => option.selected)
+        .map((option) => option.value);
+
+    const setHiddenField = (form, name, value) => {
+      let field = form.querySelector(`[name="${name}"]`);
+      if (!field) {
+        field = document.createElement('input');
+        field.type = 'hidden';
+        field.name = name;
+        form.appendChild(field);
+      }
+      field.value = value;
+    };
 
     // Process each calendar.
     calendars.forEach((calendarElement) => {
@@ -189,47 +206,6 @@ Drupal.behaviors.eventsCalendar = {
           '#event-calendar-wrapper-static, [id^="event-calendar-wrapper"], [id^="calendar-wrapper"]',
         );
 
-      // Form field readers with robust name handling.
-      const createFieldReaders = (form) => {
-        const queryByNames = (base, isMultiple = false) => {
-          const selectors = [
-            `[name="${base}${isMultiple ? '[]' : ''}"]`,
-            `[name="filters_container[${base}]${isMultiple ? '[]' : ''}"]`,
-          ];
-          return isMultiple
-            ? form.querySelectorAll(selectors.join(','))
-            : form.querySelector(selectors.join(','));
-        };
-
-        return {
-          readMulti: (name) =>
-            Array.from(queryByNames(name, true)).flatMap((select) =>
-              Array.from(select.options || [])
-                .filter((option) => option.selected)
-                .map((option) => option.value),
-            ),
-
-          readSingle: (name) => queryByNames(name)?.value || '',
-
-          setHidden: (name, value) => {
-            // Try both naming conventions for calendar fields
-            const fieldName = name.startsWith('calendar_')
-              ? `filters_container[${name}]`
-              : name;
-            let hiddenField =
-              form.querySelector(`[name="${fieldName}"]`) ||
-              form.querySelector(`[name="${name}"]`);
-            if (!hiddenField) {
-              hiddenField = document.createElement('input');
-              hiddenField.type = 'hidden';
-              hiddenField.name = fieldName;
-              form.appendChild(hiddenField);
-            }
-            hiddenField.value = value;
-          },
-        };
-      };
-
       // AJAX calendar refresh.
       const refreshCalendarData = (wrapper, button) => {
         if (isStorybook || !wrapper) return;
@@ -243,37 +219,60 @@ Drupal.behaviors.eventsCalendar = {
         const form =
           wrapper.closest('form') ||
           document.querySelector('form.ys-filter-form');
+        const { month, year } = button.dataset;
         const submitData = {
           calendar_id: `#${wrapper.id}`,
-          month: button.dataset.month,
-          year: button.dataset.year,
-          calendar_month: button.dataset.month,
-          calendar_year: button.dataset.year,
+          month,
+          year,
+          calendar_month: month,
+          calendar_year: year,
         };
 
         if (form) {
-          const { readMulti, readSingle, setHidden } = createFieldReaders(form);
-
           // Update hidden fields for month persistence.
-          setHidden('calendar_month', button.dataset.month);
-          setHidden('calendar_year', button.dataset.year);
+          setHiddenField(form, 'calendar_month', month);
+          setHiddenField(form, 'calendar_year', year);
 
-          // Read all filter values.
-          submitData.category_included_terms = JSON.stringify(
-            readMulti('category_included_terms'),
-          );
-          submitData.audience_included_terms = JSON.stringify(
-            readMulti('audience_included_terms'),
-          );
-          submitData.custom_vocab_included_terms = JSON.stringify(
-            readMulti('custom_vocab_included_terms'),
-          );
-          submitData.terms_include = readSingle('terms_include');
-          submitData.terms_exclude = readSingle('terms_exclude');
-          submitData.term_operator = readSingle('term_operator') || '+';
-          submitData.event_time_period =
-            readSingle('event_time_period') || 'all';
-          submitData.search = readSingle('search');
+          // Read filter values using exact selectors from the HTML.
+          const formElements = {
+            categorySelect: form.querySelector('#edit-category-included-terms'),
+            audienceSelect: form.querySelector('#edit-audience-included-terms'),
+            customVocabSelect: form.querySelector(
+              '#edit-custom-vocab-included-terms',
+            ),
+            searchInput: form.querySelector('#edit-search'),
+            termsIncludeInput: form.querySelector('[name="terms_include"]'),
+            termsExcludeInput: form.querySelector('[name="terms_exclude"]'),
+            termOperatorInput: form.querySelector('[name="term_operator"]'),
+            eventTimePeriodInput: form.querySelector(
+              '[name="event_time_period"]',
+            ),
+          };
+
+          // Build submit data with exact field values.
+          Object.assign(submitData, {
+            category_included_terms: JSON.stringify(
+              formElements.categorySelect
+                ? getSelectedValues(formElements.categorySelect)
+                : [],
+            ),
+            audience_included_terms: JSON.stringify(
+              formElements.audienceSelect
+                ? getSelectedValues(formElements.audienceSelect)
+                : [],
+            ),
+            custom_vocab_included_terms: JSON.stringify(
+              formElements.customVocabSelect
+                ? getSelectedValues(formElements.customVocabSelect)
+                : [],
+            ),
+            terms_include: formElements.termsIncludeInput?.value || '',
+            terms_exclude: formElements.termsExcludeInput?.value || '',
+            term_operator: formElements.termOperatorInput?.value || '+',
+            event_time_period:
+              formElements.eventTimePeriodInput?.value || 'all',
+            search: formElements.searchInput?.value || '',
+          });
         }
 
         // Execute AJAX request.
