@@ -95,6 +95,8 @@
     <div {{ bem('header', [], calendar__base_class) }}>
       <nav {{ bem('nav', ['desktop'], calendar__base_class) }}>
         <button {{ bem('nav-btn', ['prev'], calendar__base_class) }}
+            type="button"
+            data-bef-auto-submit-exclude="true"
             data-month="{{ prev_month }}"
             data-year="{{ prev_year }}">
           {%- include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
@@ -110,6 +112,8 @@
           {{ monthMap[current_month - 1] }} {{ current_year }}
         </time>
         <button {{ bem('nav-btn', ['next'], calendar__base_class) }}
+            type="button"
+            data-bef-auto-submit-exclude="true"
             data-month="{{ next_month }}"
             data-year="{{ next_year }}">
           <span>{{ monthMap[next_month - 1] }} {{ next_year }}</span>

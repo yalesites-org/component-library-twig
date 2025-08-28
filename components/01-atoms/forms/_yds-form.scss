@@ -98,6 +98,31 @@
 }
 
 .ys-filter-form--scaffold {
+  // Default to nowrap, only wrap when there are 5+ visible form items
+  flex-wrap: nowrap;
+
+  // If there are more than 4 visible form items it should wrap.
+  &:has(> .form-item:nth-child(5)) {
+    flex-wrap: wrap;
+
+    .form-item {
+      flex-basis: fit-content;
+      min-width: 29.5%;
+    }
+
+    // Search field should take the full width.
+    .form-item.form-item-search {
+      min-width: 100%;
+    }
+  }
+
+  &:has(> .form-item:nth-child(6)) {
+    .form-item {
+      flex-basis: fit-content;
+      min-width: 21.8%;
+    }
+  }
+
   .form-item__dropdown {
     height: 3.125rem;
     border: var(--border-thickness-1) solid var(--color-gray-400);
@@ -219,8 +244,8 @@
       max-width: 50%;
     }
 
-    // If there are more than 4 children it should wrap.
-    &:has(> :nth-child(5)) {
+    // If there are more than 4 visible form items it should wrap.
+    &:has(> .form-item:nth-child(5)) {
       flex-wrap: wrap;
 
       .form-item {
@@ -234,7 +259,7 @@
       }
     }
 
-    &:has(> :nth-child(6)) {
+    &:has(> .form-item:nth-child(6)) {
       .form-item {
         flex-basis: fit-content;
         min-width: 21.8%;
@@ -253,8 +278,8 @@
       max-width: 50%;
     }
 
-    // If there are more than 4 children it should wrap.
-    &:has(> :nth-child(5)) {
+    // If there are more than 4 visible form items it should wrap.
+    &:has(> .form-item:nth-child(5)) {
       flex-wrap: wrap;
 
       .form-item {
@@ -268,7 +293,7 @@
       }
     }
 
-    &:has(> :nth-child(6)) {
+    &:has(> .form-item:nth-child(6)) {
       .form-item {
         flex-basis: fit-content;
         min-width: 32.5%;

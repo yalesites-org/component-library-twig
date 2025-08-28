@@ -2,7 +2,7 @@ import MicroModal from 'micromodal';
 
 Drupal.behaviors.eventsCalendar = {
   attach(context) {
-    // Classes
+    // Classes and selectors.
     const calendar = '.calendar';
     const event = '.calendar-event';
     const eventClass = 'calendar-event';
@@ -19,98 +19,321 @@ Drupal.behaviors.eventsCalendar = {
     const noEvents = '.calendar__no-events-message';
     const storybook = '.sb-show-main';
 
-    // Selectors.
+    // Query elements.
     const calendars = context.querySelectorAll(calendar);
     const eventsToggle = context.querySelectorAll(eventToggle);
 
-    // Determines if we're in storybook (no drupal endpoints)
-    const isStorybook = !(context.querySelector(storybook) === null);
+    // Environment check.
+    const isStorybook = !!context.querySelector(storybook);
 
-    // Create a MediaQueryList.
+    // Media query for responsive behavior.
     const mql = window.matchMedia(`(min-width: 1200px )`);
 
-    // Create a temporary div element to parse the HTML content.
+    // Temporary div for HTML parsing.
     const tempDiv = document.createElement('div');
 
     // Initialize MicroModal.
     MicroModal.init();
 
-    calendars.forEach((c) => {
-      const moreEventsContainer = c.querySelector(modalContent);
-      const modalTitle = c.querySelector(modalTitleSelector);
-      const desktopCalendarPrevBtn = c
-        .querySelector(desktopNav)
-        .querySelector(prevButton);
-      const desktopCalendarNextBtn = c
-        .querySelector(desktopNav)
-        .querySelector(nextButton);
-      const calendarEvents = c.querySelectorAll(dayEvents);
-      const calendarNoEvents = c.querySelector(noEvents);
+    // Debounce utility.
+    const debounce = (fn, wait) => {
+      let timeout;
+      return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn(...args), wait);
+      };
+    };
+
+    // Setup search handling for calendar forms.
+    const setupSearchHandling = () => {
+      const forms = context.querySelectorAll('form');
+
+      forms.forEach((form) => {
+        const isCalendarFilterForm =
+          form.matches(
+            '#event-calendar-filter-form, form#event-calendar-filter-form, form.ys-filter-form',
+          ) || !!form.querySelector('.ys-filter-form');
+
+        if (
+          !isCalendarFilterForm ||
+          form.dataset.ysCalendarSearchDebounced === 'true'
+        ) {
+          return;
+        }
+
+        const triggerSearchIfReady = (input) => {
+          const value = (input.value || '').trim();
+          if (
+            !window.YS_CALENDAR_NAV_IN_PROGRESS &&
+            (value.length === 0 || value.length >= 3)
+          ) {
+            input.dispatchEvent(
+              new Event('ys-calendar-search', { bubbles: true }),
+            );
+          }
+        };
+
+        const debouncedHandler = debounce((ev) => {
+          if (ev.target?.matches?.('.ys-events-search-input')) {
+            triggerSearchIfReady(ev.target);
+          }
+        }, 500);
+
+        // Attach event listeners.
+        form.addEventListener('input', debouncedHandler, true);
+        form.addEventListener(
+          'search',
+          (ev) => {
+            if (ev.target?.matches?.('.ys-events-search-input')) {
+              triggerSearchIfReady(ev.target);
+            }
+          },
+          true,
+        );
+
+        // Initial trigger for existing search value.
+        const existingSearchInput = form.querySelector(
+          '.ys-events-search-input',
+        );
+        if (existingSearchInput) {
+          triggerSearchIfReady(existingSearchInput);
+        }
+
+        // eslint-disable-next-line no-param-reassign
+        form.dataset.ysCalendarSearchDebounced = 'true';
+      });
+    };
+
+    setupSearchHandling();
+
+    // Helper functions.
+    const getSelectedValues = (select) =>
+      Array.from(select.options)
+        .filter((option) => option.selected)
+        .map((option) => option.value);
+
+    const setHiddenField = (form, name, value) => {
+      let field = form.querySelector(`[name="${name}"]`);
+      if (!field) {
+        field = document.createElement('input');
+        field.type = 'hidden';
+        field.name = name;
+        form.appendChild(field);
+      }
+      field.value = value;
+    };
+
+    // Process each calendar.
+    calendars.forEach((calendarElement) => {
+      const moreEventsContainer = calendarElement.querySelector(modalContent);
+      const modalTitle = calendarElement.querySelector(modalTitleSelector);
+      const desktopNavElement = calendarElement.querySelector(desktopNav);
+
+      if (!desktopNavElement) return;
+
+      const prevBtn = desktopNavElement.querySelector(prevButton);
+      const nextBtn = desktopNavElement.querySelector(nextButton);
+      const calendarEventsElements =
+        calendarElement.querySelectorAll(dayEvents);
+      const calendarNoEvents = calendarElement.querySelector(noEvents);
+
+      // Utility functions.
+      const getNearestForm = () =>
+        calendarElement.closest('form') ||
+        document.querySelector('form.ys-filter-form');
+
       const handleNoMonthEvents = () => {
-        // If there are no events in the current month, show the 'No Events' text on mobile.
-        if (!calendarEvents.length) {
-          calendarNoEvents.classList.add(visibleClass);
+        if (!calendarEventsElements.length) {
+          calendarNoEvents?.classList.add(visibleClass);
         }
       };
-      // Handle the 'More events' button click.
-      eventsToggle.forEach((el) => {
-        el.addEventListener('click', () => {
-          const thisDay = el.closest(day);
-          const thisEvents = thisDay.querySelectorAll(event);
 
-          // Set the innerHTML of the temporary div to the innerHTML content of the active date time.
-          tempDiv.innerHTML = thisDay.querySelector(dialogTitle).innerHTML;
-          // Clear previous content.
-          moreEventsContainer.innerHTML = '';
-          modalTitle.innerHTML = '';
+      // Prevent form submission from nav buttons.
+      const installFormSubmitGuard = () => {
+        const form = getNearestForm();
+        if (!form || form.dataset.ysCalendarSubmitGuardInstalled === 'true')
+          return;
+
+        form.addEventListener(
+          'submit',
+          (ev) => {
+            const activeEl = document.activeElement;
+            if (activeEl?.closest?.('.calendar__nav-btn')) {
+              ev.preventDefault();
+              ev.stopImmediatePropagation?.();
+              ev.stopPropagation?.();
+            }
+          },
+          true,
+        );
+
+        // eslint-disable-next-line no-param-reassign
+        form.dataset.ysCalendarSubmitGuardInstalled = 'true';
+      };
+
+      installFormSubmitGuard();
+
+      // Handle "More events" modal.
+      eventsToggle.forEach((toggle) => {
+        toggle.addEventListener('click', (clickEvent) => {
+          // Prevent default behavior to avoid conflicts with MicroModal auto-trigger.
+          clickEvent.preventDefault();
+          clickEvent.stopPropagation();
+
+          const dayElement = toggle.closest(day);
+          const dayEventElements = dayElement.querySelectorAll(event);
+
+          // Set modal title.
+          tempDiv.innerHTML = dayElement.querySelector(dialogTitle).innerHTML;
           modalTitle.innerHTML = tempDiv.textContent || tempDiv.innerText;
-          thisEvents.forEach((e) => {
-            const clonedEvent = e.cloneNode(true);
+
+          // Clear and populate modal content.
+          moreEventsContainer.innerHTML = '';
+          dayEventElements.forEach((eventElement) => {
+            const clonedEvent = eventElement.cloneNode(true);
             clonedEvent.classList.add(`${eventClass}--modal`);
             moreEventsContainer.appendChild(clonedEvent);
           });
+
+          // Manually open the modal after content is populated.
+          MicroModal.show('calendar-modal');
         });
       });
 
-      // Helper function to find the closest calendar-wrapper with an ID that starts with 'calendar-wrapper'.
-      const getCalendarWrapper = (clickEvent) =>
-        clickEvent.target.closest('[id^="calendar-wrapper"]');
+      // Calendar wrapper finder.
+      const getCalendarWrapper = (element) =>
+        element?.closest?.(
+          '#event-calendar-wrapper-static, [id^="event-calendar-wrapper"], [id^="calendar-wrapper"]',
+        );
 
-      // Function to refresh the calendar data via AJAX based on the given button (prev/next) and calendarWrapper.
-      const refreshCalendarData = (calendarWrapper, button) => {
-        if (isStorybook) return; // If we're in storybook, we don't have access to /events-calendar
-        if (!calendarWrapper) return; // If no calendarWrapper found, exit the function.
+      // AJAX calendar refresh.
+      const refreshCalendarData = (wrapper, button) => {
+        if (isStorybook || !wrapper) return;
 
-        // Use Drupal's AJAX system to refresh the calendar data.
+        // Prevent search interference.
+        window.YS_CALENDAR_NAV_IN_PROGRESS = true;
+        setTimeout(() => {
+          window.YS_CALENDAR_NAV_IN_PROGRESS = false;
+        }, 300);
+
+        const form =
+          wrapper.closest('form') ||
+          document.querySelector('form.ys-filter-form');
+        const { month, year } = button.dataset;
+        const submitData = {
+          calendar_id: `#${wrapper.id}`,
+          month,
+          year,
+          calendar_month: month,
+          calendar_year: year,
+        };
+
+        if (form) {
+          // Update hidden fields for month persistence.
+          setHiddenField(form, 'calendar_month', month);
+          setHiddenField(form, 'calendar_year', year);
+
+          // Read filter values using exact selectors from the HTML.
+          const formElements = {
+            categorySelect: form.querySelector('#edit-category-included-terms'),
+            audienceSelect: form.querySelector('#edit-audience-included-terms'),
+            customVocabSelect: form.querySelector(
+              '#edit-custom-vocab-included-terms',
+            ),
+            searchInput: form.querySelector('#edit-search'),
+            termsIncludeInput: form.querySelector('[name="terms_include"]'),
+            termsExcludeInput: form.querySelector('[name="terms_exclude"]'),
+            termOperatorInput: form.querySelector('[name="term_operator"]'),
+            eventTimePeriodInput: form.querySelector(
+              '[name="event_time_period"]',
+            ),
+          };
+
+          // Build submit data with exact field values.
+          Object.assign(submitData, {
+            category_included_terms: JSON.stringify(
+              formElements.categorySelect
+                ? getSelectedValues(formElements.categorySelect)
+                : [],
+            ),
+            audience_included_terms: JSON.stringify(
+              formElements.audienceSelect
+                ? getSelectedValues(formElements.audienceSelect)
+                : [],
+            ),
+            custom_vocab_included_terms: JSON.stringify(
+              formElements.customVocabSelect
+                ? getSelectedValues(formElements.customVocabSelect)
+                : [],
+            ),
+            terms_include: formElements.termsIncludeInput?.value || '',
+            terms_exclude: formElements.termsExcludeInput?.value || '',
+            term_operator: formElements.termOperatorInput?.value || '+',
+            event_time_period:
+              formElements.eventTimePeriodInput?.value || 'all',
+            search: formElements.searchInput?.value || '',
+          });
+        }
+
+        // Execute AJAX request.
         Drupal.ajax({
           url: '/events-calendar',
-          submit: {
-            calendar_id: `#${calendarWrapper.id}`, // Pass the calendar wrapper ID.
-            month: button.dataset.month, // Pass the selected month from the button.
-            year: button.dataset.year, // Pass the selected year from the button.
-          },
-          progress: { type: 'fullscreen' }, // Show a fullscreen progress indicator during the refresh.
+          submit: submitData,
+          progress: { type: 'fullscreen' },
         }).execute();
       };
 
-      const handleDesktopCalendarNavigation = () => {
-        desktopCalendarPrevBtn.addEventListener('click', (clickEvent) => {
-          const calendarWrapper = getCalendarWrapper(clickEvent);
-          refreshCalendarData(calendarWrapper, desktopCalendarPrevBtn);
+      // Navigation event handler.
+      const handleNavigation = (navEvent, button) => {
+        navEvent.preventDefault();
+        navEvent.stopImmediatePropagation?.();
+        navEvent.stopPropagation?.();
+
+        const wrapper = getCalendarWrapper(button);
+        refreshCalendarData(wrapper, button);
+        return false;
+      };
+
+      // Setup navigation.
+      const setupNavigation = () => {
+        // Ensure buttons don't submit forms.
+        [prevBtn, nextBtn].forEach((btn) => {
+          if (btn) btn.setAttribute('type', 'button');
         });
 
-        desktopCalendarNextBtn.addEventListener('click', (clickEvent) => {
-          const calendarWrapper = getCalendarWrapper(clickEvent);
-          refreshCalendarData(calendarWrapper, desktopCalendarNextBtn);
+        // Click handlers.
+        prevBtn?.addEventListener(
+          'click',
+          (e) => handleNavigation(e, prevBtn),
+          { capture: true },
+        );
+        nextBtn?.addEventListener(
+          'click',
+          (e) => handleNavigation(e, nextBtn),
+          { capture: true },
+        );
+
+        // Keyboard support.
+        [prevBtn, nextBtn].forEach((btn) => {
+          btn?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleNavigation(e, btn);
+            }
+          });
         });
       };
-      handleDesktopCalendarNavigation();
+
+      setupNavigation();
+
+      // Responsive behavior.
       if (!mql.matches) {
         handleNoMonthEvents();
       }
+
       mql.addEventListener('change', () => {
         if (mql.matches) {
-          calendarNoEvents.classList.remove(visibleClass);
+          calendarNoEvents?.classList.remove(visibleClass);
         } else {
           handleNoMonthEvents();
           MicroModal.close();
