@@ -158,7 +158,11 @@ Drupal.behaviors.eventsCalendar = {
 
       // Handle "More events" modal.
       eventsToggle.forEach((toggle) => {
-        toggle.addEventListener('click', () => {
+        toggle.addEventListener('click', (clickEvent) => {
+          // Prevent default behavior to avoid conflicts with MicroModal auto-trigger.
+          clickEvent.preventDefault();
+          clickEvent.stopPropagation();
+
           const dayElement = toggle.closest(day);
           const dayEventElements = dayElement.querySelectorAll(event);
 
@@ -173,6 +177,9 @@ Drupal.behaviors.eventsCalendar = {
             clonedEvent.classList.add(`${eventClass}--modal`);
             moreEventsContainer.appendChild(clonedEvent);
           });
+
+          // Manually open the modal after content is populated.
+          MicroModal.show('calendar-modal');
         });
       });
 
@@ -205,11 +212,17 @@ Drupal.behaviors.eventsCalendar = {
           readSingle: (name) => queryByNames(name)?.value || '',
 
           setHidden: (name, value) => {
-            let hiddenField = form.querySelector(`[name="${name}"]`);
+            // Try both naming conventions for calendar fields
+            const fieldName = name.startsWith('calendar_')
+              ? `filters_container[${name}]`
+              : name;
+            let hiddenField =
+              form.querySelector(`[name="${fieldName}"]`) ||
+              form.querySelector(`[name="${name}"]`);
             if (!hiddenField) {
               hiddenField = document.createElement('input');
               hiddenField.type = 'hidden';
-              hiddenField.name = name;
+              hiddenField.name = fieldName;
               form.appendChild(hiddenField);
             }
             hiddenField.value = value;
