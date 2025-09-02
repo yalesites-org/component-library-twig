@@ -65,15 +65,15 @@
   background-position: var(--position);
   background-repeat: no-repeat;
 
-  @media (prefers-reduced-motion: no-preference) {
-    transition: background-size var(--animation-speed-default) linear,
-      color var(--animation-speed-default) ease-in-out;
-  }
-
   @if $variation == 'no-underline' {
     background-size: 0 var(--thickness);
   } @else {
     background-size: 100% var(--thickness);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: background-size var(--animation-speed-default) linear,
+      color var(--animation-speed-default) ease-in-out;
   }
 }
 

@@ -273,9 +273,9 @@ $cta-outline-weights: (
   }
 
   &[data-cta-hover-style='rise'] {
-    @include tokens.animate($property: 'transform');
-
     transform: translateY(0);
+
+    @include tokens.animate($property: 'transform');
 
     &:hover {
       transform: translateY(-0.25em);

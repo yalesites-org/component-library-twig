@@ -19,6 +19,8 @@
    * these include: banners, quick links, callouts, quote spotlight */
   --spacing-component-banner: var(--size-spacing-9);
 
+  height: 100%;
+
   @media (min-width: tokens.$break-m) {
     --size-spacing-site-gutter: var(--size-spacing-6);
   }
@@ -38,8 +40,6 @@
     --size-spacing-site-gutter: var(--size-spacing-10);
     --spacing-component-banner: var(--size-spacing-12);
   }
-
-  height: 100%;
 }
 
 ////////
