@@ -1,26 +1,19 @@
 import { useEffect } from '@storybook/preview-api';
 import Twig from 'twig';
-import { setupTwig } from './setupTwig';
+const { setupTwig } = require('./setupTwig');
 
-// GLOBAL CSS
-import '../components/style.scss';
-import '../components/00-tokens/colors/cl-colors.scss';
-import '../components/00-tokens/typography/cl-typography.scss';
-import '../components/00-tokens/effects/cl-effects.scss';
-import '../components/00-tokens/layout/cl-layout.scss';
-import '../components/04-page-layouts/placeholder/cl-placeholder.scss';
-import '../fonts/fontawesome/css/fontawesome.css';
-import '../fonts/fontawesome/css/regular.css';
-import '../fonts/fontawesome/css/solid.css';
+// TEMPORARILY REMOVED ALL CSS IMPORTS TO TEST IF STORIES LOAD
 
 // If in a Drupal project, it's recommended to import a symlinked version of drupal.js.
 import './_drupal.js';
 import './jquery-global.js';
 
+// TEMPORARILY REMOVED ALL LINK TREATMENT IMPORTS
 // Global link treatment
-import '../lib/link-treatment/link-treatment.js';
-import 'linkpurpose/css/linkpurpose.css';
-import '../lib/link-treatment/link-treatment.scss';
+// import '../lib/link-treatment/link-treatment.js';
+// TEMPORARILY REMOVED CSS IMPORTS
+// import 'linkpurpose/css/linkpurpose.css';
+// import '../lib/link-treatment/link-treatment.scss';
 
 export const decorators = [
   (StoryFn, context) => {

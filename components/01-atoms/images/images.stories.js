@@ -6,9 +6,6 @@ import imageData from './image/image.yml';
 import figureData from './image/figure.yml';
 import faIconData from './fa-icons/fa-icons.yml';
 
-import './image/cl-image.scss';
-import './icons/cl-icons.scss';
-
 const svgIcons = require.context('../../../images/icons', true, /\.svg$/);
 const icons = [];
 svgIcons.keys().forEach((key) => {

@@ -2,7 +2,6 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
 import dividerTwig from './yds-divider.twig';
 
-import './cl-dividers.scss';
 import '../../00-tokens/effects/yds-animate';
 
 const layoutOptions = ['left', 'center'];
