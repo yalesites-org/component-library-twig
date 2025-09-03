@@ -74,6 +74,11 @@ export default {
       type: 'string',
       defaultValue: textWithImageData.text_with_image__link_two__content,
     },
+    caption: {
+      name: 'Caption (optional)',
+      type: 'string',
+      defaultValue: textWithImageData.text_with_image__caption,
+    },
   },
   args: {
     componentTheme: 'default',
@@ -87,6 +92,7 @@ export default {
     subheading: textWithImageData.text_with_image__subheading,
     text: textWithImageData.text_with_image__text,
     linkContent: textWithImageData.text_with_image__link__content,
+    caption: textWithImageData.text_with_image__caption,
   },
 };
 
@@ -121,4 +127,5 @@ export const ContentSpotlightLandscape = ({
     text_with_image__link_two__content: linkTwoContent,
     text_with_image__link_two__url:
       textWithImageData.text_with_image__link_two__url,
+    text_with_image__caption: textWithImageData.text_with_image__caption,
   });

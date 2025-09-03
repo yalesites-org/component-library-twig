@@ -33,9 +33,10 @@
 			{% block facts_and_figures__icon %}
 				<div {{ bem('icon', [], facts_and_figures__base_class) }}>
 					{% include "@atoms/images/icons/_yds-icon.twig" with {
-            icon__name: facts_and_figures__icon_name|default('sack-dollar-solid'),
+            icon__name: facts_and_figures__icon_name|default('piggy-bank-solid'),
             icon__base_class: 'facts-and-figures-icon',
             icon__blockname: facts_and_figures__base_class,
+            icon__decorative: true,
           } %}
 				</div>		
 			{% endblock %}

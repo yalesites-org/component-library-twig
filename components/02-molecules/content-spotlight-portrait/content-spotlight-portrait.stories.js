@@ -66,6 +66,12 @@ export default {
       defaultValue:
         contentSpotlightPortraitData.content_spotlight_portrait__link_two__content,
     },
+    caption: {
+      name: 'Caption (optional)',
+      type: 'string',
+      defaultValue:
+        contentSpotlightPortraitData.content_spotlight_portrait__caption,
+    },
   },
   args: {
     componentTheme: 'default',
@@ -79,6 +85,7 @@ export default {
     text: contentSpotlightPortraitData.content_spotlight_portrait__text,
     linkContent:
       contentSpotlightPortraitData.content_spotlight_portrait__link__content,
+    caption: contentSpotlightPortraitData.content_spotlight_portrait__caption,
   },
 };
 
@@ -110,4 +117,6 @@ export const ContentSpotlightPortrait = ({
     content_spotlight_portrait__link_two__content: linkTwoContent,
     content_spotlight_portrait__link_two__url:
       contentSpotlightPortraitData.content_spotlight_portrait__link_two__url,
+    content_spotlight_portrait__caption:
+      contentSpotlightPortraitData.content_spotlight_portrait__caption,
   });
