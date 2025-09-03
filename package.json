@@ -64,7 +64,7 @@
   "dependencies": {
     "@drupal/once": "^1.0.1",
     "@storybook/storybook-deployer": "^2.8.16",
-    "@yalesites-org/tokens": "https://github.com/yalesites-org/tokens.git#YSP-1032-ai-palette",
+    "@yalesites-org/tokens": "^1.31.0",
     "add-attributes-twig-extension": "^0.1.0",
     "bem-twig-extension": "^0.1.1",
     "clean-webpack-plugin": "^4.0.0",
