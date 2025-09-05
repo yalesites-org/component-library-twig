@@ -31,16 +31,49 @@ export default {
   },
 };
 
-export const ContentImage = ({ caption, width, sectionTheme }) => `
-  <div data-component-has-divider="false" data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
-    <div class="yds-layout__inner">
-      <div class="yds-layout__primary">
-        ${contentImageTwig({
-          ...imageData.responsive_images['16x9'],
-          content_image__caption: caption,
-          content_image__width: width,
-        })}
+export const ContentImage = ({ caption, width, sectionTheme }) => {
+  const themes = ['default', 'one', 'two', 'three', 'four'];
+
+  return `
+    <h2>Playground</h2>
+    <p>Use the Storybook controls to test different settings and see the results below.</p>
+    
+    <div data-component-has-divider="false" data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
+      <div class="yds-layout__inner">
+        <div class="yds-layout__primary">
+          ${contentImageTwig({
+            ...imageData.responsive_images['16x9'],
+            content_image__caption: caption,
+            content_image__width: width,
+          })}
+        </div>
       </div>
     </div>
-  </div>
-`;
+
+    <hr style="margin: 3rem 0; border: 1px solid #ccc;">
+    
+    <h2>All Section Theme Variations</h2>
+    <p>Below are all section theme variations using your current caption and width settings from the controls above.</p>
+    
+    ${themes
+      .map(
+        (theme) => `
+      <div style="margin-bottom: 2rem;">
+        <h3>Section Theme: ${theme}</h3>
+        <div data-component-has-divider="false" data-component-theme="${theme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
+          <div class="yds-layout__inner">
+            <div class="yds-layout__primary">
+              ${contentImageTwig({
+                ...imageData.responsive_images['16x9'],
+                content_image__caption: caption,
+                content_image__width: width,
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    `,
+      )
+      .join('')}
+  `;
+};
