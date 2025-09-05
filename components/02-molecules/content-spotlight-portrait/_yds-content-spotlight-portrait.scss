@@ -19,18 +19,8 @@ $component-content-spotlight-port-themes: map.deep-get(
 
   // if we're not using a component theme, add top and bottom margin
   // Or if the spotlight is the only spotlight on the page
-  &[data-component-theme='default'],
-  &[data-spotlights-position='first-and-last'] {
+  &[data-component-theme='default'] {
     @include tokens.spacing-page-section;
-  }
-
-  // We're using JavaScript to evaluate the last and first spotlights in a group of spotlights
-  &[data-spotlights-position='first'] {
-    margin-top: var(--size-spacing-10);
-  }
-
-  &[data-spotlights-position='last'] {
-    margin-bottom: var(--size-spacing-10);
   }
 
   // If we're using a component theme, add padding and set background-color and color;
@@ -160,24 +150,11 @@ $component-content-spotlight-port-themes: map.deep-get(
     }
   }
 
-  // spotlights inside of the banner should behave slightly different in that
-  // first-and-last and first should have zero top margin to allow it to bump up to
-  // the header.
   .layout--banner & {
-    &[data-component-theme='default'],
-    &[data-spotlights-position='first-and-last'] {
+    &[data-component-theme='default'] {
       @include tokens.spacing-page-section;
 
       margin-top: 0;
-      margin-bottom: var(--size-spacing-10);
-    }
-
-    // We're using JavaScript to evaluate the last and first spotlights in a group of spotlights
-    &[data-spotlights-position='first'] {
-      margin-top: 0;
-    }
-
-    &[data-spotlights-position='last'] {
       margin-bottom: var(--size-spacing-10);
     }
   }
