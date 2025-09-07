@@ -186,7 +186,7 @@
               {% for event_date in event_dates %}
                 <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
                   {% if event_date.is_past_event %}
-                    Past Event: 
+                    Past Event:
                   {% endif %}
                   {% if event_date.formatted_start_date == event_date.formatted_end_date %}
                     {{ event_date.original_start|date('D M j, Y') }}
@@ -298,7 +298,7 @@
             <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
               <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
               <div {{ bem('location', [], event_meta__base_class) }}>
-                {{ place.name }}<br>
+                {{ place.name }}, {{ room }}<br>
                 {{ place.address }}
                 {{ place.city }}, {{ place.state }} {{ place.postal_code }}
               </div>
