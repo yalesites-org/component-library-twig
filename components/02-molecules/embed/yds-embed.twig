@@ -16,6 +16,7 @@
 
 {% set embed__attributes = {
   'data-component-width': embed__width,
+  'data-component-padding-options': embed__padding_options|default('default'),
   'class': bem(embed__base_class),
 } %}
 
