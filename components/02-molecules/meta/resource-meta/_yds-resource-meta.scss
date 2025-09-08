@@ -1,0 +1,111 @@
+@use '../../../00-tokens/tokens';
+@use '../../../01-atoms/atoms';
+
+.resource-meta__inner {
+  display: grid;
+  row-gap: var(--size-spacing-4);
+  justify-content: start;
+
+  [data-component-resource-type='document'] & {
+    @media (min-width: tokens.$break-s) {
+      grid-template-columns: 1fr auto;
+    }
+  }
+}
+
+.resource-meta__page-title {
+  font-size: var(--font-size-14);
+}
+
+.resource-meta__media {
+  width: max-content;
+}
+
+.resource-meta__image {
+  width: 200px;
+  margin-bottom: var(--size-spacing-3);
+  border: 1px solid currentcolor;
+}
+
+.resource-meta__cta {
+  a {
+    display: block;
+  }
+}
+
+.resource-meta__category {
+  font-size: var(--font-size-16);
+  text-transform: uppercase;
+  font-weight: var(--font-weights-yalenew-bold);
+}
+
+.resource-meta__metadata {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--size-spacing-4);
+}
+
+.resource-meta__list,
+.resource-meta__item__list {
+  @include atoms.list-reset;
+}
+
+.resource-meta__list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  column-gap: var(--size-spacing-6);
+}
+
+.resource-meta__published-on__value,
+.resource-meta__item {
+  display: inline-flex;
+  align-items: center;
+
+  .resource-meta__item & {
+    &:not(:last-child) {
+      margin-right: var(--size-spacing-3);
+
+      &::after {
+        content: ',';
+      }
+    }
+  }
+}
+
+.resource-meta__published-on,
+.resource-meta__item__list {
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.resource-meta__published-on__label,
+.resource-meta__item__label {
+  text-transform: uppercase;
+  font-weight: var(--font-weights-yalenew-bold);
+  font-family: var(--font-families-mallory);
+  margin-right: var(--size-spacing-3);
+
+  &::after {
+    content: ':';
+  }
+}
+
+.resource-meta__published-on:has(+ .resource-meta__list) {
+  @media (min-width: tokens.$break-mobile) {
+    &::after {
+      content: '|';
+      padding-left: var(--size-spacing-4);
+    }
+  }
+}
+
+.resource-meta__link {
+  @include atoms.link;
+
+  color: var(--color-link-base);
+  font-weight: var(--font-weights-mallory-book);
+}

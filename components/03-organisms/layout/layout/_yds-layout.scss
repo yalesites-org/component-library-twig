@@ -36,7 +36,8 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       // override text-shadow color for links in component themes
       .link,
       .text-field a,
-      .link-grid__link {
+      .link-grid__link,
+      .caption a {
         --color-text-shadow: var(--color-layout-theme);
         --color-link-hover: var(--color-link-hover);
         --color-link-base: var(--color-link-base);
