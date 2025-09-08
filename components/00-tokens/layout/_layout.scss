@@ -140,4 +140,18 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
       }
     }
   }
+
+  // Custom padding options support
+  &[data-component-padding-options='no-top'] {
+    margin-block-start: 0;
+  }
+
+  &[data-component-padding-options='no-bottom'] {
+    margin-block-end: 0;
+  }
+
+  &[data-component-padding-options='no-padding'] {
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }
 }
