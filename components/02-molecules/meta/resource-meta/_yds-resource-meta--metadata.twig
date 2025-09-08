@@ -1,0 +1,54 @@
+{% set resource_meta__base_class = 'resource-meta' %}
+{% set resource_meta__modifiers = resource_meta__modifiers|default([]) %}
+{% set resource_meta__item__items = resource_meta__item__items ?? items %}
+{% set resource_meta__item__label = resource_meta__item__label ?? label %}
+
+{% set resource_meta__list %}
+  {% embed "@atoms/lists/yds-list.twig" with {
+    list__modifiers: resource_meta__modifiers,
+    list__blockname: resource_meta__base_class,
+    list__base_class: 'item__list'
+  } %}
+    {% block list__content %}
+      {% if resource_meta__item__items %}
+        {% for item in resource_meta__item__items %}
+          {% embed "@atoms/lists/_yds-list-item.twig" with {
+            list__item__blockname: resource_meta__base_class,
+          } %}
+            {% block list__item__content %}
+              {% if item.resource_meta__link__url or item['#url'] %}
+                {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+                  link__blockname: resource_meta__base_class,
+                  link__content: item.resource_meta__link__content ?? item['#title'],
+                  link__url: item.resource_meta__link__url ?? item['#url'].toString(),
+                } %}
+              {% else %}
+                {% include "@atoms/typography/text/yds-text.twig" with {
+                  text__blockname: resource_meta__base_class,
+                  text__content: item.resource_meta__link__content ?? item['#title'],
+                  text__base_class: 'item__label',
+                } %}
+              {% endif %}
+            {% endblock %}
+          {% endembed %}
+        {% endfor %}
+      {% endif %}
+    {% endblock %}
+  {% endembed %}
+{% endset %}
+
+{# Only print a list if there are items. #}
+{% if resource_meta__item__items %}
+  {% embed "@atoms/lists/_yds-list-item.twig" with {
+    list__item__blockname: resource_meta__base_class,
+  } %}
+    {% block list__item__content %}
+      {% include "@atoms/typography/text/yds-text.twig" with {
+        text__blockname: resource_meta__base_class,
+        text__content: resource_meta__item__label,
+        text__base_class: 'item__label',
+      } %}
+      {{ resource_meta__list }}
+    {% endblock %}
+  {% endembed %}
+{% endif %}
