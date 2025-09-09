@@ -36,7 +36,7 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
   --color-text-shadow: var(--color-basic-white);
 
   position: relative;
-  z-index: 2;
+  z-index: 10;
 
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
