@@ -174,6 +174,7 @@ export const Resource = ({
   resourceType,
   publishDateLabel,
   publishDate,
+  description,
 }) =>
   resourceMetaTwig({
     resource_meta__heading: heading,
@@ -185,6 +186,7 @@ export const Resource = ({
     resource_meta__download_label: 'Download',
     resource_meta__download_aria_label: 'Download file',
     resource_meta__download_url: '#.pdf',
+    resource_meta__description: description,
     image__srcset__1: imageData.responsive_images['2x3'].image__srcset,
     image__sizes__1: imageData.responsive_images['2x3'].image__sizes,
     image__alt__1: imageData.responsive_images['2x3'].image__alt,
@@ -198,6 +200,10 @@ Resource.argTypes = {
     options: ['video', 'document'],
     defaultValue: 'video',
   },
+  description: {
+    name: 'Description',
+    type: 'string',
+  },
 };
 Resource.args = {
   heading: 'Resource Title',
@@ -205,4 +211,6 @@ Resource.args = {
   resourceType: 'video',
   publishDateLabel: 'Published On',
   publishDate: 'July 1, 2025',
+  description:
+    'This is a sample resource description that will appear below the media content. It can contain <strong>HTML markup</strong> and provides context about the resource.',
 };
