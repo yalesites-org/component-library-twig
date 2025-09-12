@@ -1,0 +1,36 @@
+<div {{ bem('media', [], resource_meta__base_class) }}>
+  <div {{ bem('image', [], resource_meta__base_class) }}>
+    {% block resource_meta__image %}
+      {% if resource_meta__document_image %}
+        {# Drupal provides a render array - output directly #}
+        {{ resource_meta__document_image }}
+      {% else %}
+        {# Storybook provides individual image variables #}
+        {% include "@atoms/images/image/_responsive-image.twig" with {
+          image__srcset: image__srcset__1,
+          image__sizes: image__sizes__1,
+          image__alt: image__alt__1,
+          image__src: image__src__1,
+        }%}
+      {% endif %}
+    {% endblock %}
+  </div>
+
+  {% if 
+    resource_meta__download_url and 
+    resource_meta__download_aria_label
+  %}
+    <div {{ bem('cta', [], resource_meta__base_class) }}>
+      {% include "@atoms/controls/cta/yds-cta.twig" with {
+        cta__content: resource_meta__download_label,
+        cta__href: resource_meta__download_url,
+        cta__component_theme: cta__component_theme|default('one'),
+        cta__attributes: {
+          'aria-label': resource_meta__download_aria_label,
+          'download': '',
+          'data-link-type': 'download',
+        }
+      } %}
+    </div>
+  {% endif %}
+</div>
