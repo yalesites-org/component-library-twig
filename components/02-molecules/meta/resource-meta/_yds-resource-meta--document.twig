@@ -1,12 +1,18 @@
 <div {{ bem('media', [], resource_meta__base_class) }}>
   <div {{ bem('image', [], resource_meta__base_class) }}>
     {% block resource_meta__image %}
-      {% include "@atoms/images/image/_responsive-image.twig" with {
-        image__srcset: image__srcset__1,
-        image__sizes: image__sizes__1,
-        image__alt: image__alt__1,
-        image__src: image__src__1,
-      }%}
+      {% if resource_meta__document_image %}
+        {# Drupal provides a render array - output directly #}
+        {{ resource_meta__document_image }}
+      {% else %}
+        {# Storybook provides individual image variables #}
+        {% include "@atoms/images/image/_responsive-image.twig" with {
+          image__srcset: image__srcset__1,
+          image__sizes: image__sizes__1,
+          image__alt: image__alt__1,
+          image__src: image__src__1,
+        }%}
+      {% endif %}
     {% endblock %}
   </div>
 

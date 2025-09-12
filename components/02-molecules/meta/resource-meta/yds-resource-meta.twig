@@ -67,9 +67,17 @@
 
   {# Media section - delegate to resource type-specific templates #}
   {% if resource_meta__resource_type == 'video' %}
-    {% include "@molecules/meta/resource-meta/_yds-resource-meta--video.twig" %}
+    {% include "@molecules/meta/resource-meta/_yds-resource-meta--video.twig" with {
+      video_embed__content__1: video_embed__content__1,
+    } %}
   {% elseif resource_meta__resource_type == 'document' %}
-    {% include "@molecules/meta/resource-meta/_yds-resource-meta--document.twig" %}
+    {% include "@molecules/meta/resource-meta/_yds-resource-meta--document.twig" with {
+      resource_meta__document_image: resource_meta__document_image,
+      image__srcset__1: image__srcset__1,
+      image__sizes__1: image__sizes__1,
+      image__alt__1: image__alt__1,
+      image__src__1: image__src__1,
+    } %}
   {% endif %}
   </div>
 </div>
