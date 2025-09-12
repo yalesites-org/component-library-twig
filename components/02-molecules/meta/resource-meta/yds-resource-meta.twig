@@ -90,13 +90,11 @@
           </div>
         {% endif %}
       {% elseif resource_meta__resource_type == 'video' %}
-        <div {{ bem('inner', [], resource_meta__base_class) }}>
-          {% block resource_meta__video %}
-            {% include "@atoms/videos/video-embed/yds-video-embed.twig" with {
-              video_embed__content: video_embed__content__1,
-            } %}
-          {% endblock %}
-        </div>
+        {% block resource_meta__video %}
+          {% include "@atoms/videos/video-embed/yds-video-embed.twig" with {
+            video_embed__content: video_embed__content__1,
+          } %}
+        {% endblock %}
       {% endif %}
     </div>
   {% endif %}
