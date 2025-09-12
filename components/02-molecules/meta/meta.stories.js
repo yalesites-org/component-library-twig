@@ -172,14 +172,13 @@ export const Resource = ({
   heading,
   category,
   resourceType,
-  publishDateLabel,
   publishDate,
   description,
 }) =>
   resourceMetaTwig({
     resource_meta__heading: heading,
     resource_meta__category: category,
-    resource_meta__publish_date_label: publishDateLabel,
+    resource_meta__publish_date_label: 'Published On',
     resource_meta__publish_date: publishDate,
     resource_meta__metadata: resourceMetaData.resource_meta__metadata,
     resource_meta__resource_type: resourceType,
@@ -194,11 +193,26 @@ export const Resource = ({
     video_embed__content__1: videoEmbedData.video_embed__content,
   });
 Resource.argTypes = {
+  heading: {
+    name: 'Heading',
+    type: 'string',
+  },
+  category: {
+    name: 'Category',
+    type: 'string',
+  },
   resourceType: {
     name: 'Resource Type',
     type: 'select',
-    options: ['video', 'document'],
+    options: {
+      Video: 'video',
+      Document: 'document',
+    },
     defaultValue: 'video',
+  },
+  publishDate: {
+    name: 'Publish Date',
+    type: 'string',
   },
   description: {
     name: 'Description',
@@ -209,7 +223,6 @@ Resource.args = {
   heading: 'Resource Title',
   category: 'Video',
   resourceType: 'video',
-  publishDateLabel: 'Published On',
   publishDate: 'July 1, 2025',
   description:
     'This is a sample resource description that will appear below the media content. It can contain <strong>HTML markup</strong> and provides context about the resource.',
