@@ -4,6 +4,7 @@
 .resource-meta__inner {
   display: grid;
   row-gap: var(--size-spacing-4);
+  column-gap: var(--size-spacing-6);
   justify-content: start;
 
   [data-component-resource-type='document'] & {
