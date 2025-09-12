@@ -44,6 +44,12 @@
 {% set latLong = place.latitude ~ ',' ~ place.longitude %}
 {% set get_directions__url = place ? 'https://www.google.com/maps/dir/Current+Location/' ~ latLong : '' %}
 
+{# Set up location display with conditional room #}
+{% set location_display = place.name %}
+{% if room %}
+  {% set location_display = location_display ~ ', ' ~ room %}
+{% endif %}
+
 {% if event_experience %}
   {% set event_meta__format = event_experience.0.name %}
 {% endif %}
@@ -298,7 +304,7 @@
             <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
               <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
               <div {{ bem('location', [], event_meta__base_class) }}>
-                {{ place.name }}, {{ room }}<br>
+                {{ location_display }}<br>
                 {{ place.address }}
                 {{ place.city }}, {{ place.state }} {{ place.postal_code }}
               </div>
