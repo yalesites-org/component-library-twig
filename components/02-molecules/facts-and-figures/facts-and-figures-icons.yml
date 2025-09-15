@@ -16,7 +16,7 @@
 
 # Configuration metadata
 config:
-  version: '1.0'
+  version: '1.1'
   default_value: '_none'
   none_label: '- None -'
   description: 'Available icons for Facts and Figures components'
@@ -24,18 +24,28 @@ config:
 # Available icons (alphabetically sorted)
 icons:
   atom-solid: 'Atom'
+  bee: 'Bee'
+  bolt: 'Bolt'
   book-solid: 'Book'
   calendar-solid: 'Calendar'
+  car-building: 'Car Building'
+  chalkboard-user-solid: 'Teacher'
   chart-line-solid: 'Chart Line'
+  city: 'City'
   cloud-rain-solid: 'Cloud with Rain'
   code-solid: 'Code'
   dollar-sign-solid: 'Dollar Sign'
+  droplet: 'Droplet'
   envelope-solid: 'Envelope'
-  flask-solid: 'Flask'
   face-frown-solid: 'Frowning Face'
+  face-smile-solid: 'Smiling Face'
+  flask-solid: 'Flask'
+  gears: 'Gears'
   globe-solid: 'Globe'
   graduation-cap-solid: 'Graduation Cap'
   hand-holding-dollar-solid: 'Hand Holding Dollar'
+  house-chimney: 'House Chimney'
+  industry-windows: 'Industry Windows'
   leaf-solid: 'Leaf'
   lightbulb-solid: 'Lightbulb'
   location-dot-solid: 'Location Dot'
@@ -44,11 +54,13 @@ icons:
   people-group-solid: 'People'
   piggy-bank-solid: 'Piggy Bank'
   recycle-solid: 'Recycle'
-  face-smile-solid: 'Smiling Face'
-  chalkboard-user-solid: 'Teacher'
+  rocket-launch: 'Rocket Launch'
+  sun: 'Sun'
+  temperature-sun: 'Temperature Sun'
   tree-solid: 'Tree'
   university-solid: 'University'
   user-solid: 'User'
+  wave-pulse: 'Wave Pulse'
 
 # Cache configuration (for Drupal consumers)
 cache:
