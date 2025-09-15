@@ -1,8 +1,10 @@
 @use '../../00-tokens/tokens';
 
-.embed__inner {
+.embed {
   @include tokens.spacing-page-section;
+}
 
+.embed__inner {
   iframe {
     display: block;
     border: var(--border-thickness-2) solid;
