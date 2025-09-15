@@ -4,6 +4,7 @@
 .resource-meta__inner {
   display: grid;
   row-gap: var(--size-spacing-4);
+  column-gap: var(--size-spacing-6);
   justify-content: start;
 
   [data-component-resource-type='document'] & {
@@ -121,4 +122,16 @@
 
   color: var(--color-link-base);
   font-weight: var(--font-weights-mallory-book);
+}
+
+// WYSIWYG description text
+.resource-meta__description {
+  @include tokens.body-default;
+
+  margin-top: var(--size-spacing-6);
+
+  // image in description
+  img {
+    width: auto;
+  }
 }
