@@ -56,49 +56,28 @@
         </div>
       {% endblock %}
     {% endembed %}
+
+    {# Description for document resources - appears after metadata in left column #}
+    {% if resource_meta__resource_type == 'document' and resource_meta__description %}
+      <div {{ bem('description', [], resource_meta__base_class) }}>
+        {{ resource_meta__description }}
+      </div>
+    {% endif %}
   </div>
 
-  {% if resource_meta__resource_type %}
-    <div {{ bem('media', [], resource_meta__base_class) }}>
-      {% if resource_meta__resource_type == 'document' %}
-        <div {{ bem('image', [], resource_meta__base_class) }}>
-          {% block resource_meta__image %}
-            {% include "@atoms/images/image/_responsive-image.twig" with {
-              image__srcset: image__srcset__1,
-              image__sizes: image__sizes__1,
-              image__alt: image__alt__1,
-              image__src: image__src__1,
-            }%}
-          {% endblock %}
-        </div>
-
-        {% if 
-          resource_meta__download_url and 
-          resource_meta__download_aria_label
-        %}
-          <div {{ bem('cta', [], resource_meta__base_class) }}>
-            {% include "@atoms/controls/cta/yds-cta.twig" with {
-              cta__content: resource_meta__download_label,
-              cta__href: resource_meta__download_url,
-              cta__component_theme: cta__component_theme|default('one'),
-              cta__attributes: {
-                'aria-label': resource_meta__download_aria_label,
-                'download': '',
-                'data-link-type': 'download',
-              }
-            } %}
-          </div>
-        {% endif %}
-      {% elseif resource_meta__resource_type == 'video' %}
-        <div {{ bem('inner', [], resource_meta__base_class) }}>
-          {% block resource_meta__video %}
-            {% include "@atoms/videos/video-embed/yds-video-embed.twig" with {
-              video_embed__content: video_embed__content__1,
-            } %}
-          {% endblock %}
-        </div>
-      {% endif %}
-    </div>
+  {# Media section - delegate to resource type-specific templates #}
+  {% if resource_meta__resource_type == 'video' %}
+    {% include "@molecules/meta/resource-meta/_yds-resource-meta--video.twig" with {
+      video_embed__content__1: video_embed__content__1,
+    } %}
+  {% elseif resource_meta__resource_type == 'document' %}
+    {% include "@molecules/meta/resource-meta/_yds-resource-meta--document.twig" with {
+      resource_meta__document_image: resource_meta__document_image,
+      image__srcset__1: image__srcset__1,
+      image__sizes__1: image__sizes__1,
+      image__alt__1: image__alt__1,
+      image__src__1: image__src__1,
+    } %}
   {% endif %}
   </div>
 </div>
