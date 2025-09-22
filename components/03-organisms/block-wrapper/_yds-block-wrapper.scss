@@ -13,3 +13,39 @@
 .block-wrapper__heading {
   @include tokens.heading(h4);
 }
+
+// Individual padding elements for centralized block padding
+.ys-block-padding-top,
+.ys-block-padding-bottom {
+  display: block;
+  width: 100%;
+}
+
+// Top padding element - uses margin-block-start
+.ys-block-padding-top {
+  margin-block-start: var(--size-spacing-10);
+  margin-block-end: 0;
+
+  &[data-padding-options='no-top'],
+  &[data-padding-options='no-padding'] {
+    margin-block-start: 0;
+  }
+}
+
+// Bottom padding element - uses margin-block-end
+.ys-block-padding-bottom {
+  margin-block-start: 0;
+  margin-block-end: var(--size-spacing-10);
+
+  &[data-padding-options='no-bottom'],
+  &[data-padding-options='no-padding'] {
+    margin-block-end: 0;
+  }
+}
+
+// Prevent double padding in nested scenarios
+.ys-block-padding-top + .ys-block-padding-top,
+.ys-block-padding-bottom + .ys-block-padding-bottom {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}

@@ -111,9 +111,6 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
   $flush-top: false,
   $banner-spacing: false
 ) {
-  margin-block-start: var(--spacing-page-section);
-  margin-block-end: var(--spacing-page-section);
-
   @if $flush-top == true {
     &:first-child {
       --main-content-top-margin: 0;
@@ -139,19 +136,5 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
         margin-bottom: var(--spacing-component-banner);
       }
     }
-  }
-
-  // Custom padding options support
-  &[data-component-padding-options='no-top'] {
-    margin-block-start: 0;
-  }
-
-  &[data-component-padding-options='no-bottom'] {
-    margin-block-end: 0;
-  }
-
-  &[data-component-padding-options='no-padding'] {
-    margin-block-start: 0;
-    margin-block-end: 0;
   }
 }

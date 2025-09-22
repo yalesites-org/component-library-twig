@@ -14,23 +14,6 @@ $component-inline-message-themes: map.deep-get(
   --size-icon: 1.5rem;
   --color-link-base: var(--color-inline-message-text);
 
-  margin-block-start: var(--size-spacing-10);
-  margin-block-end: var(--size-spacing-10);
-
-  // Custom padding options support
-  &[data-component-padding-options='no-top'] {
-    margin-block-start: 0;
-  }
-
-  &[data-component-padding-options='no-bottom'] {
-    margin-block-end: 0;
-  }
-
-  &[data-component-padding-options='no-padding'] {
-    margin-block-start: 0;
-    margin-block-end: 0;
-  }
-
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
   @each $theme, $value in $component-inline-message-themes {
