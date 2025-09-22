@@ -3,6 +3,15 @@
 @use '../grid-mixins' as grid;
 @use '../list-mixins' as list;
 
+// The collection main wrapper.
+.card-collection {
+  @include tokens.spacing-page-section;
+
+  .ys-view & {
+    margin-block-start: 0;
+  }
+}
+
 // The collection heading.
 .card-collection__heading {
   @include tokens.heading(h2);
