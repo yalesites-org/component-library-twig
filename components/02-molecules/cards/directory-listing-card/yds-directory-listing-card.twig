@@ -12,10 +12,8 @@
   # Available Blocks:
   # - directory_listing_card__image
   #}
-
  {% set directory_listing_card__base_class = 'directory-listing-card' %}
  {% set directory_listing_card__image = directory_listing_card__image|default('true') %}
-
  <li {{ bem(directory_listing_card__base_class) }}>
     <div {{ bem('content', [], directory_listing_card__base_class) }}>
     {% if directory_listing_card__overline %}
