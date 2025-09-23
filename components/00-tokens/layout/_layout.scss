@@ -125,11 +125,16 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
     }
   }
 
-  @if $flush-top == true {
-    &:first-child {
-      --main-content-top-margin: 0;
+  @if $banner-spacing == true {
+    margin-block-start: var(--spacing-component-banner);
+    margin-block-end: var(--spacing-component-banner);
 
-      margin-bottom: var(--spacing-component-banner);
+    @if $flush-top == true {
+      &:first-child {
+        --main-content-top-margin: 0;
+
+        margin-bottom: var(--spacing-component-banner);
+      }
     }
   }
 }
