@@ -21,6 +21,11 @@
 {% set upcoming_date_count = upcoming_dates|length %}
 {% set past_date_count = past_dates|length %}
 
+{% set featured_date_label = 'Featured Date: ' %}
+{% set past_events_label = 'Past Events: ' %}
+{% set upcoming_events_label = 'Upcoming Events: ' %}
+{% set reoccuring_label = 'Reoccuring:' %}
+
 {# Use a variable to ensure emdash is properly placed consistently #}
 {% set em_dash = '—' %}
 
@@ -75,7 +80,7 @@
     icon__decorative: true,
     icon__blockname: event_meta__base_class,
     icon__modifiers: ['expand-more-dates'],
-    icon__visual_title: 'Upcoming Events (' ~ upcoming_date_count ~ ')',
+    icon__visual_title: upcoming_events_label ~ ' (' ~ upcoming_date_count ~ ')',
     icon__visual_title__modifiers: ['show-more-dates'],
   } %}
   {# collapse minus #}
@@ -84,7 +89,7 @@
     icon__decorative: true,
     icon__blockname: event_meta__base_class,
     icon__modifiers: ['collapse-more-dates'],
-    icon__visual_title: 'Upcoming Events (' ~ upcoming_date_count ~ ')',
+    icon__visual_title: upcoming_events_label ~ ' (' ~ upcoming_date_count ~ ')',
     icon__visual_title__modifiers: ['hide-more-dates'],
   } %}
 {% endset %}
@@ -95,7 +100,7 @@
     icon__decorative: true,
     icon__blockname: event_meta__base_class,
     icon__modifiers: ['expand-more-dates'],
-    icon__visual_title: 'Past Events (' ~ past_date_count ~ ')',
+    icon__visual_title: past_events_label ~ ' (' ~ past_date_count ~ ')',
     icon__visual_title__modifiers: ['show-more-dates'],
   } %}
   {# collapse minus #}
@@ -104,7 +109,7 @@
     icon__decorative: true,
     icon__blockname: event_meta__base_class,
     icon__modifiers: ['collapse-more-dates'],
-    icon__visual_title: 'Past Events (' ~ past_date_count ~ ')',
+    icon__visual_title: past_events_label ~ ' (' ~ past_date_count ~ ')',
     icon__visual_title__modifiers: ['hide-more-dates'],
   } %}
 {% endset %}
@@ -180,7 +185,7 @@
       {# Date #}
       {% if event_dates %}
         <div {{ bem('date', [], event_meta__base_class) }}>
-          Featured Date:
+          {{ featured_date_label }}
           {# Fallback to old way of rendering if not passed #}
           {% set event_featured_date = event_featured_date|default(event_dates.0) %}
 
@@ -212,7 +217,7 @@
         {% if event_dates|length > 1 %}
           <div {{ bem('all-dates', [], event_meta__base_class) }} is-expanded="false">
             <div {{ bem('multiple-dates-label', [], event_meta__base_class) }}>
-              Reoccuring: Event {{ event_featured_index + 1 }} of {{ event_dates|length }}
+              {{ reoccuring_label }} Event {{ event_featured_index + 1 }} of {{ event_dates|length }}
             </div>
             {% if past_dates|length %}
               {% if event_dates|length > 1 %}
