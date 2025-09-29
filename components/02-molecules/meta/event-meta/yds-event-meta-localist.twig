@@ -209,13 +209,11 @@
       {# Inner #}
       <div {{ bem('inner', ['localist'], event_meta__base_class) }}>
         {# Event Dates #}
-        {% if event_dates %}
+        {% if event_dates|length > 1 %}
           <div {{ bem('all-dates', [], event_meta__base_class) }} is-expanded="false">
-            {% if event_dates|length > 1 %}
-              <div {{ bem('multiple-dates-label', [], event_meta__base_class) }}>
-                Reoccuring: Event {{ event_featured_index + 1 }} of {{ event_dates|length }}
-              </div>
-            {% endif %}
+            <div {{ bem('multiple-dates-label', [], event_meta__base_class) }}>
+              Reoccuring: Event {{ event_featured_index + 1 }} of {{ event_dates|length }}
+            </div>
             {% if past_dates|length %}
               {% if event_dates|length > 1 %}
                 {% set past_id = 'past-dates-' ~ random() %}
