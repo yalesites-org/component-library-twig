@@ -6,6 +6,21 @@
  # - event_meta__address
  #}
 
+{# Split upcomign and past dates #}
+{% set upcoming_dates = [] %}
+{% set past_dates = [] %}
+
+{% for date in event_dates %}
+  {% if date.is_past_event %}
+    {% set past_dates = past_dates|merge([date]) %}
+  {% else %}
+    {% set upcoming_dates = upcoming_dates|merge([date]) %}
+  {% endif %}
+{% endfor %}
+
+{% set upcoming_date_count = upcoming_dates|length %}
+{% set past_date_count = past_dates|length %}
+
 {# Use a variable to ensure emdash is properly placed consistently #}
 {% set em_dash = '—' %}
 
@@ -54,14 +69,13 @@
   {% set event_meta__format = event_experience.0.name %}
 {% endif %}
 
-{# Use in more-dates-link #}
-{% set event__more_dates_link__icon %}
+{% set event__upcoming_dates_link__icon %}
   {% include "@atoms/images/icons/_yds-icon.twig" with {
     icon__name: 'circle-plus',
     icon__decorative: true,
     icon__blockname: event_meta__base_class,
     icon__modifiers: ['expand-more-dates'],
-    icon__visual_title: 'Show All Dates',
+    icon__visual_title: 'Upcoming Events (' ~ upcoming_date_count ~ ')',
     icon__visual_title__modifiers: ['show-more-dates'],
   } %}
   {# collapse minus #}
@@ -70,7 +84,27 @@
     icon__decorative: true,
     icon__blockname: event_meta__base_class,
     icon__modifiers: ['collapse-more-dates'],
-    icon__visual_title: 'Hide All Dates',
+    icon__visual_title: 'Upcoming Events (' ~ upcoming_date_count ~ ')',
+    icon__visual_title__modifiers: ['hide-more-dates'],
+  } %}
+{% endset %}
+
+{% set event__past_dates_link__icon %}
+  {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'circle-plus',
+    icon__decorative: true,
+    icon__blockname: event_meta__base_class,
+    icon__modifiers: ['expand-more-dates'],
+    icon__visual_title: 'Past Events (' ~ past_date_count ~ ')',
+    icon__visual_title__modifiers: ['show-more-dates'],
+  } %}
+  {# collapse minus #}
+    {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'circle-minus',
+    icon__decorative: true,
+    icon__blockname: event_meta__base_class,
+    icon__modifiers: ['collapse-more-dates'],
+    icon__visual_title: 'Past Events (' ~ past_date_count ~ ')',
     icon__visual_title__modifiers: ['hide-more-dates'],
   } %}
 {% endset %}
@@ -95,7 +129,6 @@
     icon__visual_title__modifiers: ['hide-map'],
   } %}
 {% endset %}
-
 
 {# Event meta localist component #}
 <div {{ add_attributes(event_meta__attributes) }} data-event-status="{{ event_status }}">
@@ -147,6 +180,7 @@
       {# Date #}
       {% if event_dates %}
         <div {{ bem('date', [], event_meta__base_class) }}>
+          Featured Date:
           {# Fallback to old way of rendering if not passed #}
           {% set event_featured_date = event_featured_date|default(event_dates.0) %}
 
@@ -178,34 +212,70 @@
         {% if event_dates %}
           <div {{ bem('all-dates', [], event_meta__base_class) }} is-expanded="false">
             {% if event_dates|length > 1 %}
+              <div {{ bem('multiple-dates-label', [], event_meta__base_class) }}>
+                Reoccuring: Event {{ event_featured_index + 1 }} of {{ event_dates|length }}
+              </div>
+            {% endif %}
+            {% if past_dates|length %}
+              {% if event_dates|length > 1 %}
+                {% set past_id = 'past-dates-' ~ random() %}
+                <div {{ bem('more-dates-link', [], event_meta__base_class) }}>
+                  {% include "@atoms/controls/cta/yds-cta.twig" with {
+                    cta__content: event__past_dates_link__icon,
+                    cta__href: '#',
+                    cta__blockname: event_meta__base_class,
+                    cta__modifiers: ['show-more-dates'],
+                    cta__style: 'outline',
+                    cta__attributes: {
+                        'data-show-more-dates': '#' ~ past_id
+                      }
+                  } %}
+                </div>
+              {% endif %}
+              <ul id="{{ past_id }}" {{ bem('multiple-dates', [], event_meta__base_class) }} aria-expanded="false">
+                {% for event_date in past_dates %}
+                  <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
+                    {% if event_date.formatted_start_date == event_date.formatted_end_date %}
+                      {{ event_date.original_start|date('D M j, Y') }}
+                      {{ event_date.original_start|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}{{ em_dash }}{{- event_date.original_end|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}
+                    {% else %}
+                      {{ event_date.original_start|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
+                      {{ em_dash }}
+                      {{ event_date.original_end|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+            {% if upcoming_dates|length %}
               <div {{ bem('more-dates-link', [], event_meta__base_class) }}>
+                {% set upcoming_id = 'upcoming-dates-' ~ random() %}
                 {% include "@atoms/controls/cta/yds-cta.twig" with {
-                  cta__content: event__more_dates_link__icon,
+                  cta__content: event__upcoming_dates_link__icon,
                   cta__href: '#',
                   cta__blockname: event_meta__base_class,
                   cta__modifiers: ['show-more-dates'],
                   cta__style: 'outline',
+                  cta__attributes: {
+                      'data-show-more-dates': '#' ~ upcoming_id
+                    }
                 } %}
               </div>
+              <ul id="{{ upcoming_id }}" {{ bem('multiple-dates', [], event_meta__base_class) }} aria-expanded="false">
+                {% for event_date in upcoming_dates %}
+                  <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
+                    {% if event_date.formatted_start_date == event_date.formatted_end_date %}
+                      {{ event_date.original_start|date('D M j, Y') }}
+                      {{ event_date.original_start|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}{{ em_dash }}{{- event_date.original_end|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}
+                    {% else %}
+                      {{ event_date.original_start|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
+                      {{ em_dash }}
+                      {{ event_date.original_end|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
             {% endif %}
-            <ul {{ bem('multiple-dates', [], event_meta__base_class) }} aria-expanded="false">
-              {% for event_date in event_dates %}
-                <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
-                  {% if event_date.is_past_event %}
-                    Past Event:
-                  {% endif %}
-                  {% if event_date.formatted_start_date == event_date.formatted_end_date %}
-                    {{ event_date.original_start|date('D M j, Y') }}
-                    {{ event_date.original_start|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}{{ em_dash }}{{- event_date.original_end|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}
-                  {% else %}
-                    {{ event_date.original_start|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
-                    {{ em_dash }}
-                    {{ event_date.original_end|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
-                  {% endif %}
-                </li>
-
-              {% endfor %}
-            </ul>
           </div>
         {% endif %}
 
