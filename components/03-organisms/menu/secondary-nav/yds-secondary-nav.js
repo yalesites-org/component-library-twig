@@ -18,6 +18,7 @@ Drupal.behaviors.secondaryNav = {
       const parentLi = toggle.closest('li');
       const submenu = parentLi.querySelector('.secondary-nav__menu--level-1');
       const parentLiWidth = parentLi.offsetWidth;
+
       if (submenu) {
         const parentRect = parentLi.getBoundingClientRect();
         // in-this-section__inner is the container which is positioned relative.
@@ -26,11 +27,27 @@ Drupal.behaviors.secondaryNav = {
         submenu.style.left = `${parentRect.left - sectionRect.left}px`;
         submenu.style.maxWidth = `${parentLiWidth + 150}px`;
       }
+
+      // Prevent submenu from overflowing outside the viewport.
+      const menuRight = secondaryNav.getBoundingClientRect().right;
+      const submenuRight = submenu.getBoundingClientRect().right;
+
+      if (menuRight < submenuRight) {
+        submenu.setAttribute('data-menu-direction', 'left');
+      } else {
+        submenu.setAttribute('data-menu-direction', 'right');
+      }
     };
 
     // Function to hide a menu.
     const hide = (toggle) => {
       toggle.setAttribute('aria-expanded', false);
+      const submenu = toggle.parentElement.querySelector(
+        '.secondary-nav__menu',
+      );
+      if (submenu) {
+        submenu.removeAttribute('data-menu-direction');
+      }
     };
 
     // Function to hide all menus.
