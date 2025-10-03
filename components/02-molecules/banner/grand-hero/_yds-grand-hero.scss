@@ -30,6 +30,10 @@ $break-grand-hero-banner: tokens.$break-m;
     min-height: 28rem;
   }
 
+  &[data-grand-hero-size='mini'] {
+    min-height: 14rem;
+  }
+
   &[data-grand-hero-size='full'] {
     min-height: calc(95vh - var(--site-header-height));
   }
