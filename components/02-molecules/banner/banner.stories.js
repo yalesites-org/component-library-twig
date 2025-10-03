@@ -144,7 +144,7 @@ GrandHeroBanner.argTypes = {
   size: {
     name: 'Content Size',
     type: 'select',
-    options: ['reduced', 'full'],
+    options: ['reduced', 'full', 'mini'],
   },
   withVideo: {
     name: 'With Video',
