@@ -15,7 +15,11 @@
 {# If tile__item__attributes is not defined, set it to an empty object by default #}
 {% set tile__item__attributes = tile__item__attributes|default({}) %}
 
-{% if tile__item__content_link and tile__item__content %}
+{# Determine if tile should be linked and what text to use #}
+{% set has_link_url = tile__item__content_link %}
+{% set link_text = tile__item__link_title or tile__item__heading or tile__item__content %}
+
+{% if has_link_url and link_text %}
 {% set tile__item__attributes = tile__item__attributes|merge({
   'data-component-linked-tile': 'true',
 }) %}
@@ -49,9 +53,10 @@
 				{{ tile__item__heading }}
 			</div>
 		{% endif %}
-		{% if tile__item__content_link and tile__item__content %}
+		{# Improved link logic for accessibility #}
+		{% if has_link_url and link_text %}
 			{% include "@atoms/controls/text-link/yds-text-link.twig" with {
-				link__content: tile__item__content,
+				link__content: link_text,
 				link__url: tile__item__content_link,
 				link__blockname: tile__item__base_class,
 				link__base_class: 'link',
