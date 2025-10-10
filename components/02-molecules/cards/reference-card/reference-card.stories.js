@@ -66,6 +66,11 @@ export default {
       name: 'Overlay Text',
       type: 'string',
     },
+    componentTheme: {
+      name: 'Component Theme',
+      type: 'select',
+      options: ['one', 'two', 'three', 'four', 'five'],
+    },
   },
   args: {
     heading: referenceCardData.reference_card__heading,
@@ -81,6 +86,7 @@ export default {
     showTags: false,
     showPronouns: false,
     date: referenceCardData.reference_card__date,
+    componentTheme: 'one',
   },
 };
 
@@ -98,6 +104,7 @@ export const PostCard = ({
   showTags,
   showPronouns,
   overlayText,
+  componentTheme,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -114,6 +121,7 @@ export const PostCard = ({
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referenceCardData.reference_card__url,
+        reference_card__component_theme: componentTheme,
         show_categories: showCategories ? 'true' : 'false',
         show_eyebrow: showEyebrow ? 'true' : 'false',
         show_tags: showTags ? 'true' : 'false',
@@ -151,6 +159,7 @@ export const EventCard = ({
   showCategories,
   showTags,
   overlayText,
+  componentTheme,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -166,6 +175,7 @@ export const EventCard = ({
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referenceCardData.reference_card__url,
+        reference_card__component_theme: componentTheme,
         reference_card__cta_primary__href: primaryCTAURL,
         reference_card__cta_primary__content: primaryCTAContent,
         reference_card__cta_secondary__href: secondaryCTAURL,
@@ -229,6 +239,7 @@ export const ProfileCard = ({
   showPronouns,
   showTags,
   overlayText,
+  componentTheme,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-source='profile' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -248,6 +259,7 @@ export const ProfileCard = ({
         reference_card__snippet:
           referenceProfileCardData.reference_card__snippet,
         reference_card__url: referenceProfileCardData.reference_card__url,
+        reference_card__component_theme: componentTheme,
         reference_card__categories:
           referenceProfileCardData.reference_card__categories,
         show_categories: showCategories,
@@ -284,6 +296,7 @@ export const PageCard = ({
   showThumbnail,
   showPronouns,
   overlayText,
+  componentTheme,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -300,6 +313,7 @@ export const PageCard = ({
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referencePageCardData.reference_card__url,
+        reference_card__component_theme: componentTheme,
         show_categories: showCategories ? 'true' : 'false',
         show_eyebrow: showEyebrow ? 'true' : 'false',
         show_tags: showTags ? 'true' : 'false',
@@ -351,6 +365,7 @@ export const ResourceCard = ({
   showTags,
   showPronouns,
   overlayText,
+  componentTheme,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
@@ -367,6 +382,7 @@ export const ResourceCard = ({
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referenceResourceData.reference_card__url,
+        reference_card__component_theme: componentTheme,
         show_categories: showCategories ? 'true' : 'false',
         show_eyebrow: showEyebrow ? 'true' : 'false',
         show_tags: showTags ? 'true' : 'false',
