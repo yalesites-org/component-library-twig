@@ -4,6 +4,7 @@
  # - card_collection__type: grid (default) or list
  # - card_collection__with_images: boolean used to evaluate whether or not to show the image
  # - card_collection__source_type: if present, it will render the content type in the collection
+ # - card_collection__background_color: theme slot color (one, two, three, four, five)
  # - animate__item: defaults to `enabled`, will only animate if site_animate_components (lever / config) is not `default`
  #
  # Available Variables:
@@ -22,6 +23,12 @@
   'data-component-width': card_collection__width,
   class: bem(card_collection__base_class, card_collection__modifiers),
 } %}
+
+{% if card_collection__background_color %}
+  {% set card_collection__attributes = card_collection__attributes|merge({
+    'data-component-theme': card_collection__background_color,
+  }) %}
+{% endif %}
 
 {% if card_collection__source_type %}
   {% set card_collection__attributes = card_collection__attributes|merge({

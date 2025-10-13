@@ -19,7 +19,7 @@ export default {
     collectionType: {
       name: 'Collection Type',
       type: 'select',
-      options: ['grid', 'list', 'condensed'],
+      options: ['grid', 'list', 'condensed', 'single'],
     },
     featured: {
       name: 'Featured',
@@ -28,6 +28,13 @@ export default {
     withOverlay: {
       name: 'Overlay',
       type: 'boolean',
+      if: { arg: 'collectionType', neq: 'single' },
+    },
+    componentTheme: {
+      name: 'Component Theme',
+      type: 'select',
+      options: ['', 'one', 'two', 'three', 'four', 'five'],
+      if: { arg: 'collectionType', eq: 'single' },
     },
   },
   args: {
@@ -44,8 +51,16 @@ export const PostCardCollection = ({
   featured,
   withImages,
   withOverlay,
+  componentTheme,
 }) => {
-  const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
+  let items;
+  if (collectionType === 'single') {
+    items = [1];
+  } else if (featured) {
+    items = [1, 2, 3];
+  } else {
+    items = [1, 2, 3, 4];
+  }
 
   return cardCollectionTwig({
     card_collection__source_type: 'post',
@@ -53,6 +68,7 @@ export const PostCardCollection = ({
     card_collection__heading: heading,
     card_collection__featured: featured ? 'true' : 'false',
     card_collection__with_images: withImages ? 'true' : 'false',
+    card_collection__background_color: componentTheme,
     card_collection__cards: items,
     reference_card__overlay: withOverlay ? 'Pinned' : '',
     ...postCardData,
@@ -75,8 +91,16 @@ export const EventCardCollection = ({
   collectionType,
   featured,
   withImages,
+  componentTheme,
 }) => {
-  const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
+  let items;
+  if (collectionType === 'single') {
+    items = [1];
+  } else if (featured) {
+    items = [1, 2, 3];
+  } else {
+    items = [1, 2, 3, 4];
+  }
 
   return cardCollectionTwig({
     card_collection__source_type: 'event',
@@ -85,6 +109,7 @@ export const EventCardCollection = ({
     card_collection__heading: heading,
     card_collection__featured: featured ? 'true' : 'false',
     card_collection__with_images: withImages ? 'true' : 'false',
+    card_collection__background_color: componentTheme,
     card_collection__cards: items,
     ...eventCardData,
     ...imageData.responsive_images['3x2'],
@@ -106,8 +131,16 @@ export const ProfileCardCollection = ({
   collectionType,
   featured,
   withImages,
+  componentTheme,
 }) => {
-  const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
+  let items;
+  if (collectionType === 'single') {
+    items = [1];
+  } else if (featured) {
+    items = [1, 2, 3];
+  } else {
+    items = [1, 2, 3, 4];
+  }
 
   return cardCollectionTwig({
     card_collection__source_type: 'profile',
@@ -115,6 +148,7 @@ export const ProfileCardCollection = ({
     card_collection__heading: heading,
     card_collection__featured: featured ? 'true' : 'false',
     card_collection__with_images: withImages ? 'true' : 'false',
+    card_collection__background_color: componentTheme,
     card_collection__cards: items,
     ...profileCardData,
     ...imageData.responsive_images['1x1'],
@@ -163,8 +197,16 @@ export const ResourceCardCollection = ({
   featured,
   withImages,
   withOverlay,
+  componentTheme,
 }) => {
-  const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
+  let items;
+  if (collectionType === 'single') {
+    items = [1];
+  } else if (featured) {
+    items = [1, 2, 3];
+  } else {
+    items = [1, 2, 3, 4];
+  }
 
   return cardCollectionTwig({
     card_collection__source_type: 'resource',
@@ -172,6 +214,7 @@ export const ResourceCardCollection = ({
     card_collection__heading: heading,
     card_collection__featured: featured ? 'true' : 'false',
     card_collection__with_images: withImages ? 'true' : 'false',
+    card_collection__background_color: componentTheme,
     card_collection__cards: items,
     reference_card__overlay: withOverlay ? 'Pinned' : '',
     ...resourceCardData,
