@@ -24,11 +24,9 @@
   class: bem(card_collection__base_class, card_collection__modifiers),
 } %}
 
-{% if card_collection__background_color %}
-  {% set card_collection__attributes = card_collection__attributes|merge({
-    'data-component-theme': card_collection__background_color,
-  }) %}
-{% endif %}
+{% set card_collection__attributes = card_collection__attributes|merge({
+  'data-component-theme': card_collection__background_color|default('one'),
+}) %}
 
 {% if card_collection__source_type %}
   {% set card_collection__attributes = card_collection__attributes|merge({

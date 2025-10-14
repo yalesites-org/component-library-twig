@@ -589,3 +589,73 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     }
   }
 }
+
+// Theme slot color overrides for single card collections
+.card-collection[data-collection-type='single'][data-component-theme='one']
+  .reference-card__content {
+  background-color: var(--color-basic-white);
+  color: var(--color-gray-800);
+
+  --color-text-shadow: var(--color-basic-white);
+
+  .taxonomy-list--categories,
+  .taxonomy-list--tags {
+    color: var(--color-gray-500);
+  }
+}
+
+.card-collection[data-collection-type='single'][data-component-theme='two']
+  .reference-card__content {
+  background-color: var(--color-slot-four);
+  color: var(--color-gray-800);
+
+  --color-text-shadow: var(--color-slot-four);
+
+  .date-time,
+  .taxonomy-list--categories,
+  .taxonomy-list--tags {
+    color: var(--color-gray-800);
+  }
+}
+
+.card-collection[data-collection-type='single'][data-component-theme='three']
+  .reference-card__content {
+  background-color: var(--color-slot-two);
+  color: var(--color-basic-white);
+
+  --color-text-shadow: var(--color-slot-two);
+
+  .date-time,
+  .taxonomy-list--categories,
+  .taxonomy-list--tags {
+    color: var(--color-basic-white);
+  }
+}
+
+.card-collection[data-collection-type='single'][data-component-theme='four']
+  .reference-card__content {
+  background-color: var(--color-slot-one);
+  color: var(--color-basic-white);
+
+  --color-text-shadow: var(--color-slot-one);
+
+  .date-time,
+  .taxonomy-list--categories,
+  .taxonomy-list--tags {
+    color: var(--color-basic-white);
+  }
+}
+
+.card-collection[data-collection-type='single'][data-component-theme='five']
+  .reference-card__content {
+  background-color: var(--color-gray-800);
+  color: var(--color-basic-white);
+
+  --color-text-shadow: var(--color-gray-800);
+
+  .date-time,
+  .taxonomy-list--categories,
+  .taxonomy-list--tags {
+    color: var(--color-basic-white);
+  }
+}

@@ -66,6 +66,12 @@ export default {
       name: 'Overlay Text',
       type: 'string',
     },
+    componentTheme: {
+      name: 'Component Theme',
+      type: 'select',
+      options: ['', 'one', 'two', 'three', 'four', 'five'],
+      if: { arg: 'collectionType', eq: 'single' },
+    },
   },
   args: {
     heading: referenceCardData.reference_card__heading,
@@ -81,6 +87,7 @@ export default {
     showTags: false,
     showPronouns: false,
     date: referenceCardData.reference_card__date,
+    componentTheme: 'one',
   },
 };
 
@@ -98,8 +105,11 @@ export const PostCard = ({
   showTags,
   showPronouns,
   overlayText,
+  componentTheme,
 }) => `
-<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
+<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}"${
+  componentTheme ? ` data-component-theme="${componentTheme}"` : ''
+}>
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${referenceCardTwig({
@@ -151,8 +161,11 @@ export const EventCard = ({
   showCategories,
   showTags,
   overlayText,
+  componentTheme,
 }) => `
-<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
+<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}"${
+  componentTheme ? ` data-component-theme="${componentTheme}"` : ''
+}>
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${referenceCardTwig({
@@ -229,8 +242,11 @@ export const ProfileCard = ({
   showPronouns,
   showTags,
   overlayText,
+  componentTheme,
 }) => `
-<div class='card-collection' data-component-width='site' data-collection-source='profile' data-collection-type='${collectionType}' data-collection-featured="${featured}">
+<div class='card-collection' data-component-width='site' data-collection-source='profile' data-collection-type='${collectionType}' data-collection-featured="${featured}"${
+  componentTheme ? ` data-component-theme="${componentTheme}"` : ''
+}>
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${referenceCardTwig({
@@ -284,8 +300,11 @@ export const PageCard = ({
   showThumbnail,
   showPronouns,
   overlayText,
+  componentTheme,
 }) => `
-<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
+<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}"${
+  componentTheme ? ` data-component-theme="${componentTheme}"` : ''
+}>
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${referenceCardTwig({
@@ -351,8 +370,11 @@ export const ResourceCard = ({
   showTags,
   showPronouns,
   overlayText,
+  componentTheme,
 }) => `
-<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
+<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}"${
+  componentTheme ? ` data-component-theme="${componentTheme}"` : ''
+}>
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${referenceCardTwig({
