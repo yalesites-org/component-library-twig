@@ -526,7 +526,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   flex-wrap: wrap;
   margin-top: var(--size-spacing-3);
 
-  > *:not(:first-child, .multi-day-event) {
+  > *:not(:first-child, .multi-day-event, .past-event-icon ~ *) {
     margin-left: var(--size-spacing-5);
     padding-left: var(--size-spacing-5);
     position: relative;
@@ -541,6 +541,22 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   .multi-day-event {
     padding-left: var(--size-spacing-3);
     font-style: italic;
+  }
+
+  .past-event-icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+      color: var(--color-gray-600);
+    }
+
+    ~ * {
+      margin-left: var(--size-spacing-3);
+    }
   }
 }
 
