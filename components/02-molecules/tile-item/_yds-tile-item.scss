@@ -272,6 +272,30 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     text-decoration: none;
   }
 
+  // Focus state for keyboard accessibility (WCAG 2.4.7)
+  // Use box-shadow for better cross-browser support (Safari has outline issues)
+  &:focus {
+    outline: 3px solid var(--color-tile-item-content);
+    outline-offset: 2px;
+
+    // Box-shadow as fallback for Safari - using inset to ensure visibility
+    box-shadow: inset 0 0 0 3px var(--color-tile-item-content);
+  }
+
+  // Modern browsers support :focus-visible for better UX
+  // Only show focus ring for keyboard navigation, not mouse clicks
+  &:focus-visible {
+    outline: 3px solid var(--color-tile-item-content);
+    outline-offset: 2px;
+    box-shadow: inset 0 0 0 3px var(--color-tile-item-content);
+  }
+
+  // Remove focus ring when using mouse (browsers that support :focus-visible)
+  &:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+  }
+
   // Ensure all child elements inherit the correct colors from tile theme
   .tile__item__heading,
   .tile__item__content {
@@ -287,6 +311,11 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &:hover .tile__item__content {
     color: var(--color-tile-item-content);
   }
+}
+
+// Subtle hover state for linked tiles (UX enhancement)
+.tile__item[data-component-linked-tile='true']:hover {
+  opacity: 0.95;
 }
 
 .tile__item__link {
