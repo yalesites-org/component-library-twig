@@ -7,6 +7,7 @@
  # Available Variables:
  # - tile__item__tile__item (required)
  # - tile__item__content
+ # - tile__item__content_link: URL to make entire tile clickable
  #}
 
 {% set tile__item__base_class = 'tile__item' %}
@@ -15,7 +16,7 @@
 {# If tile__item__attributes is not defined, set it to an empty object by default #}
 {% set tile__item__attributes = tile__item__attributes|default({}) %}
 
-{% if tile__item__content_link and tile__item__content %}
+{% if tile__item__content_link %}
 {% set tile__item__attributes = tile__item__attributes|merge({
   'data-component-linked-tile': 'true',
 }) %}
@@ -31,7 +32,22 @@
   class: bem(tile__item__base_class, tile__item__modifiers),
 }) %}
 
+{# Build aria-label for linked tiles to improve accessibility #}
+{% set tile__item__aria_label = '' %}
+{% if tile__item__content_link %}
+  {% if tile__item__heading %}
+    {% set tile__item__aria_label = tile__item__heading|striptags %}
+  {% elseif tile__item__content %}
+    {% set tile__item__aria_label = tile__item__content|striptags|slice(0, 100) %}
+  {% else %}
+    {% set tile__item__aria_label = 'Tile link' %}
+  {% endif %}
+{% endif %}
+
 <li {{ add_attributes(tile__item__attributes) }}>
+  {% if tile__item__content_link %}
+    <a href="{{ tile__item__content_link }}" {{ bem('link-wrapper', [], tile__item__base_class) }}{% if tile__item__aria_label %} aria-label="{{ tile__item__aria_label }}"{% endif %}>
+  {% endif %}
 	<div {{ bem('inner', [], tile__item__base_class) }}>
 		{% if tile__item__presentation_style == 'icon' %}
 			{% block tile__item__icon %}
@@ -41,22 +57,15 @@
             icon__base_class: 'tile__item-icon',
             icon__blockname: tile__item__base_class,
           } %}
-				</div>		
+				</div>
 			{% endblock %}
-		{% endif %}	
+		{% endif %}
 		{% if tile__item__presentation_style == 'heading' %}
 			<div {{ bem('heading', [], tile__item__base_class) }}>
 				{{ tile__item__heading }}
 			</div>
 		{% endif %}
-		{% if tile__item__content_link and tile__item__content %}
-			{% include "@atoms/controls/text-link/yds-text-link.twig" with {
-				link__content: tile__item__content,
-				link__url: tile__item__content_link,
-				link__blockname: tile__item__base_class,
-				link__base_class: 'link',
-			} %}
-		{% elseif tile__item__content %}
+		{% if tile__item__content %}
       <div {{ bem('content', [], tile__item__base_class) }}>
 				{{ tile__item__content }}
 			</div>
@@ -67,6 +76,9 @@
           {% include "@atoms/images/image/_responsive-image.twig" %}
         {% endblock %}
       </div>
-    {% endif %} 
+    {% endif %}
 	</div>
+  {% if tile__item__content_link %}
+    </a>
+  {% endif %}
 </li>
