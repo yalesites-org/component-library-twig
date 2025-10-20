@@ -256,6 +256,39 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 }
 
+.tile__item__link-wrapper {
+  // Reset link styles for the wrapper to prevent default blue color
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  height: 100%;
+
+  &:visited {
+    color: inherit;
+  }
+
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  // Ensure all child elements inherit the correct colors from tile theme
+  .tile__item__heading,
+  .tile__item__content {
+    color: var(--color-tile-item-content);
+  }
+
+  &:visited .tile__item__heading,
+  &:visited .tile__item__content {
+    color: var(--color-tile-item-content);
+  }
+
+  &:hover .tile__item__heading,
+  &:hover .tile__item__content {
+    color: var(--color-tile-item-content);
+  }
+}
+
 .tile__item__link {
   @include atoms.plain-link;
   @include tokens.heading(h4);
