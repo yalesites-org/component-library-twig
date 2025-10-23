@@ -21,10 +21,10 @@
 {% set upcoming_date_count = upcoming_dates|length %}
 {% set past_date_count = past_dates|length %}
 
-{% set featured_date_label = 'Featured Date: ' %}
+{% set featured_date_label = '' %}
 {% set past_events_label = 'Past Events: ' %}
 {% set upcoming_events_label = 'Upcoming Events: ' %}
-{% set reoccuring_label = 'Reoccuring:' %}
+{% set reoccuring_label = '' %}
 
 {# Use a variable to ensure emdash is properly placed consistently #}
 {% set em_dash = '—' %}
@@ -219,6 +219,35 @@
             <div {{ bem('multiple-dates-label', [], event_meta__base_class) }}>
               {{ reoccuring_label }} Event {{ event_featured_index + 1 }} of {{ event_dates|length }}
             </div>
+            {% if upcoming_dates|length %}
+              <div {{ bem('more-dates-link', [], event_meta__base_class) }}>
+                {% set upcoming_id = 'upcoming-dates-' ~ random() %}
+                {% include "@atoms/controls/cta/yds-cta.twig" with {
+                  cta__content: event__upcoming_dates_link__icon,
+                  cta__href: '#',
+                  cta__blockname: event_meta__base_class,
+                  cta__modifiers: ['show-more-dates'],
+                  cta__style: 'outline',
+                  cta__attributes: {
+                      'data-show-more-dates': '#' ~ upcoming_id
+                    }
+                } %}
+              </div>
+              <ul id="{{ upcoming_id }}" {{ bem('multiple-dates', [], event_meta__base_class) }} aria-expanded="false">
+                {% for event_date in upcoming_dates %}
+                  <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
+                    {% if event_date.formatted_start_date == event_date.formatted_end_date %}
+                      {{ event_date.original_start|date('D M j, Y') }}
+                      {{ event_date.original_start|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}{{ em_dash }}{{- event_date.original_end|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}
+                    {% else %}
+                      {{ event_date.original_start|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
+                      {{ em_dash }}
+                      {{ event_date.original_end|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
             {% if past_dates|length %}
               {% if event_dates|length > 1 %}
                 {% set past_id = 'past-dates-' ~ random() %}
@@ -237,35 +266,6 @@
               {% endif %}
               <ul id="{{ past_id }}" {{ bem('multiple-dates', [], event_meta__base_class) }} aria-expanded="false">
                 {% for event_date in past_dates %}
-                  <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
-                    {% if event_date.formatted_start_date == event_date.formatted_end_date %}
-                      {{ event_date.original_start|date('D M j, Y') }}
-                      {{ event_date.original_start|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}{{ em_dash }}{{- event_date.original_end|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}
-                    {% else %}
-                      {{ event_date.original_start|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
-                      {{ em_dash }}
-                      {{ event_date.original_end|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
-                    {% endif %}
-                  </li>
-                {% endfor %}
-              </ul>
-            {% endif %}
-            {% if upcoming_dates|length %}
-              <div {{ bem('more-dates-link', [], event_meta__base_class) }}>
-                {% set upcoming_id = 'upcoming-dates-' ~ random() %}
-                {% include "@atoms/controls/cta/yds-cta.twig" with {
-                  cta__content: event__upcoming_dates_link__icon,
-                  cta__href: '#',
-                  cta__blockname: event_meta__base_class,
-                  cta__modifiers: ['show-more-dates'],
-                  cta__style: 'outline',
-                  cta__attributes: {
-                      'data-show-more-dates': '#' ~ upcoming_id
-                    }
-                } %}
-              </div>
-              <ul id="{{ upcoming_id }}" {{ bem('multiple-dates', [], event_meta__base_class) }} aria-expanded="false">
-                {% for event_date in upcoming_dates %}
                   <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
                     {% if event_date.formatted_start_date == event_date.formatted_end_date %}
                       {{ event_date.original_start|date('D M j, Y') }}
