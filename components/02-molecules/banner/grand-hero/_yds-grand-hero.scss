@@ -278,6 +278,13 @@ $break-grand-hero-banner: tokens.$break-m;
     align-items: center;
   }
 
+  [data-grand-hero-size='mini'][data-grand-hero-overlay-variation='contained']
+    &,
+  [data-grand-hero-size='mini'][data-grand-hero-overlay-variation='contained-narrow']
+    & {
+    margin-bottom: 0;
+  }
+
   &::before {
     content: '';
     position: absolute;
