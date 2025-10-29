@@ -57,8 +57,13 @@ format__day__long = Thursday, December 3, 2024
   'format__day__long__start': 'l, F j, Y' ~ em_dash,
   'format__month_year': 'F Y',
   'format__year_only': 'Y',
+  'format__date_and_time__start': 'F j, Y g:i a' ~ em_dash,
+  'format__date_and_time': 'g:i a',
+  'format__date_time_multiple_days__start': 'D M j, Y g:i a' ~ em_dash,
+  'format__date_time_multiple_days': 'D M j, Y g:i a',
 } %}
 
+{# easy to name configurations that utilize the above formats _start and regular variants #}
 {% set format_defaults = {
   "time": "format__time",
   "date": "format__date",
@@ -67,10 +72,13 @@ format__day__long = Thursday, December 3, 2024
   "day__full": "format__day__full",
   "year_only": "format__year_only",
   "month_year": "format__month_year",
+  "same_day_diff_time": "format__date_and_time",
+  "date_time_multiple_days": "format__date_time_multiple_days",
 } %}
 
 {% set used_format = date_time__format_override|default(format_defaults[date_time__format]) %}
 
+{# Combine start and end date/time into one variable for output #}
 {% if same_start_and_end %}
   {% set date_time = date_time__start|date(formats[used_format]) %}
 {% else %}
