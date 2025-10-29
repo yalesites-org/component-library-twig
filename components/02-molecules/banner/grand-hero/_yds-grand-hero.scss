@@ -278,6 +278,10 @@ $break-grand-hero-banner: tokens.$break-m;
     align-items: center;
   }
 
+  [data-grand-hero-size='mini'] & {
+    padding-bottom: var(--size-spacing-7);
+  }
+
   [data-grand-hero-size='mini'][data-grand-hero-overlay-variation='contained']
     &,
   [data-grand-hero-size='mini'][data-grand-hero-overlay-variation='contained-narrow']
@@ -340,10 +344,6 @@ $break-grand-hero-banner: tokens.$break-m;
 
   [data-component-theme] & {
     --color-link-hover: var(--color-grand-hero-text);
-  }
-
-  .grand-hero-banner__content-inner > & {
-    margin-top: var(--size-spacing-6);
   }
 }
 
