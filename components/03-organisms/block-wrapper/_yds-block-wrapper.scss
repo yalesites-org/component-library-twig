@@ -16,14 +16,14 @@
 
 // Padding modifiers for block wrapper
 .ys-block-wrapper--padding-default {
-  padding-top: var(--size-spacing-10);
-  padding-bottom: var(--size-spacing-10);
+  margin-block-start: var(--size-spacing-10);
+  margin-block-end: var(--size-spacing-10);
 }
 
 .ys-block-wrapper--padding-no-top {
-  padding-bottom: var(--size-spacing-10);
+  margin-block-end: var(--size-spacing-10);
 }
 
 .ys-block-wrapper--padding-no-bottom {
-  padding-top: var(--size-spacing-10);
+  margin-block-start: var(--size-spacing-10);
 }
