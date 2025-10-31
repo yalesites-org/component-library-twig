@@ -14,17 +14,16 @@
   @include tokens.heading(h4);
 }
 
-// Centralized block padding elements
-.ys-block-padding-top,
-.ys-block-padding-bottom {
-  display: block;
-  width: 100%;
-  margin-block: var(--size-spacing-10);
+// Padding modifiers for block wrapper
+.ys-block-wrapper--padding-default {
+  padding-top: var(--size-spacing-10);
+  padding-bottom: var(--size-spacing-10);
 }
 
-// Prevent double padding in nested scenarios
-.ys-block-padding-top + .ys-block-padding-top,
-.ys-block-padding-bottom + .ys-block-padding-bottom {
-  margin-block-start: 0;
-  margin-block-end: 0;
+.ys-block-wrapper--padding-no-top {
+  padding-bottom: var(--size-spacing-10);
+}
+
+.ys-block-wrapper--padding-no-bottom {
+  padding-top: var(--size-spacing-10);
 }
