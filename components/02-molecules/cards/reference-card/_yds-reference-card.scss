@@ -72,6 +72,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     [data-collection-type='single'] & {
       --color-card-single-bg: var(--color-slot-one);
       --color-text-shadow: var(--color-slot-one);
+      --color-card-single-text: var(--color-basic-white);
+      --color-heading: var(--color-card-single-text);
     }
 
     [data-collection-type='grid'] &,
@@ -88,6 +90,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     [data-collection-type='single'] & {
       --color-card-single-bg: var(--color-slot-two);
       --color-text-shadow: var(--color-slot-two);
+      --color-card-single-text: var(--color-basic-white);
+      --color-heading: var(--color-card-single-text);
     }
 
     [data-collection-type='grid'] &,
@@ -140,6 +144,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     [data-collection-type='single'] & {
       --color-card-single-bg: var(--color-slot-five);
       --color-text-shadow: var(--color-slot-five);
+      --color-card-single-text: var(--color-basic-white);
+      --color-heading: var(--color-card-single-text);
     }
 
     [data-collection-type='grid'] &,
@@ -174,6 +180,17 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     --color-card-single-bg: var(--color-blue-yale);
     --color-card-single-text: var(--color-basic-white);
     --color-heading: var(--color-card-single-text);
+
+    margin-block-start: var(--size-spacing-11);
+
+    // Taxonomy lists (categories and tags) color overrides for single collection type
+    // to ensure proper contrast with themed backgrounds
+    .taxonomy-list--categories,
+    .taxonomy-list--tags {
+      .taxonomy-list__item {
+        color: var(--color-card-single-text);
+      }
+    }
   }
 
   // Condensed card collection
@@ -575,6 +592,10 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   color: var(--color-basic-brown-gray);
   text-transform: uppercase;
+
+  [data-collection-type='single'] & {
+    color: var(--color-card-single-text);
+  }
 }
 
 .reference-card__heading {
@@ -661,10 +682,11 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
-  /// Set these to white and blue for the single card collection.
+  /// Set these to ensure proper contrast for the single card collection.
   /// If we include themes for reference cards, we should refactor this
   /// and maybe move it to /01-atoms/controls/cta/_yds-cta.scss
   [data-collection-type='single'] & {
+    // Themes with dark backgrounds (one, two, five) - use white CTAs
     .cta[data-cta-theme='one'][data-cta-style='filled'] {
       --color-cta-bg: var(--color-basic-white);
       --color-cta-bg-hover: transparent;
@@ -685,6 +707,17 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       &:hover {
         --color-cta-text-hover: var(--color-cta-action-secondary);
       }
+    }
+  }
+
+  // Themes with light backgrounds (three, four) - use dark CTAs
+  [data-collection-type='single'] [data-component-theme='three'] &,
+  [data-collection-type='single'] [data-component-theme='four'] & {
+    .cta[data-cta-style='outline'] {
+      --color-cta-action: var(--color-gray-800);
+      --color-cta-action-secondary: var(--color-gray-800);
+      --color-link-base: var(--color-gray-800);
+      --color-link-hover: var(--color-gray-800);
     }
   }
 }
