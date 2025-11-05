@@ -69,6 +69,8 @@ export const ActionBanner = ({
   contentLayout,
   bgColor,
   overlayBackgroundImage,
+  buttonAlignment,
+  buttonStyleConsistency,
 }) =>
   bannerTwig({
     ...imageData.responsive_images['16x9'],
@@ -82,6 +84,8 @@ export const ActionBanner = ({
     banner__link__style: linkStyle,
     banner__content__layout: contentLayout,
     banner__content__background: bgColor,
+    banner__button__alignment: buttonAlignment,
+    banner__button__style__consistency: buttonStyleConsistency,
     banner__overlay_background_image: overlayBackgroundImage
       ? imageData.responsive_images.pattern
       : '',
@@ -98,6 +102,18 @@ ActionBanner.argTypes = {
     type: 'select',
     options: ['bottom', 'left', 'right'],
   },
+  buttonAlignment: {
+    name: 'Button Alignment',
+    type: 'select',
+    options: ['left', 'center', 'right'],
+    defaultValue: 'right',
+  },
+  buttonStyleConsistency: {
+    name: 'Button Style Consistency',
+    type: 'select',
+    options: ['mixed', 'both_primary', 'both_secondary'],
+    defaultValue: 'mixed',
+  },
   overlayBackgroundImage: {
     name: 'Overlay Background Image',
     type: 'boolean',
@@ -108,6 +124,8 @@ ActionBanner.argTypes = {
 ActionBanner.args = {
   linkStyle: 'cta',
   contentLayout: 'bottom',
+  buttonAlignment: 'right',
+  buttonStyleConsistency: 'mixed',
   overlayBackgroundImage: false,
 };
 

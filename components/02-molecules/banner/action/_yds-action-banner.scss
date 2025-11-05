@@ -353,12 +353,29 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
       margin: 0 auto;
     }
   }
+
+  // Special handling for left button alignment in bottom layout - allow wrap
+  [data-banner-content-layout='bottom'][data-banner-button-alignment='left'] & {
+    @media (min-width: $break-cta-banner) {
+      flex-wrap: wrap;
+    }
+  }
 }
 
 .cta-banner__heading {
   @include tokens.heading(h2);
 
   margin-bottom: var(--size-spacing-2);
+}
+
+.cta-banner__text {
+  // Ensure text content stays in position for bottom layout with left button alignment
+  [data-banner-content-layout='bottom'][data-banner-button-alignment='left'] & {
+    @media (min-width: $break-cta-banner) {
+      order: 1;
+      flex-shrink: 0;
+    }
+  }
 }
 
 .cta-banner__snippet {
@@ -389,6 +406,43 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   display: flex;
   flex-flow: row wrap;
   gap: var(--size-spacing-5);
+
+  // Button alignment options
+  &[data-button-alignment='left'] {
+    justify-content: flex-start;
+  }
+
+  &[data-button-alignment='center'] {
+    justify-content: center;
+  }
+
+  &[data-button-alignment='right'] {
+    justify-content: flex-end;
+  }
+
+  // Ensure proper spacing and alignment across all section layouts
+  [data-banner-content-layout='bottom'] & {
+    @media (min-width: $break-cta-banner) {
+      flex: 0 0 auto;
+    }
+
+    // For left alignment only, position button group below text content
+    &[data-button-alignment='left'] {
+      @media (min-width: $break-cta-banner) {
+        order: 2;
+        flex-basis: 100%;
+        margin-top: var(--size-spacing-4);
+      }
+    }
+
+    // For center alignment, stay inline but add proper margins for centering
+    &[data-button-alignment='center'] {
+      @media (min-width: $break-cta-banner) {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
 }
 
 /**
