@@ -1,12 +1,16 @@
 {#
  # Available Props:
  # - banner__content__layout: bottom (default), left, or right
+ # - banner__button__alignment: right (default), center, or left
+ # - banner__button__style__consistency: mixed (default), both_primary, or both_secondary
  #
  # Available Variables:
  # - banner__heading
  # - banner__snippet
  # - banner__link__content
  # - banner__link__url
+ # - banner__link__content_two
+ # - banner__link__url_two
  #
  # Available Blocks:
  # - banner__image
@@ -16,9 +20,13 @@
 {% set banner__base_class = 'cta-banner' %}
 {% set banner__content__background = banner__content__background|default('one') %}
 {% set banner__overlay_background_image = banner__overlay_background_image.image__src|default(banner__overlay_background_image) %}
+{% set banner__button__alignment = banner__button__alignment|default('right') %}
+{% set banner__button__style__consistency = banner__button__style__consistency|default('mixed') %}
 
 {% set banner__attributes = {
   'data-banner-content-layout': banner__content__layout|default('bottom'),
+  'data-banner-button-alignment': banner__button__alignment,
+  'data-banner-button-style-consistency': banner__button__style__consistency,
   'data-component-theme': banner__content__background,
   class: bem(banner__base_class),
 } %}
@@ -63,9 +71,11 @@
               } %}
             {% endif %}
           </div>
-          {# Add wrapping opening div if there are two links #}
+          {# Add wrapping opening div for buttons with alignment #}
           {% if banner__link__content and banner__link__url and banner__link__content_two and banner__link__url_two %}
-          <div {{ bem('button-group', [], banner__base_class) }}>
+          <div {{ bem('button-group', [], banner__base_class) }} data-button-alignment="{{ banner__button__alignment }}">
+          {% elseif banner__link__content and banner__link__url %}
+          <div {{ bem('button-group', [], banner__base_class) }} data-button-alignment="{{ banner__button__alignment }}">
           {% endif %}
             {% if banner__link__content and banner__link__url %}
               {% if banner__link__style == 'text-link' %}
@@ -75,11 +85,19 @@
                   link__blockname: banner__base_class,
                 } %}
               {% else %}
+                {# Determine first button style based on consistency setting #}
+                {% if banner__button__style__consistency == 'both_primary' %}
+                  {% set first_button_style = 'filled' %}
+                {% elseif banner__button__style__consistency == 'both_secondary' %}
+                  {% set first_button_style = 'outline' %}
+                {% else %}
+                  {% set first_button_style = 'filled' %}
+                {% endif %}
                 {% include "@atoms/controls/cta/yds-cta.twig" with {
                   cta__content: banner__link__content,
                   cta__href: banner__link__url,
                   cta__blockname: banner__base_class,
-                  cta__style: 'outline',
+                  cta__style: first_button_style,
                 } %}
               {% endif %}
             {% endif %}
@@ -91,16 +109,24 @@
                   link__blockname: banner__base_class,
                 } %}
               {% else %}
+                {# Determine second button style based on consistency setting #}
+                {% if banner__button__style__consistency == 'both_primary' %}
+                  {% set second_button_style = 'filled' %}
+                {% elseif banner__button__style__consistency == 'both_secondary' %}
+                  {% set second_button_style = 'outline' %}
+                {% else %}
+                  {% set second_button_style = 'outline' %}
+                {% endif %}
                 {% include "@atoms/controls/cta/yds-cta.twig" with {
                   cta__content: banner__link__content_two,
                   cta__href: banner__link__url_two,
                   cta__blockname: banner__base_class,
-                  cta__style: 'outline',
+                  cta__style: second_button_style,
                 } %}
               {% endif %}
             {% endif %}
-          {# Add wrapping closing div if there are two links #}
-          {% if banner__link__content and banner__link__url and banner__link__content_two and banner__link__url_two %}
+          {# Add wrapping closing div for button group #}
+          {% if (banner__link__content and banner__link__url and banner__link__content_two and banner__link__url_two) or (banner__link__content and banner__link__url) %}
           </div>
           {% endif %}
         </div>
