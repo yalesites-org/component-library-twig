@@ -187,7 +187,9 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     // to ensure proper contrast with themed backgrounds
     .taxonomy-list--categories,
     .taxonomy-list--tags {
-      .taxonomy-list__item {
+      .taxonomy-list__item,
+      .taxonomy-list__item--more,
+      .taxonomy-list__item--more a {
         color: var(--color-card-single-text);
       }
     }
