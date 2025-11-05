@@ -13,3 +13,17 @@
 .block-wrapper__heading {
   @include tokens.heading(h4);
 }
+
+// Padding modifiers for block wrapper
+.ys-block-wrapper--padding-default {
+  margin-block-start: var(--size-spacing-10);
+  margin-block-end: var(--size-spacing-10);
+}
+
+.ys-block-wrapper--padding-no-top {
+  margin-block-end: var(--size-spacing-10);
+}
+
+.ys-block-wrapper--padding-no-bottom {
+  margin-block-start: var(--size-spacing-10);
+}
