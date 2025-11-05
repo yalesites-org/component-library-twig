@@ -20,13 +20,6 @@ event_dates:
     original_start: 1714912200
     original_end: 1714915800
     is_past_event: true
-  - formatted_start_date: Sunday, May 10th, 2030
-    formatted_end_date: Sunday, May 10th, 2030
-    formatted_start_time: 8:30 am EDT
-    formatted_end_time: 9:30 am EDT
-    original_start: 1904483400
-    original_end: 1904487000
-    is_past_event: false
 ticket_cost: $40 pre registration, $60 at the door
 ticket_url: https://www.yale.edu
 event_meta__cta_primary__content: Event Name Website
@@ -53,11 +46,11 @@ description: '<p>Vel quasi dicta ut fugit molestiae ea sint voluptatem soluta re
 stream_url: https://www.example.com
 stream_embed_code: Watch the event
 event_featured_date:
-  formatted_start_date: Sunday, May 10th, 2030
-  formatted_end_date: Sunday, May 10th, 2030
+  formatted_start_date: Sunday, May 5th, 2024
+  formatted_end_date: Sunday, May 5th, 2024
   formatted_start_time: 8:30 am EDT
   formatted_end_time: 9:30 am EDT
-  original_start: 1904483400
-  original_end: 1904487000
-  is_past_event: false
-event_featured_index: 3
+  original_start: 1714912200
+  original_end: 1714915800
+  is_past_event: true
+event_featured_index: 2
