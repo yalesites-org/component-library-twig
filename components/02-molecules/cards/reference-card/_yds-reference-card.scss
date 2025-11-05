@@ -551,7 +551,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     svg {
       width: 1rem;
       height: 1rem;
-      color: var(--color-gray-600);
+      color: currentcolor;
     }
 
     ~ * {
