@@ -1,0 +1,83 @@
+{% set resource_meta__base_class = 'resource-meta' %}
+{% set resource_meta__modifiers = resource_meta__modifiers|default([]) %}
+
+{% set resource_meta__attributes = {
+  'data-component-width': resource_meta__width|default('site'),
+  'data-component-resource-type': resource_meta__resource_type,
+  class: bem(resource_meta__base_class, [], resource_meta__blockname, resource_meta__additional_classes),
+} %}
+
+<div {{ add_attributes(resource_meta__attributes) }} data-embedded-components>
+  <div {{ bem('inner', [], resource_meta__base_class) }}>
+  <div {{ bem('content', [], resource_meta__base_class) }}>
+    {% embed "@molecules/page-title/yds-page-title.twig" with {
+      page_title__heading: resource_meta__heading,
+      page_title__blockname: 'resource-meta',
+    }%}
+      {% block page_title__overline %}
+        {% if resource_meta__category %}
+          {% include "@atoms/typography/text/yds-text.twig" with {
+            text__blockname: resource_meta__base_class,
+            text__content: resource_meta__category,
+            text__base_class: 'category',
+          } %}
+        {% endif %}
+      {% endblock %}
+
+      {% block page_title__meta %}
+        <div {{ bem('metadata', [], resource_meta__base_class) }}>
+          {% if resource_meta__publish_date %}
+            <div {{ bem('published-on', [], resource_meta__base_class) }}>
+              {% include "@atoms/typography/text/yds-text.twig" with {
+                text__blockname: resource_meta__base_class,
+                text__content: 'Published',
+                text__base_class: 'published-on__label',
+              } %}
+              {% include "@atoms/typography/text/yds-text.twig" with {
+                text__blockname: resource_meta__base_class,
+                text__content: resource_meta__publish_date,
+                text__base_class: 'published-on__value',
+              } %}
+            </div>
+          {% endif %}
+
+          {% if resource_meta__metadata|length %}
+            {% embed "@atoms/lists/yds-list.twig" with {
+              list__modifiers: resource_meta__modifiers,
+              list__blockname: resource_meta__base_class,
+            } %}
+              {% block list__content %}
+                {% for item in resource_meta__metadata %}
+                  {% include "@molecules/meta/resource-meta/_yds-resource-meta--metadata.twig" with item %}
+                {% endfor %}
+              {% endblock %}
+            {% endembed %}
+          {% endif %}
+        </div>
+      {% endblock %}
+    {% endembed %}
+
+    {# Description for document resources - appears after metadata in left column #}
+    {% if resource_meta__resource_type == 'document' and resource_meta__description %}
+      <div {{ bem('description', [], resource_meta__base_class) }}>
+        {{ resource_meta__description }}
+      </div>
+    {% endif %}
+  </div>
+
+  {# Media section - delegate to resource type-specific templates #}
+  {% if resource_meta__resource_type == 'video' %}
+    {% include "@molecules/meta/resource-meta/_yds-resource-meta--video.twig" with {
+      video_embed__content__1: video_embed__content__1,
+    } %}
+  {% elseif resource_meta__resource_type == 'document' %}
+    {% include "@molecules/meta/resource-meta/_yds-resource-meta--document.twig" with {
+      resource_meta__document_image: resource_meta__document_image,
+      image__srcset__1: image__srcset__1,
+      image__sizes__1: image__sizes__1,
+      image__alt__1: image__alt__1,
+      image__src__1: image__src__1,
+    } %}
+  {% endif %}
+  </div>
+</div>

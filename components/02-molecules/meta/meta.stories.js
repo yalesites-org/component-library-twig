@@ -5,15 +5,30 @@ import {
 } from '../../04-page-layouts/cl-page-args';
 
 import eventLocalistData from './event-meta/event-localist.yml';
+import eventLocalistUpcomingOnly from './event-meta/event-localist--upcoming-only.yml';
+import eventLocalistPastOnly from './event-meta/event-localist--past-only.yml';
+import eventLocalistSingleDate from './event-meta/event-localist--single-date.yml';
 import basicMetaTwig from './basic-meta/yds-basic-meta.twig';
 import eventLocalistMetaTwig from './event-meta/yds-event-meta-localist.twig';
 import dateTimeTwig from '../../01-atoms/date-time/yds-date-time.twig';
 import profileMetaTwig from './profile-meta/yds-profile-meta.twig';
 import imageData from '../../01-atoms/images/image/image.yml';
+import videoEmbedData from '../../01-atoms/videos/video-embed/video-embed.yml';
 
 import './event-meta/event-meta-localist';
 
+// Resource Meta files.
+import resourceMetaData from './resource-meta/resource-meta.yml';
+import resourceMetaTwig from './resource-meta/yds-resource-meta.twig';
+
 const colorPairingsData = Object.keys(tokens['component-themes']);
+
+const eventDataVariants = {
+  'Mixed (Past & Upcoming)': eventLocalistData,
+  'Upcoming Only': eventLocalistUpcomingOnly,
+  'Past Only': eventLocalistPastOnly,
+  'Single Date': eventLocalistSingleDate,
+};
 
 /**
  * Storybook Definition.
@@ -44,13 +59,16 @@ export const Event = ({
   allDay,
   withImage,
   withCalendar,
-}) =>
-  eventLocalistMetaTwig({
+  dataVariant,
+}) => {
+  const selectedData = eventDataVariants[dataVariant];
+
+  return eventLocalistMetaTwig({
     ...imageData.responsive_images['3x2'],
     event_title__heading: pageTitle,
-    event_dates: eventLocalistData.event_dates,
-    formatted_start_date: eventLocalistData.formatted_start_date,
-    formatted_end_date: eventLocalistData.formatted_end_date,
+    event_dates: selectedData.event_dates,
+    formatted_start_date: selectedData.formatted_start_date,
+    formatted_end_date: selectedData.formatted_end_date,
     event_meta__format: format,
     event_meta__address: address,
     event_meta__cta_primary__content: ctaText,
@@ -61,9 +79,16 @@ export const Event = ({
     event_meta__with_calendar: withCalendar == null ? true : !!withCalendar,
     event_meta__image: withImage ? 'true' : 'false',
     event_meta__all_day: allDay,
-    ...eventLocalistData,
+    ...selectedData,
   });
+};
 Event.argTypes = {
+  dataVariant: {
+    name: 'Event Date Scenario',
+    control: { type: 'select' },
+    options: Object.keys(eventDataVariants),
+    defaultValue: 'Mixed (Past & Upcoming)',
+  },
   withCalendar: {
     name: 'With Add to Calendar button',
     type: 'boolean',
@@ -71,7 +96,10 @@ Event.argTypes = {
   },
   ...eventLocalistArgTypes,
 };
-Event.args = eventLocalistArgs;
+Event.args = {
+  ...eventLocalistArgs,
+  dataVariant: 'Mixed (Past & Upcoming)',
+};
 
 export const Profile = ({
   heading,
@@ -161,4 +189,64 @@ Profile.args = {
   profileImageOrientation: 'landscape',
   profileImageAlignment: 'right',
   profileImageStyle: 'inline',
+};
+
+export const Resource = ({
+  heading,
+  category,
+  resourceType,
+  publishDate,
+  description,
+}) =>
+  resourceMetaTwig({
+    resource_meta__heading: heading,
+    resource_meta__category: category,
+    resource_meta__publish_date_label: 'Published On',
+    resource_meta__publish_date: publishDate,
+    resource_meta__metadata: resourceMetaData.resource_meta__metadata,
+    resource_meta__resource_type: resourceType,
+    resource_meta__download_label: 'Download',
+    resource_meta__download_aria_label: 'Download file',
+    resource_meta__download_url: '#.pdf',
+    resource_meta__description: description,
+    image__srcset__1: imageData.responsive_images['2x3'].image__srcset,
+    image__sizes__1: imageData.responsive_images['2x3'].image__sizes,
+    image__alt__1: imageData.responsive_images['2x3'].image__alt,
+    image__src__1: imageData.responsive_images['2x3'].image__src,
+    video_embed__content__1: videoEmbedData.video_embed__content,
+  });
+Resource.argTypes = {
+  heading: {
+    name: 'Heading',
+    type: 'string',
+  },
+  category: {
+    name: 'Category',
+    type: 'string',
+  },
+  resourceType: {
+    name: 'Resource Type',
+    type: 'select',
+    options: {
+      Video: 'video',
+      Document: 'document',
+    },
+    defaultValue: 'video',
+  },
+  publishDate: {
+    name: 'Publish Date',
+    type: 'string',
+  },
+  description: {
+    name: 'Description',
+    type: 'string',
+  },
+};
+Resource.args = {
+  heading: 'Resource Title',
+  category: 'Video',
+  resourceType: 'video',
+  publishDate: 'July 1, 2025',
+  description:
+    'This is a sample resource description that will appear below the media content. It can contain <strong>HTML markup</strong> and provides context about the resource.',
 };

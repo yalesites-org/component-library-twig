@@ -104,7 +104,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     --color-banner-text: var(--color-slot-eight);
     --color-banner-heading: var(--color-slot-eight);
     --color-banner-action: var(--color-slot-eight);
-    --color-banner-action-secondary: var(--color-one);
+    --color-banner-action-secondary: var(--color-slot-one);
     --color-link-base: var(--color-banner-heading);
     --color-link-hover: var(--color-banner-heading);
     --color-link-visited-base: var(--color-link-visited-light);
@@ -225,6 +225,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
 
   > * {
     position: relative;
+    z-index: 2;
   }
 
   [data-banner-content-layout='bottom'] & {
@@ -283,6 +284,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     width: 100%;
     content: '';
     background-color: var(--color-banner-background);
+    z-index: 1;
 
     @media (min-width: $break-cta-banner) {
       opacity: 0.85;

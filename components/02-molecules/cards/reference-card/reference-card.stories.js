@@ -3,6 +3,7 @@ import referenceCardTwig from './examples/_card--examples.twig';
 import referenceCardData from './examples/post-card.yml';
 import referenceProfileCardData from './examples/profile-card.yml';
 import referencePageCardData from './examples/page-card.yml';
+import referenceResourceData from './examples/resource-card.yml';
 import imageData from '../../../01-atoms/images/image/image.yml';
 
 /**
@@ -334,4 +335,59 @@ PageCard.args = {
   showTags: false,
   showThumbnail: true,
   showPronouns: false,
+};
+
+export const ResourceCard = ({
+  date,
+  eyebrow,
+  heading,
+  pronouns,
+  snippet,
+  collectionType,
+  featured,
+  withImage,
+  showCategories,
+  showEyebrow,
+  showTags,
+  showPronouns,
+  overlayText,
+}) => `
+<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
+  <div class='card-collection__inner'>
+    <ul class='card-collection__cards'>
+      ${referenceCardTwig({
+        card_collection__source_type: 'resource',
+        card_collection__type: collectionType,
+        ...imageData.responsive_images['3x2'],
+        reference_card__date: date,
+        reference_card__eyebrow: eyebrow,
+        reference_card__heading: heading,
+        reference_card__pronouns: pronouns,
+        reference_card__snippet: snippet,
+        reference_card__featured: featured ? 'true' : 'false',
+        reference_card__image: withImage ? 'true' : 'false',
+        reference_card__url: referenceResourceData.reference_card__url,
+        show_categories: showCategories ? 'true' : 'false',
+        show_eyebrow: showEyebrow ? 'true' : 'false',
+        show_tags: showTags ? 'true' : 'false',
+        show_pronouns: showPronouns ? 'true' : 'false',
+        reference_card__categories:
+          referenceResourceData.reference_card__categories,
+        reference_card__tags: referenceResourceData.reference_card__tags,
+        reference_card__overlay: overlayText,
+      })}
+    </ul>
+  </div>
+</div>
+`;
+ResourceCard.argTypes = {
+  date: {
+    name: 'Date',
+    type: 'string',
+    defaultValue: referenceResourceData.reference_card__date,
+  },
+};
+ResourceCard.args = {
+  showCategories: true,
+  date: referenceResourceData.reference_card__date,
 };
