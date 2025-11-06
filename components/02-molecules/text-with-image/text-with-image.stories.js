@@ -7,8 +7,6 @@ import textWithImageTwig from './yds-text-with-image.twig';
 import imageData from '../../01-atoms/images/image/image.yml';
 import textWithImageData from './text-with-image.yml';
 
-import '../content-spotlight-portrait/content-spotlights';
-
 const colorPairingsData = Object.keys(tokens['component-themes']);
 /**
  * Storybook Definition.

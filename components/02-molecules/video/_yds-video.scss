@@ -35,3 +35,35 @@
     width: 100%;
   }
 }
+
+// Layout Builder specific video container protection and drag-and-drop fixes
+.layout-builder .video-container {
+  // Prevent external scripts from interfering with video content
+  &[data-video-isolated='true'] {
+    // Ensure container is always draggable, not the video inside
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 11;
+      pointer-events: auto;
+      background: transparent;
+    }
+  }
+
+  .video-content-wrapper {
+    // Isolate the content within the container
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
+
+    // Allow video content to be visible
+    overflow: visible;
+
+    // Ensure video content doesn't interfere with drag-and-drop in Layout Builder
+    pointer-events: none;
+  }
+}
