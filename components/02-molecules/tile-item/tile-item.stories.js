@@ -1,6 +1,7 @@
 import tileItemTwig from './yds-tile-item.twig';
-
 import tileItemData from './tile-item.yml';
+
+import './yds-tile-item';
 
 // Image atom component - generic images for demo
 import imageData from '../../01-atoms/images/image/image.yml';
