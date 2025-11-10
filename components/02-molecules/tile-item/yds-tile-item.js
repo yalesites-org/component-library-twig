@@ -10,7 +10,8 @@ Drupal.behaviors.tileItem = {
 
     tileItems.forEach((tileItem) => {
       const tile = tileItem;
-      const link = tile.querySelector('.tile__item__heading-link');
+      // Find any link element within the tile (heading-link, icon-link, or fallback link)
+      const link = tile.querySelector('a');
 
       // If the tile has a link, make the whole tile clickable. However, allow
       // users to select text by only triggering the link if the "click up" is

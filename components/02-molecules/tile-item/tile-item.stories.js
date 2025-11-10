@@ -139,41 +139,109 @@ export const TileItem = ({
 export const ClickableTileExamples = () => `
   <div class="wrap-for-global-theme" data-global-theme="one">
     <h2>Clickable Tile Examples (YSP-1009)</h2>
-    <p>These examples demonstrate the clickable tile functionality. Tiles with URLs are fully clickable.</p>
+    <p>These examples demonstrate accessible clickable tile functionality across all presentation styles.</p>
 
+    <h3>Heading Presentation Style</h3>
     <div class="tiles" data-component-grid-count='four' data-component-width="site">
       <div class='tiles__inner'>
         <ul class='tiles__wrap'>
           ${tileItemTwig({
-            tile__item__heading: 'Heading + Link',
+            tile__item__heading: 'Heading + Content + Link',
+            tile__item__content: 'Additional content text',
             tile__item__content_link: 'https://www.yale.edu',
             tile__item__presentation_style: 'heading',
-            tile__item__alignment: 'left',
             tile__item__theme: 'one',
-            tile__item__bg_image: 'false',
           })}
           ${tileItemTwig({
-            tile__item__content: 'Content with link - entire tile is clickable',
+            tile__item__heading: 'Heading + Link (no content)',
             tile__item__content_link: 'https://www.yale.edu',
-            tile__item__presentation_style: 'text-only',
-            tile__item__alignment: 'left',
-            tile__item__theme: 'two',
-            tile__item__bg_image: 'false',
-          })}
-          ${tileItemTwig({
-            tile__item__content_link: 'https://www.yale.edu',
-            tile__item__presentation_style: 'text-only',
-            tile__item__alignment: 'left',
-            tile__item__theme: 'three',
-            tile__item__bg_image: 'false',
-          })}
-          ${tileItemTwig({
-            tile__item__heading: 'No Link',
-            tile__item__content: 'This tile has no link and is not clickable',
             tile__item__presentation_style: 'heading',
-            tile__item__alignment: 'left',
+            tile__item__theme: 'two',
+          })}
+          ${tileItemTwig({
+            tile__item__heading: 'Heading Only (no link)',
+            tile__item__content: 'Content without a link',
+            tile__item__presentation_style: 'heading',
+            tile__item__theme: 'three',
+          })}
+        </ul>
+      </div>
+    </div>
+
+    <h3>Text-Only Presentation Style</h3>
+    <div class="tiles" data-component-grid-count='four' data-component-width="site">
+      <div class='tiles__inner'>
+        <ul class='tiles__wrap'>
+          ${tileItemTwig({
+            tile__item__heading: 'Heading renders as link',
+            tile__item__content: 'Content text here',
+            tile__item__content_link: 'https://www.yale.edu',
+            tile__item__presentation_style: 'text-only',
+            tile__item__theme: 'one',
+          })}
+          ${tileItemTwig({
+            tile__item__content: 'Content only with link',
+            tile__item__content_link: 'https://www.yale.edu',
+            tile__item__presentation_style: 'text-only',
+            tile__item__theme: 'two',
+          })}
+          ${tileItemTwig({
+            tile__item__content_link: 'https://www.yale.edu',
+            tile__item__presentation_style: 'text-only',
+            tile__item__theme: 'three',
+          })}
+        </ul>
+      </div>
+    </div>
+
+    <h3>Icon Presentation Style</h3>
+    <div class="tiles" data-component-grid-count='four' data-component-width="site">
+      <div class='tiles__inner'>
+        <ul class='tiles__wrap'>
+          ${tileItemTwig({
+            tile__item__heading: 'Icon + Heading + Link',
+            tile__item__content: 'Content text',
+            tile__item__content_link: 'https://www.yale.edu',
+            tile__item__presentation_style: 'icon',
+            tile__item__icon_name: 'graduation-cap-solid',
+            tile__item__theme: 'one',
+          })}
+          ${tileItemTwig({
+            tile__item__heading: 'Icon Label',
+            tile__item__content_link: 'https://www.yale.edu',
+            tile__item__presentation_style: 'icon',
+            tile__item__icon_name: 'book-solid',
+            tile__item__theme: 'two',
+          })}
+          ${tileItemTwig({
+            tile__item__content_link: 'https://www.yale.edu',
+            tile__item__presentation_style: 'icon',
+            tile__item__icon_name: 'flask-solid',
+            tile__item__theme: 'three',
+          })}
+          ${tileItemTwig({
+            tile__item__heading: 'Icon No Link',
+            tile__item__content: 'No URL provided',
+            tile__item__presentation_style: 'icon',
+            tile__item__icon_name: 'building-columns-solid',
             tile__item__theme: 'four',
-            tile__item__bg_image: 'false',
+          })}
+        </ul>
+      </div>
+    </div>
+
+    <h3>Edge Cases</h3>
+    <div class="tiles" data-component-grid-count='four' data-component-width="site">
+      <div class='tiles__inner'>
+        <ul class='tiles__wrap'>
+          ${tileItemTwig({
+            tile__item__content_link: 'https://www.yale.edu',
+            tile__item__link_text: 'Custom Link Text',
+            tile__item__theme: 'one',
+          })}
+          ${tileItemTwig({
+            tile__item__heading: 'Empty tile',
+            tile__item__theme: 'two',
           })}
         </ul>
       </div>
