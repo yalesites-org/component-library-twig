@@ -10,7 +10,7 @@ $global-link-grid-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .link-grid {
-  @include tokens.spacing-page-section($banner-spacing: true);
+  @include tokens.spacing-page-section;
 
   // Global themes: set color slots for each theme
   // This establishes `--color-slot-` variables name-spaced to the selector
