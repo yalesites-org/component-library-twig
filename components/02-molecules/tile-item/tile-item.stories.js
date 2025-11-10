@@ -135,3 +135,48 @@ export const TileItem = ({
     </div>
   </div>
 `;
+
+export const ClickableTileExamples = () => `
+  <div class="wrap-for-global-theme" data-global-theme="one">
+    <h2>Clickable Tile Examples (YSP-1009)</h2>
+    <p>These examples demonstrate the clickable tile functionality. Tiles with URLs are fully clickable.</p>
+
+    <div class="tiles" data-component-grid-count='four' data-component-width="site">
+      <div class='tiles__inner'>
+        <ul class='tiles__wrap'>
+          ${tileItemTwig({
+            tile__item__heading: 'Heading + Link',
+            tile__item__content_link: 'https://www.yale.edu',
+            tile__item__presentation_style: 'heading',
+            tile__item__alignment: 'left',
+            tile__item__theme: 'one',
+            tile__item__bg_image: 'false',
+          })}
+          ${tileItemTwig({
+            tile__item__content: 'Content with link - entire tile is clickable',
+            tile__item__content_link: 'https://www.yale.edu',
+            tile__item__presentation_style: 'text-only',
+            tile__item__alignment: 'left',
+            tile__item__theme: 'two',
+            tile__item__bg_image: 'false',
+          })}
+          ${tileItemTwig({
+            tile__item__content_link: 'https://www.yale.edu',
+            tile__item__presentation_style: 'text-only',
+            tile__item__alignment: 'left',
+            tile__item__theme: 'three',
+            tile__item__bg_image: 'false',
+          })}
+          ${tileItemTwig({
+            tile__item__heading: 'No Link',
+            tile__item__content: 'This tile has no link and is not clickable',
+            tile__item__presentation_style: 'heading',
+            tile__item__alignment: 'left',
+            tile__item__theme: 'four',
+            tile__item__bg_image: 'false',
+          })}
+        </ul>
+      </div>
+    </div>
+  </div>
+`;

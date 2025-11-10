@@ -126,6 +126,11 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-tile-animation-border: var(--color-slot-three);
   }
 
+  // Apply clickable component styles when tile has a link
+  &[data-component-linked-tile='true'] {
+    @include atoms.clickable-component-heading-link;
+  }
+
   &__inner {
     display: flex;
     flex-flow: column nowrap;

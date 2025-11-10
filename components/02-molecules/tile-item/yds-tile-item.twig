@@ -15,7 +15,7 @@
 {# If tile__item__attributes is not defined, set it to an empty object by default #}
 {% set tile__item__attributes = tile__item__attributes|default({}) %}
 
-{% if tile__item__content_link and tile__item__content %}
+{% if tile__item__content_link %}
 {% set tile__item__attributes = tile__item__attributes|merge({
   'data-component-linked-tile': 'true',
 }) %}
@@ -45,21 +45,26 @@
 			{% endblock %}
 		{% endif %}	
 		{% if tile__item__presentation_style == 'heading' %}
-			<div {{ bem('heading', [], tile__item__base_class) }}>
-				{{ tile__item__heading }}
-			</div>
-		{% endif %}
-		{% if tile__item__content_link and tile__item__content %}
-			{% include "@atoms/controls/text-link/yds-text-link.twig" with {
-				link__content: tile__item__content,
-				link__url: tile__item__content_link,
-				link__blockname: tile__item__base_class,
-				link__base_class: 'link',
+			{% include "@atoms/typography/headings/yds-heading.twig" with {
+				heading__level: '3',
+				heading__blockname: tile__item__base_class,
+				heading: tile__item__heading,
+				heading__url: tile__item__content_link,
+				heading__link__base_class: 'heading-link',
 			} %}
-		{% elseif tile__item__content %}
-      <div {{ bem('content', [], tile__item__base_class) }}>
-				{{ tile__item__content }}
-			</div>
+		{% endif %}
+		{% if tile__item__content %}
+			{% if tile__item__content_link %}
+				{# When tile is linked, render content without nested link for accessibility #}
+				<div {{ bem('content', [], tile__item__base_class) }}>
+					{{ tile__item__content }}
+				</div>
+			{% else %}
+				{# When tile has no link, content can be rendered as-is #}
+				<div {{ bem('content', [], tile__item__base_class) }}>
+					{{ tile__item__content }}
+				</div>
+			{% endif %}
 		{% endif %}
     {% if tile__item__bg_image == 'true' %}
       <div {{ bem('image', [], tile__item__base_class) }}>
