@@ -4,6 +4,7 @@ import referenceCardData from './examples/post-card.yml';
 import referenceProfileCardData from './examples/profile-card.yml';
 import referencePageCardData from './examples/page-card.yml';
 import referenceResourceData from './examples/resource-card.yml';
+import referenceEventData from './examples/event-card.yml';
 import imageData from '../../../01-atoms/images/image/image.yml';
 import { transformToObjectArray } from '../../../utility';
 
@@ -99,7 +100,6 @@ export default {
     showCategories: false,
     showTags: false,
     showPronouns: false,
-    date: referenceCardData.reference_card__date,
     componentTheme: 'one',
   },
 };
@@ -182,9 +182,30 @@ export const EventCard = ({
   showTags,
   overlayText,
   componentTheme,
+  date,
 }) => {
   const categoriesArray = transformToObjectArray(categories);
   const tagsArray = transformToObjectArray(tags);
+
+  // Handle date - should be in YYYY-MM-DD HH:MM format from string input
+  let eventHasPassed = false;
+  let formattedDate = date;
+
+  if (date) {
+    // If date is a number (cached timestamp from old date picker), use default instead
+    if (typeof date === 'number') {
+      formattedDate = referenceEventData.reference_card__date;
+    }
+
+    // Convert "YYYY-MM-DD HH:MM" to ISO format for Date parsing
+    const eventDateObj = new Date(formattedDate.replace(' ', 'T'));
+    const now = new Date();
+
+    // Check if date is valid and in the past
+    if (!Number.isNaN(eventDateObj.getTime())) {
+      eventHasPassed = eventDateObj < now;
+    }
+  }
 
   return `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
@@ -195,6 +216,7 @@ export const EventCard = ({
         card_collection__type: collectionType,
         ...imageData.responsive_images['3x2'],
         format,
+        reference_card__date: formattedDate,
         reference_card__heading: heading,
         reference_card__prefix: headingPrefix,
         reference_card__snippet: snippet,
@@ -212,6 +234,7 @@ export const EventCard = ({
         reference_card__tags: tagsArray,
         show_tags: showTags,
         reference_card__overlay: overlayText,
+        event_has_passed: eventHasPassed ? 'true' : 'false',
       })}
     </ul>
   </div>
@@ -255,6 +278,15 @@ EventCard.argTypes = {
     type: 'boolean',
     defaultValue: false,
   },
+  date: {
+    name: 'Event Date',
+    type: 'string',
+    defaultValue: referenceEventData.reference_card__date,
+    description: 'Format: YYYY-MM-DD HH:MM (e.g., 2022-03-30 13:00)',
+  },
+};
+EventCard.args = {
+  date: referenceEventData.reference_card__date,
 };
 
 export const ProfileCard = ({
@@ -377,6 +409,7 @@ PageCard.argTypes = {
 PageCard.args = {
   heading: referencePageCardData.reference_card__heading,
   snippet: referencePageCardData.reference_card__snippet,
+  date: referencePageCardData.reference_card__date,
   collectionType: 'grid',
   featured: true,
   withImage: true,
