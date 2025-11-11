@@ -641,6 +641,22 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
     font-weight: var(--font-weights-yalenew-bold);
   }
+
+  // Override visited link colors for component themes with light backgrounds
+  // to ensure WCAG AA contrast compliance
+  [data-collection-type='single'] .reference-card[data-component-theme='two'] &,
+  [data-collection-type='single']
+    .reference-card[data-component-theme='three']
+    &,
+  [data-collection-type='single']
+    .reference-card[data-component-theme='four']
+    &,
+  [data-collection-type='single']
+    .reference-card[data-component-theme='five']
+    & {
+    --color-link-visited-base: var(--color-card-single-text);
+    --color-link-visited-hover: var(--color-card-single-text);
+  }
 }
 
 .reference-card__subheading {
