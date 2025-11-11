@@ -85,6 +85,7 @@ export default {
       name: 'Component Theme',
       type: 'select',
       options: ['one', 'two', 'three', 'four', 'five'],
+      if: { arg: 'collectionType', eq: 'single' },
     },
   },
   args: {
@@ -234,7 +235,7 @@ export const EventCard = ({
         reference_card__tags: tagsArray,
         show_tags: showTags,
         reference_card__overlay: overlayText,
-        event_has_passed: eventHasPassed ? 'true' : 'false',
+        event_has_passed: eventHasPassed,
       })}
     </ul>
   </div>
@@ -287,6 +288,8 @@ EventCard.argTypes = {
 };
 EventCard.args = {
   date: referenceEventData.reference_card__date,
+  secondaryCTAContent: 'Add to Calendar',
+  secondaryCTAURL: 'https://yale.edu',
 };
 
 export const ProfileCard = ({
