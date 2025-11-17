@@ -11,6 +11,18 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
   @include tokens.heading(h3, 'book');
 }
 
+.event-meta__day {
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-3);
+
+  .past-event-icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+}
+
 .event-meta__details {
   display: flex;
   flex-direction: column;
@@ -339,6 +351,12 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
     align-items: center;
     gap: var(--size-spacing-3);
   }
+}
+
+.event-meta__day .past-event-icon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-basic-brown-gray);
 }
 
 // directions

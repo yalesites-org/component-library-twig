@@ -9,6 +9,14 @@
 {% if event_meta__date_start %}
 
   {% set event_meta__day %}
+    {% if event_has_passed %}
+      <span class="past-event-icon">
+        {% include "@atoms/images/icons/_yds-icon.twig" with {
+          icon__name: 'clock-rotate-left',
+          icon__decorative: true,
+        } %}
+      </span>
+    {% endif %}
     {% include "@atoms/date-time/yds-date-time.twig" with {
       date_time__start: event_meta__date_start,
       date_time__end: event_meta__date_end,
@@ -35,8 +43,6 @@
 {# Set the event status based on event_has_passed variable #}
 {% set event_status = event_has_passed ? 'passed' : 'current' %}
 
-{# Set the event title prefix based on event status #}
-{% set event_title__prefix = event_has_passed ? 'Past Event: ' : '' %}
 
 <div {{ bem(event_meta__base_class) }} data-event-status="{{ event_status }}">
   {# To get the event_title__prefix to wire properly to the page_title__prefix
@@ -47,7 +53,6 @@
   {% embed "@molecules/page-title/yds-page-title.twig" with {
     page_title__heading: event_title__heading,
     page_title__width: 'content',
-    page_title__prefix: event_title__prefix,
   }%}
     {% block page_title__meta %}
       {% if event_has_passed %}
