@@ -59,7 +59,7 @@
 {% set event_status = event_has_passed ? 'passed' : 'current' %}
 
 {# Set the event title prefix based on event status #}
-{% set event_title__prefix = event_has_passed ? 'Past Event: ' : '' %}
+{% set event_title__prefix = '' %}
 
 {% set latLong = place.latitude ~ ',' ~ place.longitude %}
 {% set get_directions__url = place ? 'https://www.google.com/maps/dir/Current+Location/' ~ latLong : '' %}
@@ -146,7 +146,6 @@
   {% embed "@molecules/page-title/yds-page-title.twig" with {
     page_title__heading: event_title__heading,
     page_title__width: 'content',
-    page_title__prefix: event_title__prefix,
     page_title__variation: 'event',
   }%}
 
@@ -189,6 +188,16 @@
           {# Fallback to old way of rendering if not passed #}
           {% set event_featured_date = event_featured_date|default(event_dates.0) %}
 
+          <div {{ bem('day', [], event_meta__base_class) }}>
+            {% if event_has_passed %}
+              <span class="past-event-icon">
+                {% include "@atoms/images/icons/_yds-icon.twig" with {
+                  icon__name: 'clock-rotate-left',
+                  icon__decorative: true,
+                } %}
+              </span>
+            {% endif %}
+
           {% if event_featured_date.formatted_start_date == event_featured_date.formatted_end_date %}
           {#Replace am to a.m. and pm to p.m.#}
 
@@ -199,6 +208,7 @@
             {{ em_dash }}
             {{ event_featured_date.original_end|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
           {% endif %}
+          </div>
         </div>
       {% endif %}
     {% endblock %}
