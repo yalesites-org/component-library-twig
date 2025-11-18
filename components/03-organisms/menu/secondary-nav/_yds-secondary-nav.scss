@@ -349,6 +349,19 @@ $secondary-menu-sub-max-width: 19rem;
         var(--color-navigation-border);
     }
 
+    // Handle directional positioning based on viewport overflow detection
+    &[data-menu-direction='left'] {
+      left: auto;
+      right: 0;
+    }
+
+    &[data-menu-direction='right'] {
+      // Default positioning, kept for clarity
+      left: 0;
+      right: auto;
+    }
+
+    // Fallback for last child when JavaScript hasn't loaded
     [data-menu-variation='basic'] :last-child > & {
       right: 0;
     }
