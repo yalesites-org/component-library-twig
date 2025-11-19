@@ -49,6 +49,7 @@
         {% for card in card_collection__cards %}
           {% include "@molecules/cards/reference-card/examples/_card--examples.twig" with {
             reference_card__image: card_collection__with_images,
+            reference_card__component_theme: card_collection__component_theme|default('one'),
           } %}
         {% endfor %}
       {% endblock %}

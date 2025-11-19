@@ -4,7 +4,9 @@ import referenceCardData from './examples/post-card.yml';
 import referenceProfileCardData from './examples/profile-card.yml';
 import referencePageCardData from './examples/page-card.yml';
 import referenceResourceData from './examples/resource-card.yml';
+import referenceEventData from './examples/event-card.yml';
 import imageData from '../../../01-atoms/images/image/image.yml';
+import { transformToObjectArray } from '../../../utility';
 
 /**
  * Storybook Definition.
@@ -46,16 +48,29 @@ export default {
       name: 'Show Categories/Affiliations',
       type: 'boolean',
     },
+    categories: {
+      name: 'Categories/Affiliations',
+      type: 'string',
+      description:
+        'Comma-separated list (e.g., "Computer Science, Business, Law")',
+      if: { arg: 'showCategories' },
+    },
+    showTags: {
+      name: 'Show Tags',
+      type: 'boolean',
+    },
+    tags: {
+      name: 'Tags',
+      type: 'string',
+      description: 'Comma-separated list (e.g., "Public Event, Campus Event")',
+      if: { arg: 'showTags' },
+    },
     showEyebrow: {
       name: 'Show Eyebrow',
       type: 'boolean',
     },
     showPronouns: {
       name: 'Show Pronouns',
-      type: 'boolean',
-    },
-    showTags: {
-      name: 'Show Tags',
       type: 'boolean',
     },
     withImage: {
@@ -66,12 +81,18 @@ export default {
       name: 'Overlay Text',
       type: 'string',
     },
+    componentTheme: {
+      name: 'Component Theme',
+      type: 'select',
+      options: ['one', 'two', 'three', 'four', 'five'],
+      if: { arg: 'collectionType', eq: 'single' },
+    },
   },
   args: {
     heading: referenceCardData.reference_card__heading,
     snippet: referenceCardData.reference_card__snippet,
-    categories: referenceCardData.reference_card__categories,
-    tags: referenceCardData.reference_card__tags,
+    categories: 'Computer Science, Business, Law',
+    tags: 'Public Event, Campus Event, Exhibitions, Family Programs, Readings',
     pronouns: referenceProfileCardData.reference_card__pronouns,
     collectionType: 'grid',
     featured: true,
@@ -80,7 +101,7 @@ export default {
     showCategories: false,
     showTags: false,
     showPronouns: false,
-    date: referenceCardData.reference_card__date,
+    componentTheme: 'one',
   },
 };
 
@@ -90,6 +111,8 @@ export const PostCard = ({
   heading,
   pronouns,
   snippet,
+  categories,
+  tags,
   collectionType,
   featured,
   withImage,
@@ -98,7 +121,12 @@ export const PostCard = ({
   showTags,
   showPronouns,
   overlayText,
-}) => `
+  componentTheme,
+}) => {
+  const categoriesArray = transformToObjectArray(categories);
+  const tagsArray = transformToObjectArray(tags);
+
+  return `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
@@ -114,19 +142,20 @@ export const PostCard = ({
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referenceCardData.reference_card__url,
+        reference_card__component_theme: componentTheme,
         show_categories: showCategories ? 'true' : 'false',
         show_eyebrow: showEyebrow ? 'true' : 'false',
         show_tags: showTags ? 'true' : 'false',
         show_pronouns: showPronouns ? 'true' : 'false',
-        reference_card__categories:
-          referenceCardData.reference_card__categories,
-        reference_card__tags: referenceCardData.reference_card__tags,
+        reference_card__categories: categoriesArray,
+        reference_card__tags: tagsArray,
         reference_card__overlay: overlayText,
       })}
     </ul>
   </div>
 </div>
 `;
+};
 PostCard.argTypes = {
   date: {
     name: 'Date',
@@ -139,6 +168,8 @@ export const EventCard = ({
   format,
   heading,
   snippet,
+  categories,
+  tags,
   collectionType,
   featured,
   withImage,
@@ -151,7 +182,33 @@ export const EventCard = ({
   showCategories,
   showTags,
   overlayText,
-}) => `
+  componentTheme,
+  date,
+}) => {
+  const categoriesArray = transformToObjectArray(categories);
+  const tagsArray = transformToObjectArray(tags);
+
+  // Handle date - should be in YYYY-MM-DD HH:MM format from string input
+  let eventHasPassed = false;
+  let formattedDate = date;
+
+  if (date) {
+    // If date is a number (cached timestamp from old date picker), use default instead
+    if (typeof date === 'number') {
+      formattedDate = referenceEventData.reference_card__date;
+    }
+
+    // Convert "YYYY-MM-DD HH:MM" to ISO format for Date parsing
+    const eventDateObj = new Date(formattedDate.replace(' ', 'T'));
+    const now = new Date();
+
+    // Check if date is valid and in the past
+    if (!Number.isNaN(eventDateObj.getTime())) {
+      eventHasPassed = eventDateObj < now;
+    }
+  }
+
+  return `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
@@ -160,28 +217,31 @@ export const EventCard = ({
         card_collection__type: collectionType,
         ...imageData.responsive_images['3x2'],
         format,
+        reference_card__date: formattedDate,
         reference_card__heading: heading,
         reference_card__prefix: headingPrefix,
         reference_card__snippet: snippet,
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referenceCardData.reference_card__url,
+        reference_card__component_theme: componentTheme,
         reference_card__cta_primary__href: primaryCTAURL,
         reference_card__cta_primary__content: primaryCTAContent,
         reference_card__cta_secondary__href: secondaryCTAURL,
         reference_card__cta_secondary__content: secondaryCTAContent,
         multi_day_event: multiDayEvent,
-        reference_card__categories:
-          referenceCardData.reference_card__categories,
+        reference_card__categories: categoriesArray,
         show_categories: showCategories,
-        reference_card__tags: referenceCardData.reference_card__tags,
+        reference_card__tags: tagsArray,
         show_tags: showTags,
         reference_card__overlay: overlayText,
+        event_has_passed: eventHasPassed,
       })}
     </ul>
   </div>
 </div>
 `;
+};
 EventCard.argTypes = {
   format: {
     name: 'Format',
@@ -219,9 +279,22 @@ EventCard.argTypes = {
     type: 'boolean',
     defaultValue: false,
   },
+  date: {
+    name: 'Event Date',
+    type: 'string',
+    defaultValue: referenceEventData.reference_card__date,
+    description: 'Format: YYYY-MM-DD HH:MM (e.g., 2022-03-30 13:00)',
+  },
+};
+EventCard.args = {
+  date: referenceEventData.reference_card__date,
+  secondaryCTAContent: 'Add to Calendar',
+  secondaryCTAURL: 'https://yale.edu',
 };
 
 export const ProfileCard = ({
+  categories,
+  tags,
   collectionType,
   featured,
   withImage,
@@ -229,7 +302,12 @@ export const ProfileCard = ({
   showPronouns,
   showTags,
   overlayText,
-}) => `
+  componentTheme,
+}) => {
+  const categoriesArray = transformToObjectArray(categories);
+  const tagsArray = transformToObjectArray(tags);
+
+  return `
 <div class='card-collection' data-component-width='site' data-collection-source='profile' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
@@ -248,11 +326,11 @@ export const ProfileCard = ({
         reference_card__snippet:
           referenceProfileCardData.reference_card__snippet,
         reference_card__url: referenceProfileCardData.reference_card__url,
-        reference_card__categories:
-          referenceProfileCardData.reference_card__categories,
+        reference_card__component_theme: componentTheme,
+        reference_card__categories: categoriesArray,
         show_categories: showCategories,
         show_pronouns: showPronouns,
-        reference_card__tags: referenceProfileCardData.reference_card__tags,
+        reference_card__tags: tagsArray,
         show_tags: showTags,
         reference_card__overlay: overlayText,
       })}
@@ -260,6 +338,7 @@ export const ProfileCard = ({
   </div>
 </div>
 `;
+};
 
 ProfileCard.argTypes = {
   showPronouns: {
@@ -275,6 +354,8 @@ export const PageCard = ({
   heading,
   pronouns,
   snippet,
+  categories,
+  tags,
   collectionType,
   featured,
   withImage,
@@ -284,7 +365,12 @@ export const PageCard = ({
   showThumbnail,
   showPronouns,
   overlayText,
-}) => `
+  componentTheme,
+}) => {
+  const categoriesArray = transformToObjectArray(categories);
+  const tagsArray = transformToObjectArray(tags);
+
+  return `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
@@ -300,20 +386,21 @@ export const PageCard = ({
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referencePageCardData.reference_card__url,
+        reference_card__component_theme: componentTheme,
         show_categories: showCategories ? 'true' : 'false',
         show_eyebrow: showEyebrow ? 'true' : 'false',
         show_tags: showTags ? 'true' : 'false',
         show_thumbnail: showThumbnail ? 'true' : 'false',
         show_pronouns: showPronouns ? 'true' : 'false',
-        reference_card__categories:
-          referencePageCardData.reference_card__categories,
-        reference_card__tags: referencePageCardData.reference_card__tags,
+        reference_card__categories: categoriesArray,
+        reference_card__tags: tagsArray,
         reference_card__overlay: overlayText,
       })}
     </ul>
   </div>
 </div>
 `;
+};
 PageCard.argTypes = {
   date: {
     name: 'Date',
@@ -325,8 +412,7 @@ PageCard.argTypes = {
 PageCard.args = {
   heading: referencePageCardData.reference_card__heading,
   snippet: referencePageCardData.reference_card__snippet,
-  categories: referencePageCardData.reference_card__categories,
-  tags: referencePageCardData.reference_card__tags,
+  date: referencePageCardData.reference_card__date,
   collectionType: 'grid',
   featured: true,
   withImage: true,
@@ -343,6 +429,8 @@ export const ResourceCard = ({
   heading,
   pronouns,
   snippet,
+  categories,
+  tags,
   collectionType,
   featured,
   withImage,
@@ -351,7 +439,12 @@ export const ResourceCard = ({
   showTags,
   showPronouns,
   overlayText,
-}) => `
+  componentTheme,
+}) => {
+  const categoriesArray = transformToObjectArray(categories);
+  const tagsArray = transformToObjectArray(tags);
+
+  return `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
@@ -367,19 +460,20 @@ export const ResourceCard = ({
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referenceResourceData.reference_card__url,
+        reference_card__component_theme: componentTheme,
         show_categories: showCategories ? 'true' : 'false',
         show_eyebrow: showEyebrow ? 'true' : 'false',
         show_tags: showTags ? 'true' : 'false',
         show_pronouns: showPronouns ? 'true' : 'false',
-        reference_card__categories:
-          referenceResourceData.reference_card__categories,
-        reference_card__tags: referenceResourceData.reference_card__tags,
+        reference_card__categories: categoriesArray,
+        reference_card__tags: tagsArray,
         reference_card__overlay: overlayText,
       })}
     </ul>
   </div>
 </div>
 `;
+};
 ResourceCard.argTypes = {
   date: {
     name: 'Date',

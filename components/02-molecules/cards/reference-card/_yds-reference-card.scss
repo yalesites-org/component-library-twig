@@ -23,6 +23,21 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   gap: var(--size-spacing-4);
   position: relative;
 
+  // Component themes defaults: iterate over each component theme to establish
+  // default variables.
+  @each $theme, $value in $component-reference-card-themes {
+    &[data-component-theme='#{$theme}'] {
+      --color-slot-one: var(--component-themes-#{$theme}-slot-one);
+      --color-slot-two: var(--component-themes-#{$theme}-slot-two);
+      --color-slot-three: var(--component-themes-#{$theme}-slot-three);
+      --color-slot-four: var(--component-themes-#{$theme}-slot-four);
+      --color-slot-five: var(--component-themes-#{$theme}-slot-five);
+      --color-slot-six: var(--component-themes-#{$theme}-slot-six);
+      --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
+      --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
+    }
+  }
+
   // Global themes: set color slots for each theme
   // This establishes `--color-slot-` variables name-spaced to the selector
   // in which it is used. We can map component-level variables to global-level
@@ -47,6 +62,98 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   }
 
   --color-overlay-background: var(--color-slot-one);
+
+  // Component theme overrides: set specific component themes overrides
+  // Define component name spaced variables and map them to global theme slots.
+  &[data-component-theme='one'] {
+    --color-overlay-background: var(--color-slot-one);
+    --color-overlay-text: var(--color-basic-white);
+
+    [data-collection-type='single'] & {
+      --color-card-single-bg: var(--color-slot-one);
+      --color-text-shadow: var(--color-slot-one);
+      --color-card-single-text: var(--color-basic-white);
+      --color-heading: var(--color-card-single-text);
+    }
+
+    [data-collection-type='grid'] &,
+    [data-collection-type='list'] &,
+    [data-collection-type='condensed'] & {
+      --color-heading: var(--color-gray-800);
+    }
+  }
+
+  &[data-component-theme='two'] {
+    --color-overlay-background: var(--color-slot-two);
+    --color-overlay-text: var(--color-basic-white);
+
+    [data-collection-type='single'] & {
+      --color-card-single-bg: var(--color-slot-two);
+      --color-text-shadow: var(--color-slot-two);
+      --color-card-single-text: var(--color-basic-white);
+      --color-heading: var(--color-card-single-text);
+    }
+
+    [data-collection-type='grid'] &,
+    [data-collection-type='list'] &,
+    [data-collection-type='condensed'] & {
+      --color-heading: var(--color-gray-800);
+    }
+  }
+
+  &[data-component-theme='three'] {
+    --color-overlay-background: var(--color-slot-three);
+    --color-overlay-text: var(--color-gray-800);
+
+    [data-collection-type='single'] & {
+      --color-card-single-bg: var(--color-slot-three);
+      --color-text-shadow: var(--color-slot-three);
+      --color-card-single-text: var(--color-gray-800);
+      --color-heading: var(--color-card-single-text);
+    }
+
+    [data-collection-type='grid'] &,
+    [data-collection-type='list'] &,
+    [data-collection-type='condensed'] & {
+      --color-heading: var(--color-gray-800);
+    }
+  }
+
+  &[data-component-theme='four'] {
+    --color-overlay-background: var(--color-slot-four);
+    --color-overlay-text: var(--color-gray-800);
+
+    [data-collection-type='single'] & {
+      --color-card-single-bg: var(--color-slot-four);
+      --color-text-shadow: var(--color-slot-four);
+      --color-card-single-text: var(--color-gray-800);
+      --color-heading: var(--color-card-single-text);
+    }
+
+    [data-collection-type='grid'] &,
+    [data-collection-type='list'] &,
+    [data-collection-type='condensed'] & {
+      --color-heading: var(--color-gray-800);
+    }
+  }
+
+  &[data-component-theme='five'] {
+    --color-overlay-background: var(--color-slot-five);
+    --color-overlay-text: var(--color-basic-white);
+
+    [data-collection-type='single'] & {
+      --color-card-single-bg: var(--color-slot-five);
+      --color-text-shadow: var(--color-slot-five);
+      --color-card-single-text: var(--color-basic-white);
+      --color-heading: var(--color-card-single-text);
+    }
+
+    [data-collection-type='grid'] &,
+    [data-collection-type='list'] &,
+    [data-collection-type='condensed'] & {
+      --color-heading: var(--color-gray-800);
+    }
+  }
 
   // from small to media, both grid and list render using a horizontal layout.
   [data-collection-type='grid'] &,
@@ -73,6 +180,19 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     --color-card-single-bg: var(--color-blue-yale);
     --color-card-single-text: var(--color-basic-white);
     --color-heading: var(--color-card-single-text);
+
+    margin-block-start: var(--size-spacing-11);
+
+    // Taxonomy lists (categories and tags) color overrides for single collection type
+    // to ensure proper contrast with themed backgrounds
+    .taxonomy-list--categories,
+    .taxonomy-list--tags {
+      .taxonomy-list__item,
+      .taxonomy-list__item--more,
+      .taxonomy-list__item--more a {
+        color: var(--color-card-single-text);
+      }
+    }
   }
 
   // Condensed card collection
@@ -127,7 +247,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
 .reference-card__overlay {
   background-color: var(--color-overlay-background);
-  color: var(--color-basic-white);
+  color: var(--color-overlay-text, var(--color-basic-white));
   padding-left: var(--size-spacing-3);
   margin-bottom: var(--size-spacing-3);
   font-variant-caps: all-small-caps;
@@ -474,6 +594,10 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   color: var(--color-basic-brown-gray);
   text-transform: uppercase;
+
+  [data-collection-type='single'] & {
+    color: var(--color-card-single-text);
+  }
 }
 
 .reference-card__heading {
@@ -516,6 +640,22 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     @include tokens.heading(h4);
 
     font-weight: var(--font-weights-yalenew-bold);
+  }
+
+  // Override visited link colors for component themes with light backgrounds
+  // to ensure WCAG AA contrast compliance
+  [data-collection-type='single'] .reference-card[data-component-theme='two'] &,
+  [data-collection-type='single']
+    .reference-card[data-component-theme='three']
+    &,
+  [data-collection-type='single']
+    .reference-card[data-component-theme='four']
+    &,
+  [data-collection-type='single']
+    .reference-card[data-component-theme='five']
+    & {
+    --color-link-visited-base: var(--color-card-single-text);
+    --color-link-visited-hover: var(--color-card-single-text);
   }
 }
 
@@ -576,10 +716,11 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
-  /// Set these to white and blue for the single card collection.
+  /// Set these to ensure proper contrast for the single card collection.
   /// If we include themes for reference cards, we should refactor this
   /// and maybe move it to /01-atoms/controls/cta/_yds-cta.scss
   [data-collection-type='single'] & {
+    // Themes with dark backgrounds (one, two, five) - use white CTAs
     .cta[data-cta-theme='one'][data-cta-style='filled'] {
       --color-cta-bg: var(--color-basic-white);
       --color-cta-bg-hover: transparent;
@@ -600,6 +741,17 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       &:hover {
         --color-cta-text-hover: var(--color-cta-action-secondary);
       }
+    }
+  }
+
+  // Themes with light backgrounds (three, four) - use dark CTAs
+  [data-collection-type='single'] [data-component-theme='three'] &,
+  [data-collection-type='single'] [data-component-theme='four'] & {
+    .cta[data-cta-style='outline'] {
+      --color-cta-action: var(--color-gray-800);
+      --color-cta-action-secondary: var(--color-gray-800);
+      --color-link-base: var(--color-gray-800);
+      --color-link-hover: var(--color-gray-800);
     }
   }
 }
