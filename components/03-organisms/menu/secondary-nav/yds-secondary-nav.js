@@ -23,7 +23,27 @@ Drupal.behaviors.secondaryNav = {
         // in-this-section__inner is the container which is positioned relative.
         const inThisSectionInner = parentLi.closest('.in-this-section__inner');
         const sectionRect = inThisSectionInner.getBoundingClientRect();
-        submenu.style.left = `${parentRect.left - sectionRect.left}px`;
+
+        // Calculate default submenu width (19rem = 304px or actual width if rendered)
+        const submenuWidth = submenu.offsetWidth || 304;
+
+        // Check if submenu would overflow the viewport or container
+        const menuRight = sectionRect.right;
+        const submenuRight = parentRect.left + submenuWidth;
+
+        // If the submenu would extend beyond the right edge of the container or viewport
+        if (submenuRight > menuRight || submenuRight > window.innerWidth) {
+          // Align submenu to the right edge of parent
+          submenu.setAttribute('data-menu-direction', 'left');
+          submenu.style.left = 'auto';
+          submenu.style.right = `${sectionRect.right - parentRect.right}px`;
+        } else {
+          // Default: align submenu to the left edge of parent
+          submenu.setAttribute('data-menu-direction', 'right');
+          submenu.style.left = `${parentRect.left - sectionRect.left}px`;
+          submenu.style.right = '';
+        }
+
         submenu.style.maxWidth = `${parentLiWidth + 150}px`;
       }
     };
@@ -31,6 +51,13 @@ Drupal.behaviors.secondaryNav = {
     // Function to hide a menu.
     const hide = (toggle) => {
       toggle.setAttribute('aria-expanded', false);
+
+      // Clean up the data-menu-direction attribute when hiding
+      const parentLi = toggle.closest('li');
+      const submenu = parentLi?.querySelector('.secondary-nav__menu--level-1');
+      if (submenu) {
+        submenu.removeAttribute('data-menu-direction');
+      }
     };
 
     // Function to hide all menus.
