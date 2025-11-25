@@ -79,9 +79,12 @@ module.exports = {
     plugins.ProgressPlugin,
     plugins.CleanWebpackPlugin,
     plugins.CopyWebpackPlugin,
+    plugins.IconsRenamePlugin, // Run before ManifestPlugin
+    plugins.ManifestPlugin, // Will pick up the hashed icons.svg file
   ],
   output: {
     path: distDir,
     filename: '[name].js',
+    assetModuleFilename: '[name].[contenthash:8][ext]',
   },
 };
