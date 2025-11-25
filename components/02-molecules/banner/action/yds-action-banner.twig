@@ -20,7 +20,7 @@
 {% set banner__base_class = 'cta-banner' %}
 {% set banner__content__background = banner__content__background|default('one') %}
 {% set banner__overlay_background_image = banner__overlay_background_image.image__src|default(banner__overlay_background_image) %}
-{% set banner__button__alignment = banner__button__alignment|default('left') %}
+{% set banner__button__alignment = banner__button__alignment|default(banner__content__layout|default('bottom') == 'bottom' ? 'right' : 'left') %}
 {% set banner__button__style__consistency = banner__button__style__consistency|default('mixed') %}
 
 {% set banner__attributes = {
