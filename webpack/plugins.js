@@ -67,10 +67,22 @@ const ManifestPlugin = new WebpackManifestPlugin({
       const hashedFilename = `icons.${hash}.svg`;
       const hashedFilePath = path.join(distDir, hashedFilename);
 
-      // Create the hashed file if it doesn't exist.
-      if (!fs.existsSync(hashedFilePath)) {
-        fs.copyFileSync(iconsSvgPath, hashedFilePath);
-      }
+      // Clean up old hashed versions before creating the new one
+      const oldHashedFiles = glob.sync(path.join(distDir, 'icons.*.svg'));
+      oldHashedFiles.forEach((oldFile) => {
+        // Don't delete icons.svg (the unhashed version) or the current hashed version
+        const basename = path.basename(oldFile);
+        if (basename !== 'icons.svg' && basename !== hashedFilename) {
+          try {
+            fs.unlinkSync(oldFile);
+          } catch (error) {
+            // Ignore errors if file doesn't exist or is locked
+          }
+        }
+      });
+
+      // Create the hashed file (overwrite if it exists)
+      fs.copyFileSync(iconsSvgPath, hashedFilePath);
 
       // Add only icons.svg to manifest
       manifest['icons.svg'] = hashedFilename;
@@ -112,7 +124,17 @@ const IconsRenamePlugin = {
             const hashedFilename = `icons.${hash}.svg`;
             const hashedFilePath = path.join(distDir, hashedFilename);
 
-            // Create the hashed version
+            // Clean up old hashed versions before creating the new one
+            const oldHashedFiles = glob.sync(path.join(distDir, 'icons.*.svg'));
+            oldHashedFiles.forEach((oldFile) => {
+              // Don't delete icons.svg (the unhashed version) or the current hashed version
+              const basename = path.basename(oldFile);
+              if (basename !== 'icons.svg' && basename !== hashedFilename) {
+                fs.unlinkSync(oldFile);
+              }
+            });
+
+            // Create the hashed version (overwrite if it exists)
             fs.copyFileSync(iconsFile, hashedFilePath);
           } catch (error) {
             compilation.errors.push(new Error(`IconsRenamePlugin: ${error.message}`));
@@ -144,4 +166,4 @@ module.exports = {
       '!fonts/**',
     ],
   }),
-};
+};q
