@@ -1,5 +1,5 @@
 {# Get versioned icons.svg filename from manifest if available. #}
-{% set icons_svg_filename = getAssetPath('icons.svg') ?: 'icons.svg' %}
+{% set icons_svg_filename = getAssetPath('icons.svg', 'themes/contrib/atomic') ?: 'icons.svg' %}
 
 <div data-main-menu-state="loaded" data-component-width="site" data-site-header-nav-position="left" data-site-header-border-thickness="8" data-header-theme={{ site_header__theme }} data-header-accent="three" class="site-header">
   <div class="site-header__inner">

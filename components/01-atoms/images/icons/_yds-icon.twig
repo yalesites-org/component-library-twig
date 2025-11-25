@@ -12,7 +12,7 @@
  # Otherwise, set the path relative to the Component Library. #}
 {% set icon__url = directory ? '/' ~ directory ~ '/node_modules/@yalesites-org/component-library-twig/dist/' %}
 {# Get versioned asset path from manifest if directory is provided. #}
-{% set icons_svg_filename = directory ? getAssetPath('icons.svg') : 'icons.svg' %}
+{% set icons_svg_filename = directory ? getAssetPath('icons.svg', directory) : 'icons.svg' %}
 
 {% set unique_name = icon__name ~ '-' ~ random() %}
 
