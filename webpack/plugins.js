@@ -53,50 +53,47 @@ const ManifestUpdatePlugin = {
       const iconsSvgPath = path.join(distDir, 'icons.svg');
       const manifestPath = path.join(distDir, 'manifest.json');
 
-      // Wait a bit for files to be fully written
-      setTimeout(() => {
-        if (fs.existsSync(iconsSvgPath) && fs.existsSync(manifestPath)) {
-          try {
-            // Read current manifest
-            const manifestContent = fs.readFileSync(manifestPath, 'utf8');
-            const manifest = JSON.parse(manifestContent || '{}');
+      if (fs.existsSync(iconsSvgPath) && fs.existsSync(manifestPath)) {
+        try {
+          // Read current manifest
+          const manifestContent = fs.readFileSync(manifestPath, 'utf8');
+          const manifest = JSON.parse(manifestContent || '{}');
 
-            // Calculate hash from icons.svg
-            const fileContent = fs.readFileSync(iconsSvgPath, 'utf8');
-            const hash = crypto
-              .createHash('md5')
-              .update(fileContent)
-              .digest('hex')
-              .substring(0, 8);
-            const hashedFilename = `icons.${hash}.svg`;
-            const hashedFilePath = path.join(distDir, hashedFilename);
+          // Calculate hash from icons.svg
+          const fileContent = fs.readFileSync(iconsSvgPath, 'utf8');
+          const hash = crypto
+            .createHash('md5')
+            .update(fileContent)
+            .digest('hex')
+            .substring(0, 8);
+          const hashedFilename = `icons.${hash}.svg`;
+          const hashedFilePath = path.join(distDir, hashedFilename);
 
-            // Clean up old hashed versions
-            const oldHashedFiles = glob.sync(path.join(distDir, 'icons.*.svg'));
-            oldHashedFiles.forEach((oldFile) => {
-              const basename = path.basename(oldFile);
-              if (basename !== 'icons.svg' && basename !== hashedFilename) {
-                try {
-                  fs.unlinkSync(oldFile);
-                } catch (error) {
-                  // Ignore errors
-                }
+          // Clean up old hashed versions
+          const oldHashedFiles = glob.sync(path.join(distDir, 'icons.*.svg'));
+          oldHashedFiles.forEach((oldFile) => {
+            const basename = path.basename(oldFile);
+            if (basename !== 'icons.svg' && basename !== hashedFilename) {
+              try {
+                fs.unlinkSync(oldFile);
+              } catch (error) {
+                // Ignore errors
               }
-            });
+            }
+          });
 
-            // Create the hashed file
-            fs.copyFileSync(iconsSvgPath, hashedFilePath);
+          // Create the hashed file
+          fs.copyFileSync(iconsSvgPath, hashedFilePath);
 
-            // Update manifest
-            manifest['icons.svg'] = hashedFilename;
+          // Update manifest
+          manifest['icons.svg'] = hashedFilename;
 
-            // Write updated manifest
-            fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
-          } catch (error) {
-            // Silently fail - manifest will fall back to original filename
-          }
+          // Write updated manifest
+          fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
+        } catch (error) {
+          // Silently fail - manifest will fall back to original filename
         }
-      }, 100);
+      }
     });
   },
 };
