@@ -11,6 +11,8 @@
 {# If `directory` is defined, set the path relative for Drupal.
  # Otherwise, set the path relative to the Component Library. #}
 {% set icon__url = directory ? '/' ~ directory ~ '/node_modules/@yalesites-org/component-library-twig/dist/' %}
+{# Get versioned asset path from manifest if directory is provided. #}
+{% set icons_svg_filename = directory ? getAssetPath('icons.svg', directory) : 'icons.svg' %}
 
 {% set unique_name = icon__name ~ '-' ~ random() %}
 
@@ -40,7 +42,7 @@
   {% if icon__desc %}
     <desc id="desc-{{ unique_name }}">{{ icon__desc }}</desc>
   {% endif %}
-  <use xlink:href="{{ icon__url }}icons.svg#{{ icon__name }}"></use>
+  <use xlink:href="{{ icon__url }}{{ icons_svg_filename }}#{{ icon__name }}"></use>
 </svg>
 
 {% if icon__visual_title %}

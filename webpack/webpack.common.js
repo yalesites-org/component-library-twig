@@ -79,9 +79,12 @@ module.exports = {
     plugins.ProgressPlugin,
     plugins.CleanWebpackPlugin,
     plugins.CopyWebpackPlugin,
+    plugins.ManifestPlugin,
+    plugins.ManifestUpdatePlugin,
   ],
   output: {
     path: distDir,
     filename: '[name].js',
+    assetModuleFilename: '[name].[contenthash:8][ext]',
   },
 };
