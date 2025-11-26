@@ -48,7 +48,7 @@ const CopyWebpackPlugin = new _CopyWebpackPlugin([
 // Custom plugin to update manifest after files are emitted
 const ManifestUpdatePlugin = {
   apply(compiler) {
-    compiler.hooks.afterEmit.tap('ManifestUpdatePlugin', (compilation) => {
+    compiler.hooks.afterEmit.tap('ManifestUpdatePlugin', () => {
       const distDir = path.resolve(__dirname, '../dist');
       const iconsSvgPath = path.join(distDir, 'icons.svg');
       const manifestPath = path.join(distDir, 'manifest.json');
@@ -92,12 +92,11 @@ const ManifestUpdatePlugin = {
 
             // Write updated manifest
             fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
-            console.log('ManifestUpdatePlugin: Updated manifest with', hashedFilename);
           } catch (error) {
-            console.warn('ManifestUpdatePlugin: Error updating manifest:', error.message);
+            // Silently fail - manifest will fall back to original filename
           }
         }
-      }, 100); // Small delay to ensure files are written
+      }, 100);
     });
   },
 };
@@ -112,59 +111,6 @@ const ManifestPlugin = new WebpackManifestPlugin({
   },
 });
 
-// Minimal inline plugin to hash icons.svg after sprite generation
-// This runs in processAssets hook at an early stage to ensure the hashed file exists
-// before webpack-manifest-plugin generates the manifest
-const IconsRenamePlugin = {
-  apply(compiler) {
-    compiler.hooks.compilation.tap('IconsRenamePlugin', (compilation) => {
-      // Use processAssets hook which runs before manifest generation
-      // Run at PROCESS_ASSETS_STAGE_ADDITIONS (100) to run early
-      compilation.hooks.processAssets.tap(
-        {
-          name: 'IconsRenamePlugin',
-          stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
-        },
-        () => {
-          const distDir = path.resolve(__dirname, '../dist');
-          const iconsFile = path.join(distDir, 'icons.svg');
-
-          if (!fs.existsSync(iconsFile)) {
-            return;
-          }
-
-          try {
-            const fileContent = fs.readFileSync(iconsFile, 'utf8');
-            const hash = crypto
-              .createHash('md5')
-              .update(fileContent)
-              .digest('hex')
-              .substring(0, 8);
-
-            const hashedFilename = `icons.${hash}.svg`;
-            const hashedFilePath = path.join(distDir, hashedFilename);
-
-            // Clean up old hashed versions before creating the new one
-            const oldHashedFiles = glob.sync(path.join(distDir, 'icons.*.svg'));
-            oldHashedFiles.forEach((oldFile) => {
-              // Don't delete icons.svg (the unhashed version) or the current hashed version
-              const basename = path.basename(oldFile);
-              if (basename !== 'icons.svg' && basename !== hashedFilename) {
-                fs.unlinkSync(oldFile);
-              }
-            });
-
-            // Create the hashed version (overwrite if it exists)
-            fs.copyFileSync(iconsFile, hashedFilePath);
-          } catch (error) {
-            compilation.errors.push(new Error(`IconsRenamePlugin: ${error.message}`));
-          }
-        }
-      );
-    });
-  },
-};
-
 module.exports = {
   ProgressPlugin,
   MiniCssExtractPlugin,
@@ -173,7 +119,6 @@ module.exports = {
   CopyWebpackPlugin,
   ManifestPlugin,
   ManifestUpdatePlugin,
-  IconsRenamePlugin,
   CleanWebpackPlugin: new CleanWebpackPlugin({
     protectWebpackAssets: false, // Required for removal of extra, unwanted dist/css/*.js files.
     cleanOnceBeforeBuildPatterns: ['!*.{png,jpg,gif,svg}'],

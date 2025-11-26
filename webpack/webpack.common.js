@@ -79,9 +79,8 @@ module.exports = {
     plugins.ProgressPlugin,
     plugins.CleanWebpackPlugin,
     plugins.CopyWebpackPlugin,
-    plugins.IconsRenamePlugin, // Run before ManifestPlugin
-    plugins.ManifestPlugin, // Creates initial manifest
-    plugins.ManifestUpdatePlugin, // Updates manifest after files are emitted
+    plugins.ManifestPlugin,
+    plugins.ManifestUpdatePlugin,
   ],
   output: {
     path: distDir,
