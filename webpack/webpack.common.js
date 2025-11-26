@@ -80,7 +80,8 @@ module.exports = {
     plugins.CleanWebpackPlugin,
     plugins.CopyWebpackPlugin,
     plugins.IconsRenamePlugin, // Run before ManifestPlugin
-    plugins.ManifestPlugin, // Will pick up the hashed icons.svg file
+    plugins.ManifestPlugin, // Creates initial manifest
+    plugins.ManifestUpdatePlugin, // Updates manifest after files are emitted
   ],
   output: {
     path: distDir,
