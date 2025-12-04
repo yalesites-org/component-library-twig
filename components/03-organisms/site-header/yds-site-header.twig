@@ -4,9 +4,6 @@
  # - site_header__border_thickness
  # - site_header__nav_position
  #
- # Available Variables
- # - site_name
- #
  # Available Blocks
  # - site_header__primary_nav
  #}
@@ -24,7 +21,7 @@
 } %}
 
 {# If the header uses a logo as its site_name instead of text #}
-{% if site_header__site_name_is_image %}
+{% if site_header__site_name_image %}
   {% set site_header__attributes = site_header__attributes|merge({
   'data-site-header-site-name-is-image': '1',
   }) %}
@@ -32,7 +29,7 @@
 
 {# If header is simple, set header-type attribute
   set default nav position to right
- #}
+#}
 {% if site_header__menu__variation == 'focus' %}
   {% set site_header__type = 'focus' %}
   {% set site_header__attributes = site_header__attributes|merge({
@@ -50,10 +47,10 @@
 {# Primary #}
 {% set site_header__primary %}
   <div {{ bem('primary', [], site_header__base_class) }}>
-    {% if site_header__site_name_is_image %}
+    {% if site_header__site_name_image %}
       {% embed "@atoms/controls/text-link/yds-text-link.twig" with {
-        link__content: site_name,
-        link__url: '/',
+        link__content: site_header__site_name,
+        link__url: site_header__site_link,
         link__base_class: 'site-branding-logo',
         link__modifiers: ['desktop'],
         link__blockname: site_header__base_class,
@@ -61,7 +58,7 @@
         {% block link__content %}
         {# isSiteHeaderLogo is variable set in Drupal #}
         {% if isSiteHeaderLogo %}
-          {{ site_header__site_name_is_image|raw }}
+          {{ site_header__site_name_image|raw }}
           {% else %}
           {# Render example SVG in Storybook #}
           <svg width="400" height="100" viewBox="0 0 400 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,11 +70,11 @@
         {% endif %}
         {% endblock %}
       {% endembed %}
-      {% else %}
+    {% else %}
       {# Site Branding #}
       {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-        link__content: site_name,
-        link__url: '/',
+        link__content: site_header__site_name,
+        link__url: site_header__site_link,
         link__base_class: 'site-branding',
         link__modifiers: ['primary'],
         link__blockname: site_header__base_class,
@@ -98,17 +95,17 @@
   <div {{ bem('inner', [], site_header__base_class) }}>
     <div {{ bem('mobile-header', [], site_header__base_class) }}>
       {# Yale Branding #}
-      {% if site_header__site_name_is_image %}
+      {% if site_header__site_name_image %}
         {% embed "@atoms/controls/text-link/yds-text-link.twig" with {
-          link__content: site_name,
-          link__url: '/',
+          link__content: site_header__site_name,
+          link__url: site_header__site_link,
           link__base_class: 'site-branding-logo',
           link__modifiers: ['mobile'],
           link__blockname: site_header__base_class,
         } %}
           {% block link__content %}
             {% if isSiteHeaderLogo %}
-              {{ site_header__site_name_is_image|raw }}
+              {{ site_header__site_name_image|raw }}
               {% else %}
               {# Render example SVG in Storybook #}
               <svg width="400" height="100" viewBox="0 0 400 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -122,8 +119,8 @@
         {% endembed %}
         {% else %}
         {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-          link__content: site_name,
-          link__url: '/',
+          link__content: site_header__site_name,
+          link__url: site_header__site_link,
           link__base_class: 'site-branding',
           link__modifiers: ['mobile'],
           link__blockname: site_header__base_class,
