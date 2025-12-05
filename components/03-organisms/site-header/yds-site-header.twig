@@ -4,6 +4,7 @@
  # - site_header__border_thickness
  # - site_header__nav_position
  # - site_header__show_yale_logo
+ # - site_header__hide_utility_menu
  #
  # Available Blocks
  # - site_header__primary_nav
@@ -137,6 +138,7 @@
     {% else %}
       {% include "@organisms/site-header/_site-header-default.twig" with {
         site_header__show_yale_logo: site_header__show_yale_logo,
+        site_header__hide_utility_menu: site_header__hide_utility_menu,
       } %}
     {% endif %}
     </div>

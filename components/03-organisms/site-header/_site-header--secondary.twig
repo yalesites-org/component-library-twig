@@ -17,8 +17,15 @@
       link__url_type: 'internal',
     } %}
   </div>
-  {# Utility Nav #}
-  <div {{ bem('utility-nav', [], site_header__base_class) }}>
+
+  {# 
+    The utility_menu is always be shown. On the collection_microsite header
+    it is optional.
+  #}
+  {% if not site_header__hide_utility_menu %}
+    {# Utility Nav #}
+    <div {{ bem('utility-nav', [], site_header__base_class) }}>
       {% include "@organisms/menu/utility-nav/yds-utility-nav.twig" %}
-  </div>
+    </div>
+  {% endif %}
 </div>
