@@ -3,6 +3,7 @@
  # - site_header__theme
  # - site_header__border_thickness
  # - site_header__nav_position
+ # - site_header__show_yale_logo
  #
  # Available Blocks
  # - site_header__primary_nav
@@ -134,7 +135,9 @@
     {% if site_header__type == 'focus' %}
       {% include "@organisms/site-header/_site-header-simple.twig" %}
     {% else %}
-      {% include "@organisms/site-header/_site-header-default.twig" %}
+      {% include "@organisms/site-header/_site-header-default.twig" with {
+        site_header__show_yale_logo: site_header__show_yale_logo,
+      } %}
     {% endif %}
     </div>
   </div>
