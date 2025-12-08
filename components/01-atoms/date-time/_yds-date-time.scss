@@ -3,4 +3,10 @@
   font-variant-numeric: oldstyle-nums;
   text-transform: lowercase;
   letter-spacing: 0.5px;
+
+  // Override small-caps for all-day events
+  &--all-day {
+    font-variant-caps: normal;
+    text-transform: none;
+  }
 }

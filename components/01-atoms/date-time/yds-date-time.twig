@@ -79,16 +79,31 @@ format__day__long = Thursday, December 3, 2024
 {% set used_format = date_time__format_override|default(format_defaults[date_time__format]) %}
 
 {# Combine start and end date/time into one variable for output #}
-{% if same_start_and_end %}
+{% if used_format == 'format__all_day' %}
+  {# For all day events, show the date (without time) followed by "All day" #}
+  {# Check if start and end dates are the same day (not just same timestamp) #}
+  {# Use format__date__start which includes em dash - keep it for both single and multi-day #}
+  {% set start_date_formatted = date_time__start|date(formats['format__date']) %}
+  {% set end_date_formatted = date_time__end|date(formats['format__date']) %}
+  {% if start_date_formatted == end_date_formatted %}
+    {# Single day: keep the trailing em dash and add " All day" #}
+    {% set date_time = start_date_formatted ~ ' All day' %}
+  {% else %}
+    {# Multi-day: start_date already has trailing dash, end_date has trailing dash, so we get: "Dec 25—Dec 26— All day" #}
+    {# We want: "Dec 25—Dec 26 All day", so strip the trailing dash from end_date #}
+    {% set date_time = start_date_formatted ~ end_date_formatted|trim(em_dash) ~ ' All day' %}
+  {% endif %}
+{% elseif same_start_and_end %}
   {% set date_time = date_time__start|date(formats[used_format]) %}
 {% else %}
   {% set date_time = date_time__start|date(formats[used_format ~ "__start"]) ~ date_time__end|date(formats[used_format]) %}
 {% endif %}
 
 {# Add attributes #}
+{% set date_time__modifiers = used_format == 'format__all_day' ? ['all-day'] : [] %}
 {% set date_time__attribuites = {
   datetime: date_time__start|date(formats['format__iso']),
-  class: bem('date-time'),
+  class: bem('date-time', date_time__modifiers),
 } %}
 
 <time {{ add_attributes(date_time__attribuites) }}>{{ date_time }}</time>
