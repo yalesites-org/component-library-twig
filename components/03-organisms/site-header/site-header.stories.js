@@ -108,6 +108,9 @@ export const Header = ({
     site_header__site_name_image: siteHeaderSiteNameImage,
     site_header__branding_name: siteWideHeaderName,
     site_header__branding_link: siteWideHeaderUrl,
+    site_header__is_collection_microsite: false,
+    site_header__collection_microsite_name: '',
+    site_header__collection_microsite_link: '',
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
   });
@@ -156,6 +159,9 @@ export const HeaderExamples = ({
     site_header__site_name_image: siteHeaderSiteNameImage,
     site_header__branding_name: siteWideHeaderName,
     site_header__branding_link: siteWideHeaderUrl,
+    site_header__is_collection_microsite: false,
+    site_header__collection_microsite_name: '',
+    site_header__collection_microsite_link: '',
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
   });
