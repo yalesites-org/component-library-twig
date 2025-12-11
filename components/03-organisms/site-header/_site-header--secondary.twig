@@ -1,13 +1,5 @@
 <div {{ bem('secondary', [], site_header__base_class) }}>
   <div {{ bem('yale-branding', [], site_header__base_class) }}>
-    {# This should only ever show on a collection_microsite header. #}
-    {% if site_header__show_yale_logo %}
-      {% include "@atoms/typography/text/yds-text.twig" with {
-        text__content: 'Yale |',
-        text__element: 'span',
-      } %}
-    {% endif %}
-    
     {# Yale Branding #}
     {% include "@atoms/controls/text-link/yds-text-link.twig" with {
       link__content: site_header__branding_name|default('Yale University'),
