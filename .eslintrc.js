@@ -5,4 +5,7 @@ module.exports = {
     jQuery: true,
     once: true,
   },
+  rules: {
+    'import/no-unresolved': ['error', { ignore: ['^@yalesites-org/tokens'] }],
+  },
 };
