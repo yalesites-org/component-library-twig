@@ -15,7 +15,7 @@
     "lint": "npm run lint:js; npm run lint:styles",
     "lint:js": "eslint components",
     "lint:styles": "stylelint 'components/**/*.scss'",
-    "postinstall": "npx patch-package",
+    "postinstall": "npx patch-package && cd node_modules/@yalesites-org/tokens && npm install && npm run build",
     "prepare": "husky install",
     "prettier": "prettier components --ignore-unknown --list-different",
     "semantic-release": "semantic-release",
