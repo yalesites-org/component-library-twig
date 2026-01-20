@@ -12,6 +12,16 @@ $break-card-collection-max: tokens.$break-m - 0.05;
 $break-card-collection-list-image-max: tokens.$break-s - 0.05;
 $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
+// Mixin for list items without images - removes indentation
+@mixin list-no-image-flush {
+  [data-collection-type='list'] [data-component-has-image='false'] & {
+    flex: 1 0 100%;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    max-width: 100%;
+  }
+}
+
 .reference-card {
   @include atoms.clickable-component-heading-link;
   @include atoms.clickable-component-image;
@@ -380,14 +390,6 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     flex: 1 1 100%;
   }
 
-  // When there's no image in list view, content should be flush left (all breakpoints)
-  [data-collection-type='list'] [data-component-has-image='false'] & {
-    flex: 1 0 100%;
-    margin-inline-start: 0;
-    margin-inline-end: 0;
-    max-width: 100%;
-  }
-
   // vertically center content when profile source.
   [data-collection-type='single'][data-collection-featured='false'][data-collection-source='profile']
     & {
@@ -407,13 +409,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       max-width: 50%;
     }
 
-    // When there's no image in list view, content should be flush left
-    [data-collection-type='list'] [data-component-has-image='false'] & {
-      flex: 1 0 100%;
-      margin-inline-start: 0;
-      margin-inline-end: 0;
-      max-width: 100%;
-    }
+    @include list-no-image-flush;
   }
 
   @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
@@ -427,13 +423,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       flex: 1 0 66%;
     }
 
-    // When there's no image in list view, content should be flush left
-    [data-collection-type='list'] [data-component-has-image='false'] & {
-      flex: 1 0 100%;
-      margin-inline-start: 0;
-      margin-inline-end: 0;
-      max-width: 100%;
-    }
+    @include list-no-image-flush;
   }
 
   @media (min-width: tokens.$break-m) {
@@ -443,13 +433,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       margin-inline-end: auto;
     }
 
-    // When there's no image in list view, content should be flush left
-    [data-collection-type='list'] [data-component-has-image='false'] & {
-      flex: 1 0 100%;
-      margin-inline-start: 0;
-      margin-inline-end: 0;
-      max-width: 100%;
-    }
+    @include list-no-image-flush;
   }
 
   @media (min-width: tokens.$break-mobile) {
@@ -459,13 +443,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       margin-inline-end: auto;
     }
 
-    // When there's no image in list view, content should be flush left
-    [data-collection-type='list'] [data-component-has-image='false'] & {
-      flex: 1 0 100%;
-      margin-inline-start: 0;
-      margin-inline-end: 0;
-      max-width: 100%;
-    }
+    @include list-no-image-flush;
 
     [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='false']
       & {
