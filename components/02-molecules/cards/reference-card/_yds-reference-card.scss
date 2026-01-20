@@ -380,6 +380,14 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     flex: 1 1 100%;
   }
 
+  // When there's no image in list view, content should be flush left (all breakpoints)
+  [data-collection-type='list'] [data-component-has-image='false'] & {
+    flex: 1 0 100%;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    max-width: 100%;
+  }
+
   // vertically center content when profile source.
   [data-collection-type='single'][data-collection-featured='false'][data-collection-source='profile']
     & {
@@ -398,6 +406,14 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     [data-collection-type='list'][data-collection-source='profile'] & {
       max-width: 50%;
     }
+
+    // When there's no image in list view, content should be flush left
+    [data-collection-type='list'] [data-component-has-image='false'] & {
+      flex: 1 0 100%;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      max-width: 100%;
+    }
   }
 
   @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
@@ -410,6 +426,14 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     [data-collection-type='list'][data-collection-featured='false'] & {
       flex: 1 0 66%;
     }
+
+    // When there's no image in list view, content should be flush left
+    [data-collection-type='list'] [data-component-has-image='false'] & {
+      flex: 1 0 100%;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      max-width: 100%;
+    }
   }
 
   @media (min-width: tokens.$break-m) {
@@ -418,6 +442,14 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       margin-inline-start: auto;
       margin-inline-end: auto;
     }
+
+    // When there's no image in list view, content should be flush left
+    [data-collection-type='list'] [data-component-has-image='false'] & {
+      flex: 1 0 100%;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      max-width: 100%;
+    }
   }
 
   @media (min-width: tokens.$break-mobile) {
@@ -425,6 +457,14 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       flex: 0 1 71%;
       margin-inline-start: auto;
       margin-inline-end: auto;
+    }
+
+    // When there's no image in list view, content should be flush left
+    [data-collection-type='list'] [data-component-has-image='false'] & {
+      flex: 1 0 100%;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      max-width: 100%;
     }
 
     [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='false']
