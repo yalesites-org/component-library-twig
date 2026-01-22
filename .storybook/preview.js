@@ -78,4 +78,9 @@ export const tags = ['autodocs', 'autodocs'];
 export const parameters = {
   actions: { argTypesRegex: '^on.*' },
   controls: { disableSaveFromUI: true },
+  options: {
+    storySort: {
+      order: ['Introduction', 'Global Config', 'TOKENS', '*'],
+    },
+  },
 };
