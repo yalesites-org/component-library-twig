@@ -42,6 +42,10 @@
         component_wrapper__alignment: 'left',
       }%}
       {% block component_wrapper_inner %}
+        {% include "@atoms/typography/headings/yds-heading.twig" with {
+          heading__level: '2',
+          heading: 'Tabs',
+        } %}
         {% include "@molecules/tabs/yds-tabs.twig" %}
       {% endblock %}
     {% endembed %}
