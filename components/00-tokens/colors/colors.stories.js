@@ -69,6 +69,104 @@ export default {
 };
 
 export const Colors = () => colorsTwig(colorsData);
+
+export const ComponentColorSlots = () => `
+  <div style="max-width: 1200px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+    <h1 style="color: #00356b; margin-bottom: 20px;">Component Color Slots Reference</h1>
+    <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px;">
+      This reference lists all components in the YaleSites Design System that support color theming through "dials" or "slots".
+      These controls allow you to customize the visual appearance of components while maintaining accessibility standards.
+    </p>
+
+    <div style="background-color: #f8f9fa; border-left: 4px solid #00356b; padding: 20px; margin-bottom: 30px;">
+      <h3 style="margin-top: 0;">What are Color Slots?</h3>
+      <p style="margin-bottom: 0; line-height: 1.6;">
+        Color slots (also called "dials" or "themes") are predefined color combinations that have been tested for accessibility.
+        Each slot typically includes coordinated colors for backgrounds, text, borders, and accents that work together harmoniously.
+      </p>
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+      <thead>
+        <tr style="background-color: #00356b; color: white;">
+          <th style="padding: 15px; text-align: left; font-weight: 600;">Component</th>
+          <th style="padding: 15px; text-align: left; font-weight: 600;">Available Color Slots</th>
+          <th style="padding: 15px; text-align: left; font-weight: 600;">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid #dee2e6;">
+          <td style="padding: 15px; font-weight: 500;">Banner</td>
+          <td style="padding: 15px;">One, Two, Three</td>
+          <td style="padding: 15px;">Controls background theme</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #dee2e6; background-color: #f8f9fa;">
+          <td style="padding: 15px; font-weight: 500;">Button (CTA)</td>
+          <td style="padding: 15px;">Multiple theme options</td>
+          <td style="padding: 15px;">Varies by button type and context</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #dee2e6;">
+          <td style="padding: 15px; font-weight: 500;">Callout</td>
+          <td style="padding: 15px;">One, Two, Three</td>
+          <td style="padding: 15px;">Background color themes</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #dee2e6; background-color: #f8f9fa;">
+          <td style="padding: 15px; font-weight: 500;">Quick Links</td>
+          <td style="padding: 15px;">One, Two, Three</td>
+          <td style="padding: 15px;">Background color themes</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #dee2e6;">
+          <td style="padding: 15px; font-weight: 500;">Pull Quote</td>
+          <td style="padding: 15px;">One, Two, Three</td>
+          <td style="padding: 15px;">Accent theme for quote styling</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #dee2e6; background-color: #f8f9fa;">
+          <td style="padding: 15px; font-weight: 500;">Standalone Quote</td>
+          <td style="padding: 15px;">One, Two, Three</td>
+          <td style="padding: 15px;">Accent theme for quote styling</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #dee2e6;">
+          <td style="padding: 15px; font-weight: 500;">Tabs</td>
+          <td style="padding: 15px;">One, Two, Three</td>
+          <td style="padding: 15px;">Tab navigation theme</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #dee2e6; background-color: #f8f9fa;">
+          <td style="padding: 15px; font-weight: 500;">Site Header</td>
+          <td style="padding: 15px;">Multiple theme options + Accent colors (1-8)</td>
+          <td style="padding: 15px;">Combines theme with accent color selection</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #dee2e6;">
+          <td style="padding: 15px; font-weight: 500;">Site Footer</td>
+          <td style="padding: 15px;">Multiple theme options + Accent colors (1-8)</td>
+          <td style="padding: 15px;">Combines theme with accent color selection</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 20px; margin-top: 30px;">
+      <h3 style="margin-top: 0;">💡 Usage Tips</h3>
+      <ul style="margin-bottom: 0; line-height: 1.8;">
+        <li><strong>Global Theme:</strong> Set via the toolbar at the top of Storybook - affects overall site color palette</li>
+        <li><strong>Component Themes:</strong> Individual "dial" settings for specific components</li>
+        <li><strong>Accessibility:</strong> All color combinations are tested to meet WCAG 2.1 AA standards</li>
+        <li><strong>Consistency:</strong> Using the same slot numbers across components creates visual cohesion</li>
+      </ul>
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #dee2e6;">
+      <h2 style="color: #00356b; margin-bottom: 15px;">Exploring Color Options</h2>
+      <p style="line-height: 1.6; margin-bottom: 15px;">
+        To see these color slots in action, visit these stories:
+      </p>
+      <ul style="line-height: 1.8;">
+        <li><strong>Component Theme Color Pairings:</strong> View all component themes side-by-side</li>
+        <li><strong>Global Theme Color Pairings:</strong> See how components adapt to global theme changes</li>
+        <li><strong>Color Basic Themes:</strong> Review accessibility-tested background color options</li>
+      </ul>
+    </div>
+  </div>
+`;
+
 export const ColorGlobalThemes = () =>
   colorGlobalThemeTwig(colorGlobalThemeData);
 

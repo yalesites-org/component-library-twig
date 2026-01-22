@@ -278,15 +278,16 @@ export const GlobalConfig = ({
     'yds-cl-twig-site-footer-variation': siteFooterVariation,
   };
 
-  // Set properties that are stored as custom properties to the root element.
-  // @TODO: Ideally these would also live in local storage so that they persist
-  // page refreshes.
+  // Set custom CSS properties (divider settings, action color) on the root element.
+  // These are session-only and reset on page refresh - this is intentional as they
+  // are design token demonstrations rather than persistent site configuration.
   Object.entries(customProperties).forEach((entry) => {
     const [key, value] = entry;
     root.style.setProperty(key, value);
   });
 
-  // Set properties that are stored as data-attributes to localStorage.
+  // Set site-wide configuration (menu, header/footer themes) to localStorage.
+  // These persist across page refreshes as they represent global site settings.
   setAttributes(dataAttributes);
 
   return `
