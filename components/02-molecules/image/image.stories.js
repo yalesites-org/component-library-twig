@@ -21,7 +21,6 @@ export default {
       name: 'Section Theme',
       type: 'select',
       options: ['default', 'one', 'two', 'three', 'four'],
-      control: { type: 'select' },
       if: { arg: 'layoutOption', neq: 'single' },
     },
     layoutOption: {
@@ -33,7 +32,6 @@ export default {
         'thirty-thirty-thirty',
         'seventy-thirty',
       ],
-      control: { type: 'select' },
     },
   },
   args: {
