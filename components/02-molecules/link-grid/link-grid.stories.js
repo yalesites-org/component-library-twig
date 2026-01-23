@@ -21,9 +21,6 @@ export default {
       name: 'Line Treatment',
       type: 'select',
       options: ['default', 'all_strong_lines', 'all_light_lines', 'no_lines'],
-      control: {
-        type: 'select',
-      },
     },
   },
   args: {

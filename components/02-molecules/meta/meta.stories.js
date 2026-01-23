@@ -85,7 +85,7 @@ export const Event = ({
 Event.argTypes = {
   dataVariant: {
     name: 'Event Date Scenario',
-    control: { type: 'select' },
+    type: 'select',
     options: Object.keys(eventDataVariants),
     defaultValue: 'Mixed (Past & Upcoming)',
   },
