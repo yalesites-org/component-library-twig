@@ -12,13 +12,11 @@ export default {
       name: 'Component Theme',
       type: 'select',
       options: ['one', 'two', 'three'],
-      control: { type: 'select' },
     },
     sectionTheme: {
       name: 'Section Theme',
       type: 'select',
       options: ['default', 'one', 'two', 'three', 'four'],
-      control: { type: 'select' },
     },
   },
   args: {

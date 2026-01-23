@@ -30,7 +30,6 @@ export default {
       name: 'Section Theme',
       type: 'select',
       options: ['default', 'one', 'two', 'three', 'four'],
-      control: { type: 'select' },
     },
     itemsToDisplay: {
       name: 'Items to Display',
