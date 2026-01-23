@@ -39,13 +39,11 @@ exampleForm.argTypes = {
     name: 'Section Theme',
     type: 'select',
     options: ['default', 'one', 'two', 'three', 'four'],
-    control: { type: 'select' },
   },
   buttonTheme: {
     name: 'Button Theme',
     type: 'select',
     options: ['one', 'two', 'three', 'four', 'five', 'six', 'seven'],
-    control: { type: 'select' },
   },
 };
 
