@@ -28,7 +28,6 @@ export default {
       name: 'Layout',
       type: 'select',
       options: ['fifty-fifty', 'thirty-thirty-thirty', 'seventy-thirty'],
-      control: { type: 'select' },
     },
     layoutPadding: {
       name: 'Padding',
@@ -39,13 +38,11 @@ export default {
         'No bottom padding': 'no-bottom',
         'No padding (top and bottom)': 'no-padding',
       },
-      control: { type: 'select' },
     },
     theme: {
       name: 'Component Theme',
       type: 'select',
       options: ['default', 'one', 'two', 'three', 'four'],
-      control: { type: 'select' },
     },
   },
   args: {
