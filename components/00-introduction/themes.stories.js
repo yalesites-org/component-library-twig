@@ -13,7 +13,7 @@ export default {
 };
 
 const themesHTML = `
-  <div class="wrap-for-global-theme" data-global-theme="one">
+  <div class="wrap-for-global-theme">
     <div data-component-theme="default" data-component-width="site" data-component-padding="no-padding" class="yds-layout">
       <div class="yds-layout__inner">
         <div class="yds-layout__primary">
@@ -52,104 +52,191 @@ const themesHTML = `
             heading: 'The Three Theme Types',
           })}
 
-          ${calloutTwig({
-            callouts: [
-              {
-                callout__heading: '1. Global Theme (Lever)',
-                callout__text: `
-                  <p><em>Site-wide color palette</em></p>
-                  <p>
-                    The global theme is the foundation of your entire site's color scheme. It's called a "lever" because
-                    switching it fundamentally changes all the color values used throughout the site.
-                  </p>
+          ${headingTwig({
+            heading__level: '3',
+            heading: '1. Global Theme (Lever)',
+          })}
 
-                  <p><strong>Available options (6):</strong></p>
-                  <ul>
-                    <li><code>one</code> - Old Blues</li>
-                    <li><code>two</code> - New Haven Green</li>
-                    <li><code>three</code> - Shoreline Summer</li>
-                    <li><code>four</code> - Onha</li>
-                    <li><code>five</code> - It's Your Yale</li>
-                    <li><code>six</code> - AI</li>
-                  </ul>
+          ${textFieldTwig({
+            text_field__content: `
+              <p><em>Site-wide color palette</em></p>
+              <p>
+                The global theme is the foundation of your entire site's color scheme. It's called a "lever" because
+                switching it fundamentally changes all the color values used throughout the site.
+              </p>
+              <p><strong>Available options (6):</strong></p>
+              ${listTwig({
+                list__type: 'ul',
+                list__items: [
+                  { list__item__content: '<code>one</code> - Old Blues' },
+                  { list__item__content: '<code>two</code> - New Haven Green' },
+                  {
+                    list__item__content:
+                      '<code>three</code> - Shoreline Summer',
+                  },
+                  { list__item__content: '<code>four</code> - Onha' },
+                  { list__item__content: "<code>five</code> - It's Your Yale" },
+                  { list__item__content: '<code>six</code> - AI' },
+                ],
+              })}
+              <p><strong>Where you control it:</strong></p>
+              ${listTwig({
+                list__type: 'ul',
+                list__items: [
+                  {
+                    list__item__content:
+                      'In CMS: Site-level global theme setting',
+                  },
+                  {
+                    list__item__content:
+                      'In Storybook: Top toolbar "Site: Global Theme (lever)"',
+                  },
+                ],
+              })}
+              <p><strong>What it does:</strong></p>
+              ${listTwig({
+                list__type: 'ul',
+                list__items: [
+                  {
+                    list__item__content:
+                      'Changes the actual color values in the design system',
+                  },
+                  {
+                    list__item__content:
+                      'Affects how section and component themes render',
+                  },
+                  {
+                    list__item__content:
+                      'Typically set once per site and rarely changed',
+                  },
+                ],
+              })}
+            `,
+            text_field__width: 'site',
+          })}
 
-                  <p><strong>Where you control it:</strong></p>
-                  <ul>
-                    <li>In CMS: Site-level global theme setting</li>
-                    <li>In Storybook: Top toolbar "Site: Global Theme (lever)"</li>
-                  </ul>
+          ${headingTwig({
+            heading__level: '3',
+            heading: '2. Section Theme',
+          })}
 
-                  <p><strong>What it does:</strong></p>
-                  <ul>
-                    <li>Changes the actual color values in the design system</li>
-                    <li>Affects how section and component themes render</li>
-                    <li>Typically set once per site and rarely changed</li>
-                  </ul>
-                `,
-              },
-              {
-                callout__heading: '2. Section Theme',
-                callout__text: `
-                  <p><em>Background colors for page sections</em></p>
-                  <p>
-                    Section themes control the background color of layout sections. Think of them as the "canvas"
-                    on which components are placed. They create visual hierarchy and group related content.
-                  </p>
+          ${textFieldTwig({
+            text_field__content: `
+              <p><em>Background colors for page sections</em></p>
+              <p>
+                Section themes control the background color of layout sections. Think of them as the "canvas"
+                on which components are placed. They create visual hierarchy and group related content.
+              </p>
+              <p><strong>Available options (5):</strong></p>
+              ${listTwig({
+                list__type: 'ul',
+                list__items: [
+                  {
+                    list__item__content:
+                      '<code>default</code> - White/light background',
+                  },
+                  {
+                    list__item__content:
+                      '<code>one</code> - Primary brand color',
+                  },
+                  { list__item__content: '<code>two</code> - Secondary color' },
+                  {
+                    list__item__content: '<code>three</code> - Tertiary color',
+                  },
+                  {
+                    list__item__content: '<code>four</code> - Quaternary color',
+                  },
+                ],
+              })}
+              <p><strong>Where you control it:</strong></p>
+              ${listTwig({
+                list__type: 'ul',
+                list__items: [
+                  { list__item__content: 'In CMS: Per-section or per-page' },
+                  {
+                    list__item__content:
+                      'In Storybook: "Section Theme" control in playground stories',
+                  },
+                ],
+              })}
+              <p><strong>What it does:</strong></p>
+              ${listTwig({
+                list__type: 'ul',
+                list__items: [
+                  {
+                    list__item__content:
+                      'Sets background color for an entire section',
+                  },
+                  {
+                    list__item__content:
+                      'Actual colors come from the active global theme',
+                  },
+                  {
+                    list__item__content:
+                      'Can vary by page section to create visual interest',
+                  },
+                ],
+              })}
+            `,
+            text_field__width: 'site',
+          })}
 
-                  <p><strong>Available options (5):</strong></p>
-                  <ul>
-                    <li><code>default</code> - White/light background</li>
-                    <li><code>one</code> - Primary brand color</li>
-                    <li><code>two</code> - Secondary color</li>
-                    <li><code>three</code> - Tertiary color</li>
-                    <li><code>four</code> - Quaternary color</li>
-                  </ul>
+          ${headingTwig({
+            heading__level: '3',
+            heading: '3. Component Theme (Dial)',
+          })}
 
-                  <p><strong>Where you control it:</strong></p>
-                  <ul>
-                    <li>In CMS: Per-section or per-page</li>
-                    <li>In Storybook: "Section Theme" control in playground stories</li>
-                  </ul>
-
-                  <p><strong>What it does:</strong></p>
-                  <ul>
-                    <li>Sets background color for an entire section</li>
-                    <li>Actual colors come from the active global theme</li>
-                    <li>Can vary by page section to create visual interest</li>
-                  </ul>
-                `,
-              },
-              {
-                callout__heading: '3. Component Theme (Dial)',
-                callout__text: `
-                  <p><em>Accent colors for individual components</em></p>
-                  <p>
-                    Component themes control accent colors within individual components - headings, icons, borders,
-                    and decorative elements. Called a "dial" in the CMS because you turn it to select different color accents.
-                  </p>
-
-                  <p><strong>Available options (5):</strong></p>
-                  <ul>
-                    <li><code>one</code> through <code>five</code> - Different color palettes</li>
-                  </ul>
-
-                  <p><strong>Where you control it:</strong></p>
-                  <ul>
-                    <li>In CMS: Per-component "color dial" setting</li>
-                    <li>In Storybook: "[Component Name] Theme (dial)" controls</li>
-                  </ul>
-
-                  <p><strong>What it does:</strong></p>
-                  <ul>
-                    <li>Applies accent colors to a specific component</li>
-                    <li>Actual colors come from the active global theme</li>
-                    <li>Adds visual emphasis and variety within sections</li>
-                  </ul>
-                `,
-              },
-            ],
-            callout__background_color: 'two',
-            callout__width: 'site',
+          ${textFieldTwig({
+            text_field__content: `
+              <p><em>Accent colors for individual components</em></p>
+              <p>
+                Component themes control accent colors within individual components - headings, icons, borders,
+                and decorative elements. Called a "dial" in the CMS because you turn it to select different color accents.
+              </p>
+              <p><strong>Available options (5):</strong></p>
+              ${listTwig({
+                list__type: 'ul',
+                list__items: [
+                  {
+                    list__item__content:
+                      '<code>one</code> through <code>five</code> - Different color palettes',
+                  },
+                ],
+              })}
+              <p><strong>Where you control it:</strong></p>
+              ${listTwig({
+                list__type: 'ul',
+                list__items: [
+                  {
+                    list__item__content:
+                      'In CMS: Per-component "color dial" setting',
+                  },
+                  {
+                    list__item__content:
+                      'In Storybook: "[Component Name] Theme (dial)" controls',
+                  },
+                ],
+              })}
+              <p><strong>What it does:</strong></p>
+              ${listTwig({
+                list__type: 'ul',
+                list__items: [
+                  {
+                    list__item__content:
+                      'Applies accent colors to a specific component',
+                  },
+                  {
+                    list__item__content:
+                      'Actual colors come from the active global theme',
+                  },
+                  {
+                    list__item__content:
+                      'Adds visual emphasis and variety within sections',
+                  },
+                ],
+              })}
+            `,
+            text_field__width: 'site',
           })}
 
           ${headingTwig({
@@ -157,27 +244,43 @@ const themesHTML = `
             heading: 'How They Work Together',
           })}
 
-          ${calloutTwig({
-            callouts: [
-              {
-                callout__heading: 'Example Combination',
-                callout__text: `
-                <p><strong>Global Theme:</strong> <code>one</code> (Old Blues)<br>
-                → Sets the site's overall color palette to Yale's traditional blue-based colors</p>
-
-                <p><strong>Section Theme:</strong> <code>two</code><br>
-                → Within the Old Blues palette, this section gets a gray background</p>
-
-                <p><strong>Component Theme (Accordion):</strong> <code>three</code><br>
-                → Within that gray section, the accordion's headings use accent color three from Old Blues palette</p>
-
-                <p><strong>Result:</strong> A cohesive design where the accordion's accent colors complement both
-                the section's gray background and the overall Old Blues color scheme.</p>
-              `,
-              },
-            ],
-            callout__background_color: 'three',
-            callout__width: 'site',
+          ${textFieldTwig({
+            text_field__content: `
+              <p>Here's an example showing how all three theme types combine to create a cohesive design:</p>
+              <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Theme Type</th>
+                    <th scope="col">Setting</th>
+                    <th scope="col">What It Does</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Global Theme</th>
+                    <td><code>one</code> (Old Blues)</td>
+                    <td>Sets the site's overall color palette to Yale's traditional blue-based colors</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Section Theme</th>
+                    <td><code>two</code></td>
+                    <td>Within the Old Blues palette, this section gets a gray background</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Component Theme<br>(Accordion)</th>
+                    <td><code>three</code></td>
+                    <td>Within that gray section, the accordion's headings use accent color three from Old Blues palette</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><strong>Result</strong></th>
+                    <td colspan="2"><strong>A cohesive design where the accordion's accent colors complement both the section's gray background and the overall Old Blues color scheme.</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+            `,
+            text_field__width: 'site',
           })}
 
           ${headingTwig({
@@ -252,38 +355,63 @@ const themesHTML = `
             text_field__width: 'site',
           })}
 
-          ${calloutTwig({
-            callouts: [
-              {
-                callout__heading: 'Top Toolbar (Global Controls)',
-                callout__text: `
-                  <ul>
-                    <li><strong>Site: Global Theme (lever)</strong> - Changes the entire color palette for all stories</li>
-                    <li><strong>Typography: Heading Fonts</strong> - Changes font pairings (separate from themes)</li>
-                  </ul>
-                `,
-              },
-              {
-                callout__heading: 'Controls Panel (Story-Specific)',
-                callout__text: `
-                  <ul>
-                    <li><strong>Section Theme</strong> - Background color for the demo section</li>
-                    <li><strong>[Component] Theme (dial)</strong> - Accent colors for the specific component being demoed</li>
-                  </ul>
-                `,
-              },
-              {
-                callout__heading: 'VRT Sections (Below Controls)',
-                callout__text: `
-                  <p>
-                    Playground stories show all theme variations for visual regression testing. These sections demonstrate
-                    how components look across all possible theme combinations, ensuring consistent rendering.
-                  </p>
-                `,
-              },
-            ],
-            callout__background_color: 'one',
-            callout__width: 'site',
+          ${headingTwig({
+            heading__level: '3',
+            heading: 'Top Toolbar (Global Controls)',
+          })}
+
+          ${textFieldTwig({
+            text_field__content: `
+              ${listTwig({
+                list__type: 'ul',
+                list__items: [
+                  {
+                    list__item__content:
+                      '<strong>Site: Global Theme (lever)</strong> - Changes the entire color palette for all stories',
+                  },
+                  {
+                    list__item__content:
+                      '<strong>Typography: Heading Fonts</strong> - Changes font pairings (separate from themes)',
+                  },
+                ],
+              })}
+            `,
+            text_field__width: 'site',
+          })}
+
+          ${headingTwig({
+            heading__level: '3',
+            heading: 'Controls Panel (Story-Specific)',
+          })}
+
+          ${textFieldTwig({
+            text_field__content: `
+              ${listTwig({
+                list__type: 'ul',
+                list__items: [
+                  {
+                    list__item__content:
+                      '<strong>Section Theme</strong> - Background color for the demo section',
+                  },
+                  {
+                    list__item__content:
+                      '<strong>[Component] Theme (dial)</strong> - Accent colors for the specific component being demoed',
+                  },
+                ],
+              })}
+            `,
+            text_field__width: 'site',
+          })}
+
+          ${headingTwig({
+            heading__level: '3',
+            heading: 'VRT Sections (Visual Regression Testing)',
+          })}
+
+          ${textFieldTwig({
+            text_field__content:
+              '<p>Below the interactive controls, playground stories show all theme variations for visual regression testing (VRT). These sections demonstrate how components look across all possible theme combinations, ensuring consistent rendering and catching any visual bugs.</p>',
+            text_field__width: 'site',
           })}
 
           ${headingTwig({
@@ -322,21 +450,32 @@ const themesHTML = `
             text_field__width: 'site',
           })}
 
-          ${calloutTwig({
-            callouts: [
-              {
-                callout__heading: 'For Developers',
-                callout__text: `
-                <ul>
-                  <li>Developer documentation: <code>components/_storybook/README.md</code></li>
-                  <li>Theme constants: <code>components/_storybook/theme-constants.js</code></li>
-                  <li>See any playground story for examples of all three theme types in action</li>
-                </ul>
-              `,
-              },
-            ],
-            callout__background_color: 'two',
-            callout__width: 'site',
+          ${headingTwig({
+            heading__level: '3',
+            heading: 'For Developers',
+          })}
+
+          ${textFieldTwig({
+            text_field__content: `
+              ${listTwig({
+                list__type: 'ul',
+                list__items: [
+                  {
+                    list__item__content:
+                      'Developer documentation: <code>components/_storybook/README.md</code>',
+                  },
+                  {
+                    list__item__content:
+                      'Theme constants: <code>components/_storybook/theme-constants.js</code>',
+                  },
+                  {
+                    list__item__content:
+                      'See any playground story for examples of all three theme types in action',
+                  },
+                ],
+              })}
+            `,
+            text_field__width: 'site',
           })}
 
           ${dividerTwig({
