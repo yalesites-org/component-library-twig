@@ -1,8 +1,13 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 import inlineMessageTwig from './yds-inline-message.twig';
 
-const colorPairingsData = Object.keys(tokens['component-themes']);
+import {
+  componentThemes,
+  sectionThemes,
+} from '../../_storybook/theme-constants';
+import {
+  createPlaygroundIntro,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -12,8 +17,9 @@ export default {
   argTypes: {
     sectionTheme: {
       name: 'Section Theme',
+      description: 'Background color theme for the layout section',
       type: 'select',
-      options: colorPairingsData,
+      options: sectionThemes,
     },
     type: {
       name: 'Type',
@@ -29,8 +35,10 @@ export default {
       type: 'string',
     },
     themeColor: {
-      name: 'Component Theme (dial)',
-      options: ['one', 'two', 'three', 'four', 'five'],
+      name: 'Inline Message Theme (dial)',
+      description:
+        'Color accent theme for this component (from color dial in CMS)',
+      options: componentThemes,
       type: 'select',
     },
     linkContent: {
@@ -43,7 +51,7 @@ export default {
     },
   },
   args: {
-    sectionTheme: 'one',
+    sectionTheme: 'default',
     type: 'general',
     heading: 'This is a general message heading',
     content: 'This is a general message content',
@@ -62,54 +70,37 @@ export const Playground = ({
   linkContent,
   linkUrl,
 }) => {
-  const themes = colorPairingsData;
-
-  return `
-  <h2>Interactive Playground</h2>
-  <p>Use the controls to test different inline message types and themes.</p>
-
-  <div data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout">
-    <div class="yds-layout__inner">
-      <div class="yds-layout__primary">
-        ${inlineMessageTwig({
-          inline_message__heading: heading,
-          inline_message__content: content,
-          inline_message__type: type,
-          inline_message__theme: themeColor,
-          inline_message__link__content: linkContent,
-          inline_message__link__url: linkUrl,
-        })}
-      </div>
-    </div>
-  </div>
-
-  <hr style="margin: 3rem 0; border: 1px solid #ccc;">
-
-  <h2>All Section Theme Variations</h2>
-  <p>Below are all theme variations for visual regression testing.</p>
-
-  ${themes
-    .map(
-      (theme) => `
-    <div style="margin-bottom: 2rem;">
-      <h3>Section Theme: ${theme}</h3>
-      <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-        <div class="yds-layout__inner">
-          <div class="yds-layout__primary">
-            ${inlineMessageTwig({
-              inline_message__heading: heading,
-              inline_message__content: content,
-              inline_message__type: type,
-              inline_message__theme: themeColor,
-              inline_message__link__content: linkContent,
-              inline_message__link__url: linkUrl,
-            })}
-          </div>
+  // Render function for inline message variations
+  const renderInlineMessage = (theme) => `
+    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
+      <div class="yds-layout__inner">
+        <div class="yds-layout__primary">
+          ${inlineMessageTwig({
+            inline_message__heading: heading,
+            inline_message__content: content,
+            inline_message__type: type,
+            inline_message__theme: themeColor,
+            inline_message__link__content: linkContent,
+            inline_message__link__url: linkUrl,
+          })}
         </div>
       </div>
     </div>
-  `,
-    )
-    .join('')}
+  `;
+
+  return `
+    ${createPlaygroundIntro(
+      'Use the controls to test different inline message types and themes.',
+    )}
+
+    ${renderInlineMessage(sectionTheme)}
+
+    ${createThemeVariations(
+      renderInlineMessage,
+      sectionThemes,
+      'All Section Theme Variations',
+      'Below are all theme variations for visual regression testing.',
+      'Section Theme',
+    )}
   `;
 };

@@ -1,8 +1,10 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 import pager from './yds-pager.twig';
 
-const colorPairingsData = Object.keys(tokens['component-themes']);
+import { sectionThemes } from '../../_storybook/theme-constants';
+import {
+  createPlaygroundIntro,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Generate pagination data - keep it simple
@@ -47,30 +49,31 @@ export default {
   argTypes: {
     sectionTheme: {
       name: 'Section Theme',
+      description: 'Background color theme for the layout section',
       type: 'select',
-      options: colorPairingsData,
+      options: sectionThemes,
     },
     currentPage: {
       name: 'Current page',
       control: { type: 'number', min: 1, max: 10, step: 1 },
       description: 'Current active page',
+      type: 'number',
     },
     totalPages: {
       name: 'Total pages',
       control: { type: 'number', min: 1, max: 10, step: 1 },
       description: 'Total number of pages',
+      type: 'number',
     },
   },
   args: {
-    sectionTheme: 'one',
+    sectionTheme: 'default',
     currentPage: 3,
     totalPages: 10,
   },
 };
 
 export const Playground = ({ sectionTheme, currentPage, totalPages }) => {
-  const themes = colorPairingsData;
-
   // Validate and normalize args
   const safeTotalPages = Math.max(
     1,
@@ -83,38 +86,30 @@ export const Playground = ({ sectionTheme, currentPage, totalPages }) => {
 
   const data = generatePagerData(safeCurrentPage, safeTotalPages);
 
-  return `
-    <h2>Interactive Playground</h2>
-    <p>Use the controls to test different pagination states. Note: Click functionality is limited in this view.</p>
-
-    <div data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout">
+  // Render function for pager variations
+  const renderPager = (theme) => `
+    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
       <div class="yds-layout__inner">
         <div class="yds-layout__primary">
           ${pager(data)}
         </div>
       </div>
     </div>
+  `;
 
-    <hr style="margin: 3rem 0; border: 1px solid #ccc;">
+  return `
+    ${createPlaygroundIntro(
+      'Use the controls to test different pagination states. Note: Click functionality is limited in this view.',
+    )}
 
-    <h2>All Section Theme Variations</h2>
-    <p>Below are all theme variations for visual regression testing.</p>
+    ${renderPager(sectionTheme)}
 
-    ${themes
-      .map(
-        (theme) => `
-      <div style="margin-bottom: 2rem;">
-        <h3>Section Theme: ${theme}</h3>
-        <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-          <div class="yds-layout__inner">
-            <div class="yds-layout__primary">
-              ${pager(data)}
-            </div>
-          </div>
-        </div>
-      </div>
-    `,
-      )
-      .join('')}
+    ${createThemeVariations(
+      renderPager,
+      sectionThemes,
+      'All Section Theme Variations',
+      'Below are all theme variations for visual regression testing.',
+      'Section Theme',
+    )}
   `;
 };

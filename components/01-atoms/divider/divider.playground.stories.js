@@ -5,8 +5,13 @@ import dividerTwig from './yds-divider.twig';
 import './cl-dividers.scss';
 import '../../00-tokens/effects/yds-animate';
 
+import {
+  borderThicknessOptions,
+  sectionThemes,
+} from '../../_storybook/theme-constants';
+import { createPlaygroundIntro } from '../../_storybook/playground-utils';
+
 const layoutOptions = ['left', 'center'];
-const thicknessOptions = Object.keys(tokens.border.thickness);
 const widths = Object.keys(tokens.layout.width);
 
 export default {
@@ -14,32 +19,29 @@ export default {
   argTypes: {
     thickness: {
       name: 'Line thickness',
-      options: thicknessOptions,
+      options: borderThicknessOptions,
       type: 'select',
-      defaultValue: 'hairline',
     },
     dividerColor: {
       name: 'Line Color',
       options: ['gray-500', 'blue-yale', 'basic-brown-gray'],
       type: 'select',
-      defaultValue: 'gray-500',
     },
     width: {
       name: 'Divider width',
       options: widths,
       type: 'select',
-      defaultValue: '50',
     },
     position: {
       name: 'Divider position',
       options: layoutOptions,
       type: 'select',
-      defaultValue: 'center',
     },
     sectionTheme: {
       name: 'Section Theme',
+      description: 'Background color theme for the layout section',
       type: 'select',
-      options: ['default', 'one', 'two', 'three', 'four'],
+      options: sectionThemes,
     },
   },
   args: {
@@ -68,247 +70,69 @@ export const Playground = ({
     root.style.setProperty(key, value);
   });
 
+  // Render function for single divider instance
+  const renderDivider = (theme, dividerWidth = width) => `
+    <div class="yds-layout cl-divider-playground" data-component-theme="${theme}">
+      <div class="yds-layout__inner" data-component-width="site" style="
+        --color-divider: var(--color-${dividerColor});
+        --width-theme-divider: var(--layout-width-${dividerWidth});
+      ">
+        <div class="yds-layout__primary" style="width: 100%">
+          <div style="--thickness-divider: var(--size-thickness-${thickness})">
+            ${dividerTwig({
+              divider__width: dividerWidth,
+              divider__position: position,
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="padding-to-see-dividers-above">&nbsp;</div>
+  `;
+
+  // Render function for all width variations within a theme
+  const renderThemeWidthVariations = (theme) => {
+    const dividerWidths = ['25', '50', '75', '100'];
+    return `
+      <div class="yds-layout cl-divider-playground" data-component-theme="${theme}">
+        <div class="yds-layout__inner" data-component-width="site" style="
+          --color-divider: var(--color-${dividerColor});
+        ">
+          <div class="yds-layout__primary" style="width: 100%">
+            <h3 class="sb-section__subheading">Section Theme: ${theme}</h3>
+
+            ${dividerWidths
+              .map(
+                (w) => `
+              <h4>Width: ${w}</h4>
+              <div style="--thickness-divider: var(--size-thickness-${thickness})">
+                ${dividerTwig({
+                  divider__width: w,
+                  divider__position: 'center',
+                })}
+              </div>
+            `,
+              )
+              .join('')}
+          </div>
+        </div>
+      </div>
+      <div class="padding-to-see-dividers-above">&nbsp;</div>
+    `;
+  };
+
   return `
-  <div class="yds-layout cl-divider-playground" data-component-theme="${sectionTheme}">
-    <div class="yds-layout__inner" data-component-width="site" style="
-      --color-divider: var(--color-${dividerColor});
-      --width-theme-divider: var(--layout-width-${width});
-    ">
-      <div class="yds-layout__primary" style="width: 100%">
-        <h2>Interactive Playground</h2>
-        <p>Use the StoryBook controls to see the divider implement the available positions, thicknesses, and colors.</p>
+    ${createPlaygroundIntro(
+      'Use the Storybook controls to see the divider implement the available positions, thicknesses, and colors.',
+    )}
 
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: width,
-            divider__position: position,
-          })}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="padding-to-see-dividers-above">&nbsp;</div>
+    ${renderDivider(sectionTheme)}
 
-  <div class="padding-to-see-dividers-above">&nbsp;</div>
+    <hr class="sb-section__divider">
 
-  <hr style="margin: 3rem 0; border: 1px solid #ccc;">
+    <h2>All Section Theme Variations</h2>
+    <p>Below are all theme variations with width samples for visual regression testing.</p>
 
-  <h2>All Section Theme Variations</h2>
-  <p>Below are all theme variations for visual regression testing.</p>
-
-  <div class="yds-layout cl-divider-playground" data-component-theme="default">
-    <div class="yds-layout__inner" data-component-width="site" style="
-      --color-divider: var(--color-${dividerColor});
-    ">
-      <div class="yds-layout__primary" style="width: 100%">
-        <h3>Section Theme: default</h3>
-
-        <h4>Width: 25</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '25',
-            divider__position: 'center',
-          })}
-        </div>
-
-        <h4>Width: 50</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '50',
-            divider__position: 'center',
-          })}
-        </div>
-
-        <h4>Width: 75</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '75',
-            divider__position: 'center',
-          })}
-        </div>
-
-        <h4>Width: 100</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '100',
-            divider__position: 'center',
-          })}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="padding-to-see-dividers-above">&nbsp;</div>
-
-  <div class="yds-layout cl-divider-playground" data-component-theme="one">
-    <div class="yds-layout__inner" data-component-width="site" style="
-      --color-divider: var(--color-${dividerColor});
-    ">
-      <div class="yds-layout__primary" style="width: 100%">
-        <h3>Section Theme: one</h3>
-
-        <h4>Width: 25</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '25',
-            divider__position: 'center',
-          })}
-        </div>
-
-        <h4>Width: 50</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '50',
-            divider__position: 'center',
-          })}
-        </div>
-
-        <h4>Width: 75</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '75',
-            divider__position: 'center',
-          })}
-        </div>
-
-        <h4>Width: 100</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '100',
-            divider__position: 'center',
-          })}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="padding-to-see-dividers-above">&nbsp;</div>
-
-  <div class="yds-layout cl-divider-playground" data-component-theme="two">
-    <div class="yds-layout__inner" data-component-width="site" style="
-      --color-divider: var(--color-${dividerColor});
-    ">
-      <div class="yds-layout__primary" style="width: 100%">
-        <h3>Section Theme: two</h3>
-
-        <h4>Width: 25</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '25',
-            divider__position: 'center',
-          })}
-        </div>
-
-        <h4>Width: 50</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '50',
-            divider__position: 'center',
-          })}
-        </div>
-
-        <h4>Width: 75</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '75',
-            divider__position: 'center',
-          })}
-        </div>
-
-        <h4>Width: 100</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '100',
-            divider__position: 'center',
-          })}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="padding-to-see-dividers-above">&nbsp;</div>
-
-  <div class="yds-layout cl-divider-playground" data-component-theme="three">
-    <div class="yds-layout__inner" data-component-width="site" style="
-      --color-divider: var(--color-${dividerColor});
-    ">
-      <div class="yds-layout__primary" style="width: 100%">
-        <h3>Section Theme: three</h3>
-
-        <h4>Width: 25</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '25',
-            divider__position: 'center',
-          })}
-        </div>
-
-        <h4>Width: 50</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '50',
-            divider__position: 'center',
-          })}
-        </div>
-
-        <h4>Width: 75</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '75',
-            divider__position: 'center',
-          })}
-        </div>
-
-        <h4>Width: 100</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '100',
-            divider__position: 'center',
-          })}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="padding-to-see-dividers-above">&nbsp;</div>
-
-  <div class="yds-layout cl-divider-playground" data-component-theme="four">
-    <div class="yds-layout__inner" data-component-width="site" style="
-      --color-divider: var(--color-${dividerColor});
-    ">
-      <div class="yds-layout__primary" style="width: 100%">
-        <h3>Section Theme: four</h3>
-
-        <h4>Width: 25</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '25',
-            divider__position: 'center',
-          })}
-        </div>
-
-        <h4>Width: 50</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '50',
-            divider__position: 'center',
-          })}
-        </div>
-
-        <h4>Width: 75</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '75',
-            divider__position: 'center',
-          })}
-        </div>
-
-        <h4>Width: 100</h4>
-        <div style="--thickness-divider: var(--size-thickness-${thickness})">
-          ${dividerTwig({
-            divider__width: '100',
-            divider__position: 'center',
-          })}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="padding-to-see-dividers-above">&nbsp;</div>
+    ${sectionThemes.map((theme) => renderThemeWidthVariations(theme)).join('')}
   `;
 };
