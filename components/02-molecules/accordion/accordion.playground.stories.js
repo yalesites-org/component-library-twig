@@ -3,6 +3,16 @@ import accordionData from './accordion.yml';
 
 import './yds-accordion';
 
+import {
+  sectionThemes,
+  componentThemes,
+} from '../../_storybook/theme-constants';
+import {
+  createPlaygroundIntro,
+  createThemeVariations,
+  createSectionWrapper,
+} from '../../_storybook/playground-utils';
+
 export default {
   title: 'Molecules/Accordion/Playground',
   argTypes: {
@@ -19,14 +29,17 @@ export default {
       type: 'string',
     },
     themeColor: {
-      name: 'Component Theme (dial)',
-      options: ['default', 'one', 'two', 'three', 'four', 'five'],
+      name: 'Accordion Theme (dial)',
+      description:
+        'Color accent theme for this component (from color dial in CMS)',
+      options: componentThemes,
       type: 'select',
     },
     sectionTheme: {
       name: 'Section Theme',
+      description: 'Background color theme for the layout section',
       type: 'select',
-      options: ['default', 'one', 'two', 'three', 'four'],
+      options: sectionThemes,
     },
     itemsToDisplay: {
       name: 'Items to Display',
@@ -41,7 +54,7 @@ export default {
     accordionHeading: accordionData.accordion__heading,
     heading: accordionData.accordion__item__heading,
     content: accordionData.accordion__item__content,
-    themeColor: 'default',
+    themeColor: 'one',
     sectionTheme: 'default',
     itemsToDisplay: 3,
   },
@@ -62,46 +75,36 @@ export const Playground = ({
       index === 0 ? content : accordionData.accordion__item__content,
   }));
 
-  const themes = ['default', 'one', 'two', 'three', 'four'];
+  // Render function for theme variations
+  const renderAccordion = () =>
+    accordionTwig({
+      accordion__theme: themeColor,
+      accordion__heading: accordionHeading,
+      accordion__items: accordionItems,
+    });
 
   return `
-  <h2>Interactive Playground</h2>
-  <p>Use the StoryBook controls to see the accordion implement the available variations and colors.</p>
+  ${createPlaygroundIntro(
+    'Use the Storybook controls to see the accordion implement the available variations and colors.',
+  )}
 
-  <div data-component-has-divider="false" data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
-    <div class="yds-layout__inner">
-      <div class="yds-layout__primary" style="width: 100%">
-        ${accordionTwig({
-          accordion__theme: themeColor,
-          accordion__heading: accordionHeading,
-          accordion__items: accordionItems,
-        })}
-      </div>
-    </div>
-  </div>
+  ${createSectionWrapper(sectionTheme, renderAccordion(), {
+    width: 'site',
+    primaryWidth: '100%',
+  })}
 
-  <hr style="margin: 3rem 0; border: 1px solid #ccc;">
+  <hr class="sb-section__divider">
 
-  <h2>All Section Theme Variations</h2>
-  <p>Below are all theme variations for visual regression testing.</p>
-
-  ${themes
-    .map(
-      (theme) => `
-    <div data-component-has-divider="false" data-component-theme="${theme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary" style="width: 100%">
-          <h3>Section Theme: ${theme}</h3>
-          ${accordionTwig({
-            accordion__theme: themeColor,
-            accordion__heading: accordionHeading,
-            accordion__items: accordionItems,
-          })}
-        </div>
-      </div>
-    </div>
-  `,
-    )
-    .join('')}
+  ${createThemeVariations(
+    (theme) =>
+      createSectionWrapper(theme, renderAccordion(), {
+        width: 'site',
+        primaryWidth: '100%',
+      }),
+    sectionThemes,
+    'All Section Theme Variations',
+    'Below are all theme variations for visual regression testing.',
+    'Section Theme',
+  )}
   `;
 };
