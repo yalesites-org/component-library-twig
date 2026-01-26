@@ -1,5 +1,3 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 import bannerTwig from './action/yds-action-banner.twig';
 import grandHeroTwig from './grand-hero/yds-grand-hero.twig';
 import imageBannerTwig from './image/yds-image-banner.twig';
@@ -11,7 +9,14 @@ import videoBannerData from '../../01-atoms/videos/video-embed/video-embed.yml';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 
-const colorPairingsData = Object.keys(tokens['component-themes']);
+import {
+  componentThemes,
+  sectionThemes,
+} from '../../_storybook/theme-constants';
+import {
+  createPlaygroundIntro,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -24,8 +29,9 @@ export default {
   argTypes: {
     sectionTheme: {
       name: 'Section Theme',
+      description: 'Background color theme for the layout section',
       type: 'select',
-      options: colorPairingsData,
+      options: sectionThemes,
     },
     heading: {
       name: 'Heading',
@@ -44,9 +50,11 @@ export default {
       type: 'string',
     },
     bgColor: {
-      name: 'Component Theme (dial)',
+      name: 'Banner Theme (dial)',
+      description:
+        'Color accent theme for this component (from color dial in CMS)',
       type: 'select',
-      options: colorPairingsData,
+      options: componentThemes,
     },
     linkStyle: {
       name: 'Link Style',
@@ -60,7 +68,7 @@ export default {
     },
   },
   args: {
-    sectionTheme: 'one',
+    sectionTheme: 'default',
     heading: bannerData.banner__heading,
     snippet: bannerData.banner__snippet,
     linkContent: bannerData.banner__link__content,
@@ -81,122 +89,71 @@ export const Playground = ({
   linkStyle,
   contentLayout,
 }) => {
-  const themes = colorPairingsData;
+  // Render function for banner variations
+  const renderBanners = (theme) => `
+    <div data-component-theme="${theme}">
+      <h3>Action Banner</h3>
+      ${bannerTwig({
+        ...imageData.responsive_images['16x9'],
+        banner__heading: heading,
+        banner__snippet: snippet,
+        banner__link__content: linkContent,
+        banner__link__url:
+          linkStyle !== 'none' ? bannerData.banner__link__url : '',
+        banner__link__content_two: linkStyle !== 'none' ? linkContentTwo : '',
+        banner__link__url_two:
+          linkStyle !== 'none' ? bannerData.banner__link__url_two : '',
+        banner__link__style: linkStyle,
+        banner__content__layout: contentLayout,
+        banner__content__background: bgColor,
+      })}
+
+      <h3>Grand Hero Banner</h3>
+      ${grandHeroTwig({
+        ...imageData.responsive_images['16x9'],
+        grand_hero__heading: heading,
+        grand_hero__snippet: snippet,
+        grand_hero__link__content: linkContent,
+        grand_hero__link__url: grandHeroData.grand_hero__link__url,
+        grand_hero__link__content_two: linkContentTwo,
+        grand_hero__link__url_two: grandHeroData.grand_hero__link__url_two,
+        grand_hero__content__background: bgColor,
+        grand_hero__overlay_variation: 'full',
+        grand_hero__size: 'full',
+        grand_hero__video: 'false',
+      })}
+
+      <h3>Image Banner</h3>
+      ${imageBannerTwig({
+        ...imageData.responsive_images['16x9'],
+        image_banner__content__background: bgColor,
+        image_banner__overlay_variation: 'full',
+        image_banner__size: 'tall',
+        image_banner__video: 'false',
+        image_banner__caption: 'Image Banner Caption',
+      })}
+
+      <h3>Video Banner</h3>
+      ${videoBannerTwig({
+        video_banner__content: videoBannerData.video_embed__content,
+        video_banner__width: 'max',
+      })}
+    </div>
+  `;
 
   return `
-  <h2>Interactive Playground</h2>
-  <p>Use the controls to test different banner configurations. All 4 banner types are shown below.</p>
+    ${createPlaygroundIntro(
+      'Use the controls to test different banner configurations. All 4 banner types are shown below.',
+    )}
 
-  <div data-component-theme="${sectionTheme}">
-    <h3>Action Banner</h3>
-    ${bannerTwig({
-      ...imageData.responsive_images['16x9'],
-      banner__heading: heading,
-      banner__snippet: snippet,
-      banner__link__content: linkContent,
-      banner__link__url:
-        linkStyle !== 'none' ? bannerData.banner__link__url : '',
-      banner__link__content_two: linkStyle !== 'none' ? linkContentTwo : '',
-      banner__link__url_two:
-        linkStyle !== 'none' ? bannerData.banner__link__url_two : '',
-      banner__link__style: linkStyle,
-      banner__content__layout: contentLayout,
-      banner__content__background: bgColor,
-    })}
+    ${renderBanners(sectionTheme)}
 
-    <h3 style="margin-top: 2rem;">Grand Hero Banner</h3>
-    ${grandHeroTwig({
-      ...imageData.responsive_images['16x9'],
-      grand_hero__heading: heading,
-      grand_hero__snippet: snippet,
-      grand_hero__link__content: linkContent,
-      grand_hero__link__url: grandHeroData.grand_hero__link__url,
-      grand_hero__link__content_two: linkContentTwo,
-      grand_hero__link__url_two: grandHeroData.grand_hero__link__url_two,
-      grand_hero__content__background: bgColor,
-      grand_hero__overlay_variation: 'full',
-      grand_hero__size: 'full',
-      grand_hero__video: 'false',
-    })}
-
-    <h3 style="margin-top: 2rem;">Image Banner</h3>
-    ${imageBannerTwig({
-      ...imageData.responsive_images['16x9'],
-      image_banner__content__background: bgColor,
-      image_banner__overlay_variation: 'full',
-      image_banner__size: 'tall',
-      image_banner__video: 'false',
-      image_banner__caption: 'Image Banner Caption',
-    })}
-
-    <h3 style="margin-top: 2rem;">Video Banner</h3>
-    ${videoBannerTwig({
-      video_banner__content: videoBannerData.video_embed__content,
-      video_banner__width: 'max',
-    })}
-  </div>
-
-  <hr style="margin: 3rem 0; border: 1px solid #ccc;">
-
-  <h2>All Section Theme Variations</h2>
-  <p>Below are all theme variations with all 4 banner types for visual regression testing.</p>
-
-  ${themes
-    .map(
-      (theme) => `
-    <div style="margin-bottom: 3rem;">
-      <h3>Section Theme: ${theme}</h3>
-      <div data-component-theme="${theme}">
-        <h4>Action Banner</h4>
-        ${bannerTwig({
-          ...imageData.responsive_images['16x9'],
-          banner__heading: heading,
-          banner__snippet: snippet,
-          banner__link__content: linkContent,
-          banner__link__url:
-            linkStyle !== 'none' ? bannerData.banner__link__url : '',
-          banner__link__content_two: linkStyle !== 'none' ? linkContentTwo : '',
-          banner__link__url_two:
-            linkStyle !== 'none' ? bannerData.banner__link__url_two : '',
-          banner__link__style: linkStyle,
-          banner__content__layout: contentLayout,
-          banner__content__background: bgColor,
-        })}
-
-        <h4 style="margin-top: 2rem;">Grand Hero Banner</h4>
-        ${grandHeroTwig({
-          ...imageData.responsive_images['16x9'],
-          grand_hero__heading: heading,
-          grand_hero__snippet: snippet,
-          grand_hero__link__content: linkContent,
-          grand_hero__link__url: grandHeroData.grand_hero__link__url,
-          grand_hero__link__content_two: linkContentTwo,
-          grand_hero__link__url_two: grandHeroData.grand_hero__link__url_two,
-          grand_hero__content__background: bgColor,
-          grand_hero__overlay_variation: 'full',
-          grand_hero__size: 'full',
-          grand_hero__video: 'false',
-        })}
-
-        <h4 style="margin-top: 2rem;">Image Banner</h4>
-        ${imageBannerTwig({
-          ...imageData.responsive_images['16x9'],
-          image_banner__content__background: bgColor,
-          image_banner__overlay_variation: 'full',
-          image_banner__size: 'tall',
-          image_banner__video: 'false',
-          image_banner__caption: 'Image Banner Caption',
-        })}
-
-        <h4 style="margin-top: 2rem;">Video Banner</h4>
-        ${videoBannerTwig({
-          video_banner__content: videoBannerData.video_embed__content,
-          video_banner__width: 'max',
-        })}
-      </div>
-    </div>
-  `,
-    )
-    .join('')}
+    ${createThemeVariations(
+      renderBanners,
+      sectionThemes,
+      'All Section Theme Variations',
+      'Below are all theme variations with all 4 banner types for visual regression testing.',
+      'Section Theme',
+    )}
   `;
 };
