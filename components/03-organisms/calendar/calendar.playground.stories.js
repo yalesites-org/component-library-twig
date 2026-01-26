@@ -1,6 +1,7 @@
 import './yds-calendar';
 import calendarTwig from './yds-calendar.twig';
 import monthData from './calendar.yml';
+import { createPlaygroundIntro } from '../../_storybook/playground-utils';
 
 export default {
   title: 'Organisms/Calendar/Playground',
@@ -28,23 +29,24 @@ export const Playground = ({ showEvents }) => {
       );
 
   return `
-    <h2>Interactive Calendar Playground</h2>
-    <p>Use the controls to toggle event visibility. The calendar shows month navigation and event modals.</p>
+    ${createPlaygroundIntro(
+      'Use the controls to toggle event visibility. The calendar shows month navigation and event modals.',
+    )}
 
     ${calendarTwig({ month: calendarData })}
 
-    <hr style="margin: 3rem 0; border: 1px solid #ccc;">
+    <hr class="sb-section__divider">
 
     <h2>Calendar States for VRT</h2>
 
-    <div style="margin-bottom: 3rem;">
-      <h3>Calendar with Events</h3>
+    <div class="sb-section__container">
+      <h3 class="sb-section__subheading">Calendar with Events</h3>
       <p>Shows calendar with events on multiple dates</p>
       ${calendarTwig({ month: monthData })}
     </div>
 
-    <div style="margin-bottom: 3rem;">
-      <h3>Calendar without Events</h3>
+    <div class="sb-section__container">
+      <h3 class="sb-section__subheading">Calendar without Events</h3>
       <p>Shows empty calendar month</p>
       ${calendarTwig({
         month: monthData.map((week) =>

@@ -137,7 +137,7 @@ const config = {
 };
 
 export default {
-  title: 'Global Config',
+  title: 'Introduction/Global Config',
   parameters: {
     layout: 'fullscreen',
   },
