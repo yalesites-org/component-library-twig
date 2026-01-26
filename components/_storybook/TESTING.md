@@ -17,6 +17,7 @@ If your component appears within a layout section and responds to section theme 
 - **Use**: `createThemeVariations()` utility from `playground-utils.js`
 
 **Example**:
+
 ```javascript
 ${createThemeVariations(
   (theme) => componentTwig({ ...config, component__theme: 'one' }),
@@ -36,6 +37,7 @@ If your component has accent color options (the "dial" in CMS):
 - **Use**: `createThemeVariations()` utility
 
 **Example**:
+
 ```javascript
 ${createThemeVariations(
   (theme) => componentTwig({ ...config, component__theme: theme }),
@@ -55,6 +57,7 @@ If your component has style variations (layout, position, size, etc.):
 - **Use**: `createVariations()` utility
 
 **Example**:
+
 ```javascript
 // Position variations
 ${createVariations(
@@ -82,6 +85,7 @@ If your component has both theme AND accent:
 - **Use**: `createThemeAccentCombinations()` utility with `vrt-combinations.yml` data
 
 **Example**:
+
 ```javascript
 import vrtCombinations from '../_storybook/vrt-combinations.yml';
 
@@ -101,18 +105,21 @@ ${createThemeAccentCombinations(
 Before submitting a new or updated playground story, verify:
 
 ### Coverage
+
 - [ ] All theme types are tested (section, component, global if applicable)
 - [ ] All style variations are tested (position, layout, size, etc.)
 - [ ] All boolean flags are tested (with icon vs without, expanded vs collapsed, etc.)
 - [ ] Representative combinations are tested (not every permutation, but key ones)
 
 ### Code Quality
+
 - [ ] Using utility functions from `playground-utils.js` (not duplicating code)
 - [ ] Using theme constants from `theme-constants.js` (not hardcoding arrays)
 - [ ] No inline styles in VRT sections (use `.sb-section__*` classes)
 - [ ] VRT section titles are descriptive
 
 ### User Experience
+
 - [ ] Interactive section has all relevant controls
 - [ ] Control labels follow naming conventions (see README.md)
 - [ ] VRT sections are clearly separated and labeled
@@ -121,16 +128,19 @@ Before submitting a new or updated playground story, verify:
 ## Performance Considerations
 
 ### Do
+
 - ✅ Use utilities to generate VRT sections (reduces code size)
 - ✅ Test representative combinations, not every permutation
 - ✅ Group related variations together
 
 ### Don't
+
 - ❌ Test every possible combination of multiple variables (combinatorial explosion)
 - ❌ Duplicate large data structures across sections
 - ❌ Create excessive nesting of variations
 
 **Example**: For a component with 5 themes, 3 positions, and 2 sizes:
+
 - **Don't**: 5 × 3 × 2 = 30 variations (too many)
 - **Do**: 5 themes + 3 positions + 2 sizes = 10 variations (test each independently)
 
@@ -163,6 +173,7 @@ If your component has optional icons:
 ## Examples in Codebase
 
 **Good examples to reference**:
+
 - `components/03-organisms/calendar/calendar.playground.stories.js` - Clean structure
 - `components/03-organisms/site-header/site-header.playground.stories.js` - Complex theme/accent combinations
 - `components/02-molecules/accordion/accordion.playground.stories.js` - Standard pattern
