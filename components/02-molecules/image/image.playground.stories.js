@@ -2,6 +2,12 @@ import contentImageTwig from './yds-content-image.twig';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 
+import { sectionThemes } from '../../_storybook/theme-constants';
+import {
+  createPlaygroundIntro,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
+
 export default {
   title: 'Molecules/Image/Playground',
   argTypes: {
@@ -16,8 +22,9 @@ export default {
     },
     sectionTheme: {
       name: 'Section Theme',
+      description: 'Background color theme for the layout section',
       type: 'select',
-      options: ['default', 'one', 'two', 'three', 'four'],
+      options: sectionThemes,
       if: { arg: 'layoutOption', neq: 'single' },
     },
     layoutOption: {
@@ -40,22 +47,20 @@ export default {
 };
 
 export const Playground = ({ caption, width, sectionTheme, layoutOption }) => {
-  const themes = ['default', 'one', 'two', 'three', 'four'];
-
   const permutationLayout =
     layoutOption === 'single' ? 'fifty-fifty' : layoutOption;
 
+  // Helper function to create layout content (component-specific logic kept inline)
   const createLayoutContent = (layout, theme = sectionTheme) => {
     if (layout === 'single') {
-      return `
-        ${contentImageTwig({
-          ...imageData.responsive_images['16x9'],
-          content_image__caption: caption,
-          content_image__width: width,
-        })}
-      `;
+      return contentImageTwig({
+        ...imageData.responsive_images['16x9'],
+        content_image__caption: caption,
+        content_image__width: width,
+      });
     }
 
+    // Multi-column layout with different image aspect ratios
     const primaryImage = contentImageTwig({
       ...imageData.responsive_images['16x9'],
       content_image__caption: caption,
@@ -99,49 +104,35 @@ export const Playground = ({ caption, width, sectionTheme, layoutOption }) => {
 
   if (layoutOption === 'single') {
     return `
-      <h2>Interactive Playground</h2>
-      <p>Single column layout (no component theme support)</p>
+      ${createPlaygroundIntro(
+        'Single column layout (no component theme support)',
+      )}
 
       ${createLayoutContent('single')}
 
-      <hr style="margin: 3rem 0; border: 1px solid #ccc;">
-
-      <h2>All Section Theme Variations</h2>
-      <p>Below are all section theme variations using fifty-fifty layout (since single layout doesn't support themes).</p>
-
-      ${themes
-        .map(
-          (theme) => `
-        <div style="margin-bottom: 2rem;">
-          <h3>Section Theme: ${theme}</h3>
-          ${createLayoutContent(permutationLayout, theme)}
-        </div>
-      `,
-        )
-        .join('')}
+      ${createThemeVariations(
+        (theme) => createLayoutContent(permutationLayout, theme),
+        sectionThemes,
+        'All Section Theme Variations',
+        "Below are all section theme variations using fifty-fifty layout (since single layout doesn't support themes).",
+        'Section Theme',
+      )}
     `;
   }
 
   return `
-    <h2>Interactive Playground</h2>
-    <p>Use the Storybook controls to test different settings and see the results below.</p>
+    ${createPlaygroundIntro(
+      'Use the Storybook controls to test different settings and see the results below.',
+    )}
 
     ${createLayoutContent(layoutOption)}
 
-    <hr style="margin: 3rem 0; border: 1px solid #ccc;">
-
-    <h2>All Section Theme Variations</h2>
-    <p>Below are all section theme variations using your current caption and width settings with ${layoutOption} layout.</p>
-
-    ${themes
-      .map(
-        (theme) => `
-      <div style="margin-bottom: 2rem;">
-        <h3>Section Theme: ${theme}</h3>
-        ${createLayoutContent(permutationLayout, theme)}
-      </div>
-    `,
-      )
-      .join('')}
+    ${createThemeVariations(
+      (theme) => createLayoutContent(permutationLayout, theme),
+      sectionThemes,
+      `All Section Theme Variations`,
+      `Below are all section theme variations using your current caption and width settings with ${layoutOption} layout.`,
+      'Section Theme',
+    )}
   `;
 };

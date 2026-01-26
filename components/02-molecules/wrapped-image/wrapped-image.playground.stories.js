@@ -1,12 +1,14 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 import wrappedImageTwig from './yds-wrapped-image.twig';
 import textFieldTwig from '../text/yds-text-field.twig';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 import WrappedImageData from './wrapped-image.yml';
 
-const colorPairingsData = Object.keys(tokens['component-themes']);
+import { componentThemes } from '../../_storybook/theme-constants';
+import {
+  createPlaygroundIntro,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -19,8 +21,9 @@ export default {
   argTypes: {
     sectionTheme: {
       name: 'Section Theme',
+      description: 'Background color theme for the layout section',
       type: 'select',
-      options: colorPairingsData,
+      options: componentThemes,
     },
     caption: {
       name: 'Caption',
@@ -51,54 +54,37 @@ export const Playground = ({
   imageAlignment,
   imageStyle,
 }) => {
-  const themes = colorPairingsData;
+  // Render function for wrapped image variations
+  const renderWrappedImage = (theme) => `
+    <div data-component-theme="${theme}">
+      ${textFieldTwig({
+        text_field__content: WrappedImageData.text_one,
+        text_field__width: 'site',
+        text_field__alignment: 'left',
+      })}
+      ${wrappedImageTwig({
+        ...imageData.responsive_images['3x2'],
+        wrapped_image__caption: caption,
+        wrapped_image__alignment: imageAlignment,
+        wrapped_image__style: imageStyle,
+        wrapped_image__content: WrappedImageData.text_two,
+      })}
+    </div>
+  `;
 
   return `
-  <h2>Interactive Playground</h2>
-  <p>Use the controls to test different wrapped image alignments and styles.</p>
+    ${createPlaygroundIntro(
+      'Use the controls to test different wrapped image alignments and styles.',
+    )}
 
-  <div data-component-theme="${sectionTheme}">
-    ${textFieldTwig({
-      text_field__content: WrappedImageData.text_one,
-      text_field__width: 'site',
-      text_field__alignment: 'left',
-    })}
-    ${wrappedImageTwig({
-      ...imageData.responsive_images['3x2'],
-      wrapped_image__caption: caption,
-      wrapped_image__alignment: imageAlignment,
-      wrapped_image__style: imageStyle,
-      wrapped_image__content: WrappedImageData.text_two,
-    })}
-  </div>
+    ${renderWrappedImage(sectionTheme)}
 
-  <hr style="margin: 3rem 0; border: 1px solid #ccc;">
-
-  <h2>All Section Theme Variations</h2>
-  <p>Below are all theme variations for visual regression testing.</p>
-
-  ${themes
-    .map(
-      (theme) => `
-    <div style="margin-bottom: 2rem;">
-      <h3>Section Theme: ${theme}</h3>
-      <div data-component-theme="${theme}">
-        ${textFieldTwig({
-          text_field__content: WrappedImageData.text_one,
-          text_field__width: 'site',
-          text_field__alignment: 'left',
-        })}
-        ${wrappedImageTwig({
-          ...imageData.responsive_images['3x2'],
-          wrapped_image__caption: caption,
-          wrapped_image__alignment: imageAlignment,
-          wrapped_image__style: imageStyle,
-          wrapped_image__content: WrappedImageData.text_two,
-        })}
-      </div>
-    </div>
-  `,
-    )
-    .join('')}
+    ${createThemeVariations(
+      renderWrappedImage,
+      componentThemes,
+      'All Section Theme Variations',
+      'Below are all theme variations for visual regression testing.',
+      'Section Theme',
+    )}
   `;
 };
