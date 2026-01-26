@@ -93,8 +93,6 @@ export const Playground = ({
     primaryWidth: '100%',
   })}
 
-  <hr class="sb-section__divider">
-
   ${createThemeVariations(
     (theme) =>
       createSectionWrapper(theme, renderAccordion(), {

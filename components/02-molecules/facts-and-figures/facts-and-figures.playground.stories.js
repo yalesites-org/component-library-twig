@@ -95,8 +95,6 @@ export const Playground = ({
 
   ${renderFactsAndFigures(themeColor)}
 
-  <hr class="sb-section__divider">
-
   ${createThemeVariations(
     renderFactsAndFigures,
     componentThemes,

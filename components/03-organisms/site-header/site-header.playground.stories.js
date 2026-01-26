@@ -1,23 +1,22 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import siteHeaderTwig from './yds-site-header.twig';
 import utilityNavData from '../menu/utility-nav/utility-nav.yml';
 import primaryNavData from '../menu/primary-nav/primary-nav.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
+import siteHeaderConfigData from './site-header-config.yml';
+import vrtData from '../../_storybook/vrt-combinations.yml';
 import '../../02-molecules/menu/menu-toggle/yds-menu-toggle';
 import './yds-site-header';
 
-const borderThicknessOptions = Object.keys(tokens.border.thickness);
-const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
-const siteHeaderAccents = [
-  'one',
-  'two',
-  'three',
-  'four',
-  'five',
-  'six',
-  'seven',
-  'eight',
-];
+import {
+  borderThicknessOptions,
+  siteHeaderThemes,
+  siteHeaderAccents,
+} from '../../_storybook/theme-constants';
+import {
+  createPlaygroundIntro,
+  createThemeAccentCombinations,
+  createVariations,
+} from '../../_storybook/playground-utils';
 
 export default {
   title: 'Organisms/Site/Header/Playground',
@@ -43,11 +42,13 @@ export default {
     },
     siteHeaderTheme: {
       name: 'Header Theme (dial)',
-      options: siteHeaderThemeOptions,
+      description: 'Color theme for the site header',
+      options: siteHeaderThemes,
       type: 'select',
     },
     siteHeaderAccent: {
       name: 'Header Accent Color (dial)',
+      description: 'Accent color for the site header',
       options: siteHeaderAccents,
       type: 'select',
     },
@@ -81,11 +82,9 @@ export const Playground = ({
   siteHeaderSiteNameImage,
   siteHeaderAccent,
 }) => {
-  // Base header configuration
+  // Base header configuration from extracted YML
   const baseConfig = {
-    site_name: 'Department of Chemistry',
-    site_header__branding_name: 'Yale University',
-    site_header__branding_link: 'https://www.yale.edu',
+    ...siteHeaderConfigData.baseConfig,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
   };
@@ -93,23 +92,19 @@ export const Playground = ({
   // Image configuration for background image
   const imageConfig = imageData.responsive_images['16x9'];
 
-  // Sample theme and accent combinations for VRT
-  const themeCombinations = [
-    { theme: 'one', accent: 'one' },
-    { theme: 'one', accent: 'five' },
-    { theme: 'two', accent: 'two' },
-    { theme: 'three', accent: 'three' },
-  ];
-
-  const navPositions = ['left', 'center', 'right'];
-  const menuVariations = ['basic', 'mega', 'focus'];
+  // Render function for header variations
+  const renderHeader = (config) =>
+    siteHeaderTwig({
+      ...baseConfig,
+      ...config,
+    });
 
   return `
-    <h2 style="padding: 1rem;">Interactive Site Header Playground</h2>
-    <p style="padding: 0 1rem 1rem;">Use the controls to test different header configurations including theme, accent, nav position, and menu variations.</p>
+    ${createPlaygroundIntro(
+      'Use the controls to test different header configurations including theme, accent, nav position, and menu variations.',
+    )}
 
-    ${siteHeaderTwig({
-      ...baseConfig,
+    ${renderHeader({
       ...(siteHeaderImage ? imageConfig : {}),
       site_header__border_thickness: borderThickness,
       site_header__nav_position: primaryNavPosition,
@@ -120,18 +115,9 @@ export const Playground = ({
       site_header__site_name_is_image: siteHeaderSiteNameImage,
     })}
 
-    <hr style="margin: 3rem 0; border: 1px solid #ccc;">
-
-    <h2 style="padding: 1rem;">VRT: Theme & Accent Combinations</h2>
-    <p style="padding: 0 1rem 1rem;">Sample combinations of header themes and accent colors for visual regression testing.</p>
-
-    ${themeCombinations
-      .map(
-        ({ theme, accent }) => `
-      <div style="margin-bottom: 3rem;">
-        <h3 style="padding: 1rem; background: #f0f0f0;">Theme: ${theme}, Accent: ${accent}</h3>
-        ${siteHeaderTwig({
-          ...baseConfig,
+    ${createThemeAccentCombinations(
+      (theme, accent) =>
+        renderHeader({
           site_header__border_thickness: '8',
           site_header__nav_position: 'left',
           site_header__theme: theme,
@@ -139,24 +125,15 @@ export const Playground = ({
           site_header__menu__variation: 'basic',
           site_header__background_image: false,
           site_header__site_name_is_image: false,
-        })}
-      </div>
-    `,
-      )
-      .join('')}
+        }),
+      vrtData.themeAccentPairs,
+      'All Theme & Accent Combinations',
+      'Sample combinations of header themes and accent colors for visual regression testing.',
+    )}
 
-    <hr style="margin: 3rem 0; border: 1px solid #ccc;">
-
-    <h2 style="padding: 1rem;">VRT: Navigation Positions</h2>
-    <p style="padding: 0 1rem 1rem;">Header with different primary navigation positions (left, center, right).</p>
-
-    ${navPositions
-      .map(
-        (position) => `
-      <div style="margin-bottom: 3rem;">
-        <h3 style="padding: 1rem; background: #f0f0f0;">Navigation Position: ${position}</h3>
-        ${siteHeaderTwig({
-          ...baseConfig,
+    ${createVariations(
+      (position) =>
+        renderHeader({
           site_header__border_thickness: '8',
           site_header__nav_position: position,
           site_header__theme: 'one',
@@ -164,24 +141,16 @@ export const Playground = ({
           site_header__menu__variation: 'basic',
           site_header__background_image: false,
           site_header__site_name_is_image: false,
-        })}
-      </div>
-    `,
-      )
-      .join('')}
+        }),
+      vrtData.navigationPositions,
+      'All Navigation Position Variations',
+      'Header with different primary navigation positions (left, center, right).',
+      'Navigation Position',
+    )}
 
-    <hr style="margin: 3rem 0; border: 1px solid #ccc;">
-
-    <h2 style="padding: 1rem;">VRT: Menu Variations</h2>
-    <p style="padding: 0 1rem 1rem;">Header with different menu variations (basic, mega, focus).</p>
-
-    ${menuVariations
-      .map(
-        (variation) => `
-      <div style="margin-bottom: 3rem;">
-        <h3 style="padding: 1rem; background: #f0f0f0;">Menu Variation: ${variation}</h3>
-        ${siteHeaderTwig({
-          ...baseConfig,
+    ${createVariations(
+      (variation) =>
+        renderHeader({
           site_header__border_thickness: '8',
           site_header__nav_position: 'left',
           site_header__theme: 'one',
@@ -189,21 +158,19 @@ export const Playground = ({
           site_header__menu__variation: variation,
           site_header__background_image: false,
           site_header__site_name_is_image: false,
-        })}
-      </div>
-    `,
-      )
-      .join('')}
+        }),
+      vrtData.menuVariations,
+      'All Menu Variations',
+      'Header with different menu variations (basic, mega, focus).',
+      'Menu Variation',
+    )}
 
-    <hr style="margin: 3rem 0; border: 1px solid #ccc;">
+    <h2>Image Variations</h2>
+    <p>Header with background image and site name as image.</p>
 
-    <h2 style="padding: 1rem;">VRT: Image Variations</h2>
-    <p style="padding: 0 1rem 1rem;">Header with background image and site name as image.</p>
-
-    <div style="margin-bottom: 3rem;">
-      <h3 style="padding: 1rem; background: #f0f0f0;">With Background Image (requires focus menu variation)</h3>
-      ${siteHeaderTwig({
-        ...baseConfig,
+    <div>
+      <h3>With Background Image (requires focus menu variation)</h3>
+      ${renderHeader({
         ...imageConfig,
         site_header__border_thickness: '8',
         site_header__nav_position: 'left',
@@ -215,10 +182,9 @@ export const Playground = ({
       })}
     </div>
 
-    <div style="margin-bottom: 3rem;">
-      <h3 style="padding: 1rem; background: #f0f0f0;">Site Name as Image (SVG Logo)</h3>
-      ${siteHeaderTwig({
-        ...baseConfig,
+    <div>
+      <h3>Site Name as Image (SVG Logo)</h3>
+      ${renderHeader({
         site_header__border_thickness: '8',
         site_header__nav_position: 'left',
         site_header__theme: 'one',
