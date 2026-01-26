@@ -9,6 +9,7 @@ import '../components/00-tokens/typography/cl-typography.scss';
 import '../components/00-tokens/effects/cl-effects.scss';
 import '../components/00-tokens/layout/cl-layout.scss';
 import '../components/04-page-layouts/placeholder/cl-placeholder.scss';
+import '../components/_storybook/storybook.scss';
 import '../fonts/fontawesome/css/fontawesome.css';
 import '../fonts/fontawesome/css/regular.css';
 import '../fonts/fontawesome/css/solid.css';
@@ -80,7 +81,13 @@ export const parameters = {
   controls: { disableSaveFromUI: true },
   options: {
     storySort: {
-      order: ['Introduction', 'Global Config', 'TOKENS', '*'],
+      order: [
+        'Introduction',
+        ['Welcome', 'Theme System'],
+        'Global Config',
+        'TOKENS',
+        '*',
+      ],
     },
   },
 };
