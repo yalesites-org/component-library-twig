@@ -57,11 +57,6 @@ export default {
       type: 'select',
       defaultValue: 'one',
     },
-    sectionTheme: {
-      name: 'Section Theme',
-      type: 'select',
-      options: ['default', 'one', 'two', 'three', 'four'],
-    },
     iconName: {
       name: 'Icon Selection',
       options: iconDisplayToValueMap,
@@ -77,7 +72,6 @@ export default {
     alignment: 'left',
     themeColor: 'one',
     iconName: '- None -',
-    sectionTheme: 'default',
   },
 };
 
@@ -91,36 +85,34 @@ export const Playground = ({
   iconName,
 }) => {
   const hasIcon = iconName && iconName !== '- None -';
-  const themes = ['default', 'one', 'two', 'three', 'four'];
+  const themes = colorPairingsData;
 
   return `
-  <div class="wrap-for-global-theme" data-global-theme="one">
-    <h2>Interactive Playground</h2>
-    <p>Use the StoryBook controls to see the facts and figures implement the available variations.</p>
-    <ul class='facts-and-figures__group__wrap' data-facts-and-figures-collection-type='single'>
-      ${factsAndFiguresTwig({
-        facts_and_figures__stat: factsAndFigures,
-        facts_and_figures__content: content,
-        facts_and_figures__presentation_style: presentationStyle,
-        facts_and_figures__font_style: fontStyle,
-        facts_and_figures__alignment: alignment,
-        facts_and_figures__theme: themeColor,
-        facts_and_figures__has_icon: hasIcon ? 'true' : 'false',
-        facts_and_figures__icon_name: hasIcon ? iconName : null,
-      })}
-    </ul>
-  </div>
+  <h2>Interactive Playground</h2>
+  <p>Use the StoryBook controls to see the facts and figures implement the available variations.</p>
+  <ul class='facts-and-figures__group__wrap' data-facts-and-figures-collection-type='single'>
+    ${factsAndFiguresTwig({
+      facts_and_figures__stat: factsAndFigures,
+      facts_and_figures__content: content,
+      facts_and_figures__presentation_style: presentationStyle,
+      facts_and_figures__font_style: fontStyle,
+      facts_and_figures__alignment: alignment,
+      facts_and_figures__theme: themeColor,
+      facts_and_figures__has_icon: hasIcon ? 'true' : 'false',
+      facts_and_figures__icon_name: hasIcon ? iconName : null,
+    })}
+  </ul>
 
   <hr style="margin: 3rem 0; border: 1px solid #ccc;">
 
-  <h2>All Section Theme Variations</h2>
-  <p>Below are all theme variations for visual regression testing.</p>
+  <h2>All Component Theme Variations</h2>
+  <p>Below are all component theme variations for visual regression testing.</p>
 
   ${themes
     .map(
       (theme) => `
-    <div class="wrap-for-global-theme" data-global-theme="${theme}">
-      <h3>Section Theme: ${theme}</h3>
+    <div style="margin-bottom: 2rem;">
+      <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin-bottom: 1rem;">Component Theme: ${theme}</h3>
       <ul class='facts-and-figures__group__wrap' data-facts-and-figures-collection-type='single'>
         ${factsAndFiguresTwig({
           facts_and_figures__stat: factsAndFigures,
@@ -128,7 +120,7 @@ export const Playground = ({
           facts_and_figures__presentation_style: presentationStyle,
           facts_and_figures__font_style: fontStyle,
           facts_and_figures__alignment: alignment,
-          facts_and_figures__theme: themeColor,
+          facts_and_figures__theme: theme,
           facts_and_figures__has_icon: hasIcon ? 'true' : 'false',
           facts_and_figures__icon_name: hasIcon ? iconName : null,
         })}
