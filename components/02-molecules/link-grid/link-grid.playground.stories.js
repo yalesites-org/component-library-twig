@@ -1,10 +1,15 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 import linkGridTwig from './yds-link-grid.twig';
 
 import linkGridData from './link-grid.yml';
 
-const colorPairingsData = Object.keys(tokens['component-themes']);
+import {
+  componentThemes,
+  sectionThemes,
+} from '../../_storybook/theme-constants';
+import {
+  createPlaygroundIntro,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -14,13 +19,16 @@ export default {
   argTypes: {
     sectionTheme: {
       name: 'Section Theme',
+      description: 'Background color theme for the layout section',
       type: 'select',
-      options: colorPairingsData,
+      options: sectionThemes,
     },
     themeColor: {
-      name: 'Component Theme (dial)',
+      name: 'Link Grid Theme (dial)',
+      description:
+        'Color accent theme for this component (from color dial in CMS)',
       type: 'select',
-      options: colorPairingsData,
+      options: componentThemes,
     },
     lineTreatment: {
       name: 'Line Treatment',
@@ -29,55 +37,41 @@ export default {
     },
   },
   args: {
-    sectionTheme: 'one',
+    sectionTheme: 'default',
     themeColor: 'one',
     lineTreatment: 'default',
   },
 };
 
 export const Playground = ({ sectionTheme, themeColor, lineTreatment }) => {
-  const themes = colorPairingsData;
-
-  return `
-  <h2>Interactive Playground</h2>
-  <p>Use the controls to test different theme combinations and line treatments.</p>
-
-  <div data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout">
-    <div class="yds-layout__inner">
-      <div class="yds-layout__primary">
-        ${linkGridTwig({
-          link_grid__theme: themeColor,
-          link_grid__line_treatment: lineTreatment,
-          ...linkGridData,
-        })}
-      </div>
-    </div>
-  </div>
-
-  <hr style="margin: 3rem 0; border: 1px solid #ccc;">
-
-  <h2>All Section Theme Variations</h2>
-  <p>Below are all section theme variations with the selected component theme and line treatment for visual regression testing.</p>
-
-  ${themes
-    .map(
-      (theme) => `
-    <div style="margin-bottom: 2rem;">
-      <h3>Section Theme: ${theme}</h3>
-      <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-        <div class="yds-layout__inner">
-          <div class="yds-layout__primary">
-            ${linkGridTwig({
-              link_grid__theme: themeColor,
-              link_grid__line_treatment: lineTreatment,
-              ...linkGridData,
-            })}
-          </div>
+  // Render function for link grid variations
+  const renderLinkGrid = (theme) => `
+    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
+      <div class="yds-layout__inner">
+        <div class="yds-layout__primary">
+          ${linkGridTwig({
+            link_grid__theme: themeColor,
+            link_grid__line_treatment: lineTreatment,
+            ...linkGridData,
+          })}
         </div>
       </div>
     </div>
-  `,
-    )
-    .join('')}
+  `;
+
+  return `
+    ${createPlaygroundIntro(
+      'Use the controls to test different theme combinations and line treatments.',
+    )}
+
+    ${renderLinkGrid(sectionTheme)}
+
+    ${createThemeVariations(
+      renderLinkGrid,
+      sectionThemes,
+      'All Section Theme Variations',
+      'Below are all section theme variations with the selected component theme and line treatment for visual regression testing.',
+      'Section Theme',
+    )}
   `;
 };
