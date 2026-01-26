@@ -2,6 +2,12 @@ import pullQuoteTwig from './yds-pull-quote.twig';
 
 import pullQuoteData from './pull-quote.yml';
 
+import { sectionThemes } from '../../_storybook/theme-constants';
+import {
+  createPlaygroundIntro,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
+
 export default {
   title: 'Molecules/Quotes/Pull Quote/Playground',
   argTypes: {
@@ -20,11 +26,13 @@ export default {
     },
     sectionTheme: {
       name: 'Section Theme',
+      description: 'Background color theme for the layout section',
       type: 'select',
-      options: ['default', 'one', 'two', 'three', 'four'],
+      options: sectionThemes,
     },
     accentColor: {
-      name: 'Component Theme (dial)',
+      name: 'Pull Quote Accent (dial)',
+      description: 'Accent color for the pull quote',
       options: ['one', 'two', 'three'],
       type: 'select',
       if: { arg: 'sectionTheme', eq: 'default' },
@@ -46,37 +54,11 @@ export const Playground = ({
   attribution,
   sectionTheme,
 }) => {
-  const themes = ['default', 'one', 'two', 'three', 'four'];
-
-  return `
-  <h2>Interactive Playground</h2>
-  <p>Use the StoryBook controls to see the quote implement the available variations and colors.</p>
-
-  <div data-component-has-divider="false" data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
-    <div class="yds-layout__inner" style="--color-pull-quote-accent: var(--color-${accentColor})">
-      <div class="yds-layout__primary" style="width: 100%">
-        ${pullQuoteTwig({
-          pull_quote__quote: quote,
-          pull_quote__attribution: attribution,
-          pull_quote__style: style,
-          pull_quote__accent_theme: accentColor,
-        })}
-      </div>
-    </div>
-  </div>
-
-  <hr style="margin: 3rem 0; border: 1px solid #ccc;">
-
-  <h2>All Section Theme Variations</h2>
-  <p>Below are all theme variations for visual regression testing.</p>
-
-  ${themes
-    .map(
-      (theme) => `
+  // Render function for pull quote (with accent color CSS variable)
+  const renderPullQuote = (theme) => `
     <div data-component-has-divider="false" data-component-theme="${theme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
       <div class="yds-layout__inner" style="--color-pull-quote-accent: var(--color-${accentColor})">
         <div class="yds-layout__primary" style="width: 100%">
-          <h3>Section Theme: ${theme}</h3>
           ${pullQuoteTwig({
             pull_quote__quote: quote,
             pull_quote__attribution: attribution,
@@ -86,8 +68,21 @@ export const Playground = ({
         </div>
       </div>
     </div>
-  `,
-    )
-    .join('')}
+  `;
+
+  return `
+    ${createPlaygroundIntro(
+      'Use the Storybook controls to see the quote implement the available variations and colors.',
+    )}
+
+    ${renderPullQuote(sectionTheme)}
+
+    ${createThemeVariations(
+      renderPullQuote,
+      sectionThemes,
+      'All Section Theme Variations',
+      'Below are all theme variations for visual regression testing.',
+      'Section Theme',
+    )}
   `;
 };

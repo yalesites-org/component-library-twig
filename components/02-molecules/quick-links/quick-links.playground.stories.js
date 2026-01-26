@@ -1,12 +1,14 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 import quickLinksTwig from './yds-quick-links.twig';
 
 import quickLinksData from './quick-links.yml';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 
-const colorPairingsData = Object.keys(tokens['component-themes']);
+import { componentThemes } from '../../_storybook/theme-constants';
+import {
+  createPlaygroundIntro,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -19,8 +21,9 @@ export default {
   argTypes: {
     sectionTheme: {
       name: 'Section Theme',
+      description: 'Background color theme for the layout section',
       type: 'select',
-      options: colorPairingsData,
+      options: componentThemes,
     },
     heading: {
       name: 'Heading',
@@ -44,13 +47,9 @@ export default {
 };
 
 export const Playground = ({ sectionTheme, heading, description, image }) => {
-  const themes = colorPairingsData;
-
-  return `
-    <h2>Interactive Playground</h2>
-    <p>Use the controls to test different settings.</p>
-
-    <div data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout">
+  // Render function for quick links variations
+  const renderQuickLinks = (theme) => `
+    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
       <div class="yds-layout__inner">
         <div class="yds-layout__primary">
           ${quickLinksTwig({
@@ -63,33 +62,19 @@ export const Playground = ({ sectionTheme, heading, description, image }) => {
         </div>
       </div>
     </div>
+  `;
 
-    <hr style="margin: 3rem 0; border: 1px solid #ccc;">
+  return `
+    ${createPlaygroundIntro('Use the controls to test different settings.')}
 
-    <h2>All Section Theme Variations</h2>
-    <p>Below are all theme variations for visual regression testing.</p>
+    ${renderQuickLinks(sectionTheme)}
 
-    ${themes
-      .map(
-        (theme) => `
-      <div style="margin-bottom: 2rem;">
-        <h3>Section Theme: ${theme}</h3>
-        <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-          <div class="yds-layout__inner">
-            <div class="yds-layout__primary">
-              ${quickLinksTwig({
-                ...quickLinksData,
-                ...imageData.responsive_images['16x9'],
-                quick_links__heading: heading,
-                quick_links__description: description,
-                quick_links__image: image,
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-    `,
-      )
-      .join('')}
+    ${createThemeVariations(
+      renderQuickLinks,
+      componentThemes,
+      'All Section Theme Variations',
+      'Below are all theme variations for visual regression testing.',
+      'Section Theme',
+    )}
   `;
 };
