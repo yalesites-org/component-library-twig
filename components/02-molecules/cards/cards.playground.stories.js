@@ -1,5 +1,3 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 import customCardTwig from './custom-card/yds-custom-card.twig';
 import directoryCardTwig from './directory-listing-card/yds-directory-listing-card.twig';
 import referenceCardTwig from './reference-card/examples/_card--examples.twig';
@@ -12,7 +10,11 @@ import referencePageCardData from './reference-card/examples/page-card.yml';
 import referenceResourceData from './reference-card/examples/resource-card.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
-const colorPairingsData = Object.keys(tokens['component-themes']);
+import { sectionThemes } from '../../_storybook/theme-constants';
+import {
+  createPlaygroundIntro,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -25,24 +27,21 @@ export default {
   argTypes: {
     sectionTheme: {
       name: 'Section Theme',
+      description: 'Background color theme for the layout section',
       type: 'select',
-      options: colorPairingsData,
+      options: sectionThemes,
     },
   },
   args: {
-    sectionTheme: 'one',
+    sectionTheme: 'default',
   },
 };
 
 export const Playground = ({ sectionTheme }) => {
-  const themes = colorPairingsData;
-
-  return `
-  <h2>Interactive Playground</h2>
-  <p>All 7 card types are shown below for comprehensive visual regression testing.</p>
-
-  <div data-component-theme="${sectionTheme}">
-    <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin-bottom: 1rem;">1. Custom Card</h3>
+  // Render function for all card types
+  const renderCards = (theme) => `
+    <div data-component-theme="${theme}">
+      <h3>1. Custom Card</h3>
     <div class='custom-card-collection' data-component-width='site' data-collection-featured="true">
       <div class='custom-card-collection__inner'>
         <ul class='custom-card-collection__cards'>
@@ -57,7 +56,7 @@ export const Playground = ({ sectionTheme }) => {
       </div>
     </div>
 
-    <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin: 2rem 0 1rem 0;">2. Directory Listing Card (Profile)</h3>
+      <h3>2. Directory Listing Card (Profile)</h3>
     <div class='card-collection' data-component-width='site' data-collection-type='profile-directory' data-collection-featured="true">
       <div class='card-collection__inner'>
         <ul class='card-collection__cards'>
@@ -84,7 +83,7 @@ export const Playground = ({ sectionTheme }) => {
       </div>
     </div>
 
-    <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin: 2rem 0 1rem 0;">3. Post Card (Reference)</h3>
+      <h3>3. Post Card (Reference)</h3>
     <div class='card-collection' data-component-width='site' data-collection-type='grid' data-collection-featured="true">
       <div class='card-collection__inner'>
         <ul class='card-collection__cards'>
@@ -106,7 +105,7 @@ export const Playground = ({ sectionTheme }) => {
       </div>
     </div>
 
-    <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin: 2rem 0 1rem 0;">4. Event Card (Reference)</h3>
+      <h3>4. Event Card (Reference)</h3>
     <div class='card-collection' data-component-width='site' data-collection-type='grid' data-collection-featured="true">
       <div class='card-collection__inner'>
         <ul class='card-collection__cards'>
@@ -133,7 +132,7 @@ export const Playground = ({ sectionTheme }) => {
       </div>
     </div>
 
-    <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin: 2rem 0 1rem 0;">5. Profile Card (Reference)</h3>
+      <h3>5. Profile Card (Reference)</h3>
     <div class='card-collection' data-component-width='site' data-collection-source='profile' data-collection-type='grid' data-collection-featured="true">
       <div class='card-collection__inner'>
         <ul class='card-collection__cards'>
@@ -160,7 +159,7 @@ export const Playground = ({ sectionTheme }) => {
       </div>
     </div>
 
-    <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin: 2rem 0 1rem 0;">6. Page Card (Reference)</h3>
+      <h3>6. Page Card (Reference)</h3>
     <div class='card-collection' data-component-width='site' data-collection-type='grid' data-collection-featured="true">
       <div class='card-collection__inner'>
         <ul class='card-collection__cards'>
@@ -185,7 +184,7 @@ export const Playground = ({ sectionTheme }) => {
       </div>
     </div>
 
-    <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin: 2rem 0 1rem 0;">7. Resource Card (Reference)</h3>
+      <h3>7. Resource Card (Reference)</h3>
     <div class='card-collection' data-component-width='site' data-collection-type='grid' data-collection-featured="true">
       <div class='card-collection__inner'>
         <ul class='card-collection__cards'>
@@ -209,20 +208,19 @@ export const Playground = ({ sectionTheme }) => {
         </ul>
       </div>
     </div>
-  </div>
+  `;
 
-  <hr style="margin: 3rem 0; border: 1px solid #ccc;">
+  return `
+    ${createPlaygroundIntro(
+      'All 7 card types are shown below for comprehensive visual regression testing.',
+    )}
 
-  <h2>All Section Theme Variations</h2>
-  <p>Below are all theme variations with all 7 card types for visual regression testing.</p>
+    ${renderCards(sectionTheme)}
 
-  ${themes
-    .map(
+    ${createThemeVariations(
       (theme) => `
-    <div style="margin-bottom: 4rem; padding: 1rem; border: 2px solid #ccc;">
-      <h3 style="margin: 0 0 1.5rem 0; padding-bottom: 0.5rem; border-bottom: 2px solid #333;">Section Theme: ${theme}</h3>
       <div data-component-theme="${theme}">
-        <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin-bottom: 1rem;">1. Custom Card</h3>
+        <h3>1. Custom Card</h3>
         <div class='custom-card-collection' data-component-width='site' data-collection-featured="true">
           <div class='custom-card-collection__inner'>
             <ul class='custom-card-collection__cards'>
@@ -237,7 +235,7 @@ export const Playground = ({ sectionTheme }) => {
           </div>
         </div>
 
-        <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin: 2rem 0 1rem 0;">2. Directory Listing Card (Profile)</h3>
+        <h3>2. Directory Listing Card (Profile)</h3>
         <div class='card-collection' data-component-width='site' data-collection-type='profile-directory' data-collection-featured="true">
           <div class='card-collection__inner'>
             <ul class='card-collection__cards'>
@@ -264,7 +262,7 @@ export const Playground = ({ sectionTheme }) => {
           </div>
         </div>
 
-        <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin: 2rem 0 1rem 0;">3. Post Card (Reference)</h3>
+        <h3>3. Post Card (Reference)</h3>
         <div class='card-collection' data-component-width='site' data-collection-type='grid' data-collection-featured="true">
           <div class='card-collection__inner'>
             <ul class='card-collection__cards'>
@@ -288,7 +286,7 @@ export const Playground = ({ sectionTheme }) => {
           </div>
         </div>
 
-        <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin: 2rem 0 1rem 0;">4. Event Card (Reference)</h3>
+        <h3>4. Event Card (Reference)</h3>
         <div class='card-collection' data-component-width='site' data-collection-type='grid' data-collection-featured="true">
           <div class='card-collection__inner'>
             <ul class='card-collection__cards'>
@@ -317,7 +315,7 @@ export const Playground = ({ sectionTheme }) => {
           </div>
         </div>
 
-        <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin: 2rem 0 1rem 0;">5. Profile Card (Reference)</h3>
+        <h3>5. Profile Card (Reference)</h3>
         <div class='card-collection' data-component-width='site' data-collection-source='profile' data-collection-type='grid' data-collection-featured="true">
           <div class='card-collection__inner'>
             <ul class='card-collection__cards'>
@@ -346,7 +344,7 @@ export const Playground = ({ sectionTheme }) => {
           </div>
         </div>
 
-        <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin: 2rem 0 1rem 0;">6. Page Card (Reference)</h3>
+        <h3>6. Page Card (Reference)</h3>
         <div class='card-collection' data-component-width='site' data-collection-type='grid' data-collection-featured="true">
           <div class='card-collection__inner'>
             <ul class='card-collection__cards'>
@@ -373,7 +371,7 @@ export const Playground = ({ sectionTheme }) => {
           </div>
         </div>
 
-        <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin: 2rem 0 1rem 0;">7. Resource Card (Reference)</h3>
+        <h3>7. Resource Card (Reference)</h3>
         <div class='card-collection' data-component-width='site' data-collection-type='grid' data-collection-featured="true">
           <div class='card-collection__inner'>
             <ul class='card-collection__cards'>
@@ -400,9 +398,11 @@ export const Playground = ({ sectionTheme }) => {
           </div>
         </div>
       </div>
-    </div>
-  `,
-    )
-    .join('')}
+      `,
+      sectionThemes,
+      'All Section Theme Variations',
+      'Below are all theme variations with all 7 card types for visual regression testing.',
+      'Section Theme',
+    )}
   `;
 };
