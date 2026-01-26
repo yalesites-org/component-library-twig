@@ -6,6 +6,11 @@ import resourceCardData from '../../02-molecules/cards/reference-card/examples/r
 import directoryCardData from '../../02-molecules/cards/directory-listing-card/yds-directory-listing-card.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
+import {
+  createPlaygroundIntro,
+  createVariations,
+} from '../../_storybook/playground-utils';
+
 /**
  * Storybook Definition.
  */
@@ -29,12 +34,10 @@ export default {
 export const Playground = ({ collectionType }) => {
   const collectionTypes = ['grid', 'list', 'condensed'];
 
-  return `
-  <h2>Interactive Playground</h2>
-  <p>All card collection types shown with the selected collection type.</p>
-
+  // Render function for all card types
+  const renderAllCardTypes = () => `
   <div>
-    <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin-bottom: 1rem;">Post Cards</h3>
+    <h3>Post Cards</h3>
     ${cardCollectionTwig({
       card_collection__source_type: 'post',
       card_collection__type: collectionType,
@@ -46,7 +49,7 @@ export const Playground = ({ collectionType }) => {
       ...imageData.responsive_images['3x2'],
     })}
 
-    <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin: 2rem 0 1rem 0;">Event Cards</h3>
+    <h3>Event Cards</h3>
     ${cardCollectionTwig({
       card_collection__source_type: 'event',
       format: 'Online',
@@ -59,7 +62,7 @@ export const Playground = ({ collectionType }) => {
       ...imageData.responsive_images['3x2'],
     })}
 
-    <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin: 2rem 0 1rem 0;">Profile Cards</h3>
+    <h3>Profile Cards</h3>
     ${cardCollectionTwig({
       card_collection__source_type: 'profile',
       card_collection__type: collectionType,
@@ -71,7 +74,7 @@ export const Playground = ({ collectionType }) => {
       ...imageData.responsive_images['1x1'],
     })}
 
-    <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin: 2rem 0 1rem 0;">Resource Cards</h3>
+    <h3>Resource Cards</h3>
     ${cardCollectionTwig({
       card_collection__source_type: 'resource',
       card_collection__type: collectionType,
@@ -83,7 +86,7 @@ export const Playground = ({ collectionType }) => {
       ...imageData.responsive_images['3x2'],
     })}
 
-    <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin: 2rem 0 1rem 0;">Directory Listing Cards</h3>
+    <h3>Directory Listing Cards</h3>
     ${cardCollectionTwig({
       card_collection__source_type: 'directory-listing',
       card_collection__type: 'profile-directory',
@@ -94,30 +97,30 @@ export const Playground = ({ collectionType }) => {
       ...imageData.responsive_images['1x1'],
     })}
   </div>
+  `;
 
-  <hr style="margin: 3rem 0; border: 1px solid #ccc;">
+  return `
+    ${createPlaygroundIntro(
+      'All card collection types shown with the selected collection type.',
+    )}
 
-  <h2>All Collection Type Variations</h2>
-  <p>Below are all collection type variations for visual regression testing (showing Post cards as representative example).</p>
+    ${renderAllCardTypes()}
 
-  ${collectionTypes
-    .map(
-      (type) => `
-    <div style="margin-bottom: 2rem;">
-      <h3 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin-bottom: 1rem;">Collection Type: ${type}</h3>
-      ${cardCollectionTwig({
-        card_collection__source_type: 'post',
-        card_collection__type: type,
-        card_collection__heading: `${type} Collection`,
-        card_collection__featured: 'true',
-        card_collection__with_images: 'true',
-        card_collection__cards: [1, 2, 3],
-        ...postCardData,
-        ...imageData.responsive_images['3x2'],
-      })}
-    </div>
-  `,
-    )
-    .join('')}
+    ${createVariations(
+      (type) =>
+        cardCollectionTwig({
+          card_collection__source_type: 'post',
+          card_collection__type: type,
+          card_collection__heading: `${type} Collection`,
+          card_collection__featured: 'true',
+          card_collection__with_images: 'true',
+          card_collection__cards: [1, 2, 3],
+          ...postCardData,
+          ...imageData.responsive_images['3x2'],
+        }),
+      collectionTypes,
+      'All Collection Type Variations',
+      'Collection Type',
+    )}
   `;
 };
