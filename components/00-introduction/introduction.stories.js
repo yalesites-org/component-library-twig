@@ -16,7 +16,7 @@ export default {
 };
 
 const introductionHTML = `
-  <div class="wrap-for-global-theme" data-global-theme="one">
+  <div class="wrap-for-global-theme">
     <div data-component-theme="default" data-component-width="site" data-component-padding="no-padding" class="yds-layout">
       <div class="yds-layout__inner">
         <div class="yds-layout__primary">
@@ -217,7 +217,7 @@ const introductionHTML = `
     </div>
   </div>
 
-  <div class="wrap-for-global-theme" data-global-theme="one">
+  <div class="wrap-for-global-theme">
     <div data-component-theme="default" data-component-width="site" data-component-padding="no-padding" class="yds-layout">
       <div class="yds-layout__inner">
         <div class="yds-layout__primary">
