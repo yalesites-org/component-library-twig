@@ -5,20 +5,17 @@ import tileItemData from './tile-item.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 import factsAndFiguresIconsData from '../facts-and-figures/facts-and-figures-icons.yml';
 
-const iconDisplayToValueMap = {
-  '- None -': '- None -',
-};
+import {
+  componentThemes,
+  sectionThemes,
+} from '../../_storybook/theme-constants';
+import {
+  createPlaygroundIntro,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
+import { createIconMapping, hasIcon } from '../../_storybook/icon-utils';
 
-if (
-  factsAndFiguresIconsData.icons &&
-  typeof factsAndFiguresIconsData.icons === 'object'
-) {
-  Object.entries(factsAndFiguresIconsData.icons).forEach(
-    ([iconName, humanReadableName]) => {
-      iconDisplayToValueMap[humanReadableName] = iconName;
-    },
-  );
-}
+const iconDisplayToValueMap = createIconMapping(factsAndFiguresIconsData);
 
 export default {
   title: 'Molecules/Tile Item/Playground',
@@ -51,14 +48,17 @@ export default {
       type: 'select',
     },
     themeColor: {
-      name: 'Component Theme (dial)',
-      options: ['one', 'two', 'three', 'four', 'five'],
+      name: 'Tile Item Theme (dial)',
+      description:
+        'Color accent theme for this component (from color dial in CMS)',
+      options: componentThemes,
       type: 'select',
     },
     sectionTheme: {
       name: 'Section Theme',
+      description: 'Background color theme for the layout section',
       type: 'select',
-      options: ['default', 'one', 'two', 'three', 'four'],
+      options: sectionThemes,
     },
     image: {
       name: 'With image',
@@ -102,45 +102,11 @@ export const Playground = ({
   iconName,
   sectionTheme,
 }) => {
-  const hasIcon = iconName && iconName !== '- None -';
-  const themes = ['default', 'one', 'two', 'three', 'four'];
+  const hasIconSelected = hasIcon(iconName);
 
-  return `
-  <h2>Interactive Playground</h2>
-  <p>Use the StoryBook controls to see the tile item implement the available variations.</p>
-
-  <div class="wrap-for-global-theme" data-global-theme="${sectionTheme}">
-    <div class="tiles" data-component-grid-count='three' data-component-width="site">
-      <div class='tiles__inner'>
-        <ul class='tiles__wrap' data-component-grid-count='three'>
-          ${tileItemTwig({
-            tile__item__heading: heading,
-            tile__item__content: content,
-            tile__item__content_link: contentLink,
-            tile__item__alignment: alignment,
-            tile__item__vertical_alignment: verticalAlignment,
-            tile__item__presentation_style: presentationStyle,
-            tile__item__theme: themeColor,
-            tile__item__bg_image: image ? 'true' : 'false',
-            ...imageData.responsive_images['1x1'],
-            tile__item__animation: withAnimation ? 'true' : 'false',
-            tile__item__icon_name: hasIcon ? iconName : null,
-          })}
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <hr style="margin: 3rem 0; border: 1px solid #ccc;">
-
-  <h2>All Section Theme Variations</h2>
-  <p>Below are all theme variations for visual regression testing.</p>
-
-  ${themes
-    .map(
-      (theme) => `
+  // Render function for tile item variations
+  const renderTileItem = (theme) => `
     <div class="wrap-for-global-theme" data-global-theme="${theme}">
-      <h3>Section Theme: ${theme}</h3>
       <div class="tiles" data-component-grid-count='three' data-component-width="site">
         <div class='tiles__inner'>
           <ul class='tiles__wrap' data-component-grid-count='three'>
@@ -155,14 +121,27 @@ export const Playground = ({
               tile__item__bg_image: image ? 'true' : 'false',
               ...imageData.responsive_images['1x1'],
               tile__item__animation: withAnimation ? 'true' : 'false',
-              tile__item__icon_name: hasIcon ? iconName : null,
+              tile__item__icon_name: hasIconSelected ? iconName : null,
             })}
           </ul>
         </div>
       </div>
     </div>
-  `,
-    )
-    .join('')}
+  `;
+
+  return `
+    ${createPlaygroundIntro(
+      'Use the Storybook controls to see the tile item implement the available variations.',
+    )}
+
+    ${renderTileItem(sectionTheme)}
+
+    ${createThemeVariations(
+      renderTileItem,
+      sectionThemes,
+      'All Section Theme Variations',
+      'Below are all theme variations for visual regression testing.',
+      'Section Theme',
+    )}
   `;
 };

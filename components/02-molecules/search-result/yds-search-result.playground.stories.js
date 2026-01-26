@@ -1,11 +1,13 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 import searchResultTwig from './yds-search-result.twig';
 
 import searchResultData from './search-result.yml';
 import breadcrumbData from './breadcrumbs.yml';
 
-const colorPairingsData = Object.keys(tokens['component-themes']);
+import { sectionThemes } from '../../_storybook/theme-constants';
+import {
+  createPlaygroundIntro,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -15,8 +17,9 @@ export default {
   argTypes: {
     sectionTheme: {
       name: 'Section Theme',
+      description: 'Background color theme for the layout section',
       type: 'select',
-      options: colorPairingsData,
+      options: sectionThemes,
     },
     heading: {
       name: 'Heading',
@@ -40,7 +43,7 @@ export default {
     },
   },
   args: {
-    sectionTheme: 'one',
+    sectionTheme: 'default',
     heading: searchResultData.search_result__title,
     highlighted: searchResultData.search_result__highlighted,
     teaser: searchResultData.search_result__teaser,
@@ -57,58 +60,39 @@ export const Playground = ({
   contentType,
   isCas,
 }) => {
-  const themes = colorPairingsData;
-
-  return `
-  <h2>Interactive Playground</h2>
-  <p>Use the controls to test different search result configurations.</p>
-
-  <div data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout">
-    <div class="yds-layout__inner">
-      <div class="yds-layout__primary">
-        ${searchResultTwig({
-          search_result__teaser: teaser,
-          search_result__title: heading,
-          search_result__url: '#',
-          search_result__highlighted: highlighted,
-          breadcrumbs__items: breadcrumbData.items,
-          search_result__content_type: contentType,
-          search_result__prefix__icon: isCas ? 'lock-solid' : '',
-          is_cas: isCas,
-        })}
-      </div>
-    </div>
-  </div>
-
-  <hr style="margin: 3rem 0; border: 1px solid #ccc;">
-
-  <h2>All Section Theme Variations</h2>
-  <p>Below are all theme variations for visual regression testing.</p>
-
-  ${themes
-    .map(
-      (theme) => `
-    <div style="margin-bottom: 2rem;">
-      <h3>Section Theme: ${theme}</h3>
-      <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-        <div class="yds-layout__inner">
-          <div class="yds-layout__primary">
-            ${searchResultTwig({
-              search_result__teaser: teaser,
-              search_result__title: heading,
-              search_result__url: '#',
-              search_result__highlighted: highlighted,
-              breadcrumbs__items: breadcrumbData.items,
-              search_result__content_type: contentType,
-              search_result__prefix__icon: isCas ? 'lock-solid' : '',
-              is_cas: isCas,
-            })}
-          </div>
+  // Render function for search result variations
+  const renderSearchResult = (theme) => `
+    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
+      <div class="yds-layout__inner">
+        <div class="yds-layout__primary">
+          ${searchResultTwig({
+            search_result__teaser: teaser,
+            search_result__title: heading,
+            search_result__url: '#',
+            search_result__highlighted: highlighted,
+            breadcrumbs__items: breadcrumbData.items,
+            search_result__content_type: contentType,
+            search_result__prefix__icon: isCas ? 'lock-solid' : '',
+            is_cas: isCas,
+          })}
         </div>
       </div>
     </div>
-  `,
-    )
-    .join('')}
+  `;
+
+  return `
+    ${createPlaygroundIntro(
+      'Use the controls to test different search result configurations.',
+    )}
+
+    ${renderSearchResult(sectionTheme)}
+
+    ${createThemeVariations(
+      renderSearchResult,
+      sectionThemes,
+      'All Section Theme Variations',
+      'Below are all theme variations for visual regression testing.',
+      'Section Theme',
+    )}
   `;
 };
