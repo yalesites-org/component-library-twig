@@ -1,10 +1,15 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 import taxonomyDisplayTwig from './yds-taxonomy-display.twig';
 
 import taxonomyDisplayData from './taxonomy-display.yml';
 
-const colorPairingsData = Object.keys(tokens['component-themes']);
+import {
+  componentThemes,
+  sectionThemes,
+} from '../../_storybook/theme-constants';
+import {
+  createPlaygroundIntro,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -17,13 +22,16 @@ export default {
   argTypes: {
     sectionTheme: {
       name: 'Section Theme',
+      description: 'Background color theme for the layout section',
       type: 'select',
-      options: colorPairingsData,
+      options: sectionThemes,
     },
     componentTheme: {
-      name: 'Component Theme (dial)',
+      name: 'Taxonomy Display Theme (dial)',
+      description:
+        'Color accent theme for this component (from color dial in CMS)',
       type: 'select',
-      options: colorPairingsData,
+      options: componentThemes,
     },
     showTaxonomy: {
       name: 'Show Taxonomy',
@@ -31,57 +39,42 @@ export default {
     },
   },
   args: {
-    sectionTheme: 'one',
+    sectionTheme: 'default',
     componentTheme: 'one',
     showTaxonomy: true,
   },
 };
 
 export const Playground = ({ sectionTheme, componentTheme, showTaxonomy }) => {
-  const themes = colorPairingsData;
-
-  return `
-  <h2>Interactive Playground</h2>
-  <p>Use the controls to test taxonomy display with different themes.</p>
-
-  <div data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout">
-    <div class="yds-layout__inner">
-      <div class="yds-layout__primary">
-        ${taxonomyDisplayTwig({
-          taxonomy_display__theme: componentTheme,
-          taxonomy_display__items: showTaxonomy
-            ? taxonomyDisplayData.taxonomy_display__items
-            : taxonomyDisplayData.taxonomy_display__empty_items,
-        })}
-      </div>
-    </div>
-  </div>
-
-  <hr style="margin: 3rem 0; border: 1px solid #ccc;">
-
-  <h2>All Section Theme Variations</h2>
-  <p>Below are all theme variations for visual regression testing.</p>
-
-  ${themes
-    .map(
-      (theme) => `
-    <div style="margin-bottom: 2rem;">
-      <h3>Section Theme: ${theme}</h3>
-      <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-        <div class="yds-layout__inner">
-          <div class="yds-layout__primary">
-            ${taxonomyDisplayTwig({
-              taxonomy_display__theme: componentTheme,
-              taxonomy_display__items: showTaxonomy
-                ? taxonomyDisplayData.taxonomy_display__items
-                : taxonomyDisplayData.taxonomy_display__empty_items,
-            })}
-          </div>
+  // Render function for taxonomy display variations
+  const renderTaxonomyDisplay = (theme) => `
+    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
+      <div class="yds-layout__inner">
+        <div class="yds-layout__primary">
+          ${taxonomyDisplayTwig({
+            taxonomy_display__theme: componentTheme,
+            taxonomy_display__items: showTaxonomy
+              ? taxonomyDisplayData.taxonomy_display__items
+              : taxonomyDisplayData.taxonomy_display__empty_items,
+          })}
         </div>
       </div>
     </div>
-  `,
-    )
-    .join('')}
+  `;
+
+  return `
+    ${createPlaygroundIntro(
+      'Use the controls to test taxonomy display with different themes.',
+    )}
+
+    ${renderTaxonomyDisplay(sectionTheme)}
+
+    ${createThemeVariations(
+      renderTaxonomyDisplay,
+      sectionThemes,
+      'All Section Theme Variations',
+      'Below are all theme variations for visual regression testing.',
+      'Section Theme',
+    )}
   `;
 };
