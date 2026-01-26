@@ -1,10 +1,12 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 import videoTwig from './yds-video.twig';
 
 import videoData from './video.yml';
 
-const colorPairingsData = Object.keys(tokens['component-themes']);
+import { sectionThemes } from '../../_storybook/theme-constants';
+import {
+  createPlaygroundIntro,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -17,8 +19,9 @@ export default {
   argTypes: {
     sectionTheme: {
       name: 'Section Theme',
+      description: 'Background color theme for the layout section',
       type: 'select',
-      options: colorPairingsData,
+      options: sectionThemes,
     },
     heading: {
       name: 'Heading',
@@ -35,7 +38,7 @@ export default {
     },
   },
   args: {
-    sectionTheme: 'one',
+    sectionTheme: 'default',
     heading: videoData.video__heading,
     text: videoData.video__text,
     placement: videoData.video__placement,
@@ -43,44 +46,32 @@ export default {
 };
 
 export const Playground = ({ sectionTheme, heading, text, placement }) => {
-  const themes = colorPairingsData;
+  // Render function for video variations
+  const renderVideo = (theme) => `
+    <div data-component-theme="${theme}">
+      ${videoTwig({
+        ...videoData,
+        video__heading: heading,
+        video__text: text,
+        video__alignment: placement,
+        video__width: 'site',
+      })}
+    </div>
+  `;
 
   return `
-  <h2>Interactive Playground</h2>
-  <p>Use the controls to test different video configurations.</p>
+    ${createPlaygroundIntro(
+      'Use the controls to test different video configurations.',
+    )}
 
-  <div data-component-theme="${sectionTheme}">
-    ${videoTwig({
-      ...videoData,
-      video__heading: heading,
-      video__text: text,
-      video__alignment: placement,
-      video__width: 'site',
-    })}
-  </div>
+    ${renderVideo(sectionTheme)}
 
-  <hr style="margin: 3rem 0; border: 1px solid #ccc;">
-
-  <h2>All Section Theme Variations</h2>
-  <p>Below are all theme variations for visual regression testing.</p>
-
-  ${themes
-    .map(
-      (theme) => `
-    <div style="margin-bottom: 2rem;">
-      <h3>Section Theme: ${theme}</h3>
-      <div data-component-theme="${theme}">
-        ${videoTwig({
-          ...videoData,
-          video__heading: heading,
-          video__text: text,
-          video__alignment: placement,
-          video__width: 'site',
-        })}
-      </div>
-    </div>
-  `,
-    )
-    .join('')}
+    ${createThemeVariations(
+      renderVideo,
+      sectionThemes,
+      'All Section Theme Variations',
+      'Below are all theme variations for visual regression testing.',
+      'Section Theme',
+    )}
   `;
 };
