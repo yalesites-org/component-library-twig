@@ -26,11 +26,13 @@ Our playground stories follow standardized patterns using shared utilities to en
 ## Story Types
 
 ### Regular Stories
+
 - Focused on specific use cases or examples
 - Show best practices and recommended patterns
 - Used for documentation
 
 ### Playground Stories
+
 - Comprehensive interactive controls
 - VRT sections showing all variations
 - File naming: `*.playground.stories.js`
@@ -73,17 +75,19 @@ export const Playground = ({
     sectionThemes,
     'All Section Theme Variations',
     'Below are all theme variations for visual regression testing.',
-    'Section Theme'
+    'Section Theme',
   )}
 `;
 ```
 
 ### Interactive Section
+
 - Responds to Storybook controls
 - Shows component with user-selected values
 - Uses `data-global-theme` wrapper for global theme control
 
 ### VRT Sections
+
 - Static renderings of all variations
 - Used by automated testing
 - Must cover all permutations
@@ -94,17 +98,19 @@ export const Playground = ({
 ### Core Utilities (`playground-utils.js`)
 
 #### `createPlaygroundIntro(description)`
+
 Creates standard intro section.
 
 ```javascript
 import { createPlaygroundIntro } from '../_storybook/playground-utils.js';
 
 const intro = createPlaygroundIntro(
-  'This playground allows you to explore all accordion variations.'
+  'This playground allows you to explore all accordion variations.',
 );
 ```
 
 #### `createThemeVariations(renderFn, themes, title, description, label)`
+
 Most commonly used utility for theme VRT sections.
 
 ```javascript
@@ -116,11 +122,12 @@ const vrt = createThemeVariations(
   sectionThemes,
   'All Section Theme Variations',
   'Below are all theme variations for visual regression testing.',
-  'Section Theme'
+  'Section Theme',
 );
 ```
 
 #### `createVariations(renderFn, variations, title, label)`
+
 Generic variation utility for layouts, positions, etc.
 
 ```javascript
@@ -130,11 +137,12 @@ const layoutVRT = createVariations(
   (layout) => componentTwig({ ...config, layout }),
   ['fifty-fifty', 'seventy-thirty'],
   'All Layout Variations',
-  'Layout'
+  'Layout',
 );
 ```
 
 #### `createThemeAccentCombinations(renderFn, combinations, title)`
+
 For components supporting both theme and accent (site-header, site-footer).
 
 ```javascript
@@ -142,30 +150,32 @@ import { createThemeAccentCombinations } from '../_storybook/playground-utils.js
 import vrtData from '../_storybook/vrt-combinations.yml';
 
 const vrt = createThemeAccentCombinations(
-  (theme, accent) => siteHeaderTwig({
-    ...config,
-    site_header__theme: theme,
-    site_header__accent: accent
-  }),
+  (theme, accent) =>
+    siteHeaderTwig({
+      ...config,
+      site_header__theme: theme,
+      site_header__accent: accent,
+    }),
   vrtData.themeAccentPairs,
-  'All Theme & Accent Combinations'
+  'All Theme & Accent Combinations',
 );
 ```
 
 #### `createSectionWrapper(theme, content, options)`
+
 Wraps component in themed section layout.
 
 ```javascript
 import { createSectionWrapper } from '../_storybook/playground-utils.js';
 
-const wrapped = createSectionWrapper(
-  'one',
-  accordionTwig(config),
-  { width: 'site', primaryWidth: '100%' }
-);
+const wrapped = createSectionWrapper('one', accordionTwig(config), {
+  width: 'site',
+  primaryWidth: '100%',
+});
 ```
 
 #### `createMultiColumnLayout(layout, primary, secondary, tertiary, theme)`
+
 Creates multi-column layouts for components like image or text-with-image.
 
 ```javascript
@@ -176,13 +186,14 @@ const multiCol = createMultiColumnLayout(
   imageTwig(imageConfig),
   textTwig(textConfig),
   undefined,
-  'two'
+  'two',
 );
 ```
 
 ### Icon Utilities (`icon-utils.js`)
 
 #### `createIconMapping(iconsData, includeNone)`
+
 Converts icon YML to Storybook control mapping.
 
 ```javascript
@@ -203,6 +214,7 @@ argTypes: {
 ```
 
 #### `hasIcon(iconName)`
+
 Checks if icon is selected.
 
 ```javascript
@@ -225,11 +237,12 @@ import {
   siteHeaderAccents,
   siteFooterThemes,
   siteFooterAccents,
-  borderThicknessOptions
+  borderThicknessOptions,
 } from '../_storybook/theme-constants.js';
 ```
 
 **Benefits:**
+
 - Single source of truth
 - Adding theme in tokens → automatically available everywhere
 - No duplicated arrays
@@ -241,17 +254,21 @@ import {
 These are **separate concepts** that happen to use similar naming:
 
 #### Section Themes
+
 ```javascript
-['default', 'one', 'two', 'three', 'four']
+['default', 'one', 'two', 'three', 'four'];
 ```
+
 - Background colors for layout sections
 - Defined in component-library (not in tokens)
 - Used in `data-component-theme` or `data-global-theme`
 
 #### Component Themes
+
 ```javascript
-['one', 'two', 'three', 'four', 'five']
+['one', 'two', 'three', 'four', 'five'];
 ```
+
 - Color accents for individual components
 - Defined in tokens: `tokens['component-themes']`
 - Called "dial" in CMS
@@ -262,6 +279,7 @@ See `components/00-introduction/themes.mdx` for user-facing documentation.
 ### Control Labels
 
 **Section Theme controls:**
+
 ```javascript
 section_theme: {
   name: 'Section Theme',
@@ -271,6 +289,7 @@ section_theme: {
 ```
 
 **Component Theme controls:**
+
 ```javascript
 accordion__theme: {
   name: 'Accordion Theme (dial)',
@@ -286,12 +305,14 @@ Always use "(dial)" suffix for component themes to clarify they're from the CMS 
 ### When to Extract to YML
 
 **Do extract when:**
+
 - Data is complex (>3-4 properties)
 - Data is reused across stories
 - Data represents realistic content examples
 - Inline data makes story hard to read
 
 **Keep inline when:**
+
 - Simple config (2-3 properties)
 - Data derived from other values
 - Story-specific transformations
@@ -382,7 +403,7 @@ export const Playground = ({ heading, theme }) => `
     sectionThemes,
     'All Section Theme Variations',
     'Below are all theme variations for visual regression testing.',
-    'Section Theme'
+    'Section Theme',
   )}
 `;
 ```
@@ -405,9 +426,11 @@ npx eslint path/to/story.js --fix  # Auto-fix if needed
 ## Best Practices
 
 ### 1. Use Utility Functions
+
 Replace duplicated code with utilities:
 
 **Before:**
+
 ```javascript
 ${themes.map((theme) => `
   <h3 style="padding: 0.5rem;">Theme: ${theme}</h3>
@@ -416,6 +439,7 @@ ${themes.map((theme) => `
 ```
 
 **After:**
+
 ```javascript
 ${createThemeVariations(
   (theme) => componentTwig({ ...config, theme }),
@@ -427,29 +451,37 @@ ${createThemeVariations(
 ```
 
 ### 2. Import Themes from Constants
+
 **Before:**
+
 ```javascript
 const themes = ['one', 'two', 'three', 'four', 'five'];
 ```
 
 **After:**
+
 ```javascript
 import { componentThemes } from '../_storybook/theme-constants.js';
 ```
 
 ### 3. Use CSS Classes, Not Inline Styles
+
 **Before:**
+
 ```javascript
 <h2 style="padding: 1rem;">VRT: Themes</h2>
 ```
 
 **After:**
+
 ```javascript
 <h2 class="sb-section__heading">All Theme Variations</h2>
 ```
 
 ### 4. Modern argTypes Pattern
+
 **Before (deprecated):**
+
 ```javascript
 argTypes: {
   heading: {
@@ -460,6 +492,7 @@ argTypes: {
 ```
 
 **After (modern):**
+
 ```javascript
 argTypes: {
   heading: {
@@ -472,7 +505,9 @@ args: {
 ```
 
 ### 5. Test All Permutations
+
 Every playground story should test:
+
 - All themes (section and/or component)
 - All variations (layouts, positions, etc.)
 - Key combinations (theme + accent, theme + layout, etc.)
@@ -482,6 +517,7 @@ See `components/_storybook/TESTING.md` for VRT requirements.
 ## Anti-Patterns
 
 ### ❌ Don't Hardcode Theme Arrays
+
 ```javascript
 // BAD
 const themes = ['one', 'two', 'three'];
@@ -493,6 +529,7 @@ import { componentThemes } from '../_storybook/theme-constants.js';
 ```
 
 ### ❌ Don't Use Inline Styles
+
 ```javascript
 // BAD
 <h3 style="color: #222;">Theme: one</h3>
@@ -504,6 +541,7 @@ import { componentThemes } from '../_storybook/theme-constants.js';
 ```
 
 ### ❌ Don't Duplicate Iteration Logic
+
 ```javascript
 // BAD - duplicated 52 times
 ${themes.map(t => `<div>${componentTwig({theme: t})}</div>`).join('')}
@@ -515,6 +553,7 @@ ${createThemeVariations((t) => componentTwig({theme: t}), themes, 'Title')}
 ```
 
 ### ❌ Don't Use defaultValue in argTypes
+
 ```javascript
 // BAD (deprecated)
 argTypes: {
@@ -536,6 +575,7 @@ args: {
 ```
 
 ### ❌ Don't Extract All Logic
+
 Keep component-specific logic in the story with good comments:
 
 ```javascript
