@@ -1,27 +1,16 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 import factsAndFiguresGroupTwig from './yds-facts-and-figures-group.twig';
 import factsAndFiguresGroupData from './facts-and-figures-group.yml';
 import factsAndFiguresIconsData from '../../02-molecules/facts-and-figures/facts-and-figures-icons.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
-const colorPairingsData = Object.keys(tokens['component-themes']);
+import { componentThemes } from '../../_storybook/theme-constants';
+import {
+  createPlaygroundIntro,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
+import { createIconMapping, hasIcon } from '../../_storybook/icon-utils';
 
-// Process icon data for Storybook controls
-const iconDisplayToValueMap = {
-  '- None -': '- None -',
-};
-
-if (
-  factsAndFiguresIconsData.icons &&
-  typeof factsAndFiguresIconsData.icons === 'object'
-) {
-  Object.entries(factsAndFiguresIconsData.icons).forEach(
-    ([iconName, humanReadableName]) => {
-      iconDisplayToValueMap[humanReadableName] = iconName;
-    },
-  );
-}
+const iconDisplayToValueMap = createIconMapping(factsAndFiguresIconsData);
 
 /**
  * Storybook Definition.
@@ -33,8 +22,10 @@ export default {
   },
   argTypes: {
     componentTheme: {
-      name: 'Component Theme (dial)',
-      options: colorPairingsData,
+      name: 'Facts and Figures Group Theme (dial)',
+      description:
+        'Color accent theme for this component (from color dial in CMS)',
+      options: componentThemes,
       type: 'select',
     },
     presentationStyle: {
@@ -67,11 +58,10 @@ export const Playground = ({
   columnCount,
   iconName,
 }) => {
-  const themes = colorPairingsData;
   const styles = ['basic', 'icon-only'];
 
   // Determine if icons should be shown
-  const hasIcon = iconName && iconName !== '- None -';
+  const hasIconSelected = hasIcon(iconName);
 
   // Custom data with presentation style and icon applied to all items
   const customGroupData = {
@@ -80,63 +70,36 @@ export const Playground = ({
       factsAndFiguresGroupData.facts_and_figures__group.map((item) => ({
         ...item,
         facts_and_figures__presentation_style: presentationStyle,
-        facts_and_figures__has_icon: hasIcon ? 'true' : 'false',
-        facts_and_figures__icon_name: hasIcon ? iconName : null,
+        facts_and_figures__has_icon: hasIconSelected ? 'true' : 'false',
+        facts_and_figures__icon_name: hasIconSelected ? iconName : null,
       })),
   };
 
-  return `
-  <h2>Interactive Playground</h2>
-  <p>Use the controls to test different component themes and presentation styles.</p>
+  // Render function for facts and figures with theme/style combinations
+  const renderFactsAndFigures = (theme) =>
+    styles
+      .map((style) => {
+        const customData = {
+          ...factsAndFiguresGroupData,
+          facts_and_figures__group:
+            factsAndFiguresGroupData.facts_and_figures__group.map((item) => ({
+              ...item,
+              facts_and_figures__presentation_style: style,
+              facts_and_figures__has_icon: hasIconSelected ? 'true' : 'false',
+              facts_and_figures__icon_name: hasIconSelected ? iconName : null,
+            })),
+        };
 
-  ${factsAndFiguresGroupTwig({
-    facts_and_figures__group__heading:
-      factsAndFiguresGroupData.facts_and_figures__group__heading,
-    facts_and_figures__group__content:
-      factsAndFiguresGroupData.facts_and_figures__group__content,
-    facts_and_figures__group__has_icon: 'false',
-    facts_and_figures__group__grid_count: columnCount,
-    facts_and_figures__group__alignment: 'left',
-    facts_and_figures__group__presentation_style: presentationStyle,
-    facts_and_figures__group__font_style: 'normal',
-    facts_and_figures__group__theme: componentTheme,
-    facts_and_figures__group__bg_image: false,
-    ...customGroupData,
-    ...imageData.responsive_images['16x9'],
-  })}
-
-  <hr style="margin: 3rem 0; border: 1px solid #ccc;">
-
-  <h2>All Component Theme & Presentation Style Variations</h2>
-  <p>Below are all combinations of component themes and presentation styles for visual regression testing.</p>
-
-  ${themes
-    .map(
-      (theme) => `
-    <div style="margin-bottom: 4rem; padding: 1rem; border: 2px solid #ccc;">
-      <h3 style="margin: 0 0 1.5rem 0; padding-bottom: 0.5rem; border-bottom: 2px solid #333;">Component Theme: ${theme}</h3>
-      ${styles
-        .map((style) => {
-          const customData = {
-            ...factsAndFiguresGroupData,
-            facts_and_figures__group:
-              factsAndFiguresGroupData.facts_and_figures__group.map((item) => ({
-                ...item,
-                facts_and_figures__presentation_style: style,
-                facts_and_figures__has_icon: hasIcon ? 'true' : 'false',
-                facts_and_figures__icon_name: hasIcon ? iconName : null,
-              })),
-          };
-
-          return `
-        <div style="margin-bottom: 2rem;">
-          <h4 style="color: #222; background: #f5f5f5; padding: 0.5rem 1rem; margin-bottom: 1rem;">Presentation Style: ${style}</h4>
+        return `
+          <h3>Presentation Style: ${style}</h3>
           ${factsAndFiguresGroupTwig({
             facts_and_figures__group__heading:
               factsAndFiguresGroupData.facts_and_figures__group__heading,
             facts_and_figures__group__content:
               factsAndFiguresGroupData.facts_and_figures__group__content,
-            facts_and_figures__group__has_icon: hasIcon ? 'true' : 'false',
+            facts_and_figures__group__has_icon: hasIconSelected
+              ? 'true'
+              : 'false',
             facts_and_figures__group__grid_count: 'three',
             facts_and_figures__group__alignment: 'left',
             facts_and_figures__group__presentation_style: style,
@@ -146,13 +109,37 @@ export const Playground = ({
             ...customData,
             ...imageData.responsive_images['16x9'],
           })}
-        </div>
-      `;
-        })
-        .join('')}
-    </div>
-  `,
-    )
-    .join('')}
+        `;
+      })
+      .join('');
+
+  return `
+    ${createPlaygroundIntro(
+      'Use the controls to test different component themes and presentation styles.',
+    )}
+
+    ${factsAndFiguresGroupTwig({
+      facts_and_figures__group__heading:
+        factsAndFiguresGroupData.facts_and_figures__group__heading,
+      facts_and_figures__group__content:
+        factsAndFiguresGroupData.facts_and_figures__group__content,
+      facts_and_figures__group__has_icon: 'false',
+      facts_and_figures__group__grid_count: columnCount,
+      facts_and_figures__group__alignment: 'left',
+      facts_and_figures__group__presentation_style: presentationStyle,
+      facts_and_figures__group__font_style: 'normal',
+      facts_and_figures__group__theme: componentTheme,
+      facts_and_figures__group__bg_image: false,
+      ...customGroupData,
+      ...imageData.responsive_images['16x9'],
+    })}
+
+    ${createThemeVariations(
+      renderFactsAndFigures,
+      componentThemes,
+      'All Component Theme & Presentation Style Variations',
+      'Below are all combinations of component themes and presentation styles for visual regression testing.',
+      'Component Theme',
+    )}
   `;
 };
