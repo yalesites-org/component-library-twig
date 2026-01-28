@@ -28,13 +28,65 @@ export default {
       type: 'select',
       options: sectionThemes,
     },
+    allDayEvent: {
+      name: 'All-Day Event',
+      description:
+        'Show all-day event formatting (removes small-caps, shows "All day" text)',
+      type: 'boolean',
+    },
   },
   args: {
     sectionTheme: 'default',
+    allDayEvent: false,
   },
 };
 
-export const Playground = ({ sectionTheme }) => {
+export const Playground = ({ sectionTheme, allDayEvent }) => {
+  // Modify event dates to add is_all_day property and adjust timestamps
+  // For all-day events, Drupal sets start to 00:00 and end to 23:59
+  const eventDatesWithAllDay = eventLocalistData.event_dates.map((date) => {
+    if (!allDayEvent) {
+      return {
+        ...date,
+        is_all_day: false,
+      };
+    }
+    // For all-day, set times to midnight (start) and 23:59 (end)
+    const startDate = new Date(date.original_start * 1000);
+    const endDate = new Date(date.original_end * 1000);
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(23, 59, 0, 0);
+    return {
+      ...date,
+      original_start: Math.floor(startDate.getTime() / 1000),
+      original_end: Math.floor(endDate.getTime() / 1000),
+      is_all_day: true,
+    };
+  });
+
+  const eventFeaturedDateWithAllDay = (() => {
+    if (!allDayEvent) {
+      return {
+        ...eventLocalistData.event_featured_date,
+        is_all_day: false,
+      };
+    }
+    const startDate = new Date(
+      eventLocalistData.event_featured_date.original_start * 1000,
+    );
+    const endDate = new Date(
+      eventLocalistData.event_featured_date.original_end * 1000,
+    );
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(23, 59, 0, 0);
+    return {
+      ...eventLocalistData.event_featured_date,
+      original_start: Math.floor(startDate.getTime() / 1000),
+      original_end: Math.floor(endDate.getTime() / 1000),
+      is_all_day: true,
+    };
+  })();
+
   // Render function for all meta types
   const renderAllMetaTypes = (theme) => `
     <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
@@ -51,10 +103,10 @@ export const Playground = ({ sectionTheme }) => {
           <h4 style="margin-top: 2rem;">Event Meta</h4>
           ${eventLocalistMetaTwig({
             ...imageData.responsive_images['3x2'],
+            ...eventLocalistData,
             event_title__heading: 'Sample Event Title',
-            event_dates: eventLocalistData.event_dates,
-            formatted_start_date: eventLocalistData.formatted_start_date,
-            formatted_end_date: eventLocalistData.formatted_end_date,
+            event_dates: eventDatesWithAllDay,
+            event_featured_date: eventFeaturedDateWithAllDay,
             event_meta__format: 'Virtual Event',
             event_meta__address: '123 Main St, New Haven, CT',
             event_meta__cta_primary__content: 'Register',
@@ -64,8 +116,6 @@ export const Playground = ({ sectionTheme }) => {
             event_meta__cta_secondary__href: '#',
             event_meta__with_calendar: true,
             event_meta__image: 'true',
-            event_meta__all_day: false,
-            ...eventLocalistData,
           })}
 
           <h4 style="margin-top: 2rem;">Profile Meta</h4>
@@ -129,10 +179,10 @@ export const Playground = ({ sectionTheme }) => {
           <h3 style="margin-top: 2rem;">Event Meta</h3>
           ${eventLocalistMetaTwig({
             ...imageData.responsive_images['3x2'],
+            ...eventLocalistData,
             event_title__heading: 'Sample Event Title',
-            event_dates: eventLocalistData.event_dates,
-            formatted_start_date: eventLocalistData.formatted_start_date,
-            formatted_end_date: eventLocalistData.formatted_end_date,
+            event_dates: eventDatesWithAllDay,
+            event_featured_date: eventFeaturedDateWithAllDay,
             event_meta__format: 'Virtual Event',
             event_meta__address: '123 Main St, New Haven, CT',
             event_meta__cta_primary__content: 'Register',
@@ -142,8 +192,6 @@ export const Playground = ({ sectionTheme }) => {
             event_meta__cta_secondary__href: '#',
             event_meta__with_calendar: true,
             event_meta__image: 'true',
-            event_meta__all_day: false,
-            ...eventLocalistData,
           })}
 
           <h3 style="margin-top: 2rem;">Profile Meta</h3>

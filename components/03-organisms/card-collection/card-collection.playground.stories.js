@@ -25,13 +25,20 @@ export default {
       type: 'select',
       options: ['grid', 'list', 'condensed'],
     },
+    withImages: {
+      name: 'With Images',
+      description:
+        'Show cards with images. When off in list view, cards flush to left edge.',
+      type: 'boolean',
+    },
   },
   args: {
     collectionType: 'grid',
+    withImages: true,
   },
 };
 
-export const Playground = ({ collectionType }) => {
+export const Playground = ({ collectionType, withImages }) => {
   const collectionTypes = ['grid', 'list', 'condensed'];
 
   // Render function for all card types
@@ -43,7 +50,7 @@ export const Playground = ({ collectionType }) => {
       card_collection__type: collectionType,
       card_collection__heading: 'Post Card Collection',
       card_collection__featured: 'true',
-      card_collection__with_images: 'true',
+      card_collection__with_images: withImages ? 'true' : 'false',
       card_collection__cards: [1, 2, 3],
       ...postCardData,
       ...imageData.responsive_images['3x2'],
@@ -56,7 +63,7 @@ export const Playground = ({ collectionType }) => {
       card_collection__type: collectionType,
       card_collection__heading: 'Event Card Collection',
       card_collection__featured: 'true',
-      card_collection__with_images: 'true',
+      card_collection__with_images: withImages ? 'true' : 'false',
       card_collection__cards: [1, 2, 3],
       ...eventCardData,
       ...imageData.responsive_images['3x2'],
@@ -68,7 +75,7 @@ export const Playground = ({ collectionType }) => {
       card_collection__type: collectionType,
       card_collection__heading: 'Profile Card Collection',
       card_collection__featured: 'true',
-      card_collection__with_images: 'true',
+      card_collection__with_images: withImages ? 'true' : 'false',
       card_collection__cards: [1, 2, 3],
       ...profileCardData,
       ...imageData.responsive_images['1x1'],
@@ -80,7 +87,7 @@ export const Playground = ({ collectionType }) => {
       card_collection__type: collectionType,
       card_collection__heading: 'Resource Card Collection',
       card_collection__featured: 'true',
-      card_collection__with_images: 'true',
+      card_collection__with_images: withImages ? 'true' : 'false',
       card_collection__cards: [1, 2, 3],
       ...resourceCardData,
       ...imageData.responsive_images['3x2'],
@@ -113,7 +120,7 @@ export const Playground = ({ collectionType }) => {
           card_collection__type: type,
           card_collection__heading: `${type} Collection`,
           card_collection__featured: 'true',
-          card_collection__with_images: 'true',
+          card_collection__with_images: withImages ? 'true' : 'false',
           card_collection__cards: [1, 2, 3],
           ...postCardData,
           ...imageData.responsive_images['3x2'],

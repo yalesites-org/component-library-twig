@@ -63,12 +63,60 @@ export const Event = ({
 }) => {
   const selectedData = eventDataVariants[dataVariant];
 
+  // Modify event dates to add is_all_day property and adjust timestamps
+  // For all-day events, Drupal sets start to 00:00 and end to 23:59
+  const eventDatesWithAllDay = selectedData.event_dates.map((date) => {
+    if (!allDay) {
+      return {
+        ...date,
+        is_all_day: false,
+      };
+    }
+    // For all-day, set times to midnight (start) and 23:59 (end)
+    const startDate = new Date(date.original_start * 1000);
+    const endDate = new Date(date.original_end * 1000);
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(23, 59, 0, 0);
+    return {
+      ...date,
+      original_start: Math.floor(startDate.getTime() / 1000),
+      original_end: Math.floor(endDate.getTime() / 1000),
+      is_all_day: true,
+    };
+  });
+
+  const eventFeaturedDateWithAllDay = (() => {
+    if (!selectedData.event_featured_date) {
+      return undefined;
+    }
+    if (!allDay) {
+      return {
+        ...selectedData.event_featured_date,
+        is_all_day: false,
+      };
+    }
+    const startDate = new Date(
+      selectedData.event_featured_date.original_start * 1000,
+    );
+    const endDate = new Date(
+      selectedData.event_featured_date.original_end * 1000,
+    );
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(23, 59, 0, 0);
+    return {
+      ...selectedData.event_featured_date,
+      original_start: Math.floor(startDate.getTime() / 1000),
+      original_end: Math.floor(endDate.getTime() / 1000),
+      is_all_day: true,
+    };
+  })();
+
   return eventLocalistMetaTwig({
     ...imageData.responsive_images['3x2'],
+    ...selectedData,
     event_title__heading: pageTitle,
-    event_dates: selectedData.event_dates,
-    formatted_start_date: selectedData.formatted_start_date,
-    formatted_end_date: selectedData.formatted_end_date,
+    event_dates: eventDatesWithAllDay,
+    event_featured_date: eventFeaturedDateWithAllDay,
     event_meta__format: format,
     event_meta__address: address,
     event_meta__cta_primary__content: ctaText,
@@ -78,8 +126,6 @@ export const Event = ({
     event_meta__cta_secondary__href: '#',
     event_meta__with_calendar: withCalendar == null ? true : !!withCalendar,
     event_meta__image: withImage ? 'true' : 'false',
-    event_meta__all_day: allDay,
-    ...selectedData,
   });
 };
 Event.argTypes = {
