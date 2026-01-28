@@ -125,11 +125,6 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
     flex: 1 1 25%;
   }
 
-  // first column gets wider border
-  &:first-of-type {
-    border-width: var(--size-thickness-4);
-  }
-
   // if used in fifty-fifty layout and min-width 2xl
   // make the columns 50% width
   [data-component-layout='fifty-fifty'] & {
@@ -147,6 +142,29 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
       margin-bottom: 0;
       flex: 1 1 100%;
     }
+  }
+
+  // Line treatment styles - must come after layout-specific rules to override
+  // All Strong Lines: all columns use thicker border
+  .link-grid[data-line-treatment='all_strong_lines'] & {
+    border-width: var(--size-thickness-4) !important;
+  }
+
+  // All Light Lines: all columns use thinner border
+  // Ensure all columns use thin border, overriding first-of-type and layout rules
+  .link-grid[data-line-treatment='all_light_lines'] & {
+    border-width: var(--size-thickness-1) !important;
+  }
+
+  // No Lines: remove all borders
+  .link-grid[data-line-treatment='no_lines'] & {
+    border: none !important;
+  }
+
+  // Default: first column gets wider border (alternating strong and light)
+  // This must come after all_strong_lines and all_light_lines to not override them
+  .link-grid[data-line-treatment='default'] &:first-of-type {
+    border-width: var(--size-thickness-4);
   }
 }
 

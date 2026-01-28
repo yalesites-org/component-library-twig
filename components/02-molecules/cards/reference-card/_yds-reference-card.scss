@@ -12,6 +12,16 @@ $break-card-collection-max: tokens.$break-m - 0.05;
 $break-card-collection-list-image-max: tokens.$break-s - 0.05;
 $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
+// Mixin for list items without images - removes indentation
+@mixin list-no-image-flush {
+  [data-collection-type='list'] [data-component-has-image='false'] & {
+    flex: 1 0 100%;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    max-width: 100%;
+  }
+}
+
 .reference-card {
   @include atoms.clickable-component-heading-link;
   @include atoms.clickable-component-image;
@@ -398,6 +408,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     [data-collection-type='list'][data-collection-source='profile'] & {
       max-width: 50%;
     }
+
+    @include list-no-image-flush;
   }
 
   @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
@@ -410,6 +422,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     [data-collection-type='list'][data-collection-featured='false'] & {
       flex: 1 0 66%;
     }
+
+    @include list-no-image-flush;
   }
 
   @media (min-width: tokens.$break-m) {
@@ -418,6 +432,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       margin-inline-start: auto;
       margin-inline-end: auto;
     }
+
+    @include list-no-image-flush;
   }
 
   @media (min-width: tokens.$break-mobile) {
@@ -426,6 +442,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       margin-inline-start: auto;
       margin-inline-end: auto;
     }
+
+    @include list-no-image-flush;
 
     [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='false']
       & {
