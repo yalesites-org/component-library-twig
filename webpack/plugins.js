@@ -32,13 +32,18 @@ const ProgressPlugin = new webpack.ProgressPlugin();
 
 const CopyWebpackPlugin = new _CopyWebpackPlugin([
   {
-  from: './fonts',
-  to: './fonts',
+    from: './fonts',
+    to: './fonts',
   },
   {
     from: './images/patterns',
     to: './images/patterns',
-  }
+  },
+  {
+    from: './node_modules/@yalesites-org/tokens/build/json/tokens.json',
+    to: './tokens.json',
+    noErrorOnMissing: true,
+  },
 ]);
 
 module.exports = {
