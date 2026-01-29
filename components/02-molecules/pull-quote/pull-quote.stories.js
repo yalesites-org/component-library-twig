@@ -4,6 +4,7 @@ import pullQuoteData from './pull-quote.yml';
 
 export default {
   title: 'Molecules/Quotes/Pull Quote',
+  tags: ['!dev'],
 };
 
 export const pullQuote = () => `

@@ -15,7 +15,7 @@ import {
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Card Collection/Playground',
+  title: 'Organisms/Card Collection/Visreg',
   parameters: {
     layout: 'fullscreen',
   },
@@ -38,12 +38,13 @@ export default {
   },
 };
 
-export const Playground = ({ collectionType, withImages }) => {
+export const Visreg = ({ collectionType, withImages }) => {
   const collectionTypes = ['grid', 'list', 'condensed'];
 
   // Render function for all card types
   const renderAllCardTypes = () => `
   <div>
+    <div class="wrap-for-screenshot">
     <h3>Post Cards</h3>
     ${cardCollectionTwig({
       card_collection__source_type: 'post',
@@ -103,6 +104,7 @@ export const Playground = ({ collectionType, withImages }) => {
       ...directoryCardData,
       ...imageData.responsive_images['1x1'],
     })}
+    </div>
   </div>
   `;
 

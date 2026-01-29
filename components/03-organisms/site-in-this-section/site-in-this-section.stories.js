@@ -21,6 +21,7 @@ const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
  */
 export default {
   title: 'Organisms/Site/In This Section',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

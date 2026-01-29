@@ -12,6 +12,7 @@ import imageData from '../../01-atoms/images/image/image.yml';
  */
 export default {
   title: 'Organisms/Tiles',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

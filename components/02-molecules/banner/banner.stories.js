@@ -40,7 +40,8 @@ const bannerArgTypes = {
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Banners',
+  title: 'Molecules/Banner',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

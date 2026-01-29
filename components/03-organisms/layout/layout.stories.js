@@ -15,7 +15,8 @@ import '../../02-molecules/accordion/yds-accordion';
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Layouts',
+  title: 'Organisms/Layout',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

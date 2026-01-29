@@ -9,7 +9,7 @@ import {
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Component Wrapper/Playground',
+  title: 'Organisms/Component Wrapper/Visreg',
   parameters: {
     layout: 'fullscreen',
   },
@@ -25,25 +25,27 @@ export default {
   },
 };
 
-export const Playground = ({ componentWidth }) => {
+export const Visreg = ({ componentWidth }) => {
   const widthOptions = ['content', 'highlight', 'site', 'max'];
+
+  const renderComponentWrapper = (width) => `
+    <div class="wrap-for-screenshot">
+      ${componentWrapperTwig({
+        component_wrapper__width: width,
+        component_wrapper__label: `Width: ${width}`,
+      })}
+    </div>
+  `;
 
   return `
     ${createPlaygroundIntro(
       'Use the controls to test different component widths. The placeholder block shows the constrained width.',
     )}
 
-    ${componentWrapperTwig({
-      component_wrapper__width: componentWidth,
-      component_wrapper__label: 'Component Wrapper Demonstration',
-    })}
+    ${renderComponentWrapper(componentWidth)}
 
     ${createVariations(
-      (width) =>
-        componentWrapperTwig({
-          component_wrapper__width: width,
-          component_wrapper__label: `Width: ${width}`,
-        }),
+      renderComponentWrapper,
       widthOptions,
       'All Width Variations',
       'Component Width',

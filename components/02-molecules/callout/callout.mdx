@@ -1,0 +1,265 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as CalloutStories from './callout.stories';
+
+<Meta of={CalloutStories} />
+
+# Callout
+
+The callout component is a highlighted content block designed to emphasize important information. It supports single or multiple callouts within a container, with options for different themes, alignments, and optional background images. Callouts are effective for drawing attention to key programs, services, or announcements.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the callout's properties in real-time. Test different themes, alignments, link types, and background images.
+
+<Canvas of={CalloutStories.Callout} />
+<Controls of={CalloutStories.Callout} />
+
+## Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>callouts</code>
+      </td>
+      <td>
+        <code>array</code>
+      </td>
+      <td>
+        Array of callout objects. Each callout should contain{' '}
+        <code>callout__heading</code>, <code>callout__text</code>, and
+        optionally <code>callout__link__content</code>,{' '}
+        <code>callout__link__url</code>, and <code>callout__link__type</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>callout__background_color</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'one'</code>
+      </td>
+      <td>
+        Theme dial for the callout background (e.g., 'one', 'two', 'three')
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>callout__alignment</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'center'</code>
+      </td>
+      <td>
+        Text alignment within callouts: <code>'left'</code> or{' '}
+        <code>'center'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>callout__overlay_background_image</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>
+        Optional background image that displays behind the callout content with
+        an overlay
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>callout__link__type</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'button'</code>
+      </td>
+      <td>
+        Display link as a <code>'button'</code> or text <code>'link'</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### Individual Callout Properties
+
+Each object in the `callouts` array can contain:
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>callout__heading</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>The heading text for the callout</td>
+    </tr>
+    <tr>
+      <td>
+        <code>callout__text</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>The descriptive text content (supports HTML)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>callout__link__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Text for the call-to-action link or button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>callout__link__url</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>URL for the call-to-action</td>
+    </tr>
+    <tr>
+      <td>
+        <code>callout__link__type</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        Link display type: <code>'button'</code> or <code>'link'</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Component Variations
+
+### Single vs. Multiple Callouts
+
+The callout component automatically adjusts its layout based on the number of callouts provided:
+
+- **Single Callout**: Displays as a full-width highlighted block
+- **Two Callouts**: Displays side-by-side in a two-column layout
+- **Multiple Callouts**: Automatically wraps into a responsive grid
+
+### Alignment Options
+
+- **Center**: Text and elements are center-aligned (default)
+- **Left**: Text and elements are left-aligned for a more traditional reading flow
+
+### Link Types
+
+- **Button**: Displays the link as a prominent button for primary actions
+- **Link**: Displays as a text link for secondary actions or when a lighter touch is needed
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-callout.twig`
+- **Styles**: `_yds-callout.scss`
+
+### Accessibility
+
+- Semantic HTML structure with proper heading hierarchy
+- Links and buttons are keyboard accessible with clear focus indicators
+- Color contrast meets WCAG 2.1 AA standards
+- Background images use overlays to ensure text readability
+- Supports screen readers with proper ARIA attributes
+
+### Responsive Behavior
+
+- Single callouts display full-width on all screen sizes
+- Multiple callouts stack vertically on mobile devices
+- Two-column layout appears on tablet and larger screens
+- Background images are responsive and optimized for performance
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use callouts to highlight 2-3 key programs, services, or initiatives
+- Keep heading text concise (3-5 words)
+- Limit body text to 1-2 sentences for scannability
+- Choose alignment based on content density (center for short content, left for longer text)
+- Use button links for primary actions, text links for secondary actions
+- Select theme dials that provide sufficient contrast with surrounding content
+- When using background images, ensure they don't interfere with text readability
+
+### Things to Avoid
+
+- Don't use more than 3-4 callouts in a single container (creates visual clutter)
+- Don't use callouts for lengthy content (use text fields or other components instead)
+- Avoid background images with busy patterns that reduce text legibility
+- Don't mix different alignment styles within the same callout group
+- Don't use callouts for critical navigation (use menus or site structure instead)
+- Avoid using callouts on every page (reduces their impact)
+
+### When to Use Callouts
+
+- Highlighting degree programs or academic offerings
+- Featuring key services or resources
+- Promoting upcoming events or deadlines
+- Drawing attention to important initiatives
+- Creating visual entry points to different site sections
+
+## Testing
+
+For comprehensive visual regression testing with all theme variations and configurations, see the [Visreg page](?path=/story/molecules-callout-visreg--visreg).
+
+## Related Components
+
+- **Text Field**: Use for longer-form content that doesn't need visual emphasis
+- **Call to Action (CTA)**: Consider standalone CTAs for single, prominent actions
+- **Card**: Use cards when you need more structured content with images
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

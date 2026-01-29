@@ -4,6 +4,7 @@ import monthData from './calendar.yml';
 
 export default {
   title: 'Organisms/Calendar',
+  tags: ['!dev'],
 };
 
 export const Calendar = () => {

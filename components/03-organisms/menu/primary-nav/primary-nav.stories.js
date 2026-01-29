@@ -16,6 +16,7 @@ const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
  */
 export default {
   title: 'Organisms/Menu/Primary Nav',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

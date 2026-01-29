@@ -29,6 +29,7 @@ const siteHeaderAccents = [
  */
 export default {
   title: 'Organisms/Site/Header',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

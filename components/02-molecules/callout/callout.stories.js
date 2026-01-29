@@ -13,6 +13,7 @@ const colorPairingsData = Object.keys(tokens['component-themes']);
  */
 export default {
   title: 'Molecules/Callout',
+  tags: ['!dev'],
   argTypes: {
     heading: {
       name: 'Heading',

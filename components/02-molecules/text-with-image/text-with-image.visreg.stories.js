@@ -15,7 +15,7 @@ import {
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Content Spotlight/Playground',
+  title: 'Molecules/Text with Image/Visreg',
   parameters: {
     layout: 'fullscreen',
   },
@@ -70,7 +70,7 @@ export default {
   },
 };
 
-export const Playground = ({
+export const Visreg = ({
   sectionTheme,
   componentTheme,
   width,
@@ -139,6 +139,16 @@ export const Playground = ({
     )}
 
     ${renderContentSpotlights(sectionTheme)}
+
+    <hr class="sb-vrt-divider" style="margin: 4rem 0; border: none; border-top: 2px solid #ccc;" />
+
+    <div style="margin: 2rem 0; padding: 1.5rem; background: #f5f5f5; border-left: 4px solid #0053A0;">
+      <h2 style="margin: 0 0 0.5rem 0; font-size: 1.5rem; color: #0053A0;">Visual Regression Testing</h2>
+      <p style="margin: 0; font-size: 1rem; line-height: 1.5;">
+        The sections below show all variations of the text with image component for visual regression testing.
+        These are static examples captured by Percy for automated visual testing.
+      </p>
+    </div>
 
     ${createThemeVariations(
       renderContentSpotlights,

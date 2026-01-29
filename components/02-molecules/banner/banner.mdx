@@ -1,0 +1,591 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as BannerStories from './banner.stories';
+
+<Meta of={BannerStories} />
+
+# Banner
+
+The banner component displays hero-style content at the top of pages. It provides multiple variations to accommodate different content needs and visual presentations, from simple image banners to feature-rich action banners with multiple call-to-action buttons. Banners are designed to capture attention and provide clear entry points for users to engage with key content or actions.
+
+## Variations
+
+This component includes four distinct banner types, each optimized for different use cases:
+
+### Action Banner
+
+The most feature-rich banner variation, supporting text content, images, and up to two call-to-action buttons. Content can be positioned at the bottom, left, or right of the banner.
+
+<Canvas of={BannerStories.ActionBanner} />
+<Controls of={BannerStories.ActionBanner} />
+
+### Grand Hero Banner
+
+A prominent hero banner designed for maximum impact, supporting full-width or contained content overlays with optional video backgrounds.
+
+<Canvas of={BannerStories.GrandHeroBanner} />
+<Controls of={BannerStories.GrandHeroBanner} />
+
+### Image Banner
+
+A streamlined banner focused on visual impact, displaying images with optional captions and minimal content overlay. Available in tall and short size variations.
+
+<Canvas of={BannerStories.ImageBanner} />
+<Controls of={BannerStories.ImageBanner} />
+
+### Video Banner
+
+A specialized banner for displaying video content, supporting both maximum width and full-width layouts.
+
+<Canvas of={BannerStories.VideoBanner} />
+<Controls of={BannerStories.VideoBanner} />
+
+## Properties
+
+### Action Banner Properties
+
+#### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>banner__heading</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>The main heading text for the banner</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>banner__snippet</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Additional descriptive text (supports HTML)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>banner__link__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Text for the primary call-to-action button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>banner__link__url</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>URL for the primary call-to-action button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>banner__link__content_two</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Text for the secondary call-to-action button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>banner__link__url_two</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>URL for the secondary call-to-action button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>banner__link__style</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'cta'</code>
+      </td>
+      <td>
+        Link style: <code>'cta'</code>, <code>'text-link'</code>, or{' '}
+        <code>'none'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>banner__content__layout</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'bottom'</code>
+      </td>
+      <td>
+        Content position: <code>'bottom'</code>, <code>'left'</code>, or{' '}
+        <code>'right'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>banner__content__background</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'one'</code>
+      </td>
+      <td>Component theme (see Theme Options below)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>banner__button__alignment</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'right'</code>
+      </td>
+      <td>
+        Button alignment: <code>'left'</code>, <code>'center'</code>, or{' '}
+        <code>'right'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>banner__button__style__consistency</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'mixed'</code>
+      </td>
+      <td>
+        Button style consistency: <code>'mixed'</code>,{' '}
+        <code>'both_primary'</code>, or <code>'both_secondary'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>banner__overlay_background_image</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>Whether to display a pattern overlay on the background image</td>
+    </tr>
+  </tbody>
+</table>
+
+### Grand Hero Banner Properties
+
+#### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>grand_hero__heading</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>The main heading text for the grand hero banner</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>grand_hero__snippet</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Additional descriptive text (supports HTML)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>grand_hero__link__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Text for the primary call-to-action button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>grand_hero__link__url</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>URL for the primary call-to-action button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>grand_hero__link__content_two</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Text for the secondary call-to-action button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>grand_hero__link__url_two</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>URL for the secondary call-to-action button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>grand_hero__content__background</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'one'</code>
+      </td>
+      <td>Component theme (see Theme Options below)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>grand_hero__overlay_variation</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'full'</code>
+      </td>
+      <td>
+        Content overlay style: <code>'contained'</code>,{' '}
+        <code>'contained-narrow'</code>, or <code>'full'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>grand_hero__size</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'full'</code>
+      </td>
+      <td>
+        Content size: <code>'reduced'</code>, <code>'full'</code>, or{' '}
+        <code>'mini'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>grand_hero__video</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'false'</code>
+      </td>
+      <td>
+        Whether to display a video background: <code>'true'</code> or{' '}
+        <code>'false'</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### Image Banner Properties
+
+#### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>image_banner__size</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'tall'</code>
+      </td>
+      <td>
+        Image size: <code>'tall'</code> or <code>'short'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>image_banner__caption</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Caption text for the image</td>
+    </tr>
+    <tr>
+      <td>
+        <code>image_banner__video</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'false'</code>
+      </td>
+      <td>
+        Whether to display a video background: <code>'true'</code> or{' '}
+        <code>'false'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>image_banner__content__background</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'one'</code>
+      </td>
+      <td>Component theme (see Theme Options below)</td>
+    </tr>
+  </tbody>
+</table>
+
+### Video Banner Properties
+
+#### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>video_banner__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Video embed code or URL</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>video_banner__width</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'max'</code>
+      </td>
+      <td>
+        Video width: <code>'max'</code> or <code>'full'</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Theme Options
+
+Banner variations that support theming (Action, Grand Hero, and Image banners) use the following theme variations:
+
+- **Default**: Standard theme using global color settings
+- **One through Five**: Custom theme dials that override global settings with component-specific colors
+
+Use the `*__content__background` property to apply different themes. The theme affects the visual styling of the content area, including background colors and text colors for optimal contrast.
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Action Banner Template**: `action/yds-action-banner.twig`
+- **Grand Hero Template**: `grand-hero/yds-grand-hero.twig`
+- **Image Banner Template**: `image/yds-image-banner.twig`
+- **Video Banner Template**: `video/yds-video-banner.twig`
+- **Styles**: `_yds-banner.scss`, `_yds-grand-hero.scss`, `_yds-image-banner.scss`, `_yds-video-banner.scss`
+- **JavaScript**: Component-specific behavior as needed for video playback
+
+### Accessibility
+
+- Semantic HTML structure with proper heading hierarchy
+- Background images implemented with appropriate alternative text handling
+- Interactive elements (buttons, links) are keyboard accessible with clear focus indicators
+- Sufficient color contrast ratios maintained across all theme variations
+- Video content includes controls for play/pause and volume when applicable
+- Content remains accessible when background images fail to load
+
+### Behavior
+
+- **Responsive Design**: Banners adapt to viewport size, with content repositioning for optimal mobile display
+- **Content Layout**: Action Banner content position (bottom, left, right) adjusts based on viewport
+- **Image Loading**: Uses responsive images with appropriate srcset for different screen sizes
+- **Video Playback**: Video banners support autoplay with appropriate user controls
+- **Theme Application**: Component themes override global color settings for visual variety
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use banners at the top of pages to immediately capture attention and set context
+- Choose the appropriate banner variation based on your content needs:
+  - **Action Banner** for pages requiring clear calls-to-action
+  - **Grand Hero** for major landing pages or homepage
+  - **Image Banner** for visual storytelling with minimal text
+  - **Video Banner** for video-first content presentation
+- Keep heading text concise and impactful (60 characters or less recommended)
+- Limit snippet text to 1-2 sentences for readability
+- Use high-quality images with appropriate aspect ratios (typically 16:9)
+- Ensure sufficient contrast between text and background images
+- Test banner content at different viewport sizes
+
+### Things to Avoid
+
+- Don't use multiple banners on a single page (reduces impact and creates visual clutter)
+- Don't rely solely on background images to convey critical information
+- Avoid lengthy text content in banners (use page body for detailed information)
+- Don't use low-contrast color combinations that make text difficult to read
+- Avoid autoplaying video with audio (creates accessibility and user experience issues)
+- Don't use more than two call-to-action buttons in Action Banners
+
+### Button Configuration Guidelines
+
+For Action Banner buttons:
+
+- **Mixed**: Primary button uses primary styling, secondary uses secondary styling (default, recommended)
+- **Both Primary**: Both buttons use primary styling (use sparingly, can reduce visual hierarchy)
+- **Both Secondary**: Both buttons use secondary styling (use for less prominent actions)
+- **Alignment**: Consider your content layout when choosing button alignment (right-aligned works well with bottom layout)
+
+## Testing
+
+For comprehensive visual regression testing with all banner variations, theme combinations, and content layouts, see the [Visreg page](?path=/story/molecules-banner-visreg).
+
+## Related Components
+
+- **Call to Action (CTA)**: Standalone CTA components for in-page calls-to-action
+- **Card Collection**: Consider for multiple related content items with images and CTAs
+- **Text**: For longer-form content that doesn't require hero-style presentation
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

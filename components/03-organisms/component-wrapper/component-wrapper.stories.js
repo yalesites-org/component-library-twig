@@ -5,6 +5,7 @@ import componentWrapperTwig from './yds-component-wrapper.twig';
  */
 export default {
   title: 'Organisms/Component Wrapper',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

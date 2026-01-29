@@ -9,6 +9,9 @@ import './utility-nav-dropdown-menu';
 /**
  * Storybook Definition.
  */
-export default { title: 'Organisms/Menu/Utility Nav' };
+export default {
+  title: 'Organisms/Menu/Utility Nav',
+  tags: ['!dev'],
+};
 
 export const UtilityNav = () => utilityNavTwig(utilityNavData);

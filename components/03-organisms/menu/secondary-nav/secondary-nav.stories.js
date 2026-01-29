@@ -16,6 +16,7 @@ const colorPairingsData = Object.keys(tokens['component-themes']);
  */
 export default {
   title: 'Organisms/Menu/Secondary Nav',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

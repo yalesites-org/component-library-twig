@@ -23,6 +23,7 @@ const siteFooterAccents = [
  */
 export default {
   title: 'Organisms/Site/Footer',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

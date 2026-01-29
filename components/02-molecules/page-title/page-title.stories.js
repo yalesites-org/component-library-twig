@@ -13,6 +13,7 @@ import './page-title';
  */
 export default {
   title: 'Molecules/Page Title',
+  tags: ['!dev'],
   argTypes: {
     meta: {
       name: 'Meta',

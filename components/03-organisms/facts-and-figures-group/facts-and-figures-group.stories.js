@@ -43,6 +43,7 @@ if (
  */
 export default {
   title: 'Organisms/Facts and Figures Group',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

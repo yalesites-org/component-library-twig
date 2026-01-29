@@ -5,6 +5,7 @@ import blockWrapperTwig from './yds-block-wrapper.twig';
  */
 export default {
   title: 'Organisms/Block Wrapper',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

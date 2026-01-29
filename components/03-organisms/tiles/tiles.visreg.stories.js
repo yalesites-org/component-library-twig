@@ -11,7 +11,7 @@ import {
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Tiles/Playground',
+  title: 'Organisms/Tiles/Visreg',
   parameters: {
     layout: 'fullscreen',
   },
@@ -39,13 +39,17 @@ export default {
   },
 };
 
-export const Playground = ({ presentationStyle, columnCount, alignment }) => {
+export const Visreg = ({ presentationStyle, columnCount, alignment }) => {
   const styles = ['heading', 'icon', 'text-only'];
+  const columnCounts = ['two', 'three', 'four'];
+  const alignments = ['left', 'center', 'right'];
 
   return `
     ${createPlaygroundIntro(
-      'Use the controls to test different presentation styles, column counts, and alignments.',
+      'Visual regression testing for tiles component showing all presentation styles, column counts, and alignment variations.',
     )}
+
+    <hr class="sb-section__divider">
 
     ${tilesTwig({
       tiles__alignment: alignment,
@@ -73,6 +77,40 @@ export const Playground = ({ presentationStyle, columnCount, alignment }) => {
       styles,
       'All Presentation Style Variations',
       'Presentation Style',
+    )}
+
+    ${createVariations(
+      (count) =>
+        tilesTwig({
+          tiles__alignment: 'left',
+          tiles__vertical_alignment: 'top',
+          tiles__presentation_style: 'heading',
+          tiles__grid_count: count,
+          tiles__with__image: 'false',
+          tiles__with__animation: 'false',
+          ...tilesData,
+          ...imageData.responsive_images['1x1'],
+        }),
+      columnCounts,
+      'All Column Count Variations',
+      'Column Count',
+    )}
+
+    ${createVariations(
+      (align) =>
+        tilesTwig({
+          tiles__alignment: align,
+          tiles__vertical_alignment: 'top',
+          tiles__presentation_style: 'heading',
+          tiles__grid_count: 'three',
+          tiles__with__image: 'false',
+          tiles__with__animation: 'false',
+          ...tilesData,
+          ...imageData.responsive_images['1x1'],
+        }),
+      alignments,
+      'All Alignment Variations',
+      'Alignment',
     )}
   `;
 };

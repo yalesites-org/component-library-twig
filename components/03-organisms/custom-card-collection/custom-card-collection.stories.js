@@ -19,6 +19,7 @@ const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
  */
 export default {
   title: 'Organisms/Card Collection/Custom Card Collection',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

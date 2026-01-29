@@ -13,6 +13,7 @@ const colorPairingsData = Object.keys(tokens['component-themes']);
  */
 export default {
   title: 'Molecules/Content Spotlight',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

@@ -7,15 +7,15 @@ import '../../02-molecules/accordion/yds-accordion';
 
 import { componentThemes } from '../../_storybook/theme-constants';
 import {
-  createPlaygroundIntro,
-  createThemeVariations,
+  createVariations,
+  createVrtDivider,
 } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Layouts/Playground',
+  title: 'Organisms/Layout/Visreg',
   parameters: {
     layout: 'fullscreen',
   },
@@ -55,7 +55,7 @@ export default {
   },
 };
 
-export const Playground = ({
+export const Visreg = ({
   componentTheme,
   layoutOption,
   layoutPadding,
@@ -67,30 +67,45 @@ export const Playground = ({
     'seventy-thirty',
   ];
 
+  const paddingOptions = ['default', 'no-top', 'no-bottom', 'no-padding'];
+
   // Render function for layout variations
-  const renderLayouts = (theme) =>
-    layoutOptions
-      .map(
-        (layout) => `
-      <h3>Layout: ${layout}</h3>
-      ${layoutTwig({
-        ...textData,
-        ...accordionData,
-        ...imageData.responsive_images['4x3'],
-        layout__divider: 'false',
-        layout__padding: 'default',
-        component__theme: theme,
-        component__layout: layout,
-      })}
-    `,
-      )
-      .join('');
+  const renderLayouts = (layout) =>
+    layoutTwig({
+      ...textData,
+      ...accordionData,
+      ...imageData.responsive_images['4x3'],
+      layout__divider: divider ? 'true' : 'false',
+      layout__padding: layoutPadding,
+      component__theme: componentTheme,
+      component__layout: layout,
+    });
+
+  // Render function for theme variations
+  const renderThemes = (theme) =>
+    layoutTwig({
+      ...textData,
+      ...accordionData,
+      ...imageData.responsive_images['4x3'],
+      layout__divider: divider ? 'true' : 'false',
+      layout__padding: layoutPadding,
+      component__theme: theme,
+      component__layout: layoutOption,
+    });
+
+  // Render function for padding variations
+  const renderPadding = (padding) =>
+    layoutTwig({
+      ...textData,
+      ...accordionData,
+      ...imageData.responsive_images['4x3'],
+      layout__divider: divider ? 'true' : 'false',
+      layout__padding: padding,
+      component__theme: componentTheme,
+      component__layout: layoutOption,
+    });
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different layout options, padding, and themes.',
-    )}
-
     ${layoutTwig({
       ...textData,
       ...accordionData,
@@ -101,12 +116,40 @@ export const Playground = ({
       component__layout: layoutOption,
     })}
 
-    ${createThemeVariations(
+    ${createVrtDivider()}
+
+    ${createVariations(
       renderLayouts,
+      layoutOptions,
+      'All Layout Variations',
+      'Layout Configuration',
+    )}
+
+    ${createVariations(
+      renderThemes,
       componentThemes,
-      'All Theme & Layout Variations',
-      'Below are all combinations of component themes and layout options for visual regression testing.',
+      'All Theme Variations',
       'Component Theme',
     )}
+
+    ${createVariations(
+      renderPadding,
+      paddingOptions,
+      'All Padding Variations',
+      'Padding Option',
+    )}
+
+    <div class="wrap-for-screenshot">
+      <h3>With Divider Enabled</h3>
+      ${layoutTwig({
+        ...textData,
+        ...accordionData,
+        ...imageData.responsive_images['4x3'],
+        layout__divider: 'true',
+        layout__padding: 'default',
+        component__theme: componentTheme,
+        component__layout: layoutOption,
+      })}
+    </div>
   `;
 };

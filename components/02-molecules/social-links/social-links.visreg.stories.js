@@ -12,7 +12,7 @@ import {
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Social Links/Playground',
+  title: 'Molecules/Social Links/Visreg',
   argTypes: {
     sectionTheme: {
       name: 'Section Theme',
@@ -26,7 +26,7 @@ export default {
   },
 };
 
-export const Playground = ({ sectionTheme }) => {
+export const Visreg = ({ sectionTheme }) => {
   // Render function for social links variations
   const renderSocialLinks = (theme) => `
     <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
@@ -39,7 +39,7 @@ export const Playground = ({ sectionTheme }) => {
   `;
 
   return `
-    ${createPlaygroundIntro('Social media links component.')}
+    ${createPlaygroundIntro('Use the controls to test different settings.')}
 
     ${renderSocialLinks(sectionTheme)}
 

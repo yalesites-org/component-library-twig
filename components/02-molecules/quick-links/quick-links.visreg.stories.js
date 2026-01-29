@@ -14,7 +14,7 @@ import {
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Quick-links/Playground',
+  title: 'Molecules/Quick Links/Visreg',
   parameters: {
     layout: 'fullscreen',
   },
@@ -46,7 +46,7 @@ export default {
   },
 };
 
-export const Playground = ({ sectionTheme, heading, description, image }) => {
+export const Visreg = ({ sectionTheme, heading, description, image }) => {
   // Render function for quick links variations
   const renderQuickLinks = (theme) => `
     <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">

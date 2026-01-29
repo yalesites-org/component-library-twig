@@ -16,7 +16,7 @@ const iconDisplayToValueMap = createIconMapping(factsAndFiguresIconsData);
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Facts and Figures Group/Playground',
+  title: 'Organisms/Facts and Figures Group/Visreg',
   parameters: {
     layout: 'fullscreen',
   },
@@ -52,7 +52,7 @@ export default {
   },
 };
 
-export const Playground = ({
+export const Visreg = ({
   componentTheme,
   presentationStyle,
   columnCount,
@@ -118,6 +118,7 @@ export const Playground = ({
       'Use the controls to test different component themes and presentation styles.',
     )}
 
+    <div class="wrap-for-screenshot">
     ${factsAndFiguresGroupTwig({
       facts_and_figures__group__heading:
         factsAndFiguresGroupData.facts_and_figures__group__heading,
@@ -133,6 +134,7 @@ export const Playground = ({
       ...customGroupData,
       ...imageData.responsive_images['16x9'],
     })}
+    </div>
 
     ${createThemeVariations(
       renderFactsAndFigures,

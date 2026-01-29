@@ -9,6 +9,7 @@ import imageData from '../../01-atoms/images/image/image.yml';
  */
 export default {
   title: 'Molecules/Quick-links',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
