@@ -10,13 +10,14 @@ import { sectionThemes } from '../../_storybook/theme-constants';
 import {
   createPlaygroundIntro,
   createThemeVariations,
+  createVariations,
 } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Alert/Playground',
+  title: 'Molecules/Alert/Visreg',
   parameters: {
     layout: 'fullscreen',
   },
@@ -63,7 +64,7 @@ ${ctaTwig({
 })}
 `;
 
-export const Playground = ({
+export const Visreg = ({
   sectionTheme,
   type,
   heading,
@@ -112,12 +113,44 @@ export const Playground = ({
       text_field__width: 'site',
     })}
 
+    <hr class="sb-vrt-divider" style="margin: 4rem 0; border: none; border-top: 2px solid #ccc;" />
+
+    <div style="margin: 2rem 0; padding: 1.5rem; background: #f5f5f5; border-left: 4px solid #0053A0;">
+      <h2 style="margin: 0 0 0.5rem 0; font-size: 1.5rem; color: #0053A0;">Visual Regression Testing</h2>
+      <p style="margin: 0; font-size: 1rem; line-height: 1.5;">
+        The sections below show all variations of the alert component for visual regression testing.
+        These are static examples captured by Percy for automated visual testing.
+      </p>
+    </div>
+
     ${createThemeVariations(
       (theme) => renderAlert(theme, `theme-${theme}`),
       sectionThemes,
       'All Section Theme Variations',
-      'Below are all theme variations for visual regression testing.',
+      'Below are all section theme variations for visual regression testing.',
       'Section Theme',
+    )}
+
+    ${createVariations(
+      (alertType) => `
+        <div data-component-theme="one" data-component-width="site" class="yds-layout">
+          <div class="yds-layout__inner">
+            <div class="yds-layout__primary">
+              ${alertTwig({
+                alert__type: alertType,
+                alert__heading: heading,
+                alert__content: content,
+                alert__link__content: linkContent,
+                alert__link__url: alertData.alert__link__url,
+                alert__id: `alert-type-${alertType}`,
+              })}
+            </div>
+          </div>
+        </div>
+      `,
+      ['emergency', 'announcement', 'marketing'],
+      'All Alert Type Variations',
+      'Alert Type',
     )}
   `;
 };

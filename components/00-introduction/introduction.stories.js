@@ -10,6 +10,7 @@ import factsAndFiguresGroupTwig from '../03-organisms/facts-and-figures-group/yd
 
 export default {
   title: 'Introduction/Welcome',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
@@ -136,7 +137,7 @@ const introductionHTML = `
                   },
                   {
                     list__item__content:
-                      '<strong>Global Config:</strong> Configuration options for customizing the design system (found under Introduction)',
+                      '<strong>Global Themes:</strong> Use the toolbar controls at the top to switch between global color themes and typography options',
                   },
                 ],
               })}

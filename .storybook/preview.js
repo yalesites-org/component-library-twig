@@ -84,7 +84,6 @@ export const parameters = {
       order: [
         'Introduction',
         ['Welcome', 'Theme System'],
-        'Global Config',
         'TOKENS',
         '*',
       ],
