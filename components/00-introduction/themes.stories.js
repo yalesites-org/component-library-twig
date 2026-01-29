@@ -7,6 +7,7 @@ import listTwig from '../01-atoms/lists/yds-list.twig';
 
 export default {
   title: 'Introduction/Theme System',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

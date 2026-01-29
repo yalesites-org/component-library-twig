@@ -1,15 +1,15 @@
 /**
- * Playground Story Template
+ * Visreg Story Template
  *
- * This is a heavily commented template file for creating new playground stories.
- * Copy this file to create a new playground story and follow the inline comments.
+ * This is a heavily commented template file for creating new visual regression (Visreg) stories.
+ * Copy this file to create a new Visreg story and follow the inline comments.
  *
  * IMPORTANT: This file is named without ".stories.js" suffix so Storybook doesn't
- * try to load it. When copying, rename to: [component-name].playground.stories.js
+ * try to load it. When copying, rename to: [component-name].visreg.stories.js
  *
  * Usage:
  * 1. Copy this file to your component directory
- * 2. Rename to: [component-name].playground.stories.js
+ * 2. Rename to: [component-name].visreg.stories.js
  * 3. Replace all [COMPONENT_NAME] placeholders with your component name
  * 4. Update imports, argTypes, and rendering logic
  * 5. Add VRT sections for all variations
@@ -79,7 +79,7 @@ import {
 
 export default {
   // Story path in Storybook sidebar
-  title: 'Category/[COMPONENT_NAME]/Playground',
+  title: 'Category/[COMPONENT_NAME]/Visreg',
 
   // Modern argTypes definition (controls configuration)
   argTypes: {
@@ -173,18 +173,18 @@ export default {
 };
 
 // =============================================================================
-// PLAYGROUND STORY EXPORT
+// VISREG STORY EXPORT
 // =============================================================================
 
 /**
- * Playground Story
+ * Visreg Story
  *
- * This is the main playground story function. It receives all args from controls
+ * This is the main visual regression (Visreg) story function. It receives all args from controls
  * and renders both:
  * 1. Interactive section (responds to controls)
  * 2. VRT sections (static, all variations for visual regression testing)
  */
-export const Playground = ({
+export const Visreg = ({
   // Destructure all args from controls
   heading,
   section_theme,
@@ -237,6 +237,21 @@ export const Playground = ({
     <!-- Wrapper with global theme for interactive section -->
     <div class="wrap-for-global-theme" data-global-theme="${section_theme}">
       ${componentTwig(componentConfig)}
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- VRT DIVIDER                                                        -->
+    <!-- Visual separator between interactive controls and VRT sections     -->
+    <!-- ================================================================== -->
+
+    <hr class="sb-vrt-divider" style="margin: 4rem 0; border: none; border-top: 2px solid #ccc;" />
+
+    <div style="margin: 2rem 0; padding: 1.5rem; background: #f5f5f5; border-left: 4px solid #0053A0;">
+      <h2 style="margin: 0 0 0.5rem 0; font-size: 1.5rem; color: #0053A0;">Visual Regression Testing</h2>
+      <p style="margin: 0; font-size: 1rem; line-height: 1.5;">
+        The sections below show all variations of this component for visual regression testing.
+        These are static examples captured by Percy for automated visual testing.
+      </p>
     </div>
 
     <!-- ================================================================== -->

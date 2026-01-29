@@ -11,6 +11,7 @@ import './yds-alert';
  */
 export default {
   title: 'Molecules/Alert',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

@@ -5,6 +5,7 @@ import './yds-accordion';
 
 export default {
   title: 'Molecules/Accordion',
+  tags: ['!dev'],
   argTypes: {
     accordionHeading: {
       name: 'Accordion Heading',
