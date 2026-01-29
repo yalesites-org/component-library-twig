@@ -7,15 +7,30 @@ import './intro-styles.css';
 
 # Understanding the Theme System
 
-<p className="lead-text">The YaleSites component library uses a three-tier theme system that works together to create cohesive, flexible, and branded experiences. Understanding how these three types of themes interact is key to effectively using the design system.</p>
+<p className="lead-text">
+  The YaleSites component library uses a three-tier theme system that works
+  together to create cohesive, flexible, and branded experiences. Understanding
+  how these three types of themes interact is key to effectively using the
+  design system.
+</p>
 
-<div style={{padding: '1.5rem', background: '#f0f0f0', border: '1px solid #666', borderLeft: '4px solid #0053A0', margin: '2rem 0'}}>
-  <h3 style={{marginTop: 0}}>Three Theme Types Working Together</h3>
-  <p style={{marginBottom: 0}}>
-    Think of themes as layers: <strong>Global Theme</strong> sets the overall color palette,
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    border: '1px solid #666',
+    borderLeft: '4px solid #0053A0',
+    margin: '2rem 0',
+  }}
+>
+  <h3 style={{ marginTop: 0 }}>Three Theme Types Working Together</h3>
+  <p style={{ marginBottom: 0 }}>
+    Think of themes as layers: <strong>Global Theme</strong> sets the overall
+    color palette,
     <strong> Section Theme</strong> applies background colors to page sections, and
-    <strong> Component Theme (dial)</strong> adds accent colors to individual components.
-    Together, they create unlimited design combinations while maintaining brand consistency.
+    <strong> Component Theme (dial)</strong> adds accent colors to individual
+    components. Together, they create unlimited design combinations while
+    maintaining brand consistency.
   </p>
 </div>
 
@@ -25,11 +40,12 @@ import './intro-styles.css';
 
 ### 1. Global Theme (Lever)
 
-*Site-wide color palette*
+_Site-wide color palette_
 
 The global theme is the foundation of your entire site's color scheme. It's called a "lever" because switching it fundamentally changes all the color values used throughout the site.
 
 **Available options (6):**
+
 - `one` - Old Blues
 - `two` - New Haven Green
 - `three` - Shoreline Summer
@@ -38,10 +54,12 @@ The global theme is the foundation of your entire site's color scheme. It's call
 - `six` - AI
 
 **How to control:**
+
 - In Storybook: Use the "Site: Global Theme" dropdown in the top toolbar
 - In Drupal: Set site-wide in theme settings
 
 **What it affects:**
+
 - All color tokens throughout the site
 - Default colors for components that don't have specific theme overrides
 - Base palette for section themes and component themes
@@ -52,19 +70,22 @@ The global theme is the foundation of your entire site's color scheme. It's call
 
 ### 2. Section Theme
 
-*Background colors for page sections*
+_Background colors for page sections_
 
 Section themes apply background colors to major page sections (like header, main content, footer). They work within the global theme's palette.
 
 **Available options (6):**
+
 - `default` - White/light background (most common)
 - `one` through `five` - Colored backgrounds using global theme palette
 
 **How to control:**
+
 - In Storybook: Use the "Section Theme" control in the Controls panel for individual stories
 - In Drupal: Set per-section in layout builder or paragraph settings
 
 **What it affects:**
+
 - Background color of page sections
 - Automatically adjusts text color for contrast
 - Provides context for components within the section
@@ -75,19 +96,22 @@ Section themes apply background colors to major page sections (like header, main
 
 ### 3. Component Theme (Dial)
 
-*Accent colors for individual components*
+_Accent colors for individual components_
 
 Component themes (often called "dials" in the CMS) add accent colors to specific components. These are the most granular level of theming.
 
 **Available options (6):**
+
 - `default` - Uses global theme defaults
 - `one` through `five` - Accent colors from global theme palette
 
 **How to control:**
+
 - In Storybook: Use the "[Component] Theme (dial)" control in the Controls panel
 - In Drupal: Set per-component using the "Style" field (color dial)
 
 **What it affects:**
+
 - Component-specific accent colors (borders, backgrounds, highlights)
 - Links and interactive elements within the component
 - Component-specific decorative elements
@@ -105,6 +129,7 @@ The three theme types create a hierarchy:
 3. **Component Theme** adds an accent color to a specific component (e.g., `three` = bright blue accent)
 
 **Example combination:**
+
 ```
 Global Theme: "New Haven Green" (site-wide)
 └─ Section Theme: "two" (green background section)
@@ -128,19 +153,25 @@ This creates visual hierarchy and interest while maintaining brand consistency.
   </thead>
   <tbody>
     <tr>
-      <td><strong>Global Theme</strong></td>
+      <td>
+        <strong>Global Theme</strong>
+      </td>
       <td>Entire site</td>
       <td>Color palette</td>
       <td>Affects all colors site-wide</td>
     </tr>
     <tr>
-      <td><strong>Section Theme</strong></td>
+      <td>
+        <strong>Section Theme</strong>
+      </td>
       <td>Page section</td>
       <td>Background color</td>
       <td>Affects one section background</td>
     </tr>
     <tr>
-      <td><strong>Component Theme</strong></td>
+      <td>
+        <strong>Component Theme</strong>
+      </td>
       <td>Individual component</td>
       <td>Accent color</td>
       <td>Affects one component's accents</td>
@@ -157,6 +188,7 @@ Storybook provides three places to control themes:
 ### Top Toolbar (Global Controls)
 
 Located at the very top of Storybook:
+
 - **Site: Global Theme** - Changes the site-wide color palette for all components
 - **Typography: Heading Fonts** - Switches between YaleNew and Mallory heading fonts
 
@@ -165,6 +197,7 @@ These controls apply to ALL stories and persist as you navigate.
 ### Controls Panel (Story-Specific)
 
 Located at the bottom of each story:
+
 - **Section Theme** - Controls the background color for that specific story
 - **[Component] Theme (dial)** - Controls the accent color for the component in that story
 
