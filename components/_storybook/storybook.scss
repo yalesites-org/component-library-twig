@@ -10,6 +10,76 @@
  */
 
 /**
+ * Global Storybook Documentation Styles
+ * Apply Mallory font and larger font sizes to MDX documentation pages
+ */
+.sb-show-main {
+  font-family: Mallory, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Increase base font size for documentation blocks */
+.sbdocs-wrapper,
+.sbdocs-content {
+  font-family: Mallory, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  font-size: 16px;
+}
+
+/* Headings in docs */
+.sbdocs h1 {
+  font-family: Mallory, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  font-size: 2.5rem;
+  line-height: 1.2;
+}
+
+.sbdocs h2 {
+  font-family: Mallory, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  font-size: 2rem;
+  line-height: 1.3;
+}
+
+.sbdocs h3 {
+  font-family: Mallory, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+.sbdocs h4 {
+  font-family: Mallory, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+/* Paragraph text */
+.sbdocs p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Tables */
+.sbdocs table {
+  font-size: 15px;
+}
+
+.sbdocs td,
+.sbdocs th {
+  padding: 0.75rem;
+}
+
+/* Code blocks */
+.sbdocs code {
+  font-size: 14px;
+}
+
+/**
  * Section divider - horizontal rule styling for separating VRT sections
  */
 .sb-section__divider {

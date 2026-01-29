@@ -9,6 +9,8 @@ import faIconData from './fa-icons/fa-icons.yml';
 import './image/cl-image.scss';
 import './icons/cl-icons.scss';
 
+import { sectionThemes } from '../../_storybook/theme-constants';
+
 const svgIcons = require.context('../../../images/icons', true, /\.svg$/);
 const icons = [];
 svgIcons.keys().forEach((key) => {
@@ -19,7 +21,51 @@ svgIcons.keys().forEach((key) => {
 /**
  * Storybook Definition.
  */
-export default { title: 'Atoms/Images' };
+export default {
+  title: 'Atoms/Images',
+  tags: ['!dev'],
+  argTypes: {
+    sectionTheme: {
+      name: 'Section Theme',
+      description: 'Background color theme for the layout section',
+      type: 'select',
+      options: sectionThemes,
+    },
+    aspectRatio: {
+      name: 'Aspect Ratio',
+      type: 'select',
+      options: ['16x9', '3x2', '1x1', '1x1.6', '4x3'],
+    },
+  },
+  args: {
+    sectionTheme: 'default',
+    aspectRatio: '16x9',
+  },
+};
+
+export const Interactive = ({ sectionTheme, aspectRatio }) => `
+  <div class="yds-layout" data-component-theme="${sectionTheme}" data-component-width="site">
+    <div class="yds-layout__inner">
+      <div class="yds-layout__primary">
+        <h3>Responsive Image - ${aspectRatio}</h3>
+        <div class="cl-image-examples">
+          <div class="cl-image-example">
+            ${imageTwig(imageData.responsive_images[aspectRatio])}
+          </div>
+        </div>
+
+        <h3>Figure with Caption</h3>
+        ${imageTwig(figureData)}
+
+        <h3>Sample Icons</h3>
+        ${iconsTwig({ icons: icons.slice(0, 10) })}
+
+        <h3>Font Awesome Icons</h3>
+        ${faIconsTwig(faIconData)}
+      </div>
+    </div>
+  </div>
+`;
 
 export const Images = () => `
   <h2>Aspect Ratios</h2>

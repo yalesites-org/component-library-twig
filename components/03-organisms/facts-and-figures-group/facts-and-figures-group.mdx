@@ -1,7 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as FactsAndFiguresGroupStories from './facts-and-figures-group.stories';
 
-<Meta of={FactsAndFiguresGroupStories} />
+<Meta of={FactsAndFiguresGroupStories} name="Docs" />
 
 # Facts and Figures Group
 
@@ -110,8 +110,8 @@ Use the controls panel below to experiment with the facts and figures group's pr
         <code>'three'</code>
       </td>
       <td>
-        Number of columns in the grid: <code>'two'</code>,{' '}
-        <code>'three'</code>, or <code>'four'</code>
+        Number of columns in the grid: <code>'two'</code>, <code>'three'</code>,
+        or <code>'four'</code>
       </td>
     </tr>
     <tr>
@@ -192,8 +192,7 @@ Use the controls panel below to experiment with the facts and figures group's pr
         <code>'false'</code>
       </td>
       <td>
-        Enable icons for fact items: <code>'true'</code> or{' '}
-        <code>'false'</code>
+        Enable icons for fact items: <code>'true'</code> or <code>'false'</code>
       </td>
     </tr>
   </tbody>
@@ -268,19 +267,20 @@ Configure the number of columns to best fit your content and available space:
     </p>
   </div>
 
-  <div
-    style={{
-      padding: '1.5rem',
-      background: '#f0f0f0',
-      borderRadius: '8px',
-    }}
-  >
-    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Three Columns</h3>
-    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
-      Balanced default layout suitable for most use cases. Accommodates 3-6
-      statistics while maintaining readability across viewport sizes.
-    </p>
-  </div>
+{' '}
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Three Columns</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Balanced default layout suitable for most use cases. Accommodates 3-6
+    statistics while maintaining readability across viewport sizes.
+  </p>
+</div>
 
   <div
     style={{

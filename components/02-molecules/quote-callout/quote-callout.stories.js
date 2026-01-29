@@ -4,6 +4,7 @@ import imageData from '../../01-atoms/images/image/image.yml';
 
 export default {
   title: 'Molecules/Quotes/Quote Callout',
+  tags: ['!dev'],
 };
 
 export const quoteCallout = () => `

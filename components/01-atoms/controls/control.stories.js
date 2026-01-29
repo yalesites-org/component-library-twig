@@ -14,6 +14,7 @@ const componentThemeOptions = Object.keys(tokens['button-cta-themes']);
  */
 export default {
   title: 'Atoms/Controls',
+  tags: ['!dev'],
   argTypes: {
     sectionTheme: {
       name: 'Section Theme',

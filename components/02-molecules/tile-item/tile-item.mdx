@@ -1,0 +1,340 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as TileItemStories from './tile-item.stories';
+
+<Meta of={TileItemStories} name="Docs" />
+
+# Tile Item
+
+The tile item component is a versatile card-style element used within tile grids to display content in an organized, scannable format. It supports three presentation styles (heading, icon, text-only) and can include optional background images, making it ideal for creating visual grids of information, statistics, or navigational elements.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the tile item's properties in real-time.
+
+<Canvas of={TileItemStories.TileItem} />
+<Controls of={TileItemStories.TileItem} />
+
+## Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>tile__item__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Main content text for the tile (supports HTML)</td>
+    </tr>
+  </tbody>
+</table>
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>tile__item__heading</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Large heading text (used with 'heading' presentation style)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>tile__item__content_link</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>URL to make the entire tile clickable</td>
+    </tr>
+    <tr>
+      <td>
+        <code>tile__item__presentation_style</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'heading'</code>
+      </td>
+      <td>
+        Visual style: <code>'heading'</code>, <code>'icon'</code>, or{' '}
+        <code>'text-only'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>tile__item__alignment</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'left'</code>
+      </td>
+      <td>
+        Text alignment: <code>'left'</code>, <code>'center'</code>, or{' '}
+        <code>'right'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>tile__item__vertical_alignment</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'top'</code>
+      </td>
+      <td>
+        Vertical content position: <code>'top'</code> or <code>'bottom'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>tile__item__theme</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'one'</code>
+      </td>
+      <td>Component theme from the color dial</td>
+    </tr>
+    <tr>
+      <td>
+        <code>tile__item__bg_image</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'false'</code>
+      </td>
+      <td>
+        Show background image: <code>'true'</code> or <code>'false'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>tile__item__animation</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'false'</code>
+      </td>
+      <td>
+        Enable hover animation: <code>'true'</code> or <code>'false'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>tile__item__icon_name</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>
+        Icon identifier (used with 'icon' presentation style, e.g.,
+        'sack-dollar-solid')
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Presentation Styles
+
+### Heading
+
+Displays a large, prominent heading (typically a number or short text) with supporting content below. Ideal for statistics, facts, or figures.
+
+**Use for:**
+
+- Statistics and metrics (e.g., "1,500 Students")
+- Key numbers and data points
+- Facts and figures displays
+- Impact statements
+
+**Visual characteristics:**
+
+- Large, bold heading text
+- Smaller descriptive content below
+- Clear hierarchy between heading and content
+- Emphasis on the numeric or heading value
+
+### Icon
+
+Features a decorative icon above the content text. Perfect for categorized information or feature highlights.
+
+**Use for:**
+
+- Feature lists with visual indicators
+- Service offerings or capabilities
+- Category navigation
+- Process steps with icons
+
+**Visual characteristics:**
+
+- Icon displayed prominently at top
+- Content text below icon
+- Visual interest through iconography
+- Clear categorical representation
+
+### Text-Only
+
+Displays only the content text without additional visual elements. Clean and minimal approach.
+
+**Use for:**
+
+- Simple text grids
+- Quote collections
+- Testimonial displays
+- Minimalist designs
+
+**Visual characteristics:**
+
+- Clean, text-focused design
+- No decorative elements
+- Maximum space for content
+- Emphasis on readability
+
+## Alignment Options
+
+### Horizontal Alignment
+
+- **Left**: Content aligns to the left edge (default, best for readability)
+- **Center**: Content centered within the tile (good for symmetrical layouts)
+- **Right**: Content aligns to the right edge (use sparingly for visual variety)
+
+### Vertical Alignment
+
+- **Top**: Content positioned at the top of the tile (default, provides consistency)
+- **Bottom**: Content positioned at the bottom (useful with background images)
+
+## Background Images
+
+Tiles can include background images that appear behind the content:
+
+- Adds visual interest and context
+- Works well with vertical alignment options
+- Should have sufficient contrast with text
+- Optional overlay ensures text readability
+- Supports responsive image formats
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-tile-item.twig`
+- **Styles**: `_yds-tile-item.scss`
+- **Parent Component**: Used within Tiles (organism)
+
+### Accessibility
+
+- **Semantic HTML**: Proper list structure (`<li>` element)
+- **Clickable tiles**: Entire tile is keyboard accessible when linked
+- **ARIA labels**: Descriptive labels for screen reader users
+- **Color contrast**: Text meets WCAG AA standards against backgrounds
+- **Focus indicators**: Clear keyboard focus states
+- **Icon accessibility**: Icons include appropriate aria-hidden and text alternatives
+
+### Grid Context
+
+Tile items are designed to be used within a tiles container that controls the grid layout:
+
+- **Three column grid**: Standard layout (default)
+- **Responsive behavior**: Adjusts columns based on viewport size
+- **Equal height tiles**: All tiles in a row maintain consistent height
+- **Gap spacing**: Consistent spacing between tiles
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use consistent presentation styles within a single tile grid
+- Keep content concise (1-2 sentences maximum)
+- Ensure sufficient contrast between text and background images
+- Use icons that clearly represent the content category
+- Apply themes consistently across related tiles
+- Make entire tiles clickable when they represent links
+- Test readability with and without background images
+- Choose vertical alignment based on image composition
+
+### Things to Avoid
+
+- Don't mix too many presentation styles in one grid
+- Avoid overly long content that causes uneven tile heights
+- Don't use background images that obscure text
+- Avoid using too many different icons in one grid
+- Don't rely solely on color to convey meaning
+- Avoid making some tiles clickable and others not in the same grid
+- Don't use center alignment unless the entire grid is centered
+- Avoid animations on every tile (can be overwhelming)
+
+### Content Recommendations
+
+**Heading style content:**
+
+- "1,500" / "Students enrolled"
+- "95%" / "Satisfaction rate"
+- "24/7" / "Support available"
+
+**Icon style content:**
+
+- Brief feature descriptions
+- Service categories
+- Process step descriptions
+
+**Text-only style content:**
+
+- Short quotes or testimonials
+- Simple statements
+- Brief descriptions
+
+## Testing
+
+For comprehensive visual regression testing with all presentation styles, alignments, and theme combinations, see the [Visreg page](?path=/story/molecules-tile-item-visreg--visreg).
+
+## Related Components
+
+- **Tiles (Organism)**: The container component that houses tile items
+- **Facts and Figures**: Specialized version for displaying statistics
+- **Cards**: Alternative card-style component for more complex content
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

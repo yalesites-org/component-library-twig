@@ -1,7 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as BlockWrapperStories from './block-wrapper.stories';
 
-<Meta of={BlockWrapperStories} />
+<Meta of={BlockWrapperStories} name="Docs" />
 
 # Block Wrapper
 
@@ -62,8 +62,8 @@ Use the controls panel below to experiment with the block wrapper's properties i
         <code>[]</code>
       </td>
       <td>
-        Array of CSS classes for styling. Include padding modifier classes
-        like <code>ys-block-wrapper--padding-default</code>
+        Array of CSS classes for styling. Include padding modifier classes like{' '}
+        <code>ys-block-wrapper--padding-default</code>
       </td>
     </tr>
   </tbody>
@@ -98,40 +98,41 @@ The block wrapper supports four padding configurations to accommodate different 
     </p>
   </div>
 
-  <div
-    style={{
-      padding: '1.5rem',
-      background: '#f0f0f0',
-      borderRadius: '8px',
-    }}
-  >
-    <h3 style={{ marginTop: 0, color: '#0053A0' }}>No Top Padding</h3>
-    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
-      Removes top padding while maintaining bottom padding. Ideal for blocks
-      that follow headers or when creating tighter visual groupings.
-    </p>
-    <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: 0 }}>
-      <strong>Class:</strong> <code>ys-block-wrapper--padding-no-top</code>
-    </p>
-  </div>
+{' '}
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>No Top Padding</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Removes top padding while maintaining bottom padding. Ideal for blocks that
+    follow headers or when creating tighter visual groupings.
+  </p>
+  <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: 0 }}>
+    <strong>Class:</strong> <code>ys-block-wrapper--padding-no-top</code>
+  </p>
+</div>
 
-  <div
-    style={{
-      padding: '1.5rem',
-      background: '#f0f0f0',
-      borderRadius: '8px',
-    }}
-  >
-    <h3 style={{ marginTop: 0, color: '#0053A0' }}>No Bottom Padding</h3>
-    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
-      Removes bottom padding while maintaining top padding. Useful for blocks
-      that precede footers or when content flows directly into the next
-      section.
-    </p>
-    <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: 0 }}>
-      <strong>Class:</strong> <code>ys-block-wrapper--padding-no-bottom</code>
-    </p>
-  </div>
+{' '}
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>No Bottom Padding</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Removes bottom padding while maintaining top padding. Useful for blocks that
+    precede footers or when content flows directly into the next section.
+  </p>
+  <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: 0 }}>
+    <strong>Class:</strong> <code>ys-block-wrapper--padding-no-bottom</code>
+  </p>
+</div>
 
   <div
     style={{
@@ -175,8 +176,8 @@ The block wrapper supports four padding configurations to accommodate different 
         <strong>Accessibility</strong>
       </td>
       <td>
-        Semantic HTML wrapper, maintains proper document flow, preserves
-        content accessibility
+        Semantic HTML wrapper, maintains proper document flow, preserves content
+        accessibility
       </td>
     </tr>
     <tr>

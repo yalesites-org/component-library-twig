@@ -35,6 +35,7 @@ const eventDataVariants = {
  */
 export default {
   title: 'Molecules/Meta',
+  tags: ['!dev'],
 };
 
 export const Basic = ({ meta }) => basicMetaTwig({ basic_meta: meta });

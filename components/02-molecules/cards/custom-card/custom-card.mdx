@@ -1,7 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as CustomCardStories from './custom-card.stories';
 
-<Meta of={CustomCardStories} />
+<Meta of={CustomCardStories} name="Docs" />
 
 # Custom Card
 
@@ -70,7 +70,9 @@ Use the controls panel below to experiment with the custom card's properties in 
       <td>
         <code>null</code>
       </td>
-      <td>Descriptive text content displayed below the heading (supports HTML)</td>
+      <td>
+        Descriptive text content displayed below the heading (supports HTML)
+      </td>
     </tr>
     <tr>
       <td>
@@ -129,9 +131,7 @@ Custom cards are displayed within a collection container that supports additiona
       <td>
         <code>true</code>
       </td>
-      <td>
-        Whether the collection displays cards in a featured layout style
-      </td>
+      <td>Whether the collection displays cards in a featured layout style</td>
     </tr>
   </tbody>
 </table>

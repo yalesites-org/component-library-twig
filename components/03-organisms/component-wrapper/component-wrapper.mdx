@@ -1,7 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as ComponentWrapperStories from './component-wrapper.stories';
 
-<Meta of={ComponentWrapperStories} />
+<Meta of={ComponentWrapperStories} name="Docs" />
 
 # Component Wrapper
 
@@ -42,9 +42,7 @@ This component has no strictly required properties, but typically includes conte
       <td>
         <code>'site'</code>
       </td>
-      <td>
-        Sets the maximum width constraint (see Width Options below)
-      </td>
+      <td>Sets the maximum width constraint (see Width Options below)</td>
     </tr>
     <tr>
       <td>
@@ -130,41 +128,43 @@ The component wrapper supports four width configurations to accommodate differen
     </p>
   </div>
 
-  <div
-    style={{
-      padding: '1.5rem',
-      background: '#f0f0f0',
-      borderRadius: '8px',
-    }}
-  >
-    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Highlight</h3>
-    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
-      Medium width option for featured content sections. Use for highlighted
-      content blocks, callouts, or sections that need more width than standard
-      text content.
-    </p>
-    <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: 0 }}>
-      <strong>Value:</strong> <code>'highlight'</code>
-    </p>
-  </div>
+{' '}
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Highlight</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Medium width option for featured content sections. Use for highlighted
+    content blocks, callouts, or sections that need more width than standard
+    text content.
+  </p>
+  <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: 0 }}>
+    <strong>Value:</strong> <code>'highlight'</code>
+  </p>
+</div>
 
-  <div
-    style={{
-      padding: '1.5rem',
-      background: '#f0f0f0',
-      borderRadius: '8px',
-    }}
-  >
-    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Site</h3>
-    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
-      Standard site width (default). Provides consistent width for most
-      components and maintains the overall site layout. Use for general content
-      areas, cards, and multi-column layouts.
-    </p>
-    <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: 0 }}>
-      <strong>Value:</strong> <code>'site'</code>
-    </p>
-  </div>
+{' '}
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Site</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Standard site width (default). Provides consistent width for most components
+    and maintains the overall site layout. Use for general content areas, cards,
+    and multi-column layouts.
+  </p>
+  <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: 0 }}>
+    <strong>Value:</strong> <code>'site'</code>
+  </p>
+</div>
 
   <div
     style={{

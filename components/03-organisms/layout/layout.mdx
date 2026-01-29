@@ -1,7 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as LayoutStories from './layout.stories';
 
-<Meta of={LayoutStories} />
+<Meta of={LayoutStories} name="Docs" />
 
 # Layout
 
@@ -72,8 +72,7 @@ Use the controls panel below to experiment with the layout's properties in real-
       </td>
       <td>
         Layout configuration: <code>'fifty-fifty'</code>,{' '}
-        <code>'thirty-thirty-thirty'</code>, or{' '}
-        <code>'seventy-thirty'</code>
+        <code>'thirty-thirty-thirty'</code>, or <code>'seventy-thirty'</code>
       </td>
     </tr>
     <tr>
@@ -178,20 +177,21 @@ The layout component supports three distinct column configurations for different
     </p>
   </div>
 
-  <div
-    style={{
-      padding: '1.5rem',
-      background: '#f0f0f0',
-      borderRadius: '8px',
-    }}
-  >
-    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Seventy-Thirty</h3>
-    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
-      Asymmetric layout with a wider primary region (70%) and narrower
-      secondary region (30%). Perfect for main content with sidebar
-      navigation or supplementary information.
-    </p>
-  </div>
+{' '}
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Seventy-Thirty</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Asymmetric layout with a wider primary region (70%) and narrower secondary
+    region (30%). Perfect for main content with sidebar navigation or
+    supplementary information.
+  </p>
+</div>
 
   <div
     style={{
@@ -211,7 +211,7 @@ The layout component supports three distinct column configurations for different
 
 ## Visual Dividers
 
-When <code>layout__divider</code> is set to <code>'true'</code>, visual dividers appear between layout regions to create clear separation between content areas. In the three-column layout, dividers appear between all three columns when enabled.
+When <code>layout\_\_divider</code> is set to <code>'true'</code>, visual dividers appear between layout regions to create clear separation between content areas. In the three-column layout, dividers appear between all three columns when enabled.
 
 ## Padding Options
 
@@ -289,8 +289,8 @@ The layout component provides flexible padding controls to accommodate different
         <strong>Responsive Behavior</strong>
       </td>
       <td>
-        Multi-column layouts reflow to single column on small screens,
-        maintains content hierarchy and readability across all devices
+        Multi-column layouts reflow to single column on small screens, maintains
+        content hierarchy and readability across all devices
       </td>
     </tr>
   </tbody>

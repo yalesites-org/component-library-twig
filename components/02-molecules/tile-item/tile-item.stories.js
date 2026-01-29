@@ -6,6 +6,7 @@ import imageData from '../../01-atoms/images/image/image.yml';
 
 export default {
   title: 'Molecules/Tile Item',
+  tags: ['!dev'],
 };
 
 export const TileItem = () => `

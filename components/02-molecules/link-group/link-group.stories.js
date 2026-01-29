@@ -7,6 +7,7 @@ import linkGroupData from './link-group.yml';
  */
 export default {
   title: 'Molecules/Link group',
+  tags: ['!dev'],
   argTypes: {
     heading: {
       name: 'Heading',

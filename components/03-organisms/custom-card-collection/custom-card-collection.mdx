@@ -1,7 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as CustomCardCollectionStories from './custom-card-collection.stories';
 
-<Meta of={CustomCardCollectionStories} />
+<Meta of={CustomCardCollectionStories} name="Docs" />
 
 # Custom Card Collection
 
@@ -74,8 +74,8 @@ Use the controls panel below to experiment with the custom card collection's pro
         <code>'false'</code>
       </td>
       <td>
-        Enable featured layout with larger first card:{' '}
-        <code>'true'</code> or <code>'false'</code>
+        Enable featured layout with larger first card: <code>'true'</code> or{' '}
+        <code>'false'</code>
       </td>
     </tr>
     <tr>
@@ -133,7 +133,7 @@ Use the controls panel below to experiment with the custom card collection's pro
 
 ## Featured Layout
 
-When <code>custom_card_collection__featured</code> is set to <code>'true'</code>, the collection displays with a featured layout where the first card appears larger and more prominently than the subsequent cards. This creates visual hierarchy and draws attention to the primary content.
+When <code>custom_card_collection\_\_featured</code> is set to <code>'true'</code>, the collection displays with a featured layout where the first card appears larger and more prominently than the subsequent cards. This creates visual hierarchy and draws attention to the primary content.
 
 <div
   style={{
@@ -217,8 +217,7 @@ The image display setting applies to all cards in the collection uniformly.
       </td>
       <td>
         Featured layout stacks vertically on mobile, standard grid adapts
-        columns based on viewport size, maintains readability across all
-        devices
+        columns based on viewport size, maintains readability across all devices
       </td>
     </tr>
   </tbody>

@@ -1,7 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as UtilityNavStories from './utility-nav.stories';
 
-<Meta of={UtilityNavStories} />
+<Meta of={UtilityNavStories} name="Docs" />
 
 # Utility Nav
 
@@ -136,9 +136,9 @@ The Utility Nav offers several configurable features that can be used individual
 
 <div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', margin: '2rem 0'}}>
 
-<div style={{padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px'}}>
-  <h3 style={{marginTop: 0, color: '#0053A0'}}>Standard Menu Items</h3>
-  <p style={{fontSize: '0.95rem', marginBottom: 0}}>
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Standard Menu Items</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
     Display a horizontal list of utility links such as About, Events, Contact,
     or other quick-access pages. These items appear as simple text links in the
     utility bar and are ideal for secondary navigation items that don't require
@@ -146,9 +146,9 @@ The Utility Nav offers several configurable features that can be used individual
   </p>
 </div>
 
-<div style={{padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px'}}>
-  <h3 style={{marginTop: 0, color: '#0053A0'}}>Search Functionality</h3>
-  <p style={{fontSize: '0.95rem', marginBottom: 0}}>
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Search Functionality</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
     Include an integrated search input field that allows users to search site
     content directly from the header. The search feature includes a magnifying
     glass icon and accessible form elements with proper ARIA labels for screen
@@ -156,18 +156,18 @@ The Utility Nav offers several configurable features that can be used individual
   </p>
 </div>
 
-<div style={{padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px'}}>
-  <h3 style={{marginTop: 0, color: '#0053A0'}}>Call-to-Action Button</h3>
-  <p style={{fontSize: '0.95rem', marginBottom: 0}}>
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Call-to-Action Button</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
     Feature a prominent call-to-action button (such as "Apply Now" or "Give")
     styled as a pill-shaped button that stands out from standard links. Supports
     theming to match site branding and design requirements.
   </p>
 </div>
 
-<div style={{padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px'}}>
-  <h3 style={{marginTop: 0, color: '#0053A0'}}>Dropdown Menu</h3>
-  <p style={{fontSize: '0.95rem', marginBottom: 0}}>
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Dropdown Menu</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
     Provide access to a grouped set of related links through a dropdown trigger
     button. Useful for audience-specific navigation (like "For Students", "For
     Faculty") or categorized utility links. Includes proper ARIA attributes for
@@ -201,7 +201,8 @@ Dropdown menu items follow the same structure and are displayed in a vertical li
         <strong>Files</strong>
       </td>
       <td>
-        <code>yds-utility-nav.twig</code>, <code>utility-nav-dropdown-menu.js</code>,{' '}
+        <code>yds-utility-nav.twig</code>,{' '}
+        <code>utility-nav-dropdown-menu.js</code>,{' '}
         <code>_yds-utility-nav.scss</code>
       </td>
     </tr>
@@ -260,6 +261,7 @@ The Utility Nav is highly flexible and should be configured based on your site's
 ### Link Types
 
 The component supports various link types:
+
 - Internal site pages
 - External URLs (including PDFs and downloads)
 - Anchored links within the current page

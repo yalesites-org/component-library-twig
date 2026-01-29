@@ -1,7 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as PrimaryNavStories from './primary-nav.stories';
 
-<Meta of={PrimaryNavStories} />
+<Meta of={PrimaryNavStories} name="Docs" />
 
 # Primary Nav
 
@@ -34,7 +34,10 @@ Use the controls panel below to experiment with the primary nav's properties in 
       <td>
         <code>array</code>
       </td>
-      <td>Array of navigation menu items with title, url, and optional nested items</td>
+      <td>
+        Array of navigation menu items with title, url, and optional nested
+        items
+      </td>
     </tr>
   </tbody>
 </table>
@@ -75,18 +78,18 @@ The Primary Nav supports three distinct menu variations, each optimized for diff
 
 <div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', margin: '2rem 0'}}>
 
-<div style={{padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px'}}>
-  <h3 style={{marginTop: 0, color: '#0053A0'}}>Basic Menu</h3>
-  <p style={{fontSize: '0.95rem', marginBottom: 0}}>
-    Standard dropdown navigation with simple hover/click interactions. Best suited
-    for sites with straightforward navigation hierarchies and moderate content
-    depth. Provides a clean, traditional navigation experience.
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Basic Menu</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Standard dropdown navigation with simple hover/click interactions. Best
+    suited for sites with straightforward navigation hierarchies and moderate
+    content depth. Provides a clean, traditional navigation experience.
   </p>
 </div>
 
-<div style={{padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px'}}>
-  <h3 style={{marginTop: 0, color: '#0053A0'}}>Mega Menu</h3>
-  <p style={{fontSize: '0.95rem', marginBottom: 0}}>
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Mega Menu</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
     Expanded multi-column navigation panel that displays all menu items in a
     structured grid layout. Ideal for sites with complex navigation structures,
     multiple content sections, or deep hierarchies requiring better overview and
@@ -94,9 +97,9 @@ The Primary Nav supports three distinct menu variations, each optimized for diff
   </p>
 </div>
 
-<div style={{padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px'}}>
-  <h3 style={{marginTop: 0, color: '#0053A0'}}>Focus Menu</h3>
-  <p style={{fontSize: '0.95rem', marginBottom: 0}}>
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Focus Menu</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
     Full-screen overlay navigation that emphasizes the menu as a primary
     interaction. Creates an immersive navigation experience with larger touch
     targets and enhanced visual hierarchy. Particularly effective for sites
@@ -115,7 +118,7 @@ Menu items support complex hierarchical structures with the following properties
 - **below**: Optional nested array of child menu items (supports multiple levels)
 - **is_active**: Boolean to mark the current active page
 - **is_cas**: Boolean to indicate CAS authentication requirement
-- **list__item__is_heading**: Boolean to render item as a section heading
+- **list**item**is_heading**: Boolean to render item as a section heading
 - **heading_cta**: Optional call-to-action text for heading items
 
 ## Technical Specifications
@@ -179,6 +182,7 @@ Menu items support complex hierarchical structures with the following properties
 ### Navigation Hierarchy
 
 The Primary Nav supports multi-level hierarchies:
+
 - Level 1: Top-level navigation items
 - Level 2: Primary dropdown items
 - Level 3: Nested submenu items
@@ -188,6 +192,7 @@ Keep hierarchies shallow when possible for optimal user experience. Consider meg
 ### Link Types
 
 The component supports various link types:
+
 - Internal site links
 - External URLs (automatically detected)
 - PDF and document downloads (indicated with appropriate icons)

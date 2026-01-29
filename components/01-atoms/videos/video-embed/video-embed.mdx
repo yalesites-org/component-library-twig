@@ -1,0 +1,263 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as VideoEmbedStories from './video-embed.stories';
+
+<Meta of={VideoEmbedStories} name="Docs" />
+
+# Video Embed
+
+The video embed component provides a responsive container for embedded videos from platforms like YouTube, Vimeo, and other iframe-based video sources. It maintains proper aspect ratios and ensures videos are accessible and performant.
+
+## Interactive Preview
+
+Use the controls panel below to see the video embed component in action.
+
+<Canvas of={VideoEmbedStories.videoEmbed} />
+
+## Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>video_embed__url</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Video embed URL (iframe src)</td>
+    </tr>
+  </tbody>
+</table>
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>video_embed__title</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>-</td>
+      <td>Accessible title for the video iframe</td>
+    </tr>
+    <tr>
+      <td>
+        <code>video_embed__aspect_ratio</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'16:9'</code>
+      </td>
+      <td>Video aspect ratio (16:9, 4:3, 1:1)</td>
+    </tr>
+  </tbody>
+</table>
+
+## Supported Video Platforms
+
+The video embed component works with any iframe-based video platform, including:
+
+- **YouTube**: Standard and privacy-enhanced embeds
+- **Vimeo**: Public and private videos
+- **Kaltura**: Enterprise video platform
+- **Wistia**: Business video hosting
+- **Custom Players**: Any iframe-embeddable video player
+
+## Aspect Ratios
+
+The component supports standard video aspect ratios:
+
+<table>
+  <thead>
+    <tr>
+      <th>Ratio</th>
+      <th>Description</th>
+      <th>Common Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>16:9</code>
+      </td>
+      <td>Widescreen format (default)</td>
+      <td>Modern videos, YouTube, most web content</td>
+    </tr>
+    <tr>
+      <td>
+        <code>4:3</code>
+      </td>
+      <td>Classic format</td>
+      <td>Older videos, presentations</td>
+    </tr>
+    <tr>
+      <td>
+        <code>1:1</code>
+      </td>
+      <td>Square format</td>
+      <td>Social media videos</td>
+    </tr>
+  </tbody>
+</table>
+
+## Technical Specifications
+
+- **Atomic Level**: Atom
+- **Template**: `yds-video-embed.twig`
+- **Styles**: `cl-video-embed.scss`
+
+### Accessibility
+
+- **Title Attribute**: All iframes must have a descriptive title
+- **Keyboard Navigation**: Embedded players are keyboard accessible
+- **Captions**: Ensure embedded videos have captions/subtitles available
+- **Transcripts**: Provide transcripts for important video content
+- **Skip Links**: Consider skip links for multiple embedded videos
+- **Focus Management**: Embedded players maintain focus indicators
+
+### Responsive Behavior
+
+- **Fluid Sizing**: Videos scale to container width
+- **Aspect Ratio**: Maintains proportions across all viewport sizes
+- **Mobile Friendly**: Touch controls work properly on mobile devices
+- **Performance**: Uses lazy loading when appropriate
+
+### Performance
+
+- **Lazy Loading**: Iframes can be lazy-loaded for better page performance
+- **Facade Pattern**: Consider loading a thumbnail first for better LCP
+- **Connection**: Videos don't load until necessary, saving bandwidth
+- **Third-party Scripts**: Minimize impact of external player scripts
+
+## Usage Guidelines
+
+### Best Practices
+
+- Always provide a descriptive title for the iframe
+- Use 16:9 aspect ratio for modern web videos
+- Enable captions/subtitles in the video platform
+- Provide a transcript or summary for accessibility
+- Test keyboard navigation through embedded player controls
+- Use privacy-enhanced embed URLs when available (YouTube: youtube-nocookie.com)
+- Consider lazy loading for pages with multiple videos
+- Ensure video platform is GDPR/privacy compliant if required
+
+### Things to Avoid
+
+- Don't autoplay videos with sound (violates accessibility guidelines)
+- Avoid embedding videos without descriptive titles
+- Don't embed very large videos on pages that should load quickly
+- Avoid platforms that don't support captions/subtitles
+- Don't use deprecated embed codes
+- Avoid inline styles on embed codes
+- Don't forget to test embedded videos on mobile devices
+
+## Implementation Notes
+
+### Basic Video Embed
+
+```twig
+{{ include('@atoms/videos/video-embed/yds-video-embed.twig', {
+  video_embed__url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+  video_embed__title: 'Video Title for Accessibility',
+  video_embed__aspect_ratio: '16:9'
+}) }}
+```
+
+### YouTube Privacy-Enhanced Mode
+
+Use `youtube-nocookie.com` domain for privacy-enhanced embeds:
+
+```
+https://www.youtube-nocookie.com/embed/VIDEO_ID
+```
+
+### Lazy Loading
+
+Add loading attribute to iframe for better performance:
+
+```html
+<iframe loading="lazy" src="..." title="..."></iframe>
+```
+
+### Facade Pattern
+
+For critical performance pages, consider implementing a facade pattern:
+
+1. Show video thumbnail as placeholder
+2. Load actual iframe on user click
+3. Improves initial page load performance
+
+### Video Parameters
+
+Common parameters for video platforms:
+
+**YouTube:**
+
+- `autoplay=1` - Autoplay video (use carefully)
+- `controls=0` - Hide video controls
+- `modestbranding=1` - Minimize YouTube branding
+- `rel=0` - Don't show related videos
+
+**Vimeo:**
+
+- `autoplay=1` - Autoplay video
+- `loop=1` - Loop video
+- `title=0` - Hide video title
+- `byline=0` - Hide video author
+
+## Accessibility Considerations
+
+### Video Captions
+
+All embedded videos should have captions available:
+
+- Enable captions in the video platform
+- Provide accurate, synchronized captions
+- Support multiple languages when possible
+
+### Transcripts
+
+Provide text transcripts for:
+
+- Important instructional content
+- Lectures and presentations
+- Videos with dialogue or narration
+- Legal or compliance content
+
+### Autoplay Guidelines
+
+- Never autoplay videos with sound
+- Use autoplay sparingly, only when expected
+- Provide pause/stop controls prominently
+- Consider motion sensitivity (WCAG 2.1)
+
+## Testing
+
+For comprehensive visual regression testing with all video embed variations and theme combinations, see the [Visreg page](?path=/story/atoms-videos-video-embed-visreg).
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

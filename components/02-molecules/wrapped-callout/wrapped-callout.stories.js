@@ -10,6 +10,7 @@ const colorPairingsData = Object.keys(tokens['component-themes']);
  */
 export default {
   title: 'Molecules/Wrapped Callout',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

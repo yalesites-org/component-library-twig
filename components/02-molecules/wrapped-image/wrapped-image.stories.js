@@ -9,6 +9,7 @@ import WrappedImageData from './wrapped-image.yml';
  */
 export default {
   title: 'Molecules/Wrapped Image',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },

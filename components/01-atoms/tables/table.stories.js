@@ -4,6 +4,7 @@ import './table';
 
 export default {
   title: 'Atoms/Table',
+  tags: ['!dev'],
 };
 
 export const Table = () => `

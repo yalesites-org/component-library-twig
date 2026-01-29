@@ -13,7 +13,10 @@ import selectOptionsData from './select/select.yml';
 /**
  * Storybook Definition.
  */
-export default { title: 'Atoms/Forms' };
+export default {
+  title: 'Atoms/Forms',
+  tags: ['!dev'],
+};
 
 // export const checkboxes = () => checkbox(checkboxData);
 

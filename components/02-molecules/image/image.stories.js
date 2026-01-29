@@ -4,6 +4,7 @@ import imageData from '../../01-atoms/images/image/image.yml';
 
 export default {
   title: 'Molecules/Image',
+  tags: ['!dev'],
 };
 
 export const ContentImage = () => `

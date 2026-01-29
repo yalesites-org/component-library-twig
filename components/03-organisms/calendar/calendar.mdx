@@ -1,7 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as CalendarStories from './calendar.stories';
 
-<Meta of={CalendarStories} />
+<Meta of={CalendarStories} name="Docs" />
 
 # Calendar
 
@@ -196,35 +196,36 @@ The calendar component provides several interactive features for users:
     </p>
   </div>
 
-  <div
-    style={{
-      padding: '1.5rem',
-      background: '#f0f0f0',
-      borderRadius: '8px',
-    }}
-  >
-    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Event Indicators</h3>
-    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
-      Days with events display visual indicators showing the number of events.
-      Users can click on these indicators to view event details in a modal
-      dialog.
-    </p>
-  </div>
+{' '}
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Event Indicators</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Days with events display visual indicators showing the number of events.
+    Users can click on these indicators to view event details in a modal dialog.
+  </p>
+</div>
 
-  <div
-    style={{
-      padding: '1.5rem',
-      background: '#f0f0f0',
-      borderRadius: '8px',
-    }}
-  >
-    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Event Modals</h3>
-    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
-      Clicking on a day with events opens a modal displaying all events for
-      that day. Each event shows title, time, category, type tags, and optional
-      description and links.
-    </p>
-  </div>
+{' '}
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Event Modals</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Clicking on a day with events opens a modal displaying all events for that
+    day. Each event shows title, time, category, type tags, and optional
+    description and links.
+  </p>
+</div>
 
   <div
     style={{
@@ -276,9 +277,9 @@ The calendar component provides several interactive features for users:
         <strong>Interactive Behavior</strong>
       </td>
       <td>
-        Month navigation with JavaScript, modal dialogs for event details,
-        event indicators clickable on desktop and touch devices, keyboard
-        support for all interactive elements
+        Month navigation with JavaScript, modal dialogs for event details, event
+        indicators clickable on desktop and touch devices, keyboard support for
+        all interactive elements
       </td>
     </tr>
     <tr>

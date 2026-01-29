@@ -7,6 +7,7 @@ import linkSkipData from './link-skip.yml';
  */
 export default {
   title: 'Molecules/Link skip',
+  tags: ['!dev'],
 };
 
 export const linkSkip = () =>

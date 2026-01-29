@@ -11,6 +11,7 @@ const colorPairingsData = Object.keys(tokens['component-themes']);
  */
 export default {
   title: 'Molecules/Link grid',
+  tags: ['!dev'],
   argTypes: {
     themeColor: {
       name: 'Component Theme (dial)',

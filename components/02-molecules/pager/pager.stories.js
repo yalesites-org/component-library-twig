@@ -147,6 +147,7 @@ function addStorybookEnhancement(storyId, args) {
  */
 export default {
   title: 'Molecules/Pager',
+  tags: ['!dev'],
   argTypes: {
     currentPage: {
       name: 'Current page', // Human-friendly name

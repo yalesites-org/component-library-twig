@@ -1,10 +1,93 @@
+import tokens from '@yalesites-org/tokens/build/json/tokens.json';
+
 import dividerTwig from './yds-divider.twig';
 
 import './cl-dividers.scss';
 import '../../00-tokens/effects/yds-animate';
 
+import {
+  borderThicknessOptions,
+  sectionThemes,
+} from '../../_storybook/theme-constants';
+
+const layoutOptions = ['left', 'center'];
+const widths = Object.keys(tokens.layout.width);
+
 export default {
   title: 'Atoms/Divider',
+  tags: ['!dev'],
+  argTypes: {
+    thickness: {
+      name: 'Line thickness',
+      options: borderThicknessOptions,
+      type: 'select',
+    },
+    dividerColor: {
+      name: 'Line Color',
+      options: ['gray-500', 'blue-yale', 'basic-brown-gray'],
+      type: 'select',
+    },
+    width: {
+      name: 'Divider width',
+      options: widths,
+      type: 'select',
+    },
+    position: {
+      name: 'Divider position',
+      options: layoutOptions,
+      type: 'select',
+    },
+    sectionTheme: {
+      name: 'Section Theme',
+      description: 'Background color theme for the layout section',
+      type: 'select',
+      options: sectionThemes,
+    },
+  },
+  args: {
+    thickness: 'hairline',
+    dividerColor: 'gray-500',
+    width: '50',
+    position: 'center',
+    sectionTheme: 'default',
+  },
+};
+
+export const Interactive = ({
+  position,
+  thickness,
+  dividerColor,
+  width,
+  sectionTheme,
+}) => {
+  const customProperties = {
+    '--thickness-theme-divider': `var(--size-thickness-${thickness})`,
+  };
+
+  const root = document.documentElement;
+  Object.entries(customProperties).forEach((entry) => {
+    const [key, value] = entry;
+    root.style.setProperty(key, value);
+  });
+
+  return `
+    <div class="yds-layout" data-component-theme="${sectionTheme}">
+      <div class="yds-layout__inner" data-component-width="site" style="
+        --color-divider: var(--color-${dividerColor});
+        --width-theme-divider: var(--layout-width-${width});
+      ">
+        <div class="yds-layout__primary" style="width: 100%">
+          <div style="--thickness-divider: var(--size-thickness-${thickness})">
+            ${dividerTwig({
+              divider__width: width,
+              divider__position: position,
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="padding-to-see-dividers-above">&nbsp;</div>
+  `;
 };
 
 export const Dividers = () => `

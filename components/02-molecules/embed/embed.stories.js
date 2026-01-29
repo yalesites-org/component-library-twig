@@ -1,11 +1,11 @@
 import embedTwig from './yds-embed.twig';
-import deprecatedEmbedTwig from './yds-deprecated.twig';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Embed',
+  tags: ['!dev'],
   argTypes: {
     width: {
       name: 'Width',
@@ -30,16 +30,20 @@ export default {
   },
 };
 
-export const EmbedQualtrics = ({ width, type, loading }) =>
-  deprecatedEmbedTwig({
+export const Interactive = ({ width, type, loading }) =>
+  embedTwig({
     embed__src:
-      'https://yalesurvey.ca1.qualtrics.com/jfe/form/SV_cDezt2JVsNok77o',
-    embed__title: 'Example Qualtrics Form',
+      'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/320687463',
+    embed__title: 'Example SoundCloud Track',
     embed__width: width,
     embed__height: '100%',
     embed__type: type,
     embed__loading: loading,
   });
+
+Interactive.args = {
+  type: 'audio',
+};
 
 export const EmbedSoundCloud = ({ width, type, loading }) =>
   embedTwig({

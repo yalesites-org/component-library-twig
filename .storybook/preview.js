@@ -84,7 +84,12 @@ export const parameters = {
       order: [
         'Introduction',
         ['Welcome', 'Theme System'],
-        'TOKENS',
+        'Tokens',
+        'Atoms',
+        'Molecules',
+        'Organisms',
+        'Page Layouts',
+        'Page Examples',
         '*',
       ],
     },

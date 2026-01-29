@@ -1,7 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as CardCollectionStories from './card-collection.stories';
 
-<Meta of={CardCollectionStories} />
+<Meta of={CardCollectionStories} name="Docs" />
 
 # Card Collection
 
@@ -102,8 +102,8 @@ Use the controls panel below to experiment with the card collection's properties
         <code>'false'</code>
       </td>
       <td>
-        Enable featured layout with larger first card:{' '}
-        <code>'true'</code> or <code>'false'</code>
+        Enable featured layout with larger first card: <code>'true'</code> or{' '}
+        <code>'false'</code>
       </td>
     </tr>
     <tr>
@@ -198,34 +198,36 @@ The card collection supports multiple layout modes for different content present
     </p>
   </div>
 
-  <div
-    style={{
-      padding: '1.5rem',
-      background: '#f0f0f0',
-      borderRadius: '8px',
-    }}
-  >
-    <h3 style={{ marginTop: 0, color: '#0053A0' }}>List Layout</h3>
-    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
-      Single-column vertical list with cards displaying in full width. Ideal
-      for detailed content where readability is prioritized. When images are
-      disabled, cards flush to left edge.
-    </p>
-  </div>
+{' '}
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>List Layout</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Single-column vertical list with cards displaying in full width. Ideal for
+    detailed content where readability is prioritized. When images are disabled,
+    cards flush to left edge.
+  </p>
+</div>
 
-  <div
-    style={{
-      padding: '1.5rem',
-      background: '#f0f0f0',
-      borderRadius: '8px',
-    }}
-  >
-    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Condensed Layout</h3>
-    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
-      Compact display maximizing content density. Suitable for displaying
-      larger numbers of items in limited space while maintaining scannability.
-    </p>
-  </div>
+{' '}
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Condensed Layout</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Compact display maximizing content density. Suitable for displaying larger
+    numbers of items in limited space while maintaining scannability.
+  </p>
+</div>
 
   <div
     style={{
@@ -245,7 +247,7 @@ The card collection supports multiple layout modes for different content present
 
 ## Featured Layout
 
-When <code>card_collection__featured</code> is set to <code>'true'</code>, the first card displays larger and more prominently than subsequent cards. This creates visual hierarchy and draws attention to the most important content. Featured layout works best with 3-4 total cards.
+When <code>card_collection\_\_featured</code> is set to <code>'true'</code>, the first card displays larger and more prominently than subsequent cards. This creates visual hierarchy and draws attention to the most important content. Featured layout works best with 3-4 total cards.
 
 ## Technical Specifications
 
@@ -280,8 +282,8 @@ When <code>card_collection__featured</code> is set to <code>'true'</code>, the f
         <strong>Responsive Behavior</strong>
       </td>
       <td>
-        Grid columns adjust based on viewport size, maintains readability
-        across all devices, touch-optimized for mobile interactions
+        Grid columns adjust based on viewport size, maintains readability across
+        all devices, touch-optimized for mobile interactions
       </td>
     </tr>
   </tbody>

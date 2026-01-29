@@ -8,6 +8,7 @@ import inlineMessageTwig from './yds-inline-message.twig';
  */
 export default {
   title: 'Molecules/Inline Message',
+  tags: ['!dev'],
   argTypes: {
     type: {
       name: 'Type',

@@ -1,7 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as TilesStories from './tiles.stories';
 
-<Meta of={TilesStories} />
+<Meta of={TilesStories} name="Docs" />
 
 # Tiles
 
@@ -119,8 +119,8 @@ Use the controls panel below to experiment with the tiles component's properties
         <code>'three'</code>
       </td>
       <td>
-        Number of columns in the grid: <code>'two'</code>,{' '}
-        <code>'three'</code>, or <code>'four'</code>
+        Number of columns in the grid: <code>'two'</code>, <code>'three'</code>,
+        or <code>'four'</code>
       </td>
     </tr>
     <tr>
@@ -182,20 +182,20 @@ The tiles component supports three distinct presentation styles to match differe
     </p>
   </div>
 
-  <div
-    style={{
-      padding: '1.5rem',
-      background: '#f0f0f0',
-      borderRadius: '8px',
-    }}
-  >
-    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Icon</h3>
-    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
-      Icon-based presentation for visual representation of features or
-      services. Combines iconography with text for quick recognition and
-      scanning.
-    </p>
-  </div>
+{' '}
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Icon</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Icon-based presentation for visual representation of features or services.
+    Combines iconography with text for quick recognition and scanning.
+  </p>
+</div>
 
   <div
     style={{
@@ -279,8 +279,8 @@ Control the vertical positioning of content within tiles:
         <strong>Responsive Behavior</strong>
       </td>
       <td>
-        Grid columns reduce based on viewport size, maintains readability
-        across all devices, touch-optimized for mobile interactions
+        Grid columns reduce based on viewport size, maintains readability across
+        all devices, touch-optimized for mobile interactions
       </td>
     </tr>
   </tbody>
