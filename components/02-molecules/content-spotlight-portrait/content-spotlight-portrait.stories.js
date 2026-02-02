@@ -41,7 +41,7 @@ export default {
       componentTheme: {
         name: 'Component Theme (dial)',
         type: 'select',
-        options: colorPairingsData,
+        options: ['default', ...colorPairingsData],
       },
       position: {
         name: 'Image Position',

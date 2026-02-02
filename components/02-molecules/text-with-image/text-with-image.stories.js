@@ -40,7 +40,7 @@ export default {
       componentTheme: {
         name: 'Component Theme (dial)',
         type: 'select',
-        options: colorPairingsData,
+        options: ['default', ...colorPairingsData],
       },
       width: {
         name: 'Width',
