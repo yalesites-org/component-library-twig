@@ -98,3 +98,12 @@ export const Visreg = ({
     )}
   `;
 };
+
+Visreg.args = {
+  sectionTheme: 'default',
+  heading: searchResultData.search_result__title,
+  highlighted: searchResultData.search_result__highlighted,
+  teaser: searchResultData.search_result__teaser,
+  contentType: searchResultData.search_result__content_type,
+  isCas: false,
+};
