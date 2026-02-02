@@ -1,4 +1,5 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 // Twig templates
 import contentSpotlightPortraitTwig from './yds-content-spotlight-portrait.twig';
@@ -9,82 +10,86 @@ import contentSpotlightPortraitData from './content-spotlight-portrait.yml';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
+const contentSpotlightPortraitArgs = {
+  componentTheme: 'default',
+  position: 'image-left',
+  contentVerticalAlignment: 'middle',
+  imageStyle: 'inline',
+  overline: null,
+  heading: contentSpotlightPortraitData.content_spotlight_portrait__heading,
+  subheading:
+    contentSpotlightPortraitData.content_spotlight_portrait__subheading,
+  text: contentSpotlightPortraitData.content_spotlight_portrait__text,
+  linkContent:
+    contentSpotlightPortraitData.content_spotlight_portrait__link__content,
+  linkTwoContent:
+    contentSpotlightPortraitData.content_spotlight_portrait__link_two__content,
+  caption: contentSpotlightPortraitData.content_spotlight_portrait__caption,
+};
+
 /**
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Content Spotlight',
+  title: 'Molecules/Content Spotlight/Content Spotlight Portrait',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    componentTheme: {
-      name: 'Component Theme (dial)',
-      type: 'select',
-      options: colorPairingsData,
+  argTypes: addTableDefaults(
+    {
+      componentTheme: {
+        name: 'Component Theme (dial)',
+        type: 'select',
+        options: colorPairingsData,
+      },
+      position: {
+        name: 'Image Position',
+        type: 'select',
+        options: ['image-left', 'image-right'],
+      },
+      contentVerticalAlignment: {
+        name: 'Content Vertical Alignment',
+        type: 'select',
+        options: ['top', 'middle', 'bottom'],
+      },
+      imageStyle: {
+        name: 'Image Style',
+        type: 'select',
+        options: ['inline', 'offset'],
+      },
+      overline: {
+        name: 'Overline (optional)',
+        type: 'string',
+      },
+      heading: {
+        name: 'Heading',
+        type: 'string',
+      },
+      subheading: {
+        name: 'Subheading (optional)',
+        type: 'string',
+      },
+      text: {
+        name: 'Text',
+        type: 'string',
+      },
+      linkContent: {
+        name: 'Link Content (optional)',
+        type: 'string',
+      },
+      linkTwoContent: {
+        name: 'Second Link Content (optional)',
+        type: 'string',
+      },
+      caption: {
+        name: 'Caption (optional)',
+        type: 'string',
+      },
     },
-    position: {
-      name: 'Image Position',
-      type: 'select',
-      options: ['image-left', 'image-right'],
-    },
-    contentVerticalAlignment: {
-      name: 'Content Vertical Alignment',
-      type: 'select',
-      options: ['top', 'middle', 'bottom'],
-    },
-    imageStyle: {
-      name: 'Image Style',
-      type: 'select',
-      options: ['inline', 'offset'],
-    },
-    overline: {
-      name: 'Overline (optional)',
-      type: 'string',
-    },
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    subheading: {
-      name: 'Subheading (optional)',
-      type: 'string',
-    },
-    text: {
-      name: 'Text',
-      type: 'string',
-    },
-    linkContent: {
-      name: 'Link Content (optional)',
-      type: 'string',
-    },
-    linkTwoContent: {
-      name: 'Second Link Content (optional)',
-      type: 'string',
-      defaultValue:
-        contentSpotlightPortraitData.content_spotlight_portrait__link_two__content,
-    },
-    caption: {
-      name: 'Caption (optional)',
-      type: 'string',
-      defaultValue:
-        contentSpotlightPortraitData.content_spotlight_portrait__caption,
-    },
-  },
-  args: {
-    componentTheme: 'default',
-    position: 'image-left',
-    contentVerticalAlignment: 'middle',
-    imageStyle: 'inline',
-    overline: null,
-    heading: contentSpotlightPortraitData.content_spotlight_portrait__heading,
-    subheading:
-      contentSpotlightPortraitData.content_spotlight_portrait__subheading,
-    text: contentSpotlightPortraitData.content_spotlight_portrait__text,
-    linkContent:
-      contentSpotlightPortraitData.content_spotlight_portrait__link__content,
-    caption: contentSpotlightPortraitData.content_spotlight_portrait__caption,
-  },
+    contentSpotlightPortraitArgs,
+  ),
+  args: contentSpotlightPortraitArgs,
 };
 
 export const ContentSpotlightPortrait = ({

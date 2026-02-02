@@ -1,0 +1,230 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as ContentSpotlightPortraitStories from './content-spotlight-portrait.stories';
+
+<Meta of={ContentSpotlightPortraitStories} name="Docs" />
+
+# Content Spotlight Portrait
+
+The Content Spotlight Portrait component displays content with a portrait-oriented image (2:3 aspect ratio), providing a visually prominent way to highlight important information, testimonials, or featured content. It supports flexible positioning, alignment options, and theme customization through the color dial system.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the content spotlight portrait's properties in real-time.
+
+<Canvas of={ContentSpotlightPortraitStories.ContentSpotlightPortrait} />
+<Controls of={ContentSpotlightPortraitStories.ContentSpotlightPortrait} />
+
+## Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>content_spotlight_portrait__heading</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>The main heading text</td>
+    </tr>
+  </tbody>
+</table>
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>content_spotlight_portrait__theme</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'default'</code>
+      </td>
+      <td>Component theme from color dial</td>
+    </tr>
+    <tr>
+      <td>
+        <code>content_spotlight_portrait__position</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'image-left'</code>
+      </td>
+      <td>
+        Image position: <code>'image-left'</code> or <code>'image-right'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>content_spotlight_portrait__vertical_align</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'middle'</code>
+      </td>
+      <td>
+        Content vertical alignment: <code>'top'</code>, <code>'middle'</code>,
+        or <code>'bottom'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>content_spotlight_portrait__style</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'inline'</code>
+      </td>
+      <td>
+        Image style: <code>'inline'</code> or <code>'offset'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>content_spotlight_portrait__overline</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Optional overline text above heading</td>
+    </tr>
+    <tr>
+      <td>
+        <code>content_spotlight_portrait__subheading</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Optional subheading text</td>
+    </tr>
+    <tr>
+      <td>
+        <code>content_spotlight_portrait__text</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Body text content</td>
+    </tr>
+    <tr>
+      <td>
+        <code>content_spotlight_portrait__link__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Primary link text</td>
+    </tr>
+    <tr>
+      <td>
+        <code>content_spotlight_portrait__link_two__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Secondary link text</td>
+    </tr>
+    <tr>
+      <td>
+        <code>content_spotlight_portrait__caption</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Image caption text</td>
+    </tr>
+  </tbody>
+</table>
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Molecule</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Image Aspect Ratio</strong>
+      </td>
+      <td>2:3 (Portrait orientation)</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-content-spotlight-portrait.twig</code>,{' '}
+        <code>_yds-content-spotlight-portrait.scss</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### When to Use
+
+- Highlighting individual people, profiles, or testimonials
+- Featuring vertical/portrait-oriented imagery
+- Creating visual hierarchy with prominent content sections
+- Showcasing featured content with portrait-style photography
+
+### Image Considerations
+
+- Use portrait-oriented images (taller than wide)
+- Recommended aspect ratio: 2:3
+- Ensure images are high quality and properly cropped
+- Consider the focal point when choosing image position
+
+## Visual Regression Testing
+
+For comprehensive testing of all theme variations and configurations, see the [Visreg page](?path=/story/molecules-content-spotlight-content-spotlight-portrait-visreg--visreg).

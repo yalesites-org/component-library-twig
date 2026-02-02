@@ -1,0 +1,258 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as ContentSpotlightLandscapeStories from './text-with-image.stories';
+
+<Meta of={ContentSpotlightLandscapeStories} name="Docs" />
+
+# Content Spotlight Landscape
+
+The Content Spotlight Landscape component displays content with a landscape-oriented image (3:2 aspect ratio), providing a wider visual format ideal for scenic photography, group photos, or content that benefits from horizontal composition. It supports flexible positioning, alignment options, and theme customization.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the content spotlight landscape's properties in real-time.
+
+<Canvas of={ContentSpotlightLandscapeStories.ContentSpotlightLandscape} />
+<Controls of={ContentSpotlightLandscapeStories.ContentSpotlightLandscape} />
+
+## Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>text_with_image__heading</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>The main heading text</td>
+    </tr>
+  </tbody>
+</table>
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>text_with_image__theme</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'default'</code>
+      </td>
+      <td>Component theme from color dial</td>
+    </tr>
+    <tr>
+      <td>
+        <code>text_with_image__width</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'site'</code>
+      </td>
+      <td>
+        Component width: <code>'site'</code> or <code>'highlight'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>text_with_image__position</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'image-left'</code>
+      </td>
+      <td>
+        Image position: <code>'image-left'</code> or <code>'image-right'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>text_with_image__vertical_align</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'top'</code>
+      </td>
+      <td>
+        Content vertical alignment: <code>'top'</code>, <code>'middle'</code>,
+        or <code>'bottom'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>text_with_image__style</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'inline'</code>
+      </td>
+      <td>
+        Image style: <code>'inline'</code> or <code>'offset'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>text_with_image__focus</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'equal'</code>
+      </td>
+      <td>
+        Content focus: <code>'image'</code> or <code>'equal'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>text_with_image__overline</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Optional overline text above heading</td>
+    </tr>
+    <tr>
+      <td>
+        <code>text_with_image__subheading</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Optional subheading text</td>
+    </tr>
+    <tr>
+      <td>
+        <code>text_with_image__text</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Body text content</td>
+    </tr>
+    <tr>
+      <td>
+        <code>text_with_image__link__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Primary link text</td>
+    </tr>
+    <tr>
+      <td>
+        <code>text_with_image__link_two__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Secondary link text</td>
+    </tr>
+    <tr>
+      <td>
+        <code>text_with_image__caption</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Image caption text</td>
+    </tr>
+  </tbody>
+</table>
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Molecule</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Image Aspect Ratio</strong>
+      </td>
+      <td>3:2 (Landscape orientation)</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-text-with-image.twig</code>,{' '}
+        <code>_yds-text-with-image.scss</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### When to Use
+
+- Featuring landscape-oriented imagery or scenic photography
+- Displaying content that benefits from horizontal composition
+- Creating balanced layouts with wider visual elements
+- Showcasing group photos or wide-angle content
+
+### Image Considerations
+
+- Use landscape-oriented images (wider than tall)
+- Recommended aspect ratio: 3:2
+- Ensure images are high quality and properly cropped
+- Consider the focal point when choosing image position
+
+## Visual Regression Testing
+
+For comprehensive testing of all theme variations and configurations, see the [Visreg page](?path=/story/molecules-content-spotlight-content-spotlight-landscape-visreg--visreg).
