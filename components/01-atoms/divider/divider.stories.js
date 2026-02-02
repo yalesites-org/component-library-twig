@@ -9,48 +9,55 @@ import {
   borderThicknessOptions,
   sectionThemes,
 } from '../../_storybook/theme-constants';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 const layoutOptions = ['left', 'center'];
 const widths = Object.keys(tokens.layout.width);
 
+// Define args first so we can use them in argTypes
+const dividerArgs = {
+  thickness: 'hairline',
+  dividerColor: 'gray-500',
+  width: '50',
+  position: 'center',
+  sectionTheme: 'default',
+};
+
 export default {
   title: 'Atoms/Divider',
   tags: ['!dev'],
-  argTypes: {
-    thickness: {
-      name: 'Line thickness',
-      options: borderThicknessOptions,
-      type: 'select',
+  argTypes: addTableDefaults(
+    {
+      thickness: {
+        name: 'Line thickness',
+        options: borderThicknessOptions,
+        type: 'select',
+      },
+      dividerColor: {
+        name: 'Line Color',
+        options: ['gray-500', 'blue-yale', 'basic-brown-gray'],
+        type: 'select',
+      },
+      width: {
+        name: 'Divider width',
+        options: widths,
+        type: 'select',
+      },
+      position: {
+        name: 'Divider position',
+        options: layoutOptions,
+        type: 'select',
+      },
+      sectionTheme: {
+        name: 'Section Theme',
+        description: 'Background color theme for the layout section',
+        type: 'select',
+        options: sectionThemes,
+      },
     },
-    dividerColor: {
-      name: 'Line Color',
-      options: ['gray-500', 'blue-yale', 'basic-brown-gray'],
-      type: 'select',
-    },
-    width: {
-      name: 'Divider width',
-      options: widths,
-      type: 'select',
-    },
-    position: {
-      name: 'Divider position',
-      options: layoutOptions,
-      type: 'select',
-    },
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-  },
-  args: {
-    thickness: 'hairline',
-    dividerColor: 'gray-500',
-    width: '50',
-    position: 'center',
-    sectionTheme: 'default',
-  },
+    dividerArgs,
+  ),
+  args: dividerArgs,
 };
 
 export const Interactive = ({
@@ -88,6 +95,15 @@ export const Interactive = ({
     </div>
     <div class="padding-to-see-dividers-above">&nbsp;</div>
   `;
+};
+
+// Inherit args from default export to ensure Controls table shows defaults
+Interactive.args = {
+  thickness: 'hairline',
+  dividerColor: 'gray-500',
+  width: '50',
+  position: 'center',
+  sectionTheme: 'default',
 };
 
 export const Dividers = () => `
