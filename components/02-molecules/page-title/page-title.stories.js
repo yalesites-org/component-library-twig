@@ -6,7 +6,16 @@ import dateTimeTwig from '../../01-atoms/date-time/yds-date-time.twig';
 // import textData from './text/text.yml';
 
 import socialLinksData from '../social-links/social-links.yml';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 import './page-title';
+
+const defaultArgs = {
+  meta: `<span>By Charlyn Paradis</span>${dateTimeTwig({
+    date_time__start: '2022-01-25',
+    date_time__format: 'date',
+  })}`,
+  socialLinks: 'false',
+};
 
 /**
  * Storybook Definition.
@@ -14,27 +23,24 @@ import './page-title';
 export default {
   title: 'Molecules/Page Title',
   tags: ['!dev'],
-  argTypes: {
-    meta: {
-      name: 'Meta',
-      type: 'string',
+  argTypes: addTableDefaults(
+    {
+      meta: {
+        name: 'Meta',
+        type: 'string',
+      },
+      prefix: {
+        name: 'Page Title Prefix',
+        type: 'string',
+      },
+      socialLinks: {
+        name: 'Social Links',
+        type: 'boolean',
+      },
     },
-    prefix: {
-      name: 'Page Title Prefix',
-      type: 'string',
-    },
-    socialLinks: {
-      name: 'Social Links',
-      type: 'boolean',
-    },
-  },
-  args: {
-    meta: `<span>By Charlyn Paradis</span>${dateTimeTwig({
-      date_time__start: '2022-01-25',
-      date_time__format: 'date',
-    })}`,
-    socialLinks: 'false',
-  },
+    defaultArgs,
+  ),
+  args: defaultArgs,
 };
 
 export const PageTitle = ({ meta, prefix, socialLinks }) =>

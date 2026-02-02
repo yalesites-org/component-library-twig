@@ -1,4 +1,5 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 import calloutTwig from './yds-callout.twig';
 
@@ -8,55 +9,59 @@ import imageData from '../../01-atoms/images/image/image.yml';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
+const calloutArgs = {
+  heading: calloutData.callout__heading,
+  text: calloutData.callout__text,
+  linkText: calloutData.callout__link__content,
+  linkType: calloutData.callout__link__type,
+  backgroundColor: 'one',
+  calloutAlignment: 'center',
+  overlayBackgroundImage: false,
+};
+
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Callout',
   tags: ['!dev'],
-  argTypes: {
-    heading: {
-      name: 'Heading',
-      type: 'string',
+  argTypes: addTableDefaults(
+    {
+      heading: {
+        name: 'Heading',
+        type: 'string',
+      },
+      text: {
+        name: 'Text',
+        type: 'string',
+      },
+      linkText: {
+        name: 'Link Text',
+        type: 'string',
+      },
+      linkType: {
+        name: 'Link Type',
+        type: 'select',
+        options: ['button', 'link'],
+      },
+      backgroundColor: {
+        name: 'Callout Theme (dial)',
+        type: 'select',
+        options: colorPairingsData,
+      },
+      calloutAlignment: {
+        name: 'Callout Alignment',
+        type: 'select',
+        options: ['left', 'center'],
+      },
+      overlayBackgroundImage: {
+        name: 'Overlay Background Image',
+        type: 'boolean',
+      },
     },
-    text: {
-      name: 'Text',
-      type: 'string',
-    },
-    linkText: {
-      name: 'Link Text',
-      type: 'string',
-    },
-    linkType: {
-      name: 'Link Type',
-      type: 'select',
-      options: ['button', 'link'],
-    },
-    backgroundColor: {
-      name: 'Callout Theme (dial)',
-      type: 'select',
-      options: colorPairingsData,
-    },
-    calloutAlignment: {
-      name: 'Callout Alignment',
-      type: 'select',
-      options: ['left', 'center'],
-    },
-    overlayBackgroundImage: {
-      name: 'Overlay Background Image',
-      type: 'boolean',
-      defaultValue: false,
-    },
-  },
-  args: {
-    heading: calloutData.callout__heading,
-    text: calloutData.callout__text,
-    linkText: calloutData.callout__link__content,
-    linkType: calloutData.callout__link__type,
-    backgroundColor: 'one',
-    calloutAlignment: 'center',
-    overlayBackgroundImage: false,
-  },
+    calloutArgs,
+  ),
+  args: calloutArgs,
 };
 
 export const Callout = ({
@@ -110,3 +115,5 @@ export const Callout = ({
     ],
   })}
 `;
+
+Callout.args = calloutArgs;

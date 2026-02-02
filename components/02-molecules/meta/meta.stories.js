@@ -14,6 +14,7 @@ import dateTimeTwig from '../../01-atoms/date-time/yds-date-time.twig';
 import profileMetaTwig from './profile-meta/yds-profile-meta.twig';
 import imageData from '../../01-atoms/images/image/image.yml';
 import videoEmbedData from '../../01-atoms/videos/video-embed/video-embed.yml';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 import './event-meta/event-meta-localist';
 
@@ -39,18 +40,22 @@ export default {
 };
 
 export const Basic = ({ meta }) => basicMetaTwig({ basic_meta: meta });
-Basic.argTypes = {
-  meta: {
-    name: 'Meta',
-    type: 'string',
-  },
-};
-Basic.args = {
+const basicArgs = {
   meta: `<span>By Charlyn Paradis</span>${dateTimeTwig({
     date_time__start: '2022-01-25',
     date_time__format: 'day__full',
   })}`,
 };
+Basic.argTypes = addTableDefaults(
+  {
+    meta: {
+      name: 'Meta',
+      type: 'string',
+    },
+  },
+  basicArgs,
+);
+Basic.args = basicArgs;
 
 export const Event = ({
   pageTitle,
@@ -129,24 +134,27 @@ export const Event = ({
     event_meta__image: withImage ? 'true' : 'false',
   });
 };
-Event.argTypes = {
-  dataVariant: {
-    name: 'Event Date Scenario',
-    type: 'select',
-    options: Object.keys(eventDataVariants),
-    defaultValue: 'Mixed (Past & Upcoming)',
-  },
-  withCalendar: {
-    name: 'With Add to Calendar button',
-    type: 'boolean',
-    defaultValue: true,
-  },
-  ...eventLocalistArgTypes,
-};
-Event.args = {
+const eventArgs = {
   ...eventLocalistArgs,
   dataVariant: 'Mixed (Past & Upcoming)',
+  withCalendar: true,
 };
+Event.argTypes = addTableDefaults(
+  {
+    dataVariant: {
+      name: 'Event Date Scenario',
+      type: 'select',
+      options: Object.keys(eventDataVariants),
+    },
+    withCalendar: {
+      name: 'With Add to Calendar button',
+      type: 'boolean',
+    },
+    ...eventLocalistArgTypes,
+  },
+  eventArgs,
+);
+Event.args = eventArgs;
 
 export const Profile = ({
   heading,
@@ -175,58 +183,7 @@ export const Profile = ({
     profile_meta__image_style: profileImageStyle,
     profile_meta__image_alignment: profileImageAlignment,
   });
-Profile.argTypes = {
-  heading: {
-    name: 'Heading',
-    type: 'string',
-    defaultValue: 'Person Namerton',
-  },
-  titleLine: {
-    name: 'Profile professional title',
-    type: 'string',
-    defaultValue: 'Professional Title',
-  },
-  subTitle: {
-    name: 'Profile subtitle',
-    type: 'string',
-    defaultValue: 'Subtitle',
-  },
-  department: {
-    name: 'Profile department',
-    type: 'string',
-    defaultValue: 'Department name',
-  },
-  pronouns: {
-    name: 'Profile pronouns',
-    type: 'string',
-    defaultValue: 'They/They/Them',
-  },
-  bgColor: {
-    name: 'Component Theme (dial)',
-    type: 'select',
-    options: colorPairingsData,
-    defaultValue: 'one',
-  },
-  profileImageOrientation: {
-    name: 'Profile Image Orientation',
-    type: 'select',
-    options: ['landscape', 'portrait'],
-    defaultValue: 'landscape',
-  },
-  profileImageAlignment: {
-    name: 'Profile Image Alignment',
-    type: 'select',
-    options: ['left', 'right'],
-    defaultValue: 'right',
-  },
-  profileImageStyle: {
-    name: 'Profile Image Style',
-    type: 'select',
-    options: ['inline', 'outdent'],
-    defaultValue: 'inline',
-  },
-};
-Profile.args = {
+const profileArgs = {
   heading: 'Person Namerton',
   titleLine: 'Professional Title',
   subTitle: 'Subtitle',
@@ -237,6 +194,52 @@ Profile.args = {
   profileImageAlignment: 'right',
   profileImageStyle: 'inline',
 };
+Profile.argTypes = addTableDefaults(
+  {
+    heading: {
+      name: 'Heading',
+      type: 'string',
+    },
+    titleLine: {
+      name: 'Profile professional title',
+      type: 'string',
+    },
+    subTitle: {
+      name: 'Profile subtitle',
+      type: 'string',
+    },
+    department: {
+      name: 'Profile department',
+      type: 'string',
+    },
+    pronouns: {
+      name: 'Profile pronouns',
+      type: 'string',
+    },
+    bgColor: {
+      name: 'Component Theme (dial)',
+      type: 'select',
+      options: colorPairingsData,
+    },
+    profileImageOrientation: {
+      name: 'Profile Image Orientation',
+      type: 'select',
+      options: ['landscape', 'portrait'],
+    },
+    profileImageAlignment: {
+      name: 'Profile Image Alignment',
+      type: 'select',
+      options: ['left', 'right'],
+    },
+    profileImageStyle: {
+      name: 'Profile Image Style',
+      type: 'select',
+      options: ['inline', 'outdent'],
+    },
+  },
+  profileArgs,
+);
+Profile.args = profileArgs;
 
 export const Resource = ({
   heading,
@@ -262,34 +265,7 @@ export const Resource = ({
     image__src__1: imageData.responsive_images['2x3'].image__src,
     video_embed__content__1: videoEmbedData.video_embed__content,
   });
-Resource.argTypes = {
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
-  category: {
-    name: 'Category',
-    type: 'string',
-  },
-  resourceType: {
-    name: 'Resource Type',
-    type: 'select',
-    options: {
-      Video: 'video',
-      Document: 'document',
-    },
-    defaultValue: 'video',
-  },
-  publishDate: {
-    name: 'Publish Date',
-    type: 'string',
-  },
-  description: {
-    name: 'Description',
-    type: 'string',
-  },
-};
-Resource.args = {
+const resourceArgs = {
   heading: 'Resource Title',
   category: 'Video',
   resourceType: 'video',
@@ -297,3 +273,33 @@ Resource.args = {
   description:
     'This is a sample resource description that will appear below the media content. It can contain <strong>HTML markup</strong> and provides context about the resource.',
 };
+Resource.argTypes = addTableDefaults(
+  {
+    heading: {
+      name: 'Heading',
+      type: 'string',
+    },
+    category: {
+      name: 'Category',
+      type: 'string',
+    },
+    resourceType: {
+      name: 'Resource Type',
+      type: 'select',
+      options: {
+        Video: 'video',
+        Document: 'document',
+      },
+    },
+    publishDate: {
+      name: 'Publish Date',
+      type: 'string',
+    },
+    description: {
+      name: 'Description',
+      type: 'string',
+    },
+  },
+  resourceArgs,
+);
+Resource.args = resourceArgs;

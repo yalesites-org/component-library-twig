@@ -2,6 +2,17 @@ import directoryCardTwig from './yds-directory-listing-card.twig';
 
 import directoryCardData from './yds-directory-listing-card.yml';
 import imageData from '../../../01-atoms/images/image/image.yml';
+import { addTableDefaults } from '../../../_storybook/add-table-defaults';
+
+const defaultArgs = {
+  heading: directoryCardData.directory_listing_card__heading,
+  subheading: directoryCardData.directory_listing_card__subheading,
+  snippet: directoryCardData.directory_listing_card__snippet,
+  email: directoryCardData.directory_listing_card__email,
+  phone: directoryCardData.directory_listing_card__phone,
+  featured: true,
+  overline: directoryCardData.directory_listing_card__overline,
+};
 
 /**
  * Storybook Definition.
@@ -11,52 +22,40 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    heading: {
-      name: 'Heading',
-      type: 'string',
-      defaultValue: directoryCardData.directory_listing_card__heading,
+  argTypes: addTableDefaults(
+    {
+      heading: {
+        name: 'Heading',
+        type: 'string',
+      },
+      subheading: {
+        name: 'Subheading',
+        type: 'string',
+      },
+      snippet: {
+        name: 'Snippet',
+        type: 'string',
+      },
+      email: {
+        name: 'Email',
+        type: 'string',
+      },
+      phone: {
+        name: 'Phone',
+        type: 'string',
+      },
+      featured: {
+        name: 'Featured',
+        type: 'boolean',
+      },
+      overline: {
+        name: 'Overline',
+        type: 'string',
+      },
     },
-    subheading: {
-      name: 'Subheading',
-      type: 'string',
-      defaultValue: directoryCardData.directory_listing_card__subheading,
-    },
-    snippet: {
-      name: 'Snippet',
-      type: 'string',
-      defaultValue: directoryCardData.directory_listing_card__snippet,
-    },
-    email: {
-      name: 'Email',
-      type: 'string',
-      defaultValue: directoryCardData.directory_listing_card__email,
-    },
-    phone: {
-      name: 'Phone',
-      type: 'string',
-      defaultValue: directoryCardData.directory_listing_card__phone,
-    },
-    featured: {
-      name: 'Featured',
-      type: 'boolean',
-      defaultValue: true,
-    },
-    overline: {
-      name: 'Overline',
-      type: 'string',
-      defaultValue: directoryCardData.directory_listing_card__overline,
-    },
-  },
-  args: {
-    heading: directoryCardData.directory_listing_card__heading,
-    subheading: directoryCardData.directory_listing_card__subheading,
-    snippet: directoryCardData.directory_listing_card__snippet,
-    email: directoryCardData.directory_listing_card__email,
-    phone: directoryCardData.directory_listing_card__phone,
-    featured: true,
-    overline: directoryCardData.directory_listing_card__overline,
-  },
+    defaultArgs,
+  ),
+  args: defaultArgs,
 };
 
 export const ProfileCardDirectoryListing = ({

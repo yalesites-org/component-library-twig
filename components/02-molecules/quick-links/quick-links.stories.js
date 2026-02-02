@@ -1,8 +1,15 @@
 import quickLinksTwig from './yds-quick-links.twig';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 import quickLinksData from './quick-links.yml';
 
 import imageData from '../../01-atoms/images/image/image.yml';
+
+const quickLinksArgs = {
+  heading: quickLinksData.quick_links__heading,
+  description: quickLinksData.quick_links__description,
+  image: true,
+};
 
 /**
  * Storybook Definition.
@@ -13,25 +20,24 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    heading: {
-      name: 'Heading',
-      type: 'string',
+  argTypes: addTableDefaults(
+    {
+      heading: {
+        name: 'Heading',
+        type: 'string',
+      },
+      description: {
+        name: 'Description',
+        type: 'string',
+      },
+      image: {
+        name: 'With image',
+        type: 'boolean',
+      },
     },
-    description: {
-      name: 'Description',
-      type: 'string',
-    },
-    image: {
-      name: 'With image',
-      type: 'boolean',
-    },
-  },
-  args: {
-    heading: quickLinksData.quick_links__heading,
-    description: quickLinksData.quick_links__description,
-    image: true,
-  },
+    quickLinksArgs,
+  ),
+  args: quickLinksArgs,
 };
 
 export const quickLinks = ({ heading, description, variation, image }) =>
@@ -43,3 +49,5 @@ export const quickLinks = ({ heading, description, variation, image }) =>
     quick_links__variation: variation,
     quick_links__image: image,
   });
+
+quickLinks.args = quickLinksArgs;

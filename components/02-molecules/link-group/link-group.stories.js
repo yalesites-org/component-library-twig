@@ -1,6 +1,11 @@
 import linkGroupTwig from './yds-link-group.twig';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 import linkGroupData from './link-group.yml';
+
+const linkGroupArgs = {
+  heading: linkGroupData.link_group__heading,
+};
 
 /**
  * Storybook Definition.
@@ -8,15 +13,16 @@ import linkGroupData from './link-group.yml';
 export default {
   title: 'Molecules/Link group',
   tags: ['!dev'],
-  argTypes: {
-    heading: {
-      name: 'Heading',
-      type: 'string',
+  argTypes: addTableDefaults(
+    {
+      heading: {
+        name: 'Heading',
+        type: 'string',
+      },
     },
-  },
-  args: {
-    heading: linkGroupData.link_group__heading,
-  },
+    linkGroupArgs,
+  ),
+  args: linkGroupArgs,
 };
 
 export const linkGroup = ({ heading }) =>
@@ -24,3 +30,5 @@ export const linkGroup = ({ heading }) =>
     ...linkGroupData,
     link_group__heading: heading,
   });
+
+linkGroup.args = linkGroupArgs;

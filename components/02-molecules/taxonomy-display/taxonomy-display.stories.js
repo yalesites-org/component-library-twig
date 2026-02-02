@@ -5,8 +5,14 @@ import taxonomyDisplayTwig from './yds-taxonomy-display.twig';
 
 // Data files
 import taxonomyDisplayData from './taxonomy-display.yml';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
+
+const defaultArgs = {
+  componentTheme: 'default',
+  showTaxonomy: true,
+};
 
 /**
  * Storybook Definition.
@@ -17,21 +23,21 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    componentTheme: {
-      name: 'Component Theme (dial)',
-      type: 'select',
-      options: colorPairingsData,
+  argTypes: addTableDefaults(
+    {
+      componentTheme: {
+        name: 'Component Theme (dial)',
+        type: 'select',
+        options: colorPairingsData,
+      },
+      showTaxonomy: {
+        name: 'Show Taxonomy',
+        type: 'boolean',
+      },
     },
-    showTaxonomy: {
-      name: 'Show Taxonomy',
-      type: 'boolean',
-    },
-  },
-  args: {
-    componentTheme: 'default',
-    showTaxonomy: true,
-  },
+    defaultArgs,
+  ),
+  args: defaultArgs,
 };
 
 export const TaxonomyDisplay = ({ componentTheme, showTaxonomy }) =>

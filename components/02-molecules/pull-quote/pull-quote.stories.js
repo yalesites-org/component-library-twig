@@ -5,6 +5,7 @@ import pullQuoteData from './pull-quote.yml';
 export default {
   title: 'Molecules/Quotes/Pull Quote',
   tags: ['!dev'],
+  args: {},
 };
 
 export const pullQuote = () => `
@@ -22,3 +23,5 @@ export const pullQuote = () => `
     pull_quote__style: 'quote-left',
   })}
 `;
+
+pullQuote.args = {};

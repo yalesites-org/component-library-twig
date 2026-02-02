@@ -1,36 +1,42 @@
 import accordionTwig from './yds-accordion.twig';
 import accordionData from './accordion.yml';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 import './yds-accordion';
+
+const accordionArgs = {
+  accordionHeading: accordionData.accordion__heading,
+  heading: accordionData.accordion__item__heading,
+  content: accordionData.accordion__item__content,
+  themeColor: 'default',
+};
 
 export default {
   title: 'Molecules/Accordion',
   tags: ['!dev'],
-  argTypes: {
-    accordionHeading: {
-      name: 'Accordion Heading',
-      type: 'string',
+  argTypes: addTableDefaults(
+    {
+      accordionHeading: {
+        name: 'Accordion Heading',
+        type: 'string',
+      },
+      heading: {
+        name: 'Heading',
+        type: 'string',
+      },
+      content: {
+        name: 'Content',
+        type: 'string',
+      },
+      themeColor: {
+        name: 'Component Theme (dial)',
+        options: ['default', 'one', 'two', 'three', 'four', 'five'],
+        type: 'select',
+      },
     },
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    content: {
-      name: 'Content',
-      type: 'string',
-    },
-    themeColor: {
-      name: 'Component Theme (dial)',
-      options: ['default', 'one', 'two', 'three', 'four', 'five'],
-      type: 'select',
-    },
-  },
-  args: {
-    accordionHeading: accordionData.accordion__heading,
-    heading: accordionData.accordion__item__heading,
-    content: accordionData.accordion__item__content,
-    themeColor: 'default',
-  },
+    accordionArgs,
+  ),
+  args: accordionArgs,
 };
 
 export const Accordion = ({
@@ -50,3 +56,5 @@ export const Accordion = ({
     ],
   })}
 `;
+
+Accordion.args = accordionArgs;

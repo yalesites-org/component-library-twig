@@ -1,4 +1,5 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 import bannerTwig from './action/yds-action-banner.twig';
 import grandHeroTwig from './grand-hero/yds-grand-hero.twig';
@@ -17,23 +18,27 @@ const bannerArgTypes = {
   heading: {
     name: 'Heading',
     type: 'string',
-    defaultValue: bannerData.banner__heading,
   },
   snippet: {
     name: 'Snippet',
     type: 'string',
-    defaultValue: bannerData.banner__snippet,
   },
   linkContent: {
     name: 'Link Content',
     type: 'string',
-    defaultValue: bannerData.banner__link__content,
   },
   linkContentTwo: {
     name: 'Link Content Two',
     type: 'string',
-    defaultValue: bannerData.banner__link__content_two,
   },
+};
+
+const defaultArgs = {
+  heading: bannerData.banner__heading,
+  snippet: bannerData.banner__snippet,
+  linkContent: bannerData.banner__link__content,
+  linkContentTwo: bannerData.banner__link__content_two,
+  bgColor: 'one',
 };
 
 /**
@@ -45,20 +50,17 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  args: {
-    heading: bannerData.banner__heading,
-    snippet: bannerData.banner__snippet,
-    linkContent: bannerData.banner__link__content,
-    linkContentTwo: bannerData.banner__link__content_two,
-    bgColor: 'one',
-  },
-  argTypes: {
-    bgColor: {
-      name: 'Component Theme (dial)',
-      type: 'select',
-      options: colorPairingsData,
+  args: defaultArgs,
+  argTypes: addTableDefaults(
+    {
+      bgColor: {
+        name: 'Component Theme (dial)',
+        type: 'select',
+        options: colorPairingsData,
+      },
     },
-  },
+    defaultArgs,
+  ),
 };
 
 export const ActionBanner = ({
@@ -91,44 +93,47 @@ export const ActionBanner = ({
       ? imageData.responsive_images.pattern
       : '',
   });
-ActionBanner.argTypes = {
-  ...bannerArgTypes,
-  linkStyle: {
-    name: 'Link Style',
-    type: 'select',
-    options: ['cta', 'text-link', 'none'],
-  },
-  contentLayout: {
-    name: 'Content Layout',
-    type: 'select',
-    options: ['bottom', 'left', 'right'],
-  },
-  buttonAlignment: {
-    name: 'Button Alignment',
-    type: 'select',
-    options: ['left', 'center', 'right'],
-    defaultValue: 'right',
-  },
-  buttonStyleConsistency: {
-    name: 'Button Style Consistency',
-    type: 'select',
-    options: ['mixed', 'both_primary', 'both_secondary'],
-    defaultValue: 'mixed',
-  },
-  overlayBackgroundImage: {
-    name: 'Overlay Background Image',
-    type: 'boolean',
-    defaultValue: false,
-  },
-};
-
-ActionBanner.args = {
+const actionBannerArgs = {
+  ...defaultArgs,
   linkStyle: 'cta',
   contentLayout: 'bottom',
   buttonAlignment: 'right',
   buttonStyleConsistency: 'mixed',
   overlayBackgroundImage: false,
 };
+
+ActionBanner.argTypes = addTableDefaults(
+  {
+    ...bannerArgTypes,
+    linkStyle: {
+      name: 'Link Style',
+      type: 'select',
+      options: ['cta', 'text-link', 'none'],
+    },
+    contentLayout: {
+      name: 'Content Layout',
+      type: 'select',
+      options: ['bottom', 'left', 'right'],
+    },
+    buttonAlignment: {
+      name: 'Button Alignment',
+      type: 'select',
+      options: ['left', 'center', 'right'],
+    },
+    buttonStyleConsistency: {
+      name: 'Button Style Consistency',
+      type: 'select',
+      options: ['mixed', 'both_primary', 'both_secondary'],
+    },
+    overlayBackgroundImage: {
+      name: 'Overlay Background Image',
+      type: 'boolean',
+    },
+  },
+  actionBannerArgs,
+);
+
+ActionBanner.args = actionBannerArgs;
 
 export const GrandHeroBanner = ({
   heading,
@@ -153,29 +158,39 @@ export const GrandHeroBanner = ({
     grand_hero__size: size,
     grand_hero__video: withVideo ? 'true' : 'false',
   });
-GrandHeroBanner.argTypes = {
-  ...bannerArgTypes,
-  overlayVariation: {
-    name: 'Content Overlay',
-    type: 'select',
-    options: ['contained', 'contained-narrow', 'full'],
-  },
-  size: {
-    name: 'Content Size',
-    type: 'select',
-    options: ['reduced', 'full', 'mini'],
-  },
-  withVideo: {
-    name: 'With Video',
-    type: 'boolean',
-  },
-};
-
-GrandHeroBanner.args = {
+const grandHeroBannerArgs = {
+  heading: bannerData.banner__heading,
+  snippet: bannerData.banner__snippet,
+  linkContent: bannerData.banner__link__content,
+  linkContentTwo: bannerData.banner__link__content_two,
+  bgColor: 'one',
   overlayVariation: 'full',
   size: 'full',
   withVideo: false,
 };
+
+GrandHeroBanner.argTypes = addTableDefaults(
+  {
+    ...bannerArgTypes,
+    overlayVariation: {
+      name: 'Content Overlay',
+      type: 'select',
+      options: ['contained', 'contained-narrow', 'full'],
+    },
+    size: {
+      name: 'Content Size',
+      type: 'select',
+      options: ['reduced', 'full', 'mini'],
+    },
+    withVideo: {
+      name: 'With Video',
+      type: 'boolean',
+    },
+  },
+  grandHeroBannerArgs,
+);
+
+GrandHeroBanner.args = grandHeroBannerArgs;
 
 export const ImageBanner = ({ bgColor, size, withVideo, imageCaption }) =>
   imageBannerTwig({
@@ -186,41 +201,51 @@ export const ImageBanner = ({ bgColor, size, withVideo, imageCaption }) =>
     image_banner__video: withVideo ? 'true' : 'false',
     image_banner__caption: imageCaption,
   });
-ImageBanner.argTypes = {
-  size: {
-    name: 'Image Size',
-    type: 'select',
-    options: ['tall', 'short'],
-    defaultValue: 'tall',
-  },
-  withVideo: {
-    name: 'With Video',
-    type: 'boolean',
-  },
-  imageCaption: {
-    name: 'Image Caption',
-    type: 'string',
-  },
-};
-
-ImageBanner.args = {
+const imageBannerArgs = {
+  bgColor: 'one',
   size: 'tall',
   withVideo: false,
   imageCaption: 'Image Caption',
 };
+
+ImageBanner.argTypes = addTableDefaults(
+  {
+    size: {
+      name: 'Image Size',
+      type: 'select',
+      options: ['tall', 'short'],
+    },
+    withVideo: {
+      name: 'With Video',
+      type: 'boolean',
+    },
+    imageCaption: {
+      name: 'Image Caption',
+      type: 'string',
+    },
+  },
+  imageBannerArgs,
+);
+
+ImageBanner.args = imageBannerArgs;
 
 export const VideoBanner = ({ width }) =>
   videoBannerTwig({
     video_banner__content: videoBannerData.video_embed__content,
     video_banner__width: width,
   });
-VideoBanner.argTypes = {
-  width: {
-    name: 'Video Width',
-    type: 'select',
-    options: ['max', 'full'],
-  },
-};
-VideoBanner.args = {
+const videoBannerArgs = {
   width: 'max',
 };
+
+VideoBanner.argTypes = addTableDefaults(
+  {
+    width: {
+      name: 'Video Width',
+      type: 'select',
+      options: ['max', 'full'],
+    },
+  },
+  videoBannerArgs,
+);
+VideoBanner.args = videoBannerArgs;

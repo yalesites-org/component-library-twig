@@ -6,6 +6,14 @@ import customCardData from './custom-card.yml';
 
 // Image atom component - generic images for demo
 import imageData from '../../../01-atoms/images/image/image.yml';
+import { addTableDefaults } from '../../../_storybook/add-table-defaults';
+
+const defaultArgs = {
+  heading: customCardData.custom_card__heading,
+  snippet: customCardData.custom_card__snippet,
+  withImage: true,
+  featured: true,
+};
 
 /**
  * Storybook Definition.
@@ -16,30 +24,28 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    heading: {
-      name: 'Heading',
-      type: 'string',
+  argTypes: addTableDefaults(
+    {
+      heading: {
+        name: 'Heading',
+        type: 'string',
+      },
+      snippet: {
+        name: 'Snippet',
+        type: 'string',
+      },
+      withImage: {
+        name: 'With Image',
+        type: 'boolean',
+      },
+      featured: {
+        name: 'Featured',
+        type: 'boolean',
+      },
     },
-    snippet: {
-      name: 'Snippet',
-      type: 'string',
-    },
-    withImage: {
-      name: 'With Image',
-      type: 'boolean',
-    },
-    featured: {
-      name: 'Featured',
-      type: 'boolean',
-    },
-  },
-  args: {
-    heading: customCardData.custom_card__heading,
-    snippet: customCardData.custom_card__snippet,
-    withImage: true,
-    featured: true,
-  },
+    defaultArgs,
+  ),
+  args: defaultArgs,
 };
 
 export const customCard = ({ heading, snippet, withImage, featured }) => `

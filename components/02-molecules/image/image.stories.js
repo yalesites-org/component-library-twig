@@ -5,6 +5,7 @@ import imageData from '../../01-atoms/images/image/image.yml';
 export default {
   title: 'Molecules/Image',
   tags: ['!dev'],
+  args: {},
 };
 
 export const ContentImage = () => `
@@ -15,3 +16,5 @@ export const ContentImage = () => `
     content_image__width: 'content',
   })}
 `;
+
+ContentImage.args = {};

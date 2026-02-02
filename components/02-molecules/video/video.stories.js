@@ -1,8 +1,15 @@
 // Twig templates
 import videoTwig from './yds-video.twig';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 // Data files
 import videoData from './video.yml';
+
+const videoArgs = {
+  heading: videoData.video__heading,
+  text: videoData.video__text,
+  placement: videoData.video__placement,
+};
 
 /**
  * Storybook Definition.
@@ -13,26 +20,25 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    heading: {
-      name: 'Heading',
-      type: 'string',
+  argTypes: addTableDefaults(
+    {
+      heading: {
+        name: 'Heading',
+        type: 'string',
+      },
+      text: {
+        name: 'Text',
+        type: 'string',
+      },
+      placement: {
+        name: 'Video Placement',
+        type: 'select',
+        options: ['left', 'center'],
+      },
     },
-    text: {
-      name: 'Text',
-      type: 'string',
-    },
-    placement: {
-      name: 'Video Placement',
-      type: 'select',
-      options: ['left', 'center'],
-      defaultValue: videoData.video__placement,
-    },
-  },
-  args: {
-    heading: videoData.video__heading,
-    text: videoData.video__text,
-  },
+    videoArgs,
+  ),
+  args: videoArgs,
 };
 
 export const Interactive = ({ heading, text, placement }) =>

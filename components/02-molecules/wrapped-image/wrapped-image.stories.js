@@ -1,8 +1,15 @@
 import wrappedImageTwig from './yds-wrapped-image.twig';
 import textFieldTwig from '../text/yds-text-field.twig';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 import WrappedImageData from './wrapped-image.yml';
+
+const wrappedImageArgs = {
+  caption: 'This is the caption for the 16:9 image above.',
+  imageAlignment: 'left',
+  imageStyle: 'floated',
+};
 
 /**
  * Storybook Definition.
@@ -13,27 +20,26 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    caption: {
-      name: 'Caption',
-      type: 'string',
+  argTypes: addTableDefaults(
+    {
+      caption: {
+        name: 'Caption',
+        type: 'string',
+      },
+      imageAlignment: {
+        name: 'Image Alignment',
+        type: 'select',
+        options: ['left', 'right'],
+      },
+      imageStyle: {
+        name: 'Image Style',
+        type: 'select',
+        options: ['floated', 'offset'],
+      },
     },
-    imageAlignment: {
-      name: 'Image Alignment',
-      type: 'select',
-      options: ['left', 'right'],
-    },
-    imageStyle: {
-      name: 'Image Style',
-      type: 'select',
-      options: ['floated', 'offset'],
-    },
-  },
-  args: {
-    caption: 'This is the caption for the 16:9 image above.',
-    imageAlignment: 'left',
-    imageStyle: 'floated',
-  },
+    wrappedImageArgs,
+  ),
+  args: wrappedImageArgs,
 };
 
 export const WrappedImage = ({ caption, imageAlignment, imageStyle }) => `
@@ -50,3 +56,5 @@ export const WrappedImage = ({ caption, imageAlignment, imageStyle }) => `
     wrapped_image__content: WrappedImageData.text_two,
   })}
 `;
+
+WrappedImage.args = wrappedImageArgs;
