@@ -12,6 +12,7 @@ import breadcrumbData from '../../03-organisms/menu/breadcrumbs/breadcrumbs.yml'
 import imageData from '../../01-atoms/images/image/image.yml';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 import referenceCardData from '../../02-molecules/cards/reference-card/examples/post-card.yml';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
@@ -19,6 +20,8 @@ import '../../02-molecules/read-time/yds-read-time';
 
 // Utility for converting argTypes to args
 import argTypesToArgs from '../../utility';
+
+const defaultArgs = argTypesToArgs(argTypes);
 
 /**
  * Storybook Definition.
@@ -28,8 +31,8 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes,
-  args: argTypesToArgs(argTypes),
+  argTypes: addTableDefaults(argTypes, defaultArgs),
+  args: defaultArgs,
 };
 
 export const PostArticle = ({
@@ -92,16 +95,20 @@ export const PostArticle = ({
     ...socialLinksData,
     ...referenceCardData,
   });
-PostArticle.argTypes = {
-  showSocialMediaSharingLinks: {
-    name: 'Show Social Media Sharing Links',
-    type: 'boolean',
-    defaultValue: false,
-  },
-};
-PostArticle.args = {
+const postArticleArgs = {
   showSocialMediaSharingLinks: false,
 };
+PostArticle.argTypes = addTableDefaults(
+  {
+    showSocialMediaSharingLinks: {
+      name: 'Show Social Media Sharing Links',
+      type: 'boolean',
+    },
+  },
+  postArticleArgs,
+);
+
+PostArticle.args = postArticleArgs;
 
 export const postGridCustom = ({
   allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),

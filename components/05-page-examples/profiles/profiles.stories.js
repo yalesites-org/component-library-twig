@@ -15,10 +15,17 @@ import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 import videoData from '../../02-molecules/video/video.yml';
 import accordionData from '../../02-molecules/accordion/accordion.yml';
 import tabData from '../../02-molecules/tabs/tabs.yml';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
 import '../../01-atoms/controls/text-link/yds-text-link';
+
+const defaultArgs = {
+  profileImageOrientation: 'landscape',
+  profileImageAlignment: 'right',
+  profileImageStyle: 'inline',
+};
 
 /**
  * Storybook Definition.
@@ -28,27 +35,28 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    ...argTypes,
-    profileImageOrientation: {
-      name: 'Profile Image Orientation',
-      type: 'select',
-      options: ['landscape', 'portrait'],
-      defaultValue: 'landscape',
+  argTypes: addTableDefaults(
+    {
+      ...argTypes,
+      profileImageOrientation: {
+        name: 'Profile Image Orientation',
+        type: 'select',
+        options: ['landscape', 'portrait'],
+      },
+      profileImageAlignment: {
+        name: 'Profile Image Alignment',
+        type: 'select',
+        options: ['left', 'right'],
+      },
+      profileImageStyle: {
+        name: 'Profile Image Style',
+        type: 'select',
+        options: ['inline', 'outdent'],
+      },
     },
-    profileImageAlignment: {
-      name: 'Profile Image Alignment',
-      type: 'select',
-      options: ['left', 'right'],
-      defaultValue: 'right',
-    },
-    profileImageStyle: {
-      name: 'Profile Image Style',
-      type: 'select',
-      options: ['inline', 'outdent'],
-      defaultValue: 'inline',
-    },
-  },
+    defaultArgs,
+  ),
+  args: defaultArgs,
 };
 
 export const ProfilePage = ({

@@ -14,9 +14,14 @@ import imageData from '../../01-atoms/images/image/image.yml';
 import pagerData from '../../02-molecules/pager/pager-last.yml';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 import videoEmbedData from '../../01-atoms/videos/video-embed/video-embed.yml';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
+
+const defaultArgs = {
+  showBreadcrumbs: true,
+};
 
 /**
  * Storybook Definition.
@@ -26,14 +31,17 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    ...argTypes,
-    showBreadcrumbs: {
-      name: 'Breadcrumbs',
-      type: 'boolean',
-      defaultValue: true,
+  argTypes: addTableDefaults(
+    {
+      ...argTypes,
+      showBreadcrumbs: {
+        name: 'Breadcrumbs',
+        type: 'boolean',
+      },
     },
-  },
+    defaultArgs,
+  ),
+  args: defaultArgs,
 };
 
 export const ResourcePage = ({
@@ -100,17 +108,20 @@ export const ResourcePage = ({
     video_embed__content__1: videoEmbedData.video_embed__content,
   });
 };
-ResourcePage.argTypes = {
-  resourceType: {
-    name: 'Resource Type',
-    type: 'select',
-    options: ['video', 'document'],
-    defaultValue: 'video',
-  },
-};
-ResourcePage.args = {
+const resourcePageArgs = {
   resourceType: 'video',
 };
+ResourcePage.argTypes = addTableDefaults(
+  {
+    resourceType: {
+      name: 'Resource Type',
+      type: 'select',
+      options: ['video', 'document'],
+    },
+  },
+  resourcePageArgs,
+);
+ResourcePage.args = resourcePageArgs;
 
 export const ResourceGrid = ({
   siteName,
