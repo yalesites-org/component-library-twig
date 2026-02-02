@@ -13,6 +13,9 @@ import './yds-breadcrumbs';
 export default {
   title: 'Organisms/Menu/Breadcrumbs',
   tags: ['!dev'],
+  args: {},
 };
 
 export const Breadcrumbs = () => breadcrumbsTwig({ ...breadcrumbsData });
+
+Breadcrumbs.args = {};

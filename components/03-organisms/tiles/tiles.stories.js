@@ -6,6 +6,17 @@ import tilesData from './tiles.yml';
 
 // Image atom component - generic images for demo
 import imageData from '../../01-atoms/images/image/image.yml';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
+
+const defaultArgs = {
+  globalTheme: 'one',
+  presentationStyle: 'number',
+  alignment: 'left',
+  verticalAlignment: 'top',
+  gridCount: 'three',
+  image: false,
+  withAnimation: false,
+};
 
 /**
  * Storybook Definition.
@@ -16,45 +27,40 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    presentationStyle: {
-      name: 'Presentation Style',
-      options: ['heading', 'icon', 'text-only'],
-      type: 'select',
+  argTypes: addTableDefaults(
+    {
+      presentationStyle: {
+        name: 'Presentation Style',
+        options: ['heading', 'icon', 'text-only'],
+        type: 'select',
+      },
+      alignment: {
+        name: 'Alignment',
+        options: ['left', 'center', 'right'],
+        type: 'select',
+      },
+      verticalAlignment: {
+        name: 'Vertical Alignment',
+        options: ['top', 'bottom'],
+        type: 'select',
+      },
+      columnCount: {
+        name: 'Column Count',
+        options: ['two', 'three', 'four'],
+        type: 'select',
+      },
+      image: {
+        name: 'With image',
+        type: 'boolean',
+      },
+      withAnimation: {
+        name: 'With Animation',
+        type: 'boolean',
+      },
     },
-    alignment: {
-      name: 'Alignment',
-      options: ['left', 'center', 'right'],
-      type: 'select',
-    },
-    verticalAlignment: {
-      name: 'Vertical Alignment',
-      options: ['top', 'bottom'],
-      type: 'select',
-    },
-    columnCount: {
-      name: 'Column Count',
-      options: ['two', 'three', 'four'],
-      type: 'select',
-    },
-    image: {
-      name: 'With image',
-      type: 'boolean',
-    },
-    withAnimation: {
-      name: 'With Animation',
-      type: 'boolean',
-    },
-  },
-  args: {
-    globalTheme: 'one',
-    presentationStyle: 'number',
-    alignment: 'left',
-    verticalAlignment: 'top',
-    gridCount: 'three',
-    image: false,
-    withAnimation: false,
-  },
+    defaultArgs,
+  ),
+  args: defaultArgs,
 };
 
 export const Tiles = ({

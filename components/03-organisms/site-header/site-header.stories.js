@@ -5,6 +5,7 @@ import siteHeaderTwig from './yds-site-header.twig';
 import utilityNavData from '../menu/utility-nav/utility-nav.yml';
 import primaryNavData from '../menu/primary-nav/primary-nav.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 import '../../02-molecules/menu/menu-toggle/yds-menu-toggle';
 
@@ -24,6 +25,18 @@ const siteHeaderAccents = [
   'eight',
 ];
 
+const defaultArgs = {
+  borderThickness: '8',
+  primaryNavPosition: 'left',
+  menuVariation: 'basic',
+  siteHeaderImage: false,
+  siteHeaderSiteNameImage: false,
+  siteHeaderTheme: 'one',
+  siteHeaderAccent: 'one',
+  siteWideHeaderName: 'Yale University',
+  siteWideHeaderUrl: 'https://www.yale.edu',
+};
+
 /**
  * Storybook Definition.
  */
@@ -33,50 +46,43 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    borderThickness: {
-      name: 'Navigation Border Thickness',
-      options: borderThicknessOptions,
-      type: 'select',
+  argTypes: addTableDefaults(
+    {
+      borderThickness: {
+        name: 'Navigation Border Thickness',
+        options: borderThicknessOptions,
+        type: 'select',
+      },
+      primaryNavPosition: {
+        name: 'Navigation Position',
+        options: ['left', 'center', 'right'],
+        type: 'select',
+      },
+      menuVariation: {
+        name: 'Menu Variation',
+        options: ['basic', 'mega', 'focus'],
+        type: 'select',
+      },
+      siteHeaderImage: {
+        name: 'Header With Image',
+        type: 'boolean',
+      },
+      siteHeaderSiteNameImage: {
+        name: 'Site Name is an Image',
+        type: 'boolean',
+      },
+      siteWideHeaderName: {
+        name: 'Site Wide Header Name',
+        type: 'string',
+      },
+      siteWideHeaderUrl: {
+        name: 'Site Wide Header URL',
+        type: 'string',
+      },
     },
-    primaryNavPosition: {
-      name: 'Navigation Position',
-      options: ['left', 'center', 'right'],
-      type: 'select',
-    },
-    menuVariation: {
-      name: 'Menu Variation',
-      options: ['basic', 'mega', 'focus'],
-      type: 'select',
-    },
-    siteHeaderImage: {
-      name: 'Header With Image',
-      type: 'boolean',
-    },
-    siteHeaderSiteNameImage: {
-      name: 'Site Name is an Image',
-      type: 'boolean',
-    },
-    siteWideHeaderName: {
-      name: 'Site Wide Header Name',
-      type: 'string',
-    },
-    siteWideHeaderUrl: {
-      name: 'Site Wide Header URL',
-      type: 'string',
-    },
-  },
-  args: {
-    borderThickness: '8',
-    primaryNavPosition: 'left',
-    menuVariation: 'basic',
-    siteHeaderImage: false,
-    siteHeaderSiteNameImage: false,
-    siteHeaderTheme: 'one',
-    siteHeaderAccent: 'one',
-    siteWideHeaderName: 'Yale University',
-    siteWideHeaderUrl: 'https://www.yale.edu',
-  },
+    defaultArgs,
+  ),
+  args: defaultArgs,
 };
 
 export const Header = ({
@@ -110,19 +116,36 @@ export const Header = ({
     primary_nav__items: primaryNavData.items,
   });
 
-Header.argTypes = {
-  siteHeaderTheme: {
-    name: 'Header Theme (dial)',
-    options: siteHeaderThemeOptions,
-    type: 'select',
-  },
-  siteHeaderAccent: {
-    name: 'Header Accent Color (dial)',
-    options: siteHeaderAccents,
-    type: 'select',
-  },
-  siteHeaderImage: {
-    name: 'With image',
-    type: 'boolean',
-  },
+const headerArgs = {
+  borderThickness: '8',
+  primaryNavPosition: 'left',
+  menuVariation: 'basic',
+  siteHeaderImage: false,
+  siteHeaderSiteNameImage: false,
+  siteHeaderTheme: 'one',
+  siteHeaderAccent: 'one',
+  siteWideHeaderName: 'Yale University',
+  siteWideHeaderUrl: 'https://www.yale.edu',
 };
+
+Header.args = headerArgs;
+
+Header.argTypes = addTableDefaults(
+  {
+    siteHeaderTheme: {
+      name: 'Header Theme (dial)',
+      options: siteHeaderThemeOptions,
+      type: 'select',
+    },
+    siteHeaderAccent: {
+      name: 'Header Accent Color (dial)',
+      options: siteHeaderAccents,
+      type: 'select',
+    },
+    siteHeaderImage: {
+      name: 'With image',
+      type: 'boolean',
+    },
+  },
+  headerArgs,
+);

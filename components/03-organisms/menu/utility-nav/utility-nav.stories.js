@@ -12,6 +12,9 @@ import './utility-nav-dropdown-menu';
 export default {
   title: 'Organisms/Menu/Utility Nav',
   tags: ['!dev'],
+  args: {},
 };
 
 export const UtilityNav = () => utilityNavTwig(utilityNavData);
+
+UtilityNav.args = {};

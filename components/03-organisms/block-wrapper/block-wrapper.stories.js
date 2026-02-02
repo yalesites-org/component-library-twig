@@ -1,4 +1,11 @@
 import blockWrapperTwig from './yds-block-wrapper.twig';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
+
+const defaultArgs = {
+  blockContent:
+    'Block wrapper content goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+  paddingModifier: 'padding-default',
+};
 
 /**
  * Storybook Definition.
@@ -9,27 +16,26 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    blockContent: {
-      name: 'Content',
-      type: 'string',
-    },
-    paddingModifier: {
-      name: 'Padding Modifier',
-      type: 'select',
-      options: {
-        'Default Padding': 'padding-default',
-        'No Top Padding': 'padding-no-top',
-        'No Bottom Padding': 'padding-no-bottom',
-        'No Padding': 'padding-no-padding',
+  argTypes: addTableDefaults(
+    {
+      blockContent: {
+        name: 'Content',
+        type: 'string',
+      },
+      paddingModifier: {
+        name: 'Padding Modifier',
+        type: 'select',
+        options: {
+          'Default Padding': 'padding-default',
+          'No Top Padding': 'padding-no-top',
+          'No Bottom Padding': 'padding-no-bottom',
+          'No Padding': 'padding-no-padding',
+        },
       },
     },
-  },
-  args: {
-    blockContent:
-      'Block wrapper content goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
-    paddingModifier: 'padding-default',
-  },
+    defaultArgs,
+  ),
+  args: defaultArgs,
 };
 
 export const BlockWrapper = ({ blockContent, paddingModifier }) => {

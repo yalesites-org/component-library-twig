@@ -5,11 +5,17 @@ import primaryNavTwig from './yds-primary-nav.twig';
 
 // Data.
 import primaryNavData from './primary-nav.yml';
+import { addTableDefaults } from '../../../_storybook/add-table-defaults';
 
 // JavaScript
 import './yds-primary-nav';
 
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
+
+const defaultArgs = {
+  siteHeaderTheme: 'one',
+  menuVariation: 'basic',
+};
 
 /**
  * Storybook Definition.
@@ -20,22 +26,22 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    siteHeaderTheme: {
-      name: 'Site Header Theme',
-      options: siteHeaderThemeOptions,
-      type: 'select',
+  argTypes: addTableDefaults(
+    {
+      siteHeaderTheme: {
+        name: 'Site Header Theme',
+        options: siteHeaderThemeOptions,
+        type: 'select',
+      },
+      menuVariation: {
+        name: 'Menu Variation',
+        options: ['basic', 'mega', 'focus'],
+        type: 'select',
+      },
     },
-    menuVariation: {
-      name: 'Menu Variation',
-      options: ['basic', 'mega', 'focus'],
-      type: 'select',
-    },
-  },
-  args: {
-    siteHeaderTheme: 'one',
-    menuVariation: 'basic',
-  },
+    defaultArgs,
+  ),
+  args: defaultArgs,
 };
 
 export const PrimaryNav = ({ siteHeaderTheme, menuVariation }) => `
