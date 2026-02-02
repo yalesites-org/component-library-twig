@@ -115,6 +115,17 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   margin-bottom: var(--size-spacing-7);
   padding: var(--size-spacing-4) 0;
 
+  // If column contains a heading, remove top padding
+  &:has(.link-group__heading) {
+    padding-top: 0;
+  }
+
+  // Style link-group headings when used inside link-grid columns
+  .link-group__heading {
+    // Match bottom padding to list item bottom margin
+    padding-bottom: var(--size-spacing-6);
+  }
+
   // medium = two columns
   @media (min-width: tokens.$break-m) {
     flex: 1 1 50%;
