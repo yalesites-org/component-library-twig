@@ -7,7 +7,7 @@ export default {
   tags: ['!dev'],
 };
 
-export const quoteCallout = () => `
+export const QuoteCallout = () => `
   ${quoteCalloutTwig({
     quote_callout__quote: quoteCalloutData.quote_callout__quote,
     quote_callout__attribution: quoteCalloutData.quote_callout__attribution,

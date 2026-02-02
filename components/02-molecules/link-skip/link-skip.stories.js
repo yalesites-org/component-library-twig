@@ -10,7 +10,7 @@ export default {
   tags: ['!dev'],
 };
 
-export const linkSkip = () =>
+export const LinkSkip = () =>
   linkSkipTwig({
     ...linkSkipData,
   });
