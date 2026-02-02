@@ -5,6 +5,8 @@ import siteFooterTwig from './yds-site-footer.twig';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 import linkGroupData from '../../02-molecules/link-group/link-group.yml';
 
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
+
 const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
 const siteFooterAccents = [
@@ -18,6 +20,12 @@ const siteFooterAccents = [
   'eight',
 ];
 
+const footerDefaultArgs = {
+  borderThickness: '8',
+  siteFooterAccent: 'one',
+  siteFooterVariation: 'basic',
+};
+
 /**
  * Storybook Definition.
  */
@@ -27,17 +35,23 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    borderThickness: {
-      options: borderThicknessOptions,
-      type: 'select',
+  argTypes: addTableDefaults(
+    {
+      borderThickness: {
+        options: borderThicknessOptions,
+        type: 'select',
+      },
     },
-  },
-  args: {
-    borderThickness: '8',
-    siteFooterAccent: 'one',
-    siteFooterVariation: 'basic',
-  },
+    footerDefaultArgs,
+  ),
+  args: footerDefaultArgs,
+};
+
+const footerArgs = {
+  borderThickness: '8',
+  siteFooterTheme: 'one',
+  siteFooterAccent: 'one',
+  siteFooterVariation: 'basic',
 };
 
 export const Footer = ({
@@ -58,24 +72,29 @@ export const Footer = ({
       'This is <a href="https://example.com">example text</a> for footer content <a href="https://example.com/blah">with a link</a>.',
   });
 
-Footer.args = {
-  siteFooterTheme: 'one',
-};
+Footer.args = footerArgs;
 
-Footer.argTypes = {
-  siteFooterTheme: {
-    name: 'Footer Theme (dial)',
-    options: siteFooterThemeOptions,
-    type: 'select',
+Footer.argTypes = addTableDefaults(
+  {
+    borderThickness: {
+      options: borderThicknessOptions,
+      type: 'select',
+    },
+    siteFooterTheme: {
+      name: 'Footer Theme (dial)',
+      options: siteFooterThemeOptions,
+      type: 'select',
+    },
+    siteFooterAccent: {
+      name: 'Footer Accent Color (dial)',
+      options: siteFooterAccents,
+      type: 'select',
+    },
+    siteFooterVariation: {
+      name: 'Footer Variation (dial)',
+      options: ['basic', 'mega'],
+      type: 'select',
+    },
   },
-  siteFooterAccent: {
-    name: 'Footer Accent Color (dial)',
-    options: siteFooterAccents,
-    type: 'select',
-  },
-  siteFooterVariation: {
-    name: 'Footer Variation (dial)',
-    options: ['basic', 'mega'],
-    type: 'select',
-  },
-};
+  footerArgs,
+);

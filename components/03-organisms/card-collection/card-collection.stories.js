@@ -6,6 +6,15 @@ import profileCardData from '../../02-molecules/cards/reference-card/examples/pr
 import resourceCardData from '../../02-molecules/cards/reference-card/examples/resource-card.yml';
 
 import imageData from '../../01-atoms/images/image/image.yml';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
+
+const defaultArgs = {
+  collectionType: 'grid',
+  featured: true,
+  withImages: true,
+  heading: 'Card Collection',
+  withOverlay: false,
+};
 
 /**
  * Storybook Definition.
@@ -16,27 +25,25 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    collectionType: {
-      name: 'Collection Type',
-      type: 'select',
-      options: ['grid', 'list', 'condensed'],
+  argTypes: addTableDefaults(
+    {
+      collectionType: {
+        name: 'Collection Type',
+        type: 'select',
+        options: ['grid', 'list', 'condensed'],
+      },
+      featured: {
+        name: 'Featured',
+        type: 'boolean',
+      },
+      withOverlay: {
+        name: 'Overlay',
+        type: 'boolean',
+      },
     },
-    featured: {
-      name: 'Featured',
-      type: 'boolean',
-    },
-    withOverlay: {
-      name: 'Overlay',
-      type: 'boolean',
-    },
-  },
-  args: {
-    collectionType: 'grid',
-    featured: true,
-    withImages: true,
-    heading: 'Card Collection',
-  },
+    defaultArgs,
+  ),
+  args: defaultArgs,
 };
 
 export const PostCardCollection = ({
@@ -60,16 +67,30 @@ export const PostCardCollection = ({
     ...imageData.responsive_images['3x2'],
   });
 };
-PostCardCollection.argTypes = {
-  withImages: {
-    name: 'With Images',
-    type: 'boolean',
-  },
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
+
+const postCardCollectionArgs = {
+  collectionType: 'grid',
+  featured: true,
+  withImages: true,
+  heading: 'Card Collection',
+  withOverlay: false,
 };
+
+PostCardCollection.args = postCardCollectionArgs;
+
+PostCardCollection.argTypes = addTableDefaults(
+  {
+    withImages: {
+      name: 'With Images',
+      type: 'boolean',
+    },
+    heading: {
+      name: 'Heading',
+      type: 'string',
+    },
+  },
+  postCardCollectionArgs,
+);
 
 export const EventCardCollection = ({
   heading,
@@ -91,16 +112,26 @@ export const EventCardCollection = ({
     ...imageData.responsive_images['3x2'],
   });
 };
-EventCardCollection.argTypes = {
-  withImages: {
-    name: 'With Images',
-    type: 'boolean',
-  },
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
+const eventCardCollectionArgs = {
+  collectionType: 'grid',
+  featured: true,
+  withImages: true,
+  heading: 'Card Collection',
 };
+EventCardCollection.args = eventCardCollectionArgs;
+EventCardCollection.argTypes = addTableDefaults(
+  {
+    withImages: {
+      name: 'With Images',
+      type: 'boolean',
+    },
+    heading: {
+      name: 'Heading',
+      type: 'string',
+    },
+  },
+  eventCardCollectionArgs,
+);
 
 export const ProfileCardCollection = ({
   heading,
@@ -121,16 +152,26 @@ export const ProfileCardCollection = ({
     ...imageData.responsive_images['1x1'],
   });
 };
-ProfileCardCollection.argTypes = {
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
-  withImages: {
-    name: 'With Images',
-    type: 'boolean',
-  },
+const profileCardCollectionArgs = {
+  collectionType: 'grid',
+  featured: true,
+  withImages: true,
+  heading: 'Card Collection',
 };
+ProfileCardCollection.args = profileCardCollectionArgs;
+ProfileCardCollection.argTypes = addTableDefaults(
+  {
+    heading: {
+      name: 'Heading',
+      type: 'string',
+    },
+    withImages: {
+      name: 'With Images',
+      type: 'boolean',
+    },
+  },
+  profileCardCollectionArgs,
+);
 
 export const DirectoryListingCardCollection = ({ featured, heading }) => {
   const items = featured ? [1, 2, 3, 4] : [1, 2, 3, 4, 5, 6];
@@ -146,17 +187,25 @@ export const DirectoryListingCardCollection = ({ featured, heading }) => {
     ...imageData.responsive_images['1x1'],
   });
 };
-DirectoryListingCardCollection.argTypes = {
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
-  collectionType: {
-    name: 'Collection Type',
-    type: 'select',
-    options: ['profile-directory'],
-  },
+const directoryListingCardCollectionArgs = {
+  featured: true,
+  heading: 'Directory Listing',
 };
+DirectoryListingCardCollection.args = directoryListingCardCollectionArgs;
+DirectoryListingCardCollection.argTypes = addTableDefaults(
+  {
+    heading: {
+      name: 'Heading',
+      type: 'string',
+    },
+    collectionType: {
+      name: 'Collection Type',
+      type: 'select',
+      options: ['profile-directory'],
+    },
+  },
+  directoryListingCardCollectionArgs,
+);
 
 export const ResourceCardCollection = ({
   heading,
@@ -179,13 +228,24 @@ export const ResourceCardCollection = ({
     ...imageData.responsive_images['3x2'],
   });
 };
-ResourceCardCollection.argTypes = {
-  withImages: {
-    name: 'With Images',
-    type: 'boolean',
-  },
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
+const resourceCardCollectionArgs = {
+  collectionType: 'grid',
+  featured: true,
+  withImages: true,
+  heading: 'Card Collection',
+  withOverlay: false,
 };
+ResourceCardCollection.args = resourceCardCollectionArgs;
+ResourceCardCollection.argTypes = addTableDefaults(
+  {
+    withImages: {
+      name: 'With Images',
+      type: 'boolean',
+    },
+    heading: {
+      name: 'Heading',
+      type: 'string',
+    },
+  },
+  resourceCardCollectionArgs,
+);

@@ -5,6 +5,11 @@ import videoBackgroundData from './video-background.yml';
 import './yds-video-background';
 
 import { sectionThemes } from '../../../_storybook/theme-constants';
+import { addTableDefaults } from '../../../_storybook/add-table-defaults';
+
+const videoBackgroundArgs = {
+  sectionTheme: 'default',
+};
 
 /**
  * Storybook Definition.
@@ -12,17 +17,18 @@ import { sectionThemes } from '../../../_storybook/theme-constants';
 export default {
   title: 'Atoms/Videos/Video Background',
   tags: ['!dev'],
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
+  argTypes: addTableDefaults(
+    {
+      sectionTheme: {
+        name: 'Section Theme',
+        description: 'Background color theme for the layout section',
+        type: 'select',
+        options: sectionThemes,
+      },
     },
-  },
-  args: {
-    sectionTheme: 'default',
-  },
+    videoBackgroundArgs,
+  ),
+  args: videoBackgroundArgs,
 };
 
 export const Interactive = ({ sectionTheme }) => `

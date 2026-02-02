@@ -10,6 +10,8 @@ import formExample from './contact-form-example.twig';
 // import radioData from './radio/radio.yml';
 import selectOptionsData from './select/select.yml';
 
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
+
 /**
  * Storybook Definition.
  */
@@ -26,6 +28,11 @@ export const selectDropdowns = () => select(selectOptionsData);
 
 export const textfieldsExamples = () => textfields();
 
+const exampleFormArgs = {
+  sectionTheme: 'default',
+  buttonTheme: 'one',
+};
+
 export const exampleForm = ({ buttonTheme, sectionTheme }) => `
   <div data-component-has-divider="false" data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
     <div class="yds-layout__inner">
@@ -37,20 +44,20 @@ export const exampleForm = ({ buttonTheme, sectionTheme }) => `
   </div>
 `;
 
-exampleForm.argTypes = {
-  sectionTheme: {
-    name: 'Section Theme',
-    type: 'select',
-    options: ['default', 'one', 'two', 'three', 'four'],
+exampleForm.argTypes = addTableDefaults(
+  {
+    sectionTheme: {
+      name: 'Section Theme',
+      type: 'select',
+      options: ['default', 'one', 'two', 'three', 'four'],
+    },
+    buttonTheme: {
+      name: 'Button Theme',
+      type: 'select',
+      options: ['one', 'two', 'three', 'four', 'five', 'six', 'seven'],
+    },
   },
-  buttonTheme: {
-    name: 'Button Theme',
-    type: 'select',
-    options: ['one', 'two', 'three', 'four', 'five', 'six', 'seven'],
-  },
-};
+  exampleFormArgs,
+);
 
-exampleForm.args = {
-  sectionTheme: 'default',
-  buttonTheme: 'one',
-};
+exampleForm.args = exampleFormArgs;
