@@ -15,15 +15,44 @@
 }
 
 // Padding modifiers for block wrapper
-.ys-block-wrapper--padding-default {
+.ys-block-wrapper.ys-block-wrapper--padding-default {
   margin-block-start: var(--size-spacing-10);
   margin-block-end: var(--size-spacing-10);
 }
 
-.ys-block-wrapper--padding-no-top {
+.ys-block-wrapper.ys-block-wrapper--padding-no-top {
   margin-block-end: var(--size-spacing-10);
+
+  // Override child component top spacing with increased specificity
+  > * {
+    margin-block-start: 0;
+  }
 }
 
-.ys-block-wrapper--padding-no-bottom {
+.ys-block-wrapper.ys-block-wrapper--padding-no-bottom {
   margin-block-start: var(--size-spacing-10);
+
+  // Override child component bottom spacing with increased specificity
+  > * {
+    margin-block-end: 0;
+  }
+}
+
+.ys-block-wrapper.ys-block-wrapper--padding-no-padding {
+  margin-block-start: 0;
+  margin-block-end: 0;
+
+  // Override child component top and bottom spacing with increased specificity
+  > * {
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }
+}
+
+// Make blocks flush with footer when they have no bottom padding and are the
+// last element in the main content area. This overrides the default bottom
+// margin applied by .main-content > *:last-child in page-layouts.scss
+.ys-block-wrapper--padding-no-bottom:last-child,
+.ys-block-wrapper--padding-no-padding:last-child {
+  --main-content-bottom-margin: 0;
 }
