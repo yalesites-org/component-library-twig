@@ -64,7 +64,7 @@
   "dependencies": {
     "@drupal/once": "^1.0.1",
     "@storybook/storybook-deployer": "^2.8.16",
-    "@yalesites-org/tokens": "git+https://github.com/yalesites-org/tokens.git#1012-opac-change-color-palette",
+    "@yalesites-org/tokens": "git+https://github.com/yalesites-org/tokens.git#62161358739328732cb8f9d437a7b671fd38d404",
     "add-attributes-twig-extension": "^0.1.0",
     "bem-twig-extension": "^0.1.1",
     "clean-webpack-plugin": "^4.0.0",
