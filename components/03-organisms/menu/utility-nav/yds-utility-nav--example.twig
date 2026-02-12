@@ -1,3 +1,6 @@
+{# Get versioned icons.svg filename from manifest if available. #}
+{% set icons_svg_filename = getAssetPath('icons.svg', 'themes/contrib/atomic') ?: 'icons.svg' %}
+
 <div data-main-menu-state="loaded" data-component-width="site" data-site-header-nav-position="left" data-site-header-border-thickness="8" data-header-theme={{ site_header__theme }} data-header-accent="three" class="site-header">
   <div class="site-header__inner">
     <div class="site-header__menu-wrapper">
@@ -36,7 +39,7 @@
               <div class="utility-nav__dropdown" aria-haspopup="true">
                 <button data-cta-hover-style="fade" data-cta-radius="pill" data-cta-style="filled" data-cta-outline-weight="2" data-cta-control-type="dropdown" data-cta-theme="none" class="utility-nav__cta">About Operations
                   <svg class="cta__icon">
-                    <use xlink:href="icons.svg#angle-down"></use>
+                    <use xlink:href="{{ icons_svg_filename }}#angle-down"></use>
                   </svg>
                 </button>
                 <div class="utility-nav__dropdown-content" aria-hidden="true">
@@ -102,7 +105,7 @@
                   <div class="form-item form-item-keywords">
                     <label for="edit-keywords--header-search-form-desktop">
                       <svg class="utility-nav__icon utility-nav__icon--search" aria-hidden="true" role="img">
-                        <use xlink:href="icons.svg#magnifying-glass"></use>
+                        <use xlink:href="{{ icons_svg_filename }}#magnifying-glass"></use>
                       </svg>
                       <span class="visually-hidden">Search</span>
                     </label>
