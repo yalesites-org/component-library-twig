@@ -107,23 +107,25 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 }
 
-.link-grid__links-column {
-  @include atoms.list-reset;
-
+.link-grid__column-wrapper {
   width: 100%;
-  border-left: var(--size-thickness-1) solid var(--color-link-grid-border);
   margin-bottom: var(--size-spacing-7);
+  border-left: var(--size-thickness-1) solid var(--color-link-grid-border);
   padding: var(--size-spacing-4) 0;
 
-  // If column contains a heading, remove top padding
+  // If wrapper contains a heading, remove top padding
   &:has(.link-group__heading) {
     padding-top: 0;
   }
 
   // Style link-group headings when used inside link-grid columns
   .link-group__heading {
+    @include tokens.heading(h6);
+
     // Match bottom padding to list item bottom margin
     padding-bottom: var(--size-spacing-6);
+    padding-left: var(--size-spacing-6);
+    padding-right: var(--size-spacing-6);
   }
 
   // medium = two columns
@@ -145,13 +147,13 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 
   // if used in thirty-thirty-thirty layout and min-width 2xl
-  // make the columns 100% width
+  // make the columns 100% width and apply thicker border
   [data-component-layout='thirty-thirty-thirty'] &,
   .yds-two-column .yds-two-column__secondary & {
     @media (min-width: tokens.$break-2xl) {
-      border-width: var(--size-thickness-4);
       margin-bottom: 0;
       flex: 1 1 100%;
+      border-width: var(--size-thickness-4);
     }
   }
 
@@ -162,7 +164,6 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 
   // All Light Lines: all columns use thinner border
-  // Ensure all columns use thin border, overriding first-of-type and layout rules
   .link-grid[data-line-treatment='all_light_lines'] & {
     border-width: var(--size-thickness-1) !important;
   }
@@ -173,10 +174,15 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 
   // Default: first column gets wider border (alternating strong and light)
-  // This must come after all_strong_lines and all_light_lines to not override them
   .link-grid[data-line-treatment='default'] &:first-of-type {
     border-width: var(--size-thickness-4);
   }
+}
+
+.link-grid__links-column {
+  @include atoms.list-reset;
+
+  width: 100%;
 }
 
 .link-grid__list-item {
