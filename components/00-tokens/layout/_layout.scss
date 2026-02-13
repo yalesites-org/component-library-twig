@@ -119,12 +119,6 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
     }
   }
 
-  @if $flush-bottom == true {
-    &:last-child {
-      --main-content-bottom-margin: 0;
-    }
-  }
-
   @if $banner-spacing == true {
     margin-block-start: var(--spacing-component-banner);
     margin-block-end: var(--spacing-component-banner);
