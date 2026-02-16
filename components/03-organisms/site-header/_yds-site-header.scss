@@ -369,7 +369,7 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
   text-decoration: none;
 
   &--desktop {
-    [data-collection-microsite-header] & {
+    [data-collection-nav-position='collection_primary_nav'] & {
       font-size: var(--font-size-29);
     }
 
@@ -383,7 +383,7 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
 
     max-width: 80%;
 
-    [data-collection-microsite-header] & {
+    [data-collection-nav-position='collection_primary_nav'] & {
       font-size: var(--font-size-24);
     }
   }
@@ -396,7 +396,7 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
   }
 }
 
-.site-header__collection-microsite-branding {
+.site-header__collection-nav-branding {
   font: var(--font-style-branding-site);
   font-family: var(--font-families-mallory);
   font-weight: var(--font-weights-mallory-medium);
