@@ -5,4 +5,12 @@ module.exports = {
     jQuery: true,
     once: true,
   },
+  overrides: [
+    {
+      files: ['**/*.stories.js'],
+      rules: {
+        'import/no-unresolved': 'off',
+      },
+    },
+  ],
 };
