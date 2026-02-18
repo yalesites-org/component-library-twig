@@ -21,9 +21,9 @@
   class: bem(site_header__base_class),
 } %}
 
-{% if site_header__collection_nav_position == 'collection_primary_nav' %}
+{% if site_header__collection_nav_position == 'in_header' %}
   {% set site_header__attributes = site_header__attributes|merge({
-    'data-collection-nav-position': 'collection_primary_nav'
+    'data-collection-nav-position': 'in_header'
   }) %}
 {% endif %}
 
@@ -71,7 +71,7 @@
     Use the site name image, if set, but only when the site header
     is not using collection primary navigation.
   #}
-  {% if site_name_image and collection_nav_position != 'collection_primary_nav' %}
+  {% if site_name_image and collection_nav_position != 'in_header' %}
     {% embed "@atoms/controls/text-link/yds-text-link.twig" with {
       link__content: site_name,
       link__url: site_link,
@@ -105,7 +105,7 @@
         link__blockname: base_class,
       } %}
 
-      {% if collection_nav_position == 'collection_primary_nav' %}
+      {% if collection_nav_position == 'in_header' %}
         {% include "@atoms/controls/text-link/yds-text-link.twig" with {
           link__content: collection_nav_name,
           link__url: collection_nav_link,

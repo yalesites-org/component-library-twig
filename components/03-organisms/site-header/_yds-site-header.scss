@@ -369,7 +369,7 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
   text-decoration: none;
 
   &--desktop {
-    [data-collection-nav-position='collection_primary_nav'] & {
+    [data-collection-nav-position='in_header'] & {
       font-size: var(--font-size-29);
     }
 
@@ -383,7 +383,7 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
 
     max-width: 80%;
 
-    [data-collection-nav-position='collection_primary_nav'] & {
+    [data-collection-nav-position='in_header'] & {
       font-size: var(--font-size-24);
     }
   }
