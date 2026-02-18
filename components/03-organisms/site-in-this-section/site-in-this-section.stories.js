@@ -63,7 +63,7 @@ export const SiteSection = ({
 }) => {
   if (collectionNavDisplay === 'in_header') {
     return siteHeaderTwig({
-      site_header__site_name: 'Department of Chemistry',
+      site_header__site_name: 'Institution for Social and Policy Studies',
       site_header__site_link: '/',
       site_header__border_thickness: '8',
       site_header__nav_position: 'left',
@@ -71,7 +71,8 @@ export const SiteSection = ({
       site_header__accent: 'one',
       site_header__menu__variation: 'basic',
       site_header__collection_nav_position: 'in_header',
-      site_header__collection_nav_name: 'Yale Divinity School',
+      site_header__collection_nav_name:
+        'Yale Interdisciplinary Center for Bioethics',
       site_header__collection_nav_link: '#',
       utility_nav__items: utilityNavData.items,
       primary_nav__items: primaryNavData.items,
