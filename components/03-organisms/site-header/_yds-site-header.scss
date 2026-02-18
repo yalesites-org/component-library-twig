@@ -370,7 +370,11 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
 
   &--desktop {
     [data-collection-nav-position='in_header'] & {
-      font-size: var(--font-size-29);
+      font-family: var(--font-families-mallory);
+      font-weight: var(--font-weights-mallory-book);
+      font-size: var(--font-size-16);
+      text-transform: uppercase;
+      letter-spacing: 0.075em;
     }
 
     @media (max-width: tokens.$break-mobile-max) {
@@ -384,7 +388,11 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
     max-width: 80%;
 
     [data-collection-nav-position='in_header'] & {
-      font-size: var(--font-size-24);
+      font-family: var(--font-families-mallory);
+      font-weight: var(--font-weights-mallory-book);
+      font-size: var(--font-size-14);
+      text-transform: uppercase;
+      letter-spacing: 0.075em;
     }
   }
 
@@ -398,10 +406,9 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
 
 .site-header__collection-nav-branding {
   font: var(--font-style-branding-site);
-  font-family: var(--font-families-mallory);
-  font-weight: var(--font-weights-mallory-medium);
   color: var(--color-site-header-site-branding);
   text-decoration: none;
+  letter-spacing: -0.02em;
   margin-top: 0.25em;
 
   &--mobile {
