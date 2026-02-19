@@ -3,7 +3,7 @@
  # - site_header__theme
  # - site_header__border_thickness
  # - site_header__nav_position
- # - site_header__hide_utility_menu
+
  #
  # Available Blocks
  # - site_header__primary_nav
@@ -21,9 +21,9 @@
   class: bem(site_header__base_class),
 } %}
 
-{% if site_header__is_collection_microsite %}
+{% if site_header__collection_nav_position == 'in_header' %}
   {% set site_header__attributes = site_header__attributes|merge({
-    'data-collection-microsite-header': true
+    'data-collection-nav-position': 'in_header'
   }) %}
 {% endif %}
 
@@ -58,20 +58,20 @@
   so it's to make changes.
 #}
 {% macro siteBranding(
-  modifiers, 
+  modifiers,
   base_class,
-  site_name, 
-  site_link, 
-  site_name_image, 
-  is_collection_microsite,
-  collection_microsite_name,
-  collection_microsite_link
+  site_name,
+  site_link,
+  site_name_image,
+  collection_nav_position,
+  collection_nav_name,
+  collection_nav_link
 ) %}
-  {# 
+  {#
     Use the site name image, if set, but only when the site header
-    is not a collection microsite.
+    is not using collection primary navigation.
   #}
-  {% if site_name_image and not is_collection_microsite %}
+  {% if site_name_image and collection_nav_position != 'in_header' %}
     {% embed "@atoms/controls/text-link/yds-text-link.twig" with {
       link__content: site_name,
       link__url: site_link,
@@ -105,11 +105,11 @@
         link__blockname: base_class,
       } %}
 
-      {% if is_collection_microsite %}
+      {% if collection_nav_position == 'in_header' %}
         {% include "@atoms/controls/text-link/yds-text-link.twig" with {
-          link__content: collection_microsite_name,
-          link__url: collection_microsite_link,
-          link__base_class: 'collection-microsite-branding',
+          link__content: collection_nav_name,
+          link__url: collection_nav_link,
+          link__base_class: 'collection-nav-branding',
           link__modifiers: [modifiers],
           link__blockname: base_class,
           link__style: 'no-underline',
@@ -125,14 +125,14 @@
 {% set site_header__primary %}
   <div {{ bem('primary', [], site_header__base_class) }}>
     {{ siteHeader.siteBranding(
-      'desktop', 
-      site_header__base_class, 
-      site_header__site_name, 
+      'desktop',
+      site_header__base_class,
+      site_header__site_name,
       site_header__site_link,
       site_header__site_name_image,
-      site_header__is_collection_microsite,
-      site_header__collection_microsite_name,
-      site_header__collection_microsite_link) }}
+      site_header__collection_nav_position,
+      site_header__collection_nav_name,
+      site_header__collection_nav_link) }}
 
     {# Primary Nav #}
     <div {{ bem('primary-nav', [], site_header__base_class) }}>
@@ -150,13 +150,13 @@
     <div {{ bem('mobile-header', [], site_header__base_class) }}>
       {{ siteHeader.siteBranding(
         'mobile',
-        site_header__base_class, 
-        site_header__site_name, 
+        site_header__base_class,
+        site_header__site_name,
         site_header__site_link,
         site_header__site_name_image,
-        site_header__is_collection_microsite,
-        site_header__collection_microsite_name,
-        site_header__collection_microsite_link) }}
+        site_header__collection_nav_position,
+        site_header__collection_nav_name,
+        site_header__collection_nav_link) }}
 
       {# Mobile Menu Toggle #}
       {% include "@molecules/menu/menu-toggle/yds-menu-toggle.twig" %}
@@ -166,9 +166,7 @@
     {% if site_header__type == 'focus' %}
       {% include "@organisms/site-header/_site-header-simple.twig" %}
     {% else %}
-      {% include "@organisms/site-header/_site-header-default.twig" with {
-        site_header__hide_utility_menu: site_header__hide_utility_menu,
-      } %}
+      {% include "@organisms/site-header/_site-header-default.twig" %}
     {% endif %}
     </div>
   </div>
