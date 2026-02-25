@@ -395,13 +395,6 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
       letter-spacing: 0.075em;
     }
   }
-
-  // if right alignment, limit the branding width
-  @media (min-width: tokens.$break-mobile) {
-    [data-site-header-nav-position='right'] & {
-      max-width: 36.5%;
-    }
-  }
 }
 
 .site-header__collection-nav-branding {
