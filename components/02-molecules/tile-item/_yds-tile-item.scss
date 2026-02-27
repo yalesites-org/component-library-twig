@@ -180,13 +180,22 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 }
 
 .tile__item__heading {
-  @include tokens.heading(h1);
+  @include tokens.heading(h2);
 
   position: relative;
   flex: 0 auto;
+  margin-bottom: var(--size-spacing-5);
 
   [data-component-vertical-alignment='bottom'] & {
     flex: 1 auto;
+  }
+
+  [data-component-alignment='center'] & {
+    text-align: center;
+  }
+
+  [data-component-alignment='right'] & {
+    text-align: right;
   }
 }
 
@@ -207,7 +216,7 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 }
 
 .tile__item__content {
-  @include tokens.heading(h4);
+  @include tokens.body-default;
 
   flex: 1 auto;
   text-align: left;
@@ -258,7 +267,9 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .tile__item__link {
   @include atoms.plain-link;
-  @include tokens.heading(h4);
+  @include tokens.body-default;
+
+  text-decoration: none;
 
   [data-component-alignment='center'] & {
     text-align: center;
@@ -272,9 +283,9 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     color: var(--color-tile-item-content);
   }
 
-  // when hovering over the tile item, remove the underline on the link
+  // when hovering over the tile item, show the underline on the link
   .tile__item:hover & {
-    text-decoration: none;
+    text-decoration: underline;
   }
 }
 
