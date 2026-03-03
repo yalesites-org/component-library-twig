@@ -112,7 +112,7 @@ export const Visreg = ({
       site_header__accent: siteHeaderAccent,
       site_header__menu__variation: menuVariation,
       site_header__background_image: siteHeaderImage,
-      site_header__site_name_is_image: siteHeaderSiteNameImage,
+      site_header__site_name_image: siteHeaderSiteNameImage,
     })}
 
     <hr class="sb-vrt-divider" style="margin: 4rem 0; border: none; border-top: 2px solid #ccc;" />
@@ -134,7 +134,7 @@ export const Visreg = ({
           site_header__accent: accent,
           site_header__menu__variation: 'basic',
           site_header__background_image: false,
-          site_header__site_name_is_image: false,
+          site_header__site_name_image: false,
         }),
       vrtData.themeAccentPairs,
       'All Theme & Accent Combinations',
@@ -150,7 +150,7 @@ export const Visreg = ({
           site_header__accent: 'one',
           site_header__menu__variation: 'basic',
           site_header__background_image: false,
-          site_header__site_name_is_image: false,
+          site_header__site_name_image: false,
         }),
       vrtData.navigationPositions,
       'All Navigation Position Variations',
@@ -167,7 +167,7 @@ export const Visreg = ({
           site_header__accent: 'one',
           site_header__menu__variation: variation,
           site_header__background_image: false,
-          site_header__site_name_is_image: false,
+          site_header__site_name_image: false,
         }),
       vrtData.menuVariations,
       'All Menu Variations',
@@ -188,7 +188,7 @@ export const Visreg = ({
         site_header__accent: 'one',
         site_header__menu__variation: 'focus',
         site_header__background_image: true,
-        site_header__site_name_is_image: false,
+        site_header__site_name_image: false,
       })}
     </div>
 
@@ -201,7 +201,7 @@ export const Visreg = ({
         site_header__accent: 'one',
         site_header__menu__variation: 'basic',
         site_header__background_image: false,
-        site_header__site_name_is_image: true,
+        site_header__site_name_image: true,
       })}
     </div>
   `;
