@@ -17,6 +17,7 @@ import '../../02-molecules/tabs/yds-tabs';
 
 import quickLinksData from '../../02-molecules/quick-links/quick-links.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
+import { exampleSiteNameImageSvg } from '../../_storybook/theme-constants';
 import tabData from '../../02-molecules/tabs/tabs.yml';
 import bannerData from '../../02-molecules/banner/banner.yml';
 
@@ -220,7 +221,9 @@ export const ComponentThemeColorPairings = ({
     site_header__theme: siteHeaderTheme,
     site_header__background_image: siteHeaderImage,
     site_header__branding_link: 'https://www.yale.edu',
-    site_header__site_name_image: siteHeaderSiteNameImage,
+    site_header__site_name_image: siteHeaderSiteNameImage
+      ? exampleSiteNameImageSvg
+      : false,
     site_header__accent: siteHeaderAccent,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
@@ -384,7 +387,9 @@ export const GlobalThemeColorPairings = ({
     site_header__theme: siteHeaderTheme,
     site_header__background_image: siteHeaderImage,
     site_header__branding_link: 'https://www.yale.edu',
-    site_header__site_name_image: siteHeaderSiteNameImage,
+    site_header__site_name_image: siteHeaderSiteNameImage
+      ? exampleSiteNameImageSvg
+      : false,
     site_header__accent: siteHeaderAccent,
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,

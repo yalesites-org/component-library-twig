@@ -6,6 +6,7 @@ import utilityNavData from '../menu/utility-nav/utility-nav.yml';
 import primaryNavData from '../menu/primary-nav/primary-nav.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 import { addTableDefaults } from '../../_storybook/add-table-defaults';
+import { exampleSiteNameImageSvg } from '../../_storybook/theme-constants';
 
 import '../../02-molecules/menu/menu-toggle/yds-menu-toggle';
 
@@ -106,7 +107,9 @@ export const Header = ({
     site_header__accent: siteHeaderAccent,
     site_header__menu__variation: menuVariation,
     site_header__background_image: siteHeaderImage,
-    site_header__site_name_image: siteHeaderSiteNameImage,
+    site_header__site_name_image: siteHeaderSiteNameImage
+      ? exampleSiteNameImageSvg
+      : false,
     site_header__branding_name: siteWideHeaderName,
     site_header__branding_link: siteWideHeaderUrl,
     site_header__collection_nav_position: '',

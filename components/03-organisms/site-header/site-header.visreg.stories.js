@@ -11,6 +11,7 @@ import {
   borderThicknessOptions,
   siteHeaderThemes,
   siteHeaderAccents,
+  exampleSiteNameImageSvg,
 } from '../../_storybook/theme-constants';
 import {
   createPlaygroundIntro,
@@ -112,7 +113,9 @@ export const Visreg = ({
       site_header__accent: siteHeaderAccent,
       site_header__menu__variation: menuVariation,
       site_header__background_image: siteHeaderImage,
-      site_header__site_name_image: siteHeaderSiteNameImage,
+      site_header__site_name_image: siteHeaderSiteNameImage
+        ? exampleSiteNameImageSvg
+        : false,
     })}
 
     <hr class="sb-vrt-divider" style="margin: 4rem 0; border: none; border-top: 2px solid #ccc;" />
@@ -201,7 +204,7 @@ export const Visreg = ({
         site_header__accent: 'one',
         site_header__menu__variation: 'basic',
         site_header__background_image: false,
-        site_header__site_name_image: true,
+        site_header__site_name_image: exampleSiteNameImageSvg,
       })}
     </div>
   `;
