@@ -13,7 +13,7 @@ import {
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Menu/Secondary Nav/Visreg',
+  title: 'Organisms/Menu/Content Collection/Visreg',
   parameters: {
     layout: 'fullscreen',
   },

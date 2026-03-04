@@ -12,14 +12,12 @@ const defaultArgs = {
   snippet: referenceCardData.reference_card__snippet,
   categories: referenceCardData.reference_card__categories,
   tags: referenceCardData.reference_card__tags,
-  pronouns: referenceProfileCardData.reference_card__pronouns,
   collectionType: 'grid',
   featured: true,
   withImage: true,
   showEyebrow: false,
   showCategories: false,
   showTags: false,
-  showPronouns: false,
   date: referenceCardData.reference_card__date,
 };
 
@@ -42,11 +40,6 @@ export default {
         name: 'Heading',
         type: 'string',
       },
-      pronouns: {
-        name: 'Pronouns',
-        type: 'string',
-        if: { arg: 'showPronouns' },
-      },
       snippet: {
         name: 'Snippet',
         type: 'string',
@@ -68,10 +61,6 @@ export default {
         name: 'Show Eyebrow',
         type: 'boolean',
       },
-      showPronouns: {
-        name: 'Show Pronouns',
-        type: 'boolean',
-      },
       showTags: {
         name: 'Show Tags',
         type: 'boolean',
@@ -81,7 +70,7 @@ export default {
         type: 'boolean',
       },
       overlayText: {
-        name: 'Overlay Text',
+        name: 'Overlay Text (Pinned)',
         type: 'string',
       },
     },
@@ -94,7 +83,6 @@ export const PostCard = ({
   date,
   eyebrow,
   heading,
-  pronouns,
   snippet,
   collectionType,
   featured,
@@ -102,7 +90,6 @@ export const PostCard = ({
   showCategories,
   showEyebrow,
   showTags,
-  showPronouns,
   overlayText,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
@@ -115,15 +102,13 @@ export const PostCard = ({
         reference_card__date: date,
         reference_card__eyebrow: eyebrow,
         reference_card__heading: heading,
-        reference_card__pronouns: pronouns,
         reference_card__snippet: snippet,
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referenceCardData.reference_card__url,
-        show_categories: showCategories ? 'true' : 'false',
-        show_eyebrow: showEyebrow ? 'true' : 'false',
-        show_tags: showTags ? 'true' : 'false',
-        show_pronouns: showPronouns ? 'true' : 'false',
+        show_categories: showCategories,
+        show_eyebrow: showEyebrow,
+        show_tags: showTags,
         reference_card__categories:
           referenceCardData.reference_card__categories,
         reference_card__tags: referenceCardData.reference_card__tags,
@@ -300,7 +285,6 @@ export const PageCard = ({
   date,
   eyebrow,
   heading,
-  pronouns,
   snippet,
   collectionType,
   featured,
@@ -309,7 +293,6 @@ export const PageCard = ({
   showEyebrow,
   showTags,
   showThumbnail,
-  showPronouns,
   overlayText,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
@@ -322,16 +305,14 @@ export const PageCard = ({
         reference_card__date: date,
         reference_card__eyebrow: eyebrow,
         reference_card__heading: heading,
-        reference_card__pronouns: pronouns,
         reference_card__snippet: snippet,
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referencePageCardData.reference_card__url,
-        show_categories: showCategories ? 'true' : 'false',
-        show_eyebrow: showEyebrow ? 'true' : 'false',
-        show_tags: showTags ? 'true' : 'false',
+        show_categories: showCategories,
+        show_eyebrow: showEyebrow,
+        show_tags: showTags,
         show_thumbnail: showThumbnail ? 'true' : 'false',
-        show_pronouns: showPronouns ? 'true' : 'false',
         reference_card__categories:
           referencePageCardData.reference_card__categories,
         reference_card__tags: referencePageCardData.reference_card__tags,
@@ -354,7 +335,6 @@ const pageCardArgs = {
   showCategories: false,
   showTags: false,
   showThumbnail: true,
-  showPronouns: false,
 };
 PageCard.argTypes = addTableDefaults(
   {
@@ -372,7 +352,6 @@ export const ResourceCard = ({
   date,
   eyebrow,
   heading,
-  pronouns,
   snippet,
   collectionType,
   featured,
@@ -380,7 +359,6 @@ export const ResourceCard = ({
   showCategories,
   showEyebrow,
   showTags,
-  showPronouns,
   overlayText,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
@@ -393,15 +371,13 @@ export const ResourceCard = ({
         reference_card__date: date,
         reference_card__eyebrow: eyebrow,
         reference_card__heading: heading,
-        reference_card__pronouns: pronouns,
         reference_card__snippet: snippet,
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referenceResourceData.reference_card__url,
-        show_categories: showCategories ? 'true' : 'false',
-        show_eyebrow: showEyebrow ? 'true' : 'false',
-        show_tags: showTags ? 'true' : 'false',
-        show_pronouns: showPronouns ? 'true' : 'false',
+        show_categories: showCategories,
+        show_eyebrow: showEyebrow,
+        show_tags: showTags,
         reference_card__categories:
           referenceResourceData.reference_card__categories,
         reference_card__tags: referenceResourceData.reference_card__tags,

@@ -20,7 +20,7 @@ import {
 } from '../../_storybook/playground-utils';
 
 export default {
-  title: 'Organisms/Site/Header/Visreg',
+  title: 'Organisms/Global Elements/Header/Visreg',
   parameters: {
     layout: 'fullscreen',
   },

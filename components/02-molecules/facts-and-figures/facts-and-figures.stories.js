@@ -1,24 +1,42 @@
 import factsAndFiguresTwig from './yds-facts-and-figures.twig';
 import factsAndFiguresData from './facts-and-figures.yml';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
+
+const defaultArgs = {
+  fontStyle: 'normal',
+};
 
 export default {
   title: 'Molecules/Facts and Figures',
   tags: ['!dev'],
+  argTypes: addTableDefaults(
+    {
+      fontStyle: {
+        name: 'Font Style',
+        options: ['normal', 'numeric-oldstyle'],
+        type: 'select',
+      },
+    },
+    defaultArgs,
+  ),
+  args: defaultArgs,
 };
 
-export const Interactive = () => `
+export const Interactive = ({ fontStyle }) => `
   <ul class='facts-and-figures__group__wrap' data-facts-and-figures-collection-type="single">
     ${factsAndFiguresTwig({
       facts_and_figures__stat: factsAndFiguresData.facts_and_figures__stat,
       facts_and_figures__content:
         factsAndFiguresData.facts_and_figures__content,
       facts_and_figures__presentation_style: 'basic',
+      facts_and_figures__font_style: fontStyle,
       facts_and_figures__has_icon: 'false',
       facts_and_figures__alignment: 'center',
     })}
     ${factsAndFiguresTwig({
       facts_and_figures__stat: factsAndFiguresData.facts_and_figures__stat,
       facts_and_figures__presentation_style: 'basic',
+      facts_and_figures__font_style: fontStyle,
       facts_and_figures__has_icon: 'true',
       facts_and_figures__alignment: 'left',
     })}
@@ -27,25 +45,28 @@ export const Interactive = () => `
       facts_and_figures__content:
         factsAndFiguresData.facts_and_figures__content,
       facts_and_figures__presentation_style: 'basic',
+      facts_and_figures__font_style: fontStyle,
       facts_and_figures__alignment: 'center',
       facts_and_figures__has_icon: 'true',
     })}
   </ul>
 `;
 
-export const FactsAndFigures = () => `
+export const FactsAndFigures = ({ fontStyle }) => `
   <ul class='facts-and-figures__group__wrap' data-facts-and-figures-collection-type="single">
     ${factsAndFiguresTwig({
       facts_and_figures__stat: factsAndFiguresData.facts_and_figures__stat,
       facts_and_figures__content:
         factsAndFiguresData.facts_and_figures__content,
       facts_and_figures__presentation_style: 'basic',
+      facts_and_figures__font_style: fontStyle,
       facts_and_figures__has_icon: 'false',
       facts_and_figures__alignment: 'center',
     })}
     ${factsAndFiguresTwig({
       facts_and_figures__stat: factsAndFiguresData.facts_and_figures__stat,
       facts_and_figures__presentation_style: 'basic',
+      facts_and_figures__font_style: fontStyle,
       facts_and_figures__has_icon: 'true',
       facts_and_figures__alignment: 'left',
     })}
@@ -54,6 +75,7 @@ export const FactsAndFigures = () => `
       facts_and_figures__content:
         factsAndFiguresData.facts_and_figures__content,
       facts_and_figures__presentation_style: 'basic',
+      facts_and_figures__font_style: fontStyle,
       facts_and_figures__alignment: 'center',
       facts_and_figures__has_icon: 'true',
     })}

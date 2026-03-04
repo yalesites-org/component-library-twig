@@ -9,11 +9,9 @@ import imageData from '../../01-atoms/images/image/image.yml';
 import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 const defaultArgs = {
-  globalTheme: 'one',
   presentationStyle: 'number',
   alignment: 'left',
   verticalAlignment: 'top',
-  gridCount: 'three',
   image: false,
   withAnimation: false,
 };

@@ -20,7 +20,7 @@ const defaultArgs = {
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Menu/Secondary Nav',
+  title: 'Organisms/Menu/Content Collection',
   tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',

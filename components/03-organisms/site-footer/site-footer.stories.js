@@ -30,7 +30,7 @@ const footerDefaultArgs = {
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Site/Footer',
+  title: 'Organisms/Global Elements/Footer',
   tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',

@@ -5,18 +5,18 @@ import * as MetaStories from './meta.stories';
 
 # Meta
 
-The meta component provides structured metadata displays for different content types across the YaleSites platform. It supports four distinct meta types: Basic, Event, Profile, and Resource, each designed to present relevant contextual information in a consistent, accessible format.
+The meta component provides structured metadata displays for different content types across the YaleSites platform. It supports four distinct meta types: Post Meta, Event, Profile, and Resource, each designed to present relevant contextual information in a consistent, accessible format.
 
 ## Interactive Preview
 
 Use the controls panel below to experiment with different meta component properties. Select between the four meta types to see how each displays its specific information.
 
-<Canvas of={MetaStories.Basic} />
-<Controls of={MetaStories.Basic} />
+<Canvas of={MetaStories.PostMeta} />
+<Controls of={MetaStories.PostMeta} />
 
 ## Meta Types
 
-### Basic Meta
+### Post Meta
 
 A simple meta component for displaying author information and publication dates. Commonly used in articles, news posts, and blog entries.
 
@@ -399,7 +399,7 @@ Displays metadata for downloadable resources and media content, including catego
 
 ### Best Practices
 
-- **Basic Meta**: Use for simple content attribution and timestamps
+- **Post Meta**: Use for simple content attribution and timestamps
 - **Event Meta**: Always include complete date/time information and location details
 - **Profile Meta**: Include pronouns when available to foster inclusivity
 - **Resource Meta**: Clearly indicate resource type (video vs. document) for user expectations

@@ -17,7 +17,7 @@ import {
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Alert/Visreg',
+  title: 'Molecules/Site Alert/Visreg',
   parameters: {
     layout: 'fullscreen',
   },

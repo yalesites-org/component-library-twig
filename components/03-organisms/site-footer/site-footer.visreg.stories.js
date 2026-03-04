@@ -16,7 +16,7 @@ import {
 } from '../../_storybook/playground-utils';
 
 export default {
-  title: 'Organisms/Site/Footer/Visreg',
+  title: 'Organisms/Global Elements/Footer/Visreg',
   parameters: {
     layout: 'fullscreen',
   },

@@ -1,5 +1,3 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 // Markup.
 import primaryNavTwig from './yds-primary-nav.twig';
 
@@ -10,10 +8,7 @@ import { addTableDefaults } from '../../../_storybook/add-table-defaults';
 // JavaScript
 import './yds-primary-nav';
 
-const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
-
 const defaultArgs = {
-  siteHeaderTheme: 'one',
   menuVariation: 'basic',
 };
 
@@ -28,11 +23,6 @@ export default {
   },
   argTypes: addTableDefaults(
     {
-      siteHeaderTheme: {
-        name: 'Site Header Theme',
-        options: siteHeaderThemeOptions,
-        type: 'select',
-      },
       menuVariation: {
         name: 'Menu Variation',
         options: ['basic', 'mega', 'focus'],
@@ -44,8 +34,8 @@ export default {
   args: defaultArgs,
 };
 
-export const PrimaryNav = ({ siteHeaderTheme, menuVariation }) => `
-  <div style="position: relative; padding-top: var(--size-spacing-site-gutter);" data-site-header-nav-position='left' data-component-width="max" data-header-theme="${siteHeaderTheme}">
+export const PrimaryNav = ({ menuVariation }) => `
+  <div style="position: relative; padding-top: var(--size-spacing-site-gutter);" data-site-header-nav-position='left' data-component-width="max" data-header-theme="one">
     ${primaryNavTwig({ ...primaryNavData, menu__variation: menuVariation })}
   </div>
 `;

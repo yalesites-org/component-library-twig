@@ -173,7 +173,11 @@ ProfileCardCollection.argTypes = addTableDefaults(
   profileCardCollectionArgs,
 );
 
-export const DirectoryListingCardCollection = ({ featured, heading }) => {
+export const DirectoryListingCardCollection = ({
+  featured,
+  heading,
+  withOverlay,
+}) => {
   const items = featured ? [1, 2, 3, 4] : [1, 2, 3, 4, 5, 6];
 
   return cardCollectionTwig({
@@ -183,6 +187,7 @@ export const DirectoryListingCardCollection = ({ featured, heading }) => {
     card_collection__featured: featured ? 'true' : 'false',
     card_collection__cards: items,
     directory_listing_card__heading: heading,
+    reference_card__overlay: withOverlay ? 'Pinned' : '',
     ...directoryCardData,
     ...imageData.responsive_images['1x1'],
   });
@@ -190,6 +195,7 @@ export const DirectoryListingCardCollection = ({ featured, heading }) => {
 const directoryListingCardCollectionArgs = {
   featured: true,
   heading: 'Directory Listing',
+  withOverlay: false,
 };
 DirectoryListingCardCollection.args = directoryListingCardCollectionArgs;
 DirectoryListingCardCollection.argTypes = addTableDefaults(
@@ -198,10 +204,9 @@ DirectoryListingCardCollection.argTypes = addTableDefaults(
       name: 'Heading',
       type: 'string',
     },
-    collectionType: {
-      name: 'Collection Type',
-      type: 'select',
-      options: ['profile-directory'],
+    withOverlay: {
+      name: 'Overlay',
+      type: 'boolean',
     },
   },
   directoryListingCardCollectionArgs,

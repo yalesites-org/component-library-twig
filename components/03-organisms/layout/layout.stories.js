@@ -1,5 +1,4 @@
 // Markup.
-import twoColumnTwig from './two-column/_two-column--example.twig';
 import layoutTwig from './layout/_layout--example.twig';
 
 // Data files
@@ -60,7 +59,6 @@ export default {
   args: defaultArgs,
 };
 
-export const TwoColumn = () => twoColumnTwig(textData);
 export const layout = ({ divider, theme, layoutOption, layoutPadding }) =>
   layoutTwig({
     ...textData,

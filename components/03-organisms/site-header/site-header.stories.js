@@ -42,7 +42,7 @@ const defaultArgs = {
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Site/Header',
+  title: 'Organisms/Global Elements/Header',
   tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',

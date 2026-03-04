@@ -8,7 +8,7 @@ const defaultArgs = {
   heading: directoryCardData.directory_listing_card__heading,
   subheading: directoryCardData.directory_listing_card__subheading,
   snippet: directoryCardData.directory_listing_card__snippet,
-  email: directoryCardData.directory_listing_card__email,
+  showEmail: true,
   phone: directoryCardData.directory_listing_card__phone,
   featured: true,
   overline: directoryCardData.directory_listing_card__overline,
@@ -36,9 +36,9 @@ export default {
         name: 'Snippet',
         type: 'string',
       },
-      email: {
-        name: 'Email',
-        type: 'string',
+      showEmail: {
+        name: 'Show Email',
+        type: 'boolean',
       },
       phone: {
         name: 'Phone',
@@ -65,7 +65,7 @@ export const ProfileCardDirectoryListing = ({
   subheading,
   snippet,
   overline,
-  email,
+  showEmail,
   phone,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='profile-directory' data-collection-featured="${featured}">
@@ -79,7 +79,9 @@ export const ProfileCardDirectoryListing = ({
         directory_listing_card__heading: heading,
         directory_listing_card__subheading: subheading,
         directory_listing_card__snippet: snippet,
-        directory_listing_card__email: email,
+        directory_listing_card__email: showEmail
+          ? directoryCardData.directory_listing_card__email
+          : '',
         directory_listing_card__phone: phone,
         directory_listing_card__url:
           directoryCardData.directory_listing_card__url,

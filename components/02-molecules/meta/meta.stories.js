@@ -39,23 +39,31 @@ export default {
   tags: ['!dev'],
 };
 
-export const Basic = ({ meta }) => basicMetaTwig({ basic_meta: meta });
-const basicArgs = {
-  meta: `<span>By Charlyn Paradis</span>${dateTimeTwig({
-    date_time__start: '2022-01-25',
-    date_time__format: 'day__full',
-  })}`,
+export const PostMeta = ({ author, date }) =>
+  basicMetaTwig({
+    basic_meta: `<span>By ${author}</span>${dateTimeTwig({
+      date_time__start: date,
+      date_time__format: 'day__full',
+    })}`,
+  });
+const postMetaArgs = {
+  author: 'Charlyn Paradis',
+  date: '2022-01-25',
 };
-Basic.argTypes = addTableDefaults(
+PostMeta.argTypes = addTableDefaults(
   {
-    meta: {
-      name: 'Meta',
+    author: {
+      name: 'Author',
+      type: 'string',
+    },
+    date: {
+      name: 'Date',
       type: 'string',
     },
   },
-  basicArgs,
+  postMetaArgs,
 );
-Basic.args = basicArgs;
+PostMeta.args = postMetaArgs;
 
 export const Event = ({
   pageTitle,

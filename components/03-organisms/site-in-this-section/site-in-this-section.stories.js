@@ -27,7 +27,7 @@ const defaultArgs = {
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Site/In This Section',
+  title: 'Organisms/Global Elements/In This Section',
   tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',

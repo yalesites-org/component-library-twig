@@ -40,7 +40,6 @@ if (
 }
 
 const defaultArgs = {
-  globalTheme: 'one',
   themeColor: 'one',
   factsAndFiguresGroupHeading:
     factsAndFiguresGroupData.facts_and_figures__group__heading,
@@ -90,7 +89,7 @@ export default {
       },
       presentationStyle: {
         name: 'Presentation Style',
-        options: ['basic', 'icon-only'],
+        options: { 'With line': 'basic', 'Without line': 'icon-only' },
         type: 'select',
       },
       fontStyle: {

@@ -24,7 +24,7 @@ import {
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Site/In This Section/Visreg',
+  title: 'Organisms/Global Elements/In This Section/Visreg',
   parameters: {
     layout: 'fullscreen',
   },

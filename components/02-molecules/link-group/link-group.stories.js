@@ -28,7 +28,7 @@ export default {
 export const linkGroup = ({ heading }) =>
   linkGroupTwig({
     ...linkGroupData,
-    link_group__heading: heading,
+    link_group__heading_one: heading,
   });
 
 linkGroup.args = linkGroupArgs;

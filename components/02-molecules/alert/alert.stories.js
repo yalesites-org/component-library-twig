@@ -17,7 +17,7 @@ const alertArgs = {
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Alert',
+  title: 'Molecules/Site Alert',
   tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',

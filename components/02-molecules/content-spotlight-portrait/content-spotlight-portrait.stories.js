@@ -59,7 +59,7 @@ export default {
         options: ['inline', 'offset'],
       },
       overline: {
-        name: 'Overline (optional)',
+        name: 'Overline',
         type: 'string',
       },
       heading: {
@@ -67,7 +67,7 @@ export default {
         type: 'string',
       },
       subheading: {
-        name: 'Subheading (optional)',
+        name: 'Subheading',
         type: 'string',
       },
       text: {
@@ -75,15 +75,15 @@ export default {
         type: 'string',
       },
       linkContent: {
-        name: 'Link Content (optional)',
+        name: 'Link Content',
         type: 'string',
       },
       linkTwoContent: {
-        name: 'Second Link Content (optional)',
+        name: 'Second Link Content',
         type: 'string',
       },
       caption: {
-        name: 'Caption (optional)',
+        name: 'Caption',
         type: 'string',
       },
     },
