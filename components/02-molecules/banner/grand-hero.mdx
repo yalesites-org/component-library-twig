@@ -1,0 +1,236 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as GrandHeroStories from './grand-hero.stories';
+
+<Meta of={GrandHeroStories} name="Docs" />
+
+# Grand Hero Banner
+
+The Grand Hero Banner is designed for maximum visual impact — typically used on homepages and major landing pages. It supports a full-width background image, heading, snippet, and up to two call-to-action buttons. The content overlay can be configured as full-width or contained to suit different compositional needs.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the component's properties in real-time.
+
+<Canvas of={GrandHeroStories.GrandHeroBanner} />
+<Controls of={GrandHeroStories.GrandHeroBanner} />
+
+## Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>grand_hero__heading</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>The main heading text for the grand hero banner</td>
+    </tr>
+  </tbody>
+</table>
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>grand_hero__snippet</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Additional descriptive text (supports HTML)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>grand_hero__link__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Text for the primary call-to-action button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>grand_hero__link__url</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>URL for the primary call-to-action button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>grand_hero__link__content_two</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Text for the secondary call-to-action button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>grand_hero__link__url_two</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>URL for the secondary call-to-action button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>grand_hero__content__background</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'one'</code>
+      </td>
+      <td>Component theme (see Theme Options below)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>grand_hero__overlay_variation</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'full'</code>
+      </td>
+      <td>
+        Content overlay style: <code>'full'</code>,{' '}
+        <code>'contained'</code>, or <code>'contained-narrow'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>grand_hero__size</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'full'</code>
+      </td>
+      <td>
+        Content size: <code>'full'</code>, <code>'reduced'</code>, or{' '}
+        <code>'mini'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>grand_hero__video</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'false'</code>
+      </td>
+      <td>
+        Whether to display a video background: <code>'true'</code> or{' '}
+        <code>'false'</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Theme Options
+
+The Grand Hero Banner supports the full set of component theme dials:
+
+- **Default**: Standard theme using global color settings
+- **One through Five**: Custom theme dials that override global settings with component-specific colors
+
+Use the `grand_hero__content__background` property to apply different themes.
+
+## Overlay Variations
+
+The Grand Hero Banner supports three overlay styles. Use the interactive preview above to switch between them, or see the [Visreg page](?path=/story/molecules-banners-grand-hero-visreg--visreg) for a side-by-side comparison.
+
+### Contained Overlay
+
+Content is constrained to a column width, providing a cleaner, more structured look against the full-bleed image.
+
+<Canvas of={GrandHeroStories.GrandHeroBannerContained} />
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `grand-hero/yds-grand-hero.twig`
+- **Styles**: `grand-hero/_yds-grand-hero.scss`
+
+### Accessibility
+
+- Semantic HTML structure with proper heading hierarchy
+- Background images implemented with appropriate alternative text handling
+- Interactive elements (buttons, links) are keyboard accessible with clear focus indicators
+- Sufficient color contrast ratios maintained across all theme variations
+- Content remains accessible when background images fail to load
+
+### Behavior
+
+- **Responsive Design**: Banner adapts to viewport with content scaling appropriately
+- **Image Loading**: Uses responsive images with appropriate srcset for different screen sizes
+- **Video Background**: When enabled, replaces the static background image with a video
+
+## Usage Guidelines
+
+### Best Practices
+
+- Reserve for homepages and primary landing pages — one per page maximum
+- Keep heading text bold and brief; the Grand Hero is the first thing users see
+- Use high-quality, full-bleed images with a 16:9 aspect ratio
+- Choose the overlay variation based on the image composition — full overlay works well with busy imagery, contained works with cleaner images
+
+### Things to Avoid
+
+- Don't use on interior content pages where an Action Banner or Image Banner would be more appropriate
+- Avoid lengthy snippet text — the heading should carry the message
+- Don't use low-contrast color combinations that make text difficult to read
+
+## Testing
+
+For comprehensive visual regression testing with all overlay, theme, and size variations, see the [Visreg page](?path=/story/molecules-banners-grand-hero-visreg--visreg).
+
+## Related Components
+
+- **Action Banner**: When you need multiple CTAs or flexible content positioning
+- **Image Banner**: For visual storytelling with minimal text and no content overlay
+- **Video Banner**: For video-first content presentation

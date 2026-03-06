@@ -1,12 +1,5 @@
 import bannerTwig from './action/yds-action-banner.twig';
-import grandHeroTwig from './grand-hero/yds-grand-hero.twig';
-import imageBannerTwig from './image/yds-image-banner.twig';
-import videoBannerTwig from './video/yds-video-banner.twig';
-
 import bannerData from './banner.yml';
-import grandHeroData from './grand-hero.yml';
-import videoBannerData from '../../01-atoms/videos/video-embed/video-embed.yml';
-
 import imageData from '../../01-atoms/images/image/image.yml';
 
 import {
@@ -22,7 +15,7 @@ import {
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Banner/Visreg',
+  title: 'Molecules/Banners/Action Banner/Visreg',
   parameters: {
     layout: 'fullscreen',
   },
@@ -80,7 +73,6 @@ export default {
 };
 
 export const Visreg = ({
-  sectionTheme,
   heading,
   snippet,
   linkContent,
@@ -89,10 +81,31 @@ export const Visreg = ({
   linkStyle,
   contentLayout,
 }) => {
-  // Render function for banner variations
-  const renderBanners = (theme) => `
+  const renderLayouts = () =>
+    ['bottom', 'left', 'right']
+      .map(
+        (layout) => `
+      <h3 style="padding: 1rem; background: #f5f5f5;">Content Layout: ${layout}</h3>
+      ${bannerTwig({
+        ...imageData.responsive_images['16x9'],
+        banner__heading: heading,
+        banner__snippet: snippet,
+        banner__link__content: linkContent,
+        banner__link__url:
+          linkStyle !== 'none' ? bannerData.banner__link__url : '',
+        banner__link__content_two: linkStyle !== 'none' ? linkContentTwo : '',
+        banner__link__url_two:
+          linkStyle !== 'none' ? bannerData.banner__link__url_two : '',
+        banner__link__style: linkStyle,
+        banner__content__layout: layout,
+        banner__content__background: bgColor,
+      })}
+    `,
+      )
+      .join('');
+
+  const renderTheme = (theme) => `
     <div data-component-theme="${theme}">
-      <h3>Action Banner</h3>
       ${bannerTwig({
         ...imageData.responsive_images['16x9'],
         banner__heading: heading,
@@ -107,62 +120,24 @@ export const Visreg = ({
         banner__content__layout: contentLayout,
         banner__content__background: bgColor,
       })}
-
-      <h3>Grand Hero Banner</h3>
-      ${grandHeroTwig({
-        ...imageData.responsive_images['16x9'],
-        grand_hero__heading: heading,
-        grand_hero__snippet: snippet,
-        grand_hero__link__content: linkContent,
-        grand_hero__link__url: grandHeroData.grand_hero__link__url,
-        grand_hero__link__content_two: linkContentTwo,
-        grand_hero__link__url_two: grandHeroData.grand_hero__link__url_two,
-        grand_hero__content__background: bgColor,
-        grand_hero__overlay_variation: 'full',
-        grand_hero__size: 'full',
-        grand_hero__video: 'false',
-      })}
-
-      <h3>Image Banner</h3>
-      ${imageBannerTwig({
-        ...imageData.responsive_images['16x9'],
-        image_banner__content__background: bgColor,
-        image_banner__overlay_variation: 'full',
-        image_banner__size: 'tall',
-        image_banner__video: 'false',
-        image_banner__caption: 'Image Banner Caption',
-      })}
-
-      <h3>Video Banner</h3>
-      ${videoBannerTwig({
-        video_banner__content: videoBannerData.video_embed__content,
-        video_banner__width: 'max',
-      })}
     </div>
   `;
 
   return `
     ${createPlaygroundIntro(
-      'Use the controls to test different banner configurations. All 4 banner types are shown below.',
+      'Use the controls to test different Action Banner configurations.',
     )}
 
-    ${renderBanners(sectionTheme)}
+    <h2 style="padding: 1rem;">Content Layout Variations</h2>
+    ${renderLayouts()}
 
     <hr class="sb-vrt-divider" style="margin: 4rem 0; border: none; border-top: 2px solid #ccc;" />
 
-    <div style="margin: 2rem 0; padding: 1.5rem; background: #f5f5f5; border-left: 4px solid #0053A0;">
-      <h2 style="margin: 0 0 0.5rem 0; font-size: 1.5rem; color: #0053A0;">Visual Regression Testing</h2>
-      <p style="margin: 0; font-size: 1rem; line-height: 1.5;">
-        The sections below show all variations of the banner component for visual regression testing.
-        These are static examples captured by Percy for automated visual testing.
-      </p>
-    </div>
-
     ${createThemeVariations(
-      renderBanners,
+      renderTheme,
       sectionThemes,
       'All Section Theme Variations',
-      'Below are all theme variations with all 4 banner types for visual regression testing.',
+      'Below are all section theme variations of the Action Banner for visual regression testing.',
       'Section Theme',
     )}
   `;
