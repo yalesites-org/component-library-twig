@@ -33,17 +33,20 @@ function hslToHex(hslStr) {
   const f = (n) => {
     const k = (n + h / 30) % 12;
     const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-    return Math.round(255 * color).toString(16).padStart(2, '0');
+    return Math.round(255 * color)
+      .toString(16)
+      .padStart(2, '0');
   };
   return `#${f(0)}${f(8)}${f(4)}`;
 }
 
 function addHex(colorGroup) {
-  const result = {};
-  for (const [name, value] of Object.entries(colorGroup)) {
-    result[name] = { value, hex: hslToHex(value) };
-  }
-  return result;
+  return Object.fromEntries(
+    Object.entries(colorGroup).map(([name, value]) => [
+      name,
+      { value, hex: hslToHex(value) },
+    ]),
+  );
 }
 
 const colorsData = {
