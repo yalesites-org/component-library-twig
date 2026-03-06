@@ -16,6 +16,8 @@ import './intro-styles.css';
 
 The YaleSites Design System provides a consistent, accessible, and flexible foundation for building websites across Yale University. It includes reusable components, design tokens, and comprehensive documentation to ensure brand consistency and excellent user experiences.
 
+The design system was developed in close collaboration with the **University Office of Public Affairs and Communication (OPAC)** and built in tandem with the [YaleSites Drupal platform](https://yalesites.yale.edu). While the system was created with Drupal development in mind, it is intentionally technology-agnostic — it can serve as a design reference or be adopted in other technology stacks.
+
 ---
 
 ## Atomic Design Principles
@@ -100,7 +102,6 @@ Our component library is organized using **Atomic Design** methodology, breaking
 - **Organisms**: Complex sections like headers, footers, menus, and content collections
 - **Page Layouts**: Page structure templates with various column configurations
 - **Page Examples**: Complete page demonstrations showing real-world implementations
-- **Global Themes**: Use the toolbar controls at the top to switch between global color themes and typography options
 
 ---
 
@@ -117,29 +118,6 @@ Educational content with component introduction, interactive preview with contro
 Comprehensive testing page with interactive controls and all component variations for Percy visual regression testing coverage.
 
 For more details, see the [Storybook Migration Guide](https://github.com/yalesites-org/component-library-twig/blob/main/STORYBOOK-MIGRATION-GUIDE.md).
-
----
-
-## Global Themes & Typography
-
-Use the toolbar controls at the top of Storybook to:
-
-- **Site: Global Theme**: Switch between Yale's six global color palettes (Old Blues, New Haven Green, Shoreline Summer, Onha, It's Your Yale, AI)
-- **Typography: Heading Fonts**: Toggle between YaleNew and Mallory heading font pairings
-
-<div
-  style={{
-    padding: '1rem',
-    background: '#f0f0f0',
-    border: '1px solid #666',
-    borderLeft: '4px solid #0053A0',
-    margin: '1.5rem 0',
-  }}
->
-  <strong>💡 Tip:</strong> These global controls apply to all components,
-  allowing you to preview how designs adapt across different themes and
-  typography settings.
-</div>
 
 ---
 

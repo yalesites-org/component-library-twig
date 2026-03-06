@@ -21,14 +21,39 @@ import { exampleSiteNameImageSvg } from '../../_storybook/theme-constants';
 import tabData from '../../02-molecules/tabs/tabs.yml';
 import bannerData from '../../02-molecules/banner/banner.yml';
 
+function hslToHex(hslStr) {
+  const match = hslStr.match(
+    /hsl\((\d+(?:\.\d+)?),\s*(\d+(?:\.\d+)?)%,\s*(\d+(?:\.\d+)?)%\)/,
+  );
+  if (!match) return null;
+  const h = parseFloat(match[1]);
+  const s = parseFloat(match[2]) / 100;
+  const l = parseFloat(match[3]) / 100;
+  const a = s * Math.min(l, 1 - l);
+  const f = (n) => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color).toString(16).padStart(2, '0');
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+function addHex(colorGroup) {
+  const result = {};
+  for (const [name, value] of Object.entries(colorGroup)) {
+    result[name] = { value, hex: hslToHex(value) };
+  }
+  return result;
+}
+
 const colorsData = {
   colors: {
-    blue: tokens.color.blue,
-    green: tokens.color.green,
-    orange: tokens.color.orange,
-    yellow: tokens.color.yellow,
-    basic: tokens.color.basic,
-    gray: tokens.color.gray,
+    blue: addHex(tokens.color.blue),
+    green: addHex(tokens.color.green),
+    orange: addHex(tokens.color.orange),
+    yellow: addHex(tokens.color.yellow),
+    basic: addHex(tokens.color.basic),
+    gray: addHex(tokens.color.gray),
   },
 };
 
