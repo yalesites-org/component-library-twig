@@ -81,6 +81,7 @@ export const parameters = {
   controls: { disableSaveFromUI: true },
   options: {
     storySort: {
+      method: 'alphabetical',
       order: [
         'Introduction',
         ['Welcome', 'Theme System'],

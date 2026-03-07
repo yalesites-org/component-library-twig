@@ -145,3 +145,14 @@
   margin-block-start: 0 !important;
   margin-block-end: 0 !important;
 }
+
+/**
+ * Full-bleed canvas wrapper
+ * Breaks out of the docs panel max-width so full-width components like banners
+ * render at the full preview frame width, mimicking live Drupal site behavior.
+ * Apply to <Canvas> elements in MDX using <div className="sb-full-bleed-canvas">.
+ */
+.sb-full-bleed-canvas {
+  width: 100vw;
+  margin-left: calc(50% - 50vw - 12px) !important;
+}
