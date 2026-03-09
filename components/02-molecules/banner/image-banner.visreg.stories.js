@@ -8,6 +8,7 @@ import {
 import {
   createPlaygroundIntro,
   createThemeVariations,
+  createVariations,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -19,12 +20,6 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
     bgColor: {
       name: 'Banner Theme (dial)',
       description:
@@ -43,7 +38,6 @@ export default {
     },
   },
   args: {
-    sectionTheme: 'default',
     bgColor: 'one',
     size: 'tall',
     imageCaption: 'Image Banner Caption',
@@ -51,23 +45,6 @@ export default {
 };
 
 export const Visreg = ({ bgColor, size, imageCaption }) => {
-  const renderSizes = () =>
-    ['tall', 'short']
-      .map(
-        (imgSize) => `
-      <h3 style="padding: 1rem; background: #f5f5f5;">Size: ${imgSize}</h3>
-      ${imageBannerTwig({
-        ...imageData.responsive_images['16x9'],
-        image_banner__content__background: bgColor,
-        image_banner__overlay_variation: 'full',
-        image_banner__size: imgSize,
-        image_banner__video: 'false',
-        image_banner__caption: imageCaption,
-      })}
-    `,
-      )
-      .join('');
-
   const renderTheme = (theme) => `
     <div data-component-theme="${theme}">
       ${imageBannerTwig({
@@ -86,10 +63,20 @@ export const Visreg = ({ bgColor, size, imageCaption }) => {
       'Use the controls to test different Image Banner configurations.',
     )}
 
-    <h2 style="padding: 1rem;">Size Variations</h2>
-    ${renderSizes()}
-
-    <hr class="sb-vrt-divider" style="margin: 4rem 0; border: none; border-top: 2px solid #ccc;" />
+    ${createVariations(
+      (imgSize) =>
+        imageBannerTwig({
+          ...imageData.responsive_images['16x9'],
+          image_banner__content__background: bgColor,
+          image_banner__overlay_variation: 'full',
+          image_banner__size: imgSize,
+          image_banner__video: 'false',
+          image_banner__caption: imageCaption,
+        }),
+      ['tall', 'short'],
+      'Size Variations',
+      'Size',
+    )}
 
     ${createThemeVariations(
       renderTheme,

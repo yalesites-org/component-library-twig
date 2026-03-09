@@ -10,6 +10,7 @@ import {
 import {
   createPlaygroundIntro,
   createThemeVariations,
+  createVariations,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -21,12 +22,6 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
     heading: {
       name: 'Heading',
       type: 'string',
@@ -57,7 +52,6 @@ export default {
     },
   },
   args: {
-    sectionTheme: 'default',
     heading: bannerData.banner__heading,
     snippet: bannerData.banner__snippet,
     linkContent: bannerData.banner__link__content,
@@ -75,28 +69,6 @@ export const Visreg = ({
   bgColor,
   overlayVariation,
 }) => {
-  const renderOverlays = () =>
-    ['full', 'contained', 'contained-narrow']
-      .map(
-        (overlay) => `
-      <h3 style="padding: 1rem; background: #f5f5f5;">Overlay Variation: ${overlay}</h3>
-      ${grandHeroTwig({
-        ...imageData.responsive_images['16x9'],
-        grand_hero__heading: heading,
-        grand_hero__snippet: snippet,
-        grand_hero__link__content: linkContent,
-        grand_hero__link__url: grandHeroData.grand_hero__link__url,
-        grand_hero__link__content_two: linkContentTwo,
-        grand_hero__link__url_two: grandHeroData.grand_hero__link__url_two,
-        grand_hero__content__background: bgColor,
-        grand_hero__overlay_variation: overlay,
-        grand_hero__size: 'full',
-        grand_hero__video: 'false',
-      })}
-    `,
-      )
-      .join('');
-
   const renderTheme = (theme) => `
     <div data-component-theme="${theme}">
       ${grandHeroTwig({
@@ -120,10 +92,25 @@ export const Visreg = ({
       'Use the controls to test different Grand Hero Banner configurations.',
     )}
 
-    <h2 style="padding: 1rem;">Overlay Variations</h2>
-    ${renderOverlays()}
-
-    <hr class="sb-vrt-divider" style="margin: 4rem 0; border: none; border-top: 2px solid #ccc;" />
+    ${createVariations(
+      (overlay) =>
+        grandHeroTwig({
+          ...imageData.responsive_images['16x9'],
+          grand_hero__heading: heading,
+          grand_hero__snippet: snippet,
+          grand_hero__link__content: linkContent,
+          grand_hero__link__url: grandHeroData.grand_hero__link__url,
+          grand_hero__link__content_two: linkContentTwo,
+          grand_hero__link__url_two: grandHeroData.grand_hero__link__url_two,
+          grand_hero__content__background: bgColor,
+          grand_hero__overlay_variation: overlay,
+          grand_hero__size: 'full',
+          grand_hero__video: 'false',
+        }),
+      ['full', 'contained', 'contained-narrow'],
+      'Overlay Variations',
+      'Overlay Variation',
+    )}
 
     ${createThemeVariations(
       renderTheme,

@@ -9,6 +9,7 @@ import {
 import {
   createPlaygroundIntro,
   createThemeVariations,
+  createVariations,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -20,12 +21,6 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
     heading: {
       name: 'Heading',
       type: 'string',
@@ -61,7 +56,6 @@ export default {
     },
   },
   args: {
-    sectionTheme: 'default',
     heading: bannerData.banner__heading,
     snippet: bannerData.banner__snippet,
     linkContent: bannerData.banner__link__content,
@@ -81,29 +75,6 @@ export const Visreg = ({
   linkStyle,
   contentLayout,
 }) => {
-  const renderLayouts = () =>
-    ['bottom', 'left', 'right']
-      .map(
-        (layout) => `
-      <h3 style="padding: 1rem; background: #f5f5f5;">Content Layout: ${layout}</h3>
-      ${bannerTwig({
-        ...imageData.responsive_images['16x9'],
-        banner__heading: heading,
-        banner__snippet: snippet,
-        banner__link__content: linkContent,
-        banner__link__url:
-          linkStyle !== 'none' ? bannerData.banner__link__url : '',
-        banner__link__content_two: linkStyle !== 'none' ? linkContentTwo : '',
-        banner__link__url_two:
-          linkStyle !== 'none' ? bannerData.banner__link__url_two : '',
-        banner__link__style: linkStyle,
-        banner__content__layout: layout,
-        banner__content__background: bgColor,
-      })}
-    `,
-      )
-      .join('');
-
   const renderTheme = (theme) => `
     <div data-component-theme="${theme}">
       ${bannerTwig({
@@ -128,10 +99,26 @@ export const Visreg = ({
       'Use the controls to test different Action Banner configurations.',
     )}
 
-    <h2 style="padding: 1rem;">Content Layout Variations</h2>
-    ${renderLayouts()}
-
-    <hr class="sb-vrt-divider" style="margin: 4rem 0; border: none; border-top: 2px solid #ccc;" />
+    ${createVariations(
+      (layout) =>
+        bannerTwig({
+          ...imageData.responsive_images['16x9'],
+          banner__heading: heading,
+          banner__snippet: snippet,
+          banner__link__content: linkContent,
+          banner__link__url:
+            linkStyle !== 'none' ? bannerData.banner__link__url : '',
+          banner__link__content_two: linkStyle !== 'none' ? linkContentTwo : '',
+          banner__link__url_two:
+            linkStyle !== 'none' ? bannerData.banner__link__url_two : '',
+          banner__link__style: linkStyle,
+          banner__content__layout: layout,
+          banner__content__background: bgColor,
+        }),
+      ['bottom', 'left', 'right'],
+      'Content Layout Variations',
+      'Content Layout',
+    )}
 
     ${createThemeVariations(
       renderTheme,
