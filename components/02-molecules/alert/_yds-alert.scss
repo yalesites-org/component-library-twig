@@ -120,7 +120,7 @@ $alert-fade-speed: var(--animation-speed-slow);
 }
 
 .alert__text {
-  @include tokens.body-s-condensed;
+  @include tokens.body-default;
 
   margin-top: var(--size-spacing-2);
   max-width: var(--size-component-layout-width-content);
