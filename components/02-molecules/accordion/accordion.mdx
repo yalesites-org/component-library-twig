@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as AccordionStories from './accordion.stories';
+import twigPropsTable from '../../_storybook/twig-props-table';
+import componentProps from './accordion-props.yml';
 
 <Meta of={AccordionStories} name="Docs" />
 
@@ -18,85 +20,11 @@ Use the controls panel below to experiment with the accordion's properties in re
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>accordion__items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>Array of accordion items, each containing heading and content</td>
-    </tr>
-    <tr>
-      <td>
-        <code>accordion__item__heading</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The heading text for each accordion item</td>
-    </tr>
-    <tr>
-      <td>
-        <code>accordion__item__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        The content displayed when an accordion item is expanded (supports HTML)
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>accordion__heading</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Optional heading displayed above all accordion items</td>
-    </tr>
-    <tr>
-      <td>
-        <code>accordion__theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'default'</code>
-      </td>
-      <td>Component theme (see Theme Options below)</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Theme Options
 

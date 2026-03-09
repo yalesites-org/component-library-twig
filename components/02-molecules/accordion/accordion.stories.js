@@ -1,42 +1,20 @@
 import accordionTwig from './yds-accordion.twig';
 import accordionData from './accordion.yml';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
+import componentProps from './accordion-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 import './yds-accordion';
-
-const accordionArgs = {
-  accordionHeading: accordionData.accordion__heading,
-  heading: accordionData.accordion__item__heading,
-  content: accordionData.accordion__item__content,
-  themeColor: 'default',
-};
 
 export default {
   title: 'Molecules/Accordion',
   tags: ['!dev'],
-  argTypes: addTableDefaults(
-    {
-      accordionHeading: {
-        name: 'Accordion Heading',
-        type: 'string',
-      },
-      heading: {
-        name: 'Heading',
-        type: 'string',
-      },
-      content: {
-        name: 'Content',
-        type: 'string',
-      },
-      themeColor: {
-        name: 'Component Theme (dial)',
-        options: ['default', 'one', 'two', 'three', 'four', 'five'],
-        type: 'select',
-      },
-    },
-    accordionArgs,
-  ),
-  args: accordionArgs,
+  argTypes: toArgTypes(componentProps),
+  args: {
+    ...toArgs(componentProps),
+    heading: accordionData.accordion__item__heading,
+    content: accordionData.accordion__item__content,
+    accordionHeading: accordionData.accordion__heading,
+  },
 };
 
 export const Accordion = ({
@@ -64,5 +42,3 @@ export const Accordion = ({
     ],
   })}
 `;
-
-Accordion.args = accordionArgs;
