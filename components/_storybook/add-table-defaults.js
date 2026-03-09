@@ -3,6 +3,11 @@
  *
  * This eliminates duplication between args and table.defaultValue in Storybook 7+.
  *
+ * String type args display '-' as their default because their args values are demo
+ * filler content, not true defaults. Select, boolean, and other types show their
+ * actual default value. To override this behavior for a specific arg, set
+ * table.defaultValue explicitly in the argType definition and it will be respected.
+ *
  * @param {Object} argTypes - The argTypes object
  * @param {Object} args - The args object containing default values
  * @returns {Object} - Updated argTypes with table.defaultValue added
@@ -23,6 +28,19 @@
  *   }),
  * };
  */
+function resolveDefaultValue(key, argTypeConfig, args) {
+  if (argTypeConfig.table?.defaultValue !== undefined) {
+    return argTypeConfig.table.defaultValue;
+  }
+  if (argTypeConfig.type === 'string') {
+    return { summary: '-' };
+  }
+  if (args[key] !== undefined) {
+    return { summary: String(args[key]) };
+  }
+  return undefined;
+}
+
 export function addTableDefaults(argTypes, args) {
   return Object.entries(argTypes).reduce(
     (result, [key, argTypeConfig]) => ({
@@ -31,10 +49,7 @@ export function addTableDefaults(argTypes, args) {
         ...argTypeConfig,
         table: {
           ...argTypeConfig.table,
-          defaultValue:
-            args[key] !== undefined
-              ? { summary: String(args[key]) }
-              : argTypeConfig.table?.defaultValue,
+          defaultValue: resolveDefaultValue(key, argTypeConfig, args),
         },
       },
     }),
@@ -49,15 +64,13 @@ export function addTableDefaults(argTypes, args) {
 export function updateArgTypesWithDefaults(argTypes, args) {
   const updatedArgTypes = { ...argTypes };
   Object.entries(updatedArgTypes).forEach(([key, argTypeConfig]) => {
-    if (args[key] !== undefined) {
-      updatedArgTypes[key] = {
-        ...argTypeConfig,
-        table: {
-          ...argTypeConfig.table,
-          defaultValue: { summary: String(args[key]) },
-        },
-      };
-    }
+    updatedArgTypes[key] = {
+      ...argTypeConfig,
+      table: {
+        ...argTypeConfig.table,
+        defaultValue: resolveDefaultValue(key, argTypeConfig, args),
+      },
+    };
   });
   return updatedArgTypes;
 }
