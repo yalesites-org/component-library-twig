@@ -251,5 +251,21 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   margin-bottom: 0;
   max-height: var(--size-spacing-8);
   min-height: 0;
+  min-width: 0;
+  overflow: visible;
   padding: 0;
+}
+
+// Ensure controls display in narrow layout sections (e.g. 70/30 two-column).
+// Parent overflow or flex constraints can clip the toggle in smaller columns.
+.yds-two-column__primary .layout-builder-block .accordion,
+.yds-two-column__primary .js-layout-builder-block .accordion,
+.yds-two-column__secondary .layout-builder-block .accordion,
+.yds-two-column__secondary .js-layout-builder-block .accordion {
+  overflow: visible;
+
+  .accordion__inner,
+  .accordion__controls {
+    overflow: visible;
+  }
 }
