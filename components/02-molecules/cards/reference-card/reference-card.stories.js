@@ -10,8 +10,6 @@ import { addTableDefaults } from '../../../_storybook/add-table-defaults';
 const defaultArgs = {
   heading: referenceCardData.reference_card__heading,
   snippet: referenceCardData.reference_card__snippet,
-  categories: referenceCardData.reference_card__categories,
-  tags: referenceCardData.reference_card__tags,
   collectionType: 'grid',
   featured: true,
   withImage: true,
@@ -325,8 +323,6 @@ export const PageCard = ({
 const pageCardArgs = {
   heading: referencePageCardData.reference_card__heading,
   snippet: referencePageCardData.reference_card__snippet,
-  categories: referencePageCardData.reference_card__categories,
-  tags: referencePageCardData.reference_card__tags,
   date: referencePageCardData.reference_card__date,
   collectionType: 'grid',
   featured: true,
