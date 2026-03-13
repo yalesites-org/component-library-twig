@@ -245,15 +245,19 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   margin-block-start: 0;
 }
 
+// Force accordion__controls to display in layout builder (overrides template's
+// display: none and any theme-specific hiding).
 .layout-builder-block .accordion__controls,
 .js-layout-builder-block .accordion__controls {
   align-items: center;
+  display: flex !important;
   margin-bottom: 0;
   max-height: var(--size-spacing-8);
   min-height: 0;
   min-width: 0;
   overflow: visible;
   padding: 0;
+  visibility: visible !important;
 }
 
 // Ensure controls display in narrow layout sections (e.g. 70/30 two-column).
@@ -267,5 +271,29 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   .accordion__inner,
   .accordion__controls {
     overflow: visible;
+  }
+}
+
+// Ensure "Expand all" displays with non-default themes in layout builder.
+.layout-builder-block
+  .accordion[data-component-theme]:not([data-component-theme='default'])
+  .accordion__controls,
+.js-layout-builder-block
+  .accordion[data-component-theme]:not([data-component-theme='default'])
+  .accordion__controls {
+  overflow: visible;
+}
+
+// Layout builder has white background; use dark text so the toggle is visible.
+.layout-builder-block
+  .accordion[data-component-theme]:not([data-component-theme='default'])
+  .accordion__toggle-all,
+.js-layout-builder-block
+  .accordion[data-component-theme]:not([data-component-theme='default'])
+  .accordion__toggle-all {
+  color: var(--color-gray-800);
+
+  &:hover {
+    color: var(--color-link-base);
   }
 }
