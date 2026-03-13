@@ -66,10 +66,21 @@
       } %}
     {% endif %}
     {% if reference_card__subheading %}
+      {% set subheading_with_icon %}
+        {% if event_has_passed %}
+          <span class="past-event-icon">
+            {% include "@atoms/images/icons/_yds-icon.twig" with {
+              icon__name: 'clock-rotate-left',
+              icon__decorative: true,
+            } %}
+          </span>
+        {% endif %}
+        {{ reference_card__subheading }}
+      {% endset %}
       {% include "@atoms/typography/text/yds-text.twig" with {
         text__blockname: reference_card__base_class,
         text__base_class: 'subheading',
-        text__content: reference_card__subheading,
+        text__content: subheading_with_icon,
       } %}
     {% endif %}
     {% if reference_card__overline %}

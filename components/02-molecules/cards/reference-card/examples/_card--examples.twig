@@ -8,7 +8,11 @@
 {% endif %}
 
 {% set reference_card__date__formatted %}
-  {% set date_time__format = card_collection__source_type == 'post' ? 'date' %}
+  {% set date_time__format = (
+    card_collection__source_type == 'post' or 
+    card_collection__source_type == 'resource'
+  ) ? 'date' %}
+
   {% include "@atoms/date-time/yds-date-time.twig" with {
     date_time__start: reference_card__date,
   } %}
@@ -85,6 +89,15 @@
   {% else %}
     {# If event and list put the date and time in the subheading. #}
     {% set reference_card__subheading = reference_card__date__formatted ~ multi_day_text ~ reference_card__time__formatted %}
+  {% endif %}
+
+{# Resource Card #}
+{% elseif card_collection__source_type == 'resource' %}
+  {% set reference_card__overline = '<strong>Published on:</strong>' ~ reference_card__date__formatted %}
+  
+  {% if card_collection__type == 'condensed' %}
+    {% set reference_card__snippet = null %}
+    {% set reference_card__image = 'false' %}
   {% endif %}
 {% endif %}
 

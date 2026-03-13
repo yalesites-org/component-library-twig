@@ -36,7 +36,8 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       // override text-shadow color for links in component themes
       .link,
       .text-field a,
-      .link-grid__link {
+      .link-grid__link,
+      .caption a {
         --color-text-shadow: var(--color-layout-theme);
         --color-link-hover: var(--color-link-hover);
         --color-link-base: var(--color-link-base);
@@ -126,18 +127,8 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
 
   // if we're not using a component theme, add top and bottom margin
   // Or if the spotlight is the only spotlight on the page
-  &[data-component-theme='default'],
-  &[data-spotlights-position='first-and-last'] {
+  &[data-component-theme='default'] {
     @include tokens.spacing-page-section;
-  }
-
-  // We're using JavaScript to evaluate the last and first spotlights in a group of spotlights
-  &[data-spotlights-position='first'] {
-    margin-top: var(--size-spacing-10);
-  }
-
-  &[data-spotlights-position='last'] {
-    margin-bottom: var(--size-spacing-10);
   }
 
   &[data-component-padding='no-top'],

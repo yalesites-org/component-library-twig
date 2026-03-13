@@ -50,6 +50,7 @@ export const globalTypes = {
         { value: 'three', title: 'Shoreline Summer' },
         { value: 'four', title: 'Onha' },
         { value: 'five', title: 'It\'s Your Yale' },
+        { value: 'six', title: 'AI'},
         { value: 'seven', title: 'Whitney Humanities Center' },
       ],
       showName: true,

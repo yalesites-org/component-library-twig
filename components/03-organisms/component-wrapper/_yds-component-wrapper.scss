@@ -16,7 +16,8 @@
   margin-bottom: var(--size-spacing-7);
 
   // When a component wrapper contains a view the header should yse yale-new.
-  .ys-view & {
+  .ys-view &,
+  .ys-resource-view & {
     @include tokens.heading(h2);
   }
 

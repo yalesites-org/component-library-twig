@@ -17,14 +17,24 @@ export default {
       type: 'select',
       options: colorPairingsData,
     },
+    lineTreatment: {
+      name: 'Line Treatment',
+      type: 'select',
+      options: ['default', 'all_strong_lines', 'all_light_lines', 'no_lines'],
+      control: {
+        type: 'select',
+      },
+    },
   },
   args: {
     themeColor: 'one',
+    lineTreatment: 'default',
   },
 };
 
-export const linkGrid = ({ themeColor }) =>
+export const linkGrid = ({ themeColor, lineTreatment }) =>
   linkGridTwig({
     link_grid__theme: themeColor,
+    link_grid__line_treatment: lineTreatment,
     ...linkGridData,
   });

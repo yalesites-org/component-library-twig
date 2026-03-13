@@ -148,3 +148,11 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
     }
   }
 }
+
+// For images linked, add borders around them
+// except the bottom border.
+.custom-card__image-link {
+  border-top: var(--card-border);
+  border-left: var(--card-border);
+  border-right: var(--card-border);
+}
