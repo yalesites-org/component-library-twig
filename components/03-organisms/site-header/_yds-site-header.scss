@@ -250,7 +250,10 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
     max-height: calc(100vh - var(--header-height-mobile));
     width: 100vw;
     max-width: 100%;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior-x: none;
+    touch-action: pan-y;
     border-bottom: var(--site-header-mobile-border-bottom);
     transform: translateY(-100%);
 
