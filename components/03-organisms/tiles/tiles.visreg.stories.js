@@ -5,6 +5,7 @@ import imageData from '../../01-atoms/images/image/image.yml';
 import {
   createPlaygroundIntro,
   createVariations,
+  createVrtIntro,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -49,7 +50,7 @@ export const Visreg = ({ presentationStyle, columnCount, alignment }) => {
       'Visual regression testing for tiles component showing all presentation styles, column counts, and alignment variations.',
     )}
 
-    <hr class="sb-section__divider">
+    ${createVrtIntro()}
 
     ${tilesTwig({
       tiles__alignment: alignment,

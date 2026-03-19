@@ -8,6 +8,7 @@ import { sectionThemes } from '../../_storybook/theme-constants';
 import {
   createPlaygroundIntro,
   createThemeVariations,
+  createVrtIntro,
 } from '../../_storybook/playground-utils';
 
 export default {
@@ -51,9 +52,7 @@ export const Visreg = ({ sectionTheme, buttonTheme }) => {
   `;
 
   return `
-    <div style="border-top: 4px solid red; padding-top: 1rem; margin-top: 1rem;">
-      <p style="color: red; font-weight: bold;">VRT Divider - Content above is interactive, content below is for visual regression testing</p>
-    </div>
+    ${createVrtIntro()}
 
     ${createPlaygroundIntro(
       'Use the controls to test form elements with different themes.',

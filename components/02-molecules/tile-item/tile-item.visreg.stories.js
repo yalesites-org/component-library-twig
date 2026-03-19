@@ -12,6 +12,7 @@ import {
 import {
   createPlaygroundIntro,
   createThemeVariations,
+  createVrtIntro,
 } from '../../_storybook/playground-utils';
 import { createIconMapping, hasIcon } from '../../_storybook/icon-utils';
 
@@ -136,14 +137,7 @@ export const Visreg = ({
 
     ${renderTileItem(sectionTheme)}
 
-    <hr class="sb-vrt-divider" style="margin: 4rem 0; border: none; border-top: 2px solid #ccc;" />
-
-    <div style="margin: 2rem 0; padding: 1.5rem; background: #f5f5f5; border-left: 4px solid #0053A0;">
-      <h2 style="margin: 0 0 0.5rem 0; font-size: 1.5rem; color: #0053A0;">Visual Regression Testing</h2>
-      <p style="margin: 0; font-size: 0.95rem;">
-        The variations below test all tile item configurations for visual regression testing with Percy.
-      </p>
-    </div>
+    ${createVrtIntro()}
 
     ${createThemeVariations(
       renderTileItem,

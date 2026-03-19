@@ -13,6 +13,7 @@ import { sectionThemes } from '../../_storybook/theme-constants';
 import {
   createPlaygroundIntro,
   createThemeVariations,
+  createVrtIntro,
 } from '../../_storybook/playground-utils';
 
 const svgIcons = require.context('../../../images/icons', true, /\.svg$/);
@@ -113,7 +114,7 @@ export const Visreg = ({ sectionTheme, aspectRatio }) => {
       </div>
     </div>
 
-    <hr class="sb-section__divider sb-vrt-divider">
+    ${createVrtIntro()}
 
     ${createThemeVariations(
       renderImages,

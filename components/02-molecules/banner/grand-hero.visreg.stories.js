@@ -11,6 +11,7 @@ import {
   createPlaygroundIntro,
   createThemeVariations,
   createVariations,
+  createVrtIntro,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -111,6 +112,8 @@ export const Visreg = ({
       'Overlay Variations',
       'Overlay Variation',
     )}
+
+    ${createVrtIntro()}
 
     ${createThemeVariations(
       renderTheme,

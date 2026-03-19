@@ -9,7 +9,10 @@ import {
   borderThicknessOptions,
   sectionThemes,
 } from '../../_storybook/theme-constants';
-import { createPlaygroundIntro } from '../../_storybook/playground-utils';
+import {
+  createPlaygroundIntro,
+  createVrtIntro,
+} from '../../_storybook/playground-utils';
 
 const layoutOptions = ['left', 'center'];
 const widths = Object.keys(tokens.layout.width);
@@ -128,7 +131,7 @@ export const Visreg = ({
 
     ${renderDivider(sectionTheme)}
 
-    <hr class="sb-section__divider sb-vrt-divider">
+    ${createVrtIntro()}
 
     <h2>All Section Theme Variations</h2>
     <p>Below are all theme variations with width samples for visual regression testing.</p>

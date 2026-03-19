@@ -9,6 +9,7 @@ import {
   createPlaygroundIntro,
   createThemeVariations,
   createVariations,
+  createVrtIntro,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -77,6 +78,8 @@ export const Visreg = ({ bgColor, size, imageCaption }) => {
       'Size Variations',
       'Size',
     )}
+
+    ${createVrtIntro()}
 
     ${createThemeVariations(
       renderTheme,

@@ -4,6 +4,7 @@ import videoBannerData from '../../01-atoms/videos/video-embed/video-embed.yml';
 import {
   createPlaygroundIntro,
   createVariations,
+  createVrtIntro,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -31,4 +32,6 @@ export const Visreg = () => `
     'Width Variations',
     'Width',
   )}
+
+  ${createVrtIntro()}
 `;

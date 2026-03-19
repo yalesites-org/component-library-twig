@@ -8,6 +8,7 @@ import { sectionThemes } from '../../../_storybook/theme-constants';
 import {
   createPlaygroundIntro,
   createThemeVariations,
+  createVrtIntro,
 } from '../../../_storybook/playground-utils';
 
 export default {
@@ -44,7 +45,7 @@ export const Visreg = ({ sectionTheme }) => {
 
     ${renderVideoBackground(sectionTheme)}
 
-    <hr class="sb-section__divider sb-vrt-divider">
+    ${createVrtIntro()}
 
     ${createThemeVariations(
       renderVideoBackground,
