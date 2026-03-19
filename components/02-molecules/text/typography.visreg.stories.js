@@ -5,37 +5,20 @@ import textData from './text-field.yml';
 import '../../01-atoms/typography/text/yds-text';
 
 import { sectionThemes } from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-} from '../../_storybook/playground-utils';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Text/Visreg',
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-    variation: {
-      name: 'Text Field Variation',
-      options: ['default', 'emphasized'],
-      type: 'select',
-    },
-  },
-  args: {
-    sectionTheme: 'default',
-    variation: 'default',
-  },
+  parameters: { controls: { disable: true } },
 };
 
 // *** VRT: Text Field with All Section Theme Variations ***
-export const Visreg = ({ sectionTheme, variation }) => {
+export const Visreg = () => {
+  const variation = 'default';
+
   // Render function for text field variations
   const renderTextField = (theme) => `
     <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
@@ -51,12 +34,6 @@ export const Visreg = ({ sectionTheme, variation }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different text field variations.',
-    )}
-
-    ${renderTextField(sectionTheme)}
-
     ${createThemeVariations(
       renderTextField,
       sectionThemes,

@@ -15,11 +15,7 @@ import {
   componentThemes,
   siteHeaderThemes,
 } from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -28,38 +24,7 @@ export default {
   title: 'Organisms/Global Elements/In This Section/Visreg',
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    collectionNavDisplay: {
-      name: 'Collection Navigation Display',
-      options: ['in_content', 'in_header'],
-      control: {
-        type: 'select',
-        labels: {
-          in_content: 'In Content Section',
-          in_header: 'In Site Header',
-        },
-      },
-    },
-    siteSectionTheme: {
-      name: 'In This Section Theme (dial)',
-      description:
-        'Color accent theme for this component (from color dial in CMS)',
-      options: componentThemes,
-      type: 'select',
-      if: { arg: 'collectionNavDisplay', eq: 'in_content' },
-    },
-    siteHeaderTheme: {
-      name: 'Header Theme (dial)',
-      options: siteHeaderThemes,
-      type: 'select',
-      if: { arg: 'collectionNavDisplay', eq: 'in_header' },
-    },
-  },
-  args: {
-    collectionNavDisplay: 'in_content',
-    siteSectionTheme: 'one',
-    siteHeaderTheme: 'one',
+    controls: { disable: true },
   },
 };
 
@@ -80,29 +45,8 @@ const renderSiteHeader = (theme) =>
     primary_nav__items: primaryNavData.items,
   });
 
-export const Visreg = ({
-  collectionNavDisplay,
-  siteSectionTheme,
-  siteHeaderTheme,
-}) => {
-  // Top interactive component follows controls
-  const interactive =
-    collectionNavDisplay === 'in_header'
-      ? renderSiteHeader(siteHeaderTheme)
-      : siteSectionTwig({
-          site_section_wrap__theme: siteSectionTheme,
-          secondary_nav__items: secondaryNavData.items,
-        });
-
+export const Visreg = () => {
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to toggle between In Content and In Header display modes.',
-    )}
-
-    ${interactive}
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       (theme) =>
         siteSectionTwig({

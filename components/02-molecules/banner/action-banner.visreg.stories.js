@@ -2,15 +2,10 @@ import bannerTwig from './action/yds-action-banner.twig';
 import bannerData from './banner.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
+import { sectionThemes } from '../../_storybook/theme-constants';
 import {
-  componentThemes,
-  sectionThemes,
-} from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
   createThemeVariations,
   createVariations,
-  createVrtIntro,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -20,62 +15,19 @@ export default {
   title: 'Molecules/Banners/Action Banner/Visreg',
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    snippet: {
-      name: 'Snippet',
-      type: 'string',
-    },
-    linkContent: {
-      name: 'Link Content',
-      type: 'string',
-    },
-    linkContentTwo: {
-      name: 'Link Content Two',
-      type: 'string',
-    },
-    bgColor: {
-      name: 'Banner Theme (dial)',
-      description:
-        'Color accent theme for this component (from color dial in CMS)',
-      type: 'select',
-      options: componentThemes,
-    },
-    linkStyle: {
-      name: 'Link Style',
-      type: 'select',
-      options: ['cta', 'text-link', 'none'],
-    },
-    contentLayout: {
-      name: 'Content Layout',
-      type: 'select',
-      options: ['bottom', 'left', 'right'],
-    },
-  },
-  args: {
-    heading: bannerData.banner__heading,
-    snippet: bannerData.banner__snippet,
-    linkContent: bannerData.banner__link__content,
-    linkContentTwo: bannerData.banner__link__content_two,
-    bgColor: 'one',
-    linkStyle: 'cta',
-    contentLayout: 'bottom',
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({
-  heading,
-  snippet,
-  linkContent,
-  linkContentTwo,
-  bgColor,
-  linkStyle,
-  contentLayout,
-}) => {
+export const Visreg = () => {
+  const heading = bannerData.banner__heading;
+  const snippet = bannerData.banner__snippet;
+  const linkContent = bannerData.banner__link__content;
+  const linkContentTwo = bannerData.banner__link__content_two;
+  const bgColor = 'one';
+  const linkStyle = 'cta';
+  const contentLayout = 'bottom';
+
   const renderTheme = (theme) => `
     <div data-component-theme="${theme}">
       ${bannerTwig({
@@ -96,10 +48,6 @@ export const Visreg = ({
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different Action Banner configurations.',
-    )}
-
     ${createVariations(
       (layout) =>
         bannerTwig({
@@ -120,8 +68,6 @@ export const Visreg = ({
       'Content Layout Variations',
       'Content Layout',
     )}
-
-    ${createVrtIntro()}
 
     ${createThemeVariations(
       renderTheme,

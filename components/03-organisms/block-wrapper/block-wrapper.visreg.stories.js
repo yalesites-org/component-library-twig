@@ -1,9 +1,6 @@
 import blockWrapperTwig from './yds-block-wrapper.twig';
 
-import {
-  createPlaygroundIntro,
-  createVariations,
-} from '../../_storybook/playground-utils';
+import { createVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -12,25 +9,11 @@ export default {
   title: 'Organisms/Block Wrapper/Visreg',
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    paddingModifier: {
-      name: 'Padding Modifier',
-      type: 'select',
-      options: {
-        'Default Padding': 'padding-default',
-        'No Top Padding': 'padding-no-top',
-        'No Bottom Padding': 'padding-no-bottom',
-        'No Padding': 'padding-no-padding',
-      },
-    },
-  },
-  args: {
-    paddingModifier: 'padding-default',
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({ paddingModifier }) => {
+export const Visreg = () => {
   const paddingOptions = [
     'padding-default',
     'padding-no-top',
@@ -63,12 +46,6 @@ export const Visreg = ({ paddingModifier }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different padding modifiers.',
-    )}
-
-    ${renderBlockWrapper(paddingModifier)}
-
     ${createVariations(
       renderBlockWrapper,
       paddingOptions,

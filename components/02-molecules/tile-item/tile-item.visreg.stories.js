@@ -3,106 +3,28 @@ import tileItemTwig from './yds-tile-item.twig';
 import tileItemData from './tile-item.yml';
 
 import imageData from '../../01-atoms/images/image/image.yml';
-import factsAndFiguresIconsData from '../facts-and-figures/facts-and-figures-icons.yml';
 
-import {
-  componentThemes,
-  sectionThemes,
-} from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
-import { createIconMapping, hasIcon } from '../../_storybook/icon-utils';
-
-const iconDisplayToValueMap = createIconMapping(factsAndFiguresIconsData);
+import { sectionThemes } from '../../_storybook/theme-constants';
+import { createThemeVariations } from '../../_storybook/playground-utils';
+import { hasIcon } from '../../_storybook/icon-utils';
 
 export default {
   title: 'Molecules/Tile Item/Visreg',
-  argTypes: {
-    heading: {
-      name: 'Number',
-      type: 'string',
-    },
-    content: {
-      name: 'Content',
-      type: 'string',
-    },
-    contentLink: {
-      name: 'Content Link',
-      type: 'string',
-    },
-    presentationStyle: {
-      name: 'Presentation Style',
-      options: ['heading', 'icon', 'text-only'],
-      type: 'select',
-    },
-    alignment: {
-      name: 'Alignment',
-      options: ['left', 'center', 'right'],
-      type: 'select',
-    },
-    verticalAlignment: {
-      name: 'Vertical Alignment',
-      options: ['top', 'bottom'],
-      type: 'select',
-    },
-    themeColor: {
-      name: 'Tile Item Theme (dial)',
-      description:
-        'Color accent theme for this component (from color dial in CMS)',
-      options: componentThemes,
-      type: 'select',
-    },
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-    image: {
-      name: 'With image',
-      type: 'boolean',
-    },
-    withAnimation: {
-      name: 'With Animation',
-      type: 'boolean',
-    },
-    iconName: {
-      name: 'Icon Selection',
-      options: iconDisplayToValueMap,
-      type: 'select',
-    },
-  },
-  args: {
-    heading: tileItemData.tile__item__heading,
-    content: tileItemData.tile__item__content,
-    contentLink: 'https://www.yale.edu',
-    presentationStyle: 'heading',
-    alignment: 'left',
-    verticalAlignment: 'top',
-    themeColor: 'one',
-    sectionTheme: 'default',
-    image: true,
-    withAnimation: false,
-    iconName: 'sack-dollar-solid',
-  },
+  parameters: { controls: { disable: true } },
 };
 
-export const Visreg = ({
-  heading,
-  content,
-  contentLink,
-  presentationStyle,
-  themeColor,
-  alignment,
-  verticalAlignment,
-  image,
-  withAnimation,
-  iconName,
-  sectionTheme,
-}) => {
+export const Visreg = () => {
+  const heading = tileItemData.tile__item__heading;
+  const content = tileItemData.tile__item__content;
+  const contentLink = 'https://www.yale.edu';
+  const presentationStyle = 'heading';
+  const alignment = 'left';
+  const verticalAlignment = 'top';
+  const themeColor = 'one';
+  const image = true;
+  const withAnimation = false;
+  const iconName = 'sack-dollar-solid';
+
   const hasIconSelected = hasIcon(iconName);
 
   // Render function for tile item variations
@@ -131,14 +53,6 @@ export const Visreg = ({
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the Storybook controls to see the tile item implement the available variations.',
-    )}
-
-    ${renderTileItem(sectionTheme)}
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       renderTileItem,
       sectionThemes,

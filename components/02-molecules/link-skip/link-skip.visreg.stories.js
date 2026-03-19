@@ -3,30 +3,17 @@ import linkSkipTwig from './yds-link-skip.twig';
 import linkSkipData from './link-skip.yml';
 
 import { sectionThemes } from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-} from '../../_storybook/playground-utils';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Link skip/Visreg',
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-  },
-  args: {
-    sectionTheme: 'default',
-  },
+  parameters: { controls: { disable: true } },
 };
 
-export const Visreg = ({ sectionTheme }) => {
+export const Visreg = () => {
   // Render function for link skip variations
   const renderLinkSkip = (theme) => `
     <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
@@ -41,12 +28,6 @@ export const Visreg = ({ sectionTheme }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Skip link component for accessibility. Press Tab to see it appear.',
-    )}
-
-    ${renderLinkSkip(sectionTheme)}
-
     ${createThemeVariations(
       renderLinkSkip,
       sectionThemes,

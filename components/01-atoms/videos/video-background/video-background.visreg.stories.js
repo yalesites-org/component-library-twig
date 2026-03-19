@@ -5,28 +5,14 @@ import videoBackgroundData from './video-background.yml';
 import './yds-video-background';
 
 import { sectionThemes } from '../../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../../_storybook/playground-utils';
+import { createThemeVariations } from '../../../_storybook/playground-utils';
 
 export default {
   title: 'Atoms/Videos/Video Background/Visreg',
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-  },
-  args: {
-    sectionTheme: 'default',
-  },
+  parameters: { controls: { disable: true } },
 };
 
-export const Visreg = ({ sectionTheme }) => {
+export const Visreg = () => {
   // Render function for video background variations
   const renderVideoBackground = (theme) => `
     <div class="yds-layout" data-component-theme="${theme}" data-component-width="site">
@@ -39,14 +25,6 @@ export const Visreg = ({ sectionTheme }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test video background with different themes.',
-    )}
-
-    ${renderVideoBackground(sectionTheme)}
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       renderVideoBackground,
       sectionThemes,

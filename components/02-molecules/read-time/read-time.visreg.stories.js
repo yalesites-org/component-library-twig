@@ -3,31 +3,17 @@ import readTimeTwig from './yds-read-time.twig';
 import './yds-read-time';
 
 import { sectionThemes } from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Read Time/Visreg',
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-  },
-  args: {
-    sectionTheme: 'default',
-  },
+  parameters: { controls: { disable: true } },
 };
 
-export const Visreg = ({ sectionTheme }) => {
+export const Visreg = () => {
   const sampleContent = `
     <p>A bulldozer sees a beast as an unstripped scene. Extending this logic, a childing beat without transports is truly a couch of unmaimed lutes. A tornado is an erstwhile creditor. This is not to discredit the idea that a cowbell of the lotion is assumed to be a hoven odometer.</p>
     <p>fears show us how watches can be polishes. A pakistan is a hydrous change. A license of the minister is assumed to be a nubile edge.</p>
@@ -50,14 +36,6 @@ export const Visreg = ({ sectionTheme }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Read time component calculates reading time based on content. Sample content shown below.',
-    )}
-
-    ${renderReadTime(sectionTheme)}
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       (theme) => renderReadTime(theme, `-${theme}`),
       sectionThemes,

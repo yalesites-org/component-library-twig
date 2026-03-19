@@ -4,11 +4,7 @@ import secondaryNavData from './secondary-nav.yml';
 import './yds-secondary-nav';
 
 import { componentThemes } from '../../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../../_storybook/playground-utils';
+import { createThemeVariations } from '../../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -17,22 +13,11 @@ export default {
   title: 'Organisms/Menu/Content Collection/Visreg',
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    themeColor: {
-      name: 'Secondary Nav Theme (dial)',
-      description:
-        'Color accent theme for this component (from color dial in CMS)',
-      options: componentThemes,
-      type: 'select',
-    },
-  },
-  args: {
-    themeColor: 'one',
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({ themeColor }) => {
+export const Visreg = () => {
   // Render function for secondary nav variations
   const renderSecondaryNav = (theme) => `
     <div style="position: relative; padding-top: var(--size-spacing-site-gutter);" data-component-width="max" data-component-theme="${theme}">
@@ -41,14 +26,6 @@ export const Visreg = ({ themeColor }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different component theme variations.',
-    )}
-
-    ${renderSecondaryNav(themeColor)}
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       renderSecondaryNav,
       componentThemes,

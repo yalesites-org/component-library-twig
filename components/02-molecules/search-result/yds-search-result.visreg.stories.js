@@ -4,62 +4,23 @@ import searchResultData from './search-result.yml';
 import breadcrumbData from './breadcrumbs.yml';
 
 import { sectionThemes } from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-} from '../../_storybook/playground-utils';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Search Result/Visreg',
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    highlighted: {
-      name: 'Search Results Highlighted',
-      type: 'string',
-    },
-    teaser: {
-      name: 'Search Results Teaser',
-      type: 'string',
-    },
-    contentType: {
-      name: 'Search Results Content Type',
-      type: 'string',
-    },
-    isCas: {
-      name: 'Is CAS',
-      type: 'boolean',
-    },
-  },
-  args: {
-    sectionTheme: 'default',
-    heading: searchResultData.search_result__title,
-    highlighted: searchResultData.search_result__highlighted,
-    teaser: searchResultData.search_result__teaser,
-    contentType: searchResultData.search_result__content_type,
-    isCas: false,
-  },
+  parameters: { controls: { disable: true } },
 };
 
-export const Visreg = ({
-  sectionTheme,
-  heading,
-  highlighted,
-  teaser,
-  contentType,
-  isCas,
-}) => {
+export const Visreg = () => {
+  const heading = searchResultData.search_result__title;
+  const highlighted = searchResultData.search_result__highlighted;
+  const teaser = searchResultData.search_result__teaser;
+  const contentType = searchResultData.search_result__content_type;
+  const isCas = false;
+
   // Render function for search result variations
   const renderSearchResult = (theme) => `
     <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
@@ -81,14 +42,6 @@ export const Visreg = ({
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different search result configurations.',
-    )}
-
-    ${renderSearchResult(sectionTheme)}
-
-    <div class="vrt-divider"></div>
-
     ${createThemeVariations(
       renderSearchResult,
       sectionThemes,
@@ -97,13 +50,4 @@ export const Visreg = ({
       'Section Theme',
     )}
   `;
-};
-
-Visreg.args = {
-  sectionTheme: 'default',
-  heading: searchResultData.search_result__title,
-  highlighted: searchResultData.search_result__highlighted,
-  teaser: searchResultData.search_result__teaser,
-  contentType: searchResultData.search_result__content_type,
-  isCas: false,
 };

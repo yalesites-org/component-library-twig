@@ -1,42 +1,20 @@
 import embedTwig from './yds-embed.twig';
 
 import { sectionThemes } from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-} from '../../_storybook/playground-utils';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Embed/Visreg',
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-    width: {
-      name: 'Width',
-      type: 'select',
-      options: ['max', 'site', 'highlight', 'content'],
-    },
-    loading: {
-      name: 'Loading',
-      options: ['lazy', 'eager'],
-      type: 'select',
-    },
-  },
-  args: {
-    sectionTheme: 'default',
-    width: 'site',
-    loading: 'lazy',
-  },
+  parameters: { controls: { disable: true } },
 };
 
-export const Visreg = ({ sectionTheme, width, loading }) => {
+export const Visreg = () => {
+  const width = 'site';
+  const loading = 'lazy';
+
   // Render function for embed variations
   const renderEmbeds = (theme) => `
     <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
@@ -79,14 +57,6 @@ export const Visreg = ({ sectionTheme, width, loading }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different embed configurations. All embed types are shown below.',
-    )}
-
-    ${renderEmbeds(sectionTheme)}
-
-    <div class="vrt-divider"></div>
-
     ${createThemeVariations(
       renderEmbeds,
       sectionThemes,

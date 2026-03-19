@@ -5,41 +5,20 @@ import socialLinksData from '../social-links/social-links.yml';
 import './page-title';
 
 import { sectionThemes } from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Page Title/Visreg',
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-    prefix: {
-      name: 'Page Title Prefix',
-      type: 'string',
-    },
-    socialLinks: {
-      name: 'Social Links',
-      type: 'boolean',
-    },
-  },
-  args: {
-    sectionTheme: 'default',
-    prefix: '',
-    socialLinks: false,
-  },
+  parameters: { controls: { disable: true } },
 };
 
-export const Visreg = ({ sectionTheme, prefix, socialLinks }) => {
+export const Visreg = () => {
+  const prefix = '';
+  const socialLinks = false;
+
   const meta = `<span>By Charlyn Paradis</span>${dateTimeTwig({
     date_time__start: '2022-01-25',
     date_time__format: 'date',
@@ -63,14 +42,6 @@ export const Visreg = ({ sectionTheme, prefix, socialLinks }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different page title configurations.',
-    )}
-
-    ${renderPageTitle(sectionTheme)}
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       renderPageTitle,
       sectionThemes,

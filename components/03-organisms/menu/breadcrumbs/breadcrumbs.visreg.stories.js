@@ -4,31 +4,19 @@ import breadcrumbsData from './breadcrumbs.yml';
 import './yds-breadcrumbs';
 
 import { sectionThemes } from '../../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../../_storybook/playground-utils';
+import { createThemeVariations } from '../../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Organisms/Menu/Breadcrumbs/Visreg',
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-  },
-  args: {
-    sectionTheme: 'default',
+  parameters: {
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({ sectionTheme }) => {
+export const Visreg = () => {
   // Render function for breadcrumbs variations
   const renderBreadcrumbs = (theme) => `
     <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
@@ -41,14 +29,6 @@ export const Visreg = ({ sectionTheme }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different section theme variations.',
-    )}
-
-    ${renderBreadcrumbs(sectionTheme)}
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       renderBreadcrumbs,
       sectionThemes,

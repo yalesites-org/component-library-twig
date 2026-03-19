@@ -5,10 +5,7 @@ import quickLinksData from './quick-links.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
 import { componentThemes } from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-} from '../../_storybook/playground-utils';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -17,36 +14,15 @@ export default {
   title: 'Molecules/Quick Links/Visreg',
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: componentThemes,
-    },
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    description: {
-      name: 'Description',
-      type: 'string',
-    },
-    image: {
-      name: 'With image',
-      type: 'boolean',
-    },
-  },
-  args: {
-    sectionTheme: 'one',
-    heading: quickLinksData.quick_links__heading,
-    description: quickLinksData.quick_links__description,
-    image: true,
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({ sectionTheme, heading, description, image }) => {
+export const Visreg = () => {
+  const heading = quickLinksData.quick_links__heading;
+  const description = quickLinksData.quick_links__description;
+  const image = true;
+
   // Render function for quick links variations
   const renderQuickLinks = (theme) => `
     <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
@@ -65,10 +41,6 @@ export const Visreg = ({ sectionTheme, heading, description, image }) => {
   `;
 
   return `
-    ${createPlaygroundIntro('Use the controls to test different settings.')}
-
-    ${renderQuickLinks(sectionTheme)}
-
     ${createThemeVariations(
       renderQuickLinks,
       componentThemes,

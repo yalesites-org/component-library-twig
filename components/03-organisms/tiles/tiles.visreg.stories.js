@@ -2,11 +2,7 @@ import tilesTwig from './yds-tiles.twig';
 import tilesData from './tiles.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
-import {
-  createPlaygroundIntro,
-  createVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
+import { createVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -15,54 +11,16 @@ export default {
   title: 'Organisms/Tiles/Visreg',
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    presentationStyle: {
-      name: 'Presentation Style',
-      options: ['heading', 'icon', 'text-only'],
-      type: 'select',
-    },
-    columnCount: {
-      name: 'Column Count',
-      options: ['two', 'three', 'four'],
-      type: 'select',
-    },
-    alignment: {
-      name: 'Alignment',
-      options: ['left', 'center', 'right'],
-      type: 'select',
-    },
-  },
-  args: {
-    presentationStyle: 'heading',
-    columnCount: 'three',
-    alignment: 'left',
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({ presentationStyle, columnCount, alignment }) => {
+export const Visreg = () => {
   const styles = ['heading', 'icon', 'text-only'];
   const columnCounts = ['two', 'three', 'four'];
   const alignments = ['left', 'center', 'right'];
 
   return `
-    ${createPlaygroundIntro(
-      'Visual regression testing for tiles component showing all presentation styles, column counts, and alignment variations.',
-    )}
-
-    ${createVrtIntro()}
-
-    ${tilesTwig({
-      tiles__alignment: alignment,
-      tiles__vertical_alignment: 'top',
-      tiles__presentation_style: presentationStyle,
-      tiles__grid_count: columnCount,
-      tiles__with__image: 'false',
-      tiles__with__animation: 'false',
-      ...tilesData,
-      ...imageData.responsive_images['1x1'],
-    })}
-
     ${createVariations(
       (style) =>
         tilesTwig({

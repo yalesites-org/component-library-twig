@@ -7,83 +7,21 @@ import vrtData from '../../_storybook/vrt-combinations.yml';
 import '../../02-molecules/menu/menu-toggle/yds-menu-toggle';
 import './yds-site-header';
 
+import { exampleSiteNameImageSvg } from '../../_storybook/theme-constants';
 import {
-  borderThicknessOptions,
-  siteHeaderThemes,
-  siteHeaderAccents,
-  exampleSiteNameImageSvg,
-} from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
   createThemeAccentCombinations,
   createVariations,
-  createVrtIntro,
 } from '../../_storybook/playground-utils';
 
 export default {
   title: 'Organisms/Global Elements/Header/Visreg',
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    borderThickness: {
-      name: 'Navigation Border Thickness',
-      options: borderThicknessOptions,
-      type: 'select',
-    },
-    primaryNavPosition: {
-      name: 'Navigation Position',
-      options: ['left', 'center', 'right'],
-      type: 'select',
-    },
-    menuVariation: {
-      name: 'Menu Variation (focus required for background image)',
-      options: ['basic', 'mega', 'focus'],
-      type: 'select',
-      description: 'Background image only displays with "focus" variation',
-    },
-    siteHeaderTheme: {
-      name: 'Header Theme (dial)',
-      description: 'Color theme for the site header',
-      options: siteHeaderThemes,
-      type: 'select',
-    },
-    siteHeaderAccent: {
-      name: 'Header Accent Color (dial)',
-      description: 'Accent color for the site header',
-      options: siteHeaderAccents,
-      type: 'select',
-    },
-    siteHeaderImage: {
-      name: 'With Background Image (requires focus menu)',
-      type: 'boolean',
-      description: 'Only works when Menu Variation is set to "focus"',
-    },
-    siteHeaderSiteNameImage: {
-      name: 'Site Name is an Image',
-      type: 'boolean',
-    },
-  },
-  args: {
-    borderThickness: '8',
-    primaryNavPosition: 'left',
-    menuVariation: 'basic',
-    siteHeaderTheme: 'one',
-    siteHeaderAccent: 'one',
-    siteHeaderImage: false,
-    siteHeaderSiteNameImage: false,
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({
-  borderThickness,
-  primaryNavPosition,
-  siteHeaderTheme,
-  menuVariation,
-  siteHeaderImage,
-  siteHeaderSiteNameImage,
-  siteHeaderAccent,
-}) => {
+export const Visreg = () => {
   // Base header configuration from extracted YML
   const baseConfig = {
     ...siteHeaderConfigData.baseConfig,
@@ -102,25 +40,6 @@ export const Visreg = ({
     });
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different header configurations including theme, accent, nav position, and menu variations.',
-    )}
-
-    ${renderHeader({
-      ...(siteHeaderImage ? imageConfig : {}),
-      site_header__border_thickness: borderThickness,
-      site_header__nav_position: primaryNavPosition,
-      site_header__theme: siteHeaderTheme,
-      site_header__accent: siteHeaderAccent,
-      site_header__menu__variation: menuVariation,
-      site_header__background_image: siteHeaderImage,
-      site_header__site_name_image: siteHeaderSiteNameImage
-        ? exampleSiteNameImageSvg
-        : false,
-    })}
-
-    ${createVrtIntro()}
-
     ${createThemeAccentCombinations(
       (theme, accent) =>
         renderHeader({
@@ -171,34 +90,31 @@ export const Visreg = ({
       'Menu Variation',
     )}
 
-    <h2>Image Variations</h2>
-    <p>Header with background image and site name as image.</p>
-
-    <div>
-      <h3>With Background Image (requires focus menu variation)</h3>
-      ${renderHeader({
-        ...imageConfig,
-        site_header__border_thickness: '8',
-        site_header__nav_position: 'left',
-        site_header__theme: 'one',
-        site_header__accent: 'one',
-        site_header__menu__variation: 'focus',
-        site_header__background_image: true,
-        site_header__site_name_image: false,
-      })}
-    </div>
-
-    <div>
-      <h3>Site Name as Image (SVG Logo)</h3>
-      ${renderHeader({
-        site_header__border_thickness: '8',
-        site_header__nav_position: 'left',
-        site_header__theme: 'one',
-        site_header__accent: 'one',
-        site_header__menu__variation: 'basic',
-        site_header__background_image: false,
-        site_header__site_name_image: exampleSiteNameImageSvg,
-      })}
-    </div>
+    ${createVariations(
+      (variation) =>
+        variation === 'background-image'
+          ? renderHeader({
+              ...imageConfig,
+              site_header__border_thickness: '8',
+              site_header__nav_position: 'left',
+              site_header__theme: 'one',
+              site_header__accent: 'one',
+              site_header__menu__variation: 'focus',
+              site_header__background_image: true,
+              site_header__site_name_image: false,
+            })
+          : renderHeader({
+              site_header__border_thickness: '8',
+              site_header__nav_position: 'left',
+              site_header__theme: 'one',
+              site_header__accent: 'one',
+              site_header__menu__variation: 'basic',
+              site_header__background_image: false,
+              site_header__site_name_image: exampleSiteNameImageSvg,
+            }),
+      ['background-image', 'site-name-image'],
+      'Image Variations',
+      'Image Variation',
+    )}
   `;
 };

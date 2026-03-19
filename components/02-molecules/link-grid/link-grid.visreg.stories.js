@@ -2,49 +2,21 @@ import linkGridTwig from './yds-link-grid.twig';
 
 import linkGridData from './link-grid.yml';
 
-import {
-  componentThemes,
-  sectionThemes,
-} from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
+import { sectionThemes } from '../../_storybook/theme-constants';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Link grid/Visreg',
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-    themeColor: {
-      name: 'Link Grid Theme (dial)',
-      description:
-        'Color accent theme for this component (from color dial in CMS)',
-      type: 'select',
-      options: componentThemes,
-    },
-    lineTreatment: {
-      name: 'Line Treatment',
-      type: 'select',
-      options: ['default', 'all_strong_lines', 'all_light_lines', 'no_lines'],
-    },
-  },
-  args: {
-    sectionTheme: 'default',
-    themeColor: 'one',
-    lineTreatment: 'default',
-  },
+  parameters: { controls: { disable: true } },
 };
 
-export const Visreg = ({ sectionTheme, themeColor, lineTreatment }) => {
+export const Visreg = () => {
+  const themeColor = 'one';
+  const lineTreatment = 'default';
+
   // Render function for link grid variations
   const renderLinkGrid = (theme) => `
     <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
@@ -61,14 +33,6 @@ export const Visreg = ({ sectionTheme, themeColor, lineTreatment }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different theme combinations and line treatments.',
-    )}
-
-    ${renderLinkGrid(sectionTheme)}
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       renderLinkGrid,
       sectionThemes,

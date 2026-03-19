@@ -5,60 +5,19 @@ import siteFooterConfigData from './site-footer-config.yml';
 import vrtData from '../../_storybook/vrt-combinations.yml';
 
 import {
-  borderThicknessOptions,
-  siteFooterThemes,
-  siteFooterAccents,
-} from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
   createThemeAccentCombinations,
   createVariations,
-  createVrtIntro,
 } from '../../_storybook/playground-utils';
 
 export default {
   title: 'Organisms/Global Elements/Footer/Visreg',
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    borderThickness: {
-      name: 'Border Thickness',
-      options: borderThicknessOptions,
-      type: 'select',
-    },
-    siteFooterTheme: {
-      name: 'Footer Theme (dial)',
-      description: 'Color theme for the site footer',
-      options: siteFooterThemes,
-      type: 'select',
-    },
-    siteFooterAccent: {
-      name: 'Footer Accent Color (dial)',
-      description: 'Accent color for the site footer',
-      options: siteFooterAccents,
-      type: 'select',
-    },
-    siteFooterVariation: {
-      name: 'Footer Variation (dial)',
-      options: ['basic', 'mega'],
-      type: 'select',
-    },
-  },
-  args: {
-    borderThickness: '8',
-    siteFooterTheme: 'one',
-    siteFooterAccent: 'one',
-    siteFooterVariation: 'basic',
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({
-  borderThickness,
-  siteFooterTheme,
-  siteFooterVariation,
-  siteFooterAccent,
-}) => {
+export const Visreg = () => {
   // Base footer configuration from extracted YML and other data sources
   const baseConfig = {
     ...socialLinksData,
@@ -76,19 +35,6 @@ export const Visreg = ({
     });
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different footer configurations including theme, accent, variation, and border thickness.',
-    )}
-
-    ${renderFooter({
-      site_footer__border_thickness: borderThickness,
-      site_footer__theme: siteFooterTheme,
-      site_footer__accent: siteFooterAccent,
-      site_footer__variation: siteFooterVariation,
-    })}
-
-    ${createVrtIntro()}
-
     ${createThemeAccentCombinations(
       (theme, accent) =>
         renderFooter({

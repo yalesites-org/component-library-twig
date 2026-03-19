@@ -2,15 +2,8 @@ import wrappedCalloutTwig from './yds-wrapped-callout.twig';
 import textFieldTwig from '../text/yds-text-field.twig';
 import wrappedCalloutData from './wrapped-callout.yml';
 
-import {
-  componentThemes,
-  sectionThemes,
-} from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
+import { sectionThemes } from '../../_storybook/theme-constants';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -19,35 +12,14 @@ export default {
   title: 'Molecules/Wrapped Callout/Visreg',
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-    calloutAlignment: {
-      name: 'Callout Alignment',
-      type: 'select',
-      options: ['left', 'right'],
-    },
-    themeColor: {
-      name: 'Wrapped Callout Theme (dial)',
-      description:
-        'Color accent theme for this component (from color dial in CMS)',
-      options: componentThemes,
-      type: 'select',
-    },
-  },
-  args: {
-    sectionTheme: 'default',
-    calloutAlignment: 'left',
-    themeColor: 'one',
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({ sectionTheme, calloutAlignment, themeColor }) => {
+export const Visreg = () => {
+  const calloutAlignment = 'left';
+  const themeColor = 'one';
+
   // Render function for wrapped callout variations
   const renderWrappedCallout = (theme) => `
     <div data-component-theme="${theme}">
@@ -66,14 +38,6 @@ export const Visreg = ({ sectionTheme, calloutAlignment, themeColor }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different wrapped callout alignments and themes.',
-    )}
-
-    ${renderWrappedCallout(sectionTheme)}
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       renderWrappedCallout,
       sectionThemes,

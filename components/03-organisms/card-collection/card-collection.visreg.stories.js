@@ -6,10 +6,7 @@ import resourceCardData from '../../02-molecules/cards/reference-card/examples/r
 import directoryCardData from '../../02-molecules/cards/directory-listing-card/yds-directory-listing-card.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
-import {
-  createPlaygroundIntro,
-  createVariations,
-} from '../../_storybook/playground-utils';
+import { createVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -18,28 +15,14 @@ export default {
   title: 'Organisms/Card Collection/Visreg',
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    collectionType: {
-      name: 'Collection Type',
-      type: 'select',
-      options: ['grid', 'list', 'condensed'],
-    },
-    withImages: {
-      name: 'With Images',
-      description:
-        'Show cards with images. When off in list view, cards flush to left edge.',
-      type: 'boolean',
-    },
-  },
-  args: {
-    collectionType: 'grid',
-    withImages: true,
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({ collectionType, withImages }) => {
+export const Visreg = () => {
   const collectionTypes = ['grid', 'list', 'condensed'];
+  const collectionType = 'grid';
+  const withImages = true;
 
   // Render function for all card types
   const renderAllCardTypes = () => `
@@ -109,10 +92,6 @@ export const Visreg = ({ collectionType, withImages }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'All card collection types shown with the selected collection type.',
-    )}
-
     ${renderAllCardTypes()}
 
     ${createVariations(

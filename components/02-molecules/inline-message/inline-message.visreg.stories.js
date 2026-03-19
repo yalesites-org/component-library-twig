@@ -1,76 +1,26 @@
 import inlineMessageTwig from './yds-inline-message.twig';
 
-import {
-  componentThemes,
-  sectionThemes,
-} from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
+import { sectionThemes } from '../../_storybook/theme-constants';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Inline Message/Visreg',
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-    type: {
-      name: 'Type',
-      type: 'select',
-      options: ['general', 'alert'],
-    },
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    content: {
-      name: 'Content',
-      type: 'string',
-    },
-    themeColor: {
-      name: 'Inline Message Theme (dial)',
-      description:
-        'Color accent theme for this component (from color dial in CMS)',
-      options: componentThemes,
-      type: 'select',
-    },
-    linkContent: {
-      name: 'Link Content',
-      type: 'string',
-    },
-    linkUrl: {
-      name: 'Link URL',
-      type: 'string',
-    },
-  },
-  args: {
-    sectionTheme: 'default',
-    type: 'general',
-    heading: 'This is a general message heading',
-    content: 'This is a general message content',
-    themeColor: 'one',
-    linkContent: 'This is a link',
-    linkUrl: '#',
+  parameters: {
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({
-  sectionTheme,
-  type,
-  heading,
-  content,
-  themeColor,
-  linkContent,
-  linkUrl,
-}) => {
+export const Visreg = () => {
+  const type = 'general';
+  const heading = 'This is a general message heading';
+  const content = 'This is a general message content';
+  const themeColor = 'one';
+  const linkContent = 'This is a link';
+  const linkUrl = '#';
+
   // Render function for inline message variations
   const renderInlineMessage = (theme) => `
     <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
@@ -90,14 +40,6 @@ export const Visreg = ({
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different inline message types and themes.',
-    )}
-
-    ${renderInlineMessage(sectionTheme)}
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       renderInlineMessage,
       sectionThemes,

@@ -1,9 +1,6 @@
 import componentWrapperTwig from './yds-component-wrapper.twig';
 
-import {
-  createPlaygroundIntro,
-  createVariations,
-} from '../../_storybook/playground-utils';
+import { createVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -12,20 +9,11 @@ export default {
   title: 'Organisms/Component Wrapper/Visreg',
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    componentWidth: {
-      name: 'Component Width',
-      type: 'select',
-      options: ['content', 'highlight', 'site', 'max'],
-    },
-  },
-  args: {
-    componentWidth: 'content',
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({ componentWidth }) => {
+export const Visreg = () => {
   const widthOptions = ['content', 'highlight', 'site', 'max'];
 
   const renderComponentWrapper = (width) => `
@@ -38,12 +26,6 @@ export const Visreg = ({ componentWidth }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different component widths. The placeholder block shows the constrained width.',
-    )}
-
-    ${renderComponentWrapper(componentWidth)}
-
     ${createVariations(
       renderComponentWrapper,
       widthOptions,

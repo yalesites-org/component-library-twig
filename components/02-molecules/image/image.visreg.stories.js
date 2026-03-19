@@ -3,51 +3,20 @@ import contentImageTwig from './yds-content-image.twig';
 import imageData from '../../01-atoms/images/image/image.yml';
 
 import { sectionThemes } from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 export default {
   title: 'Molecules/Image/Visreg',
-  argTypes: {
-    caption: {
-      name: 'Caption',
-      type: 'string',
-    },
-    width: {
-      name: 'Component Width',
-      type: 'select',
-      options: ['content', 'highlight', 'site', 'max'],
-    },
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-      if: { arg: 'layoutOption', neq: 'single' },
-    },
-    layoutOption: {
-      name: 'Layout',
-      type: 'select',
-      options: [
-        'single',
-        'fifty-fifty',
-        'thirty-thirty-thirty',
-        'seventy-thirty',
-      ],
-    },
-  },
-  args: {
-    caption: 'This is the <a href="#">caption</a> for the 16:9 image above.',
-    width: 'content',
-    sectionTheme: 'default',
-    layoutOption: 'fifty-fifty',
-  },
+  parameters: { controls: { disable: true } },
 };
 
-export const Visreg = ({ caption, width, sectionTheme, layoutOption }) => {
+export const Visreg = () => {
+  const caption =
+    'This is the <a href="#">caption</a> for the 16:9 image above.';
+  const width = 'content';
+  const sectionTheme = 'default';
+  const layoutOption = 'fifty-fifty';
+
   const permutationLayout =
     layoutOption === 'single' ? 'fifty-fifty' : layoutOption;
 
@@ -103,39 +72,11 @@ export const Visreg = ({ caption, width, sectionTheme, layoutOption }) => {
     `;
   };
 
-  if (layoutOption === 'single') {
-    return `
-      ${createPlaygroundIntro(
-        'Single column layout (no component theme support)',
-      )}
-
-      ${createLayoutContent('single')}
-
-      ${createVrtIntro()}
-
-      ${createThemeVariations(
-        (theme) => createLayoutContent(permutationLayout, theme),
-        sectionThemes,
-        'All Section Theme Variations',
-        "Below are all section theme variations using fifty-fifty layout (since single layout doesn't support themes).",
-        'Section Theme',
-      )}
-    `;
-  }
-
   return `
-    ${createPlaygroundIntro(
-      'Use the Storybook controls to test different settings and see the results below.',
-    )}
-
-    ${createLayoutContent(layoutOption)}
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       (theme) => createLayoutContent(permutationLayout, theme),
       sectionThemes,
-      `All Section Theme Variations`,
+      'All Section Theme Variations',
       `Below are all section theme variations using your current caption and width settings with ${layoutOption} layout.`,
       'Section Theme',
     )}

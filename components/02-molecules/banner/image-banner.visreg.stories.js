@@ -1,15 +1,10 @@
 import imageBannerTwig from './image/yds-image-banner.twig';
 import imageData from '../../01-atoms/images/image/image.yml';
 
+import { sectionThemes } from '../../_storybook/theme-constants';
 import {
-  componentThemes,
-  sectionThemes,
-} from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
   createThemeVariations,
   createVariations,
-  createVrtIntro,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -19,33 +14,15 @@ export default {
   title: 'Molecules/Banners/Image Banner/Visreg',
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    bgColor: {
-      name: 'Banner Theme (dial)',
-      description:
-        'Color accent theme for this component (from color dial in CMS)',
-      type: 'select',
-      options: componentThemes,
-    },
-    size: {
-      name: 'Image Size',
-      type: 'select',
-      options: ['tall', 'short'],
-    },
-    imageCaption: {
-      name: 'Image Caption',
-      type: 'string',
-    },
-  },
-  args: {
-    bgColor: 'one',
-    size: 'tall',
-    imageCaption: 'Image Banner Caption',
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({ bgColor, size, imageCaption }) => {
+export const Visreg = () => {
+  const bgColor = 'one';
+  const size = 'tall';
+  const imageCaption = 'Image Banner Caption';
+
   const renderTheme = (theme) => `
     <div data-component-theme="${theme}">
       ${imageBannerTwig({
@@ -60,10 +37,6 @@ export const Visreg = ({ bgColor, size, imageCaption }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different Image Banner configurations.',
-    )}
-
     ${createVariations(
       (imgSize) =>
         imageBannerTwig({
@@ -78,8 +51,6 @@ export const Visreg = ({ bgColor, size, imageCaption }) => {
       'Size Variations',
       'Size',
     )}
-
-    ${createVrtIntro()}
 
     ${createThemeVariations(
       renderTheme,

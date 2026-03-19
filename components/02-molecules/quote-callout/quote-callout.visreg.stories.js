@@ -2,76 +2,22 @@ import quoteCalloutTwig from './yds-quote-callout.twig';
 import quoteCalloutData from './quote-callout.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
-import {
-  componentThemes,
-  sectionThemes,
-} from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
+import { sectionThemes } from '../../_storybook/theme-constants';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 export default {
   title: 'Molecules/Quotes/Quote Callout/Visreg',
-  argTypes: {
-    quote: {
-      name: 'Quote',
-      type: 'string',
-    },
-    attribution: {
-      name: 'Attribution',
-      type: 'string',
-    },
-    style: {
-      name: 'Style',
-      options: ['bar', 'quote'],
-      type: 'select',
-    },
-    quoteAlignment: {
-      name: 'Quote Alignment',
-      options: ['left', 'right'],
-      type: 'select',
-    },
-    accentColor: {
-      name: 'Quote Callout Theme (dial)',
-      description:
-        'Color accent theme for this component (from color dial in CMS)',
-      options: componentThemes,
-      type: 'select',
-    },
-    quoteImage: {
-      name: 'Quote Image',
-      options: ['with-image', 'no-image'],
-      type: 'select',
-    },
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-  },
-  args: {
-    quote: quoteCalloutData.quote_callout__quote,
-    attribution: quoteCalloutData.quote_callout__attribution,
-    style: 'bar',
-    quoteAlignment: 'left',
-    accentColor: 'one',
-    quoteImage: 'no-image',
-    sectionTheme: 'default',
-  },
+  parameters: { controls: { disable: true } },
 };
 
-export const Visreg = ({
-  style,
-  accentColor,
-  quote,
-  attribution,
-  quoteAlignment,
-  quoteImage,
-  sectionTheme,
-}) => {
+export const Visreg = () => {
+  const quote = quoteCalloutData.quote_callout__quote;
+  const attribution = quoteCalloutData.quote_callout__attribution;
+  const style = 'bar';
+  const quoteAlignment = 'left';
+  const accentColor = 'one';
+  const quoteImage = 'no-image';
+
   // Render function for quote callout variations
   const renderQuoteCallout = (theme) => `
     <div data-component-has-divider="false" data-component-theme="${theme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
@@ -92,14 +38,6 @@ export const Visreg = ({
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the Storybook controls to see the quote callout implement the available variations and colors.',
-    )}
-
-    ${renderQuoteCallout(sectionTheme)}
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       renderQuoteCallout,
       sectionThemes,

@@ -7,34 +7,14 @@ import listTagsData from './taxonomy/tags-list.yml';
 import listCategoriesData from './taxonomy/categories-list.yml';
 
 import { sectionThemes } from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 export default {
   title: 'Atoms/Lists/Visreg',
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-    listType: {
-      name: 'List Type',
-      type: 'select',
-      options: ['ul', 'ol'],
-    },
-  },
-  args: {
-    sectionTheme: 'default',
-    listType: 'ul',
-  },
+  parameters: { controls: { disable: true } },
 };
 
-export const Visreg = ({ sectionTheme, listType }) => {
+export const Visreg = () => {
   // Render function for all list variations
   const renderLists = (theme) => `
     <div class="yds-layout" data-component-theme="${theme}" data-component-width="site">
@@ -64,35 +44,6 @@ export const Visreg = ({ sectionTheme, listType }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different list types with various themes.',
-    )}
-
-    <div class="yds-layout" data-component-theme="${sectionTheme}" data-component-width="site">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
-          <h3>${listType === 'ul' ? 'Unordered' : 'Ordered'} List</h3>
-          <div class="text-field">
-            ${listTwig({
-              list__items:
-                listType === 'ul'
-                  ? listData.unordered__list__items
-                  : listData.ordered__list__items,
-              list__type: listType,
-            })}
-          </div>
-
-          <h3>Tags List</h3>
-          ${listTagsTwig(listTagsData)}
-
-          <h3>Categories List</h3>
-          ${listCategoriesTwig(listCategoriesData)}
-        </div>
-      </div>
-    </div>
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       renderLists,
       sectionThemes,

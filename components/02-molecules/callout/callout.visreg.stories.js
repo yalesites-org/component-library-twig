@@ -5,79 +5,27 @@ import calloutData from './callout.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
 import { componentThemes } from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Callout/Visreg',
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: componentThemes,
-    },
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    text: {
-      name: 'Text',
-      type: 'string',
-    },
-    linkText: {
-      name: 'Link Text',
-      type: 'string',
-    },
-    linkType: {
-      name: 'Link Type',
-      type: 'select',
-      options: ['button', 'link'],
-    },
-    backgroundColor: {
-      name: 'Callout Theme (dial)',
-      description: 'Background color theme for the callout component',
-      type: 'select',
-      options: componentThemes,
-    },
-    calloutAlignment: {
-      name: 'Callout Alignment',
-      type: 'select',
-      options: ['left', 'center'],
-    },
-    overlayBackgroundImage: {
-      name: 'Overlay Background Image',
-      type: 'boolean',
-    },
-  },
-  args: {
-    sectionTheme: 'one',
-    heading: calloutData.callout__heading,
-    text: calloutData.callout__text,
-    linkText: calloutData.callout__link__content,
-    linkType: calloutData.callout__link__type,
-    backgroundColor: 'one',
-    calloutAlignment: 'center',
-    overlayBackgroundImage: false,
+  parameters: {
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({
-  sectionTheme,
-  heading,
-  text,
-  linkText,
-  linkType,
-  backgroundColor,
-  calloutAlignment,
-  overlayBackgroundImage,
-}) => {
+export const Visreg = () => {
+  const heading = calloutData.callout__heading;
+  const text = calloutData.callout__text;
+  const linkText = calloutData.callout__link__content;
+  const linkType = calloutData.callout__link__type;
+  const backgroundColor = 'one';
+  const calloutAlignment = 'center';
+  const overlayBackgroundImage = false;
+
   // Render function for callout variations
   const renderCallout = (theme) => `
     <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
@@ -105,14 +53,6 @@ export const Visreg = ({
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different callout configurations and themes.',
-    )}
-
-    ${renderCallout(sectionTheme)}
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       renderCallout,
       componentThemes,

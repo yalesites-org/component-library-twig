@@ -11,45 +11,8 @@
  * - Not overly abstract - component-specific logic stays in stories
  *
  * Usage:
- * import { createPlaygroundIntro, createThemeVariations } from '../_storybook/playground-utils.js';
+ * import { createThemeVariations } from '../_storybook/playground-utils.js';
  */
-
-/**
- * Creates a standard intro section for playground stories
- *
- * Provides consistent formatting with a "Playground" heading and description text
- * at the top of playground stories.
- *
- * @param {string} description - Description text explaining the playground story purpose
- * @returns {string} HTML string for intro section
- *
- * @example
- * const intro = createPlaygroundIntro(
- *   'This playground allows you to explore all variations of the accordion component.'
- * );
- */
-export const createPlaygroundIntro = (description) => `
-  <div class="sb-section__container">
-    <h2 class="sb-section__heading">Playground</h2>
-    <p class="sb-section__description">${description}</p>
-  </div>
-`;
-
-/**
- * Creates a labeled transition to the VRT section
- *
- * Provides a visual divider and heading to separate the playground section
- * from visual regression testing variations.
- *
- * @returns {string} HTML string for VRT section intro
- *
- * @example
- * const vrtIntro = createVrtIntro();
- */
-export const createVrtIntro = () => `
-  <hr class="sb-section__divider">
-  <h2 class="sb-section__heading">Visual Regression Testing</h2>
-`;
 
 /**
  * Creates theme variation sections for visual regression testing

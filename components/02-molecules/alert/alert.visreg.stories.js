@@ -8,10 +8,8 @@ import './yds-alert';
 
 import { sectionThemes } from '../../_storybook/theme-constants';
 import {
-  createPlaygroundIntro,
   createThemeVariations,
   createVariations,
-  createVrtIntro,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -21,38 +19,7 @@ export default {
   title: 'Molecules/Site Alert/Visreg',
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-    type: {
-      name: 'Alert Type',
-      type: 'select',
-      options: ['emergency', 'announcement', 'marketing'],
-    },
-    heading: {
-      name: 'Alert Heading',
-      type: 'string',
-    },
-    content: {
-      name: 'Alert Content',
-      type: 'string',
-    },
-    linkContent: {
-      name: 'Alert Link Text',
-      type: 'string',
-    },
-  },
-  args: {
-    sectionTheme: 'default',
-    type: 'announcement',
-    heading: alertData.alert__heading,
-    content: alertData.alert__content,
-    linkContent: alertData.alert__link__content,
+    controls: { disable: true },
   },
 };
 
@@ -65,13 +32,12 @@ ${ctaTwig({
 })}
 `;
 
-export const Visreg = ({
-  sectionTheme,
-  type,
-  heading,
-  content,
-  linkContent,
-}) => {
+export const Visreg = () => {
+  const type = 'announcement';
+  const heading = alertData.alert__heading;
+  const content = alertData.alert__content;
+  const linkContent = alertData.alert__link__content;
+
   // Render function for alert variations
   const renderAlert = (theme, idSuffix = 'default') => `
     <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
@@ -103,18 +69,10 @@ export const Visreg = ({
       };
     </script>
 
-    ${createPlaygroundIntro(
-      'Use the controls to test different alert types and content. Click the reset button below to show dismissed alerts.',
-    )}
-
-    ${renderAlert(sectionTheme, 'playground')}
-
     ${textFieldTwig({
       text_field__content: alertResetInstructions,
       text_field__width: 'site',
     })}
-
-    ${createVrtIntro()}
 
     ${createThemeVariations(
       (theme) => renderAlert(theme, `theme-${theme}`),

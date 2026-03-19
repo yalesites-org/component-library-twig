@@ -6,10 +6,7 @@ import imageData from '../../01-atoms/images/image/image.yml';
 import '../../02-molecules/accordion/yds-accordion';
 
 import { componentThemes } from '../../_storybook/theme-constants';
-import {
-  createVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
+import { createVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -18,49 +15,16 @@ export default {
   title: 'Organisms/Layout/Visreg',
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    componentTheme: {
-      name: 'Layout Theme (dial)',
-      description:
-        'Color accent theme for this component (from color dial in CMS)',
-      type: 'select',
-      options: componentThemes,
-    },
-    layoutOption: {
-      name: 'Layout',
-      type: 'select',
-      options: ['fifty-fifty', 'thirty-thirty-thirty', 'seventy-thirty'],
-    },
-    layoutPadding: {
-      name: 'Padding',
-      type: 'select',
-      options: {
-        'Default (current padding)': 'default',
-        'No top padding': 'no-top',
-        'No bottom padding': 'no-bottom',
-        'No padding (top and bottom)': 'no-padding',
-      },
-    },
-    divider: {
-      name: 'Divider',
-      type: 'boolean',
-    },
-  },
-  args: {
-    componentTheme: 'one',
-    layoutOption: 'fifty-fifty',
-    layoutPadding: 'default',
-    divider: false,
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({
-  componentTheme,
-  layoutOption,
-  layoutPadding,
-  divider,
-}) => {
+export const Visreg = () => {
+  const componentTheme = 'one';
+  const layoutOption = 'fifty-fifty';
+  const layoutPadding = 'default';
+  const divider = false;
+
   const layoutOptions = [
     'fifty-fifty',
     'thirty-thirty-thirty',
@@ -106,18 +70,6 @@ export const Visreg = ({
     });
 
   return `
-    ${layoutTwig({
-      ...textData,
-      ...accordionData,
-      ...imageData.responsive_images['4x3'],
-      layout__divider: divider ? 'true' : 'false',
-      layout__padding: layoutPadding,
-      component__theme: componentTheme,
-      component__layout: layoutOption,
-    })}
-
-    ${createVrtIntro()}
-
     ${createVariations(
       renderLayouts,
       layoutOptions,
@@ -139,17 +91,20 @@ export const Visreg = ({
       'Padding Option',
     )}
 
-    <div class="wrap-for-screenshot">
-      <h3>With Divider Enabled</h3>
-      ${layoutTwig({
-        ...textData,
-        ...accordionData,
-        ...imageData.responsive_images['4x3'],
-        layout__divider: 'true',
-        layout__padding: 'default',
-        component__theme: componentTheme,
-        component__layout: layoutOption,
-      })}
-    </div>
+    ${createVariations(
+      () =>
+        layoutTwig({
+          ...textData,
+          ...accordionData,
+          ...imageData.responsive_images['4x3'],
+          layout__divider: 'true',
+          layout__padding: 'default',
+          component__theme: componentTheme,
+          component__layout: layoutOption,
+        }),
+      ['enabled'],
+      'With Divider Enabled',
+      'Divider',
+    )}
   `;
 };

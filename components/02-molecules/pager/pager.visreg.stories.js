@@ -1,11 +1,7 @@
 import pager from './yds-pager.twig';
 
 import { sectionThemes } from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Generate pagination data - keep it simple
@@ -47,34 +43,13 @@ function generatePagerData(currentPage, totalPages) {
  */
 export default {
   title: 'Molecules/Pager/Visreg',
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-    currentPage: {
-      name: 'Current page',
-      control: { type: 'number', min: 1, max: 10, step: 1 },
-      description: 'Current active page',
-      type: 'number',
-    },
-    totalPages: {
-      name: 'Total pages',
-      control: { type: 'number', min: 1, max: 10, step: 1 },
-      description: 'Total number of pages',
-      type: 'number',
-    },
-  },
-  args: {
-    sectionTheme: 'default',
-    currentPage: 3,
-    totalPages: 10,
-  },
+  parameters: { controls: { disable: true } },
 };
 
-export const Visreg = ({ sectionTheme, currentPage, totalPages }) => {
+export const Visreg = () => {
+  const currentPage = 3;
+  const totalPages = 10;
+
   // Validate and normalize args
   const safeTotalPages = Math.max(
     1,
@@ -99,14 +74,6 @@ export const Visreg = ({ sectionTheme, currentPage, totalPages }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different pagination states. Note: Click functionality is limited in this view.',
-    )}
-
-    ${renderPager(sectionTheme)}
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       renderPager,
       sectionThemes,

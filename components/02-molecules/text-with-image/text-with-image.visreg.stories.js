@@ -6,11 +6,7 @@ import textWithImageData from './text-with-image.yml';
 import contentSpotlightPortraitData from '../content-spotlight-portrait/content-spotlight-portrait.yml';
 
 import { componentThemes } from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -19,67 +15,18 @@ export default {
   title: 'Molecules/Content Spotlight/Content Spotlight Landscape/Visreg',
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: componentThemes,
-    },
-    componentTheme: {
-      name: 'Content Spotlight Theme (dial)',
-      description:
-        'Color accent theme for this component (from color dial in CMS)',
-      type: 'select',
-      options: componentThemes,
-    },
-    width: {
-      name: 'Width',
-      type: 'select',
-      options: ['highlight', 'site'],
-    },
-    position: {
-      name: 'Image Position',
-      type: 'select',
-      options: ['image-left', 'image-right'],
-    },
-    contentVerticalAlignment: {
-      name: 'Content Vertical Alignment',
-      type: 'select',
-      options: ['top', 'middle', 'bottom'],
-    },
-    imageStyle: {
-      name: 'Image Style',
-      type: 'select',
-      options: ['inline', 'offset'],
-    },
-    focus: {
-      name: 'Focus',
-      type: 'select',
-      options: ['image', 'equal'],
-    },
-  },
-  args: {
-    sectionTheme: 'one',
-    componentTheme: 'one',
-    width: 'site',
-    position: 'image-left',
-    contentVerticalAlignment: 'top',
-    imageStyle: 'inline',
-    focus: 'equal',
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({
-  sectionTheme,
-  componentTheme,
-  width,
-  position,
-  contentVerticalAlignment,
-  imageStyle,
-  focus,
-}) => {
+export const Visreg = () => {
+  const componentTheme = 'one';
+  const width = 'site';
+  const position = 'image-left';
+  const contentVerticalAlignment = 'top';
+  const imageStyle = 'inline';
+  const focus = 'equal';
+
   // Render function for content spotlight variations (both landscape and portrait)
   const renderContentSpotlights = (theme) => `
     <div data-component-theme="${theme}">
@@ -135,14 +82,6 @@ export const Visreg = ({
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Use the controls to test different content spotlight configurations. Both landscape and portrait variants are shown below.',
-    )}
-
-    ${renderContentSpotlights(sectionTheme)}
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       renderContentSpotlights,
       componentThemes,

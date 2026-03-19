@@ -1,11 +1,7 @@
 import videoBannerTwig from './video/yds-video-banner.twig';
 import videoBannerData from '../../01-atoms/videos/video-embed/video-embed.yml';
 
-import {
-  createPlaygroundIntro,
-  createVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
+import { createVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -14,14 +10,11 @@ export default {
   title: 'Molecules/Banners/Video Banner/Visreg',
   parameters: {
     layout: 'fullscreen',
+    controls: { disable: true },
   },
 };
 
 export const Visreg = () => `
-  ${createPlaygroundIntro(
-    'Use the controls to test different Video Banner configurations.',
-  )}
-
   ${createVariations(
     (w) =>
       videoBannerTwig({
@@ -32,6 +25,4 @@ export const Visreg = () => `
     'Width Variations',
     'Width',
   )}
-
-  ${createVrtIntro()}
 `;

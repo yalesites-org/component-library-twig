@@ -1,68 +1,20 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 import dividerTwig from './yds-divider.twig';
 
 import './cl-dividers.scss';
 import '../../00-tokens/effects/yds-animate';
 
-import {
-  borderThicknessOptions,
-  sectionThemes,
-} from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
-
-const layoutOptions = ['left', 'center'];
-const widths = Object.keys(tokens.layout.width);
+import { sectionThemes } from '../../_storybook/theme-constants';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 export default {
   title: 'Atoms/Divider/Visreg',
-  argTypes: {
-    thickness: {
-      name: 'Line thickness',
-      options: borderThicknessOptions,
-      type: 'select',
-    },
-    dividerColor: {
-      name: 'Line Color',
-      options: ['gray-500', 'blue-yale', 'basic-brown-gray'],
-      type: 'select',
-    },
-    width: {
-      name: 'Divider width',
-      options: widths,
-      type: 'select',
-    },
-    position: {
-      name: 'Divider position',
-      options: layoutOptions,
-      type: 'select',
-    },
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-  },
-  args: {
-    thickness: 'hairline',
-    dividerColor: 'gray-500',
-    width: '50',
-    position: 'center',
-    sectionTheme: 'default',
-  },
+  parameters: { controls: { disable: true } },
 };
 
-export const Visreg = ({
-  position,
-  thickness,
-  dividerColor,
-  width,
-  sectionTheme,
-}) => {
+export const Visreg = () => {
+  const thickness = 'hairline';
+  const dividerColor = 'gray-500';
+
   const customProperties = {
     '--thickness-theme-divider': `var(--size-thickness-${thickness})`,
   };
@@ -73,26 +25,6 @@ export const Visreg = ({
     root.style.setProperty(key, value);
   });
 
-  // Render function for single divider instance
-  const renderDivider = (theme, dividerWidth = width) => `
-    <div class="yds-layout cl-divider-playground" data-component-theme="${theme}">
-      <div class="yds-layout__inner" data-component-width="site" style="
-        --color-divider: var(--color-${dividerColor});
-        --width-theme-divider: var(--layout-width-${dividerWidth});
-      ">
-        <div class="yds-layout__primary" style="width: 100%">
-          <div style="--thickness-divider: var(--size-thickness-${thickness})">
-            ${dividerTwig({
-              divider__width: dividerWidth,
-              divider__position: position,
-            })}
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="padding-to-see-dividers-above">&nbsp;</div>
-  `;
-
   // Render function for all width variations within a theme
   const renderThemeWidthVariations = (theme) => {
     const dividerWidths = ['25', '50', '75', '100'];
@@ -102,8 +34,6 @@ export const Visreg = ({
           --color-divider: var(--color-${dividerColor});
         ">
           <div class="yds-layout__primary" style="width: 100%">
-            <h3 class="sb-section__subheading">Section Theme: ${theme}</h3>
-
             ${dividerWidths
               .map(
                 (w) => `
@@ -125,17 +55,12 @@ export const Visreg = ({
   };
 
   return `
-    ${createPlaygroundIntro(
-      'Use the Storybook controls to see the divider implement the available positions, thicknesses, and colors.',
+    ${createThemeVariations(
+      renderThemeWidthVariations,
+      sectionThemes,
+      'All Section Theme Variations',
+      'Below are all theme variations with width samples for visual regression testing.',
+      'Section Theme',
     )}
-
-    ${renderDivider(sectionTheme)}
-
-    ${createVrtIntro()}
-
-    <h2>All Section Theme Variations</h2>
-    <p>Below are all theme variations with width samples for visual regression testing.</p>
-
-    ${sectionThemes.map((theme) => renderThemeWidthVariations(theme)).join('')}
   `;
 };

@@ -4,10 +4,7 @@ import imageData from '../../01-atoms/images/image/image.yml';
 import contentSpotlightPortraitData from './content-spotlight-portrait.yml';
 
 import { componentThemes } from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-} from '../../_storybook/playground-utils';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -16,52 +13,16 @@ export default {
   title: 'Molecules/Content Spotlight/Content Spotlight Portrait/Visreg',
   parameters: {
     layout: 'fullscreen',
-  },
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: componentThemes,
-    },
-    componentTheme: {
-      name: 'Content Spotlight Theme (dial)',
-      description:
-        'Color accent theme for this component (from color dial in CMS)',
-      type: 'select',
-      options: componentThemes,
-    },
-    position: {
-      name: 'Image Position',
-      type: 'select',
-      options: ['image-left', 'image-right'],
-    },
-    contentVerticalAlignment: {
-      name: 'Content Vertical Alignment',
-      type: 'select',
-      options: ['top', 'middle', 'bottom'],
-    },
-    imageStyle: {
-      name: 'Image Style',
-      type: 'select',
-      options: ['inline', 'offset'],
-    },
-  },
-  args: {
-    sectionTheme: 'one',
-    componentTheme: 'one',
-    position: 'image-left',
-    contentVerticalAlignment: 'middle',
-    imageStyle: 'inline',
+    controls: { disable: true },
   },
 };
 
-export const Visreg = ({
-  componentTheme,
-  position,
-  contentVerticalAlignment,
-  imageStyle,
-}) => {
+export const Visreg = () => {
+  const componentTheme = 'one';
+  const position = 'image-left';
+  const contentVerticalAlignment = 'middle';
+  const imageStyle = 'inline';
+
   // Render function for content spotlight portrait
   const renderContentSpotlightPortrait = (theme) => `
     <div data-component-theme="${theme}">
@@ -93,9 +54,6 @@ export const Visreg = ({
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'Content Spotlight Portrait variations for visual regression testing',
-    )}
     ${createThemeVariations(
       renderContentSpotlightPortrait,
       componentThemes,

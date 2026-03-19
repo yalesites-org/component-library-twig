@@ -11,38 +11,19 @@ import resourceMetaData from './resource-meta/resource-meta.yml';
 import './event-meta/event-meta-localist';
 
 import { sectionThemes } from '../../_storybook/theme-constants';
-import {
-  createPlaygroundIntro,
-  createThemeVariations,
-  createVrtIntro,
-} from '../../_storybook/playground-utils';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Meta/Visreg',
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      description: 'Background color theme for the layout section',
-      type: 'select',
-      options: sectionThemes,
-    },
-    allDayEvent: {
-      name: 'All-Day Event',
-      description:
-        'Show all-day event formatting (removes small-caps, shows "All day" text)',
-      type: 'boolean',
-    },
-  },
-  args: {
-    sectionTheme: 'default',
-    allDayEvent: false,
-  },
+  parameters: { controls: { disable: true } },
 };
 
-export const Visreg = ({ sectionTheme, allDayEvent }) => {
+export const Visreg = () => {
+  const allDayEvent = false;
+
   // Modify event dates to add is_all_day property and adjust timestamps
   // For all-day events, Drupal sets start to 00:00 and end to 23:59
   const eventDatesWithAllDay = eventLocalistData.event_dates.map((date) => {
@@ -162,82 +143,6 @@ export const Visreg = ({ sectionTheme, allDayEvent }) => {
   `;
 
   return `
-    ${createPlaygroundIntro(
-      'All 4 meta component types are shown below: Basic, Event, Profile, and Resource.',
-    )}
-
-    <div data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
-          <h3>Basic Meta</h3>
-          ${basicMetaTwig({
-            basic_meta: `<span>By Charlyn Paradis</span>${dateTimeTwig({
-              date_time__start: '2022-01-25',
-              date_time__format: 'day__full',
-            })}`,
-          })}
-
-          <h3 style="margin-top: 2rem;">Event Meta</h3>
-          ${eventLocalistMetaTwig({
-            ...imageData.responsive_images['3x2'],
-            ...eventLocalistData,
-            event_title__heading: 'Sample Event Title',
-            event_dates: eventDatesWithAllDay,
-            event_featured_date: eventFeaturedDateWithAllDay,
-            event_meta__format: 'Virtual Event',
-            event_meta__address: '123 Main St, New Haven, CT',
-            event_meta__cta_primary__content: 'Register',
-            event_meta__cta_primary__href: '#',
-            cost_button_text: 'Register',
-            event_meta__cta_secondary__content: 'Add to calendar',
-            event_meta__cta_secondary__href: '#',
-            event_meta__with_calendar: true,
-            event_meta__image: 'true',
-          })}
-
-          <h3 style="margin-top: 2rem;">Profile Meta</h3>
-          ${profileMetaTwig({
-            ...imageData.responsive_images['3x2'],
-            profile_meta__heading: 'Person Namerton',
-            profile_meta__title_line: 'Professional Title',
-            profile_meta__subtitle_line: 'Subtitle',
-            profile_meta__department: 'Department name',
-            profile_meta__pronouns: 'They/They/Them',
-            profile_meta__background: 'one',
-            profile_meta__image_orientation: 'landscape',
-            image__srcset__1: imageData.responsive_images['2x3'].image__srcset,
-            image__sizes__1: imageData.responsive_images['2x3'].image__sizes,
-            image__alt__1: imageData.responsive_images['2x3'].image__alt,
-            image__src__1: imageData.responsive_images['2x3'].image__src,
-            profile_meta__image_style: 'inline',
-            profile_meta__image_alignment: 'right',
-          })}
-
-          <h3 style="margin-top: 2rem;">Resource Meta</h3>
-          ${resourceMetaTwig({
-            resource_meta__heading: 'Resource Title',
-            resource_meta__category: 'Video',
-            resource_meta__publish_date_label: 'Published On',
-            resource_meta__publish_date: 'July 1, 2025',
-            resource_meta__metadata: resourceMetaData.resource_meta__metadata,
-            resource_meta__resource_type: 'video',
-            resource_meta__download_label: 'Download',
-            resource_meta__download_aria_label: 'Download file',
-            resource_meta__download_url: '#.pdf',
-            resource_meta__description:
-              'This is a sample resource description that will appear below the media content.',
-            image__srcset__1: imageData.responsive_images['2x3'].image__srcset,
-            image__sizes__1: imageData.responsive_images['2x3'].image__sizes,
-            image__alt__1: imageData.responsive_images['2x3'].image__alt,
-            image__src__1: imageData.responsive_images['2x3'].image__src,
-            video_embed__content__1: videoEmbedData.video_embed__content,
-          })}
-        </div>
-      </div>
-    </div>
-
-    ${createVrtIntro()}
-
     ${createThemeVariations(
       renderAllMetaTypes,
       sectionThemes,
