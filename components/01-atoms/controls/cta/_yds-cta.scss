@@ -373,4 +373,16 @@ $cta-outline-weights: (
   .component-wrapper--no-bottom-margin & {
     margin-bottom: 0;
   }
+
+  &--align-left {
+    justify-content: flex-start;
+  }
+
+  &--align-center {
+    justify-content: center;
+  }
+
+  &--align-right {
+    justify-content: flex-end;
+  }
 }

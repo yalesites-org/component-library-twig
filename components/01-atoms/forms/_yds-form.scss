@@ -83,6 +83,67 @@
 
     min-height: var(--size-spacing-9);
   }
+
+  // Stack calendar filter form items vertically on mobile
+  @media (max-width: tokens.$break-mobile) {
+    form#event-calendar-filter-form & {
+      display: block;
+      flex-flow: column nowrap;
+
+      .form-item,
+      .js-form-item {
+        display: block;
+        width: 100%;
+        margin-bottom: 1rem;
+        float: none;
+        clear: both;
+        max-width: 100%;
+        flex: none;
+        flex-basis: 100%;
+        min-width: 100%;
+      }
+
+      .form-item:last-of-type,
+      .js-form-item:last-of-type {
+        margin-bottom: 0;
+      }
+
+      .form-item label,
+      .js-form-item label,
+      .form-item .form-item__label,
+      .js-form-item .form-item__label {
+        display: block;
+        margin-bottom: 0.5rem;
+        float: none;
+        width: 100%;
+      }
+
+      .form-actions,
+      .form-actions-wrapper {
+        display: block;
+        margin-top: 1rem;
+        clear: both;
+        width: 100%;
+      }
+
+      > * {
+        display: block;
+        width: 100%;
+        float: none;
+        clear: both;
+        flex: none;
+      }
+
+      .form-item select,
+      .form-item input[type='text'],
+      .js-form-item select,
+      .js-form-item input[type='text'] {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+    }
+  }
 }
 
 .form-item-search {
@@ -98,6 +159,31 @@
 }
 
 .ys-filter-form--scaffold {
+  // Default to nowrap, only wrap when there are 5+ visible form items
+  flex-wrap: nowrap;
+
+  // If there are more than 4 visible form items it should wrap.
+  &:has(> .form-item:nth-child(5)) {
+    flex-wrap: wrap;
+
+    .form-item {
+      flex-basis: fit-content;
+      min-width: 29.5%;
+    }
+
+    // Search field should take the full width.
+    .form-item.form-item-search {
+      min-width: 100%;
+    }
+  }
+
+  &:has(> .form-item:nth-child(6)) {
+    .form-item {
+      flex-basis: fit-content;
+      min-width: 21.8%;
+    }
+  }
+
   .form-item__dropdown {
     height: 3.125rem;
     border: var(--border-thickness-1) solid var(--color-gray-400);
@@ -197,7 +283,8 @@
       }
 
       .result-selected {
-        color: var(--color-gray-500);
+        background-color: var(--color-gray-700);
+        color: var(--color-basic-white);
       }
     }
   }
@@ -205,6 +292,31 @@
   @media (max-width: tokens.$break-mobile) {
     .chosen-container {
       border: 1px solid var(--color-basic-black);
+    }
+
+    // Override scaffold styles for calendar filter form on mobile
+    form#event-calendar-filter-form & {
+      flex-wrap: nowrap;
+
+      .form-item {
+        flex-basis: 100%;
+        min-width: 100%;
+        width: 100%;
+      }
+
+      // Override the :has() selectors that set min-width
+      &:has(> .form-item:nth-child(5)),
+      &:has(> .form-item:nth-child(6)) {
+        .form-item {
+          flex-basis: 100%;
+          min-width: 100%;
+          width: 100%;
+        }
+
+        .form-item.form-item-search {
+          min-width: 100%;
+        }
+      }
     }
   }
 
@@ -219,8 +331,8 @@
       max-width: 50%;
     }
 
-    // If there are more than 4 children it should wrap.
-    &:has(> :nth-child(5)) {
+    // If there are more than 4 visible form items it should wrap.
+    &:has(> .form-item:nth-child(5)) {
       flex-wrap: wrap;
 
       .form-item {
@@ -234,7 +346,7 @@
       }
     }
 
-    &:has(> :nth-child(6)) {
+    &:has(> .form-item:nth-child(6)) {
       .form-item {
         flex-basis: fit-content;
         min-width: 21.8%;
@@ -253,8 +365,8 @@
       max-width: 50%;
     }
 
-    // If there are more than 4 children it should wrap.
-    &:has(> :nth-child(5)) {
+    // If there are more than 4 visible form items it should wrap.
+    &:has(> .form-item:nth-child(5)) {
       flex-wrap: wrap;
 
       .form-item {
@@ -268,7 +380,7 @@
       }
     }
 
-    &:has(> :nth-child(6)) {
+    &:has(> .form-item:nth-child(6)) {
       .form-item {
         flex-basis: fit-content;
         min-width: 32.5%;

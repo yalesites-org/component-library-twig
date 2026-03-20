@@ -72,12 +72,6 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &[data-component-theme='five'] {
     --color-accordion-accent: var(--color-slot-five);
   }
-
-  // remove margin from the top and bottom of the accordion in a fifty-fifty layout
-  [data-component-layout='fifty-fifty'] & {
-    margin-block-start: 0;
-    margin-block-end: 0;
-  }
 }
 
 .accordion__heading {
@@ -173,6 +167,11 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   [data-component-theme='default'] & {
     margin-bottom: var(--size-spacing-5);
+  }
+
+  // Add left padding to the heading for non-default themes
+  [data-component-theme]:not([data-component-theme='default']) .accordion & {
+    padding-inline-start: var(--size-spacing-5);
   }
 }
 

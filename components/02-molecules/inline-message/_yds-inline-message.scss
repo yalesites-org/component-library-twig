@@ -14,9 +14,6 @@ $component-inline-message-themes: map.deep-get(
   --size-icon: 1.5rem;
   --color-link-base: var(--color-inline-message-text);
 
-  margin-block-start: var(--size-spacing-10);
-  margin-block-end: var(--size-spacing-10);
-
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
   @each $theme, $value in $component-inline-message-themes {

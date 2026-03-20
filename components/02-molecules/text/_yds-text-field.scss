@@ -18,10 +18,6 @@
     @include tokens.body-xl;
   }
 
-  &:first-child {
-    margin-top: var(--spacing-page-inner);
-  }
-
   a {
     @include atoms.link;
   }

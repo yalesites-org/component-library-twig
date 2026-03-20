@@ -10,11 +10,7 @@ $component-image-banner-themes: map.deep-get(
 $break-image-banner: tokens.$break-m;
 
 .image-banner {
-  @include tokens.spacing-page-section(
-    $flush-top: true,
-    $flush-bottom: true,
-    $banner-spacing: true
-  );
+  @include tokens.spacing-page-section($flush-top: true, $flush-bottom: true);
 
   position: relative;
   overflow: hidden;
