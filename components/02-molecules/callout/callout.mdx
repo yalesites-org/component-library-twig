@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as CalloutStories from './callout.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './callout-props.yml';
 
 <Meta of={CalloutStories} name="Docs" />
 
@@ -16,169 +18,9 @@ Use the controls panel below to experiment with the callout's properties in real
 
 ## Properties
 
-### Required Properties
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>callouts</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        Array of callout objects. Each callout should contain{' '}
-        <code>callout__heading</code>, <code>callout__text</code>, and
-        optionally <code>callout__link__content</code>,{' '}
-        <code>callout__link__url</code>, and <code>callout__link__type</code>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>callout__background_color</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>
-        Theme dial for the callout background (e.g., 'one', 'two', 'three')
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>callout__alignment</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'center'</code>
-      </td>
-      <td>
-        Text alignment within callouts: <code>'left'</code> or{' '}
-        <code>'center'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>callout__overlay_background_image</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>
-        Optional background image that displays behind the callout content with
-        an overlay
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>callout__link__type</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'button'</code>
-      </td>
-      <td>
-        Display link as a <code>'button'</code> or text <code>'link'</code>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-### Individual Callout Properties
-
-Each object in the `callouts` array can contain:
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>callout__heading</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The heading text for the callout</td>
-    </tr>
-    <tr>
-      <td>
-        <code>callout__text</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The descriptive text content (supports HTML)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>callout__link__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Text for the call-to-action link or button</td>
-    </tr>
-    <tr>
-      <td>
-        <code>callout__link__url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>URL for the call-to-action</td>
-    </tr>
-    <tr>
-      <td>
-        <code>callout__link__type</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        Link display type: <code>'button'</code> or <code>'link'</code>
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Component Variations
 

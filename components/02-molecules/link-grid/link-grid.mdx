@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as LinkGridStories from './link-grid.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './link-grid-props.yml';
 
 <Meta of={LinkGridStories} name="Docs" />
 
@@ -18,57 +20,7 @@ Use the controls panel below to experiment with the link grid's properties in re
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>link_grid__theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>Component theme dial (see Theme Options below)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>link_grid__line_treatment</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'default'</code>
-      </td>
-      <td>
-        Visual treatment for dividing lines: 'default', 'all_strong_lines',
-        'all_light_lines', or 'no_lines'
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>link_grid__items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        <code>[]</code>
-      </td>
-      <td>Array of link objects, each containing url and content properties</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Theme Options
 

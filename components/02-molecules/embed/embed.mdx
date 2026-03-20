@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as EmbedStories from './embed.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './embed-props.yml';
 
 <Meta of={EmbedStories} name="Docs" />
 
@@ -16,108 +18,9 @@ Use the controls panel below to experiment with the embed's properties in real-t
 
 ## Properties
 
-### Required Properties
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>embed__src</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The URL of the content to embed (for iframe-based embeds)</td>
-    </tr>
-  </tbody>
-</table>
-
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>embed__title</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>
-        Accessible title for the embedded content (important for screen readers)
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>embed__width</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'site'</code>
-      </td>
-      <td>Width constraint: 'max', 'site', 'highlight', or 'content'</td>
-    </tr>
-    <tr>
-      <td>
-        <code>embed__height</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'100%'</code>
-      </td>
-      <td>Height of the embedded content</td>
-    </tr>
-    <tr>
-      <td>
-        <code>embed__type</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Type of embed: 'form', 'audio', 'map', 'calendar', etc.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>embed__loading</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'lazy'</code>
-      </td>
-      <td>
-        Loading strategy: 'lazy' (load when visible) or 'eager' (load
-        immediately)
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Embed Types
 

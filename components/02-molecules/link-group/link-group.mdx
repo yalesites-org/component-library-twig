@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as LinkGroupStories from './link-group.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './link-group-props.yml';
 
 <Meta of={LinkGroupStories} name="Docs" />
 
@@ -18,42 +20,7 @@ Use the controls panel below to experiment with the link group's properties in r
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>link_group__heading</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Optional heading displayed above the group of links</td>
-    </tr>
-    <tr>
-      <td>
-        <code>link_group__items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        <code>[]</code>
-      </td>
-      <td>Array of link objects, each containing url and content properties</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Technical Specifications
 

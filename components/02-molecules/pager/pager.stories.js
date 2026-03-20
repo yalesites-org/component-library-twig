@@ -4,7 +4,8 @@ import inlineMessage from '../inline-message/yds-inline-message.twig';
 // Demo JS.
 import './cl-pager';
 
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
+import componentProps from './pager-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Generate pagination data - keep it simple
@@ -144,9 +145,18 @@ function addStorybookEnhancement(storyId, args) {
   window.PagerManager.attachEnhancement(storyId, args);
 }
 
-const pagerArgs = {
-  currentPage: 1,
-  totalPages: 10,
+const argTypes = toArgTypes(componentProps);
+argTypes.currentPage = {
+  ...argTypes.currentPage,
+  control: { type: 'number', min: 1, max: 50, step: 1 },
+};
+argTypes.totalPages = {
+  ...argTypes.totalPages,
+  control: { type: 'number', min: 1, max: 50, step: 1 },
+};
+argTypes.storyInfo = {
+  table: { disable: true },
+  control: { disable: true },
 };
 
 /**
@@ -155,26 +165,8 @@ const pagerArgs = {
 export default {
   title: 'Molecules/Pager',
   tags: ['!dev'],
-  argTypes: addTableDefaults(
-    {
-      currentPage: {
-        name: 'Current page', // Human-friendly name
-        control: { type: 'number', min: 1, max: 50, step: 1 },
-        description: 'Current active page',
-      },
-      totalPages: {
-        name: 'Total pages', // Human-friendly name
-        control: { type: 'number', min: 1, max: 50, step: 1 },
-        description: 'Total number of pages',
-      },
-      storyInfo: {
-        table: { disable: true }, // Hide from controls panel
-        control: { disable: true }, // Hide from controls panel
-      },
-    },
-    pagerArgs,
-  ),
-  args: pagerArgs,
+  argTypes,
+  args: toArgs(componentProps),
 };
 
 /**

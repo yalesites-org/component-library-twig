@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as InlineMessageStories from './inline-message.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './inline-message-props.yml';
 
 <Meta of={InlineMessageStories} name="Docs" />
 
@@ -18,90 +20,7 @@ Use the controls panel below to experiment with the inline message's properties 
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>inline_message__type</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'general'</code>
-      </td>
-      <td>Message type: 'general' or 'alert'</td>
-    </tr>
-    <tr>
-      <td>
-        <code>inline_message__heading</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Heading text for the message</td>
-    </tr>
-    <tr>
-      <td>
-        <code>inline_message__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Main content of the message (supports HTML)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>inline_message__theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>Component theme dial (see Theme Options below)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>inline_message__link__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Optional link text displayed within the message</td>
-    </tr>
-    <tr>
-      <td>
-        <code>inline_message__link__url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>URL for the optional link</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Message Types
 

@@ -2,16 +2,8 @@
 import inlineMessageTwig from './yds-inline-message.twig';
 
 // Data files
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
-
-const defaultArgs = {
-  type: 'general',
-  heading: 'This is a general message heading',
-  content: 'This is a general message content',
-  themeColor: 'one',
-  linkContent: 'This is a link',
-  linkUrl: '#',
-};
+import componentProps from './inline-message-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Storybook Definition.
@@ -19,38 +11,14 @@ const defaultArgs = {
 export default {
   title: 'Molecules/Inline Message',
   tags: ['!dev'],
-  argTypes: addTableDefaults(
-    {
-      type: {
-        name: 'Type',
-        type: 'select',
-        options: ['general', 'alert'],
-      },
-      heading: {
-        name: 'Heading',
-        type: 'string',
-      },
-      content: {
-        name: 'Content',
-        type: 'string',
-      },
-      themeColor: {
-        name: 'Component Theme (dial)',
-        options: ['one', 'two', 'three', 'four', 'five'],
-        type: 'select',
-      },
-      linkContent: {
-        name: 'Link Content',
-        type: 'string',
-      },
-      linkUrl: {
-        name: 'Link URL',
-        type: 'string',
-      },
-    },
-    defaultArgs,
-  ),
-  args: defaultArgs,
+  argTypes: toArgTypes(componentProps),
+  args: {
+    ...toArgs(componentProps),
+    heading: 'This is a general message heading',
+    content: 'This is a general message content',
+    linkContent: 'This is a link',
+    linkUrl: '#',
+  },
 };
 
 export const InlineMessage = ({

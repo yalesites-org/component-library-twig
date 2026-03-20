@@ -1,17 +1,12 @@
 import alertTwig from './yds-alert.twig';
 import textFieldTwig from '../text/yds-text-field.twig';
 import ctaTwig from '../../01-atoms/controls/cta/yds-cta.twig';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
+import componentProps from './alert-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 import alertData from './alert.yml';
 
 import './yds-alert';
-
-const alertArgs = {
-  heading: alertData.alert__heading,
-  content: alertData.alert__content,
-  linkContent: alertData.alert__link__content,
-};
 
 /**
  * Storybook Definition.
@@ -22,24 +17,13 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      heading: {
-        name: 'Alert Heading',
-        type: 'string',
-      },
-      content: {
-        name: 'Alert Content',
-        type: 'string',
-      },
-      linkContent: {
-        name: 'Alert Link Text',
-        type: 'string',
-      },
-    },
-    alertArgs,
-  ),
-  args: alertArgs,
+  argTypes: toArgTypes(componentProps),
+  args: {
+    ...toArgs(componentProps),
+    heading: alertData.alert__heading,
+    content: alertData.alert__content,
+    linkContent: alertData.alert__link__content,
+  },
 };
 
 const alertResetInstructions = `
@@ -74,23 +58,6 @@ ${alertTwig({
 ${textFieldTwig({
   text_field__content: alertResetInstructions,
 })}`;
-const alertStoryArgs = {
-  ...alertArgs,
-  type: 'announcement',
-};
-
-Alert.argTypes = addTableDefaults(
-  {
-    type: {
-      name: 'Alert Type',
-      type: 'select',
-      options: ['emergency', 'announcement', 'marketing'],
-    },
-  },
-  alertStoryArgs,
-);
-
-Alert.args = alertStoryArgs;
 
 export const AlertExamples = ({ heading, content, linkContent }) => `
 <script>

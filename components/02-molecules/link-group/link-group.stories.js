@@ -1,11 +1,8 @@
 import linkGroupTwig from './yds-link-group.twig';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
+import componentProps from './link-group-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 import linkGroupData from './link-group.yml';
-
-const linkGroupArgs = {
-  heading: linkGroupData.link_group__heading,
-};
 
 /**
  * Storybook Definition.
@@ -13,16 +10,11 @@ const linkGroupArgs = {
 export default {
   title: 'Molecules/Link group',
   tags: ['!dev'],
-  argTypes: addTableDefaults(
-    {
-      heading: {
-        name: 'Heading',
-        type: 'string',
-      },
-    },
-    linkGroupArgs,
-  ),
-  args: linkGroupArgs,
+  argTypes: toArgTypes(componentProps),
+  args: {
+    ...toArgs(componentProps),
+    heading: linkGroupData.link_group__heading_one,
+  },
 };
 
 export const linkGroup = ({ heading }) =>
@@ -30,5 +22,3 @@ export const linkGroup = ({ heading }) =>
     ...linkGroupData,
     link_group__heading_one: heading,
   });
-
-linkGroup.args = linkGroupArgs;

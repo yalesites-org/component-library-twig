@@ -1,5 +1,6 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
+import componentProps from './callout-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 import calloutTwig from './yds-callout.twig';
 
@@ -9,14 +10,10 @@ import imageData from '../../01-atoms/images/image/image.yml';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
-const calloutArgs = {
-  heading: calloutData.callout__heading,
-  text: calloutData.callout__text,
-  linkText: calloutData.callout__link__content,
-  linkType: calloutData.callout__link__type,
-  backgroundColor: 'one',
-  calloutAlignment: 'center',
-  overlayBackgroundImage: false,
+const argTypes = toArgTypes(componentProps);
+argTypes.backgroundColor = {
+  ...argTypes.backgroundColor,
+  options: colorPairingsData,
 };
 
 /**
@@ -25,43 +22,14 @@ const calloutArgs = {
 export default {
   title: 'Molecules/Callout',
   tags: ['!dev'],
-  argTypes: addTableDefaults(
-    {
-      heading: {
-        name: 'Heading',
-        type: 'string',
-      },
-      text: {
-        name: 'Text',
-        type: 'string',
-      },
-      linkText: {
-        name: 'Link Text',
-        type: 'string',
-      },
-      linkType: {
-        name: 'Link Type',
-        type: 'select',
-        options: ['button', 'link'],
-      },
-      backgroundColor: {
-        name: 'Callout Theme (dial)',
-        type: 'select',
-        options: colorPairingsData,
-      },
-      calloutAlignment: {
-        name: 'Callout Alignment',
-        type: 'select',
-        options: ['left', 'center'],
-      },
-      overlayBackgroundImage: {
-        name: 'Overlay Background Image',
-        type: 'boolean',
-      },
-    },
-    calloutArgs,
-  ),
-  args: calloutArgs,
+  argTypes,
+  args: {
+    ...toArgs(componentProps),
+    heading: calloutData.callout__heading,
+    text: calloutData.callout__text,
+    linkText: calloutData.callout__link__content,
+    linkType: calloutData.callout__link__type,
+  },
 };
 
 export const Callout = ({
@@ -115,5 +83,3 @@ export const Callout = ({
     ],
   })}
 `;
-
-Callout.args = calloutArgs;

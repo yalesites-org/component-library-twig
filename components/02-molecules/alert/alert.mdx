@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as AlertStories from './alert.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './alert-props.yml';
 
 <Meta of={AlertStories} name="Docs" />
 
@@ -16,100 +18,9 @@ Use the controls panel below to experiment with the alert's properties in real-t
 
 ## Properties
 
-### Required Properties
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>alert__type</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        Type of alert: <code>'emergency'</code>, <code>'announcement'</code>, or{' '}
-        <code>'marketing'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>alert__id</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Unique identifier for the alert (used for localStorage tracking)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>alert__heading</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The main heading text for the alert</td>
-    </tr>
-  </tbody>
-</table>
-
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>alert__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Additional descriptive content (supports HTML)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>alert__link__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Text for the optional call-to-action link</td>
-    </tr>
-    <tr>
-      <td>
-        <code>alert__link__url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>URL for the optional call-to-action link</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Alert Types
 
