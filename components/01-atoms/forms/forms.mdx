@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as FormsStories from './forms.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './forms-props.yml';
 
 <Meta of={FormsStories} />
 
@@ -38,44 +40,7 @@ Complete form implementation with all elements working together.
 
 ### Example Form Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>buttonTheme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>Theme color for submit button (one through seven)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>sectionTheme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'default'</code>
-      </td>
-      <td>
-        Background theme for form section (default, one, two, three, four)
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Form Elements
 

@@ -6,13 +6,8 @@ import listData from './list.yml';
 import listTagsData from './taxonomy/tags-list.yml';
 import listCategoriesData from './taxonomy/categories-list.yml';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
-
-const listArgs = {
-  sectionTheme: 'default',
-  listType: 'ul',
-};
+import componentProps from './list-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Storybook Definition.
@@ -20,23 +15,8 @@ const listArgs = {
 export default {
   title: 'Atoms/Lists',
   tags: ['!dev'],
-  argTypes: addTableDefaults(
-    {
-      sectionTheme: {
-        name: 'Section Theme',
-        description: 'Background color theme for the layout section',
-        type: 'select',
-        options: sectionThemes,
-      },
-      listType: {
-        name: 'List Type',
-        type: 'select',
-        options: ['ul', 'ol'],
-      },
-    },
-    listArgs,
-  ),
-  args: listArgs,
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
 export const Interactive = ({ sectionTheme, listType }) => `

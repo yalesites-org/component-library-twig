@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as DividerStories from './divider.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './divider-props.yml';
 
 <Meta of={DividerStories} name="Docs" />
 
@@ -18,42 +20,7 @@ Use the controls panel below to experiment with the divider's properties in real
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>divider__width</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'100'</code>
-      </td>
-      <td>Width of the divider (25, 50, 75, 100)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>divider__position</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'left'</code>
-      </td>
-      <td>Horizontal alignment (left, center)</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## CSS Custom Properties
 

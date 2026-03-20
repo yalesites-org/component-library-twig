@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as VideoBackgroundStories from './video-background.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './video-background-props.yml';
 
 <Meta of={VideoBackgroundStories} name="Docs" />
 
@@ -18,26 +20,11 @@ Use the controls panel below to experiment with the video background across diff
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>video_background__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>URL to the video file (MP4 format recommended)</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
 
 ## Technical Specifications
 

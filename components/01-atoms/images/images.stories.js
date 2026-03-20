@@ -9,8 +9,8 @@ import faIconData from './fa-icons/fa-icons.yml';
 import './image/cl-image.scss';
 import './icons/cl-icons.scss';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
+import componentProps from './images-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 const svgIcons = require.context('../../../images/icons', true, /\.svg$/);
 const icons = [];
@@ -19,34 +19,14 @@ svgIcons.keys().forEach((key) => {
   icons.push(icon);
 });
 
-const imagesArgs = {
-  sectionTheme: 'default',
-  aspectRatio: '16x9',
-};
-
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Atoms/Images',
   tags: ['!dev'],
-  argTypes: addTableDefaults(
-    {
-      sectionTheme: {
-        name: 'Section Theme',
-        description: 'Background color theme for the layout section',
-        type: 'select',
-        options: sectionThemes,
-      },
-      aspectRatio: {
-        name: 'Aspect Ratio',
-        type: 'select',
-        options: ['16x9', '3x2', '1x1', '1x1.6', '4x3'],
-      },
-    },
-    imagesArgs,
-  ),
-  args: imagesArgs,
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
 export const Interactive = ({ sectionTheme, aspectRatio }) => `
