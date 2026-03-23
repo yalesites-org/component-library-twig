@@ -25,7 +25,6 @@ heading:
   required: true
   description: Heading text for each accordion item
   detail: The heading text displayed on the clickable accordion toggle for each item.
-  default: 'Art Collections'
   control: text
 
 content:
@@ -37,7 +36,6 @@ content:
   detail: >
     The content revealed when an accordion item is expanded. Supports full
     HTML markup including links, lists, and formatted text.
-  default: '<p>Accordion content</p>'
   control: text
 
 accordionHeading:
@@ -49,7 +47,6 @@ accordionHeading:
   detail: >
     Displays as a heading above the full accordion group. Leave empty to
     show items without a group heading.
-  default: ''
   control: text
 
 themeColor:
