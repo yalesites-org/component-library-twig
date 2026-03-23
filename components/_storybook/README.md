@@ -601,16 +601,16 @@ Each component has a `[component]-props.yml` file:
 ```yaml
 # [component]-props.yml
 myProp:
-  twigProp: my_twig__prop       # snake_case Twig variable name
-  name: My Prop Label            # display name in controls
-  type: string                   # string | boolean | select | number | array
+  twigProp: my_twig__prop # snake_case Twig variable name
+  name: My Prop Label # display name in controls
+  type: string # string | boolean | select | number | array
   required: false
   description: Short description for the controls panel
-  detail: >                      # optional: longer description for docs tables
+  detail: > # optional: longer description for docs tables
     More detailed explanation...
-  default: someValue             # only if the Twig template has |default('someValue')
-  control: text                  # text | boolean | select | number (omit for docs-only)
-  options:                       # only for select type
+  default: someValue # only if the Twig template has |default('someValue')
+  control: text # text | boolean | select | number (omit for docs-only)
+  options: # only for select type
     - option1
     - option2
 ```
