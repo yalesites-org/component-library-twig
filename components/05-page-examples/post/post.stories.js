@@ -32,8 +32,14 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes,
-  args: defaultArgs,
+  argTypes: {
+    ...argTypes,
+    ...toArgTypes(componentProps),
+  },
+  args: {
+    ...defaultArgs,
+    ...toArgs(componentProps),
+  },
 };
 
 export const PostArticle = ({
@@ -96,8 +102,6 @@ export const PostArticle = ({
     ...socialLinksData,
     ...referenceCardData,
   });
-PostArticle.argTypes = toArgTypes(componentProps);
-PostArticle.args = toArgs(componentProps);
 
 export const postGridCustom = ({
   allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
