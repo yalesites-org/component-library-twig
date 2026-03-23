@@ -1,3 +1,11 @@
+# standard-page-props.yml
+#
+# Standard page example property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
 introContent:
   twigProp: intro_content
   name: Intro Content
@@ -68,9 +76,13 @@ bgColor:
   name: Banner Content Background Color Theme (dial)
   type: select
   required: false
-  description: The background color theme for the banner content area.
-  control: select
+  description: Color theme for the banner content area background
+  detail: >
+    Color theme applied to the banner content background. Options are
+    dynamically derived from the design system tokens. Uses the same
+    token-driven color pairings as other component theme selectors.
   default: one
+  control: select
 
 heading:
   twigProp: banner__heading

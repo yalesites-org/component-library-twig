@@ -1,3 +1,11 @@
+# resources-props.yml
+#
+# Resources page example property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
 showBreadcrumbs:
   twigProp: show_breadcrumbs
   name: Breadcrumbs
@@ -5,14 +13,3 @@ showBreadcrumbs:
   required: false
   description: Whether to display breadcrumb navigation on the resource page.
   control: boolean
-
-resourceType:
-  twigProp: resource_meta__resource_type
-  name: Resource Type
-  type: select
-  required: false
-  description: The type of resource being displayed (video or document).
-  control: select
-  options:
-    - video
-    - document

@@ -104,6 +104,18 @@ export const ResourcePage = ({
     video_embed__content__1: videoEmbedData.video_embed__content,
   });
 };
+ResourcePage.argTypes = {
+  resourceType: {
+    name: 'Resource Type',
+    description: 'The type of resource to display',
+    options: ['video', 'document'],
+    control: { type: 'select' },
+    table: {
+      category: 'Optional',
+      type: { summary: 'select' },
+    },
+  },
+};
 ResourcePage.args = { resourceType: 'video' };
 
 export const ResourceGrid = ({

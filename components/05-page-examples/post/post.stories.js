@@ -14,15 +14,11 @@ import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 import referenceCardData from '../../02-molecules/cards/reference-card/examples/post-card.yml';
 import componentProps from './post-props.yml';
 import { toArgTypes, toArgs } from '../../_storybook/component-props';
+import argTypesToArgs from '../../utility';
 
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
 import '../../02-molecules/read-time/yds-read-time';
-
-// Utility for converting argTypes to args
-import argTypesToArgs from '../../utility';
-
-const defaultArgs = argTypesToArgs(argTypes);
 
 /**
  * Storybook Definition.
@@ -37,7 +33,7 @@ export default {
     ...toArgTypes(componentProps),
   },
   args: {
-    ...defaultArgs,
+    ...argTypesToArgs(argTypes),
     ...toArgs(componentProps),
   },
 };
