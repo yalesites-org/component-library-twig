@@ -31,7 +31,10 @@ export default {
     layout: 'fullscreen',
   },
   argTypes,
-  args: toArgs(componentProps),
+  args: {
+    ...toArgs(componentProps),
+    borderThickness: '8',
+  },
 };
 
 export const Footer = ({

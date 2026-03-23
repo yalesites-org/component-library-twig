@@ -36,7 +36,7 @@ verticalAlignment:
   type: select
   required: false
   description: Vertical positioning of content within tiles
-  default: top
+  default: left
   options:
     - top
     - bottom
@@ -48,6 +48,7 @@ columnCount:
   type: select
   required: false
   description: Number of columns in the tiles grid
+  default: three
   options:
     - two
     - three

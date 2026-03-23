@@ -19,7 +19,10 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: toArgTypes(componentProps),
-  args: toArgs(componentProps),
+  args: {
+    ...toArgs(componentProps),
+    verticalAlignment: 'top',
+  },
 };
 
 export const Tiles = ({

@@ -13,7 +13,7 @@ borderThickness:
   detail: >
     Controls the thickness of the decorative top border on the footer.
     Options are derived from the border.thickness design tokens.
-  default: '8'
+  default: '0'
   control: select
 
 siteFooterTheme:
