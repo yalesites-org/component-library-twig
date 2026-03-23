@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as TilesStories from './tiles.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './tiles-props.yml';
 
 <Meta of={TilesStories} name="Docs" />
 
@@ -18,142 +20,11 @@ Use the controls panel below to experiment with the tiles component's properties
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>tiles</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>Array of tile items to display in the grid</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>tiles__width</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'site'</code>
-      </td>
-      <td>Width constraint for the tiles container</td>
-    </tr>
-    <tr>
-      <td>
-        <code>tiles__presentation_style</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'heading'</code>
-      </td>
-      <td>
-        Visual style: <code>'heading'</code>, <code>'icon'</code>, or{' '}
-        <code>'text-only'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>tiles__alignment</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'left'</code>
-      </td>
-      <td>
-        Horizontal alignment: <code>'left'</code>, <code>'center'</code>, or{' '}
-        <code>'right'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>tiles__vertical_alignment</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'top'</code>
-      </td>
-      <td>
-        Vertical alignment of tile content: <code>'top'</code> or{' '}
-        <code>'bottom'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>tiles__grid_count</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'three'</code>
-      </td>
-      <td>
-        Number of columns in the grid: <code>'two'</code>, <code>'three'</code>,
-        or <code>'four'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>tiles__with__image</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'false'</code>
-      </td>
-      <td>
-        Display background images on tiles: <code>'true'</code> or{' '}
-        <code>'false'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>tiles__with__animation</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'false'</code>
-      </td>
-      <td>
-        Enable animation effects: <code>'true'</code> or <code>'false'</code>
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Presentation Styles
 

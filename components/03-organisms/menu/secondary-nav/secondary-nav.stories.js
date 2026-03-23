@@ -5,15 +5,18 @@ import secondaryNavTwig from './yds-secondary-nav.twig';
 
 // Data.
 import secondaryNavData from './secondary-nav.yml';
-import { addTableDefaults } from '../../../_storybook/add-table-defaults';
+import componentProps from './secondary-nav-props.yml';
+import { toArgTypes, toArgs } from '../../../_storybook/component-props';
 
 // JavaScript
 import './yds-secondary-nav';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
-const defaultArgs = {
-  themeColor: 'one',
+const argTypes = toArgTypes(componentProps);
+argTypes.themeColor = {
+  ...argTypes.themeColor,
+  options: colorPairingsData,
 };
 
 /**
@@ -25,17 +28,8 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      themeColor: {
-        name: 'Component Theme (dial)',
-        options: colorPairingsData,
-        type: 'select',
-      },
-    },
-    defaultArgs,
-  ),
-  args: defaultArgs,
+  argTypes,
+  args: toArgs(componentProps),
 };
 
 export const secondaryNav = ({ themeColor }) => `

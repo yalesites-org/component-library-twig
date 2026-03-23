@@ -7,16 +7,10 @@ import accordionData from '../../02-molecules/accordion/accordion.yml';
 
 // Image atom component - generic images for demo
 import imageData from '../../01-atoms/images/image/image.yml';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
+import componentProps from './layout-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 import '../../02-molecules/accordion/yds-accordion';
-
-const defaultArgs = {
-  divider: false,
-  layoutOption: 'fifty-fifty',
-  layoutPadding: 'default',
-  theme: 'default',
-};
 
 /**
  * Storybook Definition.
@@ -27,36 +21,8 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      divider: {
-        name: 'Divider',
-        type: 'boolean',
-      },
-      layoutOption: {
-        name: 'Layout',
-        type: 'select',
-        options: ['fifty-fifty', 'thirty-thirty-thirty', 'seventy-thirty'],
-      },
-      layoutPadding: {
-        name: 'Padding',
-        type: 'select',
-        options: {
-          'Default (current padding)': 'default',
-          'No top padding': 'no-top',
-          'No bottom padding': 'no-bottom',
-          'No padding (top and bottom)': 'no-padding',
-        },
-      },
-      theme: {
-        name: 'Component Theme',
-        type: 'select',
-        options: ['default', 'one', 'two', 'three', 'four'],
-      },
-    },
-    defaultArgs,
-  ),
-  args: defaultArgs,
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
 export const layout = ({ divider, theme, layoutOption, layoutPadding }) =>

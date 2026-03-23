@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as SiteFooterStories from './site-footer.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './site-footer-props.yml';
 
 <Meta of={SiteFooterStories} name="Docs" />
 
@@ -18,115 +20,11 @@ Use the controls panel below to experiment with the site footer's properties in 
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>site_footer__content_text</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>HTML content for the footer text area</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>site_footer__border_thickness</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'8'</code>
-      </td>
-      <td>Border thickness for footer top border (from design tokens)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>site_footer__theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>Footer color theme (dial)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>site_footer__accent</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>Footer accent color (dial)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>site_footer__variation</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'basic'</code>
-      </td>
-      <td>
-        Footer variation: <code>'basic'</code> or <code>'mega'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>social_links__items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Social media links to display in the footer</td>
-    </tr>
-    <tr>
-      <td>
-        <code>link_group__items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Link groups for footer navigation</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Footer Variations
 

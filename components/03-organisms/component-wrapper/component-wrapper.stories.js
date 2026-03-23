@@ -1,9 +1,6 @@
 import componentWrapperTwig from './yds-component-wrapper.twig';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
-
-const defaultArgs = {
-  componentWidth: 'content',
-};
+import componentProps from './component-wrapper-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Storybook Definition.
@@ -14,17 +11,8 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      componentWidth: {
-        name: 'Component Width',
-        type: 'select',
-        options: ['content', 'highlight', 'site', 'max'],
-      },
-    },
-    defaultArgs,
-  ),
-  args: defaultArgs,
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
 export const ComponentWrapper = ({ componentWidth }) => {

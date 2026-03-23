@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as FactsAndFiguresGroupStories from './facts-and-figures-group.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './facts-and-figures-group-props.yml';
 
 <Meta of={FactsAndFiguresGroupStories} name="Docs" />
 
@@ -18,185 +20,11 @@ Use the controls panel below to experiment with the facts and figures group's pr
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>facts_and_figures__group</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>Array of fact and figure items to display in the grid</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>facts_and_figures__group__heading</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Optional heading for the facts and figures group</td>
-    </tr>
-    <tr>
-      <td>
-        <code>facts_and_figures__group__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Optional introductory content text</td>
-    </tr>
-    <tr>
-      <td>
-        <code>facts_and_figures__group__link__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Link text for optional call-to-action</td>
-    </tr>
-    <tr>
-      <td>
-        <code>facts_and_figures__group__link__url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>URL for optional call-to-action link</td>
-    </tr>
-    <tr>
-      <td>
-        <code>facts_and_figures__group__grid_count</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'three'</code>
-      </td>
-      <td>
-        Number of columns in the grid: <code>'two'</code>, <code>'three'</code>,
-        or <code>'four'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>facts_and_figures__group__alignment</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'left'</code>
-      </td>
-      <td>
-        Text alignment: <code>'left'</code> or <code>'center'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>facts_and_figures__group__presentation_style</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'basic'</code>
-      </td>
-      <td>
-        Visual style: <code>'basic'</code> or <code>'icon-only'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>facts_and_figures__group__font_style</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'normal'</code>
-      </td>
-      <td>
-        Font style for numbers: <code>'normal'</code> or{' '}
-        <code>'numeric-oldstyle'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>facts_and_figures__group__theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>Component theme from color dial in CMS</td>
-    </tr>
-    <tr>
-      <td>
-        <code>facts_and_figures__group__bg_image</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Display background image behind the statistics</td>
-    </tr>
-    <tr>
-      <td>
-        <code>facts_and_figures__group__has_icon</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'false'</code>
-      </td>
-      <td>
-        Enable icons for fact items: <code>'true'</code> or <code>'false'</code>
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Presentation Styles
 

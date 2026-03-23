@@ -1,0 +1,59 @@
+# layout-props.yml
+#
+# Layout component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+divider:
+  twigProp: layout__divider
+  name: Divider
+  type: boolean
+  required: false
+  description: Show a visual divider between layout regions
+  detail: >
+    When true, displays a visual divider between layout content regions. Passed
+    to Twig as the string 'true' or 'false' via layout__divider.
+  default: false
+  control: boolean
+
+layoutOption:
+  twigProp: component__layout
+  name: Layout
+  type: select
+  required: false
+  description: Column configuration for the layout
+  default: fifty-fifty
+  options:
+    - fifty-fifty
+    - thirty-thirty-thirty
+    - seventy-thirty
+  control: select
+
+layoutPadding:
+  twigProp: layout__padding
+  name: Padding
+  type: select
+  required: false
+  description: Vertical padding configuration for the layout component
+  default: default
+  options:
+    Default (current padding): default
+    No top padding: no-top
+    No bottom padding: no-bottom
+    No padding (top and bottom): no-padding
+  control: select
+
+theme:
+  twigProp: component__theme
+  name: Component Theme
+  type: select
+  required: false
+  description: Color theme applied to the layout component
+  default: default
+  options:
+    - default
+    - one
+    - two
+    - three
+    - four
+  control: select

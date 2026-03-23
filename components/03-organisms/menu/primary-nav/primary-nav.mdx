@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as PrimaryNavStories from './primary-nav.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './primary-nav-props.yml';
 
 <Meta of={PrimaryNavStories} name="Docs" />
 
@@ -18,59 +20,11 @@ Use the controls panel below to experiment with the primary nav's properties in 
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        Array of navigation menu items with title, url, and optional nested
-        items
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>menu__variation</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'basic'</code>
-      </td>
-      <td>
-        Menu variation: <code>'basic'</code>, <code>'mega'</code>, or{' '}
-        <code>'focus'</code>
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Menu Variations
 

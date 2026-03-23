@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as CardCollectionStories from './card-collection.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './card-collection-props.yml';
 
 <Meta of={CardCollectionStories} name="Docs" />
 
@@ -18,124 +20,11 @@ Use the controls panel below to experiment with the card collection's properties
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>card_collection__source_type</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        Type of cards in the collection: <code>'post'</code>,{' '}
-        <code>'event'</code>, <code>'profile'</code>, <code>'resource'</code>,
-        or <code>'directory-listing'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>card_collection__cards</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>Array of card items to display</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>card_collection__heading</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Optional heading for the card collection</td>
-    </tr>
-    <tr>
-      <td>
-        <code>card_collection__type</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'grid'</code>
-      </td>
-      <td>
-        Layout type: <code>'grid'</code>, <code>'list'</code>,{' '}
-        <code>'condensed'</code>, or <code>'profile-directory'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>card_collection__featured</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'false'</code>
-      </td>
-      <td>
-        Enable featured layout with larger first card: <code>'true'</code> or{' '}
-        <code>'false'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>card_collection__with_images</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'true'</code>
-      </td>
-      <td>
-        Display images on cards: <code>'true'</code> or <code>'false'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>reference_card__overlay</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>
-        Overlay text for reference cards (e.g., <code>'Pinned'</code>)
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Card Type Variants
 

@@ -3,14 +3,11 @@ import primaryNavTwig from './yds-primary-nav.twig';
 
 // Data.
 import primaryNavData from './primary-nav.yml';
-import { addTableDefaults } from '../../../_storybook/add-table-defaults';
+import componentProps from './primary-nav-props.yml';
+import { toArgTypes, toArgs } from '../../../_storybook/component-props';
 
 // JavaScript
 import './yds-primary-nav';
-
-const defaultArgs = {
-  menuVariation: 'basic',
-};
 
 /**
  * Storybook Definition.
@@ -21,17 +18,8 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      menuVariation: {
-        name: 'Menu Variation',
-        options: ['basic', 'mega', 'focus'],
-        type: 'select',
-      },
-    },
-    defaultArgs,
-  ),
-  args: defaultArgs,
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
 export const PrimaryNav = ({ menuVariation }) => `

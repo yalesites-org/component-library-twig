@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as ComponentWrapperStories from './component-wrapper.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './component-wrapper-props.yml';
 
 <Meta of={ComponentWrapperStories} name="Docs" />
 
@@ -22,81 +24,7 @@ This component has no strictly required properties, but typically includes conte
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>component_wrapper__width</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'site'</code>
-      </td>
-      <td>Sets the maximum width constraint (see Width Options below)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>component_wrapper__alignment</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'center'</code>
-      </td>
-      <td>Horizontal alignment of the component within its container</td>
-    </tr>
-    <tr>
-      <td>
-        <code>component_wrapper__label</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Optional heading displayed above the component content</td>
-    </tr>
-    <tr>
-      <td>
-        <code>component__modifiers</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        <code>[]</code>
-      </td>
-      <td>
-        Array of BEM modifier classes (e.g., <code>'no-top-margin'</code>,{' '}
-        <code>'no-bottom-margin'</code>)
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>component__extra_classes</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        <code>[]</code>
-      </td>
-      <td>Additional CSS classes for custom styling</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Width Options
 

@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as SiteInThisSectionStories from './site-in-this-section.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './site-in-this-section-props.yml';
 
 <Meta of={SiteInThisSectionStories} name="Docs" />
 
@@ -18,59 +20,11 @@ Use the controls panel below to experiment with the site in this section compone
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>secondary_nav__items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        Array of navigation menu items with title, url, and optional nested
-        items
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>site_section_wrap__theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>
-        Component theme color from the design system dial (one, two, three,
-        etc.)
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Component Structure
 

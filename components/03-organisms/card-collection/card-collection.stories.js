@@ -6,15 +6,8 @@ import profileCardData from '../../02-molecules/cards/reference-card/examples/pr
 import resourceCardData from '../../02-molecules/cards/reference-card/examples/resource-card.yml';
 
 import imageData from '../../01-atoms/images/image/image.yml';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
-
-const defaultArgs = {
-  collectionType: 'grid',
-  featured: true,
-  withImages: true,
-  heading: 'Card Collection',
-  withOverlay: false,
-};
+import componentProps from './card-collection-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Storybook Definition.
@@ -25,25 +18,8 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      collectionType: {
-        name: 'Collection Type',
-        type: 'select',
-        options: ['grid', 'list', 'condensed'],
-      },
-      featured: {
-        name: 'Featured',
-        type: 'boolean',
-      },
-      withOverlay: {
-        name: 'Overlay',
-        type: 'boolean',
-      },
-    },
-    defaultArgs,
-  ),
-  args: defaultArgs,
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
 export const PostCardCollection = ({
@@ -68,30 +44,6 @@ export const PostCardCollection = ({
   });
 };
 
-const postCardCollectionArgs = {
-  collectionType: 'grid',
-  featured: true,
-  withImages: true,
-  heading: 'Card Collection',
-  withOverlay: false,
-};
-
-PostCardCollection.args = postCardCollectionArgs;
-
-PostCardCollection.argTypes = addTableDefaults(
-  {
-    withImages: {
-      name: 'With Images',
-      type: 'boolean',
-    },
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-  },
-  postCardCollectionArgs,
-);
-
 export const EventCardCollection = ({
   heading,
   collectionType,
@@ -112,26 +64,6 @@ export const EventCardCollection = ({
     ...imageData.responsive_images['3x2'],
   });
 };
-const eventCardCollectionArgs = {
-  collectionType: 'grid',
-  featured: true,
-  withImages: true,
-  heading: 'Card Collection',
-};
-EventCardCollection.args = eventCardCollectionArgs;
-EventCardCollection.argTypes = addTableDefaults(
-  {
-    withImages: {
-      name: 'With Images',
-      type: 'boolean',
-    },
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-  },
-  eventCardCollectionArgs,
-);
 
 export const ProfileCardCollection = ({
   heading,
@@ -152,26 +84,6 @@ export const ProfileCardCollection = ({
     ...imageData.responsive_images['1x1'],
   });
 };
-const profileCardCollectionArgs = {
-  collectionType: 'grid',
-  featured: true,
-  withImages: true,
-  heading: 'Card Collection',
-};
-ProfileCardCollection.args = profileCardCollectionArgs;
-ProfileCardCollection.argTypes = addTableDefaults(
-  {
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    withImages: {
-      name: 'With Images',
-      type: 'boolean',
-    },
-  },
-  profileCardCollectionArgs,
-);
 
 export const DirectoryListingCardCollection = ({
   featured,
@@ -192,25 +104,6 @@ export const DirectoryListingCardCollection = ({
     ...imageData.responsive_images['1x1'],
   });
 };
-const directoryListingCardCollectionArgs = {
-  featured: true,
-  heading: 'Directory Listing',
-  withOverlay: false,
-};
-DirectoryListingCardCollection.args = directoryListingCardCollectionArgs;
-DirectoryListingCardCollection.argTypes = addTableDefaults(
-  {
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    withOverlay: {
-      name: 'Overlay',
-      type: 'boolean',
-    },
-  },
-  directoryListingCardCollectionArgs,
-);
 
 export const ResourceCardCollection = ({
   heading,
@@ -233,24 +126,3 @@ export const ResourceCardCollection = ({
     ...imageData.responsive_images['3x2'],
   });
 };
-const resourceCardCollectionArgs = {
-  collectionType: 'grid',
-  featured: true,
-  withImages: true,
-  heading: 'Card Collection',
-  withOverlay: false,
-};
-ResourceCardCollection.args = resourceCardCollectionArgs;
-ResourceCardCollection.argTypes = addTableDefaults(
-  {
-    withImages: {
-      name: 'With Images',
-      type: 'boolean',
-    },
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-  },
-  resourceCardCollectionArgs,
-);

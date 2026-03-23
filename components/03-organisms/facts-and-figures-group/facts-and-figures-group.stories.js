@@ -11,7 +11,8 @@ import factsAndFiguresIconsData from '../../02-molecules/facts-and-figures/facts
 
 // Image atom component - generic images for demo
 import imageData from '../../01-atoms/images/image/image.yml';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
+import componentProps from './facts-and-figures-group-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
@@ -39,20 +40,14 @@ if (
   );
 }
 
-const defaultArgs = {
-  themeColor: 'one',
-  factsAndFiguresGroupHeading:
-    factsAndFiguresGroupData.facts_and_figures__group__heading,
-  factsAndFiguresGroupContent:
-    factsAndFiguresGroupData.facts_and_figures__group__content,
-  factsAndFiguresGroupLink:
-    factsAndFiguresGroupData.facts_and_figures__group__link__content,
-  image: true,
-  presentationStyle: 'basic',
-  fontStyle: 'normal',
-  columnCount: 'three',
-  alignment: 'left',
-  iconName: '- None -',
+const argTypes = toArgTypes(componentProps);
+argTypes.themeColor = {
+  ...argTypes.themeColor,
+  options: colorPairingsData,
+};
+argTypes.iconName = {
+  ...argTypes.iconName,
+  options: iconDisplayToValueMap,
 };
 
 /**
@@ -64,58 +59,16 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      themeColor: {
-        name: 'Component Theme (dial)',
-        options: colorPairingsData,
-        type: 'select',
-      },
-      factsAndFiguresGroupHeading: {
-        name: 'Infographic Group Heading',
-        type: 'string',
-      },
-      factsAndFiguresGroupContent: {
-        name: 'Infographic Group Content',
-        type: 'string',
-      },
-      factsAndFiguresGroupLink: {
-        name: 'Infographic Group Link',
-        type: 'string',
-      },
-      image: {
-        name: 'With image',
-        type: 'boolean',
-      },
-      presentationStyle: {
-        name: 'Presentation Style',
-        options: { 'With line': 'basic', 'Without line': 'icon-only' },
-        type: 'select',
-      },
-      fontStyle: {
-        name: 'Font Style',
-        options: ['normal', 'numeric-oldstyle'],
-        type: 'select',
-      },
-      columnCount: {
-        name: 'Column Count',
-        options: ['two', 'three', 'four'],
-        type: 'select',
-      },
-      alignment: {
-        name: 'Alignment',
-        options: ['left', 'center'],
-        type: 'select',
-      },
-      iconName: {
-        name: 'Icon Selection',
-        options: iconDisplayToValueMap,
-        type: 'select',
-      },
-    },
-    defaultArgs,
-  ),
-  args: defaultArgs,
+  argTypes,
+  args: {
+    ...toArgs(componentProps),
+    factsAndFiguresGroupHeading:
+      factsAndFiguresGroupData.facts_and_figures__group__heading,
+    factsAndFiguresGroupContent:
+      factsAndFiguresGroupData.facts_and_figures__group__content,
+    factsAndFiguresGroupLink:
+      factsAndFiguresGroupData.facts_and_figures__group__link__content,
+  },
 };
 
 export const FactsAndFiguresGroup = ({

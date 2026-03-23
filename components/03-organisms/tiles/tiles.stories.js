@@ -6,15 +6,8 @@ import tilesData from './tiles.yml';
 
 // Image atom component - generic images for demo
 import imageData from '../../01-atoms/images/image/image.yml';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
-
-const defaultArgs = {
-  presentationStyle: 'number',
-  alignment: 'left',
-  verticalAlignment: 'top',
-  image: false,
-  withAnimation: false,
-};
+import componentProps from './tiles-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Storybook Definition.
@@ -25,40 +18,8 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      presentationStyle: {
-        name: 'Presentation Style',
-        options: ['heading', 'icon', 'text-only'],
-        type: 'select',
-      },
-      alignment: {
-        name: 'Alignment',
-        options: ['left', 'center', 'right'],
-        type: 'select',
-      },
-      verticalAlignment: {
-        name: 'Vertical Alignment',
-        options: ['top', 'bottom'],
-        type: 'select',
-      },
-      columnCount: {
-        name: 'Column Count',
-        options: ['two', 'three', 'four'],
-        type: 'select',
-      },
-      image: {
-        name: 'With image',
-        type: 'boolean',
-      },
-      withAnimation: {
-        name: 'With Animation',
-        type: 'boolean',
-      },
-    },
-    defaultArgs,
-  ),
-  args: defaultArgs,
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
 export const Tiles = ({

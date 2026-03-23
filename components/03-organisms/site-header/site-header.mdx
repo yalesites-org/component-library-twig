@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as SiteHeaderStories from './site-header.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './site-header-props.yml';
 
 <Meta of={SiteHeaderStories} name="Docs" />
 
@@ -18,179 +20,11 @@ Use the controls panel below to experiment with the site header's properties in 
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>site_name</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The name of the site displayed in the header</td>
-    </tr>
-    <tr>
-      <td>
-        <code>primary_nav__items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>Primary navigation menu items</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>site_header__border_thickness</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'8'</code>
-      </td>
-      <td>Border thickness for navigation (from design tokens)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>site_header__nav_position</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'left'</code>
-      </td>
-      <td>
-        Navigation position: <code>'left'</code>, <code>'center'</code>, or{' '}
-        <code>'right'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>site_header__theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>Header color theme (dial)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>site_header__accent</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>Header accent color (dial)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>site_header__menu__variation</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'basic'</code>
-      </td>
-      <td>
-        Menu variation: <code>'basic'</code>, <code>'mega'</code>, or{' '}
-        <code>'focus'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>site_header__background_image</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>
-        Enable background image (only works with <code>'focus'</code> menu
-        variation)
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>site_header__site_name_is_image</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Use an image for the site name instead of text</td>
-    </tr>
-    <tr>
-      <td>
-        <code>site_header__branding_name</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'Yale University'</code>
-      </td>
-      <td>University-wide branding name</td>
-    </tr>
-    <tr>
-      <td>
-        <code>site_header__branding_link</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'https://www.yale.edu'</code>
-      </td>
-      <td>URL for university-wide branding link</td>
-    </tr>
-    <tr>
-      <td>
-        <code>utility_nav__items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Utility navigation items (secondary links)</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Menu Variations
 

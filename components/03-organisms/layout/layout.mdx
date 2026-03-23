@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as LayoutStories from './layout.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './layout-props.yml';
 
 <Meta of={LayoutStories} name="Docs" />
 
@@ -18,137 +20,11 @@ Use the controls panel below to experiment with the layout's properties in real-
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>content.primary</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Content for the primary region</td>
-    </tr>
-    <tr>
-      <td>
-        <code>content.secondary</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Content for the secondary region</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>component__layout</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'fifty-fifty'</code>
-      </td>
-      <td>
-        Layout configuration: <code>'fifty-fifty'</code>,{' '}
-        <code>'thirty-thirty-thirty'</code>, or <code>'seventy-thirty'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>component__theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'default'</code>
-      </td>
-      <td>
-        Component theme color: <code>'default'</code>, <code>'one'</code>,{' '}
-        <code>'two'</code>, <code>'three'</code>, or <code>'four'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>component__width</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'site'</code>
-      </td>
-      <td>Maximum width constraint for the layout</td>
-    </tr>
-    <tr>
-      <td>
-        <code>layout__divider</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'false'</code>
-      </td>
-      <td>
-        Show visual divider between regions: <code>'true'</code> or{' '}
-        <code>'false'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>layout__padding</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'default'</code>
-      </td>
-      <td>
-        Padding configuration: <code>'default'</code>, <code>'no-top'</code>,{' '}
-        <code>'no-bottom'</code>, or <code>'no-padding'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>content.tertiary</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>
-        Content for the tertiary region (only used with{' '}
-        <code>thirty-thirty-thirty</code> layout)
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Layout Configurations
 
