@@ -97,27 +97,39 @@ The accordion component allows users to show and hide sections of related conten
 
 ## Properties
 
+Use the `twigPropsTable` utility function with a `[component]-props.yml` file as the single source of truth for all prop metadata:
+
+```mdx
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './[component]-props.yml';
+
+## Properties
+
 ### Required Properties
 
-Use HTML tables for better rendering in Storybook MDX:
+{twigPropsTable(componentProps, 'required')}
 
-```html
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>accordion__items</code></td>
-      <td><code>array</code></td>
-      <td>Array of accordion items...</td>
-    </tr>
-  </tbody>
-</table>
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+```
+
+The `twigPropsTable` function reads from the component's `[component]-props.yml` file. The `filter` argument accepts `'required'`, `'optional'`, or omit for all props.
+
+See `accordion-props.yml` for a complete example of the YAML format.
+
+### Story Controls and Arguments
+
+In your `[component].stories.js` file, use utilities from `components/_storybook/component-props.js` to generate Storybook controls and default arguments from the same YAML file:
+
+```javascript
+import { toArgTypes, toArgs } from '../_storybook/component-props';
+import componentProps from './[component]-props.yml';
+
+export default {
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
+};
 ```
 
 ...

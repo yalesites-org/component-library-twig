@@ -54,6 +54,16 @@ import {
   // borderThicknessOptions, // Uncomment if needed
 } from '../_storybook/theme-constants';
 
+// Import YAML-driven props (recommended for new stories)
+// import { toArgTypes, toArgs } from '../_storybook/component-props';
+// import componentProps from './[component-name]-props.yml';
+//
+// Then in export default:
+//   argTypes: toArgTypes(componentProps),
+//   args: toArgs(componentProps),
+//
+// See components/_storybook/README.md for full YAML props documentation.
+
 // Import icon utilities if component uses icons
 // import { createIconMapping, hasIcon } from '../_storybook/icon-utils';
 // import iconsData from './[component-name]-icons.yml';

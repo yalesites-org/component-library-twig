@@ -590,12 +590,74 @@ const config = {
 
 Only extract truly reusable patterns.
 
+## YAML-Driven Props Pattern
+
+Components use a YAML-driven props system for defining Storybook controls and MDX documentation tables from a single source of truth.
+
+### Component Props File
+
+Each component has a `[component]-props.yml` file:
+
+```yaml
+# [component]-props.yml
+myProp:
+  twigProp: my_twig__prop       # snake_case Twig variable name
+  name: My Prop Label            # display name in controls
+  type: string                   # string | boolean | select | number | array
+  required: false
+  description: Short description for the controls panel
+  detail: >                      # optional: longer description for docs tables
+    More detailed explanation...
+  default: someValue             # only if the Twig template has |default('someValue')
+  control: text                  # text | boolean | select | number (omit for docs-only)
+  options:                       # only for select type
+    - option1
+    - option2
+```
+
+### In Story Files
+
+```javascript
+import { toArgTypes, toArgs } from '../_storybook/component-props';
+import componentProps from './[component]-props.yml';
+
+export default {
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
+};
+```
+
+### In MDX Documentation
+
+```mdx
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './[component]-props.yml';
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+```
+
+### Key Rules
+
+- **`default` field**: Must match the actual Twig `|default()` value. Story-preferred demo values belong in `args`, not YAML.
+- **YAML keys**: Top-level keys are camelCase Storybook arg names; `twigProp` is the snake_case Twig variable.
+- **Omit `control`**: For props that are documentation-only (no interactive control), omit the `control` field.
+- **Omit `twigProp`**: For Storybook-only toggles with no Twig counterpart, omit `twigProp` and add a `detail` explanation.
+
 ## Additional Resources
 
 - **Template**: `TEMPLATE-playground-story.js` (root of component library)
 - **Theme Documentation**: `components/00-introduction/themes.stories.js`
 - **Testing Guide**: `components/_storybook/TESTING.md`
 - **VRT Data**: `components/_storybook/vrt-combinations.yml`
+- **Component Props Files**: `[component]-props.yml` — YAML props file for each component (single source of truth)
+- **Component Props Utilities**: `components/_storybook/component-props.js` — `toArgTypes` and `toArgs` utilities
+- **Props Table Component**: `components/_storybook/twig-props-table.mdx` — `twigPropsTable` utility for MDX docs
 
 ## Questions or Issues?
 
