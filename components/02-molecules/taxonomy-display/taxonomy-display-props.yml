@@ -23,10 +23,12 @@ componentTheme:
   control: select
 
 showTaxonomy:
-  twigProp: taxonomy_display__items
   name: Show Taxonomy
   type: boolean
   required: false
-  description: Whether to display taxonomy items or show the empty state
+  description: Toggle to show or hide taxonomy items in the preview
+  detail: >
+    Storybook-only control. When false, passes an empty items array to the
+    Twig template. The Twig prop is taxonomy_display__items (array).
   default: true
   control: boolean

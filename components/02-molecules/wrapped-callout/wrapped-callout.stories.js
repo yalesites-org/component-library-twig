@@ -17,14 +17,14 @@ export default {
   args: {
     ...toArgs(componentProps),
     calloutContent: wrappedCalloutData.text_two,
-    calloutCallout: wrappedCalloutData.text_three,
+    calloutText: wrappedCalloutData.text_three,
   },
 };
 
 export const wrappedCallout = ({
   calloutAlignment,
   calloutContent,
-  calloutCallout,
+  calloutText,
   themeColor,
 }) => `
   ${textFieldTwig({
@@ -35,7 +35,7 @@ export const wrappedCallout = ({
   ${wrappedCalloutTwig({
     wrapped_callout__alignment: calloutAlignment,
     wrapped_callout__content: calloutContent,
-    wrapped_callout__callout: calloutCallout,
+    wrapped_callout__callout: calloutText,
     wrapped_callout__theme: themeColor,
   })}
 `;

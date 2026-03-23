@@ -6,7 +6,7 @@
 #
 # Edit descriptions and details freely - changes appear in Storybook on reload.
 
-tabs__theme:
+tabsTheme:
   twigProp: tabs__theme
   name: Tabs Theme (dial)
   type: select

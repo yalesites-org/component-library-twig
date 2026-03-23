@@ -26,9 +26,9 @@ calloutContent:
   description: Main body text that flows around the callout (supports HTML)
   control: text
 
-calloutCallout:
+calloutText:
   twigProp: wrapped_callout__callout
-  name: Callout Callout
+  name: Callout Text
   type: string
   required: false
   description: Highlighted callout text displayed in the callout box (supports HTML)
