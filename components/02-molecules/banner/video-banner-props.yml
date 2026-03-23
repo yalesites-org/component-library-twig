@@ -9,7 +9,7 @@ width:
   name: Video Width
   type: select
   required: false
-  description: "Video width: max (constrained) or full (fluid full-width)"
+  description: 'Video width: max (constrained) or full (fluid full-width)'
   default: max
   options:
     - max

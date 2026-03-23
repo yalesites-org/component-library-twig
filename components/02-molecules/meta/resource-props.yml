@@ -25,10 +25,10 @@ resourceType:
   name: Resource Type
   type: select
   required: true
-  description: "Resource type: video or document (Video maps to 'video', Document maps to 'document')"
+  description: 'Resource type: video or document'
   options:
-    - video
-    - document
+    Video: video
+    Document: document
   control: select
 
 publishDate:

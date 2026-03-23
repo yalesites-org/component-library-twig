@@ -25,7 +25,7 @@ width:
   name: Width
   type: select
   required: false
-  description: "Component width: site or highlight"
+  description: 'Component width: site or highlight'
   default: site
   options:
     - highlight
@@ -37,7 +37,7 @@ position:
   name: Image Position
   type: select
   required: false
-  description: "Image position: image-left or image-right"
+  description: 'Image position: image-left or image-right'
   default: image-left
   options:
     - image-left
@@ -49,7 +49,7 @@ contentVerticalAlignment:
   name: Content Vertical Alignment
   type: select
   required: false
-  description: "Vertical alignment of content: top, middle, or bottom"
+  description: 'Vertical alignment of content: top, middle, or bottom'
   default: top
   options:
     - top
@@ -62,7 +62,7 @@ imageStyle:
   name: Image Style
   type: select
   required: false
-  description: "Image style: inline or offset"
+  description: 'Image style: inline or offset'
   default: inline
   options:
     - inline
@@ -74,7 +74,7 @@ focus:
   name: Focus
   type: select
   required: false
-  description: "Content focus emphasis: image or equal"
+  description: 'Content focus emphasis: image or equal'
   default: equal
   options:
     - image

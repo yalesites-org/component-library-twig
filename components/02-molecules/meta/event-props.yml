@@ -8,7 +8,7 @@ dataVariant:
   name: Event Date Scenario
   type: select
   required: false
-  description: "Which set of event date data to display"
+  description: 'Which set of event date data to display'
   detail: >
     Storybook-only selector that switches between pre-defined event date
     data files. Not a Twig prop — the selected data is spread into the
@@ -44,7 +44,7 @@ format:
   name: Format
   type: select
   required: false
-  description: "Event format: In-person, Online, or Hybrid"
+  description: 'Event format: In-person, Online, or Hybrid'
   default: In-person
   options:
     - In-person

@@ -9,6 +9,9 @@ import componentProps from './reference-card-props.yml';
 import { toArgTypes, toArgs } from '../../../_storybook/component-props';
 import { addTableDefaults } from '../../../_storybook/add-table-defaults';
 
+const argTypes = toArgTypes(componentProps);
+argTypes.eyebrow = { ...argTypes.eyebrow, if: { arg: 'showEyebrow' } };
+
 /**
  * Storybook Definition.
  */
@@ -17,7 +20,7 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: toArgTypes(componentProps),
+  argTypes,
   args: {
     ...toArgs(componentProps),
     heading: referenceCardData.reference_card__heading,

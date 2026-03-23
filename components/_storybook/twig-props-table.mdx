@@ -21,9 +21,7 @@ return (
   <tbody>
     {entries.map(([key, prop]) => (
       <tr key={key}>
-        <td>
-          <code>{prop.twigProp}</code>
-        </td>
+        <td>{prop.twigProp ? <code>{prop.twigProp}</code> : '—'}</td>
         <td>
           <code>{prop.type || '—'}</code>
         </td>

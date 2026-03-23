@@ -52,7 +52,6 @@ bgColor:
   description: Component theme color
   default: one
   options:
-    - default
     - one
     - two
     - three
@@ -65,7 +64,7 @@ profileImageOrientation:
   name: Profile Image Orientation
   type: select
   required: false
-  description: "Image orientation: landscape or portrait"
+  description: 'Image orientation: landscape or portrait'
   default: landscape
   options:
     - landscape
@@ -77,8 +76,8 @@ profileImageAlignment:
   name: Profile Image Alignment
   type: select
   required: false
-  description: "Image alignment: left or right"
-  default: right
+  description: 'Image alignment: left or right'
+  default: left
   options:
     - left
     - right
@@ -89,7 +88,7 @@ profileImageStyle:
   name: Profile Image Style
   type: select
   required: false
-  description: "Image style: inline or outdent"
+  description: 'Image style: inline or outdent'
   default: inline
   options:
     - inline

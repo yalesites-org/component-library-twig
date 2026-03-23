@@ -44,7 +44,6 @@ bgColor:
   description: Component theme color
   default: one
   options:
-    - default
     - one
     - two
     - three
@@ -57,8 +56,8 @@ overlayVariation:
   name: Content Overlay
   type: select
   required: false
-  description: "Content overlay style: full, contained, or contained-narrow"
-  default: full
+  description: 'Content overlay style: full, contained, or contained-narrow'
+  default: contained
   options:
     - contained
     - contained-narrow
@@ -70,7 +69,7 @@ size:
   name: Content Size
   type: select
   required: false
-  description: "Content size variation: reduced, full, or mini"
+  description: 'Content size variation: reduced, full, or mini'
   default: full
   options:
     - reduced

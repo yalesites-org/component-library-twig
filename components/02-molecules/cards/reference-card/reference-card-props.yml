@@ -28,7 +28,7 @@ collectionType:
   name: Collection Type
   type: select
   required: false
-  description: "Layout type for the card collection: grid, list, condensed, or single"
+  description: 'Layout type for the card collection: grid, list, condensed, or single'
   default: grid
   options:
     - grid

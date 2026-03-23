@@ -25,7 +25,7 @@ position:
   name: Image Position
   type: select
   required: false
-  description: "Image position: image-left or image-right"
+  description: 'Image position: image-left or image-right'
   default: image-left
   options:
     - image-left
@@ -37,7 +37,7 @@ contentVerticalAlignment:
   name: Content Vertical Alignment
   type: select
   required: false
-  description: "Vertical alignment of content: top, middle, or bottom"
+  description: 'Vertical alignment of content: top, middle, or bottom'
   default: middle
   options:
     - top
@@ -50,7 +50,7 @@ imageStyle:
   name: Image Style
   type: select
   required: false
-  description: "Image style: inline or offset"
+  description: 'Image style: inline or offset'
   default: inline
   options:
     - inline

@@ -44,7 +44,6 @@ bgColor:
   description: Component theme color
   default: one
   options:
-    - default
     - one
     - two
     - three
@@ -57,7 +56,7 @@ linkStyle:
   name: Link Style
   type: select
   required: false
-  description: "Style for the call-to-action links: cta, text-link, or none"
+  description: 'Style for the call-to-action links: cta, text-link, or none'
   default: cta
   options:
     - cta
@@ -70,7 +69,7 @@ contentLayout:
   name: Content Layout
   type: select
   required: false
-  description: "Position of the content overlay: bottom, left, or right"
+  description: 'Position of the content overlay: bottom, left, or right'
   default: bottom
   options:
     - bottom
@@ -83,7 +82,7 @@ buttonAlignment:
   name: Button Alignment
   type: select
   required: false
-  description: "Alignment for the action buttons: left, center, or right"
+  description: 'Alignment for the action buttons: left, center, or right'
   default: right
   options:
     - left
@@ -96,7 +95,7 @@ buttonStyleConsistency:
   name: Button Style Consistency
   type: select
   required: false
-  description: "Visual style consistency for multiple buttons: mixed, both_primary, or both_secondary"
+  description: 'Visual style consistency for multiple buttons: mixed, both_primary, or both_secondary'
   default: mixed
   options:
     - mixed

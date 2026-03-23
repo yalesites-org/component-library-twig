@@ -41,6 +41,7 @@ export default {
   argTypes: toArgTypes(componentProps),
   args: {
     ...toArgs(componentProps),
+    overlayVariation: 'full',
     heading: bannerData.banner__heading,
     snippet: bannerData.banner__snippet,
     linkContent: bannerData.banner__link__content,

@@ -173,6 +173,7 @@ Profile.args = {
   subTitle: 'Subtitle',
   department: 'Department name',
   pronouns: 'They/They/Them',
+  profileImageAlignment: 'right',
 };
 
 export const Resource = ({

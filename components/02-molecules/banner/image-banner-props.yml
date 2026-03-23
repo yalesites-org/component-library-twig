@@ -12,7 +12,6 @@ bgColor:
   description: Component theme color
   default: one
   options:
-    - default
     - one
     - two
     - three
@@ -25,7 +24,7 @@ size:
   name: Image Size
   type: select
   required: false
-  description: "Image height variation: tall or short"
+  description: 'Image height variation: tall or short'
   default: tall
   options:
     - tall
