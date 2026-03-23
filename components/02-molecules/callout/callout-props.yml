@@ -36,9 +36,9 @@ linkType:
   type: select
   required: false
   description: Style of the callout link
-  default: button
+  default: cta
   options:
-    - button
+    - cta
     - link
   control: select
 

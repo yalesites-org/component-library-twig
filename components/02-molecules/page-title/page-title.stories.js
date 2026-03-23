@@ -31,6 +31,6 @@ export const PageTitle = ({ meta, prefix, socialLinks }) =>
     page_title__heading: 'Davis Team Project Wins Award for Research',
     page_title__meta: meta,
     page_title__prefix: prefix,
-    page_title__show_social_links: socialLinks ? 'true' : 'false',
+    page_title__show_social_media_sharing_links: socialLinks ? 'true' : 'false',
     ...socialLinksData,
   });

@@ -17,7 +17,7 @@ width:
   options:
     - max
     - site
-    - hightlight
+    - highlight
     - content
   control: select
 
