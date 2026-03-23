@@ -1,31 +1,11 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
-
 // Twig templates
 import contentSpotlightPortraitTwig from './yds-content-spotlight-portrait.twig';
 
 // Data files
 import imageData from '../../01-atoms/images/image/image.yml';
 import contentSpotlightPortraitData from './content-spotlight-portrait.yml';
-
-const colorPairingsData = Object.keys(tokens['component-themes']);
-
-const contentSpotlightPortraitArgs = {
-  componentTheme: 'default',
-  position: 'image-left',
-  contentVerticalAlignment: 'middle',
-  imageStyle: 'inline',
-  overline: null,
-  heading: contentSpotlightPortraitData.content_spotlight_portrait__heading,
-  subheading:
-    contentSpotlightPortraitData.content_spotlight_portrait__subheading,
-  text: contentSpotlightPortraitData.content_spotlight_portrait__text,
-  linkContent:
-    contentSpotlightPortraitData.content_spotlight_portrait__link__content,
-  linkTwoContent:
-    contentSpotlightPortraitData.content_spotlight_portrait__link_two__content,
-  caption: contentSpotlightPortraitData.content_spotlight_portrait__caption,
-};
+import componentProps from './content-spotlight-portrait-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Storybook Definition.
@@ -36,60 +16,19 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      componentTheme: {
-        name: 'Component Theme (dial)',
-        type: 'select',
-        options: ['default', ...colorPairingsData],
-      },
-      position: {
-        name: 'Image Position',
-        type: 'select',
-        options: ['image-left', 'image-right'],
-      },
-      contentVerticalAlignment: {
-        name: 'Content Vertical Alignment',
-        type: 'select',
-        options: ['top', 'middle', 'bottom'],
-      },
-      imageStyle: {
-        name: 'Image Style',
-        type: 'select',
-        options: ['inline', 'offset'],
-      },
-      overline: {
-        name: 'Overline',
-        type: 'string',
-      },
-      heading: {
-        name: 'Heading',
-        type: 'string',
-      },
-      subheading: {
-        name: 'Subheading',
-        type: 'string',
-      },
-      text: {
-        name: 'Text',
-        type: 'string',
-      },
-      linkContent: {
-        name: 'Link Content',
-        type: 'string',
-      },
-      linkTwoContent: {
-        name: 'Second Link Content',
-        type: 'string',
-      },
-      caption: {
-        name: 'Caption',
-        type: 'string',
-      },
-    },
-    contentSpotlightPortraitArgs,
-  ),
-  args: contentSpotlightPortraitArgs,
+  argTypes: toArgTypes(componentProps),
+  args: {
+    ...toArgs(componentProps),
+    heading: contentSpotlightPortraitData.content_spotlight_portrait__heading,
+    subheading:
+      contentSpotlightPortraitData.content_spotlight_portrait__subheading,
+    text: contentSpotlightPortraitData.content_spotlight_portrait__text,
+    linkContent:
+      contentSpotlightPortraitData.content_spotlight_portrait__link__content,
+    linkTwoContent:
+      contentSpotlightPortraitData.content_spotlight_portrait__link_two__content,
+    caption: contentSpotlightPortraitData.content_spotlight_portrait__caption,
+  },
 };
 
 export const ContentSpotlightPortrait = ({

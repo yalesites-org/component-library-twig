@@ -1,30 +1,11 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
-
 // Twig templates
 import textWithImageTwig from './yds-text-with-image.twig';
 
 // Data files
 import imageData from '../../01-atoms/images/image/image.yml';
 import textWithImageData from './text-with-image.yml';
-
-const colorPairingsData = Object.keys(tokens['component-themes']);
-
-const textWithImageArgs = {
-  componentTheme: 'default',
-  width: 'site',
-  position: 'image-left',
-  contentVerticalAlignment: 'top',
-  imageStyle: 'inline',
-  focus: 'equal',
-  overline: null,
-  heading: textWithImageData.text_with_image__heading,
-  subheading: textWithImageData.text_with_image__subheading,
-  text: textWithImageData.text_with_image__text,
-  linkContent: textWithImageData.text_with_image__link__content,
-  linkTwoContent: textWithImageData.text_with_image__link_two__content,
-  caption: textWithImageData.text_with_image__caption,
-};
+import componentProps from './text-with-image-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Storybook Definition.
@@ -35,70 +16,16 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      componentTheme: {
-        name: 'Component Theme (dial)',
-        type: 'select',
-        options: ['default', ...colorPairingsData],
-      },
-      width: {
-        name: 'Width',
-        type: 'select',
-        options: ['highlight', 'site'],
-      },
-      position: {
-        name: 'Image Position',
-        type: 'select',
-        options: ['image-left', 'image-right'],
-      },
-      contentVerticalAlignment: {
-        name: 'Content Vertical Alignment',
-        type: 'select',
-        options: ['top', 'middle', 'bottom'],
-      },
-      imageStyle: {
-        name: 'Image Style',
-        type: 'select',
-        options: ['inline', 'offset'],
-      },
-      focus: {
-        name: 'Focus',
-        type: 'select',
-        options: ['image', 'equal'],
-      },
-      overline: {
-        name: 'Overline',
-        type: 'string',
-      },
-      heading: {
-        name: 'Heading',
-        type: 'string',
-      },
-      subheading: {
-        name: 'Subheading',
-        type: 'string',
-      },
-      text: {
-        name: 'Text',
-        type: 'string',
-      },
-      linkContent: {
-        name: 'Link Content',
-        type: 'string',
-      },
-      linkTwoContent: {
-        name: 'Second Link Content',
-        type: 'string',
-      },
-      caption: {
-        name: 'Caption',
-        type: 'string',
-      },
-    },
-    textWithImageArgs,
-  ),
-  args: textWithImageArgs,
+  argTypes: toArgTypes(componentProps),
+  args: {
+    ...toArgs(componentProps),
+    heading: textWithImageData.text_with_image__heading,
+    subheading: textWithImageData.text_with_image__subheading,
+    text: textWithImageData.text_with_image__text,
+    linkContent: textWithImageData.text_with_image__link__content,
+    linkTwoContent: textWithImageData.text_with_image__link_two__content,
+    caption: textWithImageData.text_with_image__caption,
+  },
 };
 
 export const ContentSpotlightLandscape = ({

@@ -1,41 +1,7 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
-
 import imageBannerTwig from './image/yds-image-banner.twig';
+import componentProps from './image-banner-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 import imageData from '../../01-atoms/images/image/image.yml';
-
-const colorPairingsData = Object.keys(tokens['component-themes']);
-
-const defaultArgs = {
-  bgColor: 'one',
-  size: 'tall',
-  withVideo: false,
-  imageCaption: 'Image Caption',
-};
-
-const sharedArgTypes = addTableDefaults(
-  {
-    bgColor: {
-      name: 'Component Theme (dial)',
-      type: 'select',
-      options: colorPairingsData,
-    },
-    size: {
-      name: 'Image Size',
-      type: 'select',
-      options: ['tall', 'short'],
-    },
-    withVideo: {
-      name: 'With Video',
-      type: 'boolean',
-    },
-    imageCaption: {
-      name: 'Image Caption',
-      type: 'string',
-    },
-  },
-  defaultArgs,
-);
 
 const renderBanner = ({ bgColor, size, withVideo, imageCaption }) =>
   imageBannerTwig({
@@ -56,15 +22,15 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  args: defaultArgs,
-  argTypes: sharedArgTypes,
+  argTypes: toArgTypes(componentProps),
+  args: {
+    ...toArgs(componentProps),
+    imageCaption: 'Image Caption',
+  },
 };
 
 export const ImageBanner = (args) => renderBanner(args);
-ImageBanner.args = defaultArgs;
-ImageBanner.argTypes = sharedArgTypes;
 
 export const ImageBannerShort = (args) => renderBanner(args);
-ImageBannerShort.args = { ...defaultArgs, size: 'short' };
-ImageBannerShort.argTypes = sharedArgTypes;
+ImageBannerShort.args = { size: 'short' };
 ImageBannerShort.storyName = 'Short';

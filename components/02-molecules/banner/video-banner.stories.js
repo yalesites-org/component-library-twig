@@ -1,22 +1,7 @@
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
-
 import videoBannerTwig from './video/yds-video-banner.twig';
+import componentProps from './video-banner-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 import videoBannerData from '../../01-atoms/videos/video-embed/video-embed.yml';
-
-const defaultArgs = {
-  width: 'max',
-};
-
-const sharedArgTypes = addTableDefaults(
-  {
-    width: {
-      name: 'Video Width',
-      type: 'select',
-      options: ['max', 'full'],
-    },
-  },
-  defaultArgs,
-);
 
 /**
  * Storybook Definition.
@@ -27,8 +12,8 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  args: defaultArgs,
-  argTypes: sharedArgTypes,
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
 export const VideoBanner = ({ width }) =>
@@ -36,6 +21,3 @@ export const VideoBanner = ({ width }) =>
     video_banner__content: videoBannerData.video_embed__content,
     video_banner__width: width,
   });
-
-VideoBanner.args = defaultArgs;
-VideoBanner.argTypes = sharedArgTypes;

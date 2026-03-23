@@ -2,17 +2,8 @@ import directoryCardTwig from './yds-directory-listing-card.twig';
 
 import directoryCardData from './yds-directory-listing-card.yml';
 import imageData from '../../../01-atoms/images/image/image.yml';
-import { addTableDefaults } from '../../../_storybook/add-table-defaults';
-
-const defaultArgs = {
-  heading: directoryCardData.directory_listing_card__heading,
-  subheading: directoryCardData.directory_listing_card__subheading,
-  snippet: directoryCardData.directory_listing_card__snippet,
-  showEmail: true,
-  phone: directoryCardData.directory_listing_card__phone,
-  featured: true,
-  overline: directoryCardData.directory_listing_card__overline,
-};
+import componentProps from './directory-listing-card-props.yml';
+import { toArgTypes, toArgs } from '../../../_storybook/component-props';
 
 /**
  * Storybook Definition.
@@ -22,40 +13,15 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      heading: {
-        name: 'Heading',
-        type: 'string',
-      },
-      subheading: {
-        name: 'Subheading',
-        type: 'string',
-      },
-      snippet: {
-        name: 'Snippet',
-        type: 'string',
-      },
-      showEmail: {
-        name: 'Show Email',
-        type: 'boolean',
-      },
-      phone: {
-        name: 'Phone',
-        type: 'string',
-      },
-      featured: {
-        name: 'Featured',
-        type: 'boolean',
-      },
-      overline: {
-        name: 'Overline',
-        type: 'string',
-      },
-    },
-    defaultArgs,
-  ),
-  args: defaultArgs,
+  argTypes: toArgTypes(componentProps),
+  args: {
+    ...toArgs(componentProps),
+    heading: directoryCardData.directory_listing_card__heading,
+    subheading: directoryCardData.directory_listing_card__subheading,
+    snippet: directoryCardData.directory_listing_card__snippet,
+    phone: directoryCardData.directory_listing_card__phone,
+    overline: directoryCardData.directory_listing_card__overline,
+  },
 };
 
 export const ProfileCardDirectoryListing = ({

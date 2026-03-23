@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as ImageBannerStories from './image-banner.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './image-banner-props.yml';
 
 <Meta of={ImageBannerStories} name="Docs" />
 
@@ -20,71 +22,7 @@ Use the controls panel below to experiment with the component's properties in re
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>image_banner__size</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'tall'</code>
-      </td>
-      <td>
-        Image height: <code>'tall'</code> or <code>'short'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>image_banner__caption</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Caption text displayed below or over the image</td>
-    </tr>
-    <tr>
-      <td>
-        <code>image_banner__video</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'false'</code>
-      </td>
-      <td>
-        Whether to display a video background: <code>'true'</code> or{' '}
-        <code>'false'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>image_banner__content__background</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>Component theme (see Theme Options below)</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Theme Options
 

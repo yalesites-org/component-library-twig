@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as CustomCardStories from './custom-card.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './custom-card-props.yml';
 
 <Meta of={CustomCardStories} name="Docs" />
 
@@ -18,123 +20,11 @@ Use the controls panel below to experiment with the custom card's properties in 
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>custom_card__heading</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The heading text for the card</td>
-    </tr>
-    <tr>
-      <td>
-        <code>custom_card__url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>URL that the card heading and image link to</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>custom_card__snippet</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>
-        Descriptive text content displayed below the heading (supports HTML)
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>custom_card__image</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'true'</code>
-      </td>
-      <td>
-        Whether to display an image with the card: <code>'true'</code> or{' '}
-        <code>'false'</code>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-### Collection Properties
-
-Custom cards are displayed within a collection container that supports additional properties:
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>data-component-width</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'site'</code>
-      </td>
-      <td>
-        Controls the width of the card collection container (e.g., 'site',
-        'max')
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>data-collection-featured</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>Whether the collection displays cards in a featured layout style</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Component Variations
 

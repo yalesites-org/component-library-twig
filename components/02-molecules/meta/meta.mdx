@@ -1,5 +1,10 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as MetaStories from './meta.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import postMetaProps from './post-meta-props.yml';
+import eventProps from './event-props.yml';
+import profileProps from './profile-props.yml';
+import resourceProps from './resource-props.yml';
 
 <Meta of={MetaStories} name="Docs" />
 
@@ -28,26 +33,7 @@ A simple meta component for displaying author information and publication dates.
 
 **Properties:**
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>basic_meta</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>HTML string containing meta information (supports HTML markup)</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(postMetaProps, 'required')}
 
 ### Event Meta
 
@@ -64,80 +50,8 @@ A comprehensive metadata component for displaying event information from Localis
 
 **Key Properties:**
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>event_title__heading</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Event title heading</td>
-    </tr>
-    <tr>
-      <td>
-        <code>event_dates</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>Array of event date objects with start/end timestamps</td>
-    </tr>
-    <tr>
-      <td>
-        <code>event_meta__format</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Event format (e.g., 'Virtual Event', 'In-Person')</td>
-    </tr>
-    <tr>
-      <td>
-        <code>event_meta__address</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Event location address</td>
-    </tr>
-    <tr>
-      <td>
-        <code>event_meta__cta_primary__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Primary call-to-action text (e.g., 'Register', 'Buy Tickets')</td>
-    </tr>
-    <tr>
-      <td>
-        <code>event_meta__with_calendar</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>Show 'Add to calendar' button</td>
-    </tr>
-    <tr>
-      <td>
-        <code>event_meta__image</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Show event image ('true' or 'false')</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(eventProps, 'required')}
+{twigPropsTable(eventProps, 'optional')}
 
 ### Profile Meta
 
@@ -154,122 +68,8 @@ Displays professional metadata for person profiles including titles, departments
 
 **Key Properties:**
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>profile_meta__heading</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>-</td>
-      <td>Person's name</td>
-    </tr>
-    <tr>
-      <td>
-        <code>profile_meta__title_line</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>-</td>
-      <td>Professional title</td>
-    </tr>
-    <tr>
-      <td>
-        <code>profile_meta__subtitle_line</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>-</td>
-      <td>Subtitle (additional title or role)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>profile_meta__department</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>-</td>
-      <td>Department or organizational unit</td>
-    </tr>
-    <tr>
-      <td>
-        <code>profile_meta__pronouns</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>-</td>
-      <td>Preferred pronouns</td>
-    </tr>
-    <tr>
-      <td>
-        <code>profile_meta__background</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>Component theme (dial)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>profile_meta__image_orientation</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'landscape'</code>
-      </td>
-      <td>
-        Image orientation: <code>'landscape'</code> or <code>'portrait'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>profile_meta__image_alignment</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'right'</code>
-      </td>
-      <td>
-        Image alignment: <code>'left'</code> or <code>'right'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>profile_meta__image_style</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'inline'</code>
-      </td>
-      <td>
-        Image style: <code>'inline'</code> or <code>'outdent'</code>
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(profileProps, 'required')}
+{twigPropsTable(profileProps, 'optional')}
 
 ### Resource Meta
 
@@ -286,73 +86,8 @@ Displays metadata for downloadable resources and media content, including catego
 
 **Key Properties:**
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>resource_meta__heading</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Resource title</td>
-    </tr>
-    <tr>
-      <td>
-        <code>resource_meta__category</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Resource category label</td>
-    </tr>
-    <tr>
-      <td>
-        <code>resource_meta__resource_type</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        Resource type: <code>'video'</code> or <code>'document'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>resource_meta__publish_date</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Publication date string</td>
-    </tr>
-    <tr>
-      <td>
-        <code>resource_meta__description</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Resource description (supports HTML)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>resource_meta__download_url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Download link for document resources</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(resourceProps, 'required')}
+{twigPropsTable(resourceProps, 'optional')}
 
 ## Technical Specifications
 

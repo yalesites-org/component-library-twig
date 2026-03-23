@@ -5,19 +5,9 @@ import referenceProfileCardData from './examples/profile-card.yml';
 import referencePageCardData from './examples/page-card.yml';
 import referenceResourceData from './examples/resource-card.yml';
 import imageData from '../../../01-atoms/images/image/image.yml';
+import componentProps from './reference-card-props.yml';
+import { toArgTypes, toArgs } from '../../../_storybook/component-props';
 import { addTableDefaults } from '../../../_storybook/add-table-defaults';
-
-const defaultArgs = {
-  heading: referenceCardData.reference_card__heading,
-  snippet: referenceCardData.reference_card__snippet,
-  collectionType: 'grid',
-  featured: true,
-  withImage: true,
-  showEyebrow: false,
-  showCategories: false,
-  showTags: false,
-  date: referenceCardData.reference_card__date,
-};
 
 /**
  * Storybook Definition.
@@ -27,54 +17,12 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      eyebrow: {
-        name: 'Eyebrow',
-        type: 'string',
-        if: { arg: 'showEyebrow' },
-      },
-      heading: {
-        name: 'Heading',
-        type: 'string',
-      },
-      snippet: {
-        name: 'Snippet',
-        type: 'string',
-      },
-      collectionType: {
-        name: 'Collection Type',
-        type: 'select',
-        options: ['grid', 'list', 'condensed', 'single'],
-      },
-      featured: {
-        name: 'Featured',
-        type: 'boolean',
-      },
-      showCategories: {
-        name: 'Show Categories/Affiliations',
-        type: 'boolean',
-      },
-      showEyebrow: {
-        name: 'Show Eyebrow',
-        type: 'boolean',
-      },
-      showTags: {
-        name: 'Show Tags',
-        type: 'boolean',
-      },
-      withImage: {
-        name: 'With Image',
-        type: 'boolean',
-      },
-      overlayText: {
-        name: 'Overlay Text (Pinned)',
-        type: 'string',
-      },
-    },
-    defaultArgs,
-  ),
-  args: defaultArgs,
+  argTypes: toArgTypes(componentProps),
+  args: {
+    ...toArgs(componentProps),
+    heading: referenceCardData.reference_card__heading,
+    snippet: referenceCardData.reference_card__snippet,
+  },
 };
 
 export const PostCard = ({

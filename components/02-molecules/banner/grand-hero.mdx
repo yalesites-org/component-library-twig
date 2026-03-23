@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as GrandHeroStories from './grand-hero.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './grand-hero-props.yml';
 
 <Meta of={GrandHeroStories} name="Docs" />
 
@@ -20,158 +22,11 @@ Use the controls panel below to experiment with the component's properties in re
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>grand_hero__heading</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The main heading text for the grand hero banner</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>grand_hero__snippet</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Additional descriptive text (supports HTML)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>grand_hero__link__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Text for the primary call-to-action button</td>
-    </tr>
-    <tr>
-      <td>
-        <code>grand_hero__link__url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>URL for the primary call-to-action button</td>
-    </tr>
-    <tr>
-      <td>
-        <code>grand_hero__link__content_two</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Text for the secondary call-to-action button</td>
-    </tr>
-    <tr>
-      <td>
-        <code>grand_hero__link__url_two</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>URL for the secondary call-to-action button</td>
-    </tr>
-    <tr>
-      <td>
-        <code>grand_hero__content__background</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>Component theme (see Theme Options below)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>grand_hero__overlay_variation</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'full'</code>
-      </td>
-      <td>
-        Content overlay style: <code>'full'</code>, <code>'contained'</code>, or{' '}
-        <code>'contained-narrow'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>grand_hero__size</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'full'</code>
-      </td>
-      <td>
-        Content size: <code>'full'</code>, <code>'reduced'</code>, or{' '}
-        <code>'mini'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>grand_hero__video</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'false'</code>
-      </td>
-      <td>
-        Whether to display a video background: <code>'true'</code> or{' '}
-        <code>'false'</code>
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Theme Options
 

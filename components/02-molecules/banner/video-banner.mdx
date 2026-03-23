@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as VideoBannerStories from './video-banner.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './video-banner-props.yml';
 
 <Meta of={VideoBannerStories} name="Docs" />
 
@@ -18,58 +20,9 @@ Use the controls panel below to experiment with the component's properties in re
 
 ## Properties
 
-### Required Properties
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>video_banner__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Video embed code or iframe HTML</td>
-    </tr>
-  </tbody>
-</table>
-
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>video_banner__width</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'max'</code>
-      </td>
-      <td>
-        Video width: <code>'max'</code> (constrained) or <code>'full'</code>{' '}
-        (fluid full-width)
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Technical Specifications
 

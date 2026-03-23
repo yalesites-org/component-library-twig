@@ -1,79 +1,8 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
-
 import bannerTwig from './action/yds-action-banner.twig';
+import componentProps from './action-banner-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 import bannerData from './banner.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
-
-const colorPairingsData = Object.keys(tokens['component-themes']);
-
-const bannerArgTypes = {
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
-  snippet: {
-    name: 'Snippet',
-    type: 'string',
-  },
-  linkContent: {
-    name: 'Link Content',
-    type: 'string',
-  },
-  linkContentTwo: {
-    name: 'Link Content Two',
-    type: 'string',
-  },
-};
-
-const defaultArgs = {
-  heading: bannerData.banner__heading,
-  snippet: bannerData.banner__snippet,
-  linkContent: bannerData.banner__link__content,
-  linkContentTwo: bannerData.banner__link__content_two,
-  bgColor: 'one',
-  linkStyle: 'cta',
-  contentLayout: 'bottom',
-  buttonAlignment: 'right',
-  buttonStyleConsistency: 'mixed',
-  overlayBackgroundImage: false,
-};
-
-const sharedArgTypes = addTableDefaults(
-  {
-    ...bannerArgTypes,
-    bgColor: {
-      name: 'Component Theme (dial)',
-      type: 'select',
-      options: colorPairingsData,
-    },
-    linkStyle: {
-      name: 'Link Style',
-      type: 'select',
-      options: ['cta', 'text-link', 'none'],
-    },
-    contentLayout: {
-      name: 'Content Layout',
-      type: 'select',
-      options: ['bottom', 'left', 'right'],
-    },
-    buttonAlignment: {
-      name: 'Button Alignment',
-      type: 'select',
-      options: ['left', 'center', 'right'],
-    },
-    buttonStyleConsistency: {
-      name: 'Button Style Consistency',
-      type: 'select',
-      options: ['mixed', 'both_primary', 'both_secondary'],
-    },
-    overlayBackgroundImage: {
-      name: 'Overlay Background Image',
-      type: 'boolean',
-    },
-  },
-  defaultArgs,
-);
 
 const renderBanner = ({
   heading,
@@ -115,20 +44,22 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  args: defaultArgs,
-  argTypes: sharedArgTypes,
+  argTypes: toArgTypes(componentProps),
+  args: {
+    ...toArgs(componentProps),
+    heading: bannerData.banner__heading,
+    snippet: bannerData.banner__snippet,
+    linkContent: bannerData.banner__link__content,
+    linkContentTwo: bannerData.banner__link__content_two,
+  },
 };
 
 export const ActionBanner = (args) => renderBanner(args);
-ActionBanner.args = defaultArgs;
-ActionBanner.argTypes = sharedArgTypes;
 
 export const ActionBannerLeft = (args) => renderBanner(args);
-ActionBannerLeft.args = { ...defaultArgs, contentLayout: 'left' };
-ActionBannerLeft.argTypes = sharedArgTypes;
+ActionBannerLeft.args = { contentLayout: 'left' };
 ActionBannerLeft.storyName = 'Left Layout';
 
 export const ActionBannerRight = (args) => renderBanner(args);
-ActionBannerRight.args = { ...defaultArgs, contentLayout: 'right' };
-ActionBannerRight.argTypes = sharedArgTypes;
+ActionBannerRight.args = { contentLayout: 'right' };
 ActionBannerRight.storyName = 'Right Layout';

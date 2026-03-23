@@ -1,8 +1,4 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-import {
-  eventLocalistArgs,
-  eventLocalistArgTypes,
-} from '../../04-page-layouts/cl-page-args';
+import { eventLocalistArgs } from '../../04-page-layouts/cl-page-args';
 
 import eventLocalistData from './event-meta/event-localist.yml';
 import eventLocalistUpcomingOnly from './event-meta/event-localist--upcoming-only.yml';
@@ -14,7 +10,7 @@ import dateTimeTwig from '../../01-atoms/date-time/yds-date-time.twig';
 import profileMetaTwig from './profile-meta/yds-profile-meta.twig';
 import imageData from '../../01-atoms/images/image/image.yml';
 import videoEmbedData from '../../01-atoms/videos/video-embed/video-embed.yml';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 import './event-meta/event-meta-localist';
 
@@ -22,7 +18,11 @@ import './event-meta/event-meta-localist';
 import resourceMetaData from './resource-meta/resource-meta.yml';
 import resourceMetaTwig from './resource-meta/yds-resource-meta.twig';
 
-const colorPairingsData = Object.keys(tokens['component-themes']);
+// Per-story props files.
+import postMetaProps from './post-meta-props.yml';
+import eventProps from './event-props.yml';
+import profileProps from './profile-props.yml';
+import resourceProps from './resource-props.yml';
 
 const eventDataVariants = {
   'Mixed (Past & Upcoming)': eventLocalistData,
@@ -46,24 +46,12 @@ export const PostMeta = ({ author, date }) =>
       date_time__format: 'day__full',
     })}`,
   });
-const postMetaArgs = {
+PostMeta.argTypes = toArgTypes(postMetaProps);
+PostMeta.args = {
+  ...toArgs(postMetaProps),
   author: 'Charlyn Paradis',
   date: '2022-01-25',
 };
-PostMeta.argTypes = addTableDefaults(
-  {
-    author: {
-      name: 'Author',
-      type: 'string',
-    },
-    date: {
-      name: 'Date',
-      type: 'string',
-    },
-  },
-  postMetaArgs,
-);
-PostMeta.args = postMetaArgs;
 
 export const Event = ({
   pageTitle,
@@ -142,27 +130,13 @@ export const Event = ({
     event_meta__image: withImage ? 'true' : 'false',
   });
 };
-const eventArgs = {
+Event.argTypes = toArgTypes(eventProps);
+Event.args = {
+  ...toArgs(eventProps),
   ...eventLocalistArgs,
   dataVariant: 'Mixed (Past & Upcoming)',
   withCalendar: true,
 };
-Event.argTypes = addTableDefaults(
-  {
-    dataVariant: {
-      name: 'Event Date Scenario',
-      type: 'select',
-      options: Object.keys(eventDataVariants),
-    },
-    withCalendar: {
-      name: 'With Add to Calendar button',
-      type: 'boolean',
-    },
-    ...eventLocalistArgTypes,
-  },
-  eventArgs,
-);
-Event.args = eventArgs;
 
 export const Profile = ({
   heading,
@@ -191,63 +165,15 @@ export const Profile = ({
     profile_meta__image_style: profileImageStyle,
     profile_meta__image_alignment: profileImageAlignment,
   });
-const profileArgs = {
+Profile.argTypes = toArgTypes(profileProps);
+Profile.args = {
+  ...toArgs(profileProps),
   heading: 'Person Namerton',
   titleLine: 'Professional Title',
   subTitle: 'Subtitle',
   department: 'Department name',
   pronouns: 'They/They/Them',
-  bgColor: 'one',
-  profileImageOrientation: 'landscape',
-  profileImageAlignment: 'right',
-  profileImageStyle: 'inline',
 };
-Profile.argTypes = addTableDefaults(
-  {
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    titleLine: {
-      name: 'Profile professional title',
-      type: 'string',
-    },
-    subTitle: {
-      name: 'Profile subtitle',
-      type: 'string',
-    },
-    department: {
-      name: 'Profile department',
-      type: 'string',
-    },
-    pronouns: {
-      name: 'Profile pronouns',
-      type: 'string',
-    },
-    bgColor: {
-      name: 'Component Theme (dial)',
-      type: 'select',
-      options: colorPairingsData,
-    },
-    profileImageOrientation: {
-      name: 'Profile Image Orientation',
-      type: 'select',
-      options: ['landscape', 'portrait'],
-    },
-    profileImageAlignment: {
-      name: 'Profile Image Alignment',
-      type: 'select',
-      options: ['left', 'right'],
-    },
-    profileImageStyle: {
-      name: 'Profile Image Style',
-      type: 'select',
-      options: ['inline', 'outdent'],
-    },
-  },
-  profileArgs,
-);
-Profile.args = profileArgs;
 
 export const Resource = ({
   heading,
@@ -273,7 +199,9 @@ export const Resource = ({
     image__src__1: imageData.responsive_images['2x3'].image__src,
     video_embed__content__1: videoEmbedData.video_embed__content,
   });
-const resourceArgs = {
+Resource.argTypes = toArgTypes(resourceProps);
+Resource.args = {
+  ...toArgs(resourceProps),
   heading: 'Resource Title',
   category: 'Video',
   resourceType: 'video',
@@ -281,33 +209,3 @@ const resourceArgs = {
   description:
     'This is a sample resource description that will appear below the media content. It can contain <strong>HTML markup</strong> and provides context about the resource.',
 };
-Resource.argTypes = addTableDefaults(
-  {
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    category: {
-      name: 'Category',
-      type: 'string',
-    },
-    resourceType: {
-      name: 'Resource Type',
-      type: 'select',
-      options: {
-        Video: 'video',
-        Document: 'document',
-      },
-    },
-    publishDate: {
-      name: 'Publish Date',
-      type: 'string',
-    },
-    description: {
-      name: 'Description',
-      type: 'string',
-    },
-  },
-  resourceArgs,
-);
-Resource.args = resourceArgs;
