@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as VideoStories from './video.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './video-props.yml';
 
 <Meta of={VideoStories} name="Docs" />
 
@@ -16,91 +18,9 @@ Use the controls panel below to experiment with the video's properties in real-t
 
 ## Properties
 
-### Required Properties
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>video_embed__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The video embed code (iframe or HTML5 video element)</td>
-    </tr>
-  </tbody>
-</table>
-
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>video__heading</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Optional heading/title for the video</td>
-    </tr>
-    <tr>
-      <td>
-        <code>video__text</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Optional caption or description text (supports HTML)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>video__alignment</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'left'</code>
-      </td>
-      <td>Video placement: 'left' or 'center'</td>
-    </tr>
-    <tr>
-      <td>
-        <code>video__width</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'site'</code>
-      </td>
-      <td>Width constraint: 'max', 'site', 'highlight', or 'content'</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Video Platforms
 

@@ -1,0 +1,35 @@
+# video-props.yml
+#
+# Video component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+heading:
+  twigProp: video__heading
+  name: Heading
+  type: string
+  required: false
+  description: Optional heading or title displayed above the video
+  control: text
+
+text:
+  twigProp: video__text
+  name: Text
+  type: string
+  required: false
+  description: Optional caption or description text displayed with the video
+  control: text
+
+placement:
+  twigProp: video__alignment
+  name: Video Placement
+  type: select
+  required: false
+  description: Alignment of the video within its container
+  default: left
+  options:
+    - left
+    - center
+  control: select

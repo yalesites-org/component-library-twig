@@ -1,25 +1,13 @@
 import factsAndFiguresTwig from './yds-facts-and-figures.twig';
 import factsAndFiguresData from './facts-and-figures.yml';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
-
-const defaultArgs = {
-  fontStyle: 'normal',
-};
+import componentProps from './facts-and-figures-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 export default {
   title: 'Molecules/Facts and Figures',
   tags: ['!dev'],
-  argTypes: addTableDefaults(
-    {
-      fontStyle: {
-        name: 'Font Style',
-        options: ['normal', 'numeric-oldstyle'],
-        type: 'select',
-      },
-    },
-    defaultArgs,
-  ),
-  args: defaultArgs,
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
 export const Interactive = ({ fontStyle }) => `

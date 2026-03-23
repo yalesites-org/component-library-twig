@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as FactsAndFiguresStories from './facts-and-figures.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './facts-and-figures-props.yml';
 
 <Meta of={FactsAndFiguresStories} name="Docs" />
 
@@ -16,134 +18,9 @@ Use the controls panel below to experiment with the facts and figures properties
 
 ## Properties
 
-### Required Properties
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>facts_and_figures__stat</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        The statistic or figure to display (e.g., "$52,000", "1,200+", "95%")
-      </td>
-    </tr>
-  </tbody>
-</table>
-
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>facts_and_figures__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Descriptive text explaining the statistic</td>
-    </tr>
-    <tr>
-      <td>
-        <code>facts_and_figures__presentation_style</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'basic'</code>
-      </td>
-      <td>
-        Display style: 'basic' (text with optional content) or 'icon-only' (icon
-        display)
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>facts_and_figures__font_style</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'normal'</code>
-      </td>
-      <td>
-        Font style: 'normal' or 'numeric-oldstyle' (traditional number styling)
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>facts_and_figures__alignment</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'left'</code>
-      </td>
-      <td>Content alignment: 'left' or 'center'</td>
-    </tr>
-    <tr>
-      <td>
-        <code>facts_and_figures__theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>Component theme color from the color dial in CMS</td>
-    </tr>
-    <tr>
-      <td>
-        <code>facts_and_figures__has_icon</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'false'</code>
-      </td>
-      <td>Whether to display an icon: 'true' or 'false'</td>
-    </tr>
-    <tr>
-      <td>
-        <code>facts_and_figures__icon_name</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Icon name to display when has_icon is 'true'</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Presentation Styles
 

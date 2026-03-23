@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as WrappedImageStories from './wrapped-image.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './wrapped-image-props.yml';
 
 <Meta of={WrappedImageStories} name="Docs" />
 
@@ -16,125 +18,9 @@ Use the controls panel below to experiment with the wrapped image's properties i
 
 ## Properties
 
-### Required Properties
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>image__src</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Image source URL</td>
-    </tr>
-    <tr>
-      <td>
-        <code>image__alt</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Alternative text for accessibility</td>
-    </tr>
-    <tr>
-      <td>
-        <code>wrapped_image__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Text content that flows around the image (supports HTML)</td>
-    </tr>
-  </tbody>
-</table>
-
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>wrapped_image__caption</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Caption text displayed below the image (supports HTML)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>wrapped_image__alignment</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'left'</code>
-      </td>
-      <td>
-        Image position: <code>'left'</code> or <code>'right'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>wrapped_image__style</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'floated'</code>
-      </td>
-      <td>
-        Visual style: <code>'floated'</code> or <code>'offset'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>image__srcset</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Responsive image srcset</td>
-    </tr>
-    <tr>
-      <td>
-        <code>image__sizes</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Responsive image sizes attribute</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Visual Styles
 

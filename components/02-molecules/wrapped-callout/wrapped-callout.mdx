@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as WrappedCalloutStories from './wrapped-callout.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './wrapped-callout-props.yml';
 
 <Meta of={WrappedCalloutStories} name="Docs" />
 
@@ -16,78 +18,9 @@ Use the controls panel below to experiment with the wrapped callout's properties
 
 ## Properties
 
-### Required Properties
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>wrapped_callout__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Main body text that flows around the callout (supports HTML)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>wrapped_callout__callout</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Highlighted callout text (supports HTML)</td>
-    </tr>
-  </tbody>
-</table>
-
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>wrapped_callout__alignment</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'left'</code>
-      </td>
-      <td>
-        Callout position: <code>'left'</code> or <code>'right'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>wrapped_callout__theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>Component theme from the color dial (one, two, three, etc.)</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Alignment Options
 

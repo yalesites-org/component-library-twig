@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as TabsStories from './tabs.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './tabs-props.yml';
 
 <Meta of={TabsStories} name="Docs" />
 
@@ -16,87 +18,9 @@ Use the controls panel below to experiment with the tabs' properties in real-tim
 
 ## Properties
 
-### Required Properties
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>tabs</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>Array of tab objects, each containing tab__label and tab__content</td>
-    </tr>
-    <tr>
-      <td>
-        <code>tabs[].tab__label</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The text label displayed on the tab button</td>
-    </tr>
-    <tr>
-      <td>
-        <code>tabs[].tab__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The HTML content displayed in the tab panel</td>
-    </tr>
-  </tbody>
-</table>
-
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>tabs__id</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>auto-generated</td>
-      <td>
-        Unique identifier for the tabs component (used for ARIA relationships)
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>tabs__theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>one</code>
-      </td>
-      <td>
-        Color accent theme from the color dial (one, two, three, four, etc.)
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Technical Specifications
 

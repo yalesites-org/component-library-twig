@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as TaxonomyDisplayStories from './taxonomy-display.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './taxonomy-display-props.yml';
 
 <Meta of={TaxonomyDisplayStories} name="Docs" />
 
@@ -16,94 +18,9 @@ Use the controls panel below to experiment with the taxonomy display's propertie
 
 ## Properties
 
-### Required Properties
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>taxonomy_display__items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        Array of taxonomy vocabulary objects, each containing a label and terms
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-### Item Structure
-
-Each item in `taxonomy_display__items` should have the following structure:
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>taxonomy_display__item__label</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The vocabulary label (e.g., "Audience", "Type", "Category")</td>
-    </tr>
-    <tr>
-      <td>
-        <code>taxonomy_display__item__terms</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        Array of term objects with <code>taxonomy_display__link__content</code>{' '}
-        and <code>taxonomy_display__link__url</code> properties
-      </td>
-    </tr>
-  </tbody>
-</table>
-
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>taxonomy_display__theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'default'</code>
-      </td>
-      <td>Component theme from the color dial (e.g., 'one', 'two', 'three')</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Technical Specifications
 

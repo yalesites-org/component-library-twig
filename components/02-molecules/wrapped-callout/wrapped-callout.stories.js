@@ -1,17 +1,8 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
 import wrappedCalloutTwig from './yds-wrapped-callout.twig';
 import textFieldTwig from '../text/yds-text-field.twig';
 import wrappedCalloutData from './wrapped-callout.yml';
-
-const colorPairingsData = Object.keys(tokens['component-themes']);
-
-const wrappedCalloutArgs = {
-  calloutAlignment: 'left',
-  calloutContent: wrappedCalloutData.text_two,
-  calloutCallout: wrappedCalloutData.text_three,
-  themeColor: 'one',
-};
+import componentProps from './wrapped-callout-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Storybook Definition.
@@ -22,30 +13,12 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      calloutAlignment: {
-        name: 'Callout Alignment',
-        type: 'select',
-        options: ['left', 'right'],
-      },
-      calloutContent: {
-        name: 'Callout Content',
-        type: 'string',
-      },
-      calloutCallout: {
-        name: 'Callout Callout',
-        type: 'string',
-      },
-      themeColor: {
-        name: 'Component Theme (dial)',
-        options: colorPairingsData,
-        type: 'select',
-      },
-    },
-    wrappedCalloutArgs,
-  ),
-  args: wrappedCalloutArgs,
+  argTypes: toArgTypes(componentProps),
+  args: {
+    ...toArgs(componentProps),
+    calloutContent: wrappedCalloutData.text_two,
+    calloutCallout: wrappedCalloutData.text_three,
+  },
 };
 
 export const wrappedCallout = ({
@@ -66,5 +39,3 @@ export const wrappedCallout = ({
     wrapped_callout__theme: themeColor,
   })}
 `;
-
-wrappedCallout.args = wrappedCalloutArgs;

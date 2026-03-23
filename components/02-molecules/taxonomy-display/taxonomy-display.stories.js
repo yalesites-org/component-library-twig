@@ -1,18 +1,10 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 // Twig templates
 import taxonomyDisplayTwig from './yds-taxonomy-display.twig';
 
 // Data files
 import taxonomyDisplayData from './taxonomy-display.yml';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
-
-const colorPairingsData = Object.keys(tokens['component-themes']);
-
-const defaultArgs = {
-  componentTheme: 'default',
-  showTaxonomy: true,
-};
+import componentProps from './taxonomy-display-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Storybook Definition.
@@ -23,21 +15,8 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      componentTheme: {
-        name: 'Component Theme (dial)',
-        type: 'select',
-        options: ['default', ...colorPairingsData],
-      },
-      showTaxonomy: {
-        name: 'Show Taxonomy',
-        type: 'boolean',
-      },
-    },
-    defaultArgs,
-  ),
-  args: defaultArgs,
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
 export const TaxonomyDisplay = ({ componentTheme, showTaxonomy }) =>
