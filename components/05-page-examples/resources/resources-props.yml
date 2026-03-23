@@ -1,0 +1,18 @@
+showBreadcrumbs:
+  twigProp: show_breadcrumbs
+  name: Breadcrumbs
+  type: boolean
+  required: false
+  description: Whether to display breadcrumb navigation on the resource page.
+  control: boolean
+
+resourceType:
+  twigProp: resource_meta__resource_type
+  name: Resource Type
+  type: select
+  required: false
+  description: The type of resource being displayed (video or document).
+  control: select
+  options:
+    - video
+    - document

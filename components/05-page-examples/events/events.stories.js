@@ -13,7 +13,9 @@ import breadcrumbData from '../../03-organisms/menu/breadcrumbs/breadcrumbs.yml'
 import imageData from '../../01-atoms/images/image/image.yml';
 import pagerData from '../../02-molecules/pager/pager-last.yml';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
+import componentProps from './events-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
+import argTypesToArgs from '../../utility';
 
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
@@ -21,14 +23,6 @@ import '../../00-tokens/layout/yds-layout';
 // Utility to convert dates to unix timestamps
 const toUnixTimeStamp = (date) => {
   return Math.floor(Date.parse(date) / 1000);
-};
-
-const defaultArgs = {
-  eventPageTitle:
-    'Parlika (2016) film screening + Q&A with film director Sahraa Karimi',
-  showBreadcrumbs: true,
-  startDate: '2022-04-01T08:00',
-  endDate: '2022-04-01T11:30',
 };
 
 /**
@@ -39,22 +33,18 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      ...argTypes,
-      ...eventArgTypes,
-      eventPageTitle: {
-        name: 'Page Title',
-        type: 'string',
-      },
-      showBreadcrumbs: {
-        name: 'Breadcrumbs',
-        type: 'boolean',
-      },
-    },
-    defaultArgs,
-  ),
-  args: defaultArgs,
+  argTypes: {
+    ...argTypes,
+    ...eventArgTypes,
+    ...toArgTypes(componentProps),
+  },
+  args: {
+    ...argTypesToArgs({ ...argTypes, ...eventArgTypes }),
+    ...toArgs(componentProps),
+    eventPageTitle:
+      'Parlika (2016) film screening + Q&A with film director Sahraa Karimi',
+    showBreadcrumbs: true,
+  },
 };
 
 export const EventPage = ({

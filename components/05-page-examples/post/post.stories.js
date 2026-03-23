@@ -12,7 +12,8 @@ import breadcrumbData from '../../03-organisms/menu/breadcrumbs/breadcrumbs.yml'
 import imageData from '../../01-atoms/images/image/image.yml';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 import referenceCardData from '../../02-molecules/cards/reference-card/examples/post-card.yml';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
+import componentProps from './post-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
@@ -31,7 +32,7 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(argTypes, defaultArgs),
+  argTypes,
   args: defaultArgs,
 };
 
@@ -95,20 +96,8 @@ export const PostArticle = ({
     ...socialLinksData,
     ...referenceCardData,
   });
-const postArticleArgs = {
-  showSocialMediaSharingLinks: false,
-};
-PostArticle.argTypes = addTableDefaults(
-  {
-    showSocialMediaSharingLinks: {
-      name: 'Show Social Media Sharing Links',
-      type: 'boolean',
-    },
-  },
-  postArticleArgs,
-);
-
-PostArticle.args = postArticleArgs;
+PostArticle.argTypes = toArgTypes(componentProps);
+PostArticle.args = toArgs(componentProps);
 
 export const postGridCustom = ({
   allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),

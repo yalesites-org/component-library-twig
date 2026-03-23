@@ -2,7 +2,9 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 
 // Shared Storybook args.
 import argTypes from '../../04-page-layouts/cl-page-args';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
+import componentProps from './standard-page-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
+import argTypesToArgs from '../../utility';
 
 // Twig files.
 import standardPageTwig from './standard-page.twig';
@@ -40,10 +42,10 @@ import '../../03-organisms/site-in-this-section/yds-site-in-this-section';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
-const defaultArgs = {
-  introContent: 'none',
-  calloutBackground: 'one',
-  pageTitleDisplay: 'visible',
+const componentArgTypes = toArgTypes(componentProps);
+componentArgTypes.bgColor = {
+  ...componentArgTypes.bgColor,
+  options: colorPairingsData,
 };
 
 /**
@@ -54,36 +56,16 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      ...argTypes,
-      introContent: {
-        name: 'Intro Content',
-        options: [
-          'none',
-          'image',
-          'wrapped-image',
-          'text-with-image--focus-image',
-          'text-with-image--focus-equal',
-          'collection-featured',
-          'collection-secondary',
-        ],
-        type: 'select',
-      },
-      calloutBackground: {
-        name: 'Callout Theme (dial)',
-        type: 'select',
-        options: ['one', 'two', 'three'],
-      },
-      pageTitleDisplay: {
-        name: 'Page Title Display',
-        type: 'select',
-        options: ['visible', 'hidden', 'visually-hidden'],
-      },
-    },
-    defaultArgs,
-  ),
-  args: defaultArgs,
+  argTypes: {
+    ...argTypes,
+    ...componentArgTypes,
+  },
+  args: {
+    ...argTypesToArgs(argTypes),
+    ...toArgs(componentProps),
+    calloutBackground: 'one',
+    pageTitleDisplay: 'visible',
+  },
 };
 
 // Basic page
@@ -339,7 +321,7 @@ export const WithBanner = ({
     ...tabData,
     ...mediaGridData,
   });
-const withBannerArgs = {
+WithBanner.args = {
   bannerType: 'grand-hero',
   contentLayout: 'bottom',
   bgColor: 'one',
@@ -353,68 +335,6 @@ const withBannerArgs = {
   videoHeading: videoData.video__heading,
   videoCaption: videoData.video__text,
 };
-WithBanner.argTypes = addTableDefaults(
-  {
-    bannerType: {
-      name: 'Banner Type',
-      type: 'select',
-      options: ['action', 'grand-hero'],
-    },
-    contentLayout: {
-      name: 'Banner Content Layout',
-      type: 'select',
-      options: ['bottom', 'left', 'right'],
-    },
-    bgColor: {
-      name: 'Banner Content Background Color Theme (dial)',
-      type: 'select',
-      options: colorPairingsData,
-    },
-    heading: {
-      name: 'Banner Heading',
-      type: 'string',
-    },
-    snippet: {
-      name: 'Banner Snippet',
-      type: 'string',
-    },
-    linkContent: {
-      name: 'Banner Link Content',
-      type: 'string',
-    },
-    linkStyle: {
-      name: 'Link Style',
-      type: 'select',
-      options: ['cta', 'text-link'],
-    },
-    grandHeroOverlayVariation: {
-      name: 'Grand Hero Content Overlay',
-      type: 'select',
-      options: ['contained', 'full'],
-    },
-    grandHeroSize: {
-      name: 'Grand Hero Content Size',
-      type: 'select',
-      options: ['reduced', 'full'],
-    },
-    grandHeroWithVideo: {
-      name: 'Grand Hero With Video',
-      type: 'boolean',
-    },
-    videoHeading: {
-      name: 'Video Heading',
-      type: 'string',
-    },
-    videoCaption: {
-      name: 'Video Caption',
-      type: 'string',
-    },
-    ...accordionData,
-  },
-  withBannerArgs,
-);
-
-WithBanner.args = withBannerArgs;
 
 // With sidebar
 export const WithSidebar = ({
@@ -492,10 +412,10 @@ export const WithQuickLinks = ({
   footerBorderThickness = localStorage.getItem(
     'yds-cl-twig-footer-border-thickness',
   ),
-  heading,
-  description,
-  image,
-  variation,
+  quickLinksHeading,
+  quickLinksDescription,
+  quickLinksImage,
+  quickLinksVariation,
 }) =>
   standardPageQuickLinksTwig({
     site_name: siteName,
@@ -521,39 +441,15 @@ export const WithQuickLinks = ({
     ...imageData.responsive_images['16x9'],
     ...referenceCardData,
     ...socialLinksData,
-    quick_links__heading: heading,
-    quick_links__description: description,
-    quick_links__image: image,
-    quick_links__variation: variation,
+    quick_links__heading: quickLinksHeading,
+    quick_links__description: quickLinksDescription,
+    quick_links__image: quickLinksImage,
+    quick_links__variation: quickLinksVariation,
     quick_links__links: quickLinksData.quick_links__links,
   });
-const withQuickLinksArgs = {
-  heading: quickLinksData.quick_links__heading,
-  description: quickLinksData.quick_links__description,
-  image: true,
-  variation: 'promotional',
+WithQuickLinks.args = {
+  quickLinksHeading: quickLinksData.quick_links__heading,
+  quickLinksDescription: quickLinksData.quick_links__description,
+  quickLinksImage: true,
+  quickLinksVariation: 'promotional',
 };
-WithQuickLinks.argTypes = addTableDefaults(
-  {
-    heading: {
-      name: 'Quick Links Heading',
-      type: 'string',
-    },
-    description: {
-      name: 'Quick Links Description',
-      type: 'string',
-    },
-    image: {
-      name: 'With image',
-      type: 'boolean',
-    },
-    variation: {
-      name: 'Quick Links Variation',
-      type: 'select',
-      options: ['promotional', 'subtle'],
-    },
-  },
-  withQuickLinksArgs,
-);
-
-WithQuickLinks.args = withQuickLinksArgs;

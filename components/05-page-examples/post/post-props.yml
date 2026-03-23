@@ -1,0 +1,8 @@
+showSocialMediaSharingLinks:
+  twigProp: page_title__show_social_media_sharing_links
+  name: Show Social Media Sharing Links
+  type: boolean
+  required: false
+  description: Whether to display social media sharing links on the post article page.
+  control: boolean
+  default: false

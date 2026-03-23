@@ -14,14 +14,12 @@ import imageData from '../../01-atoms/images/image/image.yml';
 import pagerData from '../../02-molecules/pager/pager-last.yml';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
 import videoEmbedData from '../../01-atoms/videos/video-embed/video-embed.yml';
-import { addTableDefaults } from '../../_storybook/add-table-defaults';
+import componentProps from './resources-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
+import argTypesToArgs from '../../utility';
 
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
-
-const defaultArgs = {
-  showBreadcrumbs: true,
-};
 
 /**
  * Storybook Definition.
@@ -31,17 +29,15 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: addTableDefaults(
-    {
-      ...argTypes,
-      showBreadcrumbs: {
-        name: 'Breadcrumbs',
-        type: 'boolean',
-      },
-    },
-    defaultArgs,
-  ),
-  args: defaultArgs,
+  argTypes: {
+    ...argTypes,
+    ...toArgTypes(componentProps),
+  },
+  args: {
+    ...argTypesToArgs(argTypes),
+    ...toArgs(componentProps),
+    showBreadcrumbs: true,
+  },
 };
 
 export const ResourcePage = ({
@@ -108,20 +104,7 @@ export const ResourcePage = ({
     video_embed__content__1: videoEmbedData.video_embed__content,
   });
 };
-const resourcePageArgs = {
-  resourceType: 'video',
-};
-ResourcePage.argTypes = addTableDefaults(
-  {
-    resourceType: {
-      name: 'Resource Type',
-      type: 'select',
-      options: ['video', 'document'],
-    },
-  },
-  resourcePageArgs,
-);
-ResourcePage.args = resourcePageArgs;
+ResourcePage.args = { resourceType: 'video' };
 
 export const ResourceGrid = ({
   siteName,
