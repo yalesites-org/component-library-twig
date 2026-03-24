@@ -2,8 +2,14 @@ import utilityNavExampleTwig from './yds-utility-nav--example.twig';
 
 import './utility-nav-dropdown-menu';
 
-import { siteHeaderThemes } from '../../../_storybook/theme-constants';
-import { createThemeVariations } from '../../../_storybook/playground-utils';
+import {
+  siteHeaderThemes,
+  globalThemes,
+} from '../../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+} from '../../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -17,18 +23,22 @@ export default {
 };
 
 export const Visreg = () => {
-  return `
-    <div class="utility-nav--examples">
-      ${createThemeVariations(
-        (theme) =>
-          utilityNavExampleTwig({
-            site_header__theme: theme,
-          }),
-        siteHeaderThemes,
-        'All Site Header Theme Variations',
-        'Below are all site header theme variations for visual regression testing.',
-        'Site Header Theme',
-      )}
-    </div>
-  `;
+  return createGlobalThemeVariations(
+    () => `
+      <div class="utility-nav--examples">
+        ${createThemeVariations(
+          (theme) =>
+            utilityNavExampleTwig({
+              site_header__theme: theme,
+            }),
+          siteHeaderThemes,
+          'All Site Header Theme Variations',
+          'Below are all site header theme variations for visual regression testing.',
+          'Site Header Theme',
+        )}
+      </div>
+    `,
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

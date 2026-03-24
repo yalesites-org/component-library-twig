@@ -1,7 +1,15 @@
 import inlineMessageTwig from './yds-inline-message.twig';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import {
+  globalThemes,
+  sectionThemes,
+  componentThemes,
+} from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+  createSectionWrapper,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -14,38 +22,53 @@ export default {
 };
 
 export const Visreg = () => {
-  const type = 'general';
-  const heading = 'This is a general message heading';
-  const content = 'This is a general message content';
-  const themeColor = 'one';
+  const types = ['general', 'marketing'];
+  const heading = 'This is a message heading';
+  const content = 'This is a message content';
   const linkContent = 'This is a link';
   const linkUrl = '#';
 
-  // Render function for inline message variations
-  const renderInlineMessage = (theme) => `
-    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
-          ${inlineMessageTwig({
-            inline_message__heading: heading,
-            inline_message__content: content,
-            inline_message__type: type,
-            inline_message__theme: themeColor,
-            inline_message__link__content: linkContent,
-            inline_message__link__url: linkUrl,
-          })}
-        </div>
-      </div>
-    </div>
-  `;
+  const renderInlineMessage = (dialTheme, type) =>
+    inlineMessageTwig({
+      inline_message__heading: heading,
+      inline_message__content: content,
+      inline_message__type: type,
+      inline_message__theme: dialTheme,
+      inline_message__link__content: linkContent,
+      inline_message__link__url: linkUrl,
+    });
 
-  return `
-    ${createThemeVariations(
-      renderInlineMessage,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all theme variations for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        (sectionTheme) =>
+          createSectionWrapper(
+            sectionTheme,
+            componentThemes
+              .map(
+                (componentTheme) => `
+                  <div class="sb-section__container">
+                    <h3 class="sb-section__subheading">Inline Message Theme: ${componentTheme}</h3>
+                    ${types
+                      .map(
+                        (type) => `
+                      <h4>Type: ${type}</h4>
+                      ${renderInlineMessage(componentTheme, type)}
+                    `,
+                      )
+                      .join('')}
+                  </div>
+                `,
+              )
+              .join(''),
+            { width: 'site', primaryWidth: '100%' },
+          ),
+        sectionThemes,
+        'All Section × Inline Message Theme Combinations',
+        '',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

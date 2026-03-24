@@ -5,8 +5,11 @@ import textCopyButtonTwig from './text-copy-button/yds-text-copy-button.twig';
 import './text-link/yds-text-link';
 import './text-copy-button/yds-text-copy-button';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 export default {
   title: 'Atoms/Controls/Visreg',
@@ -90,13 +93,16 @@ export const Visreg = () => {
     </div>
   `;
 
-  return `
-    ${createThemeVariations(
-      renderControls,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all theme variations for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        renderControls,
+        sectionThemes,
+        'All Section Theme Variations',
+        'Below are all theme variations for visual regression testing.',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

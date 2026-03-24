@@ -1,6 +1,12 @@
 import blockWrapperTwig from './yds-block-wrapper.twig';
 
-import { createVariations } from '../../_storybook/playground-utils';
+import { sectionThemes, globalThemes } from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createSectionWrapper,
+  createThemeVariations,
+  createVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -45,12 +51,28 @@ export const Visreg = () => {
     </div>
   `;
 
-  return `
-    ${createVariations(
+  const renderPaddingVariations = () =>
+    createVariations(
       renderBlockWrapper,
       paddingOptions,
       'All Padding Variations',
       'Padding Modifier',
-    )}
-  `;
+    );
+
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderPaddingVariations(), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        sectionThemes,
+        'All Section Theme Variations',
+        '',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

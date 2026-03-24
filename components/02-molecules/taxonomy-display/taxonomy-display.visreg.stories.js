@@ -2,8 +2,16 @@ import taxonomyDisplayTwig from './yds-taxonomy-display.twig';
 
 import taxonomyDisplayData from './taxonomy-display.yml';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import {
+  globalThemes,
+  sectionThemes,
+  componentThemes,
+} from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+  createSectionWrapper,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -17,32 +25,40 @@ export default {
 };
 
 export const Visreg = () => {
-  const componentTheme = 'one';
   const showTaxonomy = true;
 
-  // Render function for taxonomy display variations
-  const renderTaxonomyDisplay = (theme) => `
-    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
-          ${taxonomyDisplayTwig({
-            taxonomy_display__theme: componentTheme,
-            taxonomy_display__items: showTaxonomy
-              ? taxonomyDisplayData.taxonomy_display__items
-              : taxonomyDisplayData.taxonomy_display__empty_items,
-          })}
-        </div>
-      </div>
-    </div>
-  `;
+  const renderTaxonomyDisplay = (dialTheme) =>
+    taxonomyDisplayTwig({
+      taxonomy_display__theme: dialTheme,
+      taxonomy_display__items: showTaxonomy
+        ? taxonomyDisplayData.taxonomy_display__items
+        : taxonomyDisplayData.taxonomy_display__empty_items,
+    });
 
-  return `
-    ${createThemeVariations(
-      renderTaxonomyDisplay,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all theme variations for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        (sectionTheme) =>
+          createSectionWrapper(
+            sectionTheme,
+            componentThemes
+              .map(
+                (componentTheme) => `
+                  <div class="sb-section__container">
+                    <h3 class="sb-section__subheading">Taxonomy Display Theme: ${componentTheme}</h3>
+                    ${renderTaxonomyDisplay(componentTheme)}
+                  </div>
+                `,
+              )
+              .join(''),
+            { width: 'site', primaryWidth: '100%' },
+          ),
+        sectionThemes,
+        'All Section × Taxonomy Display Theme Combinations',
+        '',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

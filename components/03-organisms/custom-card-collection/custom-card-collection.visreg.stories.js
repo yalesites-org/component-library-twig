@@ -2,7 +2,13 @@ import customCardCollectionTwig from './yds-custom-card-collection.twig';
 import customCardData from '../../02-molecules/cards/custom-card/custom-card.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
-import { createVariations } from '../../_storybook/playground-utils';
+import { sectionThemes, globalThemes } from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createSectionWrapper,
+  createThemeVariations,
+  createVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -15,16 +21,14 @@ export default {
   },
 };
 
-export const Visreg = (_, context) => {
-  const globalTheme = context.globals.globalTheme || 'one';
+export const Visreg = () => {
   const heading = 'Custom Card Collection';
   const withImage = true;
 
-  return `
-    ${createVariations(
+  const renderLayoutVariations = () =>
+    createVariations(
       (isFeatured) =>
         customCardCollectionTwig({
-          site_global__theme: globalTheme,
           custom_card_collection__heading: heading,
           custom_card__heading: customCardData.custom_card__heading,
           custom_card__snippet: customCardData.custom_card__snippet,
@@ -39,6 +43,22 @@ export const Visreg = (_, context) => {
       'All Layout Variations',
       'Layout Type',
       (isFeatured) => (isFeatured ? 'Featured Layout' : 'Standard Layout'),
-    )}
-  `;
+    );
+
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderLayoutVariations(), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        sectionThemes,
+        'All Section Theme Variations',
+        '',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

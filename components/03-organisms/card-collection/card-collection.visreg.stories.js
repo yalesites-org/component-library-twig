@@ -6,7 +6,13 @@ import resourceCardData from '../../02-molecules/cards/reference-card/examples/r
 import directoryCardData from '../../02-molecules/cards/directory-listing-card/yds-directory-listing-card.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
-import { createVariations } from '../../_storybook/playground-utils';
+import { sectionThemes, globalThemes } from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createSectionWrapper,
+  createThemeVariations,
+  createVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -91,7 +97,7 @@ export const Visreg = () => {
   </div>
   `;
 
-  return `
+  const renderAllContent = () => `
     ${renderAllCardTypes()}
 
     ${createVariations(
@@ -111,4 +117,21 @@ export const Visreg = () => {
       'Collection Type',
     )}
   `;
+
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderAllContent(), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        sectionThemes,
+        'All Section Theme Variations',
+        '',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

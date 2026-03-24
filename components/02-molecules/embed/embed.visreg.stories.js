@@ -1,7 +1,10 @@
 import embedTwig from './yds-embed.twig';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -56,13 +59,16 @@ export const Visreg = () => {
     </div>
   `;
 
-  return `
-    ${createThemeVariations(
-      renderEmbeds,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all theme variations with multiple embed types for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        renderEmbeds,
+        sectionThemes,
+        'All Section Theme Variations',
+        'Below are all theme variations with multiple embed types for visual regression testing.',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

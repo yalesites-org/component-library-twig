@@ -25,6 +25,16 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 export const sectionThemes = ['default', 'one', 'two', 'three', 'four'];
 
 /**
+ * Global themes (from tokens)
+ * Used for site-wide color palette theming ("lever" in CMS)
+ * Applied via data-global-theme attribute
+ *
+ * @type {string[]}
+ */
+export const globalThemes = Object.keys(tokens['global-themes']);
+// Returns: ['one', 'two', 'three', 'four', 'five', 'six']
+
+/**
  * Component themes (from tokens)
  * Used for individual component color theming ("dial" in CMS)
  *

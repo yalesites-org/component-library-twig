@@ -10,8 +10,11 @@ import referencePageCardData from './reference-card/examples/page-card.yml';
 import referenceResourceData from './reference-card/examples/resource-card.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -26,9 +29,10 @@ export default {
 
 // *** VRT: All 7 Card Types with All Section Theme Variations ***
 export const Visreg = () => {
-  return `
-    ${createThemeVariations(
-      (theme) => `
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        (theme) => `
       <div data-component-theme="${theme}">
         <h3>1. Custom Card</h3>
         <div class='custom-card-collection' data-component-width='site' data-collection-featured="true">
@@ -209,10 +213,12 @@ export const Visreg = () => {
         </div>
       </div>
       `,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all theme variations with all 7 card types for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+        sectionThemes,
+        'All Section Theme Variations',
+        'Below are all theme variations with all 7 card types for visual regression testing.',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

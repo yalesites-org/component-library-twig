@@ -6,8 +6,11 @@ import listData from './list.yml';
 import listTagsData from './taxonomy/tags-list.yml';
 import listCategoriesData from './taxonomy/categories-list.yml';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 export default {
   title: 'Atoms/Lists/Visreg',
@@ -43,13 +46,16 @@ export const Visreg = () => {
     </div>
   `;
 
-  return `
-    ${createThemeVariations(
-      renderLists,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all theme variations for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        renderLists,
+        sectionThemes,
+        'All Section Theme Variations',
+        'Below are all theme variations for visual regression testing.',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

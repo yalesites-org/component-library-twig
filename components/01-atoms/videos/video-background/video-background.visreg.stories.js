@@ -4,8 +4,16 @@ import videoBackgroundData from './video-background.yml';
 
 import './yds-video-background';
 
-import { sectionThemes } from '../../../_storybook/theme-constants';
-import { createThemeVariations } from '../../../_storybook/playground-utils';
+import {
+  globalThemes,
+  sectionThemes,
+  componentThemes,
+} from '../../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+  createSectionWrapper,
+} from '../../../_storybook/playground-utils';
 
 export default {
   title: 'Atoms/Videos/Video Background/Visreg',
@@ -13,24 +21,34 @@ export default {
 };
 
 export const Visreg = () => {
-  // Render function for video background variations
-  const renderVideoBackground = (theme) => `
-    <div class="yds-layout" data-component-theme="${theme}" data-component-width="site">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
-          ${videoBackgroundTwig(videoBackgroundData)}
-        </div>
-      </div>
-    </div>
-  `;
-
-  return `
-    ${createThemeVariations(
-      renderVideoBackground,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all theme variations for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        (sectionTheme) =>
+          createSectionWrapper(
+            sectionTheme,
+            componentThemes
+              .map(
+                (componentTheme) => `
+                  <div class="sb-section__container">
+                    <h3 class="sb-section__subheading">Video Background Theme: ${componentTheme}</h3>
+                    ${videoBackgroundTwig({
+                      ...videoBackgroundData,
+                      video_background__button__background_color:
+                        componentTheme,
+                    })}
+                  </div>
+                `,
+              )
+              .join(''),
+            { width: 'site', primaryWidth: '100%' },
+          ),
+        sectionThemes,
+        'All Section × Video Background Theme Combinations',
+        '',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

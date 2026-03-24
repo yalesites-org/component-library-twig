@@ -10,8 +10,11 @@ import resourceMetaData from './resource-meta/resource-meta.yml';
 
 import './event-meta/event-meta-localist';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -142,13 +145,16 @@ export const Visreg = () => {
     </div>
   `;
 
-  return `
-    ${createThemeVariations(
-      renderAllMetaTypes,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all theme variations with all 4 meta types for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        renderAllMetaTypes,
+        sectionThemes,
+        'All Section Theme Variations',
+        'Below are all theme variations with all 4 meta types for visual regression testing.',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

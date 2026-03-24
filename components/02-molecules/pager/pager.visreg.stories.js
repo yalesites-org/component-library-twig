@@ -1,7 +1,10 @@
 import pager from './yds-pager.twig';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Generate pagination data - keep it simple
@@ -73,13 +76,16 @@ export const Visreg = () => {
     </div>
   `;
 
-  return `
-    ${createThemeVariations(
-      renderPager,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all theme variations for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        renderPager,
+        sectionThemes,
+        'All Section Theme Variations',
+        'Below are all theme variations for visual regression testing.',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

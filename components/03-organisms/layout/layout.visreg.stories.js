@@ -5,8 +5,17 @@ import imageData from '../../01-atoms/images/image/image.yml';
 
 import '../../02-molecules/accordion/yds-accordion';
 
-import { componentThemes } from '../../_storybook/theme-constants';
-import { createVariations } from '../../_storybook/playground-utils';
+import {
+  componentThemes,
+  globalThemes,
+  sectionThemes,
+} from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createSectionWrapper,
+  createThemeVariations,
+  createVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -20,7 +29,7 @@ export default {
 };
 
 export const Visreg = () => {
-  const componentTheme = 'one';
+  const defaultComponentTheme = 'one';
   const layoutOption = 'fifty-fifty';
   const layoutPadding = 'default';
   const divider = false;
@@ -41,7 +50,7 @@ export const Visreg = () => {
       ...imageData.responsive_images['4x3'],
       layout__divider: divider ? 'true' : 'false',
       layout__padding: layoutPadding,
-      component__theme: componentTheme,
+      component__theme: defaultComponentTheme,
       component__layout: layout,
     });
 
@@ -65,7 +74,7 @@ export const Visreg = () => {
       ...imageData.responsive_images['4x3'],
       layout__divider: divider ? 'true' : 'false',
       layout__padding: padding,
-      component__theme: componentTheme,
+      component__theme: defaultComponentTheme,
       component__layout: layoutOption,
     });
 
@@ -75,13 +84,6 @@ export const Visreg = () => {
       layoutOptions,
       'All Layout Variations',
       'Layout Configuration',
-    )}
-
-    ${createVariations(
-      renderThemes,
-      componentThemes,
-      'All Theme Variations',
-      'Component Theme',
     )}
 
     ${createVariations(
@@ -99,12 +101,39 @@ export const Visreg = () => {
           ...imageData.responsive_images['4x3'],
           layout__divider: 'true',
           layout__padding: 'default',
-          component__theme: componentTheme,
+          component__theme: defaultComponentTheme,
           component__layout: layoutOption,
         }),
       ['enabled'],
       'With Divider Enabled',
       'Divider',
+    )}
+
+    ${createGlobalThemeVariations(
+      () =>
+        createThemeVariations(
+          (sectionTheme) =>
+            createSectionWrapper(
+              sectionTheme,
+              componentThemes
+                .map(
+                  (componentTheme) => `
+                    <div class="sb-section__container">
+                      <h3 class="sb-section__subheading">Component Theme: ${componentTheme}</h3>
+                      ${renderThemes(componentTheme)}
+                    </div>
+                  `,
+                )
+                .join(''),
+              { width: 'site', primaryWidth: '100%' },
+            ),
+          sectionThemes,
+          'All Section × Component Theme Combinations',
+          '',
+          'Section Theme',
+        ),
+      globalThemes,
+      'All Global Theme Variations',
     )}
   `;
 };

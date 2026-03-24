@@ -3,8 +3,14 @@ import breadcrumbsData from './breadcrumbs.yml';
 
 import './yds-breadcrumbs';
 
-import { sectionThemes } from '../../../_storybook/theme-constants';
-import { createThemeVariations } from '../../../_storybook/playground-utils';
+import {
+  sectionThemes,
+  globalThemes,
+} from '../../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+} from '../../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -28,13 +34,16 @@ export const Visreg = () => {
     </div>
   `;
 
-  return `
-    ${createThemeVariations(
-      renderBreadcrumbs,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all section theme variations for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        renderBreadcrumbs,
+        sectionThemes,
+        'All Section Theme Variations',
+        'Below are all section theme variations for visual regression testing.',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

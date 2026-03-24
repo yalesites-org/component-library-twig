@@ -1,6 +1,12 @@
 import componentWrapperTwig from './yds-component-wrapper.twig';
 
-import { createVariations } from '../../_storybook/playground-utils';
+import { sectionThemes, globalThemes } from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createSectionWrapper,
+  createThemeVariations,
+  createVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -25,12 +31,28 @@ export const Visreg = () => {
     </div>
   `;
 
-  return `
-    ${createVariations(
+  const renderWidthVariations = () =>
+    createVariations(
       renderComponentWrapper,
       widthOptions,
       'All Width Variations',
       'Component Width',
-    )}
-  `;
+    );
+
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderWidthVariations(), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        sectionThemes,
+        'All Section Theme Variations',
+        '',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

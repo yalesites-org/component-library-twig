@@ -2,8 +2,15 @@ import quoteCalloutTwig from './yds-quote-callout.twig';
 import quoteCalloutData from './quote-callout.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import {
+  globalThemes,
+  sectionThemes,
+  componentThemes,
+} from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 export default {
   title: 'Molecules/Quotes/Quote Callout/Visreg',
@@ -13,14 +20,17 @@ export default {
 export const Visreg = () => {
   const quote = quoteCalloutData.quote_callout__quote;
   const attribution = quoteCalloutData.quote_callout__attribution;
-  const style = 'bar';
   const quoteAlignment = 'left';
-  const accentColor = 'one';
-  const quoteImage = 'no-image';
 
-  // Render function for quote callout variations
-  const renderQuoteCallout = (theme) => `
-    <div data-component-has-divider="false" data-component-theme="${theme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
+  // style 'image' is triggered automatically when quote_image === 'with-image'
+  const variants = [
+    { style: 'bar', quoteImage: 'no-image' },
+    { style: 'quote', quoteImage: 'no-image' },
+    { style: 'bar', quoteImage: 'with-image' },
+  ];
+
+  const renderQuoteCallout = (sectionTheme, accentColor, style, quoteImage) => `
+    <div data-component-has-divider="false" data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
       <div class="yds-layout__inner" style="--color-quote-callout-accent: var(--color-${accentColor})">
         <div class="yds-layout__primary" style="width: 100%">
           ${quoteCalloutTwig({
@@ -37,13 +47,40 @@ export const Visreg = () => {
     </div>
   `;
 
-  return `
-    ${createThemeVariations(
-      renderQuoteCallout,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all theme variations for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        (sectionTheme) =>
+          componentThemes
+            .map(
+              (componentTheme) => `
+                <div class="sb-section__container">
+                  <h3 class="sb-section__subheading">Quote Callout Theme: ${componentTheme}</h3>
+                  ${variants
+                    .map(
+                      ({ style, quoteImage }) => `
+                    <h4>Style: ${
+                      quoteImage === 'with-image' ? 'image' : style
+                    } / Image: ${quoteImage}</h4>
+                    ${renderQuoteCallout(
+                      sectionTheme,
+                      componentTheme,
+                      style,
+                      quoteImage,
+                    )}
+                  `,
+                    )
+                    .join('')}
+                </div>
+              `,
+            )
+            .join(''),
+        sectionThemes,
+        'All Section × Quote Callout Theme Combinations',
+        '',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

@@ -3,8 +3,14 @@ import primaryNavData from './primary-nav.yml';
 
 import './yds-primary-nav';
 
-import { siteHeaderThemes } from '../../../_storybook/theme-constants';
-import { createThemeVariations } from '../../../_storybook/playground-utils';
+import {
+  siteHeaderThemes,
+  globalThemes,
+} from '../../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+} from '../../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -33,13 +39,16 @@ export const Visreg = () => {
       )
       .join('');
 
-  return `
-    ${createThemeVariations(
-      renderPrimaryNav,
-      siteHeaderThemes,
-      'All Site Header Theme & Menu Variation Combinations',
-      'Below are all combinations of site header themes and menu variations for visual regression testing.',
-      'Site Header Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        renderPrimaryNav,
+        siteHeaderThemes,
+        'All Site Header Theme & Menu Variation Combinations',
+        'Below are all combinations of site header themes and menu variations for visual regression testing.',
+        'Site Header Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

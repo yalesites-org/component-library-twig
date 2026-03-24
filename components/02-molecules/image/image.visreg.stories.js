@@ -2,8 +2,11 @@ import contentImageTwig from './yds-content-image.twig';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 export default {
   title: 'Molecules/Image/Visreg',
@@ -72,13 +75,16 @@ export const Visreg = () => {
     `;
   };
 
-  return `
-    ${createThemeVariations(
-      (theme) => createLayoutContent(permutationLayout, theme),
-      sectionThemes,
-      'All Section Theme Variations',
-      `Below are all section theme variations using your current caption and width settings with ${layoutOption} layout.`,
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        (theme) => createLayoutContent(permutationLayout, theme),
+        sectionThemes,
+        'All Section Theme Variations',
+        `Below are all section theme variations using your current caption and width settings with ${layoutOption} layout.`,
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

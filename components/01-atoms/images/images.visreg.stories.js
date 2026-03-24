@@ -9,8 +9,11 @@ import faIconData from './fa-icons/fa-icons.yml';
 import './image/cl-image.scss';
 import './icons/cl-icons.scss';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 const svgIcons = require.context('../../../images/icons', true, /\.svg$/);
 const icons = [];
@@ -67,13 +70,16 @@ export const Visreg = () => {
     </div>
   `;
 
-  return `
-    ${createThemeVariations(
-      renderImages,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all theme variations for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        renderImages,
+        sectionThemes,
+        'All Section Theme Variations',
+        'Below are all theme variations for visual regression testing.',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

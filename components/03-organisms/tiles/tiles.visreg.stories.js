@@ -2,7 +2,13 @@ import tilesTwig from './yds-tiles.twig';
 import tilesData from './tiles.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
-import { createVariations } from '../../_storybook/playground-utils';
+import { sectionThemes, globalThemes } from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createSectionWrapper,
+  createThemeVariations,
+  createVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -20,7 +26,7 @@ export const Visreg = () => {
   const columnCounts = ['two', 'three', 'four'];
   const alignments = ['left', 'center', 'right'];
 
-  return `
+  const renderTileVariations = () => `
     ${createVariations(
       (style) =>
         tilesTwig({
@@ -72,4 +78,21 @@ export const Visreg = () => {
       'Alignment',
     )}
   `;
+
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderTileVariations(), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        sectionThemes,
+        'All Section Theme Variations',
+        '',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

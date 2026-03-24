@@ -1,10 +1,16 @@
 import imageBannerTwig from './image/yds-image-banner.twig';
 import imageData from '../../01-atoms/images/image/image.yml';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
 import {
+  globalThemes,
+  sectionThemes,
+  componentThemes,
+} from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
   createThemeVariations,
   createVariations,
+  createSectionWrapper,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -19,29 +25,25 @@ export default {
 };
 
 export const Visreg = () => {
-  const bgColor = 'one';
   const size = 'tall';
   const imageCaption = 'Image Banner Caption';
 
-  const renderTheme = (theme) => `
-    <div data-component-theme="${theme}">
-      ${imageBannerTwig({
-        ...imageData.responsive_images['16x9'],
-        image_banner__content__background: bgColor,
-        image_banner__overlay_variation: 'full',
-        image_banner__size: size,
-        image_banner__video: 'false',
-        image_banner__caption: imageCaption,
-      })}
-    </div>
-  `;
+  const renderImageBanner = (bgColor) =>
+    imageBannerTwig({
+      ...imageData.responsive_images['16x9'],
+      image_banner__content__background: bgColor,
+      image_banner__overlay_variation: 'full',
+      image_banner__size: size,
+      image_banner__video: 'false',
+      image_banner__caption: imageCaption,
+    });
 
   return `
     ${createVariations(
       (imgSize) =>
         imageBannerTwig({
           ...imageData.responsive_images['16x9'],
-          image_banner__content__background: bgColor,
+          image_banner__content__background: 'one',
           image_banner__overlay_variation: 'full',
           image_banner__size: imgSize,
           image_banner__video: 'false',
@@ -52,12 +54,31 @@ export const Visreg = () => {
       'Size',
     )}
 
-    ${createThemeVariations(
-      renderTheme,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all section theme variations of the Image Banner for visual regression testing.',
-      'Section Theme',
+    ${createGlobalThemeVariations(
+      () =>
+        createThemeVariations(
+          (sectionTheme) =>
+            createSectionWrapper(
+              sectionTheme,
+              componentThemes
+                .map(
+                  (componentTheme) => `
+                    <div class="sb-section__container">
+                      <h3 class="sb-section__subheading">Image Banner Theme: ${componentTheme}</h3>
+                      ${renderImageBanner(componentTheme)}
+                    </div>
+                  `,
+                )
+                .join(''),
+              { width: 'site', primaryWidth: '100%' },
+            ),
+          sectionThemes,
+          'All Section × Image Banner Theme Combinations',
+          '',
+          'Section Theme',
+        ),
+      globalThemes,
+      'All Global Theme Variations',
     )}
   `;
 };

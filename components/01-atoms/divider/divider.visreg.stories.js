@@ -3,8 +3,11 @@ import dividerTwig from './yds-divider.twig';
 import './cl-dividers.scss';
 import '../../00-tokens/effects/yds-animate';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 export default {
   title: 'Atoms/Divider/Visreg',
@@ -54,13 +57,16 @@ export const Visreg = () => {
     `;
   };
 
-  return `
-    ${createThemeVariations(
-      renderThemeWidthVariations,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all theme variations with width samples for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        renderThemeWidthVariations,
+        sectionThemes,
+        'All Section Theme Variations',
+        'Below are all theme variations with width samples for visual regression testing.',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

@@ -2,8 +2,16 @@ import factsAndFiguresGroupTwig from './yds-facts-and-figures-group.twig';
 import factsAndFiguresGroupData from './facts-and-figures-group.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
-import { componentThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import {
+  componentThemes,
+  globalThemes,
+  sectionThemes,
+} from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createSectionWrapper,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -17,7 +25,7 @@ export default {
 };
 
 export const Visreg = () => {
-  const styles = ['basic', 'icon-only'];
+  const styles = ['basic', 'with-icon', 'icon-only'];
 
   // Render function for facts and figures with theme/style combinations
   const renderFactsAndFigures = (theme) =>
@@ -55,13 +63,30 @@ export const Visreg = () => {
       })
       .join('');
 
-  return `
-    ${createThemeVariations(
-      renderFactsAndFigures,
-      componentThemes,
-      'All Component Theme & Presentation Style Variations',
-      'Below are all combinations of component themes and presentation styles for visual regression testing.',
-      'Component Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        (sectionTheme) =>
+          createSectionWrapper(
+            sectionTheme,
+            componentThemes
+              .map(
+                (componentTheme) => `
+                  <div class="sb-section__container">
+                    <h3 class="sb-section__subheading">Component Theme: ${componentTheme}</h3>
+                    ${renderFactsAndFigures(componentTheme)}
+                  </div>
+                `,
+              )
+              .join(''),
+            { width: 'site', primaryWidth: '100%' },
+          ),
+        sectionThemes,
+        'All Section × Component Theme Combinations',
+        '',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

@@ -2,8 +2,16 @@ import tabs from './yds-tabs.twig';
 import tabData from './tabs.yml';
 import './yds-tabs';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import {
+  globalThemes,
+  sectionThemes,
+  componentThemes,
+} from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+  createSectionWrapper,
+} from '../../_storybook/playground-utils';
 
 export default {
   title: 'Molecules/Tabs/Visreg',
@@ -12,30 +20,40 @@ export default {
 
 // *** VRT: Tabs with All Section Theme Variations ***
 export const Visreg = () => {
-  const componentTheme = 'one';
+  const renderTabs = (dialTheme, idSuffix = '') =>
+    tabs({
+      ...tabData,
+      tabs__id: `123${idSuffix}`,
+      tabs__theme: dialTheme,
+    });
 
-  // Render function for tabs variations
-  const renderTabs = (theme, idSuffix = '') => `
-    <div data-component-has-divider="false" data-component-theme="${theme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary" style="width: 100%">
-          ${tabs({
-            ...tabData,
-            tabs__id: `123${idSuffix}`,
-            tabs__theme: componentTheme,
-          })}
-        </div>
-      </div>
-    </div>
-  `;
-
-  return `
-    ${createThemeVariations(
-      (theme) => renderTabs(theme, `-${theme}`),
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all theme variations for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        (sectionTheme) =>
+          createSectionWrapper(
+            sectionTheme,
+            componentThemes
+              .map(
+                (componentTheme) => `
+                  <div class="sb-section__container">
+                    <h3 class="sb-section__subheading">Tabs Theme: ${componentTheme}</h3>
+                    ${renderTabs(
+                      componentTheme,
+                      `-${sectionTheme}-${componentTheme}`,
+                    )}
+                  </div>
+                `,
+              )
+              .join(''),
+            { width: 'site', primaryWidth: '100%' },
+          ),
+        sectionThemes,
+        'All Section × Tabs Theme Combinations',
+        '',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

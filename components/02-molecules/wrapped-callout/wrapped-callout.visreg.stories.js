@@ -2,8 +2,16 @@ import wrappedCalloutTwig from './yds-wrapped-callout.twig';
 import textFieldTwig from '../text/yds-text-field.twig';
 import wrappedCalloutData from './wrapped-callout.yml';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import {
+  globalThemes,
+  sectionThemes,
+  componentThemes,
+} from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+  createSectionWrapper,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -17,33 +25,53 @@ export default {
 };
 
 export const Visreg = () => {
-  const calloutAlignment = 'left';
-  const themeColor = 'one';
+  const alignments = ['left', 'right'];
 
-  // Render function for wrapped callout variations
-  const renderWrappedCallout = (theme) => `
-    <div data-component-theme="${theme}">
-      ${textFieldTwig({
-        text_field__content: wrappedCalloutData.text_one,
-        text_field__width: 'site',
-        text_field__alignment: 'left',
-      })}
-      ${wrappedCalloutTwig({
-        wrapped_callout__alignment: calloutAlignment,
-        wrapped_callout__content: wrappedCalloutData.text_two,
-        wrapped_callout__callout: wrappedCalloutData.text_three,
-        wrapped_callout__theme: themeColor,
-      })}
-    </div>
+  const renderWrappedCallout = (dialTheme, alignment) => `
+    ${textFieldTwig({
+      text_field__content: wrappedCalloutData.text_one,
+      text_field__width: 'site',
+      text_field__alignment: 'left',
+    })}
+    ${wrappedCalloutTwig({
+      wrapped_callout__alignment: alignment,
+      wrapped_callout__content: wrappedCalloutData.text_two,
+      wrapped_callout__callout: wrappedCalloutData.text_three,
+      wrapped_callout__theme: dialTheme,
+    })}
   `;
 
-  return `
-    ${createThemeVariations(
-      renderWrappedCallout,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all theme variations for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        (sectionTheme) =>
+          createSectionWrapper(
+            sectionTheme,
+            componentThemes
+              .map(
+                (componentTheme) => `
+                  <div class="sb-section__container">
+                    <h3 class="sb-section__subheading">Wrapped Callout Theme: ${componentTheme}</h3>
+                    ${alignments
+                      .map(
+                        (alignment) => `
+                      <h4>Alignment: ${alignment}</h4>
+                      ${renderWrappedCallout(componentTheme, alignment)}
+                    `,
+                      )
+                      .join('')}
+                  </div>
+                `,
+              )
+              .join(''),
+            { width: 'site', primaryWidth: '100%' },
+          ),
+        sectionThemes,
+        'All Section × Wrapped Callout Theme Combinations',
+        '',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

@@ -2,8 +2,16 @@ import linkGridTwig from './yds-link-grid.twig';
 
 import linkGridData from './link-grid.yml';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import {
+  globalThemes,
+  sectionThemes,
+  componentThemes,
+} from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+  createSectionWrapper,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -14,31 +22,51 @@ export default {
 };
 
 export const Visreg = () => {
-  const themeColor = 'one';
-  const lineTreatment = 'default';
+  const lineTreatments = [
+    'default',
+    'all_strong_lines',
+    'all_light_lines',
+    'no_lines',
+  ];
 
-  // Render function for link grid variations
-  const renderLinkGrid = (theme) => `
-    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
-          ${linkGridTwig({
-            link_grid__theme: themeColor,
-            link_grid__line_treatment: lineTreatment,
-            ...linkGridData,
-          })}
-        </div>
-      </div>
-    </div>
-  `;
+  const renderLinkGrid = (dialTheme, lineTreatment) =>
+    linkGridTwig({
+      link_grid__theme: dialTheme,
+      link_grid__line_treatment: lineTreatment,
+      ...linkGridData,
+    });
 
-  return `
-    ${createThemeVariations(
-      renderLinkGrid,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all section theme variations with the selected component theme and line treatment for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        (sectionTheme) =>
+          createSectionWrapper(
+            sectionTheme,
+            componentThemes
+              .map(
+                (componentTheme) => `
+                  <div class="sb-section__container">
+                    <h3 class="sb-section__subheading">Link Grid Theme: ${componentTheme}</h3>
+                    ${lineTreatments
+                      .map(
+                        (lineTreatment) => `
+                      <h4>Line Treatment: ${lineTreatment}</h4>
+                      ${renderLinkGrid(componentTheme, lineTreatment)}
+                    `,
+                      )
+                      .join('')}
+                  </div>
+                `,
+              )
+              .join(''),
+            { width: 'site', primaryWidth: '100%' },
+          ),
+        sectionThemes,
+        'All Section × Link Grid Theme Combinations',
+        '',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

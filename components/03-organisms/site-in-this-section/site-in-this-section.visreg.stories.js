@@ -13,9 +13,15 @@ import './cl-site-in-this-section.scss';
 
 import {
   componentThemes,
+  globalThemes,
+  sectionThemes,
   siteHeaderThemes,
 } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import {
+  createGlobalThemeVariations,
+  createSectionWrapper,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -46,25 +52,44 @@ const renderSiteHeader = (theme) =>
   });
 
 export const Visreg = () => {
-  return `
-    ${createThemeVariations(
-      (theme) =>
-        siteSectionTwig({
-          site_section_wrap__theme: theme,
-          secondary_nav__items: secondaryNavData.items,
-        }),
-      componentThemes,
-      'In Content — All Component Theme Variations',
-      'Section navigation displayed inline within the content area.',
-      'Component Theme',
-    )}
+  const renderSiteSection = (componentTheme) =>
+    siteSectionTwig({
+      site_section_wrap__theme: componentTheme,
+      secondary_nav__items: secondaryNavData.items,
+    });
 
-    ${createThemeVariations(
-      (theme) => renderSiteHeader(theme),
-      siteHeaderThemes,
-      'In Header — All Header Theme Variations (Collection Nav)',
-      'Collection navigation displayed within the site header.',
-      'Header Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () => `
+      ${createThemeVariations(
+        (sectionTheme) =>
+          createSectionWrapper(
+            sectionTheme,
+            componentThemes
+              .map(
+                (componentTheme) => `
+                  <div class="sb-section__container">
+                    <h3 class="sb-section__subheading">Component Theme: ${componentTheme}</h3>
+                    ${renderSiteSection(componentTheme)}
+                  </div>
+                `,
+              )
+              .join(''),
+            { width: 'site', primaryWidth: '100%' },
+          ),
+        sectionThemes,
+        'All Section × Component Theme Combinations',
+        '',
+        'Section Theme',
+      )}
+      ${createThemeVariations(
+        (theme) => renderSiteHeader(theme),
+        siteHeaderThemes,
+        'In Header — All Header Theme Variations (Collection Nav)',
+        'Collection navigation displayed within the site header.',
+        'Header Theme',
+      )}
+    `,
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

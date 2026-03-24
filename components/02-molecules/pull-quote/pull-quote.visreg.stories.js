@@ -2,8 +2,15 @@ import pullQuoteTwig from './yds-pull-quote.twig';
 
 import pullQuoteData from './pull-quote.yml';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import {
+  globalThemes,
+  sectionThemes,
+  componentThemes,
+} from '../../_storybook/theme-constants';
+import {
+  createGlobalThemeVariations,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 export default {
   title: 'Molecules/Quotes/Pull Quote/Visreg',
@@ -13,12 +20,10 @@ export default {
 export const Visreg = () => {
   const quote = pullQuoteData.pull_quote__quote;
   const attribution = pullQuoteData.pull_quote__attribution;
-  const style = 'bar-left';
-  const accentColor = 'one';
+  const styles = ['bar-left', 'bar-right', 'quote-left'];
 
-  // Render function for pull quote (with accent color CSS variable)
-  const renderPullQuote = (theme) => `
-    <div data-component-has-divider="false" data-component-theme="${theme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
+  const renderPullQuote = (sectionTheme, accentColor, style) => `
+    <div data-component-has-divider="false" data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
       <div class="yds-layout__inner" style="--color-pull-quote-accent: var(--color-${accentColor})">
         <div class="yds-layout__primary" style="width: 100%">
           ${pullQuoteTwig({
@@ -32,13 +37,33 @@ export const Visreg = () => {
     </div>
   `;
 
-  return `
-    ${createThemeVariations(
-      renderPullQuote,
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all theme variations for visual regression testing.',
-      'Section Theme',
-    )}
-  `;
+  return createGlobalThemeVariations(
+    () =>
+      createThemeVariations(
+        (sectionTheme) =>
+          componentThemes
+            .map(
+              (componentTheme) => `
+                <div class="sb-section__container">
+                  <h3 class="sb-section__subheading">Pull Quote Theme: ${componentTheme}</h3>
+                  ${styles
+                    .map(
+                      (style) => `
+                    <h4>Style: ${style}</h4>
+                    ${renderPullQuote(sectionTheme, componentTheme, style)}
+                  `,
+                    )
+                    .join('')}
+                </div>
+              `,
+            )
+            .join(''),
+        sectionThemes,
+        'All Section × Pull Quote Theme Combinations',
+        '',
+        'Section Theme',
+      ),
+    globalThemes,
+    'All Global Theme Variations',
+  );
 };

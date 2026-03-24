@@ -6,10 +6,11 @@ import alertData from './alert.yml';
 
 import './yds-alert';
 
-import { sectionThemes } from '../../_storybook/theme-constants';
+import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
+  createGlobalThemeVariations,
+  createSectionWrapper,
   createThemeVariations,
-  createVariations,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -32,29 +33,31 @@ ${ctaTwig({
 })}
 `;
 
+const alertTypes = ['emergency', 'announcement', 'marketing'];
+
 export const Visreg = () => {
-  const type = 'announcement';
   const heading = alertData.alert__heading;
   const content = alertData.alert__content;
   const linkContent = alertData.alert__link__content;
 
-  // Render function for alert variations
-  const renderAlert = (theme, idSuffix = 'default') => `
-    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
+  const renderAlertTypes = (sectionTheme) =>
+    alertTypes
+      .map(
+        (alertType) => `
+        <div class="sb-section__container">
+          <h3 class="sb-section__subheading">Alert Type: ${alertType}</h3>
           ${alertTwig({
-            alert__type: type,
+            alert__type: alertType,
             alert__heading: heading,
             alert__content: content,
             alert__link__content: linkContent,
             alert__link__url: alertData.alert__link__url,
-            alert__id: `alert-${idSuffix}`,
+            alert__id: `alert-${sectionTheme}-${alertType}`,
           })}
         </div>
-      </div>
-    </div>
-  `;
+      `,
+      )
+      .join('');
 
   return `
     <script>
@@ -74,34 +77,21 @@ export const Visreg = () => {
       text_field__width: 'site',
     })}
 
-    ${createThemeVariations(
-      (theme) => renderAlert(theme, `theme-${theme}`),
-      sectionThemes,
-      'All Section Theme Variations',
-      'Below are all section theme variations for visual regression testing.',
-      'Section Theme',
-    )}
-
-    ${createVariations(
-      (alertType) => `
-        <div data-component-theme="one" data-component-width="site" class="yds-layout">
-          <div class="yds-layout__inner">
-            <div class="yds-layout__primary">
-              ${alertTwig({
-                alert__type: alertType,
-                alert__heading: heading,
-                alert__content: content,
-                alert__link__content: linkContent,
-                alert__link__url: alertData.alert__link__url,
-                alert__id: `alert-type-${alertType}`,
-              })}
-            </div>
-          </div>
-        </div>
-      `,
-      ['emergency', 'announcement', 'marketing'],
-      'All Alert Type Variations',
-      'Alert Type',
+    ${createGlobalThemeVariations(
+      () =>
+        createThemeVariations(
+          (sectionTheme) =>
+            createSectionWrapper(sectionTheme, renderAlertTypes(sectionTheme), {
+              width: 'site',
+              primaryWidth: '100%',
+            }),
+          sectionThemes,
+          'All Section Theme Variations',
+          'Below are all section theme variations for visual regression testing.',
+          'Section Theme',
+        ),
+      globalThemes,
+      'All Global Theme Variations',
     )}
   `;
 };
