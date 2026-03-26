@@ -91,6 +91,7 @@ export const parameters = {
         'Organisms',
         'Page Layouts',
         'Page Examples',
+        ['Overview', '*'],
         '*',
       ],
     },

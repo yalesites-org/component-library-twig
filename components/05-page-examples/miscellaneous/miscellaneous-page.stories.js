@@ -13,6 +13,7 @@ import textWithImageData from '../../02-molecules/text-with-image/text-with-imag
 import accordionData from '../../02-molecules/accordion/accordion.yml';
 import alertData from '../../02-molecules/alert/alert.yml';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
+import argTypesToArgs from '../../utility';
 
 // JavaScript.
 import '../../00-tokens/layout/yds-layout';
@@ -26,6 +27,7 @@ export default {
     layout: 'fullscreen',
   },
   argTypes,
+  args: argTypesToArgs(argTypes),
 };
 
 export const AccordionPage = ({
@@ -57,6 +59,7 @@ export const AccordionPage = ({
     site_animate_components: allowAnimatedItems,
     site_header__border_thickness: headerBorderThickness,
     site_header__branding_link: 'https://www.yale.edu',
+    site_header__site_link: '/',
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
     site_header__accent: siteHeaderAccent,
