@@ -253,6 +253,27 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       }
     }
 
+    // Resource portrait grid.
+    [data-collection-type='grid'][data-collection-source='resource-portrait']
+      & {
+      aspect-ratio: 5/8;
+
+      // Safari 14 fix for aspect-ratio
+      @supports not (aspect-ratio: 5 / 8) {
+        &::before {
+          float: left;
+          padding-top: 160%;
+          content: '';
+        }
+
+        &::after {
+          display: block;
+          content: '';
+          clear: both;
+        }
+      }
+    }
+
     // Profile list non-featured
     [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='false']
       & {
@@ -267,7 +288,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   }
 
   // Resource thumbnail show top of the PDF file
-  [data-collection-source='resource'] & {
+  [data-collection-source='resource'] &,
+  [data-collection-source='resource-portrait'] & {
     overflow: hidden;
   }
 
