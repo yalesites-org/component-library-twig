@@ -126,3 +126,29 @@ export const ResourceCardCollection = ({
     ...imageData.responsive_images['3x2'],
   });
 };
+
+export const ResourcePortraitCardCollection = ({
+  heading,
+  collectionType,
+  featured,
+  withImages,
+  withOverlay,
+}) => {
+  const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
+
+  return cardCollectionTwig({
+    card_collection__source_type: 'resource',
+    card_collection__modifiers: ['resource-portrait'],
+    card_collection__type: collectionType,
+    card_collection__heading: heading,
+    card_collection__featured: featured ? 'true' : 'false',
+    card_collection__with_images: withImages ? 'true' : 'false',
+    card_collection__cards: items,
+    reference_card__overlay: withOverlay ? 'Pinned' : '',
+    ...resourceCardData,
+    ...imageData.responsive_images['1x1.6'],
+  });
+};
+ResourcePortraitCardCollection.args = {
+  featured: false,
+};
