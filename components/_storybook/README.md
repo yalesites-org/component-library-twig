@@ -126,18 +126,33 @@ const vrt = createThemeVariations(
 );
 ```
 
-#### `createVariations(renderFn, variations, title, label)`
+#### `createVariations(renderFn, variations, title, description, label, labelFormatter)`
 
-Generic variation utility for layouts, positions, etc.
+Generic variation utility for layouts, positions, etc. The `description` param
+renders an optional paragraph under the section heading. The `labelFormatter`
+param accepts a function `(variation) => string` for custom subheading text;
+when omitted, subheadings default to `"${label}: ${variation}"`.
 
 ```javascript
 import { createVariations } from '../_storybook/playground-utils.js';
 
+// Basic usage
 const layoutVRT = createVariations(
   (layout) => componentTwig({ ...config, layout }),
   ['fifty-fifty', 'seventy-thirty'],
   'All Layout Variations',
+  '', // description (empty string if unused)
   'Layout',
+);
+
+// With a custom label formatter
+const stateVRT = createVariations(
+  (state) => componentTwig({ ...config, state }),
+  events,
+  'All Event States',
+  '',
+  'Event State',
+  (event) => `${event.label} (${event.state})`,
 );
 ```
 
@@ -163,15 +178,30 @@ const vrt = createThemeAccentCombinations(
 
 #### `createSectionWrapper(theme, content, options)`
 
-Wraps component in themed section layout.
+Wraps component in a themed `yds-layout` section with all required data
+attributes. Options: `width` (default `'site'`), `primaryWidth` (CSS width
+string on the primary column), `hasDivider` (boolean), `innerStyle` (CSS
+string applied to `.yds-layout__inner` — useful for passing CSS custom
+properties like accent colors).
 
 ```javascript
 import { createSectionWrapper } from '../_storybook/playground-utils.js';
 
+// Basic usage
 const wrapped = createSectionWrapper('one', accordionTwig(config), {
   width: 'site',
   primaryWidth: '100%',
 });
+
+// With innerStyle for CSS custom properties (e.g. accent color)
+const accentWrapped = createSectionWrapper(
+  sectionTheme,
+  pullQuoteTwig({ ...config, pull_quote__accent_theme: accentColor }),
+  {
+    primaryWidth: '100%',
+    innerStyle: `--color-pull-quote-accent: var(--color-${accentColor})`,
+  },
+);
 ```
 
 #### `createMultiColumnLayout(layout, primary, secondary, tertiary, theme)`
@@ -188,6 +218,44 @@ const multiCol = createMultiColumnLayout(
   undefined,
   'two',
 );
+```
+
+### Page Example Utilities (`05-page-examples/page-utils.js`)
+
+#### `buildPageProps(args)` (default export)
+
+Encapsulates the shared header, footer, nav, and toolbar props that every page
+example story requires. Returns an object you spread into your twig call, then
+add page-specific props after.
+
+Handles automatically:
+- 12 global toolbar localStorage reads (header theme, footer theme, nav
+  position, menu variation, animated items, border thicknesses, accents, etc.)
+- Mapping all of those to the twig prop keys expected by page templates
+- `show_breadcrumbs` from args
+
+The three nav YAML files (`utility-nav`, `primary-nav`, `breadcrumbs`) must
+still be imported and spread in each story file due to a webpack module
+resolution constraint — they fail to load when imported from a non-story
+utility file.
+
+```javascript
+import buildPageProps from '../page-utils';
+import utilityNavData from '../../03-organisms/menu/utility-nav/utility-nav.yml';
+import primaryNavData from '../../03-organisms/menu/primary-nav/primary-nav.yml';
+import breadcrumbData from '../../03-organisms/menu/breadcrumbs/breadcrumbs.yml';
+
+export const MyPage = (args) => {
+  const { pageTitle, somePageSpecificArg } = args;
+  return myPageTwig({
+    ...buildPageProps(args),
+    utility_nav__items: utilityNavData.items,
+    primary_nav__items: primaryNavData.items,
+    breadcrumbs__items: breadcrumbData.items,
+    page_title__heading: pageTitle,
+    some_page_specific_prop: somePageSpecificArg,
+  });
+};
 ```
 
 ### Icon Utilities (`icon-utils.js`)
