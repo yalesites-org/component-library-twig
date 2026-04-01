@@ -1,8 +1,8 @@
 // Libraries.
 @use '~normalize.css/normalize';
 
-// Config.
-@use '_settings/config';
+// Global Config.
+@use 'global-config';
 
 // Components.
 @use '01-atoms/atoms';

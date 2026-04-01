@@ -1,0 +1,42 @@
+# control-props.yml
+#
+# Controls component property definitions (story-level controls).
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+sectionTheme:
+  twigProp: data-component-theme
+  name: Section Theme
+  type: select
+  required: false
+  description: Background color theme for the layout section
+  default: default
+  options:
+    - default
+    - one
+    - two
+    - three
+    - four
+  control: select
+
+componentTheme:
+  twigProp: cta__component_theme
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Theme color for the CTA button from the design system dial
+  detail: >
+    Controls the color theme applied to CTA buttons. Maps to the
+    cta__component_theme Twig variable. Used primarily in the CTA story.
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+    - six
+    - seven
+  control: select

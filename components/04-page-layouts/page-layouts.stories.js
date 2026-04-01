@@ -1,4 +1,5 @@
 import argTypes from './cl-page-args';
+import argTypesToArgs from '../utility';
 
 import fullWidthTwig from './yds-full-width.twig';
 
@@ -14,6 +15,7 @@ export default {
     layout: 'fullscreen',
   },
   argTypes,
+  args: argTypesToArgs(argTypes),
 };
 
 export const fullWidth = ({
@@ -31,6 +33,7 @@ export const fullWidth = ({
     site_name: siteName,
     site_header__border_thickness: headerBorderThickness,
     site_header__branding_link: 'https://www.yale.edu',
+    site_header__site_link: '/',
     site_header__nav_position: primaryNavPosition,
     site_header__theme: siteHeaderTheme,
     site_footer__border_thickness: footerBorderThickness,

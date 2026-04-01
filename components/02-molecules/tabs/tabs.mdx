@@ -1,0 +1,192 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as TabsStories from './tabs.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './tabs-props.yml';
+
+<Meta of={TabsStories} name="Docs" />
+
+# Tabs
+
+The tabs component provides an interactive tabbed interface for organizing related content into separate panels. Users can click on tab labels to switch between different content sections without leaving the page. This component is ideal for presenting multiple related pieces of information in a compact, organized manner.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the tabs' properties in real-time. Click on tab labels to switch between content panels.
+
+<Canvas of={TabsStories.Interactive} />
+<Controls of={TabsStories.Interactive} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-tabs.twig`
+- **Styles**: `_yds-tabs.scss`
+- **JavaScript**: `yds-tabs.js`
+
+### Accessibility
+
+- Proper ARIA attributes for tabs pattern (role="tablist", role="tab", role="tabpanel")
+- Keyboard navigation support:
+  - Arrow keys to navigate between tabs
+  - Tab key to enter/exit the tab list
+  - Enter/Space to activate a tab
+- aria-selected indicates the active tab
+- aria-controls links tabs to their panels
+- Each tab panel is associated with its tab via aria-labelledby
+- Only the active tab is in tab order (tabindex="0"), others use tabindex="-1"
+- Focus management ensures keyboard users can navigate efficiently
+
+### Behavior
+
+- **Default State**: First tab is active by default
+- **Tab Activation**: Click a tab label to display its associated content
+- **Visual Feedback**: Active tab has distinct styling to indicate selection
+- **Keyboard Navigation**: Full keyboard support for accessible interaction
+- **Responsive**: Tabs adapt to available space, may scroll horizontally on narrow screens
+- **Theme Support**: Tabs respect the component theme dial for color accents
+- **Content Management**: Only the active tab's content is visible at a time
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use tabs when you have 2-8 related content sections
+- Keep tab labels short and descriptive (1-3 words ideal)
+- Ensure tab content is substantial enough to warrant separation
+- Order tabs logically (chronological, importance, or alphabetical)
+- Keep all tabs at the same level of importance
+- Ensure content in one tab doesn't depend on viewing another tab first
+- Use consistent content structure across all tab panels
+- Make the first tab contain the most important or frequently accessed content
+
+### Things to Avoid
+
+- Don't use tabs for sequential content that should be read in order (use a stepper instead)
+- Avoid using tabs with only one or two sections (not worth the interaction cost)
+- Don't nest tabs within tabs (causes confusion and accessibility issues)
+- Avoid very long tab labels that might break layouts or wrap awkwardly
+- Don't hide critical content in non-default tabs
+- Avoid using tabs when users need to compare content across panels (use side-by-side layout instead)
+- Don't use tabs for navigation between pages (use primary navigation instead)
+
+## Content Patterns
+
+### Tab Label Best Practices
+
+- **Concise**: Keep to 1-3 words when possible
+- **Descriptive**: Clearly indicate what content is in the panel
+- **Parallel**: Use consistent grammatical structure (all nouns, all verbs, etc.)
+- **Distinct**: Each label should be clearly different from others
+
+### Tab Content Guidelines
+
+- Each panel should be self-contained and understandable without viewing other tabs
+- Content length can vary between tabs, but extreme differences may indicate poor organization
+- Consider using consistent content structures (e.g., all tabs have headings and paragraphs)
+- Rich content including images, lists, and links is supported
+
+## Theming
+
+The tabs component supports Yale's color dial system through the `tabs__theme` property. This applies accent colors to:
+
+- Active tab indicator (underline or background)
+- Tab focus states
+- Interactive hover states
+
+Available theme values: one, two, three, four, five, six, seven, eight
+
+## Examples and Use Cases
+
+### Registration Information
+
+Use tabs to organize different phases of a process:
+
+- "Before registration"
+- "During registration"
+- "After registration"
+
+### Departmental Information
+
+Organize different aspects of a department or program:
+
+- "Overview"
+- "Faculty"
+- "Research"
+- "Admissions"
+
+### Event Details
+
+Break down event information into digestible sections:
+
+- "Schedule"
+- "Speakers"
+- "Location"
+- "FAQs"
+
+## Technical Implementation
+
+### Data Structure Example
+
+```javascript
+{
+  tabs__id: "unique-id-123",
+  tabs__theme: "one",
+  tabs: [
+    {
+      tab__label: "Overview",
+      tab__content: "<div class='text-field'><p>Content goes here...</p></div>"
+    },
+    {
+      tab__label: "Details",
+      tab__content: "<div class='text-field'><p>More content...</p></div>"
+    }
+  ]
+}
+```
+
+### JavaScript Behavior
+
+The tabs JavaScript handles:
+
+- Click events on tab buttons
+- Keyboard navigation (arrow keys, Enter, Space)
+- Focus management for accessibility
+- ARIA state updates (aria-selected)
+- Show/hide logic for tab panels
+- URL hash support (optional, for deep linking)
+
+## Testing
+
+For comprehensive visual regression testing with all theme variations, see the [Visreg page](?path=/story/molecules-tabs-visreg).
+
+### Testing Considerations
+
+- Test with varying numbers of tabs (2, 4, 8+)
+- Test with different content lengths in each panel
+- Test keyboard navigation thoroughly
+- Test with screen readers to verify ARIA implementation
+- Test responsive behavior on narrow screens
+- Verify theme variations apply correctly
+
+## Related Components
+
+- **Accordion**: Alternative for vertically-stacked collapsible content
+- **Text Field**: Often used within tab panels for formatted content
+- **Layout**: Tabs are typically placed within layout components
+
+## Alternatives to Consider
+
+- **Accordion**: Better for mobile, when users might need to see multiple sections simultaneously, or when vertical space is not a constraint
+- **Progressive Disclosure**: For optional or advanced content that most users won't need
+- **Separate Pages**: When content sections are substantial enough to warrant their own URLs
+- **Vertical Navigation**: When you have many sections (8+) or hierarchical content
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

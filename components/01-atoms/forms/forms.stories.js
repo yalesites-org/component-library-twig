@@ -10,10 +10,18 @@ import formExample from './contact-form-example.twig';
 // import radioData from './radio/radio.yml';
 import selectOptionsData from './select/select.yml';
 
+import componentProps from './forms-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
+
 /**
  * Storybook Definition.
  */
-export default { title: 'Atoms/Forms' };
+export default {
+  title: 'Atoms/Forms',
+  tags: ['!dev'],
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
+};
 
 // export const checkboxes = () => checkbox(checkboxData);
 
@@ -33,23 +41,3 @@ export const exampleForm = ({ buttonTheme, sectionTheme }) => `
     </div>
   </div>
 `;
-
-exampleForm.argTypes = {
-  sectionTheme: {
-    name: 'Section Theme',
-    type: 'select',
-    options: ['default', 'one', 'two', 'three', 'four'],
-    control: { type: 'select' },
-  },
-  buttonTheme: {
-    name: 'Button Theme',
-    type: 'select',
-    options: ['one', 'two', 'three', 'four', 'five', 'six', 'seven'],
-    control: { type: 'select' },
-  },
-};
-
-exampleForm.args = {
-  sectionTheme: 'default',
-  buttonTheme: 'one',
-};

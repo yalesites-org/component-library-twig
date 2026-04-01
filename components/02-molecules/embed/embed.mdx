@@ -1,0 +1,163 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as EmbedStories from './embed.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './embed-props.yml';
+
+<Meta of={EmbedStories} name="Docs" />
+
+# Embed
+
+The embed component provides a flexible container for embedding third-party content such as forms, audio players, maps, calendars, and social media posts. It supports various embed types including Microsoft Forms, SoundCloud, Google Maps, Google Calendar, PowerBI dashboards, and social media embeds from Instagram, X (Twitter), and Bluesky.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the embed's properties in real-time. The embed component adapts to different content types and provides consistent styling across all embedded content.
+
+<Canvas of={EmbedStories.Interactive} />
+<Controls of={EmbedStories.Interactive} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Embed Types
+
+The embed component supports multiple types of embedded content:
+
+### Forms
+
+**Supported Platforms:** Microsoft Forms, Google Forms, Qualtrics, and other form platforms
+
+**Use Case:** Embed surveys, registration forms, feedback forms, and data collection tools directly into content pages.
+
+**Example:** Microsoft Forms embed for event registration or feedback collection.
+
+### Audio
+
+**Supported Platforms:** SoundCloud, Spotify, Apple Music embeds
+
+**Use Case:** Share podcasts, music, audio recordings, or sound clips within content.
+
+**Example:** SoundCloud player for a university podcast episode.
+
+### Maps
+
+**Supported Platforms:** Google Maps, Mapbox, and other mapping services
+
+**Use Case:** Show locations, campus maps, directions, or geographic data visualization.
+
+**Example:** Google Maps embed showing Yale University campus location.
+
+### Calendars
+
+**Supported Platforms:** Google Calendar, Outlook Calendar
+
+**Use Case:** Display event schedules, office hours, or upcoming activities.
+
+**Example:** Google Calendar showing department events and deadlines.
+
+### Dashboards
+
+**Supported Platforms:** PowerBI, Tableau, and other data visualization tools
+
+**Use Case:** Embed interactive data dashboards and analytics.
+
+**Example:** PowerBI dashboard showing institutional metrics.
+
+### Social Media
+
+**Supported Platforms:** Instagram, X (Twitter), Bluesky
+
+**Use Case:** Display social media posts and feeds to show institutional updates and engagement.
+
+**Note:** Social media embeds use embed codes provided by the platforms and are rendered as raw HTML rather than iframes.
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-embed.twig`
+- **Styles**: `_yds-embed.scss`
+
+### Accessibility
+
+- **Title Attribute**: All iframe embeds should include an `embed__title` for screen reader context
+- **Semantic HTML**: Uses appropriate `iframe` element with proper attributes
+- **Keyboard Navigation**: All embedded content maintains keyboard accessibility
+- **Loading Strategy**: Lazy loading improves page performance without sacrificing accessibility
+
+### Behavior
+
+- **Responsive Design**: Embeds scale appropriately to container width
+- **Lazy Loading**: By default, embeds use lazy loading to improve page load performance
+- **Width Constraints**: Supports multiple width options to fit different layout contexts
+- **Aspect Ratios**: Different embed types may have different default aspect ratios
+
+## Width Options
+
+The embed component supports four width options:
+
+- **max**: Maximum width, edge-to-edge in container
+- **site**: Standard site content width (default)
+- **highlight**: Slightly wider than content for emphasis
+- **content**: Standard content column width
+
+## Usage Guidelines
+
+### Best Practices
+
+- Always provide an `embed__title` for accessibility, especially for forms and interactive content
+- Use lazy loading (`loading: 'lazy'`) for embeds below the fold to improve page performance
+- Choose appropriate width based on content type (maps often benefit from wider widths)
+- Test embedded content responsiveness across different screen sizes
+- Verify that embedded content is accessible and follows accessibility guidelines
+- Consider the performance impact of multiple embeds on a single page
+- For social media embeds, ensure the embed code is current and from official sources
+
+### Things to Avoid
+
+- Don't embed untrusted or unverified third-party content
+- Avoid embedding content that contains autoplay audio/video without user controls
+- Don't use embeds when native HTML elements would be more appropriate
+- Avoid excessive stacking of multiple heavy embeds on a single page
+- Don't forget to include titles for screen readers
+- Avoid embedding content that requires specific plugins or outdated technologies
+
+## Security Considerations
+
+- **Content Source Validation**: Only embed content from trusted, verified sources
+- **HTTPS**: Ensure all embed URLs use HTTPS for secure connections
+- **CSP Compatibility**: Verify embedded content works with Content Security Policy headers
+- **Privacy**: Consider privacy implications of third-party embeds (cookies, tracking)
+
+## Implementation Notes
+
+### Social Media Embeds
+
+Social media embeds (Instagram, X, Bluesky) require both the blockquote HTML and script tag provided by the platform. These are typically added as raw HTML rather than using the component's iframe structure.
+
+### Form Embeds
+
+Form embeds should include:
+
+- The form URL with embed parameters
+- An appropriate title describing the form's purpose
+- Appropriate height to show form content without excessive scrolling
+
+### Map Embeds
+
+Map embeds benefit from:
+
+- Using the 'map' type for semantic clarity
+- Wider width options for better geographic context
+- Appropriate loading strategy based on page position
+
+## Related Components
+
+- **Video**: For video-specific embeds with additional features
+- **Iframe**: Lower-level iframe component for custom implementations
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

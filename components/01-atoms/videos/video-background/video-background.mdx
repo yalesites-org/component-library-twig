@@ -1,0 +1,146 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as VideoBackgroundStories from './video-background.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './video-background-props.yml';
+
+<Meta of={VideoBackgroundStories} name="Docs" />
+
+# Video Background
+
+The video background component allows for full-width looping video backgrounds that add visual interest and motion to sections. The video plays automatically, is muted, and loops continuously to create an engaging background effect.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the video background across different themes.
+
+<Canvas of={VideoBackgroundStories.Interactive} />
+<Controls of={VideoBackgroundStories.Interactive} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Atom
+- **Template**: `yds-video-background.twig`
+- **JavaScript**: `yds-video-background.js`
+
+### Accessibility
+
+- **Autoplay Considerations**: Video is muted and decorative
+- **Motion Preferences**: Respects prefers-reduced-motion media query
+- **No Audio**: Background videos should not include essential audio
+- **Fallback**: Should include a poster image for browsers that don't autoplay
+
+### Behavior
+
+- **Autoplay**: Automatically plays on page load
+- **Muted**: No audio to prevent user disruption
+- **Looping**: Continuously loops for seamless background
+- **Responsive**: Scales to fill container while maintaining aspect ratio
+- **Performance**: May pause when not in viewport to improve performance
+
+## Video Requirements
+
+### Technical Requirements
+
+- **Format**: MP4 (H.264 codec) for best browser support
+- **Duration**: 5-30 seconds recommended for loop seamlessness
+- **Resolution**: 1920x1080 (Full HD) minimum
+- **File Size**: Optimize for web (under 5MB ideal)
+- **Aspect Ratio**: 16:9 recommended
+
+### Content Guidelines
+
+- Use subtle, non-distracting motion
+- Ensure smooth loop points (end matches beginning)
+- Avoid text or important details that need reading
+- Consider all users see the content, not just those who can play video
+- Ensure sufficient contrast for overlaid text
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use for hero sections or feature highlights
+- Keep videos short for faster loading
+- Optimize videos for web delivery
+- Include a poster frame for initial display
+- Ensure content works without the video (progressive enhancement)
+- Test on various connection speeds
+- Consider mobile data usage
+
+### Things to Avoid
+
+- Don't use videos with essential information (accessibility)
+- Avoid videos that distract from main content
+- Don't rely solely on video for visual interest
+- Avoid long videos that increase page weight
+- Don't use videos with rapid motion that could cause discomfort
+- Avoid videos that don't loop seamlessly
+
+## Performance Considerations
+
+### Optimization Tips
+
+1. **Compression**: Use modern codecs and compression tools
+2. **Resolution**: Provide appropriate sizes for different viewports
+3. **Lazy Loading**: Consider loading video only when needed
+4. **Fallbacks**: Provide static image fallback for unsupported browsers
+5. **CDN**: Host videos on a CDN for faster delivery
+
+### Mobile Considerations
+
+- **Autoplay**: Some mobile browsers restrict autoplay
+- **Data Usage**: Consider file size impact on mobile users
+- **Performance**: Mobile devices may struggle with high-res video
+- **Battery**: Background video can drain battery quickly
+
+## Reduced Motion
+
+The component respects the `prefers-reduced-motion` media query. Users who have enabled reduced motion in their system settings will see a static frame instead of the playing video.
+
+## Implementation Notes
+
+### Basic Usage
+
+```html
+<div class="video-background">
+  <video autoplay muted loop playsinline>
+    <source src="background.mp4" type="video/mp4" />
+  </video>
+</div>
+```
+
+### With Overlay Content
+
+Background videos typically have content overlaid on top:
+
+```html
+<div class="section-with-video">
+  <div class="video-background">...</div>
+  <div class="overlay-content">
+    <h1>Your Content Here</h1>
+  </div>
+</div>
+```
+
+## Testing
+
+For comprehensive visual regression testing with all video background variations and theme combinations, see the [Visreg page](?path=/story/atoms-videos-video-background-visreg).
+
+## Related Components
+
+- **Background Image**: Alternative static background option
+- **Hero Component**: Often uses video backgrounds
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

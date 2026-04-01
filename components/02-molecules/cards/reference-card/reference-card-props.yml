@@ -1,0 +1,97 @@
+# reference-card-props.yml
+#
+# Reference Card component property definitions (shared props).
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Story-specific props (date, event format, profile pronouns, etc.)
+# are defined as story-level argTypes overrides in reference-card.stories.js.
+
+heading:
+  twigProp: reference_card__heading
+  name: Heading
+  type: string
+  required: true
+  description: The heading text for the card
+  control: text
+
+snippet:
+  twigProp: reference_card__snippet
+  name: Snippet
+  type: string
+  required: false
+  description: Descriptive text content displayed below the heading
+  control: text
+
+collectionType:
+  twigProp: card_collection__type
+  name: Collection Type
+  type: select
+  required: false
+  description: 'Layout type for the card collection: grid, list, condensed, or single'
+  default: grid
+  options:
+    - grid
+    - list
+    - condensed
+    - single
+  control: select
+
+featured:
+  name: Featured
+  type: boolean
+  required: false
+  description: Whether the collection displays cards in a featured layout style
+  detail: >
+    Controls the data-collection-featured attribute on the card collection
+    wrapper. This is a Storybook-only UI toggle — it is not a direct Twig
+    prop on the card template itself.
+  default: true
+  control: boolean
+
+withImage:
+  twigProp: reference_card__image
+  name: With Image
+  type: boolean
+  required: false
+  description: Whether to display an image with the card
+  default: true
+  control: boolean
+
+showEyebrow:
+  name: Show Eyebrow
+  type: boolean
+  required: false
+  description: Whether to display the eyebrow text above the heading
+  detail: >
+    Storybook-only toggle that controls show_eyebrow. When enabled, the
+    eyebrow field becomes visible in the Controls panel via a conditional
+    if: { arg: 'showEyebrow' } rule.
+  default: false
+  control: boolean
+
+eyebrow:
+  twigProp: reference_card__eyebrow
+  name: Eyebrow
+  type: string
+  required: false
+  description: Optional eyebrow text displayed above the heading (conditionally shown)
+  control: text
+
+showCategories:
+  name: Show Categories/Affiliations
+  type: boolean
+  required: false
+  description: Whether to display categories or affiliations on the card
+  detail: Controls the show_categories Twig variable.
+  default: false
+  control: boolean
+
+showTags:
+  name: Show Tags
+  type: boolean
+  required: false
+  description: Whether to display tags on the card
+  detail: Controls the show_tags Twig variable.
+  default: false
+  control: boolean

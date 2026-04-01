@@ -1,0 +1,87 @@
+# grand-hero-props.yml
+#
+# Grand Hero Banner component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+heading:
+  twigProp: grand_hero__heading
+  name: Heading
+  type: string
+  required: true
+  description: The main heading text for the grand hero banner
+  control: text
+
+snippet:
+  twigProp: grand_hero__snippet
+  name: Snippet
+  type: string
+  required: false
+  description: Additional descriptive text (supports HTML)
+  control: text
+
+linkContent:
+  twigProp: grand_hero__link__content
+  name: Link Content
+  type: string
+  required: false
+  description: Text for the primary call-to-action button
+  control: text
+
+linkContentTwo:
+  twigProp: grand_hero__link__content_two
+  name: Link Content Two
+  type: string
+  required: false
+  description: Text for the secondary call-to-action button
+  control: text
+
+bgColor:
+  twigProp: grand_hero__content__background
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Component theme color
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select
+
+overlayVariation:
+  twigProp: grand_hero__overlay_variation
+  name: Content Overlay
+  type: select
+  required: false
+  description: 'Content overlay style: full, contained, or contained-narrow'
+  default: contained
+  options:
+    - contained
+    - contained-narrow
+    - full
+  control: select
+
+size:
+  twigProp: grand_hero__size
+  name: Content Size
+  type: select
+  required: false
+  description: 'Content size variation: reduced, full, or mini'
+  default: full
+  options:
+    - reduced
+    - full
+    - mini
+  control: select
+
+withVideo:
+  twigProp: grand_hero__video
+  name: With Video
+  type: boolean
+  required: false
+  description: Whether to display a video background instead of a static image
+  default: false
+  control: boolean

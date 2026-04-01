@@ -1,0 +1,113 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as ActionBannerStories from './action-banner.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './action-banner-props.yml';
+
+<Meta of={ActionBannerStories} name="Docs" />
+
+# Action Banner
+
+The Action Banner is the most feature-rich banner variation in the Yale design system. It supports heading text, a snippet, a background image, and up to two call-to-action buttons. Content can be positioned at the bottom, left, or right of the banner, making it well-suited for pages that require clear, prominent calls-to-action.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the component's properties in real-time.
+
+<div className="sb-full-bleed-canvas">
+  <Canvas of={ActionBannerStories.ActionBanner} />
+</div>
+<Controls of={ActionBannerStories.ActionBanner} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Theme Options
+
+The Action Banner supports the full set of component theme dials:
+
+- **Default**: Standard theme using global color settings
+- **One through Five**: Custom theme dials that override global settings with component-specific colors
+
+Use the `banner__content__background` property to apply different themes. The theme affects the content area background color and text colors for optimal contrast.
+
+## Content Layout Variations
+
+The Action Banner supports three content positions. Use the interactive preview above to switch between them, or see the [Visreg page](?path=/story/molecules-banners-action-banner-visreg--visreg) for a side-by-side comparison.
+
+### Left Layout
+
+Content positioned to the left of the banner image — works well for emphasis on a key message.
+
+<div className="sb-full-bleed-canvas">
+  <Canvas of={ActionBannerStories.ActionBannerLeft} />
+</div>
+
+### Right Layout
+
+Content positioned to the right — useful for balancing a left-heavy image composition.
+
+<div className="sb-full-bleed-canvas">
+  <Canvas of={ActionBannerStories.ActionBannerRight} />
+</div>
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `action/yds-action-banner.twig`
+- **Styles**: `action/_yds-action-banner.scss`
+
+### Accessibility
+
+- Semantic HTML structure with proper heading hierarchy
+- Background images implemented with appropriate alternative text handling
+- Interactive elements (buttons, links) are keyboard accessible with clear focus indicators
+- Sufficient color contrast ratios maintained across all theme variations
+- Content remains accessible when background images fail to load
+
+### Behavior
+
+- **Responsive Design**: Content repositions for optimal mobile display
+- **Content Layout**: Bottom, left, and right positions adjust based on viewport
+- **Image Loading**: Uses responsive images with appropriate srcset for different screen sizes
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use at the top of pages to immediately capture attention and set context
+- Keep heading text concise and impactful (60 characters or less recommended)
+- Limit snippet text to 1–2 sentences for readability
+- Use high-quality images with 16:9 aspect ratio
+- Ensure sufficient contrast between text and background images
+- Don't use more than two call-to-action buttons
+
+### Button Configuration
+
+- **Mixed** (default): Primary button uses primary styling, secondary uses secondary — recommended for clear visual hierarchy
+- **Both Primary**: Use sparingly; reduces visual hierarchy between buttons
+- **Both Secondary**: Use for less prominent actions
+- **Alignment**: Right-aligned works well with bottom layout; left-aligned suits left/right layouts
+
+### Things to Avoid
+
+- Don't use multiple banners on a single page
+- Don't rely solely on background images to convey critical information
+- Avoid lengthy text content — use page body for detailed information
+- Don't use low-contrast color combinations
+
+## Testing
+
+For comprehensive visual regression testing with all layout, theme, and content variations, see the [Visreg page](?path=/story/molecules-banners-action-banner-visreg--visreg).
+
+## Related Components
+
+- **Grand Hero Banner**: For maximum-impact hero without multi-button CTAs
+- **Image Banner**: For visual storytelling with minimal text
+- **Video Banner**: For video-first content presentation

@@ -1,0 +1,83 @@
+# callout-props.yml
+#
+# Callout component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+heading:
+  twigProp: callout__heading
+  name: Heading
+  type: string
+  required: false
+  description: Heading text for each callout item
+  control: text
+
+text:
+  twigProp: callout__text
+  name: Text
+  type: string
+  required: false
+  description: Body text for each callout item
+  control: text
+
+linkText:
+  twigProp: callout__link__content
+  name: Link Text
+  type: string
+  required: false
+  description: Text for the callout link
+  control: text
+
+linkType:
+  twigProp: callout__link__type
+  name: Link Type
+  type: select
+  required: false
+  description: Style of the callout link
+  default: cta
+  options:
+    - cta
+    - link
+  control: select
+
+backgroundColor:
+  twigProp: callout__background_color
+  name: Callout Theme (dial)
+  type: select
+  required: false
+  description: Color theme applied to the callout component
+  detail: >
+    Applies a color theme to the callout component. The available options
+    are derived from the component-themes token set. Maps to the
+    callout__background_color Twig variable.
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select
+
+calloutAlignment:
+  twigProp: callout__alignment
+  name: Callout Alignment
+  type: select
+  required: false
+  description: Horizontal alignment of callout content
+  default: center
+  options:
+    - left
+    - center
+  control: select
+
+overlayBackgroundImage:
+  twigProp: callout__overlay_background_image
+  name: Overlay Background Image
+  type: boolean
+  required: false
+  description: Show a background image overlay on the callout
+  default: false
+  control: boolean

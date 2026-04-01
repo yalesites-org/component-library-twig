@@ -1,0 +1,383 @@
+import { Meta } from '@storybook/blocks';
+import './intro-styles.css';
+
+<Meta title="Introduction/Theme System" />
+
+<div className="sb-intro-page">
+
+# Understanding the Theme System
+
+<p className="lead-text">
+  The YaleSites component library uses a three-tier theme system that works
+  together to create cohesive, flexible, and branded experiences. Understanding
+  how these three types of themes interact is key to effectively using the
+  design system.
+</p>
+
+<div style={{ margin: '2rem 0' }}>
+  <h3 style={{ marginBottom: '0.75rem', color: '#333' }}>Three Theme Types Working Together</h3>
+  <p style={{ marginBottom: '1.5rem', color: '#444', lineHeight: '1.6' }}>
+    Think of themes as layers: <strong>Global Theme</strong> sets the overall color palette,
+    <strong> Section Theme</strong> applies background colors to page sections, and
+    <strong> Component Theme (dial)</strong> adds accent colors to individual components.
+    Together, they create unlimited design combinations while maintaining brand consistency.
+  </p>
+  <div style={{ position: 'relative', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+
+    {/* Global Theme - outermost layer */}
+    <div style={{
+      border: '3px solid #0053A0',
+      borderRadius: '12px',
+      padding: '1.5rem',
+      background: '#e8f1f9',
+      position: 'relative',
+    }}>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.75rem',
+        marginBottom: '0.5rem',
+      }}>
+        <div style={{
+          background: '#0053A0',
+          color: 'white',
+          padding: '0.25rem 0.75rem',
+          borderRadius: '4px',
+          fontSize: '0.75rem',
+          fontWeight: '700',
+          letterSpacing: '0.05em',
+          textTransform: 'uppercase',
+          whiteSpace: 'nowrap',
+        }}>
+          Global Theme (Lever)
+        </div>
+        <span style={{ fontSize: '0.9rem', color: '#333' }}>
+          Sets the <strong>site-wide color palette</strong> — affects everything
+        </span>
+      </div>
+      <div style={{ fontSize: '0.8rem', color: '#555', marginBottom: '1rem', paddingLeft: '0.25rem' }}>
+        e.g. "Old Blues", "New Haven Green", "Shoreline Summer" …
+      </div>
+
+      {/* Section Theme - middle layer */}
+      <div style={{
+        border: '2px solid #2e7d32',
+        borderRadius: '8px',
+        padding: '1.25rem',
+        background: '#eef5ee',
+        position: 'relative',
+      }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.75rem',
+          marginBottom: '0.5rem',
+        }}>
+          <div style={{
+            background: '#2e7d32',
+            color: 'white',
+            padding: '0.25rem 0.75rem',
+            borderRadius: '4px',
+            fontSize: '0.75rem',
+            fontWeight: '700',
+            letterSpacing: '0.05em',
+            textTransform: 'uppercase',
+            whiteSpace: 'nowrap',
+          }}>
+            Section Theme
+          </div>
+          <span style={{ fontSize: '0.9rem', color: '#333' }}>
+            Sets the <strong>background color of a page section</strong>
+          </span>
+        </div>
+        <div style={{ fontSize: '0.8rem', color: '#555', marginBottom: '1rem', paddingLeft: '0.25rem' }}>
+          e.g. default (white), one, two, three, four, five
+        </div>
+
+        {/* Component Theme - innermost layer */}
+        <div style={{
+          border: '2px solid #b35c00',
+          borderRadius: '6px',
+          padding: '1rem 1.25rem',
+          background: '#fff8f0',
+          position: 'relative',
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            marginBottom: '0.5rem',
+          }}>
+            <div style={{
+              background: '#b35c00',
+              color: 'white',
+              padding: '0.25rem 0.75rem',
+              borderRadius: '4px',
+              fontSize: '0.75rem',
+              fontWeight: '700',
+              letterSpacing: '0.05em',
+              textTransform: 'uppercase',
+              whiteSpace: 'nowrap',
+            }}>
+              Component Theme (Dial)
+            </div>
+            <span style={{ fontSize: '0.9rem', color: '#333' }}>
+              Adds an <strong>accent color to an individual component</strong>
+            </span>
+          </div>
+          <div style={{ fontSize: '0.8rem', color: '#555', paddingLeft: '0.25rem' }}>
+            e.g. default, one, two, three, four, five — overrides only this component
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Legend */}
+    <div style={{
+      display: 'flex',
+      gap: '2rem',
+      marginTop: '1.25rem',
+      flexWrap: 'wrap',
+      fontSize: '0.85rem',
+      color: '#555',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <div style={{ width: '16px', height: '16px', background: '#0053A0', borderRadius: '3px' }} />
+        Broadest scope — entire site
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <div style={{ width: '16px', height: '16px', background: '#2e7d32', borderRadius: '3px' }} />
+        Mid scope — one page section
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <div style={{ width: '16px', height: '16px', background: '#b35c00', borderRadius: '3px' }} />
+        Narrowest scope — one component
+      </div>
+    </div>
+
+  </div>
+</div>
+
+---
+
+## The Three Theme Types
+
+### 1. Global Theme (Lever)
+
+_Site-wide color palette_
+
+The global theme is the foundation of your entire site's color scheme. It's called a "lever" because switching it fundamentally changes all the color values used throughout the site.
+
+**Available options (6):**
+
+- `one` - Old Blues
+- `two` - New Haven Green
+- `three` - Shoreline Summer
+- `four` - Onha
+- `five` - It's Your Yale
+- `six` - AI
+
+**How to control:**
+
+- In Storybook: Use the "Site: Global Theme" dropdown in the top toolbar
+- In Drupal: Set site-wide in theme settings
+
+**What it affects:**
+
+- All color tokens throughout the site
+- Default colors for components that don't have specific theme overrides
+- Base palette for section themes and component themes
+
+**Think of it as:** The color filter applied to your entire website
+
+---
+
+### 2. Section Theme
+
+_Background colors for page sections_
+
+Section themes apply background colors to major page sections (like header, main content, footer). They work within the global theme's palette.
+
+**Available options (6):**
+
+- `default` - White/light background (most common)
+- `one` through `five` - Colored backgrounds using global theme palette
+
+**How to control:**
+
+- In Storybook: Use the "Section Theme" control in the Controls panel for individual stories
+- In Drupal: Set per-section in layout builder or paragraph settings
+
+**What it affects:**
+
+- Background color of page sections
+- Automatically adjusts text color for contrast
+- Provides context for components within the section
+
+**Think of it as:** The canvas color for a section of your page
+
+---
+
+### 3. Component Theme (Dial)
+
+_Accent colors for individual components_
+
+Component themes (often called "dials" in the CMS) add accent colors to specific components. These are the most granular level of theming.
+
+**Available options (6):**
+
+- `default` - Uses global theme defaults
+- `one` through `five` - Accent colors from global theme palette
+
+**How to control:**
+
+- In Storybook: Use the "[Component] Theme (dial)" control in the Controls panel
+- In Drupal: Set per-component using the "Style" field (color dial)
+
+**What it affects:**
+
+- Component-specific accent colors (borders, backgrounds, highlights)
+- Links and interactive elements within the component
+- Component-specific decorative elements
+
+**Think of it as:** The accent color for a specific component
+
+---
+
+## How They Work Together
+
+The three theme types create a hierarchy:
+
+1. **Global Theme** sets the base palette (e.g., "Old Blues")
+2. **Section Theme** applies a background color to a page section (e.g., `two` = navy background)
+3. **Component Theme** adds an accent color to a specific component (e.g., `three` = bright blue accent)
+
+**Example combination:**
+
+```
+Global Theme: "New Haven Green" (site-wide)
+└─ Section Theme: "two" (green background section)
+   └─ Component Theme: "three" (bright accent on a card within that section)
+```
+
+This creates visual hierarchy and interest while maintaining brand consistency.
+
+---
+
+## Key Differences Explained
+
+<table>
+  <thead>
+    <tr>
+      <th>Theme Type</th>
+      <th>Scope</th>
+      <th>Controls</th>
+      <th>Changes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Global Theme</strong>
+      </td>
+      <td>Entire site</td>
+      <td>Color palette</td>
+      <td>Affects all colors site-wide</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Section Theme</strong>
+      </td>
+      <td>Page section</td>
+      <td>Background color</td>
+      <td>Affects one section background</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Component Theme</strong>
+      </td>
+      <td>Individual component</td>
+      <td>Accent color</td>
+      <td>Affects one component's accents</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Using Themes in Storybook
+
+Storybook provides three places to control themes:
+
+### Top Toolbar (Global Controls)
+
+Located at the very top of Storybook:
+
+- **Site: Global Theme** - Changes the site-wide color palette for all components
+- **Typography: Heading Fonts** - Switches between YaleNew and Mallory heading fonts
+
+These controls apply to ALL stories and persist as you navigate.
+
+### Controls Panel (Story-Specific)
+
+Located at the bottom of each story:
+
+- **Section Theme** - Controls the background color for that specific story
+- **[Component] Theme (dial)** - Controls the accent color for the component in that story
+
+These controls only affect the current story.
+
+### VRT Sections (Visual Regression Testing)
+
+Many stories include automated VRT sections showing all theme combinations. These are static and used for Percy visual regression testing.
+
+---
+
+## Best Practices
+
+### For Content Editors
+
+1. **Start with Global Theme**: Choose your site's global theme first - this is typically set once and rarely changed
+2. **Use Section Themes Sparingly**: Too many colored backgrounds can be overwhelming. Use `default` (white) for most sections
+3. **Add Component Themes for Accent**: Use component themes to highlight important elements or create visual interest
+4. **Test Contrast**: Always check that text is readable against your chosen backgrounds
+
+### For Developers
+
+1. **Respect the Hierarchy**: Don't fight the cascade - work with the three-tier system
+2. **Use Theme Tokens**: Always use theme-aware CSS custom properties, never hard-coded colors
+3. **Test All Combinations**: Use Storybook's VRT sections to verify components work across all theme combinations
+4. **Document Theme Usage**: When creating new components, document which theme types they support
+
+### For Designers
+
+1. **Design with Themes in Mind**: Create components that work across all global theme palettes
+2. **Consider Context**: Remember components may appear on different section backgrounds
+3. **Maintain Contrast**: Ensure sufficient contrast ratios across all theme combinations (WCAG AA minimum)
+4. **Use Storybook**: Review components in Storybook across different theme combinations before finalizing designs
+
+---
+
+## Common Questions
+
+**Q: Can I mix and match themes however I want?**
+A: Yes! The system is designed to work across all combinations. However, use restraint - too many theme variations on one page can be visually overwhelming.
+
+**Q: What happens if I don't set a theme?**
+A: Components will use the `default` option, which respects the global theme palette.
+
+**Q: Can I add custom themes?**
+A: Global themes are defined in the design tokens and require coordination with the design system team. Section and component themes use the same six options across the system.
+
+**Q: Why can't I change component themes in the top toolbar?**
+A: Component themes are intentionally component-specific (not global) to allow fine-grained control. Each component can have its own accent color.
+
+---
+
+## Learn More
+
+- [Component Library Repository](https://github.com/yalesites-org/component-library-twig)
+- [Design Tokens Documentation](?path=/docs/tokens-colors--docs)
+- [Storybook Migration Guide](https://github.com/yalesites-org/component-library-twig/blob/main/STORYBOOK-MIGRATION-GUIDE.md)
+
+</div>

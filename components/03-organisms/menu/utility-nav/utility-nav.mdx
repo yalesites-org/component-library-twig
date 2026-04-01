@@ -1,0 +1,288 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as UtilityNavStories from './utility-nav.stories';
+
+<Meta of={UtilityNavStories} name="Docs" />
+
+# Utility Nav
+
+The Utility Nav provides quick access to secondary navigation items, utility functions, and calls-to-action in the site header. It serves as a complementary navigation element to the primary navigation, offering users access to important but non-primary features like search, login, contact forms, or other utility links. The component is designed to be flexible and can accommodate various configurations including standard menu items, dropdown menus, search functionality, and call-to-action buttons.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the utility nav's properties in real-time.
+
+<Canvas of={UtilityNavStories.UtilityNav} />
+<Controls of={UtilityNavStories.UtilityNav} />
+
+## Properties
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>items</code>
+      </td>
+      <td>
+        <code>array</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Array of navigation menu items with title and url properties</td>
+    </tr>
+    <tr>
+      <td>
+        <code>utility_nav__link__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Text content for the primary call-to-action button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>utility_nav__link__url</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>URL destination for the primary call-to-action button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>utility_nav__search</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>Whether to display the search input field</td>
+    </tr>
+    <tr>
+      <td>
+        <code>utility_nav__cta__theme</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'none'</code>
+      </td>
+      <td>Theme variant for the call-to-action button styling</td>
+    </tr>
+    <tr>
+      <td>
+        <code>utility_nav__dropdown_link__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Text content for the dropdown menu trigger button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>utility_nav__dropdown_link__url</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>URL destination for the dropdown menu trigger button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>utility_nav__dropdown__items</code>
+      </td>
+      <td>
+        <code>array</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>
+        Array of dropdown menu items with title and url properties for the
+        dropdown menu
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Component Features
+
+The Utility Nav offers several configurable features that can be used individually or in combination:
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', margin: '2rem 0'}}>
+
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Standard Menu Items</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Display a horizontal list of utility links such as About, Events, Contact,
+    or other quick-access pages. These items appear as simple text links in the
+    utility bar and are ideal for secondary navigation items that don't require
+    special emphasis.
+  </p>
+</div>
+
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Search Functionality</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Include an integrated search input field that allows users to search site
+    content directly from the header. The search feature includes a magnifying
+    glass icon and accessible form elements with proper ARIA labels for screen
+    readers.
+  </p>
+</div>
+
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Call-to-Action Button</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Feature a prominent call-to-action button (such as "Apply Now" or "Give")
+    styled as a pill-shaped button that stands out from standard links. Supports
+    theming to match site branding and design requirements.
+  </p>
+</div>
+
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Dropdown Menu</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Provide access to a grouped set of related links through a dropdown trigger
+    button. Useful for audience-specific navigation (like "For Students", "For
+    Faculty") or categorized utility links. Includes proper ARIA attributes for
+    accessibility.
+  </p>
+</div>
+
+</div>
+
+## Menu Item Structure
+
+Menu items use a simple structure with the following properties:
+
+- **title**: The display text for the menu item
+- **url**: The link destination (can be internal or external)
+
+Dropdown menu items follow the same structure and are displayed in a vertical list when the dropdown is activated.
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Organism</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-utility-nav.twig</code>,{' '}
+        <code>utility-nav-dropdown-menu.js</code>,{' '}
+        <code>_yds-utility-nav.scss</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Accessibility</strong>
+      </td>
+      <td>
+        ARIA attributes for dropdown state (aria-expanded, aria-haspopup,
+        aria-hidden), visually hidden labels for screen readers, keyboard
+        navigation support, accessible form elements for search
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Responsive Behavior</strong>
+      </td>
+      <td>
+        Adapts to mobile and desktop viewports with screen size-specific form
+        IDs, optimized layout for smaller screens, touch-friendly interaction
+        targets
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>JavaScript</strong>
+      </td>
+      <td>
+        Manages dropdown menu interactions, toggle states, and click-outside
+        functionality for closing dropdowns
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### Component Configuration
+
+The Utility Nav is highly flexible and should be configured based on your site's specific needs:
+
+- **Minimal setup**: Use with just standard menu items for simple utility links
+- **Search-focused**: Enable search without additional menu items for search-centric sites
+- **Action-oriented**: Combine search with a prominent CTA button for conversion-focused sites
+- **Audience segmented**: Use dropdown menu to organize links by user type or category
+
+### Best Practices
+
+- Keep the number of standard menu items limited (3-5 maximum) to avoid clutter
+- Use clear, concise labels for all navigation items
+- Reserve the CTA button for your most important conversion action
+- Ensure dropdown menu items are logically grouped and clearly labeled
+- Test dropdown interactions on both desktop and mobile devices
+- Verify that search functionality submits to the correct endpoint
+
+### Link Types
+
+The component supports various link types:
+
+- Internal site pages
+- External URLs (including PDFs and downloads)
+- Anchored links within the current page
+- CAS-authenticated endpoints
+
+### Accessibility Considerations
+
+- All interactive elements must be keyboard accessible
+- Search input includes visually hidden label for screen readers
+- Dropdown button announces expanded/collapsed state to assistive technology
+- Ensure sufficient color contrast for all text and interactive elements
+- Test with screen readers to verify proper announcements
+- Maintain logical tab order through all interactive elements
+
+## Related Components
+
+- **Site Header** - Parent container component that includes the Utility Nav
+- **Primary Nav** - Main navigation component that works alongside Utility Nav
+- **CTA** - Atom-level button component used within Utility Nav
+- **Icon** - Used for search and dropdown indicators
+
+## Visual Regression Testing
+
+For comprehensive testing of all utility nav configurations and theme combinations, see the [Visreg page](?path=/story/organisms-menu-utility-nav-visreg--visreg).

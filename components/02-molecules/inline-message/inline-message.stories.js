@@ -2,45 +2,20 @@
 import inlineMessageTwig from './yds-inline-message.twig';
 
 // Data files
+import componentProps from './inline-message-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Inline Message',
-  argTypes: {
-    type: {
-      name: 'Type',
-      type: 'select',
-      options: ['general', 'alert'],
-    },
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    content: {
-      name: 'Content',
-      type: 'string',
-    },
-    themeColor: {
-      name: 'Component Theme (dial)',
-      options: ['one', 'two', 'three', 'four', 'five'],
-      type: 'select',
-    },
-    linkContent: {
-      name: 'Link Content',
-      type: 'string',
-    },
-    linkUrl: {
-      name: 'Link URL',
-      type: 'string',
-    },
-  },
+  tags: ['!dev'],
+  argTypes: toArgTypes(componentProps),
   args: {
-    type: 'general',
+    ...toArgs(componentProps),
     heading: 'This is a general message heading',
     content: 'This is a general message content',
-    themeColor: 'one',
     linkContent: 'This is a link',
     linkUrl: '#',
   },

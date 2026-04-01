@@ -1,0 +1,69 @@
+# VRT Combinations Data
+#
+# Common theme/accent combinations and variation sets for visual regression testing.
+# These combinations ensure comprehensive testing coverage across all playground stories.
+#
+# Usage:
+# import vrtData from '../_storybook/vrt-combinations.yml';
+# const pairs = vrtData.themeAccentPairs;
+
+# Theme and accent color pairings
+# Used for components that support both theme and accent (site-header, site-footer, etc.)
+themeAccentPairs:
+  - theme: 'one'
+    accent: 'one'
+  - theme: 'one'
+    accent: 'five'
+  - theme: 'two'
+    accent: 'two'
+  - theme: 'three'
+    accent: 'three'
+  - theme: 'four'
+    accent: 'four'
+  - theme: 'five'
+    accent: 'five'
+
+# Sample border thickness values for testing
+# Includes minimum, maximum, and representative middle values
+sampleBorderThickness:
+  - '0'
+  - '4'
+  - '8'
+  - '16'
+
+# Common layout variations
+# Used for multi-column layouts and grid components
+layoutVariations:
+  - 'fifty-fifty'
+  - 'thirty-thirty-thirty'
+  - 'seventy-thirty'
+  - 'full-width'
+
+# Navigation position variations
+# Used for menu and navigation components
+navigationPositions:
+  - 'left'
+  - 'center'
+  - 'right'
+
+# Menu type variations
+# Different menu styles for testing
+menuVariations:
+  - 'basic'
+  - 'mega'
+  - 'focus'
+
+# Image aspect ratios
+# Common aspect ratios for image testing
+imageAspectRatios:
+  - '1x1'
+  - '16x9'
+  - '3x2'
+  - '4x3'
+
+# Width options for components
+# Common width settings for component containers
+widthOptions:
+  - 'site'
+  - 'content'
+  - 'max'

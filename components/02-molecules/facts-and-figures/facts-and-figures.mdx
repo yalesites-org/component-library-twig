@@ -1,0 +1,214 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as FactsAndFiguresStories from './facts-and-figures.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './facts-and-figures-props.yml';
+
+<Meta of={FactsAndFiguresStories} name="Docs" />
+
+# Facts and Figures
+
+The facts and figures component displays statistical information in a visually compelling way. It supports various presentation styles including basic text, icon-only displays, and multiple font styles. The component is designed to highlight key metrics, statistics, and data points with optional icons and customizable theming.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the facts and figures properties in real-time. The component adapts to different presentation styles, alignments, and theme colors.
+
+<Canvas of={FactsAndFiguresStories.Interactive} />
+<Controls of={FactsAndFiguresStories.Interactive} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Presentation Styles
+
+### Basic Style
+
+The basic presentation style displays the statistic prominently with optional descriptive content below. This is the most common and versatile style.
+
+**Use Case:** Display clear, readable statistics with explanatory text for context.
+
+**Example:** "$52,000" with content "Annual grant for undergraduate students"
+
+**Best For:**
+
+- Financial figures with context
+- Percentage statistics with descriptions
+- Any metric requiring explanation
+
+### Icon-Only Style
+
+The icon-only style emphasizes visual representation with an icon instead of or alongside the statistic.
+
+**Use Case:** Create visual impact with iconography representing the data point.
+
+**Best For:**
+
+- Visual storytelling
+- When space is limited
+- Creating visual patterns with multiple facts
+
+## Font Styles
+
+### Normal
+
+Standard numeric display using the default font styling. Provides clean, modern number presentation.
+
+**Use Case:** Most statistics and metrics, especially modern data and contemporary figures.
+
+### Numeric Oldstyle
+
+Traditional, classical number styling with varying heights and descenders. Provides an elegant, traditional appearance.
+
+**Use Case:** Historical data, traditional institutional metrics, when matching classical design aesthetics.
+
+## Alignment Options
+
+### Left Alignment
+
+Statistics and content aligned to the left. Standard reading flow, works well in most layouts.
+
+**Use Case:** Traditional layouts, content-heavy presentations, when facts are in a vertical list.
+
+### Center Alignment
+
+Statistics and content centered. Creates visual emphasis and symmetry.
+
+**Use Case:** Highlighted statistics, hero sections, when displaying a small number of key metrics.
+
+## Component Theming
+
+The facts and figures component supports theming through the color dial system, allowing color customization to match institutional branding or create visual hierarchies.
+
+**Theme Options:** Multiple theme colors available through the CMS color dial configuration.
+
+**Use Case:** Match department colors, create visual groupings, emphasize certain statistics.
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-facts-and-figures.twig`
+- **Styles**: `_yds-facts-and-figures.scss`
+- **JavaScript**: May include animation effects for stat display
+
+### Accessibility
+
+- **Semantic HTML**: Uses appropriate heading and list elements for structure
+- **Icon Accessibility**: Icons include appropriate ARIA labels when used
+- **Color Contrast**: All theme variations maintain WCAG AA contrast requirements
+- **Screen Reader Support**: Statistics and descriptions are properly announced with context
+
+### Behavior
+
+- **Responsive Design**: Adapts layout for mobile, tablet, and desktop views
+- **Icon Display**: Icons scale appropriately with text size
+- **Theme Application**: Color themes apply consistently across all variations
+- **Collection Support**: Multiple facts can be grouped in collections
+
+## Collection Usage
+
+Facts and figures are typically displayed in groups or collections. The component includes wrapper markup for collections:
+
+```html
+<ul
+  class="facts-and-figures__group__wrap"
+  data-facts-and-figures-collection-type="single"
+>
+  <!-- Individual fact items -->
+</ul>
+```
+
+**Collection Types:**
+
+- **Single**: Individual fact display
+- **Group**: Multiple related facts in a collection
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use clear, concise statistics that are easy to understand at a glance
+- Provide context with descriptive content when the statistic needs explanation
+- Choose alignment based on surrounding layout (center for hero sections, left for content areas)
+- Use icons purposefully to enhance understanding, not just for decoration
+- Maintain consistent presentation style within a collection of facts
+- Select appropriate font style based on the aesthetic context (modern vs. traditional)
+- Use theming to create visual hierarchy or grouping of related statistics
+- Keep statistic text short and scannable (large numbers, percentages, currency values)
+
+### Things to Avoid
+
+- Don't use overly complex or technical statistics without explanation
+- Avoid mixing different presentation styles within the same visual grouping
+- Don't use icons that are unclear or don't relate to the statistic
+- Avoid very long descriptive content that overwhelms the statistic
+- Don't sacrifice readability for visual style
+- Avoid using too many different theme colors in close proximity
+- Don't display statistics without proper source attribution when required
+
+## Common Use Cases
+
+### Institutional Metrics
+
+**Example:** Enrollment numbers, graduation rates, research funding, faculty count
+
+**Configuration:** Basic style, normal font, center alignment for emphasis
+
+### Financial Information
+
+**Example:** Endowment size, scholarship amounts, grant funding
+
+**Configuration:** Basic style with content, appropriate currency formatting
+
+### Achievement Statistics
+
+**Example:** Rankings, percentages, award counts
+
+**Configuration:** Can use icons for visual impact, center alignment for emphasis
+
+### Historical Data
+
+**Example:** Founding year, years of operation, historical milestones
+
+**Configuration:** Numeric oldstyle font for classical aesthetic
+
+## Implementation Notes
+
+### Grouping Multiple Facts
+
+When displaying multiple facts and figures together, wrap them in the appropriate collection container with `data-facts-and-figures-collection-type` attribute for proper styling and spacing.
+
+### Icon Selection
+
+Icons should be semantically related to the statistic they accompany. Common patterns:
+
+- Dollar sign/money icons for financial figures
+- People icons for enrollment/population statistics
+- Award/trophy icons for achievements and rankings
+- Book icons for academic metrics
+- Globe icons for international statistics
+
+### Number Formatting
+
+Statistics should be formatted appropriately:
+
+- Use commas for thousands separators (1,200 not 1200)
+- Include currency symbols when appropriate ($52,000)
+- Use + for "or more" values (1,200+)
+- Use % symbol for percentages (95%)
+
+## Related Components
+
+- **Text**: For detailed textual information
+- **Heading**: For section titles above fact collections
+- **Icon**: For standalone icon usage
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

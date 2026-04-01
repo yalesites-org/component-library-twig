@@ -1,4 +1,6 @@
 import linkGroupTwig from './yds-link-group.twig';
+import componentProps from './link-group-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 import linkGroupData from './link-group.yml';
 
@@ -7,19 +9,16 @@ import linkGroupData from './link-group.yml';
  */
 export default {
   title: 'Molecules/Link group',
-  argTypes: {
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-  },
+  tags: ['!dev'],
+  argTypes: toArgTypes(componentProps),
   args: {
-    heading: linkGroupData.link_group__heading,
+    ...toArgs(componentProps),
+    heading: linkGroupData.link_group__heading_one,
   },
 };
 
 export const linkGroup = ({ heading }) =>
   linkGroupTwig({
     ...linkGroupData,
-    link_group__heading: heading,
+    link_group__heading_one: heading,
   });
