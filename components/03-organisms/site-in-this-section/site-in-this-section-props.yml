@@ -1,0 +1,52 @@
+# site-in-this-section-props.yml
+#
+# Site In This Section component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+collectionNavDisplay:
+  name: Collection Navigation Display
+  type: select
+  required: false
+  description: Where to display the collection navigation (in content or in header)
+  detail: >
+    Storybook-only toggle that controls which Twig template is rendered.
+    'in_content' renders the site-in-this-section component; 'in_header'
+    renders the site-header component with the collection nav embedded inside.
+    There is no single corresponding Twig prop — the value is used in the
+    story render function to choose between templates.
+  default: in_content
+  options:
+    - in_content
+    - in_header
+  control: select
+
+siteSectionTheme:
+  twigProp: site_section_wrap__theme
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Color theme applied to the site-in-this-section component (visible when displayed in content)
+  detail: >
+    Applies a color theme when the component is displayed in content position.
+    Options are derived from the component-themes design tokens.
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select
+
+siteHeaderTheme:
+  twigProp: site_header__theme
+  name: Header Theme (dial)
+  type: select
+  required: false
+  description: Color theme for the site header (visible when collection nav is displayed in header)
+  detail: >
+    Controls the site header color scheme when the collection nav is embedded
+    in the header. Options are derived from the site-header-themes design tokens.
+  default: one
+  control: select

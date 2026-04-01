@@ -7,6 +7,7 @@ import socialLinksData from './social-links.yml';
  */
 export default {
   title: 'Molecules/Social Links',
+  tags: ['!dev'],
 };
 
 export const SocialLinks = () => socialLinksTwig(socialLinksData);

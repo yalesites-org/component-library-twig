@@ -1,0 +1,107 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as CalloutStories from './callout.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './callout-props.yml';
+
+<Meta of={CalloutStories} name="Docs" />
+
+# Callout
+
+The callout component is a highlighted content block designed to emphasize important information. It supports single or multiple callouts within a container, with options for different themes, alignments, and optional background images. Callouts are effective for drawing attention to key programs, services, or announcements.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the callout's properties in real-time. Test different themes, alignments, link types, and background images.
+
+<Canvas of={CalloutStories.Callout} />
+<Controls of={CalloutStories.Callout} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Component Variations
+
+### Single vs. Multiple Callouts
+
+The callout component automatically adjusts its layout based on the number of callouts provided:
+
+- **Single Callout**: Displays as a full-width highlighted block
+- **Two Callouts**: Displays side-by-side in a two-column layout
+- **Multiple Callouts**: Automatically wraps into a responsive grid
+
+### Alignment Options
+
+- **Center**: Text and elements are center-aligned (default)
+- **Left**: Text and elements are left-aligned for a more traditional reading flow
+
+### Link Types
+
+- **Button**: Displays the link as a prominent button for primary actions
+- **Link**: Displays as a text link for secondary actions or when a lighter touch is needed
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-callout.twig`
+- **Styles**: `_yds-callout.scss`
+
+### Accessibility
+
+- Semantic HTML structure with proper heading hierarchy
+- Links and buttons are keyboard accessible with clear focus indicators
+- Color contrast meets WCAG 2.1 AA standards
+- Background images use overlays to ensure text readability
+- Supports screen readers with proper ARIA attributes
+
+### Responsive Behavior
+
+- Single callouts display full-width on all screen sizes
+- Multiple callouts stack vertically on mobile devices
+- Two-column layout appears on tablet and larger screens
+- Background images are responsive and optimized for performance
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use callouts to highlight 2-3 key programs, services, or initiatives
+- Keep heading text concise (3-5 words)
+- Limit body text to 1-2 sentences for scannability
+- Choose alignment based on content density (center for short content, left for longer text)
+- Use button links for primary actions, text links for secondary actions
+- Select theme dials that provide sufficient contrast with surrounding content
+- When using background images, ensure they don't interfere with text readability
+
+### Things to Avoid
+
+- Don't use more than 3-4 callouts in a single container (creates visual clutter)
+- Don't use callouts for lengthy content (use text fields or other components instead)
+- Avoid background images with busy patterns that reduce text legibility
+- Don't mix different alignment styles within the same callout group
+- Don't use callouts for critical navigation (use menus or site structure instead)
+- Avoid using callouts on every page (reduces their impact)
+
+### When to Use Callouts
+
+- Highlighting degree programs or academic offerings
+- Featuring key services or resources
+- Promoting upcoming events or deadlines
+- Drawing attention to important initiatives
+- Creating visual entry points to different site sections
+
+## Testing
+
+For comprehensive visual regression testing with all theme variations and configurations, see the [Visreg page](?path=/story/molecules-callout-visreg--visreg).
+
+## Related Components
+
+- **Text Field**: Use for longer-form content that doesn't need visual emphasis
+- **Call to Action (CTA)**: Consider standalone CTAs for single, prominent actions
+- **Card**: Use cards when you need more structured content with images
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

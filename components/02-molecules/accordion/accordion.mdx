@@ -1,0 +1,89 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as AccordionStories from './accordion.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './accordion-props.yml';
+
+<Meta of={AccordionStories} name="Docs" />
+
+# Accordion
+
+The accordion component allows users to show and hide sections of related content on a page. Each accordion item contains a heading that users can click or tap to reveal associated content. This component helps organize dense information into scannable, expandable sections that reduce page clutter and improve the user experience.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the accordion's properties in real-time.
+
+<Canvas of={AccordionStories.Accordion} />
+<Controls of={AccordionStories.Accordion} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Theme Options
+
+This component supports the following theme variations:
+
+- **Default**: Standard theme using global color settings
+- **One through Five**: Custom theme dials that override global settings with component-specific colors
+
+Use the `accordion__theme` property to apply different themes. The theme affects the visual styling of accordion items, including hover states and active item indicators.
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-accordion.twig`
+- **Styles**: `_yds-accordion.scss`
+- **JavaScript**: `yds-accordion.js`
+
+### Accessibility
+
+- Uses semantic HTML `<details>` and `<summary>` elements for native accordion functionality
+- Keyboard accessible: Users can navigate between items with Tab key and toggle items with Enter or Space
+- Screen reader friendly: Proper semantic structure announces expanded/collapsed states
+- ARIA attributes included for enhanced screen reader support
+- Focus indicators visible for keyboard navigation
+
+### Behavior
+
+- Accordion items can be expanded or collapsed by clicking the heading
+- Multiple items can be open simultaneously (independent operation)
+- JavaScript enhances the native `<details>` behavior with smooth animations
+- Accordion state persists during page interaction but resets on page reload
+- Works without JavaScript using native browser `<details>` functionality as a fallback
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use accordions to organize related content into logical groups
+- Keep accordion item headings clear and descriptive (45 characters or less recommended)
+- Place the most important information in the first few items
+- Consider using an overall `accordion__heading` to provide context for the entire group
+- Limit the number of accordion items to 10 or fewer for better usability
+
+### Things to Avoid
+
+- Don't hide critical information that users need to see immediately
+- Don't use accordions for short content that could be displayed on the page
+- Avoid nesting accordions within accordions (creates confusing navigation)
+- Don't rely solely on accordions for navigation (use proper navigation components)
+
+## Testing
+
+For comprehensive visual regression testing with all accordion variations and theme combinations, see the [Visreg page](?path=/story/molecules-accordion--visreg).
+
+## Related Components
+
+- **Tabs**: Alternative pattern for organizing content when users need to compare information across categories
+- **Card Collection**: Consider for displaying multiple expandable content blocks with richer visual treatment
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

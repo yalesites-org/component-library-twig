@@ -1,0 +1,32 @@
+# quick-links-props.yml
+#
+# Quick Links component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+heading:
+  twigProp: quick_links__heading
+  name: Heading
+  type: string
+  required: false
+  description: Heading text for the quick links component
+  control: text
+
+description:
+  twigProp: quick_links__description
+  name: Description
+  type: string
+  required: false
+  description: Optional description text displayed below the heading
+  control: text
+
+image:
+  twigProp: quick_links__image
+  name: With image
+  type: boolean
+  required: false
+  description: Whether to display an image alongside the quick links
+  default: true
+  control: boolean

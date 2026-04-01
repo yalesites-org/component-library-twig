@@ -1,5 +1,6 @@
 module.exports = {
   stories: [
+    '../components/[0-9]*/**/*.mdx',
     '../components/**/*.stories.@(js|jsx|ts|tsx)',
   ],
   staticDirs: [

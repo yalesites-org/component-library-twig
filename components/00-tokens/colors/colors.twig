@@ -19,6 +19,9 @@
         {% for nested_color, nested_value in colorset %}
           <li {{ bem("item", [], colors__base_class) }} style="background: var(--color-{{color}}-{{ nested_color }});">
             <span {{ bem("title", [], colors__base_class) }}>--color-{{ color }}-{{ nested_color }}</span>
+            {% if nested_value.hex %}
+              <span {{ bem("hex", [], colors__base_class) }}>{{ nested_value.hex }}</span>
+            {% endif %}
           </li>
         {% endfor %}
       {% else %}

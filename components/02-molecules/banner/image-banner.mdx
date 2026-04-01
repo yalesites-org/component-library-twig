@@ -1,0 +1,90 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as ImageBannerStories from './image-banner.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './image-banner-props.yml';
+
+<Meta of={ImageBannerStories} name="Docs" />
+
+# Image Banner
+
+The Image Banner is a streamlined, visually focused banner that displays a full-width image with an optional caption. It prioritizes the image itself over text content, making it well-suited for visual storytelling, photography showcases, or pages where the imagery is the primary message. Available in tall and short height variations.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the component's properties in real-time.
+
+<div className="sb-full-bleed-canvas">
+  <Canvas of={ImageBannerStories.ImageBanner} />
+</div>
+<Controls of={ImageBannerStories.ImageBanner} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Theme Options
+
+The Image Banner supports the full set of component theme dials:
+
+- **Default**: Standard theme using global color settings
+- **One through Five**: Custom theme dials that override global settings with component-specific colors
+
+Use the `image_banner__content__background` property to apply different themes.
+
+## Size Variations
+
+The Image Banner is available in two heights. Use the interactive preview above to switch between them, or see the [Visreg page](?path=/story/molecules-banners-image-banner-visreg--visreg) for a side-by-side comparison.
+
+### Short
+
+A reduced height variant — useful when you need a visual accent without the full-bleed impact of the tall version.
+
+<div className="sb-full-bleed-canvas">
+  <Canvas of={ImageBannerStories.ImageBannerShort} />
+</div>
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `image/yds-image-banner.twig`
+- **Styles**: `image/yds-image-banner.scss`
+
+### Accessibility
+
+- Background images implemented with appropriate alternative text handling
+- Caption text is visible and properly associated with the image
+- Content remains accessible when background images fail to load
+
+### Behavior
+
+- **Responsive Design**: Banner scales appropriately across viewport sizes
+- **Image Loading**: Uses responsive images with appropriate srcset for different screen sizes
+- **Video Background**: When enabled, replaces the static image with a video
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use when the image is the primary content and text is secondary or absent
+- Choose tall for maximum visual impact on key landing pages
+- Choose short for a more compact visual accent
+- Use high-quality, full-bleed images with a 16:9 aspect ratio
+- Include a caption when the image source or subject matter warrants attribution
+
+### Things to Avoid
+
+- Don't use when you need prominent calls-to-action — use Action Banner instead
+- Don't rely solely on the image to convey critical information
+- Avoid images with complex compositions that lose meaning at reduced sizes
+
+## Testing
+
+For comprehensive visual regression testing with all size and theme variations, see the [Visreg page](?path=/story/molecules-banners-image-banner-visreg--visreg).
+
+## Related Components
+
+- **Action Banner**: When you need text content and calls-to-action alongside the image
+- **Grand Hero Banner**: For maximum-impact hero with content overlay
+- **Video Banner**: For video-first content without a static image fallback

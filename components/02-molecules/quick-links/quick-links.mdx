@@ -1,0 +1,108 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as QuickLinksStories from './quick-links.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './quick-links-props.yml';
+
+<Meta of={QuickLinksStories} name="Docs" />
+
+# Quick Links
+
+The Quick Links component provides a list of important links for quick navigation. It features an optional heading and description, and can optionally include an accompanying image. Quick Links are ideal for highlighting frequently accessed pages or key resources.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the Quick Links properties in real-time. Test different headings, descriptions, and image options.
+
+<Canvas of={QuickLinksStories.quickLinks} />
+<Controls of={QuickLinksStories.quickLinks} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Component Variations
+
+### With and Without Images
+
+The Quick Links component can be displayed with or without an accompanying image:
+
+- **Without Image**: Links appear in a clean, text-focused layout
+- **With Image**: An image is displayed alongside the links, adding visual interest and context
+
+### Link Types
+
+The component automatically detects and styles different link types:
+
+- **Internal Links**: Links beginning with `#` or relative paths
+- **External Links**: Full URLs are displayed with appropriate styling
+- **Document Links**: Links to documents (e.g., PDFs) are automatically identified and styled
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-quick-links.twig`
+- **Styles**: `_yds-quick-links.scss`
+
+### Accessibility
+
+- Semantic list structure (`<ul>` and `<li>` elements) for proper screen reader navigation
+- Links are keyboard accessible with clear focus indicators
+- Proper heading hierarchy when heading is provided
+- Color contrast meets WCAG 2.1 AA standards
+- External links and document links are properly identified for assistive technologies
+
+### Responsive Behavior
+
+- Links stack vertically on all screen sizes for optimal readability
+- When an image is included, the layout adjusts responsively:
+  - Mobile: Image stacks above or below the links
+  - Tablet and larger: Image and links appear side-by-side
+- Touch targets meet minimum size requirements for mobile devices
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use Quick Links for frequently accessed resources or important navigation shortcuts
+- Keep link text concise and descriptive (3-8 words)
+- Limit to 4-8 links to avoid overwhelming users
+- Group related links together logically
+- Use optional heading to provide context about the link collection
+- When using an image, ensure it relates to the links' content or purpose
+- Order links by importance or usage frequency
+
+### Things to Avoid
+
+- Don't use Quick Links to replace primary navigation
+- Don't include more than 10 links (creates a long, hard-to-scan list)
+- Avoid overly generic link text like "Click here" or "Read more"
+- Don't mix unrelated links in the same Quick Links component
+- Avoid using images that don't add meaningful context
+- Don't use Quick Links for single links (use a standard link or button instead)
+- Avoid placing Quick Links in every layout region (reduces their effectiveness)
+
+### When to Use Quick Links
+
+- Sidebar or footer navigation for key pages
+- Related resources within content pages
+- Important forms, tools, or applications
+- Department or program landing pages
+- Support and help sections
+- Administrative or staff resources
+
+## Testing
+
+For comprehensive visual regression testing with all theme variations and configurations, see the [Visreg page](?path=/story/molecules-quick-links-visreg--visreg).
+
+## Related Components
+
+- **Menu**: Use for primary navigation structures
+- **Link**: Use standalone links for single navigation items
+- **Callout**: Consider callouts when you need more visual emphasis with descriptions
+- **Card**: Use cards when links need more context with images and descriptions
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

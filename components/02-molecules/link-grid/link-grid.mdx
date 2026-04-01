@@ -1,0 +1,93 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as LinkGridStories from './link-grid.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './link-grid-props.yml';
+
+<Meta of={LinkGridStories} name="Docs" />
+
+# Link Grid
+
+The link grid component displays a collection of links in a responsive multi-column grid layout. It provides flexible theming and visual treatment options for organizing groups of related links with clear visual separation.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the link grid's properties in real-time.
+
+<Canvas of={LinkGridStories.linkGrid} />
+<Controls of={LinkGridStories.linkGrid} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Theme Options
+
+This component supports the following theme variations:
+
+- **One through Five**: Custom theme dials that override global settings with component-specific colors
+
+Use the `link_grid__theme` property to apply different themes. The theme affects link colors, hover states, and visual accents.
+
+## Line Treatment Options
+
+The link grid offers four line treatment options for visual separation:
+
+- **default**: Standard line treatment with contextual styling
+- **all_strong_lines**: Bold, prominent dividing lines between all items
+- **all_light_lines**: Subtle, light dividing lines between all items
+- **no_lines**: No dividing lines, clean spacing only
+
+Choose the line treatment that best fits your content density and visual hierarchy needs.
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-link-grid.twig`
+- **Styles**: `_yds-link-grid.scss`
+
+### Accessibility
+
+- Uses semantic HTML list structure for proper screen reader navigation
+- All links are keyboard accessible with clear focus indicators
+- Screen readers announce the grid structure and total link count
+- Color themes meet WCAG contrast requirements
+
+### Behavior
+
+- Responsive grid layout adapts from multi-column to single column on mobile
+- Standard link styling with theme-aware hover and focus states
+- Grid items automatically reflow based on container width
+- Works without JavaScript
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use link grids for collections of 6-20 related links
+- Choose line treatments that complement the surrounding content density
+- Select themes that provide sufficient contrast with the page background
+- Ensure link text is concise and descriptive (2-5 words recommended)
+- Group related links together for easier scanning
+
+### Things to Avoid
+
+- Don't use link grids for very small link sets (use link group instead)
+- Avoid mixing link grids with vastly different line treatments on the same page
+- Don't use overly long link text that disrupts the grid layout
+- Avoid creating too many link grid sections that overwhelm the page
+
+## Testing
+
+For comprehensive visual regression testing with all link grid variations, theme combinations, and line treatments, see the [Visreg page](?path=/story/molecules-link-grid-visreg).
+
+## Related Components
+
+- **Link Group**: Use for simple vertical list of links without grid layout
+- **Card Collection**: Alternative for presenting links with additional context and imagery
+- **Menu**: Consider for primary navigation structures
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

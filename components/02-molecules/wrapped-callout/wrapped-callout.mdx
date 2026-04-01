@@ -1,0 +1,130 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as WrappedCalloutStories from './wrapped-callout.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './wrapped-callout-props.yml';
+
+<Meta of={WrappedCalloutStories} name="Docs" />
+
+# Wrapped Callout
+
+The wrapped callout component displays highlighted content alongside flowing text, creating an inline emphasis element that breaks up long text sections while maintaining reading flow. The callout can be aligned to either side of the content and themed to match the page design.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the wrapped callout's properties in real-time.
+
+<Canvas of={WrappedCalloutStories.wrappedCallout} />
+<Controls of={WrappedCalloutStories.wrappedCallout} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Alignment Options
+
+### Left Alignment
+
+The callout appears on the left side with text flowing around it on the right. This is the default alignment.
+
+**Use for:**
+
+- Standard reading flow (left-to-right languages)
+- When the next section has right-aligned elements for visual balance
+- Creating a traditional magazine-style layout
+
+### Right Alignment
+
+The callout appears on the right side with text flowing around it on the left.
+
+**Use for:**
+
+- Creating visual variety when multiple callouts appear on a page
+- Balancing page layouts with left-aligned elements
+- Emphasizing content in the reader's peripheral vision
+
+## Theming
+
+The wrapped callout supports theming through the component theme (dial) system. The theme controls the background color and accent styling of the callout box.
+
+**Available themes:**
+
+- **one**: Primary theme (default Yale blue)
+- **two**: Secondary theme
+- **three**: Tertiary theme
+- Additional themes as configured in the design system
+
+The theme ensures the callout visually stands out while maintaining harmony with the overall page design.
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-wrapped-callout.twig`
+- **Styles**: `_yds-wrapped-callout.scss`
+
+### Accessibility
+
+- Semantic HTML structure with proper heading hierarchy
+- Sufficient color contrast between callout and background (meets WCAG AA)
+- Text remains readable when text size is increased
+- No reliance on color alone to convey meaning
+- Callout content is part of the natural reading order
+
+### Responsive Behavior
+
+- **Desktop**: Callout floats to the specified side with text wrapping
+- **Tablet**: Callout may reduce in width while maintaining float behavior
+- **Mobile**: Callout typically stacks vertically above the content for better readability on narrow screens
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use wrapped callouts to highlight key points, definitions, or related information
+- Keep callout text concise (2-4 sentences maximum)
+- Ensure sufficient surrounding text for effective wrapping (at least 2-3 paragraphs)
+- Choose alignment that creates visual balance with other page elements
+- Use themes consistently across a page to maintain visual harmony
+- Place callouts at natural breaks in the content flow
+
+### Things to Avoid
+
+- Don't use multiple wrapped callouts in close proximity (creates layout congestion)
+- Avoid placing callouts in content sections that are too short
+- Don't use overly long callout text that disrupts reading flow
+- Avoid alternating alignment too frequently on the same page
+- Don't rely solely on the callout color to convey importance
+- Avoid using wrapped callouts for critical information (use standard callout instead)
+
+### Content Recommendations
+
+**Good callout content:**
+
+- Key definitions or terminology
+- Relevant quotes or excerpts
+- Quick facts or statistics
+- Related tips or insights
+- Brief asides that enrich the main content
+
+**Better suited for other components:**
+
+- Critical warnings or alerts (use Alert component)
+- Standalone quotes (use Pull Quote component)
+- Important announcements (use Callout component)
+- Lists or structured data (use Text Field with proper markup)
+
+## Testing
+
+For comprehensive visual regression testing with all alignment and theme combinations, see the [Visreg page](?path=/story/molecules-wrapped-callout-visreg--visreg).
+
+## Related Components
+
+- **Callout**: Full-width highlighted content for important information
+- **Pull Quote**: Standalone quoted text with decorative styling
+- **Wrapped Image**: Image with text wrapping for similar inline placement
+- **Text Field**: The primary content component used with wrapped callouts
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

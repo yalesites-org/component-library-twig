@@ -10,42 +10,31 @@ import customCardData from '../../02-molecules/cards/custom-card/custom-card.yml
 
 // Image atom component - generic images for demo
 import imageData from '../../01-atoms/images/image/image.yml';
+import componentProps from './custom-card-collection-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 // Get global theme options
 const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
+
+const argTypes = toArgTypes(componentProps);
+argTypes.globalTheme = {
+  ...argTypes.globalTheme,
+  options: siteGlobalThemeOptions,
+};
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Organisms/Card Collection/Custom Card Collection',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    globalTheme: {
-      name: 'Global Theme (lever)',
-      options: siteGlobalThemeOptions,
-      type: 'select',
-    },
-    customCardCollectionHeading: {
-      name: 'Collection Heading',
-      type: 'string',
-    },
-    featured: {
-      name: 'Featured',
-      type: 'boolean',
-    },
-    withImage: {
-      name: 'With Images',
-      type: 'boolean',
-    },
-  },
+  argTypes,
   args: {
+    ...toArgs(componentProps),
     customCardCollectionHeading: 'Custom Card Collection Heading',
-    featured: true,
-    withImage: true,
-    globalTheme: 'one',
   },
 };
 

@@ -1,0 +1,117 @@
+# facts-and-figures-group-props.yml
+#
+# Facts and Figures Group component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+themeColor:
+  twigProp: facts_and_figures__group__theme
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Color theme applied to the facts and figures group
+  detail: >
+    Applies a color theme to the component. Options are derived from the
+    component-themes design tokens. Maps to facts_and_figures__group__theme.
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select
+
+factsAndFiguresGroupHeading:
+  twigProp: facts_and_figures__group__heading
+  name: Infographic Group Heading
+  type: string
+  required: false
+  description: Optional heading displayed above the facts and figures group
+  control: text
+
+factsAndFiguresGroupContent:
+  twigProp: facts_and_figures__group__content
+  name: Infographic Group Content
+  type: string
+  required: false
+  description: Optional introductory content text for the group
+  control: text
+
+factsAndFiguresGroupLink:
+  twigProp: facts_and_figures__group__link__content
+  name: Infographic Group Link
+  type: string
+  required: false
+  description: Link text for the optional call-to-action below the group
+  control: text
+
+image:
+  twigProp: facts_and_figures__group__bg_image
+  name: With image
+  type: boolean
+  required: false
+  description: Display a background image behind the statistics
+  default: false
+  control: boolean
+
+presentationStyle:
+  twigProp: facts_and_figures__group__presentation_style
+  name: Presentation Style
+  type: select
+  required: false
+  description: Visual style controlling whether items display with or without a line
+  default: basic
+  options:
+    With line: basic
+    Without line: icon-only
+  control: select
+
+fontStyle:
+  twigProp: facts_and_figures__group__font_style
+  name: Font Style
+  type: select
+  required: false
+  description: Numeric font style for statistic values
+  default: normal
+  options:
+    - normal
+    - numeric-oldstyle
+  control: select
+
+columnCount:
+  twigProp: facts_and_figures__group__grid_count
+  name: Column Count
+  type: select
+  required: false
+  description: Number of columns in the grid layout
+  default: four
+  options:
+    - two
+    - three
+    - four
+  control: select
+
+alignment:
+  twigProp: facts_and_figures__group__alignment
+  name: Alignment
+  type: select
+  required: false
+  description: Text alignment for fact items
+  default: center
+  options:
+    - left
+    - center
+  control: select
+
+iconName:
+  twigProp: facts_and_figures__icon_name
+  name: Icon Selection
+  type: select
+  required: false
+  description: Icon to display on each fact item (overrides individual item icons in story)
+  detail: >
+    Selects an icon from the facts-and-figures-icons.yml registry. Options are
+    built dynamically from that file. The '- None -' option disables icons.
+    Maps to facts_and_figures__icon_name on each individual item.
+  control: select
