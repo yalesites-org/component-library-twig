@@ -13,6 +13,7 @@ import './event-meta/event-meta-localist';
 import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
   createGlobalThemeVariations,
+  createSectionWrapper,
   createThemeVariations,
 } from '../../_storybook/playground-utils';
 
@@ -73,10 +74,10 @@ export const Visreg = () => {
   })();
 
   // Render function for all meta types
-  const renderAllMetaTypes = (theme) => `
-    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
+  const renderAllMetaTypes = (theme) =>
+    createSectionWrapper(
+      theme,
+      `
           <h4>Basic Meta</h4>
           ${basicMetaTwig({
             basic_meta: `<span>By Charlyn Paradis</span>${dateTimeTwig({
@@ -140,10 +141,8 @@ export const Visreg = () => {
             image__src__1: imageData.responsive_images['2x3'].image__src,
             video_embed__content__1: videoEmbedData.video_embed__content,
           })}
-        </div>
-      </div>
-    </div>
-  `;
+        `,
+    );
 
   return createGlobalThemeVariations(
     () =>

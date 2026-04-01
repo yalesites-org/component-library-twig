@@ -5,6 +5,7 @@ import linkGroupData from './link-group.yml';
 import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
   createGlobalThemeVariations,
+  createSectionWrapper,
   createThemeVariations,
 } from '../../_storybook/playground-utils';
 
@@ -20,18 +21,14 @@ export const Visreg = () => {
   const heading = linkGroupData.link_group__heading;
 
   // Render function for link group variations
-  const renderLinkGroup = (theme) => `
-    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
-          ${linkGroupTwig({
-            ...linkGroupData,
-            link_group__heading: heading,
-          })}
-        </div>
-      </div>
-    </div>
-  `;
+  const renderLinkGroup = (theme) =>
+    createSectionWrapper(
+      theme,
+      linkGroupTwig({
+        ...linkGroupData,
+        link_group__heading: heading,
+      }),
+    );
 
   return createGlobalThemeVariations(
     () =>

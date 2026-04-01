@@ -5,6 +5,7 @@ import './yds-read-time';
 import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
   createGlobalThemeVariations,
+  createSectionWrapper,
   createThemeVariations,
 } from '../../_storybook/playground-utils';
 
@@ -25,18 +26,11 @@ export const Visreg = () => {
   `;
 
   // Render function for read time variations
-  const renderReadTime = (theme, idSuffix = '') => `
-    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
-          <div id="main-content${idSuffix}">
-            ${sampleContent}
-            ${readTimeTwig()}
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
+  const renderReadTime = (theme, idSuffix = '') =>
+    createSectionWrapper(
+      theme,
+      `<div id="main-content${idSuffix}">${sampleContent}${readTimeTwig()}</div>`,
+    );
 
   return createGlobalThemeVariations(
     () =>

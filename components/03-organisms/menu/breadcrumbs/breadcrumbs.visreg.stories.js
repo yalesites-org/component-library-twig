@@ -9,6 +9,7 @@ import {
 } from '../../../_storybook/theme-constants';
 import {
   createGlobalThemeVariations,
+  createSectionWrapper,
   createThemeVariations,
 } from '../../../_storybook/playground-utils';
 
@@ -24,15 +25,8 @@ export default {
 
 export const Visreg = () => {
   // Render function for breadcrumbs variations
-  const renderBreadcrumbs = (theme) => `
-    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
-          ${breadcrumbsTwig({ ...breadcrumbsData })}
-        </div>
-      </div>
-    </div>
-  `;
+  const renderBreadcrumbs = (theme) =>
+    createSectionWrapper(theme, breadcrumbsTwig({ ...breadcrumbsData }));
 
   return createGlobalThemeVariations(
     () =>

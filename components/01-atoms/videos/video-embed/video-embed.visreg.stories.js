@@ -8,6 +8,7 @@ import {
 } from '../../../_storybook/theme-constants';
 import {
   createGlobalThemeVariations,
+  createSectionWrapper,
   createThemeVariations,
 } from '../../../_storybook/playground-utils';
 
@@ -18,15 +19,8 @@ export default {
 
 export const Visreg = () => {
   // Render function for video embed variations
-  const renderVideoEmbed = (theme) => `
-    <div class="yds-layout" data-component-theme="${theme}" data-component-width="site">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
-          ${videoEmbedTwig(videoEmbedData)}
-        </div>
-      </div>
-    </div>
-  `;
+  const renderVideoEmbed = (theme) =>
+    createSectionWrapper(theme, videoEmbedTwig(videoEmbedData));
 
   return createGlobalThemeVariations(
     () =>

@@ -6,6 +6,7 @@ import breadcrumbData from './breadcrumbs.yml';
 import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
   createGlobalThemeVariations,
+  createSectionWrapper,
   createThemeVariations,
 } from '../../_storybook/playground-utils';
 
@@ -25,24 +26,20 @@ export const Visreg = () => {
   const isCas = false;
 
   // Render function for search result variations
-  const renderSearchResult = (theme) => `
-    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
-          ${searchResultTwig({
-            search_result__teaser: teaser,
-            search_result__title: heading,
-            search_result__url: '#',
-            search_result__highlighted: highlighted,
-            breadcrumbs__items: breadcrumbData.items,
-            search_result__content_type: contentType,
-            search_result__prefix__icon: isCas ? 'lock-solid' : '',
-            is_cas: isCas,
-          })}
-        </div>
-      </div>
-    </div>
-  `;
+  const renderSearchResult = (theme) =>
+    createSectionWrapper(
+      theme,
+      searchResultTwig({
+        search_result__teaser: teaser,
+        search_result__title: heading,
+        search_result__url: '#',
+        search_result__highlighted: highlighted,
+        breadcrumbs__items: breadcrumbData.items,
+        search_result__content_type: contentType,
+        search_result__prefix__icon: isCas ? 'lock-solid' : '',
+        is_cas: isCas,
+      }),
+    );
 
   return createGlobalThemeVariations(
     () =>

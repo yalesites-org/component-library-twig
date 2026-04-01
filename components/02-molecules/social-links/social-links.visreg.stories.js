@@ -5,6 +5,7 @@ import socialLinksData from './social-links.yml';
 import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
   createGlobalThemeVariations,
+  createSectionWrapper,
   createThemeVariations,
 } from '../../_storybook/playground-utils';
 
@@ -18,15 +19,8 @@ export default {
 
 export const Visreg = () => {
   // Render function for social links variations
-  const renderSocialLinks = (theme) => `
-    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
-          ${socialLinksTwig(socialLinksData)}
-        </div>
-      </div>
-    </div>
-  `;
+  const renderSocialLinks = (theme) =>
+    createSectionWrapper(theme, socialLinksTwig(socialLinksData));
 
   return createGlobalThemeVariations(
     () =>

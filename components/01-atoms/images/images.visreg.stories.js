@@ -12,6 +12,7 @@ import './icons/cl-icons.scss';
 import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
   createGlobalThemeVariations,
+  createSectionWrapper,
   createThemeVariations,
 } from '../../_storybook/playground-utils';
 
@@ -29,10 +30,10 @@ export default {
 
 export const Visreg = () => {
   // Render function for all image variations
-  const renderImages = (theme) => `
-    <div class="yds-layout" data-component-theme="${theme}" data-component-width="site">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary" style="width: 100%">
+  const renderImages = (theme) =>
+    createSectionWrapper(
+      theme,
+      `
           <h4>All Aspect Ratios</h4>
           <div class="cl-image-examples">
             <div class="cl-image-example">
@@ -65,10 +66,9 @@ export const Visreg = () => {
 
           <h4>Font Awesome Icons</h4>
           ${faIconsTwig(faIconData)}
-        </div>
-      </div>
-    </div>
-  `;
+        `,
+      { primaryWidth: '100%' },
+    );
 
   return createGlobalThemeVariations(
     () =>

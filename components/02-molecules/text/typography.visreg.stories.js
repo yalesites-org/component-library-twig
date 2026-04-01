@@ -7,6 +7,7 @@ import '../../01-atoms/typography/text/yds-text';
 import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
   createGlobalThemeVariations,
+  createSectionWrapper,
   createThemeVariations,
 } from '../../_storybook/playground-utils';
 
@@ -23,18 +24,14 @@ export const Visreg = () => {
   const variation = 'default';
 
   // Render function for text field variations
-  const renderTextField = (theme) => `
-    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
-          ${textFieldTwig({
-            text_field__content: textData.text_field__content,
-            text_field__variation: variation,
-          })}
-        </div>
-      </div>
-    </div>
-  `;
+  const renderTextField = (theme) =>
+    createSectionWrapper(
+      theme,
+      textFieldTwig({
+        text_field__content: textData.text_field__content,
+        text_field__variation: variation,
+      }),
+    );
 
   return createGlobalThemeVariations(
     () =>

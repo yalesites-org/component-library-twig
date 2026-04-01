@@ -7,6 +7,7 @@ import './page-title';
 import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
   createGlobalThemeVariations,
+  createSectionWrapper,
   createThemeVariations,
 } from '../../_storybook/playground-utils';
 
@@ -28,21 +29,17 @@ export const Visreg = () => {
   })}`;
 
   // Render function for page title variations
-  const renderPageTitle = (theme) => `
-    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
-          ${pageTitleTwig({
-            page_title__heading: 'Davis Team Project Wins Award for Research',
-            page_title__meta: meta,
-            page_title__prefix: prefix,
-            page_title__show_social_links: socialLinks ? 'true' : 'false',
-            ...socialLinksData,
-          })}
-        </div>
-      </div>
-    </div>
-  `;
+  const renderPageTitle = (theme) =>
+    createSectionWrapper(
+      theme,
+      pageTitleTwig({
+        page_title__heading: 'Davis Team Project Wins Award for Research',
+        page_title__meta: meta,
+        page_title__prefix: prefix,
+        page_title__show_social_links: socialLinks ? 'true' : 'false',
+        ...socialLinksData,
+      }),
+    );
 
   return createGlobalThemeVariations(
     () =>

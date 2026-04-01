@@ -9,6 +9,7 @@ import {
 } from '../../_storybook/theme-constants';
 import {
   createGlobalThemeVariations,
+  createSectionWrapper,
   createThemeVariations,
 } from '../../_storybook/playground-utils';
 
@@ -22,20 +23,20 @@ export const Visreg = () => {
   const attribution = pullQuoteData.pull_quote__attribution;
   const styles = ['bar-left', 'bar-right', 'quote-left'];
 
-  const renderPullQuote = (sectionTheme, accentColor, style) => `
-    <div data-component-has-divider="false" data-component-theme="${sectionTheme}" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
-      <div class="yds-layout__inner" style="--color-pull-quote-accent: var(--color-${accentColor})">
-        <div class="yds-layout__primary" style="width: 100%">
-          ${pullQuoteTwig({
-            pull_quote__quote: quote,
-            pull_quote__attribution: attribution,
-            pull_quote__style: style,
-            pull_quote__accent_theme: accentColor,
-          })}
-        </div>
-      </div>
-    </div>
-  `;
+  const renderPullQuote = (sectionTheme, accentColor, style) =>
+    createSectionWrapper(
+      sectionTheme,
+      pullQuoteTwig({
+        pull_quote__quote: quote,
+        pull_quote__attribution: attribution,
+        pull_quote__style: style,
+        pull_quote__accent_theme: accentColor,
+      }),
+      {
+        primaryWidth: '100%',
+        innerStyle: `--color-pull-quote-accent: var(--color-${accentColor})`,
+      },
+    );
 
   return createGlobalThemeVariations(
     () =>

@@ -8,6 +8,7 @@ import './text-copy-button/yds-text-copy-button';
 import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
   createGlobalThemeVariations,
+  createSectionWrapper,
   createThemeVariations,
 } from '../../_storybook/playground-utils';
 
@@ -21,10 +22,10 @@ export const Visreg = () => {
   const ctaText = 'Call to action';
 
   // Render function for controls variations
-  const renderControls = (theme) => `
-    <div class="yds-layout" data-component-theme="${theme}" data-component-width="site">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
+  const renderControls = (theme) =>
+    createSectionWrapper(
+      theme,
+      `
           <h4>CTA Filled</h4>
           <div class="cta-group">
             ${ctaTwig({
@@ -88,10 +89,9 @@ export const Visreg = () => {
             text_copy_button__content: '(copy)',
             text_copy_button__component_theme: componentTheme,
           })}
-        </div>
-      </div>
-    </div>
-  `;
+        `,
+      { width: 'site' },
+    );
 
   return createGlobalThemeVariations(
     () =>

@@ -3,6 +3,7 @@ import embedTwig from './yds-embed.twig';
 import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
   createGlobalThemeVariations,
+  createSectionWrapper,
   createThemeVariations,
 } from '../../_storybook/playground-utils';
 
@@ -19,10 +20,10 @@ export const Visreg = () => {
   const loading = 'lazy';
 
   // Render function for embed variations
-  const renderEmbeds = (theme) => `
-    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
+  const renderEmbeds = (theme) =>
+    createSectionWrapper(
+      theme,
+      `
           <h3>Microsoft Forms</h3>
           ${embedTwig({
             embed__title: 'Example Microsoft Form',
@@ -54,10 +55,8 @@ export const Visreg = () => {
             embed__loading: loading,
             embed__type: 'map',
           })}
-        </div>
-      </div>
-    </div>
-  `;
+        `,
+    );
 
   return createGlobalThemeVariations(
     () =>

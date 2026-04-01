@@ -3,6 +3,7 @@ import pager from './yds-pager.twig';
 import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
   createGlobalThemeVariations,
+  createSectionWrapper,
   createThemeVariations,
 } from '../../_storybook/playground-utils';
 
@@ -66,15 +67,7 @@ export const Visreg = () => {
   const data = generatePagerData(safeCurrentPage, safeTotalPages);
 
   // Render function for pager variations
-  const renderPager = (theme) => `
-    <div data-component-theme="${theme}" data-component-width="site" class="yds-layout">
-      <div class="yds-layout__inner">
-        <div class="yds-layout__primary">
-          ${pager(data)}
-        </div>
-      </div>
-    </div>
-  `;
+  const renderPager = (theme) => createSectionWrapper(theme, pager(data));
 
   return createGlobalThemeVariations(
     () =>
