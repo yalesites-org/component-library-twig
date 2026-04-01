@@ -103,15 +103,20 @@ export const createVariations = (
   renderFn,
   variations,
   title,
+  description = '',
   label = 'Variation',
+  labelFormatter = null,
 ) => `
   <h2 class="sb-section__heading">${title}</h2>
+  ${description ? `<p class="sb-section__description">${description}</p>` : ''}
   <hr class="sb-section__divider">
   ${variations
     .map(
       (variation) => `
     <div class="sb-section__container">
-      <h3 class="sb-section__subheading">${label}: ${variation}</h3>
+      <h3 class="sb-section__subheading">${
+        labelFormatter ? labelFormatter(variation) : `${label}: ${variation}`
+      }</h3>
       ${renderFn(variation)}
     </div>
   `,
@@ -188,9 +193,15 @@ export const createThemeAccentCombinations = (
  * const wrapped = createSectionWrapper('two', componentTwig(config));
  */
 export const createSectionWrapper = (theme, content, options = {}) => {
-  const { width = 'site', primaryWidth, hasDivider = false } = options;
+  const {
+    width = 'site',
+    primaryWidth,
+    hasDivider = false,
+    innerStyle,
+  } = options;
 
   const primaryStyle = primaryWidth ? ` style="width: ${primaryWidth}"` : '';
+  const innerStyleAttr = innerStyle ? ` style="${innerStyle}"` : '';
 
   return `
     <div data-component-has-divider="${hasDivider}"
@@ -199,7 +210,7 @@ export const createSectionWrapper = (theme, content, options = {}) => {
          class="yds-layout"
          data-embedded-components=""
          data-spotlights-position="first">
-      <div class="yds-layout__inner">
+      <div class="yds-layout__inner"${innerStyleAttr}>
         <div class="yds-layout__primary"${primaryStyle}>
           ${content}
         </div>
