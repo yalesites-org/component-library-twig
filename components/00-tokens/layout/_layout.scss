@@ -47,6 +47,10 @@
 body,
 html {
   height: 100%;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    overflow-x: hidden;
+  }
 }
 
 .layout-container {
