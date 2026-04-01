@@ -1,0 +1,66 @@
+# inline-message-props.yml
+#
+# Inline Message component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+type:
+  twigProp: inline_message__type
+  name: Type
+  type: select
+  required: false
+  description: Message type affecting visual style and semantic meaning
+  default: general
+  options:
+    - general
+    - marketing
+  control: select
+
+heading:
+  twigProp: inline_message__heading
+  name: Heading
+  type: string
+  required: false
+  description: Heading text for the message
+  control: text
+
+content:
+  twigProp: inline_message__content
+  name: Content
+  type: string
+  required: false
+  description: Main content of the message (supports HTML)
+  control: text
+
+themeColor:
+  twigProp: inline_message__theme
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Component theme dial controlling background and text colors
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select
+
+linkContent:
+  twigProp: inline_message__link__content
+  name: Link Content
+  type: string
+  required: false
+  description: Optional link text displayed within the message
+  control: text
+
+linkUrl:
+  twigProp: inline_message__link__url
+  name: Link URL
+  type: string
+  required: false
+  description: URL for the optional link
+  control: text

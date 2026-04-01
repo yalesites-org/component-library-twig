@@ -1,0 +1,13 @@
+/* Accessible link colors for introduction pages */
+.sb-intro-page a {
+  color: #0053a0; /* Yale Blue - better contrast */
+}
+
+.sb-intro-page a:hover {
+  color: #00356b; /* Darker Yale Blue on hover */
+  text-decoration: underline;
+}
+
+.sb-intro-page a:visited {
+  color: #4a0080; /* Visited link purple with good contrast */
+}

@@ -1,0 +1,193 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as PagerStories from './pager.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './pager-props.yml';
+
+<Meta of={PagerStories} name="Docs" />
+
+# Pager
+
+The pager component provides navigation controls for multi-page content. It displays page numbers with intelligent truncation patterns using ellipsis for large page sets, along with previous and next navigation arrows. The component adapts its display pattern based on the current page position and total page count, ensuring users always maintain context while having access to key navigation points.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the pager's properties in real-time. Click on page numbers to navigate between pages.
+
+<Canvas of={PagerStories.Interactive} />
+<Controls of={PagerStories.Interactive} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Pagination Patterns
+
+The pager component intelligently adapts its display based on the total number of pages and the current page position. This ensures optimal usability while maintaining visual clarity.
+
+### Single Page
+
+When only one page exists, the pagination component is hidden entirely. This reduces visual clutter and follows UX best practices.
+
+### Simple Pattern (2-3 Pages)
+
+For small page sets (2-3 pages), all page numbers are displayed without truncation.
+
+**Example:** `1 2 3`
+
+**Use Case:** With few pages, users benefit from seeing all options at once without cognitive load from ellipsis or hidden pages.
+
+### Four Page Special Case
+
+When exactly four pages exist, all page numbers are shown to avoid confusing displays like "1 2 3 4 ... 4".
+
+**Example:** `1 2 3 4`
+
+### Complex Patterns (5+ Pages)
+
+For larger page sets, the pager uses intelligent ellipsis patterns that adapt based on current position:
+
+#### Start Pattern (Pages 1-2)
+
+**Example:** `1 2 3 ... 10`
+
+**Use Case:** Users near the beginning need clear forward navigation. Pattern emphasizes forward progress.
+
+#### Extended Start (Page 3)
+
+**Example:** `1 2 3 4 ... 10`
+
+**Use Case:** When on page 3, users expect to easily click to page 4 without jumping to the last page. Reduces navigation friction.
+
+#### Middle Pattern
+
+**Example:** `1 ... 4 5 6 ... 10`
+
+**Use Case:** Shows current page with context (one before/after) while maintaining awareness of start/end boundaries.
+
+#### Extended End (Third From Last)
+
+**Example:** `1 ... 7 8 9 10`
+
+**Use Case:** Mirror of extended start - when on page 8 of 10, users can easily access page 7 without jumping to page 1.
+
+#### End Pattern (Last 2 Pages)
+
+**Example:** `1 ... 8 9 10`
+
+**Use Case:** Users near the end need context about their position and easy access to earlier content.
+
+### Mobile Display
+
+On mobile devices, the pager displays a compact format showing the current position:
+
+**Example:** `5 / 10`
+
+This prevents horizontal scrolling while maintaining position awareness.
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-pager.twig`
+- **Styles**: `_yds-pager.scss`
+- **JavaScript**: `cl-pager.js`
+
+### Accessibility
+
+- Proper ARIA labels and roles for screen reader navigation
+- Semantic `<nav>` element with `role="navigation"` and `aria-label="Pagination"`
+- Current page clearly indicated with `is-active` class and visually hidden "Current" label
+- All page links have descriptive `aria-label` attributes
+- Keyboard accessible with clear focus indicators
+- Previous and next links include `rel="prev"` and `rel="next"` attributes for better SEO
+
+### Behavior
+
+- **Navigation**: Click page numbers, previous, or next arrows to navigate
+- **Visual Feedback**: Current page is highlighted with distinct styling
+- **Responsive**: Desktop shows full pagination, mobile shows compact "X / Y" format
+- **Dynamic Patterns**: Display pattern automatically adjusts based on current position
+- **JavaScript Enhancement**: Interactive page updates in Storybook (standard HTML links in production)
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use pagination for content sets with more than 10-20 items per page
+- Keep items per page consistent throughout the user experience
+- Place pagination at both the top and bottom of long content lists
+- Ensure page size is appropriate for the content type (balance page load time with navigation frequency)
+- Display total results count near the pagination when possible
+- Consider "Load More" patterns for infinite scroll scenarios on mobile
+
+### Things to Avoid
+
+- Don't hide pagination when there's only one page (component does this automatically)
+- Don't use pagination for content that should be displayed on a single page
+- Avoid very small page sizes (under 5 items) that require excessive clicking
+- Don't use pagination as the only way to access content - provide search and filters
+- Avoid breaking related content across page boundaries when possible
+
+## Implementation Notes
+
+### Data Structure
+
+The pager expects a specific data structure from Drupal's pager system:
+
+```javascript
+{
+  current: 5,
+  items: {
+    pages: {
+      1: { href: '/page/1' },
+      2: { href: '/page/2' },
+      // ... more pages
+    },
+    previous: { href: '/page/4' },
+    next: { href: '/page/6' },
+    first: { href: '/page/1' },
+    last: { href: '/page/10' }
+  }
+}
+```
+
+### Pattern Logic
+
+The component uses several key variables to determine which pattern to display:
+
+- **is_single_page**: Total pages equals 1
+- **is_simple**: 2-3 total pages
+- **is_exactly_four**: Exactly 4 total pages
+- **needs_ellipsis**: 5 or more total pages
+- **at_start**: Current page is 1 or 2
+- **on_third**: Current page is 3
+- **in_middle**: Current page is not near start or end
+- **on_third_from_end**: Current page is 3rd from last
+- **at_end**: Current page is in last 2 pages
+
+## Testing
+
+For comprehensive visual regression testing with all pagination pattern variations and theme combinations, see the [Visreg page](?path=/story/molecules-pager-visreg).
+
+### Testing Different Patterns
+
+To test various pagination patterns, adjust the total pages and current page controls:
+
+1. **Single page**: Set total pages to 1
+2. **Simple pattern**: Set total pages to 2-3
+3. **Four page case**: Set total pages to 4, try different current pages
+4. **Start pattern**: Set total pages to 10, current page to 1 or 2
+5. **Extended start**: Set total pages to 10, current page to 3
+6. **Middle pattern**: Set total pages to 10, current page to 5
+7. **Extended end**: Set total pages to 10, current page to 8
+8. **End pattern**: Set total pages to 10, current page to 9 or 10
+
+## Related Components
+
+- **Load More Button**: Alternative pattern for progressive content loading
+- **Infinite Scroll**: Consider for mobile-first experiences where pagination may be cumbersome
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

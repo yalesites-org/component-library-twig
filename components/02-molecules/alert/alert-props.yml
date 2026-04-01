@@ -1,0 +1,45 @@
+# alert-props.yml
+#
+# Alert component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+heading:
+  twigProp: alert__heading
+  name: Alert Heading
+  type: string
+  required: false
+  description: The main heading text for the alert
+
+content:
+  twigProp: alert__content
+  name: Alert Content
+  type: string
+  required: false
+  description: Additional descriptive content (supports HTML)
+
+linkContent:
+  twigProp: alert__link__content
+  name: Alert Link Text
+  type: string
+  required: false
+  description: Text for the optional call-to-action link
+
+type:
+  twigProp: alert__type
+  name: Alert Type
+  type: select
+  required: false
+  description: Type of alert displayed
+  detail: >
+    Controls the visual style and semantic meaning of the alert.
+    Use 'emergency' for urgent situations, 'announcement' for important
+    notices, and 'marketing' for promotional content.
+  default: announcement
+  options:
+    - emergency
+    - announcement
+    - marketing
+  control: select

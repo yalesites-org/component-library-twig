@@ -11,11 +11,12 @@ import '../../01-atoms/typography/text/yds-text';
  */
 export default {
   title: 'Molecules/Text',
+  tags: ['!dev'],
   argTypes: {
     variation: {
       name: 'Text Field Variation',
       options: ['default', 'emphasized'],
-      type: 'select',
+      control: 'select',
     },
   },
   args: {
@@ -23,9 +24,24 @@ export default {
   },
 };
 
-export const TextField = ({ variation }) => `
-${textFieldTwig({
-  text_field__content: textData.text_field__content,
-  text_field__variation: variation,
-})}
-`;
+export const TextField = {
+  argTypes: {
+    variation: {
+      name: 'Text Field Variation',
+      options: ['default', 'emphasized'],
+      control: 'select',
+    },
+  },
+  args: {
+    variation: 'default',
+  },
+  render: ({ variation }) => `
+    ${textFieldTwig({
+      text_field__content: textData.text_field__content,
+      text_field__variation: variation,
+    })}
+  `,
+};
+
+// Make Interactive story an alias to TextField
+export const Interactive = TextField;

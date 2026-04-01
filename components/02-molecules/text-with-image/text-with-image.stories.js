@@ -1,95 +1,29 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 // Twig templates
 import textWithImageTwig from './yds-text-with-image.twig';
 
 // Data files
 import imageData from '../../01-atoms/images/image/image.yml';
 import textWithImageData from './text-with-image.yml';
+import componentProps from './text-with-image-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
-const colorPairingsData = Object.keys(tokens['component-themes']);
 /**
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Content Spotlight',
+  title: 'Molecules/Content Spotlight/Content Spotlight Landscape',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    componentTheme: {
-      name: 'Component Theme (dial)',
-      type: 'select',
-      options: colorPairingsData,
-    },
-    width: {
-      name: 'Width',
-      type: 'select',
-      options: ['highlight', 'site'],
-    },
-    position: {
-      name: 'Image Position',
-      type: 'select',
-      options: ['image-left', 'image-right'],
-    },
-    contentVerticalAlignment: {
-      name: 'Content Vertical Alignment',
-      type: 'select',
-      options: ['top', 'middle', 'bottom'],
-    },
-    imageStyle: {
-      name: 'Image Style',
-      type: 'select',
-      options: ['inline', 'offset'],
-    },
-    focus: {
-      name: 'Focus',
-      type: 'select',
-      options: ['image', 'equal'],
-    },
-    overline: {
-      name: 'Overline (optional)',
-      type: 'string',
-    },
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    subheading: {
-      name: 'Subheading (optional)',
-      type: 'string',
-    },
-    text: {
-      name: 'Text',
-      type: 'string',
-    },
-    linkContent: {
-      name: 'Link Content (optional)',
-      type: 'string',
-    },
-    linkTwoContent: {
-      name: 'Second Link Content (optional)',
-      type: 'string',
-      defaultValue: textWithImageData.text_with_image__link_two__content,
-    },
-    caption: {
-      name: 'Caption (optional)',
-      type: 'string',
-      defaultValue: textWithImageData.text_with_image__caption,
-    },
-  },
+  argTypes: toArgTypes(componentProps),
   args: {
-    componentTheme: 'default',
-    width: 'site',
-    position: 'image-left',
-    contentVerticalAlignment: 'top',
-    imageStyle: 'inline',
-    focus: 'equal',
-    overline: null,
+    ...toArgs(componentProps),
     heading: textWithImageData.text_with_image__heading,
     subheading: textWithImageData.text_with_image__subheading,
     text: textWithImageData.text_with_image__text,
     linkContent: textWithImageData.text_with_image__link__content,
+    linkTwoContent: textWithImageData.text_with_image__link_two__content,
     caption: textWithImageData.text_with_image__caption,
   },
 };

@@ -12,13 +12,23 @@
   min-width: 150px;
   min-height: 150px;
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .cl-colors__title {
   background: hsl(0deg 0% 100% / 80%);
   padding: 0.5rem;
+}
+
+.cl-colors__hex {
+  background: hsl(0deg 0% 100% / 80%);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8em;
+  font-family: monospace;
+  letter-spacing: 0.05em;
 }
 
 [data-global-theme] {

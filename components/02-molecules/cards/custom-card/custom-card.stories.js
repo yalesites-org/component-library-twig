@@ -6,38 +6,23 @@ import customCardData from './custom-card.yml';
 
 // Image atom component - generic images for demo
 import imageData from '../../../01-atoms/images/image/image.yml';
+import componentProps from './custom-card-props.yml';
+import { toArgTypes, toArgs } from '../../../_storybook/component-props';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Cards',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    snippet: {
-      name: 'Snippet',
-      type: 'string',
-    },
-    withImage: {
-      name: 'With Image',
-      type: 'boolean',
-    },
-    featured: {
-      name: 'Featured',
-      type: 'boolean',
-    },
-  },
+  argTypes: toArgTypes(componentProps),
   args: {
+    ...toArgs(componentProps),
     heading: customCardData.custom_card__heading,
     snippet: customCardData.custom_card__snippet,
-    withImage: true,
-    featured: true,
   },
 };
 

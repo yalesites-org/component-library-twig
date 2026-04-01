@@ -11,6 +11,8 @@ import factsAndFiguresIconsData from '../../02-molecules/facts-and-figures/facts
 
 // Image atom component - generic images for demo
 import imageData from '../../01-atoms/images/image/image.yml';
+import componentProps from './facts-and-figures-group-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
@@ -38,77 +40,37 @@ if (
   );
 }
 
+const argTypes = toArgTypes(componentProps);
+argTypes.themeColor = {
+  ...argTypes.themeColor,
+  options: colorPairingsData,
+};
+argTypes.iconName = {
+  ...argTypes.iconName,
+  options: iconDisplayToValueMap,
+};
+
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Organisms/Facts and Figures Group',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    themeColor: {
-      name: 'Component Theme (dial)',
-      options: colorPairingsData,
-      type: 'select',
-    },
-    factsAndFiguresGroupHeading: {
-      name: 'Infographic Group Heading',
-      type: 'string',
-    },
-    factsAndFiguresGroupContent: {
-      name: 'Infographic Group Content',
-      type: 'string',
-    },
-    factsAndFiguresGroupLink: {
-      name: 'Infographic Group Link',
-      type: 'string',
-    },
-    image: {
-      name: 'With image',
-      type: 'boolean',
-    },
-    presentationStyle: {
-      name: 'Presentation Style',
-      options: ['basic', 'icon-only'],
-      type: 'select',
-    },
-    fontStyle: {
-      name: 'Font Style',
-      options: ['normal', 'numeric-oldstyle'],
-      type: 'select',
-    },
-    columnCount: {
-      name: 'Column Count',
-      options: ['two', 'three', 'four'],
-      type: 'select',
-      defaultValue: 'three',
-    },
-    alignment: {
-      name: 'Alignment',
-      options: ['left', 'center'],
-      type: 'select',
-    },
-    iconName: {
-      name: 'Icon Selection',
-      options: iconDisplayToValueMap,
-      type: 'select',
-      defaultValue: '- None -',
-    },
-  },
+  argTypes,
   args: {
-    globalTheme: 'one',
-    themeColor: 'one',
+    ...toArgs(componentProps),
     factsAndFiguresGroupHeading:
       factsAndFiguresGroupData.facts_and_figures__group__heading,
     factsAndFiguresGroupContent:
       factsAndFiguresGroupData.facts_and_figures__group__content,
     factsAndFiguresGroupLink:
       factsAndFiguresGroupData.facts_and_figures__group__link__content,
-    image: true,
-    presentationStyle: 'basic',
-    fontStyle: 'normal',
+    columnCount: 'three',
     alignment: 'left',
+    image: true,
     iconName: '- None -',
   },
 };

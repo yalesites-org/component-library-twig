@@ -1,0 +1,88 @@
+# event-props.yml
+#
+# Event Meta component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+dataVariant:
+  name: Event Date Scenario
+  type: select
+  required: false
+  description: 'Which set of event date data to display'
+  detail: >
+    Storybook-only selector that switches between pre-defined event date
+    data files. Not a Twig prop — the selected data is spread into the
+    template in the render function.
+  default: Mixed (Past & Upcoming)
+  options:
+    - Mixed (Past & Upcoming)
+    - Upcoming Only
+    - Past Only
+    - Single Date
+  control: select
+
+withCalendar:
+  twigProp: event_meta__with_calendar
+  name: With Add to Calendar button
+  type: boolean
+  required: false
+  description: Whether to show the Add to Calendar button
+  default: true
+  control: boolean
+
+withImage:
+  twigProp: event_meta__image
+  name: With Image
+  type: boolean
+  required: false
+  description: Whether to display an event image
+  default: true
+  control: boolean
+
+format:
+  twigProp: event_meta__format
+  name: Format
+  type: select
+  required: false
+  description: 'Event format: In-person, Online, or Hybrid'
+  default: In-person
+  options:
+    - In-person
+    - Online
+    - Hybrid
+  control: select
+
+address:
+  twigProp: event_meta__address
+  name: Address
+  type: string
+  required: false
+  description: Event location address
+  control: text
+
+ctaText:
+  twigProp: event_meta__cta_primary__content
+  name: CTA Text
+  type: string
+  required: false
+  description: Primary call-to-action button text
+  control: text
+
+allDay:
+  name: All Day
+  type: boolean
+  required: false
+  description: Whether the event is an all-day event
+  detail: >
+    Storybook-only toggle that adjusts event timestamps to represent all-day
+    events (00:00 to 23:59). Not a direct Twig prop.
+  default: false
+  control: boolean
+
+pageTitle:
+  twigProp: event_title__heading
+  name: Page Title
+  type: string
+  required: false
+  description: Event title heading displayed in the meta component
+  control: text

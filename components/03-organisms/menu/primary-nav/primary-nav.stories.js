@@ -1,44 +1,29 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 // Markup.
 import primaryNavTwig from './yds-primary-nav.twig';
 
 // Data.
 import primaryNavData from './primary-nav.yml';
+import componentProps from './primary-nav-props.yml';
+import { toArgTypes, toArgs } from '../../../_storybook/component-props';
 
 // JavaScript
 import './yds-primary-nav';
-
-const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Organisms/Menu/Primary Nav',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    siteHeaderTheme: {
-      name: 'Site Header Theme',
-      options: siteHeaderThemeOptions,
-      type: 'select',
-    },
-    menuVariation: {
-      name: 'Menu Variation',
-      options: ['basic', 'mega', 'focus'],
-      type: 'select',
-    },
-  },
-  args: {
-    siteHeaderTheme: 'one',
-    menuVariation: 'basic',
-  },
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
-export const PrimaryNav = ({ siteHeaderTheme, menuVariation }) => `
-  <div style="position: relative; padding-top: var(--size-spacing-site-gutter);" data-site-header-nav-position='left' data-component-width="max" data-header-theme="${siteHeaderTheme}">
+export const PrimaryNav = ({ menuVariation }) => `
+  <div style="position: relative; padding-top: var(--size-spacing-site-gutter);" data-site-header-nav-position='left' data-component-width="max" data-header-theme="one">
     ${primaryNavTwig({ ...primaryNavData, menu__variation: menuVariation })}
   </div>
 `;

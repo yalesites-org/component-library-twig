@@ -7,6 +7,7 @@ import './yds-read-time';
  */
 export default {
   title: 'Molecules/Read Time',
+  tags: ['!dev'],
 };
 
 export const ReadTime = () => {

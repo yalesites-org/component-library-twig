@@ -1,45 +1,31 @@
 import embedTwig from './yds-embed.twig';
-import deprecatedEmbedTwig from './yds-deprecated.twig';
+import componentProps from './embed-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Embed',
-  argTypes: {
-    width: {
-      name: 'Width',
-      type: 'select',
-      options: ['max', 'site', 'hightlight', 'content'],
-    },
-    type: {
-      name: 'Type',
-      options: ['form', 'audio', 'map'],
-      type: 'select',
-    },
-    loading: {
-      name: 'Loading',
-      options: ['lazy', 'eager'],
-      type: 'select',
-    },
-  },
-  args: {
-    width: 'site',
-    type: 'form',
-    loading: 'lazy',
-  },
+  tags: ['!dev'],
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
-export const EmbedQualtrics = ({ width, type, loading }) =>
-  deprecatedEmbedTwig({
+export const Interactive = ({ width, type, loading }) =>
+  embedTwig({
     embed__src:
-      'https://yalesurvey.ca1.qualtrics.com/jfe/form/SV_cDezt2JVsNok77o',
-    embed__title: 'Example Qualtrics Form',
+      'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/320687463',
+    embed__title: 'Example SoundCloud Track',
     embed__width: width,
     embed__height: '100%',
     embed__type: type,
     embed__loading: loading,
   });
+
+Interactive.args = {
+  type: 'audio',
+};
 
 export const EmbedSoundCloud = ({ width, type, loading }) =>
   embedTwig({
@@ -53,7 +39,9 @@ export const EmbedSoundCloud = ({ width, type, loading }) =>
   });
 
 EmbedSoundCloud.args = {
+  width: 'site',
   type: 'audio',
+  loading: 'lazy',
 };
 
 export const EmbedInstagram = () => {
@@ -74,6 +62,12 @@ export const EmbedPowerBI = ({ width, type, loading }) =>
     embed__type: type,
   });
 
+EmbedPowerBI.args = {
+  width: 'site',
+  type: 'form',
+  loading: 'lazy',
+};
+
 export const EmbedMicrosoftForms = ({ width, type, loading }) =>
   embedTwig({
     embed__title: 'Example Microsoft Form',
@@ -84,6 +78,12 @@ export const EmbedMicrosoftForms = ({ width, type, loading }) =>
     embed__loading: loading,
     embed__type: type,
   });
+
+EmbedMicrosoftForms.args = {
+  width: 'site',
+  type: 'form',
+  loading: 'lazy',
+};
 
 export const EmbedGoogleMaps = ({ width, type, loading }) =>
   embedTwig({
@@ -96,7 +96,9 @@ export const EmbedGoogleMaps = ({ width, type, loading }) =>
   });
 
 EmbedGoogleMaps.args = {
+  width: 'site',
   type: 'map',
+  loading: 'lazy',
 };
 
 export const EmbedGoogleCalendar = ({ width, type, loading }) =>
@@ -111,7 +113,9 @@ export const EmbedGoogleCalendar = ({ width, type, loading }) =>
   });
 
 EmbedGoogleCalendar.args = {
+  width: 'site',
   type: 'calendar',
+  loading: 'lazy',
 };
 
 export const EmbedBluesky = () => {

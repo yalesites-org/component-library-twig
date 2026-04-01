@@ -1,50 +1,30 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import wrappedCalloutTwig from './yds-wrapped-callout.twig';
 import textFieldTwig from '../text/yds-text-field.twig';
 import wrappedCalloutData from './wrapped-callout.yml';
-
-const colorPairingsData = Object.keys(tokens['component-themes']);
+import componentProps from './wrapped-callout-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Wrapped Callout',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    calloutAlignment: {
-      name: 'Callout Alignment',
-      type: 'select',
-      options: ['left', 'right'],
-    },
-    calloutContent: {
-      name: 'Callout Content',
-      type: 'string',
-    },
-    calloutCallout: {
-      name: 'Callout Callout',
-      type: 'string',
-    },
-    themeColor: {
-      name: 'Component Theme (dial)',
-      options: colorPairingsData,
-      type: 'select',
-    },
-  },
+  argTypes: toArgTypes(componentProps),
   args: {
-    calloutAlignment: 'left',
+    ...toArgs(componentProps),
     calloutContent: wrappedCalloutData.text_two,
-    calloutCallout: wrappedCalloutData.text_three,
-    themeColor: 'one',
+    calloutText: wrappedCalloutData.text_three,
   },
 };
 
 export const wrappedCallout = ({
   calloutAlignment,
   calloutContent,
-  calloutCallout,
+  calloutText,
   themeColor,
 }) => `
   ${textFieldTwig({
@@ -55,7 +35,7 @@ export const wrappedCallout = ({
   ${wrappedCalloutTwig({
     wrapped_callout__alignment: calloutAlignment,
     wrapped_callout__content: calloutContent,
-    wrapped_callout__callout: calloutCallout,
+    wrapped_callout__callout: calloutText,
     wrapped_callout__theme: themeColor,
   })}
 `;

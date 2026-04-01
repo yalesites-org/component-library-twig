@@ -1,0 +1,85 @@
+# divider-props.yml
+#
+# Divider component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+thickness:
+  twigProp: --thickness-divider
+  name: Line thickness
+  type: select
+  required: false
+  description: Controls the divider line thickness via CSS custom property
+  default: hairline
+  options:
+    - hairline
+    - '1'
+    - '2'
+    - '4'
+    - '8'
+    - '16'
+    - '24'
+    - '32'
+  control: select
+
+dividerColor:
+  twigProp: --color-divider
+  name: Line Color
+  type: select
+  required: false
+  description: Controls the divider line color via CSS custom property
+  default: gray-500
+  options:
+    - gray-500
+    - blue-yale
+    - basic-brown-gray
+  control: select
+
+width:
+  twigProp: divider__width
+  name: Divider width
+  type: select
+  required: false
+  description: Width of the divider as a percentage
+  detail: >
+    Width of the divider as a percentage of the container. Maps to the
+    divider__width Twig variable. Available values are determined by design tokens.
+  default: '100'
+  options:
+    - '25'
+    - '50'
+    - '75'
+    - '100'
+  control: select
+
+position:
+  twigProp: divider__position
+  name: Divider position
+  type: select
+  required: false
+  description: Horizontal alignment of the divider
+  detail: >
+    Horizontal alignment of the divider within its container. Maps to the
+    divider__position Twig variable.
+  default: center
+  options:
+    - left
+    - center
+  control: select
+
+sectionTheme:
+  twigProp: data-component-theme
+  name: Section Theme
+  type: select
+  required: false
+  description: Background color theme for the layout section
+  default: default
+  options:
+    - default
+    - one
+    - two
+    - three
+    - four
+  control: select
