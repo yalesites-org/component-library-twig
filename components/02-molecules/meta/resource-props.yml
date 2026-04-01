@@ -1,0 +1,48 @@
+# resource-props.yml
+#
+# Resource Meta component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+heading:
+  twigProp: resource_meta__heading
+  name: Heading
+  type: string
+  required: true
+  description: Resource title
+  control: text
+
+category:
+  twigProp: resource_meta__category
+  name: Category
+  type: string
+  required: true
+  description: Resource category label
+  control: text
+
+resourceType:
+  twigProp: resource_meta__resource_type
+  name: Resource Type
+  type: select
+  required: true
+  description: 'Resource type: video or document'
+  options:
+    Video: video
+    Document: document
+  control: select
+
+publishDate:
+  twigProp: resource_meta__publish_date
+  name: Publish Date
+  type: string
+  required: false
+  description: Publication date string
+  control: text
+
+description:
+  twigProp: resource_meta__description
+  name: Description
+  type: string
+  required: false
+  description: Resource description (supports HTML)
+  control: text

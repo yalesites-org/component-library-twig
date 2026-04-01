@@ -1,0 +1,80 @@
+# tiles-props.yml
+#
+# Tiles component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+presentationStyle:
+  twigProp: tiles__presentation_style
+  name: Presentation Style
+  type: select
+  required: false
+  description: Visual style for tile items
+  default: heading
+  options:
+    - heading
+    - icon
+    - text-only
+  control: select
+
+alignment:
+  twigProp: tiles__alignment
+  name: Alignment
+  type: select
+  required: false
+  description: Horizontal alignment of content within each tile
+  default: left
+  options:
+    - left
+    - center
+    - right
+  control: select
+
+verticalAlignment:
+  twigProp: tiles__vertical_alignment
+  name: Vertical Alignment
+  type: select
+  required: false
+  description: Vertical positioning of content within tiles
+  default: left
+  options:
+    - top
+    - bottom
+  control: select
+
+columnCount:
+  twigProp: tiles__grid_count
+  name: Column Count
+  type: select
+  required: false
+  description: Number of columns in the tiles grid
+  default: three
+  options:
+    - two
+    - three
+    - four
+  control: select
+
+image:
+  twigProp: tiles__with__image
+  name: With image
+  type: boolean
+  required: false
+  description: Display background images on tiles
+  detail: >
+    When true, passes 'true' to tiles__with__image in the Twig template to
+    enable background image rendering on each tile.
+  default: false
+  control: boolean
+
+withAnimation:
+  twigProp: tiles__with__animation
+  name: With Animation
+  type: boolean
+  required: false
+  description: Enable entrance animation effects on tiles
+  detail: >
+    When true, passes 'true' to tiles__with__animation in the Twig template
+    to enable CSS animation on tile items.
+  default: false
+  control: boolean

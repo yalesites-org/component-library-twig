@@ -1,0 +1,95 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as GrandHeroStories from './grand-hero.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './grand-hero-props.yml';
+
+<Meta of={GrandHeroStories} name="Docs" />
+
+# Grand Hero Banner
+
+The Grand Hero Banner is designed for maximum visual impact — typically used on homepages and major landing pages. It supports a full-width background image, heading, snippet, and up to two call-to-action buttons. The content overlay can be configured as full-width or contained to suit different compositional needs.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the component's properties in real-time.
+
+<div className="sb-full-bleed-canvas">
+  <Canvas of={GrandHeroStories.GrandHeroBanner} />
+</div>
+<Controls of={GrandHeroStories.GrandHeroBanner} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Theme Options
+
+The Grand Hero Banner supports the full set of component theme dials:
+
+- **Default**: Standard theme using global color settings
+- **One through Five**: Custom theme dials that override global settings with component-specific colors
+
+Use the `grand_hero__content__background` property to apply different themes.
+
+## Overlay Variations
+
+The Grand Hero Banner supports three overlay styles. Use the interactive preview above to switch between them, or see the [Visreg page](?path=/story/molecules-banners-grand-hero-visreg--visreg) for a side-by-side comparison.
+
+### Contained Overlay
+
+Content is constrained to a column width, providing a cleaner, more structured look against the full-bleed image.
+
+<div className="sb-full-bleed-canvas">
+  <Canvas of={GrandHeroStories.GrandHeroBannerContained} />
+</div>
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `grand-hero/yds-grand-hero.twig`
+- **Styles**: `grand-hero/_yds-grand-hero.scss`
+
+### Accessibility
+
+- Semantic HTML structure with proper heading hierarchy
+- Background images implemented with appropriate alternative text handling
+- Interactive elements (buttons, links) are keyboard accessible with clear focus indicators
+- Sufficient color contrast ratios maintained across all theme variations
+- Content remains accessible when background images fail to load
+
+### Behavior
+
+- **Responsive Design**: Banner adapts to viewport with content scaling appropriately
+- **Image Loading**: Uses responsive images with appropriate srcset for different screen sizes
+- **Video Background**: When enabled, replaces the static background image with a video
+
+## Usage Guidelines
+
+### Best Practices
+
+- Reserve for homepages and primary landing pages — one per page maximum
+- Keep heading text bold and brief; the Grand Hero is the first thing users see
+- Use high-quality, full-bleed images with a 16:9 aspect ratio
+- Choose the overlay variation based on the image composition — full overlay works well with busy imagery, contained works with cleaner images
+
+### Things to Avoid
+
+- Don't use on interior content pages where an Action Banner or Image Banner would be more appropriate
+- Avoid lengthy snippet text — the heading should carry the message
+- Don't use low-contrast color combinations that make text difficult to read
+
+## Testing
+
+For comprehensive visual regression testing with all overlay, theme, and size variations, see the [Visreg page](?path=/story/molecules-banners-grand-hero-visreg--visreg).
+
+## Related Components
+
+- **Action Banner**: When you need multiple CTAs or flexible content positioning
+- **Image Banner**: For visual storytelling with minimal text and no content overlay
+- **Video Banner**: For video-first content presentation

@@ -1,0 +1,31 @@
+# block-wrapper-props.yml
+#
+# Block Wrapper component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+blockContent:
+  twigProp: block_wrapper__content
+  name: Content
+  type: string
+  required: true
+  description: The content to be wrapped (typically HTML markup)
+  control: text
+
+paddingModifier:
+  twigProp: block_wrapper__extra_classes
+  name: Padding Modifier
+  type: select
+  required: false
+  description: Padding configuration applied via CSS class on the block wrapper
+  detail: >
+    Controls vertical padding on the block wrapper by applying a BEM modifier
+    class. The class is appended as ys-block-wrapper--{value}. Passed as part
+    of the block_wrapper__extra_classes array in the Twig template.
+  default: padding-default
+  options:
+    Default Padding: padding-default
+    No Top Padding: padding-no-top
+    No Bottom Padding: padding-no-bottom
+    No Padding: padding-no-padding
+  control: select

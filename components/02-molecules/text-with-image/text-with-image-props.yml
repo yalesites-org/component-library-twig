@@ -1,0 +1,138 @@
+# text-with-image-props.yml
+#
+# Text with Image (Content Spotlight Landscape) component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+componentTheme:
+  twigProp: text_with_image__theme
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Component theme from color dial
+  default: default
+  options:
+    - default
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select
+
+width:
+  twigProp: text_with_image__width
+  name: Width
+  type: select
+  required: false
+  description: 'Component width: site or highlight'
+  default: site
+  options:
+    - highlight
+    - site
+  control: select
+
+position:
+  twigProp: text_with_image__position
+  name: Image Position
+  type: select
+  required: false
+  description: 'Image position: image-left or image-right'
+  default: image-left
+  options:
+    - image-left
+    - image-right
+  control: select
+
+contentVerticalAlignment:
+  twigProp: text_with_image__vertical_align
+  name: Content Vertical Alignment
+  type: select
+  required: false
+  description: 'Vertical alignment of content: top, middle, or bottom'
+  default: top
+  options:
+    - top
+    - middle
+    - bottom
+  control: select
+
+imageStyle:
+  twigProp: text_with_image__style
+  name: Image Style
+  type: select
+  required: false
+  description: 'Image style: inline or offset'
+  default: inline
+  options:
+    - inline
+    - offset
+  control: select
+
+focus:
+  twigProp: text_with_image__focus
+  name: Focus
+  type: select
+  required: false
+  description: 'Content focus emphasis: image or equal'
+  default: equal
+  options:
+    - image
+    - equal
+  control: select
+
+overline:
+  twigProp: text_with_image__overline
+  name: Overline
+  type: string
+  required: false
+  description: Optional overline text above heading
+  control: text
+
+heading:
+  twigProp: text_with_image__heading
+  name: Heading
+  type: string
+  required: true
+  description: The main heading text
+  control: text
+
+subheading:
+  twigProp: text_with_image__subheading
+  name: Subheading
+  type: string
+  required: false
+  description: Optional subheading text
+  control: text
+
+text:
+  twigProp: text_with_image__text
+  name: Text
+  type: string
+  required: false
+  description: Body text content
+  control: text
+
+linkContent:
+  twigProp: text_with_image__link__content
+  name: Link Content
+  type: string
+  required: false
+  description: Primary link text
+  control: text
+
+linkTwoContent:
+  twigProp: text_with_image__link_two__content
+  name: Second Link Content
+  type: string
+  required: false
+  description: Secondary link text
+  control: text
+
+caption:
+  twigProp: text_with_image__caption
+  name: Caption
+  type: string
+  required: false
+  description: Image caption text
+  control: text

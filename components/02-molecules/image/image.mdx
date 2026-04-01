@@ -1,0 +1,248 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as ImageStories from './image.stories';
+
+<Meta of={ImageStories} name="Docs" />
+
+# Image
+
+The content image component displays responsive images with optional captions in various layout contexts. It extends the base image atom with content-specific features like captions and width controls, making it suitable for use within articles, pages, and other content types.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the image component's properties.
+
+<Canvas of={ImageStories.ContentImage} />
+<Controls of={ImageStories.ContentImage} />
+
+## Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>image__src</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Image source URL</td>
+    </tr>
+    <tr>
+      <td>
+        <code>image__alt</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Alternative text for accessibility (required for all images)</td>
+    </tr>
+  </tbody>
+</table>
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>content_image__caption</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Caption text displayed below the image (supports HTML)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>content_image__width</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'content'</code>
+      </td>
+      <td>
+        Width constraint: <code>'content'</code>, <code>'highlight'</code>,{' '}
+        <code>'site'</code>, or <code>'max'</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>image__srcset</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Responsive image srcset for different viewport sizes</td>
+    </tr>
+    <tr>
+      <td>
+        <code>image__sizes</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>
+        Sizes attribute for responsive images (defines image display width at
+        different breakpoints)
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Width Options
+
+The content image component supports four width constraints that determine how the image fits within its container:
+
+### Content
+
+The default width that constrains the image to the content column width. This is the standard choice for images within text content.
+
+**Use for:**
+
+- Images within article body content
+- Inline images in blog posts
+- Standard content illustrations
+
+### Highlight
+
+A slightly wider width that extends beyond the standard content column to emphasize the image while maintaining readability of surrounding text.
+
+**Use for:**
+
+- Featured images that deserve extra prominence
+- Key illustrations in long-form content
+- Images that benefit from additional visual space
+
+### Site
+
+Extends the image to the full site content width, spanning the entire content area.
+
+**Use for:**
+
+- Hero images
+- Full-width illustrations
+- Images that need maximum impact
+
+### Max
+
+The maximum width available, extending to the viewport edges on larger screens.
+
+**Use for:**
+
+- Panoramic images
+- Full-bleed photography
+- Images where edge-to-edge display is desired
+
+## Image Aspect Ratios
+
+The component supports various aspect ratios for different use cases:
+
+- **16:9**: Wide format, ideal for hero images and landscape photography
+- **3:2**: Classic photography ratio, balanced and versatile
+- **4:3**: Traditional format, good for portraits and standard imagery
+- **1:1**: Square format, useful for consistent grid layouts
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-content-image.twig`
+- **Styles**: `_yds-content-image.scss`
+- **Base Component**: Extends `yds-image.twig` (atom)
+
+### Accessibility
+
+- **Required alt text**: All images must have descriptive alt text
+- **Empty alt for decorative images**: Use `alt=""` for purely decorative images
+- **Caption semantics**: Captions use proper semantic markup (`<figcaption>`)
+- **HTML structure**: Uses `<figure>` element for proper semantic structure
+- **Link support**: When captions contain links, ensure sufficient color contrast
+
+### Responsive Images
+
+The component leverages modern responsive image techniques:
+
+- **srcset**: Provides multiple image sources for different pixel densities and viewport sizes
+- **sizes**: Tells the browser what size the image will be at different breakpoints
+- **Lazy loading**: Images can be lazy-loaded for performance optimization
+- **Art direction**: Different crops or compositions can be served at different breakpoints
+
+## Usage Guidelines
+
+### Best Practices
+
+- Always provide meaningful alt text that describes the image content
+- Use appropriate aspect ratios for your content type
+- Choose width constraints that complement the surrounding content
+- Add captions to provide context or attribution when helpful
+- Optimize images before upload to reduce file size
+- Use srcset and sizes for responsive delivery
+- Consider the reading flow when placing images
+
+### Things to Avoid
+
+- Don't use generic alt text like "image" or "photo"
+- Don't rely solely on captions to convey critical information (include in alt text)
+- Avoid overly large images that slow page load
+- Don't use max width indiscriminately (it can disrupt page layout)
+- Avoid placing too many images too close together
+- Don't forget to test image appearance across different viewport sizes
+
+### Alt Text Guidelines
+
+**Good alt text:**
+
+- Describes the image content and context
+- Is concise but informative
+- Includes relevant details for understanding
+- Considers the image's purpose in context
+
+**Example:**
+"Students collaborating in Sterling Memorial Library's reading room"
+
+**Poor alt text:**
+
+- "Image123.jpg"
+- "Photo"
+- "Click here"
+
+## Testing
+
+For comprehensive visual regression testing with all width variations, aspect ratios, and theme combinations, see the [Visreg page](?path=/story/molecules-image-visreg--visreg).
+
+## Related Components
+
+- **Image (Atom)**: The base image component
+- **Wrapped Image**: Image with text wrapping for inline placement
+- **Banner**: Large hero images with text overlay
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

@@ -1,0 +1,153 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as ReadTimeStories from './read-time.stories';
+
+<Meta of={ReadTimeStories} name="Docs" />
+
+# Read Time
+
+The Read Time component automatically calculates and displays the estimated reading time for page content. It analyzes the text within the main content area and provides an easy-to-understand time estimate, helping users gauge how long it will take to read through the material.
+
+## Interactive Preview
+
+The Read Time component displays below the sample content. It automatically calculates reading time based on the text length in the main content area.
+
+<Canvas of={ReadTimeStories.ReadTime} />
+
+## Properties
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>read_time__label</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'Estimated read time'</code>
+      </td>
+      <td>Label text displayed before the calculated time</td>
+    </tr>
+  </tbody>
+</table>
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-read-time.twig`
+- **Styles**: `_yds-read-time.scss`
+- **JavaScript**: `yds-read-time.js`
+
+### Calculation Method
+
+The read time is calculated using the following approach:
+
+- **Reading Speed**: 200 words per minute (average adult reading speed)
+- **Content Source**: Text within the `#main-content` element
+- **Calculation**: Total word count divided by words per minute, rounded up to the nearest minute
+- **Minimum Display**: If content is less than 200 words, displays "less than 1 min"
+
+### JavaScript Behavior
+
+The component uses a Drupal behavior that:
+
+1. Locates the `#main-content` element on the page
+2. Extracts and cleans the text content (removes extra whitespace)
+3. Counts the total number of words
+4. Calculates reading time in minutes
+5. Updates the display with the calculated time or "less than 1" for short content
+
+### Accessibility
+
+- Semantic HTML structure with clearly labeled time information
+- Screen readers announce the complete reading time statement
+- Visual and text-based presentation ensures information is accessible to all users
+- No interactive elements required - purely informational
+
+### Dependencies
+
+- **Required Element**: The component requires a `#main-content` element to be present on the page
+- **JavaScript**: Requires JavaScript to calculate and display the reading time
+- **No JavaScript Fallback**: If JavaScript is disabled, the component will show "0 min"
+
+## Usage Guidelines
+
+### Best Practices
+
+- Place the Read Time component at the beginning or end of article content
+- Use on long-form content pages like articles, blog posts, and documentation
+- Ensure the main content area has the ID `#main-content` for proper calculation
+- Keep the default label unless there's a compelling reason to change it
+- Position the component in a consistent location across similar content types
+
+### Things to Avoid
+
+- Don't use Read Time on pages with minimal content (less than a paragraph)
+- Don't place multiple Read Time components on the same page
+- Avoid using on pages without a clearly defined `#main-content` area
+- Don't use on highly interactive pages where "reading time" doesn't make sense
+- Don't customize the reading speed calculation without research and user testing
+- Avoid using on landing pages or marketing pages focused on quick scanning
+
+### When to Use Read Time
+
+- **Long-form articles**: Blog posts, news articles, essays
+- **Documentation**: Technical guides, tutorials, how-to content
+- **Research publications**: Academic papers, white papers, reports
+- **Educational content**: Learning materials, course content
+- **Policy documents**: Terms of service, privacy policies, guidelines
+
+### When NOT to Use Read Time
+
+- **Short pages**: Contact forms, error pages, simple landing pages
+- **Media-heavy content**: Photo galleries, video pages, interactive media
+- **Navigation pages**: Directory listings, search results, sitemaps
+- **Dashboards**: Administrative interfaces, data visualizations
+- **Transactional pages**: Checkout flows, form submissions
+
+## Implementation Notes
+
+### Content Scope
+
+The Read Time component calculates based on ALL text within the `#main-content` element, including:
+
+- Body text paragraphs
+- Headings and subheadings
+- List items
+- Blockquotes
+- Table content
+- Any other text elements
+
+### Reading Speed Assumptions
+
+The default 200 words per minute is intentionally on the lower end of average reading speeds to provide a realistic estimate that accounts for:
+
+- Varying reading abilities
+- Technical or complex content
+- Reading interruptions
+- Time spent reviewing images or diagrams
+
+## Testing
+
+For comprehensive visual regression testing with all theme variations, see the [Visreg page](?path=/story/molecules-read-time-visreg--visreg).
+
+## Related Components
+
+- **Text Field**: The primary content component that Read Time measures
+- **Breadcrumbs**: Another metadata component often paired with Read Time
+- **Byline**: Consider pairing with byline information on article pages
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

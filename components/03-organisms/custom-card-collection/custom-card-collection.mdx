@@ -1,0 +1,159 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as CustomCardCollectionStories from './custom-card-collection.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './custom-card-collection-props.yml';
+
+<Meta of={CustomCardCollectionStories} name="Docs" />
+
+# Custom Card Collection
+
+Custom Card Collection displays custom cards with flexible layouts. Unlike standard card collections, custom cards allow for more creative content presentation with customizable snippets, images, and link destinations. This component is ideal for curated content groupings, featured sections, or promotional content that requires a tailored approach.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the custom card collection's properties in real-time.
+
+<Canvas of={CustomCardCollectionStories.customCardCollection} />
+<Controls of={CustomCardCollectionStories.customCardCollection} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Featured Layout
+
+When <code>custom_card_collection\_\_featured</code> is set to <code>'true'</code>, the collection displays with a featured layout where the first card appears larger and more prominently than the subsequent cards. This creates visual hierarchy and draws attention to the primary content.
+
+<div
+  style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    gap: '1.5rem',
+    margin: '2rem 0',
+  }}
+>
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Featured Layout (3 cards)</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      One large featured card on the left, with two smaller cards stacked on
+      the right. Creates strong visual hierarchy and emphasizes the primary
+      content while maintaining context with related items.
+    </p>
+  </div>
+
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Standard Layout (4 cards)</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      Equal-sized cards in a responsive grid layout. Provides balanced
+      presentation where all items have equal visual weight. Adapts to
+      viewport size for optimal viewing across devices.
+    </p>
+  </div>
+</div>
+
+## Image Display Options
+
+Custom cards support flexible image display:
+
+- **With images enabled**: Full visual presentation with 3x2 aspect ratio images that enhance engagement
+- **With images disabled**: Text-focused presentation that maximizes content density and readability
+
+The image display setting applies to all cards in the collection uniformly.
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Organism</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-custom-card-collection.twig</code>,{' '}
+        <code>_yds-custom-card-collection.scss</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Accessibility</strong>
+      </td>
+      <td>
+        Semantic HTML list structure, proper heading hierarchy, keyboard
+        navigable links, sufficient color contrast, alt text for images
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Responsive Behavior</strong>
+      </td>
+      <td>
+        Featured layout stacks vertically on mobile, standard grid adapts
+        columns based on viewport size, maintains readability across all devices
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### Featured Collections
+
+- Use featured layout to highlight the most important or compelling content
+- Optimal with 3 cards (1 featured + 2 supporting)
+- Ensure the first card contains the most engaging content, visuals, and messaging
+- Featured layout creates asymmetric visual interest and natural reading flow
+
+### Standard Collections
+
+- Standard layout works best with 4 cards for balanced grid presentation
+- Can accommodate more cards if needed, maintaining responsive grid behavior
+- Use when all items should have equal visual prominence
+- Provides clean, organized content presentation
+
+### Content Recommendations
+
+- Keep heading text concise and descriptive (under 70 characters)
+- Limit snippet text to 2-3 sentences for scannable content
+- Ensure custom card content aligns thematically when grouped in a collection
+- Use high-quality images with appropriate aspect ratios (3x2)
+- Verify all URLs are valid and lead to relevant destinations
+
+### When to Use Custom Cards vs Reference Cards
+
+- **Custom Cards**: For curated, promotional, or featured content that needs custom snippets and destinations
+- **Reference Cards**: For automated content feeds from posts, events, profiles, or resources
+
+## Related Components
+
+- **Custom Card** - Individual custom card component
+- **Card Collection** - Collection of automated reference cards for posts, events, profiles, and resources
+- **Grid** - Base grid system used for layout
+- **Heading** - Text component for collection headings
+
+## Visual Regression Testing
+
+For comprehensive testing of all custom card collection variations including featured/standard layouts and image display options, see the [Visreg page](?path=/story/organisms-card-collection-custom-card-collection-visreg--visreg).

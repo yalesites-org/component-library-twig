@@ -6,36 +6,20 @@ import profileCardData from '../../02-molecules/cards/reference-card/examples/pr
 import resourceCardData from '../../02-molecules/cards/reference-card/examples/resource-card.yml';
 
 import imageData from '../../01-atoms/images/image/image.yml';
+import componentProps from './card-collection-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Organisms/Card Collection',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    collectionType: {
-      name: 'Collection Type',
-      type: 'select',
-      options: ['grid', 'list', 'condensed'],
-    },
-    featured: {
-      name: 'Featured',
-      type: 'boolean',
-    },
-    withOverlay: {
-      name: 'Overlay',
-      type: 'boolean',
-    },
-  },
-  args: {
-    collectionType: 'grid',
-    featured: true,
-    withImages: true,
-    heading: 'Card Collection',
-  },
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
 export const PostCardCollection = ({
@@ -59,16 +43,6 @@ export const PostCardCollection = ({
     ...imageData.responsive_images['3x2'],
   });
 };
-PostCardCollection.argTypes = {
-  withImages: {
-    name: 'With Images',
-    type: 'boolean',
-  },
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
-};
 
 export const EventCardCollection = ({
   heading,
@@ -90,16 +64,6 @@ export const EventCardCollection = ({
     ...imageData.responsive_images['3x2'],
   });
 };
-EventCardCollection.argTypes = {
-  withImages: {
-    name: 'With Images',
-    type: 'boolean',
-  },
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
-};
 
 export const ProfileCardCollection = ({
   heading,
@@ -120,18 +84,12 @@ export const ProfileCardCollection = ({
     ...imageData.responsive_images['1x1'],
   });
 };
-ProfileCardCollection.argTypes = {
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
-  withImages: {
-    name: 'With Images',
-    type: 'boolean',
-  },
-};
 
-export const DirectoryListingCardCollection = ({ featured, heading }) => {
+export const DirectoryListingCardCollection = ({
+  featured,
+  heading,
+  withOverlay,
+}) => {
   const items = featured ? [1, 2, 3, 4] : [1, 2, 3, 4, 5, 6];
 
   return cardCollectionTwig({
@@ -141,20 +99,10 @@ export const DirectoryListingCardCollection = ({ featured, heading }) => {
     card_collection__featured: featured ? 'true' : 'false',
     card_collection__cards: items,
     directory_listing_card__heading: heading,
+    reference_card__overlay: withOverlay ? 'Pinned' : '',
     ...directoryCardData,
     ...imageData.responsive_images['1x1'],
   });
-};
-DirectoryListingCardCollection.argTypes = {
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
-  collectionType: {
-    name: 'Collection Type',
-    type: 'select',
-    options: ['profile-directory'],
-  },
 };
 
 export const ResourceCardCollection = ({
@@ -177,14 +125,4 @@ export const ResourceCardCollection = ({
     ...resourceCardData,
     ...imageData.responsive_images['3x2'],
   });
-};
-ResourceCardCollection.argTypes = {
-  withImages: {
-    name: 'With Images',
-    type: 'boolean',
-  },
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
 };

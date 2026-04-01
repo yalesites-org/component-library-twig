@@ -1,0 +1,345 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as SearchResultStories from './yds-search-result.stories';
+
+<Meta of={SearchResultStories} name="Docs" />
+
+# Search Result
+
+The search result component displays individual search result items with title, teaser text, optional highlighted matches, breadcrumb navigation, and content type indicators. It supports special indicators for restricted CAS (Central Authentication Service) content and adapts to different theme variations.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the search result's properties in real-time. The component displays search matches with optional highlighting and provides clear visual hierarchy.
+
+<Canvas of={SearchResultStories.SearchResult} />
+<Controls of={SearchResultStories.SearchResult} />
+
+## Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>search_result__title</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>The title/heading of the search result (typically the page title)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>search_result__url</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>The URL link to the full content</td>
+    </tr>
+  </tbody>
+</table>
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>search_result__highlighted</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>
+        Text excerpt with search term highlighted using &lt;strong&gt; tags
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>search_result__teaser</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Meta description or excerpt text (supports HTML)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>search_result__content_type</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Content type label (e.g., 'post', 'page', 'event')</td>
+    </tr>
+    <tr>
+      <td>
+        <code>breadcrumbs__items</code>
+      </td>
+      <td>
+        <code>array</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Breadcrumb trail items showing content hierarchy</td>
+    </tr>
+    <tr>
+      <td>
+        <code>is_cas</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>Whether the content requires CAS authentication</td>
+    </tr>
+    <tr>
+      <td>
+        <code>search_result__prefix__icon</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>
+        Icon name to display as prefix (e.g., 'lock-solid' for CAS content)
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Component Features
+
+### Title and Link
+
+The primary heading displays the page or content title and serves as the clickable link to the full content. This is the most prominent element of the search result.
+
+**Best Practice:** Titles should be descriptive and accurately reflect the content they link to.
+
+### Highlighted Search Matches
+
+The `search_result__highlighted` field shows text excerpts with search terms emphasized using `<strong>` tags. This helps users quickly identify where their search terms appear in the content.
+
+**Example:** "...showing **word** in page result..."
+
+**Use Case:** Display context around search term matches to help users evaluate result relevance.
+
+### Teaser/Description
+
+The teaser provides additional context about the content, typically showing meta descriptions or content excerpts.
+
+**Use Case:** Help users understand what they'll find if they click through to the full content.
+
+### Content Type Indicator
+
+Content type labels help users understand what kind of content the result represents.
+
+**Common Types:**
+
+- post (blog posts, news articles)
+- page (standard pages)
+- event (calendar events)
+- person (faculty, staff profiles)
+- resource (downloads, documents)
+
+**Use Case:** Users can filter mentally or scan for specific content types they're seeking.
+
+### Breadcrumb Navigation
+
+Breadcrumbs show the hierarchical path to the content, providing context about content location within the site structure.
+
+**Example:** Home > Academics > Department > Program
+
+**Use Case:** Help users understand content relationships and site structure.
+
+### CAS Authentication Indicator
+
+When `is_cas` is true, the component displays a lock icon to indicate that the content requires authentication.
+
+**Use Case:** Clearly communicate to users which content requires login credentials before they click through.
+
+**Visual Indicator:** Lock icon prefix
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-search-result.twig`
+- **Styles**: `_yds-search-result.scss`
+- **Theme Support**: Adapts to section theme variations
+
+### Accessibility
+
+- **Semantic Headings**: Uses appropriate heading level for result titles
+- **Link Context**: Title links include full context for screen readers
+- **ARIA Labels**: Icon indicators include descriptive labels
+- **Visual Hierarchy**: Clear structure for scanning and navigation
+- **Keyboard Navigation**: All interactive elements are keyboard accessible
+
+### Behavior
+
+- **Responsive Design**: Adapts layout for mobile, tablet, and desktop views
+- **Theme Awareness**: Styling adjusts based on section theme
+- **Highlighted Text**: Search term highlighting uses semantic `<strong>` for emphasis
+- **Truncation**: Long text may be truncated with ellipsis for consistent layout
+
+## Search Result Anatomy
+
+A complete search result typically includes:
+
+1. **Lock icon** (if CAS authentication required)
+2. **Content type label** (e.g., "post", "page")
+3. **Title** (linked to full content)
+4. **Breadcrumb trail** (showing content hierarchy)
+5. **Highlighted excerpt** (showing search term in context)
+6. **Teaser/description** (providing additional context)
+
+Not all elements are required—the component adapts to available data.
+
+## Usage Guidelines
+
+### Best Practices
+
+- Always provide clear, descriptive titles that accurately represent content
+- Include teaser text to give users context before clicking
+- Use highlighted excerpts to show search term context when available
+- Display breadcrumbs for content with clear hierarchical relationships
+- Use content type indicators to help users quickly identify result types
+- Clearly mark CAS-restricted content with appropriate icons
+- Maintain consistent result formatting throughout search results pages
+- Order results by relevance when possible
+- Consider showing total result count and current page position
+
+### Things to Avoid
+
+- Don't use clickbait or misleading titles
+- Avoid very long teasers that make results hard to scan
+- Don't show broken or invalid URLs
+- Avoid highlighting that makes text hard to read
+- Don't omit critical information like titles or links
+- Avoid inconsistent content type labeling
+- Don't show CAS indicator without proper authentication handling
+- Avoid cluttering results with unnecessary metadata
+
+## Common Search Scenarios
+
+### General Site Search
+
+**Configuration:** Include all available metadata (title, teaser, content type, breadcrumbs)
+
+**Use Case:** Users searching across all site content need maximum context to evaluate results
+
+### Filtered Search Results
+
+**Configuration:** Emphasize content type indicators when users filter by type
+
+**Use Case:** When users have filtered to specific content types, type labels provide confirmation
+
+### Authenticated Content Search
+
+**Configuration:** Use CAS indicator for restricted content, clearly separate public from restricted results
+
+**Use Case:** Users need to know which results require authentication before clicking
+
+### Academic/Research Search
+
+**Configuration:** Include detailed teasers and breadcrumbs showing departmental/organizational hierarchy
+
+**Use Case:** Academic users need context about content source and relationships
+
+## Implementation Notes
+
+### Highlighted Text Formatting
+
+Search term highlighting should:
+
+- Use `<strong>` tags for semantic emphasis
+- Include sufficient surrounding context (typically 50-100 characters before/after match)
+- Handle multiple matches in the same excerpt
+- Preserve word boundaries for readability
+- Escape HTML in user-generated search terms for security
+
+### Content Type Configuration
+
+Content types should be:
+
+- Consistently labeled across the site
+- Lowercase for visual consistency (usually handled in template)
+- Machine-readable while human-friendly
+- Mapped from CMS content types to display labels
+
+### Breadcrumb Integration
+
+Breadcrumbs should:
+
+- Start with home/root level
+- Show logical hierarchy, not necessarily URL structure
+- Truncate intelligently for very deep hierarchies
+- Use appropriate separators (typically ">")
+
+### CAS Content Handling
+
+For CAS-protected content:
+
+- Set `is_cas: true`
+- Include `search_result__prefix__icon: 'lock-solid'`
+- Consider adding explanatory text in teaser
+- Ensure proper redirect handling on click
+
+## Performance Considerations
+
+### Search Result Pages
+
+- Implement pagination for large result sets (typically 10-20 results per page)
+- Use lazy loading for images within search results
+- Optimize highlighting algorithm for performance with large result sets
+- Cache search results when appropriate
+- Consider faceted search for large content repositories
+
+### Result Rendering
+
+- Limit teaser length to improve page load time
+- Use efficient highlighting algorithms
+- Render breadcrumbs efficiently, especially for deep hierarchies
+- Optimize for keyboard and screen reader performance
+
+## Related Components
+
+- **Pager**: For navigating multiple pages of search results
+- **Breadcrumb**: Standalone breadcrumb component
+- **Icon**: For content type and status indicators
+- **Link**: For title and URL rendering
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

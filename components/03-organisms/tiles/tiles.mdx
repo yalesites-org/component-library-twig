@@ -1,0 +1,198 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as TilesStories from './tiles.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './tiles-props.yml';
+
+<Meta of={TilesStories} name="Docs" />
+
+# Tiles
+
+The tiles component displays a collection of tile items in a grid layout. Each tile can showcase numerical data, headings, icons, or text content in a clean, organized format. Tiles are ideal for displaying statistics, key metrics, or feature highlights in a scannable grid arrangement.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the tiles component's properties in real-time.
+
+<Canvas of={TilesStories.Tiles} />
+<Controls of={TilesStories.Tiles} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Presentation Styles
+
+The tiles component supports three distinct presentation styles to match different content types and visual needs:
+
+<div
+  style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: '1.5rem',
+    margin: '2rem 0',
+  }}
+>
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Heading</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      Default style emphasizing the heading text, ideal for statistics,
+      metrics, or numerical data. Heading is prominently displayed with
+      supporting content below.
+    </p>
+  </div>
+
+{' '}
+
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Icon</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Icon-based presentation for visual representation of features or services.
+    Combines iconography with text for quick recognition and scanning.
+  </p>
+</div>
+
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Text Only</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      Clean text-focused presentation without visual emphasis on heading or
+      icons. Provides a more subdued, content-focused appearance.
+    </p>
+  </div>
+</div>
+
+## Grid Configurations
+
+The tiles component offers flexible grid layouts to accommodate different numbers of items and spatial requirements:
+
+- **Two Column**: Best for highlighting 2-4 key items with more space per tile
+- **Three Column**: Default layout balancing density and readability, ideal for 3-6 items
+- **Four Column**: Higher density layout for displaying 4-8+ items with compact presentation
+
+The grid automatically adapts to smaller viewports, reducing columns as needed for optimal mobile display.
+
+## Alignment Options
+
+### Horizontal Alignment
+
+Control the horizontal alignment of content within each tile:
+
+- **Left**: Default alignment, content starts at the left edge
+- **Center**: Centers content within each tile for balanced presentation
+- **Right**: Right-aligns content, useful for specific layout needs
+
+### Vertical Alignment
+
+Control the vertical positioning of content within tiles:
+
+- **Top**: Default position, content aligns to the top of each tile
+- **Bottom**: Content aligns to the bottom, useful when tiles have varying content heights
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Organism</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-tiles.twig</code>, <code>_yds-tiles.scss</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Dependencies</strong>
+      </td>
+      <td>
+        Uses <code>tile-item</code> molecule component for individual tiles
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Accessibility</strong>
+      </td>
+      <td>
+        Semantic HTML list structure, proper heading hierarchy, keyboard
+        navigable when tiles contain links, sufficient color contrast
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Responsive Behavior</strong>
+      </td>
+      <td>
+        Grid columns reduce based on viewport size, maintains readability across
+        all devices, touch-optimized for mobile interactions
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### Content Recommendations
+
+- Keep tile headings concise and scannable (2-5 words or numerical values)
+- Ensure supporting content is brief and contextual
+- Use consistent themes within a tile collection for visual cohesion
+- Limit tile collections to 6-8 items for optimal scannability
+
+### Grid Selection
+
+- **Two column**: Use for small collections (2-4 items) or when each tile needs more visual weight
+- **Three column**: Default choice for most use cases, balances visual impact with content density
+- **Four column**: Best for larger collections (6-8+ items) or when space is limited
+
+### Presentation Style Selection
+
+- **Heading**: Choose for numerical data, statistics, or metrics that need emphasis
+- **Icon**: Select when visual symbols enhance understanding or recognition
+- **Text-only**: Use for more subdued presentations or text-heavy content
+
+### Background Images
+
+When enabled, background images add visual interest but should:
+
+- Be relevant to the tile's content
+- Maintain sufficient contrast with text for readability
+- Use consistent image quality and style across the collection
+
+## Related Components
+
+- **Tile Item** - Individual tile component used within the tiles collection
+- **Grid** - Base grid system used for layout structure
+- **Stats** - Similar component for displaying statistical information
+
+## Visual Regression Testing
+
+For comprehensive testing of all tiles variations including presentation styles, grid configurations, and alignment options, see the [Visreg page](?path=/story/organisms-tiles-visreg--visreg).

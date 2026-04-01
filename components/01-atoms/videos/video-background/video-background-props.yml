@@ -1,0 +1,33 @@
+# video-background-props.yml
+#
+# Video Background component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+videoContent:
+  twigProp: video_background__content
+  name: Video Content
+  type: string
+  required: true
+  description: URL to the video file (MP4 format recommended)
+  detail: >
+    URL to the video file used as the background. MP4 format with H.264 codec
+    is recommended for best browser compatibility. This prop is provided via
+    demo data and is not directly editable in the Controls panel.
+
+sectionTheme:
+  twigProp: data-component-theme
+  name: Section Theme
+  type: select
+  required: false
+  description: Background color theme for the layout section
+  default: default
+  options:
+    - default
+    - one
+    - two
+    - three
+    - four
+  control: select

@@ -1,0 +1,17 @@
+# video-banner-props.yml
+#
+# Video Banner component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+width:
+  twigProp: video_banner__width
+  name: Video Width
+  type: select
+  required: false
+  description: 'Video width: max (constrained) or full (fluid full-width)'
+  default: max
+  options:
+    - max
+    - full
+  control: select

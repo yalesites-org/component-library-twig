@@ -55,6 +55,41 @@ Any time something is pushed to the `main` branch on GitHub, a [GitHub Action](.
 
 This is an entirely automated process, so whether changes are pushed directly to `main` or if they go through the preferred PR workflow the release process will be run. Merges into `main` should be performed using a merge commit.
 
+## Storybook Documentation Structure
+
+The YaleSites Component Library uses a modern two-page documentation structure for components:
+
+### 1. Documentation Page (MDX)
+Educational content focused on helping developers understand and use components:
+- Component introduction and use cases
+- Interactive preview with controls
+- Property documentation (required/optional)
+- Theme options
+- Key variants (2-4 representative examples)
+- Technical specifications (accessibility, behavior)
+- Usage guidelines and best practices
+
+**Files**: `[component].mdx`
+
+### 2. Visual Regression Page (Visreg)
+Comprehensive testing page with all component variations:
+- Interactive controls section
+- All theme variations
+- All component variations
+- Percy visual regression testing coverage
+
+**Files**: `[component].visreg.stories.js`
+
+### Migration Guide
+
+For detailed instructions on creating or migrating components to this structure, see the [Storybook Migration Guide](STORYBOOK-MIGRATION-GUIDE.md).
+
+### Example Components
+
+The following components have been fully migrated and serve as reference examples:
+- **Accordion**: `components/02-molecules/accordion/`
+- **Alert**: `components/02-molecules/alert/`
+
 ## Live Component Library
 
 You can view the latest version of the component library at any time by visiting the [Deployed Storybook](https://yalesites-org.github.io/component-library-twig). All new commits to the `main` branch trigger a rebuild and deploy of the component library, so it will always be up-to-date with the latest released code.
