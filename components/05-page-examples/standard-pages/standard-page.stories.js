@@ -5,6 +5,10 @@ import argTypes from '../../04-page-layouts/cl-page-args';
 import componentProps from './standard-page-props.yml';
 import { toArgTypes, toArgs } from '../../_storybook/component-props';
 import argTypesToArgs from '../../utility';
+import buildPageProps from '../page-utils';
+import utilityNavData from '../../03-organisms/menu/utility-nav/utility-nav.yml';
+import primaryNavData from '../../03-organisms/menu/primary-nav/primary-nav.yml';
+import breadcrumbData from '../../03-organisms/menu/breadcrumbs/breadcrumbs.yml';
 
 // Twig files.
 import standardPageTwig from './standard-page.twig';
@@ -15,9 +19,6 @@ import standardPageShortTwig from './standard-page-short.twig';
 import standardPageSpotlightsTwig from './standard-page-spotlights.twig';
 
 // Data files.
-import utilityNavData from '../../03-organisms/menu/utility-nav/utility-nav.yml';
-import primaryNavData from '../../03-organisms/menu/primary-nav/primary-nav.yml';
-import breadcrumbData from '../../03-organisms/menu/breadcrumbs/breadcrumbs.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 import textWithImageData from '../../02-molecules/text-with-image/text-with-image.yml';
 import bannerData from '../../02-molecules/banner/banner.yml';
@@ -69,55 +70,17 @@ export default {
 };
 
 // Basic page
-export const Basic = ({
-  siteName,
-  pageTitle,
-  pageTitleDisplay,
-  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
-  headerBorderThickness = localStorage.getItem(
-    'yds-cl-twig-header-border-thickness',
-  ),
-  primaryNavPosition = localStorage.getItem('yds-cl-twig-primary-nav-position'),
-  siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
-  siteHeaderAccent = localStorage.getItem('yds-cl-twig-site-header-accent'),
-  utilityNavLinkContent,
-  utilityNavSearch,
-  siteFooterVariation = localStorage.getItem(
-    'yds-cl-twig-site-footer-variation',
-  ),
-  siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
-  siteFooterAccent = localStorage.getItem('yds-cl-twig-site-footer-accent'),
-  footerBorderThickness = localStorage.getItem(
-    'yds-cl-twig-footer-border-thickness',
-  ),
-  introContent,
-  calloutBackground,
-}) =>
-  standardPageTwig({
-    site_name: siteName,
+export const Basic = (args) => {
+  const { pageTitle, pageTitleDisplay, introContent, calloutBackground } = args;
+  return standardPageTwig({
+    ...buildPageProps(args),
+    utility_nav__items: utilityNavData.items,
+    primary_nav__items: primaryNavData.items,
+    breadcrumbs__items: breadcrumbData.items,
     page_title__heading: pageTitle,
     page_title__meta: null,
     page_title__display: pageTitleDisplay,
     page_title__additional_classes: [pageTitleDisplay],
-    site_animate_components: allowAnimatedItems,
-    site_header__border_thickness: headerBorderThickness,
-    site_header__branding_link: 'https://www.yale.edu',
-    site_header__site_link: '/',
-    site_header__nav_position: primaryNavPosition,
-    site_header__theme: siteHeaderTheme,
-    site_header__accent: siteHeaderAccent,
-    site_footer__variation: siteFooterVariation,
-    site_footer__border_thickness: footerBorderThickness,
-    site_footer__theme: siteFooterTheme,
-    site_footer__accent: siteFooterAccent,
-    utility_nav__items: utilityNavData.items,
-    primary_nav__items: primaryNavData.items,
-    site_header__menu__variation: menuVariation,
-    utility_nav__link__content: utilityNavLinkContent,
-    utility_nav__link__url: '#',
-    utility_nav__search: utilityNavSearch,
-    breadcrumbs__items: breadcrumbData.items,
     intro_content: introContent,
     callout__background_color: calloutBackground,
     ...textWithImageData,
@@ -125,54 +88,18 @@ export const Basic = ({
     ...socialLinksData,
     ...imageData.responsive_images['4x3'],
   });
+};
 
 // Short page
-export const BasicShort = ({
-  siteName,
-  pageTitle,
-  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
-  headerBorderThickness = localStorage.getItem(
-    'yds-cl-twig-header-border-thickness',
-  ),
-  primaryNavPosition = localStorage.getItem('yds-cl-twig-primary-nav-position'),
-  siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
-  siteHeaderAccent = localStorage.getItem('yds-cl-twig-site-header-accent'),
-  utilityNavLinkContent,
-  utilityNavSearch,
-  siteFooterVariation = localStorage.getItem(
-    'yds-cl-twig-site-footer-variation',
-  ),
-  siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
-  siteFooterAccent = localStorage.getItem('yds-cl-twig-site-footer-accent'),
-  footerBorderThickness = localStorage.getItem(
-    'yds-cl-twig-footer-border-thickness',
-  ),
-  introContent,
-  calloutBackground,
-}) =>
-  standardPageShortTwig({
-    site_name: siteName,
-    page_title__heading: pageTitle,
-    page_title__meta: null,
-    site_animate_components: allowAnimatedItems,
-    site_header__border_thickness: headerBorderThickness,
-    site_header__branding_link: 'https://www.yale.edu',
-    site_header__site_link: '/',
-    site_header__nav_position: primaryNavPosition,
-    site_header__theme: siteHeaderTheme,
-    site_header__accent: siteHeaderAccent,
-    site_footer__variation: siteFooterVariation,
-    site_footer__border_thickness: footerBorderThickness,
-    site_footer__theme: siteFooterTheme,
-    site_footer__accent: siteFooterAccent,
+export const BasicShort = (args) => {
+  const { pageTitle, introContent, calloutBackground } = args;
+  return standardPageShortTwig({
+    ...buildPageProps(args),
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
-    site_header__menu__variation: menuVariation,
-    utility_nav__link__content: utilityNavLinkContent,
-    utility_nav__link__url: '#',
-    utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
+    page_title__heading: pageTitle,
+    page_title__meta: null,
     ...imageData.responsive_images['4x3'],
     intro_content: introContent,
     callout__background_color: calloutBackground,
@@ -181,53 +108,18 @@ export const BasicShort = ({
     ...socialLinksData,
     ...secondaryNavItems,
   });
+};
 
 // Spotlight page
-export const BasicSpotlights = ({
-  siteName,
-  pageTitle,
-  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
-  headerBorderThickness = localStorage.getItem(
-    'yds-cl-twig-header-border-thickness',
-  ),
-  primaryNavPosition = localStorage.getItem('yds-cl-twig-primary-nav-position'),
-  siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
-  siteHeaderAccent = localStorage.getItem('yds-cl-twig-site-header-accent'),
-  utilityNavLinkContent,
-  utilityNavSearch,
-  siteFooterVariation = localStorage.getItem(
-    'yds-cl-twig-site-footer-variation',
-  ),
-  siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
-  siteFooterAccent = localStorage.getItem('yds-cl-twig-site-footer-accent'),
-  footerBorderThickness = localStorage.getItem(
-    'yds-cl-twig-footer-border-thickness',
-  ),
-  calloutBackground,
-}) =>
-  standardPageSpotlightsTwig({
-    site_name: siteName,
-    page_title__heading: pageTitle,
-    page_title__meta: null,
-    site_animate_components: allowAnimatedItems,
-    site_header__border_thickness: headerBorderThickness,
-    site_header__branding_link: 'https://www.yale.edu',
-    site_header__site_link: '/',
-    site_header__nav_position: primaryNavPosition,
-    site_header__theme: siteHeaderTheme,
-    site_header__accent: siteHeaderAccent,
-    site_footer__variation: siteFooterVariation,
-    site_footer__border_thickness: footerBorderThickness,
-    site_footer__theme: siteFooterTheme,
-    site_footer__accent: siteFooterAccent,
+export const BasicSpotlights = (args) => {
+  const { pageTitle, calloutBackground } = args;
+  return standardPageSpotlightsTwig({
+    ...buildPageProps(args),
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
-    site_header__menu__variation: menuVariation,
-    utility_nav__link__content: utilityNavLinkContent,
-    utility_nav__link__url: '#',
-    utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
+    page_title__heading: pageTitle,
+    page_title__meta: null,
     callout__background_color: calloutBackground,
     ...textWithImageData,
     ...referenceCardData,
@@ -235,66 +127,34 @@ export const BasicSpotlights = ({
     ...contentSpotlightPortraitData,
     ...imageData.responsive_images['2x3'],
   });
+};
 
 // With Banner
-export const WithBanner = ({
-  siteName,
-  pageTitle,
-  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
-  headerBorderThickness = localStorage.getItem(
-    'yds-cl-twig-header-border-thickness',
-  ),
-  primaryNavPosition = localStorage.getItem('yds-cl-twig-primary-nav-position'),
-  siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
-  siteHeaderAccent = localStorage.getItem('yds-cl-twig-site-header-accent'),
-  utilityNavLinkContent,
-  utilityNavSearch,
-  siteFooterVariation = localStorage.getItem(
-    'yds-cl-twig-site-footer-variation',
-  ),
-  siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
-  siteFooterAccent = localStorage.getItem('yds-cl-twig-site-footer-accent'),
-  footerBorderThickness = localStorage.getItem(
-    'yds-cl-twig-footer-border-thickness',
-  ),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
-  introContent,
-  calloutBackground,
-  heading,
-  snippet,
-  linkContent,
-  contentLayout,
-  bgColor,
-  linkStyle,
-  bannerType,
-  videoHeading,
-  videoCaption,
-  grandHeroOverlayVariation,
-  grandHeroSize,
-  grandHeroWithVideo,
-}) =>
-  standardPageBannerTwig({
-    site_name: siteName,
-    page_title__heading: pageTitle,
-    page_title__meta: null,
-    site_animate_components: allowAnimatedItems,
-    site_header__border_thickness: headerBorderThickness,
-    site_header__branding_link: 'https://www.yale.edu',
-    site_header__site_link: '/',
-    site_header__nav_position: primaryNavPosition,
-    site_header__theme: siteHeaderTheme,
-    site_header__accent: siteHeaderAccent,
-    site_footer__variation: siteFooterVariation,
-    site_footer__border_thickness: footerBorderThickness,
-    site_footer__theme: siteFooterTheme,
-    site_footer__accent: siteFooterAccent,
+export const WithBanner = (args) => {
+  const {
+    pageTitle,
+    introContent,
+    calloutBackground,
+    heading,
+    snippet,
+    linkContent,
+    contentLayout,
+    bgColor,
+    linkStyle,
+    bannerType,
+    videoHeading,
+    videoCaption,
+    grandHeroOverlayVariation,
+    grandHeroSize,
+    grandHeroWithVideo,
+  } = args;
+  return standardPageBannerTwig({
+    ...buildPageProps(args),
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
-    site_header__menu__variation: menuVariation,
-    utility_nav__link__content: utilityNavLinkContent,
-    utility_nav__link__url: '#',
-    utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
+    page_title__heading: pageTitle,
+    page_title__meta: null,
     intro_content: introContent,
     callout__background_color: calloutBackground,
     ...textWithImageData,
@@ -325,6 +185,7 @@ export const WithBanner = ({
     ...tabData,
     ...mediaGridData,
   });
+};
 WithBanner.args = {
   bannerType: 'grand-hero',
   contentLayout: 'bottom',
@@ -341,52 +202,15 @@ WithBanner.args = {
 };
 
 // With sidebar
-export const WithSidebar = ({
-  siteName,
-  pageTitle,
-  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
-  headerBorderThickness = localStorage.getItem(
-    'yds-cl-twig-header-border-thickness',
-  ),
-  primaryNavPosition = localStorage.getItem('yds-cl-twig-primary-nav-position'),
-  siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
-  siteHeaderAccent = localStorage.getItem('yds-cl-twig-site-header-accent'),
-  utilityNavLinkContent,
-  utilityNavSearch,
-  siteFooterVariation = localStorage.getItem(
-    'yds-cl-twig-site-footer-variation',
-  ),
-  siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
-  siteFooterAccent = localStorage.getItem('yds-cl-twig-site-footer-accent'),
-  footerBorderThickness = localStorage.getItem(
-    'yds-cl-twig-footer-border-thickness',
-  ),
-  introContent,
-  calloutBackground,
-}) =>
-  standardPageSidebarTwig({
-    site_name: siteName,
-    page_title__heading: pageTitle,
-    page_title__meta: null,
-    site_animate_components: allowAnimatedItems,
-    site_header__border_thickness: headerBorderThickness,
-    site_header__branding_link: 'https://www.yale.edu',
-    site_header__site_link: '/',
-    site_header__nav_position: primaryNavPosition,
-    site_header__theme: siteHeaderTheme,
-    site_header__accent: siteHeaderAccent,
-    site_footer__variation: siteFooterVariation,
-    site_footer__border_thickness: footerBorderThickness,
-    site_footer__theme: siteFooterTheme,
-    site_footer__accent: siteFooterAccent,
+export const WithSidebar = (args) => {
+  const { pageTitle, introContent, calloutBackground } = args;
+  return standardPageSidebarTwig({
+    ...buildPageProps(args),
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
-    site_header__menu__variation: menuVariation,
-    utility_nav__link__content: utilityNavLinkContent,
-    utility_nav__link__url: '#',
-    utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
+    page_title__heading: pageTitle,
+    page_title__meta: null,
     ...imageData.responsive_images['16x9'],
     intro_content: introContent,
     callout__background_color: calloutBackground,
@@ -394,56 +218,24 @@ export const WithSidebar = ({
     ...referenceCardData,
     ...socialLinksData,
   });
+};
 
 // With quick links
-export const WithQuickLinks = ({
-  siteName,
-  pageTitle,
-  allowAnimatedItems = localStorage.getItem('yds-cl-twig-animate-items'),
-  menuVariation = localStorage.getItem('yds-cl-twig-menu-variation'),
-  headerBorderThickness = localStorage.getItem(
-    'yds-cl-twig-header-border-thickness',
-  ),
-  primaryNavPosition = localStorage.getItem('yds-cl-twig-primary-nav-position'),
-  siteHeaderTheme = localStorage.getItem('yds-cl-twig-site-header-theme'),
-  siteHeaderAccent = localStorage.getItem('yds-cl-twig-site-header-accent'),
-  utilityNavLinkContent,
-  utilityNavSearch,
-  siteFooterVariation = localStorage.getItem(
-    'yds-cl-twig-site-footer-variation',
-  ),
-  siteFooterTheme = localStorage.getItem('yds-cl-twig-site-footer-theme'),
-  siteFooterAccent = localStorage.getItem('yds-cl-twig-site-footer-accent'),
-  footerBorderThickness = localStorage.getItem(
-    'yds-cl-twig-footer-border-thickness',
-  ),
-  quickLinksHeading,
-  quickLinksDescription,
-  quickLinksImage,
-  quickLinksVariation,
-}) =>
-  standardPageQuickLinksTwig({
-    site_name: siteName,
-    page_title__heading: pageTitle,
-    page_title__meta: null,
-    site_animate_components: allowAnimatedItems,
-    site_header__border_thickness: headerBorderThickness,
-    site_header__branding_link: 'https://www.yale.edu',
-    site_header__site_link: '/',
-    site_header__nav_position: primaryNavPosition,
-    site_header__theme: siteHeaderTheme,
-    site_header__accent: siteHeaderAccent,
-    site_footer__variation: siteFooterVariation,
-    site_footer__border_thickness: footerBorderThickness,
-    site_footer__theme: siteFooterTheme,
-    site_footer__accent: siteFooterAccent,
+export const WithQuickLinks = (args) => {
+  const {
+    pageTitle,
+    quickLinksHeading,
+    quickLinksDescription,
+    quickLinksImage,
+    quickLinksVariation,
+  } = args;
+  return standardPageQuickLinksTwig({
+    ...buildPageProps(args),
     utility_nav__items: utilityNavData.items,
     primary_nav__items: primaryNavData.items,
-    site_header__menu__variation: menuVariation,
-    utility_nav__link__content: utilityNavLinkContent,
-    utility_nav__link__url: '#',
-    utility_nav__search: utilityNavSearch,
     breadcrumbs__items: breadcrumbData.items,
+    page_title__heading: pageTitle,
+    page_title__meta: null,
     ...imageData.responsive_images['16x9'],
     ...referenceCardData,
     ...socialLinksData,
@@ -453,6 +245,7 @@ export const WithQuickLinks = ({
     quick_links__variation: quickLinksVariation,
     quick_links__links: quickLinksData.quick_links__links,
   });
+};
 WithQuickLinks.args = {
   quickLinksHeading: quickLinksData.quick_links__heading,
   quickLinksDescription: quickLinksData.quick_links__description,
