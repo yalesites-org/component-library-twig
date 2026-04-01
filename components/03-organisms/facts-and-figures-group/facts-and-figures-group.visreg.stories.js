@@ -11,6 +11,7 @@ import {
   createGlobalThemeVariations,
   createSectionWrapper,
   createThemeVariations,
+  createVariations,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -27,65 +28,71 @@ export default {
 export const Visreg = () => {
   const styles = ['basic', 'with-icon', 'icon-only'];
 
-  // Render function for facts and figures with theme/style combinations
-  const renderFactsAndFigures = (theme) =>
-    styles
-      .map((style) => {
-        const customData = {
-          ...factsAndFiguresGroupData,
-          facts_and_figures__group:
-            factsAndFiguresGroupData.facts_and_figures__group.map((item) => ({
-              ...item,
-              facts_and_figures__presentation_style: style,
-              facts_and_figures__has_icon: 'false',
-              facts_and_figures__icon_name: null,
-            })),
-        };
+  const renderFactsAndFigures = (theme, style = 'basic') => {
+    const customData = {
+      ...factsAndFiguresGroupData,
+      facts_and_figures__group:
+        factsAndFiguresGroupData.facts_and_figures__group.map((item) => ({
+          ...item,
+          facts_and_figures__presentation_style: style,
+          facts_and_figures__has_icon: 'false',
+          facts_and_figures__icon_name: null,
+        })),
+    };
 
-        return `
-          <h3>Presentation Style: ${style}</h3>
-          ${factsAndFiguresGroupTwig({
-            facts_and_figures__group__heading:
-              factsAndFiguresGroupData.facts_and_figures__group__heading,
-            facts_and_figures__group__content:
-              factsAndFiguresGroupData.facts_and_figures__group__content,
-            facts_and_figures__group__has_icon: 'false',
-            facts_and_figures__group__grid_count: 'three',
-            facts_and_figures__group__alignment: 'left',
-            facts_and_figures__group__presentation_style: style,
-            facts_and_figures__group__font_style: 'normal',
-            facts_and_figures__group__theme: theme,
-            facts_and_figures__group__bg_image: false,
-            ...customData,
-            ...imageData.responsive_images['16x9'],
-          })}
-        `;
-      })
-      .join('');
+    return factsAndFiguresGroupTwig({
+      facts_and_figures__group__heading:
+        factsAndFiguresGroupData.facts_and_figures__group__heading,
+      facts_and_figures__group__content:
+        factsAndFiguresGroupData.facts_and_figures__group__content,
+      facts_and_figures__group__has_icon: 'false',
+      facts_and_figures__group__grid_count: 'three',
+      facts_and_figures__group__alignment: 'left',
+      facts_and_figures__group__presentation_style: style,
+      facts_and_figures__group__font_style: 'normal',
+      facts_and_figures__group__theme: theme,
+      facts_and_figures__group__bg_image: false,
+      ...customData,
+      ...imageData.responsive_images['16x9'],
+    });
+  };
 
   return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (sectionTheme) =>
-          createSectionWrapper(
-            sectionTheme,
-            componentThemes
-              .map(
-                (componentTheme) => `
-                  <div class="sb-section__container">
-                    <h3 class="sb-section__subheading">Component Theme: ${componentTheme}</h3>
-                    ${renderFactsAndFigures(componentTheme)}
-                  </div>
-                `,
-              )
-              .join(''),
-            { width: 'site', primaryWidth: '100%' },
-          ),
+    () => `
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderFactsAndFigures('one'), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
         sectionThemes,
-        'All Section × Component Theme Combinations',
+        'All Section Theme Variations',
         '',
         'Section Theme',
-      ),
+      )}
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper('one', renderFactsAndFigures(theme), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        componentThemes,
+        'All Facts and Figures Group Theme Variations',
+        '',
+        'Facts and Figures Group Theme',
+      )}
+      ${createVariations(
+        (style) =>
+          createSectionWrapper('one', renderFactsAndFigures('one', style), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        styles,
+        'All Presentation Style Variations',
+        '',
+        'Presentation Style',
+      )}
+    `,
     globalThemes,
     'All Global Theme Variations',
   );

@@ -44,9 +44,9 @@ export const Visreg = () => {
       createThemeVariations(
         renderPrimaryNav,
         siteHeaderThemes,
-        'All Site Header Theme & Menu Variation Combinations',
+        'All Header Theme Variations',
         'Below are all combinations of site header themes and menu variations for visual regression testing.',
-        'Site Header Theme',
+        'Header Theme',
       ),
     globalThemes,
     'All Global Theme Variations',

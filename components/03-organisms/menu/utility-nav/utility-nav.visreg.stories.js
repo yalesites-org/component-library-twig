@@ -32,9 +32,9 @@ export const Visreg = () => {
               site_header__theme: theme,
             }),
           siteHeaderThemes,
-          'All Site Header Theme Variations',
+          'All Header Theme Variations',
           'Below are all site header theme variations for visual regression testing.',
-          'Site Header Theme',
+          'Header Theme',
         )}
       </div>
     `,

@@ -11,6 +11,7 @@ import {
   createGlobalThemeVariations,
   createThemeVariations,
   createSectionWrapper,
+  createVariations,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -27,7 +28,7 @@ export default {
 export const Visreg = () => {
   const alignments = ['left', 'right'];
 
-  const renderWrappedCallout = (dialTheme, alignment) => `
+  const renderWrappedCallout = (dialTheme, alignment = 'left') => `
     ${textFieldTwig({
       text_field__content: wrappedCalloutData.text_one,
       text_field__width: 'site',
@@ -42,35 +43,41 @@ export const Visreg = () => {
   `;
 
   return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (sectionTheme) =>
-          createSectionWrapper(
-            sectionTheme,
-            componentThemes
-              .map(
-                (componentTheme) => `
-                  <div class="sb-section__container">
-                    <h3 class="sb-section__subheading">Wrapped Callout Theme: ${componentTheme}</h3>
-                    ${alignments
-                      .map(
-                        (alignment) => `
-                      <h4>Alignment: ${alignment}</h4>
-                      ${renderWrappedCallout(componentTheme, alignment)}
-                    `,
-                      )
-                      .join('')}
-                  </div>
-                `,
-              )
-              .join(''),
-            { width: 'site', primaryWidth: '100%' },
-          ),
+    () => `
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderWrappedCallout('one'), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
         sectionThemes,
-        'All Section × Wrapped Callout Theme Combinations',
+        'All Section Theme Variations',
         '',
         'Section Theme',
-      ),
+      )}
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper('one', renderWrappedCallout(theme), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        componentThemes,
+        'All Wrapped Callout Theme Variations',
+        '',
+        'Wrapped Callout Theme',
+      )}
+      ${createVariations(
+        (alignment) =>
+          createSectionWrapper('one', renderWrappedCallout('one', alignment), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        alignments,
+        'All Alignment Variations',
+        '',
+        'Alignment',
+      )}
+    `,
     globalThemes,
     'All Global Theme Variations',
   );

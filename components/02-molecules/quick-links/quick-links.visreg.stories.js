@@ -13,13 +13,14 @@ import {
   createGlobalThemeVariations,
   createSectionWrapper,
   createThemeVariations,
+  createVariations,
 } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Quick Links/Visreg',
+  title: 'Molecules/Quick-links/Visreg',
   parameters: {
     layout: 'fullscreen',
     controls: { disable: true },
@@ -29,56 +30,56 @@ export default {
 export const Visreg = () => {
   const heading = quickLinksData.quick_links__heading;
   const description = quickLinksData.quick_links__description;
-  const variations = ['promotional', 'subtle'];
   const imageOptions = [true, false];
 
-  const renderQuickLinks = (theme, variation, withImage) =>
+  const renderQuickLinks = (theme, withImage = true) =>
     quickLinksTwig({
       ...quickLinksData,
       ...imageData.responsive_images['16x9'],
       quick_links__heading: heading,
       quick_links__description: description,
       quick_links__image: withImage,
-      quick_links__variation: variation,
+      quick_links__variation: 'promotional',
       quick_links__background_color: theme,
     });
 
   return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (sectionTheme) =>
-          createSectionWrapper(
-            sectionTheme,
-            componentThemes
-              .map(
-                (componentTheme) => `
-                  <div class="sb-section__container">
-                    <h3 class="sb-section__subheading">Quick Links Theme: ${componentTheme}</h3>
-                    ${variations
-                      .flatMap((variation) =>
-                        imageOptions.map(
-                          (withImage) => `
-                        <h4>Variation: ${variation} / Image: ${withImage}</h4>
-                        ${renderQuickLinks(
-                          componentTheme,
-                          variation,
-                          withImage,
-                        )}
-                      `,
-                        ),
-                      )
-                      .join('')}
-                  </div>
-                `,
-              )
-              .join(''),
-            { width: 'site', primaryWidth: '100%' },
-          ),
+    () => `
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderQuickLinks('one'), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
         sectionThemes,
-        'All Section × Quick Links Theme Combinations',
+        'All Section Theme Variations',
         '',
         'Section Theme',
-      ),
+      )}
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper('one', renderQuickLinks(theme), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        componentThemes,
+        'All Quick Links Theme Variations',
+        '',
+        'Quick Links Theme',
+      )}
+      ${createVariations(
+        (withImage) =>
+          createSectionWrapper('one', renderQuickLinks('one', withImage), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        imageOptions,
+        'All Image Display Options',
+        '',
+        'Image',
+        (val) => (val ? 'With Image' : 'Without Image'),
+      )}
+    `,
     globalThemes,
     'All Global Theme Variations',
   );

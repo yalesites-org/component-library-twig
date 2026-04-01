@@ -12,6 +12,7 @@ import {
   createGlobalThemeVariations,
   createSectionWrapper,
   createThemeVariations,
+  createVariations,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -32,8 +33,8 @@ export const Visreg = () => {
 
   const renderContentSpotlightPortrait = (
     componentTheme,
-    position,
-    imageStyle,
+    position = 'image-left',
+    imageStyle = 'inline',
   ) =>
     contentSpotlightPortraitTwig({
       ...imageData.responsive_images['2x3'],
@@ -60,41 +61,54 @@ export const Visreg = () => {
     });
 
   return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (sectionTheme) =>
-          createSectionWrapper(
-            sectionTheme,
-            componentThemes
-              .map(
-                (componentTheme) => `
-                  <div class="sb-section__container">
-                    <h3 class="sb-section__subheading">Content Spotlight Portrait Theme: ${componentTheme}</h3>
-                    ${positions
-                      .flatMap((position) =>
-                        imageStyles.map(
-                          (imageStyle) => `
-                        <h4>Position: ${position} / Style: ${imageStyle}</h4>
-                        ${renderContentSpotlightPortrait(
-                          componentTheme,
-                          position,
-                          imageStyle,
-                        )}
-                      `,
-                        ),
-                      )
-                      .join('')}
-                  </div>
-                `,
-              )
-              .join(''),
-            { width: 'site', primaryWidth: '100%' },
-          ),
+    () => `
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderContentSpotlightPortrait('one'), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
         sectionThemes,
-        'All Section × Content Spotlight Portrait Theme Combinations',
+        'All Section Theme Variations',
         '',
         'Section Theme',
-      ),
+      )}
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper('one', renderContentSpotlightPortrait(theme), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        componentThemes,
+        'All Content Spotlight Portrait Theme Variations',
+        '',
+        'Content Spotlight Portrait Theme',
+      )}
+      ${createVariations(
+        (position) =>
+          createSectionWrapper(
+            'one',
+            renderContentSpotlightPortrait('one', position),
+            { width: 'site', primaryWidth: '100%' },
+          ),
+        positions,
+        'All Position Variations',
+        '',
+        'Position',
+      )}
+      ${createVariations(
+        (imageStyle) =>
+          createSectionWrapper(
+            'one',
+            renderContentSpotlightPortrait('one', 'image-left', imageStyle),
+            { width: 'site', primaryWidth: '100%' },
+          ),
+        imageStyles,
+        'All Image Style Variations',
+        '',
+        'Image Style',
+      )}
+    `,
     globalThemes,
     'All Global Theme Variations',
   );

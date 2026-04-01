@@ -11,6 +11,7 @@ import {
   createGlobalThemeVariations,
   createThemeVariations,
   createSectionWrapper,
+  createVariations,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -29,7 +30,7 @@ export const Visreg = () => {
     'no_lines',
   ];
 
-  const renderLinkGrid = (dialTheme, lineTreatment) =>
+  const renderLinkGrid = (dialTheme, lineTreatment = 'default') =>
     linkGridTwig({
       link_grid__theme: dialTheme,
       link_grid__line_treatment: lineTreatment,
@@ -37,35 +38,41 @@ export const Visreg = () => {
     });
 
   return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (sectionTheme) =>
-          createSectionWrapper(
-            sectionTheme,
-            componentThemes
-              .map(
-                (componentTheme) => `
-                  <div class="sb-section__container">
-                    <h3 class="sb-section__subheading">Link Grid Theme: ${componentTheme}</h3>
-                    ${lineTreatments
-                      .map(
-                        (lineTreatment) => `
-                      <h4>Line Treatment: ${lineTreatment}</h4>
-                      ${renderLinkGrid(componentTheme, lineTreatment)}
-                    `,
-                      )
-                      .join('')}
-                  </div>
-                `,
-              )
-              .join(''),
-            { width: 'site', primaryWidth: '100%' },
-          ),
+    () => `
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderLinkGrid('one'), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
         sectionThemes,
-        'All Section × Link Grid Theme Combinations',
+        'All Section Theme Variations',
         '',
         'Section Theme',
-      ),
+      )}
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper('one', renderLinkGrid(theme), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        componentThemes,
+        'All Link Grid Theme Variations',
+        '',
+        'Link Grid Theme',
+      )}
+      ${createVariations(
+        (lineTreatment) =>
+          createSectionWrapper('one', renderLinkGrid('one', lineTreatment), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        lineTreatments,
+        'All Line Treatment Variations',
+        '',
+        'Line Treatment',
+      )}
+    `,
     globalThemes,
     'All Global Theme Variations',
   );

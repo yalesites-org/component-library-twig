@@ -56,28 +56,30 @@ export const Visreg = () => {
     )}
 
     ${createGlobalThemeVariations(
-      () =>
-        createThemeVariations(
-          (sectionTheme) =>
-            createSectionWrapper(
-              sectionTheme,
-              componentThemes
-                .map(
-                  (componentTheme) => `
-                    <div class="sb-section__container">
-                      <h3 class="sb-section__subheading">Image Banner Theme: ${componentTheme}</h3>
-                      ${renderImageBanner(componentTheme)}
-                    </div>
-                  `,
-                )
-                .join(''),
-              { width: 'site', primaryWidth: '100%' },
-            ),
+      () => `
+        ${createThemeVariations(
+          (theme) =>
+            createSectionWrapper(theme, renderImageBanner('one'), {
+              width: 'site',
+              primaryWidth: '100%',
+            }),
           sectionThemes,
-          'All Section × Image Banner Theme Combinations',
+          'All Section Theme Variations',
           '',
           'Section Theme',
-        ),
+        )}
+        ${createThemeVariations(
+          (theme) =>
+            createSectionWrapper('one', renderImageBanner(theme), {
+              width: 'site',
+              primaryWidth: '100%',
+            }),
+          componentThemes,
+          'All Image Banner Theme Variations',
+          '',
+          'Image Banner Theme',
+        )}
+      `,
       globalThemes,
       'All Global Theme Variations',
     )}

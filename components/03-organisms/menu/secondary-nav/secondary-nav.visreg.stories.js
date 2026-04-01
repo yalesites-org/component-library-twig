@@ -26,36 +26,37 @@ export default {
 };
 
 export const Visreg = () => {
-  // Render function for secondary nav component theme variations
   const renderSecondaryNav = (componentTheme) => `
     <div style="position: relative; padding-top: var(--size-spacing-site-gutter);" data-component-width="max" data-component-theme="${componentTheme}">
       ${secondaryNavTwig({ ...secondaryNavData, menu_theme: componentTheme })}
     </div>
   `;
 
-  // Render function wrapping component themes in a section wrapper
-  const renderWithSectionTheme = (sectionTheme) =>
-    createSectionWrapper(
-      sectionTheme,
-      createThemeVariations(
-        renderSecondaryNav,
-        componentThemes,
-        'All Component Theme Variations',
-        'Below are all component theme variations for visual regression testing.',
-        'Component Theme',
-      ),
-      { width: 'site', primaryWidth: '100%' },
-    );
-
   return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        renderWithSectionTheme,
+    () => `
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderSecondaryNav('one'), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
         sectionThemes,
         'All Section Theme Variations',
         '',
         'Section Theme',
-      ),
+      )}
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper('one', renderSecondaryNav(theme), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        componentThemes,
+        'All Secondary Nav Theme Variations',
+        '',
+        'Secondary Nav Theme',
+      )}
+    `,
     globalThemes,
     'All Global Theme Variations',
   );

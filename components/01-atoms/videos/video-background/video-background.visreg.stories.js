@@ -21,33 +21,37 @@ export default {
 };
 
 export const Visreg = () => {
+  const renderVideoBackground = (theme) =>
+    videoBackgroundTwig({
+      ...videoBackgroundData,
+      video_background__button__background_color: theme,
+    });
+
   return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (sectionTheme) =>
-          createSectionWrapper(
-            sectionTheme,
-            componentThemes
-              .map(
-                (componentTheme) => `
-                  <div class="sb-section__container">
-                    <h3 class="sb-section__subheading">Video Background Theme: ${componentTheme}</h3>
-                    ${videoBackgroundTwig({
-                      ...videoBackgroundData,
-                      video_background__button__background_color:
-                        componentTheme,
-                    })}
-                  </div>
-                `,
-              )
-              .join(''),
-            { width: 'site', primaryWidth: '100%' },
-          ),
+    () => `
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderVideoBackground('one'), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
         sectionThemes,
-        'All Section × Video Background Theme Combinations',
+        'All Section Theme Variations',
         '',
         'Section Theme',
-      ),
+      )}
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper('one', renderVideoBackground(theme), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        componentThemes,
+        'All Video Background Theme Variations',
+        '',
+        'Video Background Theme',
+      )}
+    `,
     globalThemes,
     'All Global Theme Variations',
   );

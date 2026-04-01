@@ -9,6 +9,7 @@ import {
   createGlobalThemeVariations,
   createSectionWrapper,
   createThemeVariations,
+  createVariations,
 } from '../../_storybook/playground-utils';
 
 export default {
@@ -24,7 +25,11 @@ export const Visreg = () => {
   const alignment = 'center';
   const iconName = 'piggy-bank-solid';
 
-  const renderFactsAndFigures = (theme, presentationStyle, fontStyle) => `
+  const renderFactsAndFigures = (
+    theme,
+    presentationStyle = 'basic',
+    fontStyle = 'normal',
+  ) => `
     <ul class='facts-and-figures__group__wrap' data-facts-and-figures-collection-type='single'>
       ${factsAndFiguresTwig({
         facts_and_figures__stat: factsAndFigures,
@@ -42,41 +47,57 @@ export const Visreg = () => {
   `;
 
   return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (sectionTheme) =>
-          createSectionWrapper(
-            sectionTheme,
-            componentThemes
-              .map(
-                (componentTheme) => `
-                  <div class="sb-section__container">
-                    <h3 class="sb-section__subheading">Facts and Figures Theme: ${componentTheme}</h3>
-                    ${presentationStyles
-                      .flatMap((presentationStyle) =>
-                        fontStyles.map(
-                          (fontStyle) => `
-                        <h4>Style: ${presentationStyle} / Font: ${fontStyle}</h4>
-                        ${renderFactsAndFigures(
-                          componentTheme,
-                          presentationStyle,
-                          fontStyle,
-                        )}
-                      `,
-                        ),
-                      )
-                      .join('')}
-                  </div>
-                `,
-              )
-              .join(''),
-            { width: 'site', primaryWidth: '100%' },
-          ),
+    () => `
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderFactsAndFigures('one'), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
         sectionThemes,
-        'All Section × Facts and Figures Theme Combinations',
+        'All Section Theme Variations',
         '',
         'Section Theme',
-      ),
+      )}
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper('one', renderFactsAndFigures(theme), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        componentThemes,
+        'All Facts and Figures Theme Variations',
+        '',
+        'Facts and Figures Theme',
+      )}
+      ${createVariations(
+        (presentationStyle) =>
+          createSectionWrapper(
+            'one',
+            renderFactsAndFigures('one', presentationStyle),
+            { width: 'site', primaryWidth: '100%' },
+          ),
+        presentationStyles,
+        'All Presentation Style Variations',
+        '',
+        'Presentation Style',
+      )}
+      ${createVariations(
+        (fontStyle) =>
+          createSectionWrapper(
+            'one',
+            renderFactsAndFigures('one', 'basic', fontStyle),
+            {
+              width: 'site',
+              primaryWidth: '100%',
+            },
+          ),
+        fontStyles,
+        'All Font Style Variations',
+        '',
+        'Font Style',
+      )}
+    `,
     globalThemes,
     'All Global Theme Variations',
   );

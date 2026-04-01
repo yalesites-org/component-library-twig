@@ -14,6 +14,7 @@ import {
   createGlobalThemeVariations,
   createSectionWrapper,
   createThemeVariations,
+  createVariations,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -34,7 +35,11 @@ export const Visreg = () => {
   const positions = ['image-left', 'image-right'];
   const imageStyles = ['inline', 'offset'];
 
-  const renderContentSpotlights = (componentTheme, position, imageStyle) => `
+  const renderContentSpotlights = (
+    componentTheme,
+    position = 'image-left',
+    imageStyle = 'inline',
+  ) => `
     <h3>Content Spotlight Landscape (3x2) — ${position} / ${imageStyle}</h3>
     ${textWithImageTwig({
       ...imageData.responsive_images['3x2'],
@@ -85,38 +90,54 @@ export const Visreg = () => {
   `;
 
   return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (sectionTheme) =>
-          createSectionWrapper(
-            sectionTheme,
-            componentThemes
-              .map(
-                (componentTheme) => `
-                  <div class="sb-section__container">
-                    <h3 class="sb-section__subheading">Content Spotlight Theme: ${componentTheme}</h3>
-                    ${positions
-                      .flatMap((position) =>
-                        imageStyles.map((imageStyle) =>
-                          renderContentSpotlights(
-                            componentTheme,
-                            position,
-                            imageStyle,
-                          ),
-                        ),
-                      )
-                      .join('')}
-                  </div>
-                `,
-              )
-              .join(''),
-            { width: 'site', primaryWidth: '100%' },
-          ),
+    () => `
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderContentSpotlights('one'), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
         sectionThemes,
-        'All Section × Content Spotlight Theme Combinations',
+        'All Section Theme Variations',
         '',
         'Section Theme',
-      ),
+      )}
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper('one', renderContentSpotlights(theme), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        componentThemes,
+        'All Content Spotlight Theme Variations',
+        '',
+        'Content Spotlight Theme',
+      )}
+      ${createVariations(
+        (position) =>
+          createSectionWrapper(
+            'one',
+            renderContentSpotlights('one', position),
+            { width: 'site', primaryWidth: '100%' },
+          ),
+        positions,
+        'All Position Variations',
+        '',
+        'Position',
+      )}
+      ${createVariations(
+        (imageStyle) =>
+          createSectionWrapper(
+            'one',
+            renderContentSpotlights('one', 'image-left', imageStyle),
+            { width: 'site', primaryWidth: '100%' },
+          ),
+        imageStyles,
+        'All Image Style Variations',
+        '',
+        'Image Style',
+      )}
+    `,
     globalThemes,
     'All Global Theme Variations',
   );

@@ -21,33 +21,37 @@ export default {
 };
 
 export const Visreg = () => {
-  const renderWidthVariations = () =>
-    createVariations(
-      (w) =>
-        videoBannerTwig({
-          video_banner__content: videoBannerData.video_embed__content,
-          video_banner__width: w,
-        }),
+  const renderVideoBanner = (width = 'max') =>
+    videoBannerTwig({
+      video_banner__content: videoBannerData.video_embed__content,
+      video_banner__width: width,
+    });
+
+  return `
+    ${createVariations(
+      (w) => renderVideoBanner(w),
       ['max', 'full'],
       'Width Variations',
       '',
       'Width',
-    );
+    )}
 
-  return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (theme) =>
-          createSectionWrapper(theme, renderWidthVariations(), {
-            width: 'site',
-            primaryWidth: '100%',
-          }),
-        sectionThemes,
-        'All Section Theme Variations',
-        '',
-        'Section Theme',
-      ),
-    globalThemes,
-    'All Global Theme Variations',
-  );
+    ${createGlobalThemeVariations(
+      () => `
+        ${createThemeVariations(
+          (theme) =>
+            createSectionWrapper(theme, renderVideoBanner(), {
+              width: 'site',
+              primaryWidth: '100%',
+            }),
+          sectionThemes,
+          'All Section Theme Variations',
+          '',
+          'Section Theme',
+        )}
+      `,
+      globalThemes,
+      'All Global Theme Variations',
+    )}
+  `;
 };

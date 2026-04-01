@@ -71,28 +71,30 @@ export const Visreg = () => {
     )}
 
     ${createGlobalThemeVariations(
-      () =>
-        createThemeVariations(
-          (sectionTheme) =>
-            createSectionWrapper(
-              sectionTheme,
-              componentThemes
-                .map(
-                  (componentTheme) => `
-                    <div class="sb-section__container">
-                      <h3 class="sb-section__subheading">Grand Hero Theme: ${componentTheme}</h3>
-                      ${renderGrandHero(componentTheme)}
-                    </div>
-                  `,
-                )
-                .join(''),
-              { width: 'site', primaryWidth: '100%' },
-            ),
+      () => `
+        ${createThemeVariations(
+          (theme) =>
+            createSectionWrapper(theme, renderGrandHero('one'), {
+              width: 'site',
+              primaryWidth: '100%',
+            }),
           sectionThemes,
-          'All Section × Grand Hero Theme Combinations',
+          'All Section Theme Variations',
           '',
           'Section Theme',
-        ),
+        )}
+        ${createThemeVariations(
+          (theme) =>
+            createSectionWrapper('one', renderGrandHero(theme), {
+              width: 'site',
+              primaryWidth: '100%',
+            }),
+          componentThemes,
+          'All Grand Hero Theme Variations',
+          '',
+          'Grand Hero Theme',
+        )}
+      `,
       globalThemes,
       'All Global Theme Variations',
     )}

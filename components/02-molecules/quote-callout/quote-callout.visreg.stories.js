@@ -11,6 +11,7 @@ import {
   createGlobalThemeVariations,
   createSectionWrapper,
   createThemeVariations,
+  createVariations,
 } from '../../_storybook/playground-utils';
 
 export default {
@@ -30,7 +31,12 @@ export const Visreg = () => {
     { style: 'bar', quoteImage: 'with-image' },
   ];
 
-  const renderQuoteCallout = (sectionTheme, accentColor, style, quoteImage) =>
+  const renderQuoteCallout = (
+    sectionTheme,
+    accentColor,
+    style = 'bar',
+    quoteImage = 'no-image',
+  ) =>
     createSectionWrapper(
       sectionTheme,
       quoteCalloutTwig({
@@ -49,38 +55,34 @@ export const Visreg = () => {
     );
 
   return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (sectionTheme) =>
-          componentThemes
-            .map(
-              (componentTheme) => `
-                <div class="sb-section__container">
-                  <h3 class="sb-section__subheading">Quote Callout Theme: ${componentTheme}</h3>
-                  ${variants
-                    .map(
-                      ({ style, quoteImage }) => `
-                    <h4>Style: ${
-                      quoteImage === 'with-image' ? 'image' : style
-                    } / Image: ${quoteImage}</h4>
-                    ${renderQuoteCallout(
-                      sectionTheme,
-                      componentTheme,
-                      style,
-                      quoteImage,
-                    )}
-                  `,
-                    )
-                    .join('')}
-                </div>
-              `,
-            )
-            .join(''),
+    () => `
+      ${createThemeVariations(
+        (theme) => renderQuoteCallout(theme, 'one'),
         sectionThemes,
-        'All Section × Quote Callout Theme Combinations',
+        'All Section Theme Variations',
         '',
         'Section Theme',
-      ),
+      )}
+      ${createThemeVariations(
+        (theme) => renderQuoteCallout('one', theme),
+        componentThemes,
+        'All Quote Callout Theme Variations',
+        '',
+        'Quote Callout Theme',
+      )}
+      ${createVariations(
+        ({ style, quoteImage }) =>
+          renderQuoteCallout('one', 'one', style, quoteImage),
+        variants,
+        'All Style Variations',
+        '',
+        'Style',
+        ({ style, quoteImage }) =>
+          `Style: ${
+            quoteImage === 'with-image' ? 'image' : style
+          } / Image: ${quoteImage}`,
+      )}
+    `,
     globalThemes,
     'All Global Theme Variations',
   );

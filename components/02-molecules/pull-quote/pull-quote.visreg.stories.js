@@ -11,6 +11,7 @@ import {
   createGlobalThemeVariations,
   createSectionWrapper,
   createThemeVariations,
+  createVariations,
 } from '../../_storybook/playground-utils';
 
 export default {
@@ -23,7 +24,7 @@ export const Visreg = () => {
   const attribution = pullQuoteData.pull_quote__attribution;
   const styles = ['bar-left', 'bar-right', 'quote-left'];
 
-  const renderPullQuote = (sectionTheme, accentColor, style) =>
+  const renderPullQuote = (sectionTheme, accentColor, style = 'bar-left') =>
     createSectionWrapper(
       sectionTheme,
       pullQuoteTwig({
@@ -39,31 +40,29 @@ export const Visreg = () => {
     );
 
   return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (sectionTheme) =>
-          componentThemes
-            .map(
-              (componentTheme) => `
-                <div class="sb-section__container">
-                  <h3 class="sb-section__subheading">Pull Quote Theme: ${componentTheme}</h3>
-                  ${styles
-                    .map(
-                      (style) => `
-                    <h4>Style: ${style}</h4>
-                    ${renderPullQuote(sectionTheme, componentTheme, style)}
-                  `,
-                    )
-                    .join('')}
-                </div>
-              `,
-            )
-            .join(''),
+    () => `
+      ${createThemeVariations(
+        (theme) => renderPullQuote(theme, 'one'),
         sectionThemes,
-        'All Section × Pull Quote Theme Combinations',
+        'All Section Theme Variations',
         '',
         'Section Theme',
-      ),
+      )}
+      ${createThemeVariations(
+        (theme) => renderPullQuote('one', theme),
+        componentThemes,
+        'All Pull Quote Theme Variations',
+        '',
+        'Pull Quote Theme',
+      )}
+      ${createVariations(
+        (style) => renderPullQuote('one', 'one', style),
+        styles,
+        'All Style Variations',
+        '',
+        'Style',
+      )}
+    `,
     globalThemes,
     'All Global Theme Variations',
   );

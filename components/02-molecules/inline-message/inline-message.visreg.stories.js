@@ -9,6 +9,7 @@ import {
   createGlobalThemeVariations,
   createThemeVariations,
   createSectionWrapper,
+  createVariations,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -28,7 +29,7 @@ export const Visreg = () => {
   const linkContent = 'This is a link';
   const linkUrl = '#';
 
-  const renderInlineMessage = (dialTheme, type) =>
+  const renderInlineMessage = (dialTheme, type = 'general') =>
     inlineMessageTwig({
       inline_message__heading: heading,
       inline_message__content: content,
@@ -39,35 +40,41 @@ export const Visreg = () => {
     });
 
   return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (sectionTheme) =>
-          createSectionWrapper(
-            sectionTheme,
-            componentThemes
-              .map(
-                (componentTheme) => `
-                  <div class="sb-section__container">
-                    <h3 class="sb-section__subheading">Inline Message Theme: ${componentTheme}</h3>
-                    ${types
-                      .map(
-                        (type) => `
-                      <h4>Type: ${type}</h4>
-                      ${renderInlineMessage(componentTheme, type)}
-                    `,
-                      )
-                      .join('')}
-                  </div>
-                `,
-              )
-              .join(''),
-            { width: 'site', primaryWidth: '100%' },
-          ),
+    () => `
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderInlineMessage('one'), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
         sectionThemes,
-        'All Section × Inline Message Theme Combinations',
+        'All Section Theme Variations',
         '',
         'Section Theme',
-      ),
+      )}
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper('one', renderInlineMessage(theme), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        componentThemes,
+        'All Inline Message Theme Variations',
+        '',
+        'Inline Message Theme',
+      )}
+      ${createVariations(
+        (type) =>
+          createSectionWrapper('one', renderInlineMessage('one', type), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        types,
+        'All Type Variations',
+        '',
+        'Type',
+      )}
+    `,
     globalThemes,
     'All Global Theme Variations',
   );

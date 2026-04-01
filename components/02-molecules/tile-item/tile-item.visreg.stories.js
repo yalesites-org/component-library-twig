@@ -13,6 +13,7 @@ import {
   createGlobalThemeVariations,
   createThemeVariations,
   createSectionWrapper,
+  createVariations,
 } from '../../_storybook/playground-utils';
 import { hasIcon } from '../../_storybook/icon-utils';
 
@@ -34,7 +35,7 @@ export const Visreg = () => {
 
   const hasIconSelected = hasIcon(iconName);
 
-  const renderTileItem = (dialTheme, presentationStyle) => `
+  const renderTileItem = (dialTheme, presentationStyle = 'heading') => `
     <div class="tiles" data-component-grid-count='three' data-component-width="site">
       <div class='tiles__inner'>
         <ul class='tiles__wrap' data-component-grid-count='three'>
@@ -58,35 +59,45 @@ export const Visreg = () => {
   `;
 
   return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (sectionTheme) =>
-          createSectionWrapper(
-            sectionTheme,
-            componentThemes
-              .map(
-                (componentTheme) => `
-                  <div class="sb-section__container">
-                    <h3 class="sb-section__subheading">Tile Item Theme: ${componentTheme}</h3>
-                    ${presentationStyles
-                      .map(
-                        (style) => `
-                      <h4>Presentation Style: ${style}</h4>
-                      ${renderTileItem(componentTheme, style)}
-                    `,
-                      )
-                      .join('')}
-                  </div>
-                `,
-              )
-              .join(''),
-            { width: 'site', primaryWidth: '100%' },
-          ),
+    () => `
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderTileItem('one'), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
         sectionThemes,
-        'All Section × Tile Item Theme Combinations',
+        'All Section Theme Variations',
         '',
         'Section Theme',
-      ),
+      )}
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper('one', renderTileItem(theme), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        componentThemes,
+        'All Tile Item Theme Variations',
+        '',
+        'Tile Item Theme',
+      )}
+      ${createVariations(
+        (presentationStyle) =>
+          createSectionWrapper(
+            'one',
+            renderTileItem('one', presentationStyle),
+            {
+              width: 'site',
+              primaryWidth: '100%',
+            },
+          ),
+        presentationStyles,
+        'All Presentation Style Variations',
+        '',
+        'Presentation Style',
+      )}
+    `,
     globalThemes,
     'All Global Theme Variations',
   );
