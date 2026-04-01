@@ -56,6 +56,7 @@ export const Visreg = () => {
       renderBlockWrapper,
       paddingOptions,
       'All Padding Variations',
+      '',
       'Padding Modifier',
     );
 

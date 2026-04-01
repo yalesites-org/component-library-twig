@@ -83,6 +83,7 @@ export const Visreg = () => {
       renderLayouts,
       layoutOptions,
       'All Layout Variations',
+      '',
       'Layout Configuration',
     )}
 
@@ -90,6 +91,7 @@ export const Visreg = () => {
       renderPadding,
       paddingOptions,
       'All Padding Variations',
+      '',
       'Padding Option',
     )}
 
@@ -106,6 +108,7 @@ export const Visreg = () => {
         }),
       ['enabled'],
       'With Divider Enabled',
+      '',
       'Divider',
     )}
 

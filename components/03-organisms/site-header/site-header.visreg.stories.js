@@ -119,6 +119,7 @@ export const Visreg = () => {
               }),
         ['background-image', 'site-name-image'],
         'Image Variations',
+        '',
         'Image Variation',
       )}
     `,

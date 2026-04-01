@@ -51,6 +51,7 @@ export const Visreg = () => {
         }),
       ['tall', 'short'],
       'Size Variations',
+      '',
       'Size',
     )}
 

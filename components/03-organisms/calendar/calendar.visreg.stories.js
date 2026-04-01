@@ -32,6 +32,7 @@ export const Visreg = () => {
         }),
       [true, false],
       'All Calendar Variations',
+      '',
       'Event State',
       (hasEvents) =>
         hasEvents ? 'Calendar with Events' : 'Calendar without Events',

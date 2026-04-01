@@ -41,6 +41,7 @@ export const Visreg = () => {
         }),
       styles,
       'All Presentation Style Variations',
+      '',
       'Presentation Style',
     )}
 
@@ -58,6 +59,7 @@ export const Visreg = () => {
         }),
       columnCounts,
       'All Column Count Variations',
+      '',
       'Column Count',
     )}
 
@@ -75,6 +77,7 @@ export const Visreg = () => {
         }),
       alignments,
       'All Alignment Variations',
+      '',
       'Alignment',
     )}
   `;

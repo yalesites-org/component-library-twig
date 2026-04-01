@@ -41,6 +41,7 @@ export const Visreg = () => {
         }),
       [true, false],
       'All Layout Variations',
+      '',
       'Layout Type',
       (isFeatured) => (isFeatured ? 'Featured Layout' : 'Standard Layout'),
     );

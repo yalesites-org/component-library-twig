@@ -68,6 +68,7 @@ export const Visreg = () => {
         }),
       ['bottom', 'left', 'right'],
       'Content Layout Variations',
+      '',
       'Content Layout',
     )}
 

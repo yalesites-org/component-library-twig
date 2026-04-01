@@ -114,6 +114,7 @@ export const Visreg = () => {
         }),
       collectionTypes,
       'All Collection Type Variations',
+      '',
       'Collection Type',
     )}
   `;

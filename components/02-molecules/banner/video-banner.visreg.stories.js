@@ -30,6 +30,7 @@ export const Visreg = () => {
         }),
       ['max', 'full'],
       'Width Variations',
+      '',
       'Width',
     );
 

@@ -66,6 +66,7 @@ export const Visreg = () => {
         }),
       ['full', 'contained', 'contained-narrow'],
       'Overlay Variations',
+      '',
       'Overlay Variation',
     )}
 

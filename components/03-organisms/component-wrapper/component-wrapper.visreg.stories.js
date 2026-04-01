@@ -36,6 +36,7 @@ export const Visreg = () => {
       renderComponentWrapper,
       widthOptions,
       'All Width Variations',
+      '',
       'Component Width',
     );
 
