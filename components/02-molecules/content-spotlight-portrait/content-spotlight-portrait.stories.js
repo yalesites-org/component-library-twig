@@ -1,88 +1,32 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 // Twig templates
 import contentSpotlightPortraitTwig from './yds-content-spotlight-portrait.twig';
 
 // Data files
 import imageData from '../../01-atoms/images/image/image.yml';
 import contentSpotlightPortraitData from './content-spotlight-portrait.yml';
-
-const colorPairingsData = Object.keys(tokens['component-themes']);
+import componentProps from './content-spotlight-portrait-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Content Spotlight',
+  title: 'Molecules/Content Spotlight/Content Spotlight Portrait',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    componentTheme: {
-      name: 'Component Theme (dial)',
-      type: 'select',
-      options: colorPairingsData,
-    },
-    position: {
-      name: 'Image Position',
-      type: 'select',
-      options: ['image-left', 'image-right'],
-    },
-    contentVerticalAlignment: {
-      name: 'Content Vertical Alignment',
-      type: 'select',
-      options: ['top', 'middle', 'bottom'],
-    },
-    imageStyle: {
-      name: 'Image Style',
-      type: 'select',
-      options: ['inline', 'offset'],
-    },
-    overline: {
-      name: 'Overline (optional)',
-      type: 'string',
-    },
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    subheading: {
-      name: 'Subheading (optional)',
-      type: 'string',
-    },
-    text: {
-      name: 'Text',
-      type: 'string',
-    },
-    linkContent: {
-      name: 'Link Content (optional)',
-      type: 'string',
-    },
-    linkTwoContent: {
-      name: 'Second Link Content (optional)',
-      type: 'string',
-      defaultValue:
-        contentSpotlightPortraitData.content_spotlight_portrait__link_two__content,
-    },
-    caption: {
-      name: 'Caption (optional)',
-      type: 'string',
-      defaultValue:
-        contentSpotlightPortraitData.content_spotlight_portrait__caption,
-    },
-  },
+  argTypes: toArgTypes(componentProps),
   args: {
-    componentTheme: 'default',
-    position: 'image-left',
-    contentVerticalAlignment: 'middle',
-    imageStyle: 'inline',
-    overline: null,
+    ...toArgs(componentProps),
     heading: contentSpotlightPortraitData.content_spotlight_portrait__heading,
     subheading:
       contentSpotlightPortraitData.content_spotlight_portrait__subheading,
     text: contentSpotlightPortraitData.content_spotlight_portrait__text,
     linkContent:
       contentSpotlightPortraitData.content_spotlight_portrait__link__content,
+    linkTwoContent:
+      contentSpotlightPortraitData.content_spotlight_portrait__link_two__content,
     caption: contentSpotlightPortraitData.content_spotlight_portrait__caption,
   },
 };

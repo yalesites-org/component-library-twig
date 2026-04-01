@@ -1,0 +1,29 @@
+# facts-and-figures-props.yml
+#
+# Facts and Figures component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+stat:
+  twigProp: facts_and_figures__stat
+  name: Statistic
+  type: string
+  required: true
+  description: The statistic text displayed as the primary fact
+  detail: >
+    The primary statistic displayed in the component (e.g., "42%", "$1.2M").
+    Passed directly to the Twig template; not an interactive control.
+
+fontStyle:
+  twigProp: facts_and_figures__font_style
+  name: Font Style
+  type: select
+  required: false
+  description: Font style applied to the statistic figure
+  default: normal
+  options:
+    - normal
+    - numeric-oldstyle
+  control: select

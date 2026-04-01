@@ -1,0 +1,51 @@
+# wrapped-callout-props.yml
+#
+# Wrapped Callout component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+calloutAlignment:
+  twigProp: wrapped_callout__alignment
+  name: Callout Alignment
+  type: select
+  required: false
+  description: Position of the callout box within the content flow
+  default: left
+  options:
+    - left
+    - right
+  control: select
+
+calloutContent:
+  twigProp: wrapped_callout__content
+  name: Callout Content
+  type: string
+  required: false
+  description: Main body text that flows around the callout (supports HTML)
+  control: text
+
+calloutText:
+  twigProp: wrapped_callout__callout
+  name: Callout Text
+  type: string
+  required: false
+  description: Highlighted callout text displayed in the callout box (supports HTML)
+  control: text
+
+themeColor:
+  twigProp: wrapped_callout__theme
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Color theme applied to the callout box from the CMS color dial
+  default: one
+  options:
+    - default
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select

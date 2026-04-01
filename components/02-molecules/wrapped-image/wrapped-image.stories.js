@@ -3,36 +3,20 @@ import textFieldTwig from '../text/yds-text-field.twig';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 import WrappedImageData from './wrapped-image.yml';
+import componentProps from './wrapped-image-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Wrapped Image',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    caption: {
-      name: 'Caption',
-      type: 'string',
-    },
-    imageAlignment: {
-      name: 'Image Alignment',
-      type: 'select',
-      options: ['left', 'right'],
-    },
-    imageStyle: {
-      name: 'Image Style',
-      type: 'select',
-      options: ['floated', 'offset'],
-    },
-  },
-  args: {
-    caption: 'This is the caption for the 16:9 image above.',
-    imageAlignment: 'left',
-    imageStyle: 'floated',
-  },
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
 export const WrappedImage = ({ caption, imageAlignment, imageStyle }) => `

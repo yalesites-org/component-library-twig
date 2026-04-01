@@ -1,0 +1,110 @@
+# site-header-props.yml
+#
+# Site Header component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+borderThickness:
+  twigProp: site_header__border_thickness
+  name: Navigation Border Thickness
+  type: select
+  required: false
+  description: Border thickness for the navigation area (from design tokens)
+  detail: >
+    Controls the thickness of the decorative border on the navigation.
+    Options are derived from the border.thickness design tokens.
+  default: '8'
+  control: select
+
+primaryNavPosition:
+  twigProp: site_header__nav_position
+  name: Navigation Position
+  type: select
+  required: false
+  description: Horizontal alignment of the primary navigation within the header
+  default: left
+  options:
+    - left
+    - center
+    - right
+  control: select
+
+menuVariation:
+  twigProp: site_header__menu__variation
+  name: Menu Variation
+  type: select
+  required: false
+  description: Display style for the primary navigation menu
+  default: basic
+  options:
+    - basic
+    - mega
+    - focus
+  control: select
+
+siteHeaderImage:
+  twigProp: site_header__background_image
+  name: Header With Image
+  type: boolean
+  required: false
+  description: Enable background image on the header (only works with focus menu variation)
+  default: false
+  control: boolean
+
+siteHeaderSiteNameImage:
+  twigProp: site_header__site_name_image
+  name: Site Name is an Image
+  type: boolean
+  required: false
+  description: Display an image in place of the text site name
+  detail: >
+    When true, renders an example SVG image as the site name. In production,
+    the actual site name image SVG is provided via site_header__site_name_image.
+  default: false
+  control: boolean
+
+siteHeaderTheme:
+  twigProp: site_header__theme
+  name: Header Theme (dial)
+  type: select
+  required: false
+  description: Color theme applied to the site header
+  detail: >
+    Controls the overall header color scheme. Options are derived from the
+    site-header-themes design tokens.
+  default: one
+  control: select
+
+siteHeaderAccent:
+  twigProp: site_header__accent
+  name: Header Accent Color (dial)
+  type: select
+  required: false
+  description: Accent color applied to interactive elements in the header
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+    - six
+    - seven
+    - eight
+  control: select
+
+siteWideHeaderName:
+  twigProp: site_header__branding_name
+  name: Site Wide Header Name
+  type: string
+  required: false
+  description: University-wide branding name displayed in the header
+  control: text
+
+siteWideHeaderUrl:
+  twigProp: site_header__branding_link
+  name: Site Wide Header URL
+  type: string
+  required: false
+  description: URL for the university-wide branding link
+  control: text

@@ -1,0 +1,283 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as TextStories from './typography.stories';
+
+<Meta of={TextStories} name="Docs" />
+
+# Text Field
+
+The text field component provides formatted, styled text content for use throughout the Yale site. It handles rich text content including headings, paragraphs, lists, links, and inline formatting elements. The component ensures consistent typography and spacing across all text-heavy content areas.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the text field's properties in real-time. Try switching between default and emphasized variations.
+
+<Canvas of={TextStories.TextField} />
+<Controls of={TextStories.TextField} />
+
+## Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>text_field__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>HTML content containing the formatted text to display</td>
+    </tr>
+  </tbody>
+</table>
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>text_field__variation</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>default</code>
+      </td>
+      <td>
+        Visual variation: 'default' or 'emphasized' (for increased prominence)
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Supported Elements
+
+The text field component supports a wide range of HTML elements for rich text formatting:
+
+### Headings
+
+- **H2**: Primary section headings
+- **H3**: Subsection headings
+- **H4**: Tertiary headings
+- **H5**: Quaternary headings
+- **H6**: Minor headings
+
+### Text Formatting
+
+- **Paragraphs**: Standard text blocks with proper spacing
+- **Links**: Styled anchor tags with hover states
+- **Strong**: Bold text for emphasis
+- **Em**: Italicized text for added emphasis
+- **Strikethrough**: Text with a line through it
+- **Superscript**: Raised text (for footnotes, exponents)
+- **Subscript**: Lowered text (for chemical formulas)
+
+### Lists
+
+- **Unordered Lists**: Bullet point lists
+- **Ordered Lists**: Numbered lists
+- **Nested Lists**: Lists within lists maintain proper indentation
+
+### Code
+
+- **Inline Code**: Monospaced code within text
+- **Code Blocks**: Multi-line formatted code with syntax preservation
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-text-field.twig`
+- **Styles**: `_yds-text-field.scss`
+- **Dependencies**: `yds-text` (atom-level typography styles)
+
+### Accessibility
+
+- Proper semantic HTML structure
+- Heading hierarchy maintained (no skipped levels)
+- Links have sufficient color contrast
+- Focus indicators on interactive elements
+- List markup properly structured
+- Code blocks maintain readability
+
+### Behavior
+
+- **Responsive Typography**: Text scales appropriately on different screen sizes
+- **Link Styling**: Links include hover and focus states
+- **Spacing**: Consistent vertical rhythm between elements
+- **Code Formatting**: Preserves whitespace and indentation in code blocks
+- **List Styling**: Bullets and numbers properly aligned with text
+
+## Variations
+
+### Default Variation
+
+Standard text styling suitable for most content areas. Uses the base typography system with standard spacing and sizing.
+
+### Emphasized Variation
+
+Provides increased visual prominence for text that needs to stand out. May include:
+
+- Larger font sizes
+- Increased spacing
+- Enhanced styling for headings
+- Different color treatments
+
+Use emphasized variation sparingly for introductory content or key sections that should draw attention.
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use proper heading hierarchy (don't skip levels)
+- Keep paragraphs focused and reasonably sized (3-5 sentences ideal)
+- Use links judiciously and make link text descriptive
+- Use lists to break up complex information
+- Use strong and em for semantic emphasis, not just styling
+- Keep code blocks properly formatted with correct indentation
+- Use the emphasized variation only for truly important content sections
+- Ensure text content is well-structured and scannable
+
+### Things to Avoid
+
+- Don't skip heading levels (e.g., H2 directly to H5)
+- Avoid very long paragraphs that are hard to scan
+- Don't use "click here" or "read more" as link text
+- Avoid excessive use of inline formatting (too much bold/italic)
+- Don't use multiple H2s in a row without content between them
+- Avoid placing important content only in emphasized sections
+- Don't use emphasized variation for entire pages
+
+## Content Patterns
+
+### Effective Heading Structure
+
+```html
+<h2>Main Section</h2>
+<p>Content about the main section...</p>
+
+<h3>Subsection</h3>
+<p>Content about the subsection...</p>
+
+<h4>Detailed Point</h4>
+<p>Detailed content...</p>
+```
+
+### Link Best Practices
+
+- **Good**: "Read the [academic calendar](url) for important dates"
+- **Bad**: "Click [here](url) to read the calendar"
+
+### List Usage
+
+Use lists to:
+
+- Break down complex processes into steps
+- Present multiple related items
+- Improve scannability of dense content
+- Group similar information
+
+## Typography System
+
+The text field component leverages Yale's typography system, which includes:
+
+- Consistent font families
+- Responsive font sizing
+- Proper line heights for readability
+- Appropriate spacing between elements
+- Color treatments that maintain WCAG contrast ratios
+
+## Example Content Structure
+
+The component handles complex text structures like:
+
+```html
+<h2>Section Title</h2>
+<p>
+  Introduction paragraph with a <a href="#">relevant link</a> and some
+  <strong>important information</strong>.
+</p>
+
+<h3>Subsection</h3>
+<p>More detailed content here.</p>
+
+<ul>
+  <li>First key point</li>
+  <li>Second key point with <em>emphasis</em></li>
+  <li>Third point</li>
+</ul>
+
+<h4>Technical Details</h4>
+<p>Example with <code>inline code</code> and subscript H<sub>2</sub>O.</p>
+
+<pre><code>
+/** Code block example **/
+.example {
+  padding: 0 var(--size-spacing-3);
+  background-color: var(--color-code-background);
+}
+</code></pre>
+```
+
+## Integration Points
+
+The text field component is commonly used within:
+
+- **Layout Components**: As primary content areas
+- **Tab Panels**: For tabbed content
+- **Accordions**: For expandable content sections
+- **Cards**: For card descriptions and content
+- **Modals**: For modal body content
+
+## Testing
+
+For comprehensive visual regression testing with all theme variations, see the [Visreg page](?path=/story/molecules-text-visreg).
+
+### Testing Considerations
+
+- Test with all heading levels
+- Verify all inline formatting elements render correctly
+- Test link styles and states (hover, focus, visited)
+- Check list indentation and nesting
+- Verify code block formatting
+- Test both variations (default and emphasized)
+- Check responsive behavior on different screen sizes
+- Validate semantic HTML structure
+
+## Related Components
+
+- **Text (Atom)**: Base typography atom that provides the foundational styles
+- **Link (Atom)**: Provides link styling used within text fields
+- **Heading (Atom)**: Provides heading styles
+- **Layout Components**: Contain and structure text field content
+
+## WYSIWYG Integration
+
+In Drupal, the text field component typically receives content from WYSIWYG editors. Ensure that:
+
+- WYSIWYG toolbar options match supported elements
+- Text formats are configured to allow necessary HTML tags
+- Editor styles match front-end rendering
+- Content editors are trained on proper heading hierarchy
+- Link insertion is straightforward and accessible
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.
