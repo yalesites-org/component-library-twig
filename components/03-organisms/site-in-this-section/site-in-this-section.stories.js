@@ -5,6 +5,8 @@ import siteHeaderTwig from '../site-header/yds-site-header.twig';
 import secondaryNavData from '../menu/secondary-nav/secondary-nav.yml';
 import utilityNavData from '../menu/utility-nav/utility-nav.yml';
 import primaryNavData from '../menu/primary-nav/primary-nav.yml';
+import componentProps from './site-in-this-section-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 import '../menu/secondary-nav/yds-secondary-nav';
 import '../../02-molecules/menu/menu-in-this-section-toggle/yds-menu-in-this-section-toggle';
@@ -16,44 +18,39 @@ import './cl-site-in-this-section.scss';
 const colorPairingsData = Object.keys(tokens['component-themes']);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 
+const argTypes = toArgTypes(componentProps);
+argTypes.siteSectionTheme = {
+  ...argTypes.siteSectionTheme,
+  options: colorPairingsData,
+  if: { arg: 'collectionNavDisplay', eq: 'in_content' },
+};
+argTypes.siteHeaderTheme = {
+  ...argTypes.siteHeaderTheme,
+  options: siteHeaderThemeOptions,
+  if: { arg: 'collectionNavDisplay', eq: 'in_header' },
+};
+argTypes.collectionNavDisplay = {
+  ...argTypes.collectionNavDisplay,
+  control: {
+    type: 'select',
+    labels: {
+      in_content: 'In Content Section',
+      in_header: 'In Site Header',
+    },
+  },
+};
+
 /**
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Site/In This Section',
+  title: 'Organisms/Global Elements/In This Section',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    collectionNavDisplay: {
-      name: 'Collection Navigation Display',
-      options: ['in_content', 'in_header'],
-      control: {
-        type: 'select',
-        labels: {
-          in_content: 'In Content Section',
-          in_header: 'In Site Header',
-        },
-      },
-    },
-    siteSectionTheme: {
-      name: 'Component Theme (dial)',
-      options: colorPairingsData,
-      type: 'select',
-      if: { arg: 'collectionNavDisplay', eq: 'in_content' },
-    },
-    siteHeaderTheme: {
-      name: 'Header Theme (dial)',
-      options: siteHeaderThemeOptions,
-      type: 'select',
-      if: { arg: 'collectionNavDisplay', eq: 'in_header' },
-    },
-  },
-  args: {
-    collectionNavDisplay: 'in_content',
-    siteSectionTheme: 'one',
-    siteHeaderTheme: 'one',
-  },
+  argTypes,
+  args: toArgs(componentProps),
 };
 
 export const SiteSection = ({

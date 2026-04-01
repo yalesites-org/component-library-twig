@@ -1,0 +1,191 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as LinkSkipStories from './link-skip.stories';
+
+<Meta of={LinkSkipStories} name="Docs" />
+
+# Link Skip
+
+The link skip component provides an accessibility-focused navigation aid that allows keyboard users to bypass repetitive navigation and jump directly to the main content of a page. This component is visually hidden by default and only appears when it receives keyboard focus, ensuring compliance with WCAG 2.1 accessibility guidelines.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the link skip's properties. Press Tab to see the skip link appear at the top of the page.
+
+<Canvas of={LinkSkipStories.LinkSkip} />
+<Controls of={LinkSkipStories.LinkSkip} />
+
+## Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>link_skip__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>The text content displayed in the skip link</td>
+    </tr>
+    <tr>
+      <td>
+        <code>link_skip__url</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        The target anchor link (typically <code>'#main-content'</code> or
+        similar)
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>link_skip__base_class</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'link-skip'</code>
+      </td>
+      <td>Base CSS class for the component</td>
+    </tr>
+    <tr>
+      <td>
+        <code>link_skip__extra_class</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Additional CSS classes for custom styling</td>
+    </tr>
+  </tbody>
+</table>
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-link-skip.twig`
+- **Styles**: `_yds-link-skip.scss`
+
+### Accessibility
+
+The link skip component is a critical accessibility feature that provides several benefits:
+
+- **Keyboard Navigation**: Appears when users navigate with the Tab key
+- **Screen Reader Support**: Properly announced by assistive technologies
+- **WCAG 2.1 Compliance**: Meets WCAG 2.1 Level A Success Criterion 2.4.1 (Bypass Blocks)
+- **Visual Feedback**: Clear focus indicators when the link receives keyboard focus
+- **Skip Navigation**: Allows users to bypass repetitive content and jump to main content
+
+### Behavior
+
+- **Visually Hidden by Default**: The skip link is positioned off-screen using CSS
+- **Appears on Focus**: When the link receives keyboard focus (via Tab), it becomes visible
+- **First Interactive Element**: Should be the first focusable element on the page
+- **Anchor Navigation**: Clicking or activating the link scrolls to the target anchor
+- **No JavaScript Required**: Works entirely with HTML and CSS
+
+## Usage Guidelines
+
+### Best Practices
+
+- Place the skip link as the very first element in your page's HTML
+- Use descriptive text like "Skip to main content" or "Skip to content"
+- Ensure the target anchor (e.g., `#main-content`) exists on the page
+- Apply the skip link to a container element that wraps the main content
+- Test with keyboard navigation to ensure proper visibility and functionality
+- Use consistent skip link text across all pages of your site
+
+### Things to Avoid
+
+- Don't hide the skip link entirely (it must be available to keyboard users)
+- Don't place the skip link after other focusable elements
+- Don't use vague text like "Skip" without context
+- Don't create multiple skip links pointing to the same target
+- Don't forget to add the corresponding ID to your main content area
+- Don't use JavaScript-dependent implementations when CSS is sufficient
+
+### When to Use Link Skip
+
+The link skip component should be used on:
+
+- All pages with repeated navigation elements
+- Pages with complex headers or navigation menus
+- Sites with multiple navigation regions
+- Any page where users would benefit from bypassing repetitive content
+
+### Implementation Example
+
+```html
+<!-- Skip link (first element in body) -->
+<a href="#main-content" class="link-skip">Skip to main content</a>
+
+<!-- Site header and navigation -->
+<header>...</header>
+<nav>...</nav>
+
+<!-- Main content with corresponding ID -->
+<main id="main-content">
+  <!-- Page content -->
+</main>
+```
+
+## Testing
+
+For comprehensive visual regression testing with all theme variations, see the [Visreg page](?path=/story/molecules-link-skip-visreg--visreg).
+
+### Testing Skip Link Functionality
+
+When testing the skip link:
+
+1. Load a page with the skip link component
+2. Press the Tab key once (skip link should appear at the top)
+3. The skip link should have clear visual focus indicators
+4. Press Enter or Space to activate the link
+5. The page should scroll to the main content area
+6. Focus should move to the main content container
+
+### Testing Accessibility
+
+- Use a screen reader to verify the link is properly announced
+- Ensure the link appears before any other interactive elements
+- Verify sufficient color contrast in the visible state
+- Test keyboard navigation flow from skip link to main content
+
+## Related Components
+
+- **Navigation**: Works in conjunction with site navigation to improve accessibility
+- **Header**: Typically placed before or within the site header region
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

@@ -7,29 +7,30 @@ import textCopyButtonTwig from './text-copy-button/yds-text-copy-button.twig';
 import './text-link/yds-text-link';
 import './text-copy-button/yds-text-copy-button';
 
+import componentProps from './control-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
+
 const componentThemeOptions = Object.keys(tokens['button-cta-themes']);
+const argTypes = toArgTypes(componentProps);
+// Override componentTheme options with token-derived values
+argTypes.componentTheme = {
+  ...argTypes.componentTheme,
+  options: componentThemeOptions,
+};
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Atoms/Controls',
-  argTypes: {
-    sectionTheme: {
-      name: 'Section Theme',
-      type: 'select',
-      options: ['default', 'one', 'two', 'three', 'four'],
-      control: { type: 'select' },
-    },
-  },
+  tags: ['!dev'],
+  argTypes,
   parameters: {
     controls: {
       sort: 'requiredFirst',
     },
   },
-  args: {
-    sectionTheme: 'default',
-  },
+  args: toArgs(componentProps),
 };
 
 const Section = (sectionTheme, component) => `
@@ -173,18 +174,6 @@ export const Cta = ({ componentTheme, sectionTheme }) =>
   </div>
   `,
   );
-
-Cta.argTypes = {
-  componentTheme: {
-    name: 'Component Theme (dial)',
-    options: componentThemeOptions,
-    type: 'select',
-  },
-};
-
-Cta.args = {
-  componentTheme: 'one',
-};
 
 export const textLink = ({ sectionTheme }) =>
   Section(

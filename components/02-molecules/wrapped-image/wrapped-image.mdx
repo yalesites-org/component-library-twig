@@ -1,0 +1,155 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as WrappedImageStories from './wrapped-image.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './wrapped-image-props.yml';
+
+<Meta of={WrappedImageStories} name="Docs" />
+
+# Wrapped Image
+
+The wrapped image component displays an image inline with flowing text content, allowing text to wrap around the image naturally. It supports two distinct visual styles (floated and offset) and can be positioned on either side of the content, making it ideal for magazine-style layouts and editorial content.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the wrapped image's properties in real-time.
+
+<Canvas of={WrappedImageStories.WrappedImage} />
+<Controls of={WrappedImageStories.WrappedImage} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Visual Styles
+
+### Floated
+
+The default style where the image floats within the text content with text wrapping naturally around it. The image maintains consistent spacing from the surrounding text.
+
+**Use for:**
+
+- Traditional magazine-style layouts
+- Editorial content with integrated imagery
+- When you want the image to feel embedded within the text
+- Standard inline image placement
+
+**Visual characteristics:**
+
+- Image appears inline with text flow
+- Consistent margin spacing on all sides
+- Text wraps naturally around the image edges
+- Maintains reading flow
+
+### Offset
+
+A more dramatic style where the image extends beyond the text column boundary, creating visual interest and emphasis.
+
+**Use for:**
+
+- Featured images that deserve extra prominence
+- Creating visual hierarchy and breaking up dense text
+- When you want the image to stand out from the content
+- Modern, dynamic layouts
+
+**Visual characteristics:**
+
+- Image extends beyond the standard content column
+- Creates a "break-out" effect
+- More visual impact than floated style
+- Adds rhythm and variety to the page
+
+## Alignment Options
+
+### Left Alignment
+
+The image appears on the left side with text flowing around it on the right.
+
+**Use for:**
+
+- Standard reading flow (left-to-right languages)
+- When subsequent sections have right-aligned elements for balance
+- Traditional editorial layouts
+
+### Right Alignment
+
+The image appears on the right side with text flowing around it on the left.
+
+**Use for:**
+
+- Creating visual variety when multiple images appear on a page
+- Balancing layouts with left-aligned elements
+- Emphasizing imagery in the reader's peripheral vision
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-wrapped-image.twig`
+- **Styles**: `_yds-wrapped-image.scss`
+- **Base Component**: Extends image atom functionality
+
+### Accessibility
+
+- **Required alt text**: All images must have descriptive alternative text
+- **Caption semantics**: Captions use proper `<figcaption>` markup
+- **Semantic structure**: Uses `<figure>` element for proper HTML5 semantics
+- **Color contrast**: Captions meet WCAG AA contrast requirements
+- **Text reflow**: Content remains readable when text is resized
+- **Reading order**: Natural document flow maintained for screen readers
+
+### Responsive Behavior
+
+- **Desktop**: Image floats or offsets to the specified side with full text wrapping
+- **Tablet**: Image may reduce in size while maintaining layout style
+- **Mobile**: Images typically stack vertically above text on narrow screens for better readability
+
+## Usage Guidelines
+
+### Best Practices
+
+- Ensure sufficient surrounding text (minimum 2-3 paragraphs) for effective wrapping
+- Use high-quality images with appropriate aspect ratios (typically 3:2 works well)
+- Add meaningful captions to provide context or attribution
+- Choose alignment that creates visual balance with other page elements
+- Use offset style sparingly for maximum impact
+- Test layouts across different viewport sizes
+- Provide descriptive alt text that conveys the image's purpose in context
+
+### Things to Avoid
+
+- Don't place multiple wrapped images too close together
+- Avoid using wrapped images in short content sections
+- Don't use offset style for every image (diminishes impact)
+- Avoid images that are too large or too small for the content
+- Don't alternate alignment too frequently on the same page
+- Avoid wrapping text around images with crucial details that might be cropped
+- Don't forget to optimize image file sizes for performance
+
+### Content Length Considerations
+
+**Minimum content length:**
+
+- At least 150-200 words of text for effective wrapping
+- 2-3 paragraphs minimum to support the layout
+
+**Optimal scenarios:**
+
+- Long-form articles with 400+ words
+- Editorial content with multiple paragraphs
+- Feature stories and in-depth pieces
+
+## Testing
+
+For comprehensive visual regression testing with all alignment, style, and theme combinations, see the [Visreg page](?path=/story/molecules-wrapped-image-visreg--visreg).
+
+## Related Components
+
+- **Content Image**: Full-width images with captions
+- **Wrapped Callout**: Text callout with similar wrapping behavior
+- **Text Field**: The primary content component used with wrapped images
+- **Image (Atom)**: The base image component
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

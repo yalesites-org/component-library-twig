@@ -1,0 +1,62 @@
+# card-collection-props.yml
+#
+# Card Collection component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+collectionType:
+  twigProp: card_collection__type
+  name: Collection Type
+  type: select
+  required: false
+  description: Layout type for the card collection
+  default: grid
+  options:
+    - grid
+    - list
+    - condensed
+  control: select
+
+featured:
+  twigProp: card_collection__featured
+  name: Featured
+  type: boolean
+  required: false
+  description: Enable featured layout with larger first card
+  detail: >
+    When true, the first card displays larger and more prominently. Passed to
+    Twig as the string 'true' or 'false' via card_collection__featured.
+  default: true
+  control: boolean
+
+withOverlay:
+  twigProp: reference_card__overlay
+  name: Overlay
+  type: boolean
+  required: false
+  description: Show an overlay label on reference cards (e.g., Pinned)
+  detail: >
+    When enabled, passes 'Pinned' to reference_card__overlay in the Twig
+    template to display an overlay badge on cards.
+  default: false
+  control: boolean
+
+withImages:
+  twigProp: card_collection__with_images
+  name: With Images
+  type: boolean
+  required: false
+  description: Display images on cards
+  detail: >
+    Passed to Twig as the string 'true' or 'false' via
+    card_collection__with_images.
+  default: true
+  control: boolean
+
+heading:
+  twigProp: card_collection__heading
+  name: Heading
+  type: string
+  required: false
+  description: Optional heading displayed above the card collection
+  control: text

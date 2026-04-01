@@ -1,0 +1,161 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as MetaStories from './meta.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import postMetaProps from './post-meta-props.yml';
+import eventProps from './event-props.yml';
+import profileProps from './profile-props.yml';
+import resourceProps from './resource-props.yml';
+
+<Meta of={MetaStories} name="Docs" />
+
+# Meta
+
+The meta component provides structured metadata displays for different content types across the YaleSites platform. It supports four distinct meta types: Post Meta, Event, Profile, and Resource, each designed to present relevant contextual information in a consistent, accessible format.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with different meta component properties. Select between the four meta types to see how each displays its specific information.
+
+<Canvas of={MetaStories.PostMeta} />
+<Controls of={MetaStories.PostMeta} />
+
+## Meta Types
+
+### Post Meta
+
+A simple meta component for displaying author information and publication dates. Commonly used in articles, news posts, and blog entries.
+
+**Example Usage:**
+
+- Author bylines
+- Publication dates
+- Last updated timestamps
+
+**Properties:**
+
+{twigPropsTable(postMetaProps, 'required')}
+
+### Event Meta
+
+A comprehensive metadata component for displaying event information from Localist, including dates, times, location, and registration options.
+
+<Canvas of={MetaStories.Event} />
+<Controls of={MetaStories.Event} />
+
+**Example Usage:**
+
+- Event detail pages
+- Calendar entries
+- Virtual and in-person events
+
+**Key Properties:**
+
+{twigPropsTable(eventProps, 'required')}
+{twigPropsTable(eventProps, 'optional')}
+
+### Profile Meta
+
+Displays professional metadata for person profiles including titles, departments, and pronouns with optional portrait or landscape imagery.
+
+<Canvas of={MetaStories.Profile} />
+<Controls of={MetaStories.Profile} />
+
+**Example Usage:**
+
+- Faculty profiles
+- Staff directory entries
+- Leadership pages
+
+**Key Properties:**
+
+{twigPropsTable(profileProps, 'required')}
+{twigPropsTable(profileProps, 'optional')}
+
+### Resource Meta
+
+Displays metadata for downloadable resources and media content, including category, publication date, and resource type indicators.
+
+<Canvas of={MetaStories.Resource} />
+<Controls of={MetaStories.Resource} />
+
+**Example Usage:**
+
+- Downloadable PDFs
+- Video resources
+- Document libraries
+
+**Key Properties:**
+
+{twigPropsTable(resourceProps, 'required')}
+{twigPropsTable(resourceProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Templates**: Multiple Twig files for each meta type:
+  - `yds-basic-meta.twig`
+  - `yds-event-meta-localist.twig`
+  - `yds-profile-meta.twig`
+  - `yds-resource-meta.twig`
+- **Styles**: Type-specific SCSS files
+- **JavaScript**: `event-meta-localist.js` for event date handling
+
+### Accessibility
+
+- Semantic HTML structure for all meta types
+- Proper heading hierarchy
+- ARIA labels for interactive elements (calendar, download buttons)
+- Screen reader friendly date/time formatting
+- Color contrast meets WCAG AA standards
+- Pronouns displayed with appropriate semantic markup
+
+### Event-Specific Features
+
+**All-Day Events:**
+
+- Automatically formats all-day events (00:00 to 23:59)
+- Displays "All day" text instead of specific times
+- Removes small-caps formatting for clarity
+
+**Date Scenarios:**
+
+- Mixed past and upcoming dates
+- Upcoming only
+- Past only
+- Single date events
+
+**Calendar Integration:**
+
+- "Add to calendar" functionality
+- Multiple date handling
+- Timezone awareness
+
+## Usage Guidelines
+
+### Best Practices
+
+- **Post Meta**: Use for simple content attribution and timestamps
+- **Event Meta**: Always include complete date/time information and location details
+- **Profile Meta**: Include pronouns when available to foster inclusivity
+- **Resource Meta**: Clearly indicate resource type (video vs. document) for user expectations
+
+### Things to Avoid
+
+- Don't mix meta types on the same content piece
+- Don't omit critical information (event dates, profile titles)
+- Avoid using basic meta when more specific types are appropriate
+- Don't forget to include accessible image alt text for profile and event images
+
+## Testing
+
+For comprehensive visual regression testing with all meta variations and theme combinations, see the [Visreg page](?path=/story/molecules-meta-visreg--visreg).
+
+## Related Components
+
+- **Date Time**: Atomic component used within meta for date display
+- **Image**: Used in event, profile, and resource meta types
+- **Video Embed**: Used in resource meta for video resources
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

@@ -1,0 +1,75 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as ContentSpotlightPortraitStories from './content-spotlight-portrait.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './content-spotlight-portrait-props.yml';
+
+<Meta of={ContentSpotlightPortraitStories} name="Docs" />
+
+# Content Spotlight Portrait
+
+The Content Spotlight Portrait component displays content with a portrait-oriented image (2:3 aspect ratio), providing a visually prominent way to highlight important information, testimonials, or featured content. It supports flexible positioning, alignment options, and theme customization through the color dial system.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the content spotlight portrait's properties in real-time.
+
+<Canvas of={ContentSpotlightPortraitStories.ContentSpotlightPortrait} />
+<Controls of={ContentSpotlightPortraitStories.ContentSpotlightPortrait} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Molecule</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Image Aspect Ratio</strong>
+      </td>
+      <td>2:3 (Portrait orientation)</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-content-spotlight-portrait.twig</code>,{' '}
+        <code>_yds-content-spotlight-portrait.scss</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### When to Use
+
+- Highlighting individual people, profiles, or testimonials
+- Featuring vertical/portrait-oriented imagery
+- Creating visual hierarchy with prominent content sections
+- Showcasing featured content with portrait-style photography
+
+### Image Considerations
+
+- Use portrait-oriented images (taller than wide)
+- Recommended aspect ratio: 2:3
+- Ensure images are high quality and properly cropped
+- Consider the focal point when choosing image position
+
+## Visual Regression Testing
+
+For comprehensive testing of all theme variations and configurations, see the [Visreg page](?path=/story/molecules-content-spotlight-content-spotlight-portrait-visreg--visreg).

@@ -1,0 +1,130 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as AlertStories from './alert.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './alert-props.yml';
+
+<Meta of={AlertStories} name="Docs" />
+
+# Alert
+
+The alert component displays important messages to users that require attention or action. Alerts are dismissible and use localStorage to remember when a user has dismissed them, preventing the same alert from appearing again on subsequent visits. This component supports three distinct types: emergency, announcement, and marketing, each with unique visual styling to indicate priority and purpose.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the alert's properties in real-time. Once dismissed, alerts won't reappear until you click the reset button.
+
+<Canvas of={AlertStories.Alert} />
+<Controls of={AlertStories.Alert} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Alert Types
+
+The alert component supports three distinct types, each with specific visual styling and use cases:
+
+### Emergency Alert
+
+Critical, urgent information that requires immediate attention. Uses bold, high-contrast styling to ensure visibility.
+
+**Use for:**
+
+- Campus emergencies or safety warnings
+- System outages affecting critical services
+- Time-sensitive urgent announcements
+
+### Announcement Alert
+
+Important information that users should know about, but not urgent. Uses moderate contrast styling.
+
+**Use for:**
+
+- Important deadlines or date changes
+- Policy updates or new features
+- Scheduled maintenance notifications
+
+### Marketing Alert
+
+Promotional or informational content that may be of interest to users. Uses subtle styling that's noticeable but not disruptive.
+
+**Use for:**
+
+- Event promotions
+- New content highlights
+- Non-critical feature announcements
+
+<Canvas of={AlertStories.AlertExamples} />
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-alert.twig`
+- **Styles**: `_yds-alert.scss`
+- **JavaScript**: `yds-alert.js`
+
+### Accessibility
+
+- Proper ARIA roles and attributes for screen readers
+- Close button is keyboard accessible with clear focus indicators
+- Alert type is conveyed through both color and text for users who cannot perceive color differences
+- Semantic HTML structure ensures proper announcement by assistive technologies
+
+### Behavior
+
+- **Dismissible**: Users can close alerts by clicking the close button
+- **localStorage Persistence**: Once dismissed, the alert's state is stored in the browser's localStorage using the `alert__id`
+- **Unique IDs Required**: Each alert must have a unique `alert__id` to track dismissal correctly
+- **Reset Functionality**: In Storybook, use the "Reset dismissed alerts" button to clear localStorage and show alerts again
+- **No JavaScript Fallback**: Alerts remain visible if JavaScript is disabled (close button won't function)
+
+### Important Implementation Notes
+
+1. **Unique IDs are Critical**: Always use unique `alert__id` values. Reusing IDs will cause multiple alerts to be dismissed together.
+2. **Testing**: When testing dismissed alerts, you must clear localStorage or use the reset button.
+3. **Production Use**: Consider managing alert IDs centrally to avoid conflicts across different pages.
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use alerts sparingly to maintain their impact and avoid alert fatigue
+- Choose the appropriate alert type based on urgency and importance
+- Keep alert content concise and actionable (2-3 sentences maximum)
+- Always provide a unique `alert__id` for each distinct alert message
+- Place alerts at the top of the page where they're immediately visible
+- Include a call-to-action link when users need to take specific action
+
+### Things to Avoid
+
+- Don't use multiple emergency alerts on the same page (reduces urgency)
+- Don't use alerts for non-important information (use other components instead)
+- Don't reuse alert IDs across different alert messages
+- Avoid lengthy content in alerts (use full pages for complex information)
+- Don't use alerts for persistent navigation or UI elements
+- Don't use marketing alerts for critical information
+
+## Testing
+
+For comprehensive visual regression testing with all alert type variations and theme combinations, see the [Visreg page](?path=/story/molecules-alert--visreg).
+
+### Testing Dismissed Alerts
+
+When testing alert functionality:
+
+1. Dismiss an alert by clicking the close button
+2. The alert should disappear immediately
+3. Refresh the page - the alert should remain hidden
+4. Click "Reset dismissed alerts" button to restore all alerts
+5. The alert should reappear after reset
+
+## Related Components
+
+- **Text Field**: Use for longer-form content that doesn't require immediate attention
+- **Call to Action (CTA)**: Consider standalone CTAs for promotional content that doesn't need alert-level urgency
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

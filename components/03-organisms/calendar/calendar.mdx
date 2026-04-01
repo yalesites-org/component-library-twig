@@ -1,0 +1,338 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as CalendarStories from './calendar.stories';
+
+<Meta of={CalendarStories} name="Docs" />
+
+# Calendar
+
+The calendar component displays events in a monthly calendar format. It provides an interactive interface for viewing and navigating event schedules with modal dialogs for event details. The calendar supports month navigation, event indicators, and accessible markup for screen readers.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the calendar's properties in real-time.
+
+<Canvas of={CalendarStories.Calendar} />
+<Controls of={CalendarStories.Calendar} />
+
+## Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>month</code>
+      </td>
+      <td>
+        <code>array</code>
+      </td>
+      <td>
+        Array of weeks, each containing an array of day objects with date and
+        events data
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Calendar Structure
+
+The calendar data is organized as a two-dimensional array representing weeks and days:
+
+### Day Object Structure
+
+Each day in the calendar contains:
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>date</code>
+      </td>
+      <td>
+        <code>object</code>
+      </td>
+      <td>
+        Object containing <code>day</code>, <code>month</code>, and{' '}
+        <code>year</code> properties
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>events</code>
+      </td>
+      <td>
+        <code>array</code>
+      </td>
+      <td>Array of event objects for this day (can be empty)</td>
+    </tr>
+  </tbody>
+</table>
+
+### Event Object Structure
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>title</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Event title</td>
+    </tr>
+    <tr>
+      <td>
+        <code>time</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Event time (e.g., "09:00am to 9:45am")</td>
+    </tr>
+    <tr>
+      <td>
+        <code>category</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Event category label</td>
+    </tr>
+    <tr>
+      <td>
+        <code>type</code>
+      </td>
+      <td>
+        <code>array</code>
+      </td>
+      <td>Array of event type tags (e.g., "Public Event", "Art Event")</td>
+    </tr>
+    <tr>
+      <td>
+        <code>url</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Link to event details</td>
+    </tr>
+    <tr>
+      <td>
+        <code>description</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Optional event description (shown in modal)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>optional_link__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Optional additional link text</td>
+    </tr>
+    <tr>
+      <td>
+        <code>optional_link__url</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Optional additional link URL</td>
+    </tr>
+  </tbody>
+</table>
+
+## Features
+
+The calendar component provides several interactive features for users:
+
+<div
+  style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    gap: '1.5rem',
+    margin: '2rem 0',
+  }}
+>
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Month Navigation</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      Previous and next month navigation buttons allow users to browse through
+      different months. The current month and year are prominently displayed in
+      the header.
+    </p>
+  </div>
+
+{' '}
+
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Event Indicators</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Days with events display visual indicators showing the number of events.
+    Users can click on these indicators to view event details in a modal dialog.
+  </p>
+</div>
+
+{' '}
+
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Event Modals</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Clicking on a day with events opens a modal displaying all events for that
+    day. Each event shows title, time, category, type tags, and optional
+    description and links.
+  </p>
+</div>
+
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Responsive Layout</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      The calendar adapts to different screen sizes, maintaining readability
+      and usability on mobile devices. Touch-optimized for easy navigation on
+      tablets and phones.
+    </p>
+  </div>
+</div>
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Organism</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-calendar.twig</code>, <code>yds-calendar.js</code>,{' '}
+        <code>_yds-calendar.scss</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Accessibility</strong>
+      </td>
+      <td>
+        Semantic table structure with proper headers, ARIA labels for screen
+        readers, keyboard navigable controls, focus management for modals,
+        accessible date formatting
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Interactive Behavior</strong>
+      </td>
+      <td>
+        Month navigation with JavaScript, modal dialogs for event details, event
+        indicators clickable on desktop and touch devices, keyboard support for
+        all interactive elements
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Responsive Behavior</strong>
+      </td>
+      <td>
+        Calendar grid adjusts to viewport size, maintains readability on mobile
+        devices, optimized touch targets for interactive elements
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### Event Display
+
+- Days without events appear as standard calendar cells
+- Days with events show an indicator with the number of events
+- Multiple events on a single day are all displayed in the modal
+- Event categories and types provide visual organization and filtering context
+
+### Navigation
+
+- Use previous/next buttons to navigate between months
+- Month and year are always visible in the header
+- Calendar maintains state during navigation
+- Modal dialogs overlay the calendar and can be closed with a close button or ESC key
+
+### Event Information
+
+- Each event displays a title, time, and category
+- Event types appear as tags for quick identification
+- Optional descriptions provide additional context
+- Links allow users to navigate to full event details or related pages
+
+### Content Recommendations
+
+- Provide meaningful event titles that clearly describe the event
+- Use consistent time formatting for better scannability
+- Categorize events logically to help users find relevant content
+- Include descriptions for events that need additional context
+- Ensure event URLs link to complete information pages
+
+## Related Components
+
+- **Modal** - Dialog component used for displaying event details
+- **Button** - Navigation controls for previous/next month
+- **Link** - Event titles and optional links
+
+## Visual Regression Testing
+
+For comprehensive testing of calendar states including empty months, single events, and multiple events per day, see the [Visreg page](?path=/story/organisms-calendar-visreg--visreg).

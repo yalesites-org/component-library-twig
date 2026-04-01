@@ -1,0 +1,39 @@
+# wrapped-image-props.yml
+#
+# Wrapped Image component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+caption:
+  twigProp: wrapped_image__caption
+  name: Caption
+  type: string
+  required: false
+  description: Caption text displayed below the image (supports HTML)
+  control: text
+
+imageAlignment:
+  twigProp: wrapped_image__alignment
+  name: Image Alignment
+  type: select
+  required: false
+  description: Position of the image within the text content flow
+  default: left
+  options:
+    - left
+    - right
+  control: select
+
+imageStyle:
+  twigProp: wrapped_image__style
+  name: Image Style
+  type: select
+  required: false
+  description: Visual style controlling how the image sits relative to the content column
+  default: floated
+  options:
+    - floated
+    - offset
+  control: select
