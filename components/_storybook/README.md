@@ -229,6 +229,7 @@ example story requires. Returns an object you spread into your twig call, then
 add page-specific props after.
 
 Handles automatically:
+
 - 12 global toolbar localStorage reads (header theme, footer theme, nav
   position, menu variation, animated items, border thicknesses, accents, etc.)
 - Mapping all of those to the twig prop keys expected by page templates
