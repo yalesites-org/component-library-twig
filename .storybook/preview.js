@@ -52,6 +52,7 @@ export const globalTypes = {
         { value: 'four', title: 'Onha' },
         { value: 'five', title: 'It\'s Your Yale'},
         { value: 'six', title: 'AI'},
+        { value: 'seven', title: 'Whitney Humanities Center' },
       ],
       showName: true,
       title: 'Site: Global Theme (lever)',
