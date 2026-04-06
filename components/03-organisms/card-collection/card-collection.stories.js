@@ -152,6 +152,3 @@ export const ResourcePortraitCardCollection = ({
 ResourcePortraitCardCollection.args = {
   featured: false,
 };
-ResourcePortraitCardCollection.args = {
-  featured: false,
-};
