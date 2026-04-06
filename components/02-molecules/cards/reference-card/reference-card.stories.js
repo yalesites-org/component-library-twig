@@ -307,14 +307,19 @@ export const ResourceCard = ({
   showEyebrow,
   showTags,
   overlayText,
+  portrait,
 }) => `
-<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
+<div class='card-collection${
+  portrait ? ' card-collection--resource-portrait' : ''
+}' data-component-width='site'${
+  portrait ? " data-collection-source='resource'" : ''
+} data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${referenceCardTwig({
         card_collection__source_type: 'resource',
         card_collection__type: collectionType,
-        ...imageData.responsive_images['3x2'],
+        ...imageData.responsive_images[portrait ? '1x1.6' : '3x2'],
         reference_card__date: date,
         reference_card__eyebrow: eyebrow,
         reference_card__heading: heading,
@@ -336,6 +341,7 @@ export const ResourceCard = ({
 `;
 const resourceCardArgs = {
   showCategories: true,
+  portrait: false,
   date: referenceResourceData.reference_card__date,
 };
 ResourceCard.argTypes = addTableDefaults(
@@ -344,64 +350,12 @@ ResourceCard.argTypes = addTableDefaults(
       name: 'Date',
       type: 'string',
     },
+    portrait: {
+      name: 'Portrait',
+      type: 'boolean',
+    },
   },
   resourceCardArgs,
 );
 
 ResourceCard.args = resourceCardArgs;
-
-export const ResourcePortraitCard = ({
-  date,
-  eyebrow,
-  heading,
-  snippet,
-  collectionType,
-  featured,
-  withImage,
-  showCategories,
-  showEyebrow,
-  showTags,
-  overlayText,
-}) => `
-<div class='card-collection card-collection--resource-portrait' data-component-width='site' data-collection-source='resource' data-collection-type='${collectionType}' data-collection-featured="${featured}">
-  <div class='card-collection__inner'>
-    <ul class='card-collection__cards'>
-      ${referenceCardTwig({
-        card_collection__source_type: 'resource',
-        card_collection__type: collectionType,
-        ...imageData.responsive_images['1x1.6'],
-        reference_card__date: date,
-        reference_card__eyebrow: eyebrow,
-        reference_card__heading: heading,
-        reference_card__snippet: snippet,
-        reference_card__featured: featured ? 'true' : 'false',
-        reference_card__image: withImage ? 'true' : 'false',
-        reference_card__url: referenceResourceData.reference_card__url,
-        show_categories: showCategories,
-        show_eyebrow: showEyebrow,
-        show_tags: showTags,
-        reference_card__categories:
-          referenceResourceData.reference_card__categories,
-        reference_card__tags: referenceResourceData.reference_card__tags,
-        reference_card__overlay: overlayText,
-      })}
-    </ul>
-  </div>
-</div>
-`;
-const resourcePortraitCardArgs = {
-  showCategories: true,
-  featured: false,
-  date: referenceResourceData.reference_card__date,
-};
-ResourcePortraitCard.argTypes = addTableDefaults(
-  {
-    date: {
-      name: 'Date',
-      type: 'string',
-    },
-  },
-  resourcePortraitCardArgs,
-);
-
-ResourcePortraitCard.args = resourcePortraitCardArgs;

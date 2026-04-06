@@ -9,12 +9,44 @@ import componentProps from './card-collection-props.yml';
 
 The card collection component displays multiple cards in a flexible grid or list layout. It supports various card types including posts, events, profiles, resources, and directory listings. Card collections can be configured with different layout modes, featured positioning, and image display options to create organized, scannable content groupings across the site.
 
-## Interactive Preview
+## Card Type Variants
 
-Use the controls panel below to experiment with the card collection's properties in real-time.
+The card collection supports the following card types. Each section below is fully interactive — use the controls panel to experiment with layout, featured mode, and image options.
+
+### Post Cards
+
+Standard content cards for blog posts, news, or general content. Supports 3x2 images, headlines, excerpts, and publication date.
 
 <Canvas of={CardCollectionStories.PostCardCollection} />
 <Controls of={CardCollectionStories.PostCardCollection} />
+
+### Event Cards
+
+Specialized cards for events with date, format (online/in-person), and CTAs. Supports 3x2 images.
+
+<Canvas of={CardCollectionStories.EventCardCollection} />
+<Controls of={CardCollectionStories.EventCardCollection} />
+
+### Profile Cards
+
+People-focused cards with headshots, names, titles, and affiliations. Uses 1x1 images.
+
+<Canvas of={CardCollectionStories.ProfileCardCollection} />
+<Controls of={CardCollectionStories.ProfileCardCollection} />
+
+### Directory Listing Cards
+
+Compact profile cards for directory views. Uses the `profile-directory` layout type.
+
+<Canvas of={CardCollectionStories.DirectoryListingCardCollection} />
+<Controls of={CardCollectionStories.DirectoryListingCardCollection} />
+
+### Resource Cards
+
+Cards for downloadable resources, documents, or external links. Supports icons, file types, and overlay labels like "Pinned". Toggle the **Portrait** control to switch to the portrait display mode, which renders images at a 1:1.6 ratio.
+
+<Canvas of={CardCollectionStories.ResourceCardCollection} />
+<Controls of={CardCollectionStories.ResourceCardCollection} />
 
 ## Properties
 
@@ -26,39 +58,48 @@ Use the controls panel below to experiment with the card collection's properties
 
 {twigPropsTable(componentProps, 'optional')}
 
-## Card Type Variants
+### Property Compatibility by Card Type
 
-The card collection supports five distinct card types, each optimized for different content types:
+Not all properties apply to every card type. The controls panel in each section above reflects this automatically.
 
-<Canvas of={CardCollectionStories.PostCardCollection} />
-
-### Post Cards
-
-Standard content cards displaying blog posts, news articles, or general content. Supports 3x2 aspect ratio images, headlines, excerpts, and metadata like publication date.
-
-<Canvas of={CardCollectionStories.EventCardCollection} />
-
-### Event Cards
-
-Specialized cards for events displaying date, time, format (online/in-person), location, and event details. Supports 3x2 aspect ratio images.
-
-<Canvas of={CardCollectionStories.ProfileCardCollection} />
-
-### Profile Cards
-
-People-focused cards displaying headshots, names, titles, and affiliations. Uses 1x1 aspect ratio images optimized for portrait photography.
-
-<Canvas of={CardCollectionStories.DirectoryListingCardCollection} />
-
-### Directory Listing Cards
-
-Compact profile cards designed for directory views. Uses the <code>profile-directory</code> layout type for efficient display of multiple people.
-
-<Canvas of={CardCollectionStories.ResourceCardCollection} />
-
-### Resource Cards
-
-Cards for downloadable resources, documents, or external links. Supports icons, file types, and overlay labels like "Pinned".
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Post</th>
+      <th>Event</th>
+      <th>Profile</th>
+      <th>Directory</th>
+      <th>Resource</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Heading</td>
+      <td>Y</td><td>Y</td><td>Y</td><td>Y</td><td>Y</td>
+    </tr>
+    <tr>
+      <td>Collection Type</td>
+      <td>Y</td><td>Y</td><td>Y</td><td>—</td><td>Y</td>
+    </tr>
+    <tr>
+      <td>Featured</td>
+      <td>Y</td><td>Y</td><td>Y</td><td>Y</td><td>Y</td>
+    </tr>
+    <tr>
+      <td>With Images</td>
+      <td>Y</td><td>Y</td><td>Y</td><td>—</td><td>Y</td>
+    </tr>
+    <tr>
+      <td>Overlay</td>
+      <td>Y</td><td>—</td><td>—</td><td>—</td><td>Y</td>
+    </tr>
+    <tr>
+      <td>Portrait</td>
+      <td>—</td><td>—</td><td>—</td><td>—</td><td>Y</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Collection Layouts
 

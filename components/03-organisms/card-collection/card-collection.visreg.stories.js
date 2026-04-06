@@ -83,6 +83,19 @@ export const Visreg = () => {
       ...imageData.responsive_images['3x2'],
     })}
 
+    <h3>Resource Portrait Cards</h3>
+    ${cardCollectionTwig({
+      card_collection__source_type: 'resource',
+      card_collection__modifiers: ['resource-portrait'],
+      card_collection__type: collectionType,
+      card_collection__heading: 'Resource Portrait Card Collection',
+      card_collection__featured: 'false',
+      card_collection__with_images: withImages ? 'true' : 'false',
+      card_collection__cards: [1, 2, 3, 4],
+      ...resourceCardData,
+      ...imageData.responsive_images['1x1.6'],
+    })}
+
     <h3>Directory Listing Cards</h3>
     ${cardCollectionTwig({
       card_collection__source_type: 'directory-listing',
