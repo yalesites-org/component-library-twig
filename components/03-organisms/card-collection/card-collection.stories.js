@@ -8,6 +8,7 @@ import resourceCardData from '../../02-molecules/cards/reference-card/examples/r
 import imageData from '../../01-atoms/images/image/image.yml';
 import componentProps from './card-collection-props.yml';
 import { toArgTypes, toArgs } from '../../_storybook/component-props';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 /**
  * Storybook Definition.
@@ -65,6 +66,10 @@ export const EventCardCollection = ({
   });
 };
 
+EventCardCollection.argTypes = {
+  withOverlay: { table: { disable: true } },
+};
+
 export const ProfileCardCollection = ({
   heading,
   collectionType,
@@ -83,6 +88,10 @@ export const ProfileCardCollection = ({
     ...profileCardData,
     ...imageData.responsive_images['1x1'],
   });
+};
+
+ProfileCardCollection.argTypes = {
+  withOverlay: { table: { disable: true } },
 };
 
 export const DirectoryListingCardCollection = ({
@@ -105,17 +114,25 @@ export const DirectoryListingCardCollection = ({
   });
 };
 
+DirectoryListingCardCollection.argTypes = {
+  collectionType: { table: { disable: true } },
+  withImages: { table: { disable: true } },
+  withOverlay: { table: { disable: true } },
+};
+
 export const ResourceCardCollection = ({
   heading,
   collectionType,
   featured,
   withImages,
   withOverlay,
+  portrait,
 }) => {
   const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
 
   return cardCollectionTwig({
     card_collection__source_type: 'resource',
+    card_collection__modifiers: portrait ? ['resource-portrait'] : [],
     card_collection__type: collectionType,
     card_collection__heading: heading,
     card_collection__featured: featured ? 'true' : 'false',
@@ -123,6 +140,19 @@ export const ResourceCardCollection = ({
     card_collection__cards: items,
     reference_card__overlay: withOverlay ? 'Pinned' : '',
     ...resourceCardData,
-    ...imageData.responsive_images['3x2'],
+    ...imageData.responsive_images[portrait ? '1x1.6' : '3x2'],
   });
 };
+const resourceCardCollectionArgs = {
+  portrait: false,
+};
+ResourceCardCollection.argTypes = addTableDefaults(
+  {
+    portrait: {
+      name: 'Portrait',
+      type: 'boolean',
+    },
+  },
+  resourceCardCollectionArgs,
+);
+ResourceCardCollection.args = resourceCardCollectionArgs;

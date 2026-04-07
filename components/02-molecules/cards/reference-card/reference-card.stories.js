@@ -307,14 +307,19 @@ export const ResourceCard = ({
   showEyebrow,
   showTags,
   overlayText,
+  portrait,
 }) => `
-<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
+<div class='card-collection${
+  portrait ? ' card-collection--resource-portrait' : ''
+}' data-component-width='site'${
+  portrait ? " data-collection-source='resource'" : ''
+} data-collection-type='${collectionType}' data-collection-featured="${featured}">
   <div class='card-collection__inner'>
     <ul class='card-collection__cards'>
       ${referenceCardTwig({
         card_collection__source_type: 'resource',
         card_collection__type: collectionType,
-        ...imageData.responsive_images['3x2'],
+        ...imageData.responsive_images[portrait ? '1x1.6' : '3x2'],
         reference_card__date: date,
         reference_card__eyebrow: eyebrow,
         reference_card__heading: heading,
@@ -336,6 +341,7 @@ export const ResourceCard = ({
 `;
 const resourceCardArgs = {
   showCategories: true,
+  portrait: false,
   date: referenceResourceData.reference_card__date,
 };
 ResourceCard.argTypes = addTableDefaults(
@@ -343,6 +349,10 @@ ResourceCard.argTypes = addTableDefaults(
     date: {
       name: 'Date',
       type: 'string',
+    },
+    portrait: {
+      name: 'Portrait',
+      type: 'boolean',
     },
   },
   resourceCardArgs,
