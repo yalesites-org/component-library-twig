@@ -74,6 +74,7 @@ $component-content-spotlight-port-themes: map.deep-get(
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
 
       @if $globalTheme == 'four' {
         // Switch colors slot in order to have the selected background colors per component theme.
@@ -131,23 +132,13 @@ $component-content-spotlight-port-themes: map.deep-get(
   }
 
   &[data-component-theme='five'] {
-    --color-background: var(--color-slot-two);
-    --color-text: var(--color-slot-eight);
-    --color-heading: var(--color-slot-eight);
-    --color-link-base: var(--color-slot-eight);
-    --color-link-hover: var(--color-slot-eight);
-    --color-link-visited-base: var(--color-link-visited-light);
-    --color-link-visited-hover: var(--color-link-visited-light-hover);
-
-    [data-global-theme='four'] & {
-      --color-background: var(--component-themes-five-background);
-      --color-text: var(--component-themes-five-text);
-      --color-heading: var(--component-themes-five-heading);
-      --color-link-base: var(--color-slot-one);
-      --color-link-hover: var(--color-slot-one);
-      --color-link-visited-base: var(--color-purple-visited);
-      --color-link-visited-hover: var(--color-purple-visited-hover);
-    }
+    --color-background: var(--color-slot-nine);
+    --color-text: var(--component-themes-five-text);
+    --color-heading: var(--component-themes-five-heading);
+    --color-link-base: var(--color-slot-one);
+    --color-link-hover: var(--color-slot-one);
+    --color-link-visited-base: var(--color-purple-visited);
+    --color-link-visited-hover: var(--color-purple-visited-hover);
   }
 
   .layout--banner & {

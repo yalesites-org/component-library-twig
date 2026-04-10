@@ -88,6 +88,7 @@ blockquote {
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
 
       @if $globalTheme == 'four' {
         // Switch colors slot in order to have the selected background colors per component theme.
@@ -147,17 +148,10 @@ blockquote {
   }
 
   &[data-component-theme='five'] {
-    --color-quote-callout-background: var(--color-slot-two);
-    --color-quote-callout-accent: var(--color-slot-eight);
-    --color-quote-callout-quote: var(--color-slot-eight);
-    --color-quote-callout-attribution: var(--color-slot-eight);
-
-    [data-global-theme='four'] & {
-      --color-quote-callout-background: var(--component-themes-five-background);
-      --color-quote-callout-accent: var(--color-slot-seven);
-      --color-quote-callout-quote: var(--color-slot-seven);
-      --color-quote-callout-attribution: var(--color-slot-seven);
-    }
+    --color-quote-callout-background: var(--color-slot-nine);
+    --color-quote-callout-accent: var(--color-slot-seven);
+    --color-quote-callout-quote: var(--color-slot-seven);
+    --color-quote-callout-attribution: var(--color-slot-seven);
   }
 }
 

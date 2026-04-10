@@ -76,6 +76,7 @@ $facts-and-figures-group-component-themes: map.deep-get(
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
 
       @if $globalTheme == 'four' {
         // Switch colors slot in order to have the selected background colors per component theme.
@@ -116,15 +117,10 @@ $facts-and-figures-group-component-themes: map.deep-get(
   }
 
   &[data-component-theme='four'] {
-    --color-facts-and-figures-theme: var(--color-slot-two);
-    --color-facts-and-figures-content: var(--color-slot-eight);
+    --color-facts-and-figures-theme: var(--color-slot-nine);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
-
-    [data-global-theme='four'] & {
-      --color-facts-and-figures-theme: var(--component-themes-five-background);
-      --color-facts-and-figures-content: var(--color-slot-seven);
-    }
+    --color-facts-and-figures-content: var(--color-slot-seven);
   }
 
   &[data-component-theme='five'] {

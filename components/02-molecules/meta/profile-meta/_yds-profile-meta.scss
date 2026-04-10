@@ -46,6 +46,7 @@ $break-profile-banner-max: $break-profile-banner - 0.05;
       );
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
 
       @if $globalTheme == 'four' {
         // Switch colors slot in order to have the selected background colors per component theme.
@@ -87,17 +88,10 @@ $break-profile-banner-max: $break-profile-banner - 0.05;
   }
 
   &[data-component-theme='four'] {
-    --color-profile-background: var(--color-slot-two);
-    --color-text-shadow: var(--color-slot-one);
-    --color-text: var(--color-basic-white);
-    --color-heading: var(--color-basic-white);
-
-    [data-global-theme='four'] & {
-      --color-profile-background: var(--component-themes-five-background);
-      --color-text: var(--component-themes-five-text);
-      --color-text-shadow: var(--component-themes-five-text);
-      --color-heading: var(--component-themes-five-heading);
-    }
+    --color-profile-background: var(--color-slot-nine);
+    --color-text: var(--component-themes-five-text);
+    --color-text-shadow: var(--component-themes-five-text);
+    --color-heading: var(--component-themes-five-heading);
   }
 
   &[data-component-theme='five'] {

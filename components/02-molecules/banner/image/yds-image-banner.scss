@@ -73,6 +73,7 @@ $break-image-banner: tokens.$break-m;
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
 
       @if $globalTheme == 'four' {
         // Switch colors slot in order to have the selected background colors per component theme.
@@ -142,25 +143,15 @@ $break-image-banner: tokens.$break-m;
   }
 
   &[data-component-theme='five'] {
-    --color-image-banner-background: var(--color-slot-two);
-    --color-image-banner-text: var(--color-slot-eight);
-    --color-image-banner-heading: var(--color-slot-eight);
-    --color-image-banner-action: var(--color-slot-eight);
-    --color-image-banner-action-secondary: var(--color-slot-one);
+    --color-image-banner-background: var(--color-slot-nine);
+    --color-image-banner-text: var(--component-themes-five-text);
+    --color-image-banner-heading: var(--component-themes-five-heading);
+    --color-image-banner-action: var(--color-slot-seven);
+    --color-image-banner-action-secondary: var(--color-slot-eight);
     --color-link-base: var(--color-image-banner-heading);
     --color-link-hover: var(--color-image-banner-heading);
-    --color-link-visited-base: var(--color-link-visited-light);
-    --color-link-visited-hover: var(--color-link-visited-light-hover);
-
-    [data-global-theme='four'] & {
-      --color-image-banner-background: var(--component-themes-five-background);
-      --color-image-banner-text: var(--component-themes-five-text);
-      --color-image-banner-heading: var(--component-themes-five-heading);
-      --color-image-banner-action: var(--color-slot-seven);
-      --color-image-banner-action-secondary: var(--color-slot-eight);
-      --color-link-visited-base: var(--color-purple-visited);
-      --color-link-visited-hover: var(--color-purple-visited-hover);
-    }
+    --color-link-visited-base: var(--color-purple-visited);
+    --color-link-visited-hover: var(--color-purple-visited-hover);
   }
 }
 
