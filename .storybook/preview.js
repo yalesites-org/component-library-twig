@@ -90,6 +90,7 @@ export const parameters = {
         'Atoms',
         'Molecules',
         'Organisms',
+        ['Card Collection', ['Docs', 'Visreg', '*']],
         'Page Layouts',
         'Page Examples',
         ['Overview', '*'],
