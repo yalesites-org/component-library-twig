@@ -25,6 +25,7 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
       );
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
 
       @if $globalTheme == 'four' {
         // Switch colors slot in order to have the selected background colors per component theme.
@@ -64,6 +65,10 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   &[data-component-theme='five'] {
     --color-link-grid-action: var(--color-slot-two);
+  }
+
+  &[data-component-theme='six'] {
+    --color-link-grid-action: var(--color-slot-nine);
   }
 
   // if used in the layout component, remove the top margin

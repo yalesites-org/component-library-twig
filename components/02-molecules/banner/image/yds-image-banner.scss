@@ -143,9 +143,21 @@ $break-image-banner: tokens.$break-m;
   }
 
   &[data-component-theme='five'] {
+    --color-image-banner-background: var(--color-slot-two);
+    --color-image-banner-text: var(--color-slot-eight);
+    --color-image-banner-heading: var(--color-slot-eight);
+    --color-image-banner-action: var(--color-slot-eight);
+    --color-image-banner-action-secondary: var(--color-slot-one);
+    --color-link-base: var(--color-image-banner-heading);
+    --color-link-hover: var(--color-image-banner-heading);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
+  }
+
+  &[data-component-theme='six'] {
     --color-image-banner-background: var(--color-slot-nine);
-    --color-image-banner-text: var(--component-themes-five-text);
-    --color-image-banner-heading: var(--component-themes-five-heading);
+    --color-image-banner-text: var(--color-slot-seven);
+    --color-image-banner-heading: var(--color-slot-seven);
     --color-image-banner-action: var(--color-slot-seven);
     --color-image-banner-action-secondary: var(--color-slot-eight);
     --color-link-base: var(--color-image-banner-heading);

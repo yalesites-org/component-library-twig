@@ -88,10 +88,10 @@ $break-profile-banner-max: $break-profile-banner - 0.05;
   }
 
   &[data-component-theme='four'] {
-    --color-profile-background: var(--color-slot-nine);
-    --color-text: var(--component-themes-five-text);
-    --color-text-shadow: var(--component-themes-five-text);
-    --color-heading: var(--component-themes-five-heading);
+    --color-profile-background: var(--color-slot-two);
+    --color-text-shadow: var(--color-slot-one);
+    --color-text: var(--color-basic-white);
+    --color-heading: var(--color-basic-white);
   }
 
   &[data-component-theme='five'] {
@@ -99,6 +99,13 @@ $break-profile-banner-max: $break-profile-banner - 0.05;
     --color-text-shadow: var(--color-slot-one);
     --color-text: var(--color-gray-800);
     --color-heading: var(--color-gray-800);
+  }
+
+  &[data-component-theme='six'] {
+    --color-profile-background: var(--color-slot-nine);
+    --color-text: var(--color-slot-seven);
+    --color-text-shadow: var(--color-slot-seven);
+    --color-heading: var(--color-slot-seven);
   }
 
   @media (max-width: tokens.$break-mobile-max) {

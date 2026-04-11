@@ -132,9 +132,19 @@ $component-content-spotlight-port-themes: map.deep-get(
   }
 
   &[data-component-theme='five'] {
+    --color-background: var(--color-slot-two);
+    --color-text: var(--color-slot-eight);
+    --color-heading: var(--color-slot-eight);
+    --color-link-base: var(--color-slot-eight);
+    --color-link-hover: var(--color-slot-eight);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
+  }
+
+  &[data-component-theme='six'] {
     --color-background: var(--color-slot-nine);
-    --color-text: var(--component-themes-five-text);
-    --color-heading: var(--component-themes-five-heading);
+    --color-text: var(--color-slot-seven);
+    --color-heading: var(--color-slot-seven);
     --color-link-base: var(--color-slot-one);
     --color-link-hover: var(--color-slot-one);
     --color-link-visited-base: var(--color-purple-visited);

@@ -60,6 +60,7 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
 
       @if $globalTheme == 'four' {
         // Set color slot for the text on light background.
@@ -123,6 +124,14 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &[data-component-theme='five'] {
     --color-tile-item-theme: var(--color-slot-five);
     --color-tile-item-content: var(--color-slot-eight);
+    --color-tile-animation-border: var(--color-slot-three);
+  }
+
+  &[data-component-theme='six'] {
+    --color-tile-item-theme: var(--color-slot-nine);
+    --color-tile-item-content: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-link-visited);
+    --color-link-visited-hover: var(--color-link-visited-hover);
     --color-tile-animation-border: var(--color-slot-three);
   }
 

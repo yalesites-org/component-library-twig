@@ -117,14 +117,21 @@ $facts-and-figures-group-component-themes: map.deep-get(
   }
 
   &[data-component-theme='four'] {
-    --color-facts-and-figures-theme: var(--color-slot-nine);
+    --color-facts-and-figures-theme: var(--color-slot-two);
+    --color-facts-and-figures-content: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
-    --color-facts-and-figures-content: var(--color-slot-seven);
   }
 
   &[data-component-theme='five'] {
     --color-facts-and-figures-theme: var(--color-slot-three);
+    --color-facts-and-figures-content: var(--color-slot-seven);
+  }
+
+  &[data-component-theme='six'] {
+    --color-facts-and-figures-theme: var(--color-slot-nine);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
     --color-facts-and-figures-content: var(--color-slot-seven);
   }
 }

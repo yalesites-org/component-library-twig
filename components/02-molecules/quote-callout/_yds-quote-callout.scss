@@ -148,6 +148,13 @@ blockquote {
   }
 
   &[data-component-theme='five'] {
+    --color-quote-callout-background: var(--color-slot-two);
+    --color-quote-callout-accent: var(--color-slot-eight);
+    --color-quote-callout-quote: var(--color-slot-eight);
+    --color-quote-callout-attribution: var(--color-slot-eight);
+  }
+
+  &[data-component-theme='six'] {
     --color-quote-callout-background: var(--color-slot-nine);
     --color-quote-callout-accent: var(--color-slot-seven);
     --color-quote-callout-quote: var(--color-slot-seven);
