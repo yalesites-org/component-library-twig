@@ -133,6 +133,9 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-link-visited-base: var(--color-link-visited);
     --color-link-visited-hover: var(--color-link-visited-hover);
     --color-tile-animation-border: var(--color-slot-three);
+
+    background-color: var(--color-tile-item-theme);
+    color: var(--color-tile-item-content);
   }
 
   &__inner {

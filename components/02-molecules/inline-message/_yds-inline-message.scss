@@ -126,6 +126,9 @@ $component-inline-message-themes: map.deep-get(
     --color-link-hover: var(--color-slot-seven);
     --color-link-visited-base: var(--color-slot-seven);
     --color-link-visited-hover: var(--color-slot-seven);
+
+    background-color: var(--color-inline-message-background);
+    color: var(--color-inline-message-text);
   }
 }
 

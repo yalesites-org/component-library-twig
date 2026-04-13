@@ -133,6 +133,9 @@ $facts-and-figures-group-component-themes: map.deep-get(
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
     --color-facts-and-figures-content: var(--color-slot-seven);
+
+    background-color: var(--color-facts-and-figures-theme);
+    color: var(--color-facts-and-figures-content);
   }
 }
 
