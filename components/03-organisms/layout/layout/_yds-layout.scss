@@ -65,6 +65,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
 
       @if $globalTheme == 'four' {
         // Switch colors slot in order to have the selected background colors per component theme.
@@ -123,6 +124,19 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-layout-border: var(--color-slot-four);
     --color-heading: var(--color-slot-eight);
     --color-link-grid-action: var(--color-slot-four);
+  }
+
+  &[data-component-theme='five'] {
+    --color-layout-theme: var(--color-slot-nine);
+    --color-layout-content: var(--color-slot-seven);
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
+    --color-heading: var(--color-slot-seven);
+    --color-layout-border: var(--color-slot-six);
+    --color-link-grid-action: var(--color-slot-six);
+
+    background-color: var(--color-layout-theme);
+    color: var(--color-layout-content);
   }
 
   // if we're not using a component theme, add top and bottom margin
