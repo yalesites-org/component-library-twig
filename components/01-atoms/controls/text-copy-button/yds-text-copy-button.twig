@@ -25,7 +25,7 @@
 		</span>
 	{% endif %}
 
-	<button {{ bem('button', [], text_copy_button__base_class) }}>
+	<button {{ bem('button', [], text_copy_button__base_class) }}{% if text_copy_button__pre_text %} aria-label="Copy {{ text_copy_button__pre_text }}"{% endif %}>
 		{% block text_copy_button__content %}
 			{{- text_copy_button__content -}}
 		{% endblock %}
