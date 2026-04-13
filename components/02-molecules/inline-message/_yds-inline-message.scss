@@ -129,6 +129,10 @@ $component-inline-message-themes: map.deep-get(
 
     background-color: var(--color-inline-message-background);
     color: var(--color-inline-message-text);
+
+    [data-global-theme='four'] & {
+      --color-inline-message-text: var(--global-themes-four-colors-slot-six);
+    }
   }
 }
 
