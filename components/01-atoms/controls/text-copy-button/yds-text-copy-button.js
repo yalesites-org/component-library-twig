@@ -31,12 +31,6 @@
  *
  * @property {string}      detail.text   - The plain text that was copied.
  * @property {HTMLElement} detail.button - The button element that was clicked.
- *
- * ## Screen reader announcements
- *
- * Regardless of whether the default feedback is suppressed, a `role="status"`
- * live region always announces "Copied [text] to clipboard" to assistive
- * technology (WCAG 4.1.3 Status Messages, Level AA).
  */
 Drupal.behaviors.textCopyButton = {
   attach(context) {
@@ -76,17 +70,11 @@ Drupal.behaviors.textCopyButton = {
             });
             const useDefault = btn.dispatchEvent(copyEvent);
 
-            // Announce copy result to screen readers (WCAG 4.1.3 Status Messages).
-            Drupal.behaviors.textCopyButton.announce(
-              `Copied ${text} to clipboard`,
-            );
-
             if (useDefault) {
-              // Default text feedback — unchanged from original behavior.
               btn.textContent = 'Copied to clipboard';
               setTimeout(() => {
                 btn.textContent = '(Copy)';
-              }, 1200);
+              }, 1700);
             }
           })
           .catch(() => {
@@ -94,26 +82,5 @@ Drupal.behaviors.textCopyButton = {
           });
       });
     });
-  },
-
-  /**
-   * Announces a message to screen readers via a shared aria-live region.
-   * The region is created on first call and reused thereafter.
-   *
-   * @param {string} message - Plain text to announce.
-   */
-  announce(message) {
-    let region = document.querySelector('.text-copy-button__status');
-    if (!region) {
-      region = document.createElement('div');
-      region.className = 'text-copy-button__status visually-hidden';
-      region.setAttribute('role', 'status');
-      region.setAttribute('aria-live', 'polite');
-      document.body.appendChild(region);
-    }
-    region.textContent = message;
-    setTimeout(() => {
-      region.textContent = '';
-    }, 1200);
   },
 };
