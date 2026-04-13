@@ -56,4 +56,5 @@ theme:
     - two
     - three
     - four
+    - five
   control: select
