@@ -1,5 +1,7 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import getGlobalThemes from './color-global-themes';
+import colorMeta from './color-data.yml';
+import '../../01-atoms/controls/text-copy-button/yds-text-copy-button';
 
 import colorsTwig from './colors.twig';
 import colorComponentThemeTwig from './color-component-theme-pairings.twig';
@@ -21,7 +23,7 @@ import { exampleSiteNameImageSvg } from '../../_storybook/theme-constants';
 import tabData from '../../02-molecules/tabs/tabs.yml';
 import bannerData from '../../02-molecules/banner/banner.yml';
 
-function hslToHex(hslStr) {
+function hslToComponents(hslStr) {
   const match = hslStr.match(
     /hsl\((\d+(?:\.\d+)?),\s*(\d+(?:\.\d+)?)%,\s*(\d+(?:\.\d+)?)%\)/,
   );
@@ -33,32 +35,108 @@ function hslToHex(hslStr) {
   const f = (n) => {
     const k = (n + h / 30) % 12;
     const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-    return Math.round(255 * color)
-      .toString(16)
-      .padStart(2, '0');
+    return Math.round(255 * color);
   };
-  return `#${f(0)}${f(8)}${f(4)}`;
+  return { r: f(0), g: f(8), b: f(4) };
 }
 
-function addHex(colorGroup) {
+function hslToHex(hslStr) {
+  const rgb = hslToComponents(hslStr);
+  if (!rgb) return null;
+  const toHex = (n) => n.toString(16).padStart(2, '0');
+  return `#${toHex(rgb.r)}${toHex(rgb.g)}${toHex(rgb.b)}`;
+}
+
+function hslToRgb(hslStr) {
+  const rgb = hslToComponents(hslStr);
+  if (!rgb) return null;
+  return `${rgb.r}, ${rgb.g}, ${rgb.b}`;
+}
+
+function mergeColorData(tokenGroup, metaGroup = {}) {
   return Object.fromEntries(
-    Object.entries(colorGroup).map(([name, value]) => [
-      name,
-      { value, hex: hslToHex(value) },
-    ]),
+    Object.entries(tokenGroup).map(([key, hslValue]) => {
+      const meta = metaGroup[key] || {};
+      return [
+        key,
+        {
+          name: meta.name || key,
+          hex: hslToHex(hslValue),
+          rgb: hslToRgb(hslValue),
+          cmyk: meta.cmyk || '--',
+          pantone: meta.pantone || '--',
+        },
+      ];
+    }),
   );
 }
 
+const colorGroups = [
+  'blue',
+  'green',
+  'orange',
+  'yellow',
+  'basic',
+  'gray',
+  'brown',
+  'purple',
+];
+
 const colorsData = {
-  colors: {
-    blue: addHex(tokens.color.blue),
-    green: addHex(tokens.color.green),
-    orange: addHex(tokens.color.orange),
-    yellow: addHex(tokens.color.yellow),
-    basic: addHex(tokens.color.basic),
-    gray: addHex(tokens.color.gray),
-  },
+  colors: Object.fromEntries(
+    colorGroups
+      .filter((g) => tokens.color[g])
+      .map((g) => [g, mergeColorData(tokens.color[g], colorMeta[g])]),
+  ),
 };
+
+// Shared live region for copy announcements. aria-live="polite" (without
+// aria-atomic) announces to VoiceOver on all activation methods — CTRL+OPT+Space,
+// Enter, and mouse click — regardless of where the VO cursor is. Intentionally
+// NOT role="status" (which implies aria-atomic="true"): aria-atomic causes
+// VoiceOver to treat clearing the region as a full update, shifting its virtual
+// cursor and auto-reading forward. Without aria-atomic, an empty-string update
+// has no content and VoiceOver ignores it, so clearing is safe.
+// Created eagerly so VoiceOver registers it before the first copy — lazy creation
+// causes the first announcement to be missed.
+// ID guard prevents duplicates on Storybook HMR re-evaluation.
+let clColorsAnnouncer = document.getElementById('cl-colors-copy-announcer');
+if (!clColorsAnnouncer) {
+  clColorsAnnouncer = document.createElement('div');
+  clColorsAnnouncer.id = 'cl-colors-copy-announcer';
+  clColorsAnnouncer.setAttribute('aria-live', 'polite');
+  Object.assign(clColorsAnnouncer.style, {
+    position: 'absolute',
+    width: '1px',
+    height: '1px',
+    overflow: 'hidden',
+    clip: 'rect(0,0,0,0)',
+    whiteSpace: 'nowrap',
+  });
+  document.body.appendChild(clColorsAnnouncer);
+}
+
+// Guard prevents stacking duplicate listeners on HMR re-evaluation.
+// Stored as a data attribute on the announcer element to avoid ESLint
+// no-underscore-dangle restrictions on custom document properties.
+if (!clColorsAnnouncer.dataset.listenerAttached) {
+  clColorsAnnouncer.dataset.listenerAttached = 'true';
+  document.addEventListener('text-copy-button:copied', (e) => {
+    if (!e.detail.button.closest('.cl-colors')) return;
+    e.preventDefault();
+    const btn = e.detail.button;
+
+    clColorsAnnouncer.textContent = 'Copied!';
+
+    btn.classList.add('cl-colors__copy-btn--copied');
+    setTimeout(() => {
+      btn.classList.remove('cl-colors__copy-btn--copied');
+      // Safe to clear without aria-atomic — empty update has no content for
+      // VoiceOver to announce or navigate to.
+      clColorsAnnouncer.textContent = '';
+    }, 1700);
+  });
+}
 
 const colorComponentThemeData = { themes: tokens['component-themes'] };
 const colorBasicThemeData = { themes: tokens['basic-themes'] };
