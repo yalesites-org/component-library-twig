@@ -116,9 +116,10 @@ if (!clColorsAnnouncer) {
   document.body.appendChild(clColorsAnnouncer);
 }
 
-// Guard prevents stacking duplicate listeners on HMR re-evaluation.
-// Stored as a data attribute on the announcer element to avoid ESLint
-// no-underscore-dangle restrictions on custom document properties.
+// Guard prevents stacking duplicate listeners on Storybook HMR re-evaluation.
+// A module-level variable would reset on HMR while the DOM node persists, so
+// the flag lives on the announcer element — which survives re-evaluation with
+// its ID intact — rather than in a module-level variable.
 if (!clColorsAnnouncer.dataset.listenerAttached) {
   clColorsAnnouncer.dataset.listenerAttached = 'true';
   document.addEventListener('text-copy-button:copied', (e) => {
@@ -128,8 +129,12 @@ if (!clColorsAnnouncer.dataset.listenerAttached) {
 
     clColorsAnnouncer.textContent = 'Copied!';
 
+    // Clear any in-flight timeout on this button before starting a new one.
+    // Without this, rapid clicks accumulate timeouts that remove --copied at
+    // staggered times, leaving the button in the wrong visual state.
+    clearTimeout(Number(btn.dataset.copyTimeout));
     btn.classList.add('cl-colors__copy-btn--copied');
-    setTimeout(() => {
+    btn.dataset.copyTimeout = setTimeout(() => {
       btn.classList.remove('cl-colors__copy-btn--copied');
       // Safe to clear without aria-atomic — empty update has no content for
       // VoiceOver to announce or navigate to.

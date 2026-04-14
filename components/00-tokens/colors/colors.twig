@@ -49,9 +49,7 @@
                   <svg class="cl-colors__icon-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
-                  {# Visually-hidden label: screen readers read this as the button name.
-                     JS updates its textContent on copy — same mechanism as text-copy-button's
-                     default textContent swap, which is the reliable cross-SR announcement. #}
+                  {# Visually-hidden label read by screen readers as the button's accessible name. #}
                   <span {{ bem('copy-label', [], colors__base_class) }}>Copy {{ label }} {{ val }}</span>
                 </button>
               </div>

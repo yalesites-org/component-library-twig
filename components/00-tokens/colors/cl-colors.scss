@@ -1,3 +1,7 @@
+// Success green used for the copy-button check icon. No Yale token equivalent —
+// defined here so there is one place to update it if the value ever changes.
+$cl-colors-copy-success: #16a34a;
+
 // Card grid — scoped under .cl-colors so it doesn't affect color-global-themes.twig,
 // which also uses .cl-colors__list and .cl-colors__item but without a .cl-colors wrapper.
 .cl-colors {
@@ -11,7 +15,7 @@
   }
 
   .cl-colors__item {
-    background: #fff;
+    background: var(--color-basic-white);
     border: 1px solid #e5e7eb;
     box-shadow: 0 1px 3px rgb(0 0 0 / 8%);
     overflow: hidden;
@@ -107,7 +111,7 @@
     }
 
     &:focus-visible {
-      outline: 2px solid #00356b;
+      outline: 2px solid var(--color-blue-yale);
       outline-offset: 2px;
     }
 
@@ -121,12 +125,12 @@
     }
 
     &--copied {
-      color: #16a34a;
+      color: $cl-colors-copy-success;
 
       // Keep green during hover — the base &:hover rule has equal specificity
       // but appears earlier in source, so this later rule wins the cascade.
       &:hover {
-        color: #16a34a;
+        color: $cl-colors-copy-success;
       }
 
       .cl-colors__icon-copy {
