@@ -39,6 +39,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
       );
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
     }
   }
 
@@ -84,7 +85,9 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   [data-component-theme]:not(
       [data-component-theme='default'],
-      [data-component-theme='two']
+      [data-component-theme='two'],
+      [data-component-theme='five'],
+      [data-component-theme='six']
     )
     & {
     --color-border: var(--color-gray-400);
