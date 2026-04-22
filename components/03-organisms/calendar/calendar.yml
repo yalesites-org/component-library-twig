@@ -229,6 +229,9 @@
         type:
           - 'Public Event'
           - 'Community Event'
+          - 'Campus Event'
+          - 'Lecture'
+          - 'Workshop'
         description: 'Lin Zhong, professor of computer science, has been named a fellow of the Association for Computing Machinery (ACM).'
       - category: 'computer science'
         title: 'Music in Schools Initiative - Morse Summer Music Academy'
