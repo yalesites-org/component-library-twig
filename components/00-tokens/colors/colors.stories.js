@@ -82,13 +82,41 @@ const colorGroups = [
   'purple',
 ];
 
-const colorsData = {
-  colors: Object.fromEntries(
-    colorGroups
-      .filter((g) => tokens.color[g])
-      .map((g) => [g, mergeColorData(tokens.color[g], colorMeta[g])]),
-  ),
-};
+const hiddenColors = [
+  'purple.visited',
+  'purple.visited-hover',
+  'purple.visited-light',
+  'purple.visited-light-hover',
+];
+
+function getAvailableGroups() {
+  return colorGroups.filter((g) => tokens.color[g]);
+}
+
+function isVisibleColor(group, key) {
+  return !hiddenColors.includes(`${group}.${key}`);
+}
+
+function filterHiddenColors(group, mergedColors) {
+  const allColors = Object.entries(mergedColors);
+  const visibleColors = allColors.filter(([key]) => isVisibleColor(group, key));
+  return Object.fromEntries(visibleColors);
+}
+
+function isNonEmptyGroup([, colors]) {
+  return Object.keys(colors).length > 0;
+}
+
+function buildVisibleColorGroups() {
+  const groups = getAvailableGroups().map((g) => [
+    g,
+    filterHiddenColors(g, mergeColorData(tokens.color[g], colorMeta[g])),
+  ]);
+
+  return Object.fromEntries(groups.filter(isNonEmptyGroup));
+}
+
+const colorsData = { colors: buildVisibleColorGroups() };
 
 // Shared live region for copy announcements. aria-live="polite" (without
 // aria-atomic) announces to VoiceOver on all activation methods — CTRL+OPT+Space,
