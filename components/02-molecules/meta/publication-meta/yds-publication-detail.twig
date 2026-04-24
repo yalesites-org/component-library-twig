@@ -1,0 +1,233 @@
+{#
+ # Publication Detail meta block
+ #
+ # Heavy meta header used at the top of a Resource (publication) full page.
+ # Mirrors the structure of @molecules/meta/event-meta/yds-event-meta-localist:
+ # a page-title shell with an overline + meta region that contains a
+ # `details-wrapper` grid of fields.
+ #
+ # Available Variables:
+ # - publication_detail__heading                 (string)  Title.
+ # - publication_detail__category                (string)  Category overline.
+ # - publication_detail__publish_date            (string)  Pre-formatted date.
+ # - publication_detail__authors                 (array)   [{ label, url }]
+ # - publication_detail__journal_publication_name  (string)
+ # - publication_detail__journal_publication_issue (string)
+ # - publication_detail__citation                (string)  Rendered HTML.
+ # - publication_detail__abstract                (string)  Rendered HTML.
+ # - publication_detail__external_source         (object)  { url, title }
+ # - publication_detail__download_url            (string)
+ # - publication_detail__download_label          (string)
+ # - publication_detail__download_aria_label     (string)
+ # - publication_detail__resource_type           (string)  Media bundle.
+ # - publication_detail__media_id                (int)     For video embed.
+ # - publication_detail__document_image          (render)  Thumbnail render array.
+ # - publication_detail__metadata                (array)   Keyed taxonomy data:
+ #     { field_name: { label: 'Audience', items: [{ '#title', '#url' }, ...] } }
+ #}
+
+{% set publication_detail__base_class = 'publication-detail' %}
+
+{% set publication_detail__attributes = {
+  'data-component-width': publication_detail__width|default('site'),
+  class: bem(publication_detail__base_class, [], publication_detail__blockname),
+} %}
+
+{# Anything to show in the grid? #}
+{% set has_grid =
+  publication_detail__authors|length
+  or publication_detail__publish_date
+  or publication_detail__external_source.url
+  or publication_detail__download_url
+  or publication_detail__journal_publication_name
+  or publication_detail__journal_publication_issue
+  or publication_detail__citation
+  or publication_detail__metadata|length
+%}
+
+<div {{ add_attributes(publication_detail__attributes) }} data-embedded-components>
+  {% embed "@molecules/page-title/yds-page-title.twig" with {
+    page_title__heading: publication_detail__heading,
+    page_title__blockname: publication_detail__base_class,
+    page_title__variation: 'event',
+  } %}
+
+    {% block page_title__overline %}
+      {% if publication_detail__category %}
+        {% include "@atoms/typography/text/yds-text.twig" with {
+          text__blockname: publication_detail__base_class,
+          text__content: publication_detail__category,
+          text__base_class: 'category',
+        } %}
+      {% endif %}
+    {% endblock %}
+
+    {% block page_title__image %}
+      {% if publication_detail__document_image or publication_detail__download_url %}
+        <div {{ bem('image-wrap', [], publication_detail__base_class) }}>
+          {% if publication_detail__document_image %}
+            <div {{ bem('image', [], publication_detail__base_class) }}>
+              {{ publication_detail__document_image }}
+            </div>
+          {% endif %}
+          {% if publication_detail__download_url %}
+            {% set download_cta_content %}
+              {{ publication_detail__download_label|default('Download') }}
+              {% include "@atoms/images/icons/_yds-icon.twig" with {
+                icon__name: 'circle-down',
+                icon__decorative: true,
+                icon__base_class: 'cta__icon',
+              } %}
+            {% endset %}
+            <div {{ bem('download', [], publication_detail__base_class) }}>
+              {% include "@atoms/controls/cta/yds-cta.twig" with {
+                cta__content: download_cta_content,
+                cta__href: publication_detail__download_url,
+                cta__component_theme: 'one',
+                cta__attributes: {
+                  'aria-label': publication_detail__download_aria_label,
+                },
+              } %}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endblock %}
+
+    {% block page_title__meta %}
+      <div {{ bem('inner', [], publication_detail__base_class) }}>
+
+        {# Grid of detail fields #}
+        {% if has_grid %}
+          <div {{ bem('details-wrapper', [], publication_detail__base_class) }}>
+
+            {% if publication_detail__authors|length %}
+              <div {{ bem('authors', [], publication_detail__base_class) }}>
+                <label {{ bem('field__label', [], publication_detail__base_class) }}>
+                  {{ publication_detail__authors|length > 1 ? 'Authors' : 'Author' }}
+                </label>
+                <ul {{ bem('authors-list', [], publication_detail__base_class) }}>
+                  {% for author in publication_detail__authors %}
+                    <li {{ bem('authors-list__item', [], publication_detail__base_class) }}>
+                      {% if author.url %}
+                        <a href="{{ author.url }}">{{ author.label }}</a>
+                      {% else %}
+                        {{ author.label }}
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+
+            {% if publication_detail__publish_date %}
+              <div {{ bem('publish-date', [], publication_detail__base_class) }}>
+                <label {{ bem('field__label', [], publication_detail__base_class) }}>
+                  Published
+                </label>
+                <div {{ bem('publish-date__value', [], publication_detail__base_class) }}>
+                  {{ publication_detail__publish_date }}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if publication_detail__journal_publication_name %}
+              <div {{ bem('journal-name', [], publication_detail__base_class) }}>
+                <label {{ bem('field__label', [], publication_detail__base_class) }}>
+                  Publication
+                </label>
+                <div {{ bem('journal-name__value', [], publication_detail__base_class) }}>
+                  {{ publication_detail__journal_publication_name }}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if publication_detail__journal_publication_issue %}
+              <div {{ bem('journal-issue', [], publication_detail__base_class) }}>
+                <label {{ bem('field__label', [], publication_detail__base_class) }}>
+                  Issue
+                </label>
+                <div {{ bem('journal-issue__value', [], publication_detail__base_class) }}>
+                  {{ publication_detail__journal_publication_issue }}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if publication_detail__external_source.url %}
+              <div {{ bem('external-source', [], publication_detail__base_class) }}>
+                <label {{ bem('field__label', [], publication_detail__base_class) }}>
+                  External Source
+                </label>
+                <div {{ bem('external-source__link', [], publication_detail__base_class) }}>
+                  {% include "@atoms/controls/cta/yds-cta.twig" with {
+                    cta__content: publication_detail__external_source.title|default('Visit Source'),
+                    cta__href: publication_detail__external_source.url,
+                    cta__component_theme: 'one',
+                    cta__style: 'outline',
+                  } %}
+                </div>
+              </div>
+            {% endif %}
+
+            {# Generic taxonomy cells from metadata array #}
+            {% for field_name, group in publication_detail__metadata %}
+              {% if group.items|length %}
+                <div {{ bem('taxonomy', [field_name|replace({'field_': ''})|replace({'_': '-'})], publication_detail__base_class) }}>
+                  <label {{ bem('field__label', [], publication_detail__base_class) }}>
+                    {{ group.label }}
+                  </label>
+                  <ul {{ bem('taxonomy-list', [], publication_detail__base_class) }}>
+                    {% for item in group.items %}
+                      <li {{ bem('taxonomy-list__item', [], publication_detail__base_class) }}>
+                        {{ item }}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+            {% endfor %}
+
+            {% if publication_detail__citation %}
+              {% set citation_id = 'publication-citation-' ~ random() %}
+              <div {{ bem('citation', [], publication_detail__base_class) }}>
+                <label {{ bem('field__label', [], publication_detail__base_class) }}>
+                  Citation
+                </label>
+                <div id="{{ citation_id }}" {{ bem('citation__value', [], publication_detail__base_class) }}>
+                  {{ publication_detail__citation }}
+                </div>
+                <button
+                  type="button"
+                  {{ bem('citation__copy', [], publication_detail__base_class) }}
+                  data-copy-citation
+                  data-copy-target="#{{ citation_id }}"
+                >
+                  Copy citation
+                </button>
+              </div>
+            {% endif %}
+
+          </div>
+        {% endif %}
+
+        {% if publication_detail__abstract %}
+          <div {{ bem('abstract', [], publication_detail__base_class) }}>
+            <label {{ bem('field__label', [], publication_detail__base_class) }}>
+              Abstract
+            </label>
+            <div {{ bem('abstract__value', [], publication_detail__base_class) }}>
+              {{ publication_detail__abstract }}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if publication_detail__resource_type == 'video' and publication_detail__media_id %}
+          <div {{ bem('video', [], publication_detail__base_class) }}>
+            {{ video_embed__content__1 }}
+          </div>
+        {% endif %}
+
+      </div>
+    {% endblock %}
+  {% endembed %}
+</div>

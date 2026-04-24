@@ -1,0 +1,221 @@
+@use '../../../00-tokens/tokens';
+@use '../../../01-atoms/atoms';
+
+/* Publication Detail
+ *
+ * Heavy meta header for the Resource (publication) full page. Visually
+ * mirrors the event-meta-localist `details-wrapper` pattern: stacked on
+ * mobile, multi-column grid with subtle dividers at $break-l.
+ *
+ * Co-located with the publication-meta molecule (used for card / list_item
+ * / condensed view modes) to keep all publication treatments in one place.
+ */
+
+$publication-detail-borders-max: tokens.$break-l - 0.5;
+
+.publication-detail {
+  color: var(--color-basic-brown-gray);
+
+  /* Constrain the thumbnail image rendered into page_title__image so it sits
+   * as a small column on the right of the heading rather than full width.
+   * The download CTA stacks directly underneath. */
+  &__image-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-spacing-3);
+    width: 100%;
+    max-width: 200px;
+
+    @media (min-width: tokens.$break-l) {
+      flex: 0 0 200px;
+    }
+  }
+
+  &__image {
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid currentcolor;
+    }
+  }
+
+  &__download a {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: var(--size-spacing-2);
+    padding: var(--size-spacing-2) var(--size-spacing-4);
+    text-align: center;
+    font-size: var(--font-size-16);
+
+    .cta__icon {
+      width: 1em;
+      height: 1em;
+      flex: 0 0 1em;
+    }
+  }
+
+  &__inner {
+    display: flex;
+    flex-flow: column wrap;
+    border-top: var(--border-thickness-1) solid var(--color-divider);
+    margin-top: var(--size-spacing-6);
+  }
+
+  &__details-wrapper {
+    display: flex;
+    flex-flow: column wrap;
+
+    @media (min-width: tokens.$break-l) {
+      flex-flow: row wrap;
+    }
+
+    > * {
+      position: relative;
+      padding: var(--size-spacing-6);
+      flex: 1 auto;
+
+      @media (max-width: $publication-detail-borders-max) {
+        border-bottom: var(--border-thickness-1) solid var(--color-divider);
+      }
+
+      @media (min-width: tokens.$break-l) {
+        border-bottom: var(--border-thickness-1) solid var(--color-divider);
+        flex: 1 0 33.33%;
+
+        /* Vertical separator on cells that don't start a new row.
+         * The first child of each row of three never gets one. */
+        &:not(:nth-child(3n + 1))::before {
+          content: '';
+          border-left: var(--border-thickness-1) solid var(--color-gray-200);
+          position: absolute;
+          left: 0;
+          top: var(--size-spacing-6);
+          bottom: var(--size-spacing-6);
+          height: calc(100% - var(--size-spacing-6) * 2);
+        }
+      }
+    }
+  }
+
+  /* Full-width cells */
+  &__authors,
+  &__citation,
+  &__abstract {
+    @media (min-width: tokens.$break-l) {
+      flex: 1 0 100% !important;
+
+      /* Full-width cells never need a left border */
+      &::before {
+        display: none !important;
+      }
+    }
+  }
+
+  /* Abstract sits OUTSIDE the grid wrapper, but uses the same spacing */
+  &__abstract {
+    padding: var(--size-spacing-6);
+    border-bottom: var(--border-thickness-1) solid var(--color-divider);
+  }
+
+  /* Field label — shared treatment matching event-meta__event__label */
+  &__field__label {
+    @include tokens.body-s;
+
+    display: block;
+    margin-bottom: var(--size-spacing-3);
+    font-weight: var(--font-weights-yalenew-bold);
+    color: var(--color-gray-800);
+  }
+
+  /* Author list — wraps inline */
+  &__authors-list {
+    @include atoms.list-reset;
+
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--size-spacing-1) var(--size-spacing-3);
+  }
+
+  &__authors-list__item {
+    &:not(:last-child)::after {
+      content: ',';
+    }
+
+    a {
+      @include atoms.plain-link;
+
+      color: var(--color-link-base);
+    }
+  }
+
+  /* Taxonomy cells — chip list like event-meta__event-types */
+  &__taxonomy-list {
+    @include atoms.list-reset;
+
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--size-spacing-3);
+  }
+
+  &__taxonomy-list__item {
+    background-color: var(--color-gray-100);
+    padding: var(--size-spacing-2) var(--size-spacing-3);
+
+    a {
+      @include atoms.plain-link;
+      @include tokens.body-s;
+
+      color: var(--color-text);
+    }
+  }
+
+  /* Citation — formatted text, slightly tighter */
+  &__citation__value,
+  &__abstract__value {
+    @include tokens.body-default;
+
+    color: var(--color-text);
+
+    p:first-child {
+      margin-top: 0;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  /* Copy-citation button — minimal text-button look that lives below the
+   * citation text, separated by a small gap. */
+  &__citation__copy {
+    @include tokens.body-s;
+
+    margin-top: var(--size-spacing-3);
+    padding: 0;
+    background: transparent;
+    border: 0;
+    color: var(--color-link-base);
+    cursor: pointer;
+    text-decoration: underline;
+    font: inherit;
+    font-size: var(--font-size-14);
+
+    &:hover,
+    &:focus {
+      color: var(--color-link-hover);
+    }
+  }
+
+  /* External source / Download CTAs render at outline style; nothing to
+   * override here, but keep the wrapper as a flex column so the CTA
+   * doesn't stretch full width on wide cells. */
+  &__external-source__link,
+  &__download__link {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-start;
+  }
+}
