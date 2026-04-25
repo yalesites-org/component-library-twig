@@ -5,16 +5,28 @@
  *
  * Heavy meta header for the Resource (publication) full page. Visually
  * mirrors the event-meta-localist `details-wrapper` pattern: stacked on
- * mobile, multi-column grid with subtle dividers at $break-l.
+ * mobile, multi-column grid with horizontal dividers between rows.
  *
  * Co-located with the publication-meta molecule (used for card / list_item
  * / condensed view modes) to keep all publication treatments in one place.
  */
 
-$publication-detail-borders-max: tokens.$break-l - 0.5;
-
 .publication-detail {
   color: var(--color-basic-brown-gray);
+
+  /* Each metadata cell is a <dl><dt><dd> for proper term–definition
+   * semantics. Reset browser defaults so the cells slot into the
+   * existing flex grid identically to the previous div-based cells. */
+  dl,
+  dt,
+  dd {
+    margin: 0;
+  }
+
+  dd {
+    margin-inline-start: 0;
+    padding: 0;
+  }
 
   /* Constrain the thumbnail image rendered into page_title__image so it sits
    * as a small column on the right of the heading rather than full width.
@@ -73,29 +85,12 @@ $publication-detail-borders-max: tokens.$break-l - 0.5;
     }
 
     > * {
-      position: relative;
       padding: var(--size-spacing-6);
       flex: 1 auto;
-
-      @media (max-width: $publication-detail-borders-max) {
-        border-bottom: var(--border-thickness-1) solid var(--color-divider);
-      }
+      border-bottom: var(--border-thickness-1) solid var(--color-divider);
 
       @media (min-width: tokens.$break-l) {
-        border-bottom: var(--border-thickness-1) solid var(--color-divider);
         flex: 1 0 33.33%;
-
-        /* Vertical separator on cells that don't start a new row.
-         * The first child of each row of three never gets one. */
-        &:not(:nth-child(3n + 1))::before {
-          content: '';
-          border-left: var(--border-thickness-1) solid var(--color-gray-200);
-          position: absolute;
-          left: 0;
-          top: var(--size-spacing-6);
-          bottom: var(--size-spacing-6);
-          height: calc(100% - var(--size-spacing-6) * 2);
-        }
       }
     }
   }
@@ -106,11 +101,6 @@ $publication-detail-borders-max: tokens.$break-l - 0.5;
   &__abstract {
     @media (min-width: tokens.$break-l) {
       flex: 1 0 100% !important;
-
-      /* Full-width cells never need a left border */
-      &::before {
-        display: none !important;
-      }
     }
   }
 
