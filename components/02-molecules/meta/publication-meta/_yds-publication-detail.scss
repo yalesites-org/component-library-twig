@@ -120,6 +120,27 @@ $publication-detail-borders-max: tokens.$break-l - 0.5;
     border-bottom: var(--border-thickness-1) solid var(--color-divider);
   }
 
+  /* Video embed — the parent .publication-detail__inner uses flex-flow:
+   * column wrap, which sizes column-direction children to their content
+   * rather than stretching them. Drupal's oEmbed formatter renders the
+   * iframe with width="200" height="113" (YouTube's default response),
+   * so without an explicit width on the container the whole video cell
+   * collapses to 200px wide. Force full width on the container; the
+   * iframe inside then scales fluidly. */
+  &__video {
+    width: 100%;
+    padding: var(--size-spacing-6);
+    border-bottom: var(--border-thickness-1) solid var(--color-divider);
+
+    iframe {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      aspect-ratio: 16 / 9;
+      height: auto;
+    }
+  }
+
   /* Field label — shared treatment matching event-meta__event__label */
   &__field__label {
     @include tokens.body-s;
