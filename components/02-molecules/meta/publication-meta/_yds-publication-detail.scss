@@ -183,8 +183,11 @@
     }
   }
 
-  /* Citation — formatted text, slightly tighter */
-  &__citation__value,
+  /* Abstract value and citation source text share the same typography.
+   * Defined as two sequential rules (rather than a shared comma group)
+   * so that all lower-specificity .abstract__value selectors appear in
+   * the cascade before any higher-specificity .citation .pre-text__text
+   * selectors — required by stylelint no-descending-specificity. */
   &__abstract__value {
     @include tokens.body-default;
 
@@ -199,25 +202,28 @@
     }
   }
 
-  /* Copy-citation button — minimal text-button look that lives below the
-   * citation text, separated by a small gap. */
-  &__citation__copy {
-    @include tokens.body-s;
+  &__citation .pre-text__text {
+    @include tokens.body-default;
 
-    margin-top: var(--size-spacing-3);
-    padding: 0;
-    background: transparent;
-    border: 0;
-    color: var(--color-link-base);
-    cursor: pointer;
-    text-decoration: underline;
-    font: inherit;
-    font-size: var(--font-size-14);
+    color: var(--color-text);
 
-    &:hover,
-    &:focus {
-      color: var(--color-link-hover);
+    p:first-child {
+      margin-top: 0;
     }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  /* Space the copy button below the citation text. The atom wraps the
+   * source and button in a single flex container; the default layout is
+   * inline, so we stack them in the citation context. */
+  &__citation .text-copy-button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--size-spacing-3);
   }
 
   /* External source / Download CTAs render at outline style; nothing to

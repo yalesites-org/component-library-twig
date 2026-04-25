@@ -198,23 +198,16 @@
             {% endfor %}
 
             {% if publication_detail__citation %}
-              {% set citation_id = 'publication-citation-' ~ random() %}
               <dl {{ bem('citation', [], publication_detail__base_class) }}>
                 <dt {{ bem('field__label', [], publication_detail__base_class) }}>
                   Citation
                 </dt>
                 <dd>
-                  <div id="{{ citation_id }}" {{ bem('citation__value', [], publication_detail__base_class) }}>
-                    {{ publication_detail__citation }}
-                  </div>
-                  <button
-                    type="button"
-                    {{ bem('citation__copy', [], publication_detail__base_class) }}
-                    data-copy-citation
-                    data-copy-target="#{{ citation_id }}"
-                  >
-                    Copy citation
-                  </button>
+                  {% include '@atoms/controls/text-copy-button/yds-text-copy-button.twig' with {
+                    text_copy_button__pre_text: publication_detail__citation,
+                    text_copy_button__pre_text_tag: 'div',
+                    text_copy_button__content: 'Copy citation',
+                  } %}
                 </dd>
               </dl>
             {% endif %}
