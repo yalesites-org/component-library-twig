@@ -98,6 +98,12 @@
     {% block page_title__meta %}
       <div {{ bem('inner', [], publication_detail__base_class) }}>
 
+        {% if publication_detail__resource_type == 'video' and publication_detail__media_id %}
+          <div {{ bem('video', [], publication_detail__base_class) }}>
+            {{ video_embed__content__1 }}
+          </div>
+        {% endif %}
+
         {#
           Each metadata cell is rendered as <dl><dt><dd> for proper
           term-definition semantics (WCAG 1.3.1 / 2.4.6). Wrapping each
@@ -232,12 +238,6 @@
             <div {{ bem('description__value', [], publication_detail__base_class) }}>
               {{ publication_detail__description }}
             </div>
-          </div>
-        {% endif %}
-
-        {% if publication_detail__resource_type == 'video' and publication_detail__media_id %}
-          <div {{ bem('video', [], publication_detail__base_class) }}>
-            {{ video_embed__content__1 }}
           </div>
         {% endif %}
 
