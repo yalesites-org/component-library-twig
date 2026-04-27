@@ -237,3 +237,76 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     }
   }
 }
+
+// Layout Builder context: reduce top spacing since .layout-builder-block
+// already has padding.
+.layout-builder-block .accordion {
+  margin-block-start: 0;
+}
+
+// Force accordion__controls to display in layout builder (overrides template's
+// display: none and any theme-specific hiding).
+.layout-builder-block .accordion__controls {
+  align-items: center;
+  display: flex !important;
+  margin-bottom: 0;
+  max-height: var(--size-spacing-8);
+  min-height: 0;
+  min-width: 0;
+  overflow: visible;
+  padding: 0;
+  visibility: visible !important;
+}
+
+// Ensure controls display in narrow layout sections (e.g. 70/30 two-column).
+// Parent overflow or flex constraints can clip the toggle in smaller columns.
+.yds-two-column__primary .layout-builder-block .accordion,
+.yds-two-column__secondary .layout-builder-block .accordion {
+  overflow: visible;
+
+  .accordion__inner,
+  .accordion__controls {
+    overflow: visible;
+  }
+}
+
+// Ensure "Expand all" displays with non-default themes in layout builder.
+.layout-builder-block
+  .accordion[data-component-theme]:not([data-component-theme='default'])
+  .accordion__controls {
+  overflow: visible;
+}
+
+// Toggle color follows section background (matches layout-builder.css pattern for
+// .layout-builder__link--add). Nested so base + :hover output before section overrides.
+.layout-builder-block .accordion__toggle-all {
+  color: var(--color-gray-800);
+
+  &:hover {
+    color: var(--color-link-base);
+  }
+
+  // All theme base overrides first (same specificity), then all :hover overrides.
+  .yds-layout.layout-builder__layout[data-component-theme='two'] &,
+  .yds-layout.layout-builder__layout[data-component-theme='default'] & {
+    color: var(--color-gray-800);
+  }
+
+  .yds-layout.layout-builder__layout[data-component-theme='one'] &,
+  .yds-layout.layout-builder__layout[data-component-theme='three'] &,
+  .yds-layout.layout-builder__layout[data-component-theme='four'] & {
+    color: var(--color-basic-white);
+  }
+
+  .yds-layout.layout-builder__layout[data-component-theme='two'] &:hover,
+  .yds-layout.layout-builder__layout[data-component-theme='default'] &:hover {
+    color: var(--color-link-base);
+  }
+
+  .yds-layout.layout-builder__layout[data-component-theme='one'] &:hover,
+  .yds-layout.layout-builder__layout[data-component-theme='three'] &:hover,
+  .yds-layout.layout-builder__layout[data-component-theme='four'] &:hover {
+    color: var(--color-basic-white);
+    opacity: 0.9;
+  }
+}

@@ -1,0 +1,42 @@
+# forms-props.yml
+#
+# Forms component property definitions (story-level controls).
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+sectionTheme:
+  twigProp: data-component-theme
+  name: Section Theme
+  type: select
+  required: false
+  description: Background color theme for the layout section
+  default: default
+  options:
+    - default
+    - one
+    - two
+    - three
+    - four
+  control: select
+
+buttonTheme:
+  twigProp: buttonTheme
+  name: Button Theme
+  type: select
+  required: false
+  description: Theme color for the submit button
+  detail: >
+    Controls the color theme of the form's submit button. Maps to the
+    buttonTheme prop passed to contact-form-example.twig.
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+    - six
+    - seven
+  control: select

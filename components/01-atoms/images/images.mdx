@@ -1,0 +1,254 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as ImagesStories from './images.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './images-props.yml';
+
+<Meta of={ImagesStories} name="Docs" />
+
+# Images
+
+The images component system provides responsive images with various aspect ratios, figure elements with captions, SVG icons, and Font Awesome icons. This comprehensive image handling system ensures optimal display across devices and use cases.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with different image properties and aspect ratios in real-time.
+
+<Canvas of={ImagesStories.Interactive} />
+<Controls of={ImagesStories.Interactive} />
+
+## Component Variations
+
+### Responsive Images
+
+Images with programmatic crops using standardized aspect ratios.
+
+### Figure with Caption
+
+Images wrapped in semantic figure elements with caption support.
+
+### SVG Icons
+
+Custom SVG icons from the design system.
+
+### Font Awesome Icons
+
+Icon font integration for standardized iconography.
+
+## Aspect Ratios
+
+The component library supports five standard aspect ratios for programmatic image cropping:
+
+<table>
+  <thead>
+    <tr>
+      <th>Ratio</th>
+      <th>Description</th>
+      <th>Common Use Cases</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>16:9</code>
+      </td>
+      <td>Widescreen format</td>
+      <td>Hero images, video thumbnails, banners</td>
+    </tr>
+    <tr>
+      <td>
+        <code>3:2</code>
+      </td>
+      <td>Standard photo ratio</td>
+      <td>General photography, featured images</td>
+    </tr>
+    <tr>
+      <td>
+        <code>1:1</code>
+      </td>
+      <td>Square format</td>
+      <td>Profile images, thumbnails, social media</td>
+    </tr>
+    <tr>
+      <td>
+        <code>1:1.6</code>
+      </td>
+      <td>Portrait format</td>
+      <td>Vertical content, portraits, mobile optimized</td>
+    </tr>
+    <tr>
+      <td>
+        <code>4:3</code>
+      </td>
+      <td>Classic format</td>
+      <td>Traditional photography, presentations</td>
+    </tr>
+  </tbody>
+</table>
+
+## Properties
+
+### Story Controls
+
+The following controls are available in the Storybook Controls panel and affect the story rendering context.
+
+#### Optional
+
+{twigPropsTable(componentProps, 'optional')}
+
+### Image Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>image__src</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Image source URL</td>
+    </tr>
+    <tr>
+      <td>
+        <code>image__alt</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Alternative text for accessibility</td>
+    </tr>
+    <tr>
+      <td>
+        <code>image__aspect_ratio</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Aspect ratio class (16x9, 3x2, 1x1, 1x1.6, 4x3)</td>
+    </tr>
+  </tbody>
+</table>
+
+### Figure Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>figure__caption</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Caption text displayed below image</td>
+    </tr>
+  </tbody>
+</table>
+
+### Icon Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>icons</code>
+      </td>
+      <td>
+        <code>array</code>
+      </td>
+      <td>Array of icon names to display</td>
+    </tr>
+  </tbody>
+</table>
+
+## Technical Specifications
+
+- **Atomic Level**: Atom
+- **Templates**: `yds-image.twig`, `yds-icons.twig`, `yds-fa-icons.twig`
+- **Styles**: `cl-image.scss`, `cl-icons.scss`
+
+### Accessibility
+
+- **Alt Text**: All images must include descriptive alt text
+- **Semantic HTML**: Uses proper `<figure>` and `<figcaption>` elements
+- **Icon Labels**: Icons used for meaning should include aria-label
+- **Decorative Images**: Decorative images should use empty alt attributes
+
+### Responsive Behavior
+
+- **Aspect Ratio**: Maintained across all viewport sizes
+- **Fluid Sizing**: Images scale to container width
+- **Performance**: Uses responsive image techniques when applicable
+- **Lazy Loading**: Can be enhanced with loading="lazy" attribute
+
+## Usage Guidelines
+
+### Best Practices
+
+- Always provide meaningful alt text for images that convey information
+- Use empty alt="" for purely decorative images
+- Choose aspect ratios based on content and layout requirements
+- Use figure/caption for images that need explanatory text
+- Optimize images for web (compress, appropriate format)
+- Use SVG icons for scalable, crisp iconography
+- Consider responsive image srcset for multiple resolutions
+
+### Things to Avoid
+
+- Don't use images of text when actual text would work
+- Avoid missing or generic alt text like "image" or "photo"
+- Don't force aspect ratios that crop out important content
+- Avoid oversized images that impact page performance
+- Don't rely on color alone in icons to convey meaning
+
+## Implementation Notes
+
+### Aspect Ratio Implementation
+
+Aspect ratios are maintained using CSS custom properties and padding-based techniques to ensure consistent proportions:
+
+```html
+<div class="aspect-ratio-16x9">
+  <img src="..." alt="..." />
+</div>
+```
+
+### Figure Usage
+
+Figures should be used when an image needs a caption:
+
+```html
+<figure>
+  <img src="..." alt="..." />
+  <figcaption>Image caption text</figcaption>
+</figure>
+```
+
+## Testing
+
+For comprehensive visual regression testing with all image variations and theme combinations, see the [Visreg page](?path=/story/atoms-images-visreg).
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

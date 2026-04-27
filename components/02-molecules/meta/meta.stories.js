@@ -1,8 +1,4 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-import {
-  eventLocalistArgs,
-  eventLocalistArgTypes,
-} from '../../04-page-layouts/cl-page-args';
+import { eventLocalistArgs } from '../../04-page-layouts/cl-page-args';
 
 import eventLocalistData from './event-meta/event-localist.yml';
 import eventLocalistUpcomingOnly from './event-meta/event-localist--upcoming-only.yml';
@@ -14,6 +10,7 @@ import dateTimeTwig from '../../01-atoms/date-time/yds-date-time.twig';
 import profileMetaTwig from './profile-meta/yds-profile-meta.twig';
 import imageData from '../../01-atoms/images/image/image.yml';
 import videoEmbedData from '../../01-atoms/videos/video-embed/video-embed.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 import './event-meta/event-meta-localist';
 
@@ -21,7 +18,11 @@ import './event-meta/event-meta-localist';
 import resourceMetaData from './resource-meta/resource-meta.yml';
 import resourceMetaTwig from './resource-meta/yds-resource-meta.twig';
 
-const colorPairingsData = Object.keys(tokens['component-themes']);
+// Per-story props files.
+import postMetaProps from './post-meta-props.yml';
+import eventProps from './event-props.yml';
+import profileProps from './profile-props.yml';
+import resourceProps from './resource-props.yml';
 
 const eventDataVariants = {
   'Mixed (Past & Upcoming)': eventLocalistData,
@@ -35,20 +36,21 @@ const eventDataVariants = {
  */
 export default {
   title: 'Molecules/Meta',
+  tags: ['!dev'],
 };
 
-export const Basic = ({ meta }) => basicMetaTwig({ basic_meta: meta });
-Basic.argTypes = {
-  meta: {
-    name: 'Meta',
-    type: 'string',
-  },
-};
-Basic.args = {
-  meta: `<span>By Charlyn Paradis</span>${dateTimeTwig({
-    date_time__start: '2022-01-25',
-    date_time__format: 'day__full',
-  })}`,
+export const PostMeta = ({ author, date }) =>
+  basicMetaTwig({
+    basic_meta: `<span>By ${author}</span>${dateTimeTwig({
+      date_time__start: date,
+      date_time__format: 'day__full',
+    })}`,
+  });
+PostMeta.argTypes = toArgTypes(postMetaProps);
+PostMeta.args = {
+  ...toArgs(postMetaProps),
+  author: 'Charlyn Paradis',
+  date: '2022-01-25',
 };
 
 export const Event = ({
@@ -63,12 +65,60 @@ export const Event = ({
 }) => {
   const selectedData = eventDataVariants[dataVariant];
 
+  // Modify event dates to add is_all_day property and adjust timestamps
+  // For all-day events, Drupal sets start to 00:00 and end to 23:59
+  const eventDatesWithAllDay = selectedData.event_dates.map((date) => {
+    if (!allDay) {
+      return {
+        ...date,
+        is_all_day: false,
+      };
+    }
+    // For all-day, set times to midnight (start) and 23:59 (end)
+    const startDate = new Date(date.original_start * 1000);
+    const endDate = new Date(date.original_end * 1000);
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(23, 59, 0, 0);
+    return {
+      ...date,
+      original_start: Math.floor(startDate.getTime() / 1000),
+      original_end: Math.floor(endDate.getTime() / 1000),
+      is_all_day: true,
+    };
+  });
+
+  const eventFeaturedDateWithAllDay = (() => {
+    if (!selectedData.event_featured_date) {
+      return undefined;
+    }
+    if (!allDay) {
+      return {
+        ...selectedData.event_featured_date,
+        is_all_day: false,
+      };
+    }
+    const startDate = new Date(
+      selectedData.event_featured_date.original_start * 1000,
+    );
+    const endDate = new Date(
+      selectedData.event_featured_date.original_end * 1000,
+    );
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(23, 59, 0, 0);
+    return {
+      ...selectedData.event_featured_date,
+      original_start: Math.floor(startDate.getTime() / 1000),
+      original_end: Math.floor(endDate.getTime() / 1000),
+      is_all_day: true,
+    };
+  })();
+
   return eventLocalistMetaTwig({
     ...imageData.responsive_images['3x2'],
+    ...selectedData,
     event_title__heading: pageTitle,
-    event_dates: selectedData.event_dates,
-    formatted_start_date: selectedData.formatted_start_date,
-    formatted_end_date: selectedData.formatted_end_date,
+    event_dates: eventDatesWithAllDay,
+    event_featured_date: eventFeaturedDateWithAllDay,
     event_meta__format: format,
     event_meta__address: address,
     event_meta__cta_primary__content: ctaText,
@@ -78,27 +128,14 @@ export const Event = ({
     event_meta__cta_secondary__href: '#',
     event_meta__with_calendar: withCalendar == null ? true : !!withCalendar,
     event_meta__image: withImage ? 'true' : 'false',
-    event_meta__all_day: allDay,
-    ...selectedData,
   });
 };
-Event.argTypes = {
-  dataVariant: {
-    name: 'Event Date Scenario',
-    control: { type: 'select' },
-    options: Object.keys(eventDataVariants),
-    defaultValue: 'Mixed (Past & Upcoming)',
-  },
-  withCalendar: {
-    name: 'With Add to Calendar button',
-    type: 'boolean',
-    defaultValue: true,
-  },
-  ...eventLocalistArgTypes,
-};
+Event.argTypes = toArgTypes(eventProps);
 Event.args = {
+  ...toArgs(eventProps),
   ...eventLocalistArgs,
   dataVariant: 'Mixed (Past & Upcoming)',
+  withCalendar: true,
 };
 
 export const Profile = ({
@@ -128,67 +165,15 @@ export const Profile = ({
     profile_meta__image_style: profileImageStyle,
     profile_meta__image_alignment: profileImageAlignment,
   });
-Profile.argTypes = {
-  heading: {
-    name: 'Heading',
-    type: 'string',
-    defaultValue: 'Person Namerton',
-  },
-  titleLine: {
-    name: 'Profile professional title',
-    type: 'string',
-    defaultValue: 'Professional Title',
-  },
-  subTitle: {
-    name: 'Profile subtitle',
-    type: 'string',
-    defaultValue: 'Subtitle',
-  },
-  department: {
-    name: 'Profile department',
-    type: 'string',
-    defaultValue: 'Department name',
-  },
-  pronouns: {
-    name: 'Profile pronouns',
-    type: 'string',
-    defaultValue: 'They/They/Them',
-  },
-  bgColor: {
-    name: 'Component Theme (dial)',
-    type: 'select',
-    options: colorPairingsData,
-    defaultValue: 'one',
-  },
-  profileImageOrientation: {
-    name: 'Profile Image Orientation',
-    type: 'select',
-    options: ['landscape', 'portrait'],
-    defaultValue: 'landscape',
-  },
-  profileImageAlignment: {
-    name: 'Profile Image Alignment',
-    type: 'select',
-    options: ['left', 'right'],
-    defaultValue: 'right',
-  },
-  profileImageStyle: {
-    name: 'Profile Image Style',
-    type: 'select',
-    options: ['inline', 'outdent'],
-    defaultValue: 'inline',
-  },
-};
+Profile.argTypes = toArgTypes(profileProps);
 Profile.args = {
+  ...toArgs(profileProps),
   heading: 'Person Namerton',
   titleLine: 'Professional Title',
   subTitle: 'Subtitle',
   department: 'Department name',
   pronouns: 'They/They/Them',
-  bgColor: 'one',
-  profileImageOrientation: 'landscape',
   profileImageAlignment: 'right',
-  profileImageStyle: 'inline',
 };
 
 export const Resource = ({
@@ -215,34 +200,9 @@ export const Resource = ({
     image__src__1: imageData.responsive_images['2x3'].image__src,
     video_embed__content__1: videoEmbedData.video_embed__content,
   });
-Resource.argTypes = {
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
-  category: {
-    name: 'Category',
-    type: 'string',
-  },
-  resourceType: {
-    name: 'Resource Type',
-    type: 'select',
-    options: {
-      Video: 'video',
-      Document: 'document',
-    },
-    defaultValue: 'video',
-  },
-  publishDate: {
-    name: 'Publish Date',
-    type: 'string',
-  },
-  description: {
-    name: 'Description',
-    type: 'string',
-  },
-};
+Resource.argTypes = toArgTypes(resourceProps);
 Resource.args = {
+  ...toArgs(resourceProps),
   heading: 'Resource Title',
   category: 'Video',
   resourceType: 'video',

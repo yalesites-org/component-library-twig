@@ -9,6 +9,7 @@ import '../components/00-tokens/typography/cl-typography.scss';
 import '../components/00-tokens/effects/cl-effects.scss';
 import '../components/00-tokens/layout/cl-layout.scss';
 import '../components/04-page-layouts/placeholder/cl-placeholder.scss';
+import '../components/_storybook/storybook.scss';
 import '../fonts/fontawesome/css/fontawesome.css';
 import '../fonts/fontawesome/css/regular.css';
 import '../fonts/fontawesome/css/solid.css';
@@ -51,6 +52,7 @@ export const globalTypes = {
         { value: 'four', title: 'Onha' },
         { value: 'five', title: 'It\'s Your Yale'},
         { value: 'six', title: 'AI'},
+        { value: 'seven', title: 'Whitney Humanities Center' },
       ],
       showName: true,
       title: 'Site: Global Theme (lever)',
@@ -78,4 +80,22 @@ export const tags = ['autodocs', 'autodocs'];
 export const parameters = {
   actions: { argTypesRegex: '^on.*' },
   controls: { disableSaveFromUI: true },
+  options: {
+    storySort: {
+      method: 'alphabetical',
+      order: [
+        'Introduction',
+        ['Welcome', 'Theme System'],
+        'Tokens',
+        'Atoms',
+        'Molecules',
+        'Organisms',
+        ['Card Collection', ['Docs', 'Visreg', '*']],
+        'Page Layouts',
+        'Page Examples',
+        ['Overview', '*'],
+        '*',
+      ],
+    },
+  },
 };

@@ -1,0 +1,34 @@
+# taxonomy-display-props.yml
+#
+# Taxonomy Display component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+componentTheme:
+  twigProp: taxonomy_display__theme
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Component theme from the color dial in CMS
+  default: default
+  options:
+    - default
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select
+
+showTaxonomy:
+  name: Show Taxonomy
+  type: boolean
+  required: false
+  description: Toggle to show or hide taxonomy items in the preview
+  detail: >
+    Storybook-only control. When false, passes an empty items array to the
+    Twig template. The Twig prop is taxonomy_display__items (array).
+  default: true
+  control: boolean

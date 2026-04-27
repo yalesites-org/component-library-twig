@@ -26,7 +26,6 @@ export default {
     contentType: {
       name: 'Search Results Content Type',
       type: 'string',
-      defaultValue: searchResultData.search_result__content_type,
     },
     isCas: {
       name: 'Is CAS',
@@ -37,6 +36,7 @@ export default {
     heading: searchResultData.search_result__title,
     highlighted: searchResultData.search_result__highlighted,
     teaser: searchResultData.search_result__teaser,
+    contentType: searchResultData.search_result__content_type,
   },
 };
 
@@ -57,3 +57,5 @@ export const SearchResult = ({
     search_result__prefix__icon: isCas ? 'lock-solid' : '',
     is_cas: isCas,
   });
+
+SearchResult.tags = ['!dev'];

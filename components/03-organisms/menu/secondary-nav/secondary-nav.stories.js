@@ -5,30 +5,31 @@ import secondaryNavTwig from './yds-secondary-nav.twig';
 
 // Data.
 import secondaryNavData from './secondary-nav.yml';
+import componentProps from './secondary-nav-props.yml';
+import { toArgTypes, toArgs } from '../../../_storybook/component-props';
 
 // JavaScript
 import './yds-secondary-nav';
 
 const colorPairingsData = Object.keys(tokens['component-themes']);
 
+const argTypes = toArgTypes(componentProps);
+argTypes.themeColor = {
+  ...argTypes.themeColor,
+  options: colorPairingsData,
+};
+
 /**
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Menu/Secondary Nav',
+  title: 'Organisms/Menu/Content Collection',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    themeColor: {
-      name: 'Component Theme (dial)',
-      options: colorPairingsData,
-      type: 'select',
-    },
-  },
-  args: {
-    themeColor: 'one',
-  },
+  argTypes,
+  args: toArgs(componentProps),
 };
 
 export const secondaryNav = ({ themeColor }) => `

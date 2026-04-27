@@ -1,0 +1,204 @@
+# standard-page-props.yml
+#
+# Standard page example property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+introContent:
+  twigProp: intro_content
+  name: Intro Content
+  type: select
+  required: false
+  description: The type of introductory content to display above the main page body.
+  control: select
+  options:
+    - none
+    - image
+    - wrapped-image
+    - text-with-image--focus-image
+    - text-with-image--focus-equal
+    - collection-featured
+    - collection-secondary
+  default: none
+
+calloutBackground:
+  twigProp: callout__background_color
+  name: Callout Theme (dial)
+  type: select
+  required: false
+  description: The background color theme applied to callout components on the page.
+  control: select
+  options:
+    - one
+    - two
+    - three
+
+pageTitleDisplay:
+  twigProp: page_title__display
+  name: Page Title Display
+  type: select
+  required: false
+  description: Controls the visibility of the page title.
+  control: select
+  options:
+    - visible
+    - hidden
+    - visually-hidden
+
+bannerType:
+  twigProp: banner_type
+  name: Banner Type
+  type: select
+  required: false
+  description: The type of banner component to display at the top of the page.
+  control: select
+  options:
+    - action
+    - grand-hero
+
+contentLayout:
+  twigProp: banner__content__layout
+  name: Banner Content Layout
+  type: select
+  required: false
+  description: The layout position of the banner content overlay.
+  control: select
+  options:
+    - bottom
+    - left
+    - right
+  default: bottom
+
+bgColor:
+  twigProp: banner__content__background
+  name: Banner Content Background Color Theme (dial)
+  type: select
+  required: false
+  description: Color theme for the banner content area background
+  detail: >
+    Color theme applied to the banner content background. Options are
+    dynamically derived from the design system tokens. Uses the same
+    token-driven color pairings as other component theme selectors.
+  default: one
+  control: select
+
+heading:
+  twigProp: banner__heading
+  name: Banner Heading
+  type: string
+  required: false
+  description: The heading text displayed within the banner or grand hero component.
+  control: text
+
+snippet:
+  twigProp: banner__snippet
+  name: Banner Snippet
+  type: string
+  required: false
+  description: The snippet or body text displayed within the banner component.
+  control: text
+
+linkContent:
+  twigProp: banner__link__content
+  name: Banner Link Content
+  type: string
+  required: false
+  description: The text label for the banner call-to-action link.
+  control: text
+
+linkStyle:
+  twigProp: banner__link__style
+  name: Link Style
+  type: select
+  required: false
+  description: The visual style applied to the banner call-to-action link.
+  control: select
+  options:
+    - cta
+    - text-link
+
+grandHeroOverlayVariation:
+  twigProp: grand_hero__overlay_variation
+  name: Grand Hero Content Overlay
+  type: select
+  required: false
+  description: The overlay variation for the grand hero content area.
+  control: select
+  options:
+    - contained
+    - full
+  default: contained
+
+grandHeroSize:
+  twigProp: grand_hero__size
+  name: Grand Hero Content Size
+  type: select
+  required: false
+  description: The size of the grand hero component.
+  control: select
+  options:
+    - reduced
+    - full
+  default: full
+
+grandHeroWithVideo:
+  twigProp: grand_hero__video
+  name: Grand Hero With Video
+  type: boolean
+  required: false
+  description: Whether to display a video background within the grand hero component.
+  control: boolean
+
+videoHeading:
+  twigProp: video__heading
+  name: Video Heading
+  type: string
+  required: false
+  description: The heading text displayed above the video component.
+  control: text
+
+videoCaption:
+  twigProp: video__text
+  name: Video Caption
+  type: string
+  required: false
+  description: The caption or description text displayed below the video component.
+  control: text
+
+quickLinksHeading:
+  twigProp: quick_links__heading
+  name: Quick Links Heading
+  type: string
+  required: false
+  description: The heading text for the quick links component.
+  control: text
+
+quickLinksDescription:
+  twigProp: quick_links__description
+  name: Quick Links Description
+  type: string
+  required: false
+  description: The description text displayed beneath the quick links heading.
+  control: text
+
+quickLinksImage:
+  twigProp: quick_links__image
+  name: With image
+  type: boolean
+  required: false
+  description: Whether to display an image alongside the quick links component.
+  control: boolean
+
+quickLinksVariation:
+  twigProp: quick_links__variation
+  name: Quick Links Variation
+  type: select
+  required: false
+  description: The visual variation of the quick links component.
+  control: select
+  options:
+    - promotional
+    - subtle
+  default: promotional

@@ -1,0 +1,71 @@
+# accordion-props.yml
+#
+# Accordion component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+accordionItems:
+  twigProp: accordion__items
+  name: Accordion Items
+  type: array
+  required: true
+  description: Array of accordion items, each containing a heading and content
+  detail: >
+    Array of objects passed to the Twig template. Each item requires
+    accordion__item__heading and accordion__item__content. This prop is
+    constructed in the story's render function and is not directly editable
+    via the Controls panel.
+
+heading:
+  twigProp: accordion__item__heading
+  name: Heading
+  type: string
+  required: true
+  description: Heading text for each accordion item
+  detail: The heading text displayed on the clickable accordion toggle for each item.
+  control: text
+
+content:
+  twigProp: accordion__item__content
+  name: Content
+  type: string
+  required: true
+  description: Body content for each accordion item (supports HTML)
+  detail: >
+    The content revealed when an accordion item is expanded. Supports full
+    HTML markup including links, lists, and formatted text.
+  control: text
+
+accordionHeading:
+  twigProp: accordion__heading
+  name: Accordion Heading
+  type: string
+  required: false
+  description: Optional heading displayed above all accordion items
+  detail: >
+    Displays as a heading above the full accordion group. Leave empty to
+    show items without a group heading.
+  control: text
+
+themeColor:
+  twigProp: accordion__theme
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Color accent from the CMS color dial
+  detail: >
+    Applies a color theme to the accordion component. The theme affects
+    the visual styling of accordion items, including hover states and
+    active item indicators. Use the accordion__theme Twig property to
+    apply different themes.
+  default: default
+  options:
+    - default
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select
