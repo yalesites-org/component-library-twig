@@ -98,6 +98,7 @@
   /* Full-width cells */
   &__authors,
   &__citation,
+  &__description,
   &__abstract {
     @media (min-width: tokens.$break-l) {
       flex: 1 0 100% !important;
@@ -106,6 +107,12 @@
 
   /* Abstract sits OUTSIDE the grid wrapper, but uses the same spacing */
   &__abstract {
+    padding: var(--size-spacing-6);
+    border-bottom: var(--border-thickness-1) solid var(--color-divider);
+  }
+
+  /* Description sits OUTSIDE the grid wrapper, but uses the same spacing */
+  &__description {
     padding: var(--size-spacing-6);
     border-bottom: var(--border-thickness-1) solid var(--color-divider);
   }
@@ -189,6 +196,20 @@
    * the cascade before any higher-specificity .citation .pre-text__text
    * selectors — required by stylelint no-descending-specificity. */
   &__abstract__value {
+    @include tokens.body-default;
+
+    color: var(--color-text);
+
+    p:first-child {
+      margin-top: 0;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__description__value {
     @include tokens.body-default;
 
     color: var(--color-text);

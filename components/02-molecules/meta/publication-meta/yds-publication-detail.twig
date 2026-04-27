@@ -14,6 +14,7 @@
  # - publication_detail__journal_publication_name  (string)
  # - publication_detail__journal_publication_issue (string)
  # - publication_detail__citation                (string)  Rendered HTML.
+ # - publication_detail__description             (string)  Rendered HTML.
  # - publication_detail__abstract                (string)  Rendered HTML.
  # - publication_detail__external_source         (object)  { url, title }
  # - publication_detail__download_url            (string)
@@ -224,6 +225,14 @@
               {{ publication_detail__abstract }}
             </dd>
           </dl>
+        {% endif %}
+
+        {% if publication_detail__description %}
+          <div {{ bem('description', [], publication_detail__base_class) }}>
+            <div {{ bem('description__value', [], publication_detail__base_class) }}>
+              {{ publication_detail__description }}
+            </div>
+          </div>
         {% endif %}
 
         {% if publication_detail__resource_type == 'video' and publication_detail__media_id %}
