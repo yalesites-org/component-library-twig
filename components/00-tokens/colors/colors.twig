@@ -31,27 +31,29 @@
             } %}
 
             {% for label, val in value_rows %}
-              {# text-copy-button class satisfies yds-text-copy-button.js wrapper lookup #}
-              <div {{ bem('value-row', [], colors__base_class, ['text-copy-button']) }}>
+              {% set is_placeholder = val == '--' %}
+              <div {{ bem('value-row', [], colors__base_class, is_placeholder ? [] : ['text-copy-button']) }}>
                 <span {{ bem('label', [], colors__base_class) }}>{{ label }}</span>
                 {# pre-text__text class is required by yds-text-copy-button.js to read the copy value #}
-                <code class="cl-colors__value pre-text__text">{{ val }}</code>
-                <button
-                  class="cl-colors__copy-btn text-copy-button__button"
-                  type="button"
-                >
-                  {# Copy icon (shown by default) #}
-                  <svg class="cl-colors__icon-copy" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                  </svg>
-                  {# Check icon (shown when copied, toggled by JS via --copied modifier) #}
-                  <svg class="cl-colors__icon-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                  </svg>
-                  {# Visually-hidden label read by screen readers as the button's accessible name. #}
-                  <span {{ bem('copy-label', [], colors__base_class) }}>Copy {{ label }} {{ val }}</span>
-                </button>
+                <code class="cl-colors__value{{ is_placeholder ? '' : ' pre-text__text' }}">{{ val }}</code>
+                {% if not is_placeholder %}
+                  <button
+                    class="cl-colors__copy-btn text-copy-button__button"
+                    type="button"
+                  >
+                    {# Copy icon (shown by default) #}
+                    <svg class="cl-colors__icon-copy" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    {# Check icon (shown when copied, toggled by JS via --copied modifier) #}
+                    <svg class="cl-colors__icon-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    {# Visually-hidden label read by screen readers as the button's accessible name. #}
+                    <span {{ bem('copy-label', [], colors__base_class) }}>Copy {{ label }} {{ val }}</span>
+                  </button>
+                {% endif %}
               </div>
             {% endfor %}
           </div>
