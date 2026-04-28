@@ -68,6 +68,7 @@ export const globalTypes = {
       items: [
         { value: 'yalenew', title: 'Headings: YaleNew' },
         { value: 'mallory', title: 'Headings: Mallory' },
+        { value: 'yalenew-oldstyle', title: 'Headings: Yale Old-Style Numerals' },
       ],
       showName: true,
       dynamicTitle: true,
