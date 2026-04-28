@@ -8,6 +8,9 @@ module.exports = {
     '../images', 
     '../fonts'
   ],
+  core: {
+    disableTelemetry: true,
+  },
   addons: [
     '@storybook/addon-a11y',
     '@storybook/addon-links',

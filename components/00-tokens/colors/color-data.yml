@@ -1,0 +1,187 @@
+# Supplemental color metadata for the Storybook Colors page.
+# Hex and RGB values are computed from design tokens automatically.
+# OPAC should verify/correct CMYK values (these are programmatic approximations)
+# and fill in Pantone values when available.
+blue:
+  yale:
+    name: 'Yale Blue'
+    cmyk: '100, 50, 0, 58'
+    pantone: '--'
+  medium:
+    name: 'Medium Blue'
+    cmyk: '79, 44, 0, 25'
+    pantone: '--'
+  light:
+    name: 'Light Blue'
+    cmyk: '62, 34, 0, 0'
+    pantone: '--'
+  horizon:
+    name: 'Horizon Blue'
+    cmyk: '64, 32, 0, 33'
+    pantone: '--'
+  shale:
+    name: 'Shale Blue'
+    cmyk: '33, 10, 0, 31'
+    pantone: '--'
+  pewter:
+    name: 'Pewter Blue'
+    cmyk: '10, 0, 0, 21'
+    pantone: '--'
+  royal:
+    name: 'Royal Blue'
+    cmyk: '64, 44, 0, 41'
+    pantone: '--'
+  slate:
+    name: 'Slate Blue'
+    cmyk: '25, 3, 0, 64'
+    pantone: '--'
+  oceanic:
+    name: 'Oceanic Blue'
+    cmyk: '53, 0, 5, 56'
+    pantone: '--'
+  soft-oceanic:
+    name: 'Soft Oceanic Blue'
+    cmyk: '8, 0, 1, 3'
+    pantone: '--'
+  soft:
+    name: 'Soft Blue'
+    cmyk: '6, 2, 0, 3'
+    pantone: '--'
+  deep-teal:
+    name: 'Deep Teal Blue'
+    cmyk: '42, 21, 0, 67'
+    pantone: '--'
+  mint:
+    name: 'Mint Blue'
+    cmyk: '34, 0, 4, 18'
+    pantone: '--'
+  ocean:
+    name: 'Ocean Blue'
+    cmyk: '54, 0, 4, 56'
+    pantone: '--'
+
+green:
+  basil:
+    name: 'Basil Green'
+    cmyk: '15, 0, 23, 59'
+    pantone: '--'
+  ground:
+    name: 'Ground Green'
+    cmyk: '8, 0, 17, 38'
+    pantone: '--'
+  fog:
+    name: 'Fog Green'
+    cmyk: '0, 1, 10, 13'
+    pantone: '--'
+  pine:
+    name: 'Pine Green'
+    cmyk: '27, 0, 14, 78'
+    pantone: '--'
+
+orange:
+  peach:
+    name: 'Peach'
+    cmyk: '0, 22, 55, 16'
+    pantone: '--'
+  coral:
+    name: 'Coral'
+    cmyk: '0, 61, 68, 0'
+    pantone: '--'
+
+yellow:
+  umbrella:
+    name: 'Umbrella'
+    cmyk: '0, 13, 46, 11'
+    pantone: '--'
+  yale-gold:
+    name: 'Yale Gold'
+    cmyk: '0, 16, 64, 0'
+    pantone: '--'
+
+basic:
+  white:
+    name: 'White'
+    cmyk: '0, 0, 0, 0'
+    pantone: '--'
+  black:
+    name: 'Black'
+    cmyk: '0, 0, 0, 100'
+    pantone: '--'
+  brown-gray:
+    name: 'Brown Gray'
+    cmyk: '0, 7, 13, 53'
+    pantone: '--'
+
+gray:
+  100:
+    name: 'Gray 100'
+    cmyk: '0, 0, 0, 3'
+    pantone: '--'
+  200:
+    name: 'Gray 200'
+    cmyk: '0, 0, 0, 15'
+    pantone: '--'
+  300:
+    name: 'Gray 300'
+    cmyk: '0, 0, 0, 27'
+    pantone: '--'
+  400:
+    name: 'Gray 400'
+    cmyk: '0, 0, 0, 39'
+    pantone: '--'
+  500:
+    name: 'Gray 500'
+    cmyk: '0, 0, 0, 54'
+    pantone: '--'
+  600:
+    name: 'Gray 600'
+    cmyk: '0, 0, 0, 63'
+    pantone: '--'
+  700:
+    name: 'Gray 700'
+    cmyk: '0, 0, 0, 71'
+    pantone: '--'
+  800:
+    name: 'Gray 800'
+    cmyk: '0, 0, 0, 87'
+    pantone: '--'
+  900:
+    name: 'Gray 900'
+    cmyk: '0, 0, 0, 89'
+    pantone: '--'
+  hale:
+    name: 'Gray Hale'
+    cmyk: '22, 13, 0, 66'
+    pantone: '--'
+
+brown:
+  sand:
+    name: 'Sand'
+    cmyk: '0, 8, 16, 24'
+    pantone: '--'
+  mushroom:
+    name: 'Mushroom'
+    cmyk: '0, 5, 12, 43'
+    pantone: '--'
+
+purple:
+  visited:
+    name: 'Visited'
+    cmyk: '48, 70, 0, 43'
+    pantone: '--'
+  visited-hover:
+    name: 'Visited Hover'
+    cmyk: '48, 71, 0, 24'
+    pantone: '--'
+  visited-light:
+    name: 'Visited Light'
+    cmyk: '10, 15, 0, 3'
+    pantone: '--'
+  visited-light-hover:
+    name: 'Visited Light Hover'
+    cmyk: '15, 22, 0, 2'
+    pantone: '--'
+  plum:
+    name: 'Plum'
+    cmyk: '15, 23, 0, 57'
+    pantone: '--'
