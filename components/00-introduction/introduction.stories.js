@@ -167,7 +167,7 @@ const introductionHTML = `
                   },
                   {
                     list__item__content:
-                      '<strong>Typography: Heading Fonts:</strong> Toggle between YaleNew and Mallory heading font pairings',
+                      '<strong>Typography: Heading Fonts:</strong> Switch between YaleNew, Mallory, and Yale Old-Style Numerals heading font pairings',
                   },
                 ],
               })}
