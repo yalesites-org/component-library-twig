@@ -16,7 +16,7 @@ $cl-colors-copy-success: #16a34a;
 
   .cl-colors__item {
     background: var(--color-basic-white);
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-gray-200);
     box-shadow: 0 1px 3px rgb(0 0 0 / 8%);
     overflow: hidden;
     transition: box-shadow 0.2s ease;
@@ -38,7 +38,7 @@ $cl-colors-copy-success: #16a34a;
   .cl-colors__name {
     font-size: 0.95rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--color-gray-900);
     margin: 0 0 0.25rem;
   }
 
@@ -46,10 +46,10 @@ $cl-colors-copy-success: #16a34a;
     display: block;
     font-size: 0.7rem;
     font-family: monospace;
-    color: #6b6b6b;
+    color: var(--color-gray-500);
     margin-bottom: 0.75rem;
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-gray-100);
   }
 
   // Each value-row: label on its own full-width line, value + copy button below.
@@ -66,7 +66,7 @@ $cl-colors-copy-success: #16a34a;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #6b6b6b;
+    color: var(--color-gray-500);
     width: 100%;
     margin-bottom: 0.1rem;
   }
@@ -75,7 +75,7 @@ $cl-colors-copy-success: #16a34a;
   .cl-colors__value {
     font-size: 0.8rem;
     font-family: monospace;
-    color: #374151;
+    color: var(--color-gray-700);
     flex: 1;
     background: transparent;
     border: none;
@@ -100,14 +100,14 @@ $cl-colors-copy-success: #16a34a;
     cursor: pointer;
     padding: 0.25rem;
     border-radius: 0.25rem;
-    color: #9ca3af;
+    color: var(--color-gray-400);
     transition: color 0.15s ease, background-color 0.15s ease;
     line-height: 0;
     flex-shrink: 0;
 
     &:hover {
-      background-color: #f3f4f6;
-      color: #4b5563;
+      background-color: var(--color-gray-100);
+      color: var(--color-gray-600);
     }
 
     &:focus-visible {
