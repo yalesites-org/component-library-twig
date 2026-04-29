@@ -11,6 +11,25 @@
  * / condensed view modes) to keep all publication treatments in one place.
  */
 
+/* Shared body-default treatment for the three rich-text cells (abstract,
+ * description, citation source text). Defined as a mixin rather than a
+ * comma-grouped selector so the abstract / description / citation rules
+ * stay separate in source order, preserving the cascade required by
+ * stylelint no-descending-specificity. */
+@mixin rich-text-cell {
+  @include tokens.body-default;
+
+  color: var(--color-text);
+
+  p:first-child {
+    margin-top: 0;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
 .publication-detail {
   color: var(--color-basic-brown-gray);
 
@@ -95,13 +114,14 @@
     }
   }
 
-  /* Full-width cells */
-  &__authors,
-  &__citation,
-  &__description,
-  &__abstract {
+  /* Full-width cells inside the 3-up grid: increase specificity with the
+   * details-wrapper parent so the rule wins over `&__details-wrapper > *`
+   * naturally and the `!important` is not needed. Abstract and description
+   * sit OUTSIDE details-wrapper, so they don't need any flex override here. */
+  &__details-wrapper > &__authors,
+  &__details-wrapper > &__citation {
     @media (min-width: tokens.$break-l) {
-      flex: 1 0 100% !important;
+      flex: 1 0 100%;
     }
   }
 
@@ -190,51 +210,20 @@
     }
   }
 
-  /* Abstract value and citation source text share the same typography.
-   * Defined as two sequential rules (rather than a shared comma group)
-   * so that all lower-specificity .abstract__value selectors appear in
-   * the cascade before any higher-specificity .citation .pre-text__text
-   * selectors — required by stylelint no-descending-specificity. */
+  /* Three rich-text cells share the same body-default treatment. Sequenced
+   * lowest-specificity → highest to satisfy stylelint
+   * no-descending-specificity (see rich-text-cell mixin above for why
+   * they aren't comma-grouped). */
   &__abstract__value {
-    @include tokens.body-default;
-
-    color: var(--color-text);
-
-    p:first-child {
-      margin-top: 0;
-    }
-
-    p:last-child {
-      margin-bottom: 0;
-    }
+    @include rich-text-cell;
   }
 
   &__description__value {
-    @include tokens.body-default;
-
-    color: var(--color-text);
-
-    p:first-child {
-      margin-top: 0;
-    }
-
-    p:last-child {
-      margin-bottom: 0;
-    }
+    @include rich-text-cell;
   }
 
   &__citation .pre-text__text {
-    @include tokens.body-default;
-
-    color: var(--color-text);
-
-    p:first-child {
-      margin-top: 0;
-    }
-
-    p:last-child {
-      margin-bottom: 0;
-    }
+    @include rich-text-cell;
   }
 
   /* Space the copy button below the citation text. The atom wraps the

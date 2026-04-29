@@ -234,11 +234,14 @@
         {% endif %}
 
         {% if publication_detail__description %}
-          <div {{ bem('description', [], publication_detail__base_class) }}>
-            <div {{ bem('description__value', [], publication_detail__base_class) }}>
+          <dl {{ bem('description', [], publication_detail__base_class) }}>
+            <dt {{ bem('field__label', [], publication_detail__base_class) }}>
+              Description
+            </dt>
+            <dd {{ bem('description__value', [], publication_detail__base_class) }}>
               {{ publication_detail__description }}
-            </div>
-          </div>
+            </dd>
+          </dl>
         {% endif %}
 
       </div>

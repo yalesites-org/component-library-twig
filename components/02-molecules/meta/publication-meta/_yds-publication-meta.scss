@@ -31,11 +31,16 @@
 }
 
 @mixin publication-label {
-  @include publication-text;
+  // Labels use body-xs (one step smaller than publication-text's body-s)
+  // and re-assert the publication-meta colour / numerics so the cells
+  // still read as one coherent group with the value text.
+  @include tokens.body-xs;
 
+  color: var(--color-gray-500);
+  font-variant-numeric: oldstyle-nums;
+  letter-spacing: 0.5px;
   font-weight: var(--font-weights-mallory-book);
   font-family: var(--font-families-mallory);
-  font-size: 0.85em;
   text-transform: uppercase;
   margin-right: var(--size-spacing-2);
 }
