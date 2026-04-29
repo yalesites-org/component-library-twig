@@ -68,21 +68,22 @@
         <div {{ bem('image-wrap', [], publication_detail__base_class) }}>
           {% if publication_detail__document_image %}
             <div {{ bem('image', [], publication_detail__base_class) }}>
-              {{ publication_detail__document_image }}
+              {# `|raw` matches the pattern used by yds-video-embed and
+                 yds-image — the variable comes through as already-rendered
+                 HTML (a Drupal render array result, or a pre-built img/svg
+                 string in Storybook fixtures). Without it, autoescape
+                 prints the markup as text. #}
+              {{ publication_detail__document_image|raw }}
             </div>
           {% endif %}
           {% if publication_detail__download_url %}
-            {% set download_cta_content %}
-              {{ publication_detail__download_label|default('Download') }}
-              {% include "@atoms/images/icons/_yds-icon.twig" with {
-                icon__name: 'circle-down',
-                icon__decorative: true,
-                icon__base_class: 'cta__icon',
-              } %}
-            {% endset %}
+            {# Download icon is added by lib/ys_link's download-link
+               decorator (file extension → fa-circle-down) — adding one
+               here in the CTA content double-stamps the arrow. Pass label
+               only and let ys_link decorate. #}
             <div {{ bem('download', [], publication_detail__base_class) }}>
               {% include "@atoms/controls/cta/yds-cta.twig" with {
-                cta__content: download_cta_content,
+                cta__content: publication_detail__download_label|default('Download'),
                 cta__href: publication_detail__download_url,
                 cta__component_theme: 'one',
                 cta__attributes: {
@@ -100,7 +101,10 @@
 
         {% if publication_detail__resource_type == 'video' and publication_detail__media_id %}
           <div {{ bem('video', [], publication_detail__base_class) }}>
-            {{ video_embed__content__1 }}
+            {# Same `|raw` rationale as above — the iframe HTML is built
+               upstream (atomic's media-oembed-content.html.twig override
+               in Drupal, or a fixture string in Storybook). #}
+            {{ video_embed__content__1|raw }}
           </div>
         {% endif %}
 
