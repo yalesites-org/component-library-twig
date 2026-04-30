@@ -1,0 +1,143 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as ComponentStories from './[component-name].stories';
+
+<Meta of={ComponentStories} />
+
+# Component Name
+
+Brief introduction to the component (2-3 sentences). Explain what the component does, when to use it, and its primary purpose in the design system.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the component's properties in real-time.
+
+<Canvas of={ComponentStories.ComponentName} />
+<Controls of={ComponentStories.ComponentName} />
+
+## Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>property_name</code></td>
+      <td><code>string</code></td>
+      <td>Description of what this property does</td>
+    </tr>
+    <tr>
+      <td><code>another_property</code></td>
+      <td><code>array</code></td>
+      <td>Description of another required property</td>
+    </tr>
+  </tbody>
+</table>
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>optional_property</code></td>
+      <td><code>string</code></td>
+      <td><code>'default'</code></td>
+      <td>Description of optional property</td>
+    </tr>
+    <tr>
+      <td><code>theme</code></td>
+      <td><code>string</code></td>
+      <td><code>'default'</code></td>
+      <td>Component theme (see Theme Options below)</td>
+    </tr>
+  </tbody>
+</table>
+
+## Theme Options
+
+This component supports the following theme variations:
+
+- **Default**: Standard theme using global color settings
+- **One through Five**: Custom theme dials that override global settings with component-specific colors
+
+Use the `theme` property or the global theme toolbar to experiment with different themes.
+
+## Important Variants
+
+Below are the most commonly used variants of this component. For a comprehensive view of all variations and visual regression testing, see the [Visreg page](?path=/story/[category]-[component-name]--visreg).
+
+### Variant One
+
+Brief description of when to use this variant.
+
+<Canvas of={ComponentStories.VariantOne} />
+
+### Variant Two
+
+Brief description of when to use this variant.
+
+<Canvas of={ComponentStories.VariantTwo} />
+
+_Note: Only include 2-4 key variants here. All variations are available on the Visreg page._
+
+## Technical Specifications
+
+- **Atomic Level**: [Atom/Molecule/Organism]
+- **Template**: `yds-[component-name].twig`
+- **Styles**: `_yds-[component-name].scss`
+- **JavaScript**: `yds-[component-name].js` (if applicable)
+
+### Accessibility
+
+- Describe ARIA attributes used
+- Keyboard navigation support
+- Screen reader considerations
+- Semantic HTML elements utilized
+
+### Behavior
+
+- Describe interactive behavior (if applicable)
+- JavaScript functionality
+- State management (if applicable)
+- Browser support considerations
+
+## Usage Guidelines
+
+### Best Practices
+
+- When to use this component
+- Recommended patterns
+- Content guidelines
+
+### Things to Avoid
+
+- Common mistakes
+- Anti-patterns
+- Accessibility pitfalls
+
+## Testing
+
+For comprehensive visual regression testing with all component variations, see the [Visreg page](?path=/story/[category]-[component-name]--visreg).
+
+## Related Components
+
+- Link to related components in the design system
+- Alternative components for different use cases
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

@@ -1,0 +1,172 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as PrimaryNavStories from './primary-nav.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './primary-nav-props.yml';
+
+<Meta of={PrimaryNavStories} name="Docs" />
+
+# Primary Nav
+
+The Primary Nav is the main navigation menu component that provides the core navigation structure for YaleSites. It supports multiple menu variations to accommodate different navigation patterns and user experience requirements. The component is designed to handle complex hierarchical navigation with multiple levels of menu items while maintaining accessibility and responsive behavior.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the primary nav's properties in real-time.
+
+<Canvas of={PrimaryNavStories.PrimaryNav} />
+<Controls of={PrimaryNavStories.PrimaryNav} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Menu Variations
+
+The Primary Nav supports three distinct menu variations, each optimized for different navigation scenarios:
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', margin: '2rem 0'}}>
+
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Basic Menu</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Standard dropdown navigation with simple hover/click interactions. Best
+    suited for sites with straightforward navigation hierarchies and moderate
+    content depth. Provides a clean, traditional navigation experience.
+  </p>
+</div>
+
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Mega Menu</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Expanded multi-column navigation panel that displays all menu items in a
+    structured grid layout. Ideal for sites with complex navigation structures,
+    multiple content sections, or deep hierarchies requiring better overview and
+    discoverability.
+  </p>
+</div>
+
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Focus Menu</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Full-screen overlay navigation that emphasizes the menu as a primary
+    interaction. Creates an immersive navigation experience with larger touch
+    targets and enhanced visual hierarchy. Particularly effective for sites
+    prioritizing visual impact and user engagement.
+  </p>
+</div>
+
+</div>
+
+## Menu Item Structure
+
+Menu items support complex hierarchical structures with the following properties:
+
+- **title**: The display text for the menu item
+- **url**: The link destination (can be internal or external)
+- **below**: Optional nested array of child menu items (supports multiple levels)
+- **is_active**: Boolean to mark the current active page
+- **is_cas**: Boolean to indicate CAS authentication requirement
+- **list**item**is_heading**: Boolean to render item as a section heading
+- **heading_cta**: Optional call-to-action text for heading items
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Organism</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-primary-nav.twig</code>, <code>yds-primary-nav.js</code>,{' '}
+        <code>_yds-primary-nav.scss</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Accessibility</strong>
+      </td>
+      <td>
+        ARIA navigation landmark, keyboard navigation with arrow keys and
+        Enter/Escape, focus management for nested menus, screen reader support
+        for menu state and hierarchy
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Responsive Behavior</strong>
+      </td>
+      <td>
+        Transforms to mobile-optimized menu at smaller viewports, touch-friendly
+        interactions, collapsible submenu sections
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>JavaScript</strong>
+      </td>
+      <td>
+        Manages dropdown interactions, keyboard navigation, mobile menu toggle,
+        and focus trap for accessibility
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### Menu Variation Selection
+
+- **Basic menu**: Use for sites with 3-7 top-level items and simple dropdown structures
+- **Mega menu**: Best for sites with 5-10 top-level items and complex hierarchies requiring multi-column display
+- **Focus menu**: Ideal for visual-first sites or when navigation deserves special emphasis
+
+### Navigation Hierarchy
+
+The Primary Nav supports multi-level hierarchies:
+
+- Level 1: Top-level navigation items
+- Level 2: Primary dropdown items
+- Level 3: Nested submenu items
+
+Keep hierarchies shallow when possible for optimal user experience. Consider mega menu for deeper structures.
+
+### Link Types
+
+The component supports various link types:
+
+- Internal site links
+- External URLs (automatically detected)
+- PDF and document downloads (indicated with appropriate icons)
+- CAS-authenticated links (marked with special styling)
+
+### Accessibility Considerations
+
+- Ensure all menu items have descriptive, meaningful labels
+- Test keyboard navigation thoroughly across all menu levels
+- Verify screen reader announcements for menu state changes
+- Maintain sufficient color contrast in all theme variations
+- Provide clear focus indicators for all interactive elements
+
+## Related Components
+
+- **Site Header** - Container component that includes the Primary Nav
+- **Utility Nav** - Secondary navigation for utility links
+- **Menu Toggle** - Mobile hamburger menu control
+- **Breadcrumbs** - Complementary wayfinding component
+
+## Visual Regression Testing
+
+For comprehensive testing of all menu variations and theme combinations, see the [Visreg page](?path=/story/organisms-menu-primary-nav-visreg--visreg).

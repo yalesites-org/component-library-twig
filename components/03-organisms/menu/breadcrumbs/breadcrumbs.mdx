@@ -1,0 +1,186 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as BreadcrumbsStories from './breadcrumbs.stories';
+
+<Meta of={BreadcrumbsStories} name="Docs" />
+
+# Breadcrumbs
+
+The breadcrumbs component provides hierarchical navigation that shows users their current location within the site's structure. It displays a trail of links representing the path from the homepage to the current page, helping users understand where they are and providing quick access to parent pages. Breadcrumbs improve wayfinding and reduce the number of actions needed to navigate to higher-level pages.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the breadcrumbs properties in real-time.
+
+<Canvas of={BreadcrumbsStories.Breadcrumbs} />
+<Controls of={BreadcrumbsStories.Breadcrumbs} />
+
+## Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>items</code>
+      </td>
+      <td>
+        <code>array</code>
+      </td>
+      <td>Array of breadcrumb items representing the navigation path</td>
+    </tr>
+    <tr>
+      <td>
+        <code>items[].title</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>The text label for the breadcrumb link</td>
+    </tr>
+    <tr>
+      <td>
+        <code>items[].url</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>The URL destination for the breadcrumb link</td>
+    </tr>
+  </tbody>
+</table>
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>items[].is_active</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>
+        Marks the current page (typically the last item). Active items are not
+        linked.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Organism</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-breadcrumbs.twig</code>, <code>yds-breadcrumbs.js</code>,{' '}
+        <code>_yds-breadcrumbs.scss</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Accessibility</strong>
+      </td>
+      <td>
+        ARIA landmark role <code>navigation</code> with{' '}
+        <code>aria-label="Breadcrumb"</code>, semantic <code>&lt;ol&gt;</code>{' '}
+        structure, keyboard navigable links, current page indicated with{' '}
+        <code>aria-current="page"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Responsive Behavior</strong>
+      </td>
+      <td>
+        Breadcrumbs collapse on smaller viewports, showing only the current page
+        and immediate parent with an expandable menu for full path
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>JavaScript</strong>
+      </td>
+      <td>
+        Handles responsive collapse behavior and expand/collapse interactions on
+        mobile devices
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### Best Practices
+
+- Always include "Home" as the first breadcrumb item
+- Keep breadcrumb labels concise and descriptive (under 30 characters recommended)
+- The last breadcrumb should represent the current page and be marked with `is_active: true`
+- Use breadcrumbs on pages that are at least two levels deep in the site hierarchy
+- Ensure breadcrumb path accurately reflects the site's information architecture
+
+### Things to Avoid
+
+- Don't use breadcrumbs as the primary navigation method
+- Avoid including every level if the hierarchy is extremely deep (consider showing key levels only)
+- Don't use breadcrumbs on the homepage or other top-level pages
+- Don't make the active/current page breadcrumb clickable
+
+### Breadcrumb Length
+
+Breadcrumbs work best when limited to 7 items or fewer. For deeper hierarchies, consider:
+
+- Condensing middle levels with a "..." separator
+- Showing only the most relevant path segments
+- Restructuring your site's information architecture if paths regularly exceed 7 levels
+
+## Accessibility Considerations
+
+- The component uses semantic HTML `<nav>` with proper ARIA attributes
+- Current page is indicated with `aria-current="page"` for screen readers
+- Breadcrumb separators are decorative and hidden from assistive technology
+- All links have sufficient color contrast and visible focus indicators
+- Mobile collapsed state maintains keyboard accessibility
+
+## Relationship to Site Structure
+
+Breadcrumbs should reflect the site's actual hierarchical structure, not the user's browsing history. They represent the location of the current page within the site's organization, providing context and enabling easy navigation to parent pages.
+
+## Related Components
+
+- **Site Header** - Primary navigation component at the top of every page
+- **Primary Nav** - Main navigation menu for top-level sections
+- **Utility Nav** - Secondary navigation for utility links
+
+## Visual Regression Testing
+
+For comprehensive testing of breadcrumb variations including different path lengths and responsive behaviors, see the [Visreg page](?path=/story/organisms-menu-breadcrumbs-visreg--visreg).

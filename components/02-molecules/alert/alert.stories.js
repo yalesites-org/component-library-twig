@@ -1,6 +1,8 @@
 import alertTwig from './yds-alert.twig';
 import textFieldTwig from '../text/yds-text-field.twig';
 import ctaTwig from '../../01-atoms/controls/cta/yds-cta.twig';
+import componentProps from './alert-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 import alertData from './alert.yml';
 
@@ -10,25 +12,14 @@ import './yds-alert';
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Alert',
+  title: 'Molecules/Site Alert',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    heading: {
-      name: 'Alert Heading',
-      type: 'string',
-    },
-    content: {
-      name: 'Alert Content',
-      type: 'string',
-    },
-    linkContent: {
-      name: 'Alert Link Text',
-      type: 'string',
-    },
-  },
+  argTypes: toArgTypes(componentProps),
   args: {
+    ...toArgs(componentProps),
     heading: alertData.alert__heading,
     content: alertData.alert__content,
     linkContent: alertData.alert__link__content,
@@ -67,14 +58,6 @@ ${alertTwig({
 ${textFieldTwig({
   text_field__content: alertResetInstructions,
 })}`;
-Alert.argTypes = {
-  type: {
-    name: 'Alert Type',
-    type: 'select',
-    options: ['emergency', 'announcement', 'marketing'],
-    defaultValue: 'announcement',
-  },
-};
 
 export const AlertExamples = ({ heading, content, linkContent }) => `
 <script>

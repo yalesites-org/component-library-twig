@@ -118,11 +118,12 @@
 
   <div class="pairing-item">
     {% include "@molecules/quote-callout/yds-quote-callout.twig" with {
-      standalone_quote__width: 'site',
-      standalone_quote__alignment: 'left',
-      standalone_quote__quote_alignment: 'left',
-      standalone_quote__style: 'bar',
-      standalone_quote__quote: 'Our platform will transform our ability to study metabolic filaments and, coupled with biochemical and biophysical tools, manipulate enzyme structures and metabolic activity in cells.',
+      quote_callout__width: 'site',
+      quote_callout__alignment: 'left',
+      quote_callout__quote_alignment: 'left',
+      quote_callout__style: 'bar',
+      quote_callout__accent_theme: standalone_quote__accent_theme|default('one'),
+      quote_callout__quote: '<p>Our platform will transform our ability to study metabolic filaments and, coupled with biochemical and biophysical tools, manipulate enzyme structures and metabolic activity in cells.</p>',
     } %}
   </div>
 

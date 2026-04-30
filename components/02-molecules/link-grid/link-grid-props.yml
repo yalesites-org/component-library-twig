@@ -1,0 +1,40 @@
+# link-grid-props.yml
+#
+# Link Grid component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+themeColor:
+  twigProp: link_grid__theme
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Color theme applied to the link grid component
+  detail: >
+    Applies a color theme to the link grid component. The available options
+    are derived from the component-themes token set. Maps to the
+    link_grid__theme Twig variable.
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select
+
+lineTreatment:
+  twigProp: link_grid__line_treatment
+  name: Line Treatment
+  type: select
+  required: false
+  description: Visual style of dividers between link grid items
+  default: default
+  options:
+    - default
+    - all_strong_lines
+    - all_light_lines
+    - no_lines
+  control: select

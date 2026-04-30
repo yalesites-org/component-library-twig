@@ -1,5 +1,6 @@
 module.exports = {
   stories: [
+    '../components/[0-9]*/**/*.mdx',
     '../components/**/*.stories.@(js|jsx|ts|tsx)',
   ],
   staticDirs: [
@@ -7,6 +8,9 @@ module.exports = {
     '../images', 
     '../fonts'
   ],
+  core: {
+    disableTelemetry: true,
+  },
   addons: [
     '@storybook/addon-a11y',
     '@storybook/addon-links',

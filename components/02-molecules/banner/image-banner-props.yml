@@ -1,0 +1,49 @@
+# image-banner-props.yml
+#
+# Image Banner component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+bgColor:
+  twigProp: image_banner__content__background
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Component theme color
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select
+
+size:
+  twigProp: image_banner__size
+  name: Image Size
+  type: select
+  required: false
+  description: 'Image height variation: tall or short'
+  default: tall
+  options:
+    - tall
+    - short
+  control: select
+
+withVideo:
+  twigProp: image_banner__video
+  name: With Video
+  type: boolean
+  required: false
+  description: Whether to display a video background instead of a static image
+  default: false
+  control: boolean
+
+imageCaption:
+  twigProp: image_banner__caption
+  name: Image Caption
+  type: string
+  required: false
+  description: Caption text displayed below or over the image
+  control: text

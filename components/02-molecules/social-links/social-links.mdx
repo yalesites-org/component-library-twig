@@ -1,0 +1,170 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as SocialLinksStories from './social-links.stories';
+
+<Meta of={SocialLinksStories} name="Docs" />
+
+# Social Links
+
+The Social Links component displays a horizontal list of social media icons that link to various social media platforms. Each icon is properly labeled for accessibility and provides a clear, recognizable visual link to the corresponding platform.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the Social Links properties in real-time.
+
+<Canvas of={SocialLinksStories.SocialLinks} />
+<Controls of={SocialLinksStories.SocialLinks} />
+
+## Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>icons</code>
+      </td>
+      <td>
+        <code>array</code>
+      </td>
+      <td>
+        Array of social media link objects. Each link should contain{' '}
+        <code>url</code>, <code>name</code>, and <code>icon</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### Individual Icon Properties
+
+Each object in the `icons` array should contain:
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>url</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>The URL destination for the social media platform</td>
+    </tr>
+    <tr>
+      <td>
+        <code>name</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        Visually hidden text for screen readers that identifies the social media
+        platform
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>icon</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        The icon identifier for the social media platform (e.g., 'facebook',
+        'x-twitter', 'linkedin')
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Supported Platforms
+
+The Social Links component supports icons for the following social media platforms:
+
+- X (formerly Twitter)
+- Facebook
+- YouTube
+- Instagram
+- Weibo
+- LinkedIn
+- Bluesky
+
+Additional platforms can be supported by extending the icon system.
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-social-links.twig`
+- **Styles**: `_yds-social-links.scss`
+
+### Accessibility
+
+- Semantic list structure (`<ul>` and `<li>` elements) for proper screen reader navigation
+- Visually hidden text provides context for each social media link
+- Icons are implemented as background images with proper labels
+- Links are keyboard accessible with clear focus indicators
+- Color contrast meets WCAG 2.1 AA standards
+- External links are properly identified for assistive technologies
+
+### Responsive Behavior
+
+- Icons maintain consistent sizing across all screen sizes
+- Horizontal layout adapts to available space
+- Touch targets meet minimum size requirements for mobile devices
+- Icons wrap to multiple lines when necessary on smaller screens
+
+## Usage Guidelines
+
+### Best Practices
+
+- Include only the social media platforms where your organization actively maintains a presence
+- Order platforms by importance or audience preference
+- Keep the number of icons manageable (typically 3-6 platforms)
+- Ensure all linked profiles are official and regularly updated
+- Use the component in consistent locations across your site (e.g., footer, header)
+- Verify that all URLs are correct and active
+
+### Things to Avoid
+
+- Don't include links to inactive or abandoned social media profiles
+- Don't overwhelm users with too many social media options
+- Avoid using custom or non-standard icons that users may not recognize
+- Don't place social links in every section of every page
+- Avoid linking to personal accounts instead of official organizational profiles
+- Don't use social links as primary navigation elements
+
+### When to Use Social Links
+
+- Website footer for global social media presence
+- Header or sidebar for persistent access
+- Contact or "About Us" pages
+- Event or program pages with dedicated social media channels
+- Staff or department pages with specific social media accounts
+
+## Testing
+
+For comprehensive visual regression testing with all theme variations and configurations, see the [Visreg page](?path=/story/molecules-social-links-visreg--visreg).
+
+## Related Components
+
+- **Link**: Use for standalone links
+- **Menu**: Use for primary navigation structures
+- **Quick Links**: Consider when you need labeled text links instead of icons
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

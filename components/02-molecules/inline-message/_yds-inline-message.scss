@@ -161,7 +161,7 @@ $component-inline-message-themes: map.deep-get(
 }
 
 .inline-message__text {
-  @include tokens.body-s-condensed;
+  @include tokens.body-default;
 
   max-width: var(--size-component-layout-width-content);
   color: var(--color-inline-message-text);

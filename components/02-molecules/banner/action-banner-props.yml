@@ -1,0 +1,113 @@
+# action-banner-props.yml
+#
+# Action Banner component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+heading:
+  twigProp: banner__heading
+  name: Heading
+  type: string
+  required: true
+  description: The main heading text for the banner
+  control: text
+
+snippet:
+  twigProp: banner__snippet
+  name: Snippet
+  type: string
+  required: false
+  description: Additional descriptive text (supports HTML)
+  control: text
+
+linkContent:
+  twigProp: banner__link__content
+  name: Link Content
+  type: string
+  required: false
+  description: Text for the primary call-to-action button
+  control: text
+
+linkContentTwo:
+  twigProp: banner__link__content_two
+  name: Link Content Two
+  type: string
+  required: false
+  description: Text for the secondary call-to-action button
+  control: text
+
+bgColor:
+  twigProp: banner__content__background
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Component theme color
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select
+
+linkStyle:
+  twigProp: banner__link__style
+  name: Link Style
+  type: select
+  required: false
+  description: 'Style for the call-to-action links: cta, text-link, or none'
+  default: cta
+  options:
+    - cta
+    - text-link
+    - none
+  control: select
+
+contentLayout:
+  twigProp: banner__content__layout
+  name: Content Layout
+  type: select
+  required: false
+  description: 'Position of the content overlay: bottom, left, or right'
+  default: bottom
+  options:
+    - bottom
+    - left
+    - right
+  control: select
+
+buttonAlignment:
+  twigProp: banner__button__alignment
+  name: Button Alignment
+  type: select
+  required: false
+  description: 'Alignment for the action buttons: left, center, or right'
+  default: right
+  options:
+    - left
+    - center
+    - right
+  control: select
+
+buttonStyleConsistency:
+  twigProp: banner__button__style__consistency
+  name: Button Style Consistency
+  type: select
+  required: false
+  description: 'Visual style consistency for multiple buttons: mixed, both_primary, or both_secondary'
+  default: mixed
+  options:
+    - mixed
+    - both_primary
+    - both_secondary
+  control: select
+
+overlayBackgroundImage:
+  twigProp: banner__overlay_background_image
+  name: Overlay Background Image
+  type: boolean
+  required: false
+  description: Whether to display a pattern overlay on the background image
+  default: false
+  control: boolean

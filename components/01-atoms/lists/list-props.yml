@@ -1,0 +1,45 @@
+# list-props.yml
+#
+# Lists component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+listItems:
+  twigProp: list__items
+  name: List Items
+  type: array
+  required: true
+  description: Array of list item objects to render
+  detail: >
+    Array of objects passed to the Twig template. Each item should have
+    list__item__content for the item text. This prop is constructed in the
+    story's render function and is not directly editable via the Controls panel.
+
+listType:
+  twigProp: list__type
+  name: List Type
+  type: select
+  required: false
+  description: HTML list element type (ul for unordered, ol for ordered)
+  default: ul
+  options:
+    - ul
+    - ol
+  control: select
+
+sectionTheme:
+  twigProp: data-component-theme
+  name: Section Theme
+  type: select
+  required: false
+  description: Background color theme for the layout section
+  default: default
+  options:
+    - default
+    - one
+    - two
+    - three
+    - four
+  control: select

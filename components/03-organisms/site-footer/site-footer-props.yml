@@ -1,0 +1,59 @@
+# site-footer-props.yml
+#
+# Site Footer component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+borderThickness:
+  twigProp: site_footer__border_thickness
+  name: Border Thickness
+  type: select
+  required: false
+  description: Top border thickness for the site footer (from design tokens)
+  detail: >
+    Controls the thickness of the decorative top border on the footer.
+    Options are derived from the border.thickness design tokens.
+  default: '0'
+  control: select
+
+siteFooterTheme:
+  twigProp: site_footer__theme
+  name: Footer Theme (dial)
+  type: select
+  required: false
+  description: Color theme applied to the site footer
+  detail: >
+    Controls the overall footer color scheme. Options are derived from the
+    site-footer-themes design tokens.
+  default: one
+  control: select
+
+siteFooterAccent:
+  twigProp: site_footer__accent
+  name: Footer Accent Color (dial)
+  type: select
+  required: false
+  description: Accent color applied to links and interactive elements in the footer
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+    - six
+    - seven
+    - eight
+  control: select
+
+siteFooterVariation:
+  twigProp: site_footer__variation
+  name: Footer Variation (dial)
+  type: select
+  required: false
+  description: Layout variation for the site footer
+  default: basic
+  options:
+    - basic
+    - mega
+  control: select
