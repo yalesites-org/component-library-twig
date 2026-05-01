@@ -43,7 +43,6 @@ const renderPublicationDetail = (data, args, datesKey = 'policyBrief') => {
     publication_detail__heading: args.heading,
     publication_detail__category: args.category,
     publication_detail__publish_date: dateMap[args.dateFormat] || dateMap.year,
-    publication_detail__resource_type: args.resourceType,
     publication_detail__description: args.showDescription
       ? data.publication_detail__description
       : '',
@@ -188,7 +187,6 @@ export const VideoResource = (args) =>
       ...args,
       heading: videoResourceData.publication_detail__heading,
       category: videoResourceData.publication_detail__category,
-      resourceType: 'video',
     },
     'videoResource',
   );

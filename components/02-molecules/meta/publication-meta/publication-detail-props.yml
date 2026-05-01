@@ -34,19 +34,6 @@ dateFormat:
     - full
   control: select
 
-resourceType:
-  twigProp: publication_detail__resource_type
-  name: Resource Type
-  type: select
-  required: false
-  description: Bundle of the primary media. Only the 'video' branch renders the embedded video block; document and image bundles render the document_image thumbnail in the page-title image slot.
-  default: document
-  options:
-    - document
-    - video
-    - image
-  control: select
-
 showDescription:
   twigProp: publication_detail__description
   name: Show Description Section
