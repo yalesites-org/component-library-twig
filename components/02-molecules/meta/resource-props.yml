@@ -20,17 +20,6 @@ category:
   description: Resource category label
   control: text
 
-resourceType:
-  twigProp: resource_meta__resource_type
-  name: Resource Type
-  type: select
-  required: true
-  description: 'Resource type: video or document'
-  options:
-    Video: video
-    Document: document
-  control: select
-
 publishDate:
   twigProp: resource_meta__publish_date
   name: Publish Date
