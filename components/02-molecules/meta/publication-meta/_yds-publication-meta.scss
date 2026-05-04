@@ -1,0 +1,109 @@
+@use '../../../00-tokens/tokens';
+
+/* Publication meta
+ *
+ * Visual treatment for the three BEM blocks used inside reference-card slots
+ * for publication-style Resource teasers (card / list_item / condensed view
+ * modes). These blocks are emitted from the consuming Drupal templates:
+ *
+ *   .publication-meta        → reference-card subheading slot
+ *   .publication-journal     → reference-card snippet slot
+ *   .publication-discipline  → reference-card overline slot
+ *
+ * All three share a common label treatment, centralised in the
+ * `publication-label` mixin below. New blocks should `@include` it from
+ * their own `__label` element to stay consistent.
+ *
+ * Note: a separate, unrelated `.resource-meta` molecule exists at
+ * /02-molecules/meta/resource-meta/ — that one is the heavy "Published /
+ * metadata / file-info" block used on full Resource pages. Do not confuse
+ * the two.
+ */
+
+// Shared values to match `.reference-card__overline` (the discipline slot)
+// so all three publication blocks read as a coherent meta group.
+@mixin publication-text {
+  @include tokens.body-s;
+
+  color: var(--color-gray-500);
+  font-variant-numeric: oldstyle-nums;
+  letter-spacing: 0.5px;
+}
+
+@mixin publication-label {
+  // Labels use body-xs (one step smaller than publication-text's body-s)
+  // and re-assert the publication-meta colour / numerics so the cells
+  // still read as one coherent group with the value text.
+  @include tokens.body-xs;
+
+  color: var(--color-gray-500);
+  font-variant-numeric: oldstyle-nums;
+  letter-spacing: 0.5px;
+  font-weight: var(--font-weights-mallory-book);
+  font-family: var(--font-families-mallory);
+  text-transform: uppercase;
+  margin-right: var(--size-spacing-2);
+}
+
+/* .publication-meta — date + optional teaser text + authors */
+.publication-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-2);
+
+  &__label {
+    @include publication-label;
+  }
+
+  &__publish-date,
+  &__authors {
+    @include publication-text;
+  }
+
+  &__teaser-text {
+    @include publication-text;
+
+    // Drupal wraps formatted_text fields in a <p>; strip the extra margin
+    // so it sits flush in the stack.
+    p:first-child {
+      margin-top: 0;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__authors a {
+    color: inherit;
+  }
+}
+
+/* .publication-journal — publication name + issue, stacked */
+.publication-journal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-1);
+
+  &__label {
+    @include publication-label;
+  }
+
+  &__name,
+  &__issue {
+    @include publication-text;
+  }
+}
+
+/* .publication-discipline — taxonomy terms shown inline with label */
+.publication-discipline {
+  &__label {
+    @include publication-label;
+  }
+
+  &__terms {
+    a {
+      color: inherit;
+    }
+  }
+}

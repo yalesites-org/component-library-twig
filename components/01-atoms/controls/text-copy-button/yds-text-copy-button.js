@@ -9,16 +9,16 @@
  * ## Overriding the default feedback
  *
  * The default feedback replaces the button's text content with
- * "Copied to clipboard", then reverts to "(Copy)" after 1.2 s. To replace
- * this with custom UI (e.g. an icon swap), listen for the event and call
- * `event.preventDefault()`:
+ * "Copied to clipboard", then restores whatever label the button was
+ * rendered with after 1.7 s. To replace this with custom UI (e.g. an
+ * icon swap), listen for the event and call `event.preventDefault()`:
  *
  * @example
  * document.addEventListener('text-copy-button:copied', (e) => {
  *   // Scope to a specific context if needed:
  *   if (!e.detail.button.closest('.my-component')) return;
  *
- *   // Prevent the default "(Copy)" → "Copied to clipboard" text swap.
+ *   // Prevent the default text swap.
  *   e.preventDefault();
  *
  *   // Provide custom feedback — e.g. toggle a CSS modifier for an icon swap.
@@ -43,6 +43,11 @@ Drupal.behaviors.textCopyButton = {
 
     elems.forEach((elem) => {
       elem.setAttribute('data-text-copy-init', '');
+
+      // Capture the rendered label so we can restore it after the success
+      // message. Hardcoding a revert label here would override whatever the
+      // consumer chose to put in the button.
+      const defaultLabel = elem.textContent.trim();
 
       elem.addEventListener('click', (event) => {
         const btn = event.target.closest('.text-copy-button__button');
@@ -73,7 +78,7 @@ Drupal.behaviors.textCopyButton = {
             if (useDefault) {
               btn.textContent = 'Copied to clipboard';
               setTimeout(() => {
-                btn.textContent = '(Copy)';
+                btn.textContent = defaultLabel;
               }, 1700);
             }
           })
