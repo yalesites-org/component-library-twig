@@ -163,6 +163,7 @@ code {
 
 @mixin heading($level, $style: null) {
   body[data-font-pairing='yalenew'] &,
+  body[data-font-pairing='yalenew-oldstyle'] &,
   body:not([data-font-pairing]) & {
     @if $level == 'h1' {
       @include h1-yale-new;
