@@ -329,23 +329,6 @@ $cta-outline-weights: (
       text-decoration: underline;
     }
   }
-
-  .yds-layout[data-component-theme]:not([data-component-theme='default']) & {
-    &[data-cta-style='filled'] {
-      --color-cta-text: var(--color-layout-theme);
-      --color-cta-text-hover: var(--color-layout-border);
-      --color-cta-bg: var(--color-layout-border);
-      --color-cta-bg-hover: transparent;
-      --color-cta-border: var(--color-layout-border);
-    }
-
-    &[data-cta-style='outline'] {
-      --color-cta-text: var(--color-layout-border);
-      --color-cta-text-hover: var(--color-layout-theme);
-      --color-cta-border: var(--color-layout-border);
-      --color-cta-bg-hover: var(--color-layout-border);
-    }
-  }
 }
 
 .cta {
@@ -384,5 +367,29 @@ $cta-outline-weights: (
 
   &--align-right {
     justify-content: flex-end;
+  }
+}
+
+// Gray-400 layout sections (`five`, `six` on `.yds-layout`): match callout CTA pairing.
+// Include `.cta-banner__cta` — banner embeds the CTA mixin on that class (not always `.cta`).
+.yds-layout:is([data-component-theme='five'], [data-component-theme='six'])
+  :is(.cta, .cta-banner__cta) {
+  &[data-cta-style='filled'] {
+    --color-cta-action: var(--color-slot-seven);
+    --color-cta-bg: var(--color-slot-seven);
+    --color-cta-border: var(--color-slot-seven);
+    --color-cta-text: var(--color-slot-eight);
+    --color-cta-bg-hover: transparent;
+    --color-cta-text-hover: var(--color-slot-seven);
+  }
+
+  &[data-cta-style='outline'] {
+    --color-cta-action: var(--color-slot-seven);
+    --color-cta-action-secondary: var(--color-slot-eight);
+    --color-cta-bg: transparent;
+    --color-cta-bg-hover: var(--color-slot-seven);
+    --color-cta-border: var(--color-slot-seven);
+    --color-cta-text: var(--color-slot-seven);
+    --color-cta-text-hover: var(--color-slot-eight);
   }
 }

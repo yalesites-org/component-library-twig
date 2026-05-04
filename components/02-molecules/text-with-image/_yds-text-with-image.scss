@@ -1,6 +1,7 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
 @use '../../00-tokens/functions/map';
+@use '../../00-tokens/mixins/yds-theme-six-overrides' as theme-six;
 
 // get global themes
 $global-content-spotlight-themes: map.deep-get(tokens.$tokens, 'global-themes');
@@ -137,10 +138,12 @@ $component-content-spotlight-themes: map.deep-get(
     --color-background: var(--color-slot-nine);
     --color-text: var(--color-slot-seven);
     --color-heading: var(--color-slot-seven);
-    --color-link-base: var(--color-slot-one);
-    --color-link-hover: var(--color-slot-one);
-    --color-link-visited-base: var(--color-purple-visited);
-    --color-link-visited-hover: var(--color-purple-visited-hover);
+
+    // Slot-nine is gray-400: dark links (not brand slot-one / purple visited).
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-slot-seven);
+    --color-link-visited-hover: var(--color-slot-seven);
   }
 
   .layout--banner & {
@@ -274,6 +277,19 @@ $component-content-spotlight-themes: map.deep-get(
   }
 }
 
+// Slot-nine (gray-400): override link mixin global-theme hover and white shadow.
+@include theme-six.yds-apply-theme-six-overrides('.text-with-image') {
+  .link,
+  .text-with-image__text,
+  .text-with-image__text a {
+    @include theme-six.yds-theme-six-link-overrides;
+  }
+
+  .text-with-image__caption {
+    color: var(--color-slot-seven);
+  }
+}
+
 .text-with-image__ctas {
   align-items: flex-start;
   display: flex;
@@ -282,5 +298,10 @@ $component-content-spotlight-themes: map.deep-get(
 }
 
 .text-with-image__caption {
-  color: red;
+  color: var(--color-gray-800);
+}
+
+.text-with-image:not([data-component-theme='default'])
+  .text-with-image__caption {
+  color: var(--color-text);
 }

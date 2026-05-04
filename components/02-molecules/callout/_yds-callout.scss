@@ -140,10 +140,10 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-action-secondary: var(--color-slot-eight);
     --color-text: var(--color-slot-seven);
     --color-heading: var(--color-slot-seven);
-    --color-link-base: var(--color-slot-eight);
-    --color-link-hover: var(--color-basic-white);
-    --color-link-visited-base: var(--color-purple-visited);
-    --color-link-visited-hover: var(--color-purple-visited-hover);
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-slot-seven);
+    --color-link-visited-hover: var(--color-slot-seven);
   }
 }
 
@@ -258,6 +258,10 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   [data-component-theme='three'] & {
     --color-link-hover: var(--color-slot-eight);
+  }
+
+  [data-component-theme='six'] & {
+    --color-link-hover: var(--color-slot-seven);
   }
 }
 

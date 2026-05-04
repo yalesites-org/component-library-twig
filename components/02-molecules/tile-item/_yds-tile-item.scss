@@ -1,6 +1,7 @@
 @use '../../00-tokens/tokens';
 @use '../../00-tokens/functions/map';
 @use '../../01-atoms/atoms';
+@use '../../00-tokens/mixins/yds-theme-six-overrides' as theme-six;
 
 $global-tile-item-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
@@ -184,6 +185,13 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       }
     }
   }
+}
+
+@include theme-six.yds-apply-theme-six-overrides('.tile__item') {
+  --color-link-base: var(--color-slot-seven);
+  --color-link-hover: var(--color-slot-seven);
+  --color-link-visited-base: var(--color-slot-seven);
+  --color-link-visited-hover: var(--color-slot-seven);
 }
 
 .tile__item__heading {

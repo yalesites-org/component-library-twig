@@ -1,6 +1,7 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
 @use '../../00-tokens/functions/map';
+@use '../../00-tokens/mixins/yds-theme-six-overrides' as theme-six;
 
 $break-link-grid: tokens.$break-l;
 $break-link-grid-max: $break-link-grid - 0.05;
@@ -69,6 +70,7 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   &[data-component-theme='six'] {
     --color-link-grid-action: var(--color-slot-nine);
+    --color-heading: var(--color-slot-seven);
   }
 
   // if used in the layout component, remove the top margin
@@ -83,13 +85,24 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   flex: 1 0 100%;
   margin-bottom: var(--size-spacing-6);
 
-  [data-component-theme]:not(
-      [data-component-theme='default'],
-      [data-component-theme='two']
-    )
-    .link-grid
-    & {
+  // Use token (not inherited section color): gray layout sections can set light
+  // `color` on `.yds-layout`, which would otherwise wash out the main title.
+  color: var(--color-heading);
+
+  // Light text only on dark link-grid backgrounds. Scope to `.link-grid` so
+  // section layout `[data-component-theme]` on `.yds-layout` does not force
+  // white on theme `six` (slot-nine / gray-400) or other light blocks.
+  .link-grid[data-component-theme='one'] &,
+  .link-grid[data-component-theme='three'] &,
+  .link-grid[data-component-theme='four'] &,
+  .link-grid[data-component-theme='five'] & {
     color: var(--color-basic-white);
+  }
+}
+
+@include theme-six.yds-apply-theme-six-overrides('.link-grid') {
+  .link-grid__heading {
+    color: var(--color-slot-seven);
   }
 }
 

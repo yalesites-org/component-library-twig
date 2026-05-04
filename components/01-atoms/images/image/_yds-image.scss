@@ -1,5 +1,6 @@
 @use '../../../00-tokens/tokens';
 @use '../../controls/text-link/yds-text-link' as link;
+@use '../../../00-tokens/mixins/yds-theme-six-overrides' as theme-six;
 
 img,
 picture {
@@ -35,28 +36,38 @@ figure {
     &:hover {
       color: var(--color-gray-800);
     }
-
-    [data-component-theme]:not(
-        [data-component-theme='default'],
-        [data-component-theme='two']
-      )
-      & {
-      --color-text-shadow: var(--color-background);
-
-      color: var(--color-link-base);
-    }
   }
 
   [data-component-layout] & {
     color: var(--color-layout-content);
   }
 
-  [data-component-theme]:not(
-      [data-component-theme='default'],
-      [data-component-theme='two']
-    )
+  .yds-layout:is([data-component-theme='one'], [data-component-theme='three'])
     & {
-    color: var(--color-text);
+    color: var(--color-layout-content);
+  }
+}
+
+.yds-layout:is([data-component-theme='one'], [data-component-theme='three'])
+  .caption
+  a {
+  --color-text-shadow: var(--color-background);
+
+  color: var(--color-link-base);
+}
+
+.yds-layout:is([data-component-theme='five'], [data-component-theme='six'])
+  .caption {
+  color: var(--color-slot-seven);
+
+  a {
+    @include theme-six.yds-theme-six-link-overrides;
+
+    color: var(--color-slot-seven);
+
+    &:hover {
+      color: var(--color-slot-seven);
+    }
   }
 }
 
