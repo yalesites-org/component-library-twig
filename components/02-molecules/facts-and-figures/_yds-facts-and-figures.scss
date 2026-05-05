@@ -121,11 +121,6 @@ $facts-and-figures-component-themes: map.deep-get(
   width: 100%;
   position: relative;
 
-  // change font-variant-numeric to normal from the default of oldstyle-nums in the h3-yale-new mixin
-  [data-facts-and-figures-font-style='normal'] & {
-    font-variant-numeric: normal;
-  }
-
   // add eyebrow above facts-and-figures
   [data-facts-and-figures-style='basic'] & {
     &::before {
@@ -142,6 +137,19 @@ $facts-and-figures-component-themes: map.deep-get(
   // set eyebrow width var to 100% if facts-and-figures is centered
   [data-component-alignment='center'] & {
     --eyebrow-width: 100%;
+  }
+
+  // Per-component numeral toggle. Prefixing with `body` matches the
+  // specificity of the heading mixin's body-scoped rules (0,2,1), so source
+  // order — not specificity — resolves the cascade and the toggle wins.
+  // The numeric-oldstyle selector is also required for the yalenew-oldstyle
+  // body pairing, where the heading mixin no longer sets oldstyle-nums.
+  body [data-facts-and-figures-font-style='numeric-oldstyle'] & {
+    font-variant-numeric: oldstyle-nums;
+  }
+
+  body [data-facts-and-figures-font-style='normal'] & {
+    font-variant-numeric: normal;
   }
 }
 
