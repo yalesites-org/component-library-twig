@@ -10,10 +10,10 @@ export default {
   args: toArgs(componentProps),
 };
 
-export const Interactive = ({ fontStyle }) => `
+export const Interactive = ({ stat, fontStyle }) => `
   <ul class='facts-and-figures__group__wrap' data-facts-and-figures-collection-type="single">
     ${factsAndFiguresTwig({
-      facts_and_figures__stat: factsAndFiguresData.facts_and_figures__stat,
+      facts_and_figures__stat: stat,
       facts_and_figures__content:
         factsAndFiguresData.facts_and_figures__content,
       facts_and_figures__presentation_style: 'basic',
@@ -22,14 +22,14 @@ export const Interactive = ({ fontStyle }) => `
       facts_and_figures__alignment: 'center',
     })}
     ${factsAndFiguresTwig({
-      facts_and_figures__stat: factsAndFiguresData.facts_and_figures__stat,
+      facts_and_figures__stat: stat,
       facts_and_figures__presentation_style: 'basic',
       facts_and_figures__font_style: fontStyle,
       facts_and_figures__has_icon: 'true',
       facts_and_figures__alignment: 'left',
     })}
     ${factsAndFiguresTwig({
-      facts_and_figures__stat: factsAndFiguresData.facts_and_figures__stat,
+      facts_and_figures__stat: stat,
       facts_and_figures__content:
         factsAndFiguresData.facts_and_figures__content,
       facts_and_figures__presentation_style: 'basic',
@@ -40,10 +40,10 @@ export const Interactive = ({ fontStyle }) => `
   </ul>
 `;
 
-export const FactsAndFigures = ({ fontStyle }) => `
+export const FactsAndFigures = ({ stat, fontStyle }) => `
   <ul class='facts-and-figures__group__wrap' data-facts-and-figures-collection-type="single">
     ${factsAndFiguresTwig({
-      facts_and_figures__stat: factsAndFiguresData.facts_and_figures__stat,
+      facts_and_figures__stat: stat,
       facts_and_figures__content:
         factsAndFiguresData.facts_and_figures__content,
       facts_and_figures__presentation_style: 'basic',
@@ -52,14 +52,14 @@ export const FactsAndFigures = ({ fontStyle }) => `
       facts_and_figures__alignment: 'center',
     })}
     ${factsAndFiguresTwig({
-      facts_and_figures__stat: factsAndFiguresData.facts_and_figures__stat,
+      facts_and_figures__stat: stat,
       facts_and_figures__presentation_style: 'basic',
       facts_and_figures__font_style: fontStyle,
       facts_and_figures__has_icon: 'true',
       facts_and_figures__alignment: 'left',
     })}
     ${factsAndFiguresTwig({
-      facts_and_figures__stat: factsAndFiguresData.facts_and_figures__stat,
+      facts_and_figures__stat: stat,
       facts_and_figures__content:
         factsAndFiguresData.facts_and_figures__content,
       facts_and_figures__presentation_style: 'basic',
