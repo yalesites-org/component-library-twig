@@ -80,7 +80,7 @@ export const globalTypes = {
 export const tags = ['autodocs', 'autodocs'];
 export const parameters = {
   actions: { argTypesRegex: '^on.*' },
-  controls: { disableSaveFromUI: true },
+  controls: { disableSaveFromUI: true, sort: 'requiredFirst' },
   options: {
     storySort: {
       method: 'alphabetical',
