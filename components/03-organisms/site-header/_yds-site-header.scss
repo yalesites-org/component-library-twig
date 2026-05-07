@@ -371,7 +371,7 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
   color: var(--color-site-header-site-branding);
   text-decoration: none;
 
-  body[data-font-pairing='yalenew-oldstyle'] & {
+  body[data-font-pairing='yalenew'] & {
     font-variant-numeric: oldstyle-nums;
   }
 
@@ -411,7 +411,7 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
   letter-spacing: -0.02em;
   margin-top: 0.25em;
 
-  body[data-font-pairing='yalenew-oldstyle'] & {
+  body[data-font-pairing='yalenew'] & {
     font-variant-numeric: oldstyle-nums;
   }
 

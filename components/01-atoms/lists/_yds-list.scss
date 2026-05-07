@@ -53,10 +53,10 @@ ol {
 
 .taxonomy-list--categories {
   @include tokens.body-s;
+  @include tokens.body-oldstyle-nums;
 
   color: var(--color-gray-500);
   font-variant-caps: small-caps;
-  font-variant-numeric: oldstyle-nums;
   text-transform: lowercase;
   letter-spacing: 0.5px;
 }
