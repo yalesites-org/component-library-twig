@@ -1,6 +1,5 @@
 @use '../../../00-tokens/tokens';
 @use '../../controls/text-link/yds-text-link' as link;
-@use '../../../00-tokens/mixins/yds-theme-six-overrides' as theme-six;
 
 img,
 picture {
@@ -56,12 +55,15 @@ figure {
   color: var(--color-link-base);
 }
 
-.yds-layout:is([data-component-theme='five'], [data-component-theme='six'])
-  .caption {
+.yds-layout[data-component-theme='five'] .caption {
   color: var(--color-slot-seven);
 
   a {
-    @include theme-six.yds-theme-six-link-overrides;
+    --color-text-shadow: transparent;
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-slot-seven);
+    --color-link-visited-hover: var(--color-slot-seven);
 
     color: var(--color-slot-seven);
 

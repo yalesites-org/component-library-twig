@@ -282,7 +282,11 @@ $component-content-spotlight-port-themes: map.deep-get(
   .link,
   .content-spotlight-portrait__text,
   .content-spotlight-portrait__text a {
-    @include theme-six.yds-theme-six-link-overrides;
+    --color-text-shadow: transparent;
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-slot-seven);
+    --color-link-visited-hover: var(--color-slot-seven);
   }
 }
 

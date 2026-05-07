@@ -2,7 +2,6 @@
 @use '../../01-atoms/atoms';
 @use '../../00-tokens/functions/map';
 @use '../../01-atoms/controls/text-link/yds-text-link' as link;
-@use '../../00-tokens/mixins/yds-theme-six-overrides' as theme-six;
 
 // get global themes
 $global-quick-links-themes: map.deep-get(tokens.$tokens, 'global-themes');
@@ -82,38 +81,6 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-link-base: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
-  }
-
-  &[data-component-theme='four'] {
-    --color-quick-links-background: var(--color-slot-three);
-    --color-quick-links-text: var(--color-slot-seven);
-    --color-quick-links-heading: var(--color-slot-seven);
-    --color-quick-links-action: var(--color-slot-seven);
-    --color-quick-links-action-secondary: var(--color-basic-white);
-    --color-link-base: var(--color-slot-seven);
-  }
-
-  &[data-component-theme='five'] {
-    --color-quick-links-background: var(--color-slot-two);
-    --color-quick-links-text: var(--color-slot-eight);
-    --color-quick-links-heading: var(--color-slot-eight);
-    --color-quick-links-action: var(--color-slot-eight);
-    --color-quick-links-action-secondary: var(--color-slot-one);
-    --color-link-base: var(--color-slot-eight);
-    --color-link-visited-base: var(--color-link-visited-light);
-    --color-link-visited-hover: var(--color-link-visited-light-hover);
-  }
-
-  &[data-component-theme='six'] {
-    --color-quick-links-background: var(--color-slot-nine);
-    --color-quick-links-text: var(--color-slot-seven);
-    --color-quick-links-heading: var(--color-slot-seven);
-    --color-quick-links-action: var(--color-slot-seven);
-    --color-quick-links-action-secondary: var(--color-slot-eight);
-    --color-link-base: var(--color-slot-seven);
-    --color-link-hover: var(--color-slot-seven);
-    --color-link-visited-base: var(--color-slot-seven);
-    --color-link-visited-hover: var(--color-slot-seven);
   }
 }
 
@@ -240,15 +207,40 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
   @include atoms.link;
 }
 
-// Slot-nine (gray-400): link mixin + optional CTA in quick links.
-@include theme-six.yds-apply-theme-six-overrides('.quick-links') {
+// Gray-400 layout sections: keep quick-links link/button tokens dark regardless
+// of the inner quick-links component theme dial value.
+.yds-layout[data-component-theme='five'] .quick-links {
+  --color-text: var(--color-gray-800);
+  --color-heading: var(--color-gray-800);
+  --color-action: var(--color-gray-800);
+  --color-action-secondary: var(--color-slot-eight);
+  --color-link-base: var(--color-gray-800);
+  --color-link-hover: var(--color-gray-800);
+  --color-link-visited-base: var(--color-gray-800);
+  --color-link-visited-hover: var(--color-gray-800);
+
   .quick-links__link,
   .quick-links__description a {
-    @include theme-six.yds-theme-six-link-overrides;
+    --color-text-shadow: transparent;
+    --color-link-base: var(--color-gray-800);
+    --color-link-hover: var(--color-gray-800);
+    --color-link-visited-base: var(--color-gray-800);
+    --color-link-visited-hover: var(--color-gray-800);
   }
 
-  .cta {
-    @include theme-six.yds-theme-six-cta-overrides;
+  // Quick-links items render as CTA outline buttons; override the generic
+  // layout CTA mapping (`--color-layout-border`) so gray-400 uses neutral dark.
+  .quick-links__cta[data-cta-style='outline'],
+  .quick-links__cta[data-cta-style='filled'],
+  .cta.quick-links__cta[data-cta-style='outline'],
+  .cta.quick-links__cta[data-cta-style='filled'] {
+    --color-action: var(--color-gray-800);
+    --color-action-secondary: var(--color-slot-eight);
+    --color-cta-text: var(--color-gray-800);
+    --color-cta-text-hover: var(--color-slot-eight);
+    --color-cta-border: var(--color-gray-800);
+    --color-cta-bg-hover: var(--color-gray-800);
+    --color-cta-bg: transparent;
   }
 }
 

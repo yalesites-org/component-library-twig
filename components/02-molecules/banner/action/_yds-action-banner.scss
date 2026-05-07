@@ -415,11 +415,16 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   .cta-banner__link,
   .cta-banner__text a,
   .cta-banner__snippet a {
-    @include theme-six.yds-theme-six-link-overrides;
+    --color-text-shadow: transparent;
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-slot-seven);
+    --color-link-visited-hover: var(--color-slot-seven);
   }
 
   :is(.cta, .cta-banner__cta) {
-    @include theme-six.yds-theme-six-cta-overrides;
+    --color-action: var(--color-slot-seven);
+    --color-action-secondary: var(--color-slot-eight);
   }
 }
 

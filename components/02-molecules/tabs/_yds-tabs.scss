@@ -87,21 +87,15 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-border-selected: var(--color-basic-white);
   }
 
-  // When nested in a layout section, match inactive tab strip to the section
-  // surface without forcing the selected tab to that color (selected uses
-  // `--color-tabs-selected` / light highlight above).
   [data-component-theme]:not([data-component-theme='default']) & {
-    --color-tabs-background: var(
-      --color-layout-theme,
-      var(--color-tabs-background)
-    );
+    --color-tabs-background: var(--color-layout-theme);
+    --color-tabs-selected: var(--color-layout-theme);
+    --color-action: var(--color-layout-border);
   }
 
   [data-component-theme]:not(
       [data-component-theme='default'],
-      [data-component-theme='two'],
-      [data-component-theme='five'],
-      [data-component-theme='six']
+      [data-component-theme='two']
     )
     & {
     --color-border: var(--color-gray-400);
@@ -268,17 +262,4 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
     opacity: 1;
     transition: opacity 800ms;
   }
-}
-
-// Gray-400 layout (`five` / `six`) + tabs dial `six` only: light selected tab,
-// inactive strip matches section background, dark outlines — not on theme six
-// outside these layouts.
-.yds-layout:is([data-component-theme='five'], [data-component-theme='six'])
-  .tabs[data-component-theme='six'] {
-  --color-tabs-action: var(--color-slot-seven);
-  --color-tabs-background: var(--color-slot-nine);
-  --color-tabs-selected: var(--color-gray-100);
-  --color-heading: var(--color-slot-seven);
-  --color-border: var(--color-slot-seven);
-  --color-border-selected: var(--color-slot-seven);
 }

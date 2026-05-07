@@ -237,6 +237,10 @@ $component-taxonomy-display-port-themes: map.deep-get(
 // Slot-nine (gray-400): link mixin global-theme hover + default white shadow.
 @include theme-six.yds-apply-theme-six-overrides('.taxonomy-display') {
   .taxonomy-display__link {
-    @include theme-six.yds-theme-six-link-overrides;
+    --color-text-shadow: transparent;
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-slot-seven);
+    --color-link-visited-hover: var(--color-slot-seven);
   }
 }

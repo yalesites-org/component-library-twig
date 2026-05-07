@@ -131,33 +131,15 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-visited-base: var(--color-slot-seven);
     --color-link-visited-hover: var(--color-slot-seven);
     --color-heading: var(--color-slot-seven);
-    --color-layout-border: var(--color-slot-six);
-    --color-link-grid-action: var(--color-slot-six);
+    --color-layout-border: var(--color-slot-seven);
+    --color-link-grid-action: var(--color-slot-seven);
 
     background-color: var(--color-layout-theme);
     color: var(--color-layout-content);
-  }
 
-  &[data-component-theme='six'] {
-    --color-layout-theme: var(--color-slot-nine);
-    --color-layout-content: var(--color-slot-seven);
-    --color-link-base: var(--color-slot-seven);
-    --color-link-hover: var(--color-slot-seven);
-    --color-link-visited-base: var(--color-slot-seven);
-    --color-link-visited-hover: var(--color-slot-seven);
-    --color-heading: var(--color-slot-seven);
-    --color-layout-border: var(--color-slot-six);
-    --color-link-grid-action: var(--color-slot-six);
-
-    background-color: var(--color-layout-theme);
-    color: var(--color-layout-content);
-  }
-
-  // Slot-nine (gray-400) sections: link grid themes one/three/four/five force a
-  // white main/column title for dark component surfaces — on a gray layout
-  // that wins over `color: var(--color-heading)` and keeps headings illegibly
-  // light. Pin titles to slot-seven here (higher specificity than link-grid).
-  &:is([data-component-theme='five'], [data-component-theme='six']) {
+    // Slot-nine (gray-400) sections: link grid themes one/three/four/five force
+    // a white main/column title for dark component surfaces — on a gray layout
+    // that wins over `color: var(--color-heading)` and keeps headings legible.
     .link-grid .link-grid__heading,
     .link-grid .link-group__heading {
       color: var(--color-slot-seven);

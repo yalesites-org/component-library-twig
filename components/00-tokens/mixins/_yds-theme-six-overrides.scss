@@ -1,6 +1,6 @@
 // Layout themes on `.yds-layout` that use global `slot-nine` as the section
 // background (gray-400 in current token pairings).
-$yds-layout-theme-six-bg-themes: ('five', 'six');
+$yds-layout-theme-six-bg-themes: ('five');
 
 // Inner component themes that should read as dark text / dark links on that
 // background (not full-bleed brand blocks like theme `one`).
@@ -24,46 +24,6 @@ $yds-inner-component-themes-on-theme-six: ('default', 'two', 'four', 'six');
           @content;
         }
       }
-    }
-  }
-}
-
-// Mixin for standard link overrides on slot-nine backgrounds
-@mixin yds-theme-six-link-overrides {
-  // Always clear animated-underline shadow on neutral gray; link mixin defaults
-  // to white shadow which reads as a halo on slot-nine.
-  --color-text-shadow: transparent;
-
-  [data-global-theme='one'] &,
-  [data-global-theme='five'] & {
-    --color-link-base: var(--color-slot-seven);
-    --color-link-hover: var(--color-slot-seven);
-    --color-link-visited-base: var(--color-slot-seven);
-    --color-link-visited-hover: var(--color-slot-seven);
-  }
-}
-
-// Mixin for standard CTA overrides on slot-nine backgrounds
-@mixin yds-theme-six-cta-overrides {
-  [data-global-theme='one'] &,
-  [data-global-theme='five'] & {
-    &[data-cta-style='filled'] {
-      --color-cta-action: var(--color-slot-seven);
-      --color-cta-bg: var(--color-slot-seven);
-      --color-cta-border: var(--color-slot-seven);
-      --color-cta-text: var(--color-slot-eight);
-      --color-cta-bg-hover: transparent;
-      --color-cta-text-hover: var(--color-slot-seven);
-    }
-
-    &[data-cta-style='outline'] {
-      --color-cta-action: var(--color-slot-seven);
-      --color-cta-action-secondary: var(--color-slot-eight);
-      --color-cta-bg: transparent;
-      --color-cta-bg-hover: var(--color-slot-seven);
-      --color-cta-border: var(--color-slot-seven);
-      --color-cta-text: var(--color-slot-seven);
-      --color-cta-text-hover: var(--color-slot-eight);
     }
   }
 }
