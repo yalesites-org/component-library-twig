@@ -24,10 +24,9 @@
 // so all three publication blocks read as a coherent meta group.
 @mixin publication-text {
   @include tokens.body-s;
-
-  color: var(--color-gray-500);
   @include tokens.body-oldstyle-nums;
 
+  color: var(--color-gray-500);
   letter-spacing: 0.5px;
 }
 
@@ -36,10 +35,9 @@
   // and re-assert the publication-meta colour / numerics so the cells
   // still read as one coherent group with the value text.
   @include tokens.body-xs;
-
-  color: var(--color-gray-500);
   @include tokens.body-oldstyle-nums;
 
+  color: var(--color-gray-500);
   letter-spacing: 0.5px;
   font-weight: var(--font-weights-mallory-book);
   font-family: var(--font-families-mallory);

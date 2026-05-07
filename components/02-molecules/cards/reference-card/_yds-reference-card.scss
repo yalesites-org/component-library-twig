@@ -136,13 +136,13 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 }
 
 .reference-card__overlay {
+  @include tokens.body-oldstyle-nums;
+
   background-color: var(--color-overlay-background);
   color: var(--color-basic-white);
   padding-left: var(--size-spacing-3);
   margin-bottom: var(--size-spacing-3);
   font-variant-caps: all-small-caps;
-  @include tokens.body-oldstyle-nums;
-
   position: absolute;
   top: 0;
   left: 0;
@@ -481,12 +481,11 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
 .reference-card__overline {
   @include tokens.body-s;
+  @include tokens.body-oldstyle-nums;
 
   margin-top: var(--size-spacing-3);
   color: var(--color-gray-500);
   font-variant-caps: small-caps;
-  @include tokens.body-oldstyle-nums;
-
   text-transform: lowercase;
   letter-spacing: 0.5px;
 
@@ -497,12 +496,11 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
 .reference-card__eyebrow {
   @include tokens.body-l;
+  @include tokens.body-oldstyle-nums;
 
   margin-top: var(--size-spacing-3);
   color: var(--color-blue-medium);
   font-variant-caps: small-caps;
-  @include tokens.body-oldstyle-nums;
-
   text-transform: lowercase;
   letter-spacing: 0.5px;
 

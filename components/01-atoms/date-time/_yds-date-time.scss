@@ -1,9 +1,9 @@
 @use '../../00-tokens/tokens';
 
 .date-time {
-  font-variant-caps: small-caps;
   @include tokens.body-oldstyle-nums;
 
+  font-variant-caps: small-caps;
   text-transform: lowercase;
   letter-spacing: 0.5px;
 
