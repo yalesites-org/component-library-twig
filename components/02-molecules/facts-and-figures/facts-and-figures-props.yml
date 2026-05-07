@@ -17,14 +17,3 @@ stat:
   detail: >
     The primary statistic displayed in the component (e.g., "42%", "$1.2M").
 
-fontStyle:
-  twigProp: facts_and_figures__font_style
-  name: Font Style
-  type: select
-  required: false
-  description: Font style applied to the statistic figure
-  default: normal
-  options:
-    - normal
-    - numeric-oldstyle
-  control: select
