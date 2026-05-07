@@ -68,18 +68,6 @@ presentationStyle:
     Without line: icon-only
   control: select
 
-fontStyle:
-  twigProp: facts_and_figures__group__font_style
-  name: Font Style
-  type: select
-  required: false
-  description: Numeric font style for statistic values
-  default: normal
-  options:
-    - normal
-    - numeric-oldstyle
-  control: select
-
 columnCount:
   twigProp: facts_and_figures__group__grid_count
   name: Column Count

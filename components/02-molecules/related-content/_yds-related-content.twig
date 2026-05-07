@@ -1,0 +1,54 @@
+{# Variables are documented in the main `yds-related-content.twig` file. #}
+
+{% set related_content__base_class = 'related-content' %}
+
+{# WCAG 1.3.1 / 4.1.2 — give the <section> an accessible name so it is
+   announced as a region landmark. The wrapper references the heading
+   via aria-labelledby; the heading carries the matching id. Callers can
+   override `related_content__heading_id` to keep ids unique when more
+   than one instance renders on the same page (e.g. visreg stories);
+   the block plugin renders one instance per node so the default is
+   safe in production. #}
+{% set related_content__heading_id = related_content__heading_id|default('related-content-heading') %}
+
+{% set related_content__attributes = {
+  'data-component-width': related_content__width|default('site'),
+  class: bem(related_content__base_class),
+} %}
+
+{% if related_content__heading %}
+  {% set related_content__attributes = related_content__attributes|merge({
+    'aria-labelledby': related_content__heading_id,
+  }) %}
+{% endif %}
+
+{% if related_content__heading or related_content__view %}
+  <section {{ add_attributes(related_content__attributes) }}>
+    <div {{ bem('inner', [], related_content__base_class) }}>
+      {% if related_content__heading %}
+        {# Semantic h2; visual size handled in SCSS to match the card-collection
+           "related" treatment (h3 visual). The id wires up aria-labelledby
+           on the surrounding <section> so the region has an accessible name. #}
+        {% include "@atoms/typography/headings/yds-heading.twig" with {
+          heading__level: '2',
+          heading__blockname: related_content__base_class,
+          heading: related_content__heading,
+          heading__attributes: {
+            id: related_content__heading_id,
+            class: bem('heading', [], related_content__base_class),
+          },
+        } %}
+      {% endif %}
+
+      {% if related_content__view %}
+        <div {{ bem('list', [], related_content__base_class) }}>
+          {# View output is a pre-rendered HTML string (Views render array
+             converted upstream). Same `|raw` pattern as yds-video-embed and
+             yds-publication-detail — without it, autoescape prints markup
+             as text. #}
+          {{ related_content__view|raw }}
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% endif %}

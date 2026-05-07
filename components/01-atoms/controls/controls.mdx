@@ -36,6 +36,12 @@ Interactive button for copying text to clipboard with visual feedback.
 
 <Canvas of={ControlsStories.textCopyButton} />
 
+#### Rich-text source
+
+When the source text contains block-level markup (e.g. paragraphs from a rich-text field), pass `text_copy_button__pre_text_tag: 'div'` so the wrapper is valid HTML. Default is `span`.
+
+<Canvas of={ControlsStories.textCopyButtonRichText} />
+
 ## Story Controls
 
 The following controls are available in the Storybook Controls panel and affect the story rendering context.
@@ -319,6 +325,22 @@ The following controls are available in the Storybook Controls panel and affect 
       </td>
       <td>Theme color from dial</td>
     </tr>
+    <tr>
+      <td>
+        <code>text_copy_button__pre_text_tag</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'span'</code>
+      </td>
+      <td>
+        HTML tag wrapping the source text. Use <code>'div'</code> (or another
+        block tag) when <code>pre_text</code> contains block-level markup such
+        as paragraphs.
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -438,6 +460,8 @@ Text links automatically detect URL types and add appropriate icons:
 ### Copy Button Functionality
 
 The text copy button uses the Clipboard API to copy text. It requires JavaScript to be enabled and provides visual feedback on successful copy.
+
+On click, the button's text content is replaced with "Copied to clipboard" for ~1.7 seconds, then restored to whatever label the button was originally rendered with (captured at attach time). Consumers needing custom feedback can listen for the `text-copy-button:copied` CustomEvent dispatched on the button and call `event.preventDefault()` to suppress the default text swap.
 
 ## Testing
 

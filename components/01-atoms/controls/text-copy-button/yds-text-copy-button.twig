@@ -1,6 +1,11 @@
 {#
  # Available variables:
  # - text_copy_button__content - the content of the link (typically text)
+ # - text_copy_button__pre_text - the source text shown next to the button and
+ #     copied to the clipboard when the button is clicked
+ # - text_copy_button__pre_text_tag - HTML tag used to wrap pre_text. Defaults
+ #     to 'span'. Pass 'div' (or another block tag) when pre_text contains
+ #     block-level markup such as paragraphs.
  # - text_copy_button__attributes - array of attribute,value pairs
  #
  # Available blocks:
@@ -10,6 +15,7 @@
 
 {% set text_copy_button__base_class = text_copy_button__base_class|default('text-copy-button') %}
 {% set text_copy_button__attributes = text_copy_button__attributes|default({}) %}
+{% set text_copy_button__pre_text_tag = text_copy_button__pre_text_tag|default('span') %}
 
 {% set text_copy_button__attributes = text_copy_button__attributes|merge({
   class: bem(text_copy_button__base_class, text_copy_button__modifiers, text_copy_button__blockname, text_copy_button__extra_class),
@@ -17,12 +23,12 @@
 }) %}
 
 <div {{ add_attributes(text_copy_button__attributes) }}>
-	{# set these bem classes so that they can't be changed. 
+	{# set these bem classes so that they can't be changed.
 		the JS in `./yds-text-link.js` is looking for `pre-text__text` #}
 	{% if text_copy_button__pre_text %}
-		<span {{ bem('text', [], 'pre-text') }}>
+		<{{ text_copy_button__pre_text_tag }} {{ bem('text', [], 'pre-text') }}>
 			{{text_copy_button__pre_text}}
-		</span>
+		</{{ text_copy_button__pre_text_tag }}>
 	{% endif %}
 
 	<button {{ bem('button', [], text_copy_button__base_class) }}>

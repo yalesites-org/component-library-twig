@@ -116,11 +116,6 @@ $facts-and-figures-component-themes: map.deep-get(
   width: 100%;
   position: relative;
 
-  // change font-variant-numeric to normal from the default of oldstyle-nums in the h3-yale-new mixin
-  [data-facts-and-figures-font-style='normal'] & {
-    font-variant-numeric: normal;
-  }
-
   // add eyebrow above facts-and-figures
   [data-facts-and-figures-style='basic'] & {
     &::before {
