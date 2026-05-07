@@ -231,3 +231,12 @@ code {
     }
   }
 }
+
+// For non-heading text; headings get numeral style from heading().
+@mixin body-oldstyle-nums {
+  font-variant-numeric: oldstyle-nums;
+
+  body[data-font-pairing='yalenew-oldstyle'] & {
+    font-variant-numeric: normal;
+  }
+}
