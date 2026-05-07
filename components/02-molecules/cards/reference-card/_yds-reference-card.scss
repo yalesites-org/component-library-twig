@@ -141,7 +141,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   padding-left: var(--size-spacing-3);
   margin-bottom: var(--size-spacing-3);
   font-variant-caps: all-small-caps;
-  font-variant-numeric: oldstyle-nums;
+  @include tokens.body-oldstyle-nums;
+
   position: absolute;
   top: 0;
   left: 0;
@@ -484,7 +485,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   margin-top: var(--size-spacing-3);
   color: var(--color-gray-500);
   font-variant-caps: small-caps;
-  font-variant-numeric: oldstyle-nums;
+  @include tokens.body-oldstyle-nums;
+
   text-transform: lowercase;
   letter-spacing: 0.5px;
 
@@ -499,7 +501,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   margin-top: var(--size-spacing-3);
   color: var(--color-blue-medium);
   font-variant-caps: small-caps;
-  font-variant-numeric: oldstyle-nums;
+  @include tokens.body-oldstyle-nums;
+
   text-transform: lowercase;
   letter-spacing: 0.5px;
 

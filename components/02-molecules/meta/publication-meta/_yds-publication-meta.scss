@@ -26,7 +26,8 @@
   @include tokens.body-s;
 
   color: var(--color-gray-500);
-  font-variant-numeric: oldstyle-nums;
+  @include tokens.body-oldstyle-nums;
+
   letter-spacing: 0.5px;
 }
 
@@ -37,7 +38,8 @@
   @include tokens.body-xs;
 
   color: var(--color-gray-500);
-  font-variant-numeric: oldstyle-nums;
+  @include tokens.body-oldstyle-nums;
+
   letter-spacing: 0.5px;
   font-weight: var(--font-weights-mallory-book);
   font-family: var(--font-families-mallory);

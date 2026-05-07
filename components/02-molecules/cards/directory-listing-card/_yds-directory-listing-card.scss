@@ -60,7 +60,8 @@ $break-directory-card-collection-list-image-max: tokens.$break-s - 0.05;
   margin-bottom: var(--size-spacing-3);
   color: var(--color-gray-500);
   font-variant-caps: small-caps;
-  font-variant-numeric: oldstyle-nums;
+  @include tokens.body-oldstyle-nums;
+
   text-transform: lowercase;
   letter-spacing: 0.5px;
 }
