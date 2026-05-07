@@ -77,10 +77,6 @@
             </div>
           {% endif %}
           {% if publication_detail__download_url %}
-            {# Download icon is added by lib/ys_link's download-link
-               decorator (file extension → fa-circle-down) — adding one
-               here in the CTA content double-stamps the arrow. Pass label
-               only and let ys_link decorate. #}
             <div {{ bem('download', [], publication_detail__base_class) }}>
               {% include "@atoms/controls/cta/yds-cta.twig" with {
                 cta__content: publication_detail__download_label|default('Download'),
@@ -88,6 +84,8 @@
                 cta__component_theme: 'one',
                 cta__attributes: {
                   'aria-label': publication_detail__download_aria_label,
+                  'download': '',
+                  'data-link-type': 'download',
                 },
               } %}
             </div>
