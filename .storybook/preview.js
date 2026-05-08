@@ -26,11 +26,15 @@ import '../lib/link-treatment/link-treatment.scss';
 export const decorators = [
   (StoryFn, context) => {
     useEffect(() => {
-      Drupal.attachBehaviors();
-
       // Update body attributes for theme + heading typography
       document.body.setAttribute('data-global-theme', context.globals.globalTheme);
       document.body.setAttribute('data-font-pairing', context.globals.headingTypography || 'yalenew');
+
+      Drupal.attachBehaviors(document);
+
+      return () => {
+        Drupal.detachBehaviors(document);
+      };
     }, [context]);
 
     return StoryFn(context);
