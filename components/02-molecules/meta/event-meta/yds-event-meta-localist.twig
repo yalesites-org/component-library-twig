@@ -205,18 +205,17 @@
               date_time__format_override: 'format__all_day',
             } %}
           {% elseif event_featured_date.formatted_start_date == event_featured_date.formatted_end_date %}
-          {#Replace am to a.m. and pm to p.m.#}
-
-            <time class="date-time" datetime="{{ event_featured_date.original_start|date('c') }}">
-              {{ event_featured_date.original_start|date('D M j, Y') }}
-              {{ event_featured_date.original_start|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}{{ em_dash }}{{ event_featured_date.original_end|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
-            </time>
+            {% include "@atoms/date-time/yds-date-time.twig" with {
+              date_time__start: event_featured_date.original_start,
+              date_time__end: event_featured_date.original_end,
+              date_time__format: 'localist_same_day',
+            } %}
           {% else %}
-            <time class="date-time" datetime="{{ event_featured_date.original_start|date('c') }}">
-              {{ event_featured_date.original_start|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
-              {{ em_dash }}
-              {{ event_featured_date.original_end|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
-            </time>
+            {% include "@atoms/date-time/yds-date-time.twig" with {
+              date_time__start: event_featured_date.original_start,
+              date_time__end: event_featured_date.original_end,
+              date_time__format: 'date_time_multiple_days',
+            } %}
           {% endif %}
           </div>
         </div>
@@ -263,16 +262,17 @@
                         date_time__format_override: 'format__all_day',
                       } %}
                     {% elseif event_date.formatted_start_date == event_date.formatted_end_date %}
-                      <time class="date-time" datetime="{{ event_date.original_start|date('c') }}">
-                        {{ event_date.original_start|date('D M j, Y') }}
-                        {{ event_date.original_start|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}{{ em_dash }}{{- event_date.original_end|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}
-                      </time>
+                      {% include "@atoms/date-time/yds-date-time.twig" with {
+                        date_time__start: event_date.original_start,
+                        date_time__end: event_date.original_end,
+                        date_time__format: 'localist_same_day',
+                      } %}
                     {% else %}
-                      <time class="date-time" datetime="{{ event_date.original_start|date('c') }}">
-                        {{ event_date.original_start|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
-                        {{ em_dash }}
-                        {{ event_date.original_end|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
-                      </time>
+                      {% include "@atoms/date-time/yds-date-time.twig" with {
+                        date_time__start: event_date.original_start,
+                        date_time__end: event_date.original_end,
+                        date_time__format: 'date_time_multiple_days',
+                      } %}
                     {% endif %}
                   </li>
                 {% endfor %}
@@ -304,16 +304,17 @@
                         date_time__format_override: 'format__all_day',
                       } %}
                     {% elseif event_date.formatted_start_date == event_date.formatted_end_date %}
-                      <time class="date-time" datetime="{{ event_date.original_start|date('c') }}">
-                        {{ event_date.original_start|date('D M j, Y') }}
-                        {{ event_date.original_start|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}{{ em_dash }}{{- event_date.original_end|date('g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) -}}
-                      </time>
+                      {% include "@atoms/date-time/yds-date-time.twig" with {
+                        date_time__start: event_date.original_start,
+                        date_time__end: event_date.original_end,
+                        date_time__format: 'localist_same_day',
+                      } %}
                     {% else %}
-                      <time class="date-time" datetime="{{ event_date.original_start|date('c') }}">
-                        {{ event_date.original_start|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
-                        {{ em_dash }}
-                        {{ event_date.original_end|date('D M j, Y g:i a')|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}
-                      </time>
+                      {% include "@atoms/date-time/yds-date-time.twig" with {
+                        date_time__start: event_date.original_start,
+                        date_time__end: event_date.original_end,
+                        date_time__format: 'date_time_multiple_days',
+                      } %}
                     {% endif %}
                   </li>
                 {% endfor %}
