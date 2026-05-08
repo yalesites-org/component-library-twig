@@ -41,13 +41,21 @@ figure {
     color: var(--color-layout-content);
   }
 
-  .yds-layout:is([data-component-theme='one'], [data-component-theme='three'])
+  .yds-layout:is(
+      [data-component-theme='one'],
+      [data-component-theme='three'],
+      [data-component-theme='four']
+    )
     & {
     color: var(--color-layout-content);
   }
 }
 
-.yds-layout:is([data-component-theme='one'], [data-component-theme='three'])
+.yds-layout:is(
+    [data-component-theme='one'],
+    [data-component-theme='three'],
+    [data-component-theme='four']
+  )
   .caption
   a {
   --color-text-shadow: var(--color-background);

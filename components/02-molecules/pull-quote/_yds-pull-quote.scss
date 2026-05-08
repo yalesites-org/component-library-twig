@@ -83,8 +83,13 @@ blockquote {
     --color-pull-quote-attribution: var(--color-slot-seven);
   }
 
-  // White quote copy only on dark layout sections.
-  .yds-layout:is([data-component-theme='one'], [data-component-theme='three'])
+  // Light quote copy on dark layout sections (matches --color-layout-content: slot-eight).
+  // Theme four uses the same light-on-dark treatment as one and three; it was missing here.
+  .yds-layout:is(
+      [data-component-theme='one'],
+      [data-component-theme='three'],
+      [data-component-theme='four']
+    )
     &:not([data-component-theme='two']) {
     --color-pull-quote-quote: var(--color-basic-white);
     --color-pull-quote-attribution: var(--color-basic-white);
