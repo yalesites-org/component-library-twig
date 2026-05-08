@@ -1,7 +1,6 @@
 @use '../../../00-tokens/tokens';
 @use '../../../01-atoms/atoms';
 @use '../../../00-tokens/functions/map';
-@use '../../../00-tokens/mixins/yds-theme-six-overrides' as theme-six;
 
 // get global themes
 $global-banner-themes: map.deep-get(tokens.$tokens, 'global-themes');
@@ -140,11 +139,11 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     --color-banner-heading: var(--color-slot-seven);
     --color-banner-action: var(--color-slot-seven);
     --color-banner-action-secondary: var(--color-slot-eight);
+    --color-text-shadow: transparent;
     --color-link-base: var(--color-banner-heading);
     --color-link-hover: var(--color-banner-heading);
 
-    // Slot-nine is gray-400: avoid purple / light visited tokens and global
-    // slot-two hover from the link mixin on this light neutral background.
+    // Theme six keeps visited link state dark to match base and hover links.
     --color-link-visited-base: var(--color-slot-seven);
     --color-link-visited-hover: var(--color-slot-seven);
   }
@@ -406,26 +405,6 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   @include atoms.link;
 
   flex: 0 0 auto;
-}
-
-// Slot-nine (gray-400): link mixin sets global-theme hover; underline mixin uses
-// a white descender shadow by default — force dark tokens and no shadow on links.
-// Match callout-style CTA on gray-400.
-@include theme-six.yds-apply-theme-six-overrides('.cta-banner') {
-  .cta-banner__link,
-  .cta-banner__text a,
-  .cta-banner__snippet a {
-    --color-text-shadow: transparent;
-    --color-link-base: var(--color-slot-seven);
-    --color-link-hover: var(--color-slot-seven);
-    --color-link-visited-base: var(--color-slot-seven);
-    --color-link-visited-hover: var(--color-slot-seven);
-  }
-
-  :is(.cta, .cta-banner__cta) {
-    --color-action: var(--color-slot-seven);
-    --color-action-secondary: var(--color-slot-eight);
-  }
 }
 
 .cta-banner__button-group {

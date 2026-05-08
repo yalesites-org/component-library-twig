@@ -1,7 +1,6 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
 @use '../../00-tokens/functions/map';
-@use '../../00-tokens/mixins/yds-theme-six-overrides' as theme-six;
 
 $break-link-grid: tokens.$break-l;
 $break-link-grid-max: $break-link-grid - 0.05;
@@ -91,18 +90,12 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   // Light text only on dark link-grid backgrounds. Scope to `.link-grid` so
   // section layout `[data-component-theme]` on `.yds-layout` does not force
-  // white on theme `six` (slot-nine / gray-400) or other light blocks.
+  // white on theme `six` or other light blocks.
   .link-grid[data-component-theme='one'] &,
   .link-grid[data-component-theme='three'] &,
   .link-grid[data-component-theme='four'] &,
   .link-grid[data-component-theme='five'] & {
     color: var(--color-basic-white);
-  }
-}
-
-@include theme-six.yds-apply-theme-six-overrides('.link-grid') {
-  .link-grid__heading {
-    color: var(--color-slot-seven);
   }
 }
 

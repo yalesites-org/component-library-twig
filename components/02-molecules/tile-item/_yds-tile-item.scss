@@ -1,7 +1,6 @@
 @use '../../00-tokens/tokens';
 @use '../../00-tokens/functions/map';
 @use '../../01-atoms/atoms';
-@use '../../00-tokens/mixins/yds-theme-six-overrides' as theme-six;
 
 $global-tile-item-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
@@ -126,8 +125,10 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &[data-component-theme='six'] {
     --color-tile-item-theme: var(--color-slot-nine);
     --color-tile-item-content: var(--color-slot-seven);
-    --color-link-visited-base: var(--color-link-visited);
-    --color-link-visited-hover: var(--color-link-visited-hover);
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-slot-seven);
+    --color-link-visited-hover: var(--color-slot-seven);
     --color-tile-animation-border: var(--color-slot-three);
 
     background-color: var(--color-tile-item-theme);
@@ -185,13 +186,6 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       }
     }
   }
-}
-
-@include theme-six.yds-apply-theme-six-overrides('.tile__item') {
-  --color-link-base: var(--color-slot-seven);
-  --color-link-hover: var(--color-slot-seven);
-  --color-link-visited-base: var(--color-slot-seven);
-  --color-link-visited-hover: var(--color-slot-seven);
 }
 
 .tile__item__heading {

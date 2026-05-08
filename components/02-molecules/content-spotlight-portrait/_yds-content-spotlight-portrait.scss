@@ -1,7 +1,6 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
 @use '../../00-tokens/functions/map';
-@use '../../00-tokens/mixins/yds-theme-six-overrides' as theme-six;
 
 // get global themes
 $global-content-spotlight-port-themes: map.deep-get(
@@ -143,8 +142,9 @@ $component-content-spotlight-port-themes: map.deep-get(
     --color-background: var(--color-slot-nine);
     --color-text: var(--color-slot-seven);
     --color-heading: var(--color-slot-seven);
+    --color-spotlight-text-shadow: transparent;
 
-    // Slot-nine is gray-400: match text-with-image / light component themes.
+    // Theme six uses dark link tokens for consistent readable contrast.
     --color-link-base: var(--color-slot-seven);
     --color-link-hover: var(--color-slot-seven);
     --color-link-visited-base: var(--color-slot-seven);
@@ -272,21 +272,6 @@ $component-content-spotlight-port-themes: map.deep-get(
 
   > *:last-child {
     margin-bottom: 0;
-  }
-}
-
-// Slot-nine (gray-400): override link mixin global-theme hover and white shadow.
-@include theme-six.yds-apply-theme-six-overrides(
-  '.content-spotlight-portrait'
-) {
-  .link,
-  .content-spotlight-portrait__text,
-  .content-spotlight-portrait__text a {
-    --color-text-shadow: transparent;
-    --color-link-base: var(--color-slot-seven);
-    --color-link-hover: var(--color-slot-seven);
-    --color-link-visited-base: var(--color-slot-seven);
-    --color-link-visited-hover: var(--color-slot-seven);
   }
 }
 
