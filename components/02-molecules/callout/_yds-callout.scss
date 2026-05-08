@@ -252,14 +252,11 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-link-hover: var(--color-slot-eight);
   }
 
-  [data-component-theme='two'] & {
-    --color-link-hover: var(--color-slot-seven);
-  }
-
   [data-component-theme='three'] & {
     --color-link-hover: var(--color-slot-eight);
   }
 
+  [data-component-theme='two'] &,
   [data-component-theme='six'] & {
     --color-link-hover: var(--color-slot-seven);
   }

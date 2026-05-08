@@ -111,11 +111,15 @@ blockquote {
     --color-link-hover: var(--color-quote-callout-accent);
   }
 
-  &[data-component-theme='two'] {
-    --color-quote-callout-background: var(--color-slot-three);
+  &[data-component-theme='two'],
+  &[data-component-theme='six'] {
     --color-quote-callout-accent: var(--color-slot-seven);
     --color-quote-callout-quote: var(--color-slot-seven);
     --color-quote-callout-attribution: var(--color-slot-seven);
+  }
+
+  &[data-component-theme='two'] {
+    --color-quote-callout-background: var(--color-slot-three);
     --color-link-base: var(--color-quote-callout);
     --color-link-hover: var(--color-link-base);
   }
@@ -153,9 +157,6 @@ blockquote {
 
   &[data-component-theme='six'] {
     --color-quote-callout-background: var(--color-slot-nine);
-    --color-quote-callout-accent: var(--color-slot-seven);
-    --color-quote-callout-quote: var(--color-slot-seven);
-    --color-quote-callout-attribution: var(--color-slot-seven);
 
     background-color: var(--color-quote-callout-background);
   }

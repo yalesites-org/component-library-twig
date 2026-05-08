@@ -97,14 +97,18 @@ $break-image-banner: tokens.$break-m;
     --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 
-  &[data-component-theme='two'] {
-    --color-image-banner-background: var(--color-slot-four);
+  &[data-component-theme='two'],
+  &[data-component-theme='six'] {
     --color-image-banner-text: var(--color-slot-seven);
     --color-image-banner-heading: var(--color-slot-seven);
     --color-image-banner-action: var(--color-slot-seven);
     --color-image-banner-action-secondary: var(--color-slot-eight);
-    --color-link-base: var(--color-image-banner-text);
-    --color-link-hover: var(--color-image-banner-text);
+    --color-link-base: var(--color-image-banner-heading);
+    --color-link-hover: var(--color-image-banner-heading);
+  }
+
+  &[data-component-theme='two'] {
+    --color-image-banner-background: var(--color-slot-four);
 
     p > a {
       color: var(--color-slot-seven);
@@ -153,12 +157,6 @@ $break-image-banner: tokens.$break-m;
 
   &[data-component-theme='six'] {
     --color-image-banner-background: var(--color-slot-nine);
-    --color-image-banner-text: var(--color-slot-seven);
-    --color-image-banner-heading: var(--color-slot-seven);
-    --color-image-banner-action: var(--color-slot-seven);
-    --color-image-banner-action-secondary: var(--color-slot-eight);
-    --color-link-base: var(--color-image-banner-heading);
-    --color-link-hover: var(--color-image-banner-heading);
     --color-link-visited-base: var(--color-slot-seven);
     --color-link-visited-hover: var(--color-slot-seven);
   }
