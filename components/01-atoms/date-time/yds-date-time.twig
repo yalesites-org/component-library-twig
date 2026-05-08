@@ -77,12 +77,21 @@ format__day__long = Thursday, December 3, 2024
   "same_day_diff_time": "format__date_and_time",
   "date_time_multiple_days": "format__date_time_multiple_days",
   "localist_same_day": "format__localist_same_day",
+  "localist_all_day": "format__localist_all_day",
 } %}
 
 {% set used_format = date_time__format_override|default(format_defaults[date_time__format]) %}
 
 {# Combine start and end date/time into one variable for output #}
-{% if used_format == 'format__all_day' %}
+{% if used_format == 'format__localist_all_day' %}
+  {% set start_date_formatted = date_time__start|date(formats['format__day__full']) %}
+  {% set end_date_formatted = date_time__end|date(formats['format__day__full']) %}
+  {% if start_date_formatted == end_date_formatted %}
+    {% set date_time = start_date_formatted ~ ' All day' %}
+  {% else %}
+    {% set date_time = start_date_formatted ~ em_dash ~ end_date_formatted ~ ' All day' %}
+  {% endif %}
+{% elseif used_format == 'format__all_day' %}
   {# For all day events, show the date (without time) followed by "All day" #}
   {# Check if start and end dates are the same day (not just same timestamp) #}
   {# Use format__date__start which includes em dash - keep it for both single and multi-day #}
@@ -103,7 +112,7 @@ format__day__long = Thursday, December 3, 2024
 {% endif %}
 
 {# Add attributes #}
-{% set date_time__modifiers = used_format == 'format__all_day' ? ['all-day'] : [] %}
+{% set date_time__modifiers = (used_format == 'format__all_day' or used_format == 'format__localist_all_day') ? ['all-day'] : [] %}
 {% set date_time__attribuites = {
   datetime: date_time__start|date(formats['format__iso']),
   class: bem('date-time', date_time__modifiers),

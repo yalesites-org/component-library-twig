@@ -202,7 +202,7 @@
             {% include "@atoms/date-time/yds-date-time.twig" with {
               date_time__start: event_featured_date.original_start,
               date_time__end: event_featured_date.original_end,
-              date_time__format_override: 'format__all_day',
+              date_time__format: 'localist_all_day',
             } %}
           {% elseif event_featured_date.formatted_start_date == event_featured_date.formatted_end_date %}
             {% include "@atoms/date-time/yds-date-time.twig" with {
@@ -259,7 +259,7 @@
                       {% include "@atoms/date-time/yds-date-time.twig" with {
                         date_time__start: event_date.original_start,
                         date_time__end: event_date.original_end,
-                        date_time__format_override: 'format__all_day',
+                        date_time__format: 'localist_all_day',
                       } %}
                     {% elseif event_date.formatted_start_date == event_date.formatted_end_date %}
                       {% include "@atoms/date-time/yds-date-time.twig" with {
@@ -301,7 +301,7 @@
                       {% include "@atoms/date-time/yds-date-time.twig" with {
                         date_time__start: event_date.original_start,
                         date_time__end: event_date.original_end,
-                        date_time__format_override: 'format__all_day',
+                        date_time__format: 'localist_all_day',
                       } %}
                     {% elseif event_date.formatted_start_date == event_date.formatted_end_date %}
                       {% include "@atoms/date-time/yds-date-time.twig" with {
