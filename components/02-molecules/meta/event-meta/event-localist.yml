@@ -6,13 +6,13 @@ event_dates:
     original_start: 1714739400
     original_end: 1714743000
     is_past_event: true
+    is_all_day: false
   - formatted_start_date: Saturday, May 4th, 2024
     formatted_end_date: Saturday, May 4th, 2024
-    formatted_start_time: 8:30 am EDT
-    formatted_end_time: 9:30 am EDT
-    original_start: 1714825800
-    original_end: 1714829400
+    original_start: 1714795200
+    original_end: 1714881540
     is_past_event: true
+    is_all_day: true
   - formatted_start_date: Sunday, May 5th, 2024
     formatted_end_date: Sunday, May 5th, 2024
     formatted_start_time: 8:30 am EDT
@@ -20,6 +20,7 @@ event_dates:
     original_start: 1714912200
     original_end: 1714915800
     is_past_event: true
+    is_all_day: false
   - formatted_start_date: Sunday, May 10th, 2030
     formatted_end_date: Sunday, May 10th, 2030
     formatted_start_time: 8:30 am EDT
