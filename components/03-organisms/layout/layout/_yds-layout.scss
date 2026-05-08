@@ -133,13 +133,11 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-heading: var(--color-slot-seven);
     --color-layout-border: var(--color-slot-seven);
     --color-link-grid-action: var(--color-slot-seven);
+  }
 
-    background-color: var(--color-layout-theme);
-    color: var(--color-layout-content);
-
-    // Slot-nine (gray-400) sections: link grid themes one/three/four/five force
-    // a white main/column title for dark component surfaces — on a gray layout
-    // that wins over `color: var(--color-heading)` and keeps headings legible.
+  // Link-grid themes one/three/four/five set white heading text by default.
+  // On light section themes two and five, force dark headings for readability.
+  &:is([data-component-theme='two'], [data-component-theme='five']) {
     .link-grid .link-grid__heading,
     .link-grid .link-group__heading {
       color: var(--color-slot-seven);
