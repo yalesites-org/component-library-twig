@@ -112,7 +112,7 @@ format__day__long = Thursday, December 3, 2024
 {% endif %}
 
 {# Add attributes #}
-{% set date_time__modifiers = (used_format == 'format__all_day' or used_format == 'format__localist_all_day') ? ['all-day'] : [] %}
+{% set date_time__modifiers = used_format == 'format__all_day' ? ['all-day'] : [] %}
 {% set date_time__attribuites = {
   datetime: date_time__start|date(formats['format__iso']),
   class: bem('date-time', date_time__modifiers),
