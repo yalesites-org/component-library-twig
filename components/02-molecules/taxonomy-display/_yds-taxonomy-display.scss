@@ -94,11 +94,15 @@ $component-taxonomy-display-port-themes: map.deep-get(
     --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 
-  &[data-component-theme='two'] {
-    --color-background: var(--color-slot-four);
+  &[data-component-theme='two'],
+  &[data-component-theme='six'] {
     --color-text: var(--color-slot-seven);
     --color-link-base: var(--color-slot-seven);
     --color-link-hover: var(--color-slot-seven);
+  }
+
+  &[data-component-theme='two'] {
+    --color-background: var(--color-slot-four);
   }
 
   &[data-component-theme='three'] {
@@ -134,10 +138,7 @@ $component-taxonomy-display-port-themes: map.deep-get(
 
   &[data-component-theme='six'] {
     --color-background: var(--color-slot-nine);
-    --color-text: var(--color-slot-seven);
     --color-spotlight-text-shadow: transparent;
-    --color-link-base: var(--color-slot-seven);
-    --color-link-hover: var(--color-slot-seven);
     --color-link-visited-base: var(--color-slot-seven);
     --color-link-visited-hover: var(--color-slot-seven);
   }
