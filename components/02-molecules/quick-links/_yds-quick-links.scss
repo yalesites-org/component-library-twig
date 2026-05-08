@@ -207,6 +207,14 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
   @include atoms.link;
 }
 
+.quick-links__cta {
+  @include atoms.cta;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 // Gray-400 layout sections: keep quick-links link/button tokens dark regardless
 // of the inner quick-links component theme dial value.
 .yds-layout[data-component-theme='five'] .quick-links {
@@ -220,31 +228,17 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
   --color-link-visited-base: var(--color-quick-links-theme-five-foreground);
   --color-link-visited-hover: var(--color-quick-links-theme-five-foreground);
 
-  :is(.quick-links__link, .quick-links__description a) {
+  // Underline-link mixin uses text-shadow by default; clear it for gray sections.
+  .quick-links__link {
     --color-text-shadow: transparent;
-    --color-link-base: var(--color-quick-links-theme-five-foreground);
-    --color-link-hover: var(--color-quick-links-theme-five-foreground);
-    --color-link-visited-base: var(--color-quick-links-theme-five-foreground);
-    --color-link-visited-hover: var(--color-quick-links-theme-five-foreground);
   }
 
-  // Quick-links items render as CTA outline buttons; override the generic
-  // layout CTA mapping (`--color-layout-border`) so gray-400 uses neutral dark.
-  .quick-links__cta[data-cta-style] {
-    --color-cta-text: var(--color-quick-links-theme-five-foreground);
-    --color-cta-text-hover: var(--color-slot-eight);
-    --color-cta-border: var(--color-quick-links-theme-five-foreground);
-    --color-cta-bg-hover: var(--color-quick-links-theme-five-foreground);
-    --color-cta-bg: transparent;
+  // Force CTA tokens dark here so global button dial themes don't reintroduce
+  // brand tones for quick-links inside gray layout sections.
+  .quick-links__cta {
+    --color-action: var(--color-quick-links-theme-five-foreground);
+    --color-action-secondary: var(--color-slot-eight);
   }
-}
-
-.quick-links__cta {
-  @include atoms.cta;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .quick-links__image {
