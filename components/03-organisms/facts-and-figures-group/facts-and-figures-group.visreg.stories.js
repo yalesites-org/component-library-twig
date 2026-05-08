@@ -49,7 +49,6 @@ export const Visreg = () => {
       facts_and_figures__group__grid_count: 'three',
       facts_and_figures__group__alignment: 'left',
       facts_and_figures__group__presentation_style: style,
-      facts_and_figures__group__font_style: 'normal',
       facts_and_figures__group__theme: theme,
       facts_and_figures__group__bg_image: false,
       ...customData,
