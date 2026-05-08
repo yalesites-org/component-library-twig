@@ -109,6 +109,6 @@ format__day__long = Thursday, December 3, 2024
   class: bem('date-time', date_time__modifiers),
 } %}
 
-<time {{ add_attributes(date_time__attribuites) }}>{{ date_time|replace({'am': 'a.m.', 'pm': 'p.m.'}) }}</time>
+<time {{ add_attributes(date_time__attribuites) }}>{{ date_time }}</time>
 
 {% endapply %}
