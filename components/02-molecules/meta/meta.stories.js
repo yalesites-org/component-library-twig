@@ -71,7 +71,7 @@ export const Event = ({
     if (!allDay) {
       return {
         ...date,
-        is_all_day: false,
+        is_all_day: date.is_all_day ?? false,
       };
     }
     // For all-day, set times to midnight (start) and 23:59 (end)
@@ -94,7 +94,7 @@ export const Event = ({
     if (!allDay) {
       return {
         ...selectedData.event_featured_date,
-        is_all_day: false,
+        is_all_day: selectedData.event_featured_date.is_all_day ?? false,
       };
     }
     const startDate = new Date(
