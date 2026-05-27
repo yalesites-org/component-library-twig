@@ -69,6 +69,13 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   padding: 0;
   background-color: var(--color-banner-background);
 
+  &[data-banner-width='full'] {
+    width: 100vw;
+    max-width: 100vw;
+    margin-inline-start: calc(50% - 50vw);
+    margin-inline-end: 0;
+  }
+
   --banner-content-max-width: 37rem;
 
   // Component theme overrides: set specific component themes overrides

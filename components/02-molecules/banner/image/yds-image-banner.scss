@@ -21,6 +21,13 @@ $break-image-banner: tokens.$break-m;
   margin: 0 auto;
   background-color: var(--color-image-banner-background);
 
+  &[data-image-banner-width='full'] {
+    width: 100vw;
+    max-width: 100vw;
+    margin-inline-start: calc(50% - 50vw);
+    margin-inline-end: 0;
+  }
+
   @media (min-width: $break-image-banner) {
     align-items: center;
   }

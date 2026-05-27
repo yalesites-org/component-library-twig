@@ -3,7 +3,7 @@ import componentProps from './image-banner-props.yml';
 import { toArgTypes, toArgs } from '../../_storybook/component-props';
 import imageData from '../../01-atoms/images/image/image.yml';
 
-const renderBanner = ({ bgColor, size, withVideo, imageCaption }) =>
+const renderBanner = ({ bgColor, size, withVideo, imageCaption, width }) =>
   imageBannerTwig({
     ...imageData.responsive_images['16x9'],
     image_banner__content__background: bgColor,
@@ -11,6 +11,7 @@ const renderBanner = ({ bgColor, size, withVideo, imageCaption }) =>
     image_banner__size: size,
     image_banner__video: withVideo ? 'true' : 'false',
     image_banner__caption: imageCaption,
+    image_banner__width: width,
   });
 
 /**
@@ -34,3 +35,7 @@ export const ImageBanner = (args) => renderBanner(args);
 export const ImageBannerShort = (args) => renderBanner(args);
 ImageBannerShort.args = { size: 'short' };
 ImageBannerShort.storyName = 'Short';
+
+export const ImageBannerFullWidth = (args) => renderBanner(args);
+ImageBannerFullWidth.args = { width: 'full' };
+ImageBannerFullWidth.storyName = 'Full Width';
