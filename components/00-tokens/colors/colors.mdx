@@ -1,0 +1,27 @@
+import { Meta } from '@storybook/blocks';
+import * as ColorsStories from './colors.stories';
+
+<Meta of={ColorsStories} name="Docs" />
+
+# Colors
+
+The YaleSites color system is built on a set of named tokens derived from Yale's brand palette. These tokens power the three-tier theme system — Global Theme, Section Theme, and Component Theme — giving sites flexibility while maintaining brand consistency and accessibility.
+
+## How the Color System Works
+
+Color in YaleSites flows from broad to narrow:
+
+- **Global Theme (lever)** — Sets the site-wide color palette. Affects all color tokens throughout the site.
+- **Section Theme** — Sets the background color of a page section. Scoped to one content region.
+- **Component Theme (dial)** — Adds an accent color to an individual component, overriding section and global defaults for that component only.
+
+For a deeper explanation of how these layers interact, see the [Theme System page](?path=/docs/introduction-theme-system--docs).
+
+## Color References
+
+- [Color Palette](?path=/story/tokens-colors--colors) — Full set of color tokens with hex, RGB, CMYK, and Pantone values. Click any value to copy it.
+- [Global Themes](?path=/story/tokens-colors--color-global-themes) — The six site-wide color palettes available to YaleSites.
+- [Basic Themes](?path=/story/tokens-colors--color-basic-themes) — Accessibility-tested background color options validated to WCAG 2.1 AA.
+- [Component Theme Pairings](?path=/story/tokens-colors--component-theme-color-pairings) — Interactive view of how component-level dials render across a full page layout.
+- [Global Theme Pairings](?path=/story/tokens-colors--global-theme-color-pairings) — See how component dials behave across all six global palettes.
+- [Component Color Slots Reference](?path=/story/tokens-colors--component-color-slots) — Reference table of every component that supports color theming.

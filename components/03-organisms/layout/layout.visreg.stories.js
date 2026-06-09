@@ -21,6 +21,7 @@ import {
  * Storybook Definition.
  */
 export default {
+  tags: ['visreg'],
   title: 'Organisms/Layout/Visreg',
   parameters: {
     layout: 'fullscreen',

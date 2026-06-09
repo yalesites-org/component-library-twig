@@ -16,7 +16,9 @@ The meta component provides structured metadata displays for different content t
 
 Use the controls panel below to experiment with different meta component properties. Select between the four meta types to see how each displays its specific information.
 
-<Canvas of={MetaStories.PostMeta} />
+<div className="sb-contained-canvas">
+  <Canvas of={MetaStories.PostMeta} />
+</div>
 <Controls of={MetaStories.PostMeta} />
 
 ## Meta Types
@@ -39,7 +41,9 @@ A simple meta component for displaying author information and publication dates.
 
 A comprehensive metadata component for displaying event information from Localist, including dates, times, location, and registration options.
 
-<Canvas of={MetaStories.Event} />
+<div className="sb-contained-canvas">
+  <Canvas of={MetaStories.Event} />
+</div>
 <Controls of={MetaStories.Event} />
 
 **Example Usage:**
@@ -57,7 +61,9 @@ A comprehensive metadata component for displaying event information from Localis
 
 Displays professional metadata for person profiles including titles, departments, and pronouns with optional portrait or landscape imagery.
 
-<Canvas of={MetaStories.Profile} />
+<div className="sb-contained-canvas">
+  <Canvas of={MetaStories.Profile} />
+</div>
 <Controls of={MetaStories.Profile} />
 
 **Example Usage:**
@@ -75,7 +81,9 @@ Displays professional metadata for person profiles including titles, departments
 
 Displays metadata for downloadable resources and media content, including category, publication date, and resource type indicators.
 
-<Canvas of={MetaStories.Resource} />
+<div className="sb-contained-canvas">
+  <Canvas of={MetaStories.Resource} />
+</div>
 <Controls of={MetaStories.Resource} />
 
 **Example Usage:**

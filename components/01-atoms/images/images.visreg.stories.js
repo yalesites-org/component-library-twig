@@ -24,6 +24,7 @@ svgIcons.keys().forEach((key) => {
 });
 
 export default {
+  tags: ['visreg'],
   title: 'Atoms/Images/Visreg',
   parameters: { controls: { disable: true } },
 };

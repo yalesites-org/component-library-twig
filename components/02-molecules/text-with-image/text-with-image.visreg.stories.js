@@ -21,6 +21,7 @@ import {
  * Storybook Definition.
  */
 export default {
+  tags: ['visreg'],
   title: 'Molecules/Content Spotlight/Content Spotlight Landscape/Visreg',
   parameters: {
     layout: 'fullscreen',

@@ -22,6 +22,9 @@ argTypes.backgroundColor = {
 export default {
   title: 'Molecules/Callout',
   tags: ['!dev'],
+  parameters: {
+    layout: 'fullscreen',
+  },
   argTypes,
   args: {
     ...toArgs(componentProps),

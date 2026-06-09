@@ -12,6 +12,7 @@ const bordersData = {
 };
 
 export default {
+  tags: ['!dev'],
   title: 'Tokens/Effects',
 };
 

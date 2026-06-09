@@ -130,6 +130,33 @@ For more details, see the [Storybook Migration Guide](https://github.com/yalesit
 
 ---
 
+## Exploring the Design System
+
+The toolbar at the top of Storybook has two controls worth knowing about:
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', margin: '1.5rem 0' }}>
+
+<div style={{ background: '#f0f4ff', border: '1px solid #c7d4f0', borderRadius: '8px', padding: '1.25rem' }}>
+  <strong>🎨 Site: Global Theme (lever)</strong>
+  <p style={{ margin: '0.5rem 0 0', fontSize: '0.9rem' }}>Switches the site-wide color palette across all six Yale brand themes. Changes how every component in the library looks — great for checking how your design holds up across palettes.</p>
+</div>
+
+<div style={{ background: '#f0f4ff', border: '1px solid #c7d4f0', borderRadius: '8px', padding: '1.25rem' }}>
+  <strong>🔤 Headings: Typography</strong>
+  <p style={{ margin: '0.5rem 0 0', fontSize: '0.9rem' }}>Switches the heading font pairing between YaleNew and Mallory. Useful for previewing components in sites that use a non-default typography setting.</p>
+</div>
+
+<div style={{ background: '#f0f4ff', border: '1px solid #c7d4f0', borderRadius: '8px', padding: '1.25rem' }}>
+  <strong>👁 Visreg: Off / On</strong>
+  <p style={{ margin: '0.5rem 0 0', fontSize: '0.9rem' }}>Toggles the visual regression test pages in the sidebar. Hidden by default to keep navigation clean — turn them on when you need to review component variations for QA or testing.</p>
+</div>
+
+</div>
+
+For a deeper explanation of how themes work together, see the [Theme System page](?path=/docs/introduction-theme-system--docs).
+
+---
+
 <p style={{ textAlign: 'center', color: '#666', marginTop: '3rem' }}>
   Built with ❤️ for the Yale University community
 </p>
