@@ -237,7 +237,8 @@ $break-grand-hero-banner: tokens.$break-m;
   }
 
   [data-grand-hero-overlay-variation='contained'][data-grand-hero-width='site'],
-  [data-grand-hero-overlay-variation='contained'][data-grand-hero-width='contained-narrow']
+  [data-grand-hero-overlay-variation='contained'][data-grand-hero-width='contained-narrow'],
+  [data-grand-hero-overlay-variation='contained'][data-grand-hero-width='full']
     & {
     // prettier-ignore
     max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-site-gutter) * 2));
@@ -320,7 +321,8 @@ $break-grand-hero-banner: tokens.$break-m;
     max-width: var(--size-component-layout-width-content);
   }
 
-  [data-grand-hero-width='site'] & {
+  [data-grand-hero-width='site'] &,
+  [data-grand-hero-width='full'] & {
     // prettier-ignore
     max-width: var(--size-component-layout-width-site);
 

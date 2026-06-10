@@ -269,7 +269,9 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   }
 
   [data-banner-width='site'][data-banner-content-layout='right'] &,
-  [data-banner-width='site'][data-banner-content-layout='left'] & {
+  [data-banner-width='site'][data-banner-content-layout='left'] &,
+  [data-banner-width='full'][data-banner-content-layout='right'] &,
+  [data-banner-width='full'][data-banner-content-layout='left'] & {
     // prettier-ignore
     max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-10)));
 
@@ -350,7 +352,8 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
       var(--size-spacing-7);
   }
 
-  [data-banner-width='site'] & {
+  [data-banner-width='site'] &,
+  [data-banner-width='full'] & {
     // prettier-ignore
     max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-10)));
 
