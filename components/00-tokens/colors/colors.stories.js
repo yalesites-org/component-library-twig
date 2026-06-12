@@ -1,9 +1,12 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import getGlobalThemes from './color-global-themes';
 import colorMeta from './color-data.yml';
+import printColorsMeta from './print-colors.yml';
 import '../../01-atoms/controls/text-copy-button/yds-text-copy-button';
 
 import colorsTwig from './colors.twig';
+import webColorsTwig from './web-colors.twig';
+import printColorsTwig from './print-colors.twig';
 import colorComponentThemeTwig from './color-component-theme-pairings.twig';
 import colorGlobalThemeTwig from './color-global-themes.twig';
 import colorGlobalThemePairingTwig from './color-global-theme-pairings.twig';
@@ -209,6 +212,49 @@ export default {
 };
 
 export const Colors = () => colorsTwig(colorsData);
+
+// ---------------------------------------------------------------------------
+// Web Colors — HEX values only (for digital use).
+// ---------------------------------------------------------------------------
+export const WebColors = () => webColorsTwig(colorsData);
+WebColors.storyName = 'Web Colors';
+
+// ---------------------------------------------------------------------------
+// Print Colors — PMS + CMYK values (for print vendors). Pyramid hierarchy.
+// HEX drives swatches only and is never shown to users.
+// ---------------------------------------------------------------------------
+const printData = { print_colors: printColorsMeta };
+
+export const PrintColors = () => printColorsTwig(printData);
+PrintColors.storyName = 'Print Colors';
+
+// ---------------------------------------------------------------------------
+// Web + Print Colors — single page with both sections for comparison.
+// Composed in JS so each template is included without Twig cross-file paths.
+// ---------------------------------------------------------------------------
+export const WebAndPrintColors = () => `
+  <div class="cl-colors-combined">
+    <div class="cl-colors-combined__intro text-field" data-component-alignment="left" data-component-width="max">
+      <div class="text-field__inner">
+        <div class="text">
+          <h1>Yale Brand Colors</h1>
+          <p class="cl-colors__intro-placeholder"><em>[Contextual copy — to be added by PM.]</em></p>
+        </div>
+      </div>
+    </div>
+    <section class="cl-colors-combined__section">
+      <h2 class="cl-colors-combined__section-heading">Web Colors</h2>
+      <p class="cl-colors-combined__section-intro"><em>[Contextual copy — to be added by PM.]</em></p>
+      ${webColorsTwig({ ...colorsData, is_subsection: true })}
+    </section>
+    <section class="cl-colors-combined__section">
+      <h2 class="cl-colors-combined__section-heading">Print Colors</h2>
+      <p class="cl-colors-combined__section-intro"><em>[Contextual copy — to be added by PM.]</em></p>
+      ${printColorsTwig({ ...printData, is_subsection: true })}
+    </section>
+  </div>
+`;
+WebAndPrintColors.storyName = 'Web + Print Colors';
 
 export const ComponentColorSlots = () => `
   <div style="max-width: 1200px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
