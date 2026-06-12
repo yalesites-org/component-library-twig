@@ -212,6 +212,7 @@ export default {
 };
 
 export const Colors = () => colorsTwig(colorsData);
+Colors.tags = ['!dev'];
 
 // ---------------------------------------------------------------------------
 // Web Colors — HEX values only (for digital use).
@@ -352,9 +353,94 @@ export const ComponentColorSlots = () => `
     </div>
   </div>
 `;
+ComponentColorSlots.tags = ['!dev'];
 
-export const ColorGlobalThemes = () =>
-  colorGlobalThemeTwig(colorGlobalThemeData);
+export const ColorGlobalThemes = () => {
+  const themes = tokens['global-themes'];
+
+  const themeSlots = Object.keys(Object.values(themes)[0].colors);
+  const brandSlots = ['slot-six', 'slot-seven', 'slot-eight'];
+  const themeColorSlots = themeSlots.filter((s) => !brandSlots.includes(s));
+
+  const renderSwatch = (slot, hsl) => {
+    const hex = hslToHex(hsl);
+    const num = slot.replace('slot-', '');
+    return `
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+        <div style="
+          width:64px;height:64px;border-radius:8px;
+          background:${hsl};
+          border:1px solid rgba(0,0,0,0.1);
+        "></div>
+        <span style="font-size:11px;font-weight:600;color:#444;">Slot ${num}</span>
+        <span style="font-size:11px;color:#666;font-family:monospace;">${hex}</span>
+      </div>`;
+  };
+
+  const renderGroup = (
+    label,
+    slots,
+    colors,
+    bgColor,
+    borderColor,
+    shrink = false,
+  ) => {
+    const swatches = slots
+      .map((slot) => renderSwatch(slot, colors[slot]))
+      .join('');
+    return `
+      <div style="${shrink ? 'flex:0 0 auto;' : 'flex:1;min-width:0;'}">
+        <div style="
+          font-size:11px;font-weight:700;text-transform:uppercase;
+          letter-spacing:0.06em;color:#888;margin-bottom:8px;
+        ">${label}</div>
+        <div style="
+          background:${bgColor};border:1px solid ${borderColor};
+          border-radius:10px;padding:14px;
+          display:flex;flex-wrap:wrap;gap:12px;
+        ">
+          ${swatches}
+        </div>
+      </div>`;
+  };
+
+  const themeCards = Object.entries(themes)
+    .map(([key, theme]) => {
+      const themeGroup = renderGroup(
+        'Theme Colors — Slots 1–5',
+        themeColorSlots,
+        theme.colors,
+        '#f9fafb',
+        '#e5e7eb',
+      );
+      const brandGroup = renderGroup(
+        'Yale Brand Colors — Slots 6–8',
+        brandSlots,
+        theme.colors,
+        '#f0f4ff',
+        '#c7d4f0',
+        true,
+      );
+
+      return `
+      <div style="margin-bottom:1.5rem;padding:1.5rem;background:#fff;border:1px solid #e5e7eb;border-radius:12px;">
+        <h2 style="margin:0 0 1.25rem;font-size:1rem;font-weight:700;color:#111;">
+          ${key.charAt(0).toUpperCase() + key.slice(1)}: ${theme.label}
+        </h2>
+        <div style="display:flex;gap:1.5rem;flex-wrap:wrap;">
+          ${themeGroup}
+          ${brandGroup}
+        </div>
+      </div>`;
+    })
+    .join('');
+
+  return `
+    <div style="padding:2rem;max-width:960px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+      ${themeCards}
+    </div>`;
+};
+ColorGlobalThemes.tags = ['!dev'];
 
 export const ColorBasicThemes = () => `
   <h2>These pairings are selected to support accessibility standards.</h2>
@@ -362,6 +448,7 @@ export const ColorBasicThemes = () => `
 
   ${colorBasicThemesTwig(colorBasicThemeData)}
 `;
+ColorBasicThemes.tags = ['!dev'];
 
 export const ComponentThemeColorPairings = ({
   heading,
@@ -526,6 +613,7 @@ ComponentThemeColorPairings.args = {
   siteFooterAccent: 'one',
   siteFooterVariation: 'basic',
 };
+ComponentThemeColorPairings.tags = ['!dev'];
 
 export const GlobalThemeColorPairings = ({
   heading,
@@ -679,6 +767,7 @@ GlobalThemeColorPairings.argTypes = {
     type: 'select',
   },
 };
+GlobalThemeColorPairings.tags = ['!dev'];
 
 GlobalThemeColorPairings.args = {
   globalTheme: 'one',

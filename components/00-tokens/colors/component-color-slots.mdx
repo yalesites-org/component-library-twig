@@ -1,0 +1,14 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as ColorsStories from './colors.stories';
+
+<Meta title="Tokens/Colors/Theming Reference" />
+
+# Theming Reference
+
+A reference of every component in the YaleSites design system that supports color theming via dials or slots, along with the available options and notes on how they behave.
+
+Color slots (also called "dials") are predefined color combinations that have been tested for accessibility. Each slot maps to the active global theme's color slots, so components automatically adapt when the global theme changes.
+
+<div className="sb-contained-canvas">
+  <Canvas of={ColorsStories.ComponentColorSlots} />
+</div>
