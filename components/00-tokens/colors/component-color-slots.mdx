@@ -1,14 +1,144 @@
-import { Meta, Canvas } from '@storybook/blocks';
-import * as ColorsStories from './colors.stories';
+import { Meta } from '@storybook/blocks';
 
 <Meta title="Tokens/Colors/Theming Reference" />
 
 # Theming Reference
 
-A reference of every component in the YaleSites design system that supports color theming via dials or slots, along with the available options and notes on how they behave.
+A reference of every component in the YaleSites design system that supports color theming. These controls allow you to customize the visual appearance of components while maintaining accessibility standards.
 
-Color slots (also called "dials") are predefined color combinations that have been tested for accessibility. Each slot maps to the active global theme's color slots, so components automatically adapt when the global theme changes.
+## What are Color Slots?
 
-<div className="sb-contained-canvas">
-  <Canvas of={ColorsStories.ComponentColorSlots} />
-</div>
+Color slots (also called "dials" or "themes") are predefined color combinations that have been tested for accessibility. Each slot includes coordinated colors for backgrounds, text, borders, and accents that work together harmoniously. Slots map to the active global theme, so components automatically adapt when the global theme changes — a component set to "dial two" will always pull Slot 2 colors from whatever palette is active.
+
+<table>
+  <thead>
+    <tr>
+      <th>Tier</th>
+      <th>Component</th>
+      <th>Available Dials / Slots</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Atoms</td>
+      <td><a href="?path=/docs/atoms-controls--docs">CTA Button</a></td>
+      <td>One – Seven</td>
+      <td>Controls button background and text color</td>
+    </tr>
+    <tr>
+      <td>Atoms</td>
+      <td><a href="?path=/docs/atoms-divider--docs">Divider</a></td>
+      <td>Line color: gray, Yale Blue, brown-gray</td>
+      <td>Controls the divider line color; also responds to the active section theme</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td><a href="?path=/docs/molecules-accordion--docs">Accordion</a></td>
+      <td>Default, One – Five</td>
+      <td>Sets background color of the accordion container</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td><a href="?path=/docs/molecules-banner-action-banner--docs">Banner (Action)</a></td>
+      <td>One – Three</td>
+      <td>Controls banner background theme</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td><a href="?path=/docs/molecules-banner-grand-hero--docs">Banner (Grand Hero)</a></td>
+      <td>One – Five</td>
+      <td>Controls content area background color</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td><a href="?path=/docs/molecules-banner-image-banner--docs">Banner (Image)</a></td>
+      <td>One – Three</td>
+      <td>Controls banner background theme</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td><a href="?path=/docs/molecules-callout--docs">Callout</a></td>
+      <td>One – Five</td>
+      <td>Sets callout background color</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td><a href="?path=/docs/molecules-content-spotlight-content-spotlight-landscape--docs">Content Spotlight (Landscape)</a></td>
+      <td>Default, One – Five</td>
+      <td>Sets content area background color</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td><a href="?path=/docs/molecules-content-spotlight-content-spotlight-portrait--docs">Content Spotlight (Portrait)</a></td>
+      <td>Default, One – Five</td>
+      <td>Sets content area background color</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td><a href="?path=/docs/molecules-inline-message--docs">Inline Message</a></td>
+      <td>One – Five</td>
+      <td>Sets message background and accent color</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td><a href="?path=/docs/molecules-link-grid--docs">Link Grid</a></td>
+      <td>One – Five</td>
+      <td>Sets grid background color</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td><a href="?path=/docs/molecules-quick-links--docs">Quick Links</a></td>
+      <td>One – Five</td>
+      <td>Sets component background color via <code>data-component-theme</code>; control not currently exposed in Storybook</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td><a href="?path=/docs/molecules-tabs--docs">Tabs</a></td>
+      <td>One – Five</td>
+      <td>Sets tab navigation background and active tab color</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td><a href="?path=/docs/molecules-taxonomy-display--docs">Taxonomy Display</a></td>
+      <td>Default, One – Five</td>
+      <td>Sets tag/label background color</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td><a href="?path=/docs/molecules-tile-item--docs">Tile Item</a></td>
+      <td>One – Five</td>
+      <td>Supports background theming via <code>tile__item__theme</code> in Drupal; control not currently exposed in Storybook</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td><a href="?path=/docs/molecules-wrapped-callout--docs">Wrapped Callout</a></td>
+      <td>Default, One – Five</td>
+      <td>Sets callout background color</td>
+    </tr>
+    <tr>
+      <td>Organisms</td>
+      <td><a href="?path=/docs/organisms-facts-and-figures-group--docs">Facts and Figures Group</a></td>
+      <td>One – Five</td>
+      <td>Sets section background color</td>
+    </tr>
+    <tr>
+      <td>Organisms</td>
+      <td><a href="?path=/docs/organisms-layout--docs">Layout</a></td>
+      <td>Default, One – Four</td>
+      <td>Sets page section background color</td>
+    </tr>
+    <tr>
+      <td>Organisms</td>
+      <td><a href="?path=/docs/organisms-global-elements-header--docs">Site Header</a></td>
+      <td>Multiple themes + Accent colors (1–8)</td>
+      <td>Combines a theme dial with an accent color selection</td>
+    </tr>
+    <tr>
+      <td>Organisms</td>
+      <td><a href="?path=/docs/organisms-global-elements-footer--docs">Site Footer</a></td>
+      <td>Multiple themes + Accent colors (1–8)</td>
+      <td>Combines a theme dial with an accent color selection</td>
+    </tr>
+  </tbody>
+</table>

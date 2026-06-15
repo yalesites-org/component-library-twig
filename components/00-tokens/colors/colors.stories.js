@@ -424,7 +424,7 @@ export const ColorGlobalThemes = () => {
 
       return `
       <div style="margin-bottom:1.5rem;padding:1.5rem;background:#fff;border:1px solid #e5e7eb;border-radius:12px;">
-        <h2 style="margin:0 0 1.25rem;font-size:1rem;font-weight:700;color:#111;">
+        <h2 style="margin:0 0 1.25rem;font-size:1.35rem;font-weight:700;color:#111;">
           ${key.charAt(0).toUpperCase() + key.slice(1)}: ${theme.label}
         </h2>
         <div style="display:flex;gap:1.5rem;flex-wrap:wrap;">

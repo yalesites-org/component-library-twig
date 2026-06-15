@@ -92,6 +92,11 @@ export const parameters = {
         'Introduction',
         ['Welcome', 'Theme System'],
         'Tokens',
+        [
+          'Colors',
+          ['Overview', 'Colors', 'Color Palettes (Theme)', 'Theme Sandbox', 'Theming Reference'],
+          '*',
+        ],
         'Atoms',
         'Molecules',
         'Organisms',

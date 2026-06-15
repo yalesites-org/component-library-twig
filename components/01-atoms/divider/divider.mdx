@@ -7,11 +7,9 @@ import componentProps from './divider-props.yml';
 
 # Divider
 
-The divider component creates horizontal rules with customizable thickness, width, color, and positioning. It uses CSS custom properties for flexible theming and can be styled to match various design contexts.
+Horizontal rules with customizable thickness, width, color, and positioning. Uses CSS custom properties for flexible theming.
 
 ## Interactive Preview
-
-Use the controls panel below to experiment with the divider's properties in real-time.
 
 <div className="sb-contained-canvas">
   <Canvas of={DividerStories.Interactive} />
@@ -20,111 +18,34 @@ Use the controls panel below to experiment with the divider's properties in real
 
 ## Properties
 
-### Optional Properties
-
 {twigPropsTable(componentProps, 'optional')}
 
-## CSS Custom Properties
+## Thickness Variations
 
-The divider can be styled using CSS custom properties:
+Six thickness options from hairline to 8px.
 
-- `--thickness-divider`: Controls line thickness (uses design tokens like `var(--size-thickness-hairline)`, `var(--size-thickness-1)`, etc.)
-- `--color-divider`: Controls line color (uses color tokens like `var(--color-gray-500)`, `var(--color-blue-yale)`)
-- `--width-theme-divider`: Controls divider width (uses width tokens)
+<div className="sb-contained-canvas">
+  <Canvas of={DividerStories.DividersThickness} />
+</div>
 
-## Variations
+## Width Variations
 
-### Thickness Options
+Four width presets (25%, 50%, 75%, 100%), centered.
 
-The divider supports multiple thickness values through design tokens:
+<div className="sb-contained-canvas">
+  <Canvas of={DividerStories.DividersWidth} />
+</div>
 
-- Hairline (thinnest)
-- 1px
-- 2px
-- 4px
-- 6px
-- 8px (thickest)
+## Position Variations
 
-### Width Options
+Left and center positions at 50% width.
 
-Four width presets are available:
+<div className="sb-contained-canvas">
+  <Canvas of={DividerStories.DividersPosition} />
+</div>
 
-- 25% width
-- 50% width
-- 75% width
-- 100% width (full width)
+## Color Variations
 
-### Position Options
+Available line colors shown on themed backgrounds. Use design token values via `--color-divider`.
 
-- **Left**: Aligns divider to the left edge
-- **Center**: Centers the divider horizontally
-
-### Color Variations
-
-The divider color can be customized to match themed backgrounds:
-
-- Gray (default)
-- Blue Yale
-- Brown-gray
-- Any design system color token
-
-## Technical Specifications
-
-- **Atomic Level**: Atom
-- **Template**: `yds-divider.twig`
-- **Styles**: `cl-dividers.scss`
-
-### Accessibility
-
-- Uses semantic `<hr>` element for proper semantic meaning
-- Provides visual separation that can be detected by screen readers
-- Color is not the only means of conveying separation
-
-### Behavior
-
-- **Static Element**: No interactive behavior
-- **Responsive**: Maintains proportions across breakpoints
-- **Themeable**: Adapts to section theme contexts
-
-## Usage Guidelines
-
-### Best Practices
-
-- Use dividers to create visual separation between content sections
-- Match divider color to the current theme for visual harmony
-- Use appropriate thickness for the visual weight needed
-- Center position works well for decorative dividers
-- Left position works well for content-aligned dividers
-
-### Things to Avoid
-
-- Don't overuse dividers - whitespace can provide separation
-- Avoid using dividers as the only means of visual hierarchy
-- Don't use very thick dividers in dense content areas
-- Avoid color choices that don't provide sufficient contrast
-
-## Implementation Notes
-
-### Theming
-
-The divider integrates with the design system's theming through CSS custom properties. Set the color using the `--color-divider` custom property with design token values:
-
-```css
---color-divider: var(--color-gray-500);
-```
-
-### Thickness Control
-
-Set thickness using the `--thickness-divider` custom property:
-
-```css
---thickness-divider: var(--size-thickness-2);
-```
-
-## Testing
-
-For comprehensive visual regression testing with all divider variations and theme combinations, see the [Visreg page](?path=/story/atoms-divider-visreg).
-
----
-
-**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.
+<Canvas of={DividerStories.DividersColor} />

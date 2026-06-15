@@ -54,8 +54,6 @@ export const Interactive = ({ sectionTheme, aspectRatio }) => `
 `;
 
 export const Images = () => `
-  <h2>Aspect Ratios</h2>
-  <p>These are the current aspect ratios that we use in components that require a programmatic crop.</p>
   <div class="cl-image-examples">
     <div class="cl-image-example">
     <h2>16:9</h2>
