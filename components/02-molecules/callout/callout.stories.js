@@ -35,7 +35,7 @@ export default {
   },
 };
 
-export const Callout = ({
+export const CalloutSingle = ({
   heading,
   text,
   linkText,
@@ -43,9 +43,8 @@ export const Callout = ({
   backgroundColor,
   calloutAlignment,
   overlayBackgroundImage,
-}) => `
-  <h2>One Callout</h2>
-  ${calloutTwig({
+}) =>
+  calloutTwig({
     callout__background_color: backgroundColor,
     callout__alignment: calloutAlignment,
     callout__overlay_background_image: overlayBackgroundImage
@@ -60,9 +59,19 @@ export const Callout = ({
         callout__link__type: linkType,
       },
     ],
-  })}
-  <h2>Two Callouts</h2>
-  ${calloutTwig({
+  });
+CalloutSingle.tags = ['!dev'];
+
+export const CalloutDouble = ({
+  heading,
+  text,
+  linkText,
+  linkType,
+  backgroundColor,
+  calloutAlignment,
+  overlayBackgroundImage,
+}) =>
+  calloutTwig({
     callout__background_color: backgroundColor,
     callout__alignment: calloutAlignment,
     callout__overlay_background_image: overlayBackgroundImage
@@ -84,5 +93,5 @@ export const Callout = ({
         callout__link__type: linkType,
       },
     ],
-  })}
-`;
+  });
+CalloutDouble.tags = ['!dev'];

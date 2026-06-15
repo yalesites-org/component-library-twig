@@ -1,3 +1,8 @@
+/* Theme diagram label badges */
+.sb-theme-label {
+  color: white !important;
+}
+
 /* Accessible link colors for introduction pages */
 .sb-intro-page a {
   color: #0053a0; /* Yale Blue - better contrast */

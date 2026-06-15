@@ -90,11 +90,11 @@ export const parameters = {
       method: 'alphabetical',
       order: [
         'Introduction',
-        ['Welcome', 'Theme System'],
+        ['Welcome', 'Theme System', 'Storybook Guide'],
         'Tokens',
         [
           'Colors',
-          ['Overview', 'Colors', 'Color Palettes (Theme)', 'Theme Sandbox', 'Theming Reference'],
+          ['Colors', 'Color Palettes (Theme)', 'Theme Sandbox', 'Theming Reference'],
           '*',
         ],
         'Atoms',
