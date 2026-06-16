@@ -226,8 +226,31 @@ WebColors.tags = ['!dev'];
 // ---------------------------------------------------------------------------
 const printData = { print_colors: printColorsMeta };
 
+// Restructure web accent colors to match PDF groupings (Cyan, Green, Yellow, Red/Orange, Gray).
+// Each color carries its own css_var so the twig template can reference the correct token
+// even when the group key no longer matches the token group name.
+function withVar(tokenGroup, entries) {
+  return Object.fromEntries(
+    entries.map(([key, color]) => [
+      key,
+      { ...color, css_var: `--color-${tokenGroup}-${key}` },
+    ]),
+  );
+}
+
+const c = colorsData.colors;
+
+// Yale Blue web hex — passed separately so Yale Blue section can show both web + print values.
+const yaleBlueWeb = c.blue?.yale
+  ? { hex: c.blue.yale.hex, css_var: '--color-blue-yale' }
+  : null;
+
 export const YaleBlue = () =>
-  webColorsTwig({ ...printData, section: 'yale-blue' });
+  webColorsTwig({
+    ...printData,
+    yale_blue_web: yaleBlueWeb,
+    section: 'yale-blue',
+  });
 YaleBlue.storyName = 'Yale Blue';
 YaleBlue.tags = ['!dev'];
 
@@ -241,18 +264,32 @@ export const AccentPrint = () =>
 AccentPrint.storyName = 'Accent Colors for Print';
 AccentPrint.tags = ['!dev'];
 
-// blue.yale is already shown in the Yale Blue section — remove it here to avoid duplication.
 const accentWebColors = {
-  colors: Object.fromEntries(
-    Object.entries(colorsData.colors).map(([group, colorset]) => [
-      group,
-      group === 'blue'
-        ? Object.fromEntries(
-            Object.entries(colorset).filter(([key]) => key !== 'yale'),
-          )
-        : colorset,
-    ]),
-  ),
+  yale_blue_web: yaleBlueWeb,
+  colors: {
+    // Cyan = our blue tokens (minus yale, which has its own section)
+    Cyan: withVar(
+      'blue',
+      Object.entries(c.blue || {}).filter(([key]) => key !== 'yale'),
+    ),
+    // Green = our green tokens
+    Green: withVar('green', Object.entries(c.green || {})),
+    // Yellow = yellow tokens + orange.peach (PDF groups peach under Yellow)
+    Yellow: {
+      ...withVar('yellow', Object.entries(c.yellow || {})),
+      ...(c.orange?.peach
+        ? { peach: { ...c.orange.peach, css_var: '--color-orange-peach' } }
+        : {}),
+    },
+    // Red/Orange = orange.coral is the closest token we have
+    'Red/Orange': {
+      ...(c.orange?.coral
+        ? { coral: { ...c.orange.coral, css_var: '--color-orange-coral' } }
+        : {}),
+    },
+    // Gray = our gray tokens
+    Gray: withVar('gray', Object.entries(c.gray || {})),
+  },
 };
 
 export const AccentWeb = () =>
