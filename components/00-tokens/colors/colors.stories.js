@@ -217,7 +217,8 @@ Colors.tags = ['!dev'];
 // ---------------------------------------------------------------------------
 // Web Colors — HEX values only (for digital use).
 // ---------------------------------------------------------------------------
-export const WebColors = () => webColorsTwig(colorsData);
+export const WebColors = () =>
+  webColorsTwig({ ...colorsData, print_colors: printColorsMeta });
 WebColors.storyName = 'Web Colors';
 
 // ---------------------------------------------------------------------------
