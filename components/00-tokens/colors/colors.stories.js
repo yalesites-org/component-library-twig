@@ -6,7 +6,6 @@ import '../../01-atoms/controls/text-copy-button/yds-text-copy-button';
 
 import colorsTwig from './colors.twig';
 import webColorsTwig from './web-colors.twig';
-import printColorsTwig from './print-colors.twig';
 import colorComponentThemeTwig from './color-component-theme-pairings.twig';
 import colorGlobalThemeTwig from './color-global-themes.twig';
 import colorGlobalThemePairingTwig from './color-global-theme-pairings.twig';
@@ -219,44 +218,47 @@ Colors.tags = ['!dev'];
 // ---------------------------------------------------------------------------
 export const WebColors = () =>
   webColorsTwig({ ...colorsData, print_colors: printColorsMeta });
-WebColors.storyName = 'Web Colors';
+WebColors.storyName = 'Identity Colors';
+WebColors.tags = ['!dev'];
 
 // ---------------------------------------------------------------------------
-// Print Colors — PMS + CMYK values (for print vendors). Pyramid hierarchy.
-// HEX drives swatches only and is never shown to users.
+// Section stories — used by web-colors.mdx Canvas blocks.
 // ---------------------------------------------------------------------------
 const printData = { print_colors: printColorsMeta };
 
-export const PrintColors = () => printColorsTwig(printData);
-PrintColors.storyName = 'Print Colors';
+export const YaleBlue = () =>
+  webColorsTwig({ ...printData, section: 'yale-blue' });
+YaleBlue.storyName = 'Yale Blue';
+YaleBlue.tags = ['!dev'];
 
-// ---------------------------------------------------------------------------
-// Web + Print Colors — single page with both sections for comparison.
-// Composed in JS so each template is included without Twig cross-file paths.
-// ---------------------------------------------------------------------------
-export const WebAndPrintColors = () => `
-  <div class="cl-colors-combined">
-    <div class="cl-colors-combined__intro text-field" data-component-alignment="left" data-component-width="max">
-      <div class="text-field__inner">
-        <div class="text">
-          <h1>Yale Brand Colors</h1>
-          <p class="cl-colors__intro-placeholder"><em>[Contextual copy — to be added by PM.]</em></p>
-        </div>
-      </div>
-    </div>
-    <section class="cl-colors-combined__section">
-      <h2 class="cl-colors-combined__section-heading">Web Colors</h2>
-      <p class="cl-colors-combined__section-intro"><em>[Contextual copy — to be added by PM.]</em></p>
-      ${webColorsTwig({ ...colorsData, is_subsection: true })}
-    </section>
-    <section class="cl-colors-combined__section">
-      <h2 class="cl-colors-combined__section-heading">Print Colors</h2>
-      <p class="cl-colors-combined__section-intro"><em>[Contextual copy — to be added by PM.]</em></p>
-      ${printColorsTwig({ ...printData, is_subsection: true })}
-    </section>
-  </div>
-`;
-WebAndPrintColors.storyName = 'Web + Print Colors';
+export const CoreColors = () =>
+  webColorsTwig({ ...printData, section: 'core' });
+CoreColors.storyName = 'Core Colors';
+CoreColors.tags = ['!dev'];
+
+export const AccentPrint = () =>
+  webColorsTwig({ ...printData, section: 'accent-print' });
+AccentPrint.storyName = 'Accent Colors for Print';
+AccentPrint.tags = ['!dev'];
+
+// blue.yale is already shown in the Yale Blue section — remove it here to avoid duplication.
+const accentWebColors = {
+  colors: Object.fromEntries(
+    Object.entries(colorsData.colors).map(([group, colorset]) => [
+      group,
+      group === 'blue'
+        ? Object.fromEntries(
+            Object.entries(colorset).filter(([key]) => key !== 'yale'),
+          )
+        : colorset,
+    ]),
+  ),
+};
+
+export const AccentWeb = () =>
+  webColorsTwig({ ...accentWebColors, ...printData, section: 'accent-web' });
+AccentWeb.storyName = 'Accent Colors for Web';
+AccentWeb.tags = ['!dev'];
 
 export const ComponentColorSlots = () => `
   <div style="max-width: 1200px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
