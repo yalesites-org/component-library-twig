@@ -38,6 +38,7 @@
 {# Yale Blue — sits alone at the top of the pyramid #}
 <section class="cl-colors-tier cl-colors-tier--yale-blue">
   <{{ tier_heading_level }} class="cl-colors-tier__heading">{{ print_colors.yale_blue.label }}</{{ tier_heading_level }}>
+  <div {{ bem(colors__base_class) }}>
   <ul {{ bem('list', [], colors__base_class) }}>
     {% for key, color in print_colors.yale_blue.colors %}
       <li {{ bem('item', [], colors__base_class) }}>
@@ -73,11 +74,13 @@
       </li>
     {% endfor %}
   </ul>
+  </div>
 </section>
 
 {# Core Colors — blues + Warm Gray #}
 <section class="cl-colors-tier cl-colors-tier--core">
   <{{ tier_heading_level }} class="cl-colors-tier__heading">{{ print_colors.core.label }}</{{ tier_heading_level }}>
+  <div {{ bem(colors__base_class) }}>
   <ul {{ bem('list', [], colors__base_class) }}>
     {% for key, color in print_colors.core.colors %}
       <li {{ bem('item', [], colors__base_class) }}>
@@ -112,12 +115,14 @@
       </li>
     {% endfor %}
   </ul>
+  </div>
 </section>
 
 {# Color families — Red, Yellow, Green, Orange, Purple, Cyan/Teal, Gray #}
 {% for family_key, family in print_colors.families %}
   <section class="cl-colors-tier cl-colors-tier--{{ family_key }}">
     <{{ tier_heading_level }} class="cl-colors-tier__heading">{{ family.label }}</{{ tier_heading_level }}>
+    <div {{ bem(colors__base_class) }}>
     <ul {{ bem('list', [], colors__base_class) }}>
       {% for key, color in family.colors %}
         <li {{ bem('item', [], colors__base_class) }}>
@@ -152,5 +157,6 @@
         </li>
       {% endfor %}
     </ul>
+    </div>
   </section>
 {% endfor %}
