@@ -22,7 +22,7 @@ import {
  */
 export default {
   tags: ['visreg'],
-  title: 'Organisms/Layout/Visreg',
+  title: 'Templates/Layout/Visreg',
   parameters: {
     layout: 'fullscreen',
     controls: { disable: true },

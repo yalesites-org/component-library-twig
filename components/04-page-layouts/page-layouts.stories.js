@@ -10,7 +10,7 @@ import primaryNavData from '../03-organisms/menu/primary-nav/primary-nav.yml';
  * Storybook Definition.
  */
 export default {
-  title: 'Page Layouts/Page Layouts',
+  title: 'Templates/Page Layouts',
   parameters: {
     layout: 'fullscreen',
   },

@@ -11,7 +11,7 @@ import { toArgTypes, toArgs } from '../../_storybook/component-props';
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Content Spotlight/Content Spotlight Portrait',
+  title: 'Organisms/Content Spotlight/Content Spotlight Portrait',
   tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',

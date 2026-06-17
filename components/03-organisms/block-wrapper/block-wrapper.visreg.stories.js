@@ -13,7 +13,7 @@ import {
  */
 export default {
   tags: ['visreg'],
-  title: 'Organisms/Block Wrapper/Visreg',
+  title: 'Templates/Block Wrapper/Visreg',
   parameters: {
     layout: 'fullscreen',
     controls: { disable: true },

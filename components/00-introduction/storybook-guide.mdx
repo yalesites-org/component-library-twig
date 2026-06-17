@@ -20,17 +20,22 @@ This Storybook serves three audiences:
 
 The sidebar follows an atomic design hierarchy:
 
-| Section           | What lives here                                                                 |
-| ----------------- | ------------------------------------------------------------------------------- |
-| **Introduction**  | Orientation pages — Welcome, Theme System, this guide                           |
-| **Tokens**        | Design tokens: color palettes, typography, spacing, effects, breakpoints        |
-| **Atoms**         | The smallest building blocks: buttons, images, dividers, lists, typography      |
-| **Molecules**     | Components composed of atoms: banners, callouts, tabs, cards, quotes            |
-| **Organisms**     | Full page sections composed of molecules: site header, footer, card collections |
-| **Page Layouts**  | Full layout compositions showing how organisms fit together                     |
-| **Page Examples** | Real-world page examples for reference                                          |
+| Section           | What lives here                                                                                                         |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Introduction**  | Orientation pages — Welcome, Theme System, this guide                                                                   |
+| **Tokens**        | Design tokens: color palettes, typography, spacing, effects, breakpoints                                                |
+| **Atoms**         | The smallest building blocks: buttons, images, dividers, lists, typography, read time, link skip                        |
+| **Molecules**     | Components composed of atoms: callouts, cards, meta types, quotes, modals                                               |
+| **Organisms**     | Full page sections composed of molecules: banners, content spotlights, tabs, header, footer, calendar, card collections |
+| **Templates**     | Structural scaffolding with no visual identity of their own: block wrapper, component wrapper, layout, page layouts     |
+| **Page Examples** | Real-world page examples for reference                                                                                  |
 
-When adding a new component, place it in the tier that matches its complexity. A standalone button is an atom. A component that wraps a button, heading, and image together is a molecule. A component that spans the full page width and includes navigation or multiple molecules is an organism.
+When adding a new component, place it in the tier that matches its complexity and purpose:
+
+- A single UI element with no moving parts is an **atom**.
+- A component made of atoms working together to form a meaningful UI unit is a **molecule**.
+- A self-contained page section composed of molecules — something that spans significant width or has its own structural presence — is an **organism**.
+- A layout shell or Drupal wiring component with no visual identity of its own is a **template**.
 
 ---
 
@@ -207,9 +212,10 @@ Tag the default export with `'visreg'` — not `'!dev'`. This keeps them hidden 
 
 ### 1. Choose the right tier
 
-- **Atom** — a single, indivisible UI element (button, icon, divider, heading)
-- **Molecule** — a component made of atoms working together (callout, card, tabs)
-- **Organism** — a full section or structural component (site header, footer, tile collection)
+- **Atom** — a single, indivisible UI element (button, icon, divider, heading, read time)
+- **Molecule** — a component made of atoms working together (callout, card, meta types, modal)
+- **Organism** — a self-contained page section with significant structural presence (banner, content spotlight, tabs, site header, footer, card collection)
+- **Template** — a layout shell or Drupal wiring component with no visual identity of its own (block wrapper, component wrapper, layout)
 
 ### 2. Create the required files
 
@@ -217,12 +223,14 @@ At minimum, a new component needs:
 
 ```
 components/[tier]/[component-name]/
-  yds-[component-name].twig       ← Twig template
-  _yds-[component-name].scss      ← Styles
-  [component-name].stories.js     ← Story file with interactive controls
-  [component-name].mdx            ← Docs page
-  [component-name].visreg.stories.js  ← Visual regression stories
+  yds-[component-name].twig            ← Twig template
+  _yds-[component-name].scss           ← Styles
+  [component-name].stories.js          ← Story file with interactive controls
+  [component-name].mdx                 ← Docs page
+  [component-name].visreg.stories.js   ← Visual regression stories
 ```
+
+Where `[tier]` is one of: `01-atoms`, `02-molecules`, `03-organisms`, `04-page-layouts` (for templates).
 
 ### 3. Minimum viable MDX page
 
@@ -268,4 +276,4 @@ If the new component supports color theming (a dial or slot), add it to the [The
 | Tag `!dev` when MDX covers the story       | Hides raw story from sidebar                             |
 | Tag `visreg` for regression stories        | Keeps them hidden unless toggled on                      |
 | New option or variation = new visreg entry | Required for release QA coverage                         |
-| All three tiers need a visreg file         | Atoms, molecules, and organisms alike                    |
+| All component tiers need a visreg file     | Atoms, molecules, organisms, and templates alike         |

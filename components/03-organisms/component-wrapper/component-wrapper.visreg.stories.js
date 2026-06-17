@@ -13,7 +13,7 @@ import {
  */
 export default {
   tags: ['visreg'],
-  title: 'Organisms/Component Wrapper/Visreg',
+  title: 'Templates/Component Wrapper/Visreg',
   parameters: {
     layout: 'fullscreen',
     controls: { disable: true },

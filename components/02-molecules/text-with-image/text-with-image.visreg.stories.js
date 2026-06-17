@@ -22,7 +22,7 @@ import {
  */
 export default {
   tags: ['visreg'],
-  title: 'Molecules/Content Spotlight/Content Spotlight Landscape/Visreg',
+  title: 'Organisms/Content Spotlight/Content Spotlight Landscape/Visreg',
   parameters: {
     layout: 'fullscreen',
     controls: { disable: true },

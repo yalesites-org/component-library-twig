@@ -14,7 +14,7 @@ import {
  */
 export default {
   tags: ['visreg'],
-  title: 'Molecules/Banners/Video Banner/Visreg',
+  title: 'Organisms/Banners/Video Banner/Visreg',
   parameters: {
     layout: 'fullscreen',
     controls: { disable: true },

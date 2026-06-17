@@ -6,7 +6,7 @@ import './yds-read-time';
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Read Time',
+  title: 'Atoms/Read Time',
   tags: ['!dev'],
 };
 

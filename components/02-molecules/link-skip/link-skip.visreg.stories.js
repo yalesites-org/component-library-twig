@@ -14,7 +14,7 @@ import {
  */
 export default {
   tags: ['visreg'],
-  title: 'Molecules/Link skip/Visreg',
+  title: 'Atoms/Link Skip/Visreg',
   parameters: { controls: { disable: true } },
 };
 

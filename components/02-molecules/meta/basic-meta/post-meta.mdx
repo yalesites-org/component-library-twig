@@ -1,0 +1,46 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as MetaStories from '../meta.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from '../post-meta-props.yml';
+
+<Meta title="Molecules/Meta/Post Meta" />
+
+# Post Meta
+
+A simple meta component for displaying author information and publication dates. Commonly used in articles, news posts, and blog entries.
+
+## Interactive Preview
+
+<div className="sb-contained-canvas">
+  <Canvas of={MetaStories.PostMeta} />
+  <Controls of={MetaStories.PostMeta} />
+</div>
+
+## When to use it
+
+Use Post Meta when the content is a standard editorial piece — articles, news items, or blog-style entries — where the reader needs to know who wrote it and when it was published.
+
+Don't use Post Meta when the content is an event, profile, or resource. Those types have dedicated meta components with fields specific to their content shape.
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-basic-meta.twig`
+- **Styles**: `_yds-basic-meta.scss`
+
+### Accessibility
+
+- Semantic HTML structure
+- Screen reader friendly date formatting via the Date Time atom
+
+## Related Components
+
+- **Date Time**: Atom used within Post Meta for date display
+- **Event Meta**: Use for events instead of Post Meta
+- **Profile Meta**: Use for person profiles instead of Post Meta

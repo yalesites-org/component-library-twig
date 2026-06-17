@@ -20,7 +20,7 @@ import {
  */
 export default {
   tags: ['visreg'],
-  title: 'Molecules/Banners/Grand Hero/Visreg',
+  title: 'Organisms/Banners/Grand Hero/Visreg',
   parameters: {
     layout: 'fullscreen',
     controls: { disable: true },

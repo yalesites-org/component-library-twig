@@ -5,9 +5,11 @@ import componentProps from './publication-detail-props.yml';
 
 <Meta of={PublicationDetailStories} name="Overview" />
 
-# Publication Detail
+# Resource Detail
 
-The publication-detail molecule is the heavy meta header used at the top of a Resource (publication) full page. It mirrors the `details-wrapper` grid pattern from `event-meta-localist`: a page-title shell with a category overline plus a meta region containing a 3-up grid of metadata cells, an abstract section, and an optional description section.
+The full-page meta header rendered at the top of a Resource node. Both this component and [Resource Meta](?path=/docs/molecules-meta-resource-meta--docs) come from the same Resource content type — this one handles the full node view, while Resource Meta handles teaser cards and list items. These two templates are candidates for future consolidation.
+
+It mirrors the `details-wrapper` grid pattern from `event-meta-localist`: a page-title shell with a category overline plus a meta region containing a 3-up grid of metadata cells, an abstract section, and an optional description section.
 
 The molecule is sourced from a Resource node and renders three structurally different shapes depending on what's set: an ISPS-published policy brief, a journal article republished as a Resource, or a video lecture with an embedded oEmbed player.
 
@@ -71,7 +73,7 @@ A few of the molecule's twig variables aren't covered by the simple controls abo
 
 ## Related Components
 
-- **`publication-meta`** (sibling SCSS) — the lighter-weight meta block used inside `reference-card` slots for Resource teaser cards (card / list-item / condensed view modes).
+- **Resource Meta** — the lighter-weight meta block used inside teaser cards and list items for the same Resource content type. See note above about potential consolidation.
 - **`event-meta-localist`** — visual sibling using the same `details-wrapper` grid pattern.
 - **`text-copy-button`** atom — embedded inside the Citation cell.
 
