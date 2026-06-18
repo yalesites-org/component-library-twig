@@ -65,16 +65,18 @@
     padding-block-start: var(--size-spacing-11);
   }
 
+  // Column count derives from the cards wrapper's own inline width via
+  // container queries (see grid.container-grid), so it tracks the layout
+  // region width: full-width = 3, fifty-fifty = 2, thirds / sidebar = 1. This
+  // also subsumes the former `data-component-width='content'` two-up case (the
+  // 56rem content width falls in the two-column band) and collapses to one
+  // column on narrow viewports.
   [data-collection-type='grid'][data-collection-featured='true'] & {
-    @include grid.primary;
+    @include grid.container-grid;
   }
 
   [data-collection-type='grid'][data-collection-featured='false'] & {
-    @include grid.secondary;
-  }
-
-  [data-collection-type='grid'][data-component-width='content'] & {
-    @include grid.quaternary;
+    @include grid.container-grid(var(--spacing-component-gutter-secondary));
   }
 
   [data-collection-type='profile-directory'][data-collection-featured='false']

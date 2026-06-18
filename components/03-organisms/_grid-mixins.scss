@@ -14,6 +14,41 @@
   }
 }
 
+// Container-query driven grid for card collections.
+// Card collections sit inside layout regions of varying inline width
+// (full-width, fifty-fifty, thirty-thirty-thirty, seventy-thirty sidebar). The
+// desired column count is a function of the *available* inline width, not the
+// viewport: full-width = 3, half = 2, thirds / sidebar = 1. Rather than couple
+// this file to ancestor layout markup (the `data-component-layout` /
+// `data-component-width` attributes are set in the Drupal layout templates,
+// which live outside this package), we make the cards wrapper a query
+// container and size the cards against its own inline width. A narrow viewport
+// naturally narrows the container, so this also collapses to a single column
+// on small screens.
+// Breakpoints (container inline-size, derived from the 84rem site width):
+//   >= 70rem  -> 3 columns  (full-width region)
+//   34-70rem  -> 2 columns  (fifty-fifty region ~41rem, content width 56rem)
+//   < 34rem   -> 1 column   (thirty-thirty-thirty ~27rem, sidebar ~25rem)
+@mixin container-grid($gutter: var(--spacing-component-gutter)) {
+  --grid-gutter: #{$gutter};
+
+  @include base;
+
+  container-type: inline-size;
+
+  @container (min-width: 34rem) {
+    > * {
+      flex: 0 1 calc(50% - calc(var(--grid-gutter) / 2));
+    }
+  }
+
+  @container (min-width: 70rem) {
+    > * {
+      flex: 0 1 calc(33.33% - calc(var(--grid-gutter) * 2 / 3));
+    }
+  }
+}
+
 @mixin primary {
   --grid-gutter: var(--spacing-component-gutter);
 
@@ -59,18 +94,6 @@
   > * {
     // Media-only grids are always two-up
     flex: 0 1 calc(50% - calc(var(--grid-gutter) / 2));
-  }
-}
-
-@mixin quaternary {
-  --grid-gutter: var(--spacing-component-gutter-secondary);
-
-  @include base;
-
-  > * {
-    @media (min-width: tokens.$break-m) {
-      flex: 0 1 calc(50% - calc(var(--grid-gutter) / 2));
-    }
   }
 }
 
