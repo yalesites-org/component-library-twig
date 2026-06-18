@@ -331,7 +331,12 @@ body[data-font-pairing='mallory'] {
 // (e.g. listing card titles on a navy section). Match the shadow to the
 // section background, mirroring the footer override above. The two attribute
 // selectors give higher specificity than the per-style defaults so this wins.
+// Use the section's *rendered* background `--color-layout-theme` (set per
+// theme in `_yds-layout.scss`): for themes two and three this differs from
+// `--color-background`, so a shadow set to `--color-background` still leaves a
+// halo. Fall back to `--color-background` when the link is themed outside a
+// `.yds-layout`.
 [data-component-theme] .link[data-link-style='underline'],
 [data-component-theme] .link[data-link-style='underline-with-icon'] {
-  --color-text-shadow: var(--color-background);
+  --color-text-shadow: var(--color-layout-theme, var(--color-background));
 }

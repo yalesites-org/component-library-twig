@@ -32,8 +32,15 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   // navy), so the default white heading-link underline-skip shadow shows as a
   // halo. Match it to the section background, mirroring the single-collection
   // override below.
+  // The section's *rendered* background is `--color-layout-theme` (set per
+  // theme in `_yds-layout.scss`), which is NOT the same token as
+  // `--color-background`: for themes two and three the layout paints
+  // slot-four / slot-five while `--color-background` resolves to a different
+  // value, so a shadow set to `--color-background` still mismatches and the
+  // halo persists. Prefer the actual layout background, falling back to
+  // `--color-background` when the card is themed outside a `.yds-layout`.
   [data-component-theme] & {
-    --color-text-shadow: var(--color-background);
+    --color-text-shadow: var(--color-layout-theme, var(--color-background));
   }
 
   display: flex;
@@ -499,6 +506,16 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   [data-collection-type='single'] & {
     color: var(--color-card-single-text);
+  }
+
+  // On a component-themed section background `--color-gray-500` fails WCAG AA
+  // (e.g. 1.59:1 on the slate theme). Use the section's on-theme foreground
+  // (`--color-layout-content`, set per theme in `_yds-layout.scss`), which the
+  // section already uses for body text and clears AA on every theme. Fall back
+  // to the default gray for any themed context outside a `.yds-layout` (where
+  // the section background is not painted, so the gray still has contrast).
+  [data-component-theme] & {
+    color: var(--color-layout-content, var(--color-gray-500));
   }
 }
 
