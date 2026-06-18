@@ -28,6 +28,14 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   --color-text-shadow: var(--color-basic-white);
 
+  // In a component-themed section the background is the theme color (e.g.
+  // navy), so the default white heading-link underline-skip shadow shows as a
+  // halo. Match it to the section background, mirroring the single-collection
+  // override below.
+  [data-component-theme] & {
+    --color-text-shadow: var(--color-background);
+  }
+
   display: flex;
   flex-flow: column-reverse;
   gap: var(--size-spacing-4);
