@@ -25,6 +25,10 @@ $break-image-banner: tokens.$break-m;
     align-items: center;
   }
 
+  &[data-image-banner-size='mini'] {
+    min-height: 14rem;
+  }
+
   &[data-image-banner-size='short'] {
     min-height: 28rem;
   }
@@ -182,6 +186,10 @@ $break-image-banner: tokens.$break-m;
 
     [data-image-banner-size='short'] & {
       min-height: 28rem;
+    }
+
+    [data-image-banner-size='mini'] & {
+      min-height: 14rem;
     }
   }
 
