@@ -15,10 +15,10 @@ Open `http://localhost:6006` in your browser.
 ```
 Introduction/     → Orientation and guides
 Tokens/           → Design tokens (colors, typography, spacing, effects, breakpoints)
-Atoms/            → Smallest building blocks (buttons, dividers, images)
-Molecules/        → Composed components (banners, callouts, cards, tabs)
-Organisms/        → Full page sections (header, footer, collections)
-Page Layouts/     → Layout compositions
+Atoms/            → Smallest building blocks (buttons, dividers, images, text, read time)
+Molecules/        → Composed components (callouts, cards, meta types, modals)
+Organisms/        → Full page sections (banners, content spotlight, tabs, header, footer, collections)
+Templates/        → Structural scaffolding with no visual identity (block wrapper, component wrapper, layout, page layouts)
 Page Examples/    → Real-world page references
 ```
 
@@ -70,7 +70,7 @@ This is required so release QA can catch visual regressions. If it's not in a vi
 
 ## Adding a New Component
 
-1. **Choose the right tier** — atom (single element), molecule (composed of atoms), organism (full section)
+1. **Choose the right tier** — atom (single element), molecule (composed of atoms), organism (full section), template (layout shell with no visual identity)
 2. **Create these files:**
    - `yds-[component-name].twig` — Twig template
    - `_yds-[component-name].scss` — Styles
