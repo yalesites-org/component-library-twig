@@ -144,6 +144,56 @@ $cl-colors-copy-success: #16a34a;
   }
 }
 
+// Intro placeholder shown until PM adds contextual copy.
+.cl-colors__intro-placeholder {
+  color: var(--color-gray-500);
+  font-style: italic;
+}
+
+// Pyramid tier wrapper for the print colors page.
+.cl-colors-tier {
+  margin-bottom: var(--size-spacing-8);
+
+  &--yale-blue {
+    // Yale Blue tier has extra visual weight at the top of the pyramid.
+    padding-bottom: var(--size-spacing-6);
+    border-bottom: 3px solid var(--color-gray-200);
+    margin-bottom: var(--size-spacing-9);
+  }
+}
+
+.cl-colors-tier__heading {
+  margin-bottom: var(--size-spacing-5);
+}
+
+// Combined web+print single-page layout.
+.cl-colors-combined {
+  &__intro {
+    margin-bottom: var(--size-spacing-8);
+  }
+
+  &__section {
+    padding-top: var(--size-spacing-8);
+    border-top: 3px solid var(--color-gray-300);
+    margin-bottom: var(--size-spacing-10);
+
+    &:first-of-type {
+      border-top: none;
+      padding-top: 0;
+    }
+  }
+
+  &__section-heading {
+    margin-bottom: var(--size-spacing-4);
+  }
+
+  &__section-intro {
+    margin-bottom: var(--size-spacing-6);
+    color: var(--color-gray-500);
+    font-style: italic;
+  }
+}
+
 [data-global-theme] {
   .global-theme-title {
     position: sticky;
