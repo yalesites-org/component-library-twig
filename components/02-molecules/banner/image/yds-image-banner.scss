@@ -194,6 +194,14 @@ $break-image-banner: tokens.$break-m;
   }
 
   figcaption {
+    // The caption sits on a fixed white bar (background-color below). Themed
+    // banners remap --color-text to white (slot-eight) in component themes
+    // one/three/five, which rendered the caption white-on-white. Reset it to
+    // slot-seven -- the palette's "text on light background" slot, dark in
+    // every theme -- so the shared .caption color rule stays WCAG-readable.
+    // For a flat dark caption later, swap this line to var(--color-basic-black).
+    --color-text: var(--color-slot-seven);
+
     position: absolute;
     bottom: 0;
     left: 0;
