@@ -20,15 +20,72 @@ This Storybook serves three audiences:
 
 The sidebar follows an atomic design hierarchy:
 
-| Section           | What lives here                                                                                                         |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| **Introduction**  | Orientation pages — Welcome, Theme System, this guide                                                                   |
-| **Tokens**        | Design tokens: color palettes, typography, spacing, effects, breakpoints                                                |
-| **Atoms**         | The smallest building blocks: buttons, images, dividers, lists, typography, read time, link skip                        |
-| **Molecules**     | Components composed of atoms: callouts, cards, meta types, quotes, modals                                               |
-| **Organisms**     | Full page sections composed of molecules: banners, content spotlights, tabs, header, footer, calendar, card collections |
-| **Templates**     | Structural scaffolding with no visual identity of their own: block wrapper, component wrapper, layout, page layouts     |
-| **Page Examples** | Real-world page examples for reference                                                                                  |
+<table>
+  <thead>
+    <tr>
+      <th>Section</th>
+      <th>What lives here</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Introduction</strong>
+      </td>
+      <td>Orientation pages — Welcome, Theme System, this guide</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Tokens</strong>
+      </td>
+      <td>
+        Design tokens: color palettes, typography, spacing, effects, breakpoints
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Atoms</strong>
+      </td>
+      <td>
+        The smallest building blocks: buttons, images, dividers, lists,
+        typography, read time, link skip
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Molecules</strong>
+      </td>
+      <td>
+        Components composed of atoms: callouts, cards, meta types, quotes,
+        modals
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Organisms</strong>
+      </td>
+      <td>
+        Full page sections composed of molecules: banners, content spotlights,
+        tabs, header, footer, calendar, card collections
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Templates</strong>
+      </td>
+      <td>
+        Structural scaffolding with no visual identity of their own: block
+        wrapper, component wrapper, layout, page layouts
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Page Examples</strong>
+      </td>
+      <td>Real-world page examples for reference</td>
+    </tr>
+  </tbody>
+</table>
 
 When adding a new component, place it in the tier that matches its complexity and purpose:
 
@@ -114,10 +171,38 @@ Use the default wide canvas for: banners, full-width layouts, organisms, any com
 
 Tags control how stories appear in the sidebar and which tooling picks them up.
 
-| Tag        | What it does                                                                                          | When to use it                                                        |
-| ---------- | ----------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| `'!dev'`   | Hides the story from the sidebar                                                                      | Apply to any story whose content is fully covered by an MDX docs page |
-| `'visreg'` | Marks the story for visual regression testing; hidden by default, shown via the Visreg toolbar toggle | Apply to all `*.visreg.stories.js` exports                            |
+<table>
+  <thead>
+    <tr>
+      <th>Tag</th>
+      <th>What it does</th>
+      <th>When to use it</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>'!dev'</code>
+      </td>
+      <td>Hides the story from the sidebar</td>
+      <td>
+        Apply to any story whose content is fully covered by an MDX docs page
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>'visreg'</code>
+      </td>
+      <td>
+        Marks the story for visual regression testing; hidden by default, shown
+        via the Visreg toolbar toggle
+      </td>
+      <td>
+        Apply to all <code>*.visreg.stories.js</code> exports
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 Apply tags after the export:
 
@@ -269,11 +354,43 @@ If the new component supports color theming (a dial or slot), add it to the [The
 
 ## Quick Reference
 
-| Rule                                       | Detail                                                   |
-| ------------------------------------------ | -------------------------------------------------------- |
-| Canvas = component previews only           | Move all text, headings, and tables to MDX               |
-| Wide canvas by default                     | Use `sb-contained-canvas` for small/contained components |
-| Tag `!dev` when MDX covers the story       | Hides raw story from sidebar                             |
-| Tag `visreg` for regression stories        | Keeps them hidden unless toggled on                      |
-| New option or variation = new visreg entry | Required for release QA coverage                         |
-| All component tiers need a visreg file     | Atoms, molecules, organisms, and templates alike         |
+<table>
+  <thead>
+    <tr>
+      <th>Rule</th>
+      <th>Detail</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Canvas = component previews only</td>
+      <td>Move all text, headings, and tables to MDX</td>
+    </tr>
+    <tr>
+      <td>Wide canvas by default</td>
+      <td>
+        Use <code>sb-contained-canvas</code> for small/contained components
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Tag <code>!dev</code> when MDX covers the story
+      </td>
+      <td>Hides raw story from sidebar</td>
+    </tr>
+    <tr>
+      <td>
+        Tag <code>visreg</code> for regression stories
+      </td>
+      <td>Keeps them hidden unless toggled on</td>
+    </tr>
+    <tr>
+      <td>New option or variation = new visreg entry</td>
+      <td>Required for release QA coverage</td>
+    </tr>
+    <tr>
+      <td>All component tiers need a visreg file</td>
+      <td>Atoms, molecules, organisms, and templates alike</td>
+    </tr>
+  </tbody>
+</table>
