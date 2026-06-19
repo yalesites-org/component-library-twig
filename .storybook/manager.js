@@ -49,7 +49,7 @@ addons.register('visreg-toggle', () => {
             gap: '5px',
           },
         },
-        React.createElement('span', null, isVisible ? '👁 Visreg: On' : '👁 Visreg: Off'),
+        React.createElement('span', null, isVisible ? 'Visreg: On' : 'Visreg: Off'),
       );
     },
   });
