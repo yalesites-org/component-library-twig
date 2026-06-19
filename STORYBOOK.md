@@ -15,7 +15,7 @@ Open `http://localhost:6006` in your browser.
 ```
 Introduction/     → Orientation and guides
 Tokens/           → Design tokens (colors, typography, spacing, effects, breakpoints)
-Atoms/            → Smallest building blocks (buttons, dividers, images, text, read time)
+Atoms/            → Smallest building blocks (buttons, dividers, images, link skip, text, read time)
 Molecules/        → Composed components (callouts, cards, meta types, modals)
 Organisms/        → Full page sections (banners, content spotlight, tabs, header, footer, collections)
 Templates/        → Structural scaffolding with no visual identity (block wrapper, component wrapper, layout, page layouts)

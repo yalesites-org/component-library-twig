@@ -56,23 +56,18 @@ export const Interactive = ({ sectionTheme, aspectRatio }) => `
 export const Images = () => `
   <div class="cl-image-examples">
     <div class="cl-image-example">
-    <h2>16:9</h2>
     ${imageTwig(imageData.responsive_images['16x9'])}
     </div>
     <div class="cl-image-example">
-    <h2>3:2</h2>
     ${imageTwig(imageData.responsive_images['3x2'])}
     </div>
     <div class="cl-image-example">
-    <h2>1:1</h2>
     ${imageTwig(imageData.responsive_images['1x1'])}
     </div>
     <div class="cl-image-example">
-    <h2>1:1.6</h2>
     ${imageTwig(imageData.responsive_images['1x1.6'])}
     </div>
     <div class="cl-image-example">
-      <h2>4:3</h2>
       ${imageTwig(imageData.responsive_images['4x3'])}
     </div>
   </div>

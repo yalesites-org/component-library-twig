@@ -45,13 +45,14 @@ $cl-colors-copy-success: #16a34a;
     line-height: 1.4;
 
     &--web {
-      background: rgb(0 0 0 / 40%);
+      background-color: #1f1f1f;
       color: #fff;
     }
 
     &--print {
-      background: rgb(255 255 255 / 70%);
-      color: #333;
+      background-color: #fff;
+      color: #1f1f1f;
+      border: 1px solid rgb(0 0 0 / 20%);
     }
   }
 
