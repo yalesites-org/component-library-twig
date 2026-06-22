@@ -159,28 +159,47 @@
 }
 
 .ys-filter-form--scaffold {
-  // Default to nowrap, only wrap when there are 5+ visible form items
-  flex-wrap: nowrap;
+  // Size the filter row to the form's OWN width — the section column it sits
+  // in — rather than the viewport, so it wraps gracefully inside constrained
+  // sections (50/50, 70/30) instead of overflowing. The form is its own query
+  // container and its children (the filters) respond to it. (#1299 QA)
+  container-type: inline-size;
 
-  // If there are more than 4 visible form items it should wrap.
-  &:has(> .form-item:nth-child(5)) {
-    flex-wrap: wrap;
+  // Narrow container: filters stack one per row (the base
+  // `.form-item { width: 100% }` provides the width; wrapping lets them stack
+  // instead of overflowing on a single nowrap row).
+  flex-wrap: wrap;
 
-    .form-item {
-      flex-basis: fit-content;
-      min-width: 29.5%;
+  // Wide-enough container: lay the filters out inline, preserving the previous
+  // multi-column behavior on full-width sections.
+  @container (min-width: 34rem) {
+    .chosen-container {
+      min-width: 12rem;
     }
 
-    // Search field should take the full width.
-    .form-item.form-item-search {
-      min-width: 100%;
-    }
-  }
-
-  &:has(> .form-item:nth-child(6)) {
     .form-item {
-      flex-basis: fit-content;
-      min-width: 21.8%;
+      width: auto;
+      max-width: 50%;
+    }
+
+    // With more than four visible filters, give each a sensible minimum width
+    // so they wrap onto a second row; the search field always takes the row.
+    &:has(> .form-item:nth-child(5)) {
+      .form-item {
+        flex-basis: fit-content;
+        min-width: 29.5%;
+      }
+
+      .form-item.form-item-search {
+        min-width: 100%;
+      }
+    }
+
+    &:has(> .form-item:nth-child(6)) {
+      .form-item {
+        flex-basis: fit-content;
+        min-width: 21.8%;
+      }
     }
   }
 
@@ -316,74 +335,6 @@
         .form-item.form-item-search {
           min-width: 100%;
         }
-      }
-    }
-  }
-
-  @media (min-width: calc(tokens.$break-2xl + tokens.$size-spacing-10)) {
-    flex-wrap: nowrap;
-
-    .chosen-container {
-      min-width: 15rem; // Considering the maximum of 3 filters width.
-    }
-
-    .form-item {
-      max-width: 50%;
-    }
-
-    // If there are more than 4 visible form items it should wrap.
-    &:has(> .form-item:nth-child(5)) {
-      flex-wrap: wrap;
-
-      .form-item {
-        flex-basis: fit-content;
-        min-width: 29.5%;
-      }
-
-      // Search field should take the full width.
-      .form-item.form-item-search {
-        min-width: 100%;
-      }
-    }
-
-    &:has(> .form-item:nth-child(6)) {
-      .form-item {
-        flex-basis: fit-content;
-        min-width: 21.8%;
-      }
-    }
-  }
-
-  @media (min-width: tokens.$break-l) and (max-width: calc(tokens.$break-2xl + tokens.$size-spacing-10)) {
-    flex-wrap: nowrap;
-
-    .chosen-container {
-      min-width: 15rem; // Considering the maximum of 3 filters width.
-    }
-
-    .form-item {
-      max-width: 50%;
-    }
-
-    // If there are more than 4 visible form items it should wrap.
-    &:has(> .form-item:nth-child(5)) {
-      flex-wrap: wrap;
-
-      .form-item {
-        flex-basis: fit-content;
-        min-width: 29.5%;
-      }
-
-      // Search field should take the full width.
-      .form-item.form-item-search {
-        min-width: 100%;
-      }
-    }
-
-    &:has(> .form-item:nth-child(6)) {
-      .form-item {
-        flex-basis: fit-content;
-        min-width: 32.5%;
       }
     }
   }
