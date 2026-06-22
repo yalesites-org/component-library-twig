@@ -13,6 +13,7 @@ import {
 } from '../../_storybook/playground-utils';
 
 export default {
+  tags: ['visreg'],
   title: 'Molecules/Facts and Figures/Visreg',
   parameters: { controls: { disable: true } },
 };

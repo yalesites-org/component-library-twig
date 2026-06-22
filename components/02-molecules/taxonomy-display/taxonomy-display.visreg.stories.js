@@ -17,6 +17,7 @@ import {
  * Storybook Definition.
  */
 export default {
+  tags: ['visreg'],
   title: 'Molecules/Taxonomy Display/Visreg',
   parameters: {
     layout: 'fullscreen',

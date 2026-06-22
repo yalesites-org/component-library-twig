@@ -18,6 +18,7 @@ import {
  * Storybook Definition.
  */
 export default {
+  tags: ['visreg'],
   title: 'Organisms/Menu/Content Collection/Visreg',
   parameters: {
     layout: 'fullscreen',

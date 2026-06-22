@@ -18,7 +18,10 @@ const textTransforms = { text_transforms: tokens.font.textTransform };
 /**
  * Storybook Definition.
  */
-export default { title: 'Tokens/Typography' };
+export default {
+  tags: ['!dev'],
+  title: 'Tokens/Typography',
+};
 
 export const TypeFaces = () => typeFaces(typeFacesData);
 

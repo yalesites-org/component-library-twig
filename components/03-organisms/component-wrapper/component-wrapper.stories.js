@@ -6,7 +6,7 @@ import { toArgTypes, toArgs } from '../../_storybook/component-props';
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Component Wrapper',
+  title: 'Templates/Component Wrapper',
   tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
