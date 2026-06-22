@@ -17,7 +17,8 @@ import {
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Banners/Image Banner/Visreg',
+  tags: ['visreg'],
+  title: 'Organisms/Banners/Image Banner/Visreg',
   parameters: {
     layout: 'fullscreen',
     controls: { disable: true },

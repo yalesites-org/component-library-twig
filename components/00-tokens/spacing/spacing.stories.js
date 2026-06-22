@@ -8,6 +8,7 @@ const spacingData = {
 };
 
 export default {
+  tags: ['!dev'],
   title: 'Tokens/Spacing',
 };
 

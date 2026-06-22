@@ -17,7 +17,7 @@ const renderBanner = ({ bgColor, size, withVideo, imageCaption }) =>
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Banners/Image Banner',
+  title: 'Organisms/Banners/Image Banner',
   tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',

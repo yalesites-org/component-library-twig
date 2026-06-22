@@ -6,7 +6,6 @@ import '../../01-atoms/controls/text-copy-button/yds-text-copy-button';
 
 import colorsTwig from './colors.twig';
 import webColorsTwig from './web-colors.twig';
-import printColorsTwig from './print-colors.twig';
 import colorComponentThemeTwig from './color-component-theme-pairings.twig';
 import colorGlobalThemeTwig from './color-global-themes.twig';
 import colorGlobalThemePairingTwig from './color-global-theme-pairings.twig';
@@ -212,49 +211,91 @@ export default {
 };
 
 export const Colors = () => colorsTwig(colorsData);
+Colors.tags = ['!dev'];
 
 // ---------------------------------------------------------------------------
 // Web Colors — HEX values only (for digital use).
 // ---------------------------------------------------------------------------
-export const WebColors = () => webColorsTwig(colorsData);
-WebColors.storyName = 'Web Colors';
+export const WebColors = () =>
+  webColorsTwig({ ...colorsData, print_colors: printColorsMeta });
+WebColors.storyName = 'Identity Colors';
+WebColors.tags = ['!dev'];
 
 // ---------------------------------------------------------------------------
-// Print Colors — PMS + CMYK values (for print vendors). Pyramid hierarchy.
-// HEX drives swatches only and is never shown to users.
+// Section stories — used by web-colors.mdx Canvas blocks.
 // ---------------------------------------------------------------------------
 const printData = { print_colors: printColorsMeta };
 
-export const PrintColors = () => printColorsTwig(printData);
-PrintColors.storyName = 'Print Colors';
+// Restructure web accent colors to match PDF groupings (Cyan, Green, Yellow, Red/Orange, Gray).
+// Each color carries its own css_var so the twig template can reference the correct token
+// even when the group key no longer matches the token group name.
+function withVar(tokenGroup, entries) {
+  return Object.fromEntries(
+    entries.map(([key, color]) => [
+      key,
+      { ...color, css_var: `--color-${tokenGroup}-${key}` },
+    ]),
+  );
+}
 
-// ---------------------------------------------------------------------------
-// Web + Print Colors — single page with both sections for comparison.
-// Composed in JS so each template is included without Twig cross-file paths.
-// ---------------------------------------------------------------------------
-export const WebAndPrintColors = () => `
-  <div class="cl-colors-combined">
-    <div class="cl-colors-combined__intro text-field" data-component-alignment="left" data-component-width="max">
-      <div class="text-field__inner">
-        <div class="text">
-          <h1>Yale Brand Colors</h1>
-          <p class="cl-colors__intro-placeholder"><em>[Contextual copy — to be added by PM.]</em></p>
-        </div>
-      </div>
-    </div>
-    <section class="cl-colors-combined__section">
-      <h2 class="cl-colors-combined__section-heading">Web Colors</h2>
-      <p class="cl-colors-combined__section-intro"><em>[Contextual copy — to be added by PM.]</em></p>
-      ${webColorsTwig({ ...colorsData, is_subsection: true })}
-    </section>
-    <section class="cl-colors-combined__section">
-      <h2 class="cl-colors-combined__section-heading">Print Colors</h2>
-      <p class="cl-colors-combined__section-intro"><em>[Contextual copy — to be added by PM.]</em></p>
-      ${printColorsTwig({ ...printData, is_subsection: true })}
-    </section>
-  </div>
-`;
-WebAndPrintColors.storyName = 'Web + Print Colors';
+const c = colorsData.colors;
+
+// Yale Blue web hex — passed separately so Yale Blue section can show both web + print values.
+const yaleBlueWeb = c.blue?.yale
+  ? { hex: c.blue.yale.hex, css_var: '--color-blue-yale' }
+  : null;
+
+export const YaleBlue = () =>
+  webColorsTwig({
+    ...printData,
+    yale_blue_web: yaleBlueWeb,
+    section: 'yale-blue',
+  });
+YaleBlue.storyName = 'Yale Blue';
+YaleBlue.tags = ['!dev'];
+
+export const CoreColors = () =>
+  webColorsTwig({ ...printData, section: 'core' });
+CoreColors.storyName = 'Core Colors';
+CoreColors.tags = ['!dev'];
+
+export const AccentPrint = () =>
+  webColorsTwig({ ...printData, section: 'accent-print' });
+AccentPrint.storyName = 'Accent Colors for Print';
+AccentPrint.tags = ['!dev'];
+
+const accentWebColors = {
+  yale_blue_web: yaleBlueWeb,
+  colors: {
+    // Cyan = our blue tokens (minus yale, which has its own section)
+    Cyan: withVar(
+      'blue',
+      Object.entries(c.blue || {}).filter(([key]) => key !== 'yale'),
+    ),
+    // Green = our green tokens
+    Green: withVar('green', Object.entries(c.green || {})),
+    // Yellow = yellow tokens + orange.peach (PDF groups peach under Yellow)
+    Yellow: {
+      ...withVar('yellow', Object.entries(c.yellow || {})),
+      ...(c.orange?.peach
+        ? { peach: { ...c.orange.peach, css_var: '--color-orange-peach' } }
+        : {}),
+    },
+    // Red/Orange = orange.coral is the closest token we have
+    'Red/Orange': {
+      ...(c.orange?.coral
+        ? { coral: { ...c.orange.coral, css_var: '--color-orange-coral' } }
+        : {}),
+    },
+    // Gray = our gray tokens
+    Gray: withVar('gray', Object.entries(c.gray || {})),
+  },
+};
+
+export const AccentWeb = () =>
+  webColorsTwig({ ...accentWebColors, ...printData, section: 'accent-web' });
+AccentWeb.storyName = 'Accent Colors for Web';
+AccentWeb.tags = ['!dev'];
 
 export const ComponentColorSlots = () => `
   <div style="max-width: 1200px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
@@ -352,9 +393,94 @@ export const ComponentColorSlots = () => `
     </div>
   </div>
 `;
+ComponentColorSlots.tags = ['!dev'];
 
-export const ColorGlobalThemes = () =>
-  colorGlobalThemeTwig(colorGlobalThemeData);
+export const ColorGlobalThemes = () => {
+  const themes = tokens['global-themes'];
+
+  const themeSlots = Object.keys(Object.values(themes)[0].colors);
+  const brandSlots = ['slot-six', 'slot-seven', 'slot-eight'];
+  const themeColorSlots = themeSlots.filter((s) => !brandSlots.includes(s));
+
+  const renderSwatch = (slot, hsl) => {
+    const hex = hslToHex(hsl);
+    const num = slot.replace('slot-', '');
+    return `
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+        <div style="
+          width:64px;height:64px;border-radius:8px;
+          background:${hsl};
+          border:1px solid rgba(0,0,0,0.1);
+        "></div>
+        <span style="font-size:11px;font-weight:600;color:#444;">Slot ${num}</span>
+        <span style="font-size:11px;color:#666;font-family:monospace;">${hex}</span>
+      </div>`;
+  };
+
+  const renderGroup = (
+    label,
+    slots,
+    colors,
+    bgColor,
+    borderColor,
+    shrink = false,
+  ) => {
+    const swatches = slots
+      .map((slot) => renderSwatch(slot, colors[slot]))
+      .join('');
+    return `
+      <div style="${shrink ? 'flex:0 0 auto;' : 'flex:1;min-width:0;'}">
+        <div style="
+          font-size:11px;font-weight:700;text-transform:uppercase;
+          letter-spacing:0.06em;color:#888;margin-bottom:8px;
+        ">${label}</div>
+        <div style="
+          background:${bgColor};border:1px solid ${borderColor};
+          border-radius:10px;padding:14px;
+          display:flex;flex-wrap:wrap;gap:12px;
+        ">
+          ${swatches}
+        </div>
+      </div>`;
+  };
+
+  const themeCards = Object.entries(themes)
+    .map(([key, theme]) => {
+      const themeGroup = renderGroup(
+        'Theme Colors — Slots 1–5',
+        themeColorSlots,
+        theme.colors,
+        '#f9fafb',
+        '#e5e7eb',
+      );
+      const brandGroup = renderGroup(
+        'Yale Brand Colors — Slots 6–8',
+        brandSlots,
+        theme.colors,
+        '#f0f4ff',
+        '#c7d4f0',
+        true,
+      );
+
+      return `
+      <div style="margin-bottom:1.5rem;padding:1.5rem;background:#fff;border:1px solid #e5e7eb;border-radius:12px;">
+        <h2 style="margin:0 0 1.25rem;font-size:1.35rem;font-weight:700;color:#111;">
+          ${key.charAt(0).toUpperCase() + key.slice(1)}: ${theme.label}
+        </h2>
+        <div style="display:flex;gap:1.5rem;flex-wrap:wrap;">
+          ${themeGroup}
+          ${brandGroup}
+        </div>
+      </div>`;
+    })
+    .join('');
+
+  return `
+    <div style="padding:2rem;max-width:960px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+      ${themeCards}
+    </div>`;
+};
+ColorGlobalThemes.tags = ['!dev'];
 
 export const ColorBasicThemes = () => `
   <h2>These pairings are selected to support accessibility standards.</h2>
@@ -362,6 +488,7 @@ export const ColorBasicThemes = () => `
 
   ${colorBasicThemesTwig(colorBasicThemeData)}
 `;
+ColorBasicThemes.tags = ['!dev'];
 
 export const ComponentThemeColorPairings = ({
   heading,
@@ -526,6 +653,7 @@ ComponentThemeColorPairings.args = {
   siteFooterAccent: 'one',
   siteFooterVariation: 'basic',
 };
+ComponentThemeColorPairings.tags = ['!dev'];
 
 export const GlobalThemeColorPairings = ({
   heading,
@@ -679,6 +807,7 @@ GlobalThemeColorPairings.argTypes = {
     type: 'select',
   },
 };
+GlobalThemeColorPairings.tags = ['!dev'];
 
 GlobalThemeColorPairings.args = {
   globalTheme: 'one',

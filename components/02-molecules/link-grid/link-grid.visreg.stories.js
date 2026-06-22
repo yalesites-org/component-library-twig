@@ -18,6 +18,7 @@ import {
  * Storybook Definition.
  */
 export default {
+  tags: ['visreg'],
   title: 'Molecules/Link grid/Visreg',
   parameters: { controls: { disable: true } },
 };

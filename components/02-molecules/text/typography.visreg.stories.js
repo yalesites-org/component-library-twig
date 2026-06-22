@@ -15,7 +15,8 @@ import {
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Text/Visreg',
+  tags: ['visreg'],
+  title: 'Atoms/Text/Visreg',
   parameters: { controls: { disable: true } },
 };
 

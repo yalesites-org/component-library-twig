@@ -3,7 +3,7 @@ import * as WrappedImageStories from './wrapped-image.stories';
 import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
 import componentProps from './wrapped-image-props.yml';
 
-<Meta of={WrappedImageStories} name="Docs" />
+<Meta of={WrappedImageStories} name="Overview" />
 
 # Wrapped Image
 
@@ -13,7 +13,9 @@ The wrapped image component displays an image inline with flowing text content, 
 
 Use the controls panel below to experiment with the wrapped image's properties in real-time.
 
-<Canvas of={WrappedImageStories.WrappedImage} />
+<div className="sb-contained-canvas">
+  <Canvas of={WrappedImageStories.WrappedImage} />
+</div>
 <Controls of={WrappedImageStories.WrappedImage} />
 
 ## Properties

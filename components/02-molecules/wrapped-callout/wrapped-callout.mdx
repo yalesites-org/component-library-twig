@@ -3,7 +3,7 @@ import * as WrappedCalloutStories from './wrapped-callout.stories';
 import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
 import componentProps from './wrapped-callout-props.yml';
 
-<Meta of={WrappedCalloutStories} name="Docs" />
+<Meta of={WrappedCalloutStories} name="Overview" />
 
 # Wrapped Callout
 
@@ -13,7 +13,9 @@ The wrapped callout component displays highlighted content alongside flowing tex
 
 Use the controls panel below to experiment with the wrapped callout's properties in real-time.
 
-<Canvas of={WrappedCalloutStories.wrappedCallout} />
+<div className="sb-contained-canvas">
+  <Canvas of={WrappedCalloutStories.wrappedCallout} />
+</div>
 <Controls of={WrappedCalloutStories.wrappedCallout} />
 
 ## Properties

@@ -39,7 +39,7 @@ const renderBanner = ({
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Banners/Action Banner',
+  title: 'Organisms/Banners/Action Banner',
   tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
