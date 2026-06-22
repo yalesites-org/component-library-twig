@@ -50,7 +50,7 @@ export const Visreg = () => {
           image_banner__video: 'false',
           image_banner__caption: imageCaption,
         }),
-      ['tall', 'short'],
+      ['tall', 'short', 'mini'],
       'Size Variations',
       '',
       'Size',
