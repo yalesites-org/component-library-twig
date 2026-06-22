@@ -43,6 +43,21 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     --color-text-shadow: var(--color-layout-theme, var(--color-background));
   }
 
+  // The heading-link hover color is set to `--color-slot-two` by
+  // `clickable-component-heading-link`. On a component-themed section that slot
+  // can fail contrast against the section background, and when the background
+  // uses the same slot the hovered title disappears entirely. Pin the hover to
+  // the section's on-theme foreground (`--color-layout-content`, AA on every
+  // theme — the same token the overline uses), so the title stays legible on
+  // every background; the animated underline-slide remains the hover
+  // affordance. The mixin declares `--color-link-hover` on the heading-link
+  // element itself, so this override must also target that element (equal
+  // specificity, later source order) rather than the card. Scoped to
+  // reference-card in themed sections so default link hover is unchanged.
+  [data-component-theme] & [class*='__heading-link'] {
+    --color-link-hover: var(--color-layout-content, var(--color-slot-two));
+  }
+
   display: flex;
   flex-flow: column-reverse;
   gap: var(--size-spacing-4);
