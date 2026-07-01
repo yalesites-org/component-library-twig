@@ -147,12 +147,29 @@
 }
 
 /**
- * Full-bleed canvas wrapper
- * Breaks out of the docs panel max-width so full-width components like banners
- * render at the full preview frame width, mimicking live Drupal site behavior.
- * Apply to <Canvas> elements in MDX using <div className="sb-full-bleed-canvas">.
+ * Full-bleed canvas — applied globally to all Canvas blocks in docs pages.
+ * Targets .sbdocs-preview (Storybook's canvas wrapper) to override its
+ * 1000px max-width and hidden overflow, so components render closer to their
+ * actual site width.
  */
+.sbdocs-preview {
+  width: 90vw !important;
+  overflow: visible !important;
+  margin-left: calc(50% - 45vw - 12px) !important;
+}
+
 .sb-full-bleed-canvas {
-  width: 100vw;
-  margin-left: calc(50% - 50vw - 12px) !important;
+  width: 90vw;
+  margin-left: calc(50% - 45vw - 12px) !important;
+}
+
+/**
+ * Contained canvas — use when the wide default preview is too much.
+ * Wraps a <Canvas> in MDX with <div className="sb-contained-canvas"> to
+ * constrain it to the docs text column width.
+ */
+.sb-contained-canvas .sbdocs-preview {
+  width: 100% !important;
+  overflow: hidden !important;
+  margin-left: 0 !important;
 }

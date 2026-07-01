@@ -1,0 +1,22 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as ColorsStories from './colors.stories';
+
+<Meta title="Tokens/Colors/Theme Sandbox" />
+
+# Theme Sandbox
+
+Two interactive full-page layouts for exploring how the color system behaves in practice. Use these to validate component dial combinations before applying them to a real site.
+
+## Component Theme Pairings
+
+Mix and match individual component dials — header, footer, banner, callout, tabs, and more — to see how they look together on a single global theme. Use the toolbar to switch the global theme lever while keeping your dial selections.
+
+<Canvas of={ColorsStories.ComponentThemeColorPairings} />
+<Controls of={ColorsStories.ComponentThemeColorPairings} />
+
+## Global Theme Pairings
+
+See how the same component dial configuration renders across all six global palettes. Useful for understanding how a layout will shift if a site changes its global theme.
+
+<Canvas of={ColorsStories.GlobalThemeColorPairings} />
+<Controls of={ColorsStories.GlobalThemeColorPairings} />

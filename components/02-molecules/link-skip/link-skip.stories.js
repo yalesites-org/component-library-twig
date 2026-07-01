@@ -6,7 +6,7 @@ import linkSkipData from './link-skip.yml';
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Link skip',
+  title: 'Atoms/Link Skip',
   tags: ['!dev'],
 };
 

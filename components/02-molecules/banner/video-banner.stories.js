@@ -7,7 +7,7 @@ import videoBannerData from '../../01-atoms/videos/video-embed/video-embed.yml';
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Banners/Video Banner',
+  title: 'Organisms/Banners/Video Banner',
   tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',

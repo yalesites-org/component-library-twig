@@ -20,6 +20,7 @@ import {
  * Storybook Definition.
  */
 export default {
+  tags: ['visreg'],
   title: 'Molecules/Quick-links/Visreg',
   parameters: {
     layout: 'fullscreen',

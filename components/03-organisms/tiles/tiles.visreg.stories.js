@@ -14,6 +14,7 @@ import {
  * Storybook Definition.
  */
 export default {
+  tags: ['visreg'],
   title: 'Organisms/Tiles/Visreg',
   parameters: {
     layout: 'fullscreen',

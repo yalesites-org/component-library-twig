@@ -35,7 +35,7 @@ const renderBanner = ({
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Banners/Grand Hero',
+  title: 'Organisms/Banners/Grand Hero',
   tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',

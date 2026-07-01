@@ -17,6 +17,7 @@ import {
  * Storybook Definition.
  */
 export default {
+  tags: ['visreg'],
   title: 'Organisms/Menu/Breadcrumbs/Visreg',
   parameters: {
     controls: { disable: true },

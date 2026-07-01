@@ -14,7 +14,8 @@ import {
 } from '../../_storybook/playground-utils';
 
 export default {
-  title: 'Molecules/Tabs/Visreg',
+  tags: ['visreg'],
+  title: 'Organisms/Tabs/Visreg',
   parameters: { controls: { disable: true } },
 };
 

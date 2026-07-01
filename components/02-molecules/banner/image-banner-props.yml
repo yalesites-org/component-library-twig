@@ -24,11 +24,12 @@ size:
   name: Image Size
   type: select
   required: false
-  description: 'Image height variation: tall or short'
+  description: 'Image height variation: tall, short, or mini'
   default: tall
   options:
     - tall
     - short
+    - mini
   control: select
 
 withVideo:

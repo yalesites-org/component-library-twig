@@ -62,7 +62,7 @@ const renderPublicationDetail = (data, args, datesKey = 'policyBrief') => {
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Meta/Publication Detail',
+  title: 'Molecules/Meta/Resource Detail',
   tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',

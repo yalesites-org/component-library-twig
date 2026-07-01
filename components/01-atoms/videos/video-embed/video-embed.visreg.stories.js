@@ -13,6 +13,7 @@ import {
 } from '../../../_storybook/playground-utils';
 
 export default {
+  tags: ['visreg'],
   title: 'Atoms/Videos/Video Embed/Visreg',
   parameters: { controls: { disable: true } },
 };

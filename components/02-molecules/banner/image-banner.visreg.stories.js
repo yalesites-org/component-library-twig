@@ -17,7 +17,8 @@ import {
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Banners/Image Banner/Visreg',
+  tags: ['visreg'],
+  title: 'Organisms/Banners/Image Banner/Visreg',
   parameters: {
     layout: 'fullscreen',
     controls: { disable: true },
@@ -49,7 +50,7 @@ export const Visreg = () => {
           image_banner__video: 'false',
           image_banner__caption: imageCaption,
         }),
-      ['tall', 'short'],
+      ['tall', 'short', 'mini'],
       'Size Variations',
       '',
       'Size',
