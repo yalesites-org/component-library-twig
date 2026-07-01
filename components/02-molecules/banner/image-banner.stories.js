@@ -18,7 +18,7 @@ const renderBanner = ({ bgColor, size, withVideo, imageCaption, width }) =>
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Banners/Image Banner',
+  title: 'Organisms/Banners/Image Banner',
   tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
@@ -35,6 +35,10 @@ export const ImageBanner = (args) => renderBanner(args);
 export const ImageBannerShort = (args) => renderBanner(args);
 ImageBannerShort.args = { size: 'short' };
 ImageBannerShort.storyName = 'Short';
+
+export const ImageBannerMini = (args) => renderBanner(args);
+ImageBannerMini.args = { size: 'mini' };
+ImageBannerMini.storyName = 'Mini';
 
 export const ImageBannerFullWidth = (args) => renderBanner(args);
 ImageBannerFullWidth.args = { width: 'full' };
