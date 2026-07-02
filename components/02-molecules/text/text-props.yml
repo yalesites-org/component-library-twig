@@ -15,7 +15,7 @@ content:
 variation:
   twigProp: text_field__variation
   name: Text Field Variation
-  type: string
+  type: select
   required: false
   description: "Visual variation: 'default' or 'emphasized' (for increased prominence)"
   default: default

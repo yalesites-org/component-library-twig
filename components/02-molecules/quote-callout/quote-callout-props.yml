@@ -18,13 +18,12 @@ attribution:
   type: string
   required: false
   description: Attribution text for the quote (e.g., person's name, title, or affiliation)
-  default: null
   control: text
 
 style:
   twigProp: quote_callout__style
   name: Style
-  type: string
+  type: select
   required: false
   description: "Visual style: 'bar' (accent bar), 'quote' (decorative quote marks), or 'image' (with image)"
   default: bar
@@ -37,7 +36,7 @@ style:
 quoteAlignment:
   twigProp: quote_callout__quote_alignment
   name: Quote Alignment
-  type: string
+  type: select
   required: false
   description: "Text alignment: 'left' or 'right'"
   default: left
@@ -49,7 +48,7 @@ quoteAlignment:
 accentTheme:
   twigProp: quote_callout__accent_theme
   name: Accent Theme (dial)
-  type: string
+  type: select
   required: false
   description: Theme dial for accent color (e.g., 'one', 'two', 'three')
   default: one
@@ -64,7 +63,7 @@ accentTheme:
 quoteImage:
   twigProp: quote_callout__quote_image
   name: Quote Image
-  type: string
+  type: select
   required: false
   description: >
     Image display option: 'with-image' or 'no-image'. When 'with-image' is

@@ -35,5 +35,4 @@ extraClass:
   type: string
   required: false
   description: Additional CSS classes for custom styling
-  default: null
   control: text

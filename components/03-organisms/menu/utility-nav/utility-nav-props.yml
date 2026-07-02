@@ -21,7 +21,6 @@ linkContent:
   type: string
   required: false
   description: Text content for the primary call-to-action button
-  default: null
   control: text
 
 linkUrl:
@@ -30,7 +29,6 @@ linkUrl:
   type: string
   required: false
   description: URL destination for the primary call-to-action button
-  default: null
   control: text
 
 search:
@@ -57,7 +55,6 @@ dropdownLinkContent:
   type: string
   required: false
   description: Text content for the dropdown menu trigger button
-  default: null
   control: text
 
 dropdownLinkUrl:
@@ -66,7 +63,6 @@ dropdownLinkUrl:
   type: string
   required: false
   description: URL destination for the dropdown menu trigger button
-  default: null
   control: text
 
 dropdownItems:

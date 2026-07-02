@@ -25,7 +25,6 @@ highlighted:
   type: string
   required: false
   description: 'Text excerpt with search term highlighted using <strong> tags'
-  default: null
   control: text
 
 teaser:
@@ -34,7 +33,6 @@ teaser:
   type: string
   required: false
   description: Meta description or excerpt text (supports HTML)
-  default: null
   control: text
 
 contentType:
@@ -43,7 +41,6 @@ contentType:
   type: string
   required: false
   description: "Content type label (e.g., 'post', 'page', 'event')"
-  default: null
   control: text
 
 breadcrumbsItems:
@@ -52,7 +49,6 @@ breadcrumbsItems:
   type: array
   required: false
   description: Breadcrumb trail items showing content hierarchy
-  default: null
 
 isCas:
   twigProp: is_cas
@@ -69,4 +65,3 @@ prefixIcon:
   type: string
   required: false
   description: "Icon name to display as prefix (e.g., 'lock-solid' for CAS content)"
-  default: null

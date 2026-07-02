@@ -20,7 +20,6 @@ heading:
   type: string
   required: false
   description: "Large heading text (used with 'heading' presentation style)"
-  default: null
   control: text
 
 contentLink:
@@ -29,7 +28,6 @@ contentLink:
   type: string
   required: false
   description: URL to make the entire tile clickable
-  default: null
   control: text
 
 presentationStyle:
@@ -118,5 +116,4 @@ iconName:
   type: string
   required: false
   description: "Icon identifier (used with 'icon' presentation style, e.g., 'sack-dollar-solid')"
-  default: null
   control: text

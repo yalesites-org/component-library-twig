@@ -26,7 +26,6 @@ caption:
   type: string
   required: false
   description: Caption text displayed below the image (supports HTML)
-  default: null
   control: text
 
 width:
@@ -49,7 +48,6 @@ srcset:
   type: string
   required: false
   description: Responsive image srcset for different viewport sizes
-  default: null
   control: text
 
 sizes:
@@ -58,5 +56,4 @@ sizes:
   type: string
   required: false
   description: Sizes attribute for responsive images (defines image display width at different breakpoints)
-  default: null
   control: text

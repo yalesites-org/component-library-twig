@@ -20,7 +20,6 @@ attribution:
   type: string
   required: false
   description: Attribution text for the quote (e.g., author name, source)
-  default: null
   control: text
 
 style:
