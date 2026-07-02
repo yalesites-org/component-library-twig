@@ -159,3 +159,16 @@ The split is ~35 `list_default` / ~44 `list_key` platform-wide, so codegen reads
   with the CLT block the shim overrides.
 - Prefer `include(..., with_context=false)` / explicit `with { … } only` on the shim's inner embed
   for isolation, but forward everything the inner template needs (props, slots, `directory`).
+- **Rich content into an auto-escaping sink.** When the CLT template consumes a slot as a *variable*
+  printed with a bare `{{ x }}` (no `|raw`) — e.g. a `<blockquote>{{ quote }}` or `<figcaption>{{ attribution }}` —
+  capturing the slot as a plain string and passing it will **double-escape** rich field markup
+  (the block template feeds a render array whose rendered HTML is already escaped). Capture it as
+  **Markup** instead so the sink doesn't re-escape:
+  `{% set x %}{{ block('slot')|raw }}{% endset %}` (a `{% set %}…{% endset %}` capture is a safe
+  Markup object). If that slot is optional and the template gates on `{% if x %}`, empty it when
+  blank so the check stays falsy: `{% set x = captured|trim is empty ? '' : captured %}`. (Slots
+  whose sink already applies `|raw` — e.g. the text atom — don't need this.)
+- **Don't drop "unused"-looking `{% set %}` vars from a block template.** The pre-SDC `{% include %}`
+  (no `only`) passed block-template variables like `<comp>__width`/`<comp>__alignment` via context
+  inheritance even when they weren't in the `with {…}`. Under SDC they must be explicit props the
+  block template passes. Always capture a real before/after baseline to catch this.
