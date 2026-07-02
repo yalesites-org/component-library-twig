@@ -1,0 +1,28 @@
+{
+  "name": "@yalesites-org/web-components",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Wave 0 proof-of-concept: framework-neutral Web Component wrappers for YaleSites components (Lit + Shadow DOM + CSS custom property tokens).",
+  "type": "module",
+  "main": "dist/yalesites-web-components.js",
+  "module": "dist/yalesites-web-components.js",
+  "exports": {
+    ".": "./dist/yalesites-web-components.js",
+    "./divider": "./dist/yds-divider.js",
+    "./accordion": "./dist/yds-accordion.js"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "node --check src/yds-divider.js && node --check src/yds-accordion.js && node --check src/index.js"
+  },
+  "dependencies": {
+    "lit": "^3.1.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}
