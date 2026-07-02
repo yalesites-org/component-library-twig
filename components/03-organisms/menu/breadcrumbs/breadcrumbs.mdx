@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as BreadcrumbsStories from './breadcrumbs.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './breadcrumbs-props.yml';
 
 <Meta of={BreadcrumbsStories} name="Overview" />
 
@@ -20,74 +22,11 @@ Use the controls panel below to experiment with the breadcrumbs properties in re
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>Array of breadcrumb items representing the navigation path</td>
-    </tr>
-    <tr>
-      <td>
-        <code>items[].title</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The text label for the breadcrumb link</td>
-    </tr>
-    <tr>
-      <td>
-        <code>items[].url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The URL destination for the breadcrumb link</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>items[].is_active</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>
-        Marks the current page (typically the last item). Active items are not
-        linked.
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Technical Specifications
 
