@@ -18,6 +18,7 @@ url:
   type: string
   required: true
   description: The URL link to the full content
+  control: text
 
 highlighted:
   twigProp: search_result__highlighted

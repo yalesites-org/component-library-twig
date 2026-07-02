@@ -20,6 +20,7 @@ export default {
 
 export const ContentImage = ({ src, alt, caption, width, srcset, sizes }) => `
   ${contentImageTwig({
+    output_image_tag: true,
     image__src: src,
     image__alt: alt,
     image__srcset: srcset,
