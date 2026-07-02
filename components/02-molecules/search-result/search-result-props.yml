@@ -1,0 +1,68 @@
+# search-result-props.yml
+#
+# Search Result component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+heading:
+  twigProp: search_result__title
+  name: Heading
+  type: string
+  required: true
+  description: The title/heading of the search result (typically the page title)
+  control: text
+
+url:
+  twigProp: search_result__url
+  name: URL
+  type: string
+  required: true
+  description: The URL link to the full content
+  control: text
+
+highlighted:
+  twigProp: search_result__highlighted
+  name: Search Results Highlighted
+  type: string
+  required: false
+  description: 'Text excerpt with search term highlighted using <strong> tags'
+  control: text
+
+teaser:
+  twigProp: search_result__teaser
+  name: Search Results Teaser
+  type: string
+  required: false
+  description: Meta description or excerpt text (supports HTML)
+  control: text
+
+contentType:
+  twigProp: search_result__content_type
+  name: Search Results Content Type
+  type: string
+  required: false
+  description: "Content type label (e.g., 'post', 'page', 'event')"
+  control: text
+
+breadcrumbsItems:
+  twigProp: breadcrumbs__items
+  name: Breadcrumbs Items
+  type: array
+  required: false
+  description: Breadcrumb trail items showing content hierarchy
+
+isCas:
+  twigProp: is_cas
+  name: Is CAS
+  type: boolean
+  required: false
+  description: Whether the content requires CAS authentication
+  default: false
+  control: boolean
+
+prefixIcon:
+  twigProp: search_result__prefix__icon
+  name: Prefix Icon
+  type: string
+  required: false
+  description: "Icon name to display as prefix (e.g., 'lock-solid' for CAS content)"

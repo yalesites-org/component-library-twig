@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as UtilityNavStories from './utility-nav.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './utility-nav-props.yml';
 
 <Meta of={UtilityNavStories} name="Overview" />
 
@@ -18,117 +20,7 @@ Use the controls panel below to experiment with the utility nav's properties in 
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Array of navigation menu items with title and url properties</td>
-    </tr>
-    <tr>
-      <td>
-        <code>utility_nav__link__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Text content for the primary call-to-action button</td>
-    </tr>
-    <tr>
-      <td>
-        <code>utility_nav__link__url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>URL destination for the primary call-to-action button</td>
-    </tr>
-    <tr>
-      <td>
-        <code>utility_nav__search</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Whether to display the search input field</td>
-    </tr>
-    <tr>
-      <td>
-        <code>utility_nav__cta__theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'none'</code>
-      </td>
-      <td>Theme variant for the call-to-action button styling</td>
-    </tr>
-    <tr>
-      <td>
-        <code>utility_nav__dropdown_link__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Text content for the dropdown menu trigger button</td>
-    </tr>
-    <tr>
-      <td>
-        <code>utility_nav__dropdown_link__url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>URL destination for the dropdown menu trigger button</td>
-    </tr>
-    <tr>
-      <td>
-        <code>utility_nav__dropdown__items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>
-        Array of dropdown menu items with title and url properties for the
-        dropdown menu
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Component Features
 
