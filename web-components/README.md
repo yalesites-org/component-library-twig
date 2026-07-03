@@ -1,18 +1,23 @@
-# YaleSites Web Components — Wave 0 pilot
+# YaleSites Web Components
 
-A **proof of concept** (epic #1351 / ticket #1353) that the YaleSites design system can
-be consumed outside Drupal. It wraps two existing components — a trivial static one
-(`<yds-divider>`) and a harder one with JavaScript behavior (`<yds-accordion>`) — as
-framework-neutral [custom elements](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
-built with [Lit](https://lit.dev).
+The framework-neutral distribution of YaleSites design-system components as
+[custom elements](https://developer.mozilla.org/en-US/docs/Web/API/Web_components),
+built with [Lit](https://lit.dev). It lets non-Drupal teams consume YaleSites
+components (epic #1351 — pilot in #1353, distribution package in #1365 / Wave 10).
 
-This is intentionally small and self-contained. It does **not** package the whole
-library — that is Wave 10. Treat this README as the first draft of the
-"Wrap an SDC as a Web Component" recipe; it will be extended in Wave 10.
+**Scope, honestly:** the package infrastructure is complete — a self-contained
+build, a behavioral test suite, publish-ready packaging, and an OutSystems
+integration guide. **Two** components are wrapped so far: a trivial static one
+(`<yds-divider>`) and a harder one with JavaScript behavior (`<yds-accordion>`).
+Wrapping the rest of the library is per-component work that reuses the recipe below
+(each SDC's Twig is re-expressed once as a Lit template — see "Honest limitations").
 
 The approach follows the research spike decision
-(`docs/sdc/research-spike-1352-canvas-and-web-components.md`):
+(`../docs/sdc/research-spike-1352-canvas-and-web-components.md`):
 **Lit + Shadow DOM + CSS custom properties for theming, with `::part()` hooks.**
+
+To consume this package from OutSystems specifically, see
+[`OUTSYSTEMS.md`](OUTSYSTEMS.md).
 
 ---
 
@@ -23,6 +28,7 @@ cd web-components
 nvm use            # Node 20.14.0 (repo .nvmrc); system Node 20+ also works
 npm install
 npm run build      # bundles to ./dist as ESM (Lit included)
+npm test           # behavioral tests (Vitest + jsdom)
 ```
 
 Then view the no-Drupal demo. ES module scripts do not load over `file://`, so serve
@@ -183,11 +189,34 @@ Parts: `accordion`, `inner`, `heading`, `controls`, `toggle-all`, `item`,
   global + component themes; this pilot ports the default theme plus the non-default
   accent-bar treatment and maps `theme="one".."five"` to `--color-slot-*`. Full
   slot/global-theme fidelity is deferred.
-- **No automated tests yet.** Verified via build + syntax parse; browser/interaction
-  verification is a manual step (see the demo).
+
+## Testing
+
+Behavioral tests run in Vitest + jsdom (`test/*.test.js`), covering what Percy
+cannot see: divider enum-validation fallbacks and separator semantics; accordion
+collapse-on-attach, per-item toggle ARIA, the "toggle all" control (present only
+with 2+ items), light-DOM item harvesting, rich-content injection, and heading-level
+outline (h2 vs h3 with a group heading).
+
+```bash
+npm test           # vitest run
+```
+
+Each test was mutation-verified (breaking the targeted behavior fails exactly the
+test that covers it). New wrapped components should add a co-located
+`test/<name>.test.js` in the same style.
+
+## Publishing
+
+The package is configured for publication to GitHub Packages
+(`publishConfig.registry`); `prepublishOnly` runs `check`, `test`, and `build` so a
+release always ships a fresh, tested bundle. Publishing itself is a **gated human
+step** — it needs the `@yalesites-org` registry auth (`YALESITES_BUILD_TOKEN`) and
+team sign-off, and is intentionally not automated here.
 
 ## Scope note
 
 Nothing here touches the existing webpack/Storybook build. This directory is fully
-self-contained: its own `package.json`, its own `esbuild` build (`build.mjs`), its own
-`dist/`. Removing `web-components/` leaves the library build untouched.
+self-contained: its own `package.json`, its own `esbuild` build (`build.mjs`), its
+own Vitest config, its own `dist/`. Removing `web-components/` leaves the library
+build untouched.
