@@ -168,6 +168,15 @@ The split is ~35 `list_default` / ~44 `list_key` platform-wide, so codegen reads
   Markup object). If that slot is optional and the template gates on `{% if x %}`, empty it when
   blank so the check stays falsy: `{% set x = captured|trim is empty ? '' : captured %}`. (Slots
   whose sink already applies `|raw` — e.g. the text atom — don't need this.)
+- **Thin-wrapper limit: consumer slots that depend on component-internal state.** If the CLT
+  template generates internal state (a `random()` id, a loop `key`, a `base_class`) that the slot
+  markup *itself* uses — e.g. tabs, where each label's `aria-controls` and each panel's `id` are
+  `tab-{tabs__id}-{key}` — the `block()`-capture pattern breaks, because it renders the slot
+  *outside* the component's scope (the internal state is undefined there). These components cannot be
+  thin-wrapped; they need the **fully self-contained SDC** form (move the template + partials into
+  `atomic/components/<comp>/`) or a **structured data prop** (pass an items array and let the
+  component loop internally). Applies to interactive components (tabs/modal/menu) and nested
+  collections. Flag for a per-component decision rather than shipping broken markup.
 - **Don't drop "unused"-looking `{% set %}` vars from a block template.** The pre-SDC `{% include %}`
   (no `only`) passed block-template variables like `<comp>__width`/`<comp>__alignment` via context
   inheritance even when they weren't in the `with {…}`. Under SDC they must be explicit props the
