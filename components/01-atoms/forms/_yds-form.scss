@@ -183,6 +183,15 @@
     grid-column: 1 / -1;
   }
 
+  // Persistent, unobtrusive advisory that changing a filter updates results on
+  // its own (WCAG 2.1 SC 3.2.2). Spans the full width above the filter row. (#1367)
+  .ys-filter-form__note {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--color-gray-700);
+    font-size: var(--font-size-14);
+  }
+
   .form-item__dropdown {
     height: 3.125rem;
 
