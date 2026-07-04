@@ -185,7 +185,12 @@
 
   .form-item__dropdown {
     height: 3.125rem;
-    border: var(--border-thickness-1) solid var(--color-gray-400);
+
+    // No border here: the .chosen-container below draws the single border (same
+    // --border-thickness-1 --color-gray-400 as the search field). A border on both
+    // reads as a doubled edge. Set to 0 to override the base .form-item__dropdown
+    // border in _yds-select.scss. (#1366)
+    border: 0;
   }
 
   .chosen-container {
@@ -214,11 +219,30 @@
     border: 0;
     padding: 0;
 
+    // Closed (summary) state: lay the selected-term chips on a single line and clip
+    // anything past the width. JS marks the overflow chips and appends a "+N more"
+    // badge so the fixed-height filter row never wraps; the open state below
+    // re-enables wrapping to reveal every chip. (#1366)
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    overflow: hidden;
+
     li.search-choice {
       background-color: hsl(210deg 100% 21% / 10%);
+      flex: none;
+      max-width: 100%;
+
+      span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
 
     li.search-field {
+      min-width: 0;
+
       input[type='text'] {
         font-family: inherit;
         padding: 0;
@@ -226,24 +250,47 @@
     }
   }
 
-  .search-choice {
-    display: none; // Hide selected items as a text message is displayed, when the select is closed.
+  // Chips that don't fit on the closed single line are collapsed into the badge. (#1366)
+  .ys-search-choice--overflow {
+    display: none;
   }
 
-  .ys-select-message {
-    float: left;
+  .ys-select-more {
+    display: flex;
+    flex: none;
+    align-items: center;
+    white-space: nowrap;
+    padding: 0 var(--size-spacing-3);
+    color: var(--color-gray-700);
+    font-weight: var(--font-weights-mallory-medium);
+    list-style: none;
   }
 
   .chosen-with-drop {
     border: 1px;
     height: auto;
 
-    .search-choice {
-      display: block; // Show selected items when the dropdown is opened.
+    // Open state: the dropdown expands to full height, so show every chip
+    // (wrapping across lines) and hide the "+N more" badge. (#1366)
+    .chosen-choices {
+      flex-wrap: wrap;
+      overflow: visible;
     }
 
-    .ys-select-message {
-      display: none; // Hide message when the dropdown is opened.
+    li.search-choice {
+      max-width: none;
+
+      span {
+        white-space: normal;
+      }
+    }
+
+    .ys-search-choice--overflow {
+      display: block;
+    }
+
+    .ys-select-more {
+      display: none;
     }
 
     .chosen-drop {
