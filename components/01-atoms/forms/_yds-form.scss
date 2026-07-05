@@ -160,17 +160,30 @@
 
 .ys-filter-form--scaffold {
   // Lay the filters on a uniform column grid sized to the form's OWN width — the
-  // section column it sits in — rather than the viewport, so every dropdown and
-  // the search field are the same width and the row wraps gracefully inside
-  // constrained sections (50/50, 70/30) instead of rendering at ragged widths or
-  // overflowing. Two units fit in a 50/50 section; wider sections fit more; a
-  // container narrower than one unit collapses to a single column. (#1299 QA)
-  container-type: inline-size;
+  // section column it sits in — so every dropdown and the search field share a
+  // width and the row wraps gracefully inside constrained sections (50/50,
+  // 70/30) instead of overflowing. Capped at four columns; the search field
+  // takes the first full-width row; a container narrower than one unit collapses
+  // to a single column. (#1299 QA)
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+
+  // auto-fit fills the available width, and the max(13rem, (100% - gaps)/4)
+  // track floor caps the row at four columns (three 1rem column-gaps between
+  // four tracks), so a wide section no longer packs every filter onto one row.
+  // The outer min(100%, …) lets the track collapse to the container width when
+  // it is narrower than one unit, so an ultra-narrow column never overflows.
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, max(13rem, calc((100% - 3rem) / 4))), 1fr)
+  );
   align-items: end;
   column-gap: 1rem;
   row-gap: 0.5rem;
+
+  // Search always occupies the first full-width row.
+  .form-item-search {
+    grid-column: 1 / -1;
+  }
 
   .form-item {
     width: auto;
@@ -178,18 +191,10 @@
     min-width: 0;
   }
 
-  // Keep the Apply button on its own full-width row below the filter row.
+  // Keep the Apply button on its own full-width row below the filter row (shown
+  // only as a no-JS fallback; BEF autosubmit hides it when JS is on). (#1367)
   .form-actions {
     grid-column: 1 / -1;
-  }
-
-  // Persistent, unobtrusive advisory that changing a filter updates results on
-  // its own (WCAG 2.1 SC 3.2.2). Spans the full width above the filter row. (#1367)
-  .ys-filter-form__note {
-    grid-column: 1 / -1;
-    margin: 0;
-    color: var(--color-gray-700);
-    font-size: var(--font-size-14);
   }
 
   .form-item__dropdown {
