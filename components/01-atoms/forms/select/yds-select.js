@@ -87,6 +87,16 @@
         $select.on('chosen:updated change', (e) =>
           updateChoiceSummary(e.target),
         );
+        // Recompute against the closed single-line layout once the dropdown
+        // hides. While the dropdown is open the chip row wraps (overflow
+        // visible), so the fit test always passes and no chip is collapsed;
+        // removing a truncated term therefore can only be re-measured after the
+        // row returns to its closed state. Defer a frame so Chosen has dropped
+        // `.chosen-with-drop` and the closed layout has applied. (#1366)
+        $select.on('chosen:hiding_dropdown', (e) => {
+          const { target } = e;
+          window.requestAnimationFrame(() => updateChoiceSummary(target));
+        });
       });
     },
   };
