@@ -50,12 +50,29 @@ const originalHTML = (a) =>
     accordion__items: twigItems(a),
   });
 
+// The content-width constraint is a layout-system concern, not the accordion's
+// own code: the global `[data-component-width]` + `[class*='__inner']` rules set
+// the max-width. The original twig self-carries data-component-width and its
+// .accordion__inner gets constrained by that global CSS — but the web component's
+// __inner lives in the shadow, where global CSS can't reach it. So mimic the same
+// layout wrapper in light DOM around the host (data-component-width -> an __inner
+// with the global max-width). The original self-constrains, so it isn't wrapped.
+const contentWrap = (childNode) => {
+  const outer = document.createElement('div');
+  outer.setAttribute('data-component-width', 'content');
+  const inner = document.createElement('div');
+  inner.className = 'yds-layout__inner';
+  inner.appendChild(childNode);
+  outer.appendChild(inner);
+  return outer;
+};
+
 const makeWebComponent = (tag, a) => {
   const el = document.createElement(tag);
   if (a.accordionHeading) el.setAttribute('heading', a.accordionHeading);
   if (a.themeColor) el.setAttribute('theme', a.themeColor);
   el.items = wcItems(a);
-  return el;
+  return contentWrap(el);
 };
 
 const label = (text) => {
