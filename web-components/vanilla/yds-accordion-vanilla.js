@@ -15,8 +15,9 @@
  *     focus loss a naive full re-render would cause on every click, do TARGETED
  *     attribute updates instead of rebuilding (Lit's diffing gives you this free);
  *   - manage a unique id per instance for aria-controls wiring.
- * The CSS, BEM classes, DOM structure, heading levels and `part` names all match
- * the Lit version, so the rendered result is the same.
+ * The CSS, BEM classes, DOM structure, heading levels and `part` names match the
+ * Lit version (the one deliberate difference: the "toggle all" label is wrapped in
+ * a span so it can be updated in place), so the rendered result is the same.
  *
  * Attributes: heading, theme ("default"|"one".."five"), alignment ("center"|"left").
  * Property:   items — array of { heading, content } (content is an HTML string).
@@ -253,7 +254,7 @@ export class YdsAccordionVanilla extends HTMLElement {
 
     this.shadowRoot.innerHTML = `
       <style>${STYLES}</style>
-      <div class="accordion" part="accordion" data-component-theme="${theme}" data-component-alignment="${alignment}">
+      <div class="accordion" part="accordion" data-component-theme="${escapeHtml(theme)}" data-component-alignment="${escapeHtml(alignment)}">
         <div class="accordion__inner" part="inner">
           ${groupHeading}
           ${controls}

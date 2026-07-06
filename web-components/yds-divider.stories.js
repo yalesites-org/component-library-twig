@@ -4,7 +4,6 @@ import './src/yds-divider.js';
 
 export default {
   title: 'Web Components/Lit/Divider',
-  tags: ['!dev'],
   argTypes: {
     width: {
       control: 'select',

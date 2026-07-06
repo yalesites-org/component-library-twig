@@ -24,7 +24,6 @@ const SAMPLE_ITEMS = [
 
 export default {
   title: 'Web Components/Lit/Accordion',
-  tags: ['!dev'],
   argTypes: {
     accordionHeading: {
       control: 'text',
