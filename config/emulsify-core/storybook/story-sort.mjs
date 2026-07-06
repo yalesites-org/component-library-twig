@@ -7,6 +7,7 @@ export const ORDER_TREE = {
     'Atoms',
     'Molecules',
     'Organisms',
+    'Web Components',
     'Templates',
     'Page Examples',
   ],
@@ -29,6 +30,9 @@ export const ORDER_TREE = {
     'Card Collection': {
       __order: ['Overview', 'Visreg'],
     },
+  },
+  'Web Components': {
+    __order: ['Overview', 'Lit', 'Vanilla'],
   },
   'Page Examples': {
     __order: ['Overview'],

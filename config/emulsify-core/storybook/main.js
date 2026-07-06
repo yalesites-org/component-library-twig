@@ -18,6 +18,10 @@ export function extendConfig(config) {
     stories: [
       ...(config.stories || []),
       path.resolve(projectRoot, 'components/[0-9]*/**/*.mdx'),
+      // Web Component (Lit + vanilla) demo stories; top-level only so we don't
+      // scan web-components/node_modules.
+      path.resolve(projectRoot, 'web-components/*.mdx'),
+      path.resolve(projectRoot, 'web-components/*.stories.@(js|jsx|ts|tsx)'),
     ],
     previewAnnotations: [
       ...(config.previewAnnotations || []),
