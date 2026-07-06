@@ -180,14 +180,19 @@
   column-gap: 1rem;
   row-gap: 0.5rem;
 
-  // Search always occupies the first full-width row.
-  .form-item-search {
-    grid-column: 1 / -1;
-  }
-
   .form-item {
     width: auto;
     max-width: none;
+    min-width: 0;
+  }
+
+  // The shared .form-item__select carries min-width: 22rem for standalone
+  // selects; Chosen reads that width at init and pins it as an inline width on
+  // the .chosen-container it generates, overflowing the grid cell. Reset it here
+  // so the native select and the Chosen container both track the column width.
+  // Search stays a normal grid item (first in source order), inline with the
+  // filters rather than on its own row. (#1299 QA)
+  .form-item__select {
     min-width: 0;
   }
 
@@ -281,7 +286,10 @@
   }
 
   .chosen-with-drop {
-    border: 1px;
+    // Do not re-declare a border here. The old `border: 1px` (no style)
+    // resolved to no border, so the whole box vanished when a filter was
+    // focused/open. Removing the override lets the .chosen-container border
+    // above cascade to the open state rather than duplicating it. (#1299 QA)
     height: auto;
 
     // Open state: the dropdown expands to full height, so show every chip
@@ -350,7 +358,14 @@
   }
 
   @media (max-width: tokens.$break-mobile) {
-    .chosen-container {
+    // Show a visible box for every filter on mobile. When Chosen renders, the
+    // container carries the border; when it falls back to the native select
+    // (the scaffold zeroes the .form-item__dropdown wrapper border and the
+    // select's own border is transparent), the control would otherwise read as
+    // plain text — so border the select too. Chosen hides the native select, so
+    // this is inert while Chosen is active. (#1299 QA)
+    .chosen-container,
+    .form-item__select {
       border: 1px solid var(--color-basic-black);
     }
 
