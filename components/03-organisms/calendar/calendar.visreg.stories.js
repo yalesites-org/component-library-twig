@@ -10,6 +10,7 @@ import {
 } from '../../_storybook/playground-utils';
 
 export default {
+  tags: ['visreg'],
   title: 'Organisms/Calendar/Visreg',
   parameters: {
     controls: { disable: true },

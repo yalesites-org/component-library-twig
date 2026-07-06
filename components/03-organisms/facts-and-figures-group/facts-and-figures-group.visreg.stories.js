@@ -18,6 +18,7 @@ import {
  * Storybook Definition.
  */
 export default {
+  tags: ['visreg'],
   title: 'Organisms/Facts and Figures Group/Visreg',
   parameters: {
     layout: 'fullscreen',

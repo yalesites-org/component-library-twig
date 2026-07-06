@@ -18,6 +18,7 @@ import {
  * Storybook Definition.
  */
 export default {
+  tags: ['visreg'],
   title: 'Molecules/Wrapped Callout/Visreg',
   parameters: {
     layout: 'fullscreen',

@@ -173,7 +173,8 @@ Profile.args = {
   subTitle: 'Subtitle',
   department: 'Department name',
   pronouns: 'They/They/Them',
-  profileImageAlignment: 'right',
+  profileImageAlignment: 'left',
+  profileImageOrientation: 'portrait',
 };
 
 export const Resource = ({ heading, category, publishDate, description }) =>

@@ -1,0 +1,233 @@
+# Print color specifications.
+#
+# Source: color-specs_2025-05-10.pdf, provided by OPAC (2025-05-10).
+#
+# IMPORTANT: `hex` is used ONLY to render the on-screen swatch. It must never be
+# displayed to users on the print page — print displays PMS and CMYK only.
+# Yale's brand colors render differently in print than on screen, so these HEX
+# values are approximations of the printed result for swatch purposes.
+#
+# Structure mirrors the print "pyramid" hierarchy:
+#   yale_blue  -> sits alone at the top
+#   core       -> the blues directly below Yale Blue, plus Warm Gray
+#   families   -> the remaining accent colors grouped by family
+#
+# Combined coated/uncoated PMS cells (e.g. "PMS 660 C / PMS 279 U") are kept as a
+# single string so the C (coated) / U (uncoated) distinction shows as authored.
+
+yale_blue:
+  label: 'Yale Blue'
+  colors:
+    yale-blue:
+      name: 'Yale Blue'
+      hex: '#00356b'
+      pms: 'PMS 648 C / PMS 295 U'
+      cmyk_coated: '100, 75, 8, 40'
+      cmyk_uncoated: '100, 75, 5, 35'
+
+core:
+  label: 'Core Colors'
+  colors:
+    blue:
+      name: 'Blue'
+      hex: '#4681C2'
+      pms: 'PMS 660 C / PMS 279 U'
+      cmyk_coated: '74, 44, 0, 0'
+      cmyk_uncoated: '70, 39, 0, 0'
+    blue-light:
+      name: 'Blue (light)'
+      hex: '#78A7D8'
+      pms: 'PMS 645'
+      cmyk_coated: '51, 23, 0, 1'
+      cmyk_uncoated: '52, 24, 0, 1'
+    blue-lighter:
+      name: 'Blue (lighter)'
+      hex: '#A7CFEE'
+      pms: 'PMS 277'
+      cmyk_coated: '32, 8, 0, 0'
+      cmyk_uncoated: '31, 8, 0, 0'
+    warm-gray:
+      name: 'Warm Gray'
+      hex: '#968B83'
+      pms: 'PMS Warm Gray 7'
+      cmyk_coated: '43, 41, 45, 4'
+      cmyk_uncoated: '33, 31, 33, 17'
+
+families:
+  red:
+    label: 'Red'
+    colors:
+      red:
+        name: 'Red'
+        hex: '#ED1C2E'
+        pms: 'PMS 485'
+        cmyk_coated: '0, 99, 89, 0'
+        cmyk_uncoated: '0, 85, 100, 0'
+      red-light:
+        name: 'Red (light)'
+        hex: '#EF4637'
+        pms: 'PMS 179'
+        cmyk_coated: '0, 88, 85, 0'
+        cmyk_uncoated: '0, 83, 100, 0'
+      red-dark:
+        name: 'Red (dark)'
+        hex: '#C11E30'
+        pms: 'PMS 1805'
+        cmyk_coated: '0, 97, 78, 22'
+        cmyk_uncoated: '2, 89, 76, 18'
+      red-darker:
+        name: 'Red (darker)'
+        hex: '#85081F'
+        pms: 'PMS 1815'
+        cmyk_coated: '2, 97, 72, 52'
+        cmyk_uncoated: '9, 86, 74, 38'
+
+  yellow:
+    label: 'Yellow'
+    colors:
+      yellow:
+        name: 'Yellow'
+        hex: '#FCE020'
+        pms: 'PMS 107'
+        cmyk_coated: '3, 7, 96, 0'
+        cmyk_uncoated: '0, 0, 89, 0'
+      yellow-light:
+        name: 'Yellow (light)'
+        hex: '#FDF49B'
+        pms: 'PMS 601'
+        cmyk_coated: '2, 0, 49, 0'
+        cmyk_uncoated: '0, 0, 53, 0'
+      gold:
+        name: 'Gold'
+        hex: '#FDB515'
+        pms: 'PMS 130 C / PMS 129 U'
+        cmyk_coated: '0, 32, 100, 0'
+        cmyk_uncoated: '0, 25, 100, 0'
+      gold-dark:
+        name: 'Gold (dark)'
+        hex: '#E19717'
+        pms: 'PMS 131'
+        cmyk_coated: '0, 39, 100, 11'
+        cmyk_uncoated: '0, 42, 100, 16'
+
+  green:
+    label: 'Green'
+    colors:
+      green:
+        name: 'Green'
+        hex: '#00AA52'
+        pms: 'PMS 347'
+        cmyk_coated: '92, 0, 97, 0'
+        cmyk_uncoated: '90, 0, 95, 0'
+      green-light:
+        name: 'Green (light)'
+        hex: '#CCE4B2'
+        pms: 'PMS 580'
+        cmyk_coated: '21, 0, 38, 0'
+        cmyk_uncoated: '17, 0, 35, 0'
+      green-dark:
+        name: 'Green (dark)'
+        hex: '#475826'
+        pms: 'PMS 574'
+        cmyk_coated: '49, 22, 85, 58'
+        cmyk_uncoated: '47, 25, 79, 42'
+
+  orange:
+    label: 'Orange'
+    colors:
+      orange:
+        name: 'Orange'
+        hex: '#F89644'
+        pms: 'PMS 6017'
+        cmyk_coated: '0, 49, 82, 0'
+        cmyk_uncoated: '0, 52, 86, 0'
+      orange-light:
+        name: 'Orange (light)'
+        hex: '#FFEBC2'
+        pms: 'PMS 7506'
+        cmyk_coated: '0, 7, 26, 0'
+        cmyk_uncoated: '0, 6, 28, 0'
+      orange-dark:
+        name: 'Orange (dark)'
+        hex: '#F15623'
+        pms: 'PMS 1665'
+        cmyk_coated: '0, 82, 100, 0'
+        cmyk_uncoated: '0, 72, 100, 0'
+      orange-darker:
+        name: 'Orange (darker)'
+        hex: '#D3551D'
+        pms: 'PMS 1525'
+        cmyk_coated: '0, 77, 100, 14'
+        cmyk_uncoated: '0, 66, 100, 15'
+
+  purple:
+    label: 'Purple'
+    colors:
+      purple:
+        name: 'Purple'
+        hex: '#88177A'
+        pms: 'PMS 249'
+        cmyk_coated: '43, 100, 0, 17'
+        cmyk_uncoated: '43, 92, 8, 20'
+      purple-dark:
+        name: 'Purple (dark)'
+        hex: '#5E0257'
+        pms: 'PMS 7652'
+        cmyk_coated: '48, 99, 3, 46'
+        cmyk_uncoated: '52, 88, 15, 35'
+
+  cyan:
+    label: 'Cyan/Teal'
+    colors:
+      cyan:
+        name: 'Cyan'
+        hex: '#006BA4'
+        pms: 'PMS 3015'
+        cmyk_coated: '100, 32, 0, 25'
+        cmyk_uncoated: '100, 42, 0, 21'
+      cyan-bright:
+        name: 'Cyan (bright)'
+        hex: '#00B3F0'
+        pms: 'PMS 2202'
+        cmyk_coated: '91, 0, 0, 0'
+        cmyk_uncoated: '90, 0, 0, 0'
+      cyan-light:
+        name: 'Cyan (light)'
+        hex: '#7AD1EF'
+        pms: 'PMS 2197'
+        cmyk_coated: '47, 0, 3, 0'
+        cmyk_uncoated: '50, 0, 2, 0'
+      teal:
+        name: 'Teal'
+        hex: '#00ACC6'
+        pms: 'PMS 2229'
+        cmyk_coated: '100, 0, 24, 0'
+        cmyk_uncoated: '100, 0, 22, 0'
+      teal-dark:
+        name: 'Teal (dark)'
+        hex: '#008AA0'
+        pms: 'PMS 2231'
+        cmyk_coated: '100, 0, 23, 25'
+        cmyk_uncoated: '100, 8, 22, 19'
+
+  gray:
+    label: 'Gray'
+    colors:
+      gray-dark:
+        name: 'Gray (dark)'
+        hex: '#53595F'
+        pms: 'PMS 425'
+        cmyk_coated: '63, 51, 45, 33'
+        cmyk_uncoated: '46, 35, 32, 28'
+      gray-medium:
+        name: 'Gray (medium)'
+        hex: '#6A625C'
+        pms: 'PMS 405'
+        cmyk_coated: '49, 47, 51, 32'
+        cmyk_uncoated: '43, 41, 45, 37'
+      gray-light:
+        name: 'Gray (light)'
+        hex: '#CBC8C4'
+        pms: 'PMS 400'
+        cmyk_coated: '20, 17, 19, 0'
+        cmyk_uncoated: '17, 16, 20, 1'

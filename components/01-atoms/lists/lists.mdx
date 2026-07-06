@@ -3,7 +3,7 @@ import * as ListsStories from './list.stories';
 import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
 import componentProps from './list-props.yml';
 
-<Meta of={ListsStories} name="Docs" />
+<Meta of={ListsStories} name="Overview" />
 
 # Lists
 
@@ -13,7 +13,9 @@ The lists component system provides styled list elements for various use cases, 
 
 Use the controls panel below to experiment with different list types and themes in real-time.
 
-<Canvas of={ListsStories.Interactive} />
+<div className="sb-contained-canvas">
+  <Canvas of={ListsStories.Interactive} />
+</div>
 <Controls of={ListsStories.Interactive} />
 
 ## List Types

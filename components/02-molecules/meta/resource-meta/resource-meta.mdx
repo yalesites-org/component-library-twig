@@ -1,0 +1,58 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as MetaStories from '../meta.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from '../resource-props.yml';
+
+<Meta title="Molecules/Meta/Resource Meta" />
+
+# Resource Meta
+
+Displays metadata for downloadable resources and media content within teaser cards and list items. Renders category, publication date, and resource type indicators alongside an optional image or video.
+
+## Interactive Preview
+
+<Canvas of={MetaStories.Resource} />
+<Controls of={MetaStories.Resource} />
+
+## When to use it
+
+Use Resource Meta inside card and list-item view modes for Resource nodes. It's the lighter-weight companion to [Resource Detail](?path=/docs/molecules-meta-resource-detail--docs) — use Resource Meta for teasers, Resource Detail for the full node page. Both come from the same Resource content type and are candidates for future consolidation into a single template.
+
+## Resource Types
+
+The component renders differently depending on `resource_meta__resource_type`:
+
+- **`video`** — renders an embedded video player (oEmbed) as the primary media
+- **`document`** — renders a document thumbnail image with a download CTA
+- **`image`** — renders an image without a download CTA
+
+The interactive preview above is fixed to `video`. The [Visreg story](?path=/story/molecules-meta-visreg--visreg) covers all three branches across theme variations.
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-resource-meta.twig`
+- **Partials**: `_yds-resource-meta--document.twig`, `_yds-resource-meta--metadata.twig`, `_yds-resource-meta--video.twig`
+- **Styles**: `_yds-resource-meta.scss`
+
+### Accessibility
+
+- Download button includes `resource_meta__download_aria_label` for screen readers
+- Resource type is visually indicated and conveyed semantically
+- WCAG AA color contrast across all theme combinations
+
+## Related Components
+
+- **Resource Detail**: Full-page meta header used on the Resource node page. Both components come from the same Resource content type and are candidates for future consolidation.
+- **Image**: Used for document and image resource type thumbnails
+- **Video Embed**: Used for video resource type previews

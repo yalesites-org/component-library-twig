@@ -1,0 +1,179 @@
+{% set colors__base_class = "cl-colors" %}
+{% set card_name_level = 'h3' %}
+
+{# -------------------------------------------------------------------------
+   Yale Blue
+   When section == 'yale-blue' or no section set (full page)
+   ------------------------------------------------------------------------- #}
+{% if not section or section == 'yale-blue' %}
+  <div {{ bem(colors__base_class) }}>
+    <ul {{ bem('list', [], colors__base_class) }}>
+      {% for key, color in print_colors.yale_blue.colors %}
+        <li {{ bem('item', [], colors__base_class) }}>
+          <div {{ bem('swatch', [], colors__base_class) }} style="background: {{ yale_blue_web.hex ?? color.hex }};"></div>
+          <div {{ bem('info', [], colors__base_class) }}>
+            <{{ card_name_level }} {{ bem('name', [], colors__base_class) }}>{{ color.name }}</{{ card_name_level }}>
+
+            {# Web HEX from design token #}
+            {% if yale_blue_web %}
+              <div {{ bem('value-row', [], colors__base_class, ['text-copy-button']) }}>
+                <span {{ bem('label', [], colors__base_class) }}>Web HEX</span>
+                <code class="cl-colors__value pre-text__text">{{ yale_blue_web.hex }}</code>
+                <button class="cl-colors__copy-btn text-copy-button__button" type="button">
+                  <svg class="cl-colors__icon-copy" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <svg class="cl-colors__icon-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span {{ bem('copy-label', [], colors__base_class) }}>Copy Web HEX {{ yale_blue_web.hex }}</span>
+                </button>
+              </div>
+            {% endif %}
+
+            {# Print values — PMS + CMYK #}
+            {% set print_rows = {
+              'PMS': color.pms,
+              'CMYK (Coated)': color.cmyk_coated,
+              'CMYK (Uncoated)': color.cmyk_uncoated
+            } %}
+            {% for label, val in print_rows %}
+              <div {{ bem('value-row', [], colors__base_class, ['text-copy-button']) }}>
+                <span {{ bem('label', [], colors__base_class) }}>{{ label }}</span>
+                <code class="cl-colors__value pre-text__text">{{ val }}</code>
+                <button class="cl-colors__copy-btn text-copy-button__button" type="button">
+                  <svg class="cl-colors__icon-copy" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <svg class="cl-colors__icon-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span {{ bem('copy-label', [], colors__base_class) }}>Copy {{ label }} {{ val }}</span>
+                </button>
+              </div>
+            {% endfor %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+{# -------------------------------------------------------------------------
+   Core Colors
+   When section == 'core' or no section set (full page)
+   ------------------------------------------------------------------------- #}
+{% if not section or section == 'core' %}
+  <div {{ bem(colors__base_class) }}>
+    <ul {{ bem('list', [], colors__base_class) }}>
+      {% for key, color in print_colors.core.colors %}
+        <li {{ bem('item', [], colors__base_class) }}>
+          <div {{ bem('swatch', [], colors__base_class) }} style="background: {{ color.hex }};"></div>
+          <div {{ bem('info', [], colors__base_class) }}>
+            <{{ card_name_level }} {{ bem('name', [], colors__base_class) }}>{{ color.name }}</{{ card_name_level }}>
+            <div {{ bem('value-row', [], colors__base_class, ['text-copy-button']) }}>
+              <span {{ bem('label', [], colors__base_class) }}>HEX</span>
+              <code class="cl-colors__value pre-text__text">{{ color.hex }}</code>
+              <button class="cl-colors__copy-btn text-copy-button__button" type="button">
+                <svg class="cl-colors__icon-copy" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <svg class="cl-colors__icon-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span {{ bem('copy-label', [], colors__base_class) }}>Copy HEX {{ color.hex }}</span>
+              </button>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+{# -------------------------------------------------------------------------
+   Accent Colors for Print — PMS + CMYK, no hex displayed
+   When section == 'accent-print' or no section set (full page)
+   ------------------------------------------------------------------------- #}
+{% if not section or section == 'accent-print' %}
+  {% for family_key, family in print_colors.families %}
+    <div {{ bem(colors__base_class) }}>
+      <h3>{{ family.label }}</h3>
+      <ul {{ bem('list', [], colors__base_class) }}>
+        {% for key, color in family.colors %}
+          <li {{ bem('item', [], colors__base_class) }}>
+            <div {{ bem('swatch', [], colors__base_class) }} style="background: {{ color.hex }};">
+              <span class="cl-colors__badge cl-colors__badge--print">Print</span>
+            </div>
+            <div {{ bem('info', [], colors__base_class) }}>
+              <{{ card_name_level }} {{ bem('name', [], colors__base_class) }}>{{ color.name }}</{{ card_name_level }}>
+              {% set print_rows = {
+                'PMS': color.pms,
+                'CMYK (Coated)': color.cmyk_coated,
+                'CMYK (Uncoated)': color.cmyk_uncoated
+              } %}
+              {% for label, val in print_rows %}
+                <div {{ bem('value-row', [], colors__base_class, ['text-copy-button']) }}>
+                  <span {{ bem('label', [], colors__base_class) }}>{{ label }}</span>
+                  <code class="cl-colors__value pre-text__text">{{ val }}</code>
+                  <button class="cl-colors__copy-btn text-copy-button__button" type="button">
+                    <svg class="cl-colors__icon-copy" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <svg class="cl-colors__icon-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <span {{ bem('copy-label', [], colors__base_class) }}>Copy {{ label }} {{ val }}</span>
+                  </button>
+                </div>
+              {% endfor %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+{% endif %}
+
+{# -------------------------------------------------------------------------
+   Accent Colors for Web — HEX values from design tokens
+   When section == 'accent-web' or no section set (full page)
+   ------------------------------------------------------------------------- #}
+{% if not section or section == 'accent-web' %}
+  {% for group, colorset in _context.colors %}
+    <div {{ bem(colors__base_class) }}>
+      <h3>{{ group }}</h3>
+      <ul {{ bem('list', [], colors__base_class) }}>
+        {% for key, color in colorset %}
+          <li {{ bem('item', [], colors__base_class) }}>
+            <div {{ bem('swatch', [], colors__base_class) }} style="background: var({{ color.css_var }});">
+              <span class="cl-colors__badge cl-colors__badge--web">Web</span>
+            </div>
+            <div {{ bem('info', [], colors__base_class) }}>
+              <{{ card_name_level }} {{ bem('name', [], colors__base_class) }}>{{ color.name }}</{{ card_name_level }}>
+              <span {{ bem('var', [], colors__base_class) }}>{{ color.css_var }}</span>
+              <div {{ bem('value-row', [], colors__base_class, ['text-copy-button']) }}>
+                <span {{ bem('label', [], colors__base_class) }}>HEX</span>
+                <code class="cl-colors__value pre-text__text">{{ color.hex }}</code>
+                <button class="cl-colors__copy-btn text-copy-button__button" type="button">
+                  <svg class="cl-colors__icon-copy" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <svg class="cl-colors__icon-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span {{ bem('copy-label', [], colors__base_class) }}>Copy HEX {{ color.hex }}</span>
+                </button>
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+{% endif %}

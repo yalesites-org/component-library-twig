@@ -3,7 +3,7 @@ import * as ControlsStories from './control.stories';
 import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
 import componentProps from './control-props.yml';
 
-<Meta of={ControlsStories} name="Docs" />
+<Meta of={ControlsStories} name="Overview" />
 
 # Controls
 
@@ -13,7 +13,9 @@ The controls component system includes call-to-action buttons (CTAs), text links
 
 Use the controls panel below to experiment with CTA buttons, text links, and text copy buttons in real-time.
 
-<Canvas of={ControlsStories.Cta} />
+<div className="sb-contained-canvas">
+  <Canvas of={ControlsStories.Cta} />
+</div>
 <Controls of={ControlsStories.Cta} />
 
 ## Component Variations
@@ -28,19 +30,25 @@ Primary action buttons with configurable styles, themes, and hover effects.
 
 Standard hyperlinks with optional icons and styling variations.
 
-<Canvas of={ControlsStories.textLink} />
+<div className="sb-contained-canvas">
+  <Canvas of={ControlsStories.textLink} />
+</div>
 
 ### Text Copy Button
 
 Interactive button for copying text to clipboard with visual feedback.
 
-<Canvas of={ControlsStories.textCopyButton} />
+<div className="sb-contained-canvas">
+  <Canvas of={ControlsStories.textCopyButton} />
+</div>
 
 #### Rich-text source
 
 When the source text contains block-level markup (e.g. paragraphs from a rich-text field), pass `text_copy_button__pre_text_tag: 'div'` so the wrapper is valid HTML. Default is `span`.
 
-<Canvas of={ControlsStories.textCopyButtonRichText} />
+<div className="sb-contained-canvas">
+  <Canvas of={ControlsStories.textCopyButtonRichText} />
+</div>
 
 ## Story Controls
 

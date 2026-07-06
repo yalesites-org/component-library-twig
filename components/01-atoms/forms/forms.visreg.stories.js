@@ -12,6 +12,7 @@ import {
 } from '../../_storybook/playground-utils';
 
 export default {
+  tags: ['visreg'],
   title: 'Atoms/Forms/Visreg',
   parameters: { controls: { disable: true } },
 };

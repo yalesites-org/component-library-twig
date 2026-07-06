@@ -15,6 +15,7 @@ import {
 } from '../../_storybook/playground-utils';
 
 export default {
+  tags: ['visreg'],
   title: 'Molecules/Accordion/Visreg',
   parameters: {
     controls: { disable: true },

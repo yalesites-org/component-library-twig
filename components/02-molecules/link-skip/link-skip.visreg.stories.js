@@ -13,7 +13,8 @@ import {
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Link skip/Visreg',
+  tags: ['visreg'],
+  title: 'Atoms/Link Skip/Visreg',
   parameters: { controls: { disable: true } },
 };
 

@@ -18,6 +18,7 @@ import {
 import { hasIcon } from '../../_storybook/icon-utils';
 
 export default {
+  tags: ['visreg'],
   title: 'Molecules/Tile Item/Visreg',
   parameters: { controls: { disable: true } },
 };

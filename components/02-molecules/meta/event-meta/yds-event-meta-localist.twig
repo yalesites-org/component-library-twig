@@ -431,7 +431,7 @@
                   cta__style: 'outline',
                 } %}
                 <div {{ bem('map', [], event_meta__base_class) }} aria-expanded="false">
-                  <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d12355.08068326396!2d{{ place.longitude }}!3d{{ place.latitude }}!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1712273181159!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d12355.08068326396!2d{{ place.longitude }}!3d{{ place.latitude }}!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1712273181159!5m2!1sen!2sus" title="Map showing location of {{ location_display|default('event') }}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
                   {% include "@atoms/controls/cta/yds-cta.twig" with {
                     cta__content: 'Get Directions',

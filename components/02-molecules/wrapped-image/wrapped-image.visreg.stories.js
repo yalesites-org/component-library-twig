@@ -15,6 +15,7 @@ import {
  * Storybook Definition.
  */
 export default {
+  tags: ['visreg'],
   title: 'Molecules/Wrapped Image/Visreg',
   parameters: {
     layout: 'fullscreen',

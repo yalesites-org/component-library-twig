@@ -10,7 +10,7 @@ import '../../01-atoms/typography/text/yds-text';
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Text',
+  title: 'Atoms/Text',
   tags: ['!dev'],
   argTypes: {
     variation: {

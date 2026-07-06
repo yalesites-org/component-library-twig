@@ -3,11 +3,11 @@ import * as ImageBannerStories from './image-banner.stories';
 import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
 import componentProps from './image-banner-props.yml';
 
-<Meta of={ImageBannerStories} name="Docs" />
+<Meta of={ImageBannerStories} name="Overview" />
 
 # Image Banner
 
-The Image Banner is a streamlined, visually focused banner that displays a full-width image with an optional caption. It prioritizes the image itself over text content, making it well-suited for visual storytelling, photography showcases, or pages where the imagery is the primary message. Available in tall and short height variations.
+The Image Banner is a streamlined, visually focused banner that displays a full-width image with an optional caption. It prioritizes the image itself over text content, making it well-suited for visual storytelling, photography showcases, or pages where the imagery is the primary message. Available in tall, short, and mini height variations.
 
 ## Interactive Preview
 
@@ -35,7 +35,7 @@ Use the `image_banner__content__background` property to apply different themes.
 
 ## Size Variations
 
-The Image Banner is available in two heights. Use the interactive preview above to switch between them, or see the [Visreg page](?path=/story/molecules-banners-image-banner-visreg--visreg) for a side-by-side comparison.
+The Image Banner is available in three heights. Use the interactive preview above to switch between them, or see the [Visreg page](?path=/story/molecules-banners-image-banner-visreg--visreg) for a side-by-side comparison.
 
 ### Short
 
@@ -43,6 +43,14 @@ A reduced height variant — useful when you need a visual accent without the fu
 
 <div className="sb-full-bleed-canvas">
   <Canvas of={ImageBannerStories.ImageBannerShort} />
+</div>
+
+### Mini
+
+The most compact height variant, matching the Grand Hero Banner mini option. Use it when you need a small image accent rather than a full-sized banner.
+
+<div className="sb-full-bleed-canvas">
+  <Canvas of={ImageBannerStories.ImageBannerMini} />
 </div>
 
 ## Technical Specifications
