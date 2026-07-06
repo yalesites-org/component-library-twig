@@ -19,6 +19,8 @@
     "./src/index.js",
     "./src/yds-divider.js",
     "./src/yds-accordion.js",
+    "./vanilla/yds-divider-vanilla.js",
+    "./vanilla/yds-accordion-vanilla.js",
     "./dist/*"
   ],
   "main": "dist/yalesites-web-components.js",

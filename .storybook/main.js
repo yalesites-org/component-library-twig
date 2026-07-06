@@ -2,6 +2,10 @@ module.exports = {
   stories: [
     '../components/[0-9]*/**/*.mdx',
     '../components/**/*.stories.@(js|jsx|ts|tsx)',
+    // Web Component (Lit + vanilla) demo stories — top-level only so we don't
+    // scan web-components/node_modules.
+    '../web-components/*.mdx',
+    '../web-components/*.stories.@(js|jsx|ts|tsx)',
   ],
   staticDirs: [
     '../dist', 
