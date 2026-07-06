@@ -5,7 +5,6 @@ import './vanilla/yds-divider-vanilla.js';
 
 export default {
   title: 'Web Components/Vanilla/Divider',
-  tags: ['!dev'],
   argTypes: {
     width: {
       control: 'select',
