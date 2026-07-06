@@ -15,9 +15,12 @@ implemented **two ways** so you can compare:
   <li><strong>Vanilla</strong> — the same components hand-written with only the native Custom Elements + Shadow DOM APIs, no framework (source in <code>web-components/vanilla/</code>).</li>
 </ul>
 
-Both render **identical output** (same markup, same styles, same behavior) — the difference is the
-code that produces it. Open <strong>Lit → Accordion</strong> and <strong>Vanilla → Accordion</strong>
-side by side, then read the two source files to see what Lit does for you.
+Each component's story includes a **Comparison** view that renders the **original Twig** version
+alongside the **Lit** and **vanilla** web components, driven by the *same controls* (the original
+component's own `-props.yml`). Use it to validate that the web components are a faithful **refactor**
+of the original — same look, same controls — not a redesign. **Web Components → Divider → Comparison**
+and **Accordion → Comparison** are the 1-to-1 checks; the individual **Original / Lit / Vanilla**
+stories show each on its own.
 
 These are demonstration/comparison artifacts, not a maintained second distribution. The Drupal site
 and Storybook's Twig components are unchanged — this is purely additive.
