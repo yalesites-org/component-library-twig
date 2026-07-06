@@ -50,19 +50,20 @@ const STYLES = `
   .accordion[data-component-theme='five']  { --color-accordion-accent: var(--color-slot-five, var(--color-blue-yale, hsl(210, 100%, 21%))); }
 
   .accordion__heading {
-    font-family: var(--font-families-mallory, sans-serif);
-    font-size: var(--font-size-30, 1.875rem);
-    font-weight: 700;
-    line-height: 1.2;
+    /* Source: @include heading(h2) — the h2 heading font (YaleNew by default).
+       The --font-style-* tokens inherit through the shadow boundary. */
+    font: var(--font-style-heading-h2-yale-new, 400 1.875rem/1.2 'YaleNew', Georgia, serif);
+    font-variant-numeric: oldstyle-nums;
     margin: 0 0 var(--size-spacing-5, 1rem);
-    color: var(--color-heading);
+    color: var(--color-heading, var(--color-gray-800, hsl(0, 0%, 13%)));
   }
 
   .accordion__controls { display: flex; list-style: none; margin: 0 0 var(--size-spacing-5, 1rem); padding: 0; }
 
   .accordion__toggle-all {
     display: inline-flex; gap: var(--size-spacing-3, 0.5rem); align-items: center;
-    font: inherit; font-size: var(--font-size-15, 0.9375rem); color: inherit;
+    /* Source: @include body-s. */
+    font: var(--font-style-body-s, 400 0.9375rem/1.5 sans-serif); color: inherit;
     background: none; border: 0; padding: 0; cursor: pointer;
   }
   .accordion__toggle-all:hover { color: var(--color-link-base, hsl(213, 66%, 45%)); }
@@ -76,9 +77,9 @@ const STYLES = `
   .accordion-item { border-bottom: var(--border-thickness-1, 0.063rem) solid; padding-top: var(--size-spacing-5, 1rem); }
 
   .accordion-item__heading {
-    font-family: var(--font-families-mallory, sans-serif);
-    font-size: var(--font-size-19, 1.1875rem);
-    font-weight: 600; margin: 0 0 var(--size-spacing-5, 1rem);
+    /* Source: @include body-l (regular weight, not a heading font). */
+    font: var(--font-style-body-l, 400 1.1875rem/1.5 sans-serif);
+    margin: 0 0 var(--size-spacing-5, 1rem);
   }
 
   .accordion-item__toggle {

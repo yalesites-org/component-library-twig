@@ -102,7 +102,7 @@ export const parameters = {
         'Organisms',
         ['Card Collection', ['Overview', 'Visreg', '*']],
         'Web Components',
-        ['Overview', 'Lit', 'Vanilla', '*'],
+        ['Overview', 'Divider', 'Accordion', '*'],
         'Templates',
         'Page Examples',
         ['Overview', '*'],
