@@ -55,6 +55,12 @@
   [data-collection-type='condensed'] & {
     margin-block-start: 0;
     padding-inline-start: 0;
+
+    // Become a query container so the cards can size against this wrapper's
+    // own inline width rather than the viewport. This lets the reference-card
+    // reclaim the leaked 70% content cap only in the narrow (< 34rem) 30/33
+    // column, without affecting the 50/50 or full-width bands. (#1299 QA)
+    container-type: inline-size;
   }
 
   [data-collection-type='single'] & {

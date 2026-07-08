@@ -404,6 +404,20 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     }
   }
 
+  // The viewport rule above (intended for a lone single card) also caps every
+  // image-less condensed card at 70%, wrapping titles too early in a narrow
+  // 30/33 column. Reclaim the full width, but ONLY when the condensed cards
+  // wrapper is actually narrow (< 34rem, the single-column band); the 50/50
+  // (34-70rem) and full-width (>= 70rem) bands keep the existing cap. Wins by
+  // higher specificity + later source order. (#1299 QA)
+  [data-collection-type='condensed'] [data-component-has-image='false'] & {
+    @container (max-width: 33.95rem) {
+      > * {
+        max-width: 100%;
+      }
+    }
+  }
+
   [data-collection-type='list'] [data-component-has-overlay='true'] & {
     padding-top: var(--size-spacing-7);
   }
