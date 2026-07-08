@@ -245,14 +245,27 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
+
+    // Explicit guard: keep chips flush-left even if Chosen's vendor CSS sets a
+    // different justification, so any clip lands at the tail, not the head. (#1299 QA)
+    justify-content: flex-start;
     overflow: hidden;
 
     li.search-choice {
       background-color: hsl(210deg 100% 21% / 10%);
       flex: none;
+      min-width: 0;
       max-width: 100%;
 
+      // Chosen renders the chip label in a plain inline span, so make it an
+      // inline-block box bounded by the chip width: only then do overflow +
+      // text-overflow engage and truncate the label at the TAIL (e.g.
+      // "Storage Categ…") instead of the row's overflow clipping its head.
+      // max-width stays inside the chip's padding, leaving room for the
+      // absolutely-positioned remove control. (#1299 QA)
       span {
+        display: inline-block;
+        max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
