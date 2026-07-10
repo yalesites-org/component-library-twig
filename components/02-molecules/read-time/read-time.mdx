@@ -1,7 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as ReadTimeStories from './read-time.stories';
 
-<Meta of={ReadTimeStories} name="Docs" />
+<Meta title="Atoms/Read Time" />
 
 # Read Time
 
@@ -11,7 +11,9 @@ The Read Time component automatically calculates and displays the estimated read
 
 The Read Time component displays below the sample content. It automatically calculates reading time based on the text length in the main content area.
 
-<Canvas of={ReadTimeStories.ReadTime} />
+<div className="sb-contained-canvas">
+  <Canvas of={ReadTimeStories.ReadTime} />
+</div>
 
 ## Properties
 
@@ -44,7 +46,7 @@ The Read Time component displays below the sample content. It automatically calc
 
 ## Technical Specifications
 
-- **Atomic Level**: Molecule
+- **Atomic Level**: Atom
 - **Template**: `yds-read-time.twig`
 - **Styles**: `_yds-read-time.scss`
 - **JavaScript**: `yds-read-time.js`
@@ -140,7 +142,7 @@ The default 200 words per minute is intentionally on the lower end of average re
 
 ## Testing
 
-For comprehensive visual regression testing with all theme variations, see the [Visreg page](?path=/story/molecules-read-time-visreg--visreg).
+For comprehensive visual regression testing with all theme variations, see the [Visreg page](?path=/story/atoms-read-time-visreg--visreg).
 
 ## Related Components
 

@@ -3,7 +3,7 @@ import * as VideoBannerStories from './video-banner.stories';
 import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
 import componentProps from './video-banner-props.yml';
 
-<Meta of={VideoBannerStories} name="Docs" />
+<Meta of={VideoBannerStories} name="Overview" />
 
 # Video Banner
 
@@ -26,9 +26,29 @@ Use the controls panel below to experiment with the component's properties in re
 
 ### Twig-Only Props
 
-| Property                | Type   | Description                                                                                                                                   |
-| ----------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `video_banner__content` | string | Required. HTML embed string for the video (e.g., from Drupal's video embed field). Provided by the CMS; not an interactive Storybook control. |
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>video_banner__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        Required. HTML embed string for the video (e.g., from Drupal's video
+        embed field). Provided by the CMS; not an interactive Storybook control.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ## Technical Specifications
 

@@ -1,0 +1,48 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as ColorsStories from './colors.stories';
+
+<Meta title="Tokens/Colors/Color Palettes (Theme)" />
+
+# Color Palettes (Theme)
+
+Global themes are the top-level color palettes available to YaleSites. Each theme defines eight color slots that cascade through the entire site — changing the global theme shifts the colors used by every component, section, and layout on the page.
+
+Use the **Site: Global Theme (lever)** toolbar control at the top of Storybook to preview the full design system in any theme.
+
+> **Note:** Some palettes are designated for specific Yale units or programs. For example, the IYY palette is reserved for OPAC and your.yale.edu. If your site is not part of that program's offerings, do not use that palette. When in doubt, check with the YaleSites team before selecting a non-standard palette.
+
+## Palette Overview
+
+<div className="sb-contained-canvas">
+  <Canvas of={ColorsStories.ColorGlobalThemes} />
+</div>
+
+## Theme Colors — Slots 1–5
+
+Slots 1–5 are the customizable palette for each theme. These are the colors that give each theme its distinct personality and vary between themes. They are used across:
+
+- **Slot 1** — Primary brand color. Used for dominant UI surfaces like headers, hero banners, and primary buttons.
+- **Slot 2** — Secondary brand color. Used for section backgrounds, card accents, and secondary CTAs.
+- **Slot 3** — Accent color. Used for highlights, hover states, tags, and decorative elements.
+- **Slot 4** — Light background. Used for subtle section backgrounds and surface variants that need a low-contrast wash.
+- **Slot 5** — Dark tone. Used for text on light backgrounds, borders, and muted UI elements.
+
+These slots are what component theme dials (1–5) map to — so a callout set to "dial two" will always pull from Slot 2 of whatever global theme is active.
+
+> **Section backgrounds:** When choosing a background color for a page section in Drupal, the available options are limited to a curated set of colors from the active palette that have been validated to meet WCAG 2.1 AA contrast standards. These constraints are built into the Drupal UI — you don't need to manually verify accessibility when using the provided options.
+
+## Yale Brand Colors — Slots 6–8
+
+Slots 6–8 are fixed across every theme and cannot be changed. They represent the non-negotiable Yale brand colors that must be present on every site regardless of palette:
+
+- **Slot 6** — Yale Blue (`#00356b`). Always present as the official Yale brand anchor color.
+- **Slot 7** — Near Black. Used for body text and high-contrast elements.
+- **Slot 8** — White. Used for text on dark backgrounds and primary surface whites.
+
+These slots exist to ensure that no matter which global theme a site uses, core Yale branding — particularly Yale Blue — is always available and consistent across all properties.
+
+## How Global Themes Work
+
+Component themes (dials) reference slots by number. A component set to "dial one" always maps to Slot 1 of the active global theme, making every component in the system automatically theme-aware. Switching the global theme lever in Drupal (or the toolbar in Storybook) cascades through all eight slots simultaneously.
+
+For a deeper explanation of how global, section, and component themes layer together, see the [Theme System page](?path=/docs/introduction-theme-system--docs).

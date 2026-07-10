@@ -209,12 +209,12 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 
 .event-meta__format--overline {
   @include tokens.body-s;
+  @include tokens.body-oldstyle-nums;
 
   margin-top: 0;
   margin-bottom: var(--size-spacing-3);
   color: var(--color-gray-500);
   font-variant-caps: small-caps;
-  font-variant-numeric: oldstyle-nums;
   text-transform: lowercase;
   letter-spacing: 0.5px;
   flex: 0 auto;

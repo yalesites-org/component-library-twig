@@ -1,0 +1,248 @@
+@use '../../../00-tokens/tokens';
+@use '../../../01-atoms/atoms';
+
+/* Publication Detail
+ *
+ * Heavy meta header for the Resource (publication) full page. Visually
+ * mirrors the event-meta-localist `details-wrapper` pattern: stacked on
+ * mobile, multi-column grid with horizontal dividers between rows.
+ *
+ * Co-located with the publication-meta molecule (used for card / list_item
+ * / condensed view modes) to keep all publication treatments in one place.
+ */
+
+/* Shared body-default treatment for the three rich-text cells (abstract,
+ * description, citation source text). Defined as a mixin rather than a
+ * comma-grouped selector so the abstract / description / citation rules
+ * stay separate in source order, preserving the cascade required by
+ * stylelint no-descending-specificity. */
+@mixin rich-text-cell {
+  @include tokens.body-default;
+
+  color: var(--color-text);
+
+  p:first-child {
+    margin-top: 0;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.publication-detail {
+  color: var(--color-basic-brown-gray);
+
+  /* Each metadata cell is a <dl><dt><dd> for proper term–definition
+   * semantics. Reset browser defaults so the cells slot into the
+   * existing flex grid identically to the previous div-based cells. */
+  dl,
+  dt,
+  dd {
+    margin: 0;
+  }
+
+  dd {
+    margin-inline-start: 0;
+    padding: 0;
+  }
+
+  /* Constrain the thumbnail image rendered into page_title__image so it sits
+   * as a small column on the right of the heading rather than full width.
+   * The download CTA stacks directly underneath. */
+  &__image-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-spacing-3);
+    width: 100%;
+    max-width: 200px;
+
+    @media (min-width: tokens.$break-l) {
+      flex: 0 0 200px;
+    }
+  }
+
+  &__image {
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid currentcolor;
+    }
+  }
+
+  &__download a {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: var(--size-spacing-2);
+    padding: var(--size-spacing-2) var(--size-spacing-4);
+    text-align: center;
+    font-size: var(--font-size-16);
+
+    .cta__icon {
+      width: 1em;
+      height: 1em;
+      flex: 0 0 1em;
+    }
+  }
+
+  &__inner {
+    display: flex;
+    flex-flow: column wrap;
+    border-top: var(--border-thickness-1) solid var(--color-divider);
+    margin-top: var(--size-spacing-6);
+  }
+
+  &__details-wrapper {
+    display: flex;
+    flex-flow: column wrap;
+
+    @media (min-width: tokens.$break-l) {
+      flex-flow: row wrap;
+    }
+
+    > * {
+      padding: var(--size-spacing-6);
+      flex: 1 auto;
+      border-bottom: var(--border-thickness-1) solid var(--color-divider);
+
+      @media (min-width: tokens.$break-l) {
+        flex: 1 0 33.33%;
+      }
+    }
+  }
+
+  /* Full-width cells inside the 3-up grid: increase specificity with the
+   * details-wrapper parent so the rule wins over `&__details-wrapper > *`
+   * naturally and the `!important` is not needed. Abstract and description
+   * sit OUTSIDE details-wrapper, so they don't need any flex override here. */
+  &__details-wrapper > &__authors,
+  &__details-wrapper > &__citation {
+    @media (min-width: tokens.$break-l) {
+      flex: 1 0 100%;
+    }
+  }
+
+  /* Abstract sits OUTSIDE the grid wrapper, but uses the same spacing */
+  &__abstract {
+    padding: var(--size-spacing-6);
+    border-bottom: var(--border-thickness-1) solid var(--color-divider);
+  }
+
+  /* Description sits OUTSIDE the grid wrapper, but uses the same spacing */
+  &__description {
+    padding: var(--size-spacing-6);
+    border-bottom: var(--border-thickness-1) solid var(--color-divider);
+  }
+
+  /* Video embed — the parent .publication-detail__inner uses flex-flow:
+   * column wrap, which sizes column-direction children to their content
+   * rather than stretching them. Drupal's oEmbed formatter renders the
+   * iframe with width="200" height="113" (YouTube's default response),
+   * so without an explicit width on the container the whole video cell
+   * collapses to 200px wide. Force full width on the container; the
+   * iframe inside then scales fluidly. */
+  &__video {
+    width: 100%;
+    padding: var(--size-spacing-6);
+    border-bottom: var(--border-thickness-1) solid var(--color-divider);
+
+    iframe {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      aspect-ratio: 16 / 9;
+      height: auto;
+    }
+  }
+
+  /* Field label — shared treatment matching event-meta__event__label */
+  &__field__label {
+    @include tokens.body-s;
+
+    display: block;
+    margin-bottom: var(--size-spacing-3);
+    font-weight: var(--font-weights-yalenew-bold);
+    color: var(--color-gray-800);
+  }
+
+  /* Author list — wraps inline */
+  &__authors-list {
+    @include atoms.list-reset;
+
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--size-spacing-1) var(--size-spacing-3);
+  }
+
+  &__authors-list__item {
+    &:not(:last-child)::after {
+      content: ',';
+    }
+
+    a {
+      @include atoms.plain-link;
+
+      color: var(--color-link-base);
+    }
+  }
+
+  /* Taxonomy cells — chip list like event-meta__event-types */
+  &__taxonomy-list {
+    @include atoms.list-reset;
+
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--size-spacing-3);
+  }
+
+  &__taxonomy-list__item {
+    background-color: var(--color-gray-100);
+    padding: var(--size-spacing-2) var(--size-spacing-3);
+
+    a {
+      @include atoms.plain-link;
+      @include tokens.body-s;
+
+      color: var(--color-text);
+    }
+  }
+
+  /* Three rich-text cells share the same body-default treatment. Sequenced
+   * lowest-specificity → highest to satisfy stylelint
+   * no-descending-specificity (see rich-text-cell mixin above for why
+   * they aren't comma-grouped). */
+  &__abstract__value {
+    @include rich-text-cell;
+  }
+
+  &__description__value {
+    @include rich-text-cell;
+  }
+
+  &__citation .pre-text__text {
+    @include rich-text-cell;
+  }
+
+  /* Space the copy button below the citation text. The atom wraps the
+   * source and button in a single flex container; the default layout is
+   * inline, so we stack them in the citation context. */
+  &__citation .text-copy-button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--size-spacing-3);
+  }
+
+  /* External source / Download CTAs render at outline style; nothing to
+   * override here, but keep the wrapper as a flex column so the CTA
+   * doesn't stretch full width on wide cells. */
+  &__external-source__link,
+  &__download__link {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-start;
+  }
+}

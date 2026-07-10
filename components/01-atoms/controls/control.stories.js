@@ -234,3 +234,19 @@ export const textCopyButton = ({ sectionTheme }) =>
       text_copy_button__component_theme: 'two',
     }),
   );
+
+// Rich-text source: pre_text_tag: 'div' wraps the source in a block-level
+// element so it can validly contain paragraph markup (e.g. a citation
+// pulled from a rich-text field). Default behaviour (span wrapper) is
+// unchanged — see the textCopyButton story above.
+export const textCopyButtonRichText = ({ sectionTheme }) =>
+  Section(
+    sectionTheme,
+    textCopyButtonTwig({
+      text_copy_button__pre_text:
+        '<p>Adams, J. (2026). <em>The Department of Government Improvement</em>. Yale Institution for Social and Policy Studies.</p>',
+      text_copy_button__pre_text_tag: 'div',
+      text_copy_button__content: 'Copy citation',
+      text_copy_button__component_theme: 'two',
+    }),
+  );

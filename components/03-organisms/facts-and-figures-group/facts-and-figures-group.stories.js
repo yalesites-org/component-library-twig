@@ -79,7 +79,6 @@ export const FactsAndFiguresGroup = ({
   factsAndFiguresGroupHeading,
   factsAndFiguresGroupContent,
   presentationStyle,
-  fontStyle,
   columnCount,
   alignment,
   themeColor,
@@ -99,7 +98,6 @@ export const FactsAndFiguresGroup = ({
           facts_and_figures__has_icon: hasIcon ? 'true' : 'false',
           facts_and_figures__icon_name: hasIcon ? iconName : null,
           facts_and_figures__presentation_style: presentationStyle,
-          facts_and_figures__font_style: fontStyle,
           facts_and_figures__alignment: alignment,
         };
       }),
@@ -114,7 +112,6 @@ export const FactsAndFiguresGroup = ({
         facts_and_figures__group__grid_count: columnCount,
         facts_and_figures__group__alignment: alignment,
         facts_and_figures__group__presentation_style: presentationStyle,
-        facts_and_figures__group__font_style: fontStyle,
         facts_and_figures__group__theme: themeColor,
         facts_and_figures__group__bg_image: image,
         ...customGroupData,

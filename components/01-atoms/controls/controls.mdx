@@ -3,7 +3,7 @@ import * as ControlsStories from './control.stories';
 import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
 import componentProps from './control-props.yml';
 
-<Meta of={ControlsStories} name="Docs" />
+<Meta of={ControlsStories} name="Overview" />
 
 # Controls
 
@@ -13,7 +13,9 @@ The controls component system includes call-to-action buttons (CTAs), text links
 
 Use the controls panel below to experiment with CTA buttons, text links, and text copy buttons in real-time.
 
-<Canvas of={ControlsStories.Cta} />
+<div className="sb-contained-canvas">
+  <Canvas of={ControlsStories.Cta} />
+</div>
 <Controls of={ControlsStories.Cta} />
 
 ## Component Variations
@@ -28,13 +30,25 @@ Primary action buttons with configurable styles, themes, and hover effects.
 
 Standard hyperlinks with optional icons and styling variations.
 
-<Canvas of={ControlsStories.textLink} />
+<div className="sb-contained-canvas">
+  <Canvas of={ControlsStories.textLink} />
+</div>
 
 ### Text Copy Button
 
 Interactive button for copying text to clipboard with visual feedback.
 
-<Canvas of={ControlsStories.textCopyButton} />
+<div className="sb-contained-canvas">
+  <Canvas of={ControlsStories.textCopyButton} />
+</div>
+
+#### Rich-text source
+
+When the source text contains block-level markup (e.g. paragraphs from a rich-text field), pass `text_copy_button__pre_text_tag: 'div'` so the wrapper is valid HTML. Default is `span`.
+
+<div className="sb-contained-canvas">
+  <Canvas of={ControlsStories.textCopyButtonRichText} />
+</div>
 
 ## Story Controls
 
@@ -319,6 +333,22 @@ The following controls are available in the Storybook Controls panel and affect 
       </td>
       <td>Theme color from dial</td>
     </tr>
+    <tr>
+      <td>
+        <code>text_copy_button__pre_text_tag</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'span'</code>
+      </td>
+      <td>
+        HTML tag wrapping the source text. Use <code>'div'</code> (or another
+        block tag) when <code>pre_text</code> contains block-level markup such
+        as paragraphs.
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -438,6 +468,8 @@ Text links automatically detect URL types and add appropriate icons:
 ### Copy Button Functionality
 
 The text copy button uses the Clipboard API to copy text. It requires JavaScript to be enabled and provides visual feedback on successful copy.
+
+On click, the button's text content is replaced with "Copied to clipboard" for ~1.7 seconds, then restored to whatever label the button was originally rendered with (captured at attach time). Consumers needing custom feedback can listen for the `text-copy-button:copied` CustomEvent dispatched on the button and call `event.preventDefault()` to suppress the default text swap.
 
 ## Testing
 

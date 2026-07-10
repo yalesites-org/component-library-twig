@@ -70,8 +70,9 @@ export const globalTypes = {
     toolbar: {
       icon: 'paragraph',
       items: [
-        { value: 'yalenew', title: 'Headings: YaleNew' },
+        { value: 'yalenew', title: 'Headings: YaleNew (Old-Style Numerals)' },
         { value: 'mallory', title: 'Headings: Mallory' },
+        { value: 'yalenew-oldstyle', title: 'Headings: YaleNew (Lining Numerals)' },
       ],
       showName: true,
       dynamicTitle: true,
@@ -83,19 +84,24 @@ export const globalTypes = {
 export const tags = ['autodocs', 'autodocs'];
 export const parameters = {
   actions: { argTypesRegex: '^on.*' },
-  controls: { disableSaveFromUI: true },
+  controls: { disableSaveFromUI: true, sort: 'requiredFirst' },
   options: {
     storySort: {
       method: 'alphabetical',
       order: [
         'Introduction',
-        ['Welcome', 'Theme System'],
+        ['Welcome', 'Theme System', 'Storybook Guide'],
         'Tokens',
+        [
+          'Colors',
+          ['Colors', 'Color Palettes (Theme)', 'Theme Sandbox', 'Theming Reference'],
+          '*',
+        ],
         'Atoms',
         'Molecules',
         'Organisms',
-        ['Card Collection', ['Docs', 'Visreg', '*']],
-        'Page Layouts',
+        ['Card Collection', ['Overview', 'Visreg', '*']],
+        'Templates',
         'Page Examples',
         ['Overview', '*'],
         '*',

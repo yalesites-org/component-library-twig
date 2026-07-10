@@ -19,6 +19,19 @@
   margin-bottom: var(--size-spacing-7);
 }
 
+// "Related" variant — used for related-content sections that sit below the
+// main page content. Adds extra top spacing to separate from the preceding
+// section's bottom border, and renders the heading at h3 visual size while
+// preserving the semantic h2 element. Placed after .card-collection__heading
+// to keep cascade order ascending (stylelint no-descending-specificity).
+.card-collection--related {
+  margin-block-start: var(--size-spacing-10);
+
+  .card-collection__heading {
+    @include tokens.heading(h3);
+  }
+}
+
 // The actual collection of cards.
 .card-collection__cards {
   --card-collection-spacing: var(--spacing-component-gutter);

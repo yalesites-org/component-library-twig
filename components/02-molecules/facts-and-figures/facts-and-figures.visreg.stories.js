@@ -13,6 +13,7 @@ import {
 } from '../../_storybook/playground-utils';
 
 export default {
+  tags: ['visreg'],
   title: 'Molecules/Facts and Figures/Visreg',
   parameters: { controls: { disable: true } },
 };
@@ -21,21 +22,15 @@ export const Visreg = () => {
   const factsAndFigures = factsAndFiguresData.facts_and_figures__stat;
   const content = factsAndFiguresData.facts_and_figures__content;
   const presentationStyles = ['basic', 'with-icon', 'icon-only'];
-  const fontStyles = ['numeric-oldstyle', 'normal'];
   const alignment = 'center';
   const iconName = 'piggy-bank-solid';
 
-  const renderFactsAndFigures = (
-    theme,
-    presentationStyle = 'basic',
-    fontStyle = 'normal',
-  ) => `
+  const renderFactsAndFigures = (theme, presentationStyle = 'basic') => `
     <ul class='facts-and-figures__group__wrap' data-facts-and-figures-collection-type='single'>
       ${factsAndFiguresTwig({
         facts_and_figures__stat: factsAndFigures,
         facts_and_figures__content: content,
         facts_and_figures__presentation_style: presentationStyle,
-        facts_and_figures__font_style: fontStyle,
         facts_and_figures__alignment: alignment,
         facts_and_figures__theme: theme,
         facts_and_figures__has_icon:
@@ -81,21 +76,6 @@ export const Visreg = () => {
         'All Presentation Style Variations',
         '',
         'Presentation Style',
-      )}
-      ${createVariations(
-        (fontStyle) =>
-          createSectionWrapper(
-            'one',
-            renderFactsAndFigures('one', 'basic', fontStyle),
-            {
-              width: 'site',
-              primaryWidth: '100%',
-            },
-          ),
-        fontStyles,
-        'All Font Style Variations',
-        '',
-        'Font Style',
       )}
     `,
     globalThemes,

@@ -1,0 +1,39 @@
+publication_detail__heading: 'The Connecticut Individual Healthcare Responsibility Fee'
+publication_detail__category: 'ISPS Policy brief'
+publication_detail__publish_date: '2018'
+publication_detail__authors:
+  - label: 'Fiona M. Scott Morton'
+    url: '/people/fiona-scott-morton'
+  - label: 'Robert L. Williams'
+    url: null
+publication_detail__journal_publication_name: ''
+publication_detail__journal_publication_issue: ''
+publication_detail__citation: '<p>Scott Morton, Fiona M., and Robert L. Williams. (2018). <em>The Connecticut Individual Healthcare Responsibility Fee</em>. Yale University Institution for Social and Policy Studies.</p>'
+publication_detail__description: ''
+publication_detail__abstract: '<p>The paper proposes that all residents of the state of Connecticut take responsibility for their healthcare costs by paying the actuarially fair price of an insurance policy for which they are eligible. Currently, individuals who do not enroll in coverage shift their costs to those who are insured. The authors estimate that the rule could lower premiums by 3 percent to 12 percent, with savings as high as $1,000 per enrollee due to the lower cost profile of the new insureds.</p>'
+publication_detail__external_source:
+  url: ''
+  title: ''
+publication_detail__download_url: 'https://example.com/ispsfaculty_proposal_series_18-04_fiona_scottmortonv3.pdf'
+publication_detail__download_label: 'Download'
+publication_detail__download_aria_label: 'Download the policy brief PDF'
+publication_detail__resource_type: 'document'
+publication_detail__media_id: null
+publication_detail__document_image: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 258" width="200" height="258" role="img" aria-label="Document preview"><rect width="200" height="258" fill="#fff" stroke="#ccc" stroke-width="1"/><rect x="20" y="22" width="160" height="5" fill="#333"/><rect x="36" y="32" width="128" height="5" fill="#333"/><rect x="52" y="42" width="96" height="5" fill="#333"/><line x1="14" y1="58" x2="186" y2="58" stroke="#999" stroke-width="0.5"/><rect x="14" y="68" width="120" height="3" fill="#666"/><rect x="14" y="76" width="60" height="3" fill="#666"/><line x1="14" y1="88" x2="186" y2="88" stroke="#999" stroke-width="0.5"/><g fill="#888"><rect x="14" y="98" width="172" height="2"/><rect x="14" y="103" width="170" height="2"/><rect x="14" y="108" width="172" height="2"/><rect x="14" y="113" width="80" height="2"/><rect x="14" y="123" width="170" height="2"/><rect x="14" y="128" width="172" height="2"/><rect x="14" y="133" width="100" height="2"/><rect x="14" y="143" width="172" height="2"/><rect x="14" y="148" width="170" height="2"/><rect x="14" y="153" width="172" height="2"/><rect x="14" y="158" width="60" height="2"/><rect x="14" y="168" width="172" height="2"/><rect x="14" y="173" width="170" height="2"/><rect x="14" y="178" width="120" height="2"/></g></svg>'
+publication_detail__metadata:
+  field_geographic_areas:
+    label: 'Location'
+    items:
+      - 'Connecticut'
+  field_discipline:
+    label: 'Discipline'
+    items:
+      - 'Interdisciplinary'
+  field_areas_of_study:
+    label: 'Areas of Study'
+    items:
+      - 'Health'
+  field_cf_dcn:
+    label: 'Document Control Number(s)'
+    items:
+      - 'ISPS ID ISPS18-04'

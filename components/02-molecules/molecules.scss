@@ -16,6 +16,8 @@
 @forward './meta/event-meta/yds-event-meta';
 @forward './meta/profile-meta/yds-profile-meta';
 @forward './meta/resource-meta/yds-resource-meta';
+@forward './meta/publication-meta/yds-publication-meta';
+@forward './meta/publication-meta/yds-publication-detail';
 @forward './modal/yds-modal';
 @forward './page-title/yds-page-title';
 @forward './pager/yds-pager';
@@ -40,3 +42,4 @@
 @forward './wrapped-callout/yds-wrapped-callout';
 @forward './banner/video/yds-video-banner';
 @forward './read-time/yds-read-time';
+@forward './related-content/yds-related-content';

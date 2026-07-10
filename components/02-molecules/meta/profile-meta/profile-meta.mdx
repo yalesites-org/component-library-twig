@@ -1,0 +1,57 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as MetaStories from '../meta.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from '../profile-props.yml';
+
+<Meta title="Molecules/Meta/Profile Meta" />
+
+# Profile Meta
+
+Displays professional metadata for person profiles, including titles, departments, and pronouns, with an optional portrait or landscape image.
+
+## Interactive Preview
+
+<Canvas of={MetaStories.Profile} />
+<Controls of={MetaStories.Profile} />
+
+## When to use it
+
+Use Profile Meta on faculty profiles, staff directory entries, and leadership pages. It renders the structured header region for a person node — name, title, department, and pronouns — with an optional image at a configurable orientation and alignment.
+
+## Image Options
+
+The **Profile Image Orientation** control switches between `landscape` (3x2) and `portrait` (2x3) crops. The **Profile Image Alignment** control places the image to the `left` or `right` of the text block.
+
+Use the **Profile Image Style** control to choose between `inline` (image shares the header row) and other available layout styles.
+
+## Pronouns
+
+Include pronouns when available. Pronouns are rendered with appropriate semantic markup and displayed alongside the name to support inclusive communication.
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-profile-meta.twig`
+- **Styles**: `_yds-profile-meta.scss`
+
+### Accessibility
+
+- Pronouns rendered with semantic markup for screen reader clarity
+- Image alt text required when an image is provided
+- Proper heading hierarchy within the profile layout
+- Color contrast meets WCAG AA standards across all background color options
+
+## Related Components
+
+- **Image**: Used for the optional profile image
+- **Post Meta**: Use for editorial content attribution instead of Profile Meta

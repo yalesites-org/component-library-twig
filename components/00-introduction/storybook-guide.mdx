@@ -1,0 +1,396 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Introduction/Storybook Guide" />
+
+# Storybook Guide
+
+This guide covers how the YaleSites design system Storybook is organized, what the conventions are, and what you need to do when adding or updating components.
+
+## Who This Is For
+
+This Storybook serves three audiences:
+
+- **YaleSites developers** — the primary audience. Use this as the source of truth for component behavior, design options, and documentation conventions when building or maintaining the design system.
+- **External developers** — contributors or teams building on top of the YaleSites design system. Use this to understand how components work, what options are available, and how to contribute back correctly.
+- **Yale brand reference** — designers, communicators, and Yale staff who need to understand what the YaleSites visual language looks like. The token and color sections in particular document Yale's web brand.
+
+---
+
+## How the Sidebar Is Organized
+
+The sidebar follows an atomic design hierarchy:
+
+<table>
+  <thead>
+    <tr>
+      <th>Section</th>
+      <th>What lives here</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Introduction</strong>
+      </td>
+      <td>Orientation pages — Welcome, Theme System, this guide</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Tokens</strong>
+      </td>
+      <td>
+        Design tokens: color palettes, typography, spacing, effects, breakpoints
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Atoms</strong>
+      </td>
+      <td>
+        The smallest building blocks: buttons, images, dividers, lists,
+        typography, read time, link skip
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Molecules</strong>
+      </td>
+      <td>
+        Components composed of atoms: callouts, cards, meta types, quotes,
+        modals
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Organisms</strong>
+      </td>
+      <td>
+        Full page sections composed of molecules: banners, content spotlights,
+        tabs, header, footer, calendar, card collections
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Templates</strong>
+      </td>
+      <td>
+        Structural scaffolding with no visual identity of their own: block
+        wrapper, component wrapper, layout, page layouts
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Page Examples</strong>
+      </td>
+      <td>Real-world page examples for reference</td>
+    </tr>
+  </tbody>
+</table>
+
+When adding a new component, place it in the tier that matches its complexity and purpose:
+
+- A single UI element with no moving parts is an **atom**.
+- A component made of atoms working together to form a meaningful UI unit is a **molecule**.
+- A self-contained page section composed of molecules — something that spans significant width or has its own structural presence — is an **organism**.
+- A layout shell or Drupal wiring component with no visual identity of its own is a **template**.
+
+---
+
+## Story Files vs. MDX Pages
+
+Every component can have two types of documentation:
+
+### Story files (`*.stories.js`)
+
+Story files define the interactive previews. They export named stories that Storybook renders in Canvas blocks. Use story files to:
+
+- Define `argTypes` and `args` for interactive controls
+- Export named variants of a component (e.g. `Default`, `WithImage`, `DarkTheme`)
+- Set up visual regression exports (see [Visreg Stories](#visreg-stories) below)
+
+### MDX pages (`*.mdx`)
+
+MDX pages are the documentation layer. They wrap stories with written context. Use MDX pages to:
+
+- Explain what a component is and when to use it
+- Document design decisions, constraints, and accessibility notes
+- Embed Canvas blocks for component previews
+- Reference related components or token pages
+
+**Every component should have both.** The story file handles interactivity; the MDX page handles explanation.
+
+---
+
+## The Canvas Rule
+
+> **Canvas blocks are for front-end component previews only. All explanatory text, headings, tables, and reference content belong in MDX.**
+
+This is the most important convention in this Storybook.
+
+**Do this:**
+
+```mdx
+## Color Variations
+
+The divider supports three line colors, shown below on themed backgrounds.
+
+<Canvas of={DividerStories.DividersColor} />
+```
+
+**Not this (text baked into the story):**
+
+```js
+export const DividersColor = () => `
+  <h2>Color Variations</h2>
+  <p>The divider supports three line colors...</p>
+  ${dividerTwig(...)}
+`;
+```
+
+When story exports contain `<h2>`, `<p>`, or other document-level text, that text should be moved into the MDX page and the Canvas should contain only the rendered component.
+
+---
+
+## Canvas Width
+
+By default, Canvas blocks render at a wide width suitable for full-bleed components. For smaller, self-contained components, wrap the Canvas in `sb-contained-canvas` to constrain it:
+
+```mdx
+<div className="sb-contained-canvas">
+  <Canvas of={ComponentStories.Default} />
+</div>
+```
+
+Use `sb-contained-canvas` for: atoms, small molecules, reference tables, token swatches.
+
+Use the default wide canvas for: banners, full-width layouts, organisms, any component that needs horizontal space to read correctly.
+
+---
+
+## Tags
+
+Tags control how stories appear in the sidebar and which tooling picks them up.
+
+<table>
+  <thead>
+    <tr>
+      <th>Tag</th>
+      <th>What it does</th>
+      <th>When to use it</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>'!dev'</code>
+      </td>
+      <td>Hides the story from the sidebar</td>
+      <td>
+        Apply to any story whose content is fully covered by an MDX docs page
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>'visreg'</code>
+      </td>
+      <td>
+        Marks the story for visual regression testing; hidden by default, shown
+        via the Visreg toolbar toggle
+      </td>
+      <td>
+        Apply to all <code>*.visreg.stories.js</code> exports
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+Apply tags after the export:
+
+```js
+export const MyStory = () => myTwig(data);
+MyStory.tags = ['!dev'];
+```
+
+Or at the default export level to apply to all stories in the file:
+
+```js
+export default {
+  title: 'Atoms/MyComponent',
+  tags: ['!dev'],
+};
+```
+
+---
+
+## Naming and Sidebar Order
+
+Story titles follow the pattern `Tier/ComponentName` or `Tier/Group/ComponentName`:
+
+```js
+export default {
+  title: 'Molecules/Banner/Action Banner',
+};
+```
+
+Sidebar ordering within a section is alphabetical by default. To override the order for a specific group, add an entry to the `storySort.order` array in `.storybook/preview.js`:
+
+```js
+order: [
+  'Introduction',
+  ['Welcome', 'Theme System', 'Storybook Guide'],
+  'Tokens',
+  ['Colors', ['Colors', 'Color Palettes (Theme)', 'Theme Sandbox', 'Theming Reference']],
+  ...
+]
+```
+
+MDX pages that are standalone (not tied to a stories file) use `<Meta title="..." />`. MDX pages that are attached to a stories file use `<Meta of={StoriesObject} name="Overview" />` — the `name` field sets the tab label in the sidebar. Always use `name="Overview"` rather than `name="Docs"`.
+
+---
+
+## The Theme System in Storybook
+
+The toolbar at the top of Storybook has two controls that affect how components render:
+
+**Site: Global Theme (lever)** — switches the active color palette site-wide. All components in the Canvas update to reflect the selected theme. When building or reviewing a component, check it in multiple global themes to make sure it responds correctly.
+
+**Visreg toggle** — shows or hides visual regression stories in the sidebar (hidden by default). Use this when you need to review or update visreg exports.
+
+Both controls persist across page navigation via `localStorage`.
+
+---
+
+## Visreg Stories
+
+Visual regression stories (`*.visreg.stories.js`) are a snapshot reference for QA during releases. They render fixed, non-interactive versions of components in their key states and variants so changes can be visually diffed.
+
+### When you must add a visreg story
+
+Add or update a visreg story whenever you:
+
+- **Add a new component** — create a `component-name.visreg.stories.js` file with all meaningful variants
+- **Add a new design option or color** — add the new option as a story export in the existing visreg file
+- **Add a new layout variation or modifier** — add it to the visreg file
+- **Change the visual output of an existing story** — update the visreg export to match
+
+If a new design option ships without a visreg story, it won't be caught during release QA. Every variation that can appear on a live site should have a corresponding visreg entry.
+
+### Visreg story conventions
+
+```js
+// component-name.visreg.stories.js
+export default {
+  title: 'Atoms/MyComponent',
+  tags: ['visreg'],
+};
+
+export const Default = () => myTwig({ ...defaultData });
+export const WithDarkBackground = () =>
+  myTwig({ ...defaultData, theme: 'one' });
+```
+
+Tag the default export with `'visreg'` — not `'!dev'`. This keeps them hidden from the regular sidebar but visible when the Visreg toggle is on.
+
+---
+
+## Adding a New Component
+
+### 1. Choose the right tier
+
+- **Atom** — a single, indivisible UI element (button, icon, divider, heading, read time)
+- **Molecule** — a component made of atoms working together (callout, card, meta types, modal)
+- **Organism** — a self-contained page section with significant structural presence (banner, content spotlight, tabs, site header, footer, card collection)
+- **Template** — a layout shell or Drupal wiring component with no visual identity of its own (block wrapper, component wrapper, layout)
+
+### 2. Create the required files
+
+At minimum, a new component needs:
+
+```
+components/[tier]/[component-name]/
+  yds-[component-name].twig            ← Twig template
+  _yds-[component-name].scss           ← Styles
+  [component-name].stories.js          ← Story file with interactive controls
+  [component-name].mdx                 ← Docs page
+  [component-name].visreg.stories.js   ← Visual regression stories
+```
+
+Where `[tier]` is one of: `01-atoms`, `02-molecules`, `03-organisms`, `04-page-layouts` (for templates).
+
+### 3. Minimum viable MDX page
+
+Every component docs page should cover:
+
+- **What it is** — one or two sentences describing the component and its purpose
+- **Interactive Preview** — a Canvas block with Controls so developers can explore it
+- **When to use it** — guidance on appropriate use cases
+- **Design options** — document every dial, slot, or theme option available
+- **Accessibility notes** — any constraints or requirements specific to this component
+
+```mdx
+# Component Name
+
+Brief description of what this component does and when to use it.
+
+## Interactive Preview
+
+<Canvas of={ComponentStories.Default} />
+<Controls of={ComponentStories.Default} />
+
+## Design Options
+
+Document available theme dials, layout variants, etc.
+
+## Accessibility
+
+Any accessibility requirements or constraints.
+```
+
+### 4. Add to the Theming Reference
+
+If the new component supports color theming (a dial or slot), add it to the [Theming Reference](?path=/docs/tokens-colors-theming-reference--docs) table.
+
+---
+
+## Quick Reference
+
+<table>
+  <thead>
+    <tr>
+      <th>Rule</th>
+      <th>Detail</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Canvas = component previews only</td>
+      <td>Move all text, headings, and tables to MDX</td>
+    </tr>
+    <tr>
+      <td>Wide canvas by default</td>
+      <td>
+        Use <code>sb-contained-canvas</code> for small/contained components
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Tag <code>!dev</code> when MDX covers the story
+      </td>
+      <td>Hides raw story from sidebar</td>
+    </tr>
+    <tr>
+      <td>
+        Tag <code>visreg</code> for regression stories
+      </td>
+      <td>Keeps them hidden unless toggled on</td>
+    </tr>
+    <tr>
+      <td>New option or variation = new visreg entry</td>
+      <td>Required for release QA coverage</td>
+    </tr>
+    <tr>
+      <td>All component tiers need a visreg file</td>
+      <td>Atoms, molecules, organisms, and templates alike</td>
+    </tr>
+  </tbody>
+</table>

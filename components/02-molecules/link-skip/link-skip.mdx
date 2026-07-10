@@ -1,7 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as LinkSkipStories from './link-skip.stories';
 
-<Meta of={LinkSkipStories} name="Docs" />
+<Meta title="Atoms/Link Skip" />
 
 # Link Skip
 
@@ -11,7 +11,9 @@ The link skip component provides an accessibility-focused navigation aid that al
 
 Use the controls panel below to experiment with the link skip's properties. Press Tab to see the skip link appear at the top of the page.
 
-<Canvas of={LinkSkipStories.LinkSkip} />
+<div className="sb-contained-canvas">
+  <Canvas of={LinkSkipStories.LinkSkip} />
+</div>
 <Controls of={LinkSkipStories.LinkSkip} />
 
 ## Properties
@@ -92,7 +94,7 @@ Use the controls panel below to experiment with the link skip's properties. Pres
 
 ## Technical Specifications
 
-- **Atomic Level**: Molecule
+- **Atomic Level**: Atom
 - **Template**: `yds-link-skip.twig`
 - **Styles**: `_yds-link-skip.scss`
 
@@ -161,7 +163,7 @@ The link skip component should be used on:
 
 ## Testing
 
-For comprehensive visual regression testing with all theme variations, see the [Visreg page](?path=/story/molecules-link-skip-visreg--visreg).
+For comprehensive visual regression testing with all theme variations, see the [Visreg page](?path=/story/atoms-link-skip-visreg--visreg).
 
 ### Testing Skip Link Functionality
 

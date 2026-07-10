@@ -59,16 +59,18 @@ export const Interactive = ({
   `;
 };
 
-export const Dividers = () => `
-  <h2>Thickness Variations</h2>
+export const DividersThickness = () => `
   <div style="--thickness-divider: var(--size-thickness-hairline)">${dividerTwig()}</div>
   <div style="--thickness-divider: var(--size-thickness-1)">${dividerTwig()}</div>
   <div style="--thickness-divider: var(--size-thickness-2)">${dividerTwig()}</div>
   <div style="--thickness-divider: var(--size-thickness-4)">${dividerTwig()}</div>
   <div style="--thickness-divider: var(--size-thickness-6)">${dividerTwig()}</div>
   <div style="--thickness-divider: var(--size-thickness-8)">${dividerTwig()}</div>
+  <div class="padding-to-see-dividers-above">&nbsp;</div>
+`;
+DividersThickness.tags = ['!dev'];
 
-  <h2>Width Variations (Centered)</h2>
+export const DividersWidth = () => `
   <div style="--thickness-divider: var(--size-thickness-2)">
     ${dividerTwig({ divider__width: '25', divider__position: 'center' })}
   </div>
@@ -81,16 +83,22 @@ export const Dividers = () => `
   <div style="--thickness-divider: var(--size-thickness-2)">
     ${dividerTwig({ divider__width: '100', divider__position: 'center' })}
   </div>
+  <div class="padding-to-see-dividers-above">&nbsp;</div>
+`;
+DividersWidth.tags = ['!dev'];
 
-  <h2>Position Variations (50% Width)</h2>
+export const DividersPosition = () => `
   <div style="--thickness-divider: var(--size-thickness-2)">
     ${dividerTwig({ divider__width: '50', divider__position: 'left' })}
   </div>
   <div style="--thickness-divider: var(--size-thickness-2)">
     ${dividerTwig({ divider__width: '50', divider__position: 'center' })}
   </div>
+  <div class="padding-to-see-dividers-above">&nbsp;</div>
+`;
+DividersPosition.tags = ['!dev'];
 
-  <h2>Color Variations (on themed background)</h2>
+export const DividersColor = () => `
   <div class="yds-layout" data-component-theme="one">
     <div class="yds-layout__inner" data-component-width="site" style="--color-divider: var(--color-gray-500);">
       <div class="yds-layout__primary" style="width: 100%">
@@ -101,7 +109,6 @@ export const Dividers = () => `
       </div>
     </div>
   </div>
-
   <div class="yds-layout" data-component-theme="two">
     <div class="yds-layout__inner" data-component-width="site" style="--color-divider: var(--color-blue-yale);">
       <div class="yds-layout__primary" style="width: 100%">
@@ -112,7 +119,6 @@ export const Dividers = () => `
       </div>
     </div>
   </div>
-
   <div class="yds-layout" data-component-theme="three">
     <div class="yds-layout__inner" data-component-width="site" style="--color-divider: var(--color-basic-brown-gray);">
       <div class="yds-layout__primary" style="width: 100%">
@@ -123,6 +129,6 @@ export const Dividers = () => `
       </div>
     </div>
   </div>
-
   <div class="padding-to-see-dividers-above">&nbsp;</div>
 `;
+DividersColor.tags = ['!dev'];

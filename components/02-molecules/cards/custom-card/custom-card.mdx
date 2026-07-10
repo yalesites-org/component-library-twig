@@ -3,7 +3,7 @@ import * as CustomCardStories from './custom-card.stories';
 import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
 import componentProps from './custom-card-props.yml';
 
-<Meta of={CustomCardStories} name="Docs" />
+<Meta of={CustomCardStories} name="Overview" />
 
 # Custom Card
 
@@ -13,7 +13,9 @@ Custom Card displays customizable card content with flexible layouts. It provide
 
 Use the controls panel below to experiment with the custom card's properties in real-time. Test with and without images, toggle featured status, and adjust content.
 
-<Canvas of={CustomCardStories.customCard} />
+<div className="sb-contained-canvas">
+  <Canvas of={CustomCardStories.customCard} />
+</div>
 <Controls of={CustomCardStories.customCard} />
 
 ## Properties
@@ -28,9 +30,29 @@ Use the controls panel below to experiment with the custom card's properties in 
 
 ### Twig-Only Props
 
-| Property           | Type   | Description                                                                                         |
-| ------------------ | ------ | --------------------------------------------------------------------------------------------------- |
-| `custom_card__url` | string | Required. URL for the card heading link. Provided by the CMS; not an interactive Storybook control. |
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>custom_card__url</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        Required. URL for the card heading link. Provided by the CMS; not an
+        interactive Storybook control.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ## Component Variations
 

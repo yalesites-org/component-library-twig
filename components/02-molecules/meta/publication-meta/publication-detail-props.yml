@@ -1,0 +1,62 @@
+# publication-detail-props.yml
+#
+# Publication Detail molecule property definitions.
+# Single source of truth for both Storybook controls and MDX documentation.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+heading:
+  twigProp: publication_detail__heading
+  name: Heading
+  type: string
+  required: true
+  description: Publication title rendered as the page-title heading.
+  control: text
+
+category:
+  twigProp: publication_detail__category
+  name: Category Overline
+  type: string
+  required: false
+  description: Category overline rendered above the heading. On a Resource node this is sourced from the resource_type taxonomy term name.
+  control: text
+
+dateFormat:
+  twigProp: publication_detail__publish_date
+  name: Date Format
+  type: select
+  required: false
+  description: Editor-selected date fidelity. On a Resource node this is driven by field_date_format alongside field_publish_date; here it switches between three pre-formatted publish_date strings for preview.
+  default: year
+  options:
+    - year
+    - monthYear
+    - full
+  control: select
+
+showDescription:
+  twigProp: publication_detail__description
+  name: Show Description Section
+  type: boolean
+  required: false
+  description: Toggle the description section. Description renders below the metadata grid, alongside abstract.
+  default: false
+  control: boolean
+
+showExternalSource:
+  twigProp: publication_detail__external_source
+  name: Show External Source CTA
+  type: boolean
+  required: false
+  description: Toggle the External Source CTA cell inside the metadata grid.
+  default: false
+  control: boolean
+
+showJournalInfo:
+  twigProp: publication_detail__journal_publication_name
+  name: Show Journal Info
+  type: boolean
+  required: false
+  description: Toggle the Publication / Issue cells inside the metadata grid (used for journal articles republished as Resources).
+  default: false
+  control: boolean

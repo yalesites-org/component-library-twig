@@ -71,7 +71,7 @@ export const Event = ({
     if (!allDay) {
       return {
         ...date,
-        is_all_day: false,
+        is_all_day: date.is_all_day ?? false,
       };
     }
     // For all-day, set times to midnight (start) and 23:59 (end)
@@ -94,7 +94,7 @@ export const Event = ({
     if (!allDay) {
       return {
         ...selectedData.event_featured_date,
-        is_all_day: false,
+        is_all_day: selectedData.event_featured_date.is_all_day ?? false,
       };
     }
     const startDate = new Date(
@@ -173,23 +173,20 @@ Profile.args = {
   subTitle: 'Subtitle',
   department: 'Department name',
   pronouns: 'They/They/Them',
-  profileImageAlignment: 'right',
+  profileImageAlignment: 'left',
+  profileImageOrientation: 'portrait',
 };
 
-export const Resource = ({
-  heading,
-  category,
-  resourceType,
-  publishDate,
-  description,
-}) =>
+export const Resource = ({ heading, category, publishDate, description }) =>
   resourceMetaTwig({
     resource_meta__heading: heading,
     resource_meta__category: category,
     resource_meta__publish_date_label: 'Published On',
     resource_meta__publish_date: publishDate,
     resource_meta__metadata: resourceMetaData.resource_meta__metadata,
-    resource_meta__resource_type: resourceType,
+    // Hardcoded to 'video' since the picker has been removed; the visreg
+    // story (Molecules/Meta/Visreg) covers the document and image branches.
+    resource_meta__resource_type: 'video',
     resource_meta__download_label: 'Download',
     resource_meta__download_aria_label: 'Download file',
     resource_meta__download_url: '#.pdf',
@@ -205,7 +202,6 @@ Resource.args = {
   ...toArgs(resourceProps),
   heading: 'Resource Title',
   category: 'Video',
-  resourceType: 'video',
   publishDate: 'July 1, 2025',
   description:
     'This is a sample resource description that will appear below the media content. It can contain <strong>HTML markup</strong> and provides context about the resource.',

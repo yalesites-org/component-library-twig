@@ -6,7 +6,7 @@ import componentProps from './tabs-props.yml';
 import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 export default {
-  title: 'Molecules/Tabs',
+  title: 'Organisms/Tabs',
   tags: ['!dev'],
   argTypes: toArgTypes(componentProps),
   args: toArgs(componentProps),

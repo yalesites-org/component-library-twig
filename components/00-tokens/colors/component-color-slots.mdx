@@ -1,0 +1,284 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Tokens/Colors/Theming Reference" />
+
+# Theming Reference
+
+A reference of every component in the YaleSites design system that supports color theming. These controls allow you to customize the visual appearance of components while maintaining accessibility standards.
+
+## What are Color Slots?
+
+Color slots (also called "dials" or "themes") are predefined color combinations that have been tested for accessibility. Each slot includes coordinated colors for backgrounds, text, borders, and accents that work together harmoniously. Slots map to the active global theme, so components automatically adapt when the global theme changes — a component set to "dial two" will always pull Slot 2 colors from whatever palette is active.
+
+<table>
+  <thead>
+    <tr>
+      <th>Tier</th>
+      <th>Component</th>
+      <th>Available Dials / Slots</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Atoms</td>
+      <td>
+        <a href="index.html?path=/docs/atoms-controls--overview" target="_top">
+          CTA Button
+        </a>
+      </td>
+      <td>One – Seven</td>
+      <td>Controls button background and text color</td>
+    </tr>
+    <tr>
+      <td>Atoms</td>
+      <td>
+        <a href="index.html?path=/docs/atoms-divider--overview" target="_top">
+          Divider
+        </a>
+      </td>
+      <td>Line color: gray, Yale Blue, brown-gray</td>
+      <td>
+        Controls the divider line color; also responds to the active section
+        theme
+      </td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td>
+        <a
+          href="index.html?path=/docs/molecules-accordion--overview"
+          target="_top"
+        >
+          Accordion
+        </a>
+      </td>
+      <td>Default, One – Five</td>
+      <td>Sets background color of the accordion container</td>
+    </tr>
+    <tr>
+      <td>Organisms</td>
+      <td>
+        <a
+          href="index.html?path=/docs/organisms-banners-action-banner--overview"
+          target="_top"
+        >
+          Banner (Action)
+        </a>
+      </td>
+      <td>One – Three</td>
+      <td>Controls banner background theme</td>
+    </tr>
+    <tr>
+      <td>Organisms</td>
+      <td>
+        <a
+          href="index.html?path=/docs/organisms-banners-grand-hero--overview"
+          target="_top"
+        >
+          Banner (Grand Hero)
+        </a>
+      </td>
+      <td>One – Five</td>
+      <td>Controls content area background color</td>
+    </tr>
+    <tr>
+      <td>Organisms</td>
+      <td>
+        <a
+          href="index.html?path=/docs/organisms-banners-image-banner--overview"
+          target="_top"
+        >
+          Banner (Image)
+        </a>
+      </td>
+      <td>One – Three</td>
+      <td>Controls banner background theme</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td>
+        <a
+          href="index.html?path=/docs/molecules-callout--overview"
+          target="_top"
+        >
+          Callout
+        </a>
+      </td>
+      <td>One – Five</td>
+      <td>Sets callout background color</td>
+    </tr>
+    <tr>
+      <td>Organisms</td>
+      <td>
+        <a
+          href="index.html?path=/docs/organisms-content-spotlight-content-spotlight-landscape--overview"
+          target="_top"
+        >
+          Content Spotlight (Landscape)
+        </a>
+      </td>
+      <td>Default, One – Five</td>
+      <td>Sets content area background color</td>
+    </tr>
+    <tr>
+      <td>Organisms</td>
+      <td>
+        <a
+          href="index.html?path=/docs/organisms-content-spotlight-content-spotlight-portrait--overview"
+          target="_top"
+        >
+          Content Spotlight (Portrait)
+        </a>
+      </td>
+      <td>Default, One – Five</td>
+      <td>Sets content area background color</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td>
+        <a
+          href="index.html?path=/docs/molecules-inline-message--overview"
+          target="_top"
+        >
+          Inline Message
+        </a>
+      </td>
+      <td>One – Five</td>
+      <td>Sets message background and accent color</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td>
+        <a
+          href="index.html?path=/docs/molecules-link-grid--overview"
+          target="_top"
+        >
+          Link Grid
+        </a>
+      </td>
+      <td>One – Five</td>
+      <td>Sets grid background color</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td>
+        <a
+          href="index.html?path=/docs/molecules-quick-links--overview"
+          target="_top"
+        >
+          Quick Links
+        </a>
+      </td>
+      <td>One – Five</td>
+      <td>
+        Sets component background color via <code>data-component-theme</code>;
+        control not currently exposed in Storybook
+      </td>
+    </tr>
+    <tr>
+      <td>Organisms</td>
+      <td>
+        <a href="index.html?path=/docs/organisms-tabs--overview" target="_top">
+          Tabs
+        </a>
+      </td>
+      <td>One – Five</td>
+      <td>Sets tab navigation background and active tab color</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td>
+        <a
+          href="index.html?path=/docs/molecules-taxonomy-display--overview"
+          target="_top"
+        >
+          Taxonomy Display
+        </a>
+      </td>
+      <td>Default, One – Five</td>
+      <td>Sets tag/label background color</td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td>
+        <a
+          href="index.html?path=/docs/molecules-tile-item--overview"
+          target="_top"
+        >
+          Tile Item
+        </a>
+      </td>
+      <td>One – Five</td>
+      <td>
+        Supports background theming via <code>tile__item__theme</code> in
+        Drupal; control not currently exposed in Storybook
+      </td>
+    </tr>
+    <tr>
+      <td>Molecules</td>
+      <td>
+        <a
+          href="index.html?path=/docs/molecules-wrapped-callout--overview"
+          target="_top"
+        >
+          Wrapped Callout
+        </a>
+      </td>
+      <td>Default, One – Five</td>
+      <td>Sets callout background color</td>
+    </tr>
+    <tr>
+      <td>Organisms</td>
+      <td>
+        <a
+          href="index.html?path=/docs/organisms-facts-and-figures-group--overview"
+          target="_top"
+        >
+          Facts and Figures Group
+        </a>
+      </td>
+      <td>One – Five</td>
+      <td>Sets section background color</td>
+    </tr>
+    <tr>
+      <td>Templates</td>
+      <td>
+        <a
+          href="index.html?path=/docs/templates-layout--overview"
+          target="_top"
+        >
+          Layout
+        </a>
+      </td>
+      <td>Default, One – Four</td>
+      <td>Sets page section background color</td>
+    </tr>
+    <tr>
+      <td>Organisms</td>
+      <td>
+        <a
+          href="index.html?path=/docs/organisms-global-elements-header--overview"
+          target="_top"
+        >
+          Site Header
+        </a>
+      </td>
+      <td>Multiple themes + Accent colors (1–8)</td>
+      <td>Combines a theme dial with an accent color selection</td>
+    </tr>
+    <tr>
+      <td>Organisms</td>
+      <td>
+        <a
+          href="index.html?path=/docs/organisms-global-elements-footer--overview"
+          target="_top"
+        >
+          Site Footer
+        </a>
+      </td>
+      <td>Multiple themes + Accent colors (1–8)</td>
+      <td>Combines a theme dial with an accent color selection</td>
+    </tr>
+  </tbody>
+</table>

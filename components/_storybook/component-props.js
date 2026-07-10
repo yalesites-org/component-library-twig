@@ -39,7 +39,9 @@ export function toArgTypes(props) {
 /**
  * Extracts default args from a componentProps YAML definition.
  *
- * Only includes keys that have a `default` field defined.
+ * Uses `controlDefault` if present (seeds the Storybook control without
+ * appearing in the docs table), otherwise falls back to `default`.
+ * Only includes keys where at least one of those fields is defined.
  *
  * @param {Object} props - Parsed YAML componentProps object
  * @returns {Object} Storybook-compatible args
@@ -55,7 +57,8 @@ export function toArgTypes(props) {
  */
 export function toArgs(props) {
   return Object.entries(props).reduce((acc, [key, prop]) => {
-    if (prop.default !== undefined) acc[key] = prop.default;
+    if (prop.controlDefault !== undefined) acc[key] = prop.controlDefault;
+    else if (prop.default !== undefined) acc[key] = prop.default;
     return acc;
   }, {});
 }

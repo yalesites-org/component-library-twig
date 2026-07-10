@@ -13,9 +13,9 @@ window.Drupal = { behaviors: {} };
     context = context || document;
     settings = settings || drupalSettings;
 
-    // Guard against duplicate attachment to the same context within the same
-    // render cycle. Without this, multiple useEffect calls attach duplicate
-    // event listeners, causing toggles to fire twice and appear broken.
+    // Guard against duplicate attachment within the same render cycle.
+    // Without this, multiple useEffect calls in Storybook Docs view attach
+    // duplicate event listeners, causing toggles to fire twice and appear broken.
     if (context._drupalBehaviorsAttached) return;
     context._drupalBehaviorsAttached = true;
 
