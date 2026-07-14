@@ -53,7 +53,6 @@
     "js-yaml-loader": "^1.2.2",
     "jsdom": "^25.0.1",
     "lint-staged": "^15.2.7",
-    "lit": "^3.3.3",
     "postcss": "^8.4.29",
     "postcss-loader": "^7.3.3",
     "sass": "^1.47.0",
