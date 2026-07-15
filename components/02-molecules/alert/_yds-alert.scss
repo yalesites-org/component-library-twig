@@ -151,6 +151,15 @@ $alert-fade-speed: var(--animation-speed-slow);
   }
 }
 
+// Emergency: `atoms.link` sets `--color-link-hover` from global `--color-slot-two`
+// (e.g. Yale blue). On the red emergency background that pairing is ~2.3:1 —
+// below WCAG 2.1 AA for normal text. Pin hover (and visited-hover) to the
+// alert text token so contrast matches body copy (~5.2:1 with white on red).
+.alert[data-alert-type='emergency'] .alert__link {
+  --color-link-hover: var(--color-alert-text);
+  --color-link-visited-hover: var(--color-alert-text);
+}
+
 .alert__toggle {
   @include atoms.button-reset;
 

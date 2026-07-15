@@ -1,0 +1,25 @@
+# text-props.yml
+#
+# Text Field component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+content:
+  twigProp: text_field__content
+  name: Content
+  type: string
+  required: true
+  description: HTML content containing the formatted text to display
+  control: text
+
+variation:
+  twigProp: text_field__variation
+  name: Text Field Variation
+  type: select
+  required: false
+  description: "Visual variation: 'default' or 'emphasized' (for increased prominence)"
+  default: default
+  options:
+    - default
+    - emphasized
+  control: select

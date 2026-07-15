@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as CalendarStories from './calendar.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './calendar-props.yml';
 
 <Meta of={CalendarStories} name="Overview" />
 
@@ -18,29 +20,7 @@ Use the controls panel below to experiment with the calendar's properties in rea
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>month</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        Array of weeks, each containing an array of day objects with date and
-        events data
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ## Calendar Structure
 
