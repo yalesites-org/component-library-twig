@@ -50,7 +50,7 @@ The output is a **first draft** — always review it (search for `x-codegen-todo
 - **Optional scalar props that can receive NULL** from Drupal need a nullable type
   (`type: [string, "null"]`); SDC validates NULL against the declared type.
 - Remove codegen false-positives: it detects every `{% block %}` including those inside nested
-  `{% embed %}` of *other* components (e.g. an accordion that embeds the list atom surfaces
+  `{% embed %}` of _other_ components (e.g. an accordion that embeds the list atom surfaces
   `list__content`). Drop slots that belong to embedded sub-components.
 
 ### 3. Write the shim (`<name>.twig`)
@@ -58,7 +58,7 @@ The output is a **first draft** — always review it (search for `x-codegen-todo
 Props are available as variables. Slots need care — this is the biggest gotcha:
 
 - **Slots arrive as a block override** on the shim (both the SDC render element and a Twig
-  `{% embed %}` from a block template). Reading a slot as a *variable* only works for the render
+  `{% embed %}` from a block template). Reading a slot as a _variable_ only works for the render
   element, so use the `block()` capture pattern below.
 - **Name each SDC slot distinctly from the CLT block it injects into** (e.g. `callout__content`
   vs the CLT template's `callout__items`) — same-named blocks collide and the wrong one wins.
@@ -90,13 +90,14 @@ Component with a slot, e.g. Callout (`callout__content` → the CLT `callout__it
 ```
 
 Why each line:
+
 - `block('callout__content')` captures the override (works for both render paths).
 - the captured value is passed **inside** the `with { … } only` so it is in scope in the override.
 - `|raw` because `block()` returns a plain string and the content is already-rendered, trusted
   Drupal field output (double-escaping otherwise).
 - `{% if false %}{% block callout__content %}{% endblock %}{% endif %}` registers the receiver block
   at compile time (so `block()` finds it) without rendering it inline (which would duplicate the
-  content). A slot the CLT template consumes as a *variable* (e.g. accordion's heading) is captured
+  content). A slot the CLT template consumes as a _variable_ (e.g. accordion's heading) is captured
   the same way and passed through the `with`.
 
 ### 4. Wire assets via `libraryOverrides`
@@ -120,7 +121,7 @@ In `atomic/templates/block/layout-builder/block--inline-block--<name>.html.twig`
 - Render props-only components with `{{ include('atomic:<name>', { … }, with_context = false) }}`.
 - Render components with slots with `{% embed 'atomic:<name>' with { … } %}{% block <slot> %}…{% endblock %}{% endembed %}` — **do not use `only` here**, or the slot block override loses access to `content` and `directory`.
 - **The block template is the adapter layer.** Default dial values here — older blocks can store
-  NULL and the SDC enums are strict, and the schema `default` only applies to *absent* (not NULL)
+  NULL and the SDC enums are strict, and the schema `default` only applies to _absent_ (not NULL)
   props: `content.field_style_color.0['#markup']|default('one')`. Choose the default that matches
   the pre-SDC behavior for a NULL value (trace the CLT template's own `|default(...)`).
 - Remove now-redundant `{{ attach_library() }}` calls (the SDC attaches via `libraryOverrides`).
@@ -140,11 +141,37 @@ The split is ~35 `list_default` / ~44 `list_key` platform-wide, so codegen reads
 
 ## Verify (do not skip)
 
-- `lando drush cr`, then render in isolation:
+### Confirm the block resolves through the SDC (not a pre-SDC fallback)
+
+Thin-wrapper shims embed the canonical CLT template with `only` and never print `{{ attributes }}`,
+so Drupal's `data-component-id` attribute is **not** emitted for a thin-wrapped block — it is
+written onto the component's `attributes` object, which these shims never output. Don't look for
+`data-component-id` on a thin-wrapped block; it will not appear, debug on or off. (A **fully
+self-contained SDC** — the tabs/modal form above — that prints `{{ attributes }}` on its root
+element _does_ emit it.) A genuinely unresolved `embed 'atomic:<name>'` throws
+`ComponentNotFoundException` (a white screen), so there is no silent fallback to the old template —
+a page that renders cleanly has resolved its SDCs. To confirm which template rendered, most
+definitive first:
+
+- **Twig-debug component comments (local).** Twig debug is on locally
+  (`web/sites/theming.services.yml`). `lando drush cr`, load the page, View Source, and confirm the
+  `<!-- ... Component start: atomic:<name> -->` … `<!-- ... Component end: atomic:<name> -->`
+  boundary around the block (the leading emoji varies per component — grep the stable text
+  `Component start: atomic:<name>`).
+- **Attached asset / BEM classes (any environment, including the multidev where debug is off).**
+  Grep the rendered page for the component's `dist/js/<name>.js` library or the CLT template's unique
+  BEM classes.
+- **Registered components:**
+  `lando drush ev 'print_r(array_keys(\Drupal::service("plugin.manager.sdc")->getDefinitions()));'`
+- **Render in isolation:**
   `lando drush ev '$b=["#type"=>"component","#component"=>"atomic:<name>","#props"=>[...],"#slots"=>[...]]; print \Drupal::service("renderer")->renderInIsolation($b);'`
+
+### Confirm the output is byte-identical to pre-SDC
+
 - **Capture a real before/after baseline.** Stash the atomic changes, render an affected page,
-  restore, render again, and diff (strip SDC dev decorations: `data-component-id` and the
-  `🥚/🥜 Component` comments, which only appear with Twig debug on). Confirm byte-identical output.
+  restore, render again, and diff — stripping the `Component start`/`Component end` comments (Twig
+  debug only), and, for a self-contained SDC, the `data-component-id` attribute (a thin-wrapper shim
+  emits none). Confirm byte-identical output.
 - Confirm the JS attaches on a real page (grep the page for the component's `dist/js/*.js`).
 - Run the schema-validation test (`lando composer test:sdc`) and any behavioral tests
   (`npm run test:unit` in CLT).
@@ -159,7 +186,7 @@ The split is ~35 `list_default` / ~44 `list_key` platform-wide, so codegen reads
   with the CLT block the shim overrides.
 - Prefer `include(..., with_context=false)` / explicit `with { … } only` on the shim's inner embed
   for isolation, but forward everything the inner template needs (props, slots, `directory`).
-- **Rich content into an auto-escaping sink.** When the CLT template consumes a slot as a *variable*
+- **Rich content into an auto-escaping sink.** When the CLT template consumes a slot as a _variable_
   printed with a bare `{{ x }}` (no `|raw`) — e.g. a `<blockquote>{{ quote }}` or `<figcaption>{{ attribution }}` —
   capturing the slot as a plain string and passing it will **double-escape** rich field markup
   (the block template feeds a render array whose rendered HTML is already escaped). Capture it as
@@ -170,9 +197,9 @@ The split is ~35 `list_default` / ~44 `list_key` platform-wide, so codegen reads
   whose sink already applies `|raw` — e.g. the text atom — don't need this.)
 - **Thin-wrapper limit: consumer slots that depend on component-internal state.** If the CLT
   template generates internal state (a `random()` id, a loop `key`, a `base_class`) that the slot
-  markup *itself* uses — e.g. tabs, where each label's `aria-controls` and each panel's `id` are
+  markup _itself_ uses — e.g. tabs, where each label's `aria-controls` and each panel's `id` are
   `tab-{tabs__id}-{key}` — the `block()`-capture pattern breaks, because it renders the slot
-  *outside* the component's scope (the internal state is undefined there). These components cannot be
+  _outside_ the component's scope (the internal state is undefined there). These components cannot be
   thin-wrapped; they need the **fully self-contained SDC** form (move the template + partials into
   `atomic/components/<comp>/`) or a **structured data prop** (pass an items array and let the
   component loop internally). Applies to interactive components (tabs/modal/menu) and nested
