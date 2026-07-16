@@ -2,7 +2,15 @@ import referenceCardTwig from './examples/_card--examples.twig';
 
 import referenceCardData from './examples/post-card.yml';
 import referenceProfileCardData from './examples/profile-card.yml';
+import referencePageCardData from './examples/page-card.yml';
+import referenceResourceData from './examples/resource-card.yml';
 import imageData from '../../../01-atoms/images/image/image.yml';
+import componentProps from './reference-card-props.yml';
+import { toArgTypes, toArgs } from '../../../_storybook/component-props';
+import { addTableDefaults } from '../../../_storybook/add-table-defaults';
+
+const argTypes = toArgTypes(componentProps);
+argTypes.eyebrow = { ...argTypes.eyebrow, if: { arg: 'showEyebrow' } };
 
 /**
  * Storybook Definition.
@@ -12,78 +20,11 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    eyebrow: {
-      name: 'Eyebrow',
-      type: 'string',
-      if: { arg: 'showEyebrow' },
-    },
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    pronouns: {
-      name: 'Pronouns',
-      type: 'string',
-      if: { arg: 'showPronouns' },
-    },
-    snippet: {
-      name: 'Snippet',
-      type: 'string',
-    },
-    collectionType: {
-      name: 'Collection Type',
-      type: 'select',
-      options: ['grid', 'list', 'condensed', 'single'],
-    },
-    featured: {
-      name: 'Featured',
-      type: 'boolean',
-    },
-    showCategories: {
-      name: 'Show Categories/Affiliations',
-      type: 'boolean',
-    },
-    showEyebrow: {
-      name: 'Show Eyebrow',
-      type: 'boolean',
-    },
-    showPronouns: {
-      name: 'Show Pronouns',
-      type: 'boolean',
-    },
-    showTags: {
-      name: 'Show Tags',
-      type: 'boolean',
-    },
-    showThumbnail: {
-      name: 'Show Thumbnail',
-      type: 'boolean',
-    },
-    withImage: {
-      name: 'With Image',
-      type: 'boolean',
-    },
-    overlayText: {
-      name: 'Overlay Text',
-      type: 'string',
-    },
-  },
+  argTypes,
   args: {
+    ...toArgs(componentProps),
     heading: referenceCardData.reference_card__heading,
     snippet: referenceCardData.reference_card__snippet,
-    categories: referenceCardData.reference_card__categories,
-    tags: referenceCardData.reference_card__tags,
-    pronouns: referenceProfileCardData.reference_card__pronouns,
-    collectionType: 'grid',
-    featured: true,
-    withImage: true,
-    showEyebrow: false,
-    showCategories: false,
-    showTags: false,
-    showThumbnail: true,
-    showPronouns: false,
-    date: referenceCardData.reference_card__date,
   },
 };
 
@@ -91,7 +32,6 @@ export const PostCard = ({
   date,
   eyebrow,
   heading,
-  pronouns,
   snippet,
   collectionType,
   featured,
@@ -99,8 +39,6 @@ export const PostCard = ({
   showCategories,
   showEyebrow,
   showTags,
-  showThumbnail,
-  showPronouns,
   overlayText,
 }) => `
 <div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
@@ -113,16 +51,13 @@ export const PostCard = ({
         reference_card__date: date,
         reference_card__eyebrow: eyebrow,
         reference_card__heading: heading,
-        reference_card__pronouns: pronouns,
         reference_card__snippet: snippet,
         reference_card__featured: featured ? 'true' : 'false',
         reference_card__image: withImage ? 'true' : 'false',
         reference_card__url: referenceCardData.reference_card__url,
-        show_categories: showCategories ? 'true' : 'false',
-        show_eyebrow: showEyebrow ? 'true' : 'false',
-        show_tags: showTags ? 'true' : 'false',
-        show_thumbnail: showThumbnail ? 'true' : 'false',
-        show_pronouns: showPronouns ? 'true' : 'false',
+        show_categories: showCategories,
+        show_eyebrow: showEyebrow,
+        show_tags: showTags,
         reference_card__categories:
           referenceCardData.reference_card__categories,
         reference_card__tags: referenceCardData.reference_card__tags,
@@ -132,13 +67,19 @@ export const PostCard = ({
   </div>
 </div>
 `;
-PostCard.argTypes = {
-  date: {
-    name: 'Date',
-    type: 'string',
-    defaultValue: referenceCardData.reference_card__date,
-  },
+const postCardArgs = {
+  date: referenceCardData.reference_card__date,
 };
+PostCard.argTypes = addTableDefaults(
+  {
+    date: {
+      name: 'Date',
+      type: 'string',
+    },
+  },
+  postCardArgs,
+);
+PostCard.args = postCardArgs;
 
 export const EventCard = ({
   format,
@@ -187,44 +128,51 @@ export const EventCard = ({
   </div>
 </div>
 `;
-EventCard.argTypes = {
-  format: {
-    name: 'Format',
-    control: 'select',
-    options: ['In-person', 'Online', 'Hybrid'],
-    defaultValue: 'In-person',
-  },
-  headingPrefix: {
-    name: 'Heading Prefix',
-    type: 'string',
-    defaultValue: '',
-  },
-  primaryCTAContent: {
-    name: 'Primary CTA Content',
-    type: 'string',
-    defaultValue: 'Buy Tickets',
-  },
-  primaryCTAURL: {
-    name: 'Primary CTA URL',
-    type: 'string',
-    defaultValue: 'https://yale.edu',
-  },
-  secondaryCTAContent: {
-    name: 'Secondary CTA Content',
-    type: 'string',
-    defaultValue: 'Add to Calendar',
-  },
-  secondaryCTAURL: {
-    name: 'Secondary CTA URL',
-    type: 'string',
-    defaultValue: 'https://yale.edu',
-  },
-  multiDayEvent: {
-    name: 'Multi-day Event',
-    type: 'boolean',
-    defaultValue: false,
-  },
+const eventCardArgs = {
+  format: 'In-person',
+  headingPrefix: '',
+  primaryCTAContent: 'Buy Tickets',
+  primaryCTAURL: 'https://yale.edu',
+  secondaryCTAContent: 'Add to Calendar',
+  secondaryCTAURL: 'https://yale.edu',
+  multiDayEvent: false,
 };
+EventCard.argTypes = addTableDefaults(
+  {
+    format: {
+      name: 'Format',
+      control: 'select',
+      options: ['In-person', 'Online', 'Hybrid'],
+    },
+    headingPrefix: {
+      name: 'Heading Prefix',
+      type: 'string',
+    },
+    primaryCTAContent: {
+      name: 'Primary CTA Content',
+      type: 'string',
+    },
+    primaryCTAURL: {
+      name: 'Primary CTA URL',
+      type: 'string',
+    },
+    secondaryCTAContent: {
+      name: 'Secondary CTA Content',
+      type: 'string',
+    },
+    secondaryCTAURL: {
+      name: 'Secondary CTA URL',
+      type: 'string',
+    },
+    multiDayEvent: {
+      name: 'Multi-day Event',
+      type: 'boolean',
+    },
+  },
+  eventCardArgs,
+);
+
+EventCard.args = eventCardArgs;
 
 export const ProfileCard = ({
   collectionType,
@@ -266,10 +214,148 @@ export const ProfileCard = ({
 </div>
 `;
 
-ProfileCard.argTypes = {
-  showPronouns: {
-    name: 'Show Pronouns',
-    type: 'boolean',
-    defaultValue: false,
-  },
+const profileCardArgs = {
+  showPronouns: false,
 };
+
+ProfileCard.argTypes = addTableDefaults(
+  {
+    showPronouns: {
+      name: 'Show Pronouns',
+      type: 'boolean',
+    },
+  },
+  profileCardArgs,
+);
+
+ProfileCard.args = profileCardArgs;
+
+export const PageCard = ({
+  date,
+  eyebrow,
+  heading,
+  snippet,
+  collectionType,
+  featured,
+  withImage,
+  showCategories,
+  showEyebrow,
+  showTags,
+  showThumbnail,
+  overlayText,
+}) => `
+<div class='card-collection' data-component-width='site' data-collection-type='${collectionType}' data-collection-featured="${featured}">
+  <div class='card-collection__inner'>
+    <ul class='card-collection__cards'>
+      ${referenceCardTwig({
+        card_collection__source_type: 'page',
+        card_collection__type: collectionType,
+        ...imageData.responsive_images['3x2'],
+        reference_card__date: date,
+        reference_card__eyebrow: eyebrow,
+        reference_card__heading: heading,
+        reference_card__snippet: snippet,
+        reference_card__featured: featured ? 'true' : 'false',
+        reference_card__image: withImage ? 'true' : 'false',
+        reference_card__url: referencePageCardData.reference_card__url,
+        show_categories: showCategories,
+        show_eyebrow: showEyebrow,
+        show_tags: showTags,
+        show_thumbnail: showThumbnail ? 'true' : 'false',
+        reference_card__categories:
+          referencePageCardData.reference_card__categories,
+        reference_card__tags: referencePageCardData.reference_card__tags,
+        reference_card__overlay: overlayText,
+      })}
+    </ul>
+  </div>
+</div>
+`;
+const pageCardArgs = {
+  heading: referencePageCardData.reference_card__heading,
+  snippet: referencePageCardData.reference_card__snippet,
+  date: referencePageCardData.reference_card__date,
+  collectionType: 'grid',
+  featured: true,
+  withImage: true,
+  showEyebrow: false,
+  showCategories: false,
+  showTags: false,
+  showThumbnail: true,
+};
+PageCard.argTypes = addTableDefaults(
+  {
+    date: {
+      name: 'Date',
+      type: 'string',
+    },
+  },
+  pageCardArgs,
+);
+
+PageCard.args = pageCardArgs;
+
+export const ResourceCard = ({
+  date,
+  eyebrow,
+  heading,
+  snippet,
+  collectionType,
+  featured,
+  withImage,
+  showCategories,
+  showEyebrow,
+  showTags,
+  overlayText,
+  portrait,
+}) => `
+<div class='card-collection${
+  portrait ? ' card-collection--resource-portrait' : ''
+}' data-component-width='site'${
+  portrait ? " data-collection-source='resource'" : ''
+} data-collection-type='${collectionType}' data-collection-featured="${featured}">
+  <div class='card-collection__inner'>
+    <ul class='card-collection__cards'>
+      ${referenceCardTwig({
+        card_collection__source_type: 'resource',
+        card_collection__type: collectionType,
+        ...imageData.responsive_images[portrait ? '1x1.6' : '3x2'],
+        reference_card__date: date,
+        reference_card__eyebrow: eyebrow,
+        reference_card__heading: heading,
+        reference_card__snippet: snippet,
+        reference_card__featured: featured ? 'true' : 'false',
+        reference_card__image: withImage ? 'true' : 'false',
+        reference_card__url: referenceResourceData.reference_card__url,
+        show_categories: showCategories,
+        show_eyebrow: showEyebrow,
+        show_tags: showTags,
+        reference_card__categories:
+          referenceResourceData.reference_card__categories,
+        reference_card__tags: referenceResourceData.reference_card__tags,
+        reference_card__overlay: overlayText,
+      })}
+    </ul>
+  </div>
+</div>
+`;
+const resourceCardArgs = {
+  showCategories: true,
+  portrait: false,
+  date: referenceResourceData.reference_card__date,
+};
+ResourceCard.argTypes = addTableDefaults(
+  {
+    date: {
+      name: 'Date',
+      type: 'string',
+    },
+    portrait: {
+      name: 'Portrait',
+      type: 'boolean',
+    },
+  },
+  resourceCardArgs,
+);
+
+ResourceCard.args = resourceCardArgs;

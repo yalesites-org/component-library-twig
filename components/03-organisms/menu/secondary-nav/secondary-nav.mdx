@@ -1,0 +1,162 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as SecondaryNavStories from './secondary-nav.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './secondary-nav-props.yml';
+
+<Meta of={SecondaryNavStories} name="Overview" />
+
+# Secondary Nav
+
+The Secondary Nav provides sub-navigation within a specific section of the site. It displays a hierarchical menu structure that helps users navigate through related pages within a content area. This component is typically used to show the navigation tree for the current section, making it easy for users to understand and explore related content without losing context of where they are in the site hierarchy.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the secondary nav's properties in real-time.
+
+<Canvas of={SecondaryNavStories.secondaryNav} />
+<Controls of={SecondaryNavStories.secondaryNav} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Menu Item Structure
+
+Menu items support hierarchical structures with the following properties:
+
+- **title**: The display text for the menu item
+- **url**: The link destination (can be internal or external)
+- **below**: Optional nested array of child menu items (supports multiple levels)
+- **is_active**: Boolean to mark the current active page in the navigation tree
+
+The component intelligently handles multi-level navigation, expanding parent items when a child page is active to show the user's current location within the section hierarchy.
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Organism</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-secondary-nav.twig</code>, <code>yds-secondary-nav.js</code>,{' '}
+        <code>_yds-secondary-nav.scss</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Accessibility</strong>
+      </td>
+      <td>
+        ARIA navigation landmark, semantic list structure, keyboard navigation
+        support, screen reader friendly with proper labels and current page
+        indication
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Responsive Behavior</strong>
+      </td>
+      <td>
+        Adapts to smaller viewports with collapsible submenu sections,
+        touch-friendly interactions on mobile devices
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>JavaScript</strong>
+      </td>
+      <td>
+        Manages expand/collapse interactions for nested menu items and handles
+        active state management
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### When to Use Secondary Nav
+
+The Secondary Nav is ideal for:
+
+- Section-specific navigation in multi-page content areas
+- Displaying the navigation tree for a department, program, or topic
+- Providing context about related pages within the current section
+- Sites with deep hierarchical structures where users need to navigate between sibling and child pages
+- Complementing the primary navigation by showing detailed sub-structure
+
+### Placement
+
+Secondary navigation is typically placed:
+
+- In a sidebar alongside main content
+- At the top of a section before the main content area
+- In a consistent location across all pages within the section
+
+The component should remain visible and consistent throughout the section to help users maintain their bearings.
+
+### Navigation Depth
+
+The Secondary Nav handles multiple levels of nested items effectively:
+
+- **Level 1**: Section root or parent pages
+- **Level 2**: Primary child pages within the section
+- **Level 3+**: Nested subsections and detailed content
+
+The component automatically expands the tree to show the current page and its siblings, while keeping other branches collapsed for clarity.
+
+### Link Types
+
+The component supports various link types:
+
+- Internal site links within the section
+- External URLs (automatically detected)
+- PDF and document downloads (indicated with appropriate icons)
+- Active page indication (typically not linked, marked for screen readers)
+
+## Accessibility Considerations
+
+- Ensure all menu items have descriptive, meaningful labels that make sense out of context
+- The current page is marked with appropriate ARIA attributes for screen readers
+- Keyboard users can navigate through all menu levels using Tab and arrow keys
+- Focus indicators are clearly visible for all interactive elements
+- Collapsed/expanded states are announced to screen reader users
+- Sufficient color contrast is maintained in all theme variations
+
+## Component Theming
+
+The Secondary Nav supports theming through the `menu_theme` property, which applies colors from the YaleSites design system dial. This allows the navigation to match the visual theme of the current section or site.
+
+## Best Practices
+
+- Keep menu labels concise but descriptive (typically under 40 characters)
+- Maintain consistent labeling conventions across the navigation tree
+- Avoid extremely deep nesting (5+ levels) - consider restructuring content if needed
+- Ensure the navigation accurately reflects the site's information architecture
+- Update the active state to match the current page for proper context
+- Test the navigation with keyboard and screen readers to ensure accessibility
+
+## Related Components
+
+- **Primary Nav** - Main site-wide navigation in the header
+- **Breadcrumbs** - Complementary wayfinding showing the path to current page
+- **Site Header** - Container for primary navigation elements
+- **Utility Nav** - Secondary navigation for utility and tool links
+
+## Visual Regression Testing
+
+For comprehensive testing of all theme variations and navigation structures, see the [Visreg page](?path=/story/organisms-menu-secondary-nav-visreg--visreg).

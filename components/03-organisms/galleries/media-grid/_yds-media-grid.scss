@@ -7,7 +7,7 @@
 }
 
 .media-grid__heading {
-  @include tokens.h2-yale-new;
+  @include tokens.heading(h2);
 
   margin-bottom: var(--spacing-page-section);
 }

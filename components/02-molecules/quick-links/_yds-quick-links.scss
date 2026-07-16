@@ -128,7 +128,7 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
 }
 
 .quick-links__heading {
-  @include tokens.h2-yale-new;
+  @include tokens.heading(h2);
 
   [data-quick-links-layout='stacked'] & {
     text-align: center;

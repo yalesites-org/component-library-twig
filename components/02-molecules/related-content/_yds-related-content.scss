@@ -1,0 +1,122 @@
+@use '../../00-tokens/tokens';
+
+/*
+ * Related Content
+ *
+ * Sits below the main page content of any node that has
+ * `field_related_content`. The view embeds each related node rendered in
+ * the `related_content_card` view mode (see
+ * `node--related-content-card.html.twig` in atomic), which emits a
+ * minimal `.related-card` per row. This molecule supplies the heading,
+ * the outer wrapper, and a responsive grid for the rendered cards.
+ *
+ * View row markup is:
+ *
+ *   <section class="related-content">
+ *     <div class="related-content__inner">
+ *       <h2 class="related-content__heading">…</h2>
+ *       <div class="related-content__list">
+ *         <div class="view ...">
+ *           <div class="view-content">
+ *             <div class="views-row"><article class="related-card">…</article></div>
+ *             …
+ *           </div>
+ *         </div>
+ *       </div>
+ *     </div>
+ *   </section>
+ */
+
+.related-content {
+  @include tokens.spacing-page-section;
+
+  margin-block-start: var(--size-spacing-10);
+
+  .related-content__inner {
+    max-width: var(--size-component-layout-width-site);
+    margin: 0 auto;
+
+    [data-component-width='content'] & {
+      max-width: var(--size-component-layout-width-content);
+    }
+  }
+
+  .related-content__heading {
+    @include tokens.heading(h3);
+
+    margin-block-end: var(--size-spacing-7);
+  }
+
+  .related-content__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--size-spacing-7);
+
+    @media (min-width: tokens.$break-m) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    // atomic's views-view-unformatted.html.twig skips the standard
+    // .view-content wrapper and emits each row inside a single
+    // <div class="js-view-dom-id-...">. Flatten that wrapper so each
+    // <article class="related-card"> becomes a direct grid child.
+    > [class*='js-view-dom-id-'] {
+      display: contents;
+    }
+  }
+}
+
+/*
+ * Related Card
+ *
+ * The minimal card rendered by `node--related-content-card.html.twig` for
+ * every row in the Related Content view. Lives in this file (rather than
+ * a separate molecule) because it has no Storybook entry of its own —
+ * it only ever appears inside `.related-content`.
+ *
+ * Accessibility notes (WCAG 2.2 AA):
+ * - Both the eyebrow and the title link use `--color-heading`. That token
+ *   is kept contrast-safe per global × section theme combo by the YaleSites
+ *   token system — it resolves to Yale blue on light backgrounds and to
+ *   white on dark backgrounds, even when a global theme remaps a section
+ *   theme's bg slot. `--color-text` was tried first but pins to the
+ *   section theme's intended-paired text color (e.g. white for section
+ *   theme "two"), which fails when a global theme maps that section to a
+ *   light bg slot — the heading reads correctly in those combos but the
+ *   text token does not, so we follow the heading's lead.
+ * - The eyebrow renders at heading prominence (no longer a muted gray)
+ *   because there is no truly-muted secondary text token in this stack
+ *   that survives every theme combo. Bundle | category labels at heading
+ *   tone are still clearly subordinate to the title due to size +
+ *   uppercase styling.
+ * - Focus indicator is supplied by the global `:focus-visible` rule in
+ *   `00-tokens/utility/_utility.scss` (`outline: 2px solid
+ *   var(--color-link-base)`). The `:focus-visible` underline below adds
+ *   a parity affordance with hover.
+ */
+.related-card {
+  &__eyebrow {
+    @include tokens.body-s;
+
+    color: var(--color-heading);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-block-end: var(--size-spacing-3);
+  }
+
+  &__title {
+    @include tokens.heading(h4);
+
+    margin: 0;
+
+    a {
+      color: var(--color-heading);
+      text-decoration: none;
+
+      &:hover,
+      &:focus-visible {
+        text-decoration: underline;
+      }
+    }
+  }
+}

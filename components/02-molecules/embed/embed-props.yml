@@ -1,0 +1,49 @@
+# embed-props.yml
+#
+# Embed component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+width:
+  twigProp: embed__width
+  name: Width
+  type: select
+  required: false
+  description: Component width setting
+  detail: Controls the embed container width. Maps to the embed__width Twig variable.
+  default: site
+  options:
+    - max
+    - site
+    - highlight
+    - content
+  control: select
+
+type:
+  twigProp: embed__type
+  name: Type
+  type: select
+  required: false
+  description: Type of embedded content
+  detail: Affects styling and behavior of the embed container. Maps to the embed__type Twig variable.
+  default: form
+  options:
+    - form
+    - audio
+    - map
+    - calendar
+  control: select
+
+loading:
+  twigProp: embed__loading
+  name: Loading
+  type: select
+  required: false
+  description: Loading strategy for the embedded iframe
+  default: lazy
+  options:
+    - lazy
+    - eager
+  control: select

@@ -36,7 +36,7 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
   --color-text-shadow: var(--color-basic-white);
 
   position: relative;
-  z-index: 2;
+  z-index: 10;
 
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
@@ -250,7 +250,10 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
     max-height: calc(100vh - var(--header-height-mobile));
     width: 100vw;
     max-width: 100%;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior-x: none;
+    touch-action: pan-y;
     border-bottom: var(--site-header-mobile-border-bottom);
     transform: translateY(-100%);
 
@@ -357,21 +360,32 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
   }
 }
 
+.site-header__site-branding-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .site-header__site-branding {
   font: var(--font-style-branding-site);
   color: var(--color-site-header-site-branding);
   text-decoration: none;
 
-  &--primary {
-    @media (max-width: tokens.$break-mobile-max) {
-      display: none;
-    }
+  body[data-font-pairing='yalenew'] & {
+    font-variant-numeric: oldstyle-nums;
   }
 
-  // if right alignment, limit the branding width
-  @media (min-width: tokens.$break-mobile) {
-    [data-site-header-nav-position='right'] & {
-      max-width: 36.5%;
+  &--desktop {
+    [data-collection-nav-position='in_header'] & {
+      font-family: var(--font-families-mallory);
+      font-weight: var(--font-weights-mallory-book);
+      font-size: var(--font-size-16);
+      text-transform: uppercase;
+      letter-spacing: 0.075em;
+    }
+
+    @media (max-width: tokens.$break-mobile-max) {
+      display: none;
     }
   }
 
@@ -379,6 +393,30 @@ $site-name-as-logo-height-sm: 6.25rem; // 100px
     @include branding-small-mobile;
 
     max-width: 80%;
+
+    [data-collection-nav-position='in_header'] & {
+      font-family: var(--font-families-mallory);
+      font-weight: var(--font-weights-mallory-book);
+      font-size: var(--font-size-14);
+      text-transform: uppercase;
+      letter-spacing: 0.075em;
+    }
+  }
+}
+
+.site-header__collection-nav-branding {
+  font: var(--font-style-branding-site);
+  color: var(--color-site-header-site-branding);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  margin-top: 0.25em;
+
+  body[data-font-pairing='yalenew'] & {
+    font-variant-numeric: oldstyle-nums;
+  }
+
+  &--mobile {
+    font-size: var(--font-size-29);
   }
 }
 

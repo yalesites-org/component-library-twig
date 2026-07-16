@@ -12,6 +12,7 @@
     } %}
     {% embed "@molecules/page-title/yds-page-title.twig" with {
         page_title__width: 'content',
+        page_title__show_social_media_sharing_links: page_title__show_social_media_sharing_links,
     }%}
       {% block page_title__meta__extra %}
         {% include "@molecules/read-time/yds-read-time.twig" with {

@@ -10,11 +10,7 @@ $component-image-banner-themes: map.deep-get(
 $break-image-banner: tokens.$break-m;
 
 .image-banner {
-  @include tokens.spacing-page-section(
-    $flush-top: true,
-    $flush-bottom: true,
-    $banner-spacing: true
-  );
+  @include tokens.spacing-page-section($flush-top: true, $flush-bottom: true);
 
   position: relative;
   overflow: hidden;
@@ -25,8 +21,19 @@ $break-image-banner: tokens.$break-m;
   margin: 0 auto;
   background-color: var(--color-image-banner-background);
 
+  &[data-image-banner-width='full'] {
+    width: 100vw;
+    max-width: 100vw;
+    margin-inline-start: calc(50% - 50vw);
+    margin-inline-end: 0;
+  }
+
   @media (min-width: $break-image-banner) {
     align-items: center;
+  }
+
+  &[data-image-banner-size='mini'] {
+    min-height: 14rem;
   }
 
   &[data-image-banner-size='short'] {
@@ -175,6 +182,13 @@ $break-image-banner: tokens.$break-m;
   height: 100%;
   position: absolute;
 
+  figure,
+  picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
   img {
     width: 100%;
     height: 100%;
@@ -187,9 +201,21 @@ $break-image-banner: tokens.$break-m;
     [data-image-banner-size='short'] & {
       min-height: 28rem;
     }
+
+    [data-image-banner-size='mini'] & {
+      min-height: 14rem;
+    }
   }
 
   figcaption {
+    // The caption sits on a fixed white bar (background-color below). Themed
+    // banners remap --color-text to white (slot-eight) in component themes
+    // one/three/five, which rendered the caption white-on-white. Reset it to
+    // slot-seven -- the palette's "text on light background" slot, dark in
+    // every theme -- so the shared .caption color rule stays WCAG-readable.
+    // For a flat dark caption later, swap this line to var(--color-basic-black).
+    --color-text: var(--color-slot-seven);
+
     position: absolute;
     bottom: 0;
     left: 0;

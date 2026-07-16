@@ -7,11 +7,7 @@ $component-grand-hero-themes: map.deep-get(tokens.$tokens, 'component-themes');
 $break-grand-hero-banner: tokens.$break-m;
 
 .grand-hero-banner {
-  @include tokens.spacing-page-section(
-    $flush-top: true,
-    $flush-bottom: true,
-    $banner-spacing: true
-  );
+  @include tokens.spacing-page-section($flush-top: true, $flush-bottom: true);
 
   position: relative;
   overflow: hidden;
@@ -22,12 +18,23 @@ $break-grand-hero-banner: tokens.$break-m;
   margin: 0 auto;
   background-color: var(--color-grand-hero-background);
 
+  &[data-grand-hero-width='full'] {
+    width: 100vw;
+    max-width: 100vw;
+    margin-inline-start: calc(50% - 50vw);
+    margin-inline-end: 0;
+  }
+
   @media (min-width: $break-grand-hero-banner) {
     align-items: center;
   }
 
   &[data-grand-hero-size='reduced'] {
     min-height: 28rem;
+  }
+
+  &[data-grand-hero-size='mini'] {
+    min-height: 14rem;
   }
 
   &[data-grand-hero-size='full'] {
@@ -196,7 +203,8 @@ $break-grand-hero-banner: tokens.$break-m;
 .grand-hero-banner__outer-wrap {
   width: 100%;
 
-  [data-grand-hero-overlay-variation='contained'] & {
+  [data-grand-hero-overlay-variation='contained'],
+  [data-grand-hero-overlay-variation='contained-narrow'] & {
     align-items: flex-end;
 
     @media (min-width: $break-grand-hero-banner) {
@@ -217,9 +225,10 @@ $break-grand-hero-banner: tokens.$break-m;
   width: 100%;
   margin: 0 auto;
 
-  [data-grand-hero-overlay-variation='contained'] & {
+  [data-grand-hero-overlay-variation='contained'] &,
+  [data-grand-hero-overlay-variation='contained-narrow'] & {
     // prettier-ignore
-    max-width: calc(var(--size-component-layout-width-max) + (var(--size-spacing-site-gutter) * 2) );
+    max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-site-gutter) * 2) );
   }
 
   [data-grand-hero-overlay-variation='full'] & {
@@ -227,7 +236,9 @@ $break-grand-hero-banner: tokens.$break-m;
     align-items: center;
   }
 
-  [data-grand-hero-overlay-variation='contained'][data-grand-hero-width='site']
+  [data-grand-hero-overlay-variation='contained'][data-grand-hero-width='site'],
+  [data-grand-hero-overlay-variation='contained'][data-grand-hero-width='contained-narrow'],
+  [data-grand-hero-overlay-variation='contained'][data-grand-hero-width='full']
     & {
     // prettier-ignore
     max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-site-gutter) * 2));
@@ -254,11 +265,32 @@ $break-grand-hero-banner: tokens.$break-m;
     }
   }
 
+  [data-grand-hero-overlay-variation='contained-narrow'] & {
+    width: 100%;
+
+    @media (min-width: $break-grand-hero-banner) {
+      width: auto;
+      max-width: calc(var(--size-component-layout-width-content) / 2);
+      padding: var(--size-spacing-7);
+    }
+  }
+
   [data-grand-hero-overlay-variation='full'] & {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
+  }
+
+  [data-grand-hero-size='mini'] & {
+    padding-bottom: var(--size-spacing-7);
+  }
+
+  [data-grand-hero-size='mini'][data-grand-hero-overlay-variation='contained']
+    &,
+  [data-grand-hero-size='mini'][data-grand-hero-overlay-variation='contained-narrow']
+    & {
+    margin-bottom: 0;
   }
 
   &::before {
@@ -289,7 +321,8 @@ $break-grand-hero-banner: tokens.$break-m;
     max-width: var(--size-component-layout-width-content);
   }
 
-  [data-grand-hero-width='site'] & {
+  [data-grand-hero-width='site'] &,
+  [data-grand-hero-width='full'] & {
     // prettier-ignore
     max-width: var(--size-component-layout-width-site);
 
@@ -306,7 +339,7 @@ $break-grand-hero-banner: tokens.$break-m;
 }
 
 .grand-hero-banner__heading {
-  @include tokens.h2-yale-new;
+  @include tokens.heading(h2);
 }
 
 .grand-hero-banner__link {
@@ -323,4 +356,13 @@ $break-grand-hero-banner: tokens.$break-m;
   display: flex;
   flex-flow: row wrap;
   gap: var(--size-spacing-7);
+
+  [data-grand-hero-overlay-variation='contained-narrow'] & {
+    gap: var(--size-spacing-5);
+    margin-top: var(--size-spacing-6);
+  }
+}
+
+.grand-hero-banner__overlay-image img {
+  width: auto;
 }

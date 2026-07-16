@@ -1,0 +1,285 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as CardCollectionStories from './card-collection.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './card-collection-props.yml';
+
+<Meta of={CardCollectionStories} name="Overview" />
+
+# Card Collection
+
+The card collection component displays multiple cards in a flexible grid or list layout. It supports various card types including posts, events, profiles, resources, and directory listings. Card collections can be configured with different layout modes, featured positioning, and image display options to create organized, scannable content groupings across the site.
+
+## Card Type Variants
+
+The card collection supports the following card types. Each section below is fully interactive — use the controls panel to experiment with layout, featured mode, and image options.
+
+### Post Cards
+
+Standard content cards for blog posts, news, or general content. Supports 3x2 images, headlines, excerpts, and publication date.
+
+<Canvas of={CardCollectionStories.PostCardCollection} />
+<Controls of={CardCollectionStories.PostCardCollection} />
+
+### Event Cards
+
+Specialized cards for events with date, format (online/in-person), and CTAs. Supports 3x2 images.
+
+<Canvas of={CardCollectionStories.EventCardCollection} />
+<Controls of={CardCollectionStories.EventCardCollection} />
+
+### Profile Cards
+
+People-focused cards with headshots, names, titles, and affiliations. Uses 1x1 images.
+
+<Canvas of={CardCollectionStories.ProfileCardCollection} />
+<Controls of={CardCollectionStories.ProfileCardCollection} />
+
+### Directory Listing Cards
+
+Compact profile cards for directory views. Uses the `profile-directory` layout type.
+
+<Canvas of={CardCollectionStories.DirectoryListingCardCollection} />
+<Controls of={CardCollectionStories.DirectoryListingCardCollection} />
+
+### Resource Cards
+
+Cards for downloadable resources, documents, or external links. Supports icons, file types, and overlay labels like "Pinned". Toggle the **Portrait** control to switch to the portrait display mode, which renders images at a 1:1.6 ratio.
+
+<Canvas of={CardCollectionStories.ResourceCardCollection} />
+<Controls of={CardCollectionStories.ResourceCardCollection} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+### Property Compatibility by Card Type
+
+Not all properties apply to every card type. The controls panel in each section above reflects this automatically.
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Post</th>
+      <th>Event</th>
+      <th>Profile</th>
+      <th>Directory</th>
+      <th>Resource</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Heading</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>Collection Type</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>—</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>Featured</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>With Images</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>—</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>Overlay</td>
+      <td>Y</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>Portrait</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Y</td>
+    </tr>
+  </tbody>
+</table>
+
+## Collection Layouts
+
+The card collection supports multiple layout modes for different content presentation needs:
+
+<div
+  style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    gap: '1.5rem',
+    margin: '2rem 0',
+  }}
+>
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Grid Layout</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      Default responsive grid displaying cards in columns. Adapts to viewport
+      size for optimal viewing. Best for visual content like posts, events, and
+      resources.
+    </p>
+  </div>
+
+{' '}
+
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>List Layout</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Single-column vertical list with cards displaying in full width. Ideal for
+    detailed content where readability is prioritized. When images are disabled,
+    cards flush to left edge.
+  </p>
+</div>
+
+{' '}
+
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Condensed Layout</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Compact display maximizing content density. Suitable for displaying larger
+    numbers of items in limited space while maintaining scannability.
+  </p>
+</div>
+
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Profile Directory</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      Specialized layout for directory listing cards. Optimized grid for
+      efficiently displaying multiple people with consistent spacing and
+      alignment.
+    </p>
+  </div>
+</div>
+
+## Featured Layout
+
+When <code>card_collection\_\_featured</code> is set to <code>'true'</code>, the first card displays larger and more prominently than subsequent cards. This creates visual hierarchy and draws attention to the most important content. Featured layout works best with 3-4 total cards.
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Organism</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-card-collection.twig</code>,{' '}
+        <code>_yds-card-collection.scss</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Accessibility</strong>
+      </td>
+      <td>
+        Semantic HTML list structure, proper heading hierarchy, keyboard
+        navigable links, sufficient color contrast, alt text for images
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Responsive Behavior</strong>
+      </td>
+      <td>
+        Grid columns adjust based on viewport size, maintains readability across
+        all devices, touch-optimized for mobile interactions
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### Image Configuration
+
+- **With images enabled**: Full visual presentation with image aspect ratios appropriate for card type
+- **With images disabled**: Text-only presentation optimized for content density
+- **List layout without images**: Cards flush to left edge for clean text alignment
+
+### Featured Collections
+
+- Use featured layout to highlight the most important or recent content
+- Limit to 3-4 cards total when using featured mode
+- Ensure the first card contains the most compelling content
+
+### Card Count Recommendations
+
+- **Grid layout**: 3-12 cards for optimal visual balance
+- **List layout**: Any number of cards, particularly effective for 5+ items
+- **Condensed layout**: 6-20 cards for maximum density
+- **Featured layout**: 3-4 cards total (1 featured + 2-3 standard)
+
+### Content Considerations
+
+- Use consistent card types within a single collection
+- Provide meaningful headings when grouping related content
+- Ensure image quality is appropriate for the chosen aspect ratio
+- Use overlay labels sparingly for special emphasis (e.g., "Pinned", "Featured")
+
+## Related Components
+
+- **Reference Card** - Individual card component for posts, events, profiles, and resources
+- **Directory Listing Card** - Compact profile card for directory views
+- **Grid** - Base grid system used for layout
+- **Heading** - Text component for collection headings
+
+## Visual Regression Testing
+
+For comprehensive testing of all card collection variations including layouts, card types, and feature combinations, see the [Visreg page](?path=/story/organisms-card-collection-visreg--visreg).

@@ -1,0 +1,193 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as FormsStories from './forms.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './forms-props.yml';
+
+<Meta of={FormsStories} />
+
+# Forms
+
+The forms component system provides styled form elements including select dropdowns, text input fields, textareas, and complete form examples. These elements ensure consistent styling and accessibility across all form interactions in the design system.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with form elements across different section themes.
+
+<div className="sb-contained-canvas">
+  <Canvas of={FormsStories.exampleForm} />
+</div>
+<Controls of={FormsStories.exampleForm} />
+
+## Component Variations
+
+### Select Dropdowns
+
+Styled select elements with custom appearance.
+
+<div className="sb-contained-canvas">
+  <Canvas of={FormsStories.selectDropdowns} />
+</div>
+
+### Text Fields
+
+Input fields and textareas with consistent styling.
+
+<div className="sb-contained-canvas">
+  <Canvas of={FormsStories.textfieldsExamples} />
+</div>
+
+### Example Form
+
+Complete form implementation with all elements working together.
+
+<Canvas of={FormsStories.exampleForm} />
+
+## Properties
+
+### Example Form Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Form Elements
+
+### Text Input Fields
+
+Standard text input fields with consistent styling:
+
+- Single-line text input
+- Email input
+- Number input
+- Password input
+- Search input
+
+### Textarea
+
+Multi-line text input with resizable height.
+
+### Select Dropdowns
+
+Custom-styled dropdown menus that maintain browser functionality while providing consistent visual design.
+
+### Form Labels
+
+Properly associated labels for all form fields ensuring accessibility.
+
+### Submit Buttons
+
+CTA-styled submit buttons that integrate with the button theme system.
+
+## Form Field States
+
+All form elements support standard states:
+
+- **Default**: Normal unfocused state
+- **Focus**: Active field with focus indicator
+- **Disabled**: Non-interactive state
+- **Error**: Invalid input indication
+- **Success**: Valid input confirmation
+
+## Technical Specifications
+
+- **Atomic Level**: Atom
+- **Templates**: `yds-select.twig`, `yds-textfields.twig`, `contact-form-example.twig`
+- **Styles**: `cl-forms.scss`
+
+### Accessibility
+
+- **Label Association**: All inputs have properly associated labels
+- **Focus Indicators**: Clear visual focus states for keyboard navigation
+- **Error Messages**: Descriptive error text for invalid inputs
+- **Required Fields**: Marked with appropriate ARIA attributes
+- **Keyboard Navigation**: Full keyboard support for all form elements
+- **Screen Reader Support**: Semantic HTML with ARIA labels where needed
+- **Color Independence**: Validation states don't rely on color alone
+
+### Responsive Behavior
+
+- **Mobile Optimization**: Touch-friendly input sizes on mobile devices
+- **Flexible Width**: Form fields adapt to container width
+- **Stack on Small Screens**: Multi-column forms stack vertically on mobile
+- **Font Size**: Minimum 16px to prevent zoom on iOS
+
+## Usage Guidelines
+
+### Best Practices
+
+- Always provide clear, descriptive labels for all form fields
+- Group related fields together logically
+- Use appropriate input types (email, tel, number) for better mobile experience
+- Provide helpful placeholder text as examples, not as labels
+- Show clear validation messages near the relevant field
+- Use inline validation for immediate feedback when appropriate
+- Keep forms as short as possible - only ask for necessary information
+- Use select dropdowns for 5+ options, radio buttons for 2-4 options
+- Provide a clear submit button with action-oriented text
+
+### Things to Avoid
+
+- Don't use placeholder text as the only label
+- Avoid vague error messages like "Invalid input"
+- Don't disable the submit button - show validation errors instead
+- Avoid overly long forms - consider multi-step if necessary
+- Don't use CAPTCHAs that create accessibility barriers
+- Avoid custom form controls that break keyboard navigation
+- Don't validate on every keystroke - wait for field blur or form submit
+
+## Implementation Notes
+
+### Label Association
+
+Always associate labels with inputs using the `for` attribute:
+
+```html
+<label for="email">Email Address</label>
+<input type="email" id="email" name="email" required />
+```
+
+### Required Fields
+
+Mark required fields clearly:
+
+```html
+<label for="name">
+  Name <span class="required" aria-label="required">*</span>
+</label>
+<input type="text" id="name" name="name" required aria-required="true" />
+```
+
+### Error Handling
+
+Provide clear, specific error messages:
+
+```html
+<div class="form-field error">
+  <label for="email">Email Address</label>
+  <input
+    type="email"
+    id="email"
+    name="email"
+    aria-invalid="true"
+    aria-describedby="email-error"
+  />
+  <span id="email-error" class="error-message"
+    >Please enter a valid email address</span
+  >
+</div>
+```
+
+### Integration with CMS
+
+Forms in Drupal integrate with:
+
+- Webform module for complex form building
+- Form API for custom forms
+- Field validation for entity forms
+- CTA components for submit buttons
+
+## Testing
+
+For comprehensive visual regression testing with all form variations and theme combinations, see the [Visreg page](?path=/story/atoms-forms-visreg).
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

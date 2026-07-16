@@ -1,0 +1,480 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as ControlsStories from './control.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './control-props.yml';
+
+<Meta of={ControlsStories} name="Overview" />
+
+# Controls
+
+The controls component system includes call-to-action buttons (CTAs), text links, and text copy buttons. These fundamental interactive elements provide consistent styling and behavior across the design system with support for multiple themes, styles, and hover effects.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with CTA buttons, text links, and text copy buttons in real-time.
+
+<div className="sb-contained-canvas">
+  <Canvas of={ControlsStories.Cta} />
+</div>
+<Controls of={ControlsStories.Cta} />
+
+## Component Variations
+
+### CTA (Call to Action) Buttons
+
+Primary action buttons with configurable styles, themes, and hover effects.
+
+<Canvas of={ControlsStories.Cta} />
+
+### Text Links
+
+Standard hyperlinks with optional icons and styling variations.
+
+<div className="sb-contained-canvas">
+  <Canvas of={ControlsStories.textLink} />
+</div>
+
+### Text Copy Button
+
+Interactive button for copying text to clipboard with visual feedback.
+
+<div className="sb-contained-canvas">
+  <Canvas of={ControlsStories.textCopyButton} />
+</div>
+
+#### Rich-text source
+
+When the source text contains block-level markup (e.g. paragraphs from a rich-text field), pass `text_copy_button__pre_text_tag: 'div'` so the wrapper is valid HTML. Default is `span`.
+
+<div className="sb-contained-canvas">
+  <Canvas of={ControlsStories.textCopyButtonRichText} />
+</div>
+
+## Story Controls
+
+The following controls are available in the Storybook Controls panel and affect the story rendering context.
+
+### Optional
+
+{twigPropsTable(componentProps, 'optional')}
+
+## CTA Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>cta__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Button text content</td>
+    </tr>
+    <tr>
+      <td>
+        <code>cta__href</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Link URL</td>
+    </tr>
+  </tbody>
+</table>
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>cta__component_theme</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'one'</code>
+      </td>
+      <td>Theme color from dial (one through seven)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>cta__style</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'filled'</code>
+      </td>
+      <td>Button style (filled, outline)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>cta__radius</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'default'</code>
+      </td>
+      <td>Corner radius (default, soft, pill)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>cta__hover_style</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'fade'</code>
+      </td>
+      <td>Hover animation (fade, rise, wipe)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>cta__outline_weight</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'2'</code>
+      </td>
+      <td>Outline thickness for outline style (1, 2, 4)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>cta__control_type</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>-</td>
+      <td>Special control type (dropdown)</td>
+    </tr>
+  </tbody>
+</table>
+
+## Text Link Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>link__url</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Link destination URL</td>
+    </tr>
+    <tr>
+      <td>
+        <code>link__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Link text content</td>
+    </tr>
+  </tbody>
+</table>
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>link__style</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'underline'</code>
+      </td>
+      <td>
+        Link styling (underline, no-underline, underline-with-icon,
+        no-underline-animation)
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>link__type</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'normal'</code>
+      </td>
+      <td>
+        Link type (normal, external, target-blank, download, with-chevron)
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>link__url_type</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>-</td>
+      <td>URL type indicator (chevron)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>link__attributes</code>
+      </td>
+      <td>
+        <code>object</code>
+      </td>
+      <td>-</td>
+      <td>Additional HTML attributes (e.g., target)</td>
+    </tr>
+  </tbody>
+</table>
+
+## Text Copy Button Properties
+
+### Required Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>text_copy_button__pre_text</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Text to be copied to clipboard</td>
+    </tr>
+    <tr>
+      <td>
+        <code>text_copy_button__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Button label text</td>
+    </tr>
+  </tbody>
+</table>
+
+### Optional Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>text_copy_button__component_theme</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'two'</code>
+      </td>
+      <td>Theme color from dial</td>
+    </tr>
+    <tr>
+      <td>
+        <code>text_copy_button__pre_text_tag</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'span'</code>
+      </td>
+      <td>
+        HTML tag wrapping the source text. Use <code>'div'</code> (or another
+        block tag) when <code>pre_text</code> contains block-level markup such
+        as paragraphs.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## CTA Variations
+
+### Style Options
+
+- **Filled**: Solid background with theme color
+- **Outline**: Transparent background with colored border
+
+### Radius Options
+
+- **Default**: Standard corner radius
+- **Soft**: Slightly rounded corners
+- **Pill**: Fully rounded ends
+
+### Hover Effects
+
+- **Fade**: Opacity transition (default)
+- **Rise**: Subtle upward movement
+- **Wipe**: Color sweep animation
+
+### Outline Weights
+
+For outline style CTAs, three border thickness options are available:
+
+- **1px**: Subtle outline
+- **2px**: Standard outline (default)
+- **4px**: Bold outline
+
+## Text Link Variations
+
+### Link Types
+
+- **Normal**: Standard internal link
+- **External**: Opens external websites (with icon)
+- **Target Blank**: Opens in new tab (with icon)
+- **Download**: Triggers file download (with icon)
+- **With Chevron**: Shows directional arrow
+
+### Link Styles
+
+- **Underline**: Default underlined link with animation
+- **No Underline**: Link without underline
+- **Underline with Icon**: Link with appropriate icon
+- **No Underline Animation**: Static underline without animation
+
+## Technical Specifications
+
+- **Atomic Level**: Atom
+- **Templates**: `yds-cta.twig`, `yds-text-link.twig`, `yds-text-copy-button.twig`
+- **Styles**: `cl-cta.scss`, `cl-text-link.scss`, `cl-text-copy-button.scss`
+- **JavaScript**: `yds-text-link.js`, `yds-text-copy-button.js`
+
+### Accessibility
+
+- **Keyboard Navigation**: All controls are keyboard accessible
+- **Focus States**: Clear focus indicators for keyboard users
+- **ARIA Labels**: Appropriate labels for icon-only elements
+- **Link Purpose**: Clear indication of link behavior (external, download)
+- **Color Contrast**: Meets WCAG AA standards across all themes
+- **Interactive Feedback**: Visual confirmation for copy button action
+
+### Behavior
+
+- **Hover States**: Smooth transitions on mouse hover
+- **Active States**: Visual feedback on click/tap
+- **Focus States**: Visible outline for keyboard navigation
+- **Copy Button**: Clipboard API integration with success feedback
+- **External Links**: Automatic icon detection based on URL
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use filled CTAs for primary actions, outline for secondary actions
+- Choose hover effects that match your brand personality
+- Provide clear, action-oriented text for CTAs
+- Use appropriate link types to indicate behavior
+- Keep CTA text concise (2-4 words ideal)
+- Use copy button for shareable content like email addresses or codes
+- Ensure sufficient spacing between multiple CTAs
+
+### Things to Avoid
+
+- Don't use too many CTAs on a single page
+- Avoid vague CTA text like "Click Here" or "Learn More" without context
+- Don't mix too many different hover effects on the same page
+- Avoid using external link style for internal navigation
+- Don't use outline CTAs with very thin outlines on busy backgrounds
+- Avoid placing multiple high-emphasis CTAs next to each other
+
+## Implementation Notes
+
+### CTA Theming
+
+CTAs integrate with the design system's theme dial. Set the theme using the component_theme property:
+
+```twig
+{{ include('@atoms/controls/cta/yds-cta.twig', {
+  cta__content: 'Get Started',
+  cta__href: '/signup',
+  cta__component_theme: 'one',
+  cta__style: 'filled',
+  cta__hover_style: 'rise'
+}) }}
+```
+
+### Link Icon Auto-detection
+
+Text links automatically detect URL types and add appropriate icons:
+
+- External URLs: external link icon
+- PDF files: download icon
+- New tab links: new window icon
+
+### Copy Button Functionality
+
+The text copy button uses the Clipboard API to copy text. It requires JavaScript to be enabled and provides visual feedback on successful copy.
+
+On click, the button's text content is replaced with "Copied to clipboard" for ~1.7 seconds, then restored to whatever label the button was originally rendered with (captured at attach time). Consumers needing custom feedback can listen for the `text-copy-button:copied` CustomEvent dispatched on the button and call `event.preventDefault()` to suppress the default text swap.
+
+## Testing
+
+For comprehensive visual regression testing with all control variations and theme combinations, see the [Visreg page](?path=/story/atoms-controls-visreg).
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

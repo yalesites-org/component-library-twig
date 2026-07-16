@@ -1,0 +1,175 @@
+/**
+ * Storybook-Specific Styles
+ *
+ * This stylesheet contains all styling specific to Storybook playground stories.
+ * These classes are used to style VRT sections, dividers, and other story-specific
+ * elements without using inline styles.
+ *
+ * DO NOT use these classes in actual component files - they are only for
+ * Storybook story presentation.
+ */
+
+/**
+ * Global Storybook Documentation Styles
+ * Apply Mallory font and larger font sizes to MDX documentation pages
+ */
+.sb-show-main {
+  font-family: Mallory, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Increase base font size for documentation blocks */
+.sbdocs-wrapper,
+.sbdocs-content {
+  font-family: Mallory, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  font-size: 16px;
+}
+
+/* Headings in docs */
+.sbdocs h1 {
+  font-family: Mallory, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  font-size: 2.5rem;
+  line-height: 1.2;
+}
+
+.sbdocs h2 {
+  font-family: Mallory, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  font-size: 2rem;
+  line-height: 1.3;
+}
+
+.sbdocs h3 {
+  font-family: Mallory, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+.sbdocs h4 {
+  font-family: Mallory, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+/* Paragraph text */
+.sbdocs p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Tables */
+.sbdocs table {
+  font-size: 15px;
+}
+
+.sbdocs td,
+.sbdocs th {
+  padding: 0.75rem;
+}
+
+/* Code blocks */
+.sbdocs code {
+  font-size: 14px;
+}
+
+/**
+ * Section divider - horizontal rule styling for separating VRT sections
+ */
+.sb-section__divider {
+  margin: 3rem 0;
+  border: 0;
+  border-top: 1px solid #ccc;
+}
+
+/**
+ * Subheading for VRT variation sections
+ * Used to label different theme/variation examples
+ */
+.sb-section__subheading {
+  color: #222;
+  background: #f5f5f5;
+  padding: 0.5rem 1rem;
+  margin: 1rem 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/**
+ * Standard container spacing for sections
+ */
+.sb-section__container {
+  margin-bottom: 2rem;
+}
+
+/**
+ * Grouped variation sections
+ * Used when multiple variations are displayed together
+ */
+.sb-section__group {
+  margin-bottom: 3rem;
+}
+
+/**
+ * Main section heading for VRT areas
+ */
+.sb-section__heading {
+  padding: 1rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+/**
+ * Description text for VRT sections
+ */
+.sb-section__description {
+  color: #666;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+/**
+ * Reduce padding wrapper
+ * Used to reduce top/bottom padding on components in introduction pages
+ * Wraps components that have excessive default padding/margin
+ */
+.sb-reduce-padding .quick-links,
+.sb-reduce-padding .callouts {
+  margin-block-start: 0 !important;
+  margin-block-end: 0 !important;
+}
+
+/**
+ * Full-bleed canvas — applied globally to all Canvas blocks in docs pages.
+ * Targets .sbdocs-preview (Storybook's canvas wrapper) to override its
+ * 1000px max-width and hidden overflow, so components render closer to their
+ * actual site width.
+ */
+.sbdocs-preview {
+  width: 90vw !important;
+  overflow: visible !important;
+  margin-left: calc(50% - 45vw - 12px) !important;
+}
+
+.sb-full-bleed-canvas {
+  width: 90vw;
+  margin-left: calc(50% - 45vw - 12px) !important;
+}
+
+/**
+ * Contained canvas — use when the wide default preview is too much.
+ * Wraps a <Canvas> in MDX with <div className="sb-contained-canvas"> to
+ * constrain it to the docs text column width.
+ */
+.sb-contained-canvas .sbdocs-preview {
+  width: 100% !important;
+  overflow: hidden !important;
+  margin-left: 0 !important;
+}

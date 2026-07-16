@@ -1,0 +1,148 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as SiteHeaderStories from './site-header.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './site-header-props.yml';
+
+<Meta of={SiteHeaderStories} name="Overview" />
+
+# Site Header
+
+The site header is the primary navigation component that appears at the top of every page. It provides consistent branding, global navigation, and utility links across the entire website. The header supports multiple menu variations, configurable navigation positioning, and flexible theming options to match different site identities while maintaining accessibility and usability standards.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the site header's properties in real-time.
+
+<Canvas of={SiteHeaderStories.Header} />
+<Controls of={SiteHeaderStories.Header} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Menu Variations
+
+The site header supports three menu variations, each designed for different navigation needs:
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', margin: '2rem 0'}}>
+
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Basic Menu</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Standard dropdown navigation suitable for most sites. Simple, clean, and
+    accessible. Best for sites with moderate navigation complexity.
+  </p>
+</div>
+
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Mega Menu</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Expanded navigation panel displaying multiple columns of links. Ideal for
+    sites with deep navigation hierarchies or many top-level sections.
+  </p>
+</div>
+
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Focus Menu</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Full-screen navigation overlay with optional background image. Creates an
+    immersive navigation experience. Supports background images for enhanced
+    visual impact.
+  </p>
+</div>
+
+</div>
+
+## Navigation Positioning
+
+The primary navigation can be aligned to the **left**, **center**, or **right** of the header. This flexibility allows for different visual hierarchies and design approaches while maintaining consistent functionality.
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Organism</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-site-header.twig</code>, <code>yds-site-header.js</code>,{' '}
+        <code>_yds-site-header.scss</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Accessibility</strong>
+      </td>
+      <td>
+        ARIA landmark role <code>banner</code>, keyboard navigation support,
+        focus management for dropdown menus, screen reader announcements for
+        menu state changes
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Responsive Behavior</strong>
+      </td>
+      <td>
+        Mobile hamburger menu, touch-optimized interactions, adaptive layout
+        based on viewport size
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>JavaScript</strong>
+      </td>
+      <td>
+        Handles menu toggle, sticky header behavior, dropdown interactions, and
+        mobile menu functionality
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### Background Images
+
+Background images only display when using the **focus** menu variation. Set both `site_header__menu__variation: 'focus'` and `site_header__background_image: true` to enable this feature.
+
+### Theme Combinations
+
+The site header supports independent theme and accent color selection, allowing for nuanced color combinations that align with your site's brand identity. The theme controls the overall header color scheme, while the accent adds highlighting to interactive elements.
+
+### Navigation Complexity
+
+- **Basic menu**: Best for 3-7 top-level items with simple dropdowns
+- **Mega menu**: Suitable for 5-10 top-level items with multiple sub-levels
+- **Focus menu**: Works well with any number of items, particularly effective for visual-first sites
+
+### Accessibility Considerations
+
+- Ensure sufficient color contrast between text and background colors
+- Test keyboard navigation thoroughly, especially with mega menus
+- Verify screen reader announcements for menu state changes
+- Provide clear focus indicators for all interactive elements
+
+## Related Components
+
+- **Primary Nav** - The main navigation menu within the header
+- **Utility Nav** - Secondary navigation for utility links
+- **Menu Toggle** - Mobile hamburger menu button
+- **Breadcrumbs** - Complementary wayfinding component
+
+## Visual Regression Testing
+
+For comprehensive testing of all header variations including theme combinations, menu types, and layout configurations, see the [Visreg page](?path=/story/organisms-site-header-visreg--visreg).

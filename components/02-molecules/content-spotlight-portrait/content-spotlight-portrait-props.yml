@@ -1,0 +1,114 @@
+# content-spotlight-portrait-props.yml
+#
+# Content Spotlight Portrait component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+componentTheme:
+  twigProp: content_spotlight_portrait__theme
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Component theme from color dial
+  default: default
+  options:
+    - default
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select
+
+position:
+  twigProp: content_spotlight_portrait__position
+  name: Image Position
+  type: select
+  required: false
+  description: 'Image position: image-left or image-right'
+  default: image-left
+  options:
+    - image-left
+    - image-right
+  control: select
+
+contentVerticalAlignment:
+  twigProp: content_spotlight_portrait__vertical_align
+  name: Content Vertical Alignment
+  type: select
+  required: false
+  description: 'Vertical alignment of content: top, middle, or bottom'
+  default: middle
+  options:
+    - top
+    - middle
+    - bottom
+  control: select
+
+imageStyle:
+  twigProp: content_spotlight_portrait__style
+  name: Image Style
+  type: select
+  required: false
+  description: 'Image style: inline or offset'
+  default: inline
+  options:
+    - inline
+    - offset
+  control: select
+
+overline:
+  twigProp: content_spotlight_portrait__overline
+  name: Overline
+  type: string
+  required: false
+  description: Optional overline text above heading
+  control: text
+
+heading:
+  twigProp: content_spotlight_portrait__heading
+  name: Heading
+  type: string
+  required: true
+  description: The main heading text
+  control: text
+
+subheading:
+  twigProp: content_spotlight_portrait__subheading
+  name: Subheading
+  type: string
+  required: false
+  description: Optional subheading text
+  control: text
+
+text:
+  twigProp: content_spotlight_portrait__text
+  name: Text
+  type: string
+  required: false
+  description: Body text content
+  control: text
+
+linkContent:
+  twigProp: content_spotlight_portrait__link__content
+  name: Link Content
+  type: string
+  required: false
+  description: Primary link text
+  control: text
+
+linkTwoContent:
+  twigProp: content_spotlight_portrait__link_two__content
+  name: Second Link Content
+  type: string
+  required: false
+  description: Secondary link text
+  control: text
+
+caption:
+  twigProp: content_spotlight_portrait__caption
+  name: Caption
+  type: string
+  required: false
+  description: Image caption text
+  control: text

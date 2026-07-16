@@ -1,4 +1,4 @@
-## [YALB-XX: Title](https://yaleits.atlassian.net/browse/YALB-XX)
+## [#XXX: Title](https://github.com/yalesites-org/YaleSites-Internal/issues/XXX)
 
 ### Description of work
 - Adds functionality bullet item

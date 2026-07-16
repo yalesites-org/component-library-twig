@@ -1,0 +1,218 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as FactsAndFiguresGroupStories from './facts-and-figures-group.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './facts-and-figures-group-props.yml';
+
+<Meta of={FactsAndFiguresGroupStories} name="Overview" />
+
+# Facts and Figures Group
+
+The facts and figures group component displays statistics in an organized grid layout. It supports multiple presentation styles, optional icons, configurable column counts, and themeable color accents. This component is ideal for showcasing key metrics, data points, and statistical information in a visually appealing and scannable format.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the facts and figures group's properties in real-time.
+
+<Canvas of={FactsAndFiguresGroupStories.FactsAndFiguresGroup} />
+<Controls of={FactsAndFiguresGroupStories.FactsAndFiguresGroup} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Presentation Styles
+
+The facts and figures group supports two presentation styles:
+
+<div
+  style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    gap: '1.5rem',
+    margin: '2rem 0',
+  }}
+>
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Basic Style</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      Standard presentation with statistics and supporting content. Numbers
+      display prominently with optional descriptive text below. Ideal for most
+      use cases where context is important.
+    </p>
+  </div>
+
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Icon-Only Style</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      Minimalist presentation emphasizing icons alongside statistics. Requires{' '}
+      <code>facts_and_figures__group__has_icon</code> to be set to{' '}
+      <code>'true'</code>. Best for simple metrics with iconic representation.
+    </p>
+  </div>
+</div>
+
+## Grid Layouts
+
+Configure the number of columns to best fit your content and available space:
+
+<div
+  style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: '1.5rem',
+    margin: '2rem 0',
+  }}
+>
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Two Columns</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      Wider layout giving more emphasis to each statistic. Best for 2-4 key
+      metrics with more detailed supporting content.
+    </p>
+  </div>
+
+{' '}
+
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Three Columns</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Balanced default layout suitable for most use cases. Accommodates 3-6
+    statistics while maintaining readability across viewport sizes.
+  </p>
+</div>
+
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Four Columns</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      Compact layout maximizing content density. Ideal for displaying many
+      statistics (4-8+) in limited space while maintaining scannability.
+    </p>
+  </div>
+</div>
+
+## Font Styles
+
+Choose between standard and oldstyle numerals:
+
+- **Normal**: Standard numeric font styling, clear and modern
+- **Numeric Oldstyle**: Traditional oldstyle figures with varying heights, providing a classic typographic aesthetic
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Organism</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-facts-and-figures-group.twig</code>,{' '}
+        <code>_yds-facts-and-figures-group.scss</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Accessibility</strong>
+      </td>
+      <td>
+        Semantic HTML structure, proper heading hierarchy, keyboard navigable
+        links, sufficient color contrast, ARIA labels where appropriate
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Responsive Behavior</strong>
+      </td>
+      <td>
+        Grid columns stack appropriately on smaller viewports, maintains
+        readability across all devices, adapts spacing for mobile viewing
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### Grid Configuration
+
+- **Two columns**: Use for 2-4 prominent statistics requiring emphasis
+- **Three columns**: Default balanced layout for 3-6 statistics
+- **Four columns**: Use for 4-8+ statistics when space is limited
+
+### Icon Usage
+
+- Icons enhance recognition and visual appeal
+- Use consistently across all items in a group
+- Select icons that clearly represent the data being shown
+- Works best with icon-only presentation style for minimalist approach
+
+### Alignment
+
+- **Left alignment**: Standard for most content, easier to scan
+- **Center alignment**: Creates more visual balance, works well with symmetric layouts
+
+### Background Images
+
+- Use sparingly for special emphasis or thematic contexts
+- Ensure sufficient contrast between image and text
+- Consider accessibility implications for users with visual impairments
+
+### Content Guidelines
+
+- Keep statistics concise and immediately scannable
+- Use supporting content to provide necessary context
+- Include units or qualifiers (%, $, etc.) in the statistic itself
+- Limit to 2-8 items for optimal comprehension
+
+## Related Components
+
+- **Facts and Figures** - Individual fact/statistic component used within this group
+- **Text** - Base text component for headings and content
+- **Link** - Component for call-to-action links
+- **Image** - Component for optional background images
+
+## Visual Regression Testing
+
+For comprehensive testing of all facts and figures group variations including presentation styles, grid layouts, and theme combinations, see the [Visreg page](?path=/story/organisms-facts-and-figures-group-visreg--visreg).

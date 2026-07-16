@@ -14,7 +14,7 @@ $secondary-menu-sub-max-width: 19rem;
 
   color: var(--color-heading);
   text-align: left;
-  padding: var(--size-spacing-3) var(--size-spacing-5);
+  padding: var(--secondary-nav-padding-vertical) var(--size-spacing-5);
 
   &[aria-expanded='true'] {
     color: var(--color-navigation-expanded-item);
@@ -62,6 +62,12 @@ $secondary-menu-sub-max-width: 19rem;
 }
 
 .secondary-nav {
+  --secondary-nav-hover-bg: var(--color-gray-200);
+  --secondary-nav-hover-color: var(--color-slot-seven);
+  --secondary-nav-padding-vertical: calc(
+    var(--size-spacing-3) + var(--size-spacing-1)
+  );
+
   max-width: 100%;
   background-color: var(--color-basic-white);
 
@@ -239,13 +245,18 @@ $secondary-menu-sub-max-width: 19rem;
       background-color: var(--color-background);
       max-width: $secondary-menu-sub-max-width;
       z-index: 1;
+      /* stylelint-disable scss/operator-no-newline-after */
       top: calc(
-        var(--size-spacing-9) + var(--size-spacing-10) - var(--size-spacing-2)
+        var(--size-spacing-9) + var(--size-spacing-10) - var(--size-spacing-2) +
+          var(--size-spacing-3)
       );
 
       .in-this-section & {
-        top: calc(var(--size-spacing-7) + var(--size-spacing-4));
+        top: calc(
+          var(--size-spacing-7) + var(--size-spacing-4) + var(--size-spacing-2)
+        );
       }
+      /* stylelint-enable scss/operator-no-newline-after */
 
       [aria-expanded='false'] ~ & {
         display: none;
@@ -327,22 +338,32 @@ $secondary-menu-sub-max-width: 19rem;
   }
 
   .secondary-nav__menu--level-1 {
-    [data-menu-variation='basic'] :not(:last-child) > & {
+    [data-menu-variation='basic'] & {
       // prettier-ignore
       border-top: var(--border-thickness-1) solid var(--color-navigation-border);
       border-left: var(--border-thickness-1) solid
         var(--color-navigation-border);
       border-right: var(--border-thickness-1) solid
         var(--color-navigation-border);
-      border-bottom: var(--border-thickness-4) solid
+      border-bottom: var(--border-thickness-1) solid
         var(--color-navigation-border);
     }
 
+    // Handle directional positioning based on viewport overflow detection
+    &[data-menu-direction='left'] {
+      left: auto;
+      right: 0;
+    }
+
+    &[data-menu-direction='right'] {
+      // Default positioning, kept for clarity
+      left: 0;
+      right: auto;
+    }
+
+    // Fallback for last child when JavaScript hasn't loaded
     [data-menu-variation='basic'] :last-child > & {
       right: 0;
-
-      // prettier-ignore
-      border-right: var(--border-thickness-1) solid var(--color-navigation-border);
     }
   }
 }
@@ -350,6 +371,14 @@ $secondary-menu-sub-max-width: 19rem;
 .secondary-nav__item {
   &--level-0 {
     @include tokens.body-s;
+
+    &:has(.secondary-nav__item--active),
+    &.secondary-nav__item--active {
+      & button,
+      & a.secondary-nav__link--active {
+        font-weight: var(--font-weights-yalenew-bold);
+      }
+    }
 
     .in-this-section & {
       @media (min-width: tokens.$break-mobile) {
@@ -407,7 +436,7 @@ $secondary-menu-sub-max-width: 19rem;
     display: none;
 
     @media (min-width: tokens.$break-mobile) {
-      @include tokens.h5-mallory-compact-medium;
+      @include tokens.heading(h5);
 
       display: block;
       padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2)
@@ -434,6 +463,11 @@ $secondary-menu-sub-max-width: 19rem;
   &--level-0 {
     @include secondary-nav-item-level-0;
 
+    &:hover {
+      background-color: var(--secondary-nav-hover-bg);
+      color: var(--secondary-nav-hover-color);
+    }
+
     &.secondary-nav__link--with-sub {
       display: none;
     }
@@ -444,7 +478,7 @@ $secondary-menu-sub-max-width: 19rem;
     // Only it should be capitalized.
     &.secondary-nav__link--level-1.secondary-nav__link--with-icon.secondary-nav__link--explore-bar {
     @media (min-width: tokens.$break-mobile) {
-      @include tokens.h6-mallory-compact-medium;
+      @include tokens.heading(h6);
     }
   }
 
@@ -524,6 +558,12 @@ $secondary-menu-sub-max-width: 19rem;
   color: var(--menu-link-color);
   text-decoration: underline;
   text-decoration-thickness: var(--border-thickness-2);
+
+  // Level 0 active links should use hover custom properties for consistency
+  &.secondary-nav__link--level-0:hover {
+    background-color: var(--secondary-nav-hover-bg);
+    color: var(--secondary-nav-hover-color);
+  }
 }
 
 .secondary-nav__link:not(
@@ -569,10 +609,21 @@ $secondary-menu-sub-max-width: 19rem;
 
   &--level-0 {
     @include secondary-nav-item-level-0;
+
+    &:hover {
+      background-color: var(--secondary-nav-hover-bg);
+      color: var(--secondary-nav-hover-color);
+    }
   }
 }
 
 .secondary-nav__toggle-icon {
+  @include tokens.animate;
+
   height: 1em;
   width: 1em;
+}
+
+.secondary-nav__toggle[aria-expanded='true'] .secondary-nav__toggle-icon {
+  transform: rotate(180deg);
 }

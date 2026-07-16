@@ -1,0 +1,140 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as SiteFooterStories from './site-footer.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './site-footer-props.yml';
+
+<Meta of={SiteFooterStories} name="Overview" />
+
+# Site Footer
+
+The site footer is a global component that appears at the bottom of every page, providing essential links, contact information, and supplementary navigation. It supports two variations (basic and mega) and offers flexible theming options to maintain brand consistency while delivering accessibility and usability across the entire website.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the site footer's properties in real-time.
+
+<Canvas of={SiteFooterStories.Footer} />
+<Controls of={SiteFooterStories.Footer} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Footer Variations
+
+The site footer supports two variations designed for different content and navigation needs:
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', margin: '2rem 0'}}>
+
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Basic Footer</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Compact footer layout suitable for most sites. Provides essential links,
+    social media connections, and footer content in a streamlined format. Best
+    for sites with minimal footer navigation requirements.
+  </p>
+</div>
+
+<div style={{ padding: '1.5rem', background: '#f0f0f0', borderRadius: '8px' }}>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Mega Footer</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Expanded footer layout displaying multiple link groups and comprehensive
+    navigation. Ideal for sites that need to surface additional navigation or
+    provide extensive footer resources and links.
+  </p>
+</div>
+
+</div>
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Organism</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-site-footer.twig</code>, <code>yds-site-footer.js</code>,{' '}
+        <code>_yds-site-footer.scss</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Accessibility</strong>
+      </td>
+      <td>
+        ARIA landmark role <code>contentinfo</code>, semantic HTML structure,
+        keyboard navigable links, sufficient color contrast for all text and
+        interactive elements
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Responsive Behavior</strong>
+      </td>
+      <td>
+        Adaptive layout based on viewport size, stacked navigation on mobile
+        devices, touch-optimized link targets
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>JavaScript</strong>
+      </td>
+      <td>
+        Minimal JavaScript for interactive enhancements; core functionality
+        works without JavaScript
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### Content Organization
+
+The footer is divided into several key sections:
+
+- **Link Groups**: Organized collections of related links (in mega variation)
+- **Social Links**: Social media connections and sharing options
+- **Footer Content**: Text area supporting HTML for legal notices, copyright, and additional information
+
+### Theme Combinations
+
+The site footer supports independent theme and accent color selection. The theme controls the overall footer color scheme, while the accent adds highlighting to links and interactive elements. Ensure theme combinations maintain sufficient contrast for accessibility.
+
+### Footer Variation Selection
+
+- **Basic footer**: Best for sites with minimal footer navigation or simple content needs
+- **Mega footer**: Suitable for sites requiring multiple link groups or extensive footer navigation
+
+### Accessibility Considerations
+
+- Maintain sufficient color contrast between text and background colors
+- Ensure all links have descriptive text or ARIA labels
+- Test keyboard navigation for all interactive elements
+- Verify footer content is accessible to screen readers
+- Use semantic HTML for proper document structure
+
+## Related Components
+
+- **Social Links** - Social media link collection within the footer
+- **Link Group** - Organized collections of footer links
+- **Site Header** - Complementary global navigation component
+
+## Visual Regression Testing
+
+For comprehensive testing of all footer variations including theme combinations, layout configurations, and border thickness options, see the [Visreg page](?path=/story/organisms-site-footer-visreg--visreg).

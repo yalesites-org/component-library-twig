@@ -1,0 +1,127 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as CustomCardStories from './custom-card.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './custom-card-props.yml';
+
+<Meta of={CustomCardStories} name="Overview" />
+
+# Custom Card
+
+Custom Card displays customizable card content with flexible layouts. It provides a clean, structured way to present headings, snippets of text, and optional images in a card format. Custom cards are designed to be used within a card collection container and support both text-only and image-enhanced layouts.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the custom card's properties in real-time. Test with and without images, toggle featured status, and adjust content.
+
+<div className="sb-contained-canvas">
+  <Canvas of={CustomCardStories.customCard} />
+</div>
+<Controls of={CustomCardStories.customCard} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+### Twig-Only Props
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>custom_card__url</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        Required. URL for the card heading link. Provided by the CMS; not an
+        interactive Storybook control.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Component Variations
+
+### With and Without Images
+
+- **With Image**: Displays a responsive image alongside the card content, creating a richer visual presentation
+- **Without Image**: Shows only the heading and snippet text for a cleaner, text-focused card
+
+### Featured Collection
+
+The `data-collection-featured` attribute controls the visual treatment of the card collection, affecting spacing, sizing, and layout presentation.
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-custom-card.twig`
+- **Styles**: `_yds-custom-card.scss`
+- **JavaScript**: `yds-custom-card.js`
+
+### Accessibility
+
+- Heading level automatically adjusts based on context (h2 or h3 depending on collection heading presence)
+- Image links include proper `aria-label` attributes using the card heading text
+- Image links are marked `aria-hidden="true"` to avoid duplicate link announcements for screen readers
+- All links are keyboard accessible with visible focus indicators
+- Maintains proper semantic HTML structure
+
+### Responsive Behavior
+
+- Images use responsive image patterns to optimize for different screen sizes and devices
+- Card layouts adapt based on the collection configuration
+- Content reflows gracefully on smaller screens
+- Touch-friendly click targets for mobile devices
+
+## Usage Guidelines
+
+### Best Practices
+
+- Keep headings concise and descriptive (5-7 words maximum)
+- Use snippet text to provide context without overwhelming users (1-2 sentences)
+- Choose images that are relevant to the card content and maintain visual consistency across a collection
+- Group related cards together in collections for better information hierarchy
+- Ensure card URLs lead to relevant, well-structured destination pages
+- Use featured collection styling sparingly for high-priority content
+
+### Things to Avoid
+
+- Don't use overly long headings that break layout on smaller screens
+- Don't include too much text in snippets (reduces scannability)
+- Avoid mixing cards with and without images in the same collection (creates visual inconsistency)
+- Don't use custom cards for navigation purposes (use proper navigation components)
+- Don't overwhelm pages with too many card collections (limit to 1-2 per page)
+- Avoid generic or unclear link text in headings
+
+### When to Use Custom Cards
+
+- Showcasing featured content, news, or updates
+- Displaying program or course offerings
+- Presenting research projects or initiatives
+- Highlighting services or resources
+- Creating visual entry points to deeper content
+
+## Related Components
+
+- **Card Collection**: The container component used to display multiple custom cards
+- **Event Card**: Use for event-specific information with dates and times
+- **Profile Card**: Use for people or directory listings
+- **Text Field**: Consider for longer-form content without the card visual treatment
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

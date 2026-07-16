@@ -1,0 +1,75 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as ContentSpotlightLandscapeStories from './text-with-image.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './text-with-image-props.yml';
+
+<Meta of={ContentSpotlightLandscapeStories} name="Overview" />
+
+# Content Spotlight Landscape
+
+The Content Spotlight Landscape component displays content with a landscape-oriented image (3:2 aspect ratio), providing a wider visual format ideal for scenic photography, group photos, or content that benefits from horizontal composition. It supports flexible positioning, alignment options, and theme customization.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the content spotlight landscape's properties in real-time.
+
+<Canvas of={ContentSpotlightLandscapeStories.ContentSpotlightLandscape} />
+<Controls of={ContentSpotlightLandscapeStories.ContentSpotlightLandscape} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Molecule</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Image Aspect Ratio</strong>
+      </td>
+      <td>3:2 (Landscape orientation)</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-text-with-image.twig</code>,{' '}
+        <code>_yds-text-with-image.scss</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### When to Use
+
+- Featuring landscape-oriented imagery or scenic photography
+- Displaying content that benefits from horizontal composition
+- Creating balanced layouts with wider visual elements
+- Showcasing group photos or wide-angle content
+
+### Image Considerations
+
+- Use landscape-oriented images (wider than tall)
+- Recommended aspect ratio: 3:2
+- Ensure images are high quality and properly cropped
+- Consider the focal point when choosing image position
+
+## Visual Regression Testing
+
+For comprehensive testing of all theme variations and configurations, see the [Visreg page](?path=/story/molecules-content-spotlight-content-spotlight-landscape-visreg--visreg).

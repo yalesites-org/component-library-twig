@@ -47,6 +47,10 @@
 body,
 html {
   height: 100%;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    overflow-x: hidden;
+  }
 }
 
 .layout-container {
@@ -111,20 +115,11 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
   $flush-top: false,
   $banner-spacing: false
 ) {
-  margin-block-start: var(--spacing-page-section);
-  margin-block-end: var(--spacing-page-section);
-
   @if $flush-top == true {
     &:first-child {
       --main-content-top-margin: 0;
 
       margin-bottom: var(--size-spacing-7);
-    }
-  }
-
-  @if $flush-bottom == true {
-    &:last-child {
-      --main-content-bottom-margin: 0;
     }
   }
 

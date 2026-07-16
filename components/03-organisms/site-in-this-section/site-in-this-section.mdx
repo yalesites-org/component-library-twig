@@ -1,0 +1,178 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as SiteInThisSectionStories from './site-in-this-section.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './site-in-this-section-props.yml';
+
+<Meta of={SiteInThisSectionStories} name="Overview" />
+
+# Site In This Section
+
+The Site In This Section component displays sub-navigation for a specific section of the site. It combines a collapsible toggle with secondary navigation to help users navigate through related pages within a content area. This component provides a clear hierarchical menu structure that maintains context while browsing through section-specific content.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the site in this section component's properties in real-time.
+
+<Canvas of={SiteInThisSectionStories.SiteSection} />
+<Controls of={SiteInThisSectionStories.SiteSection} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Component Structure
+
+The Site In This Section component consists of two key sub-components:
+
+- **Menu Toggle**: A collapsible header that displays "In This Section" and can be expanded/collapsed on mobile devices
+- **Secondary Navigation**: The hierarchical menu structure showing section pages and sub-pages
+
+## Menu Item Structure
+
+Menu items support hierarchical structures with the following properties:
+
+- **title**: The display text for the menu item
+- **url**: The link destination (can be internal or external)
+- **below**: Optional nested array of child menu items (supports multiple levels)
+- **is_active**: Boolean to mark the current active page in the navigation tree
+
+The component intelligently handles multi-level navigation, expanding parent items when a child page is active to show the user's current location within the section hierarchy.
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Organism</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-site-in-this-section.twig</code>,{' '}
+        <code>yds-site-in-this-section.js</code>,{' '}
+        <code>cl-site-in-this-section.scss</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Dependencies</strong>
+      </td>
+      <td>Secondary Nav component, Menu In This Section Toggle component</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Accessibility</strong>
+      </td>
+      <td>
+        ARIA navigation landmark, semantic list structure, keyboard navigation
+        support, collapsible toggle with proper ARIA states, screen reader
+        friendly with proper labels and current page indication
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Responsive Behavior</strong>
+      </td>
+      <td>
+        Collapsible on mobile viewports with toggle interaction, expanded
+        navigation on larger screens, touch-friendly interactions on mobile
+        devices
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>JavaScript</strong>
+      </td>
+      <td>
+        Manages expand/collapse interactions for the section toggle and nested
+        menu items, handles active state management
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### When to Use Site In This Section
+
+The Site In This Section component is ideal for:
+
+- Section-specific navigation in multi-page content areas
+- Displaying the navigation tree for a department, program, or topic
+- Providing context about related pages within the current section
+- Sites with deep hierarchical structures where users need to navigate between sibling and child pages
+- Mobile-friendly collapsible navigation that saves screen space
+
+### Placement
+
+Site In This Section navigation is typically placed:
+
+- In a sidebar alongside main content on desktop layouts
+- At the top of a section before the main content area on mobile
+- In a consistent location across all pages within the section
+
+The component should remain visible and consistent throughout the section to help users maintain their bearings.
+
+### Navigation Depth
+
+The component handles multiple levels of nested items effectively:
+
+- **Level 1**: Section root or parent pages
+- **Level 2**: Primary child pages within the section
+- **Level 3+**: Nested subsections and detailed content
+
+The component automatically expands the tree to show the current page and its siblings, while keeping other branches collapsed for clarity.
+
+### Mobile Behavior
+
+On smaller viewports, the "In This Section" toggle allows users to:
+
+- Collapse the navigation to save screen space
+- Expand on demand to access section navigation
+- Maintain context without cluttering the mobile interface
+
+## Accessibility Considerations
+
+- Ensure all menu items have descriptive, meaningful labels that make sense out of context
+- The current page is marked with appropriate ARIA attributes for screen readers
+- The collapsible toggle announces its expanded/collapsed state to assistive technology
+- Keyboard users can navigate through all menu levels using Tab and arrow keys
+- Focus indicators are clearly visible for all interactive elements
+- Sufficient color contrast is maintained in all theme variations
+
+## Component Theming
+
+The Site In This Section component supports theming through the `site_section_wrap__theme` property, which applies colors from the YaleSites design system dial. This allows the navigation to match the visual theme of the current section or site.
+
+## Best Practices
+
+- Keep menu labels concise but descriptive (typically under 40 characters)
+- Maintain consistent labeling conventions across the navigation tree
+- Avoid extremely deep nesting (5+ levels) - consider restructuring content if needed
+- Ensure the navigation accurately reflects the site's information architecture
+- Update the active state to match the current page for proper context
+- Test the navigation with keyboard and screen readers to ensure accessibility
+- Consider the mobile experience and ensure the toggle is discoverable
+
+## Related Components
+
+- **Secondary Nav** - The navigation component embedded within this wrapper
+- **Menu In This Section Toggle** - The collapsible header for mobile display
+- **Primary Nav** - Main site-wide navigation in the header
+- **Breadcrumbs** - Complementary wayfinding showing the path to current page
+- **Site Header** - Container for primary navigation elements
+
+## Visual Regression Testing
+
+For comprehensive testing of all theme variations and navigation structures, see the [Visreg page](?path=/story/organisms-site-in-this-section-visreg--visreg).

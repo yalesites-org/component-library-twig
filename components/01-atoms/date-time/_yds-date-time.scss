@@ -1,6 +1,15 @@
+@use '../../00-tokens/tokens';
+
 .date-time {
+  @include tokens.body-oldstyle-nums;
+
   font-variant-caps: small-caps;
-  font-variant-numeric: oldstyle-nums;
   text-transform: lowercase;
   letter-spacing: 0.5px;
+
+  // Override small-caps for all-day events
+  &--all-day {
+    font-variant-caps: normal;
+    text-transform: none;
+  }
 }

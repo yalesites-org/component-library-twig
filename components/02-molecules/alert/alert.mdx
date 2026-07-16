@@ -1,0 +1,71 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as AlertStories from './alert.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './alert-props.yml';
+
+<Meta of={AlertStories} name="Overview" />
+
+# Alert
+
+Displays important messages at the top of the page. Supports three types — emergency, announcement, and marketing — each with distinct visual styling to signal urgency. Alerts are dismissible and use `localStorage` to remember when a user has closed them.
+
+## Interactive Preview
+
+Once dismissed, an alert won't reappear until you click **Reset dismissed alerts** in the preview below.
+
+<Canvas of={AlertStories.Alert} />
+<Controls of={AlertStories.Alert} />
+
+## Alert Types
+
+<Canvas of={AlertStories.AlertExamples} />
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Use for</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Emergency</strong>
+      </td>
+      <td>
+        Campus emergencies, system outages, urgent time-sensitive announcements
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Announcement</strong>
+      </td>
+      <td>Important deadlines, policy updates, scheduled maintenance</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Marketing</strong>
+      </td>
+      <td>
+        Event promotions, new content highlights, non-critical announcements
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Behavior
+
+- **Dismissible** — users can close alerts; state is stored in `localStorage` via the `alert__id`
+- **Unique IDs required** — always provide a unique `alert__id` per alert; reusing IDs causes multiple alerts to dismiss together
+- **No JS fallback** — alerts remain visible if JavaScript is disabled; the close button won't function
+
+## Usage
+
+- Use alerts sparingly — overuse reduces their impact
+- Place alerts at the top of the page where they're immediately visible
+- Keep content concise (2–3 sentences) and include a CTA link when action is needed
+- Don't use multiple emergency alerts on the same page

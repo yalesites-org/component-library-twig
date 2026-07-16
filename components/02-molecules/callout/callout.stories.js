@@ -1,67 +1,55 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
+import componentProps from './callout-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 import calloutTwig from './yds-callout.twig';
 
 import calloutData from './callout.yml';
 
+import imageData from '../../01-atoms/images/image/image.yml';
+
 const colorPairingsData = Object.keys(tokens['component-themes']);
+
+const argTypes = toArgTypes(componentProps);
+argTypes.backgroundColor = {
+  ...argTypes.backgroundColor,
+  options: colorPairingsData,
+};
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Callout',
-  argTypes: {
-    heading: {
-      name: 'Heading',
-      type: 'string',
-    },
-    text: {
-      name: 'Text',
-      type: 'string',
-    },
-    linkText: {
-      name: 'Link Text',
-      type: 'string',
-    },
-    linkType: {
-      name: 'Link Type',
-      type: 'select',
-      options: ['button', 'link'],
-    },
-    backgroundColor: {
-      name: 'Callout Theme (dial)',
-      type: 'select',
-      options: colorPairingsData,
-    },
-    calloutAlignment: {
-      name: 'Callout Alignment',
-      type: 'select',
-      options: ['left', 'center'],
-    },
+  tags: ['!dev'],
+  parameters: {
+    layout: 'fullscreen',
   },
+  argTypes,
   args: {
+    ...toArgs(componentProps),
     heading: calloutData.callout__heading,
     text: calloutData.callout__text,
     linkText: calloutData.callout__link__content,
     linkType: calloutData.callout__link__type,
-    backgroundColor: 'one',
-    calloutAlignment: 'center',
   },
 };
 
-export const Callout = ({
+export const CalloutSingle = ({
   heading,
   text,
   linkText,
   linkType,
   backgroundColor,
   calloutAlignment,
-}) => `
-  <h2>One Callout</h2>
-  ${calloutTwig({
+  overlayBackgroundImage,
+}) =>
+  calloutTwig({
     callout__background_color: backgroundColor,
     callout__alignment: calloutAlignment,
+    callout__overlay_background_image: overlayBackgroundImage
+      ? imageData.responsive_images.pattern
+      : '',
     callouts: [
       {
         callout__heading: heading,
@@ -71,11 +59,24 @@ export const Callout = ({
         callout__link__type: linkType,
       },
     ],
-  })}
-  <h2>Two Callouts</h2>
-  ${calloutTwig({
+  });
+CalloutSingle.tags = ['!dev'];
+
+export const CalloutDouble = ({
+  heading,
+  text,
+  linkText,
+  linkType,
+  backgroundColor,
+  calloutAlignment,
+  overlayBackgroundImage,
+}) =>
+  calloutTwig({
     callout__background_color: backgroundColor,
     callout__alignment: calloutAlignment,
+    callout__overlay_background_image: overlayBackgroundImage
+      ? imageData.responsive_images.pattern
+      : '',
     callouts: [
       {
         callout__heading: heading,
@@ -92,5 +93,5 @@ export const Callout = ({
         callout__link__type: linkType,
       },
     ],
-  })}
-`;
+  });
+CalloutDouble.tags = ['!dev'];

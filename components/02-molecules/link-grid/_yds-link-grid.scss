@@ -10,7 +10,7 @@ $global-link-grid-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .link-grid {
-  @include tokens.spacing-page-section($banner-spacing: true);
+  @include tokens.spacing-page-section;
 
   // Global themes: set color slots for each theme
   // This establishes `--color-slot-` variables name-spaced to the selector
@@ -73,10 +73,19 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
 }
 
 .link-grid__heading {
-  @include tokens.h2-yale-new;
+  @include tokens.heading(h2);
 
   flex: 1 0 100%;
   margin-bottom: var(--size-spacing-6);
+
+  [data-component-theme]:not(
+      [data-component-theme='default'],
+      [data-component-theme='two']
+    )
+    .link-grid
+    & {
+    color: var(--color-basic-white);
+  }
 }
 
 .link-grid__inner {
@@ -98,13 +107,26 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 }
 
-.link-grid__links-column {
-  @include atoms.list-reset;
-
+.link-grid__column-wrapper {
   width: 100%;
-  border-left: var(--size-thickness-1) solid var(--color-link-grid-border);
   margin-bottom: var(--size-spacing-7);
+  border-left: var(--size-thickness-1) solid var(--color-link-grid-border);
   padding: var(--size-spacing-4) 0;
+
+  // If wrapper contains a heading, remove top padding
+  &:has(.link-group__heading) {
+    padding-top: 0;
+  }
+
+  // Style link-group headings when used inside link-grid columns
+  .link-group__heading {
+    @include tokens.heading(h6);
+
+    // Match bottom padding to list item bottom margin
+    padding-bottom: var(--size-spacing-6);
+    padding-left: var(--size-spacing-6);
+    padding-right: var(--size-spacing-6);
+  }
 
   // medium = two columns
   @media (min-width: tokens.$break-m) {
@@ -116,11 +138,6 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
     flex: 1 1 25%;
   }
 
-  // first column gets wider border
-  &:first-of-type {
-    border-width: var(--size-thickness-4);
-  }
-
   // if used in fifty-fifty layout and min-width 2xl
   // make the columns 50% width
   [data-component-layout='fifty-fifty'] & {
@@ -128,6 +145,44 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
       flex: 1 1 50%;
     }
   }
+
+  // if used in thirty-thirty-thirty layout and min-width 2xl
+  // make the columns 100% width and apply thicker border
+  [data-component-layout='thirty-thirty-thirty'] &,
+  .yds-two-column .yds-two-column__secondary & {
+    @media (min-width: tokens.$break-2xl) {
+      margin-bottom: 0;
+      flex: 1 1 100%;
+      border-width: var(--size-thickness-4);
+    }
+  }
+
+  // Line treatment styles - must come after layout-specific rules to override
+  // All Strong Lines: all columns use thicker border
+  .link-grid[data-line-treatment='all_strong_lines'] & {
+    border-width: var(--size-thickness-4) !important;
+  }
+
+  // All Light Lines: all columns use thinner border
+  .link-grid[data-line-treatment='all_light_lines'] & {
+    border-width: var(--size-thickness-1) !important;
+  }
+
+  // No Lines: remove all borders
+  .link-grid[data-line-treatment='no_lines'] & {
+    border: none !important;
+  }
+
+  // Default: first column gets wider border (alternating strong and light)
+  .link-grid[data-line-treatment='default'] &:first-of-type {
+    border-width: var(--size-thickness-4);
+  }
+}
+
+.link-grid__links-column {
+  @include atoms.list-reset;
+
+  width: 100%;
 }
 
 .link-grid__list-item {

@@ -1,0 +1,219 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as LayoutStories from './layout.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './layout-props.yml';
+
+<Meta of={LayoutStories} name="Overview" />
+
+# Layout
+
+The layout component provides page-level structure with configurable content regions. It supports multiple column configurations, optional visual dividers between regions, and flexible padding controls to create organized, scannable page layouts. The layout component is themable and can accommodate various content types in each region.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the layout's properties in real-time.
+
+<Canvas of={LayoutStories.layout} />
+<Controls of={LayoutStories.layout} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Layout Configurations
+
+The layout component supports three distinct column configurations for different content arrangement needs:
+
+<div
+  style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: '1.5rem',
+    margin: '2rem 0',
+  }}
+>
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Fifty-Fifty</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      Two equal-width columns providing balanced space for primary and
+      secondary content. Ideal for side-by-side comparisons or complementary
+      content.
+    </p>
+  </div>
+
+{' '}
+
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Seventy-Thirty</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Asymmetric layout with a wider primary region (70%) and narrower secondary
+    region (30%). Perfect for main content with sidebar navigation or
+    supplementary information.
+  </p>
+</div>
+
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Thirty-Thirty-Thirty</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      Three equal-width columns for distributing content evenly across the
+      layout. Supports an optional tertiary region. Best for showcasing
+      multiple related content blocks.
+    </p>
+  </div>
+</div>
+
+## Visual Dividers
+
+When <code>layout\_\_divider</code> is set to <code>'true'</code>, visual dividers appear between layout regions to create clear separation between content areas. In the three-column layout, dividers appear between all three columns when enabled.
+
+## Padding Options
+
+The layout component provides flexible padding controls to accommodate different page compositions:
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Description</th>
+      <th>Use Case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>default</code>
+      </td>
+      <td>Standard vertical padding on top and bottom</td>
+      <td>Standalone layout sections with consistent spacing</td>
+    </tr>
+    <tr>
+      <td>
+        <code>no-top</code>
+      </td>
+      <td>Removes top padding only</td>
+      <td>When layout follows another component closely</td>
+    </tr>
+    <tr>
+      <td>
+        <code>no-bottom</code>
+      </td>
+      <td>Removes bottom padding only</td>
+      <td>When layout is followed by another component closely</td>
+    </tr>
+    <tr>
+      <td>
+        <code>no-padding</code>
+      </td>
+      <td>Removes both top and bottom padding</td>
+      <td>Full-bleed layouts or when nested within other containers</td>
+    </tr>
+  </tbody>
+</table>
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Organism</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-layout.twig</code>, <code>_yds-layout.scss</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Accessibility</strong>
+      </td>
+      <td>
+        Semantic HTML structure, maintains proper content flow, responsive
+        reflow for small viewports, keyboard navigable
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Responsive Behavior</strong>
+      </td>
+      <td>
+        Multi-column layouts reflow to single column on small screens, maintains
+        content hierarchy and readability across all devices
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### Layout Selection
+
+- **Fifty-Fifty**: Use when both content areas have equal importance and similar content volume
+- **Seventy-Thirty**: Use when one content area is primary with supporting content in the sidebar
+- **Thirty-Thirty-Thirty**: Use when showcasing three related content blocks of equal importance
+
+### Divider Usage
+
+- Enable dividers when content regions need clear visual separation
+- Consider disabling dividers for more unified, flowing layouts
+- Dividers work well with contrasting content types (text vs. images, forms vs. navigation)
+
+### Padding Configuration
+
+- Use default padding for most standalone layout sections
+- Remove top padding when stacking multiple layout sections vertically
+- Remove bottom padding when layout precedes another full-width component
+- Use no-padding for full-bleed designs or nested layouts
+
+### Theme Application
+
+- Apply component themes to coordinate layout appearance with page color schemes
+- Themes affect background colors and divider styling
+- Ensure sufficient contrast between theme colors and content for readability
+
+### Content Considerations
+
+- Keep content balanced across regions for visual harmony
+- Avoid extremely disparate content lengths in multi-column layouts
+- Ensure tertiary content is provided when using three-column layout
+- Test layouts with varying content lengths to ensure responsive behavior
+
+## Related Components
+
+- **Two Column** - Legacy two-column layout component
+- **Grid** - Base grid system for component layout
+- **Divider** - Standalone divider component
+- **Block Wrapper** - Wraps content blocks with consistent spacing
+
+## Visual Regression Testing
+
+For comprehensive testing of all layout variations including column configurations, themes, padding options, and divider combinations, see the [Visreg page](?path=/story/organisms-layout-visreg--visreg).

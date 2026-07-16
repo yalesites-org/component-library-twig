@@ -1,0 +1,96 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as InlineMessageStories from './inline-message.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './inline-message-props.yml';
+
+<Meta of={InlineMessageStories} name="Overview" />
+
+# Inline Message
+
+The inline message component displays important notifications, alerts, or informational messages within page content. It provides visual distinction through type variations and theming, making it easy for users to identify and understand the nature of the message.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the inline message's properties in real-time.
+
+<Canvas of={InlineMessageStories.InlineMessage} />
+<Controls of={InlineMessageStories.InlineMessage} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Message Types
+
+The inline message component supports two primary types:
+
+- **general**: Used for informational messages, tips, or general notices
+- **alert**: Used for important alerts, warnings, or time-sensitive information
+
+The type affects both the visual styling and the semantic meaning conveyed to assistive technologies.
+
+## Theme Options
+
+This component supports the following theme variations:
+
+- **One through Five**: Custom theme dials that override global settings with component-specific colors
+
+Use the `inline_message__theme` property to apply different themes. The theme affects background colors, text colors, and link styling to ensure proper contrast and visual hierarchy.
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-inline-message.twig`
+- **Styles**: `_yds-inline-message.scss`
+
+### Accessibility
+
+- Uses semantic HTML with proper heading structure
+- ARIA roles and attributes identify the message type for screen readers
+- Alert type messages use appropriate ARIA live regions for important announcements
+- Color themes meet WCAG contrast requirements
+- Links within messages have clear focus indicators
+- Keyboard accessible
+
+### Behavior
+
+- Messages are displayed inline with surrounding content
+- Alert type messages may include visual indicators (icons) to draw attention
+- Optional links provide contextual actions or additional information
+- Responsive design adapts to container width
+- Works without JavaScript
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use inline messages sparingly to maintain their effectiveness
+- Choose the 'alert' type only for truly important or time-sensitive information
+- Keep message content concise and actionable (2-3 sentences maximum)
+- Provide a clear, descriptive heading that summarizes the message
+- Use the optional link to provide relevant actions or additional context
+- Select themes that provide sufficient contrast with the page background
+
+### Things to Avoid
+
+- Don't use multiple alert-type messages on the same page unless absolutely necessary
+- Avoid overly long message content that becomes difficult to scan
+- Don't use inline messages for critical system errors (use dedicated error components)
+- Avoid placing inline messages in locations where they might be overlooked
+- Don't rely solely on color to convey meaning (type provides semantic context)
+
+## Testing
+
+For comprehensive visual regression testing with all inline message variations, types, and theme combinations, see the [Visreg page](?path=/story/molecules-inline-message-visreg).
+
+## Related Components
+
+- **Alert Banner**: Use for page-level or site-wide important announcements
+- **Toast Notification**: Consider for temporary, dismissible messages
+- **Callout**: Alternative for highlighting content without alert semantics
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

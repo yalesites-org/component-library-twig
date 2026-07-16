@@ -1,0 +1,74 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as LinkGroupStories from './link-group.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './link-group-props.yml';
+
+<Meta of={LinkGroupStories} name="Overview" />
+
+# Link Group
+
+The link group component displays a collection of related links organized under an optional heading. It provides a simple, accessible way to present groups of navigation or reference links in a vertical list format.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the link group's properties in real-time.
+
+<Canvas of={LinkGroupStories.linkGroup} />
+<Controls of={LinkGroupStories.linkGroup} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-link-group.twig`
+- **Styles**: `_yds-link-group.scss`
+
+### Accessibility
+
+- Uses semantic HTML with proper list structure
+- All links are keyboard accessible with clear focus indicators
+- Screen readers announce the group structure and link count
+- Proper heading hierarchy maintained when heading is present
+
+### Behavior
+
+- Links are displayed in a vertical list
+- Standard link styling with hover states
+- Responsive design adapts to container width
+- Works without JavaScript
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use link groups to organize related navigation items
+- Keep the number of links manageable (typically 10 or fewer)
+- Provide a clear, descriptive heading to give context to the link collection
+- Ensure link text is descriptive and clearly indicates the destination
+- Group links logically by topic, function, or content type
+
+### Things to Avoid
+
+- Don't use link groups for primary navigation (use navigation components instead)
+- Avoid mixing unrelated links in a single group
+- Don't use overly long link text that becomes difficult to scan
+- Avoid creating too many small link groups on a single page
+
+## Testing
+
+For comprehensive visual regression testing with all link group variations and theme combinations, see the [Visreg page](?path=/story/molecules-link-group-visreg).
+
+## Related Components
+
+- **Link Grid**: Use for displaying links in a multi-column grid layout
+- **Menu**: Consider for more complex navigation structures
+- **Card Collection**: Alternative for presenting links with additional context and imagery
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

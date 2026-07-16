@@ -1,9 +1,14 @@
-// Markup.
 import tableTwig from './example-tables.twig';
 
-/**
- * Storybook Definition.
- */
-export default { title: 'Atoms/Table' };
+import './table';
 
-export const Table = () => tableTwig();
+export default {
+  title: 'Atoms/Table',
+  tags: ['!dev'],
+};
+
+export const Table = () => `
+  <div class="layout">
+    ${tableTwig()}
+  </div>
+`;

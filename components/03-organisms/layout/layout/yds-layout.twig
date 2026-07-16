@@ -15,10 +15,11 @@
 
 {% set layout__attributes = {
   'data-component-has-divider': layout__divider == 'true' ? 'true' : 'false',
+  'data-component-padding': layout__padding|default('default'),
   'data-component-theme': component__theme|default('default'),
   'data-component-layout': component__layout|default('fifty-fifty'),
   'data-component-width': component__width|default('site'),
-  'class': bem(layout__base_class),
+  'class': bem(layout__base_class, [], '', ['layout']),
 } %}
 
 <div {{ add_attributes(layout__attributes) }} data-embedded-components>

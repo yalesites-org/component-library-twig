@@ -1,0 +1,187 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as BlockWrapperStories from './block-wrapper.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './block-wrapper-props.yml';
+
+<Meta of={BlockWrapperStories} name="Overview" />
+
+# Block Wrapper
+
+The block wrapper component wraps content blocks with consistent spacing and theming. It provides standardized vertical padding between blocks and sections, ensuring visual rhythm and proper content separation throughout the site. Block wrappers are the foundation for maintaining consistent spacing across all content types.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the block wrapper's properties in real-time.
+
+<Canvas of={BlockWrapperStories.BlockWrapper} />
+<Controls of={BlockWrapperStories.BlockWrapper} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Padding Modifiers
+
+The block wrapper supports four padding configurations to accommodate different layout requirements:
+
+<div
+  style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    gap: '1.5rem',
+    margin: '2rem 0',
+  }}
+>
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Default Padding</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      Standard vertical padding on both top and bottom. Use for most content
+      blocks to maintain consistent spacing throughout the page.
+    </p>
+    <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: 0 }}>
+      <strong>Class:</strong> <code>ys-block-wrapper--padding-default</code>
+    </p>
+  </div>
+
+{' '}
+
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>No Top Padding</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Removes top padding while maintaining bottom padding. Ideal for blocks that
+    follow headers or when creating tighter visual groupings.
+  </p>
+  <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: 0 }}>
+    <strong>Class:</strong> <code>ys-block-wrapper--padding-no-top</code>
+  </p>
+</div>
+
+{' '}
+
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>No Bottom Padding</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Removes bottom padding while maintaining top padding. Useful for blocks that
+    precede footers or when content flows directly into the next section.
+  </p>
+  <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: 0 }}>
+    <strong>Class:</strong> <code>ys-block-wrapper--padding-no-bottom</code>
+  </p>
+</div>
+
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>No Padding</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      Removes all vertical padding. Use when the wrapped content provides its
+      own spacing or when creating edge-to-edge layouts.
+    </p>
+    <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: 0 }}>
+      <strong>Class:</strong> <code>ys-block-wrapper--padding-no-padding</code>
+    </p>
+  </div>
+</div>
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Organism</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-block-wrapper.twig</code>,{' '}
+        <code>_yds-block-wrapper.scss</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Accessibility</strong>
+      </td>
+      <td>
+        Semantic HTML wrapper, maintains proper document flow, preserves content
+        accessibility
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Responsive Behavior</strong>
+      </td>
+      <td>
+        Padding values adjust responsively to maintain appropriate spacing
+        across all viewport sizes
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### When to Use Each Modifier
+
+- **Default Padding**: Use for standard content blocks in the main content area
+- **No Top Padding**: Use when a block immediately follows a hero section, page header, or another block that provides bottom spacing
+- **No Bottom Padding**: Use when a block is the last element before the footer or before a section that provides its own top spacing
+- **No Padding**: Use sparingly for full-width components like carousels, maps, or edge-to-edge imagery where wrapper padding would interfere with the design
+
+### Spacing Consistency
+
+The block wrapper is crucial for maintaining visual rhythm across pages:
+
+- Apply consistently to all major content sections
+- Use the same padding modifier for similar content types
+- Consider the relationship between adjacent blocks when choosing modifiers
+- Test how padding combinations appear on different screen sizes
+
+### Common Patterns
+
+- **Page Content**: Default padding for all main content blocks
+- **Hero → Content**: No top padding on first content block
+- **Content → Footer**: No bottom padding on last content block
+- **Full-Width Media**: No padding to allow edge-to-edge display
+
+## Related Components
+
+- **Section** - Higher-level container for grouping multiple blocks
+- **Grid** - Layout component often used within block wrappers
+- **Content Width** - Component that constrains content width within wrappers
+
+## Visual Regression Testing
+
+For comprehensive testing of all block wrapper padding variations, see the [Visreg page](?path=/story/organisms-block-wrapper-visreg--visreg).

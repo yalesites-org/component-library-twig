@@ -1,0 +1,209 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as ListsStories from './list.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './list-props.yml';
+
+<Meta of={ListsStories} name="Overview" />
+
+# Lists
+
+The lists component system provides styled list elements for various use cases, including unordered lists, ordered lists, and specialized taxonomy lists for tags and categories. Lists maintain consistent styling across the design system while adapting to their context.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with different list types and themes in real-time.
+
+<div className="sb-contained-canvas">
+  <Canvas of={ListsStories.Interactive} />
+</div>
+<Controls of={ListsStories.Interactive} />
+
+## List Types
+
+### Unordered List
+
+Standard bulleted lists for non-sequential items.
+
+### Ordered List
+
+Numbered lists for sequential or prioritized items.
+
+### Tags List
+
+Specialized list styling for tag taxonomies with pill-style presentation.
+
+### Categories List
+
+Specialized list styling for category taxonomies with distinct visual treatment.
+
+## Properties
+
+### Standard List Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+{twigPropsTable(componentProps, 'optional')}
+
+### List Item Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>item__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>Content of the list item</td>
+    </tr>
+    <tr>
+      <td>
+        <code>item__link</code>
+      </td>
+      <td>
+        <code>object</code>
+      </td>
+      <td>Optional link object with url and title properties</td>
+    </tr>
+  </tbody>
+</table>
+
+### Taxonomy List Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>tags</code>
+      </td>
+      <td>
+        <code>array</code>
+      </td>
+      <td>Array of tag objects for tags list</td>
+    </tr>
+    <tr>
+      <td>
+        <code>categories</code>
+      </td>
+      <td>
+        <code>array</code>
+      </td>
+      <td>Array of category objects for categories list</td>
+    </tr>
+  </tbody>
+</table>
+
+## Technical Specifications
+
+- **Atomic Level**: Atom
+- **Templates**: `yds-list.twig`, `yds-tags-list.twig`, `yds-categories-list.twig`
+- **Styles**: `_yds-list.scss`
+
+### Accessibility
+
+- **Semantic HTML**: Uses proper `<ul>`, `<ol>`, and `<li>` elements
+- **Screen Reader Support**: List structure is properly announced
+- **Nested Lists**: Properly structured for hierarchical content
+- **Link Context**: Links within lists have appropriate context
+
+### Behavior
+
+- **List Markers**: Standard bullets for unordered, numbers for ordered
+- **Spacing**: Consistent vertical rhythm between items
+- **Text Wrapping**: Proper indentation for multi-line items
+- **Responsive**: Adapts to container width
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use unordered lists for items without inherent order
+- Use ordered lists for sequential steps or ranked items
+- Keep list items concise and scannable
+- Nest lists only when showing clear hierarchy
+- Use tags/categories lists for metadata and filtering
+- Ensure list items are parallel in structure
+
+### Things to Avoid
+
+- Don't use lists for purely visual layout
+- Avoid overly long list items (consider breaking into paragraphs)
+- Don't nest lists more than 3 levels deep
+- Avoid mixing content types within a single list
+- Don't use lists when prose would be clearer
+
+## List Type Selection
+
+### When to Use Unordered Lists
+
+- Features or benefits
+- Non-sequential items
+- Items of equal importance
+- Navigation menus
+- Sets of related items
+
+### When to Use Ordered Lists
+
+- Step-by-step instructions
+- Ranked or prioritized items
+- Sequential processes
+- Numbered references
+- Table of contents
+
+### When to Use Taxonomy Lists
+
+- **Tags**: Informal categorization, multiple selections
+- **Categories**: Formal organization, hierarchical structure
+
+## Implementation Notes
+
+### Standard Lists
+
+Lists can be used within text-field contexts for proper styling:
+
+```html
+<div class="text-field">
+  <ul>
+    <li>First item</li>
+    <li>Second item</li>
+  </ul>
+</div>
+```
+
+### Nested Lists
+
+Lists can be nested to show hierarchy:
+
+```html
+<ul>
+  <li>
+    Parent item
+    <ul>
+      <li>Child item</li>
+    </ul>
+  </li>
+</ul>
+```
+
+## Testing
+
+For comprehensive visual regression testing with all list variations and theme combinations, see the [Visreg page](?path=/story/atoms-lists-visreg).
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

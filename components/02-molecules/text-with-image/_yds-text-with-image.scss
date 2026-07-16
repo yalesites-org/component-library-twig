@@ -14,19 +14,8 @@ $component-content-spotlight-themes: map.deep-get(
   --color-text-shadow: var(--color-basic-white);
 
   // if we're not using a component theme, add top and bottom margin
-  // Or if the spotlight is the only spotlight on the page
-  &[data-component-theme='default'],
-  &[data-spotlights-position='first-and-last'] {
+  &[data-component-theme='default'] {
     @include tokens.spacing-page-section;
-  }
-
-  // We're using JavaScript to evaluate the last and first spotlights in a group of spotlights
-  &[data-spotlights-position='first'] {
-    margin-top: var(--size-spacing-10);
-  }
-
-  &[data-spotlights-position='last'] {
-    margin-bottom: var(--size-spacing-10);
   }
 
   // if we're using a component theme, add padding and set background-color and color;
@@ -156,24 +145,11 @@ $component-content-spotlight-themes: map.deep-get(
     }
   }
 
-  // spotlights inside of the banner should behave slightly different in that
-  // first-and-last and first should have zero top margin to allow it to bump up to
-  // the header.
   .layout--banner & {
-    &[data-component-theme='default'],
-    &[data-spotlights-position='first-and-last'] {
+    &[data-component-theme='default'] {
       @include tokens.spacing-page-section;
 
       margin-top: 0;
-      margin-bottom: var(--size-spacing-10);
-    }
-
-    // We're using JavaScript to evaluate the last and first spotlights in a group of spotlights
-    &[data-spotlights-position='first'] {
-      margin-top: 0;
-    }
-
-    &[data-spotlights-position='last'] {
       margin-bottom: var(--size-spacing-10);
     }
   }
@@ -201,6 +177,13 @@ $component-content-spotlight-themes: map.deep-get(
 
     [data-content-vertical-align='bottom'] & {
       align-items: flex-end;
+    }
+
+    // Image Style Variatoins
+    [data-image-style='offset'] & {
+      --component-width: calc(
+        var(--size-component-layout-width-site) + var(--size-spacing-10)
+      );
     }
 
     // Focus Options
@@ -249,6 +232,15 @@ $component-content-spotlight-themes: map.deep-get(
     [data-image-position='image-right'] & {
       grid-area: primary;
     }
+
+    // if offset, balance out the image offset with a margin on content
+    [data-image-style='offset'][data-image-position='image-right'] & {
+      margin-inline-start: var(--size-spacing-8);
+    }
+
+    [data-image-style='offset'][data-image-position='image-left'] & {
+      margin-inline-end: var(--size-spacing-8);
+    }
   }
 
   > *:not(:last-child) {
@@ -257,17 +249,17 @@ $component-content-spotlight-themes: map.deep-get(
 }
 
 .text-with-image__overline {
-  @include tokens.h6-mallory-compact-book;
+  @include tokens.heading(h6, 'book');
 
   color: var(--color-gray-500);
 }
 
 .text-with-image__heading {
-  @include tokens.h3-yale-new;
+  @include tokens.heading(h3);
 }
 
 .text-with-image__subheading {
-  @include tokens.h5-mallory-compact-book;
+  @include tokens.heading(h5, 'book');
 
   color: var(--color-text);
 }
@@ -289,4 +281,8 @@ $component-content-spotlight-themes: map.deep-get(
   display: flex;
   flex-direction: column;
   gap: var(--size-spacing-5);
+}
+
+.text-with-image__caption {
+  color: red;
 }

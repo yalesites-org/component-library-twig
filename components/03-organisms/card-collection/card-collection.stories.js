@@ -3,38 +3,24 @@ import postCardData from '../../02-molecules/cards/reference-card/examples/post-
 import eventCardData from '../../02-molecules/cards/reference-card/examples/event-card.yml';
 import directoryCardData from '../../02-molecules/cards/directory-listing-card/yds-directory-listing-card.yml';
 import profileCardData from '../../02-molecules/cards/reference-card/examples/profile-card.yml';
+import resourceCardData from '../../02-molecules/cards/reference-card/examples/resource-card.yml';
 
 import imageData from '../../01-atoms/images/image/image.yml';
+import componentProps from './card-collection-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
+import { addTableDefaults } from '../../_storybook/add-table-defaults';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Organisms/Card Collection',
+  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {
-    collectionType: {
-      name: 'Collection Type',
-      type: 'select',
-      options: ['grid', 'list', 'condensed'],
-    },
-    featured: {
-      name: 'Featured',
-      type: 'boolean',
-    },
-    withOverlay: {
-      name: 'Overlay',
-      type: 'boolean',
-    },
-  },
-  args: {
-    collectionType: 'grid',
-    featured: true,
-    withImages: true,
-    heading: 'Card Collection',
-  },
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
 export const PostCardCollection = ({
@@ -58,16 +44,6 @@ export const PostCardCollection = ({
     ...imageData.responsive_images['3x2'],
   });
 };
-PostCardCollection.argTypes = {
-  withImages: {
-    name: 'With Images',
-    type: 'boolean',
-  },
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
-};
 
 export const EventCardCollection = ({
   heading,
@@ -89,15 +65,9 @@ export const EventCardCollection = ({
     ...imageData.responsive_images['3x2'],
   });
 };
+
 EventCardCollection.argTypes = {
-  withImages: {
-    name: 'With Images',
-    type: 'boolean',
-  },
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
+  withOverlay: { table: { disable: true } },
 };
 
 export const ProfileCardCollection = ({
@@ -119,18 +89,16 @@ export const ProfileCardCollection = ({
     ...imageData.responsive_images['1x1'],
   });
 };
+
 ProfileCardCollection.argTypes = {
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
-  withImages: {
-    name: 'With Images',
-    type: 'boolean',
-  },
+  withOverlay: { table: { disable: true } },
 };
 
-export const DirectoryListingCardCollection = ({ featured, heading }) => {
+export const DirectoryListingCardCollection = ({
+  featured,
+  heading,
+  withOverlay,
+}) => {
   const items = featured ? [1, 2, 3, 4] : [1, 2, 3, 4, 5, 6];
 
   return cardCollectionTwig({
@@ -140,18 +108,51 @@ export const DirectoryListingCardCollection = ({ featured, heading }) => {
     card_collection__featured: featured ? 'true' : 'false',
     card_collection__cards: items,
     directory_listing_card__heading: heading,
+    reference_card__overlay: withOverlay ? 'Pinned' : '',
     ...directoryCardData,
     ...imageData.responsive_images['1x1'],
   });
 };
+
 DirectoryListingCardCollection.argTypes = {
-  heading: {
-    name: 'Heading',
-    type: 'string',
-  },
-  collectionType: {
-    name: 'Collection Type',
-    type: 'select',
-    options: ['profile-directory'],
-  },
+  collectionType: { table: { disable: true } },
+  withImages: { table: { disable: true } },
+  withOverlay: { table: { disable: true } },
 };
+
+export const ResourceCardCollection = ({
+  heading,
+  collectionType,
+  featured,
+  withImages,
+  withOverlay,
+  portrait,
+}) => {
+  const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
+
+  return cardCollectionTwig({
+    card_collection__source_type: 'resource',
+    card_collection__modifiers: portrait ? ['resource-portrait'] : [],
+    card_collection__type: collectionType,
+    card_collection__heading: heading,
+    card_collection__featured: featured ? 'true' : 'false',
+    card_collection__with_images: withImages ? 'true' : 'false',
+    card_collection__cards: items,
+    reference_card__overlay: withOverlay ? 'Pinned' : '',
+    ...resourceCardData,
+    ...imageData.responsive_images[portrait ? '1x1.6' : '3x2'],
+  });
+};
+const resourceCardCollectionArgs = {
+  portrait: false,
+};
+ResourceCardCollection.argTypes = addTableDefaults(
+  {
+    portrait: {
+      name: 'Portrait',
+      type: 'boolean',
+    },
+  },
+  resourceCardCollectionArgs,
+);
+ResourceCardCollection.args = resourceCardCollectionArgs;

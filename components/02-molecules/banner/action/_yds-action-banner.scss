@@ -9,11 +9,7 @@ $break-cta-banner: tokens.$break-l;
 $break-cta-banner-max: $break-cta-banner - 0.05;
 
 .cta-banner {
-  @include tokens.spacing-page-section(
-    $flush-top: true,
-    $flush-bottom: true,
-    $banner-spacing: true
-  );
+  @include tokens.spacing-page-section($flush-top: true, $flush-bottom: true);
 
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
@@ -72,6 +68,13 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   margin-inline-end: auto;
   padding: 0;
   background-color: var(--color-banner-background);
+
+  &[data-banner-width='full'] {
+    width: 100vw;
+    max-width: 100vw;
+    margin-inline-start: calc(50% - 50vw);
+    margin-inline-end: 0;
+  }
 
   --banner-content-max-width: 37rem;
 
@@ -180,7 +183,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
 }
 
 .cta-banner__image {
-  @media (max-width: $break-cta-banner - 0.05) {
+  @media (max-width: $break-cta-banner-max) {
     aspect-ratio: 16 / 5;
 
     // Safari 14 fix for aspect-ratio
@@ -225,6 +228,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
 
   > * {
     position: relative;
+    z-index: 2;
   }
 
   [data-banner-content-layout='bottom'] & {
@@ -265,7 +269,9 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   }
 
   [data-banner-width='site'][data-banner-content-layout='right'] &,
-  [data-banner-width='site'][data-banner-content-layout='left'] & {
+  [data-banner-width='site'][data-banner-content-layout='left'] &,
+  [data-banner-width='full'][data-banner-content-layout='right'] &,
+  [data-banner-width='full'][data-banner-content-layout='left'] & {
     // prettier-ignore
     max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-10)));
 
@@ -283,6 +289,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     width: 100%;
     content: '';
     background-color: var(--color-banner-background);
+    z-index: 1;
 
     @media (min-width: $break-cta-banner) {
       opacity: 0.85;
@@ -298,6 +305,7 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
 }
 
 .cta-banner__outer-wrap {
+  position: relative;
   width: 100%;
 
   [data-banner-content-layout='left'] &,
@@ -344,7 +352,8 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
       var(--size-spacing-7);
   }
 
-  [data-banner-width='site'] & {
+  [data-banner-width='site'] &,
+  [data-banner-width='full'] & {
     // prettier-ignore
     max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-10)));
 
@@ -354,12 +363,29 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
       margin: 0 auto;
     }
   }
+
+  // Special handling for left button alignment in bottom layout - allow wrap
+  [data-banner-content-layout='bottom'][data-banner-button-alignment='left'] & {
+    @media (min-width: $break-cta-banner) {
+      flex-wrap: wrap;
+    }
+  }
 }
 
 .cta-banner__heading {
-  @include tokens.h2-yale-new;
+  @include tokens.heading(h2);
 
   margin-bottom: var(--size-spacing-2);
+}
+
+.cta-banner__text {
+  // Ensure text content stays in position for bottom layout with left button alignment
+  [data-banner-content-layout='bottom'][data-banner-button-alignment='left'] & {
+    @media (min-width: $break-cta-banner) {
+      order: 1;
+      flex-shrink: 0;
+    }
+  }
 }
 
 .cta-banner__snippet {
@@ -390,4 +416,129 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   display: flex;
   flex-flow: row wrap;
   gap: var(--size-spacing-5);
+
+  // Button alignment options
+  &[data-button-alignment='left'] {
+    justify-content: flex-start;
+  }
+
+  &[data-button-alignment='center'] {
+    justify-content: center;
+  }
+
+  &[data-button-alignment='right'] {
+    justify-content: flex-end;
+  }
+
+  // Ensure proper spacing and alignment across all section layouts
+  [data-banner-content-layout='bottom'] & {
+    @media (min-width: $break-cta-banner) {
+      flex: 0 0 auto;
+    }
+
+    // For left alignment only, position button group below text content
+    &[data-button-alignment='left'] {
+      @media (min-width: $break-cta-banner) {
+        order: 2;
+        flex-basis: 100%;
+        margin-top: var(--size-spacing-4);
+      }
+    }
+
+    // For center alignment, stay inline but add proper margins for centering
+    &[data-button-alignment='center'] {
+      @media (min-width: $break-cta-banner) {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+}
+
+/**
+ * Overlay image for CTA Banner
+ *
+ * - Absolutely positioned to cover the content area.
+ * - Uses a CSS background image with blend mode and mask gradients for fade effects.
+ * - Responsive: adapts to layout (bottom, left, right) and breakpoint.
+ * - Anchored to bottom left for pattern consistency.
+ * - Overlay only covers the intended content area, not the full section.
+ */
+.cta-banner__overlay_image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: var(--overlay-bg-image);
+  background-size: auto; // Pattern fills overlay area
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+  background-position: left bottom; // Anchor pattern to bottom left
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 1;
+
+  // Default: horizontal mask gradient for 'bottom' layout
+  /* stylelint-disable declaration-block-no-duplicate-properties */
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    transparent 50%,
+    black 100%
+  );
+  /* stylelint-enable declaration-block-no-duplicate-properties */
+
+  // Ensure overlay fills full area if Drupal prepends a div
+  & > div {
+    width: 100%;
+    height: 100%;
+  }
+
+  // Responsive mask for 'bottom' layout at large breakpoints
+  [data-banner-content-layout='bottom'] & {
+    /* stylelint-disable declaration-block-no-duplicate-properties */
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      transparent 40%,
+      black 70%
+    );
+    /* stylelint-enable declaration-block-no-duplicate-properties */
+  }
+
+  // For 'left' and 'right' layouts at large breakpoints:
+  // - Limit overlay width to content area
+  // - Use vertical mask gradient for fade effect
+  [data-banner-content-layout='right'] &,
+  [data-banner-content-layout='left'] & {
+    max-width: var(--banner-content-max-width);
+    /* stylelint-disable declaration-block-no-duplicate-properties */
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 50%,
+      black 100%
+    );
+    /* stylelint-enable declaration-block-no-duplicate-properties */
+
+    @media (max-width: #{$break-cta-banner - 0.05}) {
+      right: 0;
+      left: auto;
+      /* stylelint-disable declaration-block-no-duplicate-properties */
+      mask-image: linear-gradient(
+        to right,
+        transparent,
+        transparent 60%,
+        black 70%
+      );
+      /* stylelint-enable declaration-block-no-duplicate-properties */
+    }
+  }
+
+  // For 'right' layout, align overlay to right at large breakpoints
+  [data-banner-content-layout='right'] & {
+    right: 0;
+    left: auto;
+  }
 }

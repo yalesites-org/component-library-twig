@@ -13,12 +13,12 @@
     }
   }
 
-  a {
-    @include atoms.link;
-  }
-
   // emphasized: intro text variation
   &[data-component-variation='emphasized'] {
     @include tokens.body-xl;
+  }
+
+  a {
+    @include atoms.link;
   }
 }

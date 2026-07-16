@@ -1,0 +1,224 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as ComponentWrapperStories from './component-wrapper.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './component-wrapper-props.yml';
+
+<Meta of={ComponentWrapperStories} name="Overview" />
+
+# Component Wrapper
+
+The component wrapper provides consistent spacing and theming around components. It establishes standardized width constraints and alignment for content throughout the site, ensuring visual consistency and proper content presentation across different viewport sizes. Component wrappers are essential for maintaining a cohesive layout system.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the component wrapper's properties in real-time.
+
+<Canvas of={ComponentWrapperStories.ComponentWrapper} />
+<Controls of={ComponentWrapperStories.ComponentWrapper} />
+
+## Properties
+
+### Required Properties
+
+This component has no strictly required properties, but typically includes content within its blocks.
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Width Options
+
+The component wrapper supports four width configurations to accommodate different content types and layout requirements:
+
+<div
+  style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    gap: '1.5rem',
+    margin: '2rem 0',
+  }}
+>
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Content</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      Narrowest width option optimized for readable text content. Ideal for
+      articles, blog posts, and text-heavy pages where line length affects
+      readability.
+    </p>
+    <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: 0 }}>
+      <strong>Value:</strong> <code>'content'</code>
+    </p>
+  </div>
+
+{' '}
+
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Highlight</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Medium width option for featured content sections. Use for highlighted
+    content blocks, callouts, or sections that need more width than standard
+    text content.
+  </p>
+  <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: 0 }}>
+    <strong>Value:</strong> <code>'highlight'</code>
+  </p>
+</div>
+
+{' '}
+
+<div
+  style={{
+    padding: '1.5rem',
+    background: '#f0f0f0',
+    borderRadius: '8px',
+  }}
+>
+  <h3 style={{ marginTop: 0, color: '#0053A0' }}>Site</h3>
+  <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+    Standard site width (default). Provides consistent width for most components
+    and maintains the overall site layout. Use for general content areas, cards,
+    and multi-column layouts.
+  </p>
+  <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: 0 }}>
+    <strong>Value:</strong> <code>'site'</code>
+  </p>
+</div>
+
+  <div
+    style={{
+      padding: '1.5rem',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+    }}
+  >
+    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Max</h3>
+    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
+      Maximum width option for full-width content. Use for large images,
+      galleries, maps, or components that benefit from maximum horizontal
+      space.
+    </p>
+    <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: 0 }}>
+      <strong>Value:</strong> <code>'max'</code>
+    </p>
+  </div>
+</div>
+
+## Margin Modifiers
+
+The component wrapper includes optional margin modifiers for fine-tuned spacing control:
+
+- **No Top Margin** (`no-top-margin`): Removes top margin when the component directly follows another element with adequate spacing
+- **No Bottom Margin** (`no-bottom-margin`): Removes bottom margin when the component is followed by another element that provides spacing
+
+These modifiers are applied through the `component__modifiers` array property.
+
+## Technical Specifications
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Atomic Level</strong>
+      </td>
+      <td>Organism</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Files</strong>
+      </td>
+      <td>
+        <code>yds-component-wrapper.twig</code>,{' '}
+        <code>_yds-component-wrapper.scss</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Accessibility</strong>
+      </td>
+      <td>
+        Semantic HTML structure, maintains proper document outline, preserves
+        content accessibility
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Responsive Behavior</strong>
+      </td>
+      <td>
+        Width constraints adjust responsively to maintain appropriate content
+        width across all viewport sizes. On mobile, all width options collapse
+        to full width with appropriate padding.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Usage Guidelines
+
+### When to Use Each Width
+
+- **Content Width**: Use for body text, articles, and any content where readability is paramount. This width optimizes line length for comfortable reading (typically 45-75 characters per line).
+
+- **Highlight Width**: Use for featured content blocks, pull quotes, testimonials, or sidebar content that needs to stand out but shouldn't be full width.
+
+- **Site Width (Default)**: Use for most components including card collections, forms, tables, and general page content. This maintains consistency with the overall site layout.
+
+- **Max Width**: Use sparingly for hero images, full-width media galleries, maps, or data visualizations that benefit from maximum horizontal space.
+
+### Spacing Consistency
+
+The component wrapper is fundamental to maintaining consistent page layouts:
+
+- Apply width settings consistently across similar content types
+- Consider how adjacent components with different widths will appear together
+- Use margin modifiers to prevent excessive white space between stacked components
+- Test layouts across viewport sizes to ensure content remains accessible
+
+### Common Patterns
+
+- **Article Content**: Content width for main text, site width for embedded media
+- **Landing Pages**: Mix of highlight and site widths for visual hierarchy
+- **Dashboard Layouts**: Site width for most components, max width for data tables
+- **Media-Rich Pages**: Max width for hero images, site width for supporting content
+
+### Things to Avoid
+
+- Don't use content width for wide components like multi-column layouts or data tables
+- Avoid max width for text-heavy content as it creates uncomfortably long line lengths
+- Don't mix too many different widths on a single page as it disrupts visual flow
+- Avoid using margin modifiers unless there's a specific spacing issue to resolve
+
+## Integration with Block Wrapper
+
+Component wrappers often work in conjunction with block wrappers:
+
+- **Block Wrapper**: Controls vertical padding/spacing between sections
+- **Component Wrapper**: Controls horizontal width constraints and alignment
+
+When used together, they provide complete control over both vertical and horizontal spacing, ensuring consistent layouts throughout the site.
+
+## Visual Regression Testing
+
+For comprehensive testing of all component wrapper width variations, see the [Visreg page](?path=/story/organisms-component-wrapper-visreg--visreg).
+
+## Related Components
+
+- **Block Wrapper**: Provides vertical padding and spacing between content sections
+- **Grid**: Layout component often used within component wrappers for multi-column layouts
+- **Section**: Higher-level container for grouping related components
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

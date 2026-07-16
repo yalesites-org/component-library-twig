@@ -72,18 +72,21 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &[data-component-theme='five'] {
     --color-accordion-accent: var(--color-slot-five);
   }
-
-  // remove margin from the top and bottom of the accordion in a fifty-fifty layout
-  [data-component-layout='fifty-fifty'] & {
-    margin-block-start: 0;
-    margin-block-end: 0;
-  }
 }
 
 .accordion__heading {
-  @include tokens.h2-yale-new;
+  @include tokens.heading(h2);
 
   margin-bottom: var(--size-spacing-5);
+
+  [data-component-theme]:not(
+      [data-component-theme='default'],
+      [data-component-theme='two']
+    )
+    .accordion
+    & {
+    color: var(--color-basic-white);
+  }
 }
 
 .accordion__controls {
@@ -115,6 +118,7 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   display: flex;
   gap: var(--size-spacing-3);
   align-items: center;
+  cursor: pointer;
 
   &:hover {
     color: var(--color-link-base);
@@ -134,12 +138,27 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     max-width: var(--size-component-layout-width-content);
   }
 
-  [data-component-theme]:not([data-component-theme='default']) & {
+  .accordion[data-component-theme]:not([data-component-theme='default']) & {
+    --color-link-base: var(--color-gray-700);
+    --color-heading: var(--color-gray-700);
+
     border-bottom: none;
     background-color: var(--color-gray-100);
     padding: var(--size-spacing-3) var(--size-spacing-4);
     border-left: var(--border-thickness-6) solid var(--color-accordion-accent);
     margin-bottom: var(--size-spacing-5);
+    color: var(--color-gray-700);
+
+    .text-field a {
+      --color-text-shadow: var(--color-gray-100);
+      --color-link-hover: var(--color-gray-700);
+      --color-link-base: var(--color-gray-700);
+    }
+  }
+
+  [data-global-theme='one'] [data-component-theme='two'] .accordion &,
+  [data-global-theme='five'] [data-component-theme='two'] .accordion & {
+    background-color: var(--color-basic-white);
   }
 }
 
@@ -148,6 +167,11 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   [data-component-theme='default'] & {
     margin-bottom: var(--size-spacing-5);
+  }
+
+  // Add left padding to the heading for non-default themes
+  [data-component-theme]:not([data-component-theme='default']) .accordion & {
+    padding-inline-start: var(--size-spacing-5);
   }
 }
 
@@ -161,6 +185,7 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   width: 100%;
   padding: var(--size-spacing-3) var(--size-spacing-4) var(--size-spacing-3) 0;
   text-align: left;
+  cursor: pointer;
 
   &:hover {
     color: var(--color-link-base);
@@ -210,5 +235,78 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     > *:first-child {
       margin-top: var(--size-spacing-5);
     }
+  }
+}
+
+// Layout Builder context: reduce top spacing since .layout-builder-block
+// already has padding.
+.layout-builder-block .accordion {
+  margin-block-start: 0;
+}
+
+// Force accordion__controls to display in layout builder (overrides template's
+// display: none and any theme-specific hiding).
+.layout-builder-block .accordion__controls {
+  align-items: center;
+  display: flex !important;
+  margin-bottom: 0;
+  max-height: var(--size-spacing-8);
+  min-height: 0;
+  min-width: 0;
+  overflow: visible;
+  padding: 0;
+  visibility: visible !important;
+}
+
+// Ensure controls display in narrow layout sections (e.g. 70/30 two-column).
+// Parent overflow or flex constraints can clip the toggle in smaller columns.
+.yds-two-column__primary .layout-builder-block .accordion,
+.yds-two-column__secondary .layout-builder-block .accordion {
+  overflow: visible;
+
+  .accordion__inner,
+  .accordion__controls {
+    overflow: visible;
+  }
+}
+
+// Ensure "Expand all" displays with non-default themes in layout builder.
+.layout-builder-block
+  .accordion[data-component-theme]:not([data-component-theme='default'])
+  .accordion__controls {
+  overflow: visible;
+}
+
+// Toggle color follows section background (matches layout-builder.css pattern for
+// .layout-builder__link--add). Nested so base + :hover output before section overrides.
+.layout-builder-block .accordion__toggle-all {
+  color: var(--color-gray-800);
+
+  &:hover {
+    color: var(--color-link-base);
+  }
+
+  // All theme base overrides first (same specificity), then all :hover overrides.
+  .yds-layout.layout-builder__layout[data-component-theme='two'] &,
+  .yds-layout.layout-builder__layout[data-component-theme='default'] & {
+    color: var(--color-gray-800);
+  }
+
+  .yds-layout.layout-builder__layout[data-component-theme='one'] &,
+  .yds-layout.layout-builder__layout[data-component-theme='three'] &,
+  .yds-layout.layout-builder__layout[data-component-theme='four'] & {
+    color: var(--color-basic-white);
+  }
+
+  .yds-layout.layout-builder__layout[data-component-theme='two'] &:hover,
+  .yds-layout.layout-builder__layout[data-component-theme='default'] &:hover {
+    color: var(--color-link-base);
+  }
+
+  .yds-layout.layout-builder__layout[data-component-theme='one'] &:hover,
+  .yds-layout.layout-builder__layout[data-component-theme='three'] &:hover,
+  .yds-layout.layout-builder__layout[data-component-theme='four'] &:hover {
+    color: var(--color-basic-white);
+    opacity: 0.9;
   }
 }

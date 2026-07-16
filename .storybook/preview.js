@@ -9,6 +9,7 @@ import '../components/00-tokens/typography/cl-typography.scss';
 import '../components/00-tokens/effects/cl-effects.scss';
 import '../components/00-tokens/layout/cl-layout.scss';
 import '../components/04-page-layouts/placeholder/cl-placeholder.scss';
+import '../components/_storybook/storybook.scss';
 import '../fonts/fontawesome/css/fontawesome.css';
 import '../fonts/fontawesome/css/regular.css';
 import '../fonts/fontawesome/css/solid.css';
@@ -24,9 +25,19 @@ import '../lib/link-treatment/link-treatment.scss';
 
 export const decorators = [
   (StoryFn, context) => {
-    useEffect(() => Drupal.attachBehaviors(), [context]);
-    document.body.classList.add('yds-storybook-cl');
-    return `<div data-global-theme="${context.globals.globalTheme}">${StoryFn(context)}</div>`;
+    useEffect(() => {
+      // Update body attributes for theme + heading typography
+      document.body.setAttribute('data-global-theme', context.globals.globalTheme);
+      document.body.setAttribute('data-font-pairing', context.globals.headingTypography || 'yalenew');
+
+      Drupal.attachBehaviors(document);
+
+      return () => {
+        Drupal.detachBehaviors(document);
+      };
+    }, [context]);
+
+    return StoryFn(context);
   },
 ];
 
@@ -44,9 +55,28 @@ export const globalTypes = {
         { value: 'three', title: 'Shoreline Summer' },
         { value: 'four', title: 'Onha' },
         { value: 'five', title: 'It\'s Your Yale'},
+        { value: 'six', title: 'AI'},
+        { value: 'seven', title: 'Whitney Humanities Center' },
       ],
       showName: true,
       title: 'Site: Global Theme (lever)',
+    },
+  },
+
+  headingTypography: {
+    name: 'Typography: Heading Fonts',
+    description: 'Choose a heading font pairing.',
+    defaultValue: 'yalenew',
+    toolbar: {
+      icon: 'paragraph',
+      items: [
+        { value: 'yalenew', title: 'Headings: YaleNew (Old-Style Numerals)' },
+        { value: 'mallory', title: 'Headings: Mallory' },
+        { value: 'yalenew-oldstyle', title: 'Headings: YaleNew (Lining Numerals)' },
+      ],
+      showName: true,
+      dynamicTitle: true,
+      title: 'Typography: Heading Fonts',
     },
   },
 };
@@ -54,5 +84,28 @@ export const globalTypes = {
 export const tags = ['autodocs', 'autodocs'];
 export const parameters = {
   actions: { argTypesRegex: '^on.*' },
-  controls: { disableSaveFromUI: true },
+  controls: { disableSaveFromUI: true, sort: 'requiredFirst' },
+  options: {
+    storySort: {
+      method: 'alphabetical',
+      order: [
+        'Introduction',
+        ['Welcome', 'Theme System', 'Storybook Guide'],
+        'Tokens',
+        [
+          'Colors',
+          ['Colors', 'Color Palettes (Theme)', 'Theme Sandbox', 'Theming Reference'],
+          '*',
+        ],
+        'Atoms',
+        'Molecules',
+        'Organisms',
+        ['Card Collection', ['Overview', 'Visreg', '*']],
+        'Templates',
+        'Page Examples',
+        ['Overview', '*'],
+        '*',
+      ],
+    },
+  },
 };

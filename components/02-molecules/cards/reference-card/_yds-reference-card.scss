@@ -12,6 +12,16 @@ $break-card-collection-max: tokens.$break-m - 0.05;
 $break-card-collection-list-image-max: tokens.$break-s - 0.05;
 $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
+// Mixin for list items without images - removes indentation
+@mixin list-no-image-flush {
+  [data-collection-type='list'] [data-component-has-image='false'] & {
+    flex: 1 0 100%;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    max-width: 100%;
+  }
+}
+
 .reference-card {
   @include atoms.clickable-component-heading-link;
   @include atoms.clickable-component-image;
@@ -73,8 +83,6 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     --color-card-single-bg: var(--color-blue-yale);
     --color-card-single-text: var(--color-basic-white);
     --color-heading: var(--color-card-single-text);
-
-    margin-block-start: var(--size-spacing-11);
   }
 
   // Condensed card collection
@@ -128,12 +136,13 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 }
 
 .reference-card__overlay {
+  @include tokens.body-oldstyle-nums;
+
   background-color: var(--color-overlay-background);
   color: var(--color-basic-white);
   padding-left: var(--size-spacing-3);
   margin-bottom: var(--size-spacing-3);
   font-variant-caps: all-small-caps;
-  font-variant-numeric: oldstyle-nums;
   position: absolute;
   top: 0;
   left: 0;
@@ -245,6 +254,26 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       }
     }
 
+    // Resource portrait grid.
+    .card-collection--resource-portrait[data-collection-type='grid'] & {
+      aspect-ratio: 5/8;
+
+      // Safari 14 fix for aspect-ratio
+      @supports not (aspect-ratio: 5 / 8) {
+        &::before {
+          float: left;
+          padding-top: 160%;
+          content: '';
+        }
+
+        &::after {
+          display: block;
+          content: '';
+          clear: both;
+        }
+      }
+    }
+
     // Profile list non-featured
     [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='false']
       & {
@@ -256,6 +285,12 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       & {
       flex-basis: 15%;
     }
+  }
+
+  // Resource thumbnail show top of the PDF file
+  [data-collection-source='resource'] &,
+  .card-collection--resource-portrait & {
+    overflow: hidden;
   }
 
   // Single card collection featured
@@ -366,6 +401,10 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       grid-column: 3 / -1;
       grid-row: 2 / 7;
       align-self: center;
+
+      .yds-two-column & {
+        grid-column: 2 / -1;
+      }
     }
   }
 
@@ -391,6 +430,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     [data-collection-type='list'][data-collection-source='profile'] & {
       max-width: 50%;
     }
+
+    @include list-no-image-flush;
   }
 
   @media (min-width: tokens.$break-s) and (max-width: $break-card-collection-max) {
@@ -403,6 +444,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     [data-collection-type='list'][data-collection-featured='false'] & {
       flex: 1 0 66%;
     }
+
+    @include list-no-image-flush;
   }
 
   @media (min-width: tokens.$break-m) {
@@ -411,6 +454,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       margin-inline-start: auto;
       margin-inline-end: auto;
     }
+
+    @include list-no-image-flush;
   }
 
   @media (min-width: tokens.$break-mobile) {
@@ -419,6 +464,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       margin-inline-start: auto;
       margin-inline-end: auto;
     }
+
+    @include list-no-image-flush;
 
     [data-collection-source='profile'][data-collection-type='list'][data-collection-featured='false']
       & {
@@ -434,11 +481,11 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
 .reference-card__overline {
   @include tokens.body-s;
+  @include tokens.body-oldstyle-nums;
 
   margin-top: var(--size-spacing-3);
   color: var(--color-gray-500);
   font-variant-caps: small-caps;
-  font-variant-numeric: oldstyle-nums;
   text-transform: lowercase;
   letter-spacing: 0.5px;
 
@@ -449,11 +496,11 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
 .reference-card__eyebrow {
   @include tokens.body-l;
+  @include tokens.body-oldstyle-nums;
 
   margin-top: var(--size-spacing-3);
   color: var(--color-blue-medium);
   font-variant-caps: small-caps;
-  font-variant-numeric: oldstyle-nums;
   text-transform: lowercase;
   letter-spacing: 0.5px;
 
@@ -463,7 +510,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 }
 
 .reference-card__prefix {
-  @include tokens.h3-mallory-compact-book;
+  @include tokens.heading(h3, 'book');
 
   color: var(--color-basic-brown-gray);
   text-transform: uppercase;
@@ -471,7 +518,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
 .reference-card__heading {
   [data-collection-featured='false'] & {
-    @include tokens.h5-yale-new;
+    @include tokens.heading(h5);
 
     font-weight: var(--font-weights-yalenew-bold);
   }
@@ -482,7 +529,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
 
-    @include tokens.h3-yale-new;
+    @include tokens.heading(h3);
 
     font-weight: var(--font-weights-yalenew-bold);
 
@@ -494,19 +541,19 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   }
 
   [data-collection-type='grid'][data-collection-featured='true'] & {
-    @include tokens.h4-yale-new;
+    @include tokens.heading(h4);
 
     font-weight: var(--font-weights-yalenew-bold);
   }
 
   [data-collection-type='list'][data-collection-featured='true'] & {
-    @include tokens.h3-yale-new;
+    @include tokens.heading(h3);
 
     font-weight: var(--font-weights-yalenew-bold);
   }
 
   [data-collection-type='condensed'][data-collection-featured='true'] & {
-    @include tokens.h4-yale-new;
+    @include tokens.heading(h4);
 
     font-weight: var(--font-weights-yalenew-bold);
   }
@@ -519,7 +566,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   flex-wrap: wrap;
   margin-top: var(--size-spacing-3);
 
-  > *:not(:first-child, .multi-day-event) {
+  > *:not(:first-child, .multi-day-event, .past-event-icon ~ *) {
     margin-left: var(--size-spacing-5);
     padding-left: var(--size-spacing-5);
     position: relative;
@@ -534,6 +581,22 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   .multi-day-event {
     padding-left: var(--size-spacing-3);
     font-style: italic;
+  }
+
+  .past-event-icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+      color: currentcolor;
+    }
+
+    ~ * {
+      margin-left: var(--size-spacing-3);
+    }
   }
 }
 

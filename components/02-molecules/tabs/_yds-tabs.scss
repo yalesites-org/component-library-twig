@@ -10,12 +10,17 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   @include tokens.spacing-page-section;
   @include tokens.animate(height);
 
+  --color-border: var(--color-gray-300);
+  --color-border-selected: var(--color-gray-500);
+  --size-tabs-control: 4rem;
+
   overflow: hidden;
   position: relative;
-  border-bottom: var(--size-thickness-1) solid var(--color-gray-500);
+  border-bottom: var(--size-thickness-1) solid var(--color-border-selected);
 
-  --color-tabs-accent: --color-gray-500;
-  --size-tabs-control: 4rem;
+  .gin--dark-mode & {
+    border-color: var(--color-border-selected);
+  }
 
   [data-component-alignment='left'] & {
     max-width: var(--size-component-layout-width-content);
@@ -42,33 +47,48 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   @each $theme, $value in $component-tab-themes {
     &[data-component-theme='#{$theme}'] {
       // prettier-ignore
-      --color-tabs-accent: var(--color-tabs-accent);
       --color-action: var(--color-tabs-action);
       --color-background: var(--color-tabs-background);
+      --color-selected: var(--color-tabs-selected);
     }
   }
 
   // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
   &[data-component-theme='one'] {
-    --color-tabs-accent: var(--color-slot-one);
     --color-tabs-action: var(--color-slot-one);
-    --color-tabs-background: var(--color-basic-white);
+    --color-tabs-background: var(--color-gray-100);
+    --color-tabs-selected: var(--color-basic-white);
     --color-heading: var(--color-gray-700);
   }
 
   &[data-component-theme='two'] {
-    --color-tabs-accent: var(--color-slot-two);
     --color-tabs-action: var(--color-slot-two);
-    --color-tabs-background: var(--color-basic-white);
+    --color-tabs-background: var(--color-gray-100);
+    --color-tabs-selected: var(--color-basic-white);
     --color-heading: var(--color-gray-700);
   }
 
   &[data-component-theme='three'] {
-    --color-tabs-accent: var(--color-slot-five);
     --color-tabs-action: var(--color-slot-five);
-    --color-tabs-background: var(--color-basic-white);
+    --color-tabs-background: var(--color-gray-100);
+    --color-tabs-selected: var(--color-basic-white);
     --color-heading: var(--color-gray-700);
+  }
+
+  [data-component-theme]:not([data-component-theme='default']) & {
+    --color-tabs-background: var(--color-layout-theme);
+    --color-tabs-selected: var(--color-layout-theme);
+    --color-action: var(--color-layout-border);
+  }
+
+  [data-component-theme]:not(
+      [data-component-theme='default'],
+      [data-component-theme='two']
+    )
+    & {
+    --color-border: var(--color-gray-400);
+    --color-border-selected: var(--color-basic-white);
   }
 }
 
@@ -85,7 +105,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
     left: 0;
     right: 0;
     width: 100%;
-    border-bottom: var(--size-thickness-1) solid var(--color-gray-500);
+    border-bottom: var(--size-thickness-1) solid var(--color-border-selected);
   }
 }
 
@@ -102,7 +122,8 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   height: calc(var(--size-tabs-control) - var(--size-thickness-2));
   background-color: var(--color-background);
   opacity: 0;
-  border: var(--size-thickness-1) solid var(--color-gray-700);
+  border: var(--size-thickness-1) solid var(--color-border);
+  color: inherit;
 
   &--left {
     left: 0;
@@ -160,12 +181,20 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 .tabs__item {
   flex-shrink: 0;
-  border-top: var(--size-thickness-1) solid var(--color-gray-300);
-  border-left: var(--size-thickness-1) solid var(--color-gray-300);
+  border-top: var(--size-thickness-1) solid var(--color-border);
+  border-left: var(--size-thickness-1) solid var(--color-border);
   overflow: hidden;
 
   &:last-child {
-    border-right: var(--size-thickness-1) solid var(--color-gray-300);
+    border-right: var(--size-thickness-1) solid var(--color-border);
+  }
+
+  &:has([aria-selected='true']) {
+    border-color: var(--color-border-selected);
+
+    + .tabs__item {
+      border-left-color: var(--color-border-selected);
+    }
   }
 }
 
@@ -174,9 +203,9 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   position: relative;
   text-decoration: none;
   padding: var(--size-spacing-3) var(--size-spacing-7) var(--size-spacing-5);
-  color: var(--color-gray-700);
+  color: inherit;
   border-top: var(--size-thickness-6) solid transparent;
-  background-color: var(--color-gray-100);
+  background-color: var(--color-background);
   height: 100%;
 
   &:hover {
@@ -189,9 +218,8 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   // Active tab.
   &[aria-selected='true'] {
-    color: var(--color-action);
     border-color: var(--color-action);
-    background-color: var(--color-basic-white);
+    background-color: var(--color-selected);
 
     &::before {
       content: '';
@@ -200,7 +228,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
       left: 0;
       right: 0;
       bottom: 0;
-      border-bottom: var(--size-spacing-3) solid var(--color-basic-white);
+      border-bottom: var(--size-spacing-3) solid var(--color-selected);
       z-index: 1;
     }
   }

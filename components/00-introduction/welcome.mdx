@@ -1,0 +1,196 @@
+import { Meta } from '@storybook/blocks';
+import './intro-styles.css';
+
+<Meta title="Introduction/Welcome" />
+
+<div className="sb-intro-page">
+
+# Welcome to the YaleSites Design System
+
+<p className="lead-text">
+  This is the comprehensive component library and design system for Yale
+  University websites, built on atomic design principles.
+</p>
+
+## About This Design System
+
+The YaleSites Design System provides a consistent, accessible, and flexible foundation for building websites across Yale University. It includes reusable components, design tokens, and comprehensive documentation to ensure brand consistency and excellent user experiences.
+
+The design system was developed in close collaboration with the **University Office of Public Affairs and Communication (OPAC)** and built in tandem with the [YaleSites Drupal platform](https://yalesites.yale.edu). While the system was created with Drupal development in mind, it is intentionally technology-agnostic — it can serve as a design reference or be adopted in other technology stacks.
+
+---
+
+## Atomic Design Principles
+
+Our component library is organized using **Atomic Design** methodology, breaking interfaces down into fundamental building blocks:
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '2rem', margin: '2rem 0'}}>
+
+<div
+  style={{
+    textAlign: 'center',
+    padding: '1.5rem',
+    background: '#f5f5f5',
+    borderRadius: '8px',
+  }}
+>
+  <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>⚛️</div>
+  <h3 style={{ margin: '0.5rem 0' }}>Atoms</h3>
+  <p style={{ fontSize: '0.9rem', margin: '0' }}>
+    The foundational building blocks - buttons, links, inputs, headings, images,
+    and other basic HTML elements that can't be broken down further.
+  </p>
+</div>
+
+<div
+  style={{
+    textAlign: 'center',
+    padding: '1.5rem',
+    background: '#f5f5f5',
+    borderRadius: '8px',
+  }}
+>
+  <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🧪</div>
+  <h3 style={{ margin: '0.5rem 0' }}>Molecules</h3>
+  <p style={{ fontSize: '0.9rem', margin: '0' }}>
+    Simple groups of atoms functioning together - cards, forms, search bars,
+    navigation items, and other relatively simple components.
+  </p>
+</div>
+
+<div
+  style={{
+    textAlign: 'center',
+    padding: '1.5rem',
+    background: '#f5f5f5',
+    borderRadius: '8px',
+  }}
+>
+  <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>⚙️</div>
+  <h3 style={{ margin: '0.5rem 0' }}>Organisms</h3>
+  <p style={{ fontSize: '0.9rem', margin: '0' }}>
+    Complex components made of molecules and atoms - headers, footers, card
+    collections, galleries, and other substantial interface sections.
+  </p>
+</div>
+
+<div
+  style={{
+    textAlign: 'center',
+    padding: '1.5rem',
+    background: '#f5f5f5',
+    borderRadius: '8px',
+  }}
+>
+  <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📄</div>
+  <h3 style={{ margin: '0.5rem 0' }}>Pages</h3>
+  <p style={{ fontSize: '0.9rem', margin: '0' }}>
+    Complete page layouts and examples combining organisms, molecules, and atoms
+    into fully functional page templates and demonstrations.
+  </p>
+</div>
+
+</div>
+
+---
+
+## Organization Structure
+
+- **Tokens**: Design system tokens including colors, typography, spacing, and effects
+- **Atoms**: Basic elements like buttons, links, images, and form controls
+- **Molecules**: Component combinations like cards, banners, navigation items, and content blocks
+- **Organisms**: Complex sections like headers, footers, menus, and content collections
+- **Page Layouts**: Page structure templates with various column configurations
+- **Page Examples**: Complete page demonstrations showing real-world implementations
+
+---
+
+## Component Documentation Structure
+
+The YaleSites Component Library uses a modern two-page documentation structure:
+
+### Documentation Page (MDX)
+
+Educational content with component introduction, interactive preview with controls, property documentation, theme options, key variants, technical specifications, and usage guidelines.
+
+### Visual Regression Page (Visreg)
+
+Comprehensive testing page with interactive controls and all component variations for Percy visual regression testing coverage.
+
+For more details, see the [Storybook Migration Guide](https://github.com/yalesites-org/component-library-twig/blob/main/STORYBOOK-MIGRATION-GUIDE.md).
+
+---
+
+## Quick Links
+
+- [YaleSites Website](https://yalesites.yale.edu)
+- [GitHub Organization](https://github.com/yalesites-org)
+- [Component Library Repository](https://github.com/yalesites-org/component-library-twig)
+- [Storybook Migration Guide](https://github.com/yalesites-org/component-library-twig/blob/main/STORYBOOK-MIGRATION-GUIDE.md)
+
+---
+
+## Exploring the Design System
+
+The toolbar at the top of Storybook has two controls worth knowing about:
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', margin: '1.5rem 0' }}>
+
+<div
+  style={{
+    background: '#f0f4ff',
+    border: '1px solid #c7d4f0',
+    borderRadius: '8px',
+    padding: '1.25rem',
+  }}
+>
+  <strong>🎨 Site: Global Theme (lever)</strong>
+  <p style={{ margin: '0.5rem 0 0', fontSize: '0.9rem' }}>
+    Switches the site-wide color palette across all six Yale brand themes.
+    Changes how every component in the library looks — great for checking how
+    your design holds up across palettes.
+  </p>
+</div>
+
+<div
+  style={{
+    background: '#f0f4ff',
+    border: '1px solid #c7d4f0',
+    borderRadius: '8px',
+    padding: '1.25rem',
+  }}
+>
+  <strong>🔤 Headings: Typography</strong>
+  <p style={{ margin: '0.5rem 0 0', fontSize: '0.9rem' }}>
+    Switches the heading font pairing between YaleNew and Mallory. Useful for
+    previewing components in sites that use a non-default typography setting.
+  </p>
+</div>
+
+<div
+  style={{
+    background: '#f0f4ff',
+    border: '1px solid #c7d4f0',
+    borderRadius: '8px',
+    padding: '1.25rem',
+  }}
+>
+  <strong>👁 Visreg: Off / On</strong>
+  <p style={{ margin: '0.5rem 0 0', fontSize: '0.9rem' }}>
+    Toggles the visual regression test pages in the sidebar. Hidden by default
+    to keep navigation clean — turn them on when you need to review component
+    variations for QA or testing.
+  </p>
+</div>
+
+</div>
+
+For a deeper explanation of how themes work together, see the [Theme System page](?path=/docs/introduction-theme-system--docs).
+
+---
+
+<p style={{ textAlign: 'center', color: '#666', marginTop: '3rem' }}>
+  Built with ❤️ for the Yale University community
+</p>
+
+</div>

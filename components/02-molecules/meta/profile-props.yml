@@ -1,0 +1,96 @@
+# profile-props.yml
+#
+# Profile Meta component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+heading:
+  twigProp: profile_meta__heading
+  name: Heading
+  type: string
+  required: true
+  description: Person's name
+  control: text
+
+titleLine:
+  twigProp: profile_meta__title_line
+  name: Profile professional title
+  type: string
+  required: true
+  description: Professional title
+  control: text
+
+subTitle:
+  twigProp: profile_meta__subtitle_line
+  name: Profile subtitle
+  type: string
+  required: true
+  description: Subtitle (additional title or role)
+  control: text
+
+department:
+  twigProp: profile_meta__department
+  name: Profile department
+  type: string
+  required: true
+  description: Department or organizational unit
+  control: text
+
+pronouns:
+  twigProp: profile_meta__pronouns
+  name: Profile pronouns
+  type: string
+  required: true
+  description: Preferred pronouns
+  control: text
+
+bgColor:
+  twigProp: profile_meta__background
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Component theme color
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select
+
+profileImageOrientation:
+  twigProp: profile_meta__image_orientation
+  name: Profile Image Orientation
+  type: select
+  required: false
+  description: 'Image orientation: landscape or portrait'
+  default: landscape
+  options:
+    - landscape
+    - portrait
+  control: select
+
+profileImageAlignment:
+  twigProp: profile_meta__image_alignment
+  name: Profile Image Alignment
+  type: select
+  required: false
+  description: 'Image alignment: left or right'
+  default: left
+  options:
+    - left
+    - right
+  control: select
+
+profileImageStyle:
+  twigProp: profile_meta__image_style
+  name: Profile Image Style
+  type: select
+  required: false
+  description: 'Image style: inline or outdent'
+  default: inline
+  options:
+    - inline
+    - outdent
+  control: select

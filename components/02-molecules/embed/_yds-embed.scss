@@ -12,6 +12,7 @@
 $heights: (
   'form': 90vh,
   'audio': 130px,
+  'map': 70vh,
   'unknown': 70vh,
 );
 
@@ -37,5 +38,42 @@ $heights: (
     left: 0;
     width: 100%;
     height: 100%;
+  }
+}
+
+// Map embeds use a 3:2 aspect ratio
+.embed__inner:has(iframe[data-embed-type='map']) {
+  & iframe {
+    position: static;
+    width: 100%;
+    margin-right: auto;
+    aspect-ratio: 3 / 2;
+    height: auto;
+  }
+}
+
+// Calendar embeds need a little more width to be useful
+.embed__inner:has(iframe[data-embed-type='calendar']) {
+  & iframe {
+    position: static;
+    width: 100%;
+    margin-right: auto;
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
+}
+
+// Layout-specific overrides (higher specificity selectors go last)
+.layout--onecol {
+  .embed__inner:has(iframe[data-embed-type='map']) {
+    iframe {
+      width: 50%;
+    }
+  }
+
+  .embed__inner:has(iframe[data-embed-type='calendar']) {
+    iframe {
+      width: 66%;
+    }
   }
 }

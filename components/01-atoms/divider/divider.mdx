@@ -1,0 +1,51 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as DividerStories from './divider.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './divider-props.yml';
+
+<Meta of={DividerStories} name="Overview" />
+
+# Divider
+
+Horizontal rules with customizable thickness, width, color, and positioning. Uses CSS custom properties for flexible theming.
+
+## Interactive Preview
+
+<div className="sb-contained-canvas">
+  <Canvas of={DividerStories.Interactive} />
+</div>
+<Controls of={DividerStories.Interactive} />
+
+## Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Thickness Variations
+
+Six thickness options from hairline to 8px.
+
+<div className="sb-contained-canvas">
+  <Canvas of={DividerStories.DividersThickness} />
+</div>
+
+## Width Variations
+
+Four width presets (25%, 50%, 75%, 100%), centered.
+
+<div className="sb-contained-canvas">
+  <Canvas of={DividerStories.DividersWidth} />
+</div>
+
+## Position Variations
+
+Left and center positions at 50% width.
+
+<div className="sb-contained-canvas">
+  <Canvas of={DividerStories.DividersPosition} />
+</div>
+
+## Color Variations
+
+Available line colors shown on themed backgrounds. Use design token values via `--color-divider`.
+
+<Canvas of={DividerStories.DividersColor} />

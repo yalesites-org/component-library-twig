@@ -1,4 +1,5 @@
- <div {{ bem('secondary', [], site_header__base_class) }}>
+<div {{ bem('secondary', [], site_header__base_class) }}>
+  <div {{ bem('yale-branding', [], site_header__base_class) }}>
     {# Yale Branding #}
     {% include "@atoms/controls/text-link/yds-text-link.twig" with {
       link__content: site_header__branding_name|default('Yale University'),
@@ -7,8 +8,10 @@
       link__blockname: site_header__base_class,
       link__url_type: 'internal',
     } %}
-    {# Utility Nav #}
-    <div {{ bem('utility-nav', [], site_header__base_class) }}>
-        {% include "@organisms/menu/utility-nav/yds-utility-nav.twig" %}
-    </div>
   </div>
+
+  {# Utility Nav #}
+  <div {{ bem('utility-nav', [], site_header__base_class) }}>
+    {% include "@organisms/menu/utility-nav/yds-utility-nav.twig" %}
+  </div>
+</div>

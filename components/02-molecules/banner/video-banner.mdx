@@ -1,0 +1,95 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as VideoBannerStories from './video-banner.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './video-banner-props.yml';
+
+<Meta of={VideoBannerStories} name="Overview" />
+
+# Video Banner
+
+The Video Banner is a specialized banner for displaying video content as the primary page element. It supports two width configurations — max-width constrained or fully fluid — making it adaptable to different layout needs. Unlike the Grand Hero and Image Banners, it does not include a text content overlay.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the component's properties in real-time.
+
+<div className="sb-full-bleed-canvas">
+  <Canvas of={VideoBannerStories.VideoBanner} />
+</div>
+<Controls of={VideoBannerStories.VideoBanner} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+### Twig-Only Props
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>video_banner__content</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        Required. HTML embed string for the video (e.g., from Drupal's video
+        embed field). Provided by the CMS; not an interactive Storybook control.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `video/yds-video-banner.twig`
+- **Styles**: `video/_yds-video-banner.scss`
+- **Note**: The Video Banner does not support component theme dials.
+
+### Accessibility
+
+- Video content should include captions for users who are deaf or hard of hearing
+- Avoid autoplaying video with audio — this creates accessibility and user experience issues
+- Provide a text alternative or transcript when the video conveys critical information
+- Ensure video player controls are keyboard accessible
+
+### Behavior
+
+- **Responsive Design**: Video scales proportionally across viewport sizes
+- **Width**: `max` constrains the video to the standard content max-width; `full` allows the video to span the full viewport
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use when video is the primary content and no accompanying text or CTA is needed
+- Choose `max` width for standard content pages
+- Choose `full` width for immersive, cinematic presentations
+- Ensure the video embed includes appropriate controls for play, pause, and volume
+
+### Things to Avoid
+
+- Don't autoplay video with audio — it disrupts users and creates accessibility issues
+- Don't use when you need text content alongside the video — consider Grand Hero Banner with video enabled instead
+- Avoid using multiple video banners on a single page
+
+## Testing
+
+For visual regression testing with both width variations, see the [Visreg page](?path=/story/molecules-banners-video-banner-visreg--visreg).
+
+## Related Components
+
+- **Grand Hero Banner**: For a video background with text content overlay
+- **Image Banner**: For a static image in place of video
+- **Action Banner**: For hero content with prominent calls-to-action

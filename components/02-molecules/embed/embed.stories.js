@@ -1,45 +1,31 @@
 import embedTwig from './yds-embed.twig';
-import deprecatedEmbedTwig from './yds-deprecated.twig';
+import componentProps from './embed-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 /**
  * Storybook Definition.
  */
 export default {
   title: 'Molecules/Embed',
-  argTypes: {
-    width: {
-      name: 'Width',
-      type: 'select',
-      options: ['max', 'site', 'hightlight', 'content'],
-    },
-    type: {
-      name: 'Type',
-      options: ['form', 'audio'],
-      type: 'select',
-    },
-    loading: {
-      name: 'Loading',
-      options: ['lazy', 'eager'],
-      type: 'select',
-    },
-  },
-  args: {
-    width: 'site',
-    type: 'form',
-    loading: 'lazy',
-  },
+  tags: ['!dev'],
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
-export const EmbedQualtrics = ({ width, type, loading }) =>
-  deprecatedEmbedTwig({
+export const Interactive = ({ width, type, loading }) =>
+  embedTwig({
     embed__src:
-      'https://yalesurvey.ca1.qualtrics.com/jfe/form/SV_cDezt2JVsNok77o',
-    embed__title: 'Example Qualtrics Form',
+      'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/320687463',
+    embed__title: 'Example SoundCloud Track',
     embed__width: width,
     embed__height: '100%',
     embed__type: type,
     embed__loading: loading,
   });
+
+Interactive.args = {
+  type: 'audio',
+};
 
 export const EmbedSoundCloud = ({ width, type, loading }) =>
   embedTwig({
@@ -53,7 +39,9 @@ export const EmbedSoundCloud = ({ width, type, loading }) =>
   });
 
 EmbedSoundCloud.args = {
+  width: 'site',
   type: 'audio',
+  loading: 'lazy',
 };
 
 export const EmbedInstagram = () => {
@@ -74,6 +62,12 @@ export const EmbedPowerBI = ({ width, type, loading }) =>
     embed__type: type,
   });
 
+EmbedPowerBI.args = {
+  width: 'site',
+  type: 'form',
+  loading: 'lazy',
+};
+
 export const EmbedMicrosoftForms = ({ width, type, loading }) =>
   embedTwig({
     embed__title: 'Example Microsoft Form',
@@ -84,3 +78,46 @@ export const EmbedMicrosoftForms = ({ width, type, loading }) =>
     embed__loading: loading,
     embed__type: type,
   });
+
+EmbedMicrosoftForms.args = {
+  width: 'site',
+  type: 'form',
+  loading: 'lazy',
+};
+
+export const EmbedGoogleMaps = ({ width, type, loading }) =>
+  embedTwig({
+    embed__src:
+      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5993.31404257508!2d-72.92491802386455!3d41.316324371308916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e7d9b6cd624945%3A0xae34a2c4b4d30427!2sYale%20University!5e0!3m2!1sen!2sca!4v1746124034200!5m2!1sen!2sca',
+    embed__width: width,
+    embed__height: '100%',
+    embed__loading: loading,
+    embed__type: type,
+  });
+
+EmbedGoogleMaps.args = {
+  width: 'site',
+  type: 'map',
+  loading: 'lazy',
+};
+
+export const EmbedGoogleCalendar = ({ width, type, loading }) =>
+  embedTwig({
+    embed__src:
+      'https://calendar.google.com/calendar/embed?src=en.usa%23holiday%40group.v.calendar.google.com&ctz=America%2FNew_York',
+    embed__title: 'Example Google Calendar',
+    embed__width: width,
+    embed__height: '100%',
+    embed__loading: loading,
+    embed__type: type,
+  });
+
+EmbedGoogleCalendar.args = {
+  width: 'site',
+  type: 'calendar',
+  loading: 'lazy',
+};
+
+export const EmbedBluesky = () => {
+  return `<blockquote class="bluesky-embed" data-bluesky-uri="at://did:plc:hptrw4dge4l5q4h5pl7wpw74/app.bsky.feed.post/3ltporonlrt2z" data-bluesky-cid="bafyreiera75ojf45nkakh3piwhu3rldjzobppl7tq3nlgsmxx5zq2msiga" data-bluesky-embed-color-mode="system"><p lang="">Congratulations to James West Davidson&#x27;s A Little History of the United States, which was listed on the New York Times Bestseller List!<br><br><a href="https://bsky.app/profile/did:plc:hptrw4dge4l5q4h5pl7wpw74/post/3ltporonlrt2z?ref_src=embed">[image or embed]</a></p>&mdash; Yale University Press (<a href="https://bsky.app/profile/did:plc:hptrw4dge4l5q4h5pl7wpw74?ref_src=embed">@yalepress.bsky.social</a>) <a href="https://bsky.app/profile/did:plc:hptrw4dge4l5q4h5pl7wpw74/post/3ltporonlrt2z?ref_src=embed">July 11, 2025 at 4:30 PM</a></blockquote><script async src="https://embed.bsky.app/static/embed.js" charset="utf-8"></script>`;
+};

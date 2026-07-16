@@ -99,6 +99,19 @@ export const eventLocalistArgTypes = {
     type: 'string',
     defaultValue: 'Davis Team Project Wins Award for Research',
   },
+  withCalendar: {
+    name: 'With Add to Calendar button',
+    type: 'boolean',
+    defaultValue: true,
+  },
+};
+
+export const eventLocalistArgs = {
+  address: 'New Haven, CT',
+  pageTitle: 'Event Title',
+  ctaText: 'Register',
+  allDay: false,
+  withCalendar: true,
 };
 
 export default argTypes;

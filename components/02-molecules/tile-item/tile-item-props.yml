@@ -1,0 +1,119 @@
+# tile-item-props.yml
+#
+# Tile Item component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+content:
+  twigProp: tile__item__content
+  name: Content
+  type: string
+  required: true
+  description: Main content text for the tile (supports HTML)
+  control: text
+
+heading:
+  twigProp: tile__item__heading
+  name: Heading
+  type: string
+  required: false
+  description: "Large heading text (used with 'heading' presentation style)"
+  control: text
+
+contentLink:
+  twigProp: tile__item__content_link
+  name: Content Link
+  type: string
+  required: false
+  description: URL to make the entire tile clickable
+  control: text
+
+presentationStyle:
+  twigProp: tile__item__presentation_style
+  name: Presentation Style
+  type: select
+  required: false
+  description: "Visual style: 'heading', 'icon', or 'text-only'"
+  default: heading
+  options:
+    - heading
+    - icon
+    - text-only
+  control: select
+
+alignment:
+  twigProp: tile__item__alignment
+  name: Alignment
+  type: select
+  required: false
+  description: "Text alignment: 'left', 'center', or 'right'"
+  default: left
+  options:
+    - left
+    - center
+    - right
+  control: select
+
+verticalAlignment:
+  twigProp: tile__item__vertical_alignment
+  name: Vertical Alignment
+  type: select
+  required: false
+  description: "Vertical content position: 'top' or 'bottom'"
+  default: top
+  options:
+    - top
+    - bottom
+  control: select
+
+themeColor:
+  twigProp: tile__item__theme
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Component theme from the color dial
+  detail: >
+    Applies a color theme to the tile item. Options are derived from the
+    component-themes design tokens. Maps to tile__item__theme.
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select
+
+image:
+  twigProp: tile__item__bg_image
+  name: With Image
+  type: boolean
+  required: false
+  description: Display a background image behind the tile content
+  detail: >
+    When true, passes 'true' to tile__item__bg_image in the Twig template to
+    display a background image behind the tile.
+  default: false
+  control: boolean
+
+withAnimation:
+  twigProp: tile__item__animation
+  name: With Animation
+  type: boolean
+  required: false
+  description: Enable hover animation on the tile
+  detail: >
+    When true, passes 'true' to tile__item__animation in the Twig template
+    to enable hover animation.
+  default: false
+  control: boolean
+
+iconName:
+  twigProp: tile__item__icon_name
+  name: Icon Name
+  type: string
+  required: false
+  description: "Icon identifier (used with 'icon' presentation style, e.g., 'sack-dollar-solid')"
+  control: text

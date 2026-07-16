@@ -1,0 +1,89 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as TaxonomyDisplayStories from './taxonomy-display.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './taxonomy-display-props.yml';
+
+<Meta of={TaxonomyDisplayStories} name="Overview" />
+
+# Taxonomy Display
+
+The taxonomy display component shows categorization and metadata for content items. It presents taxonomy terms organized by their vocabulary labels (e.g., "Audience", "Type", "Category"), providing users with quick visual indicators of content classification. Each term is rendered as a clickable link, allowing users to navigate to related content.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the taxonomy display's properties in real-time. Toggle the "Show Taxonomy" control to see how the component appears with and without taxonomy terms.
+
+<Canvas of={TaxonomyDisplayStories.TaxonomyDisplay} />
+<Controls of={TaxonomyDisplayStories.TaxonomyDisplay} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-taxonomy-display.twig`
+- **Styles**: `_yds-taxonomy-display.scss`
+
+### Accessibility
+
+- Semantic HTML structure with proper list markup
+- Links are keyboard accessible with clear focus indicators
+- Vocabulary labels provide context for screen reader users
+- Color is not used as the only means of conveying information
+
+### Behavior
+
+- **Empty State**: When a vocabulary has no terms, only the label is displayed
+- **Multiple Terms**: Terms within a vocabulary are displayed inline, separated by visual indicators
+- **Component Theming**: Supports Yale's component theme dial for color variations
+- **Responsive**: Adapts to different screen sizes and container widths
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use consistent vocabulary labels across your site for predictable user experience
+- Keep the number of vocabularies to 3-4 maximum to avoid overwhelming users
+- Ensure taxonomy terms are meaningful and descriptive
+- Use the component theme to visually distinguish different content types or sections
+- Place taxonomy display near content metadata or at the end of content items
+
+### Things to Avoid
+
+- Don't use taxonomy display for navigation (use menu or quick links instead)
+- Don't include too many terms in a single vocabulary (3-5 terms maximum is ideal)
+- Don't use overly technical vocabulary labels that users won't understand
+- Avoid inconsistent vocabulary names across different content types
+- Don't rely solely on color to convey meaning (component themes are decorative)
+
+## Common Use Cases
+
+### Content Filtering
+
+Display categorization that helps users understand content type and find related items:
+
+- **Audience**: Undergraduates, Graduates, Faculty, Staff
+- **Type**: How To, News, Event, Resource
+- **Category**: Learning, Research, Campus Life
+
+### Metadata Display
+
+Show structured information about content items in lists, cards, or detail pages.
+
+## Testing
+
+For comprehensive visual regression testing with all theme variations, see the [Visreg page](?path=/story/molecules-taxonomy-display-visreg--visreg).
+
+## Related Components
+
+- **Quick Links**: Use for navigation-focused link collections
+- **Cards**: Often incorporate taxonomy display for content previews
+- **Text Field**: Use for longer-form content metadata
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

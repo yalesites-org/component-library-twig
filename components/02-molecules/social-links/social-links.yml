@@ -17,3 +17,6 @@ icons:
   - name: LinkedIn
     icon: linkedin
     url: 'https://www.linkedin.com'
+  - name: Bluesky
+    icon: bluesky
+    url: 'https://bsky.app/'

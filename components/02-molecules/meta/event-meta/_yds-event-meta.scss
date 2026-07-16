@@ -8,7 +8,19 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 }
 
 .event-meta__date {
-  @include tokens.h3-mallory-compact-book;
+  @include tokens.heading(h3, 'book');
+}
+
+.event-meta__day {
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-3);
+
+  .past-event-icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
 }
 
 .event-meta__details {
@@ -197,12 +209,12 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 
 .event-meta__format--overline {
   @include tokens.body-s;
+  @include tokens.body-oldstyle-nums;
 
   margin-top: 0;
   margin-bottom: var(--size-spacing-3);
   color: var(--color-gray-500);
   font-variant-caps: small-caps;
-  font-variant-numeric: oldstyle-nums;
   text-transform: lowercase;
   letter-spacing: 0.5px;
   flex: 0 auto;
@@ -231,6 +243,23 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
   }
 }
 
+// Map link
+.event-meta__event-show-map a {
+  @include atoms.plain-link;
+  @include tokens.body-default;
+}
+
+// Event topics link
+.event-meta__event-topics__topic a {
+  @include atoms.plain-link;
+  @include tokens.body-s;
+
+  display: block;
+  padding: var(--size-spacing-3);
+  text-align: center;
+  color: var(--color-text);
+}
+
 // More dates
 .event-meta__more-dates-link {
   display: flex;
@@ -245,6 +274,12 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
   display: flex;
   align-items: center;
   gap: var(--size-spacing-3);
+
+  &:visited,
+  &:visited:focus,
+  &:visited:hover {
+    color: var(--color-link-base);
+  }
 }
 
 .event-meta__icon--show-more-dates {
@@ -299,11 +334,6 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
   }
 }
 
-.event-meta__event-show-map a {
-  @include atoms.plain-link;
-  @include tokens.body-default;
-}
-
 .event-meta__cta--show-map svg {
   width: var(--size-spacing-6);
   height: var(--size-spacing-6);
@@ -321,6 +351,12 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
     align-items: center;
     gap: var(--size-spacing-3);
   }
+}
+
+.event-meta__day .past-event-icon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-basic-brown-gray);
 }
 
 // directions
@@ -372,14 +408,4 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
   @media (min-width: tokens.$break-m) {
     flex: 1 1 auto;
   }
-}
-
-.event-meta__event-topics__topic a {
-  @include atoms.plain-link;
-  @include tokens.body-s;
-
-  display: block;
-  padding: var(--size-spacing-3);
-  text-align: center;
-  color: var(--color-text);
 }
