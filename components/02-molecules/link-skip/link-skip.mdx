@@ -1,7 +1,9 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as LinkSkipStories from './link-skip.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './link-skip-props.yml';
 
-<Meta title="Atoms/Link Skip" />
+<Meta of={LinkSkipStories} name="Overview" />
 
 # Link Skip
 
@@ -20,77 +22,11 @@ Use the controls panel below to experiment with the link skip's properties. Pres
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>link_skip__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The text content displayed in the skip link</td>
-    </tr>
-    <tr>
-      <td>
-        <code>link_skip__url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        The target anchor link (typically <code>'#main-content'</code> or
-        similar)
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>link_skip__base_class</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'link-skip'</code>
-      </td>
-      <td>Base CSS class for the component</td>
-    </tr>
-    <tr>
-      <td>
-        <code>link_skip__extra_class</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Additional CSS classes for custom styling</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Technical Specifications
 
