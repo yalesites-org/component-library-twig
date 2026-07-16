@@ -1,7 +1,9 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as ReadTimeStories from './read-time.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './read-time-props.yml';
 
-<Meta title="Atoms/Read Time" />
+<Meta of={ReadTimeStories} name="Overview" />
 
 # Read Time
 
@@ -14,35 +16,13 @@ The Read Time component displays below the sample content. It automatically calc
 <div className="sb-contained-canvas">
   <Canvas of={ReadTimeStories.ReadTime} />
 </div>
+<Controls of={ReadTimeStories.ReadTime} />
 
 ## Properties
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>read_time__label</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'Estimated read time'</code>
-      </td>
-      <td>Label text displayed before the calculated time</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Technical Specifications
 

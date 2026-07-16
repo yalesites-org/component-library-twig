@@ -1,11 +1,5 @@
-export function twigPropsTable(props, filter) {
-  const entries = Object.entries(props).filter(([, p]) => {
-    if (filter === 'required') return p.required;
-    if (filter === 'optional') return !p.required;
-    return true;
-  });
-
-if (entries.length === 0) return null;
+export function renderPropsTable(entries, showDefault) {
+  if (entries.length === 0) return null;
 
 return (
 
@@ -14,7 +8,7 @@ return (
     <tr>
       <th>Property</th>
       <th>Type</th>
-      <th>Default</th>
+      {showDefault ? <th>Default</th> : null}
       <th>Description</th>
     </tr>
   </thead>
@@ -25,12 +19,31 @@ return (
         <td>
           <code>{prop.type || '—'}</code>
         </td>
-        <td>
-          <code>{prop.default !== undefined ? String(prop.default) : '—'}</code>
-        </td>
+        {showDefault ? (
+          <td>
+            <code>
+              {prop.default !== undefined ? String(prop.default) : '—'}
+            </code>
+          </td>
+        ) : null}
         <td>{prop.detail || prop.description || '—'}</td>
       </tr>
     ))}
   </tbody>
 </table>
 ); }
+
+export function twigPropsTable(props, filter) {
+  const entries = Object.entries(props).filter(([, p]) => {
+    if (p.twigOnly) return false;
+    if (filter === 'required') return p.required;
+    if (filter === 'optional') return !p.required;
+    return true;
+  });
+  return renderPropsTable(entries, true);
+}
+
+export function twigOnlyPropsTable(props) {
+  const entries = Object.entries(props).filter(([, p]) => p.twigOnly);
+  return renderPropsTable(entries, false);
+}

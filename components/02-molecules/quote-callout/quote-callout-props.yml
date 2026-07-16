@@ -1,0 +1,99 @@
+# quote-callout-props.yml
+#
+# Quote Callout component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+quote:
+  twigProp: quote_callout__quote
+  name: Quote
+  type: string
+  required: true
+  description: The quote text to display (supports HTML for formatting)
+  control: text
+
+attribution:
+  twigProp: quote_callout__attribution
+  name: Attribution
+  type: string
+  required: false
+  description: Attribution text for the quote (e.g., person's name, title, or affiliation)
+  control: text
+
+style:
+  twigProp: quote_callout__style
+  name: Style
+  type: select
+  required: false
+  description: "Visual style: 'bar' (accent bar), 'quote' (decorative quote marks), or 'image' (with image)"
+  default: bar
+  options:
+    - bar
+    - quote
+    - image
+  control: select
+
+quoteAlignment:
+  twigProp: quote_callout__quote_alignment
+  name: Quote Alignment
+  type: select
+  required: false
+  description: "Text alignment: 'left' or 'right'"
+  default: left
+  options:
+    - left
+    - right
+  control: select
+
+accentTheme:
+  twigProp: quote_callout__accent_theme
+  name: Accent Theme (dial)
+  type: select
+  required: false
+  description: Theme dial for accent color (e.g., 'one', 'two', 'three')
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select
+
+quoteImage:
+  twigProp: quote_callout__quote_image
+  name: Quote Image
+  type: select
+  required: false
+  description: >
+    Image display option: 'with-image' or 'no-image'. When 'with-image' is
+    selected, responsive image properties should also be provided
+  default: no-image
+  options:
+    - no-image
+    - with-image
+  control: select
+
+imageSrc:
+  twigProp: image__src
+  name: Image Source
+  type: string
+  required: false
+  description: Primary image source URL
+  twigOnly: true
+
+imageAlt:
+  twigProp: image__alt
+  name: Image Alt Text
+  type: string
+  required: false
+  description: Alternative text for accessibility
+  twigOnly: true
+
+imageSrcset:
+  twigProp: image__srcset
+  name: Image Srcset
+  type: array
+  required: false
+  description: Responsive image source set for different viewport sizes
+  twigOnly: true

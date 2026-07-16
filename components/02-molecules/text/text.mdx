@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as TextStories from './typography.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './text-props.yml';
 
 <Meta of={TextStories} name="Overview" />
 
@@ -18,55 +20,11 @@ Use the controls panel below to experiment with the text field's properties in r
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>text_field__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>HTML content containing the formatted text to display</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>text_field__variation</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>default</code>
-      </td>
-      <td>
-        Visual variation: 'default' or 'emphasized' (for increased prominence)
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Supported Elements
 
