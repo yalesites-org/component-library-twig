@@ -57,6 +57,19 @@ Content positioned to the right — useful for balancing a left-heavy image comp
   <Canvas of={ActionBannerStories.ActionBannerRight} />
 </div>
 
+## Width Variations
+
+The Action Banner supports two width modes controlled by the `banner__width` property. In Drupal, this is exposed as the **Banner Width** field on the block's Design tab.
+
+- **`site`** (default): Content is constrained to the site max-width with side gutters — consistent with other page content.
+- **`full`**: Content spans edge-to-edge across the full viewport width with no side gutters — best on wide screens for an immersive layout.
+
+Existing banners default to `site` so there is no visual change unless authors explicitly choose Full Width.
+
+<div className="sb-full-bleed-canvas">
+  <Canvas of={ActionBannerStories.ActionBannerFullWidth} />
+</div>
+
 ## Technical Specifications
 
 - **Atomic Level**: Molecule

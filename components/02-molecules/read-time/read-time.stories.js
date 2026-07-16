@@ -1,4 +1,6 @@
 import readTimeTwig from './yds-read-time.twig';
+import componentProps from './read-time-props.yml';
+import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 import './yds-read-time';
 
@@ -8,9 +10,11 @@ import './yds-read-time';
 export default {
   title: 'Atoms/Read Time',
   tags: ['!dev'],
+  argTypes: toArgTypes(componentProps),
+  args: toArgs(componentProps),
 };
 
-export const ReadTime = () => {
+export const ReadTime = ({ label }) => {
   return `
     <div id="main-content">
       <p>A bulldozer sees a beast as an unstripped scene. Extending this logic, a childing beat without transports is truly a couch of unmaimed lutes. A tornado is an erstwhile creditor. This is not to discredit the idea that a cowbell of the lotion is assumed to be a hoven odometer.</p>
@@ -23,7 +27,7 @@ export const ReadTime = () => {
       <p>Authors often misinterpret the mole as a caboched child, when in actuality it feels more like a clonic grouse. An innocent is the subway of a russia. Some posit the plummy cake to be less than rascal. Few can name an artless fountain that isn't an erose norwegian.</p>
       <p>A dolphin is a helicopter's coke. In modern times a move sees a decimal as a fragile india. This is not to discredit the idea that the kindless view reveals itself as an abject fender to those who look. The vessels could be said to resemble pauseful kicks.</p>
       <p>The heart of a math becomes an occult drop. Spindly hands show us how celeries can be colonies. A suggestion sees a riverbed as an unvoiced color.</p>
-      ${readTimeTwig()}
+      ${readTimeTwig({ read_time__label: label })}
     </div>
   `;
 };
