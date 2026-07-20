@@ -161,9 +161,9 @@ Drupal.behaviors.audioPlayer = {
         activeElement.style.display = 'block';
       }
 
-      // Toggle visibility of speed control buttons
-      // when the speed control options button is clicked
-      speedControlOptions.addEventListener('click', () => {
+      // Open or close the speed options. The inactive speeds are shown only
+      // while open; the active speed stays visible in both states.
+      function toggleSpeedOptions() {
         const isOpen = speedControl.getAttribute('options-open') === 'true';
         [
           speedControlSpeedHalf,
@@ -171,11 +171,8 @@ Drupal.behaviors.audioPlayer = {
           speedControlSpeedDouble,
         ].forEach((control) => {
           const controlElement = control;
-          // only one speed can be active at a time
-          // if the control is not active, toggle its visibility
           if (!controlElement.classList.contains('active')) {
-            controlElement.style.display =
-              controlElement.style.display === 'none' ? 'block' : 'none';
+            controlElement.style.display = isOpen ? 'none' : 'block';
           }
         });
         speedControl.setAttribute('options-open', isOpen ? 'false' : 'true');
@@ -183,7 +180,12 @@ Drupal.behaviors.audioPlayer = {
           'aria-expanded',
           isOpen ? 'false' : 'true',
         );
-      });
+      }
+
+      // Make the whole speed control area a click target: the gauge icon and
+      // the visible active label (e.g. "1x") both bubble here, so clicking the
+      // label opens the options instead of only the icon working.
+      speedControl.addEventListener('click', toggleSpeedOptions);
 
       // Set speed control event listeners
       // Speed controls are an array of objects with the control element and the playback rate
@@ -193,31 +195,20 @@ Drupal.behaviors.audioPlayer = {
         { control: speedControlSpeedDouble, rate: 2 },
       ];
 
-      // Change playback speed when a speed control is clicked
+      // Change playback speed when an option is chosen. Only acts as a selection
+      // while the options are open; stopping propagation keeps the click from
+      // bubbling to the container toggle, so choosing a speed closes the menu.
+      // When closed, the click falls through to toggleSpeedOptions and opens it.
       speedControls.forEach(({ control, rate }) => {
-        control.addEventListener('click', () => {
+        control.addEventListener('click', (event) => {
+          if (speedControl.getAttribute('options-open') !== 'true') {
+            return;
+          }
+          event.stopPropagation();
           audio.playbackRate = rate;
           setActiveSpeedControl(control);
-          [
-            speedControlSpeedHalf,
-            speedControlSpeedNormal,
-            speedControlSpeedDouble,
-          ].forEach((otherControl) => {
-            const controlElement = otherControl;
-            if (controlElement !== control)
-              controlElement.style.display = 'none';
-
-            // Close the speed control options if only one speed control is visible
-            const visibleControls = [
-              speedControlSpeedHalf,
-              speedControlSpeedNormal,
-              speedControlSpeedDouble,
-            ].filter((elem) => elem.style.display !== 'none');
-            if (visibleControls.length === 1) {
-              speedControl.setAttribute('options-open', 'false');
-              speedControlOptions.setAttribute('aria-expanded', 'false');
-            }
-          });
+          speedControl.setAttribute('options-open', 'false');
+          speedControlOptions.setAttribute('aria-expanded', 'false');
         });
       });
 

@@ -1,6 +1,79 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/controls/button/yds-button' as button;
 
+// Custom range-slider appearance shared by the progress and volume controls so
+// the two can't drift apart. Drift was the root of #779's slider defects: the
+// progress track carried a non-standard `appearance: none` (which drops the
+// track background in some Safari builds — the reported "can't see the line"
+// symptom) while the volume track did not, and the two thumbs used different
+// sizes. Defining the appearance once keeps them identical.
+@mixin range-slider {
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  height: var(--size-spacing-4);
+
+  @media (max-width: tokens.$break-mobile-max) {
+    height: var(--size-spacing-5);
+  }
+
+  // Slider track
+  &::-webkit-slider-runnable-track {
+    width: 100%;
+    height: var(--border-thickness-4);
+    cursor: pointer;
+    background: var(--color-gray-400);
+
+    @media (max-width: tokens.$break-mobile-max) {
+      height: var(--border-thickness-6);
+    }
+  }
+
+  &::-moz-range-track {
+    width: 100%;
+    height: var(--border-thickness-4);
+    cursor: pointer;
+    background: var(--color-gray-400);
+
+    @media (max-width: tokens.$break-mobile-max) {
+      height: var(--border-thickness-6);
+    }
+  }
+
+  // Slider thumb — sized identically across engines and centered on the track.
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: var(--size-spacing-4);
+    height: var(--size-spacing-4);
+    background: var(--color-blue-medium);
+    cursor: pointer;
+    border: 0;
+    border-radius: 100%;
+    margin-top: calc((var(--border-thickness-4) - var(--size-spacing-4)) / 2);
+    box-shadow: none;
+
+    @media (max-width: tokens.$break-mobile-max) {
+      width: var(--size-spacing-5);
+      height: var(--size-spacing-5);
+      margin-top: calc((var(--border-thickness-6) - var(--size-spacing-5)) / 2);
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: var(--size-spacing-4);
+    height: var(--size-spacing-4);
+    background: var(--color-blue-medium);
+    cursor: pointer;
+    border: 0;
+    border-radius: 100%;
+
+    @media (max-width: tokens.$break-mobile-max) {
+      width: var(--size-spacing-5);
+      height: var(--size-spacing-5);
+    }
+  }
+}
+
 .audio-embed {
   @include tokens.spacing-page-section;
 }
@@ -101,70 +174,10 @@
   width: 100%;
 
   input[type='range'] {
-    appearance: none;
-    background: transparent;
-    cursor: pointer;
+    @include range-slider;
+
     width: 100%;
     box-sizing: border-box;
-
-    // Slider track
-    &::-webkit-slider-runnable-track {
-      appearance: none;
-      width: 100%;
-      height: var(--border-thickness-4);
-      cursor: pointer;
-      background: var(--color-gray-400);
-      position: relative;
-
-      @media (max-width: tokens.$break-mobile-max) {
-        height: var(--border-thickness-6);
-      }
-    }
-
-    &::-moz-range-track {
-      width: 100%;
-      height: var(--border-thickness-4);
-      cursor: pointer;
-      background: var(--color-gray-400);
-      position: relative;
-
-      @media (max-width: tokens.$break-mobile-max) {
-        height: var(--border-thickness-6);
-      }
-    }
-
-    // Slider thumb
-    &::-webkit-slider-thumb {
-      appearance: none;
-      width: var(--size-spacing-4);
-      height: var(--size-spacing-4);
-      background: var(--color-blue-medium);
-      cursor: pointer;
-      border-radius: 100%;
-      border-color: var(--color-blue-medium);
-      margin-top: calc(var(--size-spacing-2) / -1);
-      box-shadow: none;
-
-      @media (max-width: tokens.$break-mobile-max) {
-        height: var(--size-spacing-5);
-        width: var(--size-spacing-5);
-      }
-    }
-
-    &::-moz-range-thumb {
-      appearance: none;
-      width: var(--size-spacing-3);
-      height: var(--size-spacing-3);
-      background: var(--color-blue-medium);
-      cursor: pointer;
-      border-radius: 100%;
-      border-color: var(--color-blue-medium);
-
-      @media (max-width: tokens.$break-mobile-max) {
-        height: var(--size-spacing-5);
-        width: var(--size-spacing-5);
-      }
-    }
   }
 }
 
@@ -213,71 +226,15 @@
   flex: 1 auto;
 
   input[type='range'] {
-    appearance: none;
-    background: transparent;
-    cursor: pointer;
+    @include range-slider;
+
     max-width: var(--size-spacing-12);
-
-    // Slider track
-    &::-webkit-slider-runnable-track {
-      width: 100%;
-      height: var(--border-thickness-4);
-      cursor: pointer;
-      background: var(--color-gray-400);
-
-      @media (max-width: tokens.$break-mobile-max) {
-        height: var(--border-thickness-6);
-      }
-    }
-
-    &::-moz-range-track {
-      width: 100%;
-      height: var(--border-thickness-4);
-      cursor: pointer;
-      background: var(--color-gray-400);
-
-      @media (max-width: tokens.$break-mobile-max) {
-        height: var(--border-thickness-6);
-      }
-    }
-
-    // Slider thumb
-    &::-webkit-slider-thumb {
-      appearance: none;
-      width: var(--size-spacing-4);
-      height: var(--size-spacing-4);
-      background: var(--color-blue-medium);
-      cursor: pointer;
-      border-radius: 100%;
-      border-color: var(--color-blue-medium);
-      margin-top: calc(var(--size-spacing-2) / -1);
-      box-shadow: none;
-
-      @media (max-width: tokens.$break-mobile-max) {
-        height: var(--size-spacing-5);
-        width: var(--size-spacing-5);
-      }
-    }
-
-    &::-moz-range-thumb {
-      appearance: none;
-      width: var(--size-spacing-3);
-      height: var(--size-spacing-3);
-      background: var(--color-blue-medium);
-      cursor: pointer;
-      border-radius: 100%;
-      border-color: var(--color-blue-medium);
-
-      @media (max-width: tokens.$break-mobile-max) {
-        height: var(--size-spacing-5);
-        width: var(--size-spacing-5);
-      }
-    }
   }
 
+  // Volume does not function on mobile (physical device volume controls handle
+  // it), so hide the whole control there per the #779 decision.
   @media (max-width: tokens.$break-mobile-max) {
-    flex: 1 auto;
-    justify-content: flex-end;
+    display: none;
   }
 }
 
