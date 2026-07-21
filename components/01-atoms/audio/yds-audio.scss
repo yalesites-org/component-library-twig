@@ -1,0 +1,297 @@
+@use '../../00-tokens/tokens';
+@use '../../01-atoms/controls/button/yds-button' as button;
+
+// Custom range-slider appearance shared by the progress and volume controls so
+// the two can't drift apart. Drift was the root of #779's slider defects: the
+// progress track carried a non-standard `appearance: none` (which drops the
+// track background in some Safari builds — the reported "can't see the line"
+// symptom) while the volume track did not, and the two thumbs used different
+// sizes. Defining the appearance once keeps them identical.
+@mixin range-slider {
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  height: var(--size-spacing-4);
+
+  @media (max-width: tokens.$break-mobile-max) {
+    height: var(--size-spacing-5);
+  }
+
+  // Slider track
+  &::-webkit-slider-runnable-track {
+    width: 100%;
+    height: var(--border-thickness-4);
+    cursor: pointer;
+    background: var(--color-text);
+
+    @media (max-width: tokens.$break-mobile-max) {
+      height: var(--border-thickness-6);
+    }
+  }
+
+  &::-moz-range-track {
+    width: 100%;
+    height: var(--border-thickness-4);
+    cursor: pointer;
+    background: var(--color-text);
+
+    @media (max-width: tokens.$break-mobile-max) {
+      height: var(--border-thickness-6);
+    }
+  }
+
+  // Slider thumb — sized identically across engines and centered on the track.
+  // Filled with the theme accent and ringed in the page background so it stays
+  // distinct from the track whatever the theme: an ancestor region can remap
+  // the thumb (--color-link-base) and the track (--color-text) to the same
+  // value (e.g. on dark pages or in themed sections), and the ring guarantees
+  // separation regardless.
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: var(--size-spacing-4);
+    height: var(--size-spacing-4);
+    background: var(--color-link-base);
+    cursor: pointer;
+    border: var(--border-thickness-2) solid var(--color-background);
+    border-radius: 100%;
+    margin-top: calc((var(--border-thickness-4) - var(--size-spacing-4)) / 2);
+    box-shadow: none;
+
+    @media (max-width: tokens.$break-mobile-max) {
+      width: var(--size-spacing-5);
+      height: var(--size-spacing-5);
+      margin-top: calc((var(--border-thickness-6) - var(--size-spacing-5)) / 2);
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: var(--size-spacing-4);
+    height: var(--size-spacing-4);
+    background: var(--color-link-base);
+    cursor: pointer;
+    border: var(--border-thickness-2) solid var(--color-background);
+    border-radius: 100%;
+
+    @media (max-width: tokens.$break-mobile-max) {
+      width: var(--size-spacing-5);
+      height: var(--size-spacing-5);
+    }
+  }
+}
+
+.audio-embed {
+  @include tokens.spacing-page-section;
+}
+
+.audio-embed__content {
+  @include tokens.body-s;
+}
+
+.audio-embed__content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-4);
+
+  // Consume the ambient theme tokens (which flip in dark `[data-basic-theme]` /
+  // `[data-component-theme]` regions) instead of fixed grays, so the player and
+  // its text stay legible on both light and dark pages. A 1px themed border
+  // keeps the player reading as a contained surface even when its background
+  // matches the page background.
+  color: var(--color-text);
+  background-color: var(--color-background);
+  border: var(--border-thickness-1) solid var(--color-text);
+  padding: var(--size-spacing-4) var(--size-spacing-5);
+
+  [data-component-alignment='left'] & {
+    max-width: var(--size-component-layout-width-content);
+  }
+}
+
+// Player
+.audio-embed__player {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--size-spacing-5);
+
+  @media (max-width: tokens.$break-mobile-max) {
+    flex-flow: row wrap;
+  }
+}
+
+.audio-embed__controls {
+  display: flex;
+  flex-direction: row;
+  flex: 0 var(--size-spacing-7);
+}
+
+.audio-embed__control {
+  @include button.reset;
+}
+
+// Play and pause buttons SVG
+.audio-embed__icon {
+  width: var(--size-spacing-7);
+  height: var(--size-spacing-7);
+}
+
+// Play and pause buttons
+.audio-embed__control--play {
+  [is-playing='true'] & {
+    display: none;
+  }
+}
+
+.audio-embed__control--pause {
+  display: none;
+
+  [is-playing='true'] & {
+    display: block;
+  }
+}
+
+.audio-embed__icon--pause {
+  fill: var(--color-link-base);
+}
+
+// Time elapsed and total time
+.audio-embed__time {
+  @include tokens.body-xs;
+
+  display: flex;
+  flex-direction: row;
+  flex: 0 auto;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    flex: 0 1 var(--size-spacing-10);
+  }
+}
+
+// Progress bar
+.audio-embed__progress {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  flex: 0 auto;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    flex: 1 calc(100% - (var(--size-spacing-7) + var(--size-spacing-13)));
+  }
+}
+
+.audio-embed__progress-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+
+  input[type='range'] {
+    @include range-slider;
+
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+// Speed and volume controls
+.audio-embed__speed {
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-4);
+  flex: 0 auto;
+  padding: var(--size-spacing-2) var(--size-spacing-3);
+  border: var(--border-thickness-1) solid var(--color-text);
+}
+
+.audio-embed__speed-options {
+  display: flex;
+  flex: 0 auto;
+  gap: var(--size-spacing-4);
+}
+
+.audio-embed__speed-control {
+  @include button.reset;
+  @include tokens.body-xs;
+
+  &.active {
+    color: var(--color-link-base);
+    font-weight: 700;
+  }
+}
+
+.audio-embed__speed-options-control {
+  @include button.reset;
+
+  @media (max-width: tokens.$break-mobile-max) {
+    height: var(--size-spacing-6);
+  }
+}
+
+.audio-embed__volume-control-option {
+  @include button.reset;
+}
+
+.audio-embed__volume {
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-4);
+  flex: 1 auto;
+
+  input[type='range'] {
+    @include range-slider;
+
+    max-width: var(--size-spacing-12);
+  }
+
+  // Volume does not function on mobile (physical device volume controls handle
+  // it), so hide the whole control there per the #779 decision.
+  @media (max-width: tokens.$break-mobile-max) {
+    display: none;
+  }
+}
+
+.audio-embed__icon--volume,
+.audio-embed__icon--volume-muted {
+  flex: 0 var(--size-spacing-5);
+  height: var(--size-spacing-5);
+  width: var(--size-spacing-5);
+
+  @media (max-width: tokens.$break-mobile-max) {
+    flex: 0 var(--size-spacing-6);
+    height: var(--size-spacing-6);
+    width: var(--size-spacing-6);
+  }
+}
+
+.audio-embed__icon--volume {
+  display: block;
+
+  [aria-pressed='true'] & {
+    display: none;
+  }
+}
+
+.audio-embed__icon--volume-muted {
+  display: none;
+
+  [aria-pressed='true'] & {
+    display: block;
+    fill: var(--color-link-base);
+  }
+}
+
+.audio-embed__icon--speed {
+  flex: 0 var(--size-spacing-5);
+  height: var(--size-spacing-5);
+  width: var(--size-spacing-5);
+
+  [options-open='true'] & {
+    fill: var(--color-link-base);
+  }
+
+  @media (max-width: tokens.$break-mobile-max) {
+    height: var(--size-spacing-6);
+    width: var(--size-spacing-6);
+  }
+}
