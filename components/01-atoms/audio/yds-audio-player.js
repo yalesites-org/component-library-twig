@@ -56,6 +56,18 @@ Drupal.behaviors.audioPlayer = {
         }
       });
 
+      // When playback reaches the end, reset to the paused state so the play
+      // icon returns; otherwise the pause icon stays and it looks like it is
+      // still playing. The next play() restarts from the beginning.
+      audio.addEventListener('ended', () => {
+        audioPlayer.setAttribute('is-playing', false);
+
+        // The pause button is now hidden, so move focus off it to stay usable.
+        if (document.activeElement === pauseButton) {
+          playButton.focus();
+        }
+      });
+
       // Check if the device is iOS
       if (isIOS) {
         volumeElement.style.display = 'none';
