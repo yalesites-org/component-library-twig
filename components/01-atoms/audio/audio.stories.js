@@ -9,7 +9,7 @@ import { toArgTypes, toArgs } from '../../_storybook/component-props';
  * Storybook Definition.
  */
 export default {
-  title: 'Atoms/Audio',
+  title: 'Atoms/Audio Player',
   tags: ['!dev'],
   argTypes: toArgTypes(componentProps),
   args: {

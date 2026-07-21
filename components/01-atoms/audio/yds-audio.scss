@@ -22,7 +22,7 @@
     width: 100%;
     height: var(--border-thickness-4);
     cursor: pointer;
-    background: var(--color-gray-400);
+    background: var(--color-text);
 
     @media (max-width: tokens.$break-mobile-max) {
       height: var(--border-thickness-6);
@@ -33,7 +33,7 @@
     width: 100%;
     height: var(--border-thickness-4);
     cursor: pointer;
-    background: var(--color-gray-400);
+    background: var(--color-text);
 
     @media (max-width: tokens.$break-mobile-max) {
       height: var(--border-thickness-6);
@@ -41,13 +41,18 @@
   }
 
   // Slider thumb — sized identically across engines and centered on the track.
+  // Filled with the theme accent and ringed in the page background so it stays
+  // distinct from the track whatever the theme: an ancestor region can remap
+  // the thumb (--color-link-base) and the track (--color-text) to the same
+  // value (e.g. on dark pages or in themed sections), and the ring guarantees
+  // separation regardless.
   &::-webkit-slider-thumb {
     appearance: none;
     width: var(--size-spacing-4);
     height: var(--size-spacing-4);
-    background: var(--color-blue-medium);
+    background: var(--color-link-base);
     cursor: pointer;
-    border: 0;
+    border: var(--border-thickness-2) solid var(--color-background);
     border-radius: 100%;
     margin-top: calc((var(--border-thickness-4) - var(--size-spacing-4)) / 2);
     box-shadow: none;
@@ -62,9 +67,9 @@
   &::-moz-range-thumb {
     width: var(--size-spacing-4);
     height: var(--size-spacing-4);
-    background: var(--color-blue-medium);
+    background: var(--color-link-base);
     cursor: pointer;
-    border: 0;
+    border: var(--border-thickness-2) solid var(--color-background);
     border-radius: 100%;
 
     @media (max-width: tokens.$break-mobile-max) {
@@ -86,7 +91,15 @@
   display: flex;
   flex-direction: column;
   gap: var(--size-spacing-4);
-  background-color: var(--color-gray-100);
+
+  // Consume the ambient theme tokens (which flip in dark `[data-basic-theme]` /
+  // `[data-component-theme]` regions) instead of fixed grays, so the player and
+  // its text stay legible on both light and dark pages. A 1px themed border
+  // keeps the player reading as a contained surface even when its background
+  // matches the page background.
+  color: var(--color-text);
+  background-color: var(--color-background);
+  border: var(--border-thickness-1) solid var(--color-text);
   padding: var(--size-spacing-4) var(--size-spacing-5);
 
   [data-component-alignment='left'] & {
@@ -138,7 +151,7 @@
 }
 
 .audio-embed__icon--pause {
-  fill: var(--color-blue-medium);
+  fill: var(--color-link-base);
 }
 
 // Time elapsed and total time
@@ -188,7 +201,7 @@
   gap: var(--size-spacing-4);
   flex: 0 auto;
   padding: var(--size-spacing-2) var(--size-spacing-3);
-  border: var(--border-thickness-1) solid var(--color-gray-400);
+  border: var(--border-thickness-1) solid var(--color-text);
 }
 
 .audio-embed__speed-options {
@@ -202,7 +215,7 @@
   @include tokens.body-xs;
 
   &.active {
-    color: var(--color-blue-medium);
+    color: var(--color-link-base);
     font-weight: 700;
   }
 }
@@ -264,7 +277,7 @@
 
   [aria-pressed='true'] & {
     display: block;
-    fill: var(--color-blue-medium);
+    fill: var(--color-link-base);
   }
 }
 
@@ -274,7 +287,7 @@
   width: var(--size-spacing-5);
 
   [options-open='true'] & {
-    fill: var(--color-blue-medium);
+    fill: var(--color-link-base);
   }
 
   @media (max-width: tokens.$break-mobile-max) {
