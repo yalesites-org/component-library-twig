@@ -1,0 +1,25 @@
+# audio-props.yml
+#
+# Audio Player component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+content:
+  twigProp: audio_embed__content
+  name: Content
+  type: string
+  required: false
+  description: >
+    Optional text shown above the player, such as a short label or
+    description of the audio file.
+  control: text
+
+url:
+  twigProp: audio_embed__url
+  name: Audio URL
+  type: string
+  required: true
+  description: >
+    URL of the audio file used by the default player source. In Drupal the
+    source is supplied by the block's media field instead of this value.
+  control: text
