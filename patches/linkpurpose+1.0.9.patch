@@ -1,0 +1,10 @@
+diff --git a/node_modules/linkpurpose/js/linkpurpose.js b/node_modules/linkpurpose/js/linkpurpose.js
+index 3274407..6dbec43 100644
+--- a/node_modules/linkpurpose/js/linkpurpose.js
++++ b/node_modules/linkpurpose/js/linkpurpose.js
+@@ -638,3 +638,5 @@ class LinkPurpose {
+ 
+   }
+ }
++
++export default LinkPurpose;

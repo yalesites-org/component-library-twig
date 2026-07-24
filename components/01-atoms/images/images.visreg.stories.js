@@ -16,12 +16,12 @@ import {
   createThemeVariations,
 } from '../../_storybook/playground-utils';
 
-const svgIcons = require.context('../../../images/icons', true, /\.svg$/);
-const icons = [];
-svgIcons.keys().forEach((key) => {
-  const icon = key.split('./')[1].split('.')[0];
-  icons.push(icon);
+const svgIconModules = import.meta.glob('../../../assets/icons/*.svg', {
+  eager: true,
 });
+const icons = Object.keys(svgIconModules).map((path) =>
+  path.split('/').pop().replace('.svg', ''),
+);
 
 export default {
   tags: ['visreg'],

@@ -28,10 +28,12 @@ If you want to work directly on the component library locally, you can clone thi
 
 1. Clone the repository `git clone git@github.com:yalesites-org/component-library-twig.git`
 2. Change directories into the repo `cd component-library-twig`
-3. Verify you're using the correct version of node `nvm use`
+3. Verify you're using the correct version of node `nvm use` (requires Node 24.13.0+, per [Emulsify Core 4](https://github.com/emulsify-ds/emulsify-core))
 4. Install dependencies `npm install`
 5. Run the develop script `npm run develop`
 6. Make your changes and commit them!
+
+**Build tooling note:** This project runs on [Emulsify Core 4](https://github.com/emulsify-ds/emulsify-core), which builds with Vite instead of Webpack. `npm run storybook`/`storybook:build` point Storybook's `--config-dir` at Emulsify Core's shared config in `node_modules/@emulsify/core/.storybook`; project-specific overrides live under `config/emulsify-core/` (see [Emulsify Core's extension points docs](https://github.com/emulsify-ds/emulsify-core/blob/4.x/docs/extension-points.md)).
 
 ### Installing the package in another project
 
@@ -76,7 +78,6 @@ Comprehensive testing page with all component variations:
 - Interactive controls section
 - All theme variations
 - All component variations
-- Percy visual regression testing coverage
 
 **Files**: `[component].visreg.stories.js`
 
@@ -104,61 +105,4 @@ PRs also have auto-deployed component libraries, which allow reviewers to load t
 
 ## Visual Regression Testing
 
-This project uses Percy's StoryBook integration to visually test and verify components during Pull Requests in GitHub.
-
-View the status of any build here: https://percy.io/95144ff9/component-library-twig
-
-### Running Visreg Tests
-
-**NOTE:** Percy is temporarily auto-approving all branches for now. (Original was only auto-approving `main`)  This will be reverted once we have a better handle on how to manage the visreg tests.
-
-Visual regression tests are automatically run on Percy any time a PR is changed from "Draft" state to "Ready for Review". So there are a few things to keep in mind when creating PRs.
-
-- When you initially create a PR that needs visreg tests, click the "Create draft PR" button instead of the "Create Pull Request" button.
-
-![Click the Create draft PR button](./.github/docs/draft-pr.png)
-
-- Then, when the PR is ready for review, you can click the "Ready for Review" button at the bottom of the page. This will trigger the visual regression tests to be run.
-
-![Click the Ready for Review button when the PR is complete](./.gihub/docs/../../.github/docs/ready-for-review.png)
-
-- If you've already created a PR and need forgot to create a draft first, or you need to re-run the visual regression tests after changes were made, you can click the "Convert to draft" link at the bottom of the page.
-
-![Click the Convert to draft button](./.github/docs/convert-to-draft.png)
-
-- Then click the "Ready for Review" button mentioned above to trigger visual regression tests.
-
-### Configuring Percy Tests
-
-Official Docs: https://docs.percy.io/docs/storybook
-
-By default all new Stories are tested, but stories can be excluded if a test does not provide value in isolation.
-
-In the project root, there is a `.percyrc` file that can be used to modify Percy's configuration, including custom css, and which Stories to skip when testing.
-
-#### Percy-specific CSS
-
-For example, we use the following percy-specific css to hide images from screenshots (since we use a random image service, which would otherwise cause regressions on every test that includes an image.)
-
-```css
-img {
-  visibility: hidden;
-}
-```
-
-#### Excluding Stories from Testing
-
-Since Percy bills by the screenshot, it's best to only test the Stories that provide value when tested visually. Some reasons stories should be excluded include:
-
-- Anything that is simply a representation of a base or "primitive" token. These will be represented in the larger components that implement them, so in isolation they don't provide significant value to visual testing.
-- Dynamic stories that automatically update when new tokens are added upstream. e.g. The colors story. Since colors aren't really a concern at this level (they're defined in Figma by a designer) we don't really need to test them in isolation here.
-- "Playground" types of stories. e.g. The site "Header" story. Since there are a number of choices, or props, that can affect how the site header looks, we have a "playground" story that allows a visitor to toggle all of the controls to see what can be generated with the design system options. What SHOULD be tested is one or more examples of the component with various decisions selected. That is why we have a "Header Examples" story that demonstrates the allowed color combinations.
-
-To exclude stories, add an item to the `exclude` array in a regex format. Some examples of what we currently exclude are:
-
-```yml
-storybook:
-  exclude:
-    - 'Tokens/Breakpoints: Breakpoints' # This specific story (must match exactly)
-    - 'Tokens/Effects: [a-zA-Z]+' # Any story in the `Tokens/Effects` section, since they are dynamically generated.
-```
+Percy visual regression testing (previously wired up via `npm run visreg:ci`) is no longer in active use and was removed as part of the Storybook/Vite migration. `[component].visreg.stories.js` pages remain as a documentation pattern (comprehensive story coverage per component) independent of any visual-diffing tool.

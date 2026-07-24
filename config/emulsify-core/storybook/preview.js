@@ -1,27 +1,37 @@
-import { useEffect } from '@storybook/preview-api';
+import { useEffect } from 'react';
 import Twig from 'twig';
-import { setupTwig } from './setupTwig';
+import jquery from 'jquery';
+import once from '@drupal/once';
+import twigUrl from './twig-url.js';
+import twigAssetPath from './twig-asset-path.js';
+
+// Global jQuery shim for component JS that expects it (e.g. link treatment).
+global.jQuery = jquery;
+global.$ = jquery;
+global.once = once;
 
 // GLOBAL CSS
-import '../components/style.scss';
-import '../components/00-tokens/colors/cl-colors.scss';
-import '../components/00-tokens/typography/cl-typography.scss';
-import '../components/00-tokens/effects/cl-effects.scss';
-import '../components/00-tokens/layout/cl-layout.scss';
-import '../components/04-page-layouts/placeholder/cl-placeholder.scss';
-import '../components/_storybook/storybook.scss';
-import '../fonts/fontawesome/css/fontawesome.css';
-import '../fonts/fontawesome/css/regular.css';
-import '../fonts/fontawesome/css/solid.css';
-
-// If in a Drupal project, it's recommended to import a symlinked version of drupal.js.
-import './_drupal.js';
-import './jquery-global.js';
+import '../../../components/style.scss';
+import '../../../components/00-tokens/colors/cl-colors.scss';
+import '../../../components/00-tokens/typography/cl-typography.scss';
+import '../../../components/00-tokens/effects/cl-effects.scss';
+import '../../../components/00-tokens/layout/cl-layout.scss';
+import '../../../components/04-page-layouts/placeholder/cl-placeholder.scss';
+import '../../../components/_storybook/storybook.scss';
+import '../../../assets/fonts/fontawesome/css/fontawesome.css';
+import '../../../assets/fonts/fontawesome/css/regular.css';
+import '../../../assets/fonts/fontawesome/css/solid.css';
 
 // Global link treatment
-import '../lib/link-treatment/link-treatment.js';
+import '../../../lib/link-treatment/link-treatment.js';
 import 'linkpurpose/css/linkpurpose.css';
-import '../lib/link-treatment/link-treatment.scss';
+import '../../../lib/link-treatment/link-treatment.scss';
+
+// Register YaleSites-specific custom Twig functions. Native bem()/add_attributes()
+// helpers and Drupal Twig filters are registered automatically by Emulsify Core's
+// Drupal platform adapter (see project.emulsify.json).
+twigUrl(Twig);
+twigAssetPath(Twig);
 
 export const decorators = [
   (StoryFn, context) => {
@@ -40,8 +50,6 @@ export const decorators = [
     return StoryFn(context);
   },
 ];
-
-setupTwig(Twig);
 
 export const globalTypes = {
   globalTheme: {
