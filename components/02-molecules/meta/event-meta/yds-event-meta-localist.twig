@@ -4,6 +4,8 @@
  # - event_meta__date_end
  # - event_meta__format: Multiselect. Options are 'In-person', 'Virtual', or both.
  # - event_meta__address
+ # - place: Structured Localist location
+ # - location_additional_info: WYSIWYG for non-Localist events.
  #}
 
 {# Split upcomign and past dates #}
@@ -417,10 +419,12 @@
           {% if place %}
             <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
               <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
-              <div {{ bem('location', [], event_meta__base_class) }}>
-                {{ location_display }}<br>
-                {{ place.address }}
-                {{ place.city }}, {{ place.state }} {{ place.postal_code }}
+              <div {{ bem('location', [], event_meta__base_class) }} itemprop="location" itemscope itemtype="https://schema.org/Place">
+                <span itemprop="name">{{ location_display }}</span><br>
+                <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                  <span itemprop="streetAddress">{{ place.address }}</span>
+                  <span itemprop="addressLocality">{{ place.city }}</span>, <span itemprop="addressRegion">{{ place.state }}</span> <span itemprop="postalCode">{{ place.postal_code }}</span>
+                </span>
               </div>
               <div {{ bem('event-show-map', [], event_meta__base_class) }} is-expanded="false">
                 {% include "@atoms/controls/cta/yds-cta.twig" with {
@@ -441,6 +445,13 @@
                     cta__style: 'outline',
                   } %}
                 </div>
+              </div>
+            </div>
+          {% elseif location_additional_info %}
+            <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
+              <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
+              <div {{ bem('location', [], event_meta__base_class) }} itemprop="location">
+                {{ location_additional_info }}
               </div>
             </div>
           {% endif %}

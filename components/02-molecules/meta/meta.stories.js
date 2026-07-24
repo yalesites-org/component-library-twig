@@ -4,6 +4,7 @@ import eventLocalistData from './event-meta/event-localist.yml';
 import eventLocalistUpcomingOnly from './event-meta/event-localist--upcoming-only.yml';
 import eventLocalistPastOnly from './event-meta/event-localist--past-only.yml';
 import eventLocalistSingleDate from './event-meta/event-localist--single-date.yml';
+import eventLocalistNoPlace from './event-meta/event-localist--no-place.yml';
 import basicMetaTwig from './basic-meta/yds-basic-meta.twig';
 import eventLocalistMetaTwig from './event-meta/yds-event-meta-localist.twig';
 import dateTimeTwig from '../../01-atoms/date-time/yds-date-time.twig';
@@ -29,6 +30,7 @@ const eventDataVariants = {
   'Upcoming Only': eventLocalistUpcomingOnly,
   'Past Only': eventLocalistPastOnly,
   'Single Date': eventLocalistSingleDate,
+  'No Localist Place (Free-form Location)': eventLocalistNoPlace,
 };
 
 /**

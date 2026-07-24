@@ -19,6 +19,7 @@ dataVariant:
     - Upcoming Only
     - Past Only
     - Single Date
+    - No Localist Place (Free-form Location)
   control: select
 
 withCalendar:
