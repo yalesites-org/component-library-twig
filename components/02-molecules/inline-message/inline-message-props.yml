@@ -18,6 +18,19 @@ type:
     - marketing
   control: select
 
+iconName:
+  twigProp: inline_message__icon_name
+  name: Icon
+  type: select
+  required: false
+  description: >-
+    Decorative icon shown beside the message, drawn from the shared icon set.
+    "_none" shows no icon. When left unset, the icon falls back to the
+    type-derived default. The full option list is populated from the shared
+    icon manifest in the story controls.
+  default: _none
+  control: select
+
 heading:
   twigProp: inline_message__heading
   name: Heading
