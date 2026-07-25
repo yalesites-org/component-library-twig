@@ -54,53 +54,60 @@ The site footer supports two variations designed for different content and navig
 
 ## Technical Specifications
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Atomic Level</strong>
-      </td>
-      <td>Organism</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Files</strong>
-      </td>
-      <td>
-        <code>yds-site-footer.twig</code>, <code>yds-site-footer.js</code>,{' '}
-        <code>_yds-site-footer.scss</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Accessibility</strong>
-      </td>
-      <td>
-        ARIA landmark role <code>contentinfo</code>, semantic HTML structure,
-        keyboard navigable links, sufficient color contrast for all text and
-        interactive elements
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Responsive Behavior</strong>
-      </td>
-      <td>
-        Adaptive layout based on viewport size, stacked navigation on mobile
-        devices, touch-optimized link targets
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>JavaScript</strong>
-      </td>
-      <td>
-        Minimal JavaScript for interactive enhancements; core functionality
-        works without JavaScript
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Technical Specifications"
+  tabIndex={0}
+>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <strong>Atomic Level</strong>
+        </td>
+        <td>Organism</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Files</strong>
+        </td>
+        <td>
+          <code>yds-site-footer.twig</code>, <code>yds-site-footer.js</code>,{' '}
+          <code>_yds-site-footer.scss</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Accessibility</strong>
+        </td>
+        <td>
+          ARIA landmark role <code>contentinfo</code>, semantic HTML structure,
+          keyboard navigable links, sufficient color contrast for all text and
+          interactive elements
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Responsive Behavior</strong>
+        </td>
+        <td>
+          Adaptive layout based on viewport size, stacked navigation on mobile
+          devices, touch-optimized link targets
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>JavaScript</strong>
+        </td>
+        <td>
+          Minimal JavaScript for interactive enhancements; core functionality
+          works without JavaScript
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Usage Guidelines
 

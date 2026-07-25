@@ -36,38 +36,45 @@ The video embed component works with any iframe-based video platform, including:
 
 The component supports standard video aspect ratios:
 
-<table>
-  <thead>
-    <tr>
-      <th>Ratio</th>
-      <th>Description</th>
-      <th>Common Use</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>16:9</code>
-      </td>
-      <td>Widescreen format (default)</td>
-      <td>Modern videos, YouTube, most web content</td>
-    </tr>
-    <tr>
-      <td>
-        <code>4:3</code>
-      </td>
-      <td>Classic format</td>
-      <td>Older videos, presentations</td>
-    </tr>
-    <tr>
-      <td>
-        <code>1:1</code>
-      </td>
-      <td>Square format</td>
-      <td>Social media videos</td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Aspect Ratios"
+  tabIndex={0}
+>
+  <table>
+    <thead>
+      <tr>
+        <th>Ratio</th>
+        <th>Description</th>
+        <th>Common Use</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>16:9</code>
+        </td>
+        <td>Widescreen format (default)</td>
+        <td>Modern videos, YouTube, most web content</td>
+      </tr>
+      <tr>
+        <td>
+          <code>4:3</code>
+        </td>
+        <td>Classic format</td>
+        <td>Older videos, presentations</td>
+      </tr>
+      <tr>
+        <td>
+          <code>1:1</code>
+        </td>
+        <td>Square format</td>
+        <td>Social media videos</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Technical Specifications
 
