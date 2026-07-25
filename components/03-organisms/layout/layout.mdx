@@ -94,84 +94,98 @@ When <code>layout\_\_divider</code> is set to <code>'true'</code>, visual divide
 
 The layout component provides flexible padding controls to accommodate different page compositions:
 
-<table>
-  <thead>
-    <tr>
-      <th>Option</th>
-      <th>Description</th>
-      <th>Use Case</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>default</code>
-      </td>
-      <td>Standard vertical padding on top and bottom</td>
-      <td>Standalone layout sections with consistent spacing</td>
-    </tr>
-    <tr>
-      <td>
-        <code>no-top</code>
-      </td>
-      <td>Removes top padding only</td>
-      <td>When layout follows another component closely</td>
-    </tr>
-    <tr>
-      <td>
-        <code>no-bottom</code>
-      </td>
-      <td>Removes bottom padding only</td>
-      <td>When layout is followed by another component closely</td>
-    </tr>
-    <tr>
-      <td>
-        <code>no-padding</code>
-      </td>
-      <td>Removes both top and bottom padding</td>
-      <td>Full-bleed layouts or when nested within other containers</td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Padding Options"
+  tabIndex={0}
+>
+  <table>
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th>Description</th>
+        <th>Use Case</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>default</code>
+        </td>
+        <td>Standard vertical padding on top and bottom</td>
+        <td>Standalone layout sections with consistent spacing</td>
+      </tr>
+      <tr>
+        <td>
+          <code>no-top</code>
+        </td>
+        <td>Removes top padding only</td>
+        <td>When layout follows another component closely</td>
+      </tr>
+      <tr>
+        <td>
+          <code>no-bottom</code>
+        </td>
+        <td>Removes bottom padding only</td>
+        <td>When layout is followed by another component closely</td>
+      </tr>
+      <tr>
+        <td>
+          <code>no-padding</code>
+        </td>
+        <td>Removes both top and bottom padding</td>
+        <td>Full-bleed layouts or when nested within other containers</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Technical Specifications
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Atomic Level</strong>
-      </td>
-      <td>Organism</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Files</strong>
-      </td>
-      <td>
-        <code>yds-layout.twig</code>, <code>_yds-layout.scss</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Accessibility</strong>
-      </td>
-      <td>
-        Semantic HTML structure, maintains proper content flow, responsive
-        reflow for small viewports, keyboard navigable
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Responsive Behavior</strong>
-      </td>
-      <td>
-        Multi-column layouts reflow to single column on small screens, maintains
-        content hierarchy and readability across all devices
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Technical Specifications"
+  tabIndex={0}
+>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <strong>Atomic Level</strong>
+        </td>
+        <td>Organism</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Files</strong>
+        </td>
+        <td>
+          <code>yds-layout.twig</code>, <code>_yds-layout.scss</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Accessibility</strong>
+        </td>
+        <td>
+          Semantic HTML structure, maintains proper content flow, responsive
+          reflow for small viewports, keyboard navigable
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Responsive Behavior</strong>
+        </td>
+        <td>
+          Multi-column layouts reflow to single column on small screens,
+          maintains content hierarchy and readability across all devices
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Usage Guidelines
 
