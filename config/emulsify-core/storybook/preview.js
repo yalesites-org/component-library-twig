@@ -4,6 +4,11 @@ import jquery from 'jquery';
 import once from '@drupal/once';
 import twigUrl from './twig-url.js';
 import twigAssetPath from './twig-asset-path.js';
+// Must be imported before lib/link-treatment/link-treatment.js below: that
+// file registers Drupal.behaviors.linkPurpose at module-evaluation time, and
+// Emulsify Core's own Drupal shim only becomes available later (it's awaited
+// inside a useEffect, not loaded synchronously).
+import './drupal-shim-stub.js';
 
 // Global jQuery shim for component JS that expects it (e.g. link treatment).
 global.jQuery = jquery;
@@ -40,10 +45,14 @@ export const decorators = [
       document.body.setAttribute('data-global-theme', context.globals.globalTheme);
       document.body.setAttribute('data-font-pairing', context.globals.headingTypography || 'yalenew');
 
-      Drupal.attachBehaviors(document);
-
+      // Emulsify Core's own preview.js decorator already calls
+      // Drupal.attachBehaviors() once its async Drupal shim is ready, so we
+      // only need to detach here on cleanup (which Core's decorator doesn't
+      // do). Guarded since the shim may not have loaded yet.
       return () => {
-        Drupal.detachBehaviors(document);
+        if (typeof window.Drupal?.detachBehaviors === 'function') {
+          window.Drupal.detachBehaviors(document);
+        }
       };
     }, [context]);
 
