@@ -26,7 +26,7 @@
     "lint": "npm run lint:js; npm run lint:styles",
     "lint:js": "eslint components",
     "lint:styles": "stylelint 'components/**/*.scss'",
-    "postinstall": "npx patch-package && node scripts/patch-linkpurpose.mjs",
+    "postinstall": "npx patch-package && node scripts/patch-linkpurpose.mjs && node scripts/patch-emulsify-core-twig-functions.mjs",
     "prepare": "husky install",
     "prettier": "prettier components --ignore-unknown --list-different",
     "semantic-release": "semantic-release",
