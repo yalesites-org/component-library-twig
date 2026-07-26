@@ -6,9 +6,10 @@ const projectRoot = path.resolve(_dirname, '../../../');
 
 // Emulsify Core's own preview.js only merges a project override's `parameters`
 // export (see src/storybook/preview-parameters.js) — it does not read
-// `decorators`, `globalTypes`, or `tags`. Registering our preview.js as a
-// Storybook `previewAnnotations` entry instead makes Storybook natively
-// compose those alongside Emulsify Core's own preview.js.
+// `decorators`, `globalTypes`, or `tags`. Registering preview-decorators.js
+// (NOT preview.js — see the comment in preview.js for why they must stay
+// separate) as a Storybook `previewAnnotations` entry instead makes
+// Storybook natively compose those alongside Emulsify Core's own preview.js.
 //
 // Emulsify Core's default `buildStoryGlobs()` only discovers `*.stories.js`
 // files, not `.mdx` docs pages. Many components here only expose their
@@ -35,7 +36,7 @@ export function extendConfig(config) {
     ],
     previewAnnotations: [
       ...(config.previewAnnotations || []),
-      path.resolve(_dirname, 'preview.js'),
+      path.resolve(_dirname, 'preview-decorators.js'),
     ],
   };
 }

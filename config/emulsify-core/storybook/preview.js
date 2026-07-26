@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
 import Twig from 'twig';
 import jquery from 'jquery';
 import once from '@drupal/once';
 import twigUrl from './twig-url.js';
 import twigAssetPath from './twig-asset-path.js';
+import { storySortComparator } from './story-sort.mjs';
 // Must be imported before lib/link-treatment/link-treatment.js below: that
 // file registers Drupal.behaviors.linkPurpose at module-evaluation time, and
 // Emulsify Core's own Drupal shim only becomes available later (it's awaited
@@ -38,91 +38,37 @@ import '../../../lib/link-treatment/link-treatment.scss';
 twigUrl(Twig);
 twigAssetPath(Twig);
 
-export const decorators = [
-  (StoryFn, context) => {
-    useEffect(() => {
-      // Update body attributes for theme + heading typography
-      document.body.setAttribute('data-global-theme', context.globals.globalTheme);
-      document.body.setAttribute('data-font-pairing', context.globals.headingTypography || 'yalenew');
+// IMPORTANT: only `parameters` belongs in this file. Emulsify Core's own
+// preview.js reads *this exact file* directly (see
+// src/storybook/preview-parameters.js) and deep-merges its `parameters`
+// export into the single global preview config Storybook loads.
+// decorators/globalTypes/tags live in preview-decorators.js instead,
+// registered separately via `previewAnnotations` (see main.js) — Core's
+// preview.js doesn't read those from a project override at all.
 
-      // Emulsify Core's own preview.js decorator already calls
-      // Drupal.attachBehaviors() once its async Drupal shim is ready, so we
-      // only need to detach here on cleanup (which Core's decorator doesn't
-      // do). Guarded since the shim may not have loaded yet.
-      return () => {
-        if (typeof window.Drupal?.detachBehaviors === 'function') {
-          window.Drupal.detachBehaviors(document);
-        }
-      };
-    }, [context]);
-
-    return StoryFn(context);
-  },
-];
-
-export const globalTypes = {
-  globalTheme: {
-    name: 'Site: Global Theme (lever)',
-    description: 'Choose a global color palette.',
-    defaultValue: 'one',
-    toolbar: {
-      items: [
-        { value: 'one', title: 'Old Blues' },
-        { value: 'two', title: 'New Haven Green' },
-        { value: 'three', title: 'Shoreline Summer' },
-        { value: 'four', title: 'Onha' },
-        { value: 'five', title: 'It\'s Your Yale'},
-        { value: 'six', title: 'AI'},
-        { value: 'seven', title: 'Whitney Humanities Center' },
-      ],
-      showName: true,
-      title: 'Site: Global Theme (lever)',
-    },
-  },
-
-  headingTypography: {
-    name: 'Typography: Heading Fonts',
-    description: 'Choose a heading font pairing.',
-    defaultValue: 'yalenew',
-    toolbar: {
-      icon: 'paragraph',
-      items: [
-        { value: 'yalenew', title: 'Headings: YaleNew (Old-Style Numerals)' },
-        { value: 'mallory', title: 'Headings: Mallory' },
-        { value: 'yalenew-oldstyle', title: 'Headings: YaleNew (Lining Numerals)' },
-      ],
-      showName: true,
-      dynamicTitle: true,
-      title: 'Typography: Heading Fonts',
-    },
-  },
-};
-
-export const tags = ['autodocs', 'autodocs'];
+// Sidebar order (kept here for documentation/dev-server use, e.g. `npm run
+// storybook`). CONFIRMED this does not actually reach the sidebar for a
+// static `storybook build`: the manager bundle (sb-manager/*.js) never
+// references `storySort` at all in the built output, regardless of whether
+// this is the declarative `{ method, order }` array form or a comparator
+// function — neither crosses whatever boundary separates the preview's
+// parameters from the manager's sidebar-tree renderer in this Storybook 10
+// + Vite + Emulsify Core setup. The root symptom this was meant to fix
+// (components with at least one *visible*, non-`!dev`-tagged story — e.g.
+// Modal, Cards — jumping ahead of alphabetically-sorted docs-only entries)
+// reproduces identically with story/tag content unchanged from before the
+// migration, so it's a sorting behavior difference from Storybook 8, not
+// something introduced by this project.
+//
+// The actual fix is scripts/sort-storybook-index.mjs, a post-build step
+// that reorders .out/index.json directly — the static file the manager
+// reads for the sidebar tree — using this same priority logic (shared via
+// story-sort.mjs). See that script for why reordering the file itself,
+// rather than getting Storybook to sort it, is what actually works.
 export const parameters = {
   actions: { argTypesRegex: '^on.*' },
   controls: { disableSaveFromUI: true, sort: 'requiredFirst' },
   options: {
-    storySort: {
-      method: 'alphabetical',
-      order: [
-        'Introduction',
-        ['Welcome', 'Theme System', 'Storybook Guide'],
-        'Tokens',
-        [
-          'Colors',
-          ['Colors', 'Color Palettes (Theme)', 'Theme Sandbox', 'Theming Reference'],
-          '*',
-        ],
-        'Atoms',
-        'Molecules',
-        'Organisms',
-        ['Card Collection', ['Overview', 'Visreg', '*']],
-        'Templates',
-        'Page Examples',
-        ['Overview', '*'],
-        '*',
-      ],
-    },
+    storySort: storySortComparator,
   },
 };

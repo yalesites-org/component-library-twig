@@ -31,7 +31,7 @@
     "prettier": "prettier components --ignore-unknown --list-different",
     "semantic-release": "semantic-release",
     "storybook": "NODE_OPTIONS=--max-old-space-size=8192 storybook dev --config-dir node_modules/@emulsify/core/.storybook -p 6006",
-    "storybook:build": "npm run build && NODE_OPTIONS=--max-old-space-size=8192 storybook build --config-dir node_modules/@emulsify/core/.storybook -o .out",
+    "storybook:build": "npm run build && NODE_OPTIONS=--max-old-space-size=8192 storybook build --config-dir node_modules/@emulsify/core/.storybook -o .out && node scripts/sort-storybook-index.mjs",
     "storybook:deploy": "storybook-to-ghpages -o .out",
     "test": "npm run lint:js && npm run lint:styles && npm run prettier && npm run storybook:build",
     "audit": "sh -c 'node_modules/@emulsify/core/scripts/audit.js \"$@\"; status=$?; printf \"\\nAudit docs: https://github.com/emulsify-ds/emulsify-core/blob/4.x/docs/migration-4x.md#storybook-migration\\n\"; exit $status' --",
