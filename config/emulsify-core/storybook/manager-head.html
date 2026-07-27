@@ -8,20 +8,9 @@
     font-family: Mallory, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
   }
 
-  /* Emulsify Core's own managerHead styles (node_modules/@emulsify/core's
-     .storybook/main.js) include:
-       [role="main"]:not(:nth-child(3)) {
-         top: 1rem !important;
-         height: calc(100vh - 2rem) !important;
-       }
-     That was written assuming the manager's <main> sits 3rd among its
-     siblings (excluded from the offset); in this Storybook version its
-     parent only has 2 children (the toolbar <section> + <main> itself), so
-     <main> is always child #2 and the exclusion never matches — the offset
-     applies unconditionally, opening a gap between the toolbar and the
-     content below it. This resets it back to flush, using the identical
-     selector so specificity matches and source order (this loads after
-     Core's inline styles) decides the winner. */
+  /* Overrides Core's [role="main"]:not(:nth-child(3)) top/height offset —
+     that :nth-child(3) exclusion doesn't match this DOM's 2-child structure,
+     so the offset was applying unconditionally and leaving a gap. */
   [role="main"]:not(:nth-child(3)) {
     top: 0 !important;
     height: 100% !important;

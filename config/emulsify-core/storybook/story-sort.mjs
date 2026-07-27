@@ -1,8 +1,5 @@
-// Shared sidebar-priority logic, used both by preview.js's storySort
-// parameter (kept for correctness/documentation even though it doesn't
-// reach the sidebar — see scripts/sort-storybook-index.mjs) and by that
-// post-build script, which is what actually controls the built sidebar
-// order for static `storybook build` output.
+// Shared sidebar-priority tree, consumed by preview.js's storySort parameter
+// and by scripts/sort-storybook-index.mjs (the latter controls the built sidebar order).
 export const ORDER_TREE = {
   __order: [
     'Introduction',

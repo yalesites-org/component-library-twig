@@ -33,7 +33,7 @@ If you want to work directly on the component library locally, you can clone thi
 5. Run the develop script `npm run develop`
 6. Make your changes and commit them!
 
-**Build tooling note:** This project runs on [Emulsify Core 4](https://github.com/emulsify-ds/emulsify-core), which builds with Vite instead of Webpack. `npm run storybook`/`storybook:build` point Storybook's `--config-dir` at Emulsify Core's shared config in `node_modules/@emulsify/core/.storybook`; project-specific overrides live under `config/emulsify-core/` (see [Emulsify Core's extension points docs](https://github.com/emulsify-ds/emulsify-core/blob/4.x/docs/extension-points.md)).
+This project's Storybook build runs on [Emulsify Core 4](https://github.com/emulsify-ds/emulsify-core) (Vite instead of Webpack). `npm run storybook`/`storybook:build` point Storybook's `--config-dir` at Emulsify Core's shared config in `node_modules/@emulsify/core/.storybook`; project-specific overrides live under `config/emulsify-core/`.
 
 ### Installing the package in another project
 
@@ -105,4 +105,4 @@ PRs also have auto-deployed component libraries, which allow reviewers to load t
 
 ## Visual Regression Testing
 
-Percy visual regression testing (previously wired up via `npm run visreg:ci`) is no longer in active use and was removed as part of the Storybook/Vite migration. `[component].visreg.stories.js` pages remain as a documentation pattern (comprehensive story coverage per component) independent of any visual-diffing tool.
+Percy visual regression testing is no longer in use. `[component].visreg.stories.js` pages remain as a documentation pattern (comprehensive story coverage per component), independent of any visual-diffing tool.

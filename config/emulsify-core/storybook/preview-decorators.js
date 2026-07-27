@@ -1,19 +1,13 @@
 import { useEffect } from 'react';
 
-// Registered only via `previewAnnotations` (see main.js), separately from
-// preview.js's `parameters` export — see the comment in preview.js for why
-// these can't live in the same file.
+// Registered via previewAnnotations in main.js — Core's preview.js only merges `parameters`, not this.
 export const decorators = [
   (StoryFn, context) => {
     useEffect(() => {
-      // Update body attributes for theme + heading typography
       document.body.setAttribute('data-global-theme', context.globals.globalTheme);
       document.body.setAttribute('data-font-pairing', context.globals.headingTypography || 'yalenew');
 
-      // Emulsify Core's own preview.js decorator already calls
-      // Drupal.attachBehaviors() once its async Drupal shim is ready, so we
-      // only need to detach here on cleanup (which Core's decorator doesn't
-      // do). Guarded since the shim may not have loaded yet.
+      // Core's decorator calls Drupal.attachBehaviors() but never detaches on cleanup.
       return () => {
         if (typeof window.Drupal?.detachBehaviors === 'function') {
           window.Drupal.detachBehaviors(document);
@@ -40,13 +34,7 @@ export const globalTypes = {
         { value: 'six', title: 'AI'},
         { value: 'seven', title: 'Whitney Humanities Center' },
       ],
-      // `showName` is deprecated (no-op in current Storybook — see
-      // https://github.com/storybookjs/storybook/issues/22245). The
-      // production build shows the static "Site: Global Theme (lever)"
-      // label rather than the current selection; matching that requires
-      // `dynamicTitle: false` explicitly. Leaving dynamicTitle unset
-      // apparently now defaults to showing the current value's own title
-      // (e.g. "Old Blues") instead, unlike Storybook 8's default.
+      // showName is deprecated/no-op (storybookjs/storybook#22245); dynamicTitle: false keeps the static label.
       dynamicTitle: false,
       title: 'Site: Global Theme (lever)',
     },

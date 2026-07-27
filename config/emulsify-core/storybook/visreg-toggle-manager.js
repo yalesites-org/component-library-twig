@@ -1,8 +1,4 @@
-/**
- * Sidebar toggle that hides stories tagged 'visreg' by default, decluttering
- * the sidebar. Independent of whether Percy (or any visual regression tool)
- * actually runs against these stories.
- */
+// Hides stories tagged 'visreg' from the sidebar by default.
 import { addons, types } from 'storybook/manager-api';
 import React from 'react';
 
