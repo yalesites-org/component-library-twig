@@ -40,7 +40,14 @@ export const globalTypes = {
         { value: 'six', title: 'AI'},
         { value: 'seven', title: 'Whitney Humanities Center' },
       ],
-      showName: true,
+      // `showName` is deprecated (no-op in current Storybook — see
+      // https://github.com/storybookjs/storybook/issues/22245). The
+      // production build shows the static "Site: Global Theme (lever)"
+      // label rather than the current selection; matching that requires
+      // `dynamicTitle: false` explicitly. Leaving dynamicTitle unset
+      // apparently now defaults to showing the current value's own title
+      // (e.g. "Old Blues") instead, unlike Storybook 8's default.
+      dynamicTitle: false,
       title: 'Site: Global Theme (lever)',
     },
   },
@@ -56,7 +63,6 @@ export const globalTypes = {
         { value: 'mallory', title: 'Headings: Mallory' },
         { value: 'yalenew-oldstyle', title: 'Headings: YaleNew (Lining Numerals)' },
       ],
-      showName: true,
       dynamicTitle: true,
       title: 'Typography: Heading Fonts',
     },

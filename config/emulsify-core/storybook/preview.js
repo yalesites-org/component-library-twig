@@ -68,6 +68,14 @@ twigAssetPath(Twig);
 export const parameters = {
   actions: { argTypesRegex: '^on.*' },
   controls: { disableSaveFromUI: true, sort: 'requiredFirst' },
+  // Emulsify Core's own preview.js defaults `layout` to 'fullscreen' (see
+  // its defaultParams). That's what strips the standard ~30px/20px padded
+  // box around each story in the Docs view (Storybook renders with the
+  // `sb-unstyled` class and no padding wrapper instead) — components used to
+  // sit inset in a neatly padded box; without this override they can ride
+  // edge-to-edge in their container. Overriding to Storybook's own default
+  // restores the original spacing.
+  layout: 'padded',
   options: {
     storySort: storySortComparator,
   },
