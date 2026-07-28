@@ -1,0 +1,77 @@
+# utility-nav-props.yml
+#
+# Utility Nav component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+items:
+  twigProp: items
+  name: Items
+  type: array
+  required: false
+  description: Array of navigation menu items with title and url properties
+  detail: >
+    Array of standard menu link objects rendered in the utility bar. Each
+    item requires title and url. Provided by the component's default data
+    and not directly editable via the Controls panel.
+
+linkContent:
+  twigProp: utility_nav__link__content
+  name: Link Content
+  type: string
+  required: false
+  description: Text content for the primary call-to-action button
+  control: text
+
+linkUrl:
+  twigProp: utility_nav__link__url
+  name: Link URL
+  type: string
+  required: false
+  description: URL destination for the primary call-to-action button
+  control: text
+
+search:
+  twigProp: utility_nav__search
+  name: Search
+  type: boolean
+  required: false
+  description: Whether to display the search input field
+  default: false
+  control: boolean
+
+ctaTheme:
+  twigProp: utility_nav__cta__theme
+  name: CTA Theme
+  type: string
+  required: false
+  description: Theme variant for the call-to-action button styling
+  default: none
+  control: text
+
+dropdownLinkContent:
+  twigProp: utility_nav__dropdown_link__content
+  name: Dropdown Link Content
+  type: string
+  required: false
+  description: Text content for the dropdown menu trigger button
+  control: text
+
+dropdownLinkUrl:
+  twigProp: utility_nav__dropdown_link__url
+  name: Dropdown Link URL
+  type: string
+  required: false
+  description: URL destination for the dropdown menu trigger button
+  control: text
+
+dropdownItems:
+  twigProp: utility_nav__dropdown__items
+  name: Dropdown Items
+  type: array
+  required: false
+  description: Array of dropdown menu items with title and url properties for the dropdown menu
+  detail: >
+    Array of standard menu link objects rendered in the dropdown menu. Each
+    item requires title and url. Provided by the component's default data
+    and not directly editable via the Controls panel.

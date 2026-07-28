@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as CalendarStories from './calendar.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './calendar-props.yml';
 
 <Meta of={CalendarStories} name="Overview" />
 
@@ -18,29 +20,7 @@ Use the controls panel below to experiment with the calendar's properties in rea
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>month</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        Array of weeks, each containing an array of day objects with date and
-        events data
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ## Calendar Structure
 
@@ -50,124 +30,138 @@ The calendar data is organized as a two-dimensional array representing weeks and
 
 Each day in the calendar contains:
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>date</code>
-      </td>
-      <td>
-        <code>object</code>
-      </td>
-      <td>
-        Object containing <code>day</code>, <code>month</code>, and{' '}
-        <code>year</code> properties
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>events</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>Array of event objects for this day (can be empty)</td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Day Object Structure"
+  tabIndex={0}
+>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>date</code>
+        </td>
+        <td>
+          <code>object</code>
+        </td>
+        <td>
+          Object containing <code>day</code>, <code>month</code>, and{' '}
+          <code>year</code> properties
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <code>events</code>
+        </td>
+        <td>
+          <code>array</code>
+        </td>
+        <td>Array of event objects for this day (can be empty)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ### Event Object Structure
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>title</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Event title</td>
-    </tr>
-    <tr>
-      <td>
-        <code>time</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Event time (e.g., "09:00am to 9:45am")</td>
-    </tr>
-    <tr>
-      <td>
-        <code>category</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Event category label</td>
-    </tr>
-    <tr>
-      <td>
-        <code>type</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>Array of event type tags (e.g., "Public Event", "Art Event")</td>
-    </tr>
-    <tr>
-      <td>
-        <code>url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Link to event details</td>
-    </tr>
-    <tr>
-      <td>
-        <code>description</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Optional event description (shown in modal)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>optional_link__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Optional additional link text</td>
-    </tr>
-    <tr>
-      <td>
-        <code>optional_link__url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Optional additional link URL</td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Event Object Structure"
+  tabIndex={0}
+>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>title</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>Event title</td>
+      </tr>
+      <tr>
+        <td>
+          <code>time</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>Event time (e.g., "09:00am to 9:45am")</td>
+      </tr>
+      <tr>
+        <td>
+          <code>category</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>Event category label</td>
+      </tr>
+      <tr>
+        <td>
+          <code>type</code>
+        </td>
+        <td>
+          <code>array</code>
+        </td>
+        <td>Array of event type tags (e.g., "Public Event", "Art Event")</td>
+      </tr>
+      <tr>
+        <td>
+          <code>url</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>Link to event details</td>
+      </tr>
+      <tr>
+        <td>
+          <code>description</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>Optional event description (shown in modal)</td>
+      </tr>
+      <tr>
+        <td>
+          <code>optional_link__content</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>Optional additional link text</td>
+      </tr>
+      <tr>
+        <td>
+          <code>optional_link__url</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>Optional additional link URL</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Features
 
@@ -247,54 +241,61 @@ The calendar component provides several interactive features for users:
 
 ## Technical Specifications
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Atomic Level</strong>
-      </td>
-      <td>Organism</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Files</strong>
-      </td>
-      <td>
-        <code>yds-calendar.twig</code>, <code>yds-calendar.js</code>,{' '}
-        <code>_yds-calendar.scss</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Accessibility</strong>
-      </td>
-      <td>
-        Semantic table structure with proper headers, ARIA labels for screen
-        readers, keyboard navigable controls, focus management for modals,
-        accessible date formatting
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Interactive Behavior</strong>
-      </td>
-      <td>
-        Month navigation with JavaScript, modal dialogs for event details, event
-        indicators clickable on desktop and touch devices, keyboard support for
-        all interactive elements
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Responsive Behavior</strong>
-      </td>
-      <td>
-        Calendar grid adjusts to viewport size, maintains readability on mobile
-        devices, optimized touch targets for interactive elements
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Technical Specifications"
+  tabIndex={0}
+>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <strong>Atomic Level</strong>
+        </td>
+        <td>Organism</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Files</strong>
+        </td>
+        <td>
+          <code>yds-calendar.twig</code>, <code>yds-calendar.js</code>,{' '}
+          <code>_yds-calendar.scss</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Accessibility</strong>
+        </td>
+        <td>
+          Semantic table structure with proper headers, ARIA labels for screen
+          readers, keyboard navigable controls, focus management for modals,
+          accessible date formatting
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Interactive Behavior</strong>
+        </td>
+        <td>
+          Month navigation with JavaScript, modal dialogs for event details,
+          event indicators clickable on desktop and touch devices, keyboard
+          support for all interactive elements
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Responsive Behavior</strong>
+        </td>
+        <td>
+          Calendar grid adjusts to viewport size, maintains readability on
+          mobile devices, optimized touch targets for interactive elements
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Usage Guidelines
 

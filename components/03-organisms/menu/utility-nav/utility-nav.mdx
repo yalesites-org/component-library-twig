@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as UtilityNavStories from './utility-nav.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './utility-nav-props.yml';
 
 <Meta of={UtilityNavStories} name="Overview" />
 
@@ -18,117 +20,7 @@ Use the controls panel below to experiment with the utility nav's properties in 
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Array of navigation menu items with title and url properties</td>
-    </tr>
-    <tr>
-      <td>
-        <code>utility_nav__link__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Text content for the primary call-to-action button</td>
-    </tr>
-    <tr>
-      <td>
-        <code>utility_nav__link__url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>URL destination for the primary call-to-action button</td>
-    </tr>
-    <tr>
-      <td>
-        <code>utility_nav__search</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Whether to display the search input field</td>
-    </tr>
-    <tr>
-      <td>
-        <code>utility_nav__cta__theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'none'</code>
-      </td>
-      <td>Theme variant for the call-to-action button styling</td>
-    </tr>
-    <tr>
-      <td>
-        <code>utility_nav__dropdown_link__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Text content for the dropdown menu trigger button</td>
-    </tr>
-    <tr>
-      <td>
-        <code>utility_nav__dropdown_link__url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>URL destination for the dropdown menu trigger button</td>
-    </tr>
-    <tr>
-      <td>
-        <code>utility_nav__dropdown__items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>
-        Array of dropdown menu items with title and url properties for the
-        dropdown menu
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Component Features
 
@@ -188,55 +80,62 @@ Dropdown menu items follow the same structure and are displayed in a vertical li
 
 ## Technical Specifications
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Atomic Level</strong>
-      </td>
-      <td>Organism</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Files</strong>
-      </td>
-      <td>
-        <code>yds-utility-nav.twig</code>,{' '}
-        <code>utility-nav-dropdown-menu.js</code>,{' '}
-        <code>_yds-utility-nav.scss</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Accessibility</strong>
-      </td>
-      <td>
-        ARIA attributes for dropdown state (aria-expanded, aria-haspopup,
-        aria-hidden), visually hidden labels for screen readers, keyboard
-        navigation support, accessible form elements for search
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Responsive Behavior</strong>
-      </td>
-      <td>
-        Adapts to mobile and desktop viewports with screen size-specific form
-        IDs, optimized layout for smaller screens, touch-friendly interaction
-        targets
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>JavaScript</strong>
-      </td>
-      <td>
-        Manages dropdown menu interactions, toggle states, and click-outside
-        functionality for closing dropdowns
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Technical Specifications"
+  tabIndex={0}
+>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <strong>Atomic Level</strong>
+        </td>
+        <td>Organism</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Files</strong>
+        </td>
+        <td>
+          <code>yds-utility-nav.twig</code>,{' '}
+          <code>utility-nav-dropdown-menu.js</code>,{' '}
+          <code>_yds-utility-nav.scss</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Accessibility</strong>
+        </td>
+        <td>
+          ARIA attributes for dropdown state (aria-expanded, aria-haspopup,
+          aria-hidden), visually hidden labels for screen readers, keyboard
+          navigation support, accessible form elements for search
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Responsive Behavior</strong>
+        </td>
+        <td>
+          Adapts to mobile and desktop viewports with screen size-specific form
+          IDs, optimized layout for smaller screens, touch-friendly interaction
+          targets
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>JavaScript</strong>
+        </td>
+        <td>
+          Manages dropdown menu interactions, toggle states, and click-outside
+          functionality for closing dropdowns
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Usage Guidelines
 
