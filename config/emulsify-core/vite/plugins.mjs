@@ -1,5 +1,20 @@
 import path from 'path';
 
+// yalesites-project's build runs `npm ci --ignore-scripts`, so postinstall
+// patches never apply there. linkpurpose ships with no export statement at
+// all; patch it at transform time instead, since that runs regardless of
+// how node_modules was installed.
+const patchLinkpurpose = () => ({
+  name: 'patch-linkpurpose-default-export',
+  transform(code, id) {
+    if (!id.includes('linkpurpose/js/linkpurpose.js')) return null;
+    if (code.includes('export default LinkPurpose')) return null;
+    return `${code}\nexport default LinkPurpose;\n`;
+  },
+});
+
+export default [patchLinkpurpose()];
+
 export const extendConfig = (config, { env }) => ({
   css: {
     preprocessorOptions: {
