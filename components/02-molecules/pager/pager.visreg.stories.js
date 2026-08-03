@@ -46,6 +46,7 @@ function generatePagerData(currentPage, totalPages) {
  * Storybook Definition.
  */
 export default {
+  tags: ['visreg'],
   title: 'Molecules/Pager/Visreg',
   parameters: { controls: { disable: true } },
 };

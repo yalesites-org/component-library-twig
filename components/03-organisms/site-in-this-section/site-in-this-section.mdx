@@ -3,7 +3,7 @@ import * as SiteInThisSectionStories from './site-in-this-section.stories';
 import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
 import componentProps from './site-in-this-section-props.yml';
 
-<Meta of={SiteInThisSectionStories} name="Docs" />
+<Meta of={SiteInThisSectionStories} name="Overview" />
 
 # Site In This Section
 
@@ -46,61 +46,68 @@ The component intelligently handles multi-level navigation, expanding parent ite
 
 ## Technical Specifications
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Atomic Level</strong>
-      </td>
-      <td>Organism</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Files</strong>
-      </td>
-      <td>
-        <code>yds-site-in-this-section.twig</code>,{' '}
-        <code>yds-site-in-this-section.js</code>,{' '}
-        <code>cl-site-in-this-section.scss</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Dependencies</strong>
-      </td>
-      <td>Secondary Nav component, Menu In This Section Toggle component</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Accessibility</strong>
-      </td>
-      <td>
-        ARIA navigation landmark, semantic list structure, keyboard navigation
-        support, collapsible toggle with proper ARIA states, screen reader
-        friendly with proper labels and current page indication
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Responsive Behavior</strong>
-      </td>
-      <td>
-        Collapsible on mobile viewports with toggle interaction, expanded
-        navigation on larger screens, touch-friendly interactions on mobile
-        devices
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>JavaScript</strong>
-      </td>
-      <td>
-        Manages expand/collapse interactions for the section toggle and nested
-        menu items, handles active state management
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Technical Specifications"
+  tabIndex={0}
+>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <strong>Atomic Level</strong>
+        </td>
+        <td>Organism</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Files</strong>
+        </td>
+        <td>
+          <code>yds-site-in-this-section.twig</code>,{' '}
+          <code>yds-site-in-this-section.js</code>,{' '}
+          <code>cl-site-in-this-section.scss</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Dependencies</strong>
+        </td>
+        <td>Secondary Nav component, Menu In This Section Toggle component</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Accessibility</strong>
+        </td>
+        <td>
+          ARIA navigation landmark, semantic list structure, keyboard navigation
+          support, collapsible toggle with proper ARIA states, screen reader
+          friendly with proper labels and current page indication
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Responsive Behavior</strong>
+        </td>
+        <td>
+          Collapsible on mobile viewports with toggle interaction, expanded
+          navigation on larger screens, touch-friendly interactions on mobile
+          devices
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>JavaScript</strong>
+        </td>
+        <td>
+          Manages expand/collapse interactions for the section toggle and nested
+          menu items, handles active state management
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Usage Guidelines
 

@@ -61,6 +61,8 @@ format__day__long = Thursday, December 3, 2024
   'format__date_and_time': 'g:i a',
   'format__date_time_multiple_days__start': 'D M j, Y g:i a' ~ em_dash,
   'format__date_time_multiple_days': 'D M j, Y g:i a',
+  'format__localist_same_day__start': 'D M j, Y g:i a' ~ em_dash,
+  'format__localist_same_day': 'g:i a',
 } %}
 
 {# easy to name configurations that utilize the above formats _start and regular variants #}
@@ -74,24 +76,31 @@ format__day__long = Thursday, December 3, 2024
   "month_year": "format__month_year",
   "same_day_diff_time": "format__date_and_time",
   "date_time_multiple_days": "format__date_time_multiple_days",
+  "localist_same_day": "format__localist_same_day",
+  "localist_all_day": "format__localist_all_day",
 } %}
 
 {% set used_format = date_time__format_override|default(format_defaults[date_time__format]) %}
 
 {# Combine start and end date/time into one variable for output #}
-{% if used_format == 'format__all_day' %}
-  {# For all day events, show the date (without time) followed by "All day" #}
-  {# Check if start and end dates are the same day (not just same timestamp) #}
-  {# Use format__date__start which includes em dash - keep it for both single and multi-day #}
+{% if used_format == 'format__localist_all_day' %}
+  {% set start_date_formatted = date_time__start|date(formats['format__day__full']) %}
+  {% set end_date_formatted = date_time__end|date(formats['format__day__full']) %}
+  {% if start_date_formatted == end_date_formatted %}
+    {% set date_time = start_date_formatted ~ ' All day' %}
+  {% else %}
+    {% set date_time = start_date_formatted ~ em_dash ~ end_date_formatted ~ ' All day' %}
+  {% endif %}
+{% elseif used_format == 'format__all_day' %}
+  {# All-day events: show the date(s) without time, followed by "All day". #}
   {% set start_date_formatted = date_time__start|date(formats['format__date']) %}
   {% set end_date_formatted = date_time__end|date(formats['format__date']) %}
   {% if start_date_formatted == end_date_formatted %}
-    {# Single day: keep the trailing em dash and add " All day" #}
+    {# Single day, e.g. "July 1, 2026 All day". #}
     {% set date_time = start_date_formatted ~ ' All day' %}
   {% else %}
-    {# Multi-day: start_date already has trailing dash, end_date has trailing dash, so we get: "Dec 25—Dec 26— All day" #}
-    {# We want: "Dec 25—Dec 26 All day", so strip the trailing dash from end_date #}
-    {% set date_time = start_date_formatted ~ end_date_formatted|trim(em_dash) ~ ' All day' %}
+    {# Multi-day, joined with an em dash, e.g. "July 1, 2026—July 5, 2026 All day". #}
+    {% set date_time = start_date_formatted ~ em_dash ~ end_date_formatted ~ ' All day' %}
   {% endif %}
 {% elseif same_start_and_end %}
   {% set date_time = date_time__start|date(formats[used_format]) %}

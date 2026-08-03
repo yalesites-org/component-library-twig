@@ -1,7 +1,12 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as QuoteCalloutStories from './quote-callout.stories';
+import {
+  twigPropsTable,
+  twigOnlyPropsTable,
+} from '../../_storybook/twig-props-table.mdx';
+import componentProps from './quote-callout-props.yml';
 
-<Meta of={QuoteCalloutStories} name="Docs" />
+<Meta of={QuoteCalloutStories} name="Overview" />
 
 # Quote Callout
 
@@ -18,156 +23,17 @@ Use the controls panel below to experiment with the quote callout's properties i
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>quote_callout__quote</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The quote text to display (supports HTML for formatting)</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>quote_callout__attribution</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>
-        Attribution text for the quote (e.g., person's name, title, or
-        affiliation)
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>quote_callout__style</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'bar'</code>
-      </td>
-      <td>
-        Visual style: <code>'bar'</code> (accent bar), <code>'quote'</code>{' '}
-        (decorative quote marks), or <code>'image'</code> (with image)
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>quote_callout__quote_alignment</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'left'</code>
-      </td>
-      <td>
-        Text alignment: <code>'left'</code> or <code>'right'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>quote_callout__accent_theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>Theme dial for accent color (e.g., 'one', 'two', 'three')</td>
-    </tr>
-    <tr>
-      <td>
-        <code>quote_callout__quote_image</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'no-image'</code>
-      </td>
-      <td>
-        Image display option: <code>'with-image'</code> or{' '}
-        <code>'no-image'</code>. When <code>'with-image'</code> is selected,
-        responsive image properties should also be provided
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ### Image Properties (when quote_callout\_\_quote_image is 'with-image')
 
 When using the image style, include responsive image properties:
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>image__src</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Primary image source URL</td>
-    </tr>
-    <tr>
-      <td>
-        <code>image__alt</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Alternative text for accessibility</td>
-    </tr>
-    <tr>
-      <td>
-        <code>image__srcset</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>Responsive image source set for different viewport sizes</td>
-    </tr>
-  </tbody>
-</table>
+{twigOnlyPropsTable(componentProps)}
 
 ## Component Variations
 

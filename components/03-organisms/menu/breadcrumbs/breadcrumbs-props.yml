@@ -1,0 +1,47 @@
+# breadcrumbs-props.yml
+#
+# Breadcrumbs component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+items:
+  twigProp: items
+  name: Items
+  type: array
+  required: true
+  description: Array of breadcrumb items representing the navigation path
+  detail: >
+    Array of objects passed to the Twig template. Each item requires a title
+    and url, with an optional is_active flag. This prop is constructed from the
+    story's fixed data and is not directly editable via the Controls panel.
+
+title:
+  twigProp: items[].title
+  name: Title
+  type: string
+  required: true
+  description: The text label for the breadcrumb link
+  detail: >
+    Belongs to each item in the items array. The text label displayed for the
+    breadcrumb link.
+
+url:
+  twigProp: items[].url
+  name: URL
+  type: string
+  required: true
+  description: The URL destination for the breadcrumb link
+  detail: >
+    Belongs to each item in the items array. The URL destination for the
+    breadcrumb link.
+
+isActive:
+  twigProp: items[].is_active
+  name: Is Active
+  type: boolean
+  required: false
+  description: Marks the current page (typically the last item)
+  detail: >
+    Belongs to each item in the items array. Marks the current page, typically
+    the last item. Active items are rendered as plain text rather than links.
+  default: false

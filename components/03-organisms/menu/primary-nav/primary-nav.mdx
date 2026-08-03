@@ -3,7 +3,7 @@ import * as PrimaryNavStories from './primary-nav.stories';
 import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
 import componentProps from './primary-nav-props.yml';
 
-<Meta of={PrimaryNavStories} name="Docs" />
+<Meta of={PrimaryNavStories} name="Overview" />
 
 # Primary Nav
 
@@ -77,53 +77,60 @@ Menu items support complex hierarchical structures with the following properties
 
 ## Technical Specifications
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Atomic Level</strong>
-      </td>
-      <td>Organism</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Files</strong>
-      </td>
-      <td>
-        <code>yds-primary-nav.twig</code>, <code>yds-primary-nav.js</code>,{' '}
-        <code>_yds-primary-nav.scss</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Accessibility</strong>
-      </td>
-      <td>
-        ARIA navigation landmark, keyboard navigation with arrow keys and
-        Enter/Escape, focus management for nested menus, screen reader support
-        for menu state and hierarchy
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Responsive Behavior</strong>
-      </td>
-      <td>
-        Transforms to mobile-optimized menu at smaller viewports, touch-friendly
-        interactions, collapsible submenu sections
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>JavaScript</strong>
-      </td>
-      <td>
-        Manages dropdown interactions, keyboard navigation, mobile menu toggle,
-        and focus trap for accessibility
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Technical Specifications"
+  tabIndex={0}
+>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <strong>Atomic Level</strong>
+        </td>
+        <td>Organism</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Files</strong>
+        </td>
+        <td>
+          <code>yds-primary-nav.twig</code>, <code>yds-primary-nav.js</code>,{' '}
+          <code>_yds-primary-nav.scss</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Accessibility</strong>
+        </td>
+        <td>
+          ARIA navigation landmark, keyboard navigation with arrow keys and
+          Enter/Escape, focus management for nested menus, screen reader support
+          for menu state and hierarchy
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Responsive Behavior</strong>
+        </td>
+        <td>
+          Transforms to mobile-optimized menu at smaller viewports,
+          touch-friendly interactions, collapsible submenu sections
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>JavaScript</strong>
+        </td>
+        <td>
+          Manages dropdown interactions, keyboard navigation, mobile menu
+          toggle, and focus trap for accessibility
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Usage Guidelines
 

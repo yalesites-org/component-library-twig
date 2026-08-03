@@ -25,11 +25,12 @@ size:
   name: Image Size
   type: select
   required: false
-  description: 'Image height variation: tall or short'
+  description: 'Image height variation: tall, short, or mini'
   default: tall
   options:
     - tall
     - short
+    - mini
   control: select
 
 withVideo:
@@ -48,3 +49,15 @@ imageCaption:
   required: false
   description: Caption text displayed below or over the image
   control: text
+
+width:
+  twigProp: image_banner__width
+  name: Banner Width
+  type: select
+  required: false
+  description: 'Banner width: site (contained, with side gutters) or full (edge-to-edge, no gutters)'
+  default: site
+  options:
+    - site
+    - full
+  control: select

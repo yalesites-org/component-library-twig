@@ -3,7 +3,7 @@ import * as GrandHeroStories from './grand-hero.stories';
 import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
 import componentProps from './grand-hero-props.yml';
 
-<Meta of={GrandHeroStories} name="Docs" />
+<Meta of={GrandHeroStories} name="Overview" />
 
 # Grand Hero Banner
 
@@ -47,6 +47,19 @@ Content is constrained to a column width, providing a cleaner, more structured l
 
 <div className="sb-full-bleed-canvas">
   <Canvas of={GrandHeroStories.GrandHeroBannerContained} />
+</div>
+
+## Width Variations
+
+The Grand Hero Banner supports two width modes controlled by the `grand_hero__width` property. In Drupal, this is exposed as the **Banner Width** field on the block's Design tab.
+
+- **`site`** (default): Content overlay is constrained to the site max-width with side gutters — consistent with other page content.
+- **`full`**: Content overlay spans edge-to-edge across the full viewport width with no side gutters — best on wide screens for maximum impact.
+
+Existing banners default to `site` so there is no visual change unless authors explicitly choose Full Width.
+
+<div className="sb-full-bleed-canvas">
+  <Canvas of={GrandHeroStories.GrandHeroBannerFullWidth} />
 </div>
 
 ## Technical Specifications

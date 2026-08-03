@@ -1,7 +1,9 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as SearchResultStories from './yds-search-result.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './search-result-props.yml';
 
-<Meta of={SearchResultStories} name="Docs" />
+<Meta of={SearchResultStories} name="Overview" />
 
 # Search Result
 
@@ -18,126 +20,11 @@ Use the controls panel below to experiment with the search result's properties i
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>search_result__title</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The title/heading of the search result (typically the page title)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>search_result__url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The URL link to the full content</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>search_result__highlighted</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>
-        Text excerpt with search term highlighted using &lt;strong&gt; tags
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>search_result__teaser</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Meta description or excerpt text (supports HTML)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>search_result__content_type</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Content type label (e.g., 'post', 'page', 'event')</td>
-    </tr>
-    <tr>
-      <td>
-        <code>breadcrumbs__items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Breadcrumb trail items showing content hierarchy</td>
-    </tr>
-    <tr>
-      <td>
-        <code>is_cas</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Whether the content requires CAS authentication</td>
-    </tr>
-    <tr>
-      <td>
-        <code>search_result__prefix__icon</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>
-        Icon name to display as prefix (e.g., 'lock-solid' for CAS content)
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Component Features
 

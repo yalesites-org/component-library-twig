@@ -1,7 +1,9 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as ImageStories from './image.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './image-props.yml';
 
-<Meta of={ImageStories} name="Docs" />
+<Meta of={ImageStories} name="Overview" />
 
 # Image
 
@@ -11,111 +13,20 @@ The content image component displays responsive images with optional captions in
 
 Use the controls panel below to experiment with the image component's properties.
 
-<Canvas of={ImageStories.ContentImage} />
+<div className="sb-contained-canvas">
+  <Canvas of={ImageStories.ContentImage} />
+</div>
 <Controls of={ImageStories.ContentImage} />
 
 ## Properties
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>image__src</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Image source URL</td>
-    </tr>
-    <tr>
-      <td>
-        <code>image__alt</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Alternative text for accessibility (required for all images)</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>content_image__caption</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Caption text displayed below the image (supports HTML)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>content_image__width</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'content'</code>
-      </td>
-      <td>
-        Width constraint: <code>'content'</code>, <code>'highlight'</code>,{' '}
-        <code>'site'</code>, or <code>'max'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>image__srcset</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Responsive image srcset for different viewport sizes</td>
-    </tr>
-    <tr>
-      <td>
-        <code>image__sizes</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>
-        Sizes attribute for responsive images (defines image display width at
-        different breakpoints)
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Width Options
 

@@ -1,0 +1,66 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as AudioStories from './audio.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './audio-props.yml';
+
+<Meta of={AudioStories} name="Overview" />
+
+# Audio Player
+
+The audio component wraps an HTML5 `<audio>` element in a custom, keyboard-accessible player with play/pause, a draggable progress bar with elapsed and total time, playback-speed selection, and a volume control. An optional label can be shown above the player. In Drupal the audio source is supplied by the block's media field rather than a URL prop.
+
+## Interactive Preview
+
+Use the controls panel below to see the audio component in action.
+
+<Canvas of={AudioStories.audioEmbed} />
+<Controls of={AudioStories.audioEmbed} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Player Controls
+
+- **Play / Pause**: Toggles playback; the button swaps between the play and pause icons.
+- **Progress bar**: A range slider showing playback position; drag to seek. The current and total time are displayed alongside it (`m:ss`).
+- **Playback speed**: A gauge toggle opens a menu of 0.5x, 1x, and 2x options. The whole speed control area (including the visible active label) is the click target, not just the icon.
+- **Volume**: A mute toggle plus a range slider. The volume control is hidden below the mobile breakpoint, where the device's physical volume controls take over.
+
+## Technical Specifications
+
+- **Atomic Level**: Atom
+- **Template**: `yds-audio.twig`
+- **Styles**: `yds-audio.scss`
+- **Behavior**: `yds-audio-player.js` (attached via the `audio-player` asset library in the Atomic theme)
+
+### Accessibility
+
+- **Keyboard**: All controls (play/pause, progress, speed toggle and options, volume) are native `<button>` / `<input>` elements and are keyboard focusable and operable.
+- **Accessible names**: Each control has a visually-hidden label or `aria-label` (for example "Play the Audio File", "Audio Playback Progress Bar", "Volume").
+- **State**: The speed toggle exposes `aria-expanded`; the volume mute toggle exposes `aria-pressed`.
+- **Fallback**: Browsers without HTML5 audio support see the message "Your browser does not support the audio element."
+
+### Responsive Behavior
+
+- The player scales to the content width of its container.
+- Below the mobile breakpoint the volume control is hidden (device volume handles it) while the progress bar and playback controls remain usable.
+
+## Implementation Notes
+
+### Basic Audio Embed
+
+```twig
+{{ include('@atoms/audio/yds-audio.twig', {
+  audio_embed__content: 'Get Your Kicks on Route 66',
+  audio_embed__url: 'https://example.com/audio.mp3',
+}) }}
+```
+
+In Drupal the audio source is provided by the block's media field, so `audio_embed__url` is used mainly for the Storybook preview and standalone examples.

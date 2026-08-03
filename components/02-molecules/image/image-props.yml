@@ -1,0 +1,59 @@
+# image-props.yml
+#
+# Image component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+src:
+  twigProp: image__src
+  name: Image Source
+  type: string
+  required: true
+  description: Image source URL
+  control: text
+
+alt:
+  twigProp: image__alt
+  name: Alt Text
+  type: string
+  required: true
+  description: Alternative text for accessibility (required for all images)
+  control: text
+
+caption:
+  twigProp: content_image__caption
+  name: Caption
+  type: string
+  required: false
+  description: Caption text displayed below the image (supports HTML)
+  control: text
+
+width:
+  twigProp: content_image__width
+  name: Width
+  type: select
+  required: false
+  description: "Width constraint: 'content', 'highlight', 'site', or 'max'"
+  default: content
+  options:
+    - content
+    - highlight
+    - site
+    - max
+  control: select
+
+srcset:
+  twigProp: image__srcset
+  name: Srcset
+  type: string
+  required: false
+  description: Responsive image srcset for different viewport sizes
+  control: text
+
+sizes:
+  twigProp: image__sizes
+  name: Sizes
+  type: string
+  required: false
+  description: Sizes attribute for responsive images (defines image display width at different breakpoints)
+  control: text

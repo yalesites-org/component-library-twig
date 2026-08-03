@@ -1,7 +1,9 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as VideoEmbedStories from './video-embed.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './video-embed-props.yml';
 
-<Meta of={VideoEmbedStories} name="Docs" />
+<Meta of={VideoEmbedStories} name="Overview" />
 
 # Video Embed
 
@@ -12,68 +14,13 @@ The video embed component provides a responsive container for embedded videos fr
 Use the controls panel below to see the video embed component in action.
 
 <Canvas of={VideoEmbedStories.videoEmbed} />
+<Controls of={VideoEmbedStories.videoEmbed} />
 
 ## Properties
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>video_embed__url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Video embed URL (iframe src)</td>
-    </tr>
-  </tbody>
-</table>
-
-### Optional Properties
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>video_embed__title</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>-</td>
-      <td>Accessible title for the video iframe</td>
-    </tr>
-    <tr>
-      <td>
-        <code>video_embed__aspect_ratio</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'16:9'</code>
-      </td>
-      <td>Video aspect ratio (16:9, 4:3, 1:1)</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ## Supported Video Platforms
 
@@ -89,38 +36,45 @@ The video embed component works with any iframe-based video platform, including:
 
 The component supports standard video aspect ratios:
 
-<table>
-  <thead>
-    <tr>
-      <th>Ratio</th>
-      <th>Description</th>
-      <th>Common Use</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>16:9</code>
-      </td>
-      <td>Widescreen format (default)</td>
-      <td>Modern videos, YouTube, most web content</td>
-    </tr>
-    <tr>
-      <td>
-        <code>4:3</code>
-      </td>
-      <td>Classic format</td>
-      <td>Older videos, presentations</td>
-    </tr>
-    <tr>
-      <td>
-        <code>1:1</code>
-      </td>
-      <td>Square format</td>
-      <td>Social media videos</td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Aspect Ratios"
+  tabIndex={0}
+>
+  <table>
+    <thead>
+      <tr>
+        <th>Ratio</th>
+        <th>Description</th>
+        <th>Common Use</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>16:9</code>
+        </td>
+        <td>Widescreen format (default)</td>
+        <td>Modern videos, YouTube, most web content</td>
+      </tr>
+      <tr>
+        <td>
+          <code>4:3</code>
+        </td>
+        <td>Classic format</td>
+        <td>Older videos, presentations</td>
+      </tr>
+      <tr>
+        <td>
+          <code>1:1</code>
+        </td>
+        <td>Square format</td>
+        <td>Social media videos</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Technical Specifications
 
@@ -180,9 +134,7 @@ The component supports standard video aspect ratios:
 
 ```twig
 {{ include('@atoms/videos/video-embed/yds-video-embed.twig', {
-  video_embed__url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-  video_embed__title: 'Video Title for Accessibility',
-  video_embed__aspect_ratio: '16:9'
+  video_embed__content: '<iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Video Title for Accessibility" allowfullscreen></iframe>'
 }) }}
 ```
 

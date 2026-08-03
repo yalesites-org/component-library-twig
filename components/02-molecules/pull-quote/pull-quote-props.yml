@@ -1,0 +1,49 @@
+# pull-quote-props.yml
+#
+# Pull Quote component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+quote:
+  twigProp: pull_quote__quote
+  name: Quote
+  type: string
+  required: true
+  description: The quote text to display (supports HTML)
+  control: text
+
+attribution:
+  twigProp: pull_quote__attribution
+  name: Attribution
+  type: string
+  required: false
+  description: Attribution text for the quote (e.g., author name, source)
+  control: text
+
+style:
+  twigProp: pull_quote__style
+  name: Style
+  type: select
+  required: false
+  description: "Visual style: 'bar-left', 'bar-right', or 'quote-left'"
+  default: bar-left
+  options:
+    - bar-left
+    - bar-right
+    - quote-left
+  control: select
+
+accentTheme:
+  twigProp: pull_quote__accent_theme
+  name: Accent Theme
+  type: select
+  required: false
+  description: "Accent color theme: 'one', 'two', or 'three'"
+  default: one
+  options:
+    - one
+    - two
+    - three
+  control: select

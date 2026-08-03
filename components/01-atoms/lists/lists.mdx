@@ -3,7 +3,7 @@ import * as ListsStories from './list.stories';
 import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
 import componentProps from './list-props.yml';
 
-<Meta of={ListsStories} name="Docs" />
+<Meta of={ListsStories} name="Overview" />
 
 # Lists
 
@@ -13,7 +13,9 @@ The lists component system provides styled list elements for various use cases, 
 
 Use the controls panel below to experiment with different list types and themes in real-time.
 
-<Canvas of={ListsStories.Interactive} />
+<div className="sb-contained-canvas">
+  <Canvas of={ListsStories.Interactive} />
+</div>
 <Controls of={ListsStories.Interactive} />
 
 ## List Types
@@ -44,67 +46,81 @@ Specialized list styling for category taxonomies with distinct visual treatment.
 
 ### List Item Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>item__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Content of the list item</td>
-    </tr>
-    <tr>
-      <td>
-        <code>item__link</code>
-      </td>
-      <td>
-        <code>object</code>
-      </td>
-      <td>Optional link object with url and title properties</td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="List Item Properties"
+  tabIndex={0}
+>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>item__content</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>Content of the list item</td>
+      </tr>
+      <tr>
+        <td>
+          <code>item__link</code>
+        </td>
+        <td>
+          <code>object</code>
+        </td>
+        <td>Optional link object with url and title properties</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ### Taxonomy List Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>tags</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>Array of tag objects for tags list</td>
-    </tr>
-    <tr>
-      <td>
-        <code>categories</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>Array of category objects for categories list</td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Taxonomy List Properties"
+  tabIndex={0}
+>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>tags</code>
+        </td>
+        <td>
+          <code>array</code>
+        </td>
+        <td>Array of tag objects for tags list</td>
+      </tr>
+      <tr>
+        <td>
+          <code>categories</code>
+        </td>
+        <td>
+          <code>array</code>
+        </td>
+        <td>Array of category objects for categories list</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Technical Specifications
 

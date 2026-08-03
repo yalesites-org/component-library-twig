@@ -22,6 +22,10 @@ Drupal.behaviors.mediaGridInteractive = {
       let activeIndex;
       let swipeStartX;
       let swipeEndX;
+      // Captions long enough to be truncated. Their collapsed height is measured
+      // on first open (see toggleModalState), not at attach, because the modal is
+      // `display: none` while inactive and offsetHeight would read 0.
+      const truncatedCaptions = [];
 
       /**
        * trapKeyboard
@@ -76,6 +80,19 @@ Drupal.behaviors.mediaGridInteractive = {
             .focus();
           body.removeAttribute('data-modal-active');
         } else if (newState === 'active') {
+          // Now that the modal is displayed, measure each truncated caption's
+          // collapsed height once (offsetHeight is 0 while the modal is
+          // `display: none`, so this cannot be measured at attach time).
+          truncatedCaptions.forEach((caption) => {
+            if (
+              !caption.style.getPropertyValue('--modal-content-item-height')
+            ) {
+              caption.style.setProperty(
+                '--modal-content-item-height',
+                `${caption.offsetHeight}px`,
+              );
+            }
+          });
           trapKeyboard();
           body.setAttribute('data-modal-active', 'true');
         }
@@ -185,12 +202,11 @@ Drupal.behaviors.mediaGridInteractive = {
             toggleCaption.setAttribute('aria-label', 'expand');
             toggleCaption.style.setProperty('display', 'inline');
 
-            // imageCaption: set default attributes
+            // imageCaption: set default attributes. The collapsed height is
+            // measured on first open in toggleModalState, not here — the modal is
+            // `display: none` while inactive, so offsetHeight would be 0.
             imageCaption.setAttribute('is-expanded', 'false');
-            imageCaption.style.setProperty(
-              '--modal-content-item-height',
-              `${imageCaption.offsetHeight}px`,
-            );
+            truncatedCaptions.push(imageCaption);
 
             // Toggle the full caption when the "circle plus" toggle is clicked
             if (!body.hasAttribute('gallery-has-click-event')) {

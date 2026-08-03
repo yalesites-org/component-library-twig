@@ -1,0 +1,15 @@
+# video-embed-props.yml
+#
+# Video Embed component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+content:
+  twigProp: video_embed__content
+  name: Content
+  type: string
+  required: true
+  description: >
+    The embedded video markup, typically an iframe. Rendered with the |raw
+    filter so the iframe renders instead of displaying as plain text.
+  control: text

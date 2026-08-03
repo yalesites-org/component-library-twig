@@ -15,6 +15,7 @@ const renderBanner = ({
   overlayBackgroundImage,
   buttonAlignment,
   buttonStyleConsistency,
+  width,
 }) =>
   bannerTwig({
     ...imageData.responsive_images['16x9'],
@@ -33,13 +34,14 @@ const renderBanner = ({
     banner__overlay_background_image: overlayBackgroundImage
       ? imageData.responsive_images.pattern
       : '',
+    banner__width: width,
   });
 
 /**
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Banners/Action Banner',
+  title: 'Organisms/Banners/Action Banner',
   tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
@@ -63,3 +65,7 @@ ActionBannerLeft.storyName = 'Left Layout';
 export const ActionBannerRight = (args) => renderBanner(args);
 ActionBannerRight.args = { contentLayout: 'right' };
 ActionBannerRight.storyName = 'Right Layout';
+
+export const ActionBannerFullWidth = (args) => renderBanner(args);
+ActionBannerFullWidth.args = { width: 'full' };
+ActionBannerFullWidth.storyName = 'Full Width';

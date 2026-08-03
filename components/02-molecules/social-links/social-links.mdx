@@ -1,7 +1,9 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as SocialLinksStories from './social-links.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './social-links-props.yml';
 
-<Meta of={SocialLinksStories} name="Docs" />
+<Meta of={SocialLinksStories} name="Overview" />
 
 # Social Links
 
@@ -11,85 +13,19 @@ The Social Links component displays a horizontal list of social media icons that
 
 Use the controls panel below to experiment with the Social Links properties in real-time.
 
-<Canvas of={SocialLinksStories.SocialLinks} />
+<div className="sb-contained-canvas">
+  <Canvas of={SocialLinksStories.SocialLinks} />
+</div>
 <Controls of={SocialLinksStories.SocialLinks} />
 
 ## Properties
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>icons</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>
-        Array of social media link objects. Each link should contain{' '}
-        <code>url</code>, <code>name</code>, and <code>icon</code>
-      </td>
-    </tr>
-  </tbody>
-</table>
+The `icons` array and the per-item properties each object in the array should
+contain (`url`, `name`, and `icon`) are documented below.
 
-### Individual Icon Properties
-
-Each object in the `icons` array should contain:
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The URL destination for the social media platform</td>
-    </tr>
-    <tr>
-      <td>
-        <code>name</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        Visually hidden text for screen readers that identifies the social media
-        platform
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>icon</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        The icon identifier for the social media platform (e.g., 'facebook',
-        'x-twitter', 'linkedin')
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ## Supported Platforms
 

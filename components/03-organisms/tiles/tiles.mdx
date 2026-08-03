@@ -3,7 +3,7 @@ import * as TilesStories from './tiles.stories';
 import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
 import componentProps from './tiles-props.yml';
 
-<Meta of={TilesStories} name="Docs" />
+<Meta of={TilesStories} name="Overview" />
 
 # Tiles
 
@@ -113,50 +113,57 @@ Control the vertical positioning of content within tiles:
 
 ## Technical Specifications
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Atomic Level</strong>
-      </td>
-      <td>Organism</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Files</strong>
-      </td>
-      <td>
-        <code>yds-tiles.twig</code>, <code>_yds-tiles.scss</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Dependencies</strong>
-      </td>
-      <td>
-        Uses <code>tile-item</code> molecule component for individual tiles
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Accessibility</strong>
-      </td>
-      <td>
-        Semantic HTML list structure, proper heading hierarchy, keyboard
-        navigable when tiles contain links, sufficient color contrast
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Responsive Behavior</strong>
-      </td>
-      <td>
-        Grid columns reduce based on viewport size, maintains readability across
-        all devices, touch-optimized for mobile interactions
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Technical Specifications"
+  tabIndex={0}
+>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <strong>Atomic Level</strong>
+        </td>
+        <td>Organism</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Files</strong>
+        </td>
+        <td>
+          <code>yds-tiles.twig</code>, <code>_yds-tiles.scss</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Dependencies</strong>
+        </td>
+        <td>
+          Uses <code>tile-item</code> molecule component for individual tiles
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Accessibility</strong>
+        </td>
+        <td>
+          Semantic HTML list structure, proper heading hierarchy, keyboard
+          navigable when tiles contain links, sufficient color contrast
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Responsive Behavior</strong>
+        </td>
+        <td>
+          Grid columns reduce based on viewport size, maintains readability
+          across all devices, touch-optimized for mobile interactions
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Usage Guidelines
 

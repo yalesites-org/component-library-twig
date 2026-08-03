@@ -16,6 +16,7 @@ import {
 } from '../../../_storybook/playground-utils';
 
 export default {
+  tags: ['visreg'],
   title: 'Atoms/Videos/Video Background/Visreg',
   parameters: { controls: { disable: true } },
 };

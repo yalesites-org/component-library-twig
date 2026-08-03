@@ -14,6 +14,7 @@ const renderBanner = ({
   overlayVariation,
   size,
   withVideo,
+  width,
 }) =>
   grandHeroTwig({
     ...imageData.responsive_images['16x9'],
@@ -27,13 +28,14 @@ const renderBanner = ({
     grand_hero__overlay_variation: overlayVariation,
     grand_hero__size: size,
     grand_hero__video: withVideo ? 'true' : 'false',
+    grand_hero__width: width,
   });
 
 /**
  * Storybook Definition.
  */
 export default {
-  title: 'Molecules/Banners/Grand Hero',
+  title: 'Organisms/Banners/Grand Hero',
   tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
@@ -54,3 +56,7 @@ export const GrandHeroBanner = (args) => renderBanner(args);
 export const GrandHeroBannerContained = (args) => renderBanner(args);
 GrandHeroBannerContained.args = { overlayVariation: 'contained' };
 GrandHeroBannerContained.storyName = 'Contained Overlay';
+
+export const GrandHeroBannerFullWidth = (args) => renderBanner(args);
+GrandHeroBannerFullWidth.args = { width: 'full' };
+GrandHeroBannerFullWidth.storyName = 'Full Width';

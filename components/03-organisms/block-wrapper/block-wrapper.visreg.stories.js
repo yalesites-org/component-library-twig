@@ -12,7 +12,8 @@ import {
  * Storybook Definition.
  */
 export default {
-  title: 'Organisms/Block Wrapper/Visreg',
+  tags: ['visreg'],
+  title: 'Templates/Block Wrapper/Visreg',
   parameters: {
     layout: 'fullscreen',
     controls: { disable: true },

@@ -1,7 +1,9 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as BreadcrumbsStories from './breadcrumbs.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './breadcrumbs-props.yml';
 
-<Meta of={BreadcrumbsStories} name="Docs" />
+<Meta of={BreadcrumbsStories} name="Overview" />
 
 # Breadcrumbs
 
@@ -11,132 +13,78 @@ The breadcrumbs component provides hierarchical navigation that shows users thei
 
 Use the controls panel below to experiment with the breadcrumbs properties in real-time.
 
-<Canvas of={BreadcrumbsStories.Breadcrumbs} />
+<div className="sb-contained-canvas">
+  <Canvas of={BreadcrumbsStories.Breadcrumbs} />
+</div>
 <Controls of={BreadcrumbsStories.Breadcrumbs} />
 
 ## Properties
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>items</code>
-      </td>
-      <td>
-        <code>array</code>
-      </td>
-      <td>Array of breadcrumb items representing the navigation path</td>
-    </tr>
-    <tr>
-      <td>
-        <code>items[].title</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The text label for the breadcrumb link</td>
-    </tr>
-    <tr>
-      <td>
-        <code>items[].url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The URL destination for the breadcrumb link</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>items[].is_active</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>
-        Marks the current page (typically the last item). Active items are not
-        linked.
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Technical Specifications
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Atomic Level</strong>
-      </td>
-      <td>Organism</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Files</strong>
-      </td>
-      <td>
-        <code>yds-breadcrumbs.twig</code>, <code>yds-breadcrumbs.js</code>,{' '}
-        <code>_yds-breadcrumbs.scss</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Accessibility</strong>
-      </td>
-      <td>
-        ARIA landmark role <code>navigation</code> with{' '}
-        <code>aria-label="Breadcrumb"</code>, semantic <code>&lt;ol&gt;</code>{' '}
-        structure, keyboard navigable links, current page indicated with{' '}
-        <code>aria-current="page"</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Responsive Behavior</strong>
-      </td>
-      <td>
-        Breadcrumbs collapse on smaller viewports, showing only the current page
-        and immediate parent with an expandable menu for full path
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>JavaScript</strong>
-      </td>
-      <td>
-        Handles responsive collapse behavior and expand/collapse interactions on
-        mobile devices
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Technical Specifications"
+  tabIndex={0}
+>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <strong>Atomic Level</strong>
+        </td>
+        <td>Organism</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Files</strong>
+        </td>
+        <td>
+          <code>yds-breadcrumbs.twig</code>, <code>yds-breadcrumbs.js</code>,{' '}
+          <code>_yds-breadcrumbs.scss</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Accessibility</strong>
+        </td>
+        <td>
+          ARIA landmark role <code>navigation</code> with{' '}
+          <code>aria-label="Breadcrumb"</code>, semantic <code>&lt;ol&gt;</code>{' '}
+          structure, keyboard navigable links, current page indicated with{' '}
+          <code>aria-current="page"</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Responsive Behavior</strong>
+        </td>
+        <td>
+          Breadcrumbs collapse on smaller viewports, showing only the current
+          page and immediate parent with an expandable menu for full path
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>JavaScript</strong>
+        </td>
+        <td>
+          Handles responsive collapse behavior and expand/collapse interactions
+          on mobile devices
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Usage Guidelines
 

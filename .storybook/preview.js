@@ -26,11 +26,15 @@ import '../lib/link-treatment/link-treatment.scss';
 export const decorators = [
   (StoryFn, context) => {
     useEffect(() => {
-      Drupal.attachBehaviors();
-
       // Update body attributes for theme + heading typography
       document.body.setAttribute('data-global-theme', context.globals.globalTheme);
       document.body.setAttribute('data-font-pairing', context.globals.headingTypography || 'yalenew');
+
+      Drupal.attachBehaviors(document);
+
+      return () => {
+        Drupal.detachBehaviors(document);
+      };
     }, [context]);
 
     return StoryFn(context);
@@ -86,13 +90,18 @@ export const parameters = {
       method: 'alphabetical',
       order: [
         'Introduction',
-        ['Welcome', 'Theme System'],
+        ['Welcome', 'Theme System', 'Storybook Guide'],
         'Tokens',
+        [
+          'Colors',
+          ['Colors', 'Color Palettes (Theme)', 'Theme Sandbox', 'Theming Reference'],
+          '*',
+        ],
         'Atoms',
         'Molecules',
         'Organisms',
-        ['Card Collection', ['Docs', 'Visreg', '*']],
-        'Page Layouts',
+        ['Card Collection', ['Overview', 'Visreg', '*']],
+        'Templates',
         'Page Examples',
         ['Overview', '*'],
         '*',

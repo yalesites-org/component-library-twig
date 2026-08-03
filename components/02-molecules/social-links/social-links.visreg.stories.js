@@ -13,6 +13,7 @@ import {
  * Storybook Definition.
  */
 export default {
+  tags: ['visreg'],
   title: 'Molecules/Social Links/Visreg',
   parameters: { controls: { disable: true } },
 };

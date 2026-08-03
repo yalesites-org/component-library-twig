@@ -1,7 +1,9 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as TileItemStories from './tile-item.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './tile-item-props.yml';
 
-<Meta of={TileItemStories} name="Docs" />
+<Meta of={TileItemStories} name="Overview" />
 
 # Tile Item
 
@@ -18,164 +20,11 @@ Use the controls panel below to experiment with the tile item's properties in re
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>tile__item__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Main content text for the tile (supports HTML)</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>tile__item__heading</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Large heading text (used with 'heading' presentation style)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>tile__item__content_link</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>URL to make the entire tile clickable</td>
-    </tr>
-    <tr>
-      <td>
-        <code>tile__item__presentation_style</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'heading'</code>
-      </td>
-      <td>
-        Visual style: <code>'heading'</code>, <code>'icon'</code>, or{' '}
-        <code>'text-only'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>tile__item__alignment</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'left'</code>
-      </td>
-      <td>
-        Text alignment: <code>'left'</code>, <code>'center'</code>, or{' '}
-        <code>'right'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>tile__item__vertical_alignment</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'top'</code>
-      </td>
-      <td>
-        Vertical content position: <code>'top'</code> or <code>'bottom'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>tile__item__theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>Component theme from the color dial</td>
-    </tr>
-    <tr>
-      <td>
-        <code>tile__item__bg_image</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'false'</code>
-      </td>
-      <td>
-        Show background image: <code>'true'</code> or <code>'false'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>tile__item__animation</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'false'</code>
-      </td>
-      <td>
-        Enable hover animation: <code>'true'</code> or <code>'false'</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>tile__item__icon_name</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>
-        Icon identifier (used with 'icon' presentation style, e.g.,
-        'sack-dollar-solid')
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Presentation Styles
 

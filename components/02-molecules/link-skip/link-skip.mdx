@@ -1,7 +1,9 @@
 import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as LinkSkipStories from './link-skip.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './link-skip-props.yml';
 
-<Meta of={LinkSkipStories} name="Docs" />
+<Meta of={LinkSkipStories} name="Overview" />
 
 # Link Skip
 
@@ -11,88 +13,24 @@ The link skip component provides an accessibility-focused navigation aid that al
 
 Use the controls panel below to experiment with the link skip's properties. Press Tab to see the skip link appear at the top of the page.
 
-<Canvas of={LinkSkipStories.LinkSkip} />
+<div className="sb-contained-canvas">
+  <Canvas of={LinkSkipStories.LinkSkip} />
+</div>
 <Controls of={LinkSkipStories.LinkSkip} />
 
 ## Properties
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>link_skip__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>The text content displayed in the skip link</td>
-    </tr>
-    <tr>
-      <td>
-        <code>link_skip__url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        The target anchor link (typically <code>'#main-content'</code> or
-        similar)
-      </td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'required')}
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>link_skip__base_class</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'link-skip'</code>
-      </td>
-      <td>Base CSS class for the component</td>
-    </tr>
-    <tr>
-      <td>
-        <code>link_skip__extra_class</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Additional CSS classes for custom styling</td>
-    </tr>
-  </tbody>
-</table>
+{twigPropsTable(componentProps, 'optional')}
 
 ## Technical Specifications
 
-- **Atomic Level**: Molecule
+- **Atomic Level**: Atom
 - **Template**: `yds-link-skip.twig`
 - **Styles**: `_yds-link-skip.scss`
 
@@ -161,7 +99,7 @@ The link skip component should be used on:
 
 ## Testing
 
-For comprehensive visual regression testing with all theme variations, see the [Visreg page](?path=/story/molecules-link-skip-visreg--visreg).
+For comprehensive visual regression testing with all theme variations, see the [Visreg page](?path=/story/atoms-link-skip-visreg--visreg).
 
 ### Testing Skip Link Functionality
 

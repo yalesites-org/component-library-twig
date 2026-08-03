@@ -1,0 +1,14 @@
+# read-time-props.yml
+#
+# Read Time component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+label:
+  twigProp: read_time__label
+  name: Label
+  type: string
+  required: false
+  description: Label text displayed before the calculated time
+  default: Estimated read time
+  control: text

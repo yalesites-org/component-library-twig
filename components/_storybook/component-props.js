@@ -18,6 +18,7 @@
  */
 export function toArgTypes(props) {
   return Object.entries(props).reduce((acc, [key, prop]) => {
+    if (prop.twigOnly) return acc;
     acc[key] = {
       name: prop.name,
       description: prop.description,
@@ -57,6 +58,7 @@ export function toArgTypes(props) {
  */
 export function toArgs(props) {
   return Object.entries(props).reduce((acc, [key, prop]) => {
+    if (prop.twigOnly) return acc;
     if (prop.controlDefault !== undefined) acc[key] = prop.controlDefault;
     else if (prop.default !== undefined) acc[key] = prop.default;
     return acc;

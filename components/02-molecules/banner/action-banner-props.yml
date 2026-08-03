@@ -112,3 +112,15 @@ overlayBackgroundImage:
   description: Whether to display a pattern overlay on the background image
   default: false
   control: boolean
+
+width:
+  twigProp: banner__width
+  name: Banner Width
+  type: select
+  required: false
+  description: 'Banner width: site (contained, with side gutters) or full (edge-to-edge, no gutters)'
+  default: site
+  options:
+    - site
+    - full
+  control: select

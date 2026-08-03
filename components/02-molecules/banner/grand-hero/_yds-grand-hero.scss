@@ -18,6 +18,13 @@ $break-grand-hero-banner: tokens.$break-m;
   margin: 0 auto;
   background-color: var(--color-grand-hero-background);
 
+  &[data-grand-hero-width='full'] {
+    width: 100vw;
+    max-width: 100vw;
+    margin-inline-start: calc(50% - 50vw);
+    margin-inline-end: 0;
+  }
+
   @media (min-width: $break-grand-hero-banner) {
     align-items: center;
   }
@@ -226,7 +233,8 @@ $break-grand-hero-banner: tokens.$break-m;
   }
 
   [data-grand-hero-overlay-variation='contained'][data-grand-hero-width='site'],
-  [data-grand-hero-overlay-variation='contained'][data-grand-hero-width='contained-narrow']
+  [data-grand-hero-overlay-variation='contained'][data-grand-hero-width='contained-narrow'],
+  [data-grand-hero-overlay-variation='contained'][data-grand-hero-width='full']
     & {
     // prettier-ignore
     max-width: calc(var(--size-component-layout-width-site) + (var(--size-spacing-site-gutter) * 2));
@@ -309,7 +317,8 @@ $break-grand-hero-banner: tokens.$break-m;
     max-width: var(--size-component-layout-width-content);
   }
 
-  [data-grand-hero-width='site'] & {
+  [data-grand-hero-width='site'] &,
+  [data-grand-hero-width='full'] & {
     // prettier-ignore
     max-width: var(--size-component-layout-width-site);
 

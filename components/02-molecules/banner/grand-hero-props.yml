@@ -86,3 +86,15 @@ withVideo:
   description: Whether to display a video background instead of a static image
   default: false
   control: boolean
+
+width:
+  twigProp: grand_hero__width
+  name: Banner Width
+  type: select
+  required: false
+  description: 'Banner width: site (contained, with side gutters) or full (edge-to-edge, no gutters)'
+  default: site
+  options:
+    - site
+    - full
+  control: select

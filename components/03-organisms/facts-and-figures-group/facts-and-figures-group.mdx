@@ -3,7 +3,7 @@ import * as FactsAndFiguresGroupStories from './facts-and-figures-group.stories'
 import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
 import componentProps from './facts-and-figures-group-props.yml';
 
-<Meta of={FactsAndFiguresGroupStories} name="Docs" />
+<Meta of={FactsAndFiguresGroupStories} name="Overview" />
 
 # Facts and Figures Group
 
@@ -135,43 +135,50 @@ Choose between standard and oldstyle numerals:
 
 ## Technical Specifications
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Atomic Level</strong>
-      </td>
-      <td>Organism</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Files</strong>
-      </td>
-      <td>
-        <code>yds-facts-and-figures-group.twig</code>,{' '}
-        <code>_yds-facts-and-figures-group.scss</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Accessibility</strong>
-      </td>
-      <td>
-        Semantic HTML structure, proper heading hierarchy, keyboard navigable
-        links, sufficient color contrast, ARIA labels where appropriate
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Responsive Behavior</strong>
-      </td>
-      <td>
-        Grid columns stack appropriately on smaller viewports, maintains
-        readability across all devices, adapts spacing for mobile viewing
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Technical Specifications"
+  tabIndex={0}
+>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <strong>Atomic Level</strong>
+        </td>
+        <td>Organism</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Files</strong>
+        </td>
+        <td>
+          <code>yds-facts-and-figures-group.twig</code>,{' '}
+          <code>_yds-facts-and-figures-group.scss</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Accessibility</strong>
+        </td>
+        <td>
+          Semantic HTML structure, proper heading hierarchy, keyboard navigable
+          links, sufficient color contrast, ARIA labels where appropriate
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Responsive Behavior</strong>
+        </td>
+        <td>
+          Grid columns stack appropriately on smaller viewports, maintains
+          readability across all devices, adapts spacing for mobile viewing
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Usage Guidelines
 

@@ -3,7 +3,7 @@ import * as BlockWrapperStories from './block-wrapper.stories';
 import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
 import componentProps from './block-wrapper-props.yml';
 
-<Meta of={BlockWrapperStories} name="Docs" />
+<Meta of={BlockWrapperStories} name="Overview" />
 
 # Block Wrapper
 
@@ -113,43 +113,50 @@ The block wrapper supports four padding configurations to accommodate different 
 
 ## Technical Specifications
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Atomic Level</strong>
-      </td>
-      <td>Organism</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Files</strong>
-      </td>
-      <td>
-        <code>yds-block-wrapper.twig</code>,{' '}
-        <code>_yds-block-wrapper.scss</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Accessibility</strong>
-      </td>
-      <td>
-        Semantic HTML wrapper, maintains proper document flow, preserves content
-        accessibility
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Responsive Behavior</strong>
-      </td>
-      <td>
-        Padding values adjust responsively to maintain appropriate spacing
-        across all viewport sizes
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Technical Specifications"
+  tabIndex={0}
+>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <strong>Atomic Level</strong>
+        </td>
+        <td>Organism</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Files</strong>
+        </td>
+        <td>
+          <code>yds-block-wrapper.twig</code>,{' '}
+          <code>_yds-block-wrapper.scss</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Accessibility</strong>
+        </td>
+        <td>
+          Semantic HTML wrapper, maintains proper document flow, preserves
+          content accessibility
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Responsive Behavior</strong>
+        </td>
+        <td>
+          Padding values adjust responsively to maintain appropriate spacing
+          across all viewport sizes
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Usage Guidelines
 

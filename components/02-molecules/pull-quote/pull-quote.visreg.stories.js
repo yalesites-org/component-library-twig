@@ -15,6 +15,7 @@ import {
 } from '../../_storybook/playground-utils';
 
 export default {
+  tags: ['visreg'],
   title: 'Molecules/Quotes/Pull Quote/Visreg',
   parameters: { controls: { disable: true } },
 };
