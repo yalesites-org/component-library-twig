@@ -25,6 +25,7 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
       );
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
 
       @if $globalTheme == 'four' {
         // Switch colors slot in order to have the selected background colors per component theme.
@@ -66,6 +67,11 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-link-grid-action: var(--color-slot-two);
   }
 
+  &[data-component-theme='six'] {
+    --color-link-grid-action: var(--color-slot-nine);
+    --color-heading: var(--color-slot-seven);
+  }
+
   // if used in the layout component, remove the top margin
   [data-component-layout] & {
     margin-block-start: 0;
@@ -78,12 +84,17 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   flex: 1 0 100%;
   margin-bottom: var(--size-spacing-6);
 
-  [data-component-theme]:not(
-      [data-component-theme='default'],
-      [data-component-theme='two']
-    )
-    .link-grid
-    & {
+  // Use token (not inherited section color): gray layout sections can set light
+  // `color` on `.yds-layout`, which would otherwise wash out the main title.
+  color: var(--color-heading);
+
+  // Light text only on dark link-grid backgrounds. Scope to `.link-grid` so
+  // section layout `[data-component-theme]` on `.yds-layout` does not force
+  // white on theme `six` or other light blocks.
+  .link-grid[data-component-theme='one'] &,
+  .link-grid[data-component-theme='three'] &,
+  .link-grid[data-component-theme='four'] &,
+  .link-grid[data-component-theme='five'] & {
     color: var(--color-basic-white);
   }
 }
