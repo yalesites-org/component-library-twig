@@ -31,6 +31,16 @@ The inline message component supports two primary types:
 
 The type affects both the visual styling and the semantic meaning conveyed to assistive technologies.
 
+## Icons
+
+The inline message can display a decorative icon beside its content, chosen from the shared icon set (the same manifest used by Facts and Figures, so the two components stay in sync).
+
+- Set the <code>inline_message\_\_icon_name</code> property to an icon machine name to display that icon.
+- Use <code>\_none</code> (or an empty value) to render a text-only message with no icon. In Drupal, choosing "- None -" is stored as an empty value, so both behave identically.
+- When the property is not supplied at all (the bare component, outside Drupal), the icon falls back to the type-derived default (<code>circle-info</code> for <strong>general</strong>, <code>circle-exclamation</code> otherwise).
+
+Use the <strong>Icon</strong> control in the interactive preview above to browse every available variant. Icons are purely decorative (rendered with <code>aria-hidden</code>): they must reinforce, never replace, the meaning carried by the text.
+
 ## Theme Options
 
 This component supports the following theme variations:
