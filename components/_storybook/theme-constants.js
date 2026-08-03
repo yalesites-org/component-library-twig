@@ -22,7 +22,7 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
  *
  * @type {string[]}
  */
-export const sectionThemes = ['default', 'one', 'two', 'three', 'four'];
+export const sectionThemes = ['default', 'one', 'two', 'three', 'four', 'five'];
 
 /**
  * Global themes (from tokens)

@@ -47,6 +47,7 @@ themeColor:
     - three
     - four
     - five
+    - six
   control: select
 
 linkContent:

@@ -39,6 +39,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
       );
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
     }
   }
 
@@ -74,6 +75,16 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-tabs-background: var(--color-gray-100);
     --color-tabs-selected: var(--color-basic-white);
     --color-heading: var(--color-gray-700);
+  }
+
+  // Theme `six` outside gray layout sections: legacy tab chrome (unchanged).
+  &[data-component-theme='six'] {
+    --color-tabs-action: var(--color-slot-seven);
+    --color-tabs-background: var(--color-slot-nine);
+    --color-tabs-selected: var(--color-basic-white);
+    --color-heading: var(--color-slot-seven);
+    --color-border: var(--color-gray-400);
+    --color-border-selected: var(--color-basic-white);
   }
 
   [data-component-theme]:not([data-component-theme='default']) & {
