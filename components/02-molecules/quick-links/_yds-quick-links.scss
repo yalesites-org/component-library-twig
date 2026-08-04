@@ -215,6 +215,32 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
   justify-content: center;
 }
 
+// Gray-400 layout sections: keep quick-links link/button tokens dark regardless
+// of the inner quick-links component theme dial value.
+.yds-layout[data-component-theme='five'] .quick-links {
+  --color-quick-links-theme-five-foreground: var(--color-gray-800);
+  --color-text: var(--color-quick-links-theme-five-foreground);
+  --color-heading: var(--color-quick-links-theme-five-foreground);
+  --color-action: var(--color-quick-links-theme-five-foreground);
+  --color-action-secondary: var(--color-slot-eight);
+  --color-link-base: var(--color-quick-links-theme-five-foreground);
+  --color-link-hover: var(--color-quick-links-theme-five-foreground);
+  --color-link-visited-base: var(--color-quick-links-theme-five-foreground);
+  --color-link-visited-hover: var(--color-quick-links-theme-five-foreground);
+
+  // Underline-link mixin uses text-shadow by default; clear it for gray sections.
+  .quick-links__link {
+    --color-text-shadow: transparent;
+  }
+
+  // Force CTA tokens dark here so global button dial themes don't reintroduce
+  // brand tones for quick-links inside gray layout sections.
+  .quick-links__cta {
+    --color-action: var(--color-quick-links-theme-five-foreground);
+    --color-action-secondary: var(--color-slot-eight);
+  }
+}
+
 .quick-links__image {
   [data-quick-links-variation='promotional'] & {
     position: absolute;

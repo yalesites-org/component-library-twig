@@ -59,6 +59,7 @@ backgroundColor:
     - three
     - four
     - five
+    - six
   control: select
 
 calloutAlignment:
