@@ -257,6 +257,22 @@
       min-width: 0;
       max-width: 100%;
 
+      // Chosen's vendor CSS pins line-height: 12px on the chip. Its own
+      // font-size: 14px on .chosen-container is overridden here, so the label
+      // ends up at 95% (vendor) of the form's ~20px — glyphs taller than their
+      // own line box. Paired with the tail-ellipsis `overflow: hidden` on the
+      // span below, that clipped the bottom of every descender (e.g. the "y"
+      // in "Faculty").
+      // Both halves of this token matter, so keep it as the `font` shorthand
+      // rather than reducing it to a font-size: its line-height gives the
+      // label a line box that fits its ink, and its smaller scale is what
+      // keeps the chip inside the 3.125rem control height the filter grid
+      // aligns on. Raising the control instead would break that alignment
+      // against the search field; a line-height alone leaves the chip too
+      // tall for the box. The closed single-line "+N more" state is
+      // unchanged. (#1299 QA)
+      font: var(--font-style-body-xs);
+
       // Chosen renders the chip label in a plain inline span, so make it an
       // inline-block box bounded by the chip width: only then do overflow +
       // text-overflow engage and truncate the label at the TAIL (e.g.
@@ -293,6 +309,12 @@
     align-items: center;
     white-space: nowrap;
     padding: 0 var(--size-spacing-3);
+
+    // The badge has no clipping problem of its own — flex centring and no
+    // ellipsis span — so this is purely to match the chips it stands in for,
+    // which the token above shrank. Declared before font-weight so the
+    // shorthand does not reset the medium weight below. (#1299 QA)
+    font: var(--font-style-body-xs);
     color: var(--color-gray-700);
     font-weight: var(--font-weights-mallory-medium);
     list-style: none;
