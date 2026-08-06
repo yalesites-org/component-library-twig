@@ -1,5 +1,16 @@
 @use '../../00-tokens/tokens';
 
+// Height of a dropdown control in the listing filter bar — the .form-item__dropdown
+// wrapper and the .chosen-container inside it, which must agree or the Chosen box and
+// its wrapper disagree on where the border sits. The selected-term chip is sized to fit
+// inside this height, so raising it is not free.
+// Deliberately NOT applied to the filter bar's search field: that is styled by the
+// global `.form-item-search .form-text` rule below, which is not scaffold-scoped and
+// would drag every other search box on the platform along with it. The two values must
+// stay equal — the filter grid lines the dropdowns up against the search field — so if
+// you change this, change that literal too. (#1299 QA)
+$filter-control-height: 3.125rem; // 50px
+
 // the button-submit mixin to emulate yds-button without the HTML attributes.
 // use case is specific to submit inputs in Drupal.
 // for all other use cases yds-button should be used.
@@ -203,7 +214,7 @@
   }
 
   .form-item__dropdown {
-    height: 3.125rem;
+    height: $filter-control-height;
 
     // No border here: the .chosen-container below draws the single border (same
     // --border-thickness-1 --color-gray-400 as the search field). A border on both
@@ -220,8 +231,35 @@
 
     background-color: var(--color-basic-white);
     border: var(--border-thickness-1) solid var(--color-dropdown-border);
-    height: 3.125rem;
     width: 100% !important;
+
+    // The open state releases `height` (.chosen-with-drop below sets
+    // height: auto so wrapped chips can grow the box), so `height` alone is not
+    // enough — min-height is what keeps an open filter from becoming shorter
+    // than its closed self.
+    height: $filter-control-height;
+    min-height: $filter-control-height;
+
+    // Chosen copies the source select's classes onto the container it
+    // generates, so .form-item__select's 0.5em block padding — sized for a
+    // native select's single line of text — lands on a box already pinned to
+    // the control height. That leaves a 28px content area for a chip row that
+    // needs 39.2px, and because .chosen-choices is opaque white it then paints
+    // over the container's own bottom border: the selected term reads as
+    // "breaking the bounds" of the filter box. Same class-copying cause as the
+    // .form-item__select min-width reset above. (#1299 QA)
+    // It cannot be treated in the same place as that reset, though. min-width: 0
+    // is harmless on a native <select>; zeroing block padding is not, and
+    // .form-item__select still matches a real <select> here — chosen.settings
+    // only initialises a multi-select at 20+ options (minimum_multiple), so a
+    // shorter filter renders natively. That fallback is live enough that the
+    // mobile rule further down already borders `.form-item__select` for it.
+    // Keying on .chosen-container confines this to the generated div.
+    // Only the block padding goes: the inline padding is the gutter before the
+    // first chip. (It is not an arrow gutter — _yds-select.scss sets
+    // `content: none` on .form-item__dropdown::after inside this scaffold, and
+    // .chosen-container-multi has no caret of its own.)
+    padding-block: 0;
 
     &:hover,
     &:focus,
@@ -237,6 +275,15 @@
   .chosen-choices {
     border: 0;
     padding: 0;
+
+    // Fill the container's content box so the flex centring below has the whole
+    // control height to centre the chip row in, rather than centring inside a
+    // shrink-to-fit row that sits at the top of the box. Deliberately
+    // min-height and not height: a percentage resolves only against the
+    // container's definite closed height, so in the open state (where
+    // .chosen-with-drop sets height: auto) this is inert and wrapped chips
+    // still grow the box freely. (#1299 QA)
+    min-height: 100%;
 
     // Closed (summary) state: lay the selected-term chips on a single line and clip
     // anything past the width. JS marks the overflow chips and appends a "+N more"
