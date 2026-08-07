@@ -76,14 +76,12 @@ $facts-and-figures-group-component-themes: map.deep-get(
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
 
       @if $globalTheme == 'four' {
         // Switch colors slot in order to have the selected background colors per component theme.
         --color-slot-two: var(--global-themes-four-colors-slot-five);
         --color-slot-five: var(--global-themes-four-colors-slot-two);
-
-        // Set color slot for the text on light background.
-        --color-slot-seven: var(--global-themes-four-colors-slot-six);
       }
     }
   }
@@ -99,11 +97,15 @@ $facts-and-figures-group-component-themes: map.deep-get(
     --color-link-hover: var(--color-slot-eight);
   }
 
-  &[data-component-theme='two'] {
-    --color-facts-and-figures-theme: var(--color-slot-four);
+  &[data-component-theme='two'],
+  &[data-component-theme='six'] {
     --color-facts-and-figures-content: var(--color-slot-seven);
     --color-link-base: var(--color-slot-seven);
     --color-link-hover: var(--color-slot-seven);
+  }
+
+  &[data-component-theme='two'] {
+    --color-facts-and-figures-theme: var(--color-slot-four);
   }
 
   &[data-component-theme='three'] {
@@ -120,16 +122,20 @@ $facts-and-figures-group-component-themes: map.deep-get(
     --color-facts-and-figures-content: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
-
-    [data-global-theme='four'] & {
-      --color-facts-and-figures-theme: var(--component-themes-five-background);
-      --color-facts-and-figures-content: var(--color-slot-seven);
-    }
   }
 
   &[data-component-theme='five'] {
     --color-facts-and-figures-theme: var(--color-slot-three);
     --color-facts-and-figures-content: var(--color-slot-seven);
+  }
+
+  &[data-component-theme='six'] {
+    --color-facts-and-figures-theme: var(--color-slot-nine);
+    --color-link-visited-base: var(--color-link-visited-light);
+    --color-link-visited-hover: var(--color-link-visited-light-hover);
+
+    background-color: var(--color-facts-and-figures-theme);
+    color: var(--color-facts-and-figures-content);
   }
 }
 
