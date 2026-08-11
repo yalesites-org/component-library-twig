@@ -214,15 +214,7 @@ export const Colors = () => colorsTwig(colorsData);
 Colors.tags = ['!dev'];
 
 // ---------------------------------------------------------------------------
-// Web Colors — HEX values only (for digital use).
-// ---------------------------------------------------------------------------
-export const WebColors = () =>
-  webColorsTwig({ ...colorsData, print_colors: printColorsMeta });
-WebColors.storyName = 'Identity Colors';
-WebColors.tags = ['!dev'];
-
-// ---------------------------------------------------------------------------
-// Section stories — used by web-colors.mdx Canvas blocks.
+// Section stories — used by the Core/Print/Web Colors doc Canvas blocks.
 // ---------------------------------------------------------------------------
 const printData = { print_colors: printColorsMeta };
 

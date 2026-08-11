@@ -6,15 +6,19 @@ $cl-colors-copy-success: #16a34a;
 // which also uses .cl-colors__list and .cl-colors__item but without a .cl-colors wrapper.
 .cl-colors {
   .cl-colors__list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 1.5rem;
     margin: 0 0 var(--size-spacing-7);
     padding: 0;
     list-style: none;
   }
 
+  // Fixed width (no grow) so cards stay the same size whether a group has
+  // 3 or 4 of them — a short group just leaves trailing whitespace in its
+  // row instead of stretching its cards wider.
   .cl-colors__item {
+    flex: 0 0 200px;
     background: var(--color-basic-white);
     border: 1px solid var(--color-gray-200);
     box-shadow: 0 1px 3px rgb(0 0 0 / 8%);
@@ -29,7 +33,7 @@ $cl-colors-copy-success: #16a34a;
   .cl-colors__swatch {
     position: relative;
     width: 100%;
-    height: 140px;
+    height: 110px;
   }
 
   .cl-colors__badge {
@@ -57,7 +61,7 @@ $cl-colors-copy-success: #16a34a;
   }
 
   .cl-colors__info {
-    padding: 1rem 1.25rem 1.25rem;
+    padding: 0.875rem 1rem 1rem;
   }
 
   .cl-colors__name {
@@ -72,18 +76,19 @@ $cl-colors-copy-success: #16a34a;
     font-size: 0.7rem;
     font-family: monospace;
     color: var(--color-gray-500);
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.75rem;
+    margin-bottom: 0.25rem;
+    padding-bottom: 0.25rem;
     border-bottom: 1px solid var(--color-gray-100);
   }
 
-  // Each value-row: label on its own full-width line, value + copy button below.
+  // Each value-row: label, value, and copy button share one line. Wrap is a
+  // fallback for extreme narrow widths, not the default layout.
   .cl-colors__value-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     padding: 0.35rem 0;
-    gap: 0 0.5rem;
+    gap: 0.15rem 0.5rem;
   }
 
   .cl-colors__label {
@@ -92,8 +97,8 @@ $cl-colors-copy-success: #16a34a;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--color-gray-500);
-    width: 100%;
-    margin-bottom: 0.1rem;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 
   // Reset <code> element browser defaults; display as plain inline text.
@@ -101,7 +106,8 @@ $cl-colors-copy-success: #16a34a;
     font-size: 0.8rem;
     font-family: monospace;
     color: var(--color-gray-700);
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: 0;
     background: transparent;
     border: none;
     padding: 0;
@@ -120,6 +126,11 @@ $cl-colors-copy-success: #16a34a;
 
   .cl-colors__copy-btn {
     appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    min-height: 1.5rem;
     border: none;
     background: transparent;
     cursor: pointer;
