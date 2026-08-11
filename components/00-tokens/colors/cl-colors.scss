@@ -178,6 +178,36 @@ $cl-colors-copy-success: #16a34a;
       }
     }
   }
+
+  // Yale Blue is the flagship color — full row width, swatch beside (not
+  // above) the info so it reads as a featured card rather than one swatch
+  // among many.
+  .cl-colors__item--featured {
+    display: flex;
+    flex: 1 1 100%;
+
+    .cl-colors__swatch {
+      width: 260px;
+      height: auto;
+      flex-shrink: 0;
+    }
+
+    .cl-colors__info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 1.5rem 2rem;
+    }
+
+    .cl-colors__name {
+      font-size: 1.25rem;
+    }
+
+    .cl-colors__value-row {
+      max-width: 320px;
+    }
+  }
 }
 
 // Intro placeholder shown until PM adds contextual copy.

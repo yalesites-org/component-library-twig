@@ -9,7 +9,7 @@
   <div {{ bem(colors__base_class) }}>
     <ul {{ bem('list', [], colors__base_class) }}>
       {% for key, color in print_colors.yale_blue.colors %}
-        <li {{ bem('item', [], colors__base_class) }}>
+        <li {{ bem('item', ['featured'], colors__base_class) }}>
           <div {{ bem('swatch', [], colors__base_class) }} style="background: {{ yale_blue_web.hex ?? color.hex }};"></div>
           <div {{ bem('info', [], colors__base_class) }}>
             <{{ card_name_level }} {{ bem('name', [], colors__base_class) }}>{{ color.name }}</{{ card_name_level }}>
