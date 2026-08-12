@@ -135,6 +135,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   opacity: 0;
   border: var(--size-thickness-1) solid var(--color-border);
   color: inherit;
+  cursor: pointer;
 
   &--left {
     left: 0;

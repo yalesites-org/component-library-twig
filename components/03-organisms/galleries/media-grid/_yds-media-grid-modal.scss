@@ -183,6 +183,12 @@ $modal-speed: var(--animation-speed-slow);
   // `overflow: auto` above, which would otherwise cut off the outline.
   outline-offset: calc(var(--size-thickness-2) * -1);
 
+  // The total count shares this class but renders as a non-interactive div, so
+  // the pointer affordance is limited to the pager items that are buttons.
+  &:not(.media-grid-modal__pager-item--total) {
+    cursor: pointer;
+  }
+
   &:hover {
     @media (min-width: tokens.$break-s) {
       color: var(--color-link-hover);
@@ -335,6 +341,7 @@ $modal-speed: var(--animation-speed-slow);
   height: 100%;
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   &:hover {
     color: var(--color-link-hover);
