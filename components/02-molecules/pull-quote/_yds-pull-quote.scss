@@ -83,6 +83,14 @@ blockquote {
     --color-pull-quote-attribution: var(--color-slot-seven);
   }
 
+  // Slot-three layout sections (#1518): light background, so dark type. The
+  // accent is left alone -- the :not(default) rule above already points it at
+  // --color-layout-border, which section theme six sets to slot-seven.
+  .yds-layout[data-component-theme='six'] & {
+    --color-pull-quote-quote: var(--color-slot-seven);
+    --color-pull-quote-attribution: var(--color-slot-seven);
+  }
+
   // Light quote copy on dark layout sections (matches --color-layout-content: slot-eight).
   // Theme four uses the same light-on-dark treatment as one and three; it was missing here.
   .yds-layout:is(
