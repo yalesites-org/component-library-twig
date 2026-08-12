@@ -1,5 +1,17 @@
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import getGlobalThemes from './color-global-themes';
+import {
+  AA_NORMAL_TEXT,
+  WCAG_LEVELS,
+  contrastRatio,
+  evaluateRatio,
+  findIsolatedSlots,
+  formatRatio,
+  parseHex,
+  parseHsl,
+  rgbToHex,
+  rgbToString,
+} from './contrast-ratio.mjs';
 import colorMeta from './color-data.yml';
 import printColorsMeta from './print-colors.yml';
 import '../../01-atoms/controls/text-copy-button/yds-text-copy-button';
@@ -25,35 +37,10 @@ import { exampleSiteNameImageSvg } from '../../_storybook/theme-constants';
 import tabData from '../../02-molecules/tabs/tabs.yml';
 import bannerData from '../../02-molecules/banner/banner.yml';
 
-function hslToComponents(hslStr) {
-  const match = hslStr.match(
-    /hsl\((\d+(?:\.\d+)?),\s*(\d+(?:\.\d+)?)%,\s*(\d+(?:\.\d+)?)%\)/,
-  );
-  if (!match) return null;
-  const h = parseFloat(match[1]);
-  const s = parseFloat(match[2]) / 100;
-  const l = parseFloat(match[3]) / 100;
-  const a = s * Math.min(l, 1 - l);
-  const f = (n) => {
-    const k = (n + h / 30) % 12;
-    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-    return Math.round(255 * color);
-  };
-  return { r: f(0), g: f(8), b: f(4) };
-}
-
-function hslToHex(hslStr) {
-  const rgb = hslToComponents(hslStr);
-  if (!rgb) return null;
-  const toHex = (n) => n.toString(16).padStart(2, '0');
-  return `#${toHex(rgb.r)}${toHex(rgb.g)}${toHex(rgb.b)}`;
-}
-
-function hslToRgb(hslStr) {
-  const rgb = hslToComponents(hslStr);
-  if (!rgb) return null;
-  return `${rgb.r}, ${rgb.g}, ${rgb.b}`;
-}
+// The color math lives in contrast-ratio.mjs so these stories and the
+// Contrast Matrix share one implementation, checked by contrast-ratio.test.mjs.
+const hslToHex = (hslStr) => rgbToHex(parseHsl(hslStr));
+const hslToRgb = (hslStr) => rgbToString(parseHsl(hslStr));
 
 function mergeColorData(tokenGroup, metaGroup = {}) {
   return Object.fromEntries(
@@ -205,6 +192,308 @@ const ctaButtonThemeOptions = Object.keys(tokens['button-cta-themes']);
 
 // get global themes as `label` : `key` values to pass into options as array.
 const siteGlobalThemeOptions = getGlobalThemes(tokens['global-themes']);
+
+// ---------------------------------------------------------------------------
+// Contrast matrix
+//
+// Everything below is derived from tokens.json `global-themes` — themes, slots,
+// and thresholds are all read, never listed here, so a theme or slot added
+// upstream shows up with no edit to this file. The math itself lives in
+// contrast-ratio.mjs and is checked by contrast-ratio.test.mjs.
+// ---------------------------------------------------------------------------
+
+const globalThemes = tokens['global-themes'];
+
+// Slot keys for the custom checker's inputs, taken from the first theme. Each
+// theme's own matrix reads that theme's slots, so themes may differ.
+const contrastSlotKeys = Object.keys(Object.values(globalThemes)[0].colors);
+
+// Slot token keys spell the number out ("slot-six") but every doc and label
+// refers to slots by numeral, so map back. An unrecognised word falls through
+// unchanged, which keeps a slot added upstream rendering rather than blank.
+const SLOT_NUMERALS = {
+  one: '1',
+  two: '2',
+  three: '3',
+  four: '4',
+  five: '5',
+  six: '6',
+  seven: '7',
+  eight: '8',
+  nine: '9',
+};
+
+const slotNumber = (slot) => {
+  const word = slot.replace('slot-', '');
+  return SLOT_NUMERALS[word] || word;
+};
+
+const slotLabel = (slot) => `Slot ${slotNumber(slot)}`;
+
+/**
+ * Verdicts, worst to best. Each carries a word and a symbol so the result never
+ * depends on the cell's color alone (WCAG 1.4.1 Use of Color) — which would be
+ * an unfortunate way for a contrast story to fail.
+ */
+const CONTRAST_TIERS = {
+  aaa: {
+    id: 'aaa',
+    label: 'AAA',
+    symbol: '★',
+    summary: 'Passes AA and AAA for normal text.',
+  },
+  aa: {
+    id: 'aa',
+    label: 'AA',
+    symbol: '✓',
+    summary: 'Passes AA for normal text, large text, and non-text.',
+  },
+  large: {
+    id: 'large',
+    label: 'AA large only',
+    symbol: '◐',
+    summary: 'Passes AA for large text and non-text. Fails AA normal text.',
+  },
+  fail: {
+    id: 'fail',
+    label: 'Fail',
+    symbol: '✕',
+    summary: 'Below every WCAG 2.1 contrast threshold.',
+  },
+};
+
+/**
+ * Reduce a ratio to a single verdict, reading the thresholds from
+ * evaluateRatio so no minimum is restated here.
+ */
+function tierFor(ratio) {
+  const levels = evaluateRatio(ratio);
+  const passes = (id) =>
+    levels.some((level) => level.id === id && level.passes);
+
+  if (passes('normal-aaa')) return CONTRAST_TIERS.aaa;
+  if (passes('normal-aa')) return CONTRAST_TIERS.aa;
+  if (passes('large-aa')) return CONTRAST_TIERS.large;
+  return CONTRAST_TIERS.fail;
+}
+
+/** Slot name to RGB for one theme. */
+const themePalette = (theme) =>
+  Object.fromEntries(
+    Object.entries(theme.colors).map(([slot, hsl]) => [slot, parseHsl(hsl)]),
+  );
+
+/** Drop slots with no usable color, so a blank input never reads as a failure. */
+const usablePalette = (palette) =>
+  Object.fromEntries(Object.entries(palette).filter(([, rgb]) => rgb));
+
+/** Pair counts and stranded slots for one palette, at the AA text threshold. */
+function paletteStats(palette) {
+  const slots = Object.keys(palette);
+  let passing = 0;
+  let total = 0;
+
+  slots.forEach((slot, index) => {
+    slots.slice(index + 1).forEach((other) => {
+      total += 1;
+      if (contrastRatio(palette[slot], palette[other]) >= AA_NORMAL_TEXT) {
+        passing += 1;
+      }
+    });
+  });
+
+  return {
+    passing,
+    total,
+    isolated: findIsolatedSlots(palette, AA_NORMAL_TEXT),
+  };
+}
+
+/** The strongest pairing available to one slot — used to say how far off it is. */
+function bestPartner(palette, slot) {
+  return Object.keys(palette)
+    .filter((other) => other !== slot)
+    .map((other) => ({
+      slot: other,
+      ratio: contrastRatio(palette[slot], palette[other]),
+    }))
+    .sort((a, b) => b.ratio - a.ratio)[0];
+}
+
+function renderSwatchChip(rgb) {
+  return `<span class="cl-contrast__chip" style="background:${rgbToHex(
+    rgb,
+  )};"></span>`;
+}
+
+function renderMatrixCell(palette, rowSlot, colSlot) {
+  if (rowSlot === colSlot) {
+    return `
+      <td class="cl-contrast__cell cl-contrast__cell--self">
+        <span aria-hidden="true">—</span>
+        <span class="visually-hidden">Same color, not a pairing</span>
+      </td>`;
+  }
+
+  const ratio = contrastRatio(palette[rowSlot], palette[colSlot]);
+  const tier = tierFor(ratio);
+
+  return `
+    <td class="cl-contrast__cell cl-contrast__cell--${tier.id}">
+      <span class="cl-contrast__ratio">${formatRatio(
+        ratio,
+      )}<span class="visually-hidden"> to 1</span></span>
+      <span class="cl-contrast__badge"><span aria-hidden="true">${
+        tier.symbol
+      }</span> ${tier.label}</span>
+    </td>`;
+}
+
+/**
+ * The pairing grid for one palette. Rows and columns are the same slots, so the
+ * grid is symmetrical; it is rendered in full rather than as a triangle so a
+ * row can be read straight across as "this slot against everything else".
+ */
+function renderMatrixTable(palette, caption) {
+  const slots = Object.keys(palette);
+
+  const headCells = slots
+    .map(
+      (slot) => `
+        <th scope="col" class="cl-contrast__head">
+          ${renderSwatchChip(palette[slot])}
+          <span>${slotLabel(slot)}</span>
+        </th>`,
+    )
+    .join('');
+
+  const rows = slots
+    .map(
+      (rowSlot) => `
+        <tr>
+          <th scope="row" class="cl-contrast__head">
+            ${renderSwatchChip(palette[rowSlot])}
+            <span>${slotLabel(rowSlot)}</span>
+            <span class="cl-contrast__hex">${rgbToHex(palette[rowSlot])}</span>
+          </th>
+          ${slots
+            .map((colSlot) => renderMatrixCell(palette, rowSlot, colSlot))
+            .join('')}
+        </tr>`,
+    )
+    .join('');
+
+  return `
+    <div class="sb-table-scroll" role="region" aria-label="${caption}" tabindex="0">
+      <table class="cl-contrast__table">
+        <caption class="visually-hidden">${caption}</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="cl-contrast__head"><span class="visually-hidden">Slot</span></th>
+            ${headCells}
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+}
+
+/** The plain-language verdict that goes above each grid. */
+function renderPaletteSummary(palette, stats) {
+  if (!stats.total) {
+    return `<p class="cl-contrast__notice">Enter at least two colors to compare.</p>`;
+  }
+
+  const headline = `<p class="cl-contrast__summary"><strong>${stats.passing} of ${stats.total}</strong> pairings meet the AA ${AA_NORMAL_TEXT}:1 minimum for normal text.</p>`;
+
+  if (!stats.isolated.length) {
+    return `${headline}
+      <p class="cl-contrast__notice cl-contrast__notice--ok">
+        <span aria-hidden="true">✓</span>
+        Every slot has at least one partner at ${AA_NORMAL_TEXT}:1, so no slot is stranded.
+      </p>`;
+  }
+
+  const items = stats.isolated
+    .map((slot) => {
+      const best = bestPartner(palette, slot);
+      const bestText = best
+        ? `its strongest pairing is ${formatRatio(
+            best.ratio,
+          )}:1 against ${slotLabel(best.slot)}`
+        : 'it has nothing to pair with';
+      return `<li><strong>${slotLabel(slot)}</strong> (${rgbToHex(
+        palette[slot],
+      )}) — ${bestText}.</li>`;
+    })
+    .join('');
+
+  return `${headline}
+    <div class="cl-contrast__notice cl-contrast__notice--warn">
+      <p><span aria-hidden="true">!</span> <strong>No passing partner.</strong> These slots cannot carry normal text against any other color here:</p>
+      <ul>${items}</ul>
+      <p>To fix one, move it substantially lighter or darker — a near-black or white will clear ${AA_NORMAL_TEXT}:1 against most mid-tones. Otherwise reserve it for decorative fills and large graphics, where 1.4.3 does not apply and only the 3:1 non-text minimum does.</p>
+    </div>`;
+}
+
+/** Threshold key, built from WCAG_LEVELS so the numbers are never retyped. */
+function renderThresholdKey() {
+  const rows = WCAG_LEVELS.map(
+    (level) => `
+      <tr>
+        <th scope="row">${level.label}</th>
+        <td>${level.level}</td>
+        <td>${level.minimum}:1</td>
+        <td>SC ${level.criterion}</td>
+      </tr>`,
+  ).join('');
+
+  const tiers = Object.values(CONTRAST_TIERS)
+    .map(
+      (tier) => `
+      <li class="cl-contrast__legend-item">
+        <span class="cl-contrast__badge cl-contrast__badge--${tier.id}"><span aria-hidden="true">${tier.symbol}</span> ${tier.label}</span>
+        ${tier.summary}
+      </li>`,
+    )
+    .join('');
+
+  return `
+    <div class="cl-contrast__key">
+      <h3>What the grid means</h3>
+      <ul class="cl-contrast__legend">${tiers}</ul>
+      <div class="sb-table-scroll" role="region" aria-label="WCAG 2.1 contrast thresholds" tabindex="0">
+        <table class="cl-contrast__table cl-contrast__table--key">
+          <caption>WCAG 2.1 contrast thresholds. Level A has no contrast criterion, so it is not listed.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Content</th>
+              <th scope="col">Level</th>
+              <th scope="col">Minimum</th>
+              <th scope="col">Criterion</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+/**
+ * Pair totals across every global theme, computed rather than asserted — the
+ * Theming Reference quotes these so its accessibility claim cannot drift away
+ * from what the matrix actually shows.
+ */
+const globalThemeContrastTotals = Object.values(globalThemes).reduce(
+  (totals, theme) => {
+    const stats = paletteStats(usablePalette(themePalette(theme)));
+    return {
+      passing: totals.passing + stats.passing,
+      total: totals.total + stats.total,
+    };
+  },
+  { passing: 0, total: 0 },
+);
 
 export default {
   title: 'Tokens/Colors',
@@ -375,7 +664,7 @@ export const ComponentColorSlots = () => `
       <ul style="margin-bottom: 0; line-height: 1.8;">
         <li><strong>Global Theme:</strong> Set via the toolbar at the top of Storybook - affects overall site color palette</li>
         <li><strong>Component Themes:</strong> Individual "dial" settings for specific components</li>
-        <li><strong>Accessibility:</strong> All color combinations are tested to meet WCAG 2.1 AA standards</li>
+        <li><strong>Accessibility:</strong> Contrast is not automatic. Only ${globalThemeContrastTotals.passing} of the ${globalThemeContrastTotals.total} global theme slot pairings clear the WCAG 2.1 AA ${AA_NORMAL_TEXT}:1 minimum for normal text — check a specific pairing in the Contrast Matrix story before relying on it</li>
         <li><strong>Consistency:</strong> Using the same slot numbers across components creates visual cohesion</li>
       </ul>
     </div>
@@ -402,9 +691,14 @@ export const ColorGlobalThemes = () => {
   const brandSlots = ['slot-six', 'slot-seven', 'slot-eight'];
   const themeColorSlots = themeSlots.filter((s) => !brandSlots.includes(s));
 
+  // Headings list the slots actually rendered. The previous hardcoded
+  // "Slots 1–5" heading sat above six swatches, because slot-nine is a theme
+  // color slot too.
+  const slotsHeading = (slots) => `Slots ${slots.map(slotNumber).join(', ')}`;
+
   const renderSwatch = (slot, hsl) => {
     const hex = hslToHex(hsl);
-    const num = slot.replace('slot-', '');
+    const num = slotNumber(slot);
     return `
       <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
         <div style="
@@ -432,7 +726,7 @@ export const ColorGlobalThemes = () => {
       <div style="${shrink ? 'flex:0 0 auto;' : 'flex:1;min-width:0;'}">
         <div style="
           font-size:11px;font-weight:700;text-transform:uppercase;
-          letter-spacing:0.06em;color:#888;margin-bottom:8px;
+          letter-spacing:0.06em;color:var(--color-gray-600);margin-bottom:8px;
         ">${label}</div>
         <div style="
           background:${bgColor};border:1px solid ${borderColor};
@@ -447,14 +741,14 @@ export const ColorGlobalThemes = () => {
   const themeCards = Object.entries(themes)
     .map(([key, theme]) => {
       const themeGroup = renderGroup(
-        'Theme Colors — Slots 1–5',
+        `Theme Colors — ${slotsHeading(themeColorSlots)}`,
         themeColorSlots,
         theme.colors,
         '#f9fafb',
         '#e5e7eb',
       );
       const brandGroup = renderGroup(
-        'Yale Brand Colors — Slots 6–8',
+        `Yale Brand Colors — ${slotsHeading(brandSlots)}`,
         brandSlots,
         theme.colors,
         '#f0f4ff',
@@ -828,3 +1122,156 @@ GlobalThemeColorPairings.args = {
   siteFooterAccent: 'one',
   siteFooterVariation: 'basic',
 };
+
+// ---------------------------------------------------------------------------
+// Contrast Matrix — every slot pairing in every global theme, with its ratio.
+// ---------------------------------------------------------------------------
+export const ThemeContrastMatrix = () => {
+  const themeSections = Object.entries(globalThemes)
+    .map(([key, theme]) => {
+      const palette = usablePalette(themePalette(theme));
+      const stats = paletteStats(palette);
+      const caption = `Contrast ratios between every color slot in the ${theme.label} theme`;
+
+      return `
+        <section class="cl-contrast__theme">
+          <h3 class="cl-contrast__theme-title">
+            ${key.charAt(0).toUpperCase() + key.slice(1)}: ${theme.label}
+          </h3>
+          ${renderPaletteSummary(palette, stats)}
+          ${renderMatrixTable(palette, caption)}
+        </section>`;
+    })
+    .join('');
+
+  return `
+    <div class="cl-contrast">
+      ${renderThresholdKey()}
+      ${themeSections}
+    </div>`;
+};
+ThemeContrastMatrix.storyName = 'Contrast Matrix';
+ThemeContrastMatrix.tags = ['!dev'];
+
+// ---------------------------------------------------------------------------
+// Custom Palette Contrast Checker — the same calculation, on colors you type.
+// ---------------------------------------------------------------------------
+const HEX_HINT = 'Enter a 3- or 6-digit hex color, for example #00356b.';
+
+export const CustomPaletteContrastChecker = () => {
+  const root = document.createElement('div');
+  root.className = 'cl-contrast';
+
+  // Seeded from the first theme so the grid is populated on arrival and the
+  // expected format is obvious; every field can be cleared or replaced.
+  const seed = Object.values(globalThemes)[0].colors;
+
+  const fields = contrastSlotKeys
+    .map((slot) => {
+      const id = `cl-contrast-input-${slot}`;
+      // Uses the design system's own form atom classes rather than restyling an
+      // input from scratch — see 01-atoms/forms/textfields.
+      return `
+        <div class="form-item cl-contrast__field">
+          <label class="form-item__label" for="${id}">${slotLabel(
+        slot,
+      )} color</label>
+          <input
+            class="form-item__textfield"
+            type="text"
+            id="${id}"
+            data-slot="${slot}"
+            value="${rgbToHex(parseHsl(seed[slot]))}"
+            placeholder="#000000"
+            maxlength="7"
+            spellcheck="false"
+            autocomplete="off"
+            aria-describedby="${id}-error"
+          />
+          <p class="form-item__error-text" id="${id}-error"></p>
+        </div>`;
+    })
+    .join('');
+
+  root.innerHTML = `
+    ${renderThresholdKey()}
+    <form class="cl-contrast__form">
+      <fieldset>
+        <legend>Colors to check</legend>
+        <p class="cl-contrast__form-hint">
+          Type a hex color into any field to see how your palette scores.
+          ${HEX_HINT} Leave a field empty to leave that slot out.
+        </p>
+        <div class="cl-contrast__fields">${fields}</div>
+      </fieldset>
+    </form>
+    <div class="cl-contrast__results"></div>
+    <p class="visually-hidden" aria-live="polite"></p>`;
+
+  const results = root.querySelector('.cl-contrast__results');
+  const announcer = root.querySelector('[aria-live]');
+  const inputs = Array.from(root.querySelectorAll('input[data-slot]'));
+
+  /** Read the fields, flagging bad values rather than silently dropping them. */
+  const readPalette = () => {
+    const palette = {};
+
+    inputs.forEach((input) => {
+      const raw = input.value.trim();
+      const rgb = parseHex(raw);
+      const invalid = raw !== '' && !rgb;
+
+      input.setAttribute('aria-invalid', String(invalid));
+      input.classList.toggle('form-item__textfield--error', invalid);
+      root.querySelector(`#${input.id}-error`).textContent = invalid
+        ? HEX_HINT
+        : '';
+
+      if (rgb) palette[input.dataset.slot] = rgb;
+    });
+
+    return palette;
+  };
+
+  /**
+   * Nothing the visitor types reaches innerHTML: the grid is rebuilt from the
+   * parsed {r, g, b} integers, and the one place raw input would show (the
+   * per-field error) is set with textContent.
+   */
+  const render = () => {
+    const palette = readPalette();
+    const stats = paletteStats(palette);
+
+    results.innerHTML = `
+      ${renderPaletteSummary(palette, stats)}
+      ${
+        stats.total
+          ? renderMatrixTable(
+              palette,
+              'Contrast ratios between every color you entered',
+            )
+          : ''
+      }`;
+
+    return stats;
+  };
+
+  let stats = render();
+
+  root.addEventListener('input', () => {
+    stats = render();
+  });
+
+  // The spoken summary updates on commit rather than on every keystroke, which
+  // would otherwise queue one announcement per character typed. `change` only
+  // fires after the value changed, so the last `input` render is current.
+  root.addEventListener('change', () => {
+    announcer.textContent = stats.total
+      ? `${stats.passing} of ${stats.total} pairings meet AA for normal text. Colors with no passing partner: ${stats.isolated.length}.`
+      : 'Enter at least two colors to compare.';
+  });
+
+  return root;
+};
+CustomPaletteContrastChecker.storyName = 'Custom Palette Contrast Checker';
+CustomPaletteContrastChecker.tags = ['!dev'];

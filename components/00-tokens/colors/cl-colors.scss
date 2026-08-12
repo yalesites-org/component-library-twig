@@ -260,3 +260,216 @@ $cl-colors-copy-success: #16a34a;
     border-top: 0.25rem dotted var(--color-gray-300);
   }
 }
+
+// Contrast matrix (Tokens/Colors/Contrast Matrix).
+// Verdict tints. There is no Yale token for semantic pass/warn/fail, so they
+// are defined here alongside $cl-colors-copy-success. They are deliberately
+// pale: every cell prints its verdict as text as well, and the text is
+// --color-gray-900 throughout, which clears AA on all four backgrounds. A page
+// about contrast has no business failing it.
+$cl-contrast-pass: #d6ebdd;
+$cl-contrast-pass-strong: #b9dfc7;
+$cl-contrast-warn: #f8ecc9;
+$cl-contrast-fail: #f6dcdc;
+
+.cl-contrast {
+  color: var(--color-gray-900);
+  margin-bottom: var(--size-spacing-9);
+
+  &__key {
+    background: var(--color-gray-100);
+    border: 1px solid var(--color-gray-200);
+    padding: var(--size-spacing-5);
+    margin-bottom: var(--size-spacing-7);
+  }
+
+  &__legend {
+    list-style: none;
+    margin: 0 0 var(--size-spacing-5);
+    padding: 0;
+    display: grid;
+    gap: var(--size-spacing-4);
+  }
+
+  &__legend-item {
+    display: flex;
+    align-items: baseline;
+    gap: var(--size-spacing-4);
+    flex-wrap: wrap;
+  }
+
+  &__theme {
+    margin-bottom: var(--size-spacing-8);
+  }
+
+  &__theme-title {
+    margin: 0 0 var(--size-spacing-4);
+  }
+
+  &__summary {
+    margin: 0 0 var(--size-spacing-4);
+  }
+
+  &__notice {
+    margin: 0 0 var(--size-spacing-5);
+    padding: var(--size-spacing-4);
+    border-left: 0.25rem solid var(--color-gray-400);
+    background: var(--color-gray-100);
+
+    p {
+      margin: 0 0 var(--size-spacing-4);
+    }
+
+    p:last-child,
+    ul:last-child {
+      margin-bottom: 0;
+    }
+
+    &--ok {
+      border-left-color: $cl-contrast-pass-strong;
+      background: $cl-contrast-pass;
+    }
+
+    &--warn {
+      border-left-color: var(--color-gray-700);
+      background: $cl-contrast-warn;
+    }
+  }
+
+  &__table {
+    border-collapse: collapse;
+    font-size: 0.8rem;
+
+    caption {
+      text-align: left;
+      margin-bottom: var(--size-spacing-4);
+      color: var(--color-gray-700);
+    }
+
+    th,
+    td {
+      border: 1px solid var(--color-gray-300);
+      padding: var(--size-spacing-4);
+      text-align: left;
+      vertical-align: top;
+    }
+  }
+
+  &__table--key {
+    font-size: 0.9rem;
+    background: var(--color-basic-white);
+  }
+
+  &__head {
+    background: var(--color-basic-white);
+    white-space: nowrap;
+    font-weight: 700;
+  }
+
+  &__chip {
+    display: inline-block;
+    width: 0.85rem;
+    height: 0.85rem;
+    margin-right: 0.35rem;
+    vertical-align: -0.1rem;
+    border: 1px solid var(--color-gray-400);
+  }
+
+  &__hex {
+    display: block;
+    font-family: monospace;
+    font-weight: 400;
+    color: var(--color-gray-700);
+  }
+
+  &__cell {
+    text-align: right;
+  }
+
+  &__ratio {
+    display: block;
+    font-family: monospace;
+    font-weight: 700;
+  }
+
+  &__badge {
+    display: block;
+    white-space: nowrap;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  &__cell--aaa,
+  &__badge--aaa {
+    background: $cl-contrast-pass-strong;
+  }
+
+  &__cell--aa,
+  &__badge--aa {
+    background: $cl-contrast-pass;
+  }
+
+  &__cell--large,
+  &__badge--large {
+    background: $cl-contrast-warn;
+  }
+
+  &__cell--fail,
+  &__badge--fail {
+    background: $cl-contrast-fail;
+  }
+
+  &__cell--self {
+    background: var(--color-gray-200);
+    text-align: center;
+  }
+
+  &__badge--aaa,
+  &__badge--aa,
+  &__badge--large,
+  &__badge--fail {
+    display: inline-block;
+    padding: 0.1rem 0.4rem;
+  }
+
+  &__form {
+    margin-bottom: var(--size-spacing-6);
+
+    fieldset {
+      border: 1px solid var(--color-gray-200);
+      padding: var(--size-spacing-5);
+    }
+
+    legend {
+      font-weight: 700;
+      padding: 0 var(--size-spacing-4);
+    }
+  }
+
+  &__form-hint {
+    margin: 0 0 var(--size-spacing-5);
+    max-width: 60ch;
+  }
+
+  &__fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+    gap: var(--size-spacing-5);
+  }
+
+  // The fields are .form-item textfields from 01-atoms/forms; only the grid
+  // layout is overridden here.
+  &__field {
+    max-width: none;
+    margin-bottom: 0;
+
+    .form-item__textfield {
+      font-family: monospace;
+    }
+
+    .form-item__error-text:empty {
+      display: none;
+    }
+  }
+}
