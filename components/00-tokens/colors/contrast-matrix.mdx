@@ -11,6 +11,8 @@ For each theme, the grid below computes the WCAG 2.1 contrast ratio between ever
 
 Ratios and verdicts are computed from the `global-themes` values in `@yalesites-org/tokens` at render time. Nothing on this page is a stored result, so a theme or slot added upstream appears here automatically.
 
+**Testing colors of your own?** Skip the built-in themes and go straight to [Check your own colors](#check-your-own-colors).
+
 ## What contrast ratio means
 
 A contrast ratio compares the relative luminance of two colors. It runs from 1:1 (identical colors, invisible) to 21:1 (black on white). WCAG 2.1 sets minimums by content type:
@@ -25,13 +27,17 @@ The ratio is symmetrical: it does not matter which of the two colors is the text
 
 ## Ratios by global theme
 
-<Canvas of={ColorsStories.ThemeContrastMatrix} />
+<div className="sb-contained-canvas">
+  <Canvas of={ColorsStories.ThemeContrastMatrix} />
+</div>
 
 ## Check your own colors
 
 Use this when someone proposes a custom palette. Replace any of the values below with the hex colors under consideration and the same calculation runs against them. Empty fields are left out of the comparison, and an unreadable value is flagged rather than silently ignored.
 
-<Canvas of={ColorsStories.CustomPaletteContrastChecker} />
+<div className="sb-contained-canvas">
+  <Canvas of={ColorsStories.CustomPaletteContrastChecker} />
+</div>
 
 ## Reading the results
 
