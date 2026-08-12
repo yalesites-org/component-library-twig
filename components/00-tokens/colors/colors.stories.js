@@ -6,6 +6,7 @@ import {
   contrastRatio,
   evaluateRatio,
   findIsolatedSlots,
+  formatContrastReport,
   formatRatio,
   parseHex,
   parseHsl,
@@ -1287,10 +1288,18 @@ export const CustomPaletteContrastChecker = () => {
       </fieldset>
     </form>
     <div class="cl-contrast__results"></div>
+    <button type="button" class="cl-contrast__download">
+      Download these results as a text file
+    </button>
+    <p class="cl-contrast__download-hint">
+      A plain-text summary of the colors, the coverage table and every pairing —
+      for sending to someone who is not looking at this page.
+    </p>
     <p class="visually-hidden" aria-live="polite"></p>`;
 
   const results = root.querySelector('.cl-contrast__results');
   const announcer = root.querySelector('[aria-live]');
+  const download = root.querySelector('.cl-contrast__download');
   const inputs = Array.from(root.querySelectorAll('input[data-slot]'));
 
   /** Read the fields, flagging bad values rather than silently dropping them. */
@@ -1334,13 +1343,16 @@ export const CustomPaletteContrastChecker = () => {
           : ''
       }`;
 
-    return stats;
+    // Nothing to export until there are two colors to compare.
+    download.disabled = !stats.total;
+
+    return { palette, stats };
   };
 
-  let stats = render();
+  let { palette, stats } = render();
 
   root.addEventListener('input', () => {
-    stats = render();
+    ({ palette, stats } = render());
   });
 
   // The spoken summary updates on commit rather than on every keystroke, which
@@ -1362,6 +1374,44 @@ export const CustomPaletteContrastChecker = () => {
     announcer.textContent = `${stats.total} ${pairings} compared. ${counts}. ${
       strandedSentence(stats).text
     }`;
+  });
+
+  download.addEventListener('click', () => {
+    const generatedOn = new Date().toISOString().slice(0, 10);
+    const text = formatContrastReport({
+      generatedOn,
+      colors: Object.keys(palette).map((slot) => ({
+        label: slotLabel(slot),
+        hex: rgbToHex(palette[slot]),
+      })),
+      thresholds: stats.thresholds.map((group) => ({
+        minimum: group.minimum,
+        usedFor: thresholdUsedFor(group),
+        passing: group.passing,
+        total: stats.total,
+        isolated: group.isolated.map(slotLabel),
+      })),
+      pairs: palettePairs(palette).map((pair) => ({
+        a: slotLabel(pair.slots[0]),
+        b: slotLabel(pair.slots[1]),
+        ratio: pair.ratio,
+        verdict: tierFor(pair.ratio).label,
+      })),
+    });
+
+    const filename = `yalesites-contrast-check-${generatedOn}.txt`;
+    const url = URL.createObjectURL(
+      new Blob([text], { type: 'text/plain;charset=utf-8' }),
+    );
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    // Revoked on the next tick rather than immediately: Safari has not always
+    // finished reading the blob by the time click() returns.
+    setTimeout(() => URL.revokeObjectURL(url), 0);
+
+    announcer.textContent = `Downloaded ${filename}.`;
   });
 
   return root;

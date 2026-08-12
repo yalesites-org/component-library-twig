@@ -272,6 +272,16 @@ $cl-contrast-pass-strong: #b9dfc7;
 $cl-contrast-warn: #f8ecc9;
 $cl-contrast-fail: #f6dcdc;
 
+// The nine-column grids do not fit Storybook's default 1000px docs column --
+// every grid needed horizontal scrolling to reach the last slots. Widen just
+// the page that contains them; 1260px is where all of them fit without
+// scrolling. The prose widens with the canvases so the two stay aligned, which
+// is the reason the canvases are contained in the first place. max-width still
+// lets the page shrink normally on smaller screens.
+.sbdocs-content:has(.cl-contrast) {
+  max-width: 1260px;
+}
+
 .cl-contrast {
   color: var(--color-gray-900);
   margin-bottom: var(--size-spacing-9);
@@ -473,6 +483,36 @@ $cl-contrast-fail: #f6dcdc;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
     gap: var(--size-spacing-5);
+  }
+
+  // No generic button exists in the design system -- .cta is a themed Twig
+  // component, not a docs utility -- so this follows the local precedent set by
+  // .cl-colors__copy-btn in this same file. Focus ring comes from the global
+  // focus mixin in 00-tokens/utility.
+  &__download {
+    appearance: none;
+    margin-top: var(--size-spacing-5);
+    padding: var(--size-spacing-4) var(--size-spacing-5);
+    border: 1px solid var(--color-gray-700);
+    background: var(--color-basic-white);
+    color: var(--color-gray-900);
+    font: inherit;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+      border-color: var(--color-gray-400);
+      color: var(--color-gray-600);
+    }
+
+    &:hover:not(:disabled) {
+      background: var(--color-gray-100);
+    }
+  }
+
+  &__download-hint {
+    margin: var(--size-spacing-4) 0 0;
+    color: var(--color-gray-700);
   }
 
   // The fields are .form-item textfields from 01-atoms/forms; only the grid

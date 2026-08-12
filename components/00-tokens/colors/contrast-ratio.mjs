@@ -191,7 +191,10 @@ export function contrastRatio(rgbA, rgbB) {
  */
 export function formatRatio(ratio) {
   if (typeof ratio !== 'number' || Number.isNaN(ratio)) return null;
-  return (Math.floor(ratio * 100) / 100).toFixed(2);
+  // The epsilon absorbs binary representation error: 2.26 * 100 is
+  // 225.99999999999997, which would otherwise truncate to 2.25. It is far too
+  // small to lift a genuinely failing ratio over a threshold.
+  return (Math.floor(ratio * 100 + 1e-9) / 100).toFixed(2);
 }
 
 /** Evaluate a ratio against every WCAG level. Returns [] for a null ratio. */
@@ -201,6 +204,87 @@ export function evaluateRatio(ratio) {
     ...level,
     passes: ratio >= level.minimum,
   }));
+}
+
+/** Pad every cell to its column's widest value so text columns line up. */
+function formatTextTable(header, rows) {
+  const widths = header.map((_, column) =>
+    Math.max(
+      header[column].length,
+      ...rows.map((row) => String(row[column]).length),
+    ),
+  );
+  const line = (cells) =>
+    cells
+      .map((cell, column) => String(cell).padEnd(widths[column]))
+      .join('  ')
+      .trimEnd();
+
+  return [line(header), line(widths.map((width) => '-'.repeat(width)))]
+    .concat(rows.map(line))
+    .join('\n');
+}
+
+/**
+ * A plain-text report of a contrast check, for handing to someone who was not
+ * looking at the page — a designer proposing a palette, or a ticket.
+ *
+ * Text rather than CSV because the audience is a person reading it, not a
+ * spreadsheet. Kept here rather than in the story so the layout is testable.
+ *
+ * @param {Object} report
+ * @param {string} report.generatedOn Date stamp, supplied by the caller.
+ * @param {Array} report.colors [{ label, hex }] in display order.
+ * @param {Array} report.thresholds [{ minimum, usedFor, passing, total, isolated }].
+ * @param {Array} report.pairs [{ a, b, ratio, verdict }] every pairing.
+ */
+export function formatContrastReport({
+  generatedOn,
+  colors,
+  thresholds,
+  pairs,
+}) {
+  const sections = [
+    `YaleSites contrast check`,
+    `Generated ${generatedOn}`,
+    '',
+    'COLORS CHECKED',
+    formatTextTable(
+      ['Name', 'Hex'],
+      colors.map((color) => [color.label, color.hex]),
+    ),
+    '',
+    'COVERAGE BY WCAG MINIMUM',
+    formatTextTable(
+      ['Minimum', 'Used for', 'Pairings passing', 'Slots with no partner'],
+      thresholds.map((group) => [
+        `${group.minimum}:1`,
+        group.usedFor,
+        `${group.passing} of ${group.total}`,
+        group.isolated.length ? group.isolated.join(', ') : 'None',
+      ]),
+    ),
+    '',
+    'EVERY PAIRING',
+    formatTextTable(
+      ['Pairing', 'Ratio', 'Verdict'],
+      pairs.map((pair) => [
+        `${pair.a} / ${pair.b}`,
+        `${formatRatio(pair.ratio)}:1`,
+        pair.verdict,
+      ]),
+    ),
+    '',
+    'WCAG 2.1 thresholds',
+    ...WCAG_LEVELS.map(
+      (level) =>
+        `  ${level.minimum}:1  ${level.label} (${level.level}), SC ${level.criterion}`,
+    ),
+    '  Level A has no contrast success criterion.',
+    '',
+  ];
+
+  return sections.join('\n');
 }
 
 /**

@@ -17,6 +17,7 @@ import {
   contrastRatio,
   evaluateRatio,
   findIsolatedSlots,
+  formatContrastReport,
   formatRatio,
   parseHex,
   parseHsl,
@@ -142,6 +143,65 @@ test('a slot can have a partner at one minimum and none at a higher one', () => 
     'slot-two',
   ]);
   assert.deepEqual(findIsolatedSlots(palette, 7), ['slot-one', 'slot-two']);
+});
+
+test('formatContrastReport produces an aligned, self-describing text report', () => {
+  const report = formatContrastReport({
+    generatedOn: '2026-08-12',
+    colors: [
+      { label: 'Slot 1', hex: '#000000' },
+      { label: 'Slot 10', hex: '#ffffff' },
+    ],
+    thresholds: [
+      {
+        minimum: 3,
+        usedFor: 'Large text (AA)',
+        passing: 1,
+        total: 1,
+        isolated: [],
+      },
+      {
+        minimum: 7,
+        usedFor: 'Normal text (AAA)',
+        passing: 0,
+        total: 1,
+        isolated: ['Slot 1', 'Slot 10'],
+      },
+    ],
+    pairs: [{ a: 'Slot 1', b: 'Slot 10', ratio: 21, verdict: 'Pass' }],
+  });
+
+  const lines = report.split('\n');
+
+  assert.match(report, /^YaleSites contrast check\nGenerated 2026-08-12$/m);
+  // Values are present, including the ratio formatted the same way the grid
+  // formats it.
+  assert.match(report, /#000000/);
+  assert.match(report, /21\.00:1/);
+  assert.match(report, /1 of 1/);
+  // Empty isolated lists read as "None" rather than blank.
+  assert.match(report, /3:1 {2,}Large text \(AA\) {2,}1 of 1 {2,}None/);
+  assert.match(
+    report,
+    /7:1 {2,}Normal text \(AAA\) {2,}0 of 1 {2,}Slot 1, Slot 10/,
+  );
+  // Columns are padded to the widest value: "Slot 10" is longer than "Slot 1",
+  // so the hex column starts at the same offset on both rows.
+  const colorRows = lines.filter((line) => /^Slot (1|10)\s+#/.test(line));
+  assert.equal(colorRows.length, 2);
+  assert.equal(
+    colorRows[0].indexOf('#'),
+    colorRows[1].indexOf('#'),
+    'hex column should be aligned',
+  );
+  // Every WCAG level is explained so the file stands alone.
+  WCAG_LEVELS.forEach((level) => {
+    assert.match(
+      report,
+      new RegExp(`SC ${level.criterion.replace('.', '\\.')}`),
+    );
+  });
+  assert.match(report, /Level A has no contrast success criterion/);
 });
 
 test('findIsolatedSlots reports slots with no partner at the threshold', () => {
