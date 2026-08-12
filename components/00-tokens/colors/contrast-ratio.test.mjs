@@ -12,6 +12,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  AA_NORMAL_TEXT,
   WCAG_LEVELS,
   contrastRatio,
   evaluateRatio,
@@ -20,6 +21,7 @@ import {
   parseHex,
   parseHsl,
   rgbToHex,
+  thresholdGroups,
 } from './contrast-ratio.mjs';
 
 const BLACK = { r: 0, g: 0, b: 0 };
@@ -102,6 +104,44 @@ test('evaluateRatio applies each WCAG minimum to the unrounded ratio', () => {
   assert.equal(at21.length, WCAG_LEVELS.length);
 
   assert.deepEqual(evaluateRatio(null), []);
+});
+
+test('thresholdGroups collapses the five criteria onto their distinct minimums', () => {
+  const groups = thresholdGroups();
+
+  // Ascending, deduplicated: 3 (large AA + non-text), 4.5 (normal AA + large
+  // AAA), 7 (normal AAA). Reporting per minimum is why no dropdown is needed.
+  assert.deepEqual(
+    groups.map((group) => group.minimum),
+    [3, 4.5, 7],
+  );
+  assert.deepEqual(
+    groups.map((group) => group.levels.map((level) => level.id)),
+    [['large-aa', 'non-text'], ['normal-aa', 'large-aaa'], ['normal-aaa']],
+  );
+  // Every criterion is represented exactly once.
+  assert.equal(
+    groups.reduce((total, group) => total + group.levels.length, 0),
+    WCAG_LEVELS.length,
+  );
+});
+
+test('a slot can have a partner at one minimum and none at a higher one', () => {
+  // ~3.5:1 apart: partnered at 3:1, stranded at 4.5:1 and 7:1. This is the
+  // whole reason the summary reports each threshold separately.
+  const palette = {
+    'slot-one': parseHex('#ffffff'),
+    'slot-two': parseHex('#8a8a8a'),
+  };
+  const ratio = contrastRatio(palette['slot-one'], palette['slot-two']);
+  assert.ok(ratio > 3 && ratio < 4.5, `expected 3-4.5, got ${ratio}`);
+
+  assert.deepEqual(findIsolatedSlots(palette, 3), []);
+  assert.deepEqual(findIsolatedSlots(palette, AA_NORMAL_TEXT), [
+    'slot-one',
+    'slot-two',
+  ]);
+  assert.deepEqual(findIsolatedSlots(palette, 7), ['slot-one', 'slot-two']);
 });
 
 test('findIsolatedSlots reports slots with no partner at the threshold', () => {

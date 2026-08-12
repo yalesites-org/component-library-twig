@@ -11,6 +11,7 @@ import {
   parseHsl,
   rgbToHex,
   rgbToString,
+  thresholdGroups,
 } from './contrast-ratio.mjs';
 import colorMeta from './color-data.yml';
 import printColorsMeta from './print-colors.yml';
@@ -234,6 +235,10 @@ const slotLabel = (slot) => `Slot ${slotNumber(slot)}`;
  * Verdicts, worst to best. Each carries a word and a symbol so the result never
  * depends on the cell's color alone (WCAG 1.4.1 Use of Color) — which would be
  * an unfortunate way for a contrast story to fail.
+ *
+ * The five WCAG criteria use only three distinct minimums (3, 4.5 and 7), so
+ * these four tiers encode every one of them: a cell's tier says which of the
+ * three boundaries the pairing clears.
  */
 const CONTRAST_TIERS = {
   aaa: {
@@ -287,26 +292,42 @@ const themePalette = (theme) =>
 const usablePalette = (palette) =>
   Object.fromEntries(Object.entries(palette).filter(([, rgb]) => rgb));
 
-/** Pair counts and stranded slots for one palette, at the AA text threshold. */
-function paletteStats(palette) {
+/** Every unordered pairing in a palette, with its ratio, computed once. */
+function palettePairs(palette) {
   const slots = Object.keys(palette);
-  let passing = 0;
-  let total = 0;
 
-  slots.forEach((slot, index) => {
-    slots.slice(index + 1).forEach((other) => {
-      total += 1;
-      if (contrastRatio(palette[slot], palette[other]) >= AA_NORMAL_TEXT) {
-        passing += 1;
-      }
-    });
-  });
+  return slots.flatMap((slot, index) =>
+    slots.slice(index + 1).map((other) => ({
+      slots: [slot, other],
+      ratio: contrastRatio(palette[slot], palette[other]),
+    })),
+  );
+}
+
+/**
+ * How a palette fares at each distinct WCAG minimum.
+ *
+ * Reported per minimum rather than only at 4.5:1, because "does every slot
+ * have a usable partner" has a different answer for icons (3:1) than for body
+ * text (4.5:1) than for AAA (7:1), and a reader needs all three at once.
+ */
+function paletteStats(palette) {
+  const pairs = palettePairs(palette);
 
   return {
-    passing,
-    total,
-    isolated: findIsolatedSlots(palette, AA_NORMAL_TEXT),
+    total: pairs.length,
+    thresholds: thresholdGroups().map((group) => ({
+      ...group,
+      passing: pairs.filter((pair) => pair.ratio >= group.minimum).length,
+      isolated: findIsolatedSlots(palette, group.minimum),
+    })),
   };
+}
+
+/** The strictest minimum at which no slot is stranded, or null if none is. */
+function strictestCleanThreshold(stats) {
+  const clean = stats.thresholds.filter((t) => !t.isolated.length);
+  return clean.length ? clean[clean.length - 1] : null;
 }
 
 /** The strongest pairing available to one slot — used to say how far off it is. */
@@ -398,41 +419,98 @@ function renderMatrixTable(palette, caption) {
     </div>`;
 }
 
-/** The plain-language verdict that goes above each grid. */
+/** "Normal text (AA), Large text (AAA)" — what a given minimum is used for. */
+const thresholdUsedFor = (group) =>
+  group.levels.map((level) => `${level.label} (${level.level})`).join(', ');
+
+/**
+ * The gist in one sentence, phrased around the strictest minimum that leaves
+ * nothing stranded — the number a reader can actually design to.
+ *
+ * Shared by the visible headline and the checker's spoken announcement so the
+ * two cannot drift apart.
+ */
+function strandedSentence(stats) {
+  const clean = strictestCleanThreshold(stats);
+  const strictest = stats.thresholds[stats.thresholds.length - 1];
+
+  if (clean === strictest) {
+    return {
+      tone: 'ok',
+      text: `Every slot has at least one partner even at ${strictest.minimum}:1, the strictest WCAG minimum. Nothing here is stranded.`,
+    };
+  }
+
+  if (!clean) {
+    return {
+      tone: 'warn',
+      text: `Some slots have no partner at any WCAG minimum, not even ${stats.thresholds[0].minimum}:1. See the table.`,
+    };
+  }
+
+  return {
+    tone: 'ok',
+    text: `Every slot has at least one partner up to ${clean.minimum}:1. Above that some slots have none — see the table.`,
+  };
+}
+
+function renderStrandedHeadline(stats) {
+  const { tone, text } = strandedSentence(stats);
+  return `<p class="cl-contrast__notice cl-contrast__notice--${tone}">
+    <span aria-hidden="true">${tone === 'ok' ? '✓' : '!'}</span> ${text}
+  </p>`;
+}
+
+/** Which slots are stranded at one minimum, and how far short they fall. */
+function renderIsolatedCell(palette, group) {
+  if (!group.isolated.length) return 'None';
+
+  return group.isolated
+    .map((slot) => {
+      const best = bestPartner(palette, slot);
+      const shortfall = best ? ` (best ${formatRatio(best.ratio)}:1)` : '';
+      return `${slotLabel(slot)}${shortfall}`;
+    })
+    .join(', ');
+}
+
+/**
+ * The per-threshold breakdown that goes above each grid.
+ *
+ * Every distinct minimum gets its own row rather than only 4.5:1, because
+ * whether a palette works depends on what it is being used for: icons need
+ * 3:1, body text 4.5:1, AAA body text 7:1.
+ */
 function renderPaletteSummary(palette, stats) {
   if (!stats.total) {
     return `<p class="cl-contrast__notice">Enter at least two colors to compare.</p>`;
   }
 
-  const headline = `<p class="cl-contrast__summary"><strong>${stats.passing} of ${stats.total}</strong> pairings meet the AA ${AA_NORMAL_TEXT}:1 minimum for normal text.</p>`;
-
-  if (!stats.isolated.length) {
-    return `${headline}
-      <p class="cl-contrast__notice cl-contrast__notice--ok">
-        <span aria-hidden="true">✓</span>
-        Every slot has at least one partner at ${AA_NORMAL_TEXT}:1, so no slot is stranded.
-      </p>`;
-  }
-
-  const items = stats.isolated
-    .map((slot) => {
-      const best = bestPartner(palette, slot);
-      const bestText = best
-        ? `its strongest pairing is ${formatRatio(
-            best.ratio,
-          )}:1 against ${slotLabel(best.slot)}`
-        : 'it has nothing to pair with';
-      return `<li><strong>${slotLabel(slot)}</strong> (${rgbToHex(
-        palette[slot],
-      )}) — ${bestText}.</li>`;
-    })
+  const rows = stats.thresholds
+    .map(
+      (group) => `
+        <tr>
+          <th scope="row">${group.minimum}:1</th>
+          <td>${thresholdUsedFor(group)}</td>
+          <td><strong>${group.passing}</strong> of ${stats.total}</td>
+          <td>${renderIsolatedCell(palette, group)}</td>
+        </tr>`,
+    )
     .join('');
 
-  return `${headline}
-    <div class="cl-contrast__notice cl-contrast__notice--warn">
-      <p><span aria-hidden="true">!</span> <strong>No passing partner.</strong> These slots cannot carry normal text against any other color here:</p>
-      <ul>${items}</ul>
-      <p>To fix one, move it substantially lighter or darker — a near-black or white will clear ${AA_NORMAL_TEXT}:1 against most mid-tones. Otherwise reserve it for decorative fills and large graphics, where 1.4.3 does not apply and only the 3:1 non-text minimum does.</p>
+  return `${renderStrandedHeadline(stats)}
+    <div class="sb-table-scroll" role="region" aria-label="Pairings meeting each WCAG minimum" tabindex="0">
+      <table class="cl-contrast__table cl-contrast__table--summary">
+        <thead>
+          <tr>
+            <th scope="col">Minimum</th>
+            <th scope="col">Used for</th>
+            <th scope="col">Pairings that pass</th>
+            <th scope="col">Slots with no partner</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
     </div>`;
 }
 
@@ -487,8 +565,11 @@ function renderThresholdKey() {
 const globalThemeContrastTotals = Object.values(globalThemes).reduce(
   (totals, theme) => {
     const stats = paletteStats(usablePalette(themePalette(theme)));
+    const normalText = stats.thresholds.find(
+      (group) => group.minimum === AA_NORMAL_TEXT,
+    );
     return {
-      passing: totals.passing + stats.passing,
+      passing: totals.passing + normalText.passing,
       total: totals.total + stats.total,
     };
   },
@@ -1266,9 +1347,21 @@ export const CustomPaletteContrastChecker = () => {
   // would otherwise queue one announcement per character typed. `change` only
   // fires after the value changed, so the last `input` render is current.
   root.addEventListener('change', () => {
-    announcer.textContent = stats.total
-      ? `${stats.passing} of ${stats.total} pairings meet AA for normal text. Colors with no passing partner: ${stats.isolated.length}.`
-      : 'Enter at least two colors to compare.';
+    if (!stats.total) {
+      announcer.textContent = 'Enter at least two colors to compare.';
+      return;
+    }
+    // "N of M at X:1" rather than "N meet X:1" sidesteps verb agreement when
+    // there is exactly one pairing.
+    const counts = stats.thresholds
+      .map(
+        (group) => `${group.passing} of ${stats.total} at ${group.minimum}:1`,
+      )
+      .join('. ');
+    const pairings = stats.total === 1 ? 'pairing' : 'pairings';
+    announcer.textContent = `${stats.total} ${pairings} compared. ${counts}. ${
+      strandedSentence(stats).text
+    }`;
   });
 
   return root;

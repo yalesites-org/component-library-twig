@@ -54,12 +54,30 @@ export const WCAG_LEVELS = [
 ];
 
 /**
- * The AA normal-text minimum — the threshold a slot pairing has to clear.
+ * The AA normal-text minimum — the usual headline threshold.
  * Read from WCAG_LEVELS rather than restated, so there is one 4.5 in this file.
  */
 export const AA_NORMAL_TEXT = WCAG_LEVELS.find(
   (level) => level.id === 'normal-aa',
 ).minimum;
+
+/**
+ * The distinct minimums, ascending, each with the criteria that share it.
+ *
+ * The five criteria only use three numbers — 3, 4.5 and 7 — so reporting per
+ * *minimum* rather than per criterion says everything there is to say without
+ * repeating a threshold under two names.
+ */
+export function thresholdGroups() {
+  const minimums = [...new Set(WCAG_LEVELS.map((level) => level.minimum))];
+
+  return minimums
+    .sort((a, b) => a - b)
+    .map((minimum) => ({
+      minimum,
+      levels: WCAG_LEVELS.filter((level) => level.minimum === minimum),
+    }));
+}
 
 const HEX_PATTERN = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i;
 

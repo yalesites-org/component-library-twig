@@ -355,9 +355,26 @@ $cl-contrast-fail: #f6dcdc;
     }
   }
 
-  &__table--key {
+  &__table--key,
+  &__table--summary {
     font-size: 0.9rem;
     background: var(--color-basic-white);
+  }
+
+  // Per-threshold breakdown above each grid. Sits close to its grid and stays
+  // visually lighter than it, so the grid remains the focus.
+  &__table--summary {
+    margin-bottom: var(--size-spacing-5);
+
+    td,
+    th {
+      padding: var(--size-spacing-4) var(--size-spacing-5);
+    }
+
+    tbody th {
+      white-space: nowrap;
+      font-family: monospace;
+    }
   }
 
   &__head {
