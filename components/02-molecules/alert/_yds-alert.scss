@@ -168,6 +168,7 @@ $alert-fade-speed: var(--animation-speed-slow);
   flex: 0 0 var(--size-icon);
   display: flex;
   transform: rotate(180deg);
+  cursor: pointer;
 
   [data-alert-state='collapsed'] & {
     transform: rotate(0deg);
