@@ -402,7 +402,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       grid-row: 2 / 7;
       align-self: center;
 
-      .yds-two-column & {
+      .yds-two-column &,
+      .yds-layout[data-component-layout='seventy-thirty'] & {
         grid-column: 2 / -1;
       }
     }

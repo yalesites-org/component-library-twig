@@ -130,7 +130,8 @@ blockquote {
     @media (min-width: tokens.$break-mobile) {
       margin-left: 9rem;
 
-      .yds-two-column & {
+      .yds-two-column &,
+      .yds-layout[data-component-layout='seventy-thirty'] & {
         margin-left: 0;
       }
     }
