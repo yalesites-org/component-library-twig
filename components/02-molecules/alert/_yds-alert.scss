@@ -170,6 +170,14 @@ $alert-fade-speed: var(--animation-speed-slow);
   transform: rotate(180deg);
   cursor: pointer;
 
+  // `button-reset` zeroes padding, leaving the 20px icon as the whole tap target
+  // below $break-mobile -- under WCAG 2.2 SC 2.5.8's 24px minimum. 2px of
+  // transparent padding reaches 24px without touching the icon. Deliberately not
+  // `--size-click-target-minimum` (44px): that reflows the mobile text column,
+  // which YaleSites-Internal#1529 rules out. Width comes from the flex automatic
+  // minimum, so `min-width: 0` or `overflow` here would silently undo it.
+  padding: var(--size-spacing-1);
+
   [data-alert-state='collapsed'] & {
     transform: rotate(0deg);
   }
