@@ -483,6 +483,12 @@ $cl-contrast-fail: #f6dcdc;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
     gap: var(--size-spacing-5);
+
+    // Two groups stack here (editable slots, then the brand-color block) --
+    // see the split in CustomPaletteContrastChecker.
+    & + & {
+      margin-top: var(--size-spacing-5);
+    }
   }
 
   // No generic button exists in the design system -- .cta is a themed Twig
@@ -528,5 +534,21 @@ $cl-contrast-fail: #f6dcdc;
     .form-item__error-text:empty {
       display: none;
     }
+  }
+
+  // Slots six, seven and eight in the custom checker — read-only, so they
+  // look it rather than relying on the attribute alone.
+  &__field--static {
+    .form-item__textfield {
+      background: var(--color-gray-100);
+      color: var(--color-gray-700);
+      cursor: default;
+    }
+  }
+
+  &__field-hint {
+    margin: var(--size-spacing-2) 0 0;
+    font-size: 0.8rem;
+    color: var(--color-gray-700);
   }
 }

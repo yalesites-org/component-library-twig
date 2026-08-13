@@ -210,6 +210,12 @@ const globalThemes = tokens['global-themes'];
 // theme's own matrix reads that theme's slots, so themes may differ.
 const contrastSlotKeys = Object.keys(Object.values(globalThemes)[0].colors);
 
+// Slots six, seven and eight are Yale's brand colors (blue, near-black,
+// white) -- they are not exposed for customization anywhere in the design
+// system, so the custom checker below renders them read-only rather than
+// inviting an edit that could never ship.
+const BRAND_SLOTS = ['slot-six', 'slot-seven', 'slot-eight'];
+
 // Slot token keys spell the number out ("slot-six") but every doc and label
 // refers to slots by numeral, so map back. An unrecognised word falls through
 // unchanged, which keeps a slot added upstream rendering rather than blank.
@@ -770,8 +776,7 @@ export const ColorGlobalThemes = () => {
   const themes = tokens['global-themes'];
 
   const themeSlots = Object.keys(Object.values(themes)[0].colors);
-  const brandSlots = ['slot-six', 'slot-seven', 'slot-eight'];
-  const themeColorSlots = themeSlots.filter((s) => !brandSlots.includes(s));
+  const themeColorSlots = themeSlots.filter((s) => !BRAND_SLOTS.includes(s));
 
   // Headings list the slots actually rendered. The previous hardcoded
   // "Slots 1–5" heading sat above six swatches, because slot-nine is a theme
@@ -830,8 +835,8 @@ export const ColorGlobalThemes = () => {
         '#e5e7eb',
       );
       const brandGroup = renderGroup(
-        `Yale Brand Colors — ${slotsHeading(brandSlots)}`,
-        brandSlots,
+        `Yale Brand Colors — ${slotsHeading(BRAND_SLOTS)}`,
+        BRAND_SLOTS,
         theme.colors,
         '#f0f4ff',
         '#c7d4f0',
@@ -1248,13 +1253,16 @@ export const CustomPaletteContrastChecker = () => {
   // expected format is obvious; every field can be cleared or replaced.
   const seed = Object.values(globalThemes)[0].colors;
 
-  const fields = contrastSlotKeys
-    .map((slot) => {
-      const id = `cl-contrast-input-${slot}`;
-      // Uses the design system's own form atom classes rather than restyling an
-      // input from scratch — see 01-atoms/forms/textfields.
+  const renderField = (slot) => {
+    const id = `cl-contrast-input-${slot}`;
+    const hex = rgbToHex(parseHsl(seed[slot]));
+
+    // Slots six, seven and eight are Yale's brand colors — read-only, so
+    // they still take part in the comparison below but cannot be typed
+    // over.
+    if (BRAND_SLOTS.includes(slot)) {
       return `
-        <div class="form-item cl-contrast__field">
+        <div class="form-item cl-contrast__field cl-contrast__field--static">
           <label class="form-item__label" for="${id}">${slotLabel(
         slot,
       )} color</label>
@@ -1263,16 +1271,57 @@ export const CustomPaletteContrastChecker = () => {
             type="text"
             id="${id}"
             data-slot="${slot}"
-            value="${rgbToHex(parseHsl(seed[slot]))}"
-            placeholder="#000000"
-            maxlength="7"
-            spellcheck="false"
-            autocomplete="off"
-            aria-describedby="${id}-error"
+            value="${hex}"
+            readonly
+            aria-describedby="${id}-hint"
           />
-          <p class="form-item__error-text" id="${id}-error"></p>
+          <p class="cl-contrast__field-hint" id="${id}-hint">Fixed Yale brand color — not editable.</p>
         </div>`;
-    })
+    }
+
+    // Uses the design system's own form atom classes rather than restyling an
+    // input from scratch — see 01-atoms/forms/textfields.
+    return `
+      <div class="form-item cl-contrast__field">
+        <label class="form-item__label" for="${id}">${slotLabel(
+      slot,
+    )} color</label>
+        <input
+          class="form-item__textfield"
+          type="text"
+          id="${id}"
+          data-slot="${slot}"
+          value="${hex}"
+          placeholder="#000000"
+          maxlength="7"
+          spellcheck="false"
+          autocomplete="off"
+          aria-describedby="${id}-error"
+        />
+        <p class="form-item__error-text" id="${id}-error"></p>
+      </div>`;
+  };
+
+  // Rendered as two row groups rather than one flowing grid, split right
+  // before the first brand slot. A single auto-fill grid wraps wherever the
+  // viewport happens to fit a column break, which can strand slot six on the
+  // editable fields' row while seven, eight and nine wrap alone below it --
+  // each group still wraps responsively on its own, just never mixed with
+  // the other.
+  const firstBrandIndex = contrastSlotKeys.findIndex((slot) =>
+    BRAND_SLOTS.includes(slot),
+  );
+  const fieldGroups = [
+    contrastSlotKeys.slice(0, firstBrandIndex),
+    contrastSlotKeys.slice(firstBrandIndex),
+  ];
+  const fields = fieldGroups
+    .map(
+      (slots) =>
+        `<div class="cl-contrast__fields">${slots
+          .map(renderField)
+          .join('')}</div>`,
+    )
     .join('');
 
   root.innerHTML = `
@@ -1281,10 +1330,12 @@ export const CustomPaletteContrastChecker = () => {
       <fieldset>
         <legend>Colors to check</legend>
         <p class="cl-contrast__form-hint">
-          Type a hex color into any field to see how your palette scores.
-          ${HEX_HINT} Leave a field empty to leave that slot out.
+          Type a hex color into any editable field to see how your palette
+          scores against your colors and Yale's fixed brand colors. ${HEX_HINT}
+          Leave an editable field empty to leave that slot out. Slots six,
+          seven and eight are Yale's brand colors and cannot be edited.
         </p>
-        <div class="cl-contrast__fields">${fields}</div>
+        ${fields}
       </fieldset>
     </form>
     <div class="cl-contrast__results"></div>
@@ -1307,6 +1358,14 @@ export const CustomPaletteContrastChecker = () => {
     const palette = {};
 
     inputs.forEach((input) => {
+      // Brand-color fields are read-only and always valid — they have no
+      // error element to update, so they skip the validation path entirely
+      // and go straight into the palette.
+      if (input.readOnly) {
+        palette[input.dataset.slot] = parseHex(input.value);
+        return;
+      }
+
       const raw = input.value.trim();
       const rgb = parseHex(raw);
       const invalid = raw !== '' && !rgb;
