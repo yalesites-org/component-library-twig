@@ -8,24 +8,45 @@ Drupal.behaviors.alert = {
     const alertState = 'data-alert-state';
     const buttonState = 'aria-expanded';
 
+    // The toggle must keep working even when localStorage cannot be used --
+    // blocked (private browsing, cookie-blocking extensions, corporate policy)
+    // or full. Storage is only how the state is remembered between page loads,
+    // so a failure to read or write it must never stop the alert being set up.
+    // Without it the state lives in the data attribute for the life of the page.
+    const readState = (id) => {
+      try {
+        return localStorage.getItem(id);
+      } catch (e) {
+        return null;
+      }
+    };
+
+    const writeState = (id, value) => {
+      try {
+        localStorage.setItem(id, value);
+      } catch (e) {
+        // Nothing to do: the state is already on the element.
+      }
+    };
+
     // Function to expand an alert.
     const expand = (item, toggle, id) => {
       item.setAttribute(alertState, 'expanded');
       toggle.setAttribute(buttonState, 'true');
-      localStorage.setItem(id, 'expanded');
+      writeState(id, 'expanded');
     };
 
     // Function to collapse an alert.
     const collapse = (item, toggle, id) => {
       item.setAttribute(alertState, 'collapsed');
       toggle.setAttribute(buttonState, 'false');
-      localStorage.setItem(id, 'collapsed');
+      writeState(id, 'collapsed');
     };
 
     // Function to dismiss an alert.
     const dismiss = (item, id) => {
       item.setAttribute(alertState, 'dismissed');
-      localStorage.setItem(id, 'dismissed');
+      writeState(id, 'dismissed');
     };
 
     // Function to animate the dismissal of an alert.
@@ -36,84 +57,57 @@ Drupal.behaviors.alert = {
 
     // Function to remove old alerts from storage.
     const resetAlerts = () => {
-      Object.keys(localStorage).forEach((key) => {
-        if (key.substring(0, 12) === 'ys-alert-id-') {
-          localStorage.removeItem(key);
-        }
-      });
+      try {
+        Object.keys(localStorage).forEach((key) => {
+          if (key.substring(0, 12) === 'ys-alert-id-') {
+            localStorage.removeItem(key);
+          }
+        });
+      } catch (e) {
+        // Storage is unavailable, so there is nothing stored to clear.
+      }
     };
 
-    // Function to check whether localStorage is both supported and available.
-    // See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#testing_for_availability
-    function storageAvailable(type) {
-      let storage;
-      try {
-        storage = window[type];
-        const x = '__storage_test__';
-        storage.setItem(x, x);
-        storage.removeItem(x);
-        return true;
-      } catch (e) {
-        return (
-          e instanceof DOMException &&
-          // everything except Firefox
-          (e.code === 22 ||
-            // Firefox
-            e.code === 1014 ||
-            // test name field too, because code might not be present
-            // everything except Firefox
-            e.name === 'QuotaExceededError' ||
-            // Firefox
-            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
-          // acknowledge QuotaExceededError only if there's something already stored
-          storage &&
-          storage.length !== 0
-        );
+    const alertCount = alerts.length;
+    let newAlerts = 0;
+
+    alerts.forEach((alert) => {
+      const id = alert.getAttribute(alertId);
+      const type = alert.getAttribute('data-alert-type');
+      const toggle = alert.querySelector(alertToggle);
+
+      // Get the alert state if previously interacted with by the user.
+      const state = readState(id);
+
+      // If the current alert has no state, clear other values from storage.
+      if (state == null) {
+        newAlerts += 1;
       }
-    }
 
-    if (storageAvailable('localStorage')) {
-      const alertCount = alerts.length;
-      let newAlerts = 0;
+      // If the alert was dismissed, keep it dismissed.
+      if (state === 'dismissed') {
+        dismiss(alert, id);
+        // If the alert was collapsed, load it in the collapsed state.
+      } else if (state === 'collapsed') {
+        collapse(alert, toggle, id);
+      }
 
-      alerts.forEach((alert) => {
-        const id = alert.getAttribute(alertId);
-        const type = alert.getAttribute('data-alert-type');
-        const toggle = alert.querySelector(alertToggle);
-
-        // Get the alert state if previously interacted with by the user.
-        const state = localStorage.getItem(id);
-
-        // If the current alert has no state, clear other values from storage.
-        if (state == null) {
-          newAlerts += 1;
+      // Toggle alert state
+      toggle.addEventListener('click', () => {
+        if (type === 'emergency') {
+          // For emergency alerts, toggle the "expanded/collapsed" state.
+          return alert.getAttribute(alertState) === 'expanded'
+            ? collapse(alert, toggle, id)
+            : expand(alert, toggle, id);
         }
 
-        // If the alert was dismissed, keep it dismissed.
-        if (state === 'dismissed') {
-          dismiss(alert, id);
-          // If the alert was collapsed, load it in the collapsed state.
-        } else if (state === 'collapsed') {
-          collapse(alert, toggle, id);
-        }
-
-        // Toggle alert state
-        toggle.addEventListener('click', () => {
-          if (type === 'emergency') {
-            // For emergency alerts, toggle the "expanded/collapsed" state.
-            return alert.getAttribute(alertState) === 'expanded'
-              ? collapse(alert, toggle, id)
-              : expand(alert, toggle, id);
-          }
-
-          // For all other alert types, dismiss the alert with animation.
-          return animatedDismiss(alert, id);
-        });
+        // For all other alert types, dismiss the alert with animation.
+        return animatedDismiss(alert, id);
       });
+    });
 
-      if (alertCount === newAlerts) {
-        resetAlerts();
-      }
+    if (alertCount === newAlerts) {
+      resetAlerts();
     }
   },
 };
