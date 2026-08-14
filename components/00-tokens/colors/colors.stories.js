@@ -251,43 +251,87 @@ export const CoreColors = () =>
 CoreColors.storyName = 'Core Colors';
 CoreColors.tags = ['!dev'];
 
-export const AccentPrint = () =>
-  webColorsTwig({ ...printData, section: 'accent-print' });
-AccentPrint.storyName = 'Accent Colors for Print';
-AccentPrint.tags = ['!dev'];
+// Print families split across two embed pages so neither one needs heavy
+// scrolling in the fixed-size Yale Identity site iframe.
+function printDataForFamilies(familyKeys) {
+  return {
+    ...printData,
+    print_colors: {
+      ...printColorsMeta,
+      families: Object.fromEntries(
+        Object.entries(printColorsMeta.families).filter(([key]) =>
+          familyKeys.includes(key),
+        ),
+      ),
+    },
+  };
+}
 
-const accentWebColors = {
-  yale_blue_web: yaleBlueWeb,
-  colors: {
-    // Cyan = our blue tokens (minus yale, which has its own section)
-    Cyan: withVar(
-      'blue',
-      Object.entries(c.blue || {}).filter(([key]) => key !== 'yale'),
-    ),
-    // Green = our green tokens
-    Green: withVar('green', Object.entries(c.green || {})),
-    // Yellow = yellow tokens + orange.peach (PDF groups peach under Yellow)
-    Yellow: {
-      ...withVar('yellow', Object.entries(c.yellow || {})),
-      ...(c.orange?.peach
-        ? { peach: { ...c.orange.peach, css_var: '--color-orange-peach' } }
-        : {}),
-    },
-    // Red/Orange = orange.coral is the closest token we have
-    'Red/Orange': {
-      ...(c.orange?.coral
-        ? { coral: { ...c.orange.coral, css_var: '--color-orange-coral' } }
-        : {}),
-    },
-    // Gray = our gray tokens
-    Gray: withVar('gray', Object.entries(c.gray || {})),
+export const AccentPrintWarm = () =>
+  webColorsTwig({
+    ...printDataForFamilies(['red', 'yellow', 'green']),
+    section: 'accent-print',
+  });
+AccentPrintWarm.storyName = 'Accent Colors for Print - Red, Yellow, Green';
+AccentPrintWarm.tags = ['!dev'];
+
+export const AccentPrintCool = () =>
+  webColorsTwig({
+    ...printDataForFamilies(['orange', 'purple', 'cyan', 'gray']),
+    section: 'accent-print',
+  });
+AccentPrintCool.storyName =
+  'Accent Colors for Print - Orange, Purple, Cyan/Teal, Gray';
+AccentPrintCool.tags = ['!dev'];
+
+// Web accent groups, restructured to match PDF groupings (Cyan, Green, Yellow,
+// Red/Orange, Gray) and split across two embed pages for the same reason.
+const accentWebColorGroups = {
+  // Cyan = our blue tokens (minus yale, which has its own section)
+  Cyan: withVar(
+    'blue',
+    Object.entries(c.blue || {}).filter(([key]) => key !== 'yale'),
+  ),
+  // Green = our green tokens
+  Green: withVar('green', Object.entries(c.green || {})),
+  // Yellow = yellow tokens + orange.peach (PDF groups peach under Yellow)
+  Yellow: {
+    ...withVar('yellow', Object.entries(c.yellow || {})),
+    ...(c.orange?.peach
+      ? { peach: { ...c.orange.peach, css_var: '--color-orange-peach' } }
+      : {}),
   },
+  // Red/Orange = orange.coral is the closest token we have
+  'Red/Orange': {
+    ...(c.orange?.coral
+      ? { coral: { ...c.orange.coral, css_var: '--color-orange-coral' } }
+      : {}),
+  },
+  // Gray = our gray tokens
+  Gray: withVar('gray', Object.entries(c.gray || {})),
 };
 
-export const AccentWeb = () =>
-  webColorsTwig({ ...accentWebColors, ...printData, section: 'accent-web' });
-AccentWeb.storyName = 'Accent Colors for Web';
-AccentWeb.tags = ['!dev'];
+function accentWebDataForGroups(groupKeys) {
+  return {
+    yale_blue_web: yaleBlueWeb,
+    colors: Object.fromEntries(
+      groupKeys.map((key) => [key, accentWebColorGroups[key]]),
+    ),
+    ...printData,
+    section: 'accent-web',
+  };
+}
+
+export const AccentWebCyanGreen = () =>
+  webColorsTwig(accentWebDataForGroups(['Cyan', 'Green']));
+AccentWebCyanGreen.storyName = 'Accent Colors for Web - Cyan, Green';
+AccentWebCyanGreen.tags = ['!dev'];
+
+export const AccentWebYellowRedGray = () =>
+  webColorsTwig(accentWebDataForGroups(['Yellow', 'Red/Orange', 'Gray']));
+AccentWebYellowRedGray.storyName =
+  'Accent Colors for Web - Yellow, Red-Orange, Gray';
+AccentWebYellowRedGray.tags = ['!dev'];
 
 export const ComponentColorSlots = () => `
   <div style="max-width: 1200px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
