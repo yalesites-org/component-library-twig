@@ -15,4 +15,20 @@ module.exports = {
       { js: 'never', mjs: 'always', jsx: 'never' },
     ],
   },
+  overrides: [
+    {
+      // Likewise `mjs`: the shared config's devDependency globs don't cover the
+      // `.test.mjs` files `node --test` picks up, so a test importing a
+      // build-time devDependency (sass, postcss) is flagged as an extraneous
+      // runtime import. Scoped as an override so the shared config's own globs
+      // stay in force everywhere else.
+      files: ['**/*.test.mjs', '**/*.test.js'],
+      rules: {
+        'import/no-extraneous-dependencies': [
+          'error',
+          { devDependencies: true },
+        ],
+      },
+    },
+  ],
 };
