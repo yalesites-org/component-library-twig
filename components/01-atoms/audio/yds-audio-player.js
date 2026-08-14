@@ -12,13 +12,24 @@ Drupal.behaviors.audioPlayer = {
       );
 
       const volumeElement = audioPlayer.querySelector('.audio-embed__volume');
-      const volumeControl = audioPlayer.querySelector('#volume-control');
+      // Selected by class, not id: ids are unique per instance so the template
+      // cannot expose a fixed one, and these lookups are already scoped to a
+      // single player's container.
+      const volumeControl = audioPlayer.querySelector(
+        '.audio-embed__volume-control',
+      );
       const volumeControlButton = audioPlayer.querySelector(
         '.audio-embed__volume-control-option',
       );
-      const progressBar = audioPlayer.querySelector('#progress-bar');
-      const currentTimeDisplay = audioPlayer.querySelector('#time-current');
-      const totalTimeDisplay = audioPlayer.querySelector('#time-total');
+      const progressBar = audioPlayer.querySelector(
+        '.audio-embed__progress-bar-input',
+      );
+      const currentTimeDisplay = audioPlayer.querySelector(
+        '.audio-embed__time--current',
+      );
+      const totalTimeDisplay = audioPlayer.querySelector(
+        '.audio-embed__time--total',
+      );
       const speedControl = audioPlayer.querySelector('.audio-embed__speed');
       const speedControlOptions = audioPlayer.querySelector(
         '.audio-embed__speed-options-control',
