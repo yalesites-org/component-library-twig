@@ -6,6 +6,12 @@ snapshot:
     img {
       visibility: hidden;
     }
+    /* The audio player's total-time display starts at 0:00 and is rewritten
+       once the remote file's metadata loads, so its final value at capture
+       time is a race, not a rendering difference. */
+    .audio-embed__time--total {
+      visibility: hidden;
+    }
 storybook:
   exclude:
     # What should be excluded?
