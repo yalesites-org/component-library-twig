@@ -8,7 +8,9 @@ A reference of every component in the YaleSites design system that supports colo
 
 ## What are Color Slots?
 
-Color slots (also called "dials" or "themes") are predefined color combinations that have been tested for accessibility. Each slot includes coordinated colors for backgrounds, text, borders, and accents that work together harmoniously. Slots map to the active global theme, so components automatically adapt when the global theme changes — a component set to "dial two" will always pull Slot 2 colors from whatever palette is active.
+Color slots (also called "dials" or "themes") are predefined color combinations. Each slot includes coordinated colors for backgrounds, text, borders, and accents that work together harmoniously. Slots map to the active global theme, so components automatically adapt when the global theme changes — a component set to "dial two" will always pull Slot 2 colors from whatever palette is active.
+
+Slots being coordinated does not mean every pairing of them is readable: fewer than half of the slot pairings across the global themes reach the WCAG AA 4.5:1 minimum for normal text. Check the pairing you intend to use in the [Contrast Matrix](?path=/docs/tokens-colors-contrast-matrix--docs), which computes the ratio for every combination.
 
 <div
   className="sb-table-scroll"

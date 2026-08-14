@@ -112,13 +112,28 @@ Drupal.behaviors.audioPlayer = {
             const fileId = btoa(audioSrc);
             const { duration } = audio;
 
+            // localStorage is only a cache for the duration between page loads:
+            // a cookie-blocking setting, extension or policy makes access throw,
+            // and a full store makes writes throw. Neither must stop the player
+            // showing a duration, so each access is guarded on its own.
             if (duration && duration !== Infinity) {
-              localStorage.setItem(`audioDuration_${fileId}`, duration);
+              try {
+                localStorage.setItem(`audioDuration_${fileId}`, duration);
+              } catch (e) {
+                // Caching failed; the duration below is still correct.
+              }
               resolve(duration);
             } else {
-              const storedDuration = localStorage.getItem(
-                `audioDuration_${fileId}`,
-              );
+              let storedDuration = null;
+
+              try {
+                storedDuration = localStorage.getItem(
+                  `audioDuration_${fileId}`,
+                );
+              } catch (e) {
+                // Nothing cached is readable, so fall back to 0 below.
+              }
+
               resolve(storedDuration || 0);
             }
           } else {
