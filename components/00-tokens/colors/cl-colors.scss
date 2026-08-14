@@ -260,3 +260,295 @@ $cl-colors-copy-success: #16a34a;
     border-top: 0.25rem dotted var(--color-gray-300);
   }
 }
+
+// Contrast matrix (Tokens/Colors/Contrast Matrix).
+// Verdict tints. There is no Yale token for semantic pass/warn/fail, so they
+// are defined here alongside $cl-colors-copy-success. They are deliberately
+// pale: every cell prints its verdict as text as well, and the text is
+// --color-gray-900 throughout, which clears AA on all four backgrounds. A page
+// about contrast has no business failing it.
+$cl-contrast-pass: #d6ebdd;
+$cl-contrast-pass-strong: #b9dfc7;
+$cl-contrast-warn: #f8ecc9;
+$cl-contrast-fail: #f6dcdc;
+
+// The nine-column grids do not fit Storybook's default 1000px docs column --
+// every grid needed horizontal scrolling to reach the last slots. Widen just
+// the page that contains them; 1260px is where all of them fit without
+// scrolling. The prose widens with the canvases so the two stay aligned, which
+// is the reason the canvases are contained in the first place. max-width still
+// lets the page shrink normally on smaller screens.
+.sbdocs-content:has(.cl-contrast) {
+  max-width: 1260px;
+}
+
+.cl-contrast {
+  color: var(--color-gray-900);
+  margin-bottom: var(--size-spacing-9);
+
+  &__key {
+    background: var(--color-gray-100);
+    border: 1px solid var(--color-gray-200);
+    padding: var(--size-spacing-5);
+    margin-bottom: var(--size-spacing-7);
+  }
+
+  &__legend {
+    list-style: none;
+    margin: 0 0 var(--size-spacing-5);
+    padding: 0;
+    display: grid;
+    gap: var(--size-spacing-4);
+  }
+
+  &__legend-item {
+    display: flex;
+    align-items: baseline;
+    gap: var(--size-spacing-4);
+    flex-wrap: wrap;
+  }
+
+  &__theme {
+    margin-bottom: var(--size-spacing-8);
+  }
+
+  &__theme-title {
+    margin: 0 0 var(--size-spacing-4);
+  }
+
+  &__summary {
+    margin: 0 0 var(--size-spacing-4);
+  }
+
+  &__notice {
+    margin: 0 0 var(--size-spacing-5);
+    padding: var(--size-spacing-4);
+    border-left: 0.25rem solid var(--color-gray-400);
+    background: var(--color-gray-100);
+
+    p {
+      margin: 0 0 var(--size-spacing-4);
+    }
+
+    p:last-child,
+    ul:last-child {
+      margin-bottom: 0;
+    }
+
+    &--ok {
+      border-left-color: $cl-contrast-pass-strong;
+      background: $cl-contrast-pass;
+    }
+
+    &--warn {
+      border-left-color: var(--color-gray-700);
+      background: $cl-contrast-warn;
+    }
+  }
+
+  &__table {
+    border-collapse: collapse;
+    font-size: 0.8rem;
+
+    caption {
+      text-align: left;
+      margin-bottom: var(--size-spacing-4);
+      color: var(--color-gray-700);
+    }
+
+    th,
+    td {
+      border: 1px solid var(--color-gray-300);
+      padding: var(--size-spacing-4);
+      text-align: left;
+      vertical-align: top;
+    }
+  }
+
+  &__table--key,
+  &__table--summary {
+    font-size: 0.9rem;
+    background: var(--color-basic-white);
+  }
+
+  // Per-threshold breakdown above each grid. Sits close to its grid and stays
+  // visually lighter than it, so the grid remains the focus.
+  &__table--summary {
+    margin-bottom: var(--size-spacing-5);
+
+    td,
+    th {
+      padding: var(--size-spacing-4) var(--size-spacing-5);
+    }
+
+    tbody th {
+      white-space: nowrap;
+      font-family: monospace;
+    }
+  }
+
+  &__head {
+    background: var(--color-basic-white);
+    white-space: nowrap;
+    font-weight: 700;
+  }
+
+  &__chip {
+    display: inline-block;
+    width: 0.85rem;
+    height: 0.85rem;
+    margin-right: 0.35rem;
+    vertical-align: -0.1rem;
+    border: 1px solid var(--color-gray-400);
+  }
+
+  &__hex {
+    display: block;
+    font-family: monospace;
+    font-weight: 400;
+    color: var(--color-gray-700);
+  }
+
+  &__cell {
+    text-align: right;
+  }
+
+  &__ratio {
+    display: block;
+    font-family: monospace;
+    font-weight: 700;
+  }
+
+  &__badge {
+    display: block;
+    white-space: nowrap;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  &__cell--aaa,
+  &__badge--aaa {
+    background: $cl-contrast-pass-strong;
+  }
+
+  &__cell--aa,
+  &__badge--aa {
+    background: $cl-contrast-pass;
+  }
+
+  &__cell--large,
+  &__badge--large {
+    background: $cl-contrast-warn;
+  }
+
+  &__cell--fail,
+  &__badge--fail {
+    background: $cl-contrast-fail;
+  }
+
+  &__cell--self {
+    background: var(--color-gray-200);
+    text-align: center;
+  }
+
+  &__badge--aaa,
+  &__badge--aa,
+  &__badge--large,
+  &__badge--fail {
+    display: inline-block;
+    padding: 0.1rem 0.4rem;
+  }
+
+  &__form {
+    margin-bottom: var(--size-spacing-6);
+
+    fieldset {
+      border: 1px solid var(--color-gray-200);
+      padding: var(--size-spacing-5);
+    }
+
+    legend {
+      font-weight: 700;
+      padding: 0 var(--size-spacing-4);
+    }
+  }
+
+  &__form-hint {
+    margin: 0 0 var(--size-spacing-5);
+    max-width: 60ch;
+  }
+
+  &__fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+    gap: var(--size-spacing-5);
+
+    // Two groups stack here (editable slots, then the brand-color block) --
+    // see the split in CustomPaletteContrastChecker.
+    & + & {
+      margin-top: var(--size-spacing-5);
+    }
+  }
+
+  // No generic button exists in the design system -- .cta is a themed Twig
+  // component, not a docs utility -- so this follows the local precedent set by
+  // .cl-colors__copy-btn in this same file. Focus ring comes from the global
+  // focus mixin in 00-tokens/utility.
+  &__download {
+    appearance: none;
+    margin-top: var(--size-spacing-5);
+    padding: var(--size-spacing-4) var(--size-spacing-5);
+    border: 1px solid var(--color-gray-700);
+    background: var(--color-basic-white);
+    color: var(--color-gray-900);
+    font: inherit;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+      border-color: var(--color-gray-400);
+      color: var(--color-gray-600);
+    }
+
+    &:hover:not(:disabled) {
+      background: var(--color-gray-100);
+    }
+  }
+
+  &__download-hint {
+    margin: var(--size-spacing-4) 0 0;
+    color: var(--color-gray-700);
+  }
+
+  // The fields are .form-item textfields from 01-atoms/forms; only the grid
+  // layout is overridden here.
+  &__field {
+    max-width: none;
+    margin-bottom: 0;
+
+    .form-item__textfield {
+      font-family: monospace;
+    }
+
+    .form-item__error-text:empty {
+      display: none;
+    }
+  }
+
+  // Slots six, seven and eight in the custom checker — read-only, so they
+  // look it rather than relying on the attribute alone.
+  &__field--static {
+    .form-item__textfield {
+      background: var(--color-gray-100);
+      color: var(--color-gray-700);
+      cursor: default;
+    }
+  }
+
+  &__field-hint {
+    margin: var(--size-spacing-2) 0 0;
+    font-size: 0.8rem;
+    color: var(--color-gray-700);
+  }
+}
