@@ -147,7 +147,7 @@ export default {
 - VRT section heading and description
 - All theme variations using `createThemeVariations()`
 - All component variations using `createVariations()`
-- Comprehensive coverage for Percy snapshots
+- Comprehensive coverage for visual regression testing
 
 ### Visreg Template Usage
 
@@ -239,7 +239,6 @@ Update the file:
     <h2 style="margin: 0 0 0.5rem 0; font-size: 1.5rem; color: #0053A0;">Visual Regression Testing</h2>
     <p style="margin: 0; font-size: 1rem; line-height: 1.5;">
       The sections below show all variations of the [component] component for visual regression testing.
-      These are static examples captured by Percy for automated visual testing.
     </p>
   </div>
   ```
@@ -347,8 +346,8 @@ Use this checklist when migrating a component:
 - **Design Review**: Visreg pages show all variations for thorough review
 
 ### For QA
-- **Comprehensive Coverage**: Visreg pages ensure all variations are captured
-- **Visual Testing**: Percy snapshots catch regressions automatically
+- **Comprehensive Coverage**: Visreg pages show every variation of a component
+- **Visual Testing**: Compare a Storybook build against the previous one to spot regressions
 - **Clear Expectations**: Documentation sets clear standards for implementation
 
 ## Example Implementations
