@@ -30,54 +30,61 @@ Use the controls panel below to experiment with the breadcrumbs properties in re
 
 ## Technical Specifications
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Atomic Level</strong>
-      </td>
-      <td>Organism</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Files</strong>
-      </td>
-      <td>
-        <code>yds-breadcrumbs.twig</code>, <code>yds-breadcrumbs.js</code>,{' '}
-        <code>_yds-breadcrumbs.scss</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Accessibility</strong>
-      </td>
-      <td>
-        ARIA landmark role <code>navigation</code> with{' '}
-        <code>aria-label="Breadcrumb"</code>, semantic <code>&lt;ol&gt;</code>{' '}
-        structure, keyboard navigable links, current page indicated with{' '}
-        <code>aria-current="page"</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Responsive Behavior</strong>
-      </td>
-      <td>
-        Breadcrumbs collapse on smaller viewports, showing only the current page
-        and immediate parent with an expandable menu for full path
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>JavaScript</strong>
-      </td>
-      <td>
-        Handles responsive collapse behavior and expand/collapse interactions on
-        mobile devices
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Technical Specifications"
+  tabIndex={0}
+>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <strong>Atomic Level</strong>
+        </td>
+        <td>Organism</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Files</strong>
+        </td>
+        <td>
+          <code>yds-breadcrumbs.twig</code>, <code>yds-breadcrumbs.js</code>,{' '}
+          <code>_yds-breadcrumbs.scss</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Accessibility</strong>
+        </td>
+        <td>
+          ARIA landmark role <code>navigation</code> with{' '}
+          <code>aria-label="Breadcrumb"</code>, semantic <code>&lt;ol&gt;</code>{' '}
+          structure, keyboard navigable links, current page indicated with{' '}
+          <code>aria-current="page"</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Responsive Behavior</strong>
+        </td>
+        <td>
+          Breadcrumbs collapse on smaller viewports, showing only the current
+          page and immediate parent with an expandable menu for full path
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>JavaScript</strong>
+        </td>
+        <td>
+          Handles responsive collapse behavior and expand/collapse interactions
+          on mobile devices
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Usage Guidelines
 

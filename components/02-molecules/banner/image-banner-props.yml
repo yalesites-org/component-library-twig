@@ -17,6 +17,7 @@ bgColor:
     - three
     - four
     - five
+    - six
   control: select
 
 size:

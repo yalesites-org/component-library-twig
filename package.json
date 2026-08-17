@@ -24,7 +24,7 @@
     "husky:commit-msg": "commitlint --edit $1",
     "husky:pre-commit": "lint-staged",
     "lint": "npm run lint:js; npm run lint:styles",
-    "lint:js": "eslint components",
+    "lint:js": "eslint components --ext .js,.mjs",
     "lint:styles": "stylelint 'components/**/*.scss'",
     "postinstall": "npx patch-package && node scripts/patch-emulsify-core-twig-functions.mjs",
     "prepare": "husky install",
@@ -33,7 +33,8 @@
     "storybook": "NODE_OPTIONS=--max-old-space-size=8192 storybook dev --config-dir node_modules/@emulsify/core/.storybook -p 6006",
     "storybook:build": "npm run build && NODE_OPTIONS=--max-old-space-size=8192 storybook build --config-dir node_modules/@emulsify/core/.storybook -o .out && node scripts/sort-storybook-index.mjs",
     "storybook:deploy": "storybook-to-ghpages -o .out",
-    "test": "npm run lint:js && npm run lint:styles && npm run prettier && npm run storybook:build",
+    "test": "npm run test:unit && npm run lint:js && npm run lint:styles && npm run prettier && npm run storybook:build",
+    "test:unit": "node --test components/",
     "audit": "sh -c 'node_modules/@emulsify/core/scripts/audit.js \"$@\"; status=$?; printf \"\\nAudit docs: https://github.com/emulsify-ds/emulsify-core/blob/4.x/docs/migration-4x.md#storybook-migration\\n\"; exit $status' --",
     "audit:twig-stories": "sh -c 'node_modules/@emulsify/core/scripts/audit-twig-stories.js \"$@\"; status=$?; printf \"\\nMigration docs: https://github.com/emulsify-ds/emulsify-core/blob/4.x/docs/storybook.md#legacy-twig-story-compatibility\\n\"; exit $status' --"
   },
@@ -72,10 +73,10 @@
     "components/**/*.scss": [
       "npm run lint:styles -- --fix"
     ],
-    "components/**/*.js": [
+    "components/**/*.{js,mjs}": [
       "npm run lint:js -- --fix"
     ],
-    "components/**/*.{js,scss,php}": [
+    "components/**/*.{js,mjs,scss,php}": [
       "npm run prettier -- --write"
     ]
   }
