@@ -16,6 +16,11 @@ const patchLinkpurpose = () => ({
 export default [patchLinkpurpose()];
 
 export const extendConfig = (config, { env }) => ({
+  optimizeDeps: {
+    // Dep pre-bundling is esbuild, which skips the transform hook above, so a
+    // pre-bundled linkpurpose keeps the missing default export in dev.
+    exclude: ['linkpurpose/js/linkpurpose'],
+  },
   css: {
     preprocessorOptions: {
       scss: {
