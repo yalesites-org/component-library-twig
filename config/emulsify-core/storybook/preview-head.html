@@ -1,2 +1,10 @@
 <!-- Load the Yale fonts in StoryBook -->
 <link rel="stylesheet" href="https://yale-webfonts.yalespace.org/fonts.min.css" />
+
+<!-- Font Awesome, served by Core's /assets staticDir mount rather than imported
+     from preview.js: that mount serves anything under assets/ as text/css, which
+     a JS module import rejects. Relative hrefs keep a Storybook build served
+     from a subpath working. -->
+<link rel="stylesheet" href="assets/fonts/fontawesome/css/fontawesome.min.css" />
+<link rel="stylesheet" href="assets/fonts/fontawesome/css/regular.min.css" />
+<link rel="stylesheet" href="assets/fonts/fontawesome/css/solid.min.css" />

@@ -20,9 +20,9 @@ import '../../../components/00-tokens/effects/cl-effects.scss';
 import '../../../components/00-tokens/layout/cl-layout.scss';
 import '../../../components/04-page-layouts/placeholder/cl-placeholder.scss';
 import '../../../components/_storybook/storybook.scss';
-import '../../../assets/fonts/fontawesome/css/fontawesome.css';
-import '../../../assets/fonts/fontawesome/css/regular.css';
-import '../../../assets/fonts/fontawesome/css/solid.css';
+// Font Awesome is loaded via <link> in preview-head.html: anything under assets/
+// is claimed by Core's /assets staticDir mount, which serves it as text/css and
+// breaks an ESM import in the dev server.
 
 // Global link treatment
 import '../../../lib/link-treatment/link-treatment.js';
