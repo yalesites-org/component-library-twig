@@ -1,3 +1,5 @@
+@use '../tokens';
+
 // Success green used for the copy-button check icon. No Yale token equivalent —
 // defined here so there is one place to update it if the value ever changes.
 $cl-colors-copy-success: #16a34a;
@@ -5,20 +7,31 @@ $cl-colors-copy-success: #16a34a;
 // Card grid — scoped under .cl-colors so it doesn't affect color-global-themes.twig,
 // which also uses .cl-colors__list and .cl-colors__item but without a .cl-colors wrapper.
 .cl-colors {
+  // Fixed four-column grid so every card is the same width and rows read as
+  // consistent groups of 4, regardless of how many colors are in the set.
+  // Steps down at narrower widths so the embed still works on small screens.
   .cl-colors__list {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1.5rem;
     margin: 0 0 var(--size-spacing-7);
     padding: 0;
     list-style: none;
+
+    @media (max-width: tokens.$break-l) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: tokens.$break-m) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: tokens.$break-s) {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 
-  // Fixed width (no grow) so cards stay the same size whether a group has
-  // 3 or 4 of them — a short group just leaves trailing whitespace in its
-  // row instead of stretching its cards wider.
   .cl-colors__item {
-    flex: 0 0 200px;
     background: var(--color-basic-white);
     border: 1px solid var(--color-gray-200);
     box-shadow: 0 1px 3px rgb(0 0 0 / 8%);
@@ -182,7 +195,7 @@ $cl-colors-copy-success: #16a34a;
   // among many.
   .cl-colors__item--featured {
     display: flex;
-    flex: 1 1 100%;
+    grid-column: 1 / -1;
 
     .cl-colors__swatch {
       width: 260px;

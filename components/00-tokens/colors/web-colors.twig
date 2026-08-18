@@ -97,12 +97,14 @@
 {# -------------------------------------------------------------------------
    Accent Colors for Print — PMS + CMYK, no hex displayed
    When section == 'accent-print' or no section set (full page)
+
+   Families (Red, Yellow, Green, ...) are flattened into a single grid with no
+   per-family headings, so the page stays short enough to embed comfortably.
    ------------------------------------------------------------------------- #}
 {% if not section or section == 'accent-print' %}
-  {% for family_key, family in print_colors.families %}
-    <div {{ bem(colors__base_class) }}>
-      <h3>{{ family.label }}</h3>
-      <ul {{ bem('list', [], colors__base_class) }}>
+  <div {{ bem(colors__base_class) }}>
+    <ul {{ bem('list', [], colors__base_class) }}>
+      {% for family_key, family in print_colors.families %}
         {% for key, color in family.colors %}
           <li {{ bem('item', [], colors__base_class) }}>
             <div {{ bem('swatch', [], colors__base_class) }} style="background: {{ color.hex }};">
@@ -134,20 +136,22 @@
             </div>
           </li>
         {% endfor %}
-      </ul>
-    </div>
-  {% endfor %}
+      {% endfor %}
+    </ul>
+  </div>
 {% endif %}
 
 {# -------------------------------------------------------------------------
    Accent Colors for Web — HEX values from design tokens
    When section == 'accent-web' or no section set (full page)
+
+   Groups (Cyan, Green, Yellow, ...) are flattened into a single grid with no
+   per-group headings, so the page stays short enough to embed comfortably.
    ------------------------------------------------------------------------- #}
 {% if not section or section == 'accent-web' %}
-  {% for group, colorset in _context.colors %}
-    <div {{ bem(colors__base_class) }}>
-      <h3>{{ group }}</h3>
-      <ul {{ bem('list', [], colors__base_class) }}>
+  <div {{ bem(colors__base_class) }}>
+    <ul {{ bem('list', [], colors__base_class) }}>
+      {% for group, colorset in _context.colors %}
         {% for key, color in colorset %}
           <li {{ bem('item', [], colors__base_class) }}>
             <div {{ bem('swatch', [], colors__base_class) }} style="background: var({{ color.css_var }});">
@@ -173,7 +177,7 @@
             </div>
           </li>
         {% endfor %}
-      </ul>
-    </div>
-  {% endfor %}
+      {% endfor %}
+    </ul>
+  </div>
 {% endif %}
