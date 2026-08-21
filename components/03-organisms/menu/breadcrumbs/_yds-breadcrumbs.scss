@@ -78,7 +78,7 @@
       z-index: 0;
     }
 
-    [data-scroll-indicator='none'],
+    [data-scroll-indicator='none'] &,
     [data-scroll-indicator='right'] & {
       @include tokens.animate-hidden;
     }
