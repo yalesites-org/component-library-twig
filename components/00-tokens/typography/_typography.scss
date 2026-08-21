@@ -15,6 +15,7 @@ code {
 
   [data-component-theme='one'] &,
   [data-component-theme='three'] &,
+  [data-component-theme='four'] &,
   [data-basic-theme='blue-yale'] &,
   [data-basic-theme='gray-700'] & {
     --color-code-border: var(--color-gray-800);

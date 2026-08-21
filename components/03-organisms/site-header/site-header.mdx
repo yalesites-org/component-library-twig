@@ -65,53 +65,60 @@ The primary navigation can be aligned to the **left**, **center**, or **right** 
 
 ## Technical Specifications
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Atomic Level</strong>
-      </td>
-      <td>Organism</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Files</strong>
-      </td>
-      <td>
-        <code>yds-site-header.twig</code>, <code>yds-site-header.js</code>,{' '}
-        <code>_yds-site-header.scss</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Accessibility</strong>
-      </td>
-      <td>
-        ARIA landmark role <code>banner</code>, keyboard navigation support,
-        focus management for dropdown menus, screen reader announcements for
-        menu state changes
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Responsive Behavior</strong>
-      </td>
-      <td>
-        Mobile hamburger menu, touch-optimized interactions, adaptive layout
-        based on viewport size
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>JavaScript</strong>
-      </td>
-      <td>
-        Handles menu toggle, sticky header behavior, dropdown interactions, and
-        mobile menu functionality
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Technical Specifications"
+  tabIndex={0}
+>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <strong>Atomic Level</strong>
+        </td>
+        <td>Organism</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Files</strong>
+        </td>
+        <td>
+          <code>yds-site-header.twig</code>, <code>yds-site-header.js</code>,{' '}
+          <code>_yds-site-header.scss</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Accessibility</strong>
+        </td>
+        <td>
+          ARIA landmark role <code>banner</code>, keyboard navigation support,
+          focus management for dropdown menus, screen reader announcements for
+          menu state changes
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Responsive Behavior</strong>
+        </td>
+        <td>
+          Mobile hamburger menu, touch-optimized interactions, adaptive layout
+          based on viewport size
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>JavaScript</strong>
+        </td>
+        <td>
+          Handles menu toggle, sticky header behavior, dropdown interactions,
+          and mobile menu functionality
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Usage Guidelines
 

@@ -62,68 +62,75 @@ Cards for downloadable resources, documents, or external links. Supports icons, 
 
 Not all properties apply to every card type. The controls panel in each section above reflects this automatically.
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Post</th>
-      <th>Event</th>
-      <th>Profile</th>
-      <th>Directory</th>
-      <th>Resource</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Heading</td>
-      <td>Y</td>
-      <td>Y</td>
-      <td>Y</td>
-      <td>Y</td>
-      <td>Y</td>
-    </tr>
-    <tr>
-      <td>Collection Type</td>
-      <td>Y</td>
-      <td>Y</td>
-      <td>Y</td>
-      <td>—</td>
-      <td>Y</td>
-    </tr>
-    <tr>
-      <td>Featured</td>
-      <td>Y</td>
-      <td>Y</td>
-      <td>Y</td>
-      <td>Y</td>
-      <td>Y</td>
-    </tr>
-    <tr>
-      <td>With Images</td>
-      <td>Y</td>
-      <td>Y</td>
-      <td>Y</td>
-      <td>—</td>
-      <td>Y</td>
-    </tr>
-    <tr>
-      <td>Overlay</td>
-      <td>Y</td>
-      <td>—</td>
-      <td>—</td>
-      <td>—</td>
-      <td>Y</td>
-    </tr>
-    <tr>
-      <td>Portrait</td>
-      <td>—</td>
-      <td>—</td>
-      <td>—</td>
-      <td>—</td>
-      <td>Y</td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Property Compatibility by Card Type"
+  tabIndex={0}
+>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Post</th>
+        <th>Event</th>
+        <th>Profile</th>
+        <th>Directory</th>
+        <th>Resource</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Heading</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+      </tr>
+      <tr>
+        <td>Collection Type</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>—</td>
+        <td>Y</td>
+      </tr>
+      <tr>
+        <td>Featured</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+      </tr>
+      <tr>
+        <td>With Images</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>—</td>
+        <td>Y</td>
+      </tr>
+      <tr>
+        <td>Overlay</td>
+        <td>Y</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>Y</td>
+      </tr>
+      <tr>
+        <td>Portrait</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>Y</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Collection Layouts
 
@@ -207,43 +214,50 @@ When <code>card_collection\_\_featured</code> is set to <code>'true'</code>, the
 
 ## Technical Specifications
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Atomic Level</strong>
-      </td>
-      <td>Organism</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Files</strong>
-      </td>
-      <td>
-        <code>yds-card-collection.twig</code>,{' '}
-        <code>_yds-card-collection.scss</code>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Accessibility</strong>
-      </td>
-      <td>
-        Semantic HTML list structure, proper heading hierarchy, keyboard
-        navigable links, sufficient color contrast, alt text for images
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Responsive Behavior</strong>
-      </td>
-      <td>
-        Grid columns adjust based on viewport size, maintains readability across
-        all devices, touch-optimized for mobile interactions
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Technical Specifications"
+  tabIndex={0}
+>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <strong>Atomic Level</strong>
+        </td>
+        <td>Organism</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Files</strong>
+        </td>
+        <td>
+          <code>yds-card-collection.twig</code>,{' '}
+          <code>_yds-card-collection.scss</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Accessibility</strong>
+        </td>
+        <td>
+          Semantic HTML list structure, proper heading hierarchy, keyboard
+          navigable links, sufficient color contrast, alt text for images
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Responsive Behavior</strong>
+        </td>
+        <td>
+          Grid columns adjust based on viewport size, maintains readability
+          across all devices, touch-optimized for mobile interactions
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Usage Guidelines
 

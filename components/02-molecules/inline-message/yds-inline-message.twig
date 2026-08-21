@@ -1,6 +1,8 @@
 {#
  # Available Variables:
  # - inline-message__type:  general (default), marketing
+ # - inline-message__icon_name:  machine name of a chosen icon, '_none' for no
+ #     icon, or unset to fall back to the type-derived default
  # - inline-message__heading
  # - inline-message__content
  # - inline-message__link__content
@@ -10,10 +12,21 @@
 {% set inline_message__base_class = 'inline-message' %}
 {% set inline_message__type = inline_message__type|default('general') %}
 
-{# Set emergency icons #}
-{% if inline_message__type == 'general' %}
+{#
+ # Resolve the icon. When an icon value is supplied — which is always the case
+ # from Drupal, where an empty field, a "- None -" choice, and a chosen icon
+ # all arrive here — that value is authoritative: a real icon key renders that
+ # icon, while an empty value or '_none' renders no icon (a text-only message).
+ # "- None -" is stored as an empty value (Drupal strips the '_none' key on
+ # save), so empty and '_none' must behave identically. Only when no icon value
+ # is supplied at all (the bare component, e.g. in Storybook) does it fall back
+ # to the type-derived default.
+ #}
+{% if inline_message__icon_name is defined %}
+  {% set inline_message__icon = (inline_message__icon_name and inline_message__icon_name != '_none')
+    ? inline_message__icon_name : null %}
+{% elseif inline_message__type == 'general' %}
   {% set inline_message__icon = 'circle-info' %}
-{# Set marketing icon #}
 {% else %}
   {% set inline_message__icon = 'circle-exclamation' %}
 {% endif %}

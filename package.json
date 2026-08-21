@@ -13,7 +13,7 @@
     "husky:commit-msg": "commitlint --edit $1",
     "husky:pre-commit": "lint-staged",
     "lint": "npm run lint:js; npm run lint:styles",
-    "lint:js": "eslint components",
+    "lint:js": "eslint components --ext .js,.mjs",
     "lint:styles": "stylelint 'components/**/*.scss'",
     "postinstall": "npx patch-package",
     "prepare": "husky install",
@@ -22,10 +22,12 @@
     "storybook": "storybook dev --ci ./dist, ./images -p 6006",
     "storybook:build": "npm run build && storybook build ./dist, ./images -o .out",
     "storybook:deploy": "storybook-to-ghpages -o .out",
-    "test": "npm run lint:js && npm run lint:styles && npm run prettier && npm run test:unit && npm run storybook:build",
+    "test": "npm run test:unit && npm run lint:js && npm run lint:styles && npm run prettier && npm run storybook:build",
+    "test:unit": "npm run test:unit:node && npm run test:unit:vitest",
+    "test:unit:node": "node --test $(find components -name '*.test.mjs')",
+    "test:unit:vitest": "vitest run",
     "visreg:ci": "percy storybook .out",
-    "webpack": "webpack --watch --config ./webpack/webpack.dev.js",
-    "test:unit": "vitest run"
+    "webpack": "webpack --watch --config ./webpack/webpack.dev.js"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
@@ -91,10 +93,10 @@
     "components/**/*.scss": [
       "npm run lint:styles -- --fix"
     ],
-    "components/**/*.js": [
+    "components/**/*.{js,mjs}": [
       "npm run lint:js -- --fix"
     ],
-    "components/**/*.{js,scss,php}": [
+    "components/**/*.{js,mjs,scss,php}": [
       "npm run prettier -- --write"
     ]
   }
