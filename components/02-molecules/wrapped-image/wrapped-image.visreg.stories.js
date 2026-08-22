@@ -4,9 +4,13 @@ import textFieldTwig from '../text/yds-text-field.twig';
 import imageData from '../../01-atoms/images/image/image.yml';
 import WrappedImageData from './wrapped-image.yml';
 
-import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
-  createGlobalThemeVariations,
+  globalThemeLabels,
+  globalThemes,
+  sectionThemes,
+} from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
+import {
   createSectionWrapper,
   createThemeVariations,
 } from '../../_storybook/playground-utils';
@@ -23,7 +27,7 @@ export default {
   },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const caption = 'This is the caption for the 16:9 image above.';
   const imageAlignment = 'left';
   const imageStyle = 'floated';
@@ -43,20 +47,31 @@ export const Visreg = () => {
     })}
   `;
 
-  return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (sectionTheme) =>
-          createSectionWrapper(sectionTheme, renderWrappedImage(), {
-            width: 'site',
-            primaryWidth: '100%',
-          }),
-        sectionThemes,
-        'All Section Theme Variations',
-        'Below are all theme variations for visual regression testing.',
-        'Section Theme',
-      ),
-    globalThemes,
-    'All Global Theme Variations',
+  return createThemeVariations(
+    (sectionTheme) =>
+      createSectionWrapper(sectionTheme, renderWrappedImage(), {
+        width: 'site',
+        primaryWidth: '100%',
+      }),
+    sectionThemes,
+    'All Section Theme Variations',
+    'Below are all theme variations for visual regression testing.',
+    'Section Theme',
   );
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';
