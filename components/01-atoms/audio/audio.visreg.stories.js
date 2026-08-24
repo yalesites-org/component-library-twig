@@ -1,8 +1,7 @@
-import textFieldTwig from './yds-text-field.twig';
+import audioEmbedTwig from './yds-audio.twig';
+import './yds-audio-player';
 
-import textData from './text-field.yml';
-
-import '../../01-atoms/typography/text/yds-text';
+import audioEmbedData from './audio.yml';
 
 import {
   globalThemeLabels,
@@ -11,8 +10,8 @@ import {
 } from '../../_storybook/theme-constants';
 import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
-  createSectionWrapper,
   createThemeVariations,
+  createSectionWrapper,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -20,32 +19,30 @@ import {
  */
 export default {
   tags: ['visreg'],
-  title: 'Atoms/Text/Visreg',
-  parameters: { controls: { disable: true } },
+  title: 'Atoms/Audio Player/Visreg',
+  parameters: {
+    controls: { disable: true },
+  },
 };
 
-// *** VRT: Text Field with All Section Theme Variations ***
-const renderGlobalTheme = () => {
-  const variation = 'default';
+const renderAudioPlayer = () =>
+  audioEmbedTwig({
+    audio_embed__content: audioEmbedData.audio_embed__content,
+    audio_embed__url: audioEmbedData.audio_embed__url,
+  });
 
-  // Render function for text field variations
-  const renderTextField = (theme) =>
-    createSectionWrapper(
-      theme,
-      textFieldTwig({
-        text_field__content: textData.text_field__content,
-        text_field__variation: variation,
+const renderGlobalTheme = () =>
+  createThemeVariations(
+    (sectionTheme) =>
+      createSectionWrapper(sectionTheme, renderAudioPlayer(), {
+        width: 'site',
+        primaryWidth: '100%',
       }),
-    );
-
-  return createThemeVariations(
-    renderTextField,
     sectionThemes,
     'All Section Theme Variations',
     'Below are all theme variations for visual regression testing.',
     'Section Theme',
   );
-};
 
 const themeStories = createGlobalThemeStories(
   renderGlobalTheme,

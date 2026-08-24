@@ -133,6 +133,12 @@ The embed component supports four width options:
 
 ## Implementation Notes
 
+### Clipboard Access
+
+Chrome and Firefox block clipboard writes from inside a cross-origin iframe unless the embedding page delegates the permission, so the iframe carries `allow="clipboard-write"`. This lets copy-to-clipboard buttons in embedded content work rather than silently failing.
+
+**Known limitation:** Safari does not honour delegated `clipboard-write` for cross-origin iframes the way Chrome and Firefox do, so copy buttons inside an embed may still fail there. There is no querystring or configuration workaround, and the platform does not attempt one.
+
 ### Social Media Embeds
 
 Social media embeds (Instagram, X, Bluesky) require both the blockquote HTML and script tag provided by the platform. These are typically added as raw HTML rather than using the component's iframe structure.

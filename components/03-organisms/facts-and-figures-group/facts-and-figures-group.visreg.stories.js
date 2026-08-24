@@ -4,11 +4,12 @@ import imageData from '../../01-atoms/images/image/image.yml';
 
 import {
   componentThemes,
+  globalThemeLabels,
   globalThemes,
   sectionThemes,
 } from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
-  createGlobalThemeVariations,
   createSectionWrapper,
   createThemeVariations,
   createVariations,
@@ -26,7 +27,7 @@ export default {
   },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const styles = ['basic', 'with-icon', 'icon-only'];
 
   const renderFactsAndFigures = (theme, style = 'basic') => {
@@ -57,8 +58,7 @@ export const Visreg = () => {
     });
   };
 
-  return createGlobalThemeVariations(
-    () => `
+  return `
       ${createThemeVariations(
         (theme) =>
           createSectionWrapper(theme, renderFactsAndFigures('one'), {
@@ -92,8 +92,21 @@ export const Visreg = () => {
         '',
         'Presentation Style',
       )}
-    `,
-    globalThemes,
-    'All Global Theme Variations',
-  );
+    `;
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';
