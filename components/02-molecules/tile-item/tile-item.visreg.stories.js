@@ -5,12 +5,13 @@ import tileItemData from './tile-item.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
 import {
+  globalThemeLabels,
   globalThemes,
   sectionThemes,
   componentThemes,
 } from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
-  createGlobalThemeVariations,
   createThemeVariations,
   createSectionWrapper,
   createVariations,
@@ -23,7 +24,7 @@ export default {
   parameters: { controls: { disable: true } },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const heading = tileItemData.tile__item__heading;
   const content = tileItemData.tile__item__content;
   const contentLink = 'https://www.yale.edu';
@@ -59,8 +60,7 @@ export const Visreg = () => {
     </div>
   `;
 
-  return createGlobalThemeVariations(
-    () => `
+  return `
       ${createThemeVariations(
         (theme) =>
           createSectionWrapper(theme, renderTileItem('one'), {
@@ -98,8 +98,21 @@ export const Visreg = () => {
         '',
         'Presentation Style',
       )}
-    `,
-    globalThemes,
-    'All Global Theme Variations',
-  );
+    `;
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

@@ -19,6 +19,13 @@
  *
  * NOTE: This file contains placeholder code and will not run as-is.
  * It must be copied and customized for your specific component.
+ *
+ * OUT OF DATE: the single `export const Visreg` below is no longer the shape a
+ * visreg story takes -- one story per global theme is, because stacking all of
+ * them in one story exceeds the visual regression snapshot pixel limit. This
+ * template also imports playground helpers that no longer exist. Follow the
+ * "One story per global theme" section of STORYBOOK.md and an existing
+ * `*.visreg.stories.js` file instead of copying this one.
  */
 
 /* eslint-disable */

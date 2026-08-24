@@ -95,6 +95,24 @@ export const Playground = ({
 
 ## Available Utilities
 
+### Visreg story utilities (`global-theme-stories.mjs`)
+
+#### `createGlobalThemeStories(renderFn, globalThemes, globalThemeLabels)`
+
+Builds one visual-regression story per global theme, keyed by global theme. Every
+`*.visreg.stories.js` file uses this — a visreg story must not stack all the global themes
+into one story, because the result exceeds the visual regression snapshot pixel limit.
+
+#### `createGlobalThemeSectionStories(renderFn, globalThemes, sectionThemes, globalThemeLabels)`
+
+The same thing crossed with section theme, for the few components too tall to fit a whole
+global theme in one snapshot.
+
+Read the `global-theme-stories.mjs` docblock before changing the shape of a visreg story: it
+is the canonical explanation, and two of the rules (no destructured exports, static
+`storyName` assignments) are forced by Storybook's static CSF indexer rather than by taste.
+`global-theme-stories.test.mjs` enforces them.
+
 ### Core Utilities (`playground-utils.js`)
 
 #### `createPlaygroundIntro(description)`
