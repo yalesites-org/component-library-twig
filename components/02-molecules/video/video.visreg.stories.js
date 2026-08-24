@@ -2,11 +2,13 @@ import videoTwig from './yds-video.twig';
 
 import videoData from './video.yml';
 
-import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
-  createGlobalThemeVariations,
-  createThemeVariations,
-} from '../../_storybook/playground-utils';
+  globalThemeLabels,
+  globalThemes,
+  sectionThemes,
+} from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -20,7 +22,7 @@ export default {
   },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const heading = videoData.video__heading;
   const text = videoData.video__text;
   const placement = videoData.video__placement;
@@ -38,16 +40,27 @@ export const Visreg = () => {
     </div>
   `;
 
-  return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        renderVideo,
-        sectionThemes,
-        'All Section Theme Variations',
-        'Below are all theme variations for visual regression testing.',
-        'Section Theme',
-      ),
-    globalThemes,
-    'All Global Theme Variations',
+  return createThemeVariations(
+    renderVideo,
+    sectionThemes,
+    'All Section Theme Variations',
+    'Below are all theme variations for visual regression testing.',
+    'Section Theme',
   );
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

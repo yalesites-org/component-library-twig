@@ -1,8 +1,12 @@
 import componentWrapperTwig from './yds-component-wrapper.twig';
 
-import { sectionThemes, globalThemes } from '../../_storybook/theme-constants';
 import {
-  createGlobalThemeVariations,
+  sectionThemes,
+  globalThemeLabels,
+  globalThemes,
+} from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
+import {
   createSectionWrapper,
   createThemeVariations,
   createVariations,
@@ -20,7 +24,7 @@ export default {
   },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const widthOptions = ['content', 'highlight', 'site', 'max'];
 
   const renderComponentWrapper = (width) => `
@@ -41,20 +45,31 @@ export const Visreg = () => {
       'Component Width',
     );
 
-  return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (theme) =>
-          createSectionWrapper(theme, renderWidthVariations(), {
-            width: 'site',
-            primaryWidth: '100%',
-          }),
-        sectionThemes,
-        'All Section Theme Variations',
-        '',
-        'Section Theme',
-      ),
-    globalThemes,
-    'All Global Theme Variations',
+  return createThemeVariations(
+    (theme) =>
+      createSectionWrapper(theme, renderWidthVariations(), {
+        width: 'site',
+        primaryWidth: '100%',
+      }),
+    sectionThemes,
+    'All Section Theme Variations',
+    '',
+    'Section Theme',
   );
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';
