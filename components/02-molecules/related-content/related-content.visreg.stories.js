@@ -1,9 +1,13 @@
 import relatedContentTwig from './yds-related-content.twig';
 import sampleData from './related-content.yml';
 
-import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
-  createGlobalThemeVariations,
+  globalThemeLabels,
+  globalThemes,
+  sectionThemes,
+} from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
+import {
   createSectionWrapper,
   createThemeVariations,
 } from '../../_storybook/playground-utils';
@@ -43,11 +47,10 @@ const buildSampleViewHtml = () => {
   return `<div class="js-view-dom-id-storybook-visreg">${articles}</div>`;
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   // Each call gets a unique heading id so the new aria-labelledby
-  // wiring stays valid when every global × section theme renders on
-  // the same Storybook page (otherwise duplicate ids would violate
-  // WCAG 4.1.1).
+  // wiring stays valid when every section theme renders on the same
+  // Storybook page (otherwise duplicate ids would violate WCAG 4.1.1).
   let headingIdCounter = 0;
   const renderRelatedContent = () => {
     const id = `related-content-heading-${headingIdCounter}`;
@@ -59,16 +62,27 @@ export const Visreg = () => {
     });
   };
 
-  return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (theme) => createSectionWrapper(theme, renderRelatedContent()),
-        sectionThemes,
-        'All Section Theme Variations',
-        'Below are all theme variations for visual regression testing.',
-        'Section Theme',
-      ),
-    globalThemes,
-    'All Global Theme Variations',
+  return createThemeVariations(
+    (theme) => createSectionWrapper(theme, renderRelatedContent()),
+    sectionThemes,
+    'All Section Theme Variations',
+    'Below are all theme variations for visual regression testing.',
+    'Section Theme',
   );
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

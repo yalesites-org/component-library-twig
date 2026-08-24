@@ -3,9 +3,13 @@ import './yds-audio-player';
 
 import audioEmbedData from './audio.yml';
 
-import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
-  createGlobalThemeVariations,
+  globalThemeLabels,
+  globalThemes,
+  sectionThemes,
+} from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
+import {
   createThemeVariations,
   createSectionWrapper,
 } from '../../_storybook/playground-utils';
@@ -27,20 +31,31 @@ const renderAudioPlayer = () =>
     audio_embed__url: audioEmbedData.audio_embed__url,
   });
 
-export const Visreg = () =>
-  createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (sectionTheme) =>
-          createSectionWrapper(sectionTheme, renderAudioPlayer(), {
-            width: 'site',
-            primaryWidth: '100%',
-          }),
-        sectionThemes,
-        'All Section Theme Variations',
-        'Below are all theme variations for visual regression testing.',
-        'Section Theme',
-      ),
-    globalThemes,
-    'All Global Theme Variations',
+const renderGlobalTheme = () =>
+  createThemeVariations(
+    (sectionTheme) =>
+      createSectionWrapper(sectionTheme, renderAudioPlayer(), {
+        width: 'site',
+        primaryWidth: '100%',
+      }),
+    sectionThemes,
+    'All Section Theme Variations',
+    'Below are all theme variations for visual regression testing.',
+    'Section Theme',
   );
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

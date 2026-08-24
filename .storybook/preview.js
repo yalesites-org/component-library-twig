@@ -1,6 +1,10 @@
 import { useEffect } from '@storybook/preview-api';
 import Twig from 'twig';
 import { setupTwig } from './setupTwig';
+import {
+  globalThemeLabels,
+  globalThemes,
+} from '../components/_storybook/theme-constants';
 
 // GLOBAL CSS
 import '../components/style.scss';
@@ -27,8 +31,14 @@ export const decorators = [
   (StoryFn, context) => {
     useEffect(() => {
       // Update body attributes for theme + heading typography
-      document.body.setAttribute('data-global-theme', context.globals.globalTheme);
-      document.body.setAttribute('data-font-pairing', context.globals.headingTypography || 'yalenew');
+      document.body.setAttribute(
+        'data-global-theme',
+        context.globals.globalTheme,
+      );
+      document.body.setAttribute(
+        'data-font-pairing',
+        context.globals.headingTypography || 'yalenew',
+      );
 
       Drupal.attachBehaviors(document);
 
@@ -49,15 +59,14 @@ export const globalTypes = {
     description: 'Choose a global color palette.',
     defaultValue: 'one',
     toolbar: {
-      items: [
-        { value: 'one', title: 'Old Blues' },
-        { value: 'two', title: 'New Haven Green' },
-        { value: 'three', title: 'Shoreline Summer' },
-        { value: 'four', title: 'Onha' },
-        { value: 'five', title: 'It\'s Your Yale'},
-        { value: 'six', title: 'AI'},
-        { value: 'seven', title: 'Whitney Humanities Center' },
-      ],
+      // Derived from tokens rather than listed here: this used to be a hand
+      // written copy, and it had already drifted (a straight apostrophe in
+      // "It's Your Yale" where tokens has a curly one), so the toolbar and the
+      // story names disagreed.
+      items: globalThemes.map((value) => ({
+        value,
+        title: globalThemeLabels[value],
+      })),
       showName: true,
       title: 'Site: Global Theme (lever)',
     },
@@ -72,7 +81,10 @@ export const globalTypes = {
       items: [
         { value: 'yalenew', title: 'Headings: YaleNew (Old-Style Numerals)' },
         { value: 'mallory', title: 'Headings: Mallory' },
-        { value: 'yalenew-oldstyle', title: 'Headings: YaleNew (Lining Numerals)' },
+        {
+          value: 'yalenew-oldstyle',
+          title: 'Headings: YaleNew (Lining Numerals)',
+        },
       ],
       showName: true,
       dynamicTitle: true,
@@ -94,7 +106,12 @@ export const parameters = {
         'Tokens',
         [
           'Colors',
-          ['Colors', 'Color Palettes (Theme)', 'Theme Sandbox', 'Theming Reference'],
+          [
+            'Colors',
+            'Color Palettes (Theme)',
+            'Theme Sandbox',
+            'Theming Reference',
+          ],
           '*',
         ],
         'Atoms',
