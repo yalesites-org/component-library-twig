@@ -1,16 +1,17 @@
 import imageBannerTwig from './image/yds-image-banner.twig';
 import imageData from '../../01-atoms/images/image/image.yml';
 
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
+  componentThemes,
+  globalThemeLabels,
   globalThemes,
   sectionThemes,
-  componentThemes,
 } from '../../_storybook/theme-constants';
 import {
-  createGlobalThemeVariations,
+  createSectionWrapper,
   createThemeVariations,
   createVariations,
-  createSectionWrapper,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -25,64 +26,69 @@ export default {
   },
 };
 
-export const Visreg = () => {
-  const size = 'tall';
-  const imageCaption = 'Image Banner Caption';
+const size = 'tall';
+const imageCaption = 'Image Banner Caption';
 
-  const renderImageBanner = (bgColor) =>
-    imageBannerTwig({
-      ...imageData.responsive_images['16x9'],
-      image_banner__content__background: bgColor,
-      image_banner__overlay_variation: 'full',
-      image_banner__size: size,
-      image_banner__video: 'false',
-      image_banner__caption: imageCaption,
-    });
+const renderImageBanner = (bgColor, imgSize = size) =>
+  imageBannerTwig({
+    ...imageData.responsive_images['16x9'],
+    image_banner__content__background: bgColor,
+    image_banner__overlay_variation: 'full',
+    image_banner__size: imgSize,
+    image_banner__video: 'false',
+    image_banner__caption: imageCaption,
+  });
 
-  return `
-    ${createVariations(
-      (imgSize) =>
-        imageBannerTwig({
-          ...imageData.responsive_images['16x9'],
-          image_banner__content__background: 'one',
-          image_banner__overlay_variation: 'full',
-          image_banner__size: imgSize,
-          image_banner__video: 'false',
-          image_banner__caption: imageCaption,
-        }),
-      ['tall', 'short', 'mini'],
-      'Size Variations',
-      '',
-      'Size',
-    )}
+/**
+ * Sizes do not vary by global theme, so they get one story of their own rather
+ * than being repeated in every global theme story.
+ */
+export const SizeVariations = () =>
+  createVariations(
+    (imgSize) => renderImageBanner('one', imgSize),
+    ['tall', 'short', 'mini'],
+    'Size Variations',
+    '',
+    'Size',
+  );
 
-    ${createGlobalThemeVariations(
-      () => `
-        ${createThemeVariations(
-          (theme) =>
-            createSectionWrapper(theme, renderImageBanner('one'), {
-              width: 'site',
-              primaryWidth: '100%',
-            }),
-          sectionThemes,
-          'All Section Theme Variations',
-          '',
-          'Section Theme',
-        )}
-        ${createThemeVariations(
-          (theme) =>
-            createSectionWrapper('one', renderImageBanner(theme), {
-              width: 'site',
-              primaryWidth: '100%',
-            }),
-          componentThemes,
-          'All Image Banner Theme Variations',
-          '',
-          'Image Banner Theme',
-        )}
-      `,
-      globalThemes,
-      'All Global Theme Variations',
-    )}
-  `;
-};
+const renderGlobalTheme = () => `
+  ${createThemeVariations(
+    (theme) =>
+      createSectionWrapper(theme, renderImageBanner('one'), {
+        width: 'site',
+        primaryWidth: '100%',
+      }),
+    sectionThemes,
+    'All Section Theme Variations',
+    '',
+    'Section Theme',
+  )}
+  ${createThemeVariations(
+    (theme) =>
+      createSectionWrapper('one', renderImageBanner(theme), {
+        width: 'site',
+        primaryWidth: '100%',
+      }),
+    componentThemes,
+    'All Image Banner Theme Variations',
+    '',
+    'Image Banner Theme',
+  )}
+`;
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

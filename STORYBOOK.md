@@ -88,6 +88,48 @@ Every component needs a `*.visreg.stories.js` file. **Add or update a visreg ent
 
 This is required so release QA can catch visual regressions. If it's not in a visreg story, it won't be reviewed.
 
+#### One story per global theme
+
+Visual regression snapshots have a hard pixel-area ceiling — Chromatic rejects anything over 25,000,000px — and stacking every global theme into one story blows past it. Build the theme stories with `createGlobalThemeStories` instead, and export one story per global theme:
+
+```js
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
+import {
+  globalThemeLabels,
+  globalThemes,
+} from '../../_storybook/theme-constants';
+
+// Renders one global theme's worth of content.
+const renderGlobalTheme = () => createThemeVariations(/* ... */);
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';
+```
+
+The 25,000,000px figure is Chromatic's, which is what this refactor is for; Percy is what
+`npm run visreg:ci` runs today. The full rationale lives in the
+`components/_storybook/global-theme-stories.mjs` docblock — read that before changing the shape.
+
+Two things to know before "tidying" that up:
+
+- **Do not collapse the exports into one destructured export.** Storybook's static CSF indexer only reads export declarators whose id is a plain identifier, so `export const { OldBlues, ... } = createGlobalThemeStories(...)` indexes as *zero* stories and the component drops out of visual regression silently.
+- **Anything that does not vary by global theme belongs in its own story**, not repeated inside all seven. See the banner components for examples.
+
+`components/_storybook/global-theme-stories.test.mjs` enforces this shape across every visreg story file.
+
 ## Adding a New Component
 
 1. **Choose the right tier** — atom (single element), molecule (composed of atoms), organism (full section), template (layout shell with no visual identity)

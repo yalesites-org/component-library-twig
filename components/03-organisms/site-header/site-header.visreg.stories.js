@@ -9,10 +9,11 @@ import './yds-site-header';
 
 import {
   exampleSiteNameImageSvg,
+  globalThemeLabels,
   globalThemes,
 } from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
-  createGlobalThemeVariations,
   createThemeAccentCombinations,
   createVariations,
 } from '../../_storybook/playground-utils';
@@ -26,7 +27,7 @@ export default {
   },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   // Base header configuration from extracted YML
   const baseConfig = {
     ...siteHeaderConfigData.baseConfig,
@@ -44,8 +45,7 @@ export const Visreg = () => {
       ...config,
     });
 
-  return createGlobalThemeVariations(
-    () => `
+  return `
       ${createThemeAccentCombinations(
         (theme, accent) =>
           renderHeader({
@@ -123,8 +123,21 @@ export const Visreg = () => {
         '',
         'Image Variation',
       )}
-    `,
-    globalThemes,
-    'All Global Theme Variations',
-  );
+    `;
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';
