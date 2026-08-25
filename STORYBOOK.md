@@ -130,6 +130,35 @@ Two things to know before "tidying" that up:
 
 `components/_storybook/global-theme-stories.test.mjs` enforces this shape across every visreg story file.
 
+#### The pixel ceiling is checked in CI
+
+Story shape is one half of staying under the ceiling; the story's actual rendered height is the
+other, and that one moves every time a component grows a variation. `npm run visreg:measure`
+measures it:
+
+```sh
+npm run storybook:build   # the check reads the built .out/index.json
+npm run visreg:measure
+```
+
+It loads every `visreg`-tagged story's `iframe.html` in headless Chromium at the 1200px snapshot
+viewport, multiplies `scrollWidth` by `scrollHeight`, and **exits non-zero naming any story over
+the ceiling and by how much**.
+
+A clean run reports the largest story and its headroom, which is the number worth watching — as
+of writing, `Molecules/Meta` sits at 24,286,800px, **97% of the ceiling**, so that component has
+almost none left. `VISREG_MEASUREMENTS_OUT=sizes.json npm run visreg:measure` writes every
+story's measurement if you need to see where a component stands.
+
+It runs in CI twice on purpose: in `Test`, on every push to a PR, so a story that grows past the
+ceiling fails while you are still working on it; and again in `Visual Regression` before Percy, so
+a PR marked ready for review cannot spend a Percy run on a snapshot that cannot be captured.
+
+If it cannot find a browser, fetch one: `npx puppeteer browsers install chrome`. Overrides
+(`VISREG_PIXEL_CEILING`, `VISREG_CONCURRENCY`, `VISREG_STORY_TIMEOUT`, `VISREG_SETTLE_TIMEOUT`)
+are listed in the `measure-visreg-pixels.mjs` docblock, which also explains why the wait strategy
+is what it is — read it before changing the measuring.
+
 ## Adding a New Component
 
 1. **Choose the right tier** — atom (single element), molecule (composed of atoms), organism (full section), template (layout shell with no visual identity)

@@ -21,6 +21,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+      # Restored before install so Puppeteer's postinstall finds a browser
+      # already there instead of pulling ~150MB on every run.
+      - name: Cache Puppeteer browsers
+        if: steps.component_changes.outputs.components == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/puppeteer
+          key: puppeteer-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - name: Install
         if: steps.component_changes.outputs.components == 'true'
         run: npm ci
@@ -29,6 +37,15 @@ jobs:
       - name: Build storybook
         if: steps.component_changes.outputs.components == 'true'
         run: npm run storybook:build
+      # Puppeteer's postinstall normally fetches this, but newer npm gates
+      # install scripts, so ask for it explicitly. It is a no-op once cached.
+      - name: Install Chrome
+        if: steps.component_changes.outputs.components == 'true'
+        run: npx puppeteer browsers install chrome
+      # Runs before Percy so an uncapturable snapshot fails the job cheaply.
+      - name: Check visreg pixel ceiling
+        if: steps.component_changes.outputs.components == 'true'
+        run: npm run visreg:measure
       - name: Run Percy Tests
         if: steps.component_changes.outputs.components == 'true'
         run: npm run visreg:ci
