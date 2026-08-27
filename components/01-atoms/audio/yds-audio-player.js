@@ -1,6 +1,6 @@
 Drupal.behaviors.audioPlayer = {
   attach(context) {
-    const audioPlayers = context.querySelectorAll('.audio-embed');
+    const audioPlayers = once('audio-player', '.audio-embed', context);
 
     audioPlayers.forEach((audioPlayer) => {
       const audio = audioPlayer.querySelector('audio');

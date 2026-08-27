@@ -34,16 +34,15 @@
  */
 Drupal.behaviors.textCopyButton = {
   attach(context) {
-    // Only bind buttons that haven't been initialized (idempotency guard).
     // Drupal.attachBehaviors() is called on every AJAX request and every
-    // Storybook render — without this guard, listeners stack.
-    const elems = context.querySelectorAll(
-      '.text-copy-button__button:not([data-text-copy-init])',
+    // Storybook render — once() keeps listeners from stacking.
+    const elems = once(
+      'text-copy-button',
+      '.text-copy-button__button',
+      context,
     );
 
     elems.forEach((elem) => {
-      elem.setAttribute('data-text-copy-init', '');
-
       // Capture the rendered label so we can restore it after the success
       // message. Hardcoding a revert label here would override whatever the
       // consumer chose to put in the button.

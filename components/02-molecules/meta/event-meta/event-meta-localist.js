@@ -1,11 +1,17 @@
 Drupal.behaviors.toggleLinks = {
   attach(context) {
     // Get all "Show More Dates" buttons by data attribute
-    const showMoreDatesButtons = context.querySelectorAll(
+    const showMoreDatesButtons = once(
+      'event-meta-show-more-dates',
       '[data-show-more-dates]',
+      context,
     );
     const showMapWrapper = context.querySelector('.event-meta__event-show-map');
-    const showMapButton = context.querySelector('.event-meta__cta--show-map');
+    const [showMapButton] = once(
+      'event-meta-show-map',
+      '.event-meta__cta--show-map',
+      context,
+    );
     const mapElementWrapper = context.querySelector('.event-meta__map');
 
     // Function to toggle aria-expanded attribute

@@ -1,7 +1,10 @@
 Drupal.behaviors.siteHeader = {
   attach(context) {
     const body = context.querySelector('body');
-    const header = context.querySelector('.site-header');
+    const [header] = once('site-header', '.site-header', context);
+    if (!header) {
+      return;
+    }
 
     /**
      * debounce
