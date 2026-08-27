@@ -1,4 +1,8 @@
 import { useEffect } from 'react';
+import {
+  globalThemeLabels,
+  globalThemes,
+} from '../../../components/_storybook/theme-constants.js';
 
 // Registered via previewAnnotations in main.js — Core's preview.js only merges `parameters`, not this.
 export const decorators = [
@@ -25,15 +29,14 @@ export const globalTypes = {
     description: 'Choose a global color palette.',
     defaultValue: 'one',
     toolbar: {
-      items: [
-        { value: 'one', title: 'Old Blues' },
-        { value: 'two', title: 'New Haven Green' },
-        { value: 'three', title: 'Shoreline Summer' },
-        { value: 'four', title: 'Onha' },
-        { value: 'five', title: 'It\'s Your Yale'},
-        { value: 'six', title: 'AI'},
-        { value: 'seven', title: 'Whitney Humanities Center' },
-      ],
+      // Derived from tokens rather than listed here: this used to be a hand
+      // written copy, and it had already drifted (a straight apostrophe in
+      // "It's Your Yale" where tokens has a curly one), so the toolbar and the
+      // story names disagreed.
+      items: globalThemes.map((value) => ({
+        value,
+        title: globalThemeLabels[value],
+      })),
       // showName is deprecated/no-op (storybookjs/storybook#22245); dynamicTitle: false keeps the static label.
       dynamicTitle: false,
       title: 'Site: Global Theme (lever)',

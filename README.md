@@ -78,8 +78,11 @@ Comprehensive testing page with all component variations:
 - Interactive controls section
 - All theme variations
 - All component variations
+- Visual regression testing coverage
 
 **Files**: `[component].visreg.stories.js`
+
+These pages remain as a documentation pattern independent of any visual-diffing tool.
 
 ### Migration Guide
 
@@ -103,6 +106,8 @@ PRs also have auto-deployed component libraries, which allow reviewers to load t
 
 ![PR preview link is the last link in the Netlify bot comment](./.github/docs/pr-preview-link.png)
 
-## Visual Regression Testing
+## Thanks
 
-Percy visual regression testing is no longer in use. `[component].visreg.stories.js` pages remain as a documentation pattern (comprehensive story coverage per component), independent of any visual-diffing tool.
+<a href="https://www.chromatic.com/"><img src="https://user-images.githubusercontent.com/321738/84662277-e3db4f80-af1b-11ea-88f5-91d67a5e59f6.png" width="153" height="30" alt="Chromatic" /></a>
+
+Thanks to [Chromatic](https://www.chromatic.com/) for providing the visual testing platform that helps us review UI changes and catch visual regressions.

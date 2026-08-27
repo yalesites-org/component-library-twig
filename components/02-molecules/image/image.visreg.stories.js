@@ -2,11 +2,13 @@ import contentImageTwig from './yds-content-image.twig';
 
 import imageData from '../../01-atoms/images/image/image.yml';
 
-import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
-  createGlobalThemeVariations,
-  createThemeVariations,
-} from '../../_storybook/playground-utils';
+  globalThemeLabels,
+  globalThemes,
+  sectionThemes,
+} from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 export default {
   tags: ['visreg'],
@@ -14,7 +16,7 @@ export default {
   parameters: { controls: { disable: true } },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const caption =
     'This is the <a href="#">caption</a> for the 16:9 image above.';
   const width = 'content';
@@ -76,16 +78,27 @@ export const Visreg = () => {
     `;
   };
 
-  return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (theme) => createLayoutContent(permutationLayout, theme),
-        sectionThemes,
-        'All Section Theme Variations',
-        `Below are all section theme variations using your current caption and width settings with ${layoutOption} layout.`,
-        'Section Theme',
-      ),
-    globalThemes,
-    'All Global Theme Variations',
+  return createThemeVariations(
+    (theme) => createLayoutContent(permutationLayout, theme),
+    sectionThemes,
+    'All Section Theme Variations',
+    `Below are all section theme variations using your current caption and width settings with ${layoutOption} layout.`,
+    'Section Theme',
   );
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';
