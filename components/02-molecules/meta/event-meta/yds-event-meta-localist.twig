@@ -4,8 +4,9 @@
  # - event_meta__date_end
  # - event_meta__format: Multiselect. Options are 'In-person', 'Virtual', or both.
  # - event_meta__address
- # - place: Structured Localist location
- # - location_additional_info: WYSIWYG for non-Localist events.
+ # - place: Structured location (Yale Location taxonomy term). Independent of room — either can be set alone.
+ # - room: Free-text room/suite string. Independent of place — either can be set alone.
+ # - location_additional_info: WYSIWYG location field. Always renders when set, alongside place/room if also present.
  #}
 
 {# Split upcomign and past dates #}
@@ -66,10 +67,10 @@
 {% set latLong = place.latitude ~ ',' ~ place.longitude %}
 {% set get_directions__url = place ? 'https://www.google.com/maps/dir/Current+Location/' ~ latLong : '' %}
 
-{# Set up location display with conditional room #}
+{# Set up location display: place and room are independent, either can be set alone #}
 {% set location_display = place.name %}
 {% if room %}
-  {% set location_display = location_display ~ ', ' ~ room %}
+  {% set location_display = location_display ? location_display ~ ', ' ~ room : room %}
 {% endif %}
 
 {% if event_experience %}
@@ -138,7 +139,7 @@
 {% endset %}
 
 {# Event meta localist component #}
-<div {{ add_attributes(event_meta__attributes) }} data-event-status="{{ event_status }}">
+<div {{ add_attributes(event_meta__attributes) }} data-event-status="{{ event_status }}" itemscope itemtype="https://schema.org/Event">
   {# To get the event_title__prefix to wire properly to the page_title__prefix
   and retain the logic of end_date, we need to include the page-title
   in the same component file #}
@@ -350,7 +351,7 @@
         </div>
 
         {# Start Grid of fields #}
-        {% if ticket_cost or event_types or event_meta__cta_primary__href or place or event_audience or event_topics %}
+        {% if ticket_cost or event_types or event_meta__cta_primary__href or place or room or location_additional_info or event_audience or event_topics %}
         <div {{ bem('details-wrapper', [], event_meta__base_class) }}>
           {% if ticket_cost %}
             <div {{ bem('cost', [], event_meta__base_class) }}>
@@ -416,16 +417,19 @@
             </div>
           {% endif %}
 
-          {% if place %}
+          {% if place or room %}
             <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
               <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
               <div {{ bem('location', [], event_meta__base_class) }} itemprop="location" itemscope itemtype="https://schema.org/Place">
                 <span itemprop="name">{{ location_display }}</span><br>
+                {% if place %}
                 <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
                   <span itemprop="streetAddress">{{ place.address }}</span>
                   <span itemprop="addressLocality">{{ place.city }}</span>, <span itemprop="addressRegion">{{ place.state }}</span> <span itemprop="postalCode">{{ place.postal_code }}</span>
                 </span>
+                {% endif %}
               </div>
+              {% if place %}
               <div {{ bem('event-show-map', [], event_meta__base_class) }} is-expanded="false">
                 {% include "@atoms/controls/cta/yds-cta.twig" with {
                   cta__content: event__show_map__icon,
@@ -446,11 +450,14 @@
                   } %}
                 </div>
               </div>
+              {% endif %}
             </div>
-          {% elseif location_additional_info %}
+          {% endif %}
+
+          {% if location_additional_info %}
             <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
-              <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
-              <div {{ bem('location', [], event_meta__base_class) }} itemprop="location">
+              <label {{ bem('event__label', [], event_meta__base_class) }}>{{ (place or room) ? 'Additional Information' : 'Location' }}</label>
+              <div {{ bem('location', [], event_meta__base_class) }}{% if not (place or room) %} itemprop="location"{% endif %}>
                 {{ location_additional_info }}
               </div>
             </div>
