@@ -144,9 +144,39 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-grid-action: var(--color-slot-seven);
   }
 
+  // Section theme six maps to slot-three, the one palette slot sections did
+  // not previously offer (added for parity with the block pickers in #1518).
+  // Unlike themes one-five it is not a key in the `component-themes` token
+  // map, so the `@each` above never emits its `background-color`/`color` --
+  // they are declared here instead. This mirrors `_yds-callout.scss`, whose
+  // `six` theme is handled the same way.
+  // slot-three is a mid-light color on all seven global themes (lightness
+  // 57%-69%), so it takes the dark-on-light treatment used by themes two and
+  // five, not the white-on-dark one used by one/three/four.
+  &[data-component-theme='six'] {
+    --color-layout-theme: var(--color-slot-three);
+    --color-layout-content: var(--color-slot-seven);
+    --color-text-shadow: var(--color-slot-three);
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-slot-seven);
+    --color-link-visited-hover: var(--color-slot-seven);
+    --color-heading: var(--color-slot-seven);
+    --color-layout-border: var(--color-slot-seven);
+    --color-link-grid-action: var(--color-slot-seven);
+
+    background-color: var(--color-layout-theme);
+    color: var(--color-layout-content);
+  }
+
   // Link-grid themes one/three/four/five set white heading text by default.
-  // On light section themes two and five, force dark headings for readability.
-  &:is([data-component-theme='two'], [data-component-theme='five']) {
+  // On light section themes two, five and six, force dark headings for
+  // readability.
+  &:is(
+      [data-component-theme='two'],
+      [data-component-theme='five'],
+      [data-component-theme='six']
+    ) {
     .link-grid .link-grid__heading,
     .link-grid .link-group__heading {
       color: var(--color-slot-seven);
