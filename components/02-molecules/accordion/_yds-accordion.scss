@@ -282,6 +282,28 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   overflow: visible;
 }
 
+// Same fix as above for the seventy-thirty layout, which switched from its
+// own yds-two-column organism to this shared one. Not extended to
+// fifty-fifty/thirty-thirty-thirty: those already render through yds-layout
+// today, so if their narrower columns needed this, it would already be
+// showing up as a live bug -- extending it there without that evidence would
+// be an unverified behavior change.
+.yds-layout[data-component-layout='seventy-thirty']
+  .yds-layout__primary
+  .layout-builder-block
+  .accordion,
+.yds-layout[data-component-layout='seventy-thirty']
+  .yds-layout__secondary
+  .layout-builder-block
+  .accordion {
+  overflow: visible;
+
+  .accordion__inner,
+  .accordion__controls {
+    overflow: visible;
+  }
+}
+
 // Toggle color follows section background (matches layout-builder.css pattern for
 // .layout-builder__link--add). Nested so base + :hover output before section overrides.
 .layout-builder-block .accordion__toggle-all {

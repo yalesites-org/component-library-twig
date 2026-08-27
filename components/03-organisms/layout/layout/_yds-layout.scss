@@ -36,7 +36,8 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       // override text-shadow color for links in component themes
       .link,
       .text-field a,
-      .caption a {
+      .caption a,
+      [class*='__heading-link'] {
         --color-text-shadow: var(--color-layout-theme);
         --color-link-hover: var(--color-link-hover);
         --color-link-base: var(--color-link-base);
@@ -263,6 +264,12 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     @media (min-width: $break-layout-layout) {
       flex: 1 0 var(--size-component-layout-width-content);
     }
+
+    // Matches the pre-migration yds-two-column organism: no extra top
+    // margin on the first block in the wider (primary) column.
+    > *:first-child {
+      margin-top: 0;
+    }
   }
 }
 
@@ -282,9 +289,19 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     }
   }
 
+  // Matches the pre-migration yds-two-column organism's always-on column
+  // separator and gutter (independent of the opt-in .yds-layout__divider).
   [data-component-layout='seventy-thirty'] & {
+    @media (max-width: $break-layout-layout-max) {
+      border-top: var(--thickness-divider) solid var(--color-divider);
+      padding-top: var(--spacing-page-inner);
+    }
+
     @media (min-width: $break-layout-layout) {
       flex: 0 1 calc(37.5rem + var(--spacing-component-gutter));
+      border-left: var(--thickness-divider) solid var(--color-divider);
+      margin-left: calc(var(--spacing-component-gutter) * 2);
+      padding-left: var(--spacing-component-gutter);
     }
   }
 }

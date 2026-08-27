@@ -79,10 +79,24 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   // Single card collection
   [data-collection-type='single'] & {
-    --color-text-shadow: var(--color-blue-yale);
+    --color-text-shadow: var(--color-card-single-bg);
     --color-card-single-bg: var(--color-blue-yale);
     --color-card-single-text: var(--color-basic-white);
     --color-heading: var(--color-card-single-text);
+  }
+
+  // Restated directly on the heading link: an enclosing themed .yds-layout
+  // section also sets --color-text-shadow directly on
+  // [class*='__heading-link'], and a value declared directly on an element
+  // always wins over an inherited one, so this card's own --color-text-shadow
+  // above (set on the ancestor, meant to be inherited) isn't enough on its
+  // own to reach it. The repeated attribute selector deliberately bumps
+  // specificity above .yds-layout[data-component-theme] [class*='__heading-link']
+  // (3 selector components), so this card's own background always wins.
+  [data-collection-type='single'][data-collection-type='single']
+    &
+    [class*='__heading-link'] {
+    --color-text-shadow: var(--color-card-single-bg);
   }
 
   // Condensed card collection
@@ -402,7 +416,8 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
       grid-row: 2 / 7;
       align-self: center;
 
-      .yds-two-column & {
+      .yds-two-column &,
+      .yds-layout[data-component-layout='seventy-thirty'] & {
         grid-column: 2 / -1;
       }
     }
