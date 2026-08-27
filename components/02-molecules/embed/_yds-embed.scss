@@ -77,3 +77,25 @@ $heights: (
     }
   }
 }
+
+// A consent-gated embed ships `data-src` and no `src`, so nothing is loaded
+// until the visitor chooses to load it. Until then the iframe must not reserve
+// the height it would occupy once loaded: Klaro renders its click-to-load
+// prompt as a sibling, and the reserved box leaves a large empty gap beneath
+// that prompt -- 90vh for a form, a 16:9 well for a video, and doubled in both
+// cases because `:has()` matches at any depth and the embed nests one
+// `.embed__inner` inside another.
+
+// Every rule here stops applying the moment Klaro copies `data-src` into `src`,
+// so the loaded embed keeps the sizing defined above with no JavaScript and no
+// second code path.
+.embed {
+  iframe[data-src]:not([src]) {
+    display: none;
+  }
+}
+
+.embed__inner:has(iframe[data-src]:not([src])) {
+  padding-bottom: 0;
+  height: auto;
+}
