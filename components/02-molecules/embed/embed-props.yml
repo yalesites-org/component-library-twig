@@ -47,3 +47,18 @@ loading:
     - lazy
     - eager
   control: select
+
+klaroService:
+  twigProp: embed__klaro_service
+  name: Klaro consent service
+  type: text
+  required: false
+  description: Klaro consent service (app) id that gates this embed
+  detail: >
+    Leave empty for content that may load immediately. When set, the iframe
+    ships data-src and data-name instead of src, so the third-party request is
+    held until the visitor consents; Klaro restores the src on consent and shows
+    a click-to-load placeholder in the meantime. Maps to the
+    embed__klaro_service Twig variable.
+  default: ''
+  control: text
