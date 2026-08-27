@@ -21,7 +21,13 @@ event_meta__cta_primary__href: https://www.example.com
 event_types:
   - name: Music
   - name: Lecture
-location_additional_info: '<p>Meet in the lobby of the Yale School of Music, 470 College St. This session will also be streamed live on our virtual platform for remote attendees; a link will be emailed after registration.</p>'
+is_localist_event: false
+event_address:
+  address: 470 College St
+  city: New Haven
+  state: CT
+  postal_code: '06511'
+address_additional_info: '<p>Meet in the lobby of the Yale School of Music. This session will also be streamed live on our virtual platform for remote attendees; a link will be emailed after registration.</p>'
 event_audience:
   - name: Audience Name one
   - name: Audience Name two
