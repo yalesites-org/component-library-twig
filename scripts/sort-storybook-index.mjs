@@ -1,7 +1,13 @@
-// Reorders .out/index.json's entries after a static `storybook build`, since
-// storySort (see preview.js) doesn't reach the manager bundle in this
-// Storybook 10 + Vite setup. Only affects the static build — not the dev
-// server, which serves its story index dynamically.
+// Reorders .out/index.json's entries after a static `storybook build`.
+//
+// Belt and braces: the postinstall story-sort patch makes Storybook's own indexer
+// apply the same comparator, but that patch does not run under
+// `npm ci --ignore-scripts` (which is how yalesites-project builds this package),
+// and the sidebar order is part of the acceptance bar. Running the comparator here
+// too makes the built order independent of whether the patch applied. Both paths
+// share one comparator, so this pass is idempotent when it already ran.
+//
+// Static build only -- the dev server serves its story index dynamically.
 import fs from 'fs';
 import { storySortComparator } from '../config/emulsify-core/storybook/story-sort.mjs';
 

@@ -76,6 +76,27 @@ export function storySortComparator(a, b) {
     return aPath.length - bPath.length;
   }
 
-  // Same full title: order by story/doc name (e.g. "Overview" vs "Visreg").
-  return compareNames(node, a.name || '', b.name || '');
+  // Same full title: these are the stories inside one component. An explicit
+  // __order wins (e.g. "Overview" before "Visreg"). Otherwise keep the order the
+  // stories are declared in, which is what the webpack build's sidebar showed --
+  // alphabetising here reorders story lists that authors sequenced deliberately
+  // (Basic, BasicShort, ... WithSidebar, WithQuickLinks). Array.prototype.sort is
+  // stable, so returning 0 preserves the indexer's declaration order.
+  const aName = a.name || '';
+  const bName = b.name || '';
+  const orderList = node?.__order || [];
+
+  if (orderList.includes(aName) || orderList.includes(bName)) {
+    return compareNames(node, aName, bName);
+  }
+
+  // A component's docs page comes before its stories, as it did in the webpack
+  // build. Storybook 9's indexer emits the docs entry last, so declaration order
+  // alone would sink "Overview" to the bottom of the story list.
+  if (a.type !== b.type) {
+    if (a.type === 'docs') return -1;
+    if (b.type === 'docs') return 1;
+  }
+
+  return 0;
 }

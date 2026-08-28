@@ -242,17 +242,37 @@ export default {
 };
 ```
 
-Sidebar ordering within a section is alphabetical by default. To override the order for a specific group, add an entry to the `storySort.order` array in `.storybook/preview.js`:
+Sections and components are ordered alphabetically by default, while the stories inside one component keep the order they are exported in. To override either, add an entry to `ORDER_TREE` in `config/emulsify-core/storybook/story-sort.mjs` — each key is a title segment, and its `__order` lists the names that should come first:
 
 ```js
-order: [
-  'Introduction',
-  ['Welcome', 'Theme System', 'Storybook Guide'],
-  'Tokens',
-  ['Colors', ['Colors', 'Color Palettes (Theme)', 'Theme Sandbox', 'Theming Reference']],
-  ...
-]
+export const ORDER_TREE = {
+  __order: [
+    'Introduction',
+    'Tokens',
+    'Atoms',
+    'Molecules',
+    'Organisms',
+    'Templates',
+    'Page Examples',
+  ],
+  Introduction: {
+    __order: ['Welcome', 'Theme System', 'Storybook Guide'],
+  },
+  Tokens: {
+    __order: ['Colors'],
+    Colors: {
+      __order: [
+        'Colors',
+        'Color Palettes (Theme)',
+        'Theme Sandbox',
+        'Theming Reference',
+      ],
+    },
+  },
+};
 ```
+
+That tree has two consumers — the `storySort` parameter in the preview, and `scripts/sort-storybook-index.mjs`, which re-sorts `.out/index.json` after a static build — so editing it in one place covers both.
 
 MDX pages that are standalone (not tied to a stories file) use `<Meta title="..." />`. MDX pages that are attached to a stories file use `<Meta of={StoriesObject} name="Overview" />` — the `name` field sets the tab label in the sidebar. Always use `name="Overview"` rather than `name="Docs"`.
 
