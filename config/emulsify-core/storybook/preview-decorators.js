@@ -8,8 +8,14 @@ import {
 export const decorators = [
   (StoryFn, context) => {
     useEffect(() => {
-      document.body.setAttribute('data-global-theme', context.globals.globalTheme);
-      document.body.setAttribute('data-font-pairing', context.globals.headingTypography || 'yalenew');
+      document.body.setAttribute(
+        'data-global-theme',
+        context.globals.globalTheme,
+      );
+      document.body.setAttribute(
+        'data-font-pairing',
+        context.globals.headingTypography || 'yalenew',
+      );
 
       // Core's decorator calls Drupal.attachBehaviors() but never detaches on cleanup.
       return () => {
@@ -52,7 +58,10 @@ export const globalTypes = {
       items: [
         { value: 'yalenew', title: 'Headings: YaleNew (Old-Style Numerals)' },
         { value: 'mallory', title: 'Headings: Mallory' },
-        { value: 'yalenew-oldstyle', title: 'Headings: YaleNew (Lining Numerals)' },
+        {
+          value: 'yalenew-oldstyle',
+          title: 'Headings: YaleNew (Lining Numerals)',
+        },
       ],
       dynamicTitle: true,
       title: 'Typography: Heading Fonts',
@@ -60,4 +69,9 @@ export const globalTypes = {
   },
 };
 
-export const tags = ['autodocs', 'autodocs'];
+// Dead as written, and deliberately left that way: Storybook reads project tags
+// only from the preview file named by --config-dir, which is @emulsify/core's, not
+// this module. Do not "fix" that by moving this into Core's preview -- Storybook 9
+// dropped `docs.autodocs: false`, so an autodocs tag reaching the indexer would
+// give every component an extra "Docs" child the published sidebar does not have.
+export const tags = ['autodocs'];
