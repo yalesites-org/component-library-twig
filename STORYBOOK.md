@@ -72,9 +72,9 @@ Give each one an `aria-label` that is unique on the page. Props tables generated
 
 ### Tags
 
-| Tag | Effect |
-|---|---|
-| `'!dev'` | Hides story from sidebar — use when MDX fully covers it |
+| Tag        | Effect                                                                      |
+| ---------- | --------------------------------------------------------------------------- |
+| `'!dev'`   | Hides story from sidebar — use when MDX fully covers it                     |
 | `'visreg'` | Marks as a visual regression story — hidden by default, toggled via toolbar |
 
 ### Visreg stories
@@ -125,10 +125,25 @@ The 25,000,000px figure is Chromatic's, which is what this refactor is for; Perc
 
 Two things to know before "tidying" that up:
 
-- **Do not collapse the exports into one destructured export.** Storybook's static CSF indexer only reads export declarators whose id is a plain identifier, so `export const { OldBlues, ... } = createGlobalThemeStories(...)` indexes as *zero* stories and the component drops out of visual regression silently.
+- **Do not collapse the exports into one destructured export.** Storybook's static CSF indexer only reads export declarators whose id is a plain identifier, so `export const { OldBlues, ... } = createGlobalThemeStories(...)` indexes as _zero_ stories and the component drops out of visual regression silently.
 - **Anything that does not vary by global theme belongs in its own story**, not repeated inside all seven. See the banner components for examples.
 
 `components/_storybook/global-theme-stories.test.mjs` enforces this shape across every visreg story file.
+
+#### Placeholder images
+
+Sample images in fixtures and page examples come from `assets/images/placeholders/`,
+committed to this repo — never from a remote placeholder service, which would make the build
+depend on a third-party host and change every snapshot of an image-bearing story.
+`assets/images/placeholders/README.md` has the available aspect ratios, how to reference
+them, and the full rationale.
+
+Reference them by URL under `/assets/` — Emulsify Core mounts the project's `assets/`
+directory there and mounts nothing at a bare `/images/`, so `/images/placeholders/x.png`
+404s while `/assets/images/placeholders/x.png` resolves. Two tests keep this honest:
+`components/_storybook/no-third-party-images.test.mjs` fails the unit suite if a fixture
+drifts back to a remote host, and `components/_storybook/fixture-asset-urls.test.mjs` fails
+it if a fixture points at an asset URL no static mount serves.
 
 ## Adding a New Component
 
