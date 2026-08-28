@@ -1,4 +1,62 @@
+import fs from 'fs';
 import path from 'path';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+
+// Static files Drupal reads out of dist/ that no import produces.
+//
+// Vite emits only what a declared component tier imports, so anything consumed by
+// URL or from PHP has to be copied in. The webpack build did this with
+// CopyWebpackPlugin entries, which left with webpack/plugins.js.
+//
+// This has to be a plugin rather than a step chained after `vite build`, because
+// Vite empties outDir at the start of EVERY build in a watch session -- so
+// `npm run vite` / `npm run develop` would delete these on each rebuild and never
+// put them back, taking fontawesome and the Site Global Theme colours out of the
+// local Drupal site. `writeBundle` runs per build, so watch mode is covered too.
+// Same hook and `enforce: 'post'` as Core's own emulsify-copy-all-src-assets.
+const copyStaticDistFiles = () => {
+  let outDir = 'dist';
+
+  return {
+    name: 'yalesites-copy-static-dist-files',
+    apply: 'build',
+    enforce: 'post',
+
+    configResolved(config) {
+      outDir = config.build?.outDir || 'dist';
+    },
+
+    writeBundle() {
+      const copies = [
+        {
+          // atomic.libraries.yml expects the fontawesome CSS and webfonts verbatim
+          // at dist/fonts, and assets/fonts is not under a component tier.
+          from: path.resolve('assets/fonts'),
+          to: path.join(outDir, 'fonts'),
+        },
+        {
+          // ys_themes' ColorTokenResolver reads dist/tokens.json straight off disk
+          // to build the global-theme colour data. On a miss it logs a warning and
+          // getGlobalThemeColors() returns [], which empties the Site Global Theme
+          // colours site-wide with no build error to explain why. Resolved through
+          // require rather than a literal node_modules path, the way the stories
+          // and playground-utils resolve the same file.
+          from: require.resolve('@yalesites-org/tokens/build/json/tokens.json'),
+          to: path.join(outDir, 'tokens.json'),
+        },
+      ];
+
+      copies.forEach(({ from, to }) => {
+        if (!fs.existsSync(from)) {
+          throw new Error(`Cannot copy into ${outDir}/: ${from} is missing.`);
+        }
+        fs.cpSync(from, to, { recursive: true });
+      });
+    },
+  };
+};
 
 // yalesites-project's build runs `npm ci --ignore-scripts`, so postinstall
 // patches never apply there. linkpurpose ships with no export statement at
@@ -13,7 +71,7 @@ const patchLinkpurpose = () => ({
   },
 });
 
-export default [patchLinkpurpose()];
+export default [patchLinkpurpose(), copyStaticDistFiles()];
 
 export const extendConfig = (config, { env }) => ({
   optimizeDeps: {

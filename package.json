@@ -17,7 +17,7 @@
   },
   "scripts": {
     "ensure-dist": "mkdir -p dist",
-    "build": "npm run ensure-dist && vite build --config node_modules/@emulsify/core/config/vite/vite.config.js && node scripts/copy-dist-static.mjs",
+    "build": "npm run ensure-dist && vite build --config node_modules/@emulsify/core/config/vite/vite.config.js",
     "build-storybook": "npm run storybook:build",
     "develop": "npm run ensure-dist && concurrently --raw --no-shell npm:vite npm:storybook",
     "vite": "vite build --watch --config node_modules/@emulsify/core/config/vite/vite.config.js",
