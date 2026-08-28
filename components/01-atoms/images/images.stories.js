@@ -12,9 +12,9 @@ import './icons/cl-icons.scss';
 import componentProps from './images-props.yml';
 import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
-const svgIconModules = import.meta.glob('../../../assets/icons/*.svg', {
-  eager: true,
-});
+// Not eager: only the keys are read, so eagerly importing pulled every icon SVG
+// into the preview bundle to derive a list of filenames.
+const svgIconModules = import.meta.glob('../../../assets/icons/*.svg');
 const icons = Object.keys(svgIconModules).map((path) =>
   path.split('/').pop().replace('.svg', ''),
 );

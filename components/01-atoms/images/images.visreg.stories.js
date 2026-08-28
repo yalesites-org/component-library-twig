@@ -20,9 +20,9 @@ import {
   createThemeVariations,
 } from '../../_storybook/playground-utils';
 
-const svgIconModules = import.meta.glob('../../../assets/icons/*.svg', {
-  eager: true,
-});
+// Not eager: only the keys are read, so eagerly importing pulled every icon SVG
+// into the preview bundle to derive a list of filenames.
+const svgIconModules = import.meta.glob('../../../assets/icons/*.svg');
 const icons = Object.keys(svgIconModules).map((path) =>
   path.split('/').pop().replace('.svg', ''),
 );
