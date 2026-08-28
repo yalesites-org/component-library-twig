@@ -74,8 +74,12 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-accordion-accent: var(--color-slot-five);
   }
 
+  // The accent is drawn as a border, so it has to clear 3:1 against the
+  // gray-100 item background on its own, with no paired foreground to help
+  // it. That rules out slot-nine, the light background tint this used to be.
+  // See 00-tokens/colors/border-accent-contrast.test.mjs for the measurement.
   &[data-component-theme='six'] {
-    --color-accordion-accent: var(--color-slot-nine);
+    --color-accordion-accent: var(--color-slot-seven);
   }
 }
 
