@@ -159,6 +159,13 @@ If it cannot find a browser, fetch one: `npx puppeteer browsers install chrome`.
 are listed in the `measure-visreg-pixels.mjs` docblock, which also explains why the wait strategy
 is what it is — read it before changing the measuring.
 
+`measure-visreg-pixels.mjs` uses **Puppeteer** for this one purpose: launch headless Chrome and
+read a single DOM measurement. That is not a broader tooling choice — **Playwright is the
+default for any new browser-driven tests** (interaction tests, cross-browser checks, anything
+beyond a one-off measurement script). It's what `@storybook/test-runner` is built on, it covers
+Chromium/Firefox/WebKit with one API, and `yalesites-project` already uses it for e2e. Don't
+reach for Puppeteer elsewhere without discussing it first.
+
 ## Adding a New Component
 
 1. **Choose the right tier** — atom (single element), molecule (composed of atoms), organism (full section), template (layout shell with no visual identity)
