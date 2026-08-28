@@ -28,7 +28,10 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 // has no ancestor-level --color-text-shadow to inherit in the first place.
 @mixin descender-halo-defaults {
   // Theme six surfaces should not render descender text-shadow halos.
-  [data-component-theme='six'] & {
+  // Excludes .yds-layout: section theme six (#1518) DOES set an
+  // ancestor-level --color-text-shadow, unlike the block components this
+  // exception was written for.
+  [data-component-theme='six']:not(.yds-layout) & {
     --color-text-shadow: transparent;
   }
 }

@@ -76,9 +76,17 @@ blockquote {
     --color-pull-quote-accent: var(--color-layout-border);
   }
 
-  // Slot-nine layout sections: dark type, light accent.
+  // Slot-nine layout sections: light accent.
   .yds-layout[data-component-theme='five'] & {
     --color-pull-quote-accent: var(--color-slot-eight);
+  }
+
+  // Slot-nine and slot-three (#1518) layout sections: both light
+  // backgrounds, so dark type. Six's accent is left alone -- the
+  // :not(default) rule above already points it at --color-layout-border,
+  // which section theme six sets to slot-seven.
+  .yds-layout:is([data-component-theme='five'], [data-component-theme='six'])
+    & {
     --color-pull-quote-quote: var(--color-slot-seven);
     --color-pull-quote-attribution: var(--color-slot-seven);
   }
