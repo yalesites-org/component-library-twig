@@ -13,31 +13,11 @@
 //    other out on click.
 //
 // Patches both files directly. Idempotent via marker check per file.
-import fs from 'fs';
-
-function patchFile({ target, marker, replacements }) {
-  const content = fs.readFileSync(target, 'utf8');
-
-  if (content.includes(marker)) {
-    return;
-  }
-
-  let patched = content;
-  for (const { from, to } of replacements) {
-    const next = patched.replace(from, to);
-    if (next === patched) {
-      throw new Error(
-        `patch-emulsify-core-storybook-behaviors: expected content not found in ${target} — @emulsify/core may have changed shape. Check this script against the current file.`,
-      );
-    }
-    patched = next;
-  }
-
-  fs.writeFileSync(target, patched);
-}
+import { patchFile } from './patch-emulsify-core.mjs';
 
 // --- Fix 1: close the behavior-shim race in attachStorybookBehaviors() ---
 patchFile({
+  scriptName: 'patch-emulsify-core-storybook-behaviors',
   target: new URL(
     '../node_modules/@emulsify/core/src/storybook/platform-behaviors.js',
     import.meta.url,
@@ -82,6 +62,7 @@ export async function attachStorybookBehaviors(options = {}) {
 
 // --- Fix 2: restore a duplicate-attachment guard + detachBehaviors ---
 patchFile({
+  scriptName: 'patch-emulsify-core-storybook-behaviors',
   target: new URL(
     '../node_modules/@emulsify/core/.storybook/_drupal.js',
     import.meta.url,
