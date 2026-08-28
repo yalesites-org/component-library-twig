@@ -37,13 +37,13 @@ const REQUIRED = {
   'fonts/fontawesome/css/fontawesome.css': "atomic's fontawesome library",
 };
 
-test('dist/ contains every file Drupal reads', (t) => {
-  if (!existsSync(distDir)) {
-    t.skip(
-      'dist/ is absent -- run `npm run build` first (test:dist runs post-build)',
-    );
-    return;
-  }
+test('dist/ contains every file Drupal reads', () => {
+  // Not a skip: test:dist only ever runs after a build, and skipping here would
+  // report green while checking nothing.
+  assert.ok(
+    existsSync(distDir),
+    `${distDir} is missing -- run \`npm run build\` first.`,
+  );
 
   const missing = Object.entries(REQUIRED)
     .filter(([relativePath]) => !existsSync(path.join(distDir, relativePath)))

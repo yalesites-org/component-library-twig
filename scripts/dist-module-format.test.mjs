@@ -49,39 +49,25 @@ const KNOWN_ES_MODULES = [
 /** Top-level `import ... from` / `export` -- the forms that break a classic script. */
 const ESM_SYNTAX = /(?:^|\n)\s*(?:import[\s{*"']|export[\s{*])/;
 
-function distJsFiles() {
-  return readdirSync(distJsDir, { recursive: true })
+test('dist/js module format matches what atomic.libraries.yml declares', () => {
+  assert.ok(
+    existsSync(distJsDir),
+    `${distJsDir} is missing -- run \`npm run build\` first. test:dist runs after the build.`,
+  );
+
+  const actual = readdirSync(distJsDir, { recursive: true })
     .filter((entry) => entry.endsWith('.js'))
-    .map((entry) => entry.split(path.sep).join('/'));
-}
-
-test('dist/js module format matches what atomic.libraries.yml declares', (t) => {
-  if (!existsSync(distJsDir)) {
-    t.skip(
-      'dist/js is absent -- run `npm run build` first (test:dist runs post-build)',
-    );
-    return;
-  }
-
-  const actual = distJsFiles()
-    .filter((file) =>
-      ESM_SYNTAX.test(readFileSync(path.join(distJsDir, file), 'utf8')),
+    .filter((entry) =>
+      ESM_SYNTAX.test(readFileSync(path.join(distJsDir, entry), 'utf8')),
     )
     .sort();
-  const expected = [...KNOWN_ES_MODULES].sort();
-
-  const undeclared = actual.filter((file) => !expected.includes(file));
-  const stale = expected.filter((file) => !actual.includes(file));
 
   assert.deepEqual(
     actual,
-    expected,
-    'The set of ES modules under dist/js/ changed.\n' +
-      `Newly an ES module (Drupal will fail to parse these as classic scripts, so each\nneeds attributes: { type: module } in atomic.libraries.yml):\n  ${
-        undeclared.join('\n  ') || '(none)'
-      }\n` +
-      `No longer an ES module (drop the type: module attribute in atomic and remove it\nfrom KNOWN_ES_MODULES here):\n  ${
-        stale.join('\n  ') || '(none)'
-      }`,
+    [...KNOWN_ES_MODULES].sort(),
+    'The set of ES modules under dist/js/ changed. Drupal loads these as classic ' +
+      'scripts unless told otherwise, and a classic script containing `import` never ' +
+      'executes. Each addition needs `attributes: { type: module }` in ' +
+      'atomic.libraries.yml; each removal should lose it there and here.',
   );
 });

@@ -242,37 +242,18 @@ export default {
 };
 ```
 
-Sections and components are ordered alphabetically by default, while the stories inside one component keep the order they are exported in. To override either, add an entry to `ORDER_TREE` in `config/emulsify-core/storybook/story-sort.mjs` — each key is a title segment, and its `__order` lists the names that should come first:
+Sections and components are ordered alphabetically by default, while the stories inside one component keep the order they are exported in, and a component's docs page comes first. To override any of that, add an entry to `ORDER_TREE` in `config/emulsify-core/storybook/story-sort.mjs`. Each key is a title segment and its `__order` lists what should come first:
 
 ```js
-export const ORDER_TREE = {
-  __order: [
-    'Introduction',
-    'Tokens',
-    'Atoms',
-    'Molecules',
-    'Organisms',
-    'Templates',
-    'Page Examples',
-  ],
-  Introduction: {
-    __order: ['Welcome', 'Theme System', 'Storybook Guide'],
+{
+  __order: ['FirstSection', 'SecondSection'],
+  FirstSection: {
+    __order: ['FirstChild'],
   },
-  Tokens: {
-    __order: ['Colors'],
-    Colors: {
-      __order: [
-        'Colors',
-        'Color Palettes (Theme)',
-        'Theme Sandbox',
-        'Theming Reference',
-      ],
-    },
-  },
-};
+}
 ```
 
-That tree has two consumers — the `storySort` parameter in the preview, and `scripts/sort-storybook-index.mjs`, which re-sorts `.out/index.json` after a static build — so editing it in one place covers both.
+The live tree is in that file — read it there rather than from a copy here. It has two consumers, the `storySort` parameter in the preview and `scripts/sort-storybook-index.mjs` (which re-sorts `.out/index.json` after a static build), so one edit covers both.
 
 MDX pages that are standalone (not tied to a stories file) use `<Meta title="..." />`. MDX pages that are attached to a stories file use `<Meta of={StoriesObject} name="Overview" />` — the `name` field sets the tab label in the sidebar. Always use `name="Overview"` rather than `name="Docs"`.
 
