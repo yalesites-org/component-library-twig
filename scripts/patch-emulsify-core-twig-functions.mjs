@@ -13,25 +13,37 @@ const marker = 'YALESITES_CUSTOM_TWIG_FUNCTIONS';
 
 const content = fs.readFileSync(target, 'utf8');
 
-if (!content.includes(marker)) {
-  const patched = content
-    .replace(
-      "import { bemTwigFunction } from './functions/bem.js';",
-      "import { bemTwigFunction } from './functions/bem.js';\n" +
-        `// ${marker}\n` +
-        "import getUrlType from '../../../../../../config/emulsify-core/storybook/get-url-type-function.js';\n" +
-        "import getAssetPath from '../../../../../../config/emulsify-core/storybook/get-asset-path-function.js';",
-    )
-    .replace(
-      'bem: bemTwigFunction,\n  };',
-      'bem: bemTwigFunction,\n    getUrlType,\n    getAssetPath,\n  };',
-    );
-
-  if (patched === content) {
+// Each replacement is checked on its own. Checking only the combined result lets
+// a half-applied patch through: if the import anchor matches but the function-map
+// anchor does not, the imports land, the functions are never registered, and the
+// script still exits 0 -- then every component calling getUrlType() throws at
+// render time, which is the failure this script exists to prevent.
+const applyOrFail = (source, anchor, replacement) => {
+  if (!source.includes(anchor)) {
     throw new Error(
-      'patch-emulsify-core-twig-functions: expected content not found — @emulsify/core/src/extensions/twig/function-map.js may have changed shape. Check this script against the current file.',
+      `patch-emulsify-core-twig-functions: anchor not found in @emulsify/core/src/extensions/twig/function-map.js:\n  ${anchor}\n` +
+        'The upstream file changed shape. Update this script against the current file.',
     );
   }
+
+  return source.replace(anchor, replacement);
+};
+
+if (!content.includes(marker)) {
+  let patched = applyOrFail(
+    content,
+    "import { bemTwigFunction } from './functions/bem.js';",
+    "import { bemTwigFunction } from './functions/bem.js';\n" +
+      `// ${marker}\n` +
+      "import getUrlType from '../../../../../../config/emulsify-core/storybook/get-url-type-function.js';\n" +
+      "import getAssetPath from '../../../../../../config/emulsify-core/storybook/get-asset-path-function.js';",
+  );
+
+  patched = applyOrFail(
+    patched,
+    'bem: bemTwigFunction,\n  };',
+    'bem: bemTwigFunction,\n    getUrlType,\n    getAssetPath,\n  };',
+  );
 
   fs.writeFileSync(target, patched);
 }
