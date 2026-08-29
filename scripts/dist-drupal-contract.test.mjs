@@ -9,14 +9,15 @@
  * atomic.libraries.yml entry -- so nothing in the build graph fails when one goes
  * missing. The webpack build kept them present via CopyWebpackPlugin entries;
  * those left with webpack/plugins.js, and their replacements live in
- * scripts/copy-dist-static.mjs and the Vite entry list.
+ * the copyStaticDistFiles() plugin in config/emulsify-core/vite/plugins.mjs
+ * and the Vite entry list.
  *
  * Each miss here is a silent runtime failure rather than a build error, which is
  * exactly why it is worth a test:
  *   - tokens.json      -> ColorTokenResolver logs a warning and returns [], and the
  *                         Site Global Theme colours empty out site-wide.
- *   - assets/icons.svg  -> every <use xlink:href> misses; icons render as blank space.
- *   - the css/js entries -> the matching atomic library loads a 404.
+. *   - assets/icons.svg -> every <use xlink:href> misses; icons render as blank space.
+ * *   - the css/js entries -> the matching atomic library loads a 404.
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';

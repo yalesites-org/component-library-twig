@@ -26,7 +26,7 @@
     "lint": "npm run lint:js; npm run lint:styles",
     "lint:js": "eslint components --ext .js,.mjs",
     "lint:styles": "stylelint 'components/**/*.scss'",
-    "postinstall": "npx patch-package && sh -c 'test -d scripts || exit 0; node scripts/patch-emulsify-core-twig-functions.mjs && node scripts/patch-emulsify-core-storybook-behaviors.mjs && node scripts/patch-emulsify-core-storybook-story-sort.mjs'",
+    "postinstall": "sh -c 'test -d scripts || exit 0; npx patch-package && node scripts/patch-emulsify-core-twig-functions.mjs && node scripts/patch-emulsify-core-storybook-behaviors.mjs && node scripts/patch-emulsify-core-storybook-story-sort.mjs'",
     "prepare": "husky install",
     "prettier": "prettier components --ignore-unknown --list-different",
     "semantic-release": "semantic-release",
