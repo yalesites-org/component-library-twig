@@ -9,7 +9,8 @@
  * into a single story put most components several times past it. Each global
  * theme therefore gets its own story, which also makes a snapshot diff readable
  * without counting theme wrappers. (The 25,000,000px figure is Chromatic's,
- * which is what this shape is for; `npm run visreg:ci` runs Percy today.)
+ * which is what this shape is for; `npm run chromatic` is what submits the
+ * snapshots.)
  *
  * Usage, in a `*.visreg.stories.js` file:
  *

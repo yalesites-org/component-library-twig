@@ -88,6 +88,12 @@ Every component needs a `*.visreg.stories.js` file. **Add or update a visreg ent
 
 This is required so release QA can catch visual regressions. If it's not in a visreg story, it won't be reviewed.
 
+Snapshots are submitted with `npm run chromatic`, which is where the Chromatic flags live so
+they are not retyped per invocation. The Chromatic CLI itself is not a dependency of this repo
+yet — installing it and wiring the CI run are
+[yalesites-org/YaleSites-Internal#1605](https://github.com/yalesites-org/YaleSites-Internal/issues/1605)
+and [#1604](https://github.com/yalesites-org/YaleSites-Internal/issues/1604).
+
 #### One story per global theme
 
 Visual regression snapshots have a hard pixel-area ceiling — Chromatic rejects anything over 25,000,000px — and stacking every global theme into one story blows past it. Build the theme stories with `createGlobalThemeStories` instead, and export one story per global theme:
@@ -119,8 +125,8 @@ export const WhitneyHumanitiesCenter = themeStories.seven;
 ItsYourYale.storyName = 'It’s Your Yale';
 ```
 
-The 25,000,000px figure is Chromatic's, which is what this refactor is for; Percy is what
-`npm run visreg:ci` runs today. The full rationale lives in the
+The 25,000,000px figure is Chromatic's, which is what this shape is for — snapshots run via
+`npm run chromatic`. The full rationale lives in the
 `components/_storybook/global-theme-stories.mjs` docblock — read that before changing the shape.
 
 Two things to know before "tidying" that up:
