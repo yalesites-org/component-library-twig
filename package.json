@@ -61,7 +61,7 @@
   },
   "dependencies": {
     "@drupal/once": "^1.0.1",
-    "@emulsify/core": "^4.0.0",
+    "@emulsify/core": "~4.2.1",
     "@storybook/storybook-deployer": "^2.8.16",
     "@yalesites-org/tokens": "^1.31.0",
     "highlight.js": "^11.9.0",
