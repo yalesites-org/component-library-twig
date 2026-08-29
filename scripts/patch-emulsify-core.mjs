@@ -15,6 +15,9 @@ import fs from 'fs';
  *
  * Idempotent: a file already containing `marker` is left alone.
  *
+ * Two of the three patch scripts share this; patch-emulsify-core-storybook-story-sort
+ * keeps its own mechanics because it needs a pristine-or-sentinel re-patch path.
+ *
  * @param {object} options
  * @param {URL|string} options.target - File to patch.
  * @param {string} options.marker - String present only in a patched file.
@@ -37,7 +40,9 @@ export function patchFile({ target, marker, replacements, scriptName }) {
       );
     }
 
-    return source.replace(from, to);
+    // A replacer function is never scanned for $-patterns ($&, $1, $`), so an
+    // injected snippet containing a dollar sign cannot be silently mangled.
+    return source.replace(from, () => to);
   }, content);
 
   fs.writeFileSync(target, patched);

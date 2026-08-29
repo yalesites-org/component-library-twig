@@ -61,15 +61,16 @@ ${endMarker}`;
 
 const content = fs.readFileSync(previewTarget, 'utf8');
 
-const sentinelPattern = new RegExp(
-  `${startMarker}[\\s\\S]*?${endMarker}`,
-);
+const sentinelPattern = new RegExp(`${startMarker}[\\s\\S]*?${endMarker}`);
 
 let patched;
 if (content.includes(pristineBlock)) {
-  patched = content.replace(pristineBlock, patchedBlock);
+  // Replacer function, not a string: patchedBlock embeds the whole text of
+  // story-sort.mjs, so a `$1` or `$&` appearing there would otherwise be eaten
+  // by String.replace and silently corrupt the inlined comparator.
+  patched = content.replace(pristineBlock, () => patchedBlock);
 } else if (sentinelPattern.test(content)) {
-  patched = content.replace(sentinelPattern, patchedBlock);
+  patched = content.replace(sentinelPattern, () => patchedBlock);
 } else {
   throw new Error(
     'patch-emulsify-core-storybook-story-sort: expected content not found in ' +
