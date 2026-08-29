@@ -24,6 +24,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
+import vm from 'node:vm';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
@@ -46,8 +47,28 @@ const KNOWN_ES_MODULES = [
   'components/02-molecules/modal/yds-modal.js',
 ];
 
-/** Top-level `import ... from` / `export` -- the forms that break a classic script. */
-const ESM_SYNTAX = /(?:^|\n)\s*(?:import[\s{*"']|export[\s{*])/;
+/**
+ * Whether a file would fail to load as a classic `<script>`.
+ *
+ * Compiling with `vm.Script` asks exactly the question Drupal's script tag asks,
+ * rather than pattern-matching for it. A regex over minified output gets this
+ * wrong in the dangerous direction: Rollup puts `export{...}` at the END of the
+ * code line, so an anchored pattern misses `a=1;export{b};` entirely and the guard
+ * would report the set unchanged while a Drupal behaviour goes inert.
+ *
+ * @param {string} code - File contents.
+ * @returns {boolean} True when the file is an ES module.
+ */
+function isEsModule(code) {
+  try {
+    new vm.Script(code);
+    return false;
+  } catch (error) {
+    return /import statement outside a module|Unexpected token .export|may appear only with|import\.meta/.test(
+      error.message,
+    );
+  }
+}
 
 test('dist/js module format matches what atomic.libraries.yml declares', () => {
   assert.ok(
@@ -58,7 +79,7 @@ test('dist/js module format matches what atomic.libraries.yml declares', () => {
   const actual = readdirSync(distJsDir, { recursive: true })
     .filter((entry) => entry.endsWith('.js'))
     .filter((entry) =>
-      ESM_SYNTAX.test(readFileSync(path.join(distJsDir, entry), 'utf8')),
+      isEsModule(readFileSync(path.join(distJsDir, entry), 'utf8')),
     )
     .sort();
 
