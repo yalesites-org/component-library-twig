@@ -7,6 +7,8 @@ import { toArgTypes, toArgs } from '../../_storybook/component-props';
 import alertData from './alert.yml';
 
 import './yds-alert';
+// Registers window.resetAlerts for the reset button's onclick.
+import './reset-alerts';
 
 /**
  * Storybook Definition.
@@ -33,17 +35,6 @@ const alertResetInstructions = ctaTwig({
 });
 
 export const Alert = ({ type, heading, content, linkContent }) => `
-<script>
-  const resetAlerts = () => {
-    Object.keys(localStorage).forEach((key) => {
-      if (key.substring(0, 12) === 'ys-alert-id-') {
-        localStorage.removeItem(key);
-      }
-    });
-
-    location.reload();
-  };
-</script>
 ${alertTwig({
   alert__type: type,
   alert__heading: heading,
@@ -57,17 +48,6 @@ ${textFieldTwig({
 })}`;
 
 export const AlertExamples = ({ heading, content, linkContent }) => `
-<script>
-  const resetAlerts = () => {
-    Object.keys(localStorage).forEach((key) => {
-      if (key.substring(0, 12) === 'ys-alert-id-') {
-        localStorage.removeItem(key);
-      }
-    });
-
-    location.reload();
-  };
-</script>
 ${alertTwig({
   alert__type: 'emergency',
   alert__heading: heading,

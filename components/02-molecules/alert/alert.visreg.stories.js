@@ -1,4 +1,6 @@
 import alertTwig from './yds-alert.twig';
+// Registers window.resetAlerts for the reset button's onclick.
+import './reset-alerts';
 import textFieldTwig from '../text/yds-text-field.twig';
 import ctaTwig from '../../01-atoms/controls/cta/yds-cta.twig';
 
@@ -50,18 +52,6 @@ const linkContent = alertData.alert__link__content;
  * story.
  */
 export const ResettingAlerts = () => `
-  <script>
-    const resetAlerts = () => {
-      Object.keys(localStorage).forEach((key) => {
-        if (key.substring(0, 12) === 'ys-alert-id-') {
-          localStorage.removeItem(key);
-        }
-      });
-
-      location.reload();
-    };
-  </script>
-
   ${textFieldTwig({
     text_field__content: alertResetInstructions,
     text_field__width: 'site',
