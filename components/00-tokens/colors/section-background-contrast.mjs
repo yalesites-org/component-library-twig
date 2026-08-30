@@ -53,42 +53,55 @@ const AA_LARGE_OR_NON_TEXT = 3;
  * becomes `color` on `.yds-layout`, so every block inside inherits them unless
  * it overrides them.
  *
- * `border` is not listed per theme: since #1613 a single shared rule sets
- * `--color-layout-border: var(--color-layout-content)` for every themed
- * section, so the border role always follows `content`.
+ * Two separate border-ish roles are modelled, because they are different
+ * properties with different consumers:
+ *
+ * - `border` is `--color-layout-border`, UNCHANGED by #1613. It is not only a
+ *   border colour -- the CTA atom draws its filled-button background from it --
+ *   so it was deliberately left alone. It still fails 3:1 on two pairings; see
+ *   the report.
+ * - `divider` is `--color-divider`, which #1613 re-points to the section's
+ *   content colour. It drives the always-on 70/30 column separator and the
+ *   divider atom.
  */
 export const SECTION_THEMES = {
   one: {
+    border: 'slot-four',
     background: 'slot-one',
     content: 'slot-eight',
     heading: 'slot-eight',
     link: 'slot-eight',
   },
   two: {
+    border: 'slot-seven',
     background: 'slot-four',
     content: 'slot-seven',
     heading: 'slot-seven',
     link: 'slot-seven',
   },
   three: {
+    border: 'slot-four',
     background: 'slot-five',
     content: 'slot-eight',
     heading: 'slot-eight',
     link: 'slot-eight',
   },
   four: {
+    border: 'slot-four',
     background: 'slot-two',
     content: 'slot-eight',
     heading: 'slot-eight',
     link: 'slot-eight',
   },
   five: {
+    border: 'slot-seven',
     background: 'slot-nine',
     content: 'slot-seven',
     heading: 'slot-seven',
     link: 'slot-seven',
   },
   six: {
+    border: 'slot-seven',
     background: 'slot-three',
     content: 'slot-seven',
     heading: 'slot-seven',
@@ -185,16 +198,24 @@ function table(header, rows) {
  * only if these rows pass, in all 7 global themes. If they do, "inherit the
  * section's foreground" is a complete fix and needs no per-theme branching.
  */
-const SELF_CONSISTENCY_ROLES = ['content', 'heading', 'link', 'border'];
+const SELF_CONSISTENCY_ROLES = [
+  'content',
+  'heading',
+  'link',
+  'divider',
+  'border',
+];
 
 function sectionSelfConsistency() {
   const cells = sectionBackgrounds().flatMap((bg) =>
     SELF_CONSISTENCY_ROLES.map((role) => {
-      // Since #1613 the border role is not declared per theme: the shared rule
-      // derives it from the content color, so it is checked as such.
-      const slot = role === 'border' ? bg.roles.content : bg.roles[role];
-      // Borders are non-text (1.4.11); text roles take the 4.5:1 normal-text bar.
-      const minimum = role === 'border' ? AA_LARGE_OR_NON_TEXT : AA_NORMAL_TEXT;
+      // #1613 re-points --color-divider to the content colour; it does not
+      // touch --color-layout-border (the CTA atom paints from that one).
+      const slot = role === 'divider' ? bg.roles.content : bg.roles[role];
+      // Both border roles are non-text (1.4.11); text roles take 4.5:1.
+      const minimum = ['border', 'divider'].includes(role)
+        ? AA_LARGE_OR_NON_TEXT
+        : AA_NORMAL_TEXT;
       const ratio = ratioAgainst(bg, bg.slots[slot]);
 
       return { bg, role, slot, minimum, ratio };
@@ -237,9 +258,11 @@ function slotSafetyBySectionBackground() {
     return 'MIXED';
   };
 
+  const backgrounds = sectionBackgrounds();
+
   const rows = Object.keys(SECTION_THEMES).flatMap((sectionTheme) =>
     slotNames.map((slot) => {
-      const ratios = sectionBackgrounds()
+      const ratios = backgrounds
         .filter((bg) => bg.sectionTheme === sectionTheme)
         .map((bg) => ratioAgainst(bg, bg.slots[slot]));
 

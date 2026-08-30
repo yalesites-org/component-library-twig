@@ -32,14 +32,14 @@ rendered `data-global-theme` back after each capture to confirm it changed.
 
 `{before|after}-{one-column|seventy-thirty}-global-<n>-<label>.jpg`
 : The **section** fixture — a text block with a heading, body copy and a link in each of the
-  six section-theme backgrounds. Proves every background option paints, and shows the
-  section-supplied foreground on it. `seventy-thirty` also shows the always-on column
-  separator, which is what the `--color-divider` change affects.
+six section-theme backgrounds. Proves every background option paints, and shows the
+section-supplied foreground on it. `seventy-thirty` also shows the always-on column
+separator, which is what the `--color-divider` change affects.
 
 `blocks-{before|after}-one-column-global-<n>-<label>.jpg`
 : The **block** fixture — `custom_cards`, `directory`, `reference_card`, `wrapped_image`,
-  `content_spotlight_portrait`, plus `button_link` and `divider` (unchanged, but they consume
-  properties the shared rule re-points, so they need regression evidence).
+`content_spotlight_portrait`, plus `button_link` and `divider` (unchanged, but they consume
+properties the shared rule re-points, so they need regression evidence).
 
 `<n>` is the global theme number, `<label>` its palette name: one=Old Blues,
 two=New Haven Green, three=Shoreline Summer, four=Onha, five=It's Your Yale, six=AI,

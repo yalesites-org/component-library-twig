@@ -22,6 +22,14 @@ $component-content-spotlight-themes: map.deep-get(
   &:not([data-component-theme='default']) {
     padding-block-start: var(--size-spacing-10);
     padding-block-end: var(--size-spacing-10);
+    // This block paints its own surface, so its descendants must use ITS
+    // text colour, not the enclosing section's. Resetting
+    // `--color-section-foreground` here does that: a nearer ancestor wins
+    // for inheritance, so the file-scope rules below resolve to
+    // `--color-text` inside a themed block and to the section's foreground
+    // inside a `default` (unpainted) one.
+    --color-section-foreground: var(--color-text);
+
     background-color: var(--color-background);
     color: var(--color-text);
   }
@@ -262,11 +270,11 @@ $component-content-spotlight-themes: map.deep-get(
 .text-with-image__subheading {
   @include tokens.heading(h5, 'book');
 
-  color: var(--color-text);
+  color: var(--color-section-foreground, var(--color-text));
 }
 
 .text-with-image__text {
-  color: var(--color-text);
+  color: var(--color-section-foreground, var(--color-text));
 
   a {
     @include atoms.link;
@@ -290,5 +298,5 @@ $component-content-spotlight-themes: map.deep-get(
 
 .text-with-image:not([data-component-theme='default'])
   .text-with-image__caption {
-  color: var(--color-text);
+  color: var(--color-section-foreground, var(--color-text));
 }

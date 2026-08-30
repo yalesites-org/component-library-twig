@@ -16,177 +16,219 @@ rows pass. Text roles are held to 4.5:1 (WCAG 1.4.3 normal text); the
 border role to 3:1 (1.4.11 non-text).
 
 Global theme                       Section  Background                      Role                   Ratio    Verdict
----------------------------------  -------  ------------------------------  ---------------------  -------  -------
+---------------------------------  -------  ------------------------------  ---------------------  -------  ----------------
 one (Old Blues)                    one      slot-one hsl(210, 100%, 21%)    content -> slot-eight  12.06:1  PASS
 one (Old Blues)                    one      slot-one hsl(210, 100%, 21%)    heading -> slot-eight  12.06:1  PASS
 one (Old Blues)                    one      slot-one hsl(210, 100%, 21%)    link -> slot-eight     12.06:1  PASS
-one (Old Blues)                    one      slot-one hsl(210, 100%, 21%)    border -> slot-eight   12.06:1  PASS
+one (Old Blues)                    one      slot-one hsl(210, 100%, 21%)    divider -> slot-eight  12.06:1  PASS
+one (Old Blues)                    one      slot-one hsl(210, 100%, 21%)    border -> slot-four    11.26:1  PASS
 one (Old Blues)                    two      slot-four hsl(0, 0%, 97%)       content -> slot-seven  15.03:1  PASS
 one (Old Blues)                    two      slot-four hsl(0, 0%, 97%)       heading -> slot-seven  15.03:1  PASS
 one (Old Blues)                    two      slot-four hsl(0, 0%, 97%)       link -> slot-seven     15.03:1  PASS
+one (Old Blues)                    two      slot-four hsl(0, 0%, 97%)       divider -> slot-seven  15.03:1  PASS
 one (Old Blues)                    two      slot-four hsl(0, 0%, 97%)       border -> slot-seven   15.03:1  PASS
 one (Old Blues)                    three    slot-five hsl(0, 0%, 13%)       content -> slot-eight  16.10:1  PASS
 one (Old Blues)                    three    slot-five hsl(0, 0%, 13%)       heading -> slot-eight  16.10:1  PASS
 one (Old Blues)                    three    slot-five hsl(0, 0%, 13%)       link -> slot-eight     16.10:1  PASS
-one (Old Blues)                    three    slot-five hsl(0, 0%, 13%)       border -> slot-eight   16.10:1  PASS
+one (Old Blues)                    three    slot-five hsl(0, 0%, 13%)       divider -> slot-eight  16.10:1  PASS
+one (Old Blues)                    three    slot-five hsl(0, 0%, 13%)       border -> slot-four    15.03:1  PASS
 one (Old Blues)                    four     slot-two hsl(213, 66%, 45%)     content -> slot-eight  5.33:1   PASS
 one (Old Blues)                    four     slot-two hsl(213, 66%, 45%)     heading -> slot-eight  5.33:1   PASS
 one (Old Blues)                    four     slot-two hsl(213, 66%, 45%)     link -> slot-eight     5.33:1   PASS
-one (Old Blues)                    four     slot-two hsl(213, 66%, 45%)     border -> slot-eight   5.33:1   PASS
+one (Old Blues)                    four     slot-two hsl(213, 66%, 45%)     divider -> slot-eight  5.33:1   PASS
+one (Old Blues)                    four     slot-two hsl(213, 66%, 45%)     border -> slot-four    4.98:1   PASS
 one (Old Blues)                    five     slot-nine hsl(0, 0%, 85%)       content -> slot-seven  11.40:1  PASS
 one (Old Blues)                    five     slot-nine hsl(0, 0%, 85%)       heading -> slot-seven  11.40:1  PASS
 one (Old Blues)                    five     slot-nine hsl(0, 0%, 85%)       link -> slot-seven     11.40:1  PASS
+one (Old Blues)                    five     slot-nine hsl(0, 0%, 85%)       divider -> slot-seven  11.40:1  PASS
 one (Old Blues)                    five     slot-nine hsl(0, 0%, 85%)       border -> slot-seven   11.40:1  PASS
 one (Old Blues)                    six      slot-three hsl(213, 100%, 69%)  content -> slot-seven  6.55:1   PASS
 one (Old Blues)                    six      slot-three hsl(213, 100%, 69%)  heading -> slot-seven  6.55:1   PASS
 one (Old Blues)                    six      slot-three hsl(213, 100%, 69%)  link -> slot-seven     6.55:1   PASS
+one (Old Blues)                    six      slot-three hsl(213, 100%, 69%)  divider -> slot-seven  6.55:1   PASS
 one (Old Blues)                    six      slot-three hsl(213, 100%, 69%)  border -> slot-seven   6.55:1   PASS
 two (New Haven Green)              one      slot-one hsl(0, 0%, 29%)        content -> slot-eight  8.86:1   PASS
 two (New Haven Green)              one      slot-one hsl(0, 0%, 29%)        heading -> slot-eight  8.86:1   PASS
 two (New Haven Green)              one      slot-one hsl(0, 0%, 29%)        link -> slot-eight     8.86:1   PASS
-two (New Haven Green)              one      slot-one hsl(0, 0%, 29%)        border -> slot-eight   8.86:1   PASS
+two (New Haven Green)              one      slot-one hsl(0, 0%, 29%)        divider -> slot-eight  8.86:1   PASS
+two (New Haven Green)              one      slot-one hsl(0, 0%, 29%)        border -> slot-four    6.41:1   PASS
 two (New Haven Green)              two      slot-four hsl(52, 26%, 83%)     content -> slot-seven  11.66:1  PASS
 two (New Haven Green)              two      slot-four hsl(52, 26%, 83%)     heading -> slot-seven  11.66:1  PASS
 two (New Haven Green)              two      slot-four hsl(52, 26%, 83%)     link -> slot-seven     11.66:1  PASS
+two (New Haven Green)              two      slot-four hsl(52, 26%, 83%)     divider -> slot-seven  11.66:1  PASS
 two (New Haven Green)              two      slot-four hsl(52, 26%, 83%)     border -> slot-seven   11.66:1  PASS
 two (New Haven Green)              three    slot-five hsl(148, 16%, 19%)    content -> slot-eight  12.33:1  PASS
 two (New Haven Green)              three    slot-five hsl(148, 16%, 19%)    heading -> slot-eight  12.33:1  PASS
 two (New Haven Green)              three    slot-five hsl(148, 16%, 19%)    link -> slot-eight     12.33:1  PASS
-two (New Haven Green)              three    slot-five hsl(148, 16%, 19%)    border -> slot-eight   12.33:1  PASS
+two (New Haven Green)              three    slot-five hsl(148, 16%, 19%)    divider -> slot-eight  12.33:1  PASS
+two (New Haven Green)              three    slot-five hsl(148, 16%, 19%)    border -> slot-four    8.93:1   PASS
 two (New Haven Green)              four     slot-two hsl(100, 13%, 36%)     content -> slot-eight  5.98:1   PASS
 two (New Haven Green)              four     slot-two hsl(100, 13%, 36%)     heading -> slot-eight  5.98:1   PASS
 two (New Haven Green)              four     slot-two hsl(100, 13%, 36%)     link -> slot-eight     5.98:1   PASS
-two (New Haven Green)              four     slot-two hsl(100, 13%, 36%)     border -> slot-eight   5.98:1   PASS
+two (New Haven Green)              four     slot-two hsl(100, 13%, 36%)     divider -> slot-eight  5.98:1   PASS
+two (New Haven Green)              four     slot-two hsl(100, 13%, 36%)     border -> slot-four    4.33:1   PASS
 two (New Haven Green)              five     slot-nine hsl(0, 0%, 97%)       content -> slot-seven  15.03:1  PASS
 two (New Haven Green)              five     slot-nine hsl(0, 0%, 97%)       heading -> slot-seven  15.03:1  PASS
 two (New Haven Green)              five     slot-nine hsl(0, 0%, 97%)       link -> slot-seven     15.03:1  PASS
+two (New Haven Green)              five     slot-nine hsl(0, 0%, 97%)       divider -> slot-seven  15.03:1  PASS
 two (New Haven Green)              five     slot-nine hsl(0, 0%, 97%)       border -> slot-seven   15.03:1  PASS
 two (New Haven Green)              six      slot-three hsl(87, 12%, 57%)    content -> slot-seven  5.77:1   PASS
 two (New Haven Green)              six      slot-three hsl(87, 12%, 57%)    heading -> slot-seven  5.77:1   PASS
 two (New Haven Green)              six      slot-three hsl(87, 12%, 57%)    link -> slot-seven     5.77:1   PASS
+two (New Haven Green)              six      slot-three hsl(87, 12%, 57%)    divider -> slot-seven  5.77:1   PASS
 two (New Haven Green)              six      slot-three hsl(87, 12%, 57%)    border -> slot-seven   5.77:1   PASS
 three (Shoreline Summer)           one      slot-one hsl(210, 100%, 21%)    content -> slot-eight  12.06:1  PASS
 three (Shoreline Summer)           one      slot-one hsl(210, 100%, 21%)    heading -> slot-eight  12.06:1  PASS
 three (Shoreline Summer)           one      slot-one hsl(210, 100%, 21%)    link -> slot-eight     12.06:1  PASS
-three (Shoreline Summer)           one      slot-one hsl(210, 100%, 21%)    border -> slot-eight   12.06:1  PASS
+three (Shoreline Summer)           one      slot-one hsl(210, 100%, 21%)    divider -> slot-eight  12.06:1  PASS
+three (Shoreline Summer)           one      slot-one hsl(210, 100%, 21%)    border -> slot-four    7.12:1   PASS
 three (Shoreline Summer)           two      slot-four hsl(43, 64%, 68%)     content -> slot-seven  9.51:1   PASS
 three (Shoreline Summer)           two      slot-four hsl(43, 64%, 68%)     heading -> slot-seven  9.51:1   PASS
 three (Shoreline Summer)           two      slot-four hsl(43, 64%, 68%)     link -> slot-seven     9.51:1   PASS
+three (Shoreline Summer)           two      slot-four hsl(43, 64%, 68%)     divider -> slot-seven  9.51:1   PASS
 three (Shoreline Summer)           two      slot-four hsl(43, 64%, 68%)     border -> slot-seven   9.51:1   PASS
 three (Shoreline Summer)           three    slot-five hsl(188, 14%, 32%)    content -> slot-eight  7.28:1   PASS
 three (Shoreline Summer)           three    slot-five hsl(188, 14%, 32%)    heading -> slot-eight  7.28:1   PASS
 three (Shoreline Summer)           three    slot-five hsl(188, 14%, 32%)    link -> slot-eight     7.28:1   PASS
-three (Shoreline Summer)           three    slot-five hsl(188, 14%, 32%)    border -> slot-eight   7.28:1   PASS
+three (Shoreline Summer)           three    slot-five hsl(188, 14%, 32%)    divider -> slot-eight  7.28:1   PASS
+three (Shoreline Summer)           three    slot-five hsl(188, 14%, 32%)    border -> slot-four    4.30:1   PASS
 three (Shoreline Summer)           four     slot-two hsl(221, 47%, 40%)     content -> slot-eight  7.32:1   PASS
 three (Shoreline Summer)           four     slot-two hsl(221, 47%, 40%)     heading -> slot-eight  7.32:1   PASS
 three (Shoreline Summer)           four     slot-two hsl(221, 47%, 40%)     link -> slot-eight     7.32:1   PASS
-three (Shoreline Summer)           four     slot-two hsl(221, 47%, 40%)     border -> slot-eight   7.32:1   PASS
+three (Shoreline Summer)           four     slot-two hsl(221, 47%, 40%)     divider -> slot-eight  7.32:1   PASS
+three (Shoreline Summer)           four     slot-two hsl(221, 47%, 40%)     border -> slot-four    4.32:1   PASS
 three (Shoreline Summer)           five     slot-nine hsl(0, 0%, 97%)       content -> slot-seven  15.03:1  PASS
 three (Shoreline Summer)           five     slot-nine hsl(0, 0%, 97%)       heading -> slot-seven  15.03:1  PASS
 three (Shoreline Summer)           five     slot-nine hsl(0, 0%, 97%)       link -> slot-seven     15.03:1  PASS
+three (Shoreline Summer)           five     slot-nine hsl(0, 0%, 97%)       divider -> slot-seven  15.03:1  PASS
 three (Shoreline Summer)           five     slot-nine hsl(0, 0%, 97%)       border -> slot-seven   15.03:1  PASS
 three (Shoreline Summer)           six      slot-three hsl(36, 59%, 61%)    content -> slot-seven  7.32:1   PASS
 three (Shoreline Summer)           six      slot-three hsl(36, 59%, 61%)    heading -> slot-seven  7.32:1   PASS
 three (Shoreline Summer)           six      slot-three hsl(36, 59%, 61%)    link -> slot-seven     7.32:1   PASS
+three (Shoreline Summer)           six      slot-three hsl(36, 59%, 61%)    divider -> slot-seven  7.32:1   PASS
 three (Shoreline Summer)           six      slot-three hsl(36, 59%, 61%)    border -> slot-seven   7.32:1   PASS
 four (Onha)                        one      slot-one hsl(210, 100%, 21%)    content -> slot-eight  12.06:1  PASS
 four (Onha)                        one      slot-one hsl(210, 100%, 21%)    heading -> slot-eight  12.06:1  PASS
 four (Onha)                        one      slot-one hsl(210, 100%, 21%)    link -> slot-eight     12.06:1  PASS
-four (Onha)                        one      slot-one hsl(210, 100%, 21%)    border -> slot-eight   12.06:1  PASS
+four (Onha)                        one      slot-one hsl(210, 100%, 21%)    divider -> slot-eight  12.06:1  PASS
+four (Onha)                        one      slot-one hsl(210, 100%, 21%)    border -> slot-four    10.54:1  PASS
 four (Onha)                        two      slot-four hsl(203, 50%, 94%)    content -> slot-seven  14.89:1  PASS
 four (Onha)                        two      slot-four hsl(203, 50%, 94%)    heading -> slot-seven  14.89:1  PASS
 four (Onha)                        two      slot-four hsl(203, 50%, 94%)    link -> slot-seven     14.89:1  PASS
+four (Onha)                        two      slot-four hsl(203, 50%, 94%)    divider -> slot-seven  14.89:1  PASS
 four (Onha)                        two      slot-four hsl(203, 50%, 94%)    border -> slot-seven   14.89:1  PASS
 four (Onha)                        three    slot-five hsl(175, 36%, 32%)    content -> slot-eight  5.78:1   PASS
 four (Onha)                        three    slot-five hsl(175, 36%, 32%)    heading -> slot-eight  5.78:1   PASS
 four (Onha)                        three    slot-five hsl(175, 36%, 32%)    link -> slot-eight     5.78:1   PASS
-four (Onha)                        three    slot-five hsl(175, 36%, 32%)    border -> slot-eight   5.78:1   PASS
+four (Onha)                        three    slot-five hsl(175, 36%, 32%)    divider -> slot-eight  5.78:1   PASS
+four (Onha)                        three    slot-five hsl(175, 36%, 32%)    border -> slot-four    5.05:1   PASS
 four (Onha)                        four     slot-two hsl(0, 0%, 46%)        content -> slot-eight  4.60:1   PASS
 four (Onha)                        four     slot-two hsl(0, 0%, 46%)        heading -> slot-eight  4.60:1   PASS
 four (Onha)                        four     slot-two hsl(0, 0%, 46%)        link -> slot-eight     4.60:1   PASS
-four (Onha)                        four     slot-two hsl(0, 0%, 46%)        border -> slot-eight   4.60:1   PASS
+four (Onha)                        four     slot-two hsl(0, 0%, 46%)        divider -> slot-eight  4.60:1   PASS
+four (Onha)                        four     slot-two hsl(0, 0%, 46%)        border -> slot-four    4.02:1   PASS
 four (Onha)                        five     slot-nine hsl(174, 57%, 93%)    content -> slot-seven  15.32:1  PASS
 four (Onha)                        five     slot-nine hsl(174, 57%, 93%)    heading -> slot-seven  15.32:1  PASS
 four (Onha)                        five     slot-nine hsl(174, 57%, 93%)    link -> slot-seven     15.32:1  PASS
+four (Onha)                        five     slot-nine hsl(174, 57%, 93%)    divider -> slot-seven  15.32:1  PASS
 four (Onha)                        five     slot-nine hsl(174, 57%, 93%)    border -> slot-seven   15.32:1  PASS
 four (Onha)                        six      slot-three hsl(45, 100%, 68%)   content -> slot-seven  12.19:1  PASS
 four (Onha)                        six      slot-three hsl(45, 100%, 68%)   heading -> slot-seven  12.19:1  PASS
 four (Onha)                        six      slot-three hsl(45, 100%, 68%)   link -> slot-seven     12.19:1  PASS
+four (Onha)                        six      slot-three hsl(45, 100%, 68%)   divider -> slot-seven  12.19:1  PASS
 four (Onha)                        six      slot-three hsl(45, 100%, 68%)   border -> slot-seven   12.19:1  PASS
 five (It’s Your Yale)              one      slot-one hsl(210, 100%, 21%)    content -> slot-eight  12.06:1  PASS
 five (It’s Your Yale)              one      slot-one hsl(210, 100%, 21%)    heading -> slot-eight  12.06:1  PASS
 five (It’s Your Yale)              one      slot-one hsl(210, 100%, 21%)    link -> slot-eight     12.06:1  PASS
-five (It’s Your Yale)              one      slot-one hsl(210, 100%, 21%)    border -> slot-eight   12.06:1  PASS
+five (It’s Your Yale)              one      slot-one hsl(210, 100%, 21%)    divider -> slot-eight  12.06:1  PASS
+five (It’s Your Yale)              one      slot-one hsl(210, 100%, 21%)    border -> slot-four    11.26:1  PASS
 five (It’s Your Yale)              two      slot-four hsl(0, 0%, 97%)       content -> slot-seven  15.90:1  PASS
 five (It’s Your Yale)              two      slot-four hsl(0, 0%, 97%)       heading -> slot-seven  15.90:1  PASS
 five (It’s Your Yale)              two      slot-four hsl(0, 0%, 97%)       link -> slot-seven     15.90:1  PASS
+five (It’s Your Yale)              two      slot-four hsl(0, 0%, 97%)       divider -> slot-seven  15.90:1  PASS
 five (It’s Your Yale)              two      slot-four hsl(0, 0%, 97%)       border -> slot-seven   15.90:1  PASS
 five (It’s Your Yale)              three    slot-five hsl(210, 26%, 26%)    content -> slot-eight  10.30:1  PASS
 five (It’s Your Yale)              three    slot-five hsl(210, 26%, 26%)    heading -> slot-eight  10.30:1  PASS
 five (It’s Your Yale)              three    slot-five hsl(210, 26%, 26%)    link -> slot-eight     10.30:1  PASS
-five (It’s Your Yale)              three    slot-five hsl(210, 26%, 26%)    border -> slot-eight   10.30:1  PASS
+five (It’s Your Yale)              three    slot-five hsl(210, 26%, 26%)    divider -> slot-eight  10.30:1  PASS
+five (It’s Your Yale)              three    slot-five hsl(210, 26%, 26%)    border -> slot-four    9.61:1   PASS
 five (It’s Your Yale)              four     slot-two hsl(213, 66%, 45%)     content -> slot-eight  5.33:1   PASS
 five (It’s Your Yale)              four     slot-two hsl(213, 66%, 45%)     heading -> slot-eight  5.33:1   PASS
 five (It’s Your Yale)              four     slot-two hsl(213, 66%, 45%)     link -> slot-eight     5.33:1   PASS
-five (It’s Your Yale)              four     slot-two hsl(213, 66%, 45%)     border -> slot-eight   5.33:1   PASS
+five (It’s Your Yale)              four     slot-two hsl(213, 66%, 45%)     divider -> slot-eight  5.33:1   PASS
+five (It’s Your Yale)              four     slot-two hsl(213, 66%, 45%)     border -> slot-four    4.98:1   PASS
 five (It’s Your Yale)              five     slot-nine hsl(0, 0%, 85%)       content -> slot-seven  12.07:1  PASS
 five (It’s Your Yale)              five     slot-nine hsl(0, 0%, 85%)       heading -> slot-seven  12.07:1  PASS
 five (It’s Your Yale)              five     slot-nine hsl(0, 0%, 85%)       link -> slot-seven     12.07:1  PASS
+five (It’s Your Yale)              five     slot-nine hsl(0, 0%, 85%)       divider -> slot-seven  12.07:1  PASS
 five (It’s Your Yale)              five     slot-nine hsl(0, 0%, 85%)       border -> slot-seven   12.07:1  PASS
 five (It’s Your Yale)              six      slot-three hsl(6, 100%, 66%)    content -> slot-seven  5.80:1   PASS
 five (It’s Your Yale)              six      slot-three hsl(6, 100%, 66%)    heading -> slot-seven  5.80:1   PASS
 five (It’s Your Yale)              six      slot-three hsl(6, 100%, 66%)    link -> slot-seven     5.80:1   PASS
+five (It’s Your Yale)              six      slot-three hsl(6, 100%, 66%)    divider -> slot-seven  5.80:1   PASS
 five (It’s Your Yale)              six      slot-three hsl(6, 100%, 66%)    border -> slot-seven   5.80:1   PASS
 six (AI)                           one      slot-one hsl(210, 100%, 21%)    content -> slot-eight  12.06:1  PASS
 six (AI)                           one      slot-one hsl(210, 100%, 21%)    heading -> slot-eight  12.06:1  PASS
 six (AI)                           one      slot-one hsl(210, 100%, 21%)    link -> slot-eight     12.06:1  PASS
-six (AI)                           one      slot-one hsl(210, 100%, 21%)    border -> slot-eight   12.06:1  PASS
+six (AI)                           one      slot-one hsl(210, 100%, 21%)    divider -> slot-eight  12.06:1  PASS
+six (AI)                           one      slot-one hsl(210, 100%, 21%)    border -> slot-four    8.63:1   PASS
 six (AI)                           two      slot-four hsl(45, 100%, 68%)    content -> slot-seven  11.52:1  PASS
 six (AI)                           two      slot-four hsl(45, 100%, 68%)    heading -> slot-seven  11.52:1  PASS
 six (AI)                           two      slot-four hsl(45, 100%, 68%)    link -> slot-seven     11.52:1  PASS
+six (AI)                           two      slot-four hsl(45, 100%, 68%)    divider -> slot-seven  11.52:1  PASS
 six (AI)                           two      slot-four hsl(45, 100%, 68%)    border -> slot-seven   11.52:1  PASS
 six (AI)                           three    slot-five hsl(0, 0%, 29%)       content -> slot-eight  8.86:1   PASS
 six (AI)                           three    slot-five hsl(0, 0%, 29%)       heading -> slot-eight  8.86:1   PASS
 six (AI)                           three    slot-five hsl(0, 0%, 29%)       link -> slot-eight     8.86:1   PASS
-six (AI)                           three    slot-five hsl(0, 0%, 29%)       border -> slot-eight   8.86:1   PASS
+six (AI)                           three    slot-five hsl(0, 0%, 29%)       divider -> slot-eight  8.86:1   PASS
+six (AI)                           three    slot-five hsl(0, 0%, 29%)       border -> slot-four    6.34:1   PASS
 six (AI)                           four     slot-two hsl(213, 66%, 45%)     content -> slot-eight  5.33:1   PASS
 six (AI)                           four     slot-two hsl(213, 66%, 45%)     heading -> slot-eight  5.33:1   PASS
 six (AI)                           four     slot-two hsl(213, 66%, 45%)     link -> slot-eight     5.33:1   PASS
-six (AI)                           four     slot-two hsl(213, 66%, 45%)     border -> slot-eight   5.33:1   PASS
+six (AI)                           four     slot-two hsl(213, 66%, 45%)     divider -> slot-eight  5.33:1   PASS
+six (AI)                           four     slot-two hsl(213, 66%, 45%)     border -> slot-four    3.82:1   PASS
 six (AI)                           five     slot-nine hsl(0, 0%, 97%)       content -> slot-seven  15.03:1  PASS
 six (AI)                           five     slot-nine hsl(0, 0%, 97%)       heading -> slot-seven  15.03:1  PASS
 six (AI)                           five     slot-nine hsl(0, 0%, 97%)       link -> slot-seven     15.03:1  PASS
+six (AI)                           five     slot-nine hsl(0, 0%, 97%)       divider -> slot-seven  15.03:1  PASS
 six (AI)                           five     slot-nine hsl(0, 0%, 97%)       border -> slot-seven   15.03:1  PASS
 six (AI)                           six      slot-three hsl(213, 100%, 69%)  content -> slot-seven  6.55:1   PASS
 six (AI)                           six      slot-three hsl(213, 100%, 69%)  heading -> slot-seven  6.55:1   PASS
 six (AI)                           six      slot-three hsl(213, 100%, 69%)  link -> slot-seven     6.55:1   PASS
+six (AI)                           six      slot-three hsl(213, 100%, 69%)  divider -> slot-seven  6.55:1   PASS
 six (AI)                           six      slot-three hsl(213, 100%, 69%)  border -> slot-seven   6.55:1   PASS
 seven (Whitney Humanities Center)  one      slot-one hsl(260, 13%, 38%)     content -> slot-eight  7.10:1   PASS
 seven (Whitney Humanities Center)  one      slot-one hsl(260, 13%, 38%)     heading -> slot-eight  7.10:1   PASS
 seven (Whitney Humanities Center)  one      slot-one hsl(260, 13%, 38%)     link -> slot-eight     7.10:1   PASS
-seven (Whitney Humanities Center)  one      slot-one hsl(260, 13%, 38%)     border -> slot-eight   7.10:1   PASS
+seven (Whitney Humanities Center)  one      slot-one hsl(260, 13%, 38%)     divider -> slot-eight  7.10:1   PASS
+seven (Whitney Humanities Center)  one      slot-one hsl(260, 13%, 38%)     border -> slot-four    3.72:1   PASS
 seven (Whitney Humanities Center)  two      slot-four hsl(36, 20%, 72%)     content -> slot-seven  8.43:1   PASS
 seven (Whitney Humanities Center)  two      slot-four hsl(36, 20%, 72%)     heading -> slot-seven  8.43:1   PASS
 seven (Whitney Humanities Center)  two      slot-four hsl(36, 20%, 72%)     link -> slot-seven     8.43:1   PASS
+seven (Whitney Humanities Center)  two      slot-four hsl(36, 20%, 72%)     divider -> slot-seven  8.43:1   PASS
 seven (Whitney Humanities Center)  two      slot-four hsl(36, 20%, 72%)     border -> slot-seven   8.43:1   PASS
 seven (Whitney Humanities Center)  three    slot-five hsl(2, 10%, 48%)      content -> slot-eight  4.63:1   PASS
 seven (Whitney Humanities Center)  three    slot-five hsl(2, 10%, 48%)      heading -> slot-eight  4.63:1   PASS
 seven (Whitney Humanities Center)  three    slot-five hsl(2, 10%, 48%)      link -> slot-eight     4.63:1   PASS
-seven (Whitney Humanities Center)  three    slot-five hsl(2, 10%, 48%)      border -> slot-eight   4.63:1   PASS
+seven (Whitney Humanities Center)  three    slot-five hsl(2, 10%, 48%)      divider -> slot-eight  4.63:1   PASS
+seven (Whitney Humanities Center)  three    slot-five hsl(2, 10%, 48%)      border -> slot-four    2.42:1   FAIL (needs 3:1)
 seven (Whitney Humanities Center)  four     slot-two hsl(175, 37%, 32%)     content -> slot-eight  5.72:1   PASS
 seven (Whitney Humanities Center)  four     slot-two hsl(175, 37%, 32%)     heading -> slot-eight  5.72:1   PASS
 seven (Whitney Humanities Center)  four     slot-two hsl(175, 37%, 32%)     link -> slot-eight     5.72:1   PASS
-seven (Whitney Humanities Center)  four     slot-two hsl(175, 37%, 32%)     border -> slot-eight   5.72:1   PASS
+seven (Whitney Humanities Center)  four     slot-two hsl(175, 37%, 32%)     divider -> slot-eight  5.72:1   PASS
+seven (Whitney Humanities Center)  four     slot-two hsl(175, 37%, 32%)     border -> slot-four    2.99:1   FAIL (needs 3:1)
 seven (Whitney Humanities Center)  five     slot-nine hsl(0, 0%, 97%)       content -> slot-seven  15.03:1  PASS
 seven (Whitney Humanities Center)  five     slot-nine hsl(0, 0%, 97%)       heading -> slot-seven  15.03:1  PASS
 seven (Whitney Humanities Center)  five     slot-nine hsl(0, 0%, 97%)       link -> slot-seven     15.03:1  PASS
+seven (Whitney Humanities Center)  five     slot-nine hsl(0, 0%, 97%)       divider -> slot-seven  15.03:1  PASS
 seven (Whitney Humanities Center)  five     slot-nine hsl(0, 0%, 97%)       border -> slot-seven   15.03:1  PASS
 seven (Whitney Humanities Center)  six      slot-three hsl(173, 43%, 68%)   content -> slot-seven  9.15:1   PASS
 seven (Whitney Humanities Center)  six      slot-three hsl(173, 43%, 68%)   heading -> slot-seven  9.15:1   PASS
 seven (Whitney Humanities Center)  six      slot-three hsl(173, 43%, 68%)   link -> slot-seven     9.15:1   PASS
+seven (Whitney Humanities Center)  six      slot-three hsl(173, 43%, 68%)   divider -> slot-seven  9.15:1   PASS
 seven (Whitney Humanities Center)  six      slot-three hsl(173, 43%, 68%)   border -> slot-seven   9.15:1   PASS
 
-Failures: 0 of 168.
+Failures: 2 of 210.
 
 
 2. EVERY SLOT AGAINST EVERY SECTION BACKGROUND

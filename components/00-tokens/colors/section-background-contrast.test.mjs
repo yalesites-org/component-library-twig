@@ -13,13 +13,15 @@
  *    fails on the drift.
  * 2. The audit's conclusion -- that every section theme's own foreground
  *    clears its own background in all 7 global themes -- is what lets blocks
- *    simply inherit the section's colors instead of naming a slot. The second
- *    test pins that, so a future palette change cannot silently break the
- *    premise the fixes rest on.
+ *    simply inherit the section's colors instead of naming a slot.
+ * 3. The shared rule itself. An earlier version of this file asserted things
+ *    about the fix without ever reading it, so deleting the entire rule from
+ *    the SCSS left every test green. `readSharedRule()` closes that hole.
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
 
 import { contrastRatio, parseHsl, AA_NORMAL_TEXT } from './contrast-ratio.mjs';
 import {
@@ -109,11 +111,10 @@ test('every section theme foreground clears its own background at AA', () => {
   );
 });
 
-test('the shared rule keeps the border role legible as non-text', () => {
-  // `--color-layout-border` is derived from `--color-layout-content` by the
-  // shared rule, so it is checked against the 3:1 non-text minimum (WCAG
-  // 1.4.11) rather than the 4.5:1 text one. Before #1613 themes one/three/four
-  // used slot-four here, which measured 2.42:1 and 2.99:1 in Whitney.
+test('the section-driven divider clears the non-text minimum everywhere', () => {
+  // #1613 re-points `--color-divider` to the section's content colour, which
+  // is what drives the always-on 70/30 column separator and the divider atom.
+  // Non-text, so WCAG 1.4.11's 3:1 rather than 1.4.3's 4.5:1.
   const NON_TEXT_MINIMUM = 3;
 
   sectionBackgrounds().forEach((bg) => {
@@ -124,7 +125,97 @@ test('the shared rule keeps the border role legible as non-text', () => {
 
     assert.ok(
       ratio >= NON_TEXT_MINIMUM,
-      `${bg.globalTheme}/${bg.sectionTheme} border: ${ratio.toFixed(2)}:1`,
+      `${bg.globalTheme}/${bg.sectionTheme} divider: ${ratio.toFixed(2)}:1`,
     );
   });
+});
+
+test('the two known --color-layout-border failures are still exactly two', () => {
+  // `--color-layout-border` was deliberately NOT re-pointed by #1613: the CTA
+  // atom paints its filled-button background from it, and it resolves to
+  // slot-four, a gold/tan brand accent in four of the seven global themes.
+  // Re-pointing it would have turned every filled CTA on a dark section white.
+  //
+  // So these two failures are outstanding, not fixed. This test pins the
+  // count: it fails if a palette change makes the problem WORSE, and it fails
+  // if someone fixes them without updating this comment -- either way the next
+  // person finds out rather than inheriting a stale claim.
+  const NON_TEXT_MINIMUM = 3;
+
+  const failing = sectionBackgrounds()
+    .filter(
+      (bg) =>
+        contrastRatio(
+          parseHsl(bg.backgroundValue),
+          parseHsl(bg.slots[bg.roles.border]),
+        ) < NON_TEXT_MINIMUM,
+    )
+    .map((bg) => `${bg.globalTheme}/${bg.sectionTheme}`);
+
+  assert.deepEqual(failing, ['seven/three', 'seven/four']);
+});
+
+/**
+ * Read the shared themed-section rule #1613 added.
+ *
+ * Matched on the literal selector rather than on a theme name, because the
+ * whole point of the rule is that it is NOT per theme -- so `readLayoutScss()`
+ * above structurally cannot see it.
+ */
+function readSharedRule() {
+  const source = readFileSync(LAYOUT_SCSS, 'utf8');
+  const match = source.match(
+    /&\[data-component-theme\]:not\(\[data-component-theme='default'\]\)\s*\{([\s\S]*?)\n {2}\}/,
+  );
+
+  return match ? match[1] : null;
+}
+
+test('the shared themed-section rule exists and drives both properties', () => {
+  const body = readSharedRule();
+
+  assert.ok(
+    body,
+    'the shared .yds-layout[data-component-theme]:not(default) rule is gone',
+  );
+  assert.match(
+    body,
+    /--color-divider:\s*var\(--color-layout-content\)/,
+    '--color-divider must be driven from the section content colour',
+  );
+  assert.match(
+    body,
+    /--color-section-foreground:\s*var\(--color-layout-content\)/,
+    '--color-section-foreground must be driven from the section content colour',
+  );
+  assert.doesNotMatch(
+    body,
+    /--color-layout-border:/,
+    'the CTA atom paints from --color-layout-border, so the shared rule must ' +
+      'not re-point it -- see the comment above the rule',
+  );
+});
+
+test('--color-section-foreground is declared in exactly the expected places', () => {
+  // The "unthemed rendering is unchanged by construction" argument rests on
+  // this property being unset except where intended, so that each consumer's
+  // `var(--color-section-foreground, <previous colour>)` fallback applies.
+  // Expected: the shared layout rule, plus the two self-painting components
+  // that reset it for their own descendants.
+  const componentsDir = new URL('../../', import.meta.url);
+  const declarations = readdirSync(componentsDir, {
+    recursive: true,
+    withFileTypes: true,
+  })
+    .filter((entry) => entry.isFile() && entry.name.endsWith('.scss'))
+    .flatMap((entry) => {
+      const dir = entry.parentPath ?? entry.path;
+      const text = readFileSync(join(dir, entry.name), 'utf8');
+      // Declarations, not `var()` reads.
+      return (text.match(/--color-section-foreground:\s*[^;]+;/g) ?? []).map(
+        (decl) => `${entry.name}: ${decl}`,
+      );
+    });
+
+  assert.equal(declarations.length, 3, declarations.join(' | '));
 });
