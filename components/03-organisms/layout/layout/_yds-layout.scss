@@ -26,7 +26,6 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
       --color-layout-theme: var(--color-slot-one);
       --color-layout-content: var(--color-slot-eight);
-      --color-layout-border: var(--color-slot-four);
       --color-link-base: var(--color-link-base);
       --color-link-hover: var(--color-link-hover);
 
@@ -93,7 +92,6 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-visited-hover: var(--color-link-visited-light-hover);
     --color-link-base: var(--color-slot-eight);
     --color-link-hover: var(--color-slot-eight);
-    --color-layout-border: var(--color-slot-four);
     --color-heading: var(--color-slot-eight);
     --color-link-grid-action: var(--color-slot-eight);
   }
@@ -104,7 +102,6 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-base: var(--color-slot-seven);
     --color-link-hover: var(--color-slot-seven);
     --color-heading: var(--color-slot-seven);
-    --color-layout-border: var(--color-slot-seven);
     --color-link-grid-action: var(--color-slot-seven);
   }
 
@@ -115,7 +112,6 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-visited-hover: var(--color-link-visited-light-hover);
     --color-link-base: var(--color-slot-eight);
     --color-link-hover: var(--color-slot-eight);
-    --color-layout-border: var(--color-slot-four);
     --color-heading: var(--color-slot-eight);
     --color-link-grid-action: var(--color-slot-four);
   }
@@ -127,7 +123,6 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-visited-hover: var(--color-link-visited-light-hover);
     --color-link-base: var(--color-slot-eight);
     --color-link-hover: var(--color-slot-eight);
-    --color-layout-border: var(--color-slot-four);
     --color-heading: var(--color-slot-eight);
     --color-link-grid-action: var(--color-slot-four);
   }
@@ -140,7 +135,6 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-visited-base: var(--color-slot-seven);
     --color-link-visited-hover: var(--color-slot-seven);
     --color-heading: var(--color-slot-seven);
-    --color-layout-border: var(--color-slot-seven);
     --color-link-grid-action: var(--color-slot-seven);
   }
 
@@ -162,11 +156,75 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-visited-base: var(--color-slot-seven);
     --color-link-visited-hover: var(--color-slot-seven);
     --color-heading: var(--color-slot-seven);
-    --color-layout-border: var(--color-slot-seven);
     --color-link-grid-action: var(--color-slot-seven);
 
     background-color: var(--color-layout-theme);
     color: var(--color-layout-content);
+  }
+
+  // One shared rule for every themed section, in place of per-theme or
+  // per-component overrides (YaleSites-Internal#1613).
+  // -
+  // It exists because three properties that blocks inside the section consume
+  // are otherwise NOT driven by the section:
+  // -
+  // 1. `--color-text` / `--color-background`. `_color-component-themes.scss`
+  //    sets both on `[data-component-theme]` -- the SAME element this selector
+  //    matches -- from the `component-themes` token map, which maps different
+  //    slots than the ones the section actually paints. On section theme two
+  //    the section paints slot-four (near-white) while the inherited
+  //    `--color-text` is white, so any block that consumes the pair on an
+  //    unpainted surface renders white-on-near-white. Section theme six is not
+  //    a key in that map at all, so neither property is emitted for it and
+  //    both fall through to the page-level value. Re-pointing them at what the
+  //    section really paints fixes both cases at once, for every block, with
+  //    no per-component work. (The same mismatch is described from the other
+  //    side in `_yds-related-content.scss`, which avoided `--color-text` for
+  //    exactly this reason.)
+  // -
+  // 2. `--color-divider`. `_global-config.scss` defaults it to
+  //    `--color-theme-divider, --color-gray-500` and nothing in the section
+  //    cascade re-declares it, so the always-on 70/30 column separator below
+  //    -- and every component border drawn from it -- stayed mid-gray on every
+  //    section background.
+  // -
+  // 3. `--color-layout-border`. Themes two/five/six already set it to the same
+  //    slot as `--color-layout-content`; one/three/four used slot-four, which
+  //    measures 2.42:1 (section theme three) and 2.99:1 (section theme four)
+  //    against their own background in the Whitney Humanities Center global
+  //    theme -- below the 3:1 WCAG 1.4.11 minimum for non-text. Deriving it
+  //    from the content color makes all six themes one rule and clears both.
+  // -
+  // A block that sets its own `[data-component-theme]` re-declares
+  // `--color-text`/`--color-background` on itself from the token map, and a
+  // nearer ancestor wins for inheritance regardless of specificity, so block
+  // colour dials keep working unchanged.
+  // -
+  // Deliberately NOT extended to slots six-nine: see
+  // `components/00-tokens/colors/section-background-contrast.txt`, which shows
+  // no single slot is legible on all six section backgrounds, so a block must
+  // consume these section-supplied properties rather than name a slot.
+  &[data-component-theme]:not([data-component-theme='default']) {
+    --color-text: var(--color-layout-content);
+    --color-background: var(--color-layout-theme);
+    --color-layout-border: var(--color-layout-content);
+    --color-divider: var(--color-layout-border);
+
+    // 4. `--color-section-foreground` is declared ONLY here, and nowhere else
+    //    in the library. Components that paint a deliberately muted
+    //    foreground on a surface they do not own -- a small-caps overline, an
+    //    eyebrow, a hairline card border -- read it with their existing colour
+    //    as the CSS fallback:
+    // -
+    //      color: var(--color-section-foreground, var(--color-gray-500));
+    // -
+    //    Outside a themed section the property is unset, the fallback applies,
+    //    and rendering is unchanged; inside one it resolves to the section's
+    //    own foreground. That keeps the de-emphasis where it is safe and
+    //    trades it for legibility only where the section background would
+    //    otherwise swallow the text -- with one declaration rather than a
+    //    per-component override per section theme.
+    --color-section-foreground: var(--color-layout-content);
   }
 
   // Link-grid themes one/three/four/five set white heading text by default.

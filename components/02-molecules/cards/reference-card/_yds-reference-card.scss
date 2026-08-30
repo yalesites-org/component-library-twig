@@ -499,7 +499,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   @include tokens.body-oldstyle-nums;
 
   margin-top: var(--size-spacing-3);
-  color: var(--color-gray-500);
+  color: var(--color-section-foreground, var(--color-gray-500));
   font-variant-caps: small-caps;
   text-transform: lowercase;
   letter-spacing: 0.5px;
@@ -514,7 +514,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   @include tokens.body-oldstyle-nums;
 
   margin-top: var(--size-spacing-3);
-  color: var(--color-blue-medium);
+  color: var(--color-section-foreground, var(--color-blue-medium));
   font-variant-caps: small-caps;
   text-transform: lowercase;
   letter-spacing: 0.5px;
@@ -527,7 +527,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 .reference-card__prefix {
   @include tokens.heading(h3, 'book');
 
-  color: var(--color-basic-brown-gray);
+  color: var(--color-section-foreground, var(--color-basic-brown-gray));
   text-transform: uppercase;
 }
 
