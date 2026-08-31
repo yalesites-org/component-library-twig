@@ -22,6 +22,7 @@ $component-content-spotlight-themes: map.deep-get(
   &:not([data-component-theme='default']) {
     padding-block-start: var(--size-spacing-10);
     padding-block-end: var(--size-spacing-10);
+
     // This block paints its own surface, so its descendants must use ITS
     // text colour, not the enclosing section's. Resetting
     // `--color-section-foreground` here does that: a nearer ancestor wins

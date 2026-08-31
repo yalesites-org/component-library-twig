@@ -219,3 +219,73 @@ test('--color-section-foreground is declared in exactly the expected places', ()
 
   assert.equal(declarations.length, 3, declarations.join(' | '));
 });
+
+/**
+ * Components whose line or heading is drawn on the ENCLOSING surface rather
+ * than on one they paint themselves, so a themed section has to supply its
+ * colour. Folded in here from yalesites-org/component-library-twig#705, which
+ * fixed the slot-nine choice for these three and explicitly deferred the
+ * section-supplied half to this issue.
+ *
+ * Deliberately NOT in this list: `--color-accordion-accent`, the 6px rule on
+ * an accordion ITEM. Every non-default dial paints the item its own gray-100
+ * fill, so the item owns the surface behind its line and the section never
+ * reaches it -- #705 measured that one at 42 failures -> 0 with slot-seven and
+ * it needs no section treatment.
+ */
+const SECTION_SURFACE_CONSUMERS = [
+  {
+    name: 'wrapped-callout border',
+    file: '../../02-molecules/wrapped-callout/_yds-wrapped-callout.scss',
+    fallback: '--color-wrapped-callout-theme',
+  },
+  {
+    name: 'link-grid column rule',
+    file: '../../02-molecules/link-grid/_yds-link-grid.scss',
+    fallback: '--color-link-grid-action',
+  },
+  {
+    name: 'accordion group heading',
+    file: '../../02-molecules/accordion/_yds-accordion.scss',
+    fallback: '--color-basic-white',
+  },
+];
+
+SECTION_SURFACE_CONSUMERS.forEach(({ name, file, fallback }) => {
+  test(`${name} takes the section foreground, falling back to its own colour`, () => {
+    const source = readFileSync(new URL(file, import.meta.url), 'utf8');
+
+    // The fallback is the point: outside a themed section the property is
+    // unset, the previous colour applies, and rendering is unchanged by
+    // construction. A bare read with no fallback would blank it out.
+    assert.match(
+      source.replace(/\s+/g, ' '),
+      new RegExp(
+        `var\\( ?--color-section-foreground, var\\(${fallback}\\) ?\\)`,
+      ),
+      `${name} must read var(--color-section-foreground, var(${fallback}))`,
+    );
+  });
+});
+
+test('the accordion group heading no longer carves out section theme two', () => {
+  // Hard-coded white needed that carve-out because section two is a near-white
+  // tint. Now that the heading follows the section's own foreground, the
+  // carve-out is not just unnecessary but wrong -- it would leave theme two on
+  // the default heading colour while every other theme tracks the section.
+  const source = readFileSync(
+    new URL(
+      '../../02-molecules/accordion/_yds-accordion.scss',
+      import.meta.url,
+    ),
+    'utf8',
+  );
+  const heading = source.match(/\.accordion__heading \{([\s\S]*?)\n\}/);
+
+  assert.ok(heading, 'the .accordion__heading rule is gone');
+  assert.doesNotMatch(
+    heading[1],
+    /\[data-component-theme='two'\]/,
+    'the section-theme-two carve-out should be gone from the group heading',
+  );
+});

@@ -1,17 +1,47 @@
 {#
+ # The ONE place a YaleSites Layout Builder section's signature is emitted:
+ #
+ #   <div class="yds-layout layout" data-component-theme="X"
+ #        data-component-layout="Y" …>
+ #
+ # Every section layout renders through here -- One column, Two Column
+ # (70/30), Two Column (50/50) and Three Column (33/33/33) -- so adding a new
+ # section type (say a 30/70) means adding a `component__layout` value and the
+ # flex-basis rules for it in `_yds-layout.scss`, and nothing else. Nothing
+ # else should hand-roll these classes or data attributes.
+ #
  # Available Variables:
- # - component__theme (string): 'default' by default
- # - layout__divider: (boolean) false by default
- # - component__layout (string): 'fifty-fifty' by default
- # - component__width (string): 'site' by default 
-
+ # - component__theme (string): 'default' by default. The section colour.
+ # - component__layout (string): 'fifty-fifty' by default. One of
+ #   'one-column', 'seventy-thirty', 'fifty-fifty', 'thirty-thirty-thirty'.
+ # - layout__divider (string): 'false' by default. The editor's opt-in divider.
+ # - layout__padding (string): 'default' by default.
+ # - component__width (string): 'site' by default
+ # - layout__extra_classes (array): extra classes for the section element, for
+ #   a layout that must keep a class of its own alongside the shared
+ #   signature. `layout--onecol` is the one real case: Drupal core's own
+ #   stylesheets, and the page's top/bottom margin rules, select on it.
+ #
  # Available Blocks:
- # - layout_primary
- # - layout_secondary
- # - layout_tertiary
+ # - layout__primary
+ # - layout__secondary
+ # - layout__tertiary
  #}
 
 {% set layout__base_class = 'yds-layout' %}
+
+{# `.yds-layout__inner` is the flex ROW that lays the regions out side by side.
+ # A single-region layout has no row, so it does not get one -- it would make a
+ # one-child flex container whose child sizes to its content, and its
+ # `> * > * { max-width: 100% }` would stop the full-bleed components a One
+ # column section is expected to host from breaking out. #}
+{% set layout__single_region = component__layout == 'one-column' %}
+
+{# A seventy-thirty section always draws its column separator as a border on
+ # .yds-layout__secondary (see _yds-layout.scss), so also rendering the opt-in
+ # divider element would draw the line twice. #}
+{% set layout__show_divider = layout__divider == 'true'
+  and component__layout != 'seventy-thirty' %}
 
 {% set layout__attributes = {
   'data-component-has-divider': layout__divider == 'true' ? 'true' : 'false',
@@ -19,33 +49,45 @@
   'data-component-theme': component__theme|default('default'),
   'data-component-layout': component__layout|default('fifty-fifty'),
   'data-component-width': component__width|default('site'),
-  'class': bem(layout__base_class, [], '', ['layout']),
+  'class': bem(
+    layout__base_class,
+    [],
+    '',
+    ['layout']|merge(layout__extra_classes|default([]))
+  ),
 } %}
 
 <div {{ add_attributes(layout__attributes) }} data-embedded-components>
-  <div {{ bem('inner', [], layout__base_class) }}>
-    <div {{ bem('primary', [], layout__base_class) }}>
-      {% block layout__primary %}
-        {{ content.primary }}
-      {% endblock %}
-    </div>
-    {% if layout__divider == 'true' %}
-      <div {{ bem('divider', [], layout__base_class) }}></div>
-    {% endif %}
-    <div {{ bem('secondary', [], layout__base_class) }}>
-      {% block layout__secondary %}
-        {{ content.secondary }}
-      {% endblock %}
-    </div>
-    {% if layout__divider == 'true' and component__layout == 'thirty-thirty-thirty' %}
-      <div {{ bem('divider', [], layout__base_class) }}></div>
-    {% endif %}
-    {% if component__layout == 'thirty-thirty-thirty' %}
-      <div {{ bem('tertiary', [], layout__base_class) }}>
-        {% block layout__tertiary %}
-          {{ content.tertiary }}
+  {% if layout__single_region %}
+    {% block layout__primary %}
+      {{ content.primary }}
+    {% endblock %}
+  {% else %}
+    <div {{ bem('inner', [], layout__base_class) }}>
+      <div {{ bem('primary', [], layout__base_class) }}>
+        {# Defined in the single-region branch above; Twig compiles blocks
+         # independently of where they appear, so it is declared once and
+         # rendered from whichever branch runs. #}
+        {{ block('layout__primary') }}
+      </div>
+      {% if layout__show_divider %}
+        <div {{ bem('divider', [], layout__base_class) }}></div>
+      {% endif %}
+      <div {{ bem('secondary', [], layout__base_class) }}>
+        {% block layout__secondary %}
+          {{ content.secondary }}
         {% endblock %}
       </div>
-    {% endif %}
-  </div>
+      {% if layout__show_divider and component__layout == 'thirty-thirty-thirty' %}
+        <div {{ bem('divider', [], layout__base_class) }}></div>
+      {% endif %}
+      {% if component__layout == 'thirty-thirty-thirty' %}
+        <div {{ bem('tertiary', [], layout__base_class) }}>
+          {% block layout__tertiary %}
+            {{ content.tertiary }}
+          {% endblock %}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
 </div>

@@ -107,7 +107,16 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
 }
 
 .link-grid__inner {
-  --color-link-grid-border: var(--color-link-grid-action);
+  // Same reasoning as wrapped-callout's border: a link grid paints no
+  // background of its own, so its column rules sit on the enclosing surface
+  // and a themed section has to supply their colour. Declared here rather than
+  // at each consumer so both the `.link-grid__inner` border and the
+  // `.link-grid__column-wrapper` border-left follow it
+  // (YaleSites-Internal#1613, deferred here from #1614).
+  --color-link-grid-border: var(
+    --color-section-foreground,
+    var(--color-link-grid-action)
+  );
 
   // set the border color to the color slot one so there is a default set
   [data-component-theme='default'] & {

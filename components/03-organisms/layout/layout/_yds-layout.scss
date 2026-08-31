@@ -167,6 +167,31 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
 
     background-color: var(--color-layout-theme);
     color: var(--color-layout-content);
+
+    // Themes one-five receive these two link-scoped blocks from the `@each`
+    // loop above, because they are keys in the `component-themes` token map.
+    // Theme six is not, so it needs its own copy -- and the root-level
+    // `--color-text-shadow` declared above is NOT enough on its own:
+    // `_yds-text-field.scss` declares `--color-text-shadow` white on
+    // `.text-field` itself, and that intermediate element's own declaration
+    // beats the value inherited from this section, so `.text-field a` and
+    // heading links rendered the light descender halo on the slot-three
+    // background. Scoping to the link element wins because the declaration
+    // then lands on the element that reads it (component-library-twig#707).
+    .link,
+    .text-field a,
+    .caption a,
+    [class*='__heading-link'] {
+      --color-text-shadow: var(--color-layout-theme);
+    }
+
+    // Same reasoning for link-grid's own link, which the `@each` loop also
+    // covers for themes one-five.
+    .link-grid__link {
+      --color-text-shadow: var(--color-layout-theme);
+      --color-link-visited-base: var(--color-layout-content);
+      --color-link-visited-hover: var(--color-link-hover);
+    }
   }
 
   // One shared rule for every themed section, in place of per-theme or
@@ -236,7 +261,24 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
 
   // if we're not using a component theme, add top and bottom margin
   // Or if the spotlight is the only spotlight on the page
-  &[data-component-theme='default'] {
+  // -
+  // One column is excluded as a FORWARD GUARD, not as an active fix. Called
+  // with no arguments the mixin above currently emits nothing at all -- its
+  // whole body sits behind `@if $flush-top == true` / `@if $banner-spacing ==
+  // true` -- so this rule compiles to an empty block and is dropped, here and
+  // at the ~25 other bare call sites in the library. Verified against the
+  // built CSS: `dist/css/style.css` contains no
+  // `.yds-layout[data-component-theme=default]` margin rule.
+  // -
+  // The exclusion matters the moment that mixin is repaired. One column is the
+  // generic main-content section every page gets, and it only started carrying
+  // `.yds-layout` when it moved onto this shared organism
+  // (YaleSites-Internal#1613). Its page-level top and bottom margins already
+  // come from `.main-content > *:first-child` (page-layouts.scss) and
+  // `.main-content .layout.layout--onecol:last-of-type` (atomic's
+  // layout-builder.css), so section margins on top of those would double them
+  // on every page of every site.
+  &[data-component-theme='default']:not([data-component-layout='one-column']) {
     @include tokens.spacing-page-section;
   }
 
@@ -309,12 +351,6 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     margin-bottom: var(--spacing-page-inner);
   }
 
-  // gap affects the width of the divider, so we can increase the width of the
-  // divider in this instance.
-  [data-component-layout='seventy-thirty'] & {
-    width: calc(var(--border-thickness-2) + var(--border-thickness-1));
-  }
-
   @media (max-width: $break-layout-layout-max) {
     width: 100%;
     height: var(--border-thickness-2);
@@ -380,6 +416,16 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
 
     @media (min-width: $break-layout-layout) {
       flex: 0 1 calc(37.5rem + var(--spacing-component-gutter));
+
+      // `.yds-layout__inner` sets `align-items: flex-start`, so without this
+      // the secondary column is only as tall as its own content and the
+      // separator drawn on its border stops short -- on a 70/30 the narrow
+      // column is usually much shorter than the wide one, so the line covered
+      // a fraction of the section. Stretching makes it span the full section
+      // height, matching how `.yds-layout__divider` (which is
+      // `align-self: stretch`) renders on fifty-fifty and
+      // thirty-thirty-thirty.
+      align-self: stretch;
       border-left: var(--thickness-divider) solid var(--color-divider);
       margin-left: calc(var(--spacing-component-gutter) * 2);
       padding-left: var(--spacing-component-gutter);
