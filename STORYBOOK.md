@@ -166,6 +166,15 @@ beyond a one-off measurement script). It's what `@storybook/test-runner` is buil
 Chromium/Firefox/WebKit with one API, and `yalesites-project` already uses it for e2e. Don't
 reach for Puppeteer elsewhere without discussing it first.
 
+#### Placeholder images
+
+Sample images in fixtures and page examples come from `images/placeholders/`, committed to
+this repo — never from a remote placeholder service, which would make the build depend on a
+third-party host and add a fresh Percy diff every run. `images/placeholders/README.md` has
+the available aspect ratios, how to reference them, and the full rationale;
+`components/_storybook/no-third-party-images.test.mjs` fails the unit suite if a fixture
+drifts back to a remote host.
+
 ## Adding a New Component
 
 1. **Choose the right tier** — atom (single element), molecule (composed of atoms), organism (full section), template (layout shell with no visual identity)
