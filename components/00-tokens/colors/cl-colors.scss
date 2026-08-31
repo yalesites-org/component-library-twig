@@ -194,6 +194,32 @@ $cl-colors-copy-success: #16a34a;
     .cl-colors__value-row {
       max-width: 320px;
     }
+
+    // On phone widths the side-by-side layout crushes the info column, so
+    // fall back to the same stacked layout as every other card: swatch on
+    // top at full width, details below. This is the width where the grid
+    // itself drops to a single column.
+    @media (max-width: tokens.$break-s) {
+      display: block;
+
+      .cl-colors__swatch {
+        width: 100%;
+        height: 110px;
+      }
+
+      .cl-colors__info {
+        display: block;
+        padding: 0.875rem 1rem 1rem;
+      }
+
+      .cl-colors__name {
+        font-size: 0.95rem;
+      }
+
+      .cl-colors__value-row {
+        max-width: none;
+      }
+    }
   }
 }
 
