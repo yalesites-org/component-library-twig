@@ -28,8 +28,8 @@ jobs:
       # install scripts, so ask for it explicitly. It is a no-op once cached.
       - name: Install Chrome
         run: npx puppeteer browsers install chrome
-      # Here as well as in Visual Regression, which only runs once a PR is
-      # marked ready -- too late to be the only place this is checked.
+      # This is the only place the ceiling is checked, so it runs on every push
+      # rather than waiting for a snapshot run to reject the story.
       # `npm run test` ends in `storybook:build`, so .out is already there.
       - name: Check visreg pixel ceiling
         run: npm run visreg:measure

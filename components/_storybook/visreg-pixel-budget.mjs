@@ -20,8 +20,7 @@
 /**
  * Chromatic's per-snapshot pixel-area ceiling.
  *
- * Percy is what `npm run visreg:ci` runs today; this is the tighter of the two
- * limits and the one the story shape was designed against, so it is what the
+ * This is the limit the story shape was designed against, so it is what the
  * check enforces. Also stated in STORYBOOK.md and in the
  * `global-theme-stories.mjs` docblock -- change it in all three.
  */
