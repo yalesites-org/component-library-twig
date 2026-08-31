@@ -23,7 +23,9 @@
     "storybook:build": "npm run build && storybook build ./dist, ./images -o .out",
     "storybook:deploy": "storybook-to-ghpages -o .out",
     "test": "npm run test:unit && npm run lint:js && npm run lint:styles && npm run prettier && npm run storybook:build",
-    "test:unit": "node --test components/",
+    "test:unit": "npm run test:unit:node && npm run test:unit:vitest",
+    "test:unit:node": "node --test $(find components -name '*.test.mjs')",
+    "test:unit:vitest": "vitest run",
     "visreg:ci": "percy storybook .out",
     "webpack": "webpack --watch --config ./webpack/webpack.dev.js"
   },
@@ -51,6 +53,7 @@
     "exports-loader": "^1.1.1",
     "husky": "^9.0.11",
     "js-yaml-loader": "^1.2.2",
+    "jsdom": "^25.0.1",
     "lint-staged": "^15.2.7",
     "postcss": "^8.4.29",
     "postcss-loader": "^7.3.3",
@@ -60,6 +63,7 @@
     "storybook": "^8.3.6",
     "style-loader": "^2.0.0",
     "twig-loader": "https://github.com/fourkitchens/twig-loader",
+    "vitest": "^2.1.9",
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {

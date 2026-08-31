@@ -118,6 +118,8 @@ export const parameters = {
         'Molecules',
         'Organisms',
         ['Card Collection', ['Overview', 'Visreg', '*']],
+        'Web Components',
+        ['Overview', 'Divider', 'Accordion', '*'],
         'Templates',
         'Page Examples',
         ['Overview', '*'],
