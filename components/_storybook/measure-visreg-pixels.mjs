@@ -34,8 +34,8 @@
  * Audio and video downloads are blocked outright. They cannot change the
  * layout -- the audio player draws its own controls and video is sized by CSS
  * -- and fetching them made the run depend on a third-party host's mood.
- * Images are deliberately *not* blocked: several stories source them from
- * picsum.photos and those do change the height.
+ * Images are deliberately *not* blocked: stories source them from the
+ * committed `images/placeholders/` set and those do change the height.
  *
  * Which is also why the settle step is time-boxed. `load` has already waited
  * for every image in the initial markup, so the budget only covers the ones
@@ -325,7 +325,8 @@ async function measureAll(browser, origin, storyList, workers) {
       });
 
       // CDP rather than `setRequestInterception`, which switches off the page
-      // cache -- and the picsum.photos images are worth caching across stories.
+      // cache -- and the placeholder images repeat across stories, so keeping
+      // the cache is worth it.
       const session = await page.createCDPSession();
       await session.send('Network.enable');
       await session.send('Network.setBlockedURLs', { urls: BLOCKED_MEDIA });
