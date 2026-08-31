@@ -16,6 +16,9 @@ jobs:
           filters: |
             components:
               - 'components/**'
+              # Placeholder image bytes are rendered into stories, so changing
+              # one changes snapshots even when no component file is touched.
+              - 'images/placeholders/**'
       - name: Install Node.js
         if: steps.component_changes.outputs.components == 'true'
         uses: actions/setup-node@v4
