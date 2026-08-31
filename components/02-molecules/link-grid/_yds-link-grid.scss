@@ -166,8 +166,14 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   // if used in thirty-thirty-thirty layout and min-width 2xl
   // make the columns 100% width and apply thicker border
+  // The seventy-thirty selector below raises this rule's specificity above
+  // the !important line-treatment rules that follow; those still win on
+  // !important regardless of source order, so the ordering warning is safe
+  // to suppress for this block.
+  /* stylelint-disable no-descending-specificity */
   [data-component-layout='thirty-thirty-thirty'] &,
-  .yds-two-column .yds-two-column__secondary & {
+  .yds-two-column .yds-two-column__secondary &,
+  .yds-layout[data-component-layout='seventy-thirty'] .yds-layout__secondary & {
     @media (min-width: tokens.$break-2xl) {
       margin-bottom: 0;
       flex: 1 1 100%;
@@ -190,6 +196,7 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   .link-grid[data-line-treatment='no_lines'] & {
     border: none !important;
   }
+  /* stylelint-enable no-descending-specificity */
 
   // Default: first column gets wider border (alternating strong and light)
   .link-grid[data-line-treatment='default'] &:first-of-type {

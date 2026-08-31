@@ -32,6 +32,15 @@ $component-inline-message-themes: map.deep-get(
       --color-link-visited-light: var(--color-slot-eight);
       --color-link-visited-light-hover: var(--color-slot-eight);
 
+      // The generic component-themes --color-text-shadow (set from
+      // --color-background) doesn't match here, since this component maps
+      // its own background to a different color slot
+      // (--color-inline-message-background) than --color-background.
+      // Declared here (not on a specific link selector) so it inherits to
+      // any link, including plain rich-text anchors from the WYSIWYG
+      // content, not just the text-link atom.
+      --color-text-shadow: var(--color-inline-message-background);
+
       background-color: var(--color-inline-message-background);
       color: var(--color-inline-message-text);
     }
