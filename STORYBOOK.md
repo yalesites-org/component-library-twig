@@ -72,9 +72,9 @@ Give each one an `aria-label` that is unique on the page. Props tables generated
 
 ### Tags
 
-| Tag | Effect |
-|---|---|
-| `'!dev'` | Hides story from sidebar — use when MDX fully covers it |
+| Tag        | Effect                                                                      |
+| ---------- | --------------------------------------------------------------------------- |
+| `'!dev'`   | Hides story from sidebar — use when MDX fully covers it                     |
 | `'visreg'` | Marks as a visual regression story — hidden by default, toggled via toolbar |
 
 ### Visreg stories
@@ -125,10 +125,46 @@ The 25,000,000px figure is Chromatic's, which is what this refactor is for; Perc
 
 Two things to know before "tidying" that up:
 
-- **Do not collapse the exports into one destructured export.** Storybook's static CSF indexer only reads export declarators whose id is a plain identifier, so `export const { OldBlues, ... } = createGlobalThemeStories(...)` indexes as *zero* stories and the component drops out of visual regression silently.
+- **Do not collapse the exports into one destructured export.** Storybook's static CSF indexer only reads export declarators whose id is a plain identifier, so `export const { OldBlues, ... } = createGlobalThemeStories(...)` indexes as _zero_ stories and the component drops out of visual regression silently.
 - **Anything that does not vary by global theme belongs in its own story**, not repeated inside all seven. See the banner components for examples.
 
 `components/_storybook/global-theme-stories.test.mjs` enforces this shape across every visreg story file.
+
+#### The pixel ceiling is checked in CI
+
+Story shape is one half of staying under the ceiling; the story's actual rendered height is the
+other, and that one moves every time a component grows a variation. `npm run visreg:measure`
+measures it:
+
+```sh
+npm run storybook:build   # the check reads the built .out/index.json
+npm run visreg:measure
+```
+
+It loads every `visreg`-tagged story's `iframe.html` in headless Chromium at the 1200px snapshot
+viewport, multiplies `scrollWidth` by `scrollHeight`, and **exits non-zero naming any story over
+the ceiling and by how much**.
+
+A clean run reports the largest story and its headroom, which is the number worth watching — as
+of writing, `Molecules/Meta` sits at 24,286,800px, **97% of the ceiling**, so that component has
+almost none left. `VISREG_MEASUREMENTS_OUT=sizes.json npm run visreg:measure` writes every
+story's measurement if you need to see where a component stands.
+
+It runs in CI twice on purpose: in `Test`, on every push to a PR, so a story that grows past the
+ceiling fails while you are still working on it; and again in `Visual Regression` before Percy, so
+a PR marked ready for review cannot spend a Percy run on a snapshot that cannot be captured.
+
+If it cannot find a browser, fetch one: `npx puppeteer browsers install chrome`. Overrides
+(`VISREG_PIXEL_CEILING`, `VISREG_CONCURRENCY`, `VISREG_STORY_TIMEOUT`, `VISREG_SETTLE_TIMEOUT`)
+are listed in the `measure-visreg-pixels.mjs` docblock, which also explains why the wait strategy
+is what it is — read it before changing the measuring.
+
+`measure-visreg-pixels.mjs` uses **Puppeteer** for this one purpose: launch headless Chrome and
+read a single DOM measurement. That is not a broader tooling choice — **Playwright is the
+default for any new browser-driven tests** (interaction tests, cross-browser checks, anything
+beyond a one-off measurement script). It's what `@storybook/test-runner` is built on, it covers
+Chromium/Firefox/WebKit with one API, and `yalesites-project` already uses it for e2e. Don't
+reach for Puppeteer elsewhere without discussing it first.
 
 #### Placeholder images
 
