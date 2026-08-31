@@ -28,6 +28,36 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   --color-text-shadow: var(--color-basic-white);
 
+  // In a component-themed section the background is the theme color (e.g.
+  // navy), so the default white heading-link underline-skip shadow shows as a
+  // halo. Match it to the section background, mirroring the single-collection
+  // override below.
+  // The section's *rendered* background is `--color-layout-theme` (set per
+  // theme in `_yds-layout.scss`), which is NOT the same token as
+  // `--color-background`: for themes two and three the layout paints
+  // slot-four / slot-five while `--color-background` resolves to a different
+  // value, so a shadow set to `--color-background` still mismatches and the
+  // halo persists. Prefer the actual layout background, falling back to
+  // `--color-background` when the card is themed outside a `.yds-layout`.
+  [data-component-theme] & {
+    --color-text-shadow: var(--color-layout-theme, var(--color-background));
+  }
+
+  // The heading-link hover color is set to `--color-slot-two` by
+  // `clickable-component-heading-link`. On a component-themed section that slot
+  // can fail contrast against the section background, and when the background
+  // uses the same slot the hovered title disappears entirely. Pin the hover to
+  // the section's on-theme foreground (`--color-layout-content`, AA on every
+  // theme — the same token the overline uses), so the title stays legible on
+  // every background; the animated underline-slide remains the hover
+  // affordance. The mixin declares `--color-link-hover` on the heading-link
+  // element itself, so this override must also target that element (equal
+  // specificity, later source order) rather than the card. Scoped to
+  // reference-card in themed sections so default link hover is unchanged.
+  [data-component-theme] & [class*='__heading-link'] {
+    --color-link-hover: var(--color-layout-content, var(--color-slot-two));
+  }
+
   display: flex;
   flex-flow: column-reverse;
   gap: var(--size-spacing-4);
@@ -374,6 +404,20 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     }
   }
 
+  // The viewport rule above (intended for a lone single card) also caps every
+  // image-less condensed card at 70%, wrapping titles too early in a narrow
+  // 30/33 column. Reclaim the full width, but ONLY when the condensed cards
+  // wrapper is actually narrow (< 34rem, the single-column band); the 50/50
+  // (34-70rem) and full-width (>= 70rem) bands keep the existing cap. Wins by
+  // higher specificity + later source order. (#1299 QA)
+  [data-collection-type='condensed'] [data-component-has-image='false'] & {
+    @container (max-width: 33.95rem) {
+      > * {
+        max-width: 100%;
+      }
+    }
+  }
+
   [data-collection-type='list'] [data-component-has-overlay='true'] & {
     padding-top: var(--size-spacing-7);
   }
@@ -491,6 +535,16 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   [data-collection-type='single'] & {
     color: var(--color-card-single-text);
+  }
+
+  // On a component-themed section background `--color-gray-500` fails WCAG AA
+  // (e.g. 1.59:1 on the slate theme). Use the section's on-theme foreground
+  // (`--color-layout-content`, set per theme in `_yds-layout.scss`), which the
+  // section already uses for body text and clears AA on every theme. Fall back
+  // to the default gray for any themed context outside a `.yds-layout` (where
+  // the section background is not painted, so the gray still has contrast).
+  [data-component-theme] & {
+    color: var(--color-layout-content, var(--color-gray-500));
   }
 }
 
