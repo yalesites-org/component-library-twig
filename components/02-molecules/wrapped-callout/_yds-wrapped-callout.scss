@@ -76,8 +76,12 @@ $wrapped-callout-component-themes: map.deep-get(
     --color-wrapped-callout-theme: var(--color-slot-five);
   }
 
+  // This theme color is only ever drawn as the callout border, so it has to
+  // clear 3:1 against the page on its own, with no paired foreground to help
+  // it. That rules out slot-nine, the light background tint this used to be.
+  // See 00-tokens/colors/border-accent-contrast.test.mjs for the measurement.
   &[data-component-theme='six'] {
-    --color-wrapped-callout-theme: var(--color-slot-nine);
+    --color-wrapped-callout-theme: var(--color-slot-seven);
   }
 }
 

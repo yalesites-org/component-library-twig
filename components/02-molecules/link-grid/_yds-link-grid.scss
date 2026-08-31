@@ -25,7 +25,9 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
       );
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
-      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
+      --color-slot-seven: var(
+        --global-themes-#{$globalTheme}-colors-slot-seven
+      );
 
       @if $globalTheme == 'four' {
         // Switch colors slot in order to have the selected background colors per component theme.
@@ -67,8 +69,13 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-link-grid-action: var(--color-slot-two);
   }
 
+  // The action color is drawn as the column rule, so it has to clear 3:1
+  // against the page on its own, with no paired foreground to help it. That
+  // rules out slot-nine, the light background tint this used to be; slot-seven
+  // also matches the heading below. See
+  // 00-tokens/colors/border-accent-contrast.test.mjs for the measurement.
   &[data-component-theme='six'] {
-    --color-link-grid-action: var(--color-slot-nine);
+    --color-link-grid-action: var(--color-slot-seven);
     --color-heading: var(--color-slot-seven);
   }
 
