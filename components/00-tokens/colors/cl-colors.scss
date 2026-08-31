@@ -49,30 +49,6 @@ $cl-colors-copy-success: #16a34a;
     height: 110px;
   }
 
-  .cl-colors__badge {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    font-size: 0.6rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: 0.2rem 0.45rem;
-    border-radius: 3px;
-    line-height: 1.4;
-
-    &--web {
-      background-color: #1f1f1f;
-      color: #fff;
-    }
-
-    &--print {
-      background-color: #fff;
-      color: #1f1f1f;
-      border: 1px solid rgb(0 0 0 / 20%);
-    }
-  }
-
   .cl-colors__info {
     padding: 0.875rem 1rem 1rem;
   }

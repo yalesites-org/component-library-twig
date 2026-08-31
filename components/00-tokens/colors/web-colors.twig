@@ -115,9 +115,7 @@
       {% for family_key, family in print_colors.families %}
         {% for key, color in family.colors %}
           <li {{ bem('item', [], colors__base_class) }}>
-            <div {{ bem('swatch', [], colors__base_class) }} style="background: {{ color.hex }};">
-              <span class="cl-colors__badge cl-colors__badge--print">Print</span>
-            </div>
+            <div {{ bem('swatch', [], colors__base_class) }} style="background: {{ color.hex }};"></div>
             <div {{ bem('info', [], colors__base_class) }}>
               {# No card name — the PMS value below acts as the card's identifier. #}
               {% set print_rows = {
@@ -162,9 +160,7 @@
       {% for group, colorset in _context.colors %}
         {% for key, color in colorset %}
           <li {{ bem('item', [], colors__base_class) }}>
-            <div {{ bem('swatch', [], colors__base_class) }} style="background: var({{ color.css_var }});">
-              <span class="cl-colors__badge cl-colors__badge--web">Web</span>
-            </div>
+            <div {{ bem('swatch', [], colors__base_class) }} style="background: var({{ color.css_var }});"></div>
             <div {{ bem('info', [], colors__base_class) }}>
               <span {{ bem('var', [], colors__base_class) }}>{{ color.css_var }}</span>
               <div {{ bem('value-row', [], colors__base_class, ['text-copy-button']) }}>
