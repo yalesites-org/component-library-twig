@@ -28,8 +28,9 @@ jobs:
       # install scripts, so ask for it explicitly. It is a no-op once cached.
       - name: Install Chrome
         run: npx puppeteer browsers install chrome
-      # This is the only place the ceiling is checked, so it runs on every push
-      # rather than waiting for a snapshot run to reject the story.
+      # This is the only place the ceiling is checked, so it runs on every PR
+      # into main or develop rather than waiting for a snapshot run to reject
+      # the story. Note a PR into any other base gets no ceiling check.
       # `npm run test` ends in `storybook:build`, so .out is already there.
       - name: Check visreg pixel ceiling
         run: npm run visreg:measure

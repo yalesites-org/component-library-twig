@@ -9,8 +9,9 @@
  * into a single story put most components several times past it. Each global
  * theme therefore gets its own story, which also makes a snapshot diff readable
  * without counting theme wrappers. (The 25,000,000px figure is Chromatic's,
- * which is what this shape is for; `npm run chromatic` is what submits the
- * snapshots.)
+ * which is what this shape is for. `npm run chromatic` is the intended submit
+ * path once the CLI lands -- yalesites-org/YaleSites-Internal#1605 installs it,
+ * #1604 wires CI -- so nothing submits snapshots automatically yet.)
  *
  * Usage, in a `*.visreg.stories.js` file:
  *

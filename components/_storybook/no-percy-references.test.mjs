@@ -42,7 +42,7 @@ const BANNED = [PERCY, /visreg:ci/];
  *
  * `git ls-files` is relative to its working directory and reports only what lives beneath it,
  * with no error if that is a subtree -- so pointing this at `components/` would quietly scan a
- * fraction of the repo and pass. The count assertion below is what catches that.
+ * fraction of the repo and pass. The first test below is what catches that.
  */
 const selfPath = fileURLToPath(import.meta.url);
 const projectRoot = path.dirname(path.dirname(path.dirname(selfPath)));
@@ -56,7 +56,10 @@ const selfEntry = path.relative(projectRoot, selfPath);
 /**
  * Tracked files that can carry prose, config, or code. Binaries and fonts cannot.
  *
- * `.cjs` is included because `release.config.cjs` sits at the repo root.
+ * `.cjs` currently matches nothing -- on this branch the root configs are `.js`
+ * (`release.config.js`). It is here because the Vite migration renames them
+ * (`release.config.cjs`, `.eslintrc.cjs`, `commitlint.config.cjs`, ...), and holding the line
+ * as that chain merges forward is this guard's whole job.
  */
 const TEXT_FILE = /\.(yml|yaml|twig|js|mjs|cjs|json|mdx|md|scss|css|html)$/;
 
@@ -93,7 +96,7 @@ test('no tracked file references Percy or the visreg:ci script', () => {
   assert.deepEqual(
     offenders,
     [],
-    'Percy is retired -- visual regression runs on Chromatic. Reword these rather than reinstating it.',
+    'Percy is retired -- Chromatic replaces it once yalesites-org/YaleSites-Internal#1605 installs the CLI and #1604 wires CI. Reword these rather than reinstating Percy.',
   );
 });
 
@@ -105,6 +108,6 @@ test('no Percy config file is left in the repo', () => {
   assert.deepEqual(
     leftovers,
     [],
-    '.percyrc and friends are gone; their story exclusions live on as Chromatic parameters.',
+    '.percyrc is gone; its story exclusions and masks are recorded in yalesites-org/YaleSites-Internal#1603, to be ported once Chromatic exists (#1605).',
   );
 });
