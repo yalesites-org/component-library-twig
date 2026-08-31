@@ -172,19 +172,26 @@ Drupal.behaviors.mediaGridInteractive = {
           '.media-grid-modal__heading',
         );
 
-        // Check if captionContent exists.
-        if (captionContent) {
-          // Store the full caption text.
+        const hasHeading = !!captionHeading;
+
+        // A heading-only item (no captionContent at all) still needs the
+        // collapsed-state treatment below, so gate on either one existing.
+        if (captionContent || hasHeading) {
           const maxLength = 100;
 
-          const fullCaption = captionContent.textContent.trim();
-          const hasHeading = !!captionHeading;
+          const fullCaption = captionContent
+            ? captionContent.textContent.trim()
+            : '';
 
-          if (hasHeading) {
+          if (hasHeading && captionContent) {
             captionContent.classList.add('media-grid-modal__text--has-heading');
             imageCaption.classList.add(
               'media-grid-modal__content--has-heading',
             );
+
+            // Flatten to plain text like every other caption pathway does —
+            // markup (e.g. links) isn't styled for this context.
+            captionContent.textContent = fullCaption;
           }
 
           // imageCaption: set default attributes. The collapsed height is
