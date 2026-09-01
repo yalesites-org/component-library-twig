@@ -39,6 +39,12 @@ twigAssetPath(Twig);
 // decorators/globalTypes/tags live in preview-decorators.js instead (see main.js).
 export const parameters = {
   actions: { argTypesRegex: '^on.*' },
+  chromatic: {
+    // Default every story OUT of visual regression; *.visreg.stories.js metas
+    // opt their own stories back in. Rationale in STORYBOOK.md, enforcement in
+    // components/_storybook/chromatic-snapshot-scope.test.mjs.
+    disableSnapshot: true,
+  },
   controls: { disableSaveFromUI: true, sort: 'requiredFirst' },
   layout: 'padded', // Core defaults to 'fullscreen', which drops story padding
   options: {

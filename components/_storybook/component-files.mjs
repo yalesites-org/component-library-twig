@@ -27,6 +27,15 @@ export const projectRoot = path.dirname(componentsDir);
 const TEXT_FILE = /\.(yml|yaml|twig|js|mjs|json|mdx|md|scss|css|html)$/;
 
 /**
+ * The filename convention that marks a story file as a visual-regression
+ * subject. Policy, not mechanics, for the same reason `TEXT_FILE` is: more than
+ * one guard asks "is this a visreg story file", and a second copy of the answer
+ * would go stale silently -- the un-updated guard just matches nothing and keeps
+ * passing.
+ */
+export const VISREG_STORY_FILE = /\.visreg\.stories\.js$/;
+
+/**
  * @param {string} [excludePath] - Absolute path to omit, so a guard that names a
  *   banned string in its own source cannot police itself.
  * @returns {string[]} Absolute paths of every scannable file under components/.

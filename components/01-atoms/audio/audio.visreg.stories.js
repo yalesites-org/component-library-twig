@@ -21,6 +21,7 @@ export default {
   tags: ['visreg'],
   title: 'Atoms/Audio Player/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     controls: { disable: true },
   },
 };

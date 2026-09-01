@@ -20,7 +20,10 @@ import {
 export default {
   tags: ['visreg'],
   title: 'Atoms/Lists/Visreg',
-  parameters: { controls: { disable: true } },
+  parameters: {
+    chromatic: { disableSnapshot: false },
+    controls: { disable: true },
+  },
 };
 
 const renderGlobalTheme = () => {

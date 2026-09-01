@@ -30,7 +30,10 @@ const icons = Object.keys(svgIconModules).map((path) =>
 export default {
   tags: ['visreg'],
   title: 'Atoms/Images/Visreg',
-  parameters: { controls: { disable: true } },
+  parameters: {
+    chromatic: { disableSnapshot: false },
+    controls: { disable: true },
+  },
 };
 
 const renderGlobalTheme = () => {
