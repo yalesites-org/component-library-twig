@@ -67,3 +67,27 @@ Images are downscaled and JPEG-encoded to keep repository weight reasonable, so 
 evidence of the _visible_ change rather than a source of exact colour values. The exact
 numbers are in `components/00-tokens/colors/section-background-contrast.txt`, which is
 generated and reproducible.
+
+## #1614 — functional-element contrast
+
+Added by yalesites-org/YaleSites-Internal#1614, which audited the three blocks #1613 left
+alone (accordion, `link_grid`, `wrapped_text_callout`).
+
+| Pattern | Count | What it shows |
+| --- | --- | --- |
+| `1614-{before,after}-global-<n>-<label>-callout-heading-dial-<d>-section-<s>.png` | 8 | The Wrapped Callout heading, which read a fixed slot-seven declared on `.wrapped-callout` itself and so could never be reached by the section. Dark-on-dark before, section foreground after. |
+| `1614-{before,after}-global-<n>-<label>-link-grid-heading-dial-<d>-section-<s>.png` | 8 | The Link Grid block heading on dials `two` and `six`, the two the white-heading rule does not cover. |
+
+Element captures, not full pages: the #1614 fixtures hold 36-42 sections each and a
+full-page image of one is unreadable at any size a ticket comment will show.
+
+Two global themes only — one (Old Blues) and four (Onha, where the slot-two/slot-five swap
+applies). These are illustrations; the exhaustive evidence is all 4410 measured cells,
+summarised in `components/00-tokens/colors/functional-element-contrast.txt`.
+
+Regenerate with `node scripts/local/1614-capture.mjs <before|after> <output-dir>` in
+yalesites-project. The four warnings above apply unchanged — in particular, take "before"
+from the branch base rather than from a stash, which is how these were captured.
+
+Note the unstyled blue link visible in the callout body copy in **both** states. That is
+deliberate: it is yalesites-org/YaleSites-Internal#1625, out of #1614's scope.
