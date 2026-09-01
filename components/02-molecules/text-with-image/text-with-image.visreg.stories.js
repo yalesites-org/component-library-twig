@@ -25,6 +25,7 @@ export default {
   tags: ['visreg'],
   title: 'Organisms/Content Spotlight/Content Spotlight Landscape/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },

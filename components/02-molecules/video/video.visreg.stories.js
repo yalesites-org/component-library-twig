@@ -17,6 +17,7 @@ export default {
   tags: ['visreg'],
   title: 'Molecules/Video/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },

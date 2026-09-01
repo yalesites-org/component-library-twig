@@ -94,6 +94,72 @@ yet — installing it and wiring the CI run are
 [yalesites-org/YaleSites-Internal#1605](https://github.com/yalesites-org/YaleSites-Internal/issues/1605)
 and [#1604](https://github.com/yalesites-org/YaleSites-Internal/issues/1604).
 
+#### What gets snapshotted: opt in, never opt out
+
+Snapshots are **off by default and opted into per file.**
+`config/emulsify-core/storybook/preview.js` sets the project-level parameter
+`chromatic: { disableSnapshot: true }`, and each `*.visreg.stories.js` meta sets
+`chromatic: { disableSnapshot: false }` to turn its own stories back on:
+
+```js
+export default {
+  tags: ['visreg'],
+  title: 'Molecules/Your Component/Visreg',
+  parameters: {
+    chromatic: { disableSnapshot: false },
+    controls: { disable: true },
+  },
+};
+```
+
+Only visual-regression stories are visual-regression subjects. The rest of the library —
+component docs, token displays, page examples — is roughly a quarter of the stories, and
+snapshotting it spends the allowance on pages whose content is documentation, plus token
+displays that redraw whenever the tokens package changes without any component changing with
+them. Inverting the default is also what keeps that true over time: a new documentation story
+cannot join the snapshot set by drifting into it, because joining takes a visible edit.
+
+`components/_storybook/chromatic-snapshot-scope.test.mjs` enforces both halves — the
+project-level default and the per-file opt-in — because either half missing fails silently.
+It is a source-text scan and needs no build, since the preview imports `.scss` and the story
+files import `.twig` and neither loads outside Vite. To check the resulting count instead,
+build first: `.out/index.json` lists every story with its tags, so `visreg`-tagged stories are
+countable directly.
+
+#### Masking content that is a race rather than a rendering decision
+
+Some regions change between two captures of the same unchanged story. A visual-regression tool
+reports that as a diff, and enough of those trains everyone to click "approve" without looking —
+which is how the previous tool was lost. `config/emulsify-core/storybook/preview.js` therefore
+carries a project-level `chromatic: { ignoreSelectors: [...] }`, one entry per masked region, each
+with the reason beside it:
+
+```js
+chromatic: {
+  disableSnapshot: true,
+  ignoreSelectors: ['.audio-embed__time--total'],
+},
+```
+
+Today the list holds one selector. The audio player's total time renders as `0:00` and is
+rewritten when the remote file's metadata arrives, so what a capture records depends on how fast
+a third-party host answers — measured on a built Storybook, the value is `0:00` 200ms and 800ms
+after load and `2:47` at 4s. Chromatic disregards an ignored element's pixels, though a change to
+its *dimensions* still registers, so this suits content that varies in value but not in size.
+
+**If you add a story with content that cannot be reproduced, add a selector here rather than
+skipping the story.** Keep the list in the preview instead of on the story: a story that sets its
+own `chromatic.ignoreSelectors` **replaces** this array rather than extending it, so a second copy
+would silently drop the first. `components/_storybook/chromatic-ignore-selectors.test.mjs` checks
+every entry still matches a component, so renaming a class fails the suite instead of quietly
+unmasking the region.
+
+**Images are deliberately not masked.** Fixtures used to come from a remote placeholder service
+that returned a different picture every request, and hiding every `img` was the only way to live
+with that. They are now committed under `assets/images/placeholders/` (see "Placeholder images"
+below), so image-bearing stories render identically across loads — verified by capturing the same
+story twice — and masking them would only blind visual regression to the thing it is best at.
+
 #### One story per global theme
 
 Visual regression snapshots have a hard pixel-area ceiling — Chromatic rejects anything over 25,000,000px — and stacking every global theme into one story blows past it. Build the theme stories with `createGlobalThemeStories` instead, and export one story per global theme:
