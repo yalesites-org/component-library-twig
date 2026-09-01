@@ -10,11 +10,15 @@
 # ever run in CI rather than affecting pushes to those branches.
 #
 # Skips rather than fails when the local Node major does not match .nvmrc.
-# `npm run test:unit` is `node --test components/`, and directory mode only
-# resolves the way CI expects on Node 20; on newer Node it reports a spurious
-# MODULE_NOT_FOUND against `components` itself. Failing a push for that would
-# be an environmental error, not a test failure, and would teach everyone
-# --no-verify.
+# It compares majors only, so it is a coarse "wrong Node entirely" check, not
+# an `engines` check -- 24.0.0 passes it while failing `engines`.
+#
+# On develop this guard also covered test discovery: `test:unit` there is
+# `node --test components/`, and directory mode only resolves as CI expects on
+# Node 20. This branch uses the glob form, which resolves on any recent Node,
+# so discovery is no longer the reason -- what is left is that a push from the
+# wrong Node major should report that rather than fail the suite, because
+# failing a push for an environmental mismatch teaches everyone --no-verify.
 
 branch=$(git rev-parse --abbrev-ref HEAD)
 
