@@ -40,6 +40,7 @@
     "audit:twig-stories": "sh -c 'node_modules/@emulsify/core/scripts/audit-twig-stories.js \"$@\"; status=$?; printf \"\\nMigration docs: https://github.com/emulsify-ds/emulsify-core/blob/4.x/docs/storybook.md#legacy-twig-story-compatibility\\n\"; exit $status' --"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^5.3.0",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.2.2",
     "@semantic-release/github": "^8.0.2",
