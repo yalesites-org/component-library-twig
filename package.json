@@ -20,6 +20,7 @@
     "build": "npm run ensure-dist && vite build --config node_modules/@emulsify/core/config/vite/vite.config.js",
     "build-storybook": "npm run storybook:build",
     "chromatic": "chromatic --storybook-build-dir .out",
+    "chromatic:local": "node scripts/chromatic-local.mjs",
     "develop": "npm run ensure-dist && concurrently --raw --no-shell npm:vite npm:storybook",
     "vite": "vite build --watch --emptyOutDir=false --config node_modules/@emulsify/core/config/vite/vite.config.js",
     "husky:commit-msg": "commitlint --edit $1",
