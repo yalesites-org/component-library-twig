@@ -122,8 +122,18 @@ export function summarise(rows) {
   return [...groups.values()].map((group) => {
     const [first] = group;
     const minimum = minimumFor(first);
+
+    // An UNMEASURABLE color is not a failing one, and the difference matters.
+    // `ratioFor` returns null when either color will not parse -- which
+    // happens for real: `getComputedStyle().fill` is the string `none` on an
+    // unfilled icon. Left in the list, a null compares false against the
+    // minimum (counted as a failure) and coerces to 0 through `Math.min`,
+    // so a measurement gap would print as a genuine `0.00-0.00` FAIL,
+    // indistinguishable from black-on-black. Partitioned out and counted
+    // separately instead: a gap in the data has to look like a gap.
     const ratios = group.map(ratioFor);
-    const passing = ratios.filter((ratio) => ratio >= minimum).length;
+    const measured = ratios.filter((ratio) => ratio !== null);
+    const passing = measured.filter((ratio) => ratio >= minimum).length;
 
     return {
       component: first.component,
@@ -132,39 +142,63 @@ export function summarise(rows) {
       sectionTheme: first.sectionTheme,
       decorative: first.decorative,
       minimum,
-      themes: group.length,
+      themes: measured.length,
+      unmeasured: ratios.length - measured.length,
       passing,
-      min: Math.min(...ratios),
-      max: Math.max(...ratios),
+      min: measured.length ? Math.min(...measured) : null,
+      max: measured.length ? Math.max(...measured) : null,
       // Would the failing cells clear the 3:1 large-text/non-text allowance?
       // The distinction the accessibility engineer signs off on.
-      passingAtThree: ratios.filter((ratio) => ratio >= AA_LARGE_OR_NON_TEXT)
+      passingAtThree: measured.filter((ratio) => ratio >= AA_LARGE_OR_NON_TEXT)
         .length,
     };
   });
 }
 
 const verdict = (summary) => {
-  if (summary.decorative) return 'n/a (decorative)';
+  if (summary.unmeasured) {
+    return `UNMEASURED (${summary.unmeasured} cell${
+      summary.unmeasured === 1 ? '' : 's'
+    })`;
+  }
   if (summary.passing === summary.themes) return 'PASS';
   if (summary.passing === 0) return 'FAIL (all themes)';
   return `FAIL (${summary.themes - summary.passing}/${summary.themes} themes)`;
 };
 
+/**
+ * Is this failing group the one defect #1614 deliberately did not fix?
+ *
+ * Wrapped callout body-half links are unstyled rather than mis-pointed --
+ * `.wrapped-callout__content a` matches no rule at all, so they render at the
+ * browser default. Tracked as YaleSites-Internal#1625.
+ */
+const isKnownUnstyledCalloutLink = (summary) =>
+  summary.component === 'wrapped_text_callout' &&
+  summary.element === 'body link';
+
 export function buildReport(rows) {
   const summaries = summarise(rows);
 
   const functional = summaries.filter((summary) => !summary.decorative);
+  // A group with an unmeasurable cell is listed here too. It is not a contrast
+  // failure, but it is equally not a pass, and burying it among the passing
+  // rows is how a measurement gap gets read as a clean bill of health.
   const failing = functional.filter(
-    (summary) => summary.passing < summary.themes,
+    (summary) => summary.passing < summary.themes || summary.unmeasured,
   );
+
+  const globalThemes = new Set(rows.map((measured) => measured.globalTheme))
+    .size;
 
   const row = (summary) => [
     summary.component,
     summary.element,
     summary.dial,
     summary.sectionTheme,
-    `${formatRatio(summary.min)}-${formatRatio(summary.max)}`,
+    summary.min === null
+      ? 'n/a'
+      : `${formatRatio(summary.min)}-${formatRatio(summary.max)}`,
     `${summary.passing}/${summary.themes}`,
     `${summary.minimum}:1`,
     verdict(summary),
@@ -191,8 +225,9 @@ export function buildReport(rows) {
     'from colors MEASURED on a rendered Drupal page. Regenerate rather than',
     'hand-edit; see the header of that file for the two commands.',
     '',
-    `Measured cells: ${cells} functional (decorative elements excluded from`,
-    'every verdict below, per #1614: the option-six accent is out of scope).',
+    `Measured cells: ${cells} functional, across ${globalThemes} global themes.`,
+    'Decorative elements are excluded from every verdict below, per #1614: the',
+    'option-six accent is out of scope.',
     'Each cell is one functional element, in one component color dial, on one',
     'section background, in one global theme, against ITS OWN painted',
     'background -- a dialled accordion item paints its own fill, so its text',
@@ -205,18 +240,26 @@ export function buildReport(rows) {
     '',
     '1. FAILURES',
     '',
-    'Every row below is the SAME defect, tracked separately as',
-    "YaleSites-Internal#1625: a link in the wrapped callout's body half has no",
-    'styling at all and renders at the browser default #0000EE. It is not a',
-    'section-background failure -- the color is identical in every global',
-    'theme, every dial and every section -- so #1614 records it and leaves it.',
-    'The section backgrounds only make an already-unstyled link visible as a',
-    'contrast failure.',
-    '',
+    // Emitted only while every failure IS that one known defect. Hardcoding
+    // the narrative unconditionally would mean the first future regression
+    // gets described as #1625 in a committed artifact while the table beneath
+    // it says something else.
+    ...(failing.length && failing.every(isKnownUnstyledCalloutLink)
+      ? [
+          'Every row below is the SAME defect, tracked separately as',
+          "YaleSites-Internal#1625: a link in the wrapped callout's body half",
+          'has no styling at all and renders at the browser default #0000EE.',
+          'It is not a section-background failure -- the color is identical in',
+          'every global theme, every dial and every section -- so #1614 records',
+          'it and leaves it. The section backgrounds only make an',
+          'already-unstyled link visible as a contrast failure.',
+          '',
+        ]
+      : []),
     failing.length
       ? table(header, failing.map(row))
       : 'None. Every functional element clears its minimum on every section',
-    failing.length ? '' : 'background in all 7 global themes.',
+    failing.length ? '' : `background in all ${globalThemes} global themes.`,
     '',
     `${failing.length} failing (component, element, dial, section) groups.`,
     '',

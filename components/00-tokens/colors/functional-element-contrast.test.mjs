@@ -33,6 +33,26 @@ import {
 const componentsDir = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const readComponent = (path) => readFileSync(join(componentsDir, path), 'utf8');
 
+const layoutScss = () =>
+  readComponent('03-organisms/layout/layout/_yds-layout.scss');
+
+/**
+ * Body of the shared `&[data-component-theme]:not([… 'default']) { … }` rule.
+ *
+ * Terminates on a closing brace at the block's OWN indentation rather than on
+ * the first `}`, so nested rules inside the block are included rather than
+ * cutting the match short. Copied from `yds-layout.test.mjs`'s `themeBlock`,
+ * which solved this for the same file: a `[^}]*` match would break the moment
+ * anything nests ahead of the rule being asserted, and would then report the
+ * fix as reverted when nothing about the fix had changed.
+ */
+function themedSectionBlock() {
+  const match = layoutScss().match(
+    /&\[data-component-theme\]:not\(\[data-component-theme='default'\]\)\s*\{([\s\S]*?)\n {2}\}/,
+  );
+  return match ? match[1] : null;
+}
+
 /** One measured row, in the shape `1614-measure-rendered.js` emits. */
 const measured = (overrides = {}) => ({
   globalTheme: 'one',
@@ -126,56 +146,98 @@ test('decorative rows are reported but never given a verdict', () => {
   assert.match(report, /None\. Every functional element clears its minimum/);
 });
 
-test('wrapped callout heading follows the section foreground', () => {
-  // The #1614 fix. `--color-heading` is declared on `.wrapped-callout` itself,
-  // so a fixed value beats the section's inherited one no matter the
-  // ancestor's specificity -- which is why the heading rendered dark on the
-  // dark section backgrounds while the callout's body copy, which inherits,
-  // was fine.
-  const scss = readComponent(
-    '02-molecules/wrapped-callout/_yds-wrapped-callout.scss',
-  );
+test('the link grid heading rule covers every section theme, not just the light ones', () => {
+  const block = themedSectionBlock();
 
+  assert.ok(
+    block,
+    'the shared themed-section rule should exist in _yds-layout.scss',
+  );
   assert.match(
-    scss,
-    /--color-heading:\s*var\(\s*--color-section-foreground,\s*var\(--color-slot-seven\)\s*\);/,
-    'wrapped callout must read --color-section-foreground with its own color as the fallback',
+    block.replace(/\s+/g, ' '),
+    /\.link-grid \.link-grid__heading, \.link-grid \.link-group__heading \{ color: var\(--color-section-foreground\); \}/,
+    'link grid headings must be re-pointed for every themed section, not only two/five/six',
   );
 });
 
-test('the link grid heading rule covers every section theme, not just the light ones', () => {
-  const scss = readComponent('03-organisms/layout/layout/_yds-layout.scss');
+test('no rule in the layout pins a link-grid heading to a fixed slot', () => {
+  // The light-only carve-out this REPLACED. Not merely redundant now: leaving
+  // it beside the general rule would re-fix the same three section themes at
+  // lower specificity and invite the next reader to add a dark-only twin
+  // rather than notice the general one already exists.
+  // -
+  // Asserted on MEANING rather than on the exact text that used to be here.
+  // Pinning the old rule's whitespace and brace placement would let it back in
+  // reformatted, joined onto one line, or with a comment after the brace.
+  const rules = layoutScss()
+    .replace(/\s+/g, ' ')
+    .match(/[^{}]*\.link-grid__heading[^{}]*\{[^{}]*\}/g);
 
-  const rule = scss.match(
-    /&\[data-component-theme\]:not\(\[data-component-theme='default'\]\) \{[^}]*\.link-grid \.link-grid__heading,\s*\.link-grid \.link-group__heading \{([^}]*)\}/,
-  );
-
-  assert.ok(
-    rule,
-    'link grid headings must be re-pointed for every themed section, not only two/five/six',
-  );
-  assert.match(rule[1], /color:\s*var\(--color-section-foreground\);/);
-
-  // The light-only carve-out this REPLACED. It is not merely redundant now:
-  // leaving it beside the general rule would re-fix the same three section
-  // themes at lower specificity and invite the next reader to add a
-  // dark-only twin rather than notice the general one already exists.
-  assert.doesNotMatch(
-    scss,
-    /\.link-grid \.link-grid__heading,\s*\.link-grid \.link-group__heading \{\s*color: var\(--color-slot-seven\);/,
-    'the light-only slot-seven carve-out should be gone, replaced by the general rule',
-  );
+  (rules || []).forEach((rule) => {
+    assert.doesNotMatch(
+      rule,
+      /--color-slot-/,
+      `link-grid heading rules must follow the section foreground, not a fixed slot: ${rule.trim()}`,
+    );
+  });
 });
 
 test('--color-section-foreground is declared for every themed section', () => {
-  // Both fixes above read this property, and both fall back to their old
+  // Both #1614 fixes read this property, and both fall back to their old
   // colour when it is unset. If the declaration were ever narrowed to a subset
   // of section themes, the fixes would silently stop applying on the rest --
   // and the fallback means nothing would look broken enough to notice.
-  const scss = readComponent('03-organisms/layout/layout/_yds-layout.scss');
-
   assert.match(
-    scss,
-    /&\[data-component-theme\]:not\(\[data-component-theme='default'\]\) \{[^}]*--color-section-foreground:\s*var\(--color-layout-content\);/,
+    themedSectionBlock().replace(/\s+/g, ' '),
+    /--color-section-foreground: var\(--color-layout-content\);/,
   );
+});
+
+test('an unmeasurable colour is reported as unmeasured, never as a failure', () => {
+  // `getComputedStyle().fill` is the string `none` on an unfilled icon, so
+  // this is a real input, not a hypothetical. Before this was partitioned out,
+  // a null ratio compared false against the minimum and coerced to 0 through
+  // `Math.min`, printing a genuine-looking `0.00-0.00  FAIL (all themes)` --
+  // a measurement gap wearing the costume of a contrast result.
+  const [summary] = summarise([measured({ value: 'none' })]);
+
+  assert.equal(summary.unmeasured, 1);
+  assert.equal(summary.themes, 0);
+  assert.equal(summary.min, null);
+
+  const report = buildReport([measured({ value: 'none' })]);
+  assert.match(report, /UNMEASURED \(1 cell\)/);
+  assert.doesNotMatch(report, /0\.00-0\.00/);
+});
+
+test('the #1625 note is emitted only while every failure IS that defect', () => {
+  // The file says "regenerate rather than hand-edit", so an unconditional
+  // narrative would describe the first future regression as #1625 in a
+  // committed artifact while the table beneath it said otherwise.
+  const calloutLink = measured({
+    element: 'body link',
+    value: 'rgb(0, 0, 238)',
+  });
+  const somethingElse = measured({
+    component: 'link_grid',
+    element: 'block heading',
+    value: 'rgb(33, 33, 33)',
+  });
+
+  assert.match(buildReport([calloutLink]), /YaleSites-Internal#1625/);
+  assert.doesNotMatch(
+    buildReport([calloutLink, somethingElse]),
+    /YaleSites-Internal#1625/,
+  );
+});
+
+test('the report counts global themes from the data, not from a literal', () => {
+  // `GLOBAL_THEMES` lives in the other repo, so a hardcoded "7" here would
+  // quietly become wrong the moment a palette is added or removed.
+  const report = buildReport([
+    measured({ globalTheme: 'one' }),
+    measured({ globalTheme: 'two' }),
+  ]);
+
+  assert.match(report, /across 2 global themes/);
 });

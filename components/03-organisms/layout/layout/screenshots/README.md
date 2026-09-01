@@ -73,10 +73,10 @@ generated and reproducible.
 Added by yalesites-org/YaleSites-Internal#1614, which audited the three blocks #1613 left
 alone (accordion, `link_grid`, `wrapped_text_callout`).
 
-| Pattern | Count | What it shows |
-| --- | --- | --- |
-| `1614-{before,after}-global-<n>-<label>-callout-heading-dial-<d>-section-<s>.png` | 8 | The Wrapped Callout heading, which read a fixed slot-seven declared on `.wrapped-callout` itself and so could never be reached by the section. Dark-on-dark before, section foreground after. |
-| `1614-{before,after}-global-<n>-<label>-link-grid-heading-dial-<d>-section-<s>.png` | 8 | The Link Grid block heading on dials `two` and `six`, the two the white-heading rule does not cover. |
+| Pattern                                                                             | Count | What it shows                                                                                                                                                                                 |
+| ----------------------------------------------------------------------------------- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `1614-{before,after}-global-<n>-<label>-callout-heading-dial-<d>-section-<s>.png`   | 8     | The Wrapped Callout heading, which read a fixed slot-seven declared on `.wrapped-callout` itself and so could never be reached by the section. Dark-on-dark before, section foreground after. |
+| `1614-{before,after}-global-<n>-<label>-link-grid-heading-dial-<d>-section-<s>.png` | 8     | The Link Grid block heading on dials `two` and `six`, the two the white-heading rule does not cover.                                                                                          |
 
 Element captures, not full pages: the #1614 fixtures hold 36-42 sections each and a
 full-page image of one is unreadable at any size a ticket comment will show.

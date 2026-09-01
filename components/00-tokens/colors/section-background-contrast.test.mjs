@@ -249,6 +249,18 @@ const SECTION_SURFACE_CONSUMERS = [
     file: '../../02-molecules/accordion/_yds-accordion.scss',
     fallback: '--color-basic-white',
   },
+  // Added by #1614. `--color-heading` is declared on `.wrapped-callout`
+  // itself, and an element's own declaration beats an inherited one whatever
+  // the ancestor's specificity -- so a fixed slot-seven here was unreachable
+  // from the section, and the heading stayed dark on the dark section
+  // backgrounds while the callout's body copy, which inherits, was fine.
+  // Matching on file content rather than on a single declaration, so this
+  // sitting in the same file as the border consumer above is fine.
+  {
+    name: 'wrapped-callout heading',
+    file: '../../02-molecules/wrapped-callout/_yds-wrapped-callout.scss',
+    fallback: '--color-slot-seven',
+  },
 ];
 
 SECTION_SURFACE_CONSUMERS.forEach(({ name, file, fallback }) => {
