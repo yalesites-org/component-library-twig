@@ -189,6 +189,24 @@ directory there and mounts nothing at a bare `/images/`, so `/images/placeholder
 drifts back to a remote host, and `components/_storybook/fixture-asset-urls.test.mjs` fails
 it if a fixture points at an asset URL no static mount serves.
 
+## Visual Testing Addon
+
+`@chromatic-com/storybook` is registered in the project's addon list
+(`config/emulsify-core/storybook/main.js`). It adds a visual tests panel to the Storybook UI
+and can highlight the elements Chromatic is configured to ignore. The stories it reports on
+are the visreg-tagged ones described under [Visreg stories](#visreg-stories) above.
+
+**No per-developer setup is required to run Storybook.** The panel reports nothing until it
+has been connected to a Chromatic project, which is done from inside the panel and needs a
+Chromatic account. Connecting it writes a `chromatic.config.json` in the repo root carrying a
+`projectId` — that value is not a secret and the file belongs in version control. The
+Chromatic project _token_ is a CI secret and is never committed here.
+
+The addon does ship into the static Storybook that `npm run storybook:build` produces — a
+panel bundle under `.out/sb-addons/`, static assets under `.out/addon-visual-tests-assets/`,
+and a hashed repository identifier in the manager HTML. What it does not ship is any
+credential: no project token and no user token is baked into the build.
+
 ## Adding a New Component
 
 1. **Choose the right tier** — atom (single element), molecule (composed of atoms), organism (full section), template (layout shell with no visual identity)

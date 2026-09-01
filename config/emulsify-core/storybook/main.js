@@ -7,6 +7,7 @@ const projectRoot = path.resolve(_dirname, '../../../');
 export default {
   addons: [
     '@storybook/addon-docs', // Core's default addon set doesn't compile .mdx docs pages
+    '@chromatic-com/storybook', // Surfaces Chromatic visual test results in the Storybook UI
     path.resolve(_dirname, 'visreg-toggle-preset.js'),
   ],
 };
