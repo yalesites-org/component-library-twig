@@ -195,10 +195,11 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   }
 
   // One shared rule for every themed section, in place of per-theme or
-  // per-component overrides (YaleSites-Internal#1613).
+  // per-component overrides (YaleSites-Internal#1613, extended by #1614).
   // -
-  // It declares exactly two properties, both of which a block inside the
-  // section otherwise has no way to reach:
+  // It declares two custom properties a block inside the section otherwise has
+  // no way to reach, plus the one override that cannot be expressed as a
+  // property because the consuming component outbids it on specificity:
   // -
   // 1. `--color-divider`. `_global-config.scss` defaults it to
   //    `--color-theme-divider, --color-gray-500` and nothing in the section
@@ -243,19 +244,40 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   &[data-component-theme]:not([data-component-theme='default']) {
     --color-divider: var(--color-layout-content);
     --color-section-foreground: var(--color-layout-content);
-  }
 
-  // Link-grid themes one/three/four/five set white heading text by default.
-  // On light section themes two, five and six, force dark headings for
-  // readability.
-  &:is(
-      [data-component-theme='two'],
-      [data-component-theme='five'],
-      [data-component-theme='six']
-    ) {
+    // 3. The link grid's headings, which cannot use the fallback pattern
+    //    above. A link grid paints no background of its own, so its headings
+    //    sit directly on the section surface -- but unlike the overlines and
+    //    hairlines in (2), `_yds-link-grid.scss` sets their colour from
+    //    higher-specificity selectors of its own
+    //    (`.link-grid[data-component-theme='one'] .link-grid__heading`), so a
+    //    `var(--color-section-foreground, ...)` fallback written there would
+    //    lose to them. Overriding from the section side is what wins.
+    //    -
+    //    #1613 covered only the three LIGHT section themes (two, five, six)
+    //    with a fixed slot-seven, because those are the ones a white link-grid
+    //    heading disappears on. That left the dark ones: the white is forced
+    //    only for dials one, three, four and five, so a grid dialled `two` or
+    //    `six` kept a dark heading and rendered it on the dark section
+    //    background -- 1.00:1 to 3.70:1 across the 42 (global theme x dial x
+    //    section) pairings measured for #1614.
+    //    -
+    //    One rule over all six section themes REPLACES that light-only
+    //    carve-out rather than sitting beside it. It is a strict
+    //    generalisation, not a behaviour change on the light ones:
+    //    `--color-section-foreground` is `--color-layout-content`, which IS
+    //    slot-seven on themes two, five and six, so those cells keep the exact
+    //    colour #1613 gave them.
+    //    -
+    //    `.link-group__heading` is carried over from the #1613 rule. Its own
+    //    `color: var(--color-site-footer-text-color)` is invalid at
+    //    computed-value time outside the footer, so it inherits today and this
+    //    declaration makes the same value explicit. The site footer's own link
+    //    groups are unreachable from here: this needs a `.link-grid` ancestor
+    //    and the footer contains none.
     .link-grid .link-grid__heading,
     .link-grid .link-group__heading {
-      color: var(--color-slot-seven);
+      color: var(--color-section-foreground);
     }
   }
 
