@@ -44,6 +44,14 @@ export const parameters = {
     // opt their own stories back in. Rationale in STORYBOOK.md, enforcement in
     // components/_storybook/chromatic-snapshot-scope.test.mjs.
     disableSnapshot: true,
+    // Regions whose content is a race rather than a rendering decision. Keep the
+    // list here and not on a story: a story's own `chromatic.ignoreSelectors`
+    // REPLACES this array rather than extending it. Rationale in STORYBOOK.md,
+    // enforcement in components/_storybook/chromatic-ignore-selectors.test.mjs.
+    ignoreSelectors: [
+      // Rewritten when the remote audio file's metadata arrives.
+      '.audio-embed__time--total',
+    ],
   },
   controls: { disableSaveFromUI: true, sort: 'requiredFirst' },
   layout: 'padded', // Core defaults to 'fullscreen', which drops story padding
