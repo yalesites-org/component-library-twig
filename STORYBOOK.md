@@ -152,9 +152,12 @@ viewport, multiplies `scrollWidth` by `scrollHeight`, and **exits non-zero namin
 the ceiling and by how much**.
 
 A clean run reports the largest story and its headroom, which is the number worth watching — as
-of writing, `Molecules/Meta` sits at 24,286,800px, **97% of the ceiling**, so that component has
-almost none left. `VISREG_MEASUREMENTS_OUT=sizes.json npm run visreg:measure` writes every
-story's measurement if you need to see where a component stands.
+of writing, `Molecules/Meta/Visreg > AI` (`molecules-meta-visreg--ai`) is the largest at
+1,200 x 20,231 = 24,277,200px, **97% of the ceiling**, so that component has almost none left.
+Measured on this branch's Vite build; develop's webpack build put the same component at
+24,286,800px, so the two pipelines agree to within 0.04% and the headroom is a property of the
+stories rather than of the bundler. `VISREG_MEASUREMENTS_OUT=sizes.json npm run visreg:measure`
+writes every story's measurement if you need to see where a component stands.
 
 It runs in CI in `Test`, on every push to a PR, so a story that grows past the ceiling fails
 while you are still working on it rather than at snapshot time.

@@ -147,7 +147,7 @@ const BLOCKED_MEDIA = [
 /**
  * Serves the built Storybook over loopback HTTP.
  *
- * Storybook 8's `iframe.html` does not render reliably from `file://`, and the
+ * Storybook's `iframe.html` does not render reliably from `file://`, and the
  * repo has no static-server dependency, so this is Node's own http module
  * rather than a new package.
  *

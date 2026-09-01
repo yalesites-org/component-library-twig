@@ -31,6 +31,6 @@ jobs:
       # This is the only place the ceiling is checked, so it runs on every PR
       # into main or develop rather than waiting for a snapshot run to reject
       # the story. Note a PR into any other base gets no ceiling check.
-      # `npm run test` ends in `storybook:build`, so .out is already there.
+      # `npm run test` runs `storybook:build` before `test:dist`, so .out is already there.
       - name: Check visreg pixel ceiling
         run: npm run visreg:measure
