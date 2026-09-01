@@ -27,6 +27,7 @@ import {
   VISREG_STORY_FILE,
   componentTextFiles,
   componentsDir,
+  objectBody,
   projectRoot,
 } from './component-files.mjs';
 
@@ -52,34 +53,6 @@ const storySources = new Map(
 
 /** Repo-relative, for readable assertion output. */
 const rel = (file) => path.relative(componentsDir, file);
-
-/**
- * Returns the body of the first `<declaration> {` object in `source`, matched by
- * counting braces. A regex cannot do this: the object is nested, so any
- * non-greedy match stops at the first inner `}` -- `parameters` in the preview
- * closes several keys before `chromatic` is reached.
- *
- * @param {string} source - File contents.
- * @param {string} declaration - Literal text that precedes the opening brace.
- * @returns {string|null} The object body, or null if the declaration is absent.
- */
-function objectBody(source, declaration) {
-  const start = source.indexOf(declaration);
-  if (start === -1) return null;
-
-  const open = source.indexOf('{', start);
-  if (open === -1) return null;
-
-  let depth = 0;
-  for (let i = open; i < source.length; i += 1) {
-    if (source[i] === '{') depth += 1;
-    if (source[i] === '}') {
-      depth -= 1;
-      if (depth === 0) return source.slice(open + 1, i);
-    }
-  }
-  return null;
-}
 
 test('the scan finds the story files, so the checks below are looking at something', () => {
   const files = [...storySources.keys()];
