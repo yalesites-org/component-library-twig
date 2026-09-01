@@ -88,6 +88,12 @@ Every component needs a `*.visreg.stories.js` file. **Add or update a visreg ent
 
 This is required so release QA can catch visual regressions. If it's not in a visreg story, it won't be reviewed.
 
+Snapshots are submitted with `npm run chromatic`, which is where the Chromatic flags live so
+they are not retyped per invocation. The Chromatic CLI itself is not a dependency of this repo
+yet — installing it and wiring the CI run are
+[yalesites-org/YaleSites-Internal#1605](https://github.com/yalesites-org/YaleSites-Internal/issues/1605)
+and [#1604](https://github.com/yalesites-org/YaleSites-Internal/issues/1604).
+
 #### One story per global theme
 
 Visual regression snapshots have a hard pixel-area ceiling — Chromatic rejects anything over 25,000,000px — and stacking every global theme into one story blows past it. Build the theme stories with `createGlobalThemeStories` instead, and export one story per global theme:
@@ -119,8 +125,8 @@ export const WhitneyHumanitiesCenter = themeStories.seven;
 ItsYourYale.storyName = 'It’s Your Yale';
 ```
 
-The 25,000,000px figure is Chromatic's, which is what this refactor is for; Percy is what
-`npm run visreg:ci` runs today. The full rationale lives in the
+The 25,000,000px figure is Chromatic's, which is what this shape is for — snapshots run via
+`npm run chromatic`. The full rationale lives in the
 `components/_storybook/global-theme-stories.mjs` docblock — read that before changing the shape.
 
 Two things to know before "tidying" that up:
@@ -129,6 +135,41 @@ Two things to know before "tidying" that up:
 - **Anything that does not vary by global theme belongs in its own story**, not repeated inside all seven. See the banner components for examples.
 
 `components/_storybook/global-theme-stories.test.mjs` enforces this shape across every visreg story file.
+
+#### The pixel ceiling is checked in CI
+
+Story shape is one half of staying under the ceiling; the story's actual rendered height is the
+other, and that one moves every time a component grows a variation. `npm run visreg:measure`
+measures it:
+
+```sh
+npm run storybook:build   # the check reads the built .out/index.json
+npm run visreg:measure
+```
+
+It loads every `visreg`-tagged story's `iframe.html` in headless Chromium at the 1200px snapshot
+viewport, multiplies `scrollWidth` by `scrollHeight`, and **exits non-zero naming any story over
+the ceiling and by how much**.
+
+A clean run reports the largest story and its headroom, which is the number worth watching — as
+of writing, `Molecules/Meta` sits at 24,286,800px, **97% of the ceiling**, so that component has
+almost none left. `VISREG_MEASUREMENTS_OUT=sizes.json npm run visreg:measure` writes every
+story's measurement if you need to see where a component stands.
+
+It runs in CI in `Test`, on every push to a PR, so a story that grows past the ceiling fails
+while you are still working on it rather than at snapshot time.
+
+If it cannot find a browser, fetch one: `npx puppeteer browsers install chrome`. Overrides
+(`VISREG_PIXEL_CEILING`, `VISREG_CONCURRENCY`, `VISREG_STORY_TIMEOUT`, `VISREG_SETTLE_TIMEOUT`)
+are listed in the `measure-visreg-pixels.mjs` docblock, which also explains why the wait strategy
+is what it is — read it before changing the measuring.
+
+`measure-visreg-pixels.mjs` uses **Puppeteer** for this one purpose: launch headless Chrome and
+read a single DOM measurement. That is not a broader tooling choice — **Playwright is the
+default for any new browser-driven tests** (interaction tests, cross-browser checks, anything
+beyond a one-off measurement script). It's what `@storybook/test-runner` is built on, it covers
+Chromium/Firefox/WebKit with one API, and `yalesites-project` already uses it for e2e. Don't
+reach for Puppeteer elsewhere without discussing it first.
 
 #### Placeholder images
 
