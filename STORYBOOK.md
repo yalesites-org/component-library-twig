@@ -163,6 +163,49 @@ panel bundle under `.out/sb-addons/`, static assets under `.out/addon-visual-tes
 and a hashed repository identifier in the manager HTML. What it does not ship is any
 credential: no project token and no user token is baked into the build.
 
+### Running Chromatic locally
+
+CI publishes to Chromatic on every push to `develop` and `main` and on every pull request
+into them — see `.github/workflows/chromatic.yml` — so a local run is only for a one-off
+check before pushing.
+
+The shared, non-secret settings live in `chromatic.config.json` at the repo root, so both CI
+and local runs read the same values and nothing is duplicated in flags. The project token is
+not in the repo: get it from the Chromatic project settings and export it as
+`CHROMATIC_PROJECT_TOKEN`.
+
+Build the Storybook first, then publish the build you already have:
+
+```bash
+npm run storybook:build
+npx chromatic --storybook-build-dir .out
+```
+
+`chromatic.config.json` already sets `storybookBuildDir` to `.out`, so that flag is
+redundant — it is spelled out here because it is the setting that goes wrong quietly.
+Chromatic has no default build directory: left unset it runs your Storybook build itself
+into a temp dir, and pointed at a directory this repo does not produce it publishes
+whatever it finds there.
+
+Two flags worth knowing for scoped checks:
+
+```bash
+# Do everything except publish - checks the config and git ancestry.
+npx chromatic --dry-run
+
+# Snapshot a subset instead of the whole library.
+npx chromatic --only-story-names 'Organisms/Banners/**'
+```
+
+Local runs draw on the same snapshot allowance as CI, so reach for `--dry-run` or
+`--only-story-names` before publishing the whole library by hand.
+
+**Watch what the visual tests panel writes back.** Connecting the panel to a Chromatic project
+rewrites `chromatic.config.json`, and as well as the `projectId` it adds any setting the file
+does not already carry — including `onlyChanged: true`, which turns TurboSnap on. TurboSnap is
+its own piece of work with its own trade-offs; if the panel adds `onlyChanged` or `zip` to the
+file, drop those lines before committing and leave them to that ticket.
+
 ## Adding a New Component
 
 1. **Choose the right tier** — atom (single element), molecule (composed of atoms), organism (full section), template (layout shell with no visual identity)
