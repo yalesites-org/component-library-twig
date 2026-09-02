@@ -406,17 +406,38 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     }
   }
 
-  // Matches the pre-migration yds-two-column organism's always-on column
-  // separator and gutter (independent of the opt-in .yds-layout__divider).
+  // The column sizing and gutter a 70/30 needs whether or not a separator is
+  // drawn between the columns, carried over from the pre-migration
+  // yds-two-column organism. The separator itself is NOT here -- see below.
   [data-component-layout='seventy-thirty'] & {
     @media (max-width: $break-layout-layout-max) {
-      border-top: var(--thickness-divider) solid var(--color-divider);
       padding-top: var(--spacing-page-inner);
     }
 
     @media (min-width: $break-layout-layout) {
       flex: 0 1 calc(37.5rem + var(--spacing-component-gutter));
+      margin-left: calc(var(--spacing-component-gutter) * 2);
+      padding-left: var(--spacing-component-gutter);
+    }
+  }
 
+  // The separator, gated on the editor's Divider toggle. fifty-fifty and
+  // thirty-thirty-thirty render the `.yds-layout__divider` element, which
+  // `yds-layout.twig` only outputs when the toggle is on. A seventy-thirty
+  // draws its separator as a border here instead (the element is excluded for
+  // this layout, or there would be two lines), so it has to consult the same
+  // toggle or the checkbox is a no-op on this layout --
+  // yalesites-project#1514.
+  // `data-component-has-divider` and `data-component-layout` are both on the
+  // section root, so the two attribute selectors are compounded: a descendant
+  // combinator between them would never match.
+  [data-component-layout='seventy-thirty'][data-component-has-divider='true']
+    & {
+    @media (max-width: $break-layout-layout-max) {
+      border-top: var(--thickness-divider) solid var(--color-divider);
+    }
+
+    @media (min-width: $break-layout-layout) {
       // `.yds-layout__inner` sets `align-items: flex-start`, so without this
       // the secondary column is only as tall as its own content and the
       // separator drawn on its border stops short -- on a 70/30 the narrow
@@ -424,11 +445,10 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       // a fraction of the section. Stretching makes it span the full section
       // height, matching how `.yds-layout__divider` (which is
       // `align-self: stretch`) renders on fifty-fifty and
-      // thirty-thirty-thirty.
+      // thirty-thirty-thirty. It belongs with the border it exists for: with
+      // no separator there is nothing to span.
       align-self: stretch;
       border-left: var(--thickness-divider) solid var(--color-divider);
-      margin-left: calc(var(--spacing-component-gutter) * 2);
-      padding-left: var(--spacing-component-gutter);
     }
   }
 }

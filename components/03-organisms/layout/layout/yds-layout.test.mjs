@@ -15,9 +15,12 @@
  *     that emits `class="yds-layout layout"` plus the `data-component-*`
  *     attributes, so a new section type is a new `component__layout` value and
  *     nothing else.
- *  3. The 70/30 separator is drawn once. The always-on `border-left` on
- *     `.yds-layout__secondary` and the opt-in `.yds-layout__divider` element
- *     must not both draw for the same section.
+ *  3. The 70/30 separator is drawn once, and only when the editor asked for it.
+ *     A 70/30 draws its separator as a `border-left` on
+ *     `.yds-layout__secondary` while 50/50 and 33/33/33 render the
+ *     `.yds-layout__divider` element, so for one section the two must never
+ *     both draw -- and the border must be gated on the same Divider toggle the
+ *     element is, or the control is a no-op on 70/30.
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -109,13 +112,13 @@ test('section theme six scopes --color-text-shadow to links, not just the root',
 });
 
 test('the 70/30 separator is drawn once, not twice', () => {
-  // A seventy-thirty section ALWAYS draws a column separator: the
-  // `border-left` (>=$break-2xl) / `border-top` (below it) on
-  // `.yds-layout__secondary`, carried over from the pre-migration
-  // yds-two-column organism. The opt-in Divider control renders a separate
-  // `.yds-layout__divider` element, so turning it on used to give two lines.
-  // Reported on component-library-twig#707; #1613 re-pointing --color-divider
-  // to the section foreground is what made the doubling read worst.
+  // A seventy-thirty section draws its column separator as the `border-left`
+  // (>=$break-2xl) / `border-top` (below it) on `.yds-layout__secondary`,
+  // carried over from the pre-migration yds-two-column organism. The Divider
+  // control renders a separate `.yds-layout__divider` element, so once both
+  // respond to the toggle, turning it on would give two lines unless the
+  // element stays excluded for this layout. Reported on
+  // component-library-twig#707.
   const source = twig();
 
   const guard = source.match(/\{%\s*set layout__show_divider =([\s\S]*?)%\}/);
@@ -129,8 +132,8 @@ test('the 70/30 separator is drawn once, not twice', () => {
   assert.match(
     guard[1],
     /component__layout != 'seventy-thirty'/,
-    "the opt-in .yds-layout__divider must not render for 'seventy-thirty', " +
-      'which already draws an always-on separator on .yds-layout__secondary',
+    "the .yds-layout__divider element must not render for 'seventy-thirty', " +
+      'which draws its separator as a border on .yds-layout__secondary',
   );
 
   // Every render of the element must go through that guard, or the exclusion
@@ -251,29 +254,89 @@ test('one column is excluded from the default-theme section margins', () => {
   );
 });
 
+/**
+ * Body of a nested rule inside `.yds-layout__secondary`, by its selector.
+ *
+ * Terminates on a closing brace at the nested rule's own indentation, so the
+ * media queries inside it are included rather than cutting the match short.
+ */
+function secondaryRule(selector) {
+  const secondary = scss().match(/\.yds-layout__secondary \{([\s\S]*?)\n\}/);
+  assert.ok(secondary, 'the .yds-layout__secondary rule is gone');
+
+  // `\s*` before the `&`: prettier wraps a selector over 80 characters onto
+  // the next line, which the compound gated selector is.
+  const escaped = selector.replace(/[[\]']/g, (c) => `\\${c}`);
+  const match = secondary[1].match(
+    new RegExp(`\\n {2}${escaped}\\s*& \\{([\\s\\S]*?)\\n {2}\\}`),
+  );
+  return match ? match[1] : null;
+}
+
+/** The `[data-component-layout='seventy-thirty']` selector, ungated. */
+const SEVENTY_THIRTY = "[data-component-layout='seventy-thirty']";
+
+/** The same layout, gated on the editor's Divider toggle being on. */
+const SEVENTY_THIRTY_WITH_DIVIDER = `${SEVENTY_THIRTY}[data-component-has-divider='true']`;
+
+test('the 70/30 separator is drawn only when the Divider toggle is on', () => {
+  // A 70/30 used to draw its separator unconditionally, so the Divider
+  // checkbox YSLayoutOptions puts on every section did nothing at all on this
+  // layout -- in either direction, because `layout__show_divider` also
+  // suppresses the element for it. 50/50 and 33/33/33 have always respected
+  // the toggle. Requested on yalesites-project#1514.
+  //
+  // The gate is `[data-component-has-divider='true']` on the section root,
+  // which `yds-layout.twig` already emits, compounded onto the layout
+  // attribute -- both live on the same element, so a descendant combinator
+  // between them would never match.
+  const gated = secondaryRule(SEVENTY_THIRTY_WITH_DIVIDER);
+
+  assert.ok(
+    gated,
+    'no seventy-thirty rule is gated on data-component-has-divider, so the ' +
+      'Divider toggle cannot reach the separator',
+  );
+  assert.match(
+    gated,
+    /border-left: var\(--thickness-divider\) solid var\(--color-divider\)/,
+    'the wide-viewport separator must be drawn from --color-divider',
+  );
+  assert.match(
+    gated,
+    /border-top: var\(--thickness-divider\) solid var\(--color-divider\)/,
+    'the stacked-viewport separator must be drawn from --color-divider',
+  );
+
+  // The ungated rule keeps the column sizing and gutter, which a 70/30 needs
+  // whether or not a line is drawn -- but it must draw no border, or the gate
+  // above is decorative.
+  const ungated = secondaryRule(SEVENTY_THIRTY);
+  assert.ok(ungated, 'the seventy-thirty secondary rule is gone');
+  assert.doesNotMatch(
+    ungated,
+    /border-(top|left):/,
+    'a border declared outside the data-component-has-divider gate draws ' +
+      'regardless of the toggle, which is the bug',
+  );
+});
+
 test('the 70/30 separator spans the full section height', () => {
   // `.yds-layout__inner` sets `align-items: flex-start`, so a flex item is only
   // as tall as its own content. On a 70/30 the narrow column is usually much
   // shorter than the wide one, which left the separator covering a fraction of
   // the section instead of dividing it. `.yds-layout__divider` gets full height
   // from `align-self: stretch`; the border-drawn separator needs the same.
-  const secondary = scss().match(/\.yds-layout__secondary \{([\s\S]*?)\n\}/);
+  //
+  // It sits in the gated rule, alongside the border it exists for: with no
+  // separator to span there is nothing to stretch, and leaving it ungated
+  // would change the column's height for sections that draw no line.
+  const gated = secondaryRule(SEVENTY_THIRTY_WITH_DIVIDER);
 
-  assert.ok(secondary, 'the .yds-layout__secondary rule is gone');
-
-  const seventyThirty = secondary[1].match(
-    /\[data-component-layout='seventy-thirty'\] & \{([\s\S]*?)\n {2}\}/,
-  );
-  assert.ok(seventyThirty, 'the seventy-thirty secondary rule is gone');
+  assert.ok(gated, 'the gated seventy-thirty secondary rule is gone');
   assert.match(
-    seventyThirty[1],
+    gated,
     /align-self: stretch/,
     'the seventy-thirty separator must stretch, or it stops at the short column',
-  );
-  // Same rule that draws it, so the two cannot drift apart.
-  assert.match(
-    seventyThirty[1],
-    /border-left: var\(--thickness-divider\) solid var\(--color-divider\)/,
-    'the separator must still be drawn from --color-divider',
   );
 });

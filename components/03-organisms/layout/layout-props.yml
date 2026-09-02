@@ -12,10 +12,12 @@ divider:
   description: Show a visual divider between layout regions
   detail: >
     When true, displays a visual divider between layout content regions. Passed
-    to Twig as the string 'true' or 'false' via layout__divider. Has no effect
-    on 'one-column' (a single region has nothing to divide) or on
-    'seventy-thirty', which always draws its column separator as a border on
-    .yds-layout__secondary -- rendering the opt-in divider there as well drew
+    to Twig as the string 'true' or 'false' via layout__divider, and mirrored
+    onto the section root as data-component-has-divider. Has no effect on
+    'one-column' -- a single region has nothing to divide. 'seventy-thirty'
+    honours it like the other multi-column layouts, but draws its separator as
+    a border on .yds-layout__secondary gated on that data attribute, rather
+    than as a .yds-layout__divider element: rendering both for one section drew
     the line twice.
   default: false
   control: boolean
