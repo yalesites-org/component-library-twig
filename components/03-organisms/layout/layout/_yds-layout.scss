@@ -194,6 +194,33 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     }
   }
 
+  // An UNTHEMED section paints no background at all, so a block inside it sits
+  // on the page surface -- and link grid paints no background of its own
+  // either, so its links' descender halo has to match that page surface.
+  // -
+  // It did not. A link grid carries its own colour dial, and the generic
+  // `[data-component-theme]` rule in
+  // `00-tokens/colors/_color-component-themes.scss` declares
+  // `--color-text-shadow: var(--color-background)` on any element holding that
+  // attribute -- so a dialled `.link-grid` handed its links a halo in the
+  // DIAL's background colour, a colour the grid never paints. On an unthemed
+  // section that drew a dark halo around every link on the white page.
+  // -
+  // Themes one-five get this re-point from the `@each` loop above and theme
+  // six from its hand-written copy; `default` is absent from the
+  // `component-themes` token map for the same reason theme six is, so it needs
+  // its own. `--color-basic-white` is the page surface as the rest of the
+  // library states it (`02-molecules/text/_yds-text-field.scss` declares
+  // exactly this for the same halo, on the same grounds), so no new value is
+  // introduced. Scoped to the link element because a declaration on the
+  // element beats one inherited from an ancestor, which is what the dial's is
+  // (component-library-twig#707, extended by #714).
+  &[data-component-theme='default'] {
+    .link-grid__link {
+      --color-text-shadow: var(--color-basic-white);
+    }
+  }
+
   // One shared rule for every themed section, in place of per-theme or
   // per-component overrides (YaleSites-Internal#1613, extended by #1614).
   // -
@@ -215,8 +242,12 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   //    CTA on a dark section from gold to white, which is a design change this
   //    accessibility fix has no business making.
   // -
-  // 2. `--color-section-foreground`, declared ONLY here and nowhere else in
-  //    the library. Components that paint a foreground on a surface they do
+  // 2. `--color-section-foreground`, declared here for every themed section.
+  //    A component that paints its OWN surface shadows it with its own
+  //    foreground so the section's does not inherit through -- `text-with-image`,
+  //    `content-spotlight-portrait` and `reference-card`'s single collection all
+  //    do, and that shadowing is what keeps rule 4 below safe inside them.
+  //    Components that paint a foreground on a surface they do
   //    not own -- a small-caps overline, an eyebrow, a hairline card border --
   //    read it with their existing colour as the CSS fallback:
   // -
@@ -278,6 +309,48 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     .link-grid .link-grid__heading,
     .link-grid .link-group__heading {
       color: var(--color-section-foreground);
+    }
+
+    // 4. Link HOVER. A themed section already declares its own
+    //    `--color-link-hover` at the section root (`slot-eight` on the dark
+    //    themes, `slot-seven` on the light ones) -- values chosen to be legible
+    //    on what the section paints. None of them ever reached a link.
+    //    -
+    //    The link atom declares `--color-link-hover: var(--color-slot-two)` ON
+    //    the link element, inside the `@each $globalTheme` loops in
+    //    `01-atoms/controls/text-link/_yds-text-link.scss` (both `link` and
+    //    `plain-link`). A declaration on an element always beats a value
+    //    inherited from an ancestor, whatever the ancestor rule's specificity,
+    //    so the section root lost every time and every hovered link resolved to
+    //    slot-two: 1.82:1 on section six, 1.00:1 on section four, failing in all
+    //    7 global themes.
+    //    -
+    //    RESTING was never wrong, which is why the first pass of the audit found
+    //    nothing: those loops do not declare `--color-link-base`, so resting
+    //    inherited the section root correctly. Only hover was hijacked.
+    //    -
+    //    `--color-section-foreground` is `--color-layout-content`, which is the
+    //    same value each section theme already sets `--color-link-hover` to at
+    //    its root -- so this introduces no colour and changes no design intent;
+    //    it makes the intent reachable. Hover then matches resting on a themed
+    //    section, exactly as it already did for `.text-field a` (the `@each`
+    //    loop's `--color-link-hover: var(--color-link-hover)` is a var() cycle,
+    //    which is invalid at computed-value time and therefore falls back to
+    //    inheriting the root -- the same outcome, arrived at by accident). The
+    //    sliding underline still signals hover.
+    //    -
+    //    Every link kind is listed, not only the ones the audit measured.
+    //    `.wrapped-callout__callout a` is why: it is a bare `<a>` in a WYSIWYG
+    //    paragraph, matching none of the four selectors the `@each` loop covers,
+    //    so it failed on all six section backgrounds rather than just on theme
+    //    six (component-library-twig#714).
+    .link,
+    .text-field a,
+    .caption a,
+    [class*='__heading-link'],
+    .link-grid__link,
+    .wrapped-callout__callout a {
+      --color-link-hover: var(--color-section-foreground);
     }
   }
 
