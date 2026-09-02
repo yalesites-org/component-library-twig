@@ -73,21 +73,41 @@ generated and reproducible.
 Added by yalesites-org/YaleSites-Internal#1614, which audited the three blocks #1613 left
 alone (accordion, `link_grid`, `wrapped_text_callout`).
 
-| Pattern                                                                             | Count | What it shows                                                                                                                                                                                 |
-| ----------------------------------------------------------------------------------- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `1614-{before,after}-global-<n>-<label>-callout-heading-dial-<d>-section-<s>.png`   | 8     | The Wrapped Callout heading, which read a fixed slot-seven declared on `.wrapped-callout` itself and so could never be reached by the section. Dark-on-dark before, section foreground after. |
-| `1614-{before,after}-global-<n>-<label>-link-grid-heading-dial-<d>-section-<s>.png` | 8     | The Link Grid block heading on dials `two` and `six`, the two the white-heading rule does not cover.                                                                                          |
+| Pattern                                                                                | Count | What it shows                                                                                                                                                                                                                                                                                                                   |
+| -------------------------------------------------------------------------------------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `1614-{before,after}-global-<n>-<label>-callout-heading-dial-<d>-section-<s>.png`      | 8     | The Wrapped Callout heading, which read a fixed slot-seven declared on `.wrapped-callout` itself and so could never be reached by the section. Dark-on-dark before, section foreground after.                                                                                                                                   |
+| `1614-{before,after}-global-<n>-<label>-link-grid-heading-dial-<d>-section-<s>.png`    | 8     | The Link Grid block heading on dials `two` and `six`, the two the white-heading rule does not cover.                                                                                                                                                                                                                            |
+| `1614-{before,after}-global-<n>-<label>-link-grid-dial-one-section-default.png`        | 4     | The UNTHEMED section, added by component-library-twig#714. Two defects in one image: the block heading is absent from the "before" entirely (the link grid's light-on-dark dial carve-out resolved white on the white page, 1.00:1), and every link carries a heavy descender halo in the dial's colour rather than the page's. |
+| `1614-{before,after}-global-<n>-<label>-link-grid-link-hover-dial-one-section-six.png` | 4     | Link Grid links with `:hover` forced, on section six. Mid-blue and near-illegible before (1.82:1), near-black after (5.77:1+).                                                                                                                                                                                                  |
+| `1614-{before,after}-global-<n>-<label>-callout-link-hover-dial-one-section-one.png`   | 4     | The Wrapped Callout's callout-half link with `:hover` forced, on section one. Dim mid-blue on dark navy before (1.24:1), white after (7.10:1+). This is the link that matched none of the four link selectors the section's `@each` loop covers, so it failed on all six section backgrounds.                                   |
 
-Element captures, not full pages: the #1614 fixtures hold 36-42 sections each and a
+Element captures, not full pages: the #1614 fixtures hold 42-49 sections each and a
 full-page image of one is unreadable at any size a ticket comment will show.
 
 Two global themes only — one (Old Blues) and four (Onha, where the slot-two/slot-five swap
-applies). These are illustrations; the exhaustive evidence is all 4410 measured cells,
+applies). These are illustrations; the exhaustive evidence is all 7595 measured cells,
 summarised in `components/00-tokens/colors/functional-element-contrast.txt`.
 
-Regenerate with `node scripts/local/1614-capture.mjs <before|after> <output-dir>` in
-yalesites-project. The four warnings above apply unchanged — in particular, take "before"
-from the branch base rather than from a stash, which is how these were captured.
+The `section-default` pair is byte-identical between global theme one and global theme four,
+in both states, and that is correct rather than stale CSS: an unthemed section paints no
+background, so the surface is the page white in every palette, and neither the link grid's
+`--color-heading` nor a link's resting colour is global-theme-scoped there. Verified with
+`cmp` rather than assumed.
 
-Note the unstyled blue link visible in the callout body copy in **both** states. That is
-deliberate: it is yalesites-org/YaleSites-Internal#1625, out of #1614's scope.
+The three `hover` captures force `:hover` through CDP (`CSS.forcePseudoState`) on the links
+inside the captured section only, and emulate `prefers-reduced-motion: reduce`. Both are
+load-bearing: a real pointer can only hover one link at a time, and the link atom transitions
+`color` over 0.15s inside `@media (prefers-reduced-motion: no-preference)`, so an unsuppressed
+screenshot photographs a colour part-way to its target. That race is not hypothetical — it
+produced two different verdicts for identical CSS in the first run of the measurement sweep.
+
+Regenerate with `node scripts/local/1614-capture.mjs <before|after> <output-dir>` in
+yalesites-project. The four warnings above apply unchanged, with one deliberate difference for
+the three pairs added by #714: their "before" is the **branch tip**, not the branch base,
+because they evidence a round of review feedback on work already committed to this branch —
+the state the reviewer tested is what "before" has to mean there. Warning 4's advice (take
+"before" from the base) is still right for the original #1614 captures above.
+
+Note the unstyled blue link visible in the callout BODY copy in **both** states of every
+callout capture. That is deliberate: it is yalesites-org/YaleSites-Internal#1625, out of
+#1614's scope, and it is the only failure left in the generated table.
