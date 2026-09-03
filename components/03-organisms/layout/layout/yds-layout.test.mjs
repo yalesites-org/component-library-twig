@@ -10,7 +10,9 @@
  *     from the `@each $theme` loop because they are keys in the
  *     `component-themes` token map. Theme six is not a key in that map, so it
  *     is hand-written -- and a root-only declaration does NOT beat the link
- *     atom's own value for `.text-field a` and heading links.
+ *     atom's own value for `.text-field a` and heading links. `default` is
+ *     absent from that map too, and a block's own colour dial leaks a halo in
+ *     a colour nothing paints when the section re-point is missing.
  *  2. One signature for every layout. `yds-layout.twig` is the single place
  *     that emits `class="yds-layout layout"` plus the `data-component-*`
  *     attributes, so a new section type is a new `component__layout` value and
@@ -108,6 +110,48 @@ test('section theme six scopes --color-text-shadow to links, not just the root',
     'section theme six needs the same link-scoped --color-text-shadow block ' +
       'that the @each loop gives themes one-five -- a root-only declaration ' +
       'does not beat the link atom for .text-field a and heading links',
+  );
+});
+
+test("an unthemed section re-points the link grid's descender halo", () => {
+  // A section left on "Default - No Color" paints no background at all, so a
+  // block inside it sits on the page surface. Link grid paints no background
+  // of its own either -- but its own colour DIAL does declare
+  // `--color-text-shadow: var(--color-background)` on `.link-grid`, from the
+  // generic `[data-component-theme]` rule in
+  // `00-tokens/colors/_color-component-themes.scss`. That is a dial background
+  // the grid never paints, so a dialled link grid on an unthemed section drew
+  // its descender halo in the dial's colour on the white page.
+  // -
+  // Themed sections one-five get the re-point from the `@each` loop and theme
+  // six from its hand-written copy, both asserted above. `default` is absent
+  // from the `component-themes` token map for the same reason theme six is, so
+  // it needs its own copy too. Reported on component-library-twig#714.
+  const body = themeBlock('default');
+
+  assert.ok(body, "the &[data-component-theme='default'] block is gone");
+
+  const linkGrid = body.match(/\.link-grid__link \{([\s\S]*?)\}/);
+
+  assert.ok(
+    linkGrid,
+    'an unthemed section needs a .link-grid__link block, the same way the ' +
+      '@each loop and theme six have one',
+  );
+  assert.match(
+    linkGrid[1],
+    /--color-text-shadow:\s*var\(/,
+    "the unthemed section must re-point the link grid link's halo",
+  );
+  // The meaning, not a literal colour: the halo must stop following
+  // `--color-background`, which on a dialled grid IS the dial colour the grid
+  // never paints. Asserting the property it must NOT read survives a later
+  // change of which page-surface token the library uses.
+  assert.doesNotMatch(
+    linkGrid[1],
+    /--color-text-shadow:\s*var\(\s*--color-background/,
+    'the halo must not follow --color-background: on a dialled link grid that ' +
+      'is the dial colour, which the grid never paints',
   );
 });
 

@@ -200,8 +200,17 @@ test('--color-section-foreground is declared in exactly the expected places', ()
   // The "unthemed rendering is unchanged by construction" argument rests on
   // this property being unset except where intended, so that each consumer's
   // `var(--color-section-foreground, <previous colour>)` fallback applies.
-  // Expected: the shared layout rule, plus the two self-painting components
-  // that reset it for their own descendants.
+  // Expected: the shared layout rule, plus the self-painting components that
+  // reset it for their own descendants.
+  //
+  // The count went 3 -> 4 in component-library-twig#714, when the single
+  // reference card joined `text-with-image` and `content-spotlight-portrait`.
+  // That was not bookkeeping: the card paints a fixed Yale-blue fill, and
+  // #714 re-points `--color-link-hover` from the section for every link inside
+  // a themed section, so without the shadow the card's heading link resolved
+  // to the SECTION's foreground -- 1.32:1 on section themes two, five and six.
+  // A new self-painting component needs an entry here for the same reason, and
+  // this assertion is where that gets noticed.
   const componentsDir = new URL('../../', import.meta.url);
   const declarations = readdirSync(componentsDir, {
     recursive: true,
@@ -217,7 +226,7 @@ test('--color-section-foreground is declared in exactly the expected places', ()
       );
     });
 
-  assert.equal(declarations.length, 3, declarations.join(' | '));
+  assert.equal(declarations.length, 4, declarations.join(' | '));
 });
 
 /**
@@ -248,6 +257,18 @@ const SECTION_SURFACE_CONSUMERS = [
     name: 'accordion group heading',
     file: '../../02-molecules/accordion/_yds-accordion.scss',
     fallback: '--color-basic-white',
+  },
+  // Added by #1614. `--color-heading` is declared on `.wrapped-callout`
+  // itself, and an element's own declaration beats an inherited one whatever
+  // the ancestor's specificity -- so a fixed slot-seven here was unreachable
+  // from the section, and the heading stayed dark on the dark section
+  // backgrounds while the callout's body copy, which inherits, was fine.
+  // Matching on file content rather than on a single declaration, so this
+  // sitting in the same file as the border consumer above is fine.
+  {
+    name: 'wrapped-callout heading',
+    file: '../../02-molecules/wrapped-callout/_yds-wrapped-callout.scss',
+    fallback: '--color-slot-seven',
   },
 ];
 
