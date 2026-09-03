@@ -64,7 +64,12 @@ ol {
 .taxonomy-list--tags {
   @include tokens.body-s;
 
-  color: tokens.$color-blue-yale;
+  // Was `tokens.$color-blue-yale`, which Sass bakes into the compiled CSS as
+  // hsl(210, 100%, 21%). No theme could override it, so tags rendered Yale
+  // blue on the Yale blue background of section theme one and vanished.
+  // Reading the section contract keeps the brand blue everywhere else
+  // (YaleSites-Internal#1628).
+  color: var(--color-section-foreground, var(--color-blue-yale));
   font-weight: var(--font-weights-mallory-medium);
   margin-top: var(--size-spacing-4);
   text-transform: capitalize;
