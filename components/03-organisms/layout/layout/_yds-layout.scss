@@ -11,6 +11,47 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
 .yds-layout {
   --color-layout-border: var(--color-slot-one);
 
+  // The section colour contract (YaleSites-Internal#1628).
+  // -
+  // `--color-layout-theme|content|border` are declared ONLY here, and only
+  // inside `[data-component-theme='...']`. Components used to read them
+  // directly through a descendant selector -- `.yds-layout[...] &` -- which
+  // fails in two ways:
+  // -
+  // 1. Off a themed section the property does not exist, so the declaration is
+  //    invalid-at-computed-value-time and is dropped. Several of those
+  //    selectors matched a bare `[data-component-theme]`, which ~20 templates
+  //    emit (callout, accordion, quick-links, banners, ...), so a divider
+  //    inside a themed callout simply disappeared.
+  // 2. Nothing between the section and the component can influence the value,
+  //    because only `.yds-layout` ever declares it. A block that paints its own
+  //    surface could not tell its descendants to follow ITS colours, which is
+  //    where the measured contrast failures come from.
+  // -
+  // These three properties fix both. They are inherited, so a block that
+  // repaints itself resets them for its own subtree and its descendants follow
+  // the surface they are actually sitting on. Components read them with their
+  // existing colour as the CSS fallback:
+  // -
+  //   color: var(--color-section-foreground, var(--color-basic-brown-gray));
+  // -
+  // so off a themed section the fallback applies and rendering is unchanged by
+  // construction. `--color-section-foreground` is the name PR #1613 introduced
+  // for the same idea; `-background` and `-accent` extend that family rather
+  // than inventing a parallel one.
+  &[data-component-theme]:not([data-component-theme='default']) {
+    --color-section-background: var(--color-layout-theme);
+    --color-section-foreground: var(--color-layout-content);
+    --color-section-accent: var(--color-layout-border);
+
+    // `--color-action` / `--color-action-secondary` are global semantic
+    // properties (`:root`, _global-config.scss). Re-pointing them per section
+    // here is what lets the CTA and tab chrome track the section without
+    // reaching back up for the layout's private properties.
+    --color-action: var(--color-section-accent);
+    --color-action-secondary: var(--color-section-background);
+  }
+
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
   @each $theme, $value in $layout-component-themes {

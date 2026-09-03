@@ -87,13 +87,32 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-border-selected: var(--color-basic-white);
   }
 
-  [data-component-theme]:not([data-component-theme='default']) & {
-    --color-tabs-background: var(--color-layout-theme);
-    --color-tabs-selected: var(--color-layout-theme);
-    --color-action: var(--color-layout-border);
+  // Tab chrome follows the section surface. Reads the inheritable section
+  // contract rather than the layout's private `--color-layout-*`, so a block
+  // that repaints itself between the section and these tabs resets it and the
+  // tabs follow THAT surface (YaleSites-Internal#1628).
+  // -
+  // Anchoring the ancestor on `.yds-layout` is a tidy-up, not a fix, and
+  // changes no rendering. The previous bare `[data-component-theme]` also
+  // matched a themed callout or accordion, but `--color-layout-*` is declared
+  // only on `.yds-layout`: with a themed section above, it matched through the
+  // section anyway and resolved to the same value; with no themed section
+  // above, it resolved to nothing and the declarations were dropped. Naming
+  // the element that actually owns the properties says which of those two the
+  // rule means.
+  .yds-layout[data-component-theme]:not([data-component-theme='default']) & {
+    --color-tabs-background: var(--color-section-background);
+    --color-tabs-selected: var(--color-section-background);
+
+    // Kept at this specificity on purpose. The `@each` loop above declares
+    // `--color-action: var(--color-tabs-action)` on `.tabs` itself, which would
+    // beat the section-level value inherited from `.yds-layout`.
+    --color-action: var(--color-section-accent);
   }
 
-  [data-component-theme]:not(
+  // Anchored on `.yds-layout` for the same reason as the block above: a bare
+  // `[data-component-theme]` also matched themed callouts and accordions.
+  .yds-layout[data-component-theme]:not(
       [data-component-theme='default'],
       [data-component-theme='two']
     )

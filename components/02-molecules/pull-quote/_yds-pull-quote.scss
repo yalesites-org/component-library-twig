@@ -70,10 +70,17 @@ blockquote {
     --color-pull-quote-accent: var(--color-slot-five);
   }
 
-  // If the yds-layout theme is not default, we assume we are inside of a
-  // colored layout, and so we match the layout border.
+  // Inside a themed section the accent matches the section accent. Reads the
+  // inheritable section contract instead of the layout's private
+  // `--color-layout-border`, so a block that repaints itself can reset it and
+  // the quote follows the surface it is on (YaleSites-Internal#1628).
+  // -
+  // The selector is left exactly as it was on purpose. It is (0,3,0), the same
+  // as the theme-five accent override below, which therefore wins on source
+  // order. Tightening this to `.yds-layout[data-component-theme]:not(...)`
+  // reads better but would make it (0,4,0) and silently beat that override.
   .yds-layout:not([data-component-theme='default']) & {
-    --color-pull-quote-accent: var(--color-layout-border);
+    --color-pull-quote-accent: var(--color-section-accent);
   }
 
   // Slot-nine layout sections: light accent.
@@ -83,7 +90,7 @@ blockquote {
 
   // Slot-nine and slot-three (#1518) layout sections: both light
   // backgrounds, so dark type. Six's accent is left alone -- the
-  // :not(default) rule above already points it at --color-layout-border,
+  // :not(default) rule above already points it at the section accent,
   // which section theme six sets to slot-seven.
   .yds-layout:is([data-component-theme='five'], [data-component-theme='six'])
     & {
@@ -91,7 +98,7 @@ blockquote {
     --color-pull-quote-attribution: var(--color-slot-seven);
   }
 
-  // Light quote copy on dark layout sections (matches --color-layout-content: slot-eight).
+  // Light quote copy on dark layout sections (matches the section foreground: slot-eight).
   // Theme four uses the same light-on-dark treatment as one and three; it was missing here.
   .yds-layout:is(
       [data-component-theme='one'],

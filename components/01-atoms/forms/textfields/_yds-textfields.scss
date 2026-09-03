@@ -31,9 +31,13 @@ $form-item-icon-size: 1.7rem;
     content: '*';
   }
 
+  // Light section backgrounds must keep the dark asterisk. `five` paints
+  // slot-nine (a very light teal) and was missing from this list, so the
+  // required-field marker went white and disappeared (YaleSites-Internal#1628).
   [data-component-theme]:not(
       [data-component-theme='default'],
-      [data-component-theme='two']
+      [data-component-theme='two'],
+      [data-component-theme='five']
     )
     & {
     &::after {

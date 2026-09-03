@@ -37,17 +37,32 @@ figure {
     }
   }
 
+  // Replaces two reach-backs that both read `--color-layout-content`
+  // (YaleSites-Internal#1628). Reading the inheritable section contract means a
+  // block that paints its own surface between the section and this caption can
+  // reset it, and the caption follows THAT surface.
+  // -
+  // Both the selector and the `inherit` fallback are deliberate, because the
+  // three outcomes here have to stay exactly as they are:
+  // -
+  //   outside any layout      -> rule does not match, `.caption` keeps its own
+  //                              brown-grey above
+  //   unthemed layout         -> contract is unset, so `inherit`
+  //   themed layout           -> the section foreground
+  // -
+  // The middle case is the subtle one. `data-component-layout` is emitted on
+  // EVERY layout (`yds-layout.twig:20` defaults it), so the old rule matched
+  // unthemed sections too, where `--color-layout-content` does not exist. An
+  // invalid `var()` does not fall back to the previous declaration -- `color`
+  // computes to `unset`, which for an inherited property means `inherit`. So
+  // captions on unthemed sections have always inherited body colour, not the
+  // brown-grey above, and `inherit` here keeps that rather than silently
+  // lightening every caption on the most common section type.
+  // -
+  // Re-keying this off the geometry attribute belongs with the dial split in
+  // #1630; it is kept here so this change stays behaviour-preserving.
   [data-component-layout] & {
-    color: var(--color-layout-content);
-  }
-
-  .yds-layout:is(
-      [data-component-theme='one'],
-      [data-component-theme='three'],
-      [data-component-theme='four']
-    )
-    & {
-    color: var(--color-layout-content);
+    color: var(--color-section-foreground, inherit);
   }
 }
 
