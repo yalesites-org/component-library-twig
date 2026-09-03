@@ -32,9 +32,10 @@
               </div>
             {% endif %}
 
-            {# Print values — PMS + CMYK #}
+            {# Print values — PMS + CMYK. The "PMS " prefix is dropped from the
+               value since the row is already labelled "PMS". #}
             {% set print_rows = {
-              'PMS': color.pms,
+              'PMS': color.pms starts with 'PMS ' ? color.pms|slice(4) : color.pms,
               'CMYK (Coated)': color.cmyk_coated,
               'CMYK (Uncoated)': color.cmyk_uncoated
             } %}
@@ -72,10 +73,28 @@
         <li {{ bem('item', [], colors__base_class) }}>
           <div {{ bem('swatch', [], colors__base_class) }} style="background: {{ color.hex }};"></div>
           <div {{ bem('info', [], colors__base_class) }}>
-            {# No card name — the PMS value below acts as the card's identifier. #}
-            {# Print values — PMS + CMYK, same specs as Yale Blue #}
+            {# No card name — the values below identify the card. #}
+
+            {# Hex — core colors are used on web as well as in print #}
+            <div {{ bem('value-row', [], colors__base_class, ['text-copy-button']) }}>
+              <span {{ bem('label', [], colors__base_class) }}>HEX</span>
+              <code class="cl-colors__value pre-text__text">{{ color.hex }}</code>
+              <button class="cl-colors__copy-btn text-copy-button__button" type="button">
+                <svg class="cl-colors__icon-copy" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <svg class="cl-colors__icon-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span {{ bem('copy-label', [], colors__base_class) }}>Copy HEX {{ color.hex }}</span>
+              </button>
+            </div>
+
+            {# Print values — PMS + CMYK, same specs as Yale Blue. The "PMS "
+               prefix is dropped from the value since the row is labelled "PMS". #}
             {% set print_rows = {
-              'PMS': color.pms,
+              'PMS': color.pms starts with 'PMS ' ? color.pms|slice(4) : color.pms,
               'CMYK (Coated)': color.cmyk_coated,
               'CMYK (Uncoated)': color.cmyk_uncoated
             } %}
@@ -117,9 +136,11 @@
           <li {{ bem('item', [], colors__base_class) }}>
             <div {{ bem('swatch', [], colors__base_class) }} style="background: {{ color.hex }};"></div>
             <div {{ bem('info', [], colors__base_class) }}>
-              {# No card name — the PMS value below acts as the card's identifier. #}
+              {# No card name — the PMS value below acts as the card's identifier.
+                 The "PMS " prefix is dropped from the value since the row is
+                 labelled "PMS". #}
               {% set print_rows = {
-                'PMS': color.pms,
+                'PMS': color.pms starts with 'PMS ' ? color.pms|slice(4) : color.pms,
                 'CMYK (Coated)': color.cmyk_coated,
                 'CMYK (Uncoated)': color.cmyk_uncoated
               } %}
