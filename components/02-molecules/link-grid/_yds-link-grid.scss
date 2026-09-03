@@ -25,7 +25,9 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
       );
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
-      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
+      --color-slot-seven: var(
+        --global-themes-#{$globalTheme}-colors-slot-seven
+      );
 
       @if $globalTheme == 'four' {
         // Switch colors slot in order to have the selected background colors per component theme.
@@ -67,8 +69,13 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-link-grid-action: var(--color-slot-two);
   }
 
+  // The action color is drawn as the column rule, so it has to clear 3:1
+  // against the page on its own, with no paired foreground to help it. That
+  // rules out slot-nine, the light background tint this used to be; slot-seven
+  // also matches the heading below. See
+  // 00-tokens/colors/border-accent-contrast.test.mjs for the measurement.
   &[data-component-theme='six'] {
-    --color-link-grid-action: var(--color-slot-nine);
+    --color-link-grid-action: var(--color-slot-seven);
     --color-heading: var(--color-slot-seven);
   }
 
@@ -86,21 +93,35 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   // Use token (not inherited section color): gray layout sections can set light
   // `color` on `.yds-layout`, which would otherwise wash out the main title.
+  // -
+  // Dials one/three/four/five used to be carved out to a fixed light colour
+  // here, on the stated grounds of "light text only on dark link-grid
+  // backgrounds". There is no such background: a link grid paints none of its
+  // own -- the same premise `.link-grid__inner` relies on just below, where the
+  // column rule has to be supplied by the enclosing surface.
+  // -
+  // So the carve-out was dead where it was overridden and wrong where it was
+  // not. Inside a themed section, `_yds-layout.scss`'s shared
+  // `.link-grid .link-grid__heading` rule already outbids it and re-points the
+  // heading to the section foreground. On an UNTHEMED section nothing outbids
+  // it, and it resolved to white on the white page: 1.00:1 in all 7 global
+  // themes, an entirely invisible block heading. Removed rather than narrowed,
+  // so `--color-heading` is the single answer here
+  // (component-library-twig#714).
   color: var(--color-heading);
-
-  // Light text only on dark link-grid backgrounds. Scope to `.link-grid` so
-  // section layout `[data-component-theme]` on `.yds-layout` does not force
-  // white on theme `six` or other light blocks.
-  .link-grid[data-component-theme='one'] &,
-  .link-grid[data-component-theme='three'] &,
-  .link-grid[data-component-theme='four'] &,
-  .link-grid[data-component-theme='five'] & {
-    color: var(--color-basic-white);
-  }
 }
 
 .link-grid__inner {
-  --color-link-grid-border: var(--color-link-grid-action);
+  // Same reasoning as wrapped-callout's border: a link grid paints no
+  // background of its own, so its column rules sit on the enclosing surface
+  // and a themed section has to supply their colour. Declared here rather than
+  // at each consumer so both the `.link-grid__inner` border and the
+  // `.link-grid__column-wrapper` border-left follow it
+  // (YaleSites-Internal#1613, deferred here from #1614).
+  --color-link-grid-border: var(
+    --color-section-foreground,
+    var(--color-link-grid-action)
+  );
 
   // set the border color to the color slot one so there is a default set
   [data-component-theme='default'] & {
@@ -159,8 +180,14 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   // if used in thirty-thirty-thirty layout and min-width 2xl
   // make the columns 100% width and apply thicker border
+  // The seventy-thirty selector below raises this rule's specificity above
+  // the !important line-treatment rules that follow; those still win on
+  // !important regardless of source order, so the ordering warning is safe
+  // to suppress for this block.
+  /* stylelint-disable no-descending-specificity */
   [data-component-layout='thirty-thirty-thirty'] &,
-  .yds-two-column .yds-two-column__secondary & {
+  .yds-two-column .yds-two-column__secondary &,
+  .yds-layout[data-component-layout='seventy-thirty'] .yds-layout__secondary & {
     @media (min-width: tokens.$break-2xl) {
       margin-bottom: 0;
       flex: 1 1 100%;
@@ -183,6 +210,7 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   .link-grid[data-line-treatment='no_lines'] & {
     border: none !important;
   }
+  /* stylelint-enable no-descending-specificity */
 
   // Default: first column gets wider border (alternating strong and light)
   .link-grid[data-line-treatment='default'] &:first-of-type {

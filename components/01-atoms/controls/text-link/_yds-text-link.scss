@@ -11,8 +11,28 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
     [data-basic-theme='#{$theme}'] {
       --color-link-base: var(--color-link-theme-#{$theme}-base);
       --color-link-hover: var(--color-link-theme-#{$theme}-hover);
-      --color-text-shadow: var(--color-background-#{$theme}-background-color);
     }
+  }
+}
+
+// Deliberately does NOT set a --color-text-shadow default here. Every theme
+// mechanism that sets --color-background (basic themes, component themes)
+// also sets --color-text-shadow to match, at the same ancestor level, and
+// links inherit it. Setting a --color-text-shadow default directly on the
+// link itself would defeat that inheritance entirely — a value declared on
+// an element always wins over an inherited one, regardless of the ancestor
+// rule's specificity — silently breaking every one of those ancestor-level
+// overrides (including ones this mixin has no visibility into, e.g.
+// .site-footer, .reference-card). The only exception that belongs here is
+// theme six, which isn't in the generated component-themes token map and so
+// has no ancestor-level --color-text-shadow to inherit in the first place.
+@mixin descender-halo-defaults {
+  // Theme six surfaces should not render descender text-shadow halos.
+  // Excludes .yds-layout: section theme six (#1518) DOES set an
+  // ancestor-level --color-text-shadow, unlike the block components this
+  // exception was written for.
+  [data-component-theme='six']:not(.yds-layout) & {
+    --color-text-shadow: transparent;
   }
 }
 
@@ -45,10 +65,7 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   font-weight: var(--font-weights-#{$family-weight});
   line-height: normal;
 
-  // Theme six surfaces should not render descender text-shadow halos.
-  [data-component-theme='six'] & {
-    --color-text-shadow: transparent;
-  }
+  @include descender-halo-defaults;
 
   // Global themes: set color slots for each theme
   // This establishes `--color-slot-` variables name-spaced to the selector
@@ -71,14 +88,23 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   // descenders in content.
   // inspired by:
   // https://github.com/adamschwartz/magic-of-css/commit/35fa2f5ab36aa8c81f053f5a8c7b67b60c79ae5b
+  // The var() fallback below only applies when --color-text-shadow is
+  // genuinely unset anywhere in the ancestor chain (e.g. a bare .link with
+  // no themed section around it) — it never overrides an ancestor-level
+  // value that IS set, unlike a default declared directly on this element.
 
-  text-shadow: 0.03em 0 var(--color-text-shadow),
-    -0.03em 0 var(--color-text-shadow), 0 0.03em var(--color-text-shadow),
-    0 -0.03em var(--color-text-shadow), 0.06em 0 var(--color-text-shadow),
-    -0.06em 0 var(--color-text-shadow), 0.09em 0 var(--color-text-shadow),
-    -0.09em 0 var(--color-text-shadow), 0.12em 0 var(--color-text-shadow),
-    -0.12em 0 var(--color-text-shadow), 0.15em 0 var(--color-text-shadow),
-    -0.15em 0 var(--color-text-shadow);
+  text-shadow: 0.03em 0 var(--color-text-shadow, var(--color-basic-white)),
+    -0.03em 0 var(--color-text-shadow, var(--color-basic-white)),
+    0 0.03em var(--color-text-shadow, var(--color-basic-white)),
+    0 -0.03em var(--color-text-shadow, var(--color-basic-white)),
+    0.06em 0 var(--color-text-shadow, var(--color-basic-white)),
+    -0.06em 0 var(--color-text-shadow, var(--color-basic-white)),
+    0.09em 0 var(--color-text-shadow, var(--color-basic-white)),
+    -0.09em 0 var(--color-text-shadow, var(--color-basic-white)),
+    0.12em 0 var(--color-text-shadow, var(--color-basic-white)),
+    -0.12em 0 var(--color-text-shadow, var(--color-basic-white)),
+    0.15em 0 var(--color-text-shadow, var(--color-basic-white)),
+    -0.15em 0 var(--color-text-shadow, var(--color-basic-white));
 
   // Animate the decorative bar when the link is hovered.
   &:hover {
@@ -212,23 +238,29 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
     // adjust position so the text-shadow aligns nicely with the text.
     --position: 0 1.05em;
 
-    // Theme six surfaces should not render descender text-shadow halos.
-    [data-component-theme='six'] & {
-      --color-text-shadow: transparent;
-    }
+    @include descender-halo-defaults;
 
     // This text shadow will make the animated underline appear to avoid
     // descenders in content.
     // inspired by:
     // https://github.com/adamschwartz/magic-of-css/commit/35fa2f5ab36aa8c81f053f5a8c7b67b60c79ae5b
+    // The var() fallback below only applies when --color-text-shadow is
+    // genuinely unset anywhere in the ancestor chain — it never overrides
+    // an ancestor-level value that IS set, unlike a default declared
+    // directly on this element.
 
-    text-shadow: 0.03em 0 var(--color-text-shadow),
-      -0.03em 0 var(--color-text-shadow), 0 0.03em var(--color-text-shadow),
-      0 -0.03em var(--color-text-shadow), 0.06em 0 var(--color-text-shadow),
-      -0.06em 0 var(--color-text-shadow), 0.09em 0 var(--color-text-shadow),
-      -0.09em 0 var(--color-text-shadow), 0.12em 0 var(--color-text-shadow),
-      -0.12em 0 var(--color-text-shadow), 0.15em 0 var(--color-text-shadow),
-      -0.15em 0 var(--color-text-shadow);
+    text-shadow: 0.03em 0 var(--color-text-shadow, var(--color-basic-white)),
+      -0.03em 0 var(--color-text-shadow, var(--color-basic-white)),
+      0 0.03em var(--color-text-shadow, var(--color-basic-white)),
+      0 -0.03em var(--color-text-shadow, var(--color-basic-white)),
+      0.06em 0 var(--color-text-shadow, var(--color-basic-white)),
+      -0.06em 0 var(--color-text-shadow, var(--color-basic-white)),
+      0.09em 0 var(--color-text-shadow, var(--color-basic-white)),
+      -0.09em 0 var(--color-text-shadow, var(--color-basic-white)),
+      0.12em 0 var(--color-text-shadow, var(--color-basic-white)),
+      -0.12em 0 var(--color-text-shadow, var(--color-basic-white)),
+      0.15em 0 var(--color-text-shadow, var(--color-basic-white)),
+      -0.15em 0 var(--color-text-shadow, var(--color-basic-white));
 
     &:focus {
       // Setting `outline: none` is generally a huge no-no! In this case,
@@ -294,16 +326,10 @@ body[data-font-pairing='mallory'] {
 .link {
   &[data-link-style='underline'] {
     @include link;
-
-    // set default --color-text-shadow
-    --color-text-shadow: var(--color-basic-white);
   }
 
   &[data-link-style='underline-with-icon'] {
     @include link;
-
-    // set default --color-text-shadow
-    --color-text-shadow: var(--color-basic-white);
 
     display: flex;
     flex-flow: row nowrap;

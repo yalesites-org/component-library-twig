@@ -36,7 +36,8 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       // override text-shadow color for links in component themes
       .link,
       .text-field a,
-      .caption a {
+      .caption a,
+      [class*='__heading-link'] {
         --color-text-shadow: var(--color-layout-theme);
         --color-link-hover: var(--color-link-hover);
         --color-link-base: var(--color-link-base);
@@ -143,18 +144,236 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-grid-action: var(--color-slot-seven);
   }
 
-  // Link-grid themes one/three/four/five set white heading text by default.
-  // On light section themes two and five, force dark headings for readability.
-  &:is([data-component-theme='two'], [data-component-theme='five']) {
+  // Section theme six maps to slot-three, the one palette slot sections did
+  // not previously offer (added for parity with the block pickers in #1518).
+  // Unlike themes one-five it is not a key in the `component-themes` token
+  // map, so the `@each` above never emits its `background-color`/`color` --
+  // they are declared here instead. This mirrors `_yds-callout.scss`, whose
+  // `six` theme is handled the same way.
+  // slot-three is a mid-light color on all seven global themes (lightness
+  // 57%-69%), so it takes the dark-on-light treatment used by themes two and
+  // five, not the white-on-dark one used by one/three/four.
+  &[data-component-theme='six'] {
+    --color-layout-theme: var(--color-slot-three);
+    --color-layout-content: var(--color-slot-seven);
+    --color-text-shadow: var(--color-slot-three);
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-slot-seven);
+    --color-link-visited-hover: var(--color-slot-seven);
+    --color-heading: var(--color-slot-seven);
+    --color-layout-border: var(--color-slot-seven);
+    --color-link-grid-action: var(--color-slot-seven);
+
+    background-color: var(--color-layout-theme);
+    color: var(--color-layout-content);
+
+    // Themes one-five receive these two link-scoped blocks from the `@each`
+    // loop above, because they are keys in the `component-themes` token map.
+    // Theme six is not, so it needs its own copy -- and the root-level
+    // `--color-text-shadow` declared above is NOT enough on its own:
+    // `_yds-text-field.scss` declares `--color-text-shadow` white on
+    // `.text-field` itself, and that intermediate element's own declaration
+    // beats the value inherited from this section, so `.text-field a` and
+    // heading links rendered the light descender halo on the slot-three
+    // background. Scoping to the link element wins because the declaration
+    // then lands on the element that reads it (component-library-twig#707).
+    .link,
+    .text-field a,
+    .caption a,
+    [class*='__heading-link'] {
+      --color-text-shadow: var(--color-layout-theme);
+    }
+
+    // Same reasoning for link-grid's own link, which the `@each` loop also
+    // covers for themes one-five.
+    .link-grid__link {
+      --color-text-shadow: var(--color-layout-theme);
+      --color-link-visited-base: var(--color-layout-content);
+      --color-link-visited-hover: var(--color-link-hover);
+    }
+  }
+
+  // An UNTHEMED section paints no background at all, so a block inside it sits
+  // on the page surface -- and link grid paints no background of its own
+  // either, so its links' descender halo has to match that page surface.
+  // -
+  // It did not. A link grid carries its own colour dial, and the generic
+  // `[data-component-theme]` rule in
+  // `00-tokens/colors/_color-component-themes.scss` declares
+  // `--color-text-shadow: var(--color-background)` on any element holding that
+  // attribute -- so a dialled `.link-grid` handed its links a halo in the
+  // DIAL's background colour, a colour the grid never paints. On an unthemed
+  // section that drew a dark halo around every link on the white page.
+  // -
+  // Themes one-five get this re-point from the `@each` loop above and theme
+  // six from its hand-written copy; `default` is absent from the
+  // `component-themes` token map for the same reason theme six is, so it needs
+  // its own. `--color-basic-white` is the page surface as the rest of the
+  // library states it (`02-molecules/text/_yds-text-field.scss` declares
+  // exactly this for the same halo, on the same grounds), so no new value is
+  // introduced. Scoped to the link element because a declaration on the
+  // element beats one inherited from an ancestor, which is what the dial's is
+  // (component-library-twig#707, extended by #714).
+  &[data-component-theme='default'] {
+    .link-grid__link {
+      --color-text-shadow: var(--color-basic-white);
+    }
+  }
+
+  // One shared rule for every themed section, in place of per-theme or
+  // per-component overrides (YaleSites-Internal#1613, extended by #1614).
+  // -
+  // It declares two custom properties a block inside the section otherwise has
+  // no way to reach, plus the one override that cannot be expressed as a
+  // property because the consuming component outbids it on specificity:
+  // -
+  // 1. `--color-divider`. `_global-config.scss` defaults it to
+  //    `--color-theme-divider, --color-gray-500` and nothing in the section
+  //    cascade re-declared it, so the always-on 70/30 column separator below,
+  //    and every component border drawn from it, stayed mid-grey on every
+  //    section background. Driven from `--color-layout-content` rather than
+  //    from `--color-layout-border`, which would have looked tidier but is not
+  //    only a border colour -- the CTA atom paints `--color-cta-bg` from it,
+  //    and it resolves to slot-four, a gold or tan brand accent rather than a
+  //    neutral in four of the seven global themes (Shoreline Summer
+  //    hsl(43,64%,68%), AI hsl(45,100%,68%), Whitney hsl(36,20%,72%), New Haven
+  //    Green hsl(52,26%,83%)). Re-pointing it would have turned every filled
+  //    CTA on a dark section from gold to white, which is a design change this
+  //    accessibility fix has no business making.
+  // -
+  // 2. `--color-section-foreground`, declared here for every themed section.
+  //    A component that paints its OWN surface shadows it with its own
+  //    foreground so the section's does not inherit through -- `text-with-image`,
+  //    `content-spotlight-portrait` and `reference-card`'s single collection all
+  //    do, and that shadowing is what keeps rule 4 below safe inside them.
+  //    Components that paint a foreground on a surface they do
+  //    not own -- a small-caps overline, an eyebrow, a hairline card border --
+  //    read it with their existing colour as the CSS fallback:
+  // -
+  //      color: var(--color-section-foreground, var(--color-gray-500));
+  // -
+  //    Outside a themed section the property is unset, the fallback applies,
+  //    and rendering is unchanged by construction; inside one it resolves to
+  //    the section's own foreground. One declaration replaces a per-component
+  //    override per section theme.
+  // -
+  // Deliberately NOT re-pointed here: `--color-text` and `--color-background`.
+  // `_color-component-themes.scss` sets both on this same element from the
+  // `component-themes` token map, which maps different slots than the section
+  // paints, so on section theme two the section paints slot-four (near-white)
+  // while the inherited `--color-text` is white. Fixing that here looked
+  // attractive but re-points the pair for components that consume it TOGETHER
+  // to paint their own panel -- `quick-links` and `tabs` set
+  // `background-color: var(--color-background)` at their root -- whose panel
+  // would then be painted in the section's own background colour and vanish
+  // into it. Those components are already self-consistent; only the ones that
+  // consume `--color-text` on an UNPAINTED surface are wrong, so they read
+  // `--color-section-foreground` instead. Same reason slots six-nine are not
+  // emitted: see `00-tokens/colors/section-background-contrast.txt`, which
+  // shows no single slot is legible on all six section backgrounds.
+  &[data-component-theme]:not([data-component-theme='default']) {
+    --color-divider: var(--color-layout-content);
+    --color-section-foreground: var(--color-layout-content);
+
+    // 3. The link grid's headings, which cannot use the fallback pattern
+    //    above. A link grid paints no background of its own, so its headings
+    //    sit directly on the section surface -- but unlike the overlines and
+    //    hairlines in (2), `_yds-link-grid.scss` sets their colour from
+    //    higher-specificity selectors of its own
+    //    (`.link-grid[data-component-theme='one'] .link-grid__heading`), so a
+    //    `var(--color-section-foreground, ...)` fallback written there would
+    //    lose to them. Overriding from the section side is what wins.
+    //    -
+    //    #1613 covered only the three LIGHT section themes (two, five, six)
+    //    with a fixed slot-seven, because those are the ones a white link-grid
+    //    heading disappears on. That left the dark ones: the white is forced
+    //    only for dials one, three, four and five, so a grid dialled `two` or
+    //    `six` kept a dark heading and rendered it on the dark section
+    //    background -- 1.00:1 to 3.70:1 across the 42 (global theme x dial x
+    //    section) pairings measured for #1614.
+    //    -
+    //    One rule over all six section themes REPLACES that light-only
+    //    carve-out rather than sitting beside it. It is a strict
+    //    generalisation, not a behaviour change on the light ones:
+    //    `--color-section-foreground` is `--color-layout-content`, which IS
+    //    slot-seven on themes two, five and six, so those cells keep the exact
+    //    colour #1613 gave them.
+    //    -
+    //    `.link-group__heading` is carried over from the #1613 rule. Its own
+    //    `color: var(--color-site-footer-text-color)` is invalid at
+    //    computed-value time outside the footer, so it inherits today and this
+    //    declaration makes the same value explicit. The site footer's own link
+    //    groups are unreachable from here: this needs a `.link-grid` ancestor
+    //    and the footer contains none.
     .link-grid .link-grid__heading,
     .link-grid .link-group__heading {
-      color: var(--color-slot-seven);
+      color: var(--color-section-foreground);
+    }
+
+    // 4. Link HOVER. A themed section already declares its own
+    //    `--color-link-hover` at the section root (`slot-eight` on the dark
+    //    themes, `slot-seven` on the light ones) -- values chosen to be legible
+    //    on what the section paints. None of them ever reached a link.
+    //    -
+    //    The link atom declares `--color-link-hover: var(--color-slot-two)` ON
+    //    the link element, inside the `@each $globalTheme` loops in
+    //    `01-atoms/controls/text-link/_yds-text-link.scss` (both `link` and
+    //    `plain-link`). A declaration on an element always beats a value
+    //    inherited from an ancestor, whatever the ancestor rule's specificity,
+    //    so the section root lost every time and every hovered link resolved to
+    //    slot-two: 1.82:1 on section six, 1.00:1 on section four, failing in all
+    //    7 global themes.
+    //    -
+    //    RESTING was never wrong, which is why the first pass of the audit found
+    //    nothing: those loops do not declare `--color-link-base`, so resting
+    //    inherited the section root correctly. Only hover was hijacked.
+    //    -
+    //    `--color-section-foreground` is `--color-layout-content`, which is the
+    //    same value each section theme already sets `--color-link-hover` to at
+    //    its root -- so this introduces no colour and changes no design intent;
+    //    it makes the intent reachable. Hover then matches resting on a themed
+    //    section, exactly as it already did for `.text-field a` (the `@each`
+    //    loop's `--color-link-hover: var(--color-link-hover)` is a var() cycle,
+    //    which is invalid at computed-value time and therefore falls back to
+    //    inheriting the root -- the same outcome, arrived at by accident). The
+    //    sliding underline still signals hover.
+    //    -
+    //    Every link kind is listed, not only the ones the audit measured.
+    //    `.wrapped-callout__callout a` is why: it is a bare `<a>` in a WYSIWYG
+    //    paragraph, matching none of the four selectors the `@each` loop covers,
+    //    so it failed on all six section backgrounds rather than just on theme
+    //    six (component-library-twig#714).
+    .link,
+    .text-field a,
+    .caption a,
+    [class*='__heading-link'],
+    .link-grid__link,
+    .wrapped-callout__callout a {
+      --color-link-hover: var(--color-section-foreground);
     }
   }
 
   // if we're not using a component theme, add top and bottom margin
   // Or if the spotlight is the only spotlight on the page
-  &[data-component-theme='default'] {
+  // -
+  // One column is excluded as a FORWARD GUARD, not as an active fix. Called
+  // with no arguments the mixin above currently emits nothing at all -- its
+  // whole body sits behind `@if $flush-top == true` / `@if $banner-spacing ==
+  // true` -- so this rule compiles to an empty block and is dropped, here and
+  // at the ~25 other bare call sites in the library. Verified against the
+  // built CSS: `dist/css/style.css` contains no
+  // `.yds-layout[data-component-theme=default]` margin rule.
+  // -
+  // The exclusion matters the moment that mixin is repaired. One column is the
+  // generic main-content section every page gets, and it only started carrying
+  // `.yds-layout` when it moved onto this shared organism
+  // (YaleSites-Internal#1613). Its page-level top and bottom margins already
+  // come from `.main-content > *:first-child` (page-layouts.scss) and
+  // `.main-content .layout.layout--onecol:last-of-type` (atomic's
+  // layout-builder.css), so section margins on top of those would double them
+  // on every page of every site.
+  &[data-component-theme='default']:not([data-component-layout='one-column']) {
     @include tokens.spacing-page-section;
   }
 
@@ -227,12 +446,6 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     margin-bottom: var(--spacing-page-inner);
   }
 
-  // gap affects the width of the divider, so we can increase the width of the
-  // divider in this instance.
-  [data-component-layout='seventy-thirty'] & {
-    width: calc(var(--border-thickness-2) + var(--border-thickness-1));
-  }
-
   @media (max-width: $break-layout-layout-max) {
     width: 100%;
     height: var(--border-thickness-2);
@@ -263,6 +476,12 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     @media (min-width: $break-layout-layout) {
       flex: 1 0 var(--size-component-layout-width-content);
     }
+
+    // Matches the pre-migration yds-two-column organism: no extra top
+    // margin on the first block in the wider (primary) column.
+    > *:first-child {
+      margin-top: 0;
+    }
   }
 }
 
@@ -282,9 +501,49 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     }
   }
 
+  // The column sizing and gutter a 70/30 needs whether or not a separator is
+  // drawn between the columns, carried over from the pre-migration
+  // yds-two-column organism. The separator itself is NOT here -- see below.
   [data-component-layout='seventy-thirty'] & {
+    @media (max-width: $break-layout-layout-max) {
+      padding-top: var(--spacing-page-inner);
+    }
+
     @media (min-width: $break-layout-layout) {
       flex: 0 1 calc(37.5rem + var(--spacing-component-gutter));
+      margin-left: calc(var(--spacing-component-gutter) * 2);
+      padding-left: var(--spacing-component-gutter);
+    }
+  }
+
+  // The separator, gated on the editor's Divider toggle. fifty-fifty and
+  // thirty-thirty-thirty render the `.yds-layout__divider` element, which
+  // `yds-layout.twig` only outputs when the toggle is on. A seventy-thirty
+  // draws its separator as a border here instead (the element is excluded for
+  // this layout, or there would be two lines), so it has to consult the same
+  // toggle or the checkbox is a no-op on this layout --
+  // yalesites-project#1514.
+  // `data-component-has-divider` and `data-component-layout` are both on the
+  // section root, so the two attribute selectors are compounded: a descendant
+  // combinator between them would never match.
+  [data-component-layout='seventy-thirty'][data-component-has-divider='true']
+    & {
+    @media (max-width: $break-layout-layout-max) {
+      border-top: var(--thickness-divider) solid var(--color-divider);
+    }
+
+    @media (min-width: $break-layout-layout) {
+      // `.yds-layout__inner` sets `align-items: flex-start`, so without this
+      // the secondary column is only as tall as its own content and the
+      // separator drawn on its border stops short -- on a 70/30 the narrow
+      // column is usually much shorter than the wide one, so the line covered
+      // a fraction of the section. Stretching makes it span the full section
+      // height, matching how `.yds-layout__divider` (which is
+      // `align-self: stretch`) renders on fifty-fifty and
+      // thirty-thirty-thirty. It belongs with the border it exists for: with
+      // no separator there is nothing to span.
+      align-self: stretch;
+      border-left: var(--thickness-divider) solid var(--color-divider);
     }
   }
 }

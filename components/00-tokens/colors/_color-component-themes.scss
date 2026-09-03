@@ -13,5 +13,11 @@ $themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-background: var(--component-themes-#{$theme}-background);
     --color-text: var(--component-themes-#{$theme}-text);
     --color-heading: var(--component-themes-#{$theme}-heading);
+
+    // References the --color-background property (not the raw token)
+    // so components that remap --color-background to a different slot
+    // (e.g. tabs, quick-links) automatically get a matching halo too,
+    // without needing their own --color-text-shadow override.
+    --color-text-shadow: var(--color-background);
   }
 }

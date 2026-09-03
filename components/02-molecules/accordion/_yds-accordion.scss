@@ -74,8 +74,12 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-accordion-accent: var(--color-slot-five);
   }
 
+  // The accent is drawn as a border, so it has to clear 3:1 against the
+  // gray-100 item background on its own, with no paired foreground to help
+  // it. That rules out slot-nine, the light background tint this used to be.
+  // See 00-tokens/colors/border-accent-contrast.test.mjs for the measurement.
   &[data-component-theme='six'] {
-    --color-accordion-accent: var(--color-slot-nine);
+    --color-accordion-accent: var(--color-slot-seven);
   }
 }
 
@@ -84,13 +88,16 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   margin-bottom: var(--size-spacing-5);
 
-  [data-component-theme]:not(
-      [data-component-theme='default'],
-      [data-component-theme='two']
-    )
-    .accordion
-    & {
-    color: var(--color-basic-white);
+  // The group heading sits on the SECTION's surface: the accordion items below
+  // paint their own gray-100 fill, but this heading paints nothing, so it has
+  // to take the section's own foreground. Hard-coded white was right for the
+  // dark section themes and wrong for the light ones -- which is why theme
+  // 'two' had to be carved out, and why themes five (a near-white tint) and
+  // six (mid-light) still rendered a white heading on a light background.
+  // Reading the section foreground is correct for all of them by construction,
+  // so the carve-out is no longer needed (YaleSites-Internal#1613).
+  [data-component-theme]:not([data-component-theme='default']) .accordion & {
+    color: var(--color-section-foreground, var(--color-basic-white));
   }
 }
 
@@ -280,6 +287,28 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   .accordion[data-component-theme]:not([data-component-theme='default'])
   .accordion__controls {
   overflow: visible;
+}
+
+// Same fix as above for the seventy-thirty layout, which switched from its
+// own yds-two-column organism to this shared one. Not extended to
+// fifty-fifty/thirty-thirty-thirty: those already render through yds-layout
+// today, so if their narrower columns needed this, it would already be
+// showing up as a live bug -- extending it there without that evidence would
+// be an unverified behavior change.
+.yds-layout[data-component-layout='seventy-thirty']
+  .yds-layout__primary
+  .layout-builder-block
+  .accordion,
+.yds-layout[data-component-layout='seventy-thirty']
+  .yds-layout__secondary
+  .layout-builder-block
+  .accordion {
+  overflow: visible;
+
+  .accordion__inner,
+  .accordion__controls {
+    overflow: visible;
+  }
 }
 
 // Toggle color follows section background (matches layout-builder.css pattern for
