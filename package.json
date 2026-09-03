@@ -9,6 +9,7 @@
   "scripts": {
     "build": "webpack --config ./webpack/webpack.prod.js",
     "build-storybook": "npm run storybook:build",
+    "chromatic": "chromatic --storybook-build-dir .out",
     "develop": "concurrently --raw 'npm run webpack' 'npm run storybook'",
     "husky:commit-msg": "commitlint --edit $1",
     "husky:pre-commit": "lint-staged",
@@ -25,7 +26,6 @@
     "storybook:deploy": "storybook-to-ghpages -o .out",
     "test": "npm run test:unit && npm run lint:js && npm run lint:styles && npm run prettier && npm run storybook:build",
     "test:unit": "node --test components/",
-    "visreg:ci": "percy storybook .out",
     "visreg:measure": "node components/_storybook/measure-visreg-pixels.mjs",
     "webpack": "webpack --watch --config ./webpack/webpack.dev.js"
   },
@@ -34,8 +34,6 @@
     "@babel/preset-env": "^7.25.4",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
-    "@percy/cli": "^1.2.1",
-    "@percy/storybook": "^6.0.0",
     "@semantic-release/github": "^8.0.2",
     "@storybook/addon-a11y": "^8.3.6",
     "@storybook/addon-essentials": "^8.3.6",
