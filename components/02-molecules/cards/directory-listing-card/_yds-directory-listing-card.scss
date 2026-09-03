@@ -59,7 +59,7 @@ $break-directory-card-collection-list-image-max: tokens.$break-s - 0.05;
   @include tokens.body-oldstyle-nums;
 
   margin-bottom: var(--size-spacing-3);
-  color: var(--color-gray-500);
+  color: var(--color-section-foreground, var(--color-gray-500));
   font-variant-caps: small-caps;
   text-transform: lowercase;
   letter-spacing: 0.5px;
