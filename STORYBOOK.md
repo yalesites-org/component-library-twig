@@ -273,6 +273,22 @@ panel bundle under `.out/sb-addons/`, static assets under `.out/addon-visual-tes
 and a hashed repository identifier in the manager HTML. What it does not ship is any
 credential: no project token and no user token is baked into the build.
 
+### The Chromatic project
+
+Builds publish to the **Component Library** project on Chromatic:
+
+- Builds: <https://www.chromatic.com/builds?appId=6a7f46a894195f6a78359448>
+- Library: <https://www.chromatic.com/library?appId=6a7f46a894195f6a78359448>
+
+Those are the links to follow when a build reports a visual change and you need to review the
+diffs. Viewing them needs an account with access to the project — access, billing, and tier
+questions are tracked in
+[yalesites-org/YaleSites-Internal#1323](https://github.com/yalesites-org/YaleSites-Internal/issues/1323).
+
+The `appId` in those URLs is recorded as `projectId` in `chromatic.config.json`, which is what
+ties this repo to the project. As noted above it is not a secret; the project _token_ is, and
+that exists only as the `CHROMATIC_PROJECT_TOKEN` repository secret.
+
 ### Running Chromatic locally
 
 CI publishes to Chromatic on every push to `develop` and `main` and on every pull request
