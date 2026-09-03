@@ -12,12 +12,12 @@ import './icons/cl-icons.scss';
 import componentProps from './images-props.yml';
 import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
-const svgIcons = require.context('../../../images/icons', true, /\.svg$/);
-const icons = [];
-svgIcons.keys().forEach((key) => {
-  const icon = key.split('./')[1].split('.')[0];
-  icons.push(icon);
-});
+// Not eager: only the keys are read, so eagerly importing pulled every icon SVG
+// into the preview bundle to derive a list of filenames.
+const svgIconModules = import.meta.glob('../../../assets/icons/*.svg');
+const icons = Object.keys(svgIconModules).map((path) =>
+  path.split('/').pop().replace('.svg', ''),
+);
 
 /**
  * Storybook Definition.

@@ -227,7 +227,9 @@ Drupal.behaviors.accordion = {
 
     collapseAllItems(items);
     hideSingleItemToggles(controls);
-    attachItemClickEvent(items);
-    attachToggleButtonClickEvent(controls);
+    attachItemClickEvent(once('accordion-item', accordionItem, context));
+    attachToggleButtonClickEvent(
+      once('accordion-controls', accordionControls, context),
+    );
   },
 };

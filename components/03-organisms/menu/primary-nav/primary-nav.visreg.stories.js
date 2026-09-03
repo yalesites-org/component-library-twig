@@ -18,6 +18,7 @@ export default {
   tags: ['visreg'],
   title: 'Organisms/Menu/Primary Nav/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },

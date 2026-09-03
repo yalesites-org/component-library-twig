@@ -17,6 +17,7 @@ import { createRequire } from 'node:module';
 import { readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
+import { VISREG_STORY_FILE } from './component-files.mjs';
 import {
   createGlobalThemeSectionStories,
   createGlobalThemeStories,
@@ -51,7 +52,7 @@ const exportNameFor = (label) => label.replace(/[^A-Za-z0-9]/g, '');
 
 /** Every `*.visreg.stories.js` file, as `{ file, source }`. */
 const visregStories = readdirSync(componentsDir, { recursive: true })
-  .filter((file) => file.endsWith('.visreg.stories.js'))
+  .filter((file) => VISREG_STORY_FILE.test(file))
   .map((file) => ({
     file,
     source: readFileSync(path.join(componentsDir, file), 'utf8'),

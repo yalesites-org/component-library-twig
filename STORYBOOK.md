@@ -72,9 +72,9 @@ Give each one an `aria-label` that is unique on the page. Props tables generated
 
 ### Tags
 
-| Tag | Effect |
-|---|---|
-| `'!dev'` | Hides story from sidebar — use when MDX fully covers it |
+| Tag        | Effect                                                                      |
+| ---------- | --------------------------------------------------------------------------- |
+| `'!dev'`   | Hides story from sidebar — use when MDX fully covers it                     |
 | `'visreg'` | Marks as a visual regression story — hidden by default, toggled via toolbar |
 
 ### Visreg stories
@@ -87,6 +87,78 @@ Every component needs a `*.visreg.stories.js` file. **Add or update a visreg ent
 - Change the visual output of an existing component
 
 This is required so release QA can catch visual regressions. If it's not in a visreg story, it won't be reviewed.
+
+Snapshots are submitted with `npm run chromatic`, which is where the Chromatic flags live so
+they are not retyped per invocation. The Chromatic CLI itself is not a dependency of this repo
+yet — installing it and wiring the CI run are
+[yalesites-org/YaleSites-Internal#1605](https://github.com/yalesites-org/YaleSites-Internal/issues/1605)
+and [#1604](https://github.com/yalesites-org/YaleSites-Internal/issues/1604).
+
+#### What gets snapshotted: opt in, never opt out
+
+Snapshots are **off by default and opted into per file.**
+`config/emulsify-core/storybook/preview.js` sets the project-level parameter
+`chromatic: { disableSnapshot: true }`, and each `*.visreg.stories.js` meta sets
+`chromatic: { disableSnapshot: false }` to turn its own stories back on:
+
+```js
+export default {
+  tags: ['visreg'],
+  title: 'Molecules/Your Component/Visreg',
+  parameters: {
+    chromatic: { disableSnapshot: false },
+    controls: { disable: true },
+  },
+};
+```
+
+Only visual-regression stories are visual-regression subjects. The rest of the library —
+component docs, token displays, page examples — is roughly a quarter of the stories, and
+snapshotting it spends the allowance on pages whose content is documentation, plus token
+displays that redraw whenever the tokens package changes without any component changing with
+them. Inverting the default is also what keeps that true over time: a new documentation story
+cannot join the snapshot set by drifting into it, because joining takes a visible edit.
+
+`components/_storybook/chromatic-snapshot-scope.test.mjs` enforces both halves — the
+project-level default and the per-file opt-in — because either half missing fails silently.
+It is a source-text scan and needs no build, since the preview imports `.scss` and the story
+files import `.twig` and neither loads outside Vite. To check the resulting count instead,
+build first: `.out/index.json` lists every story with its tags, so `visreg`-tagged stories are
+countable directly.
+
+#### Masking content that is a race rather than a rendering decision
+
+Some regions change between two captures of the same unchanged story. A visual-regression tool
+reports that as a diff, and enough of those trains everyone to click "approve" without looking —
+which is how the previous tool was lost. `config/emulsify-core/storybook/preview.js` therefore
+carries a project-level `chromatic: { ignoreSelectors: [...] }`, one entry per masked region, each
+with the reason beside it:
+
+```js
+chromatic: {
+  disableSnapshot: true,
+  ignoreSelectors: ['.audio-embed__time--total'],
+},
+```
+
+Today the list holds one selector. The audio player's total time renders as `0:00` and is
+rewritten when the remote file's metadata arrives, so what a capture records depends on how fast
+a third-party host answers — measured on a built Storybook, the value is `0:00` 200ms and 800ms
+after load and `2:47` at 4s. Chromatic disregards an ignored element's pixels, though a change to
+its *dimensions* still registers, so this suits content that varies in value but not in size.
+
+**If you add a story with content that cannot be reproduced, add a selector here rather than
+skipping the story.** Keep the list in the preview instead of on the story: a story that sets its
+own `chromatic.ignoreSelectors` **replaces** this array rather than extending it, so a second copy
+would silently drop the first. `components/_storybook/chromatic-ignore-selectors.test.mjs` checks
+every entry still matches a component, so renaming a class fails the suite instead of quietly
+unmasking the region.
+
+**Images are deliberately not masked.** Fixtures used to come from a remote placeholder service
+that returned a different picture every request, and hiding every `img` was the only way to live
+with that. They are now committed under `assets/images/placeholders/` (see "Placeholder images"
+below), so image-bearing stories render identically across loads — verified by capturing the same
+story twice — and masking them would only blind visual regression to the thing it is best at.
 
 #### One story per global theme
 
@@ -119,25 +191,146 @@ export const WhitneyHumanitiesCenter = themeStories.seven;
 ItsYourYale.storyName = 'It’s Your Yale';
 ```
 
-The 25,000,000px figure is Chromatic's, which is what this refactor is for; Percy is what
-`npm run visreg:ci` runs today. The full rationale lives in the
+The 25,000,000px figure is Chromatic's, which is what this shape is for — snapshots run via
+`npm run chromatic`. The full rationale lives in the
 `components/_storybook/global-theme-stories.mjs` docblock — read that before changing the shape.
 
 Two things to know before "tidying" that up:
 
-- **Do not collapse the exports into one destructured export.** Storybook's static CSF indexer only reads export declarators whose id is a plain identifier, so `export const { OldBlues, ... } = createGlobalThemeStories(...)` indexes as *zero* stories and the component drops out of visual regression silently.
+- **Do not collapse the exports into one destructured export.** Storybook's static CSF indexer only reads export declarators whose id is a plain identifier, so `export const { OldBlues, ... } = createGlobalThemeStories(...)` indexes as _zero_ stories and the component drops out of visual regression silently.
 - **Anything that does not vary by global theme belongs in its own story**, not repeated inside all seven. See the banner components for examples.
 
 `components/_storybook/global-theme-stories.test.mjs` enforces this shape across every visreg story file.
 
+#### The pixel ceiling is checked in CI
+
+Story shape is one half of staying under the ceiling; the story's actual rendered height is the
+other, and that one moves every time a component grows a variation. `npm run visreg:measure`
+measures it:
+
+```sh
+npm run storybook:build   # the check reads the built .out/index.json
+npm run visreg:measure
+```
+
+It loads every `visreg`-tagged story's `iframe.html` in headless Chromium at the 1200px snapshot
+viewport, multiplies `scrollWidth` by `scrollHeight`, and **exits non-zero naming any story over
+the ceiling and by how much**.
+
+A clean run reports the largest story and its headroom, which is the number worth watching — as
+of writing, `Molecules/Meta/Visreg > AI` (`molecules-meta-visreg--ai`) is the largest at
+1,200 x 20,231 = 24,277,200px, **97% of the ceiling**, so that component has almost none left.
+Measured on this branch's Vite build; develop's webpack build put the same component at
+24,286,800px, so the two pipelines agree to within 0.04% and the headroom is a property of the
+stories rather than of the bundler. `VISREG_MEASUREMENTS_OUT=sizes.json npm run visreg:measure`
+writes every story's measurement if you need to see where a component stands.
+
+It runs in CI in `Test`, on every push to a PR, so a story that grows past the ceiling fails
+while you are still working on it rather than at snapshot time.
+
+If it cannot find a browser, fetch one: `npx puppeteer browsers install chrome`. Overrides
+(`VISREG_PIXEL_CEILING`, `VISREG_CONCURRENCY`, `VISREG_STORY_TIMEOUT`, `VISREG_SETTLE_TIMEOUT`)
+are listed in the `measure-visreg-pixels.mjs` docblock, which also explains why the wait strategy
+is what it is — read it before changing the measuring.
+
+`measure-visreg-pixels.mjs` uses **Puppeteer** for this one purpose: launch headless Chrome and
+read a single DOM measurement. That is not a broader tooling choice — **Playwright is the
+default for any new browser-driven tests** (interaction tests, cross-browser checks, anything
+beyond a one-off measurement script). It's what `@storybook/test-runner` is built on, it covers
+Chromium/Firefox/WebKit with one API, and `yalesites-project` already uses it for e2e. Don't
+reach for Puppeteer elsewhere without discussing it first.
+
 #### Placeholder images
 
-Sample images in fixtures and page examples come from `images/placeholders/`, committed to
-this repo — never from a remote placeholder service, which would make the build depend on a
-third-party host and add a fresh Percy diff every run. `images/placeholders/README.md` has
-the available aspect ratios, how to reference them, and the full rationale;
+Sample images in fixtures and page examples come from `assets/images/placeholders/`,
+committed to this repo — never from a remote placeholder service, which would make the build
+depend on a third-party host and change every snapshot of an image-bearing story.
+`assets/images/placeholders/README.md` has the available aspect ratios, how to reference
+them, and the full rationale.
+
+Reference them by URL under `/assets/` — Emulsify Core mounts the project's `assets/`
+directory there and mounts nothing at a bare `/images/`, so `/images/placeholders/x.png`
+404s while `/assets/images/placeholders/x.png` resolves. Two tests keep this honest:
 `components/_storybook/no-third-party-images.test.mjs` fails the unit suite if a fixture
-drifts back to a remote host.
+drifts back to a remote host, and `components/_storybook/fixture-asset-urls.test.mjs` fails
+it if a fixture points at an asset URL no static mount serves.
+
+## Visual Testing Addon
+
+`@chromatic-com/storybook` is registered in the project's addon list
+(`config/emulsify-core/storybook/main.js`). It adds a visual tests panel to the Storybook UI
+and can highlight the elements Chromatic is configured to ignore. The stories it reports on
+are the visreg-tagged ones described under [Visreg stories](#visreg-stories) above.
+
+**No per-developer setup is required to run Storybook.** The panel reports nothing until it
+has been connected to a Chromatic project, which is done from inside the panel and needs a
+Chromatic account. Connecting it writes a `chromatic.config.json` in the repo root carrying a
+`projectId` — that value is not a secret and the file belongs in version control. The
+Chromatic project _token_ is a CI secret and is never committed here.
+
+The addon does ship into the static Storybook that `npm run storybook:build` produces — a
+panel bundle under `.out/sb-addons/`, static assets under `.out/addon-visual-tests-assets/`,
+and a hashed repository identifier in the manager HTML. What it does not ship is any
+credential: no project token and no user token is baked into the build.
+
+### The Chromatic project
+
+Builds publish to the **Component Library** project on Chromatic:
+
+- Builds: <https://www.chromatic.com/builds?appId=6a7f46a894195f6a78359448>
+- Library: <https://www.chromatic.com/library?appId=6a7f46a894195f6a78359448>
+
+Those are the links to follow when a build reports a visual change and you need to review the
+diffs. Viewing them needs an account with access to the project — access, billing, and tier
+questions are tracked in
+[yalesites-org/YaleSites-Internal#1323](https://github.com/yalesites-org/YaleSites-Internal/issues/1323).
+
+The `appId` in those URLs is recorded as `projectId` in `chromatic.config.json`, which is what
+ties this repo to the project. As noted above it is not a secret; the project _token_ is, and
+that exists only as the `CHROMATIC_PROJECT_TOKEN` repository secret.
+
+### Running Chromatic locally
+
+CI publishes to Chromatic on every push to `develop` and `main` and on every pull request
+into them — see `.github/workflows/chromatic.yml` — so a local run is only for a one-off
+check before pushing.
+
+The shared, non-secret settings live in `chromatic.config.json` at the repo root, so both CI
+and local runs read the same values and nothing is duplicated in flags. The project token is
+not in the repo: get it from the Chromatic project settings and export it as
+`CHROMATIC_PROJECT_TOKEN`.
+
+Build the Storybook first, then publish the build you already have:
+
+```bash
+npm run storybook:build
+npx chromatic --storybook-build-dir .out
+```
+
+`chromatic.config.json` already sets `storybookBuildDir` to `.out`, so that flag is
+redundant — it is spelled out here because it is the setting that goes wrong quietly.
+Chromatic has no default build directory: left unset it runs your Storybook build itself
+into a temp dir, and pointed at a directory this repo does not produce it publishes
+whatever it finds there.
+
+Two flags worth knowing for scoped checks:
+
+```bash
+# Do everything except publish - checks the config and git ancestry.
+npx chromatic --dry-run
+
+# Snapshot a subset instead of the whole library.
+npx chromatic --only-story-names 'Organisms/Banners/**'
+```
+
+Local runs draw on the same snapshot allowance as CI, so reach for `--dry-run` or
+`--only-story-names` before publishing the whole library by hand.
+
+**Watch what the visual tests panel writes back.** Connecting the panel to a Chromatic project
+rewrites `chromatic.config.json`, and as well as the `projectId` it adds any setting the file
+does not already carry — including `onlyChanged: true`, which turns TurboSnap on. TurboSnap is
+its own piece of work with its own trade-offs; if the panel adds `onlyChanged` or `zip` to the
+file, drop those lines before committing and leave them to that ticket.
 
 ## Adding a New Component
 

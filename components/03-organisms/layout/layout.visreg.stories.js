@@ -25,6 +25,7 @@ export default {
   tags: ['visreg'],
   title: 'Templates/Layout/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },

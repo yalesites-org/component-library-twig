@@ -113,6 +113,15 @@ is the canonical explanation, and two of the rules (no destructured exports, sta
 `storyName` assignments) are forced by Storybook's static CSF indexer rather than by taste.
 `global-theme-stories.test.mjs` enforces them.
 
+### Visreg pixel budget (`visreg-pixel-budget.mjs`, `measure-visreg-pixels.mjs`)
+
+`npm run visreg:measure` renders every visreg story in headless Chromium at the snapshot
+viewport and fails if any of them exceeds the pixel ceiling, naming the story and its
+size. `visreg-pixel-budget.mjs` holds the pure half (which stories count, what is over
+budget, what the report says) and is unit tested in `visreg-pixel-budget.test.mjs`;
+`measure-visreg-pixels.mjs` is the browser half and explains its wait strategy in its
+docblock. See "The pixel ceiling is checked in CI" in `STORYBOOK.md`.
+
 ### Core Utilities (`playground-utils.js`)
 
 #### `createPlaygroundIntro(description)`

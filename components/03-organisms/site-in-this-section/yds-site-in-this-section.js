@@ -1,7 +1,11 @@
 Drupal.behaviors.inThisSection = {
   attach(context) {
     // Selectors.
-    const inThisSection = context.querySelector('.in-this-section');
+    const [inThisSection] = once(
+      'in-this-section',
+      '.in-this-section',
+      context,
+    );
     if (!inThisSection) {
       return;
     }

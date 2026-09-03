@@ -20,7 +20,7 @@ Drupal.behaviors.eventsCalendar = {
     const storybook = '.sb-show-main';
 
     // Query elements.
-    const calendars = context.querySelectorAll(calendar);
+    const calendars = once('calendar', calendar, context);
     const eventsToggle = context.querySelectorAll(eventToggle);
 
     // Environment check.
