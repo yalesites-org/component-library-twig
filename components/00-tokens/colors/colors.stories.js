@@ -591,15 +591,7 @@ export const Colors = () => colorsTwig(colorsData);
 Colors.tags = ['!dev'];
 
 // ---------------------------------------------------------------------------
-// Web Colors — HEX values only (for digital use).
-// ---------------------------------------------------------------------------
-export const WebColors = () =>
-  webColorsTwig({ ...colorsData, print_colors: printColorsMeta });
-WebColors.storyName = 'Identity Colors';
-WebColors.tags = ['!dev'];
-
-// ---------------------------------------------------------------------------
-// Section stories — used by web-colors.mdx Canvas blocks.
+// Section stories — used by the Core/Print/Web Colors doc Canvas blocks.
 // ---------------------------------------------------------------------------
 const printData = { print_colors: printColorsMeta };
 
@@ -641,6 +633,8 @@ export const AccentPrint = () =>
 AccentPrint.storyName = 'Accent Colors for Print';
 AccentPrint.tags = ['!dev'];
 
+// Web accent groups, restructured to match the print PDF groupings
+// (Cyan, Green, Yellow, Red/Orange, Gray).
 const accentWebColors = {
   yale_blue_web: yaleBlueWeb,
   colors: {
