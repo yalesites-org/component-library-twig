@@ -32,10 +32,11 @@
               </div>
             {% endif %}
 
-            {# Print values — PMS + CMYK. The "PMS " prefix is dropped from the
-               value since the row is already labelled "PMS". #}
+            {# Print values — PMS + CMYK. "PMS " is stripped from the value since
+               the row is already labelled "PMS", so a combined coated/uncoated
+               cell reads "648 C / 295 U" rather than "PMS 648 C / PMS 295 U". #}
             {% set print_rows = {
-              'PMS': color.pms starts with 'PMS ' ? color.pms|slice(4) : color.pms,
+              'PMS': color.pms|replace({'PMS ': ''}),
               'CMYK (Coated)': color.cmyk_coated,
               'CMYK (Uncoated)': color.cmyk_uncoated
             } %}
@@ -91,10 +92,10 @@
               </button>
             </div>
 
-            {# Print values — PMS + CMYK, same specs as Yale Blue. The "PMS "
-               prefix is dropped from the value since the row is labelled "PMS". #}
+            {# Print values — PMS + CMYK, same specs as Yale Blue. "PMS " is
+               stripped from the value since the row is already labelled "PMS". #}
             {% set print_rows = {
-              'PMS': color.pms starts with 'PMS ' ? color.pms|slice(4) : color.pms,
+              'PMS': color.pms|replace({'PMS ': ''}),
               'CMYK (Coated)': color.cmyk_coated,
               'CMYK (Uncoated)': color.cmyk_uncoated
             } %}
@@ -137,10 +138,10 @@
             <div {{ bem('swatch', [], colors__base_class) }} style="background: {{ color.hex }};"></div>
             <div {{ bem('info', [], colors__base_class) }}>
               {# No card name — the PMS value below acts as the card's identifier.
-                 The "PMS " prefix is dropped from the value since the row is
+                 "PMS " is stripped from the value since the row is already
                  labelled "PMS". #}
               {% set print_rows = {
-                'PMS': color.pms starts with 'PMS ' ? color.pms|slice(4) : color.pms,
+                'PMS': color.pms|replace({'PMS ': ''}),
                 'CMYK (Coated)': color.cmyk_coated,
                 'CMYK (Uncoated)': color.cmyk_uncoated
               } %}
