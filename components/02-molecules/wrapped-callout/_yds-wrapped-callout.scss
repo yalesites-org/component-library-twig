@@ -50,7 +50,20 @@ $wrapped-callout-component-themes: map.deep-get(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
       --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
-      --color-heading: var(--color-slot-seven);
+
+      // The callout paints no background, so its heading sits on whatever
+      // surface encloses it -- the same reason the border below reads the
+      // section foreground. Declared on `.wrapped-callout` itself, a fixed
+      // slot-seven also BEATS the section's inherited `--color-heading`: an
+      // element's own declaration always wins over an inherited value, no
+      // matter the ancestor's specificity. That is why the callout heading
+      // measured 1.00:1 to 3.70:1 on section themes one, three and four in all
+      // seven global themes for #1614, while the callout's body copy -- which
+      // inherits -- was fine.
+      // -
+      // Outside a themed section `--color-section-foreground` is unset, the
+      // fallback applies, and rendering is unchanged by construction.
+      --color-heading: var(--color-section-foreground, var(--color-slot-seven));
     }
   }
 
@@ -76,8 +89,12 @@ $wrapped-callout-component-themes: map.deep-get(
     --color-wrapped-callout-theme: var(--color-slot-five);
   }
 
+  // This theme color is only ever drawn as the callout border, so it has to
+  // clear 3:1 against the page on its own, with no paired foreground to help
+  // it. That rules out slot-nine, the light background tint this used to be.
+  // See 00-tokens/colors/border-accent-contrast.test.mjs for the measurement.
   &[data-component-theme='six'] {
-    --color-wrapped-callout-theme: var(--color-slot-nine);
+    --color-wrapped-callout-theme: var(--color-slot-seven);
   }
 }
 
@@ -89,7 +106,17 @@ $wrapped-callout-component-themes: map.deep-get(
   width: 100%;
   max-width: 100%;
   padding: var(--size-spacing-8) var(--size-spacing-6);
-  border: var(--border-thickness-2) solid var(--color-wrapped-callout-theme);
+
+  // This callout paints no background of its own, so its border is drawn
+  // directly on whatever surface encloses it. Inside a themed section the
+  // section supplies the line colour: the backdrop there ranges from Yale Blue
+  // to a near-white tint across the six section backgrounds, and
+  // 00-tokens/colors/section-background-contrast.txt shows no fixed slot clears
+  // 3:1 on all of them (YaleSites-Internal#1613, deferred here from #1614).
+  // Outside a themed section the property is unset and the block's own colour
+  // dial applies exactly as before.
+  border: var(--border-thickness-2) solid
+    var(--color-section-foreground, var(--color-wrapped-callout-theme));
 
   // if callout has left/right alignment and the wrapped callout has content, limit the width of the callout
   @media (min-width: tokens.$break-l) {
