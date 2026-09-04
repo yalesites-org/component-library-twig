@@ -1,4 +1,3 @@
-is_localist_event: true
 event_dates:
   - formatted_start_date: Friday, May 3rd, 2024
     formatted_end_date: Friday, May 3rd, 2024
@@ -6,20 +5,6 @@ event_dates:
     formatted_end_time: 9:30 am EDT
     original_start: 1714739400
     original_end: 1714743000
-    is_past_event: true
-    is_all_day: false
-  - formatted_start_date: Saturday, May 4th, 2024
-    formatted_end_date: Saturday, May 4th, 2024
-    original_start: 1714795200
-    original_end: 1714881540
-    is_past_event: true
-    is_all_day: true
-  - formatted_start_date: Sunday, May 5th, 2024
-    formatted_end_date: Sunday, May 5th, 2024
-    formatted_start_time: 8:30 am EDT
-    formatted_end_time: 9:30 am EDT
-    original_start: 1714912200
-    original_end: 1714915800
     is_past_event: true
     is_all_day: false
   - formatted_start_date: Sunday, May 10th, 2030
@@ -36,22 +21,20 @@ event_meta__cta_primary__href: https://www.example.com
 event_types:
   - name: Music
   - name: Lecture
-place:
-  address: 1120 East Fort Avenue
-  city: Baltimore
-  state: MD
-  postal_code: 21230
-  latitude: 39.2704
-  longitude: -76.6122
+is_localist_event: false
+event_address:
+  address: 470 College St
+  city: New Haven
+  state: CT
+  postal_code: '06511'
+address_additional_info: '<p>Meet in the lobby of the Yale School of Music. This session will also be streamed live on our virtual platform for remote attendees; a link will be emailed after registration.</p>'
 event_audience:
   - name: Audience Name one
   - name: Audience Name two
-  - name: Audience Name three
-  - name: Audience Name four
 event_topics:
   - name: Topic One
   - name: Topic Two
-description: '<p>Vel quasi dicta ut fugit molestiae ea sint voluptatem soluta repellendus quod qui fugit dolores illo. Tempora exercitationem laboriosam rerum dolores quisquam. Quasi vero error atque quisquam sed consectetur qui blanditiis aliquam.</p><p>Ipsam eligendi nam nisi facilis et sit fugiat sint eius ut dolorem sunt. Ut ut aliquid est dolorem nihil sunt debitis ad saepe. Asperiores voluptatem inventore sint doloremque nam.</p>'
+description: '<p>Vel quasi dicta ut fugit molestiae ea sint voluptatem soluta repellendus quod qui fugit dolores illo.</p>'
 stream_url: https://www.example.com
 stream_embed_code: Watch the event
 event_featured_date:
@@ -62,4 +45,4 @@ event_featured_date:
   original_start: 1904483400
   original_end: 1904487000
   is_past_event: false
-event_featured_index: 3
+event_featured_index: 1
