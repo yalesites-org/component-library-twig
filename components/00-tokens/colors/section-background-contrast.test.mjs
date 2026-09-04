@@ -341,13 +341,16 @@ const SECTION_SURFACE_CONSUMERS = [
   // and after.
   //
   // Unlike the form and list rows above, that preserved pair is NOT
-  // de-emphasis worth keeping: on an unthemed section `--color-gray-300`
-  // measures 1.94:1 on white, and on the theme-six panel `--color-gray-400`
-  // is 2.52:1 and `--color-basic-white` 1.09:1. Those are pre-existing 1.4.11
-  // failures that this change deliberately leaves alone -- it scopes itself to
-  // themed sections, where the grey WAS the regression this PR is fixing.
-  // Closing the unthemed ones darkens the resting border on every tab set on
-  // the platform, which is a design decision and needs its own ticket.
+  // de-emphasis worth keeping: measured on an unthemed section,
+  // `--color-gray-300` is 1.94:1 on white, and on theme six -- whose panel
+  // computes to white, because the component-themes map stops at `five` so
+  // nothing ever reads its `--color-tabs-background` -- `--color-gray-400` is
+  // 2.75:1 and `--color-basic-white` 1.00:1, i.e. invisible. Those are
+  // pre-existing 1.4.11 failures that this change deliberately leaves alone:
+  // it scopes itself to themed sections, where the grey WAS the regression
+  // this PR is fixing. Closing the unthemed ones darkens the resting border on
+  // every tab set on the platform, which is a design decision needing its own
+  // ticket.
   {
     name: '.tabs --color-border default',
     file: '../../02-molecules/tabs/_yds-tabs.scss',
