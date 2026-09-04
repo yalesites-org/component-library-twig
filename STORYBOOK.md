@@ -218,15 +218,44 @@ viewport, multiplies `scrollWidth` by `scrollHeight`, and **exits non-zero namin
 the ceiling and by how much**.
 
 A clean run reports the largest story and its headroom, which is the number worth watching — as
-of writing, `Molecules/Meta/Visreg > AI` (`molecules-meta-visreg--ai`) is the largest at
-1,200 x 20,231 = 24,277,200px, **97% of the ceiling**, so that component has almost none left.
-Measured on this branch's Vite build; develop's webpack build put the same component at
-24,286,800px, so the two pipelines agree to within 0.04% and the headroom is a property of the
-stories rather than of the bundler. `VISREG_MEASUREMENTS_OUT=sizes.json npm run visreg:measure`
-writes every story's measurement if you need to see where a component stands.
+of writing, `Organisms/Calendar/Visreg` is the largest at 1,200 x 18,577 = 22,292,400px,
+**89% of the ceiling**, in all seven of its global-theme stories. `Templates/Layout/Visreg`
+follows at 1,200 x 17,832 = 21,398,400px (86%). Both are close enough that the next variation
+added to either is worth measuring before it lands.
+
+`Molecules/Meta/Visreg` used to hold this spot; yalesites-org/YaleSites-Internal#1601 split Event
+Meta out and stopped repeating Profile Meta per section theme, putting them at 10,336,800px (41%)
+and 12,218,400px (49%). See "When a story is getting too tall" below for what it did and when to
+do the same.
+
+Measured on this branch's Vite build; develop's webpack build put the pre-split Meta story at
+24,286,800px against Vite's 24,277,200px, so the two pipelines agree to within 0.04% and the
+headroom is a property of the stories rather than of the bundler.
+`VISREG_MEASUREMENTS_OUT=sizes.json npm run visreg:measure` writes every story's measurement if
+you need to see where a component stands.
 
 It runs in CI in `Test`, on every push to a PR, so a story that grows past the ceiling fails
 while you are still working on it rather than at snapshot time.
+
+#### When a story is getting too tall
+
+Three mechanisms, in the order to reach for them. The first two keep the story reviewable as one
+diff; only the third multiplies the snapshot count.
+
+1. **Stop iterating an axis the component ignores.** If a component's rendering does not change
+   with the axis you are looping over, every iteration after the first is a byte-identical
+   snapshot. Render it once instead and say why in a comment. Profile Meta is the worked example:
+   `yds-profile-meta.twig` sets its own `data-component-theme`, so all six section-theme
+   iterations were identical. Check before assuming — Resource Meta, right beside it, really does
+   take its colors from the section theme.
+2. **Move a heavy sibling into its own `*.visreg.stories.js`** when the story stacks several
+   independent components and one dominates. The banner components are the long-standing example
+   (one file each rather than one for the directory); `Molecules/Meta/Event Meta/Visreg` is the
+   newest.
+3. **Reach for `createGlobalThemeSectionStories`** only when a single indivisible component
+   blows the ceiling on its own, so there is no sibling to move and no redundant axis to drop —
+   `cards`, `card-collection` and `tiles`. It crosses global theme with section theme, which turns
+   7 stories into 42, so it is the last resort rather than the first.
 
 If it cannot find a browser, fetch one: `npx puppeteer browsers install chrome`. Overrides
 (`VISREG_PIXEL_CEILING`, `VISREG_CONCURRENCY`, `VISREG_STORY_TIMEOUT`, `VISREG_SETTLE_TIMEOUT`)
