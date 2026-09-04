@@ -111,9 +111,12 @@ test('every section theme foreground clears its own background at AA', () => {
   );
 });
 
-test('the section-driven divider clears the non-text minimum everywhere', () => {
+test('the section-driven line colours clear the non-text minimum everywhere', () => {
   // #1613 re-points `--color-divider` to the section's content colour, which
   // is what drives the always-on 70/30 column separator and the divider atom.
+  // #1628 re-points Tabs' `--color-border` and `--color-border-selected` at
+  // `--color-section-foreground`, which is that same content colour -- so one
+  // measurement covers every line this contract draws on a section surface.
   // Non-text, so WCAG 1.4.11's 3:1 rather than 1.4.3's 4.5:1.
   const NON_TEXT_MINIMUM = 3;
 
@@ -125,7 +128,9 @@ test('the section-driven divider clears the non-text minimum everywhere', () => 
 
     assert.ok(
       ratio >= NON_TEXT_MINIMUM,
-      `${bg.globalTheme}/${bg.sectionTheme} divider: ${ratio.toFixed(2)}:1`,
+      `${bg.globalTheme}/${bg.sectionTheme} section line: ${ratio.toFixed(
+        2,
+      )}:1`,
     );
   });
 });
@@ -321,6 +326,48 @@ const SECTION_SURFACE_CONSUMERS = [
     file: '../../01-atoms/lists/_yds-list.scss',
     fallback: '--color-gray-500',
   },
+  // Added by the second review of component-library-twig#721. Tabs is the one
+  // file this PR rewrites where the BORDER roles were left flat while the
+  // background and action roles were moved onto the contract, so the tab
+  // chrome -- the bar's bottom rule, the line under the tab strip, the
+  // selected tab's outline, the inactive tabs' top/left edges and the
+  // scroll-arrow buttons -- did not follow the section it sits on.
+  //
+  // Two fallbacks per role, because the two grey pairs live in different
+  // rules: `.tabs` itself carries the unthemed default, and the theme-six
+  // dial carries the pair it uses for the near-white slot-nine panel it
+  // paints for itself. Both keep their previous colour as the CSS fallback,
+  // so an unthemed page renders identically -- measured byte-identical before
+  // and after.
+  //
+  // Unlike the form and list rows above, that preserved pair is NOT
+  // de-emphasis worth keeping: on an unthemed section `--color-gray-300`
+  // measures 1.94:1 on white, and on the theme-six panel `--color-gray-400`
+  // is 2.52:1 and `--color-basic-white` 1.09:1. Those are pre-existing 1.4.11
+  // failures that this change deliberately leaves alone -- it scopes itself to
+  // themed sections, where the grey WAS the regression this PR is fixing.
+  // Closing the unthemed ones darkens the resting border on every tab set on
+  // the platform, which is a design decision and needs its own ticket.
+  {
+    name: '.tabs --color-border default',
+    file: '../../02-molecules/tabs/_yds-tabs.scss',
+    fallback: '--color-gray-300',
+  },
+  {
+    name: '.tabs --color-border-selected default',
+    file: '../../02-molecules/tabs/_yds-tabs.scss',
+    fallback: '--color-gray-500',
+  },
+  {
+    name: '.tabs --color-border theme six',
+    file: '../../02-molecules/tabs/_yds-tabs.scss',
+    fallback: '--color-gray-400',
+  },
+  {
+    name: '.tabs --color-border-selected theme six',
+    file: '../../02-molecules/tabs/_yds-tabs.scss',
+    fallback: '--color-basic-white',
+  },
 ];
 
 SECTION_SURFACE_CONSUMERS.forEach(({ name, file, fallback }) => {
@@ -360,4 +407,34 @@ test('the accordion group heading no longer carves out section theme two', () =>
     /\[data-component-theme='two'\]/,
     'the section-theme-two carve-out should be gone from the group heading',
   );
+});
+
+/**
+ * Ties the Tabs source wiring to the measurement above.
+ *
+ * The consumer rows further up prove each fallback pair is spelled correctly;
+ * this proves there is no FOURTH declaration somewhere else in the file still
+ * setting a border role to a flat colour. That is the shape the defect
+ * actually took: `--color-border` was on the contract nowhere and hardcoded in
+ * three separate rules, one of which only applied inside a themed section --
+ * exactly where the contract was available and unused.
+ */
+test('no tab border role is left on a flat colour', () => {
+  const source = readFileSync(
+    new URL('../../02-molecules/tabs/_yds-tabs.scss', import.meta.url),
+    'utf8',
+  ).replace(/\s+/g, ' ');
+
+  ['--color-border', '--color-border-selected'].forEach((property) => {
+    const declarations = source.match(new RegExp(`${property}: [^;]+;`, 'g'));
+
+    assert.ok(declarations, `${property} is no longer declared at all`);
+    declarations.forEach((declaration) => {
+      assert.match(
+        declaration,
+        /var\( ?--color-section-foreground, /,
+        `${declaration.trim()} does not read the section contract`,
+      );
+    });
+  });
 });
