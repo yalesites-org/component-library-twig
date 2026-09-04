@@ -83,6 +83,23 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     --color-card-single-bg: var(--color-blue-yale);
     --color-card-single-text: var(--color-basic-white);
     --color-heading: var(--color-card-single-text);
+
+    // A single card paints its OWN fixed Yale-blue fill, so nothing inside it
+    // sits on the section's background -- but `--color-section-foreground` is
+    // declared on the enclosing `.yds-layout` and inherits straight through the
+    // card, handing everything that reads it the wrong surface's foreground.
+    // On section themes two, five and six that foreground is slot-seven
+    // (hsl(0,0%,13%)), i.e. near-black on Yale blue.
+    // -
+    // Shadowing the property here is the pattern `text-with-image` and
+    // `content-spotlight-portrait` already use for the same reason (a nearer
+    // ancestor wins), and it fixes every reader at once rather than one carve-out
+    // per reader: `__prefix` (which has no single-collection override of its
+    // own and rendered near-black on the blue fill), `__overline` and
+    // `__eyebrow` (which do), and `--color-link-hover` on the heading link,
+    // which the section re-points for #1614's link-hover fix
+    // (component-library-twig#714).
+    --color-section-foreground: var(--color-card-single-text);
   }
 
   // Restated directly on the heading link: an enclosing themed .yds-layout
@@ -499,7 +516,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   @include tokens.body-oldstyle-nums;
 
   margin-top: var(--size-spacing-3);
-  color: var(--color-gray-500);
+  color: var(--color-section-foreground, var(--color-gray-500));
   font-variant-caps: small-caps;
   text-transform: lowercase;
   letter-spacing: 0.5px;
@@ -514,7 +531,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   @include tokens.body-oldstyle-nums;
 
   margin-top: var(--size-spacing-3);
-  color: var(--color-blue-medium);
+  color: var(--color-section-foreground, var(--color-blue-medium));
   font-variant-caps: small-caps;
   text-transform: lowercase;
   letter-spacing: 0.5px;
@@ -527,7 +544,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 .reference-card__prefix {
   @include tokens.heading(h3, 'book');
 
-  color: var(--color-basic-brown-gray);
+  color: var(--color-section-foreground, var(--color-basic-brown-gray));
   text-transform: uppercase;
 }
 

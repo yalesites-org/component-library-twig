@@ -13,7 +13,8 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
     @include tokens.rise-effect;
   }
 
-  --card-border: 1px solid var(--color-gray-200);
+  --card-border: 1px solid
+    var(--color-section-foreground, var(--color-gray-200));
   --color-text-shadow: var(--color-basic-white);
   --color-card-bar-long: var(--color-blue-shale);
   --color-card-bar-short: var(--color-blue-horizon);
