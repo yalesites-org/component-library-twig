@@ -9,7 +9,16 @@ $form-item-icon-size: 1.7rem;
   --color-form-item-border-focus: var(--color-gray-800);
   --color-form-item-placeholder: var(--color-gray-600);
   --color-form-item-error: var(--color-alert-emergency-background-color);
-  --color-form-item-description: var(--color-gray-500);
+
+  // Help text under a field is drawn on the enclosing surface, not on the
+  // white input, so a flat neutral measured 2.62:1 on a section themed `one`
+  // (component-library-twig#721 review). Same fallback pattern as everything
+  // else in this phase: unchanged off a themed section, follows the section on
+  // one (YaleSites-Internal#1628).
+  --color-form-item-description: var(
+    --color-section-foreground,
+    var(--color-gray-500)
+  );
 
   margin-bottom: var(--size-spacing-7);
   max-width: $form-item-max-width;
