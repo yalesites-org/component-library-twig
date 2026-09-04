@@ -3,8 +3,33 @@
   /***********
   ** Colors **
   ***********/
-  --color-action: var(--color-theme-action, var(--color-cta-primary));
-  --color-accent: var(--color-theme-accent, var(--color-blue-athens));
+  // Terminal fallbacks have to name something that exists
+  // (YaleSites-Internal#1628). `--color-cta-primary` and `--color-blue-athens`
+  // are defined nowhere -- not in the tokens package, not in any .scss -- so
+  // both chains below ended in nothing.
+  // -
+  // On a Drupal page that is usually masked: `ys_themes_build_css_variables()`
+  // emits `--color-theme-action` / `--color-theme-accent` into a `:root` block
+  // on every page, so the hook resolves and the terminal fallback is never
+  // reached. It is NOT masked where that hook is absent or unset -- Storybook,
+  // and any site where the setting is empty, which emits the literal
+  // `--color-theme-action: var(--color-);`. In those cases the whole
+  // declaration is invalid-at-computed-value-time and `--color-action` has a
+  // value only where a component happens to assign one, so an outline CTA
+  // reading it for its border can lose the border entirely.
+  // -
+  // The theme hooks stay exactly as they were; only the terminal fallbacks
+  // change, so a configured site renders identically.
+  --color-action: var(--color-theme-action, var(--color-blue-yale));
+  --color-accent: var(--color-theme-accent, var(--color-blue-medium));
+
+  // `--color-action-secondary` is the partner of `--color-action` -- the CTA
+  // atom reads it with no CSS fallback for filled button text -- but it had no
+  // `:root` declaration at all, so off a themed section it was simply unset.
+  --color-action-secondary: var(
+    --color-theme-action-secondary,
+    var(--color-basic-white)
+  );
   --color-divider: var(--color-theme-divider, var(--color-gray-500));
   --color-divider-subtle: var(--color-gray-300);
   /* prettier-ignore */

@@ -330,20 +330,42 @@ $cta-outline-weights: (
     }
   }
 
+  // Section-themed CTAs read the inheritable section contract instead of the
+  // layout's private `--color-layout-*`. Algebraically this block is just the
+  // base `filled` / `outline` rules above with `--color-action` substituted by
+  // the section accent and `--color-action-secondary` by the section
+  // background, which is why the values line up one for one.
+  // -
+  // The win: `--color-section-*` is inherited, so a block that paints its own
+  // surface between the section and this button resets it and the button is
+  // drawn against the surface it is actually on. `--color-layout-*` could
+  // never do that -- it is declared only on `.yds-layout`.
+  // -
+  // WHY THIS SELECTOR SURVIVES rather than being deleted outright, which is
+  // what YaleSites-Internal#1628 asks for: `atomic`'s Button Link block sets
+  // `cta__component_theme: cta__component_theme|default('one')`
+  // (templates/block/layout-builder/block--inline-block--button-link.html.twig),
+  // and nothing supplies that variable, so EVERY Layout Builder button renders
+  // `data-cta-theme="one"`. That dial declares `--color-action` on the button
+  // itself, which beats an inherited section value. Dropping to the base rules
+  // would therefore hand every button in every themed section back to its own
+  // theme-one palette -- a platform-wide restyle, not an accessibility fix.
+  // Removing the selector is a deliberate design change and belongs with the
+  // block/section dial split in #1630, not here.
   .yds-layout[data-component-theme]:not([data-component-theme='default']) & {
     &[data-cta-style='filled'] {
-      --color-cta-text: var(--color-layout-theme);
-      --color-cta-text-hover: var(--color-layout-border);
-      --color-cta-bg: var(--color-layout-border);
+      --color-cta-text: var(--color-section-background);
+      --color-cta-text-hover: var(--color-section-accent);
+      --color-cta-bg: var(--color-section-accent);
       --color-cta-bg-hover: transparent;
-      --color-cta-border: var(--color-layout-border);
+      --color-cta-border: var(--color-section-accent);
     }
 
     &[data-cta-style='outline'] {
-      --color-cta-text: var(--color-layout-border);
-      --color-cta-text-hover: var(--color-layout-theme);
-      --color-cta-border: var(--color-layout-border);
-      --color-cta-bg-hover: var(--color-layout-border);
+      --color-cta-text: var(--color-section-accent);
+      --color-cta-text-hover: var(--color-section-background);
+      --color-cta-border: var(--color-section-accent);
+      --color-cta-bg-hover: var(--color-section-accent);
     }
   }
 }

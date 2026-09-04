@@ -52,7 +52,17 @@
   --color-select-background: var(--color-gray-100);
   --color-select-icon: var(--color-gray-400);
   --color-select-icon-hover: var(--color-blue-horizon);
-  --color-select-text-color: var(--color-gray-700);
+
+  // The select paints no background of its own -- `background: none` in the
+  // `@supports` block below -- so its label text sits directly on whatever
+  // surface encloses it. A flat `--color-gray-700` therefore measured 1.36:1 on
+  // a section themed `one` (component-library-twig#721 review). Reading the
+  // inherited section contract follows that surface; off a themed section the
+  // property is unset and the grey is unchanged (YaleSites-Internal#1628).
+  --color-select-text-color: var(
+    --color-section-foreground,
+    var(--color-gray-700)
+  );
 
   font-size: 100%;
   line-height: 1.4;
@@ -61,6 +71,17 @@
   width: 100%;
   min-width: 22rem;
   color: var(--color-select-text-color);
+
+  // The CLOSED control is transparent and sits on the section, which is what
+  // the contract above is for. The OPEN dropdown is not: the UA paints that
+  // popup on its own system Field surface (white), and `option` inherits
+  // `color` from the select -- so on a dark section, where the contract
+  // resolves to a near-white foreground, the option list would render
+  // near-white on white. Pin the options to the neutral instead; they are
+  // never drawn on the section (YaleSites-Internal#1628).
+  option {
+    color: var(--color-gray-700);
+  }
 
   :focus {
     outline: none;

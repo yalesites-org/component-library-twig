@@ -6,8 +6,28 @@ $wrapped-image-offset-max: 1550px;
 .wrapped-image {
   @include tokens.spacing-page-inner;
 
-  // used by a element for animated hover underline
-  --color-text-shadow: var(--color-layout-theme, var(--color-basic-white));
+  // Used by the `a` element for the animated hover underline: the shadow knocks
+  // the underline out behind the glyphs, so it has to match whatever surface
+  // the text is actually sitting on.
+  // -
+  // Reads the inherited section contract rather than `--color-layout-theme`,
+  // which is the layout organism's private property (YaleSites-Internal#1628).
+  // Same value on a themed section; inside a block that repaints its own
+  // surface it now follows that surface instead of the section's.
+  // -
+  // NOT `var(--color-background)`, which is the idiom in
+  // `00-tokens/colors/_color-component-themes.scss`: on a themed SECTION that
+  // resolves to the component-themes map rather than to what the section
+  // actually paints, and they disagree on five of the six section themes.
+  // -
+  // Eleven sibling components still hard-code `--color-text-shadow` flat
+  // (accordion, reference-card, search-result, site-header, ...). Converting
+  // them is a known follow-up, not a deliberate difference -- it is a visual
+  // change across every card in a themed section, so it needs its own ticket.
+  --color-text-shadow: var(
+    --color-section-background,
+    var(--color-basic-white)
+  );
 
   // Clear the float in case the next component is an image or something.
   &::after {

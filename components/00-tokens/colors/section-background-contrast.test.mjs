@@ -111,9 +111,12 @@ test('every section theme foreground clears its own background at AA', () => {
   );
 });
 
-test('the section-driven divider clears the non-text minimum everywhere', () => {
+test('the section-driven line colours clear the non-text minimum everywhere', () => {
   // #1613 re-points `--color-divider` to the section's content colour, which
   // is what drives the always-on 70/30 column separator and the divider atom.
+  // #1628 re-points Tabs' `--color-border` and `--color-border-selected` at
+  // `--color-section-foreground`, which is that same content colour -- so one
+  // measurement covers every line this contract draws on a section surface.
   // Non-text, so WCAG 1.4.11's 3:1 rather than 1.4.3's 4.5:1.
   const NON_TEXT_MINIMUM = 3;
 
@@ -125,7 +128,9 @@ test('the section-driven divider clears the non-text minimum everywhere', () => 
 
     assert.ok(
       ratio >= NON_TEXT_MINIMUM,
-      `${bg.globalTheme}/${bg.sectionTheme} divider: ${ratio.toFixed(2)}:1`,
+      `${bg.globalTheme}/${bg.sectionTheme} section line: ${ratio.toFixed(
+        2,
+      )}:1`,
     );
   });
 });
@@ -211,6 +216,22 @@ test('--color-section-foreground is declared in exactly the expected places', ()
   // to the SECTION's foreground -- 1.32:1 on section themes two, five and six.
   // A new self-painting component needs an entry here for the same reason, and
   // this assertion is where that gets noticed.
+  //
+  // 4 -> 5 in YaleSites-Internal#1628, but the branch history reads 6 -> 5,
+  // which is worth spelling out: merging `1616-section-color-parity` in left
+  // `_yds-layout.scss` with TWO `[data-component-theme]:not(default)` blocks,
+  // each declaring this property, so the real count was briefly 6 and this
+  // assertion was failing. Consolidating those blocks removed one, and the
+  // callout below added one.
+  //
+  // The callout joined the list because it paints
+  // its own background from the component-theme dial, so before it reset the
+  // contract its descendants followed the SECTION instead -- a filled Button
+  // Link inside a theme-two callout on a theme-one section rendered
+  // near-white on near-white (the reported invisible button). Resetting
+  // `--color-section-foreground` to the callout's own `--color-text` is what
+  // makes that button, and every other contract reader inside a callout,
+  // follow the surface it is really sitting on.
   const componentsDir = new URL('../../', import.meta.url);
   const declarations = readdirSync(componentsDir, {
     recursive: true,
@@ -226,7 +247,7 @@ test('--color-section-foreground is declared in exactly the expected places', ()
       );
     });
 
-  assert.equal(declarations.length, 4, declarations.join(' | '));
+  assert.equal(declarations.length, 5, declarations.join(' | '));
 });
 
 /**
@@ -270,6 +291,86 @@ const SECTION_SURFACE_CONSUMERS = [
     file: '../../02-molecules/wrapped-callout/_yds-wrapped-callout.scss',
     fallback: '--color-slot-seven',
   },
+  // Added by the review of component-library-twig#721. These three are the
+  // same defect as the entries above, but they were invisible to the
+  // `--color-layout-*` containment test in `color-system-defects.test.mjs`:
+  // they never named a layout property at all. They are flat neutrals used as
+  // the colour of text drawn on a surface the component does not paint, with
+  // no section override anywhere in their file, so nothing was undefined and
+  // nothing was dropped -- the only symptom was measured contrast.
+  //
+  // Measured on section theme one before the fix: the select 1.36:1 and the
+  // description 2.62:1. `.taxonomy-list--categories` failed AA on ALL SIX
+  // themed sections, worst 1.16:1 on theme four; only `default` passed, and
+  // only by 0.11.
+  //
+  // The greys stay as the CSS fallback, so the de-emphasis they exist to
+  // create is unchanged on an unthemed section -- measured identical before
+  // and after on `default`. Only the themed sections move, and there the grey
+  // was the failure.
+  {
+    name: '.form-item__select text',
+    file: '../../01-atoms/forms/select/_yds-select.scss',
+    fallback: '--color-gray-700',
+  },
+  {
+    name: '.form-item__description help text',
+    file: '../../01-atoms/forms/textfields/_yds-textfields.scss',
+    fallback: '--color-gray-500',
+  },
+  // `_yds-list.scss` also holds `.taxonomy-list--tags`, which reads the
+  // contract with `--color-blue-yale` as ITS fallback. Matching on the grey
+  // keeps this row specific to the categories rule.
+  {
+    name: '.taxonomy-list--categories',
+    file: '../../01-atoms/lists/_yds-list.scss',
+    fallback: '--color-gray-500',
+  },
+  // Added by the second review of component-library-twig#721. Tabs is the one
+  // file this PR rewrites where the BORDER roles were left flat while the
+  // background and action roles were moved onto the contract, so the tab
+  // chrome -- the bar's bottom rule, the line under the tab strip, the
+  // selected tab's outline, the inactive tabs' top/left edges and the
+  // scroll-arrow buttons -- did not follow the section it sits on.
+  //
+  // Two fallbacks per role, because the two grey pairs live in different
+  // rules: `.tabs` itself carries the unthemed default, and the theme-six
+  // dial carries the pair it uses for the near-white slot-nine panel it
+  // paints for itself. Both keep their previous colour as the CSS fallback,
+  // so an unthemed page renders identically -- measured byte-identical before
+  // and after.
+  //
+  // Unlike the form and list rows above, that preserved pair is NOT
+  // de-emphasis worth keeping: measured on an unthemed section,
+  // `--color-gray-300` is 1.94:1 on white, and on theme six -- whose panel
+  // computes to white, because the component-themes map stops at `five` so
+  // nothing ever reads its `--color-tabs-background` -- `--color-gray-400` is
+  // 2.75:1 and `--color-basic-white` 1.00:1, i.e. invisible. Those are
+  // pre-existing 1.4.11 failures that this change deliberately leaves alone:
+  // it scopes itself to themed sections, where the grey WAS the regression
+  // this PR is fixing. Closing the unthemed ones darkens the resting border on
+  // every tab set on the platform, which is a design decision needing its own
+  // ticket.
+  {
+    name: '.tabs --color-border default',
+    file: '../../02-molecules/tabs/_yds-tabs.scss',
+    fallback: '--color-gray-300',
+  },
+  {
+    name: '.tabs --color-border-selected default',
+    file: '../../02-molecules/tabs/_yds-tabs.scss',
+    fallback: '--color-gray-500',
+  },
+  {
+    name: '.tabs --color-border theme six',
+    file: '../../02-molecules/tabs/_yds-tabs.scss',
+    fallback: '--color-gray-400',
+  },
+  {
+    name: '.tabs --color-border-selected theme six',
+    file: '../../02-molecules/tabs/_yds-tabs.scss',
+    fallback: '--color-basic-white',
+  },
 ];
 
 SECTION_SURFACE_CONSUMERS.forEach(({ name, file, fallback }) => {
@@ -309,4 +410,34 @@ test('the accordion group heading no longer carves out section theme two', () =>
     /\[data-component-theme='two'\]/,
     'the section-theme-two carve-out should be gone from the group heading',
   );
+});
+
+/**
+ * Ties the Tabs source wiring to the measurement above.
+ *
+ * The consumer rows further up prove each fallback pair is spelled correctly;
+ * this proves there is no FOURTH declaration somewhere else in the file still
+ * setting a border role to a flat colour. That is the shape the defect
+ * actually took: `--color-border` was on the contract nowhere and hardcoded in
+ * three separate rules, one of which only applied inside a themed section --
+ * exactly where the contract was available and unused.
+ */
+test('no tab border role is left on a flat colour', () => {
+  const source = readFileSync(
+    new URL('../../02-molecules/tabs/_yds-tabs.scss', import.meta.url),
+    'utf8',
+  ).replace(/\s+/g, ' ');
+
+  ['--color-border', '--color-border-selected'].forEach((property) => {
+    const declarations = source.match(new RegExp(`${property}: [^;]+;`, 'g'));
+
+    assert.ok(declarations, `${property} is no longer declared at all`);
+    declarations.forEach((declaration) => {
+      assert.match(
+        declaration,
+        /var\( ?--color-section-foreground, /,
+        `${declaration.trim()} does not read the section contract`,
+      );
+    });
+  });
 });

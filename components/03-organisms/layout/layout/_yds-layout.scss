@@ -222,11 +222,26 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   }
 
   // One shared rule for every themed section, in place of per-theme or
-  // per-component overrides (YaleSites-Internal#1613, extended by #1614).
+  // per-component overrides (YaleSites-Internal#1613, extended by #1614 and
+  // #1628).
   // -
-  // It declares two custom properties a block inside the section otherwise has
-  // no way to reach, plus the one override that cannot be expressed as a
-  // property because the consuming component outbids it on specificity:
+  // It declares the custom properties a block inside the section otherwise has
+  // no way to reach, plus the overrides that cannot be expressed as a property
+  // because the consuming component outbids them on specificity.
+  // -
+  // Why a block cannot simply read `--color-layout-theme|content|border`
+  // itself, which is what several components used to do through a
+  // `.yds-layout[...] &` descendant selector: those three are declared ONLY on
+  // this element, so off a themed section the property does not exist and the
+  // declaration is dropped at computed-value time -- several of those
+  // selectors matched a bare `[data-component-theme]`, which ~20 templates
+  // emit, so a divider inside a themed callout simply disappeared. And because
+  // only `.yds-layout` ever declares them, nothing BETWEEN the section and the
+  // component could influence the value, so a block that painted its own
+  // surface had no way to tell its descendants to follow ITS colours. That is
+  // where the measured contrast failures came from. The `--color-section-*`
+  // family below fixes both: it inherits, so a self-painting block resets it
+  // for its own subtree (YaleSites-Internal#1628).
   // -
   // 1. `--color-divider`. `_global-config.scss` defaults it to
   //    `--color-theme-divider, --color-gray-500` and nothing in the section
@@ -273,8 +288,20 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // emitted: see `00-tokens/colors/section-background-contrast.txt`, which
   // shows no single slot is legible on all six section backgrounds.
   &[data-component-theme]:not([data-component-theme='default']) {
-    --color-divider: var(--color-layout-content);
+    // `-background` and `-accent` extend the `--color-section-foreground` name
+    // #1613 introduced rather than inventing a parallel family. See the
+    // preamble above for why a block cannot read `--color-layout-*` directly.
+    --color-section-background: var(--color-layout-theme);
     --color-section-foreground: var(--color-layout-content);
+    --color-section-accent: var(--color-layout-border);
+    --color-divider: var(--color-layout-content);
+
+    // `--color-action` / `--color-action-secondary` are global semantic
+    // properties (`:root`, _global-config.scss). Re-pointing them per section
+    // here is what lets the CTA and tab chrome track the section without
+    // reaching back up for the layout's private properties.
+    --color-action: var(--color-section-accent);
+    --color-action-secondary: var(--color-section-background);
 
     // 3. The link grid's headings, which cannot use the fallback pattern
     //    above. A link grid paints no background of its own, so its headings
