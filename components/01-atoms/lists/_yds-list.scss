@@ -55,7 +55,15 @@ ol {
   @include tokens.body-s;
   @include tokens.body-oldstyle-nums;
 
-  color: var(--color-gray-500);
+  // Categories sit directly on the section surface with no override anywhere,
+  // so the flat neutral failed AA on ALL SIX themed sections -- 1.16:1 on
+  // theme four, 1.88:1 on six; only `default` passed, and only by 0.11
+  // (component-library-twig#721 review). Same shape as `.taxonomy-list--tags`
+  // below -- read the contract, keep the rule's OWN previous colour as the CSS
+  // fallback, so unthemed sections are unchanged. (Tags falls back to
+  // `--color-blue-yale`; the grey here is specific to categories.)
+  // YaleSites-Internal#1628.
+  color: var(--color-section-foreground, var(--color-gray-500));
   font-variant-caps: small-caps;
   text-transform: lowercase;
   letter-spacing: 0.5px;

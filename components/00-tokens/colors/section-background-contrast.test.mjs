@@ -211,6 +211,22 @@ test('--color-section-foreground is declared in exactly the expected places', ()
   // to the SECTION's foreground -- 1.32:1 on section themes two, five and six.
   // A new self-painting component needs an entry here for the same reason, and
   // this assertion is where that gets noticed.
+  //
+  // 4 -> 5 in YaleSites-Internal#1628, but the branch history reads 6 -> 5,
+  // which is worth spelling out: merging `1616-section-color-parity` in left
+  // `_yds-layout.scss` with TWO `[data-component-theme]:not(default)` blocks,
+  // each declaring this property, so the real count was briefly 6 and this
+  // assertion was failing. Consolidating those blocks removed one, and the
+  // callout below added one.
+  //
+  // The callout joined the list because it paints
+  // its own background from the component-theme dial, so before it reset the
+  // contract its descendants followed the SECTION instead -- a filled Button
+  // Link inside a theme-two callout on a theme-one section rendered
+  // near-white on near-white (the reported invisible button). Resetting
+  // `--color-section-foreground` to the callout's own `--color-text` is what
+  // makes that button, and every other contract reader inside a callout,
+  // follow the surface it is really sitting on.
   const componentsDir = new URL('../../', import.meta.url);
   const declarations = readdirSync(componentsDir, {
     recursive: true,
@@ -226,7 +242,7 @@ test('--color-section-foreground is declared in exactly the expected places', ()
       );
     });
 
-  assert.equal(declarations.length, 4, declarations.join(' | '));
+  assert.equal(declarations.length, 5, declarations.join(' | '));
 });
 
 /**
@@ -269,6 +285,41 @@ const SECTION_SURFACE_CONSUMERS = [
     name: 'wrapped-callout heading',
     file: '../../02-molecules/wrapped-callout/_yds-wrapped-callout.scss',
     fallback: '--color-slot-seven',
+  },
+  // Added by the review of component-library-twig#721. These three are the
+  // same defect as the entries above, but they were invisible to the
+  // `--color-layout-*` containment test in `color-system-defects.test.mjs`:
+  // they never named a layout property at all. They are flat neutrals used as
+  // the colour of text drawn on a surface the component does not paint, with
+  // no section override anywhere in their file, so nothing was undefined and
+  // nothing was dropped -- the only symptom was measured contrast.
+  //
+  // Measured on section theme one before the fix: the select 1.36:1 and the
+  // description 2.62:1. `.taxonomy-list--categories` failed AA on ALL SIX
+  // themed sections, worst 1.16:1 on theme four; only `default` passed, and
+  // only by 0.11.
+  //
+  // The greys stay as the CSS fallback, so the de-emphasis they exist to
+  // create is unchanged on an unthemed section -- measured identical before
+  // and after on `default`. Only the themed sections move, and there the grey
+  // was the failure.
+  {
+    name: '.form-item__select text',
+    file: '../../01-atoms/forms/select/_yds-select.scss',
+    fallback: '--color-gray-700',
+  },
+  {
+    name: '.form-item__description help text',
+    file: '../../01-atoms/forms/textfields/_yds-textfields.scss',
+    fallback: '--color-gray-500',
+  },
+  // `_yds-list.scss` also holds `.taxonomy-list--tags`, which reads the
+  // contract with `--color-blue-yale` as ITS fallback. Matching on the grey
+  // keeps this row specific to the categories rule.
+  {
+    name: '.taxonomy-list--categories',
+    file: '../../01-atoms/lists/_yds-list.scss',
+    fallback: '--color-gray-500',
   },
 ];
 
