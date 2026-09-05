@@ -84,6 +84,9 @@ Drupal.behaviors.utilityDropdownNav = {
       };
     };
 
+    // Every dropdown on the page, so a click outside one can close the others.
+    const dropdowns = [];
+
     // Loop through each dropdown
     utilityDropdownNavToggles.forEach((toggle, index) => {
       const nav = utilityDropdownNavs[index];
@@ -91,6 +94,8 @@ Drupal.behaviors.utilityDropdownNav = {
       const utilityDropdownMenu = content.querySelector(
         '.utility-nav-dropdown__menu',
       );
+
+      dropdowns.push({ toggle, nav, content });
 
       // Initial adjustment
       adjustDropdownWidth(content, utilityDropdownMenu, toggle);
@@ -122,6 +127,19 @@ Drupal.behaviors.utilityDropdownNav = {
         if (event.key === 'Escape') {
           closeDropdown(toggle, nav, content);
           toggle.focus();
+        }
+      });
+    });
+
+    // Event listeners: 'click' outside a dropdown closes it, matching the
+    // primary and secondary navs. Containment is tested against `nav`
+    // (`.utility-nav__dropdown`), which wraps the toggle as well as the panel:
+    // the toggle's own click bubbles up to this listener, so testing against
+    // the panel alone would close each dropdown as it opened.
+    window.addEventListener('click', (event) => {
+      dropdowns.forEach((dropdown) => {
+        if (!dropdown.nav.contains(event.target)) {
+          closeDropdown(dropdown.toggle, dropdown.nav, dropdown.content);
         }
       });
     });
