@@ -662,6 +662,47 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   }
 }
 
+// Profile data pass-throughs (#1648). These let the shared card show the
+// detail the profile-only directory card used to hard-code, so a people
+// listing keeps that information whichever design option it uses.
+.reference-card__pronouns {
+  @include tokens.body-s;
+
+  margin-top: var(--size-spacing-2);
+  color: var(--color-gray-500);
+
+  // Same reasoning as .reference-card__overline: `--color-gray-500` fails
+  // WCAG AA on the themed section backgrounds, so fall back to the section's
+  // own on-theme foreground where one is painted.
+  [data-component-theme] & {
+    color: var(--color-layout-content, var(--color-gray-500));
+  }
+}
+
+.reference-card__department {
+  @include tokens.body-default-condensed;
+
+  margin-top: var(--size-spacing-3);
+}
+
+.reference-card__contact {
+  @include atoms.list-reset;
+
+  margin-top: var(--size-spacing-3);
+}
+
+.reference-card__contact-item {
+  @include tokens.body-default-condensed;
+
+  // An email address is a single unbreakable token; a four-up card is narrow
+  // enough that it would otherwise overflow the card rather than wrap.
+  overflow-wrap: anywhere;
+
+  + .reference-card__contact-item {
+    margin-top: var(--size-spacing-2);
+  }
+}
+
 .reference-card__ctas {
   display: flex;
   flex-wrap: wrap;

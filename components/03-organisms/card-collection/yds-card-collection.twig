@@ -2,6 +2,9 @@
  # Available Props:
  # - card_collection__featured: boolean (ish... actually just a string. But should be 'true', or 'false')
  # - card_collection__type: grid (default) or list
+ # - card_collection__cards_per_row: '3' (default) or '4' — the maximum number of
+ #   cards per row in the widest layout region. Narrower regions still cap the
+ #   grid at two and then one column.
  # - card_collection__with_images: boolean used to evaluate whether or not to show the image
  # - card_collection__source_type: if present, it will render the content type in the collection
  # - animate__item: defaults to `enabled`, will only animate if site_animate_components (lever / config) is not `default`
@@ -19,6 +22,7 @@
 {% set card_collection__attributes = {
   'data-collection-featured': card_collection__featured|default('true'),
   'data-collection-type': card_collection__type|default('grid'),
+  'data-cards-per-row': card_collection__cards_per_row|default('3'),
   'data-component-width': card_collection__width,
   class: bem(card_collection__base_class, card_collection__modifiers),
 } %}
