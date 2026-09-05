@@ -1,5 +1,23 @@
+@use 'sass:math';
 @use '../00-tokens/tokens';
 @use '../01-atoms/atoms';
+
+// Container inline-size thresholds for the card grid, derived from the 84rem
+// site width. Named rather than repeated so the cards-per-row dial (#1648) can
+// widen the top band without restating the breakpoint.
+$container-grid-two-up: 34rem;
+$container-grid-widest: 70rem;
+
+// Flex basis for $columns evenly spaced columns separated by --grid-gutter.
+// Rounded to two decimals so three columns still emits the 33.33% this file
+// has always used.
+@function column-basis($columns) {
+  $percent: math.div(math.round(math.div(100%, $columns) * 100), 100);
+
+  @return calc(
+    #{$percent} - calc(var(--grid-gutter) * #{$columns - 1} / #{$columns})
+  );
+}
 
 @mixin base {
   @include atoms.list-reset;
@@ -36,15 +54,25 @@
 
   container-type: inline-size;
 
-  @container (min-width: 34rem) {
+  @container (min-width: #{$container-grid-two-up}) {
     > * {
       flex: 0 1 calc(50% - calc(var(--grid-gutter) / 2));
     }
   }
 
-  @container (min-width: 70rem) {
+  @include container-grid-columns(3);
+}
+
+// The widest band of container-grid on its own, so the cards-per-row dial
+// (#1648) can raise the column count without re-emitting the whole grid.
+// Deliberately scoped to the top band: the narrower bands still cap the grid
+// at 2-up and 1-up, so a 4-up listing dropped into a fifty-fifty or sidebar
+// region keeps collapsing to a readable column count instead of forcing four
+// columns into a region that cannot hold them.
+@mixin container-grid-columns($columns) {
+  @container (min-width: #{$container-grid-widest}) {
     > * {
-      flex: 0 1 calc(33.33% - calc(var(--grid-gutter) * 2 / 3));
+      flex: 0 1 column-basis($columns);
     }
   }
 }

@@ -85,6 +85,15 @@
     @include grid.container-grid(var(--spacing-component-gutter-secondary));
   }
 
+  // Cards-per-row dial (#1648). Generalises the 4-up grid that used to be
+  // available only through the profile-only directory design option, so any
+  // card grid can opt into it. Only the widest container band changes; the
+  // region-width capping above still applies, so this is a ceiling rather than
+  // a fixed column count.
+  [data-collection-type='grid'][data-cards-per-row='4'] & {
+    @include grid.container-grid-columns(4);
+  }
+
   [data-collection-type='profile-directory'][data-collection-featured='false']
     & {
     @include grid.directory-primary;

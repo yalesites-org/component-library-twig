@@ -26,6 +26,7 @@ export default {
 export const PostCardCollection = ({
   heading,
   collectionType,
+  cardsPerRow,
   featured,
   withImages,
   withOverlay,
@@ -34,6 +35,7 @@ export const PostCardCollection = ({
 
   return cardCollectionTwig({
     card_collection__source_type: 'post',
+    card_collection__cards_per_row: cardsPerRow,
     card_collection__type: collectionType,
     card_collection__heading: heading,
     card_collection__featured: featured ? 'true' : 'false',
@@ -67,12 +69,14 @@ export const EventCardCollection = ({
 };
 
 EventCardCollection.argTypes = {
+  cardsPerRow: { table: { disable: true } },
   withOverlay: { table: { disable: true } },
 };
 
 export const ProfileCardCollection = ({
   heading,
   collectionType,
+  cardsPerRow,
   featured,
   withImages,
 }) => {
@@ -80,6 +84,7 @@ export const ProfileCardCollection = ({
 
   return cardCollectionTwig({
     card_collection__source_type: 'profile',
+    card_collection__cards_per_row: cardsPerRow,
     card_collection__type: collectionType,
     card_collection__heading: heading,
     card_collection__featured: featured ? 'true' : 'false',
@@ -116,6 +121,7 @@ export const DirectoryListingCardCollection = ({
 
 DirectoryListingCardCollection.argTypes = {
   collectionType: { table: { disable: true } },
+  cardsPerRow: { table: { disable: true } },
   withImages: { table: { disable: true } },
   withOverlay: { table: { disable: true } },
 };
