@@ -10,6 +10,14 @@
 # - reference_card__snippet
 # - refreence_card__overlay
 #
+# Profile data pass-throughs, each shown only when its own toggle is on
+# (#1648). Email and phone are plain strings so this component can build the
+# mailto:/tel: link; department and pronouns may be renderables.
+# - reference_card__department  (show_department)
+# - reference_card__email       (show_email)
+# - reference_card__phone       (show_phone)
+# - reference_card__pronouns    (show_pronouns)
+#
 # Available Blocks:
 # - reference_card__image
 #}
@@ -58,7 +66,7 @@
       heading__url: reference_card__url,
       heading__attributes: heading__attributes,
     } %}
-    {% if show_pronouns %}
+    {% if show_pronouns and reference_card__pronouns %}
       {% include "@atoms/typography/text/yds-text.twig" with {
         text__blockname: reference_card__base_class,
         text__base_class: 'pronouns',
@@ -103,6 +111,59 @@
         text__blockname: reference_card__base_class,
         text__content: reference_card__snippet,
       } %}
+    {% endif %}
+    {% if show_department and reference_card__department %}
+      {% include "@atoms/typography/text/yds-text.twig" with {
+        text__base_class: 'department',
+        text__blockname: reference_card__base_class,
+        text__content: reference_card__department,
+      } %}
+    {% endif %}
+    {% if (show_email and reference_card__email) or (show_phone and reference_card__phone) %}
+      {# A list, so a screen reader announces how many contact details follow
+         and can step through them, rather than meeting loose runs of text. #}
+      <ul {{ bem('contact', [], reference_card__base_class) }}>
+        {% if show_email and reference_card__email %}
+          <li {{ bem('contact-item', [], reference_card__base_class) }}>
+            {# The address itself is the link text: it is self-describing, so a
+               screen-reader user moving card to card hears whose address it is
+               instead of a run of identical "Email" links. #}
+            {# link__type is pinned: getUrlType() has two implementations, and
+               the Storybook one classifies mailto:/tel: as external and adds an
+               icon, while Drupal's classifies them as internal. Without this the
+               component renders differently in Storybook than in production. #}
+            {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+              link__url: 'mailto:' ~ reference_card__email,
+              link__content: reference_card__email,
+              link__type: 'internal',
+              link__blockname: reference_card__base_class,
+            } %}
+          </li>
+        {% endif %}
+        {% if show_phone and reference_card__phone %}
+          {% set reference_card__phone_digits = reference_card__phone|replace({' ': '', '-': '', '(': '', ')': '', '.': ''}) %}
+          <li {{ bem('contact-item', [], reference_card__base_class) }}>
+            {# Phone is a free-text field, so only something actually dial-able
+               becomes a tel: link. "203-555-0100 ext. 12" or "Main office"
+               would otherwise produce a tel: nobody can call; those render as
+               plain text, which is what the directory card has always done. #}
+            {% if reference_card__phone_digits matches '/^\\+?[0-9]{5,}$/' %}
+              {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+                link__url: 'tel:' ~ reference_card__phone_digits,
+                link__content: reference_card__phone,
+                link__type: 'internal',
+                link__blockname: reference_card__base_class,
+              } %}
+            {% else %}
+              {% include "@atoms/typography/text/yds-text.twig" with {
+                text__base_class: 'phone',
+                text__blockname: reference_card__base_class,
+                text__content: reference_card__phone,
+              } %}
+            {% endif %}
+          </li>
+        {% endif %}
+      </ul>
     {% endif %}
     {% if reference_card__cta_primary__content and reference_card__cta_primary__href or reference_card__cta_secondary__content and reference_card__cta_secondary__href %}
       {# CTAs #}

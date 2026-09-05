@@ -17,6 +17,22 @@ collectionType:
     - condensed
   control: select
 
+cardsPerRow:
+  twigProp: card_collection__cards_per_row
+  name: Cards Per Row
+  type: select
+  required: false
+  description: Maximum number of cards side by side in the widest layout region
+  detail: >
+    A ceiling, not a fixed column count. The grid sizes itself against the
+    width of the region it sits in, so a narrower region still falls back to
+    two and then one column. Only applies to the grid collection type.
+  default: '3'
+  options:
+    - '3'
+    - '4'
+  control: select
+
 featured:
   twigProp: card_collection__featured
   name: Featured
