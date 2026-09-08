@@ -138,7 +138,11 @@ Drupal.behaviors.utilityDropdownNav = {
     // the panel alone would close each dropdown as it opened.
     window.addEventListener('click', (event) => {
       dropdowns.forEach((dropdown) => {
-        if (!dropdown.nav.contains(event.target)) {
+        // Guarded like the primary and secondary navs. The three NodeLists are
+        // zipped by index, so a dropdown toggle with no matching wrapper leaves
+        // `nav` undefined -- and nothing in this attach() dereferences it, so
+        // the miss would surface here as a throw on every click on the page.
+        if (dropdown.nav && !dropdown.nav.contains(event.target)) {
           closeDropdown(dropdown.toggle, dropdown.nav, dropdown.content);
         }
       });
