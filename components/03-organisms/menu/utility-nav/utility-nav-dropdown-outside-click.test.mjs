@@ -18,6 +18,10 @@
  * all. Nothing in the diff shows that -- only firing a real click through the
  * toggle and then out to the window does.
  *
+ * Escape is pinned here as well, on the toggle and from inside the panel: both
+ * paths share `closeDropdown()` with the new outside-click listener, and the
+ * in-panel one is the only close that also hands focus back to the toggle.
+ *
  * The second pinned property is that closing sets state rather than merely
  * hiding: `aria-expanded` on the nav AND the toggle, `aria-hidden` on the
  * content. A close that only flips a class looks identical on screen and is
@@ -70,6 +74,7 @@ class HarnessElement {
     this.parentNode = null;
     this.listeners = new Map();
     this.style = {};
+    this.hasFocus = false;
 
     // `Set` already provides `add`; only `remove` needs aliasing onto `delete`.
     this.classList.remove = (name) =>
@@ -132,6 +137,14 @@ class HarnessElement {
     this.listeners.get(type).push(listener);
   }
 
+  /**
+   * Only records that focus arrived. Enough to check that Escape hands focus
+   * back to the toggle; the harness does not model blurring the old owner.
+   */
+  focus() {
+    this.hasFocus = true;
+  }
+
   /** Fixed and non-zero: the behavior only sizes the panel with it. */
   // eslint-disable-next-line class-methods-use-this
   getBoundingClientRect() {
@@ -190,7 +203,8 @@ const buildHeader = () => {
 /**
  * Attaches the real behavior to a fresh header.
  *
- * @returns {object} the header elements, plus a `click` that really bubbles.
+ * @returns {object} the header elements, plus `click` and `keydown` that
+ *   really bubble.
  */
 const attachBehavior = () => {
   const header = buildHeader();
@@ -223,13 +237,15 @@ const attachBehavior = () => {
   sandbox.Drupal.behaviors.utilityDropdownNav.attach(document);
 
   /**
-   * Dispatches a click the way the DOM does: the target first, then every
+   * Dispatches an event the way the DOM does: the target first, then every
    * ancestor it bubbles up through, and finally the window.
    *
-   * @param {HarnessElement} target - Where the click lands.
+   * @param {string} type - The event type to dispatch.
+   * @param {HarnessElement} target - Where the event lands.
+   * @param {object} properties - Any extra event properties, such as `key`.
    */
-  const click = (target) => {
-    const event = { type: 'click', target };
+  const dispatch = (type, target, properties = {}) => {
+    const event = { type, target, ...properties };
     const propagationPath = [];
 
     for (let node = target; node; node = node.parentNode) {
@@ -238,13 +254,17 @@ const attachBehavior = () => {
 
     propagationPath.push(window);
     propagationPath.forEach((node) =>
-      (node.listeners.get('click') || []).forEach((listener) =>
+      (node.listeners.get(type) || []).forEach((listener) =>
         listener.call(node, event),
       ),
     );
   };
 
-  return { ...header, click };
+  return {
+    ...header,
+    click: (target) => dispatch('click', target),
+    keydown: (target, key) => dispatch('keydown', target, { key }),
+  };
 };
 
 /**
@@ -355,5 +375,37 @@ test('the toggle still closes the dropdown when clicked again', () => {
     stateOf(first),
     CLOSED,
     'the toggle stopped closing its own dropdown',
+  );
+});
+
+test('Escape on the toggle still closes the dropdown', () => {
+  const { first, click, keydown } = attachBehavior();
+
+  click(first.toggle);
+  keydown(first.toggle, 'Escape');
+
+  assert.deepEqual(
+    stateOf(first),
+    CLOSED,
+    'Escape on the toggle stopped closing the dropdown',
+  );
+});
+
+test('Escape inside the panel closes it and hands focus back to the toggle', () => {
+  const { first, click, keydown } = attachBehavior();
+
+  click(first.toggle);
+  keydown(first.link, 'Escape');
+
+  assert.deepEqual(
+    stateOf(first),
+    CLOSED,
+    'Escape inside the panel did not close the dropdown',
+  );
+  // Without this the panel closes under a keyboard user with focus left on a
+  // link inside an aria-hidden container, and nothing to tab from.
+  assert.ok(
+    first.toggle.hasFocus,
+    'focus did not return to the toggle after Escape',
   );
 });
