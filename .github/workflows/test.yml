@@ -1,7 +1,11 @@
 name: Test
 on:
   pull_request:
-    branches: ['main', 'develop']
+    # `1616-section-color-parity` is a long-lived integration branch: the Color
+    # Surface stack (#1613, #1614, #1628, ...) targets it rather than `develop`,
+    # so without it here every PR in that stack merges ungated and the stack
+    # reaches `develop` as a single untested merge.
+    branches: ['main', 'develop', '1616-section-color-parity']
 jobs:
   test:
     runs-on: ubuntu-latest
