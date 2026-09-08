@@ -2,10 +2,12 @@
 #
 # Source: color-specs_2025-05-10.pdf, provided by OPAC (2025-05-10).
 #
-# IMPORTANT: `hex` is used ONLY to render the on-screen swatch. It must never be
-# displayed to users on the print page — print displays PMS and CMYK only.
-# Yale's brand colors render differently in print than on screen, so these HEX
-# values are approximations of the printed result for swatch purposes.
+# `hex` renders the on-screen swatch. On the Core Colors cards it is also shown
+# as a value, since those colors are used on web as well as in print. It is NOT
+# shown on the accent Print Colors page, which stays print-only: PMS + CMYK, nor
+# for `yale_blue` (the Yale Blue card shows its web design-token hex instead).
+# For the accent colors the hex is only an approximation of the printed result,
+# since Yale's brand colors render differently in print than on screen.
 #
 # Structure mirrors the print "pyramid" hierarchy:
 #   yale_blue  -> sits alone at the top
