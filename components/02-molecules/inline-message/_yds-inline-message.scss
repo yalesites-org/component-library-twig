@@ -74,7 +74,9 @@ $component-inline-message-themes: map.deep-get(
     @include atoms.link;
 
     &:hover {
-      --color-link-hover: var(--color-link-hover);
+      // Inherited copy colour on hover, declared rather than simulated by a
+      // var() cycle (YaleSites-Internal#1629).
+      --color-link-hover: currentcolor;
     }
 
     &:visited {

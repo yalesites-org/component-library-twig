@@ -27,9 +27,28 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       --color-layout-theme: var(--color-slot-one);
       --color-layout-content: var(--color-slot-eight);
       --color-layout-border: var(--color-slot-four);
-      --color-link-base: var(--color-link-base);
-      --color-link-hover: var(--color-link-hover);
 
+      // No `--color-link-base` / `--color-link-hover` here, and none in the two
+      // descendant blocks below. Each was declared from itself -- a var() cycle,
+      // so the property computed to the guaranteed-invalid value and inherited
+      // THAT, destroying the value rather than preserving it. They were not
+      // supplying a default either: the per-theme blocks below already declare
+      // both properties, and the cycles sat on the link element at higher
+      // specificity and threw those values away (YaleSites-Internal#1629).
+      // -
+      // Of the six, only `--color-link-base` was load-bearing. #1628 already
+      // re-declares `--color-link-hover` on these same link selectors under
+      // `[data-component-theme]:not(default)` further down, which outranks the
+      // loop -- so removing the hover cycles is provably inert.
+      // -
+      // `--color-link-base` was not inert, because `color:` is not its only
+      // consumer. `_utility.scss` reads it inside the `outline` shorthand, and
+      // an invalid var() drops a shorthand outright: focused links in a themed
+      // section computed `outline-style: none`, i.e. no keyboard focus ring at
+      // all (WCAG 2.1 SC 2.4.7). `_yds-text-link.scss` reads it for `fill:`,
+      // which left link icons rendering black on the dark section themes.
+      // Unthemed sections and section theme six were unaffected -- neither is
+      // in this loop.
       background-color: var(--color-layout-theme);
       color: var(--color-layout-content);
 
@@ -39,16 +58,17 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       .caption a,
       [class*='__heading-link'] {
         --color-text-shadow: var(--color-layout-theme);
-        --color-link-hover: var(--color-link-hover);
-        --color-link-base: var(--color-link-base);
       }
 
       // Link grid: match section copy (no default purple :visited from link mixin).
       .link-grid__link {
         --color-text-shadow: var(--color-layout-theme);
-        --color-link-hover: var(--color-link-hover);
-        --color-link-base: var(--color-link-base);
         --color-link-visited-base: var(--color-layout-content);
+
+        // Left as-is: this is a reference to a DIFFERENT property, not a self
+        // reference. It only ever resolved to nothing because the thing it
+        // points at was itself cyclic. With that cycle gone the per-theme
+        // blocks below supply `--color-link-hover`, so this now resolves.
         --color-link-visited-hover: var(--color-link-hover);
       }
     }
@@ -360,11 +380,13 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     //    same value each section theme already sets `--color-link-hover` to at
     //    its root -- so this introduces no colour and changes no design intent;
     //    it makes the intent reachable. Hover then matches resting on a themed
-    //    section, exactly as it already did for `.text-field a` (the `@each`
-    //    loop's `--color-link-hover: var(--color-link-hover)` is a var() cycle,
-    //    which is invalid at computed-value time and therefore falls back to
-    //    inheriting the root -- the same outcome, arrived at by accident). The
-    //    sliding underline still signals hover.
+    //    section, exactly as it already did for `.text-field a`. (When this was
+    //    written, `.text-field a` reached that outcome by accident: the `@each`
+    //    loop declared `--color-link-hover` from itself, a var() cycle, which is
+    //    invalid at computed-value time and so fell through to inheriting the
+    //    root. That cycle is gone as of YaleSites-Internal#1629; this rule is
+    //    now the only thing setting hover there, which is what it should always
+    //    have been.) The sliding underline still signals hover.
     //    -
     //    Every link kind is listed, not only the ones the audit measured.
     //    `.wrapped-callout__callout a` is why: it is a bare `<a>` in a WYSIWYG
