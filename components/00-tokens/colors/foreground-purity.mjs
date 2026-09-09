@@ -291,7 +291,13 @@ export function scanForegroundPurity({ sources = readAllScss() } = {}) {
   const declaration = (properties, what) =>
     new RegExp(
       String.raw`(?:^|[\s;{])(?:${properties.join('|')})\s*:[^;{}]*(?:${what})`,
-      'g',
+      // Case-insensitive: CSS property names and colour keywords are ASCII
+      // case-insensitive, so `COLOR: White` is the same declaration as
+      // `color: white` and has to be caught the same way. Custom property
+      // NAMES are technically case-sensitive, but `--COLOR-TEXT` is a
+      // different (undefined) property nobody writes, so folding them too
+      // costs nothing.
+      'gi',
     );
 
   const patterns = [
@@ -306,7 +312,7 @@ export function scanForegroundPurity({ sources = readAllScss() } = {}) {
       String.raw`(?:^|[\s;{])(?:${CUSTOM_PROPERTY_FOREGROUNDS.join(
         '|',
       )})\s*:${NAMED_COLOR_LITERAL}`,
-      'g',
+      'gi',
     ),
   ];
 

@@ -68,12 +68,15 @@ const namedColors =
   '(?:aqua|black|blue|fuchsia|gold|gray|green|grey|lime|maroon|navy|olive|' +
   'orange|purple|red|silver|teal|white|yellow)';
 
+// Case-insensitive throughout: CSS colour keywords and function names are
+// ASCII case-insensitive, so `color: White` and `color: RGB(0 0 0)` are the
+// same declarations as their lowercase forms and have to fail the same way.
 const colorLiterals = [
   /#[0-9a-fA-F]{3,8}/,
-  /\b(?:rgba?|hsla?)\(/,
+  /\b(?:rgba?|hsla?)\(/i,
   // Anchored to the whole value: unanchored, `white` would match inside
   // `var(--color-basic-white)`, which is a token, not a literal.
-  new RegExp(`^\\s*${namedColors}\\s*(?:!important)?\\s*$`),
+  new RegExp(`^\\s*${namedColors}\\s*(?:!important)?\\s*$`, 'i'),
 ];
 
 // Storybook chrome and the colour-token documentation pages. Not rendered on a

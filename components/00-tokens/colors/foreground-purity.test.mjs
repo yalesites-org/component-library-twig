@@ -207,6 +207,65 @@ test('a colour literal in a foreground custom property is flagged', () => {
   assert.equal(plainProperty.counts['fake.scss'], undefined);
 });
 
+test('a capitalised literal or property is caught the same as a lowercase one', () => {
+  // CSS keywords and property names are ASCII case-insensitive, so `White` is
+  // the same declaration as `white`. Both halves of the rule missed it until
+  // they were given the `i` flag -- and a contributor pasting from a design
+  // tool, which often emits `White`, would have walked straight through.
+  const flagged = [
+    'a { --color-text: White; }',
+    'a { --color-text: WHITE !IMPORTANT; }',
+    'a { COLOR: var(--color-gray-700); }',
+    'a { --color-text: RGB(0, 0, 0); }',
+    'a { --color-heading: #FFF; }',
+  ];
+  const allowed = [
+    // Not a fixed swatch, and the right answer in several components.
+    'a { --color-link-hover: currentColor; }',
+    'a { color: var(--color-text); }',
+    // Background position stays out of scope in either case.
+    'a { background-color: White; }',
+  ];
+
+  flagged.forEach((source) => {
+    assert.equal(
+      scanForegroundPurity({ sources: [['fake.scss', source]] }).counts[
+        'fake.scss'
+      ],
+      1,
+      `not flagged: ${source}`,
+    );
+  });
+  allowed.forEach((source) => {
+    assert.equal(
+      scanForegroundPurity({ sources: [['fake.scss', source]] }).counts[
+        'fake.scss'
+      ],
+      undefined,
+      `wrongly flagged: ${source}`,
+    );
+  });
+});
+
+test('the stylelint half bans the same literals, case-insensitively', () => {
+  // The two halves are one rule split across two engines, so the literal
+  // patterns have to agree. Behavioural comparison rather than comparing regex
+  // source, which would pass while the behaviours diverged.
+  const matches = (value) =>
+    STYLELINT_CONFIG.COLOR_LITERALS.some((pattern) => pattern.test(value));
+
+  ['#fff', '#FFF', 'rgb(0 0 0)', 'RGB(0 0 0)', 'white', 'White', 'red'].forEach(
+    (value) => {
+      assert.ok(matches(value), `stylelint half missed the literal ${value}`);
+    },
+  );
+  ['currentcolor', 'currentColor', 'transparent', 'inherit'].forEach(
+    (value) => {
+      assert.ok(!matches(value), `stylelint half wrongly bans ${value}`);
+    },
+  );
+});
+
 test('a `//` inside a URL or a string does not blind the rest of the line', () => {
   // Regression: the comment stripper used to cut at the first `//` on a line,
   // so a violation sharing a line with a URL was silently invisible.
