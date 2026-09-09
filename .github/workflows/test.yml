@@ -12,13 +12,24 @@ on:
     # ungated too. It stops being needed the moment #721 merges and GitHub
     # retargets Phase 0b at `1616-section-color-parity`.
     #
-    # Two temporary entries is one more than this list should ever carry -- it
+    # `1629-color-property-cycles` is Phase 0b, and Phase 3 (#1632) is stacked on
+    # top of *it* rather than on the integration branch, because Phase 3 extends
+    # the test and lint infrastructure Phase 0 introduced. Same story as the
+    # entry above: without it that PR is ungated.
+    #
+    # Three temporary entries is two more than this list should ever carry -- it
     # reinforces the recommendation in #721 to move to
     # `branches-ignore: ['master']`, as `yalesites-project` already does, and
     # delete the list. That is a repo-wide CI policy change and wants its own
-    # ticket; both entries come out together when the stack is retired.
+    # ticket; all three entries come out together when the stack is retired.
     branches:
-      ['main', 'develop', '1616-section-color-parity', '1628-color-system-defects']
+      [
+        'main',
+        'develop',
+        '1616-section-color-parity',
+        '1628-color-system-defects',
+        '1629-color-property-cycles',
+      ]
 jobs:
   test:
     runs-on: ubuntu-latest
