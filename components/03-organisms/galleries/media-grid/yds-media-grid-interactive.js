@@ -172,50 +172,73 @@ Drupal.behaviors.mediaGridInteractive = {
           '.media-grid-modal__heading',
         );
 
-        // Check if captionContent exists.
-        if (captionContent) {
-          // Store the full caption text.
-          // if a captionHeading is present, shorten the amount of characters
-          // for the caption text.
+        const hasHeading = !!captionHeading;
+
+        // A heading-only item (no captionContent at all) still needs the
+        // collapsed-state treatment below, so gate on either one existing.
+        if (captionContent || hasHeading) {
           const maxLength = 100;
 
-          const fullCaption = captionContent.textContent.trim();
+          const fullCaption = captionContent
+            ? captionContent.textContent.trim()
+            : '';
 
-          if (captionHeading) {
+          if (hasHeading && captionContent) {
             captionContent.classList.add('media-grid-modal__text--has-heading');
             imageCaption.classList.add(
               'media-grid-modal__content--has-heading',
             );
-          }
-          // Check the length of the caption and truncate if necessary
-          if (toggleCaption && fullCaption.length > maxLength) {
-            const truncatedCaption = handleCaptionTruncation(
-              fullCaption,
-              maxLength,
-            );
 
-            // set truncated content.
-            captionContent.textContent = `${truncatedCaption}...`;
+            // Flatten to plain text like every other caption pathway does —
+            // markup (e.g. links) isn't styled for this context.
+            captionContent.textContent = fullCaption;
+          }
+
+          // imageCaption: set default attributes. The collapsed height is
+          // measured on first open in toggleModalState, not here — the modal is
+          // `display: none` while inactive, so offsetHeight would be 0.
+          imageCaption.setAttribute('is-expanded', 'false');
+
+          // A heading hides the caption body entirely via CSS while
+          // collapsed, so any non-empty body counts as hidden content;
+          // without a heading it's only hidden once truncation kicks in.
+          const hasHiddenContent = hasHeading
+            ? fullCaption.length > 0
+            : fullCaption.length > maxLength;
+
+          if (toggleCaption && hasHiddenContent) {
+            let truncatedCaption;
+
+            if (!hasHeading) {
+              truncatedCaption = handleCaptionTruncation(
+                fullCaption,
+                maxLength,
+              );
+
+              // set truncated content.
+              captionContent.textContent = `${truncatedCaption}...`;
+            }
 
             // toggleCaption: set default attributes
             toggleCaption.setAttribute('aria-expanded', 'false');
             toggleCaption.setAttribute('aria-label', 'expand');
             toggleCaption.style.setProperty('display', 'inline');
 
-            // imageCaption: set default attributes. The collapsed height is
-            // measured on first open in toggleModalState, not here — the modal is
-            // `display: none` while inactive, so offsetHeight would be 0.
-            imageCaption.setAttribute('is-expanded', 'false');
             truncatedCaptions.push(imageCaption);
 
             // Toggle the full caption when the "circle plus" toggle is clicked
             if (!body.hasAttribute('gallery-has-click-event')) {
               toggleCaption.addEventListener('click', function _(e) {
                 e.preventDefault();
-                if (captionContent.textContent === `${truncatedCaption}...`) {
+                const isCurrentlyExpanded =
+                  imageCaption.getAttribute('is-expanded') === 'true';
+
+                if (!isCurrentlyExpanded) {
                   toggleCaption.setAttribute('aria-expanded', 'true');
                   toggleCaption.setAttribute('aria-label', 'collapse');
-                  captionContent.textContent = fullCaption;
+                  if (!hasHeading) {
+                    captionContent.textContent = fullCaption;
+                  }
                   imageCaption.setAttribute('is-expanded', 'true');
                   imageCaption.style.setProperty(
                     '--modal-content-item-height',
@@ -224,7 +247,9 @@ Drupal.behaviors.mediaGridInteractive = {
                 } else {
                   toggleCaption.setAttribute('aria-expanded', 'false');
                   toggleCaption.setAttribute('aria-label', 'expand');
-                  captionContent.textContent = `${truncatedCaption}...`;
+                  if (!hasHeading) {
+                    captionContent.textContent = `${truncatedCaption}...`;
+                  }
                   imageCaption.setAttribute('is-expanded', 'false');
                   imageCaption.style.setProperty(
                     '--modal-content-item-height',
