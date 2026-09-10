@@ -526,14 +526,23 @@ test('no tab border role is left on a flat colour', () => {
  * pattern the other four are being brought up to, not a defect.
  * `resource-meta` is absent because it has no flat foreground at all.
  *
- * `flatByDesign` is the count each file may still carry, and why. Only one
- * survives: `.event-meta__multiple-dates` sets
- * `background-color: var(--color-gray-100)` and `color: var(--color-gray-800)`
- * in the same rule, so it paints the surface its own text sits on. That pairing
- * is internally consistent at 15.03:1 and the section never reaches it --
- * exactly the reason #1631 records for excluding `audio`. Recording it here
- * keeps it from reading as an oversight, and keeps this file's entry in
- * `foreground-purity-baseline.json` honest at 1 rather than 0.
+ * `flatByDesign` is the count each file may still carry, and why. Two survive,
+ * both the same shape -- a rule that paints its own background and therefore
+ * pairs its own foreground rather than letting one inherit:
+ *
+ * - `.event-meta__multiple-dates` (`--color-gray-100` / `--color-gray-800`,
+ *   15.03:1). Already paired before #1662.
+ * - `.publication-detail__taxonomy-list__item` (`--color-gray-100` /
+ *   `--color-basic-brown-gray`, 4.54:1). Newly pinned, and NOT hypothetical:
+ *   `yds-publication-detail.twig` prints `{{ item }}` raw and
+ *   `ResourceMetaBlock` builds the DCN cell as `#plain_text`, so a non-link
+ *   item inherits the component root. Moving that root onto the section
+ *   contract therefore put the section's foreground on a chip that stayed
+ *   gray-100 -- below AA on 21 of 42 pairings, worst 1.07:1. Pinning the value
+ *   it used to inherit keeps rendering identical and closes it.
+ *
+ * Both are the reason #1631 records for excluding `audio`, and both keep these
+ * files' entries in `foreground-purity-baseline.json` honest.
  */
 const META_MOLECULES = {
   '_yds-basic-meta.scss': {
@@ -550,7 +559,7 @@ const META_MOLECULES = {
   },
   '_yds-publication-detail.scss': {
     file: '../../02-molecules/meta/publication-meta/_yds-publication-detail.scss',
-    flatByDesign: 0,
+    flatByDesign: 1,
   },
 };
 
@@ -637,4 +646,95 @@ test('meta secondary text: the grays fail and the section foreground passes', ()
       )
       .join(', ')}`,
   );
+});
+
+/**
+ * The guardrail the chip above went through: paint a background, pair a
+ * foreground (YaleSites-Internal#1662).
+ *
+ * `.publication-detail__taxonomy-list__item` painted `--color-gray-100` and set
+ * no `color`, so it silently rode on whatever its ancestor happened to be. That
+ * is invisible until the ancestor moves -- which is exactly what converting
+ * these components to the section contract does, and it turned a passing 4.54:1
+ * into 1.07:1 on half the pairings before review caught it.
+ *
+ * So assert the rule directly rather than trusting each conversion to remember
+ * it: in these files, a rule that sets `background-color` to a flat palette
+ * token must set `color` in the same rule. This is the per-file, enforceable
+ * form of the guardrail #1631's acceptance criteria describe for the whole
+ * library.
+ */
+/**
+ * Rules that paint a background and pair no foreground, on purpose, for now.
+ *
+ * `.event-meta__event-types__type` and `.event-meta__event-topics__topic` are
+ * the same shape as the publication-detail chip, and they are NOT pinned here.
+ * They have no live defect -- `yds-event-meta-localist.twig` wraps every chip's
+ * text in an anchor that colours itself, and the non-localist template renders
+ * no chips at all -- and pinning them would add two raw palette foregrounds,
+ * pushing this file's `foreground-purity-baseline.json` count UP for a purely
+ * speculative hardening. That baseline may only fall.
+ *
+ * That said, "safe because the template always emits an anchor" is exactly the
+ * assumption that failed on the publication-detail chip, and those anchors
+ * colour themselves from `var(--color-text)`, which is its own AA failure on a
+ * themed section (1.07:1). Both belong to #1631's guardrail work, which should
+ * fix the chip and its link together rather than have this PR half-do it. The
+ * count is asserted, so a THIRD unpaired background cannot appear unnoticed.
+ */
+const BACKGROUND_WITHOUT_FOREGROUND = {
+  '_yds-basic-meta.scss': 0,
+  '_yds-event-meta.scss': 2,
+  '_yds-publication-meta.scss': 0,
+  '_yds-publication-detail.scss': 0,
+};
+
+Object.entries(META_MOLECULES).forEach(([name, { file }]) => {
+  test(`${name} pairs a foreground with every background it paints`, () => {
+    const source = readFileSync(new URL(file, import.meta.url), 'utf8');
+    const unpaired = [];
+
+    // Walk each `background-color: var(--color-<palette>)` forward to the end
+    // of its own rule, tracking brace depth so a nested rule's `color` (the
+    // chip's `a { color: ... }`, which only applies to links) does not count.
+    const painted = source.matchAll(
+      /(?:^|[;{\s])background-color:\s*var\(--color-(?:gray-\d+|basic-[\w-]+)\)/g,
+    );
+
+    [...painted].forEach((match) => {
+      let depth = 0;
+      let index = match.index + match[0].length;
+      let paired = false;
+
+      while (index < source.length) {
+        const character = source[index];
+        if (character === '{') depth += 1;
+        else if (character === '}') {
+          if (depth === 0) break;
+          depth -= 1;
+        } else if (
+          depth === 0 &&
+          /[;{\s]/.test(source[index - 1]) &&
+          source.startsWith('color:', index)
+        ) {
+          paired = true;
+        }
+        index += 1;
+      }
+
+      if (!paired) unpaired.push(match[0].trim());
+    });
+
+    assert.equal(
+      unpaired.length,
+      BACKGROUND_WITHOUT_FOREGROUND[name],
+      `${name}: ${
+        unpaired.length
+      } background(s) painted without pairing a foreground in the same rule, expected ${
+        BACKGROUND_WITHOUT_FOREGROUND[name]
+      } -- such text follows an ancestor the rule does not control: ${unpaired.join(
+        ' | ',
+      )}`,
+    );
+  });
 });

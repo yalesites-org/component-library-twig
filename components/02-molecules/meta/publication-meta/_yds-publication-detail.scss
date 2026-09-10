@@ -203,6 +203,21 @@
 
   &__taxonomy-list__item {
     background-color: var(--color-gray-100);
+
+    // This chip paints its own surface, so it must pair its own foreground
+    // rather than let one inherit (YaleSites-Internal#1662). Not every item is
+    // a link -- `yds-publication-detail.twig` prints `{{ item }}` raw, and
+    // ResourceMetaBlock builds the DCN cell as `#plain_text` -- so plain items
+    // inherit from `.publication-detail`, which now follows the section. That
+    // would put the section's foreground on a chip that stayed gray-100: below
+    // AA on 21 of 42 (global theme x section theme) pairings, worst 1.07:1.
+    // Pinning the previous inherited value keeps rendering identical and holds
+    // at 4.54:1 everywhere, the same "flat by design" shape
+    // `.event-meta__multiple-dates` uses. A plain `color` rather than a
+    // declaration of the section-foreground custom property, deliberately --
+    // declaring that property here would take the "declared in exactly the
+    // expected places" count from 5 to 6.
+    color: var(--color-basic-brown-gray);
     padding: var(--size-spacing-2) var(--size-spacing-3);
 
     a {
