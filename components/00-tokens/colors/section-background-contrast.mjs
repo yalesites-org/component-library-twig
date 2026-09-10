@@ -29,6 +29,10 @@ import {
   parseHsl,
   AA_NORMAL_TEXT,
 } from './contrast-ratio.mjs';
+import {
+  SECTION_THEMES,
+  resolveGlobalTheme as resolveSlots,
+} from './section-themes.mjs';
 
 // `createRequire` rather than an import attribute: prettier (and therefore
 // `npm run prettier`, part of this repo's test script) cannot parse
@@ -36,78 +40,17 @@ import {
 const require = createRequire(import.meta.url);
 const tokens = require('@yalesites-org/tokens/build/json/tokens.json');
 
+// Re-exported so existing callers -- including the drift test that compares
+// SECTION_THEMES against `_yds-layout.scss` -- keep their current import path.
+export { SECTION_THEMES };
+
+/** `resolveGlobalTheme` with the token package's global themes supplied. */
+export function resolveGlobalTheme(themeName) {
+  return resolveSlots(themeName, tokens['global-themes']);
+}
+
 /** AA minimum for large text and for non-text (UI/graphics) -- WCAG 1.4.3 / 1.4.11. */
 const AA_LARGE_OR_NON_TEXT = 3;
-
-/**
- * How `_yds-layout.scss` maps each section theme onto global-theme slots.
- *
- * Transcribed from `components/03-organisms/layout/layout/_yds-layout.scss`
- * (the `&[data-component-theme='N']` blocks). Kept as data here rather than
- * parsed out of the SCSS, because a regex over Sass would be the fragile part
- * of this script -- but that means the two can drift, so
- * `section-background-contrast.test.mjs` reads the SCSS and asserts they agree.
- *
- * Note `background`/`content` are the properties actually painted:
- * `--color-layout-theme` becomes `background-color` and `--color-layout-content`
- * becomes `color` on `.yds-layout`, so every block inside inherits them unless
- * it overrides them.
- *
- * Two separate border-ish roles are modelled, because they are different
- * properties with different consumers:
- *
- * - `border` is `--color-layout-border`, UNCHANGED by #1613. It is not only a
- *   border colour -- the CTA atom draws its filled-button background from it --
- *   so it was deliberately left alone. It still fails 3:1 on two pairings; see
- *   the report.
- * - `divider` is `--color-divider`, which #1613 re-points to the section's
- *   content colour. It drives the always-on 70/30 column separator and the
- *   divider atom.
- */
-export const SECTION_THEMES = {
-  one: {
-    border: 'slot-four',
-    background: 'slot-one',
-    content: 'slot-eight',
-    heading: 'slot-eight',
-    link: 'slot-eight',
-  },
-  two: {
-    border: 'slot-seven',
-    background: 'slot-four',
-    content: 'slot-seven',
-    heading: 'slot-seven',
-    link: 'slot-seven',
-  },
-  three: {
-    border: 'slot-four',
-    background: 'slot-five',
-    content: 'slot-eight',
-    heading: 'slot-eight',
-    link: 'slot-eight',
-  },
-  four: {
-    border: 'slot-four',
-    background: 'slot-two',
-    content: 'slot-eight',
-    heading: 'slot-eight',
-    link: 'slot-eight',
-  },
-  five: {
-    border: 'slot-seven',
-    background: 'slot-nine',
-    content: 'slot-seven',
-    heading: 'slot-seven',
-    link: 'slot-seven',
-  },
-  six: {
-    border: 'slot-seven',
-    background: 'slot-three',
-    content: 'slot-seven',
-    heading: 'slot-seven',
-    link: 'slot-seven',
-  },
-};
 
 /**
  * Raw palette values a component might hardcode instead of inheriting the
@@ -126,27 +69,6 @@ export const HARDCODED_CANDIDATES = {
   'basic-white': tokens.color.basic.white,
   'basic-black': tokens.color.basic.black,
 };
-
-/**
- * Resolve one global theme's slots, applying the theme-four slot swap.
- *
- * `_yds-layout.scss` swaps slot-two and slot-five for global theme four only
- * ("Switch colors slot in order to have the selected background colors per
- * component theme"). Ignoring it would report theme four's section themes
- * three and four against the wrong colors, which is precisely the pair #1614
- * found straddling the 3:1 threshold -- so the swap has to be modelled.
- */
-export function resolveGlobalTheme(themeName) {
-  const { colors } = tokens['global-themes'][themeName];
-  const slots = { ...colors };
-
-  if (themeName === 'four') {
-    slots['slot-two'] = colors['slot-five'];
-    slots['slot-five'] = colors['slot-two'];
-  }
-
-  return slots;
-}
 
 /** Every (global theme, section theme) pairing, with its resolved colors. */
 export function sectionBackgrounds() {
