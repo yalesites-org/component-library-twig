@@ -396,6 +396,119 @@ Drupal.behaviors.mediaGridInteractive = {
         }
       });
 
+      /**
+       * expandCaption
+       * @description Expands a truncated caption, if it has a toggle.
+       * @param {Element} caption the modal caption to expand.
+       */
+      const expandCaption = (caption) => {
+        const toggle = caption.querySelector(
+          '.media-grid-modal__toggle-caption',
+        );
+
+        // Only a caption long enough to have been truncated has a working
+        // toggle; a short one is already showing in full. Clicking it reuses
+        // the existing handler rather than duplicating its height bookkeeping.
+        if (toggle && toggle.getAttribute('aria-expanded') === 'false') {
+          toggle.click();
+        }
+      };
+
+      /**
+       * openItemFromHash
+       * @description Opens the gallery item a URL fragment points at.
+       *
+       * Each caption heading carries a stable id derived from its paragraph,
+       * so a link can name one item - notably a Beacon citation pointing at
+       * the caption an answer came from. The caption sits behind both the
+       * modal and a collapse toggle, so landing the visitor on it takes all
+       * three steps a visitor would otherwise take by hand.
+       *
+       * @param {String} hash the URL fragment, including its leading '#'.
+       * @param {Node} scope the DOM the current attach is responsible for.
+       */
+      const openItemFromHash = (hash, scope) => {
+        const id = hash.replace(/^#/, '');
+
+        if (!id) return;
+
+        const target = document.getElementById(id);
+
+        if (!target || !grid.contains(target) || !scope.contains(target)) {
+          return;
+        }
+
+        const caption = target.closest('.media-grid-modal__content');
+
+        if (!caption) return;
+
+        const index = Number(
+          caption.getAttribute('data-media-grid-modal-item'),
+        );
+
+        if (!index) return;
+
+        grid.scrollIntoView({
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)')
+            .matches
+            ? 'auto'
+            : 'smooth',
+          block: 'start',
+        });
+
+        // Same path a click takes, so the dialog gets the same focus trap and
+        // the same focus restoration on close.
+        if (grid.getAttribute('data-media-grid-modal-state') !== 'active') {
+          toggleModalState('inactive');
+        }
+
+        showSelectedItem(index);
+        expandCaption(caption);
+
+        // Land focus on the heading the fragment names, which carries
+        // tabindex="-1" for it. Opening the modal already moves focus inside
+        // via trapKeyboard, but a hash arriving while the modal is *already*
+        // open only swaps the visible item - which hides whatever was
+        // focused and drops focus to the document. Focusing the heading
+        // covers both paths and puts the visitor on the cited caption.
+        target.focus({ preventScroll: true });
+      };
+
+      openItemFromHash(window.location.hash, context);
+
+      // A hash can also arrive after load, from an in-page link or the
+      // browser restoring one.
+      //
+      // One page-level listener that looks up the owning grid, rather than
+      // one listener per grid: a per-grid listener on window outlives the
+      // grid, so an AJAX re-render would leave it holding this whole closure
+      // - grid, modal, items, captions - alive for the life of the page,
+      // once per grid replaced. Publishing the opener on the element instead
+      // means the only reference to it is the element itself, which is
+      // collectable once detached.
+      const gridElement = grid;
+
+      gridElement.ysOpenFromHash = openItemFromHash;
+
+      const root = document.documentElement;
+
+      if (!root.hasAttribute('data-media-grid-hash-bound')) {
+        root.setAttribute('data-media-grid-hash-bound', 'true');
+        window.addEventListener('hashchange', () => {
+          const { hash } = window.location;
+          const target = document.getElementById(hash.replace(/^#/, ''));
+          const owner =
+            target &&
+            target.closest(
+              '.media-grid[data-media-grid-variation="interactive"]',
+            );
+
+          if (owner && owner.ysOpenFromHash) {
+            owner.ysOpenFromHash(hash, document);
+          }
+        });
+      }
+
       // Handle key presses.
       grid.addEventListener(
         'keydown',
