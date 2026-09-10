@@ -30,7 +30,7 @@ export default {
 };
 
 export const Interactive = ({ sectionTheme, aspectRatio }) => `
-  <div class="yds-layout" data-component-theme="${sectionTheme}" data-component-width="site">
+  <div class="yds-layout" data-section-theme="${sectionTheme}" data-component-width="site">
     <div class="yds-layout__inner">
       <div class="yds-layout__primary">
         <h3>Responsive Image - ${aspectRatio}</h3>

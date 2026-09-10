@@ -72,12 +72,12 @@ blockquote {
 
   // If the yds-layout theme is not default, we assume we are inside of a
   // colored layout, and so we match the layout border.
-  .yds-layout:not([data-component-theme='default']) & {
+  .yds-layout:not([data-section-theme='default']) & {
     --color-pull-quote-accent: var(--color-layout-border);
   }
 
   // Slot-nine layout sections: light accent.
-  .yds-layout[data-component-theme='five'] & {
+  .yds-layout[data-section-theme='five'] & {
     --color-pull-quote-accent: var(--color-slot-eight);
   }
 
@@ -85,18 +85,22 @@ blockquote {
   // backgrounds, so dark type. Six's accent is left alone -- the
   // :not(default) rule above already points it at --color-layout-border,
   // which section theme six sets to slot-seven.
-  .yds-layout:is([data-component-theme='five'], [data-component-theme='six'])
-    & {
+  .yds-layout:is([data-section-theme='five'], [data-section-theme='six']) & {
     --color-pull-quote-quote: var(--color-slot-seven);
     --color-pull-quote-attribution: var(--color-slot-seven);
   }
 
   // Light quote copy on dark layout sections (matches --color-layout-content: slot-eight).
   // Theme four uses the same light-on-dark treatment as one and three; it was missing here.
+  // -
+  // Both dials appear in this one selector on purpose: the ancestor part is the
+  // SECTION's dial, the `&:not(...)` part is the pull-quote's OWN dial. They
+  // used to share an attribute name, which made that impossible to read
+  // (YaleSites-Internal#1630).
   .yds-layout:is(
-      [data-component-theme='one'],
-      [data-component-theme='three'],
-      [data-component-theme='four']
+      [data-section-theme='one'],
+      [data-section-theme='three'],
+      [data-section-theme='four']
     )
     &:not([data-component-theme='two']) {
     --color-pull-quote-quote: var(--color-basic-white);

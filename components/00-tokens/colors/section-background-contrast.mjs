@@ -43,7 +43,7 @@ const AA_LARGE_OR_NON_TEXT = 3;
  * How `_yds-layout.scss` maps each section theme onto global-theme slots.
  *
  * Transcribed from `components/03-organisms/layout/layout/_yds-layout.scss`
- * (the `&[data-component-theme='N']` blocks). Kept as data here rather than
+ * (the `&[data-section-theme='N']` blocks). Kept as data here rather than
  * parsed out of the SCSS, because a regex over Sass would be the fragile part
  * of this script -- but that means the two can drift, so
  * `section-background-contrast.test.mjs` reads the SCSS and asserts they agree.

@@ -330,7 +330,7 @@ $cta-outline-weights: (
     }
   }
 
-  .yds-layout[data-component-theme]:not([data-component-theme='default']) & {
+  .yds-layout[data-section-theme]:not([data-section-theme='default']) & {
     &[data-cta-style='filled'] {
       --color-cta-text: var(--color-layout-theme);
       --color-cta-text-hover: var(--color-layout-border);

@@ -31,9 +31,19 @@ $form-item-icon-size: 1.7rem;
     content: '*';
   }
 
+  // Both dials, spelled out -- see the note in `00-tokens/typography`. The
+  // required marker turns white because the surface behind it is dark, and a
+  // form can sit on a dark section or inside a dark-dialled block (accordion
+  // content, for one), so the section/block dial split
+  // (YaleSites-Internal#1630) must not silently drop either case.
   [data-component-theme]:not(
       [data-component-theme='default'],
       [data-component-theme='two']
+    )
+    &,
+  [data-section-theme]:not(
+      [data-section-theme='default'],
+      [data-section-theme='two']
     )
     & {
     &::after {

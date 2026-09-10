@@ -1,17 +1,32 @@
 {#
- # The ONE place a YaleSites Layout Builder section's signature is emitted:
+ # The shared place a YaleSites Layout Builder section's signature is emitted:
  #
- #   <div class="yds-layout layout" data-component-theme="X"
+ #   <div class="yds-layout layout" data-section-theme="X"
  #        data-component-layout="Y" …>
  #
- # Every section layout renders through here -- One column, Two Column
- # (70/30), Two Column (50/50) and Three Column (33/33/33) -- so adding a new
- # section type (say a 30/70) means adding a `component__layout` value and the
- # flex-basis rules for it in `_yds-layout.scss`, and nothing else. Nothing
- # else should hand-roll these classes or data attributes.
+ # Two Column (70/30), Two Column (50/50) and Three Column (33/33/33) render
+ # through here, so adding a new multi-region section type (say a 30/70) means
+ # adding a `component__layout` value and the flex-basis rules for it in
+ # `_yds-layout.scss`, and nothing else.
+ #
+ # **One column does NOT render through here.** atomic's
+ # `templates/layouts/layout--onecol.html.twig` hand-rolls the same class and
+ # attributes itself, because it needs the wrapper to appear even when the
+ # section holds no blocks. So the section signature has TWO emitters and a
+ # change to it must be made in both -- missing the second one is precisely the
+ # failure mode YaleSites-Internal#1630 was about. Nothing beyond those two
+ # should hand-roll these classes or data attributes.
  #
  # Available Variables:
- # - component__theme (string): 'default' by default. The section colour.
+ # - component__theme (string): 'default' by default. The section colour,
+ #   emitted as `data-section-theme`. The attribute is deliberately NOT
+ #   `data-component-theme`: that one is the BLOCK dial, and it maps a different
+ #   set of colour slots (`00-tokens/colors/_color-component-themes.scss` reads
+ #   the `component-themes` token layer, `_yds-layout.scss` reads the section
+ #   palette). While one attribute carried both meanings, no colour reset could
+ #   be correct for both -- see YaleSites-Internal#1630. The PROP keeps its
+ #   `component__theme` name so the three `ys_layouts` templates and atomic's
+ #   one-column template that set it do not have to change.
  # - component__layout (string): 'fifty-fifty' by default. One of
  #   'one-column', 'seventy-thirty', 'fifty-fifty', 'thirty-thirty-thirty'.
  # - layout__divider (string): 'false' by default. The editor's opt-in divider.
@@ -52,7 +67,7 @@
 {% set layout__attributes = {
   'data-component-has-divider': layout__divider == 'true' ? 'true' : 'false',
   'data-component-padding': layout__padding|default('default'),
-  'data-component-theme': component__theme|default('default'),
+  'data-section-theme': component__theme|default('default'),
   'data-component-layout': component__layout|default('fifty-fifty'),
   'data-component-width': component__width|default('site'),
   'class': bem(

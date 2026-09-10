@@ -205,7 +205,7 @@ export const createSectionWrapper = (theme, content, options = {}) => {
 
   return `
     <div data-component-has-divider="${hasDivider}"
-         data-component-theme="${theme}"
+         data-section-theme="${theme}"
          data-component-width="${width}"
          class="yds-layout"
          data-embedded-components=""
@@ -248,7 +248,7 @@ export const createMultiColumnLayout = (
   tertiary = '',
   theme = 'one',
 ) => `
-  <div data-component-theme="${theme}"
+  <div data-section-theme="${theme}"
        data-component-width="site"
        data-layout="${layout}"
        class="yds-layout yds-layout--${layout}">

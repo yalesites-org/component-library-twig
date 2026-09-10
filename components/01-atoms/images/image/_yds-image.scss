@@ -42,9 +42,9 @@ figure {
   }
 
   .yds-layout:is(
-      [data-component-theme='one'],
-      [data-component-theme='three'],
-      [data-component-theme='four']
+      [data-section-theme='one'],
+      [data-section-theme='three'],
+      [data-section-theme='four']
     )
     & {
     color: var(--color-layout-content);
@@ -52,9 +52,9 @@ figure {
 }
 
 .yds-layout:is(
-    [data-component-theme='one'],
-    [data-component-theme='three'],
-    [data-component-theme='four']
+    [data-section-theme='one'],
+    [data-section-theme='three'],
+    [data-section-theme='four']
   )
   .caption
   a {
@@ -63,7 +63,7 @@ figure {
   color: var(--color-link-base);
 }
 
-.yds-layout[data-component-theme='five'] .caption {
+.yds-layout[data-section-theme='five'] .caption {
   color: var(--color-slot-seven);
 
   a {

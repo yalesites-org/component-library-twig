@@ -28,10 +28,14 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 // has no ancestor-level --color-text-shadow to inherit in the first place.
 @mixin descender-halo-defaults {
   // Theme six surfaces should not render descender text-shadow halos.
-  // Excludes .yds-layout: section theme six (#1518) DOES set an
-  // ancestor-level --color-text-shadow, unlike the block components this
-  // exception was written for.
-  [data-component-theme='six']:not(.yds-layout) & {
+  // -
+  // The `:not(.yds-layout)` this rule used to carry is gone: it existed only to
+  // stop the rule reaching a SECTION dialled six, which does set an
+  // ancestor-level `--color-text-shadow` (#1518), unlike the block components
+  // this exception was written for. Sections now emit `data-section-theme`
+  // (YaleSites-Internal#1630), so the exclusion is expressed by the attribute
+  // name rather than patched back out with a negation.
+  [data-component-theme='six'] & {
     --color-text-shadow: transparent;
   }
 }

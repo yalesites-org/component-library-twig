@@ -41,7 +41,7 @@ $divider-positions: left, center;
     }
   }
 
-  [data-component-theme]:not([data-component-theme='default']) & {
+  [data-section-theme]:not([data-section-theme='default']) & {
     --color-divider: var(--color-layout-border);
   }
 }

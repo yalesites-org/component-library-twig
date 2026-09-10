@@ -87,15 +87,15 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-border-selected: var(--color-basic-white);
   }
 
-  [data-component-theme]:not([data-component-theme='default']) & {
+  [data-section-theme]:not([data-section-theme='default']) & {
     --color-tabs-background: var(--color-layout-theme);
     --color-tabs-selected: var(--color-layout-theme);
     --color-action: var(--color-layout-border);
   }
 
-  [data-component-theme]:not(
-      [data-component-theme='default'],
-      [data-component-theme='two']
+  [data-section-theme]:not(
+      [data-section-theme='default'],
+      [data-section-theme='two']
     )
     & {
     --color-border: var(--color-gray-400);

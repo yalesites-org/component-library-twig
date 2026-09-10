@@ -124,7 +124,7 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   );
 
   // set the border color to the color slot one so there is a default set
-  [data-component-theme='default'] & {
+  [data-section-theme='default'] & {
     --color-link-grid-action: var(--color-slot-one);
   }
 
