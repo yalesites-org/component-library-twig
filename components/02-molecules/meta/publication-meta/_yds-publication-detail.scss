@@ -31,7 +31,10 @@
 }
 
 .publication-detail {
-  color: var(--color-basic-brown-gray);
+  // Painted on the enclosing section's surface, not on one this component
+  // owns (YaleSites-Internal#1662). The grey stays as the CSS fallback so an
+  // unthemed page renders identically.
+  color: var(--color-section-foreground, var(--color-basic-brown-gray));
 
   /* Each metadata cell is a <dl><dt><dd> for proper term–definition
    * semantics. Reset browser defaults so the cells slot into the
@@ -165,7 +168,7 @@
     display: block;
     margin-bottom: var(--size-spacing-3);
     font-weight: var(--font-weights-yalenew-bold);
-    color: var(--color-gray-800);
+    color: var(--color-section-foreground, var(--color-gray-800));
   }
 
   /* Author list — wraps inline */

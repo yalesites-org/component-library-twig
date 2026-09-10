@@ -21,6 +21,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { join } from 'node:path';
 
 import { contrastRatio, parseHsl, AA_NORMAL_TEXT } from './contrast-ratio.mjs';
@@ -28,6 +29,12 @@ import {
   SECTION_THEMES,
   sectionBackgrounds,
 } from './section-background-contrast.mjs';
+
+// `createRequire` rather than an import attribute, for the reason
+// `approved-pairings.mjs` gives: prettier -- which `npm run test` runs --
+// cannot parse `with { type: 'json' }` yet.
+const require = createRequire(import.meta.url);
+const tokens = require('@yalesites-org/tokens/build/json/tokens.json');
 
 const LAYOUT_SCSS = new URL(
   '../../03-organisms/layout/layout/_yds-layout.scss',
@@ -371,6 +378,68 @@ const SECTION_SURFACE_CONSUMERS = [
     file: '../../02-molecules/tabs/_yds-tabs.scss',
     fallback: '--color-basic-white',
   },
+  // Added by YaleSites-Internal#1662. Same defect as the select / description
+  // / taxonomy rows above, found the same way -- by measurement, because
+  // nothing was undefined and nothing was dropped. The meta molecules paint no
+  // background of their own, so their date-times, counters, field labels,
+  // format overlines and audience lists sit directly on whatever the enclosing
+  // section painted, while their colour was a flat neutral chosen against a
+  // white page. Measured across 7 global themes x 6 section themes: 128 of 168
+  // pairings below 4.5:1, worst 1.00:1.
+  //
+  // Multiple rows per file, as the four `.tabs` rows above already do. That
+  // covers the SPELLING of each fallback; the per-declaration COUNT test
+  // further down is what stops one of two declarations sharing a fallback from
+  // satisfying the row on its own -- which `event-meta` would otherwise do
+  // twice over.
+  {
+    name: '.basic-meta secondary text',
+    file: '../../02-molecules/meta/basic-meta/_yds-basic-meta.scss',
+    fallback: '--color-gray-600',
+  },
+  {
+    name: '.event-meta base + past-event icon',
+    file: '../../02-molecules/meta/event-meta/_yds-event-meta.scss',
+    fallback: '--color-basic-brown-gray',
+  },
+  {
+    name: '.event-meta overline + audience',
+    file: '../../02-molecules/meta/event-meta/_yds-event-meta.scss',
+    fallback: '--color-gray-500',
+  },
+  {
+    name: '.event-meta__event__label',
+    file: '../../02-molecules/meta/event-meta/_yds-event-meta.scss',
+    fallback: '--color-gray-800',
+  },
+  // The localist cell hairline. Every sibling border in that rule draws from
+  // `--color-divider`, and this one was left flat. It is NOT converted to
+  // `--color-divider` to match them: on a themed section the two resolve to
+  // the same value (`--color-layout-content`, _yds-layout.scss lines 315/317),
+  // so there is nothing to gain there, and off one `--color-divider` defaults
+  // to `--color-gray-500` -- darkening this deliberately lighter hairline on
+  // every unthemed page, which is a design change this accessibility fix has
+  // no business making.
+  {
+    name: '.event-meta localist cell hairline',
+    file: '../../02-molecules/meta/event-meta/_yds-event-meta.scss',
+    fallback: '--color-gray-200',
+  },
+  {
+    name: 'publication-meta text + label mixins',
+    file: '../../02-molecules/meta/publication-meta/_yds-publication-meta.scss',
+    fallback: '--color-gray-500',
+  },
+  {
+    name: '.publication-detail base',
+    file: '../../02-molecules/meta/publication-meta/_yds-publication-detail.scss',
+    fallback: '--color-basic-brown-gray',
+  },
+  {
+    name: '.publication-detail__field__label',
+    file: '../../02-molecules/meta/publication-meta/_yds-publication-detail.scss',
+    fallback: '--color-gray-800',
+  },
 ];
 
 SECTION_SURFACE_CONSUMERS.forEach(({ name, file, fallback }) => {
@@ -440,4 +509,132 @@ test('no tab border role is left on a flat colour', () => {
       );
     });
   });
+});
+
+/**
+ * The meta molecules, per DECLARATION (YaleSites-Internal#1662).
+ *
+ * The `SECTION_SURFACE_CONSUMERS` rows above cover the spelling of each
+ * fallback, but they match on file CONTENT -- so one file holding two
+ * declarations that share a fallback is satisfied by converting either one.
+ * `event-meta` has exactly that shape twice over (two `--color-basic-brown-gray`
+ * declarations, two `--color-gray-500`). Counting is what closes the hole, and
+ * it is the same shape as the tab-border test above.
+ *
+ * `profile-meta` is deliberately absent: it paints its own background and
+ * re-declares `--color-text` / `--color-heading` per theme, which is the
+ * pattern the other four are being brought up to, not a defect.
+ * `resource-meta` is absent because it has no flat foreground at all.
+ *
+ * `flatByDesign` is the count each file may still carry, and why. Only one
+ * survives: `.event-meta__multiple-dates` sets
+ * `background-color: var(--color-gray-100)` and `color: var(--color-gray-800)`
+ * in the same rule, so it paints the surface its own text sits on. That pairing
+ * is internally consistent at 15.03:1 and the section never reaches it --
+ * exactly the reason #1631 records for excluding `audio`. Recording it here
+ * keeps it from reading as an oversight, and keeps this file's entry in
+ * `foreground-purity-baseline.json` honest at 1 rather than 0.
+ */
+const META_MOLECULES = {
+  '_yds-basic-meta.scss': {
+    file: '../../02-molecules/meta/basic-meta/_yds-basic-meta.scss',
+    flatByDesign: 0,
+  },
+  '_yds-event-meta.scss': {
+    file: '../../02-molecules/meta/event-meta/_yds-event-meta.scss',
+    flatByDesign: 1,
+  },
+  '_yds-publication-meta.scss': {
+    file: '../../02-molecules/meta/publication-meta/_yds-publication-meta.scss',
+    flatByDesign: 0,
+  },
+  '_yds-publication-detail.scss': {
+    file: '../../02-molecules/meta/publication-meta/_yds-publication-detail.scss',
+    flatByDesign: 0,
+  },
+};
+
+/**
+ * A palette token as the DIRECT value of `color:`.
+ *
+ * Anchored on `color:` immediately followed by the palette `var()`, so the
+ * converted form -- `color: var(--color-section-foreground, var(--color-gray-500))`
+ * -- does not match even though the same token appears inside it as the
+ * fallback. The leading class keeps it off `background-color:` and
+ * `-webkit-text-fill-color:`.
+ */
+const FLAT_FOREGROUND =
+  /(?:^|[;{\s])color:\s*var\(--color-(?:gray-\d+|basic-[\w-]+)\)/g;
+
+Object.entries(META_MOLECULES).forEach(([name, { file, flatByDesign }]) => {
+  test(`${name} keeps no secondary text on a flat neutral`, () => {
+    const source = readFileSync(new URL(file, import.meta.url), 'utf8');
+    const found = source.match(FLAT_FOREGROUND) ?? [];
+
+    // Equality, not `<=`. Too FEW means the recorded exception was converted
+    // too and this entry is now stale -- the same two-way ratchet
+    // `foreground-purity-baseline.json` uses, for the same reason: an
+    // allowance nobody has to justify stops being an allowance.
+    assert.equal(
+      found.length,
+      flatByDesign,
+      `${name}: ${
+        found.length
+      } flat foreground(s), expected ${flatByDesign} -- ${found
+        .map((declaration) => declaration.trim())
+        .join(' | ')}`,
+    );
+  });
+});
+
+/**
+ * The measurement the conversion rests on, both directions.
+ *
+ * The grays fail and the section's own foreground passes -- on every one of the
+ * 42 (global theme x section theme) pairings. Asserting the "before" half too
+ * is what keeps this from going stale: if a palette change ever made the grays
+ * legible everywhere, this test says so instead of leaving a conversion nobody
+ * can justify.
+ */
+test('meta secondary text: the grays fail and the section foreground passes', () => {
+  const grays = {
+    '--color-gray-500': tokens.color.gray['500'],
+    '--color-gray-600': tokens.color.gray['600'],
+    '--color-gray-800': tokens.color.gray['800'],
+    '--color-basic-brown-gray': tokens.color.basic['brown-gray'],
+  };
+  const backgrounds = sectionBackgrounds();
+
+  Object.entries(grays).forEach(([name, value]) => {
+    const gray = parseHsl(value);
+    const failing = backgrounds.filter(
+      (background) =>
+        contrastRatio(parseHsl(background.backgroundValue), gray) <
+        AA_NORMAL_TEXT,
+    );
+
+    assert.ok(
+      failing.length > 0,
+      `${name} now clears AA on all ${backgrounds.length} section backgrounds -- ` +
+        'the reason meta text was moved off it no longer holds; re-check #1662',
+    );
+  });
+
+  const contractFailures = backgrounds.filter(
+    (background) =>
+      contrastRatio(
+        parseHsl(background.backgroundValue),
+        parseHsl(background.slots[background.roles.content]),
+      ) < AA_NORMAL_TEXT,
+  );
+
+  assert.equal(
+    contractFailures.length,
+    0,
+    `the section foreground meta text now follows must clear AA everywhere: ${contractFailures
+      .map(
+        (background) => `${background.globalTheme}/${background.sectionTheme}`,
+      )
+      .join(', ')}`,
+  );
 });

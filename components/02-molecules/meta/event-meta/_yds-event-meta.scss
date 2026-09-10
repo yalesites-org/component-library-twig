@@ -4,7 +4,11 @@
 $event-meta-borders-max: tokens.$break-l - 0.5;
 
 .event-meta {
-  color: var(--color-basic-brown-gray);
+  // Painted on the enclosing section's surface, not on one this component
+  // owns, so the colour has to come from the section (YaleSites-Internal#1662).
+  // The grey stays as the CSS fallback: off a themed section the property is
+  // unset and rendering is unchanged by construction.
+  color: var(--color-section-foreground, var(--color-basic-brown-gray));
 }
 
 .event-meta__date {
@@ -103,7 +107,13 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
           &.event-meta__audience-wrapper + .event-meta__event-topics-wrapper {
             &::before {
               content: '';
-              border-left: var(--border-thickness-1) solid var(--color-gray-200);
+
+              // Every other border in this rule is drawn from
+              // `--color-divider`, which #1613 re-points to the section's
+              // content colour. This hairline was left flat, so it vanished
+              // on the dark section backgrounds (YaleSites-Internal#1662).
+              border-left: var(--border-thickness-1) solid
+                var(--color-section-foreground, var(--color-gray-200));
               position: absolute;
               left: 0;
               top: var(--size-spacing-6);
@@ -169,7 +179,7 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
   @include tokens.body-s;
 
   font-weight: var(--font-weights-yalenew-bold);
-  color: var(--color-gray-800);
+  color: var(--color-section-foreground, var(--color-gray-800));
 }
 
 // event types
@@ -213,7 +223,7 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 
   margin-top: 0;
   margin-bottom: var(--size-spacing-3);
-  color: var(--color-gray-500);
+  color: var(--color-section-foreground, var(--color-gray-500));
   font-variant-caps: small-caps;
   text-transform: lowercase;
   letter-spacing: 0.5px;
@@ -356,7 +366,7 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 .event-meta__day .past-event-icon svg {
   width: 1.5rem;
   height: 1.5rem;
-  color: var(--color-basic-brown-gray);
+  color: var(--color-section-foreground, var(--color-basic-brown-gray));
 }
 
 // directions
@@ -383,7 +393,7 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
   display: flex;
   flex-flow: row wrap;
   margin-top: 0;
-  color: var(--color-gray-500);
+  color: var(--color-section-foreground, var(--color-gray-500));
   gap: var(--size-spacing-3);
 }
 
