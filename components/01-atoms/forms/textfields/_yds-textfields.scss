@@ -40,13 +40,30 @@ $form-item-icon-size: 1.7rem;
     content: '*';
   }
 
-  // Light section backgrounds must keep the dark asterisk. `five` paints
-  // slot-nine (a very light teal) and was missing from this list, so the
-  // required-field marker went white and disappeared (YaleSites-Internal#1628).
+  // Light backgrounds must keep the dark asterisk; the marker only turns white
+  // because the surface behind it is dark. `five` paints slot-nine (a very
+  // light teal) and was missing from this list, so the required-field marker
+  // went white and disappeared (YaleSites-Internal#1628).
+  // -
+  // Both dials, spelled out -- see the note in `00-tokens/typography`. A form
+  // can sit on a dark section or inside a dark-dialled block (accordion
+  // content, for one), so the section/block dial split
+  // (YaleSites-Internal#1630) must not silently drop either case.
+  // -
+  // The exclusion list is deliberately IDENTICAL on both branches. This
+  // replaced one bare `[data-component-theme]` selector that matched a section
+  // and a block alike, so anything excluded on one branch and not the other
+  // would be a behaviour change smuggled in by the rename.
   [data-component-theme]:not(
       [data-component-theme='default'],
       [data-component-theme='two'],
       [data-component-theme='five']
+    )
+    &,
+  [data-section-theme]:not(
+      [data-section-theme='default'],
+      [data-section-theme='two'],
+      [data-section-theme='five']
     )
     & {
     &::after {

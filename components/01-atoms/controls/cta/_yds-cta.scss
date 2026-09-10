@@ -350,9 +350,11 @@ $cta-outline-weights: (
   // itself, which beats an inherited section value. Dropping to the base rules
   // would therefore hand every button in every themed section back to its own
   // theme-one palette -- a platform-wide restyle, not an accessibility fix.
-  // Removing the selector is a deliberate design change and belongs with the
-  // block/section dial split in #1630, not here.
-  .yds-layout[data-component-theme]:not([data-component-theme='default']) & {
+  // The block/section dial split (#1630) re-keyed this selector onto the
+  // section's own attribute but deliberately did NOT remove it: the rename does
+  // not change which buttons the rule reaches, so the platform-wide restyle
+  // above is still exactly what deleting it would cause.
+  .yds-layout[data-section-theme]:not([data-section-theme='default']) & {
     &[data-cta-style='filled'] {
       --color-cta-text: var(--color-section-background);
       --color-cta-text-hover: var(--color-section-accent);

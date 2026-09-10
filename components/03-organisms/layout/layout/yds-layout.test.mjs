@@ -47,7 +47,7 @@ const LINK_SELECTORS = [
 ];
 
 /**
- * Body of the `&[data-component-theme='<theme>'] { … }` block.
+ * Body of the `&[data-section-theme='<theme>'] { … }` block.
  *
  * Terminates on a closing brace at the block's own indentation, so nested
  * rules inside the block are included rather than cutting the match short.
@@ -55,7 +55,7 @@ const LINK_SELECTORS = [
 function themeBlock(theme) {
   const match = scss().match(
     new RegExp(
-      `&\\[data-component-theme='${theme}'\\]\\s*\\{([\\s\\S]*?)\\n {2}\\}`,
+      `&\\[data-section-theme='${theme}'\\]\\s*\\{([\\s\\S]*?)\\n {2}\\}`,
     ),
   );
   return match ? match[1] : null;
@@ -104,7 +104,7 @@ test('section theme six scopes --color-text-shadow to links, not just the root',
   // slot-three background. Reported on component-library-twig#707.
   const body = themeBlock('six');
 
-  assert.ok(body, "the &[data-component-theme='six'] block is gone");
+  assert.ok(body, "the &[data-section-theme='six'] block is gone");
   assert.ok(
     hasLinkScopedTextShadow(body),
     'section theme six needs the same link-scoped --color-text-shadow block ' +
@@ -129,7 +129,7 @@ test("an unthemed section re-points the link grid's descender halo", () => {
   // it needs its own copy too. Reported on component-library-twig#714.
   const body = themeBlock('default');
 
-  assert.ok(body, "the &[data-component-theme='default'] block is gone");
+  assert.ok(body, "the &[data-section-theme='default'] block is gone");
 
   const linkGrid = body.match(/\.link-grid__link \{([\s\S]*?)\}/);
 
@@ -217,7 +217,7 @@ test('the organism is the single source of the section signature', () => {
 
   assert.ok(attrs, 'the layout__attributes map is gone');
   [
-    'data-component-theme',
+    'data-section-theme',
     'data-component-layout',
     'data-component-padding',
     'data-component-has-divider',
@@ -232,6 +232,18 @@ test('the organism is the single source of the section signature', () => {
     attrs[1],
     /bem\(\s*layout__base_class,[\s\S]*?\['layout'\]/,
     "the signature must carry both the yds-layout base class and 'layout'",
+  );
+
+  // The section dial is `data-section-theme`; `data-component-theme` is the
+  // BLOCK dial and maps a different set of colour slots. A section emitting it
+  // puts the block colour map back on the section wrapper, which is the bug
+  // YaleSites-Internal#1630 split the attribute to make impossible. Asserted
+  // here rather than in `section-dial-split.test.mjs` because this is already
+  // the test that owns the signature's contents.
+  assert.doesNotMatch(
+    attrs[1],
+    /'data-component-theme':/,
+    'data-component-theme belongs to blocks, not to the section signature',
   );
 });
 
@@ -293,7 +305,7 @@ test('one column is excluded from the default-theme section margins', () => {
   // cannot silently regress one column.
   assert.match(
     scss(),
-    /&\[data-component-theme='default'\]:not\(\[data-component-layout='one-column'\]\) \{/,
+    /&\[data-section-theme='default'\]:not\(\[data-component-layout='one-column'\]\) \{/,
     'the default-theme section-margin rule must exclude one-column',
   );
 });

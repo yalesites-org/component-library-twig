@@ -56,7 +56,7 @@ const renderGlobalTheme = () => {
     });
 
     return `
-      <div data-component-has-divider="false" data-component-theme="${theme}" data-component-width="site" data-component-layout="${layout}" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
+      <div data-component-has-divider="false" data-section-theme="${theme}" data-component-width="site" data-component-layout="${layout}" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
         <div class="yds-layout__inner">
           <div class="yds-layout__primary" style="width: 100%">
             ${primaryImage}

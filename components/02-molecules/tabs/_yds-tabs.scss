@@ -116,15 +116,20 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   // that repaints itself between the section and these tabs resets it and the
   // tabs follow THAT surface (YaleSites-Internal#1628).
   // -
-  // Anchoring the ancestor on `.yds-layout` is a tidy-up, not a fix, and
-  // changes no rendering. The previous bare `[data-component-theme]` also
+  // Anchoring the ancestor on `.yds-layout` was a tidy-up, not a fix, and
+  // changed no rendering. The previous bare `[data-component-theme]` also
   // matched a themed callout or accordion, but `--color-layout-*` is declared
   // only on `.yds-layout`: with a themed section above, it matched through the
   // section anyway and resolved to the same value; with no themed section
   // above, it resolved to nothing and the declarations were dropped. Naming
   // the element that actually owns the properties says which of those two the
   // rule means.
-  .yds-layout[data-component-theme]:not([data-component-theme='default']) & {
+  // -
+  // The dial split (YaleSites-Internal#1630) then made that explicit in the
+  // attribute itself: a section emits `data-section-theme`, so this rule can
+  // only ever mean the section. The `&[data-component-theme='...']` dials
+  // above are the tab set's OWN colour picker and stay on the block attribute.
+  .yds-layout[data-section-theme]:not([data-section-theme='default']) & {
     --color-tabs-background: var(--color-section-background);
     --color-tabs-selected: var(--color-section-background);
 

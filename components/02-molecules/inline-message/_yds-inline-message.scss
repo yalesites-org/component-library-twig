@@ -89,7 +89,13 @@ $component-inline-message-themes: map.deep-get(
   }
 
   // For accessibility reason set lighter visited links color.
-  [data-global-theme='four'] [data-component-theme='three'] & {
+  // -
+  // The SECTION's dial, not the inline message's own: `.inline-message` is the
+  // element that carries `data-component-theme` (see the twig), so a descendant
+  // combinator here can only be matching an ancestor, and the only ancestor
+  // that carries a colour dial is the Layout Builder section. The message's own
+  // dial is handled by the `&[data-component-theme='…']` blocks below.
+  [data-global-theme='four'] [data-section-theme='three'] & {
     --color-link-visited-base: var(--color-gray-100);
     --color-link-visited-hover: var(--color-slot-eight);
   }

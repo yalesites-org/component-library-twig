@@ -3,6 +3,19 @@
 
 $themes: map.deep-get(tokens.$tokens, 'component-themes');
 
+// The BLOCK colour dial, and only the block dial.
+// -
+// The selector is bare on purpose -- it has to reach any component wrapper,
+// wherever it sits. That is safe because a Layout Builder SECTION emits
+// `data-section-theme` instead (YaleSites-Internal#1630); it used to emit this
+// same attribute, so this rule also landed on the section wrapper and mapped
+// the `component-themes` token layer onto an element whose colours come from a
+// different slot mapping in `03-organisms/layout/layout/_yds-layout.scss`. One
+// attribute with two mappings is why no colour reset could be correct for both.
+// -
+// So: do NOT add `[data-section-theme]` here. Section colours belong in
+// `_yds-layout.scss`, which derives them from `--color-layout-theme` /
+// `--color-layout-content`.
 @each $theme, $value in $themes {
   [data-component-theme='#{$theme}'] {
     --color-slot-one: var(--component-themes-#{$theme}-slot-one);

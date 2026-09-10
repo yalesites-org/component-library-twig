@@ -59,17 +59,20 @@ figure {
   // brown-grey above, and `inherit` here keeps that rather than silently
   // lightening every caption on the most common section type.
   // -
-  // Re-keying this off the geometry attribute belongs with the dial split in
-  // #1630; it is kept here so this change stays behaviour-preserving.
+  // The dial split (#1630) deliberately did NOT re-key this onto
+  // `[data-section-theme]`. Doing so would stop it matching an unthemed
+  // section, which is the middle case above -- the caption would fall back to
+  // the brown-grey rather than inheriting body colour. That is a visible change
+  // on the most common section type and needs its own ticket, not a rename.
   [data-component-layout] & {
     color: var(--color-section-foreground, inherit);
   }
 }
 
 .yds-layout:is(
-    [data-component-theme='one'],
-    [data-component-theme='three'],
-    [data-component-theme='four']
+    [data-section-theme='one'],
+    [data-section-theme='three'],
+    [data-section-theme='four']
   )
   .caption
   a {
@@ -78,7 +81,7 @@ figure {
   color: var(--color-link-base);
 }
 
-.yds-layout[data-component-theme='five'] .caption {
+.yds-layout[data-section-theme='five'] .caption {
   color: var(--color-slot-seven);
 
   a {

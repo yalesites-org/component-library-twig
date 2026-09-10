@@ -37,7 +37,7 @@ const layoutScss = () =>
   readComponent('03-organisms/layout/layout/_yds-layout.scss');
 
 /**
- * Body of the shared `&[data-component-theme]:not([… 'default']) { … }` rule.
+ * Body of the shared `&[data-section-theme]:not([… 'default']) { … }` rule.
  *
  * Terminates on a closing brace at the block's OWN indentation rather than on
  * the first `}`, so nested rules inside the block are included rather than
@@ -57,7 +57,7 @@ function themedSectionBlock() {
   const match = layoutScss()
     .replace(/^\s*\/\/.*$/gm, '')
     .match(
-      /&\[data-component-theme\]:not\(\[data-component-theme='default'\]\)\s*\{([\s\S]*?)\n {2}\}/,
+      /&\[data-section-theme\]:not\(\[data-section-theme='default'\]\)\s*\{([\s\S]*?)\n {2}\}/,
     );
   return match ? match[1] : null;
 }

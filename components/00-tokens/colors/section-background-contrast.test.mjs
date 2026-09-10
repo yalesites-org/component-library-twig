@@ -36,7 +36,7 @@ const LAYOUT_SCSS = new URL(
 
 /**
  * Pull `theme -> { --color-layout-theme, --color-layout-content }` out of the
- * SCSS's `&[data-component-theme='N'] { … }` blocks.
+ * SCSS's `&[data-section-theme='N'] { … }` blocks.
  *
  * Only the two painted properties are read. Everything else in those blocks
  * (links, headings, visited states) is styling this audit does not model, and
@@ -46,7 +46,7 @@ const LAYOUT_SCSS = new URL(
 function readLayoutScss() {
   const source = readFileSync(LAYOUT_SCSS, 'utf8');
   const blocks = source.matchAll(
-    /&\[data-component-theme='(\w+)'\]\s*\{([\s\S]*?)\n {2}\}/g,
+    /&\[data-section-theme='(\w+)'\]\s*\{([\s\S]*?)\n {2}\}/g,
   );
   return Object.fromEntries(
     [...blocks]
@@ -170,7 +170,7 @@ test('the two known --color-layout-border failures are still exactly two', () =>
 function readSharedRule() {
   const source = readFileSync(LAYOUT_SCSS, 'utf8');
   const match = source.match(
-    /&\[data-component-theme\]:not\(\[data-component-theme='default'\]\)\s*\{([\s\S]*?)\n {2}\}/,
+    /&\[data-section-theme\]:not\(\[data-section-theme='default'\]\)\s*\{([\s\S]*?)\n {2}\}/,
   );
 
   return match ? match[1] : null;
@@ -181,7 +181,7 @@ test('the shared themed-section rule exists and drives both properties', () => {
 
   assert.ok(
     body,
-    'the shared .yds-layout[data-component-theme]:not(default) rule is gone',
+    'the shared .yds-layout[data-section-theme]:not(default) rule is gone',
   );
   assert.match(
     body,
@@ -405,9 +405,12 @@ test('the accordion group heading no longer carves out section theme two', () =>
   const heading = source.match(/\.accordion__heading \{([\s\S]*?)\n\}/);
 
   assert.ok(heading, 'the .accordion__heading rule is gone');
+  // Either spelling: the carve-out predates the section/block dial split
+  // (YaleSites-Internal#1630), so a reintroduced one could be written against
+  // either attribute.
   assert.doesNotMatch(
     heading[1],
-    /\[data-component-theme='two'\]/,
+    /\[data-(component|section)-theme='two'\]/,
     'the section-theme-two carve-out should be gone from the group heading',
   );
 });

@@ -30,7 +30,7 @@ listType:
   control: select
 
 sectionTheme:
-  twigProp: data-component-theme
+  twigProp: data-section-theme
   name: Section Theme
   type: select
   required: false

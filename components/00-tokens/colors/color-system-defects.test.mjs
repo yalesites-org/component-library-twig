@@ -310,6 +310,14 @@ test('themeable colors are not baked in as Sass literals', () => {
  * Section theme five paints a very light background (slot-nine), so the
  * required-field asterisk turning white makes it invisible. The exclusion list
  * named only `default` and `two`.
+ *
+ * The dial split (YaleSites-Internal#1630) turned the one bare
+ * `[data-component-theme]` ancestor this rule used to carry into TWO branches:
+ * the block dial keeps that attribute, and a Layout Builder section now emits
+ * `data-section-theme`. Both are checked, and both must carry the SAME
+ * exclusion list -- a theme excluded on one branch and not the other is the
+ * regression the split could most easily smuggle in, and it is invisible in a
+ * diff that only reads one branch.
  */
 test('light section themes are excluded from white-on-dark form styling', () => {
   const textfields = readFileSync(
@@ -324,28 +332,42 @@ test('light section themes are excluded from white-on-dark form styling', () => 
   );
 
   // The guard spans several lines, so normalise whitespace before matching.
-  // Anchored on the `&::after` block it introduces, not just the first
-  // `[data-component-theme]:not(` in the file -- otherwise adding an unrelated
-  // guard above this one would leave the test happily validating the wrong
-  // selector while the asterisk regressed.
-  const guard = textfields
-    .replace(/\s+/g, ' ')
-    .match(
-      /\[data-component-theme\]:not\(([^)]*(?:\([^)]*\)[^)]*)*)\) & \{ &::after \{ color: var\(--color-basic-white\)/,
-    );
-
-  assert.ok(
-    guard,
-    'expected the white required-asterisk rule to be behind a :not() ' +
-      'light-theme exclusion guard in _yds-textfields.scss',
+  // Anchored on the `&::after` block the selector list introduces, not just the
+  // first `:not(` in the file -- otherwise adding an unrelated guard above this
+  // one would leave the test happily validating the wrong selector while the
+  // asterisk regressed.
+  const flat = textfields.replace(/\s+/g, ' ');
+  const rule = flat.match(
+    /((?:\[data-(?:component|section)-theme\]:not\([^)]*(?:\([^)]*\)[^)]*)*\) &,? ?)+)\{ &::after \{ color: var\(--color-basic-white\)/,
   );
 
-  ['default', 'two', 'five'].forEach((theme) => {
-    assert.ok(
-      guard[1].includes(`[data-component-theme='${theme}']`),
-      `section theme '${theme}' has a light background and must be excluded ` +
-        `from the white required-asterisk rule; guard is: ${guard[1].trim()}`,
+  assert.ok(
+    rule,
+    'expected the white required-asterisk rule to be behind :not() ' +
+      'light-theme exclusion guards in _yds-textfields.scss',
+  );
+
+  ['component', 'section'].forEach((dial) => {
+    const guard = rule[1].match(
+      new RegExp(
+        `\\[data-${dial}-theme\\]:not\\(([^)]*(?:\\([^)]*\\)[^)]*)*)\\)`,
+      ),
     );
+
+    assert.ok(
+      guard,
+      `expected a data-${dial}-theme branch on the white required-asterisk ` +
+        `rule; selector list is: ${rule[1].trim()}`,
+    );
+
+    ['default', 'two', 'five'].forEach((theme) => {
+      assert.ok(
+        guard[1].includes(`[data-${dial}-theme='${theme}']`),
+        `theme '${theme}' has a light background and must be excluded from ` +
+          `the white required-asterisk rule on the data-${dial}-theme ` +
+          `branch; guard is: ${guard[1].trim()}`,
+      );
+    });
   });
 });
 
@@ -426,6 +448,11 @@ test('no custom property is declared as a reference to itself', () => {
  * Asserted per section theme, not once for the file. A single "some declaration
  * exists" check would stay green if five of the six per-theme blocks lost their
  * declaration, which is exactly the regression it is here to catch.
+ *
+ * Keyed on `data-section-theme`: the dial split (YaleSites-Internal#1630) moved
+ * the section's own attribute off `data-component-theme`, which blocks now own
+ * alone. The theme list is still read out of the file, so this follows the SCSS
+ * rather than restating it.
  */
 test('every themed section declares a real --color-link-base for the focus ring', () => {
   const layoutPath = path.join(
@@ -444,7 +471,7 @@ test('every themed section declares a real --color-link-base for the focus ring'
   const themes = [
     ...new Set(
       lines.flatMap((line) =>
-        [...line.matchAll(/\[data-component-theme='([a-z]+)'\]/g)].map(
+        [...line.matchAll(/\[data-section-theme='([a-z]+)'\]/g)].map(
           (match) => match[1],
         ),
       ),
@@ -459,7 +486,7 @@ test('every themed section declares a real --color-link-base for the focus ring'
   themes.forEach((theme) => {
     // The block for this theme, from its selector to the closing brace.
     const start = lines.findIndex((line) =>
-      line.startsWith(`&[data-component-theme='${theme}']`),
+      line.startsWith(`&[data-section-theme='${theme}']`),
     );
     assert.notEqual(start, -1, `no block found for section theme '${theme}'`);
 

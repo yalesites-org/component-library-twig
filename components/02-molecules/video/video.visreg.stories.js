@@ -8,7 +8,10 @@ import {
   sectionThemes,
 } from '../../_storybook/theme-constants';
 import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
-import { createThemeVariations } from '../../_storybook/playground-utils';
+import {
+  createSectionWrapper,
+  createThemeVariations,
+} from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -27,18 +30,28 @@ const renderGlobalTheme = () => {
   const text = videoData.video__text;
   const placement = videoData.video__placement;
 
-  // Render function for video variations
-  const renderVideo = (theme) => `
-    <div data-component-theme="${theme}">
-      ${videoTwig({
+  // Render function for video variations.
+  //
+  // Wrapped with `createSectionWrapper`, which emits the real section signature
+  // (`class="yds-layout"` + `data-section-theme`). This grid iterates
+  // `sectionThemes` and labels its axis "Section Theme", but it used to
+  // hand-roll `<div data-component-theme="…">` -- no `yds-layout` class, so
+  // none of `_yds-layout.scss` applied and it was rendering the BLOCK colour
+  // map instead (and nothing at all for `default` and `six`, which the block
+  // map does not define). Corrected with the dial split,
+  // YaleSites-Internal#1630, since visual regression is the net for exactly
+  // that class of bug.
+  const renderVideo = (theme) =>
+    createSectionWrapper(
+      theme,
+      videoTwig({
         ...videoData,
         video__heading: heading,
         video__text: text,
         video__alignment: placement,
         video__width: 'site',
-      })}
-    </div>
-  `;
+      }),
+    );
 
   return createThemeVariations(
     renderVideo,

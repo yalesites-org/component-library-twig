@@ -14,7 +14,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
   @each $theme, $value in $layout-component-themes {
-    &[data-component-theme='#{$theme}'] {
+    &[data-section-theme='#{$theme}'] {
       // prettier-ignore
       --color-slot-one: var(--component-themes-#{$theme}-slot-one);
       --color-slot-two: var(--component-themes-#{$theme}-slot-two);
@@ -106,7 +106,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
 
   // Component theme overrides: set specific component themes overrides
   /// define component name spaced variables and map them to global theme slots.
-  &[data-component-theme='one'] {
+  &[data-section-theme='one'] {
     --color-layout-theme: var(--color-slot-one);
     --color-layout-content: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
@@ -118,7 +118,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-grid-action: var(--color-slot-eight);
   }
 
-  &[data-component-theme='two'] {
+  &[data-section-theme='two'] {
     --color-layout-theme: var(--color-slot-four);
     --color-layout-content: var(--color-slot-seven);
     --color-link-base: var(--color-slot-seven);
@@ -128,7 +128,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-grid-action: var(--color-slot-seven);
   }
 
-  &[data-component-theme='three'] {
+  &[data-section-theme='three'] {
     --color-layout-theme: var(--color-slot-five);
     --color-layout-content: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
@@ -140,7 +140,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-grid-action: var(--color-slot-four);
   }
 
-  &[data-component-theme='four'] {
+  &[data-section-theme='four'] {
     --color-layout-theme: var(--color-slot-two);
     --color-layout-content: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
@@ -152,7 +152,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-link-grid-action: var(--color-slot-four);
   }
 
-  &[data-component-theme='five'] {
+  &[data-section-theme='five'] {
     --color-layout-theme: var(--color-slot-nine);
     --color-layout-content: var(--color-slot-seven);
     --color-link-base: var(--color-slot-seven);
@@ -173,7 +173,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // slot-three is a mid-light color on all seven global themes (lightness
   // 57%-69%), so it takes the dark-on-light treatment used by themes two and
   // five, not the white-on-dark one used by one/three/four.
-  &[data-component-theme='six'] {
+  &[data-section-theme='six'] {
     --color-layout-theme: var(--color-slot-three);
     --color-layout-content: var(--color-slot-seven);
     --color-text-shadow: var(--color-slot-three);
@@ -235,7 +235,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // introduced. Scoped to the link element because a declaration on the
   // element beats one inherited from an ancestor, which is what the dial's is
   // (component-library-twig#707, extended by #714).
-  &[data-component-theme='default'] {
+  &[data-section-theme='default'] {
     .link-grid__link {
       --color-text-shadow: var(--color-basic-white);
     }
@@ -281,7 +281,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   //    A component that paints its OWN surface shadows it with its own
   //    foreground so the section's does not inherit through -- `text-with-image`,
   //    `content-spotlight-portrait` and `reference-card`'s single collection all
-  //    do, and that shadowing is what keeps rule 4 below safe inside them.
+  //    do, and that shadowing is what keeps rule 5 below safe inside them.
   //    Components that paint a foreground on a surface they do
   //    not own -- a small-caps overline, an eyebrow, a hairline card border --
   //    read it with their existing colour as the CSS fallback:
@@ -293,24 +293,52 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   //    the section's own foreground. One declaration replaces a per-component
   //    override per section theme.
   // -
-  // Deliberately NOT re-pointed here: `--color-text` and `--color-background`.
-  // `_color-component-themes.scss` sets both on this same element from the
-  // `component-themes` token map, which maps different slots than the section
-  // paints, so on section theme two the section paints slot-four (near-white)
-  // while the inherited `--color-text` is white. Fixing that here looked
-  // attractive but re-points the pair for components that consume it TOGETHER
-  // to paint their own panel -- `quick-links` and `tabs` set
-  // `background-color: var(--color-background)` at their root -- whose panel
-  // would then be painted in the section's own background colour and vanish
-  // into it. Those components are already self-consistent; only the ones that
-  // consume `--color-text` on an UNPAINTED surface are wrong, so they read
-  // `--color-section-foreground` instead. Same reason slots six-nine are not
-  // emitted: see `00-tokens/colors/section-background-contrast.txt`, which
-  // shows no single slot is legible on all six section backgrounds.
-  &[data-component-theme]:not([data-component-theme='default']) {
-    // `-background` and `-accent` extend the `--color-section-foreground` name
-    // #1613 introduced rather than inventing a parallel family. See the
-    // preamble above for why a block cannot read `--color-layout-*` directly.
+  // 3. The derived colour set -- `--color-background`, `--color-text` and
+  //    `--color-text-shadow` -- which the section now has to supply itself
+  //    (YaleSites-Internal#1630). `--color-heading` is the one member of the
+  //    group it does not; see the note in the rule body for why.
+  // -
+  //    `_color-component-themes.scss` used to set these on this same element,
+  //    because its selector was a bare `[data-component-theme]` and the section
+  //    carried that attribute too. It maps the `component-themes` token layer,
+  //    which points at different slots than the section paints -- so on section
+  //    theme two the section painted slot-four (near-white) while the inherited
+  //    `--color-text` was a literal white, 1.07:1 to 1.91:1 in all seven global
+  //    themes. That is why #1613 declared `--color-section-foreground` as a
+  //    third property instead of fixing `--color-text` in place: re-pointing it
+  //    then would also have re-pointed it for components that consume the pair
+  //    TOGETHER to paint their own panel (`quick-links` and `tabs` set
+  //    `background-color: var(--color-background)` at their root).
+  // -
+  //    Now that the section emits `data-section-theme`, the block dial no longer
+  //    reaches this element and the pair can be re-pointed safely: a dialled
+  //    block re-declares both ON ITS OWN wrapper, and a declaration on the
+  //    element beats an inherited value at any ancestor specificity. Both of
+  //    those components always emit a dial (`|default('one')`), so they are
+  //    structurally immune rather than immune by luck.
+  // -
+  //    Re-pointed as a set, not one at a time. `yds-audio.scss` paints
+  //    `background-color: var(--color-background)` and reads `var(--color-text)`
+  //    as a pair; moving only the foreground would land the section's white on
+  //    the page-default white. `section-background-contrast.test.mjs` already
+  //    proves `--color-layout-content` clears `--color-layout-theme` at AA in
+  //    all 42 (global theme x section theme) pairings, so the set is safe by the
+  //    same evidence.
+  // -
+  //    `--color-section-foreground` stays. It is not redundant: it is the
+  //    property a component reads WITH A FALLBACK when it paints on a surface it
+  //    does not own, and its absence outside a themed section is what makes
+  //    unthemed rendering byte-identical. `--color-text` has no such fallback
+  //    contract -- it always resolves to something.
+  // -
+  //    Slots six to nine are still not emitted here, for the reason #1613
+  //    recorded: `00-tokens/colors/section-background-contrast.txt` shows no
+  //    single slot is legible on all six section backgrounds.
+  &[data-section-theme]:not([data-section-theme='default']) {
+    // The `--color-section-*` contract (YaleSites-Internal#1628). `-background`
+    // and `-accent` extend the `--color-section-foreground` name #1613
+    // introduced rather than inventing a parallel family. See the preamble
+    // above for why a block cannot read `--color-layout-*` directly.
     --color-section-background: var(--color-layout-theme);
     --color-section-foreground: var(--color-layout-content);
     --color-section-accent: var(--color-layout-border);
@@ -323,7 +351,23 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     --color-action: var(--color-section-accent);
     --color-action-secondary: var(--color-section-background);
 
-    // 3. The link grid's headings, which cannot use the fallback pattern
+    // The derived set from (3) in the preamble. Safe to declare here only
+    // because the block dial no longer lands on this element.
+    --color-background: var(--color-layout-theme);
+    --color-text: var(--color-layout-content);
+
+    // `--color-heading` is deliberately absent: all six per-theme blocks above
+    // already declare it, and each one already resolves to the same slot as
+    // that theme's `--color-layout-content`. Repeating it here would be a
+    // redundant declaration that also outranks them, hiding any future
+    // divergence rather than surfacing it.
+    // -
+    // Mirrors the block dial's own `--color-text-shadow: var(--color-background)`
+    // -- referencing the property rather than the raw slot, so a component that
+    // remaps `--color-background` for its own panel gets a matching halo.
+    --color-text-shadow: var(--color-background);
+
+    // 4. The link grid's headings, which cannot use the fallback pattern
     //    above. A link grid paints no background of its own, so its headings
     //    sit directly on the section surface -- but unlike the overlines and
     //    hairlines in (2), `_yds-link-grid.scss` sets their colour from
@@ -358,7 +402,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       color: var(--color-section-foreground);
     }
 
-    // 4. Link HOVER. A themed section already declares its own
+    // 5. Link HOVER. A themed section already declares its own
     //    `--color-link-hover` at the section root (`slot-eight` on the dark
     //    themes, `slot-seven` on the light ones) -- values chosen to be legible
     //    on what the section paints. None of them ever reached a link.
@@ -412,7 +456,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // true` -- so this rule compiles to an empty block and is dropped, here and
   // at the ~25 other bare call sites in the library. Verified against the
   // built CSS: `dist/css/style.css` contains no
-  // `.yds-layout[data-component-theme=default]` margin rule.
+  // `.yds-layout[data-section-theme=default]` margin rule.
   // -
   // The exclusion matters the moment that mixin is repaired. One column is the
   // generic main-content section every page gets, and it only started carrying
@@ -422,7 +466,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // `.main-content .layout.layout--onecol:last-of-type` (atomic's
   // layout-builder.css), so section margins on top of those would double them
   // on every page of every site.
-  &[data-component-theme='default']:not([data-component-layout='one-column']) {
+  &[data-section-theme='default']:not([data-component-layout='one-column']) {
     @include tokens.spacing-page-section;
   }
 
