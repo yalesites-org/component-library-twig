@@ -568,7 +568,9 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     // Override hover link color since slot 2 could cause contrast issues
     // with the darker background.
     & .reference-card__heading-link {
-      --color-link-hover: var(--color-link-hover);
+      // Inherited copy colour on hover, declared rather than simulated by a
+      // var() cycle (YaleSites-Internal#1629).
+      --color-link-hover: currentcolor;
     }
   }
 

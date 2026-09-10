@@ -71,7 +71,17 @@
     &:not(.is-active):hover {
       background-color: var(--color-link-base);
       border-color: var(--color-link-base);
-      color: white;
+
+      // Was the literal `white`, which no theme could move: wherever
+      // `--color-link-base` resolves light, the hovered page number went white
+      // on near-white and vanished. `--color-action-secondary` is the token for
+      // text on a filled control -- the CTA atom reads it for exactly this.
+      // At `:root` it falls back to white (_global-config.scss), so the
+      // unthemed case renders identically; inside a themed section
+      // `_yds-layout.scss` re-points it to `--color-section-background`, which
+      // is the correct inverse of the link colour the hover paints behind it
+      // (YaleSites-Internal#1632).
+      color: var(--color-action-secondary);
     }
   }
 

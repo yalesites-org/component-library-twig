@@ -2,7 +2,6 @@
 @use '../../00-tokens/functions/map';
 
 $global-quote-themes: map.deep-get(tokens.$tokens, 'global-themes');
-$quote-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 blockquote {
   margin: 0;
@@ -25,14 +24,30 @@ blockquote {
     }
   }
 
-  // Component themes defaults: iterate over each component theme to establish
-  // default variables.
-  @each $theme, $value in $quote-component-themes {
-    &[data-component-theme='#{$theme}'] {
-      // prettier-ignore
-      --color-pull-quote-accent: var(--color-pull-quote-accent);
-    }
-  }
+  // No per-dial default block here on purpose.
+  // This used to be an `@each` loop over the component themes whose entire body
+  // was `--color-pull-quote-accent: var(--color-pull-quote-accent)`. That is a
+  // var() cycle, so the property computed to the guaranteed-invalid value and
+  // both readers of it below were dropped. The two readers degrade differently:
+  // the `bar-left` / `bar-right` accent is a `background-color`, which does not
+  // inherit, so `unset` meant `initial` and the bar was **not painted at all**;
+  // the `quote-left` mark is a `color`, which does inherit, so it was painted
+  // in the copy colour instead of the accent. Both are dial four and five only.
+  // Dials one, two and three never showed it because each has an explicit
+  // override further down. The loop iterates the tokens `component-themes` map,
+  // which is one..five, so dials FOUR and FIVE had the cycle and nothing else:
+  // measured `--color-pull-quote-accent` as the empty (guaranteed-invalid)
+  // value on a standalone pull-quote, against a real colour on one..three.
+  // Removing the loop lets those two dials inherit the `:root` default in
+  // `_global-config.scss`, which is what dial `default` already does.
+  // -
+  // Scope honestly: this one is Storybook-only. `ys_themes.component_overrides.yml`
+  // gives `pull_quote` a `field_style_variation` dial and no `field_style_color`,
+  // and nothing in atomic passes `pull_quote__accent_theme`, so `yds-pull-quote.twig`'s
+  // `|default('one')` always wins on a real site and dials four and five are
+  // unreachable there. The visreg stories do render them. If those dials are ever
+  // exposed to editors they need real slot mappings alongside one/two/three --
+  // right now they simply fall back to the `:root` accent. (YaleSites-Internal#1629)
 
   // Global themes: set color slots for each theme
   // This establishes `--color-slot-` variables name-spaced to the selector
@@ -70,10 +85,19 @@ blockquote {
     --color-pull-quote-accent: var(--color-slot-five);
   }
 
-  // If the yds-layout theme is not default, we assume we are inside of a
-  // colored layout, and so we match the layout border.
+  // Inside a themed section the accent matches the section accent. Reads the
+  // inheritable section contract instead of the layout's private
+  // `--color-layout-border`, so a block that repaints itself can reset it and
+  // the quote follows the surface it is on (YaleSites-Internal#1628).
+  // -
+  // Only the attribute NAME changed for the dial split
+  // (YaleSites-Internal#1630); the shape is left exactly as it was on purpose.
+  // It is (0,3,0), the same as the theme-five accent override below, which
+  // therefore wins on source order. Tightening this to
+  // `.yds-layout[data-section-theme]:not(...)` reads better but would make it
+  // (0,4,0) and silently beat that override.
   .yds-layout:not([data-section-theme='default']) & {
-    --color-pull-quote-accent: var(--color-layout-border);
+    --color-pull-quote-accent: var(--color-section-accent);
   }
 
   // Slot-nine layout sections: light accent.
@@ -83,14 +107,14 @@ blockquote {
 
   // Slot-nine and slot-three (#1518) layout sections: both light
   // backgrounds, so dark type. Six's accent is left alone -- the
-  // :not(default) rule above already points it at --color-layout-border,
+  // :not(default) rule above already points it at the section accent,
   // which section theme six sets to slot-seven.
   .yds-layout:is([data-section-theme='five'], [data-section-theme='six']) & {
     --color-pull-quote-quote: var(--color-slot-seven);
     --color-pull-quote-attribution: var(--color-slot-seven);
   }
 
-  // Light quote copy on dark layout sections (matches --color-layout-content: slot-eight).
+  // Light quote copy on dark layout sections (matches the section foreground: slot-eight).
   // Theme four uses the same light-on-dark treatment as one and three; it was missing here.
   // -
   // Both dials appear in this one selector on purpose: the ancestor part is the
