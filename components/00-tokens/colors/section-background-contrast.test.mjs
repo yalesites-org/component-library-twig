@@ -20,8 +20,10 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
+
+import { readFileSync } from 'node:fs';
+
+import { publishesContract, readComponentScss } from './surface-contract.mjs';
 
 import { contrastRatio, parseHsl, AA_NORMAL_TEXT } from './contrast-ratio.mjs';
 import {
@@ -201,12 +203,12 @@ test('the shared themed-section rule exists and drives both properties', () => {
   );
 });
 
-test('--color-section-foreground is declared in exactly the expected places', () => {
+test('the surface contract is published in exactly the expected places', () => {
   // The "unthemed rendering is unchanged by construction" argument rests on
-  // this property being unset except where intended, so that each consumer's
-  // `var(--color-section-foreground, <previous colour>)` fallback applies.
-  // Expected: the shared layout rule, plus the self-painting components that
-  // reset it for their own descendants.
+  // the contract being unpublished except where intended, so that each
+  // consumer's `var(--color-section-foreground, <previous colour>)` fallback
+  // applies. Expected: the shared layout rule, plus the self-painting
+  // components that reset it for their own descendants.
   //
   // The count went 3 -> 4 in component-library-twig#714, when the single
   // reference card joined `text-with-image` and `content-spotlight-portrait`.
@@ -222,32 +224,45 @@ test('--color-section-foreground is declared in exactly the expected places', ()
   // `_yds-layout.scss` with TWO `[data-component-theme]:not(default)` blocks,
   // each declaring this property, so the real count was briefly 6 and this
   // assertion was failing. Consolidating those blocks removed one, and the
-  // callout below added one.
+  // callout added one.
   //
-  // The callout joined the list because it paints
-  // its own background from the component-theme dial, so before it reset the
-  // contract its descendants followed the SECTION instead -- a filled Button
-  // Link inside a theme-two callout on a theme-one section rendered
-  // near-white on near-white (the reported invisible button). Resetting
-  // `--color-section-foreground` to the callout's own `--color-text` is what
-  // makes that button, and every other contract reader inside a callout,
-  // follow the surface it is really sitting on.
-  const componentsDir = new URL('../../', import.meta.url);
-  const declarations = readdirSync(componentsDir, {
-    recursive: true,
-    withFileTypes: true,
-  })
-    .filter((entry) => entry.isFile() && entry.name.endsWith('.scss'))
-    .flatMap((entry) => {
-      const dir = entry.parentPath ?? entry.path;
-      const text = readFileSync(join(dir, entry.name), 'utf8');
-      // Declarations, not `var()` reads.
-      return (text.match(/--color-section-foreground:\s*[^;]+;/g) ?? []).map(
-        (decl) => `${entry.name}: ${decl}`,
-      );
-    });
+  // YaleSites-Internal#1631 changed the SHAPE of this assertion, not just the
+  // number. Two things stopped a raw count of `--color-section-foreground:`
+  // declarations meaning what it used to:
+  //
+  //   1. Publishing now normally goes through `tokens.publish-surface(...)`,
+  //      so the literal declaration lives once in `_surface-contract.scss` and
+  //      the call sites do not spell it out.
+  //   2. A component publishes from every block that actually paints -- the
+  //      dial loop AND theme six, which is not a `component-themes` key -- so
+  //      one component contributes more than one site.
+  //
+  // Counting FILES rather than declarations survives both, and says the thing
+  // the test is really for: this set is the list of surfaces that shadow the
+  // section, and nothing should join it silently.
+  // Deliberately NOT `surveySurfaces().converted`, which would look like the
+  // obvious reuse: that list is filtered to files the guardrail detects as
+  // PAINTING, so a file that publishes and later stops painting would silently
+  // drop out of it. This assertion has to notice exactly that, so it asks the
+  // simpler question -- who publishes -- and answers it over every stylesheet.
+  // It is also why the two numbers differ: the guardrail reports 5 converted,
+  // this list has 7, the extra two being `_yds-layout.scss` (the origin of the
+  // contract, which paints via `--color-layout-*` rather than the block dial)
+  // and `_yds-reference-card.scss` (which paints at no themed scope at all).
+  const publishing = readComponentScss()
+    .filter(([, source]) => publishesContract(source))
+    .map(([path]) => path)
+    .sort();
 
-  assert.equal(declarations.length, 5, declarations.join(' | '));
+  assert.deepEqual(publishing, [
+    'components/02-molecules/banner/action/_yds-action-banner.scss',
+    'components/02-molecules/callout/_yds-callout.scss',
+    'components/02-molecules/cards/reference-card/_yds-reference-card.scss',
+    'components/02-molecules/content-spotlight-portrait/_yds-content-spotlight-portrait.scss',
+    'components/02-molecules/text-with-image/_yds-text-with-image.scss',
+    'components/03-organisms/facts-and-figures-group/_yds-facts-and-figures-group.scss',
+    'components/03-organisms/layout/layout/_yds-layout.scss',
+  ]);
 });
 
 /**
@@ -264,6 +279,17 @@ test('--color-section-foreground is declared in exactly the expected places', ()
  * it needs no section treatment.
  */
 const SECTION_SURFACE_CONSUMERS = [
+  // Added by YaleSites-Internal#1631. The current-page indicator paints no
+  // background of its own, so its fixed brown-grey was unreachable from the
+  // section it sits on. The pager renders in views blocks that ARE
+  // section-placeable -- post-list, directory, taxonomy_term -- so it is
+  // genuinely exposed, which is why it is here and not deferred with the
+  // components that only ever render in the banner region.
+  {
+    name: 'pager current-page indicator',
+    file: '../../02-molecules/pager/_yds-pager.scss',
+    fallback: '--color-basic-brown-gray',
+  },
   {
     name: 'wrapped-callout border',
     file: '../../02-molecules/wrapped-callout/_yds-wrapped-callout.scss',

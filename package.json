@@ -11,6 +11,7 @@
     "build-storybook": "npm run storybook:build",
     "contrast:foregrounds": "node components/00-tokens/colors/foreground-purity.mjs",
     "contrast:gate": "node components/00-tokens/colors/contrast-gate.mjs",
+    "contrast:surfaces": "node components/00-tokens/colors/surface-contract.mjs",
     "develop": "concurrently --raw 'npm run webpack' 'npm run storybook'",
     "husky:commit-msg": "commitlint --edit $1",
     "husky:pre-commit": "lint-staged",
