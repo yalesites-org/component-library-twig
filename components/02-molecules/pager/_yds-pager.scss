@@ -93,9 +93,23 @@
     }
   }
 
+  // The current-page indicator. It paints no background of its own, so a
+  // themed section has to supply its colour: a fixed brown-grey is not
+  // reachable from the section and rendered near-invisible on the darker
+  // section themes (YaleSites-Internal#1631).
+  // -
+  // Colour and border move together deliberately. Splitting them -- section
+  // foreground for the text, fixed brown-grey for the ring around it -- would
+  // look worse on a themed section than either choice alone. Flattening the
+  // indicator to the section's body colour is the trade-off recorded on
+  // yalesites-org/YaleSites-Internal#1627 on 2026-09-08: legibility over the
+  // de-emphasis tier, and no `color-mix()`.
   &.is-active {
-    color: var(--color-basic-brown-gray);
-    border-color: var(--color-basic-brown-gray);
+    color: var(--color-section-foreground, var(--color-basic-brown-gray));
+    border-color: var(
+      --color-section-foreground,
+      var(--color-basic-brown-gray)
+    );
   }
 }
 
