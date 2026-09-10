@@ -1,7 +1,7 @@
 Drupal.behaviors.tabs = {
   attach(context) {
     // Selectors
-    const tabs = context.querySelectorAll('.tabs');
+    const tabs = once('tabs', '.tabs', context);
     // Set an extra value to factor into getFirstVisible().
     // We need this because we no longer have a gap amount set in CSS for the UL.
     // If we don't have this the calculation fails after a couple clicks through

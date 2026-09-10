@@ -6,7 +6,7 @@ const closeHandlers = new WeakMap();
 Drupal.behaviors.ysModal = {
   attach(context) {
     // Find all modals in the current context
-    const modals = context.querySelectorAll('.micromodal-slide');
+    const modals = once('modal', '.micromodal-slide', context);
 
     if (modals.length > 0) {
       // Initialize MicroModal

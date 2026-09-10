@@ -20,6 +20,7 @@ export default {
   tags: ['visreg'],
   title: 'Organisms/Banners/Video Banner/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },

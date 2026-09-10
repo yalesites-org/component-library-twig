@@ -207,3 +207,28 @@
   overflow: hidden !important;
   margin-left: 0 !important;
 }
+
+/**
+ * Wraps a <Canvas> in MDX with <div className="sb-tall-canvas"> to give an
+ * expandable menu room to open inside the canvas.
+ *
+ * Menu dropdowns are `position: absolute`, so they contribute no height to the
+ * story container. A nav bar therefore renders a ~65px canvas while its open
+ * dropdown is ~520px, and the menu draws over the docs content below it instead
+ * of being shown off. Reserving the height keeps the open state inside the
+ * canvas, which is the whole point of these pages.
+ */
+.sb-tall-canvas .sb-story {
+  // Primary nav's dropdown measures ~520px and opens below a ~33px bar, so this
+  // clears the deepest open state with a little room to spare.
+  min-height: 38rem;
+}
+
+/**
+ * Add alongside `sb-tall-canvas` for a menu whose open state is shallow.
+ * Utility nav's dropdown is ~137px under a ~44px bar, so the full height would
+ * leave most of the canvas empty.
+ */
+.sb-tall-canvas--short .sb-story {
+  min-height: 19rem;
+}

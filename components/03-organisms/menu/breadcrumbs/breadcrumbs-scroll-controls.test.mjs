@@ -25,7 +25,7 @@ const repoRoot = path.resolve(componentDir, '../../../..');
 
 const { css } = sass.compile(path.join(componentDir, '_yds-breadcrumbs.scss'), {
   loadPaths: [repoRoot, path.join(repoRoot, 'node_modules')],
-  // Webpack resolves the `~` package prefix the token imports use; plain Sass
+  // The build resolves the `~` package prefix the token imports use; plain Sass
   // needs to be told where it points.
   importers: [
     {

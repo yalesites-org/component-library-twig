@@ -4,8 +4,17 @@ Drupal.behaviors.utilityDropdownNav = {
     const utilityDropdownNavs = document.querySelectorAll(
       '.utility-nav__dropdown',
     );
-    const utilityDropdownNavToggles = document.querySelectorAll(
+    // Toggle/nav/content are correlated by position across three separate
+    // queries, so once() only filters which toggles to (re)process here —
+    // the original (unfiltered) index is looked up below to find each
+    // toggle's matching nav/content.
+    const allUtilityDropdownNavToggles = document.querySelectorAll(
       '.utility-nav__cta[data-cta-control-type="dropdown"]',
+    );
+    const utilityDropdownNavToggles = once(
+      'utility-nav-dropdown-menu',
+      '.utility-nav__cta[data-cta-control-type="dropdown"]',
+      document,
     );
     const utilityDropdownNavContents = document.querySelectorAll(
       '.utility-nav__dropdown-content',
@@ -85,7 +94,11 @@ Drupal.behaviors.utilityDropdownNav = {
     };
 
     // Loop through each dropdown
-    utilityDropdownNavToggles.forEach((toggle, index) => {
+    utilityDropdownNavToggles.forEach((toggle) => {
+      const index = Array.prototype.indexOf.call(
+        allUtilityDropdownNavToggles,
+        toggle,
+      );
       const nav = utilityDropdownNavs[index];
       const content = utilityDropdownNavContents[index];
       const utilityDropdownMenu = content.querySelector(

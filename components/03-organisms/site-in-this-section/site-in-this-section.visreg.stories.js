@@ -31,6 +31,7 @@ export default {
   tags: ['visreg'],
   title: 'Organisms/Global Elements/In This Section/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },

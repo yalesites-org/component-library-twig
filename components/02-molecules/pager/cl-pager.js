@@ -2,7 +2,7 @@
 
 Drupal.behaviors.clPagination = {
   attach(context) {
-    const items = context.querySelectorAll('.pager__item');
+    const items = once('pager', '.pager__item', context);
     const activeClass = 'is-active';
 
     items.forEach((item) => {

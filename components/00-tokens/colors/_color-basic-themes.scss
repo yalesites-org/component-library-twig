@@ -1,4 +1,4 @@
-@use '~@yalesites-org/tokens/build/scss/tokens';
+@use '@yalesites-org/tokens/build/scss/tokens';
 @use '../functions/map';
 
 $basic-themes: map.deep-get(tokens.$tokens, 'basic-themes');

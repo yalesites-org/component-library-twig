@@ -24,6 +24,7 @@ export default {
   tags: ['visreg'],
   title: 'Molecules/Quick-links/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },

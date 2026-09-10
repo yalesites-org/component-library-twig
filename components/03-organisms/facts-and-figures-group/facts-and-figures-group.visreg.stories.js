@@ -22,6 +22,7 @@ export default {
   tags: ['visreg'],
   title: 'Organisms/Facts and Figures Group/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },
