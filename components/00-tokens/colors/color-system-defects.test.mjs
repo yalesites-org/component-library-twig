@@ -99,6 +99,53 @@ function findInScss(pattern) {
   );
 }
 
+/**
+ * The same walk, but yielding whole declarations rather than raw lines.
+ *
+ * `findInScss` matches a line at a time, which is fine for "does this name
+ * appear anywhere" checks. It is not fine for checking the SHAPE of a
+ * declaration: prettier wraps any declaration that overflows the print width,
+ * and this tree is full of long token names that trip that (see the
+ * `--color-slot-*` blocks in `_yds-layout.scss`). A line-at-a-time regex would
+ * quietly stop matching the day a declaration got one character longer.
+ *
+ * So: join each file's code lines, split on `;`, `{` and `}`, and collapse
+ * internal whitespace. Each fragment is reported against the line its first
+ * character sat on, so failure messages still point somewhere useful.
+ */
+function findInScssDeclarations(pattern) {
+  return scssFiles.flatMap(([file, contents]) => {
+    const lines = codeLines(contents);
+    const found = [];
+    let buffer = '';
+    let startLine = null;
+
+    const flush = () => {
+      const declaration = buffer.replace(/\s+/g, ' ').trim();
+      if (declaration && pattern.test(declaration)) {
+        found.push(`${file}:${startLine}: ${declaration}`);
+      }
+      buffer = '';
+      startLine = null;
+    };
+
+    lines.forEach(([lineNumber, line]) => {
+      line.split('').forEach((char) => {
+        if (char === ';' || char === '{' || char === '}') {
+          flush();
+          return;
+        }
+        if (startLine === null && char.trim() !== '') startLine = lineNumber;
+        buffer += char;
+      });
+      buffer += '\n';
+    });
+    flush();
+
+    return found;
+  });
+}
+
 test('scss files were found (guards the walker itself)', () => {
   assert.ok(
     scssFiles.length > 50,
@@ -298,6 +345,170 @@ test('light section themes are excluded from white-on-dark form styling', () => 
       guard[1].includes(`[data-component-theme='${theme}']`),
       `section theme '${theme}' has a light background and must be excluded ` +
         `from the white required-asterisk rule; guard is: ${guard[1].trim()}`,
+    );
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Phase 0b (YaleSites-Internal#1629) -- self-referential custom properties.
+// ---------------------------------------------------------------------------
+
+/**
+ * A custom property declared as a reference to itself
+ * (`--color-link-base: var(--color-link-base)`) is a dependency cycle. Per CSS
+ * Variables, every property in a cycle computes to the guaranteed-invalid
+ * value, so the declaration does NOT "keep the inherited value" -- it destroys
+ * it for the element and everything below that does not re-declare it.
+ *
+ * The failure mode is asymmetric, which is why twenty of these survived review:
+ *
+ * - Read into a colour property (`color: var(--x)`), the declaration is
+ *   invalid-at-computed-value-time, so `color` computes to `unset`. `color`
+ *   inherits, so `unset` means `inherit` -- the element picks up its parent's
+ *   colour and the page looks plausible.
+ * - Read into a SHORTHAND, the whole shorthand is dropped. That is how
+ *   `_utility.scss`'s `outline: <width> solid var(--color-link-base)` lost the
+ *   focus ring entirely on section themes one to five: measured
+ *   `outline-style: none` on a focused link inside a themed Layout Builder
+ *   section, against `2px solid` on an unthemed one. That is a WCAG 2.1 SC
+ *   2.4.7 failure, not a colour nit.
+ * - Read into a non-inherited colour property (`background-color`,
+ *   `border-color`, `fill`), `unset` means `initial`, so the paint disappears.
+ *   That is `--color-pull-quote-accent` on pull-quote dials four and five.
+ *
+ * Nothing in the pipeline catches any of this: Sass compiles it, stylelint
+ * accepts it, and the browser fails silently at computed-value time.
+ *
+ * If you are here because this test failed on a cycle you were about to write:
+ * `currentcolor` is the drop-in replacement ONLY when every consumer of the
+ * property is a `color:` longhand -- that is the case that makes the two
+ * equivalent, because `color: currentcolor` is defined to behave as `inherit`.
+ * It is not equivalent for a `background-color` or `fill` consumer, where the
+ * invalid value degrades to `initial` (transparent, black) rather than to the
+ * inherited colour. Check the consumers before reaching for it.
+ */
+test('no custom property is declared as a reference to itself', () => {
+  // `--x: var(--x)` and `--x: var(--x, fallback)`. The backreference is what
+  // makes this a cycle check rather than a "declares a var" check.
+  //
+  // Matched against declarations joined across line breaks, not against raw
+  // lines: prettier wraps long token names onto their own line all over this
+  // tree (`--color-slot-three: var(\n  --global-themes-...\n);`), and a
+  // line-at-a-time regex would sail straight past a wrapped self-reference.
+  // The guard has to survive a reformat to be worth having.
+  const violations = findInScssDeclarations(
+    /--([a-z0-9-]+):\s*var\(\s*--\1\s*[,)]/,
+  );
+
+  assert.deepEqual(
+    violations,
+    [],
+    'A custom property may not reference itself: the cycle computes to the ' +
+      'guaranteed-invalid value and discards the inherited value rather than ' +
+      'preserving it. To keep the inherited colour, declare `currentcolor` ' +
+      '(which is what the cycle simulated for `color`, and unlike the cycle ' +
+      'is also valid inside a shorthand). To adopt the surrounding surface, ' +
+      'read the section contract (--color-section-foreground / ' +
+      `--color-section-accent).\n${violations.join('\n')}`,
+  );
+});
+
+/**
+ * The focus ring reads `--color-link-base` (`00-tokens/utility/_utility.scss`),
+ * so that property has to resolve to a real colour everywhere a link can be
+ * focused. It is read through the `outline` SHORTHAND, which is what made the
+ * original defect total rather than cosmetic -- an unresolvable var() drops the
+ * whole declaration, so the ring vanished instead of turning an odd colour.
+ * That line now carries a `currentcolor` fallback, so the shorthand can no
+ * longer be dropped; this test guards the other half, that each themed section
+ * still names a real colour rather than degrading every ring to the copy colour.
+ *
+ * Asserted per section theme, not once for the file. A single "some declaration
+ * exists" check would stay green if five of the six per-theme blocks lost their
+ * declaration, which is exactly the regression it is here to catch.
+ */
+test('every themed section declares a real --color-link-base for the focus ring', () => {
+  const layoutPath = path.join(
+    componentsDir,
+    '03-organisms',
+    'layout',
+    'layout',
+    '_yds-layout.scss',
+  );
+  const layout = readFileSync(layoutPath, 'utf8');
+  const lines = codeLines(layout).map(([, line]) => line.trim());
+
+  // Every section theme the file styles, taken from the file itself so a new
+  // theme is covered the day it is added rather than the day someone
+  // remembers to update this list.
+  const themes = [
+    ...new Set(
+      lines.flatMap((line) =>
+        [...line.matchAll(/\[data-component-theme='([a-z]+)'\]/g)].map(
+          (match) => match[1],
+        ),
+      ),
+    ),
+  ].filter((theme) => theme !== 'default');
+
+  assert.ok(
+    themes.length >= 5,
+    `expected to find the section themes in _yds-layout.scss, found: ${themes}`,
+  );
+
+  themes.forEach((theme) => {
+    // The block for this theme, from its selector to the closing brace.
+    const start = lines.findIndex((line) =>
+      line.startsWith(`&[data-component-theme='${theme}']`),
+    );
+    assert.notEqual(start, -1, `no block found for section theme '${theme}'`);
+
+    const block = [];
+    for (let i = start + 1; i < lines.length && lines[i] !== '}'; i += 1) {
+      block.push(lines[i]);
+    }
+
+    const declaration = block.find((line) =>
+      line.startsWith('--color-link-base:'),
+    );
+
+    assert.ok(
+      declaration,
+      `section theme '${theme}' declares no --color-link-base, so a focused ` +
+        'link inside it falls back to the :root link colour, which is not ' +
+        'guaranteed to have contrast against the section background',
+    );
+    assert.ok(
+      !/var\(\s*--color-link-base\s*[,)]/.test(declaration),
+      `section theme '${theme}' declares --color-link-base from itself, which ` +
+        `is a cycle and takes the focus ring with it: ${declaration}`,
+    );
+  });
+});
+
+/**
+ * `var()` naming a custom property that is declared nowhere is the same
+ * silent-drop failure as a cycle, and the two travelled together: every
+ * self-referential `--color-link-visited-hover` in tile-item sat next to
+ * `--color-link-visited-base: var(--color-link-visited)`, and
+ * `--color-link-visited` does not exist. Same for `--color-quote-callout`.
+ *
+ * Scoped to this known pair rather than to every custom property in the tree:
+ * a general "every var() resolves" sweep would also have to model the tokens
+ * package's `:root` and the Sass interpolation that generates property names,
+ * which is #1632's build-time gate, not this ticket.
+ */
+test('undefined link/quote colour properties are not referenced', () => {
+  ['--color-link-visited', '--color-quote-callout'].forEach((property) => {
+    // Word-boundary on the end so `--color-link-visited-base` does not match.
+    const violations = findInScss(new RegExp(`var\\(\\s*${property}\\s*[,)]`));
+
+    assert.deepEqual(
+      violations,
+      [],
+      `${property} is declared nowhere in the library or in the tokens ` +
+        `package, so every read of it is dropped at computed-value time.` +
+        `\n${violations.join('\n')}`,
     );
   });
 });

@@ -41,7 +41,10 @@ $facts-and-figures-group-component-themes: map.deep-get(
       a,
       facts-and-figures__group_content {
         --color-text-shadow: var(--color-facts-and-figures-theme);
-        --color-link-hover: var(--color-link-hover);
+
+        // Inherited copy colour on hover, declared rather than simulated by a
+        // var() cycle (YaleSites-Internal#1629).
+        --color-link-hover: currentcolor;
       }
 
       a:not([data-link-style]) {

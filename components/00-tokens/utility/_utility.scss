@@ -15,7 +15,22 @@
 // use-cases like `focus-within` that apply to an "outer" element when something
 // "inside" has focus. e.g. The utility nav search box.
 @mixin focus-styles {
-  outline: var(--size-thickness-2) solid var(--color-link-base);
+  // The `currentcolor` fallback is load-bearing, not decoration.
+  // -
+  // A `var()` that cannot resolve is invalid at computed-value time, and inside
+  // a SHORTHAND that drops the whole declaration: `outline: unset` computes
+  // `outline-style: none`, i.e. no focus indicator at all. That is exactly how
+  // themed Layout Builder sections lost their focus ring -- a self-referential
+  // `--color-link-base` in the layout organism made the property
+  // guaranteed-invalid, and this one line silently deleted the ring on section
+  // themes one to five (YaleSites-Internal#1629).
+  // -
+  // A fallback rescues the shorthand: `var()` substitutes it both when the
+  // property is undeclared and when it is guaranteed-invalid, so the ring
+  // degrades to the element's own colour instead of disappearing. Verified in
+  // the browser for both cases. Rendering is unchanged while
+  // `--color-link-base` resolves, which it now does everywhere.
+  outline: var(--size-thickness-2) solid var(--color-link-base, currentcolor);
   outline-offset: var(--size-thickness-2);
 }
 

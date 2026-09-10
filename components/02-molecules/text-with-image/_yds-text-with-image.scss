@@ -53,7 +53,10 @@ $component-content-spotlight-themes: map.deep-get(
       .link,
       .text-with-image__text {
         --color-text-shadow: var(--color-spotlight-text-shadow);
-        --color-link-hover: var(--color-link-hover);
+
+        // Inherited copy colour on hover, declared rather than simulated by a
+        // var() cycle (YaleSites-Internal#1629).
+        --color-link-hover: currentcolor;
       }
     }
   }
