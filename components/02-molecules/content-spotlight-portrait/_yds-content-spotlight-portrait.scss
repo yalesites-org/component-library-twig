@@ -28,10 +28,10 @@ $component-content-spotlight-port-themes: map.deep-get(
     padding-block-start: var(--size-spacing-10);
     padding-block-end: var(--size-spacing-10);
 
-    // Paints its own surface, so it publishes both halves of the contract.
-    // Same shape and same reason as `_yds-text-with-image.scss`, where the
-    // rationale is written out; no accent, because this block has no control
-    // of its own.
+    // Paints its own surface, so it publishes the contract. Same shape and
+    // same reason as `_yds-text-with-image.scss`, where the rationale --
+    // including why the accent must not be left to the section -- is written
+    // out.
     @include tokens.publish-surface(var(--color-background), var(--color-text));
 
     background-color: var(--color-background);

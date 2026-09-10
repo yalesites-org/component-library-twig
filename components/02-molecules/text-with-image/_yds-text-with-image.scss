@@ -34,8 +34,11 @@ $component-content-spotlight-themes: map.deep-get(
     // draws its outline-button fill from it -- still resolved to the SECTION's
     // background while sitting on the one this block painted.
     // -
-    // No accent: this block has no control of its own, so the enclosing
-    // surface's accent keeps being inherited. See `publish-surface`.
+    // The accent defaults to the foreground, and that matters here: this
+    // block renders CTAs, and `_yds-cta.scss` reads
+    // `--color-section-background` and `--color-section-accent` as a matched
+    // pair. Publishing only the background would take the button's label from
+    // this block while the fill under it still came from the section.
     @include tokens.publish-surface(var(--color-background), var(--color-text));
 
     background-color: var(--color-background);

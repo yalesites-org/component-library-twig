@@ -104,8 +104,13 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     // alone left a descendant reading `var(--color-section-background)` --
     // the CTA atom draws its outline-button fill from it -- resolving to the
     // SECTION's background while sitting on this card's Yale-blue one.
-    // No accent argument: the card has no control of its own, so the enclosing
-    // surface's accent keeps being inherited.
+    // The accent defaults to the foreground -- the card's own white -- so the
+    // background/accent pair `_yds-cta.scss` reads is never split.
+    // -
+    // The card also overrides `--color-cta-text`/`--color-cta-bg` outright
+    // further down, and that override beats the section rule in `_yds-cta.scss`
+    // only on a specificity TIE broken by source order: 01-atoms is imported
+    // before 02-molecules. Do not reorder those imports.
     @include tokens.publish-surface(
       var(--color-card-single-bg),
       var(--color-card-single-text)

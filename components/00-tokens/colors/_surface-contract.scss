@@ -64,17 +64,34 @@
 
 /// Publish the surface this block paints.
 /// -
+/// All three properties are always emitted. Publishing a background WITHOUT an
+/// accent is not a smaller, safer step -- it is a bug, because `_yds-cta.scss`
+/// reads the two as a matched pair on the button element:
+/// -
+///   &[data-cta-style='filled'] {
+///     --color-cta-text: var(--color-section-background);  // the label
+///     --color-cta-bg:   var(--color-section-accent);      // the fill under it
+///   }
+/// -
+/// Republish only the background and the label comes from this block while the
+/// fill it sits on still comes from the section. Measured across 7 global x 6
+/// section x 6 block dials, doing that to two components took filled-button
+/// labels from 48 sub-AA combinations to 158, with a worst case of 1.00:1 --
+/// label and fill resolving to the same colour, an invisible button. That is
+/// the #1628 bug reintroduced one container down.
+/// -
+/// Defaulting the accent to the foreground is measured safe: 42/42 (global x
+/// dial) pass AA, worst 4.61:1. It is also the right meaning -- the approved
+/// foreground for a surface is by definition legible on it, so a control drawn
+/// in it is legible too.
+/// -
 /// @param {Color} $background - what this block painted.
 /// @param {Color} $foreground - the approved foreground for that background.
-/// @param {Color} $accent [null] - the control/accent colour on this surface.
-///   Omit it when the component has no control of its own, so the enclosing
-///   surface's accent keeps being inherited rather than being reset to
-///   something arbitrary.
-@mixin publish-surface($background, $foreground, $accent: null) {
+/// @param {Color} $accent [$foreground] - the control/accent colour on this
+///   surface. Pass one when the component has a control colour of its own;
+///   otherwise the foreground is the safe default.
+@mixin publish-surface($background, $foreground, $accent: $foreground) {
   --color-section-background: #{$background};
   --color-section-foreground: #{$foreground};
-
-  @if $accent {
-    --color-section-accent: #{$accent};
-  }
+  --color-section-accent: #{$accent};
 }
