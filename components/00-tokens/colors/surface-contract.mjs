@@ -9,9 +9,10 @@
  * inside it reading the *enclosing* surface's foreground against the background
  * *it* just painted. Neither palette is wrong on its own; the pairing that
  * reaches the screen is one nobody chose. That is the root cause the Color
- * Surface epic exists to close, and `contrast-gate.mjs`'s `leakSurvey()`
- * measures how far it reaches (105 of 210 theme combinations when Phase 3
- * landed).
+ * Surface epic exists to close. `contrast-gate.mjs`'s `leakSurvey()` puts a
+ * ceiling on it -- 105 of 210 (global theme x section theme x block theme)
+ * combinations land below AA. Note that figure is pure token arithmetic: it is
+ * the theoretical worst case, and converting components does not move it.
  *
  * The fix is per-component and mechanical: alongside the background, declare
  * `--color-section-background` (what was painted) and `--color-section-
@@ -110,6 +111,13 @@ function backgroundPaints(source) {
  * - A rule whose brace, body and close all share a line is invisible, since the
  *   boundary lines are excluded.
  * - A brace inside a quoted string would be counted.
+ * - A themed selector wrapped across lines does not open a scope, because the
+ *   selector and its `{` must be on the same line.
+ * - A `background:` value wrapped across lines is not seen, because the
+ *   declaration and its `;` must be on the same line.
+ * -
+ * Verified against the whole tree: none of these is live today -- the files
+ * that do wrap a themed selector paint nothing.
  *
  * Compiling the SCSS and walking real rules would remove both, and the repo
  * has `sass` available (`breadcrumbs-scroll-controls.test.mjs` compiles). That

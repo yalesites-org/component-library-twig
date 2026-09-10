@@ -99,15 +99,19 @@ test('every pending entry states a reason and the ticket that owns it', () => {
 test('the burn-down is actually burning down', () => {
   const { converted } = surveySurfaces();
 
-  // Not a vanity metric: if this ever reads 0 the detector has stopped
-  // recognising the reference implementation, and every other assertion in
-  // this file would pass vacuously.
-  assert.ok(
-    converted.length > 0,
-    'no stylesheet was detected as publishing the contract, which almost ' +
-      'certainly means the detector is broken rather than that the library ' +
-      'regressed -- _yds-callout.scss has published it since #1628.',
-  );
+  // Pinned to the exact list rather than `length > 0`. The loose form claims to
+  // be the vacuity guard for the three assertions above but barely is: one
+  // surviving detection would satisfy it. (`stalePending` would also catch a
+  // wholly broken detector, since all fifteen baseline paths would fall out --
+  // but that is a guard in a different test, and this one should stand up on
+  // its own.)
+  assert.deepEqual(converted, [
+    'components/02-molecules/banner/action/_yds-action-banner.scss',
+    'components/02-molecules/callout/_yds-callout.scss',
+    'components/02-molecules/content-spotlight-portrait/_yds-content-spotlight-portrait.scss',
+    'components/02-molecules/text-with-image/_yds-text-with-image.scss',
+    'components/03-organisms/facts-and-figures-group/_yds-facts-and-figures-group.scss',
+  ]);
 });
 
 // --- The classifier itself, on synthetic input ---------------------------

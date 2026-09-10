@@ -104,6 +104,14 @@
   // indicator to the section's body colour is the trade-off recorded on
   // yalesites-org/YaleSites-Internal#1627 on 2026-09-08: legibility over the
   // de-emphasis tier, and no `color-mix()`.
+  // -
+  // Worth being explicit about the consequence, because the ticket's wording
+  // does not spell it out: `.pager__link` is `var(--color-heading)`, which on a
+  // themed section resolves to the same slot as `--color-layout-content`. So
+  // the active page number and the inactive ones now render in the SAME colour
+  // and the ring is the only remaining "you are here" cue. That is legible --
+  // the ring clears 3:1 by the same proof that covers the section's body copy
+  // -- but it is a design change, not just a contrast fix.
   &.is-active {
     color: var(--color-section-foreground, var(--color-basic-brown-gray));
     border-color: var(
