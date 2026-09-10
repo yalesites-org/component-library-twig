@@ -99,7 +99,17 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     // `__eyebrow` (which do), and `--color-link-hover` on the heading link,
     // which the section re-points for #1614's link-hover fix
     // (component-library-twig#714).
-    --color-section-foreground: var(--color-card-single-text);
+    // -
+    // The background half arrived with YaleSites-Internal#1631: the foreground
+    // alone left a descendant reading `var(--color-section-background)` --
+    // the CTA atom draws its outline-button fill from it -- resolving to the
+    // SECTION's background while sitting on this card's Yale-blue one.
+    // No accent argument: the card has no control of its own, so the enclosing
+    // surface's accent keeps being inherited.
+    @include tokens.publish-surface(
+      var(--color-card-single-bg),
+      var(--color-card-single-text)
+    );
   }
 
   // Restated directly on the heading link: an enclosing themed .yds-layout
