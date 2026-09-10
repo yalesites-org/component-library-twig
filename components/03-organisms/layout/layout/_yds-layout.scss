@@ -27,9 +27,28 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       --color-layout-theme: var(--color-slot-one);
       --color-layout-content: var(--color-slot-eight);
       --color-layout-border: var(--color-slot-four);
-      --color-link-base: var(--color-link-base);
-      --color-link-hover: var(--color-link-hover);
 
+      // No `--color-link-base` / `--color-link-hover` here, and none in the two
+      // descendant blocks below. Each was declared from itself -- a var() cycle,
+      // so the property computed to the guaranteed-invalid value and inherited
+      // THAT, destroying the value rather than preserving it. They were not
+      // supplying a default either: the per-theme blocks below already declare
+      // both properties, and the cycles sat on the link element at higher
+      // specificity and threw those values away (YaleSites-Internal#1629).
+      // -
+      // Of the six, only `--color-link-base` was load-bearing. #1628 already
+      // re-declares `--color-link-hover` on these same link selectors under
+      // `[data-component-theme]:not(default)` further down, which outranks the
+      // loop -- so removing the hover cycles is provably inert.
+      // -
+      // `--color-link-base` was not inert, because `color:` is not its only
+      // consumer. `_utility.scss` reads it inside the `outline` shorthand, and
+      // an invalid var() drops a shorthand outright: focused links in a themed
+      // section computed `outline-style: none`, i.e. no keyboard focus ring at
+      // all (WCAG 2.1 SC 2.4.7). `_yds-text-link.scss` reads it for `fill:`,
+      // which left link icons rendering black on the dark section themes.
+      // Unthemed sections and section theme six were unaffected -- neither is
+      // in this loop.
       background-color: var(--color-layout-theme);
       color: var(--color-layout-content);
 
@@ -39,16 +58,17 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       .caption a,
       [class*='__heading-link'] {
         --color-text-shadow: var(--color-layout-theme);
-        --color-link-hover: var(--color-link-hover);
-        --color-link-base: var(--color-link-base);
       }
 
       // Link grid: match section copy (no default purple :visited from link mixin).
       .link-grid__link {
         --color-text-shadow: var(--color-layout-theme);
-        --color-link-hover: var(--color-link-hover);
-        --color-link-base: var(--color-link-base);
         --color-link-visited-base: var(--color-layout-content);
+
+        // Left as-is: this is a reference to a DIFFERENT property, not a self
+        // reference. It only ever resolved to nothing because the thing it
+        // points at was itself cyclic. With that cycle gone the per-theme
+        // blocks below supply `--color-link-hover`, so this now resolves.
         --color-link-visited-hover: var(--color-link-hover);
       }
     }
@@ -222,11 +242,26 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   }
 
   // One shared rule for every themed section, in place of per-theme or
-  // per-component overrides (YaleSites-Internal#1613, extended by #1614).
+  // per-component overrides (YaleSites-Internal#1613, extended by #1614 and
+  // #1628).
   // -
-  // It declares two custom properties a block inside the section otherwise has
-  // no way to reach, plus the one override that cannot be expressed as a
-  // property because the consuming component outbids it on specificity:
+  // It declares the custom properties a block inside the section otherwise has
+  // no way to reach, plus the overrides that cannot be expressed as a property
+  // because the consuming component outbids them on specificity.
+  // -
+  // Why a block cannot simply read `--color-layout-theme|content|border`
+  // itself, which is what several components used to do through a
+  // `.yds-layout[...] &` descendant selector: those three are declared ONLY on
+  // this element, so off a themed section the property does not exist and the
+  // declaration is dropped at computed-value time -- several of those
+  // selectors matched a bare `[data-component-theme]`, which ~20 templates
+  // emit, so a divider inside a themed callout simply disappeared. And because
+  // only `.yds-layout` ever declares them, nothing BETWEEN the section and the
+  // component could influence the value, so a block that painted its own
+  // surface had no way to tell its descendants to follow ITS colours. That is
+  // where the measured contrast failures came from. The `--color-section-*`
+  // family below fixes both: it inherits, so a self-painting block resets it
+  // for its own subtree (YaleSites-Internal#1628).
   // -
   // 1. `--color-divider`. `_global-config.scss` defaults it to
   //    `--color-theme-divider, --color-gray-500` and nothing in the section
@@ -273,8 +308,20 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // emitted: see `00-tokens/colors/section-background-contrast.txt`, which
   // shows no single slot is legible on all six section backgrounds.
   &[data-component-theme]:not([data-component-theme='default']) {
-    --color-divider: var(--color-layout-content);
+    // `-background` and `-accent` extend the `--color-section-foreground` name
+    // #1613 introduced rather than inventing a parallel family. See the
+    // preamble above for why a block cannot read `--color-layout-*` directly.
+    --color-section-background: var(--color-layout-theme);
     --color-section-foreground: var(--color-layout-content);
+    --color-section-accent: var(--color-layout-border);
+    --color-divider: var(--color-layout-content);
+
+    // `--color-action` / `--color-action-secondary` are global semantic
+    // properties (`:root`, _global-config.scss). Re-pointing them per section
+    // here is what lets the CTA and tab chrome track the section without
+    // reaching back up for the layout's private properties.
+    --color-action: var(--color-section-accent);
+    --color-action-secondary: var(--color-section-background);
 
     // 3. The link grid's headings, which cannot use the fallback pattern
     //    above. A link grid paints no background of its own, so its headings
@@ -333,11 +380,13 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     //    same value each section theme already sets `--color-link-hover` to at
     //    its root -- so this introduces no colour and changes no design intent;
     //    it makes the intent reachable. Hover then matches resting on a themed
-    //    section, exactly as it already did for `.text-field a` (the `@each`
-    //    loop's `--color-link-hover: var(--color-link-hover)` is a var() cycle,
-    //    which is invalid at computed-value time and therefore falls back to
-    //    inheriting the root -- the same outcome, arrived at by accident). The
-    //    sliding underline still signals hover.
+    //    section, exactly as it already did for `.text-field a`. (When this was
+    //    written, `.text-field a` reached that outcome by accident: the `@each`
+    //    loop declared `--color-link-hover` from itself, a var() cycle, which is
+    //    invalid at computed-value time and so fell through to inheriting the
+    //    root. That cycle is gone as of YaleSites-Internal#1629; this rule is
+    //    now the only thing setting hover there, which is what it should always
+    //    have been.) The sliding underline still signals hover.
     //    -
     //    Every link kind is listed, not only the ones the audit measured.
     //    `.wrapped-callout__callout a` is why: it is a bare `<a>` in a WYSIWYG

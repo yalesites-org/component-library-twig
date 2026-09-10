@@ -10,8 +10,16 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
   @include tokens.spacing-page-section;
   @include tokens.animate(height);
 
-  --color-border: var(--color-gray-300);
-  --color-border-selected: var(--color-gray-500);
+  // Tab chrome is drawn as lines ON the section's surface, so it has to follow
+  // that surface the same way the background and action roles below do. The
+  // greys stay as the CSS fallback: off a themed section
+  // `--color-section-foreground` is unset and rendering is unchanged by
+  // construction (YaleSites-Internal#1628).
+  --color-border: var(--color-section-foreground, var(--color-gray-300));
+  --color-border-selected: var(
+    --color-section-foreground,
+    var(--color-gray-500)
+  );
   --size-tabs-control: 4rem;
 
   overflow: hidden;
@@ -77,29 +85,53 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-heading: var(--color-gray-700);
   }
 
-  // Theme `six` outside gray layout sections: legacy tab chrome (unchanged).
+  // Theme `six`: a slot-seven action colour, and a `--color-tapered-slot-nine`
+  // panel that IS NEVER PAINTED -- the `@each` loop above emits
+  // `--color-background: var(--color-tabs-background)` only for the keys in the
+  // component-themes token map, and that map stops at `five`. So
+  // `--color-tabs-background` below is declared and nothing reads it; measured,
+  // the surface computes to white. Pre-existing omission, not introduced here,
+  // and filed separately rather than widened into this fix.
+  // -
+  // The two border roles follow the section exactly like the `.tabs` defaults
+  // above do. Their previous grey/white pair survives only as the fallback for
+  // an unthemed page, where -- against that white surface -- gray-400 measures
+  // 2.75:1 and white 1.00:1. Both are pre-existing sub-3:1 failures this PR
+  // deliberately does not close: darkening an unthemed panel is a visual
+  // change, not an accessibility regression fix.
   &[data-component-theme='six'] {
     --color-tabs-action: var(--color-slot-seven);
     --color-tabs-background: var(--color-slot-nine);
     --color-tabs-selected: var(--color-basic-white);
     --color-heading: var(--color-slot-seven);
-    --color-border: var(--color-gray-400);
-    --color-border-selected: var(--color-basic-white);
+    --color-border: var(--color-section-foreground, var(--color-gray-400));
+    --color-border-selected: var(
+      --color-section-foreground,
+      var(--color-basic-white)
+    );
   }
 
-  [data-component-theme]:not([data-component-theme='default']) & {
-    --color-tabs-background: var(--color-layout-theme);
-    --color-tabs-selected: var(--color-layout-theme);
-    --color-action: var(--color-layout-border);
-  }
+  // Tab chrome follows the section surface. Reads the inheritable section
+  // contract rather than the layout's private `--color-layout-*`, so a block
+  // that repaints itself between the section and these tabs resets it and the
+  // tabs follow THAT surface (YaleSites-Internal#1628).
+  // -
+  // Anchoring the ancestor on `.yds-layout` is a tidy-up, not a fix, and
+  // changes no rendering. The previous bare `[data-component-theme]` also
+  // matched a themed callout or accordion, but `--color-layout-*` is declared
+  // only on `.yds-layout`: with a themed section above, it matched through the
+  // section anyway and resolved to the same value; with no themed section
+  // above, it resolved to nothing and the declarations were dropped. Naming
+  // the element that actually owns the properties says which of those two the
+  // rule means.
+  .yds-layout[data-component-theme]:not([data-component-theme='default']) & {
+    --color-tabs-background: var(--color-section-background);
+    --color-tabs-selected: var(--color-section-background);
 
-  [data-component-theme]:not(
-      [data-component-theme='default'],
-      [data-component-theme='two']
-    )
-    & {
-    --color-border: var(--color-gray-400);
-    --color-border-selected: var(--color-basic-white);
+    // Kept at this specificity on purpose. The `@each` loop above declares
+    // `--color-action: var(--color-tabs-action)` on `.tabs` itself, which would
+    // beat the section-level value inherited from `.yds-layout`.
+    --color-action: var(--color-section-accent);
   }
 }
 
