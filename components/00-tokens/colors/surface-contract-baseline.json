@@ -1,0 +1,85 @@
+{
+  "$comment": [
+    "Painting surfaces that do not yet publish the surface contract, as they",
+    "stood when the guardrail landed (YaleSites-Internal#1631, Phase 2). See",
+    "surface-contract.mjs for what counts as painting and why.",
+    "",
+    "Keys are repo-relative, the same spelling foreground-purity-baseline.json",
+    "uses, so the two files can be read side by side.",
+    "",
+    "This is a burn-down list, not an opt-out. Phase 2 converts components in",
+    "measured-risk order, so a guardrail that demanded all of them at once",
+    "would have been unmergeable; what it does instead is stop a NEW painting",
+    "surface arriving unconverted.",
+    "",
+    "surface-contract.test.mjs enforces both directions: a converted surface",
+    "still listed here must have its entry deleted, and an entry whose file no",
+    "longer paints a themed background must be deleted too. Adding an entry to",
+    "turn a red build green is not a fix -- publish the contract.",
+    "",
+    "Regenerate the current state with:",
+    "  npm run contrast:surfaces"
+  ],
+  "pending": {
+    "components/02-molecules/banner/grand-hero/_yds-grand-hero.scss": {
+      "reason": "Same shape as the action banner converted in this change -- paints --color-grand-hero-background from the block dial and publishes nothing. Deferred only to keep this change reviewable: the grand hero is the page's largest painted surface and its conversion wants its own visual check across all seven global themes.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "components/02-molecules/banner/image/yds-image-banner.scss": {
+      "reason": "Paints --color-image-banner-background, but the copy sits on a photographic image rather than on that colour for most of its area, so the approved foreground is not simply the theme's text colour. Needs the same treatment as grand-hero and a designer's read on which of the two surfaces the contract should describe.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "components/02-molecules/tabs/_yds-tabs.scss": {
+      "reason": "Remaps --color-background at a themed scope and paints it at the root. Already the most contract-aware component in the library -- it reads --color-section-foreground for both border roles and --color-section-background for its chrome (#1628) -- so publishing its own would change what those reads resolve to inside a themed tab panel. Wants converting together with the tab chrome rather than ahead of it.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "components/02-molecules/quick-links/_yds-quick-links.scss": {
+      "reason": "Remaps --color-background at a themed scope and paints it at the root. Named alongside tabs in _yds-layout.scss:309-317 as the reason --color-text / --color-background could not be re-pointed from the section side before #1630, so it is entangled with that pair specifically and should convert with tabs.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "components/02-molecules/quote-callout/_yds-quote-callout.scss": {
+      "reason": "Paints --color-quote-callout-background from the dial and at theme six. Straightforward, but three of its custom properties were inert var() cycles removed in #1629 and the file's per-theme blocks re-declare at identical specificity, so the conversion needs the last-one-wins ordering checked rather than assumed.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "components/02-molecules/inline-message/_yds-inline-message.scss": {
+      "reason": "Paints --color-inline-message-background from the dial and at theme six. Deferred purely for batch size; no known complication.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "components/02-molecules/tile-item/_yds-tile-item.scss": {
+      "reason": "Paints --color-tile-item-theme from the dial and at theme six. Deferred purely for batch size; no known complication.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "components/02-molecules/facts-and-figures/_yds-facts-and-figures.scss": {
+      "reason": "The individual fact, paired with the facts-and-figures-group converted in this change. Nested inside that group, so it should be converted once the group's published contract can be measured against it -- converting both in one step would make an unexpected result hard to attribute.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "components/02-molecules/taxonomy-display/_yds-taxonomy-display.scss": {
+      "reason": "Paints --color-gray-100 flat on the `default` dial and --color-background on every other, so it needs a foreground for two different surfaces rather than one. The flat-grey half is the same shape as the meta chip lists tracked at #1662.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "components/02-molecules/accordion/_yds-accordion.scss": {
+      "reason": "Paints a flat --color-gray-100 on the accordion ITEM inside a themed accordion, plus white for two global/section-theme combinations. #705 measured the item's 6px accent rule at 42 failures -> 0 and explicitly recorded that the item owns the surface behind it; the fill itself was left. Its functional-element contrast is also still being settled on #1614.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "components/02-molecules/meta/profile-meta/_yds-profile-meta.scss": {
+      "reason": "Paints --color-profile-background across seven per-theme blocks and carries the largest raw-palette foreground count of any meta component (10 in foreground-purity-baseline.json). Wants converting with the rest of the meta family, whose secondary text is being moved onto the contract on the #1662 branch right now.",
+      "ticket": "yalesites-org/YaleSites-Internal#1662"
+    },
+    "components/02-molecules/pull-quote/_yds-pull-quote.scss": {
+      "reason": "Deliberately deferential rather than merely unconverted: it reads --color-section-accent from the enclosing section on purpose (:88-101) so the quote's accent matches the surface it sits on, and the comment there records a load-bearing specificity constraint against its own theme-five override. Publishing a contract here would change what that deference means and needs the decision on #1627 question 5 first.",
+      "ticket": "yalesites-org/YaleSites-Internal#1627"
+    },
+    "components/03-organisms/menu/secondary-nav/_yds-secondary-nav.scss": {
+      "reason": "Paints --color-background at a themed scope. Site chrome rather than a Layout Builder block: it is not placeable inside a themed section today, so it cannot exhibit the leak. Listed for completeness of the invariant rather than as pending contrast work.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "components/03-organisms/site-in-this-section/_site-in-this-section.scss": {
+      "reason": "Paints --color-background at a themed scope. Same reasoning as secondary-nav -- site chrome, not section-placeable, so the leak is unreachable. It also declares --color-section-nav-* which is a different namespace and unrelated to this contract.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "components/01-atoms/videos/video-background/yds-video-background.scss": {
+      "reason": "Paints --color-video-background behind a playing video, so the visible backdrop is the video for almost all of the surface's life and the painted colour is a poster/fallback. What the contract should publish here is a genuine question rather than a mechanical conversion.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    }
+  }
+}

@@ -28,13 +28,11 @@ $component-content-spotlight-port-themes: map.deep-get(
     padding-block-start: var(--size-spacing-10);
     padding-block-end: var(--size-spacing-10);
 
-    // This block paints its own surface, so its descendants must use ITS
-    // text colour, not the enclosing section's. Resetting
-    // `--color-section-foreground` here does that: a nearer ancestor wins
-    // for inheritance, so the file-scope rules below resolve to
-    // `--color-text` inside a themed block and to the section's foreground
-    // inside a `default` (unpainted) one.
-    --color-section-foreground: var(--color-text);
+    // Paints its own surface, so it publishes the contract. Same shape and
+    // same reason as `_yds-text-with-image.scss`, where the rationale --
+    // including why the accent must not be left to the section -- is written
+    // out.
+    @include tokens.publish-surface(var(--color-background), var(--color-text));
 
     background-color: var(--color-background);
     color: var(--color-text);

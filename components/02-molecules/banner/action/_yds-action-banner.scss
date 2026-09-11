@@ -15,8 +15,13 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   // default variables.
   @each $theme, $value in $component-banner-themes {
     &[data-component-theme='#{$theme}'] {
+      // `--color-backgound` until YaleSites-Internal#1631 -- a typo, so this
+      // reset had never once applied and `--color-background` inside a banner
+      // still resolved to the enclosing surface's. It feeds
+      // `--color-text-shadow` via the block dial, so the halo behind banner
+      // copy was drawn in the section's background rather than the banner's.
       --color-text: var(--color-banner-text);
-      --color-backgound: var(--color-banner-background);
+      --color-background: var(--color-banner-background);
       --color-heading: var(--color-banner-heading);
       --color-action: var(--color-banner-action);
       --color-action-secondary: var(--color-banner-action-secondary);
@@ -28,6 +33,12 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
       --color-slot-six: var(--component-themes-#{$theme}-slot-six);
       --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
       --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
+
+      @include tokens.publish-surface(
+        var(--color-banner-background),
+        var(--color-banner-text),
+        var(--color-banner-action)
+      );
     }
   }
 
@@ -146,7 +157,20 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
 
   &[data-component-theme='six'] {
     --color-banner-background: var(--color-slot-nine);
+
+    // Theme six is not a `component-themes` key, so the dial loop above does
+    // not remap `--color-background` for it either. Harmless because the halo
+    // is switched off here outright, but the asymmetry is deliberate rather
+    // than an oversight.
     --color-text-shadow: transparent;
+
+    // Theme six is not a `component-themes` key, so the loop above does not
+    // cover it.
+    @include tokens.publish-surface(
+      var(--color-banner-background),
+      var(--color-banner-text),
+      var(--color-banner-action)
+    );
 
     // Theme six keeps visited link state dark to match base and hover links.
     --color-link-visited-base: var(--color-slot-seven);

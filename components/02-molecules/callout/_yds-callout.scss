@@ -6,29 +6,6 @@
 $component-callout-themes: map.deep-get(tokens.$tokens, 'component-themes');
 $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
-/// Hand the section colour contract over to this callout's own surface.
-///
-/// A themed callout paints its own background, so everything inside it must be
-/// coloured against THAT surface and not the section behind it. The contract is
-/// inherited, so redeclaring it here makes the nearest painting ancestor win: a
-/// CTA, divider or caption inside this callout resolves it to the callout's
-/// colours. This is what fixes the reported invisible-button case -- a filled
-/// button in a theme-two callout on a theme-one section was painted in the
-/// SECTION's accent, near-white, on the callout's own near-white background
-/// (YaleSites-Internal#1628).
-///
-/// Include it from each block that actually paints, rather than once under a
-/// blanket `[data-component-theme]`. A theme value with no block of its own
-/// leaves `--color-callouts-background` unset, which would make all three of
-/// these invalid-at-computed-value-time and strip the contract from everything
-/// inside the callout. Unthemed or unknown, the section's own values are then
-/// inherited untouched, which is the safe outcome.
-@mixin section-contract-reset {
-  --color-section-background: var(--color-callouts-background);
-  --color-section-foreground: var(--color-text);
-  --color-section-accent: var(--color-action);
-}
-
 .callouts {
   @include tokens.spacing-page-section(
     $flush-bottom: true,
@@ -55,7 +32,11 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
       --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
       --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
 
-      @include section-contract-reset;
+      @include tokens.publish-surface(
+        var(--color-callouts-background),
+        var(--color-text),
+        var(--color-action)
+      );
     }
   }
 
@@ -172,7 +153,11 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
     // Theme six is not a `component-themes` key, so the loop above does not
     // cover it.
-    @include section-contract-reset;
+    @include tokens.publish-surface(
+      var(--color-callouts-background),
+      var(--color-text),
+      var(--color-action)
+    );
   }
 }
 

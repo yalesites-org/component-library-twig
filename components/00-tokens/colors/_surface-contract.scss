@@ -1,0 +1,97 @@
+// The surface contract (YaleSites-Internal#1631, Phase 2).
+// -
+// A component that paints a background and says nothing else leaves everything
+// inside it reading the ENCLOSING surface's foreground against the background
+// it just painted. Neither palette is wrong on its own; the pairing that
+// reaches the screen is one nobody chose. That is the root cause the Color
+// Surface epic exists to close.
+// -
+// It is not theoretical. The reported symptom that started this: a filled
+// Button Link inside a theme-two callout on a theme-one section rendered
+// near-white on near-white, because the button drew its colours from the
+// SECTION while sitting on the CALLOUT's background (YaleSites-Internal#1628).
+// -
+// The contract is the fix, in one sentence: **if a component paints a
+// background, it publishes what it painted and the approved foreground for
+// it**, so descendants derive their colour from the nearest surface rather
+// than from one two containers away. Because a directly-matching declaration
+// always beats an inherited one, re-declaring at each boundary genuinely stops
+// the leak.
+// -
+// ## Why these names
+// -
+// `--color-section-background` / `--color-section-foreground` /
+// `--color-section-accent` are not new here -- `_yds-layout.scss:342-344`
+// publishes them for a themed Layout Builder section, and 28 consumers across
+// the library already read them with a `var(--color-section-foreground,
+// <previous colour>)` fallback. #1631 proposed `--surface-*` instead, on the
+// grounds that the contract should "match the vocabulary that already exists
+// rather than adding a fourth dialect" -- but by the time Phase 2 started, the
+// vocabulary that exists IS `--color-section-*`: #1613 and #1628 had landed it
+// in five declaration sites, 28 reads, four test files and a stylelint rule.
+// Adding `--surface-*` now would be the fourth dialect, not the cure for one.
+// -
+// So the generalisation is in what the name reaches, not in the name: a
+// "section" here is any surface that paints itself, and the outermost one
+// happens to be a Layout Builder section. `_yds-callout.scss` has published the
+// contract from a molecule since #1628 on exactly that reading.
+// -
+// ## Using it
+// -
+// Include it from each block that ACTUALLY PAINTS, rather than once under a
+// blanket `[data-component-theme]`:
+// -
+//   @each $theme, $value in $component-themes {
+//     &[data-component-theme='#{$theme}'] {
+//       --color-thing-background: var(--component-themes-#{$theme}-background);
+// -
+//       @include tokens.publish-surface(
+//         var(--color-thing-background),
+//         var(--color-text),
+//         var(--color-action)
+//       );
+//     }
+//   }
+// -
+// A theme value with no block of its own would otherwise leave the source
+// property unset, which makes these declarations invalid at computed-value time
+// and STRIPS the contract from everything inside -- worse than never publishing
+// it, because the enclosing surface's values are no longer inherited either.
+// Unthemed or unknown, doing nothing is the safe outcome.
+// -
+// `surface-contract.mjs` enforces the invariant; `surface-contract-baseline.json`
+// lists the surfaces still to convert.
+
+/// Publish the surface this block paints.
+/// -
+/// All three properties are always emitted. Publishing a background WITHOUT an
+/// accent is not a smaller, safer step -- it is a bug, because `_yds-cta.scss`
+/// reads the two as a matched pair on the button element:
+/// -
+///   &[data-cta-style='filled'] {
+///     --color-cta-text: var(--color-section-background);  // the label
+///     --color-cta-bg:   var(--color-section-accent);      // the fill under it
+///   }
+/// -
+/// Republish only the background and the label comes from this block while the
+/// fill it sits on still comes from the section. Measured across 7 global x 6
+/// section x 6 block dials, doing that to two components took filled-button
+/// labels from 48 sub-AA combinations to 158, with a worst case of 1.00:1 --
+/// label and fill resolving to the same colour, an invisible button. That is
+/// the #1628 bug reintroduced one container down.
+/// -
+/// Defaulting the accent to the foreground is measured safe: 42/42 (global x
+/// dial) pass AA, worst 4.61:1. It is also the right meaning -- the approved
+/// foreground for a surface is by definition legible on it, so a control drawn
+/// in it is legible too.
+/// -
+/// @param {Color} $background - what this block painted.
+/// @param {Color} $foreground - the approved foreground for that background.
+/// @param {Color} $accent [$foreground] - the control/accent colour on this
+///   surface. Pass one when the component has a control colour of its own;
+///   otherwise the foreground is the safe default.
+@mixin publish-surface($background, $foreground, $accent: $foreground) {
+  --color-section-background: #{$background};
+  --color-section-foreground: #{$foreground};
+  --color-section-accent: #{$accent};
+}

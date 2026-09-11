@@ -180,7 +180,7 @@ export function paletteTokenNames() {
 }
 
 /** Every `.scss` under `components/`, as `[repoRelativePath, contents]`. */
-function readAllScss(directory = 'components') {
+export function readAllScss(directory = 'components') {
   const root = fileURLToPath(new URL('../../..', import.meta.url));
 
   const walk = (current) =>
@@ -230,7 +230,7 @@ function isUrlSlashes(source, index) {
  * line comments are dropped up to but not including their newline -- so a hit's
  * reported line number still matches the file.
  */
-function stripComments(source) {
+export function stripComments(source) {
   let output = '';
   let quote = null;
   let index = 0;
