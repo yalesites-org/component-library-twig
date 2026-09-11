@@ -3,6 +3,11 @@ module.exports = {
     '../components/[0-9]*/**/*.mdx',
     '../components/**/*.stories.@(js|jsx|ts|tsx)',
   ],
+  // Each entry is served at the root, so '../images' exposes images/patterns/wavy.png
+  // as /patterns/wavy.png -- NOT /images/patterns/wavy.png. The `/images/...` URLs the
+  // fixtures use resolve through '../dist', which only carries them because
+  // webpack/plugins.js copies them there. A new subdirectory of images/ therefore needs
+  // its own CopyWebpackPlugin entry before `/images/<subdir>/...` will resolve.
   staticDirs: [
     '../dist', 
     '../images', 

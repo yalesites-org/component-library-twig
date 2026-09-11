@@ -27,24 +27,16 @@ export default {
   },
 };
 
-const heading = bannerData.banner__heading;
-const snippet = bannerData.banner__snippet;
-const linkContent = bannerData.banner__link__content;
-const linkContentTwo = bannerData.banner__link__content_two;
-const linkStyle = 'cta';
-const contentLayout = 'bottom';
-
-const renderBanner = (bgColor, layout = contentLayout) =>
+const renderBanner = (bgColor, layout = 'bottom') =>
   bannerTwig({
     ...imageData.responsive_images['16x9'],
-    banner__heading: heading,
-    banner__snippet: snippet,
-    banner__link__content: linkContent,
-    banner__link__url: linkStyle !== 'none' ? bannerData.banner__link__url : '',
-    banner__link__content_two: linkStyle !== 'none' ? linkContentTwo : '',
-    banner__link__url_two:
-      linkStyle !== 'none' ? bannerData.banner__link__url_two : '',
-    banner__link__style: linkStyle,
+    banner__heading: bannerData.banner__heading,
+    banner__snippet: bannerData.banner__snippet,
+    banner__link__content: bannerData.banner__link__content,
+    banner__link__url: bannerData.banner__link__url,
+    banner__link__content_two: bannerData.banner__link__content_two,
+    banner__link__url_two: bannerData.banner__link__url_two,
+    banner__link__style: 'cta',
     banner__content__layout: layout,
     banner__content__background: bgColor,
   });
