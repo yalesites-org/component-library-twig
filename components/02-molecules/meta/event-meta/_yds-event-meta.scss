@@ -22,6 +22,21 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 
   @include tokens.publish-surface(var(--color-gray-100), var(--color-gray-700));
 
+  // Paired in the same rule that paints, which is the guardrail #1662 added
+  // for these files: a rule that paints a flat background must set `color`
+  // too, so content that is NOT a self-colouring anchor cannot ride on an
+  // ancestor the rule does not control. Today every chip's text is wrapped in
+  // an anchor (`yds-event-meta-localist.twig:389,467`) which sets its own
+  // colour from the same property, so this changes nothing that renders -- it
+  // is the assumption itself that #1662 found had failed on the
+  // publication-detail chip, and it costs nothing to stop relying on it.
+  // -
+  // Reading the published foreground rather than a palette token is what makes
+  // this free: #1662 declined to pin these two because doing so "would add two
+  // raw palette foregrounds", pushing `foreground-purity-baseline.json` up. A
+  // semantic read adds none.
+  color: var(--color-section-foreground);
+
   // A dark themed section re-points the visited pair to the near-white `light`
   // tokens for copy drawn on the SECTION (`_yds-layout.scss:112-147`), which
   // the chip inherits and draws on its own near-white background -- 1.32:1.
@@ -51,7 +66,11 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 }
 
 .event-meta {
-  color: var(--color-basic-brown-gray);
+  // Painted on the enclosing section's surface, not on one this component
+  // owns, so the colour has to come from the section (YaleSites-Internal#1662).
+  // The grey stays as the CSS fallback: off a themed section the property is
+  // unset and rendering is unchanged by construction.
+  color: var(--color-section-foreground, var(--color-basic-brown-gray));
 }
 
 .event-meta__date {
@@ -150,7 +169,13 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
           &.event-meta__audience-wrapper + .event-meta__event-topics-wrapper {
             &::before {
               content: '';
-              border-left: var(--border-thickness-1) solid var(--color-gray-200);
+
+              // Every other border in this rule is drawn from
+              // `--color-divider`, which #1613 re-points to the section's
+              // content colour. This hairline was left flat, so it vanished
+              // on the dark section backgrounds (YaleSites-Internal#1662).
+              border-left: var(--border-thickness-1) solid
+                var(--color-section-foreground, var(--color-gray-200));
               position: absolute;
               left: 0;
               top: var(--size-spacing-6);
@@ -216,7 +241,7 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
   @include tokens.body-s;
 
   font-weight: var(--font-weights-yalenew-bold);
-  color: var(--color-gray-800);
+  color: var(--color-section-foreground, var(--color-gray-800));
 }
 
 // event types
@@ -254,7 +279,7 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 
   margin-top: 0;
   margin-bottom: var(--size-spacing-3);
-  color: var(--color-gray-500);
+  color: var(--color-section-foreground, var(--color-gray-500));
   font-variant-caps: small-caps;
   text-transform: lowercase;
   letter-spacing: 0.5px;
@@ -391,7 +416,7 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 .event-meta__day .past-event-icon svg {
   width: 1.5rem;
   height: 1.5rem;
-  color: var(--color-basic-brown-gray);
+  color: var(--color-section-foreground, var(--color-basic-brown-gray));
 }
 
 // directions
@@ -418,7 +443,7 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
   display: flex;
   flex-flow: row wrap;
   margin-top: 0;
-  color: var(--color-gray-500);
+  color: var(--color-section-foreground, var(--color-gray-500));
   gap: var(--size-spacing-3);
 }
 
