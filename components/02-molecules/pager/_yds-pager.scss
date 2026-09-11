@@ -56,7 +56,11 @@
   min-width: var(--size-click-target-minimum);
   align-items: center;
   justify-content: center;
-  color: var(--color-heading);
+
+  // Use the section's on-theme foreground so pager links meet contrast on themed
+  // section backgrounds (slots 2/4/5); falls back to the heading color outside a
+  // themed layout, leaving the default appearance unchanged.
+  color: var(--color-layout-content, var(--color-heading));
   text-decoration: none;
   border: var(--size-thickness-2) solid transparent;
   padding: var(--size-spacing-2) var(--size-spacing-2);
@@ -69,9 +73,12 @@
   // Page number links (not previous/next arrows)
   &:not([class*='--previous'], [class*='--next']) {
     &:not(.is-active):hover {
-      background-color: var(--color-link-base);
-      border-color: var(--color-link-base);
-      color: white;
+      // Inverted chip: on-theme foreground fill with the section background as
+      // the text color, so the hovered page number stays AA on every theme.
+      // Falls back to the link-base fill + white text on the default background.
+      background-color: var(--color-layout-content, var(--color-link-base));
+      border-color: var(--color-layout-content, var(--color-link-base));
+      color: var(--color-layout-theme, white);
     }
   }
 
@@ -84,8 +91,14 @@
   }
 
   &.is-active {
-    color: var(--color-basic-brown-gray);
-    border-color: var(--color-basic-brown-gray);
+    // The current-page marker is distinguished by its solid border. Use the
+    // section's on-theme foreground (the theme's white/black slot) so both the
+    // number and its border clear AA on every background. The previous muted
+    // brown-gray fallback only reaches ~4.87:1 on the default background, so
+    // fall back to the heading color the other pager links use (~15:1 on white)
+    // instead.
+    color: var(--color-layout-content, var(--color-heading));
+    border-color: var(--color-layout-content, var(--color-heading));
   }
 }
 

@@ -1,5 +1,16 @@
 @use '../../00-tokens/tokens';
 
+// Height of a dropdown control in the listing filter bar — the .form-item__dropdown
+// wrapper and the .chosen-container inside it, which must agree or the Chosen box and
+// its wrapper disagree on where the border sits. The selected-term chip is sized to fit
+// inside this height, so raising it is not free.
+// Deliberately NOT applied to the filter bar's search field: that is styled by the
+// global `.form-item-search .form-text` rule below, which is not scaffold-scoped and
+// would drag every other search box on the platform along with it. The two values must
+// stay equal — the filter grid lines the dropdowns up against the search field — so if
+// you change this, change that literal too. (#1299 QA)
+$filter-control-height: 3.125rem; // 50px
+
 // the button-submit mixin to emulate yds-button without the HTML attributes.
 // use case is specific to submit inputs in Drupal.
 // for all other use cases yds-button should be used.
@@ -159,34 +170,57 @@
 }
 
 .ys-filter-form--scaffold {
-  // Default to nowrap, only wrap when there are 5+ visible form items
-  flex-wrap: nowrap;
+  // Lay the filters on a uniform column grid sized to the form's OWN width — the
+  // section column it sits in — so every dropdown and the search field share a
+  // width and the row wraps gracefully inside constrained sections (50/50,
+  // 70/30) instead of overflowing. Capped at four columns; the search field
+  // takes the first full-width row; a container narrower than one unit collapses
+  // to a single column. (#1299 QA)
+  display: grid;
 
-  // If there are more than 4 visible form items it should wrap.
-  &:has(> .form-item:nth-child(5)) {
-    flex-wrap: wrap;
+  // auto-fit fills the available width, and the max(13rem, (100% - gaps)/4)
+  // track floor caps the row at four columns (three 1rem column-gaps between
+  // four tracks), so a wide section no longer packs every filter onto one row.
+  // The outer min(100%, …) lets the track collapse to the container width when
+  // it is narrower than one unit, so an ultra-narrow column never overflows.
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, max(13rem, calc((100% - 3rem) / 4))), 1fr)
+  );
+  align-items: end;
+  column-gap: 1rem;
+  row-gap: 0.5rem;
 
-    .form-item {
-      flex-basis: fit-content;
-      min-width: 29.5%;
-    }
-
-    // Search field should take the full width.
-    .form-item.form-item-search {
-      min-width: 100%;
-    }
+  .form-item {
+    width: auto;
+    max-width: none;
+    min-width: 0;
   }
 
-  &:has(> .form-item:nth-child(6)) {
-    .form-item {
-      flex-basis: fit-content;
-      min-width: 21.8%;
-    }
+  // The shared .form-item__select carries min-width: 22rem for standalone
+  // selects; Chosen reads that width at init and pins it as an inline width on
+  // the .chosen-container it generates, overflowing the grid cell. Reset it here
+  // so the native select and the Chosen container both track the column width.
+  // Search stays a normal grid item (first in source order), inline with the
+  // filters rather than on its own row. (#1299 QA)
+  .form-item__select {
+    min-width: 0;
+  }
+
+  // Keep the Apply button on its own full-width row below the filter row (shown
+  // only as a no-JS fallback; BEF autosubmit hides it when JS is on). (#1367)
+  .form-actions {
+    grid-column: 1 / -1;
   }
 
   .form-item__dropdown {
-    height: 3.125rem;
-    border: var(--border-thickness-1) solid var(--color-gray-400);
+    height: $filter-control-height;
+
+    // No border here: the .chosen-container below draws the single border (same
+    // --border-thickness-1 --color-gray-400 as the search field). A border on both
+    // reads as a doubled edge. Set to 0 to override the base .form-item__dropdown
+    // border in _yds-select.scss. (#1366)
+    border: 0;
   }
 
   .chosen-container {
@@ -197,8 +231,35 @@
 
     background-color: var(--color-basic-white);
     border: var(--border-thickness-1) solid var(--color-dropdown-border);
-    height: 3.125rem;
     width: 100% !important;
+
+    // The open state releases `height` (.chosen-with-drop below sets
+    // height: auto so wrapped chips can grow the box), so `height` alone is not
+    // enough — min-height is what keeps an open filter from becoming shorter
+    // than its closed self.
+    height: $filter-control-height;
+    min-height: $filter-control-height;
+
+    // Chosen copies the source select's classes onto the container it
+    // generates, so .form-item__select's 0.5em block padding — sized for a
+    // native select's single line of text — lands on a box already pinned to
+    // the control height. That leaves a 28px content area for a chip row that
+    // needs 39.2px, and because .chosen-choices is opaque white it then paints
+    // over the container's own bottom border: the selected term reads as
+    // "breaking the bounds" of the filter box. Same class-copying cause as the
+    // .form-item__select min-width reset above. (#1299 QA)
+    // It cannot be treated in the same place as that reset, though. min-width: 0
+    // is harmless on a native <select>; zeroing block padding is not, and
+    // .form-item__select still matches a real <select> here — chosen.settings
+    // only initialises a multi-select at 20+ options (minimum_multiple), so a
+    // shorter filter renders natively. That fallback is live enough that the
+    // mobile rule further down already borders `.form-item__select` for it.
+    // Keying on .chosen-container confines this to the generated div.
+    // Only the block padding goes: the inline padding is the gutter before the
+    // first chip. (It is not an arrow gutter — _yds-select.scss sets
+    // `content: none` on .form-item__dropdown::after inside this scaffold, and
+    // .chosen-container-multi has no caret of its own.)
+    padding-block: 0;
 
     &:hover,
     &:focus,
@@ -215,11 +276,68 @@
     border: 0;
     padding: 0;
 
+    // Fill the container's content box so the flex centring below has the whole
+    // control height to centre the chip row in, rather than centring inside a
+    // shrink-to-fit row that sits at the top of the box. Deliberately
+    // min-height and not height: a percentage resolves only against the
+    // container's definite closed height, so in the open state (where
+    // .chosen-with-drop sets height: auto) this is inert and wrapped chips
+    // still grow the box freely. (#1299 QA)
+    min-height: 100%;
+
+    // Closed (summary) state: lay the selected-term chips on a single line and clip
+    // anything past the width. JS marks the overflow chips and appends a "+N more"
+    // badge so the fixed-height filter row never wraps; the open state below
+    // re-enables wrapping to reveal every chip. (#1366)
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    // Explicit guard: keep chips flush-left even if Chosen's vendor CSS sets a
+    // different justification, so any clip lands at the tail, not the head. (#1299 QA)
+    justify-content: flex-start;
+    overflow: hidden;
+
     li.search-choice {
       background-color: hsl(210deg 100% 21% / 10%);
+      flex: none;
+      min-width: 0;
+      max-width: 100%;
+
+      // Chosen's vendor CSS pins line-height: 12px on the chip. Its own
+      // font-size: 14px on .chosen-container is overridden here, so the label
+      // ends up at 95% (vendor) of the form's ~20px — glyphs taller than their
+      // own line box. Paired with the tail-ellipsis `overflow: hidden` on the
+      // span below, that clipped the bottom of every descender (e.g. the "y"
+      // in "Faculty").
+      // Both halves of this token matter, so keep it as the `font` shorthand
+      // rather than reducing it to a font-size: its line-height gives the
+      // label a line box that fits its ink, and its smaller scale is what
+      // keeps the chip inside the 3.125rem control height the filter grid
+      // aligns on. Raising the control instead would break that alignment
+      // against the search field; a line-height alone leaves the chip too
+      // tall for the box. The closed single-line "+N more" state is
+      // unchanged. (#1299 QA)
+      font: var(--font-style-body-xs);
+
+      // Chosen renders the chip label in a plain inline span, so make it an
+      // inline-block box bounded by the chip width: only then do overflow +
+      // text-overflow engage and truncate the label at the TAIL (e.g.
+      // "Storage Categ…") instead of the row's overflow clipping its head.
+      // max-width stays inside the chip's padding, leaving room for the
+      // absolutely-positioned remove control. (#1299 QA)
+      span {
+        display: inline-block;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
 
     li.search-field {
+      min-width: 0;
+
       input[type='text'] {
         font-family: inherit;
         padding: 0;
@@ -227,24 +345,56 @@
     }
   }
 
-  .search-choice {
-    display: none; // Hide selected items as a text message is displayed, when the select is closed.
+  // Chips that don't fit on the closed single line are collapsed into the badge. (#1366)
+  .ys-search-choice--overflow {
+    display: none;
   }
 
-  .ys-select-message {
-    float: left;
+  .ys-select-more {
+    display: flex;
+    flex: none;
+    align-items: center;
+    white-space: nowrap;
+    padding: 0 var(--size-spacing-3);
+
+    // The badge has no clipping problem of its own — flex centring and no
+    // ellipsis span — so this is purely to match the chips it stands in for,
+    // which the token above shrank. Declared before font-weight so the
+    // shorthand does not reset the medium weight below. (#1299 QA)
+    font: var(--font-style-body-xs);
+    color: var(--color-gray-700);
+    font-weight: var(--font-weights-mallory-medium);
+    list-style: none;
   }
 
   .chosen-with-drop {
-    border: 1px;
+    // Do not re-declare a border here. The old `border: 1px` (no style)
+    // resolved to no border, so the whole box vanished when a filter was
+    // focused/open. Removing the override lets the .chosen-container border
+    // above cascade to the open state rather than duplicating it. (#1299 QA)
     height: auto;
 
-    .search-choice {
-      display: block; // Show selected items when the dropdown is opened.
+    // Open state: the dropdown expands to full height, so show every chip
+    // (wrapping across lines) and hide the "+N more" badge. (#1366)
+    .chosen-choices {
+      flex-wrap: wrap;
+      overflow: visible;
     }
 
-    .ys-select-message {
-      display: none; // Hide message when the dropdown is opened.
+    li.search-choice {
+      max-width: none;
+
+      span {
+        white-space: normal;
+      }
+    }
+
+    .ys-search-choice--overflow {
+      display: block;
+    }
+
+    .ys-select-more {
+      display: none;
     }
 
     .chosen-drop {
@@ -290,100 +440,22 @@
   }
 
   @media (max-width: tokens.$break-mobile) {
-    .chosen-container {
+    // Show a visible box for every filter on mobile. When Chosen renders, the
+    // container carries the border; when it falls back to the native select
+    // (the scaffold zeroes the .form-item__dropdown wrapper border and the
+    // select's own border is transparent), the control would otherwise read as
+    // plain text — so border the select too. Chosen hides the native select, so
+    // this is inert while Chosen is active. (#1299 QA)
+    .chosen-container,
+    .form-item__select {
       border: 1px solid var(--color-basic-black);
     }
 
-    // Override scaffold styles for calendar filter form on mobile
+    // Force the calendar filter form to a single column on mobile.
     form#event-calendar-filter-form & {
-      flex-wrap: nowrap;
-
       .form-item {
-        flex-basis: 100%;
         min-width: 100%;
         width: 100%;
-      }
-
-      // Override the :has() selectors that set min-width
-      &:has(> .form-item:nth-child(5)),
-      &:has(> .form-item:nth-child(6)) {
-        .form-item {
-          flex-basis: 100%;
-          min-width: 100%;
-          width: 100%;
-        }
-
-        .form-item.form-item-search {
-          min-width: 100%;
-        }
-      }
-    }
-  }
-
-  @media (min-width: calc(tokens.$break-2xl + tokens.$size-spacing-10)) {
-    flex-wrap: nowrap;
-
-    .chosen-container {
-      min-width: 15rem; // Considering the maximum of 3 filters width.
-    }
-
-    .form-item {
-      max-width: 50%;
-    }
-
-    // If there are more than 4 visible form items it should wrap.
-    &:has(> .form-item:nth-child(5)) {
-      flex-wrap: wrap;
-
-      .form-item {
-        flex-basis: fit-content;
-        min-width: 29.5%;
-      }
-
-      // Search field should take the full width.
-      .form-item.form-item-search {
-        min-width: 100%;
-      }
-    }
-
-    &:has(> .form-item:nth-child(6)) {
-      .form-item {
-        flex-basis: fit-content;
-        min-width: 21.8%;
-      }
-    }
-  }
-
-  @media (min-width: tokens.$break-l) and (max-width: calc(tokens.$break-2xl + tokens.$size-spacing-10)) {
-    flex-wrap: nowrap;
-
-    .chosen-container {
-      min-width: 15rem; // Considering the maximum of 3 filters width.
-    }
-
-    .form-item {
-      max-width: 50%;
-    }
-
-    // If there are more than 4 visible form items it should wrap.
-    &:has(> .form-item:nth-child(5)) {
-      flex-wrap: wrap;
-
-      .form-item {
-        flex-basis: fit-content;
-        min-width: 29.5%;
-      }
-
-      // Search field should take the full width.
-      .form-item.form-item-search {
-        min-width: 100%;
-      }
-    }
-
-    &:has(> .form-item:nth-child(6)) {
-      .form-item {
-        flex-basis: fit-content;
-        min-width: 32.5%;
       }
     }
   }
