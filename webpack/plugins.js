@@ -44,6 +44,13 @@ const CopyWebpackPlugin = new _CopyWebpackPlugin([
     to: './images/patterns',
   },
   {
+    from: './images/placeholders',
+    to: './images/placeholders',
+    // The directory's README documents the images for contributors; it is not
+    // an asset and has no business in the published dist/.
+    ignore: ['*.md'],
+  },
+  {
     from: './node_modules/@yalesites-org/tokens/build/json/tokens.json',
     to: './tokens.json',
     noErrorOnMissing: true,

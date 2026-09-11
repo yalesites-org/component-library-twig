@@ -173,12 +173,16 @@
           - 'Public Event'
         optional_link__content: 'Optional link'
         optional_link__url: 'https://britishart.yale.edu/exhibitions-programs/bridget-riley-perceptual-abstraction'
+      # Deliberately carries no `type`. Most real events have no tags, and until
+      # this entry existed no fixture rendered that branch, so neither Storybook
+      # nor visual regression could see the tags list appear or disappear. It
+      # shares a day with the tagged event above so both states are visible side
+      # by side, and that day's "more events" toggle carries the untagged case
+      # into the modal too.
       - category: 'computer science'
         title: 'Application DUE: Ulysses S. Grant Summer Program'
         url: '/'
         time: '09:00am to 9:45am'
-        type:
-          - 'Public Event'
   - date:
       day: 26
       month: '06'

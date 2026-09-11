@@ -30,49 +30,28 @@ export default {
   },
 };
 
-const defaultComponentTheme = 'one';
-const layoutOption = 'fifty-fifty';
-const layoutPadding = 'default';
-const divider = false;
-
 const layoutOptions = ['fifty-fifty', 'thirty-thirty-thirty', 'seventy-thirty'];
 
 const paddingOptions = ['default', 'no-top', 'no-bottom', 'no-padding'];
 
-// Render function for layout variations
-const renderLayouts = (layout) =>
+/**
+ * Every story here renders the same example layout and varies exactly one of
+ * its options, so they all share this one argument set.
+ */
+const renderLayout = ({
+  layout = 'fifty-fifty',
+  padding = 'default',
+  theme = 'one',
+  hasDivider = false,
+} = {}) =>
   layoutTwig({
     ...textData,
     ...accordionData,
     ...imageData.responsive_images['4x3'],
-    layout__divider: divider ? 'true' : 'false',
-    layout__padding: layoutPadding,
-    component__theme: defaultComponentTheme,
-    component__layout: layout,
-  });
-
-// Render function for theme variations
-const renderThemes = (theme) =>
-  layoutTwig({
-    ...textData,
-    ...accordionData,
-    ...imageData.responsive_images['4x3'],
-    layout__divider: divider ? 'true' : 'false',
-    layout__padding: layoutPadding,
-    component__theme: theme,
-    component__layout: layoutOption,
-  });
-
-// Render function for padding variations
-const renderPadding = (padding) =>
-  layoutTwig({
-    ...textData,
-    ...accordionData,
-    ...imageData.responsive_images['4x3'],
-    layout__divider: divider ? 'true' : 'false',
+    layout__divider: hasDivider ? 'true' : 'false',
     layout__padding: padding,
-    component__theme: defaultComponentTheme,
-    component__layout: layoutOption,
+    component__theme: theme,
+    component__layout: layout,
   });
 
 /**
@@ -81,7 +60,7 @@ const renderPadding = (padding) =>
  */
 export const LayoutVariations = () => `
   ${createVariations(
-    renderLayouts,
+    (layout) => renderLayout({ layout }),
     layoutOptions,
     'All Layout Variations',
     '',
@@ -89,7 +68,7 @@ export const LayoutVariations = () => `
   )}
 
   ${createVariations(
-    renderPadding,
+    (padding) => renderLayout({ padding }),
     paddingOptions,
     'All Padding Variations',
     '',
@@ -97,16 +76,7 @@ export const LayoutVariations = () => `
   )}
 
   ${createVariations(
-    () =>
-      layoutTwig({
-        ...textData,
-        ...accordionData,
-        ...imageData.responsive_images['4x3'],
-        layout__divider: 'true',
-        layout__padding: 'default',
-        component__theme: defaultComponentTheme,
-        component__layout: layoutOption,
-      }),
+    () => renderLayout({ hasDivider: true }),
     ['enabled'],
     'With Divider Enabled',
     '',
@@ -117,7 +87,7 @@ export const LayoutVariations = () => `
 const renderGlobalTheme = () => `
   ${createThemeVariations(
     (theme) =>
-      createSectionWrapper(theme, renderThemes(defaultComponentTheme), {
+      createSectionWrapper(theme, renderLayout(), {
         width: 'site',
         primaryWidth: '100%',
       }),
@@ -128,7 +98,7 @@ const renderGlobalTheme = () => `
   )}
   ${createThemeVariations(
     (theme) =>
-      createSectionWrapper('one', renderThemes(theme), {
+      createSectionWrapper('one', renderLayout({ theme }), {
         width: 'site',
         primaryWidth: '100%',
       }),
