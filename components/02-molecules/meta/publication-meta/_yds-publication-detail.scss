@@ -31,7 +31,10 @@
 }
 
 .publication-detail {
-  color: var(--color-basic-brown-gray);
+  // Painted on the enclosing section's surface, not on one this component
+  // owns (YaleSites-Internal#1662). The grey stays as the CSS fallback so an
+  // unthemed page renders identically.
+  color: var(--color-section-foreground, var(--color-basic-brown-gray));
 
   /* Each metadata cell is a <dl><dt><dd> for proper term–definition
    * semantics. Reset browser defaults so the cells slot into the
@@ -165,7 +168,7 @@
     display: block;
     margin-bottom: var(--size-spacing-3);
     font-weight: var(--font-weights-yalenew-bold);
-    color: var(--color-gray-800);
+    color: var(--color-section-foreground, var(--color-gray-800));
   }
 
   /* Author list — wraps inline */
@@ -200,6 +203,21 @@
 
   &__taxonomy-list__item {
     background-color: var(--color-gray-100);
+
+    // This chip paints its own surface, so it must pair its own foreground
+    // rather than let one inherit (YaleSites-Internal#1662). Not every item is
+    // a link -- `yds-publication-detail.twig` prints `{{ item }}` raw, and
+    // ResourceMetaBlock builds the DCN cell as `#plain_text` -- so plain items
+    // inherit from `.publication-detail`, which now follows the section. That
+    // would put the section's foreground on a chip that stayed gray-100: below
+    // AA on 21 of 42 (global theme x section theme) pairings, worst 1.07:1.
+    // Pinning the previous inherited value keeps rendering identical and holds
+    // at 4.54:1 everywhere, the same "flat by design" shape
+    // `.event-meta__multiple-dates` uses. A plain `color` rather than a
+    // declaration of the section-foreground custom property, deliberately --
+    // declaring that property here would take the "declared in exactly the
+    // expected places" count from 5 to 6.
+    color: var(--color-basic-brown-gray);
     padding: var(--size-spacing-2) var(--size-spacing-3);
 
     a {
