@@ -2,6 +2,9 @@
  # Available Variables:
  # - accordion__item__heading
  # - accordion__item__heading__level (passed down by `accordion.twig`)
+ # - accordion__item__id - (optional) a stable id for the item's heading, so
+ #   the item can be linked to directly. Drupal derives it from the paragraph
+ #   entity; the hash handling in `yds-accordion.js` opens the item it names.
  #
  # Available Blocks:
  # - accordion__item__content
@@ -37,6 +40,7 @@
     heading__level: accordion__item__heading__level|default('2'),
     heading__blockname: accordion__item__base_class,
     heading: accordion__item__heading__content,
+    heading__id: accordion__item__id,
   } %}
   <div {{ bem('content', [], accordion__item__base_class) }}>
     {% block accordion__item__content %}

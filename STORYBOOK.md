@@ -88,6 +88,12 @@ Every component needs a `*.visreg.stories.js` file. **Add or update a visreg ent
 
 This is required so release QA can catch visual regressions. If it's not in a visreg story, it won't be reviewed.
 
+Snapshots are submitted with `npm run chromatic`, which is where the Chromatic flags live so
+they are not retyped per invocation. The Chromatic CLI itself is not a dependency of this repo
+yet — installing it and wiring the CI run are
+[yalesites-org/YaleSites-Internal#1605](https://github.com/yalesites-org/YaleSites-Internal/issues/1605)
+and [#1604](https://github.com/yalesites-org/YaleSites-Internal/issues/1604).
+
 #### One story per global theme
 
 Visual regression snapshots have a hard pixel-area ceiling — Chromatic rejects anything over 25,000,000px — and stacking every global theme into one story blows past it. Build the theme stories with `createGlobalThemeStories` instead, and export one story per global theme:
@@ -119,8 +125,8 @@ export const WhitneyHumanitiesCenter = themeStories.seven;
 ItsYourYale.storyName = 'It’s Your Yale';
 ```
 
-The 25,000,000px figure is Chromatic's, which is what this refactor is for; Percy is what
-`npm run visreg:ci` runs today. The full rationale lives in the
+The 25,000,000px figure is Chromatic's, which is what this shape is for — snapshots run via
+`npm run chromatic`. The full rationale lives in the
 `components/_storybook/global-theme-stories.mjs` docblock — read that before changing the shape.
 
 Two things to know before "tidying" that up:
@@ -150,9 +156,8 @@ of writing, `Molecules/Meta` sits at 24,286,800px, **97% of the ceiling**, so th
 almost none left. `VISREG_MEASUREMENTS_OUT=sizes.json npm run visreg:measure` writes every
 story's measurement if you need to see where a component stands.
 
-It runs in CI twice on purpose: in `Test`, on every push to a PR, so a story that grows past the
-ceiling fails while you are still working on it; and again in `Visual Regression` before Percy, so
-a PR marked ready for review cannot spend a Percy run on a snapshot that cannot be captured.
+It runs in CI in `Test`, on every push to a PR, so a story that grows past the ceiling fails
+while you are still working on it rather than at snapshot time.
 
 If it cannot find a browser, fetch one: `npx puppeteer browsers install chrome`. Overrides
 (`VISREG_PIXEL_CEILING`, `VISREG_CONCURRENCY`, `VISREG_STORY_TIMEOUT`, `VISREG_SETTLE_TIMEOUT`)
@@ -170,7 +175,7 @@ reach for Puppeteer elsewhere without discussing it first.
 
 Sample images in fixtures and page examples come from `images/placeholders/`, committed to
 this repo — never from a remote placeholder service, which would make the build depend on a
-third-party host and add a fresh Percy diff every run. `images/placeholders/README.md` has
+third-party host and add a fresh snapshot diff every run. `images/placeholders/README.md` has
 the available aspect ratios, how to reference them, and the full rationale;
 `components/_storybook/no-third-party-images.test.mjs` fails the unit suite if a fixture
 drifts back to a remote host.

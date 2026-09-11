@@ -2,6 +2,10 @@
  # Available Variables:
  # - modal_item__heading
  # - modal_item__content
+ # - modal_item__id - (optional) a stable id for the caption heading, so the
+ #   gallery item can be linked to directly. Drupal derives it from the
+ #   paragraph entity; the hash handling in `yds-media-grid-interactive.js`
+ #   opens the modal on the item it names.
  #}
 
 {% set modal_item__heading = modal_item__heading|default(item.media_grid__modal__heading) %}
@@ -34,6 +38,7 @@
         heading__level: '2',
         heading: modal_item__heading,
         heading__blockname: media_grid__modal__base_class,
+        heading__id: modal_item__id,
       } %}
     {% endif %}
     {# Content Text #}

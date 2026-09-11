@@ -10,9 +10,9 @@ while it measures — which made the build's outcome depend on a third-party hos
 and responsive. A slow or down `picsum.photos` turned CI red for reasons unrelated to the
 code under review.
 
-Committing them also removes real noise from Percy: `picsum.photos` served a _random_
-photo per request, so every snapshot of an image-bearing story differed from the last.
-These files are byte-identical on every run.
+Committing them also removes real noise from visual regression: `picsum.photos` served a
+_random_ photo per request, so every snapshot of an image-bearing story differed from the
+last. These files are byte-identical on every run.
 
 `components/_storybook/no-third-party-images.test.mjs` fails the unit suite if a fixture
 drifts back to a remote host.
@@ -91,4 +91,4 @@ run `NODE_ENV=production npm run build` once before committing, or the bytes wil
 from what a release build produces.
 
 Regenerating changes the bytes only if the command changes, but it will still need a
-Percy re-baseline if it changes what they look like.
+snapshot re-baseline if it changes what they look like.
