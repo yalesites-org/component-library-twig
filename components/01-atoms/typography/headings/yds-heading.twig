@@ -10,12 +10,25 @@
  # - heading__link__base_class - override the link base class
  # - heading__link__modifiers - override the link modifiers
  # - heading__link__blockname - override the link block name (defaults to heading__base_class)
+ #
+ # - heading__id - (optional) an id, making the heading a fragment target that
+ #   can be linked to from elsewhere on the site or from a chat citation.
+ #   Carries tabindex="-1" with it: a heading is not focusable on its own, and
+ #   a browser following a link to an unfocusable target drops focus back to
+ #   the top of the document, stranding a keyboard or screen reader user well
+ #   above the content they asked for.
  #}
 
 {% set heading__base_class = heading__base_class|default('heading') %}
 {% set heading__attributes = heading__attributes|default({
     'class': bem(heading__base_class, heading__modifiers, heading__blockname),
   }) %}
+{% if heading__id is not empty %}
+  {% set heading__attributes = heading__attributes|merge({
+    'id': heading__id,
+    'tabindex': '-1',
+  }) %}
+{% endif %}
 
 <h{{ heading__level }} {{ add_attributes(heading__attributes) }} >
   {% if heading__prefix__icon %}
