@@ -14,7 +14,7 @@ export default {
 
 export const Interactive = {
   render: ({ tabsTheme }) => `
-    <div data-component-has-divider="false" data-component-theme="default" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
+    <div data-component-has-divider="false" data-section-theme="default" data-component-width="site" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
       <div class="yds-layout__inner">
         <div class="yds-layout__primary" style="width: 100%">
           ${tabs({

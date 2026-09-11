@@ -343,12 +343,12 @@ These are **separate concepts** that happen to use similar naming:
 #### Section Themes
 
 ```javascript
-['default', 'one', 'two', 'three', 'four'];
+['default', 'one', 'two', 'three', 'four', 'five', 'six'];
 ```
 
 - Background colors for layout sections
-- Defined in component-library (not in tokens)
-- Used in `data-component-theme` or `data-global-theme`
+- Defined in component-library (not in tokens), in `_yds-layout.scss`
+- Emitted as **`data-section-theme`** — see `theme-constants.js`'s `sectionThemes`
 
 #### Component Themes
 
@@ -359,7 +359,11 @@ These are **separate concepts** that happen to use similar naming:
 - Color accents for individual components
 - Defined in tokens: `tokens['component-themes']`
 - Called "dial" in CMS
-- Used in component-specific theme props
+- Emitted as **`data-component-theme`** — see `theme-constants.js`'s `componentThemes`
+
+The two used to share the `data-component-theme` attribute, which is why they read as "similar
+naming". They were split into two attributes by YaleSites-Internal#1630, because one attribute
+carrying two different slot mappings meant no color reset could be correct for both.
 
 See `components/00-introduction/themes.mdx` for user-facing documentation.
 

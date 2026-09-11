@@ -35,7 +35,7 @@ const renderGlobalTheme = () => {
   const renderThemeWidthVariations = (theme) => {
     const dividerWidths = ['25', '50', '75', '100'];
     return `
-      <div class="yds-layout cl-divider-playground" data-component-theme="${theme}">
+      <div class="yds-layout cl-divider-playground" data-section-theme="${theme}">
         <div class="yds-layout__inner" data-component-width="site" style="
           --color-divider: var(--color-${dividerColor});
         ">
