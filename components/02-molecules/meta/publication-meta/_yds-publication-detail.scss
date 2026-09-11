@@ -198,15 +198,47 @@
     gap: var(--size-spacing-3);
   }
 
+  /* The chip paints a FIXED `--color-gray-100`, so it is a surface in its own
+   * right and has to publish the pairing for it -- see
+   * `00-tokens/colors/_surface-contract.scss`. Before this, the anchor inside
+   * read `var(--color-text)`, i.e. the foreground of the surface the chip SITS
+   * ON, against the background the chip PAINTS: white on near-white, 1.07:1,
+   * on block dials one to four and on the dark basic themes.
+   *
+   * `--color-gray-700` is not a new colour -- `hsl(0, 0%, 29%)` is what this
+   * anchor already resolves to wherever it is currently legible -- so the
+   * light themes are unchanged and only the failing combinations move.
+   *
+   * Mirrors `.event-meta__event-types__type`, which paints the same fixed
+   * chip background; the two files are deliberately kept in step. */
   &__taxonomy-list__item {
     background-color: var(--color-gray-100);
     padding: var(--size-spacing-2) var(--size-spacing-3);
+
+    @include tokens.publish-surface(
+      var(--color-gray-100),
+      var(--color-gray-700)
+    );
+
+    /* A dark themed section re-points the visited pair to the near-white
+     * `light` tokens for copy drawn on the SECTION
+     * (`_yds-layout.scss:112-147`), which the chip inherits and draws on its
+     * own near-white background -- 1.32:1. `a:visited` outranks a plain
+     * `color:` on the same anchor, so the pair has to be re-pointed here;
+     * colouring the anchor is not enough.
+     *
+     * Onto the surface foreground rather than the dark purple swatch: a fixed
+     * swatch in foreground position is what `foreground-purity.mjs` exists to
+     * stop, and `_yds-layout.scss:63-66` already sets this precedent for
+     * link-grid. Visited then matches the chip's resting colour, 8.27:1. */
+    --color-link-visited-base: var(--color-section-foreground);
+    --color-link-visited-hover: var(--color-section-foreground);
 
     a {
       @include atoms.plain-link;
       @include tokens.body-s;
 
-      color: var(--color-text);
+      color: var(--color-section-foreground);
     }
   }
 

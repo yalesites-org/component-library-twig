@@ -194,10 +194,16 @@ export function themedProperties(source) {
  *    visible by collecting the dial's property names first.
  *
  * Known gap: a component that paints a fixed background at NO themed scope --
- * the meta chip lists (`.event-meta__event-types__type` and friends, #1662) --
- * is not detectable this way without flagging every piece of flat chrome in the
- * library. Those are converted by hand and held by the consumer table in
- * `section-background-contrast.test.mjs` instead.
+ * the meta chip lists (`.event-meta__event-types__type`,
+ * `.event-meta__event-topics__topic`, `.publication-detail__taxonomy-list__item`)
+ * -- is not detectable this way without flagging every piece of flat chrome in
+ * the library. Those three are now converted (the #1631 "concrete instance of
+ * the guardrail" criterion), and because this gate still cannot see them the
+ * conversion is held by `META_CHIP_SURFACES` in
+ * `section-background-contrast.test.mjs` instead -- which pins their wiring and
+ * the measured ratios, so an accidental revert fails there rather than here.
+ * They therefore do NOT appear in the `converted` count below, which is why it
+ * reads 5 while that file's publisher list holds 9.
  */
 export function paintsThemedBackground(source) {
   const paints = backgroundPaints(source);

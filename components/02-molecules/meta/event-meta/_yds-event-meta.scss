@@ -3,6 +3,53 @@
 
 $event-meta-borders-max: tokens.$break-l - 0.5;
 
+// The two chip lists paint a FIXED `--color-gray-100`, so they are surfaces in
+// their own right and have to publish the pairing for it -- see
+// `00-tokens/colors/_surface-contract.scss`. Before this, the anchors inside
+// read `var(--color-text)`, i.e. the foreground of the surface the chip SITS
+// ON, against the background the chip PAINTS: white on near-white, 1.07:1, on
+// block dials one to four and on the dark basic themes.
+// -
+// `--color-gray-700` is not a new colour -- `hsl(0, 0%, 29%)` is what these
+// anchors already resolve to wherever they are currently legible -- so the
+// light themes are unchanged and only the failing combinations move.
+// -
+// `.event-meta__multiple-dates` below is the existing precedent in this file:
+// a rule that paints its own background pairing its own foreground. This is
+// that same idea, published so the anchors inside can read it.
+@mixin chip-surface {
+  background-color: var(--color-gray-100);
+
+  @include tokens.publish-surface(var(--color-gray-100), var(--color-gray-700));
+
+  // A dark themed section re-points the visited pair to the near-white `light`
+  // tokens for copy drawn on the SECTION (`_yds-layout.scss:112-147`), which
+  // the chip inherits and draws on its own near-white background -- 1.32:1.
+  // `a:visited` outranks a plain `color:` on the same anchor, so the pair has
+  // to be re-pointed here; colouring the anchor is not enough.
+  // -
+  // Onto the surface foreground rather than the dark purple swatch: a fixed
+  // swatch in foreground position is what `foreground-purity.mjs` exists to
+  // stop, and `_yds-layout.scss:63-66` already sets this precedent for
+  // link-grid ("match section copy -- no default purple :visited from link
+  // mixin"). Visited then matches the chip's resting colour, 8.27:1.
+  --color-link-visited-base: var(--color-section-foreground);
+  --color-link-visited-hover: var(--color-section-foreground);
+}
+
+// The anchor inside a chip. `a:visited` and `a:hover` from `plain-link`
+// outrank a plain `color:` on the same anchor, which is why the visited pair
+// is re-pointed on the chip above rather than restated here.
+@mixin chip-link {
+  @include atoms.plain-link;
+  @include tokens.body-s;
+
+  display: block;
+  padding: var(--size-spacing-3);
+  text-align: center;
+  color: var(--color-section-foreground);
+}
+
 .event-meta {
   color: var(--color-basic-brown-gray);
 }
@@ -182,7 +229,7 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 }
 
 .event-meta__event-types__type {
-  background-color: var(--color-gray-100);
+  @include chip-surface;
 
   @media (min-width: tokens.$break-m) {
     flex: 1 1 auto;
@@ -190,13 +237,7 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 }
 
 .event-meta__event-types__type a {
-  @include atoms.plain-link;
-  @include tokens.body-s;
-
-  display: block;
-  padding: var(--size-spacing-3);
-  text-align: center;
-  color: var(--color-text);
+  @include chip-link;
 }
 
 // overline for 'online', 'in-person', or `hybrid`
@@ -251,13 +292,7 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 
 // Event topics link
 .event-meta__event-topics__topic a {
-  @include atoms.plain-link;
-  @include tokens.body-s;
-
-  display: block;
-  padding: var(--size-spacing-3);
-  text-align: center;
-  color: var(--color-text);
+  @include chip-link;
 }
 
 // More dates
@@ -403,7 +438,7 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
 }
 
 .event-meta__event-topics__topic {
-  background-color: var(--color-gray-100);
+  @include chip-surface;
 
   @media (min-width: tokens.$break-m) {
     flex: 1 1 auto;
