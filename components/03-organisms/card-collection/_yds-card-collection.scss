@@ -85,13 +85,21 @@
     @include grid.container-grid(var(--spacing-component-gutter-secondary));
   }
 
-  // Cards-per-row dial (#1648). Generalises the 4-up grid that used to be
-  // available only through the profile-only directory design option, so any
-  // card grid can opt into it. Only the widest container band changes; the
-  // region-width capping above still applies, so this is a ceiling rather than
-  // a fixed column count.
-  [data-collection-type='grid'][data-cards-per-row='4'] & {
-    @include grid.container-grid-columns(4);
+  // Card-size dial (#1648). Generalises the 4-up grid that used to be available
+  // only through the profile-only directory design option, so any card grid can
+  // opt into it — expressed as how big each card is rather than as a raw column
+  // count, so the region works out how many actually fit and every choice stays
+  // valid when the block moves between regions. `large` is the absence of this
+  // rule, i.e. the grid emitted just above, unchanged from what every card grid
+  // rendered before the dial existed; only `small` adds anything, and it has to
+  // stay after the two base grids so its bands win on source order (they carry
+  // the same specificity). Deliberately NOT `data-collection-featured`: that
+  // attribute already means the per-card image/text ratio (and "larger first
+  // card"), is read by ~30 selectors in _yds-reference-card.scss, and is
+  // hardcoded to 'true' for every Drupal listing, so overloading it would
+  // conflate two concepts and put every existing listing at risk.
+  [data-collection-type='grid'][data-card-size='small'] & {
+    @include grid.container-grid-small;
   }
 
   [data-collection-type='profile-directory'][data-collection-featured='false']

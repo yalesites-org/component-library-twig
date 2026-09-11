@@ -49,13 +49,13 @@ const renderAllCardTypes = () => `
       ...imageData.responsive_images['3x2'],
     })}
 
-    <h3>Post Cards - Four Per Row</h3>
+    <h3>Post Cards - Small Card Size</h3>
     ${cardCollectionTwig({
       card_collection__source_type: 'post',
       card_collection__type: collectionType,
-      card_collection__heading: 'Post Card Collection (4 per row)',
+      card_collection__heading: 'Post Card Collection (small cards)',
       card_collection__featured: 'true',
-      card_collection__cards_per_row: '4',
+      card_collection__card_size: 'small',
       card_collection__with_images: withImages ? 'true' : 'false',
       card_collection__cards: [1, 2, 3, 4],
       ...postCardData,

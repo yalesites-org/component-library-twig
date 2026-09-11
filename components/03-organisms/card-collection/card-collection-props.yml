@@ -17,20 +17,23 @@ collectionType:
     - condensed
   control: select
 
-cardsPerRow:
-  twigProp: card_collection__cards_per_row
-  name: Cards Per Row
+cardSize:
+  twigProp: card_collection__card_size
+  name: Card Size
   type: select
   required: false
-  description: Maximum number of cards side by side in the widest layout region
+  description: How big each card in the grid is
   detail: >
-    A ceiling, not a fixed column count. The grid sizes itself against the
-    width of the region it sits in, so a narrower region still falls back to
-    two and then one column. Only applies to the grid collection type.
-  default: '3'
+    A size choice rather than a column count. The grid sizes itself against the
+    inline width of the region it sits in and fits as many cards of the chosen
+    size as will go: large gives 3 across a full-width region, 2 in a
+    fifty-fifty and 1 in anything narrower; small gives 4, then 3, then 2, then
+    1 across the same progression. Every value therefore stays valid when a
+    block moves between regions. Only applies to the grid collection type.
+  default: large
   options:
-    - '3'
-    - '4'
+    - large
+    - small
   control: select
 
 featured:

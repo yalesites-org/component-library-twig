@@ -3,10 +3,29 @@
 @use '../01-atoms/atoms';
 
 // Container inline-size thresholds for the card grid, derived from the 84rem
-// site width. Named rather than repeated so the cards-per-row dial (#1648) can
-// widen the top band without restating the breakpoint.
+// site width. Named rather than repeated so the card-size dial (#1648) can
+// shift the bands without restating the breakpoints.
 $container-grid-two-up: 34rem;
 $container-grid-widest: 70rem;
+
+// The extra, narrower band small cards get (#1648): two abreast in a region
+// large cards render one-up in. Set from *rendered* region widths, measured in a
+// browser rather than derived from the flex bases, because those bases overflow
+// their row and shrink. Measured (no divider / with divider): fifty-fifty
+// 41 / 39.94rem, seventy-thirty primary 56 / 56rem, thirty-thirty-thirty
+// 26.67 / 25.26rem, seventy-thirty secondary 26 / 23.89rem. 25rem sits below
+// both thirty-thirty-thirty widths, so a thirds column fits two small cards
+// whether or not the section shows dividers.
+// Note the two narrow regions OVERLAP rather than sorting cleanly: with dividers
+// on, a thirty-thirty-thirty column (25.26rem) is narrower than a seventy-thirty
+// sidebar (26rem). No single width threshold can therefore mean "two up in
+// thirds, one up in the sidebar" — that would need the grid to know which region
+// it sits in, which is exactly the ancestor-markup coupling container-grid exists
+// to avoid. So a seventy-thirty sidebar also takes two small cards when the
+// section has no divider. Raising this above 26rem to change that would cost
+// thirds its second column in both divider states, and thirds is the region this
+// band was added for.
+$container-grid-small-two-up: 25rem;
 
 // Flex basis for $columns evenly spaced columns separated by --grid-gutter.
 // Rounded to two decimals so three columns still emits the 33.33% this file
@@ -46,7 +65,7 @@ $container-grid-widest: 70rem;
 // Breakpoints (container inline-size, derived from the 84rem site width):
 //   >= 70rem  -> 3 columns  (full-width region)
 //   34-70rem  -> 2 columns  (fifty-fifty region ~41rem, content width 56rem)
-//   < 34rem   -> 1 column   (thirty-thirty-thirty ~27rem, sidebar ~25rem)
+//   < 34rem   -> 1 column   (thirty-thirty-thirty ~26rem, sidebar ~26rem)
 @mixin container-grid($gutter: var(--spacing-component-gutter)) {
   --grid-gutter: #{$gutter};
 
@@ -63,18 +82,44 @@ $container-grid-widest: 70rem;
   @include container-grid-columns(3);
 }
 
-// The widest band of container-grid on its own, so the cards-per-row dial
-// (#1648) can raise the column count without re-emitting the whole grid.
-// Deliberately scoped to the top band: the narrower bands still cap the grid
-// at 2-up and 1-up, so a 4-up listing dropped into a fifty-fifty or sidebar
-// region keeps collapsing to a readable column count instead of forcing four
-// columns into a region that cannot hold them.
+// The widest band of container-grid on its own, so a card-size variant (#1648)
+// can raise the column count of just that band without re-emitting the grid.
 @mixin container-grid-columns($columns) {
   @container (min-width: #{$container-grid-widest}) {
     > * {
       flex: 0 1 column-basis($columns);
     }
   }
+}
+
+// The small end of the card-size dial (#1648): one more column in every band of
+// container-grid, plus the extra narrow band above, because a smaller card fits
+// in less room.
+// Breakpoints (container inline-size):
+//   >= 70rem  -> 4 columns  (full-width region)
+//   34-70rem  -> 3 columns  (fifty-fifty ~41rem, seventy-thirty primary 56rem)
+//   25-34rem  -> 2 columns  (thirty-thirty-thirty ~26rem, sidebar ~26rem)
+//   < 25rem   -> 1 column   (sidebar with a divider ~24rem, small screens)
+// Still driven by the container's own inline size, so a size is a request for
+// cards of that size and not a column count: an author who picks "small" and
+// then moves the block into a narrower region gets whatever fits there, with no
+// stale stored value to reconcile and nothing to warn about. Emitted in
+// ascending min-width order so the widest matching band wins on source order —
+// every band here has the same specificity.
+@mixin container-grid-small {
+  @container (min-width: #{$container-grid-small-two-up}) {
+    > * {
+      flex: 0 1 column-basis(2);
+    }
+  }
+
+  @container (min-width: #{$container-grid-two-up}) {
+    > * {
+      flex: 0 1 column-basis(3);
+    }
+  }
+
+  @include container-grid-columns(4);
 }
 
 @mixin primary {
