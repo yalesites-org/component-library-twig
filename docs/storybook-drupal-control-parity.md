@@ -104,18 +104,18 @@ case was confirmed via the live entity form display and the live
 
 ## Where things stand
 
-281 Storybook controls inventoried across 63 props files, plus 10 Drupal-only controls found along the way.
+281 Storybook controls inventoried across 63 props files, plus 11 Drupal-only controls found along the way.
 
 | Status | Count | Needs a decision? |
 | --- | --- | --- |
 | `Storybook-only` | 44 | Yes |
 | `Partial` | 22 | Yes |
-| `Drupal-only` | 10 | Yes |
+| `Drupal-only` | 11 | Yes |
 | `Wired` | 86 | No |
 | `Content` | 114 | No |
 | `Structural` | 15 | No |
 
-**76 rows need a disposition ratified.** The other 215 are either already in parity or are content/plumbing that was never a control.
+**77 rows need a disposition ratified.** The other 215 are either already in parity or are content/plumbing that was never a control.
 
 Recommended dispositions (recommendations only — nothing here is decided):
 
@@ -123,7 +123,7 @@ Recommended dispositions (recommendations only — nothing here is decided):
 | --- | --- |
 | Keep as-is | 31 |
 | Drop from Storybook | 23 |
-| Add to Storybook | 14 |
+| Add to Storybook | 15 |
 | Migrate to Drupal | 8 |
 
 **21 controls are actively costing the colour effort** — see "What this means for the Color Surface epic" below.
@@ -165,9 +165,9 @@ Recommended dispositions (recommendations only — nothing here is decided):
    Drupal and the story actually render; `page_title__prefix` is passed by nobody. These are
    not parity problems, they are broken props that look like features.
 
-5. **Nearly half the rows (129 of 291) are `Content` or `Structural` and need no decision.**
+5. **Nearly half the rows (129 of 292) are `Content` or `Structural` and need no decision.**
    Most of what Storybook exposes is a content slot Drupal fills from field data. Separating
-   them out is what makes the 76 rows that *do* need a decision reviewable in one sitting.
+   them out is what makes the 77 rows that *do* need a decision reviewable in one sitting.
 
 ## What this means for the Color Surface epic
 
@@ -249,6 +249,12 @@ to rediscover:
   resolves to the 7 real token keys (`0,1,2,4,6,8,hairline`); `theme-constants.js:118` carries
   a comment claiming 8 values including `16,24,32`, which do not exist in the tokens package;
   and `divider.mdx` says "Six thickness options". Worth fixing whatever the disposition.
+- **The Two Column (70/30) section can never be themed or given a divider, and every other
+  multi-column section can.** A colour-surface disposition rather than plain drift — whether a
+  70/30 section should be themeable is a design call the review needs to make. Evidence, and
+  the separate `data-component-padding` divergence it turned up, are under "Two Column (70/30)"
+  in Coverage, where the disposition argument lives; they are not repeated here so there is
+  only one copy of the `yalesites-project` line references to keep current.
 - **An orphaned dial entry.** `ys_themes.component_overrides.yml` defines
   `quick_links.field_style_variation` (`promotional`/`subtle`), but `block_content.quick_links`
   has no such field and `block--inline-block--quick-links.html.twig:14` hardcodes
@@ -555,7 +561,7 @@ to rediscover:
 | Organism | Templates/Block Wrapper | `paddingModifier` | Padding Modifier | `block_wrapper__extra_classes` | 4: padding-default, padding-no-top, padding-no-bottom, padding-no-padding | `Wired` | block_content.<type> field_padding_options (34 bundles) and Layout Builder section padding_options (ys_layouts.module:386) | 4: default, no_top, no_bottom, no_padding | — |   | No | atomic emits the identical ys-block-wrapper--padding-<value> class straight from the field (atomic/templates/block/layout-builder/_layout-builder-block-template.twig:2-3) and the four allowed values match one-for-one (field.storage.block_content.field_padding_options.yml:13-27). | `components/03-organisms/block-wrapper/block-wrapper-props.yml` |
 | Organism | Templates/Component Wrapper | `componentWidth` | Component Width | `component_width` | 4: content, highlight, site, max | `Storybook-only` | — | — | Drop from Storybook |   | No | The twig reads component_wrapper__width (yds-component-wrapper.twig:5), so the declared prop component_width is inert in the story (component-wrapper.stories.js:20) and in every atomic caller (block--inline-block--webform.html.twig:6); no editor control sets wrapper width either. | `components/03-organisms/component-wrapper/component-wrapper-props.yml` |
 | Organism | Templates/Layout | `divider` | Divider | `layout__divider` | — | `Wired` | Layout Builder section setting (ys_layouts YSLayoutOptions.php:73 'divider' checkbox) | — | — |   | No | layout--two-column--50-50.html.twig:22 and layout--three-column--33-33-33.html.twig:22 pass settings.divider straight through. | `components/03-organisms/layout/layout-props.yml` |
-| Organism | Templates/Layout | `layoutOption` | Layout | `component__layout` | 3: fifty-fifty, thirty-thirty-thirty, seventy-thirty | `Partial` | Layout Builder layout choice (ys_layouts.layouts.yml) - only ys_layout_two_column_50_50 and ys_layout_three_column_33_33_33 render this component | 2: fifty-fifty, thirty-thirty-thirty | Keep as-is |   | No | seventy-thirty has full SCSS (_yds-layout.scss:232) but no producer: the Two column (70/30) layout renders bespoke markup (layout--two-column.html.twig:20) and never includes yds-layout.twig, so the 70/30 state is real in the CMS but unreachable through this component. | `components/03-organisms/layout/layout-props.yml` |
+| Organism | Templates/Layout | `layoutOption` | Layout | `component__layout` | 3: fifty-fifty, thirty-thirty-thirty, seventy-thirty | `Partial` | Layout Builder layout choice (ys_layouts.layouts.yml) - only ys_layout_two_column_50_50 and ys_layout_three_column_33_33_33 render this component | 2: fifty-fifty, thirty-thirty-thirty | Keep as-is |   | No | seventy-thirty has full SCSS (_yds-layout.scss:232) but no producer: the Two column (70/30) layout renders bespoke markup (layout--two-column.html.twig:20) and never includes yds-layout.twig, so the 70/30 state is real in the CMS but unreachable through this component. The section itself is rendered by `Templates/Two Column (70/30)`, added by this ticket. | `components/03-organisms/layout/layout-props.yml` |
 | Organism | Templates/Layout | `layoutPadding` | Padding | `layout__padding` | 4: default, no-top, no-bottom, no-padding | `Wired` | Layout Builder section setting padding_options (ys_layouts.module:386, saved into ys_layouts_sections_config) | 4: default, no_top, no_bottom, no_padding | — |   | No | ys_layouts_preprocess_layout (ys_layouts.module:438-442) rewrites the underscores to hyphens and the layout twigs read settings.padding, so the four values line up exactly. | `components/03-organisms/layout/layout-props.yml` |
 | Organism | Templates/Layout | `theme` | Component Theme | `component__theme` | 6: default, one, two, three, four, five | `Wired` | Layout Builder section setting theme (YSLayoutOptions.php:86, color-picker after_build) | 6: default, one, two, three, four, five | — |   | No | The section form's option list is the same six values the story exposes, and the layout twigs pass settings.theme through (layout--two-column--50-50.html.twig:23). | `components/03-organisms/layout/layout-props.yml` |
 
@@ -564,6 +570,8 @@ to rediscover:
 Drift in the other direction: an editor can set these, and Storybook never shows the result. These were found incidentally while tracing the rows above, so the list is indicative, not exhaustive — a systematic sweep from the Drupal side would be its own piece of work.
 
 One caveat before anyone chases the `field_padding_options` rows: padding **is** represented in Storybook, as `Organisms/Block Wrapper` `paddingModifier`, with the same four options. It is listed here per-component only because the field sits on 34 block types while Storybook models it once, on the wrapper the molecule stories do not render. That is a modelling difference, not a gap.
+
+The `Templates/Two Column (70/30)` `padding_options` row below is **not** one of those. That is *section* padding, not block padding, and it is a real gap: section padding is modelled in Storybook as `Templates/Layout` `layoutPadding`, but the 70/30 section renders through its own `yds-two-column.twig`, which emits no padding attribute at all.
 
 | Tier | Component | Control | Label | Twig prop | Storybook options | Status | Drupal control | Drupal options | Recommended disposition | Ratified | Colour surface | Notes | Source |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -577,6 +585,7 @@ One caveat before anyone chases the `field_padding_options` rows: padding **is**
 | Organism | Organisms/Content Spotlight/Content Spotlight Landscape | `field_heading_level` | Heading Level | `text_with_image__heading_level` | — | `Drupal-only` | block_content.content_spotlight field_heading_level | 2: 1 (H1), 2 (H2) | Keep as-is |   | No | block--inline-block--content-spotlight.html.twig:7 passes it and yds-text-with-image.twig:23 consumes it, but the props file exposes no control for it. | — |
 | Organism | Organisms/Content Spotlight/Content Spotlight Landscape | `field_media` | Image | `text_with_image__image` | — | `Drupal-only` | block_content.content_spotlight field_media (media_library widget) | — | Keep as-is |   | No | block--inline-block--content-spotlight.html.twig:21,24-26 supplies the image block, but text-with-image-props.yml has no image row (the story always uses imageData 3x2). | — |
 | Organism | Organisms/Tabs | `field_tabs` | Tab items (label + content) | `tabs` | — | `Drupal-only` | block_content.tabs field_tabs -> paragraph.tab field_heading / field_content | — | Keep as-is |   | No | atomic field--block-content--field-tabs.html.twig:5-19 builds labels and panels from the tab paragraphs, but tabs-props.yml documents only tabsTheme. | — |
+| Organism | Templates/Two Column (70/30) | `padding_options` | Section padding options | `layout__padding` | — | `Drupal-only` | Layout Builder section setting padding_options (ys_layouts.module:380-386; reaches this layout because the alter is keyed on the form ID and no-`class:` layouts still get core's LayoutDefault section form) | 4: default, no_top, no_bottom, no_padding | Add to Storybook |   | No | ys_layouts_preprocess_layout (ys_layouts.module:434-444) maps it onto settings['padding'] and layout--two-column.html.twig:20 emits data-component-padding, but yds-two-column.twig emits no padding attribute at all, so the story cannot show it. | — |
 
 ## Coverage and scope
 
@@ -587,9 +596,9 @@ ticket requires. `00-tokens`, `04-page-layouts` and `05-page-examples` are out o
   (`components/_storybook/control-parity-audit-coverage.test.mjs`) fails the unit suite if a
   control is added to any props file without a row appearing here, so this document cannot
   quietly go stale.
-- **3 components have a story but no props file**, and are covered directly from their story:
+- **4 components have a story but no props file**, and are covered directly from their story:
   `Atoms/Table` (no controls), `Molecules/Modal` (no declared `argTypes`), `Organisms/Galleries`
-  (one control, `gridHeading`).
+  (one control, `gridHeading`), and `Templates/Two Column (70/30)` (no controls — see below).
 - **22 component directories have no story or props file of their own because a parent story
   covers them** — for example `01-atoms/controls/*` under `Atoms/Controls`, the four
   `02-molecules/banner/*` directories under their respective banner stories, and
@@ -597,7 +606,60 @@ ticket requires. `00-tokens`, `04-page-layouts` and `05-page-examples` are out o
 - **5 are container directories** with no template at all (`01-atoms/controls/button`,
   `01-atoms/typography`, `01-atoms/videos`, `02-molecules/cards`, `03-organisms/menu`).
 
-### 7 components have no Storybook presence at all
+### Two Column (70/30): a story was added, and it has no Storybook controls
+
+This audit originally listed `03-organisms/layout/two-column` among the components with no
+Storybook presence. That was a real gap rather than an acceptable exception — it is an
+editor-reachable section, it is squarely in scope for the colour work, and "inventory covers
+every component" cannot be satisfied for a component with no story to source a control list
+from. `components/03-organisms/layout/two-column.stories.js` now renders it, using the
+`_two-column--example.twig` that was already in the tree and referenced by nothing.
+
+It declares **no Storybook controls**, and the Drupal side is missing two of the three section
+dials — but not, as an earlier draft of this section claimed, all of them:
+
+- `ys_layouts.layouts.yml:14` registers `ys_layout_two_column` with **no `class:`**, unlike
+  `ys_layout_two_column_50_50` and `ys_layout_three_column_33_33_33`, which both point at
+  `YSLayoutOptions`. `YSLayoutOptions.php:73,86` is the *only* source of the **divider** and
+  **component theme** settings, so a 70/30 section gets neither.
+- **Padding is the exception, and it is genuinely editor-settable.** No `class:` does not mean
+  no settings form: Drupal core defaults the plugin to `LayoutDefault`
+  (`core/lib/Drupal/Core/Layout/Attribute/Layout.php:88`), which implements
+  `PluginFormInterface`, so `ChooseSectionController.php:81` still routes a 70/30 section
+  through Configure Section. `ys_layouts_form_layout_builder_configure_section_alter()`
+  (`ys_layouts.module:380`) is a `hook_form_FORM_ID_alter()` keyed on the **form ID, not the
+  layout plugin**, so it adds the `padding_options` select unconditionally, and
+  `ys_layouts_preprocess_layout()` (`ys_layouts.module:434-444`) maps it onto
+  `settings['padding']` for every layout alike.
+- So `layout--two-column.html.twig:20`'s `settings['padding']` read is **live wiring, not
+  dead** — an editor really can set padding on a 70/30 section.
+- **Width is inert everywhere, not a dial this section lacks.** No multi-column section has an
+  editor-settable width: `layout--two-column--50-50.html.twig:19-24` passes only
+  `component__layout`, `layout__padding`, `layout__divider` and `component__theme`, and
+  `layout-props.yml` declares those same four and no width. `yds-layout.twig:21` accepts a
+  `component__width` that nothing in `yalesites-project` ever supplies.
+
+That makes **padding a `Drupal-only` control on this component** — the one new inventory row
+this section adds, now carried in the *Drupal-only controls* table above and recommended
+`Add to Storybook`. The editor has it; Storybook cannot show it, because `yds-two-column.twig`
+emits no `data-component-padding` at all, while the Drupal template at
+`layout--two-column.html.twig:20` does. The two templates have drifted: the Drupal one is
+bespoke and never includes `yds-two-column.twig`. (They also disagree on markup — CLT wraps the
+secondary region in an `<aside>`, `layout--two-column.html.twig:28` in a plain `<div>`.)
+
+**Why this is a colour-surface finding and not just bookkeeping.** A 70/30 section can never be
+given a theme, so it always renders on the ambient page surface while the 50/50 and 33/33/33
+sections beside it can be themed. Whether that is deliberate or an oversight is a design call
+for the review — it is the one disposition on this component worth ratifying. The new story is
+where it can be looked at: use the global theme toolbar to see the section against each
+palette, which is its only colour variation.
+
+The story is deliberately **not** a visreg story. Adding snapshots carries visual-regression
+cost and belongs with whatever the review ratifies, not with an inventory ticket; the
+component still has no automated contrast coverage, and that gap is recorded here rather than
+closed.
+
+### 6 components have no Storybook presence at all
 
 These ship templates but appear in no story, so they have **zero** controls, no documentation
 page, and — relevant to the colour work — no contrast coverage whatever:
@@ -610,11 +672,18 @@ page, and — relevant to the colour work — no contrast coverage whatever:
 | `02-molecules/menu` | 3 | The menu partials used by the nav organisms. |
 | `02-molecules/menu/menu-toggle` | 1 | Shipped, interactive, and never rendered in Storybook. |
 | `02-molecules/menu/menu-in-this-section-toggle` | 1 | As above. |
-| `03-organisms/layout/two-column` | 2 | **The Two Column (70/30) section** — an editor-reachable layout with no story. |
 
-`two-column` is the one worth arguing about: it is a layout site builders use, it is directly
-in scope for the section-colour work, and it cannot be previewed or contrast-checked. The
-others are mostly partials, but the two menu toggles are real interactive UI.
+These are mostly partials rendered through a parent, but **the two menu toggles are real
+interactive UI** — shipped, editor-reachable, and never rendered in Storybook. They are the
+remaining coverage gap after Two Column was closed above, and they carry the same argument in
+miniature: nothing contrast-checks them today.
+
+A guard test enforces this table one direction — add a story for something listed here and
+`control-parity-audit-coverage.test.mjs` goes red until the row moves out. That is the
+staleness that let the Two Column gap sit unnoticed, so it is now checked rather than
+remembered. The reverse is not asserted: whether an unrendered directory is a component worth
+listing or an implementation partial is a human call, and pinning it in a test would freeze a
+judgement.
 
 ## Documentation impact
 
@@ -643,4 +712,11 @@ changes are made in this ticket.
 3. Two items are worth raising regardless of how the dispositions land, because they are bugs
    rather than drift: the five broken theme CSS custom properties, and the stale
    `ys_themes/config/install` dial copy.
+4. Decide whether a **Two Column (70/30) section should be themeable** (and get a divider). It
+   is the only multi-column section that cannot be, and unlike the rows above there is no
+   Storybook control to keep or drop — the disposition is either "give it `YSLayoutOptions`
+   like the 50/50 and 33/33/33 sections" or "deliberate, leave it". It now has a story to look
+   at. Separately, its **padding is `Drupal-only`**: editors can set it but
+   `yds-two-column.twig` emits no `data-component-padding`, so Storybook cannot show it —
+   worth an `Add to Storybook` row of its own.
 

@@ -42,26 +42,61 @@ const projectRoot = path.dirname(path.dirname(path.dirname(selfPath)));
 const AUDIT = 'docs/storybook-drupal-control-parity.md';
 
 /** Only the three tiers the audit covers; tokens, page layouts and examples are out of scope. */
-const AUDITED_TIER = /^components\/(01-atoms|02-molecules|03-organisms)\//;
+const AUDITED_TIERS = ['01-atoms', '02-molecules', '03-organisms'];
+const AUDITED_TIER = new RegExp(`^components/(${AUDITED_TIERS.join('|')})/`);
 const PROPS_FILE = /-props\.yml$/;
+const STORY_FILE = /\.stories\.js$/;
 
 /** The `---|---` line under a table header. */
 const SEPARATOR = /^\|[\s:|-]+\|$/;
 
 /**
- * Every tracked props file in the audited tiers.
+ * Every tracked file in the audited tiers.
  *
- * Tracked only, so the guard cannot go red on a developer's untracked scratch YAML that CI
+ * Tracked only, so the guard cannot go red on a developer's untracked scratch file that CI
  * will never see. Computed once at module scope rather than per test -- that is the sibling
  * guards' idiom (see `global-theme-stories.test.mjs`) and it keeps this to one `git`
- * subprocess instead of one per test.
+ * subprocess for the whole file. Both scans below filter this one result; spawning `git`
+ * again per scan would cost a subprocess and let two invocations disagree if the index moves
+ * mid-run.
  */
-const propsFiles = execFileSync('git', ['ls-files'], {
+const trackedFiles = execFileSync('git', ['ls-files'], {
   cwd: projectRoot,
   encoding: 'utf8',
 })
   .split('\n')
-  .filter((file) => AUDITED_TIER.test(file) && PROPS_FILE.test(file));
+  .filter((file) => AUDITED_TIER.test(file));
+
+/** The props files -- the declared source of truth for controls, one per component. */
+const propsFiles = trackedFiles.filter((file) => PROPS_FILE.test(file));
+
+/**
+ * The stories.
+ *
+ * The audit's coverage claim rests on which components Storybook actually renders, so the
+ * exceptions table near the end is checked against the stories themselves rather than against
+ * a second hand-maintained list.
+ */
+const storyFiles = trackedFiles.filter((file) => STORY_FILE.test(file));
+
+/**
+ * Asserts a scan found files in every audited tier.
+ *
+ * Guards the guard: a scan run from the wrong directory reports nothing and every assertion
+ * that iterates it passes vacuously. A bare total is not enough -- at the time of writing
+ * `01-atoms` holds only 8 of the 63 props files, so if that tier alone dropped out the totals
+ * would still clear any sensible floor while coverage silently narrowed. Hence per tier, and
+ * hence applied to BOTH scans (props files and stories), not just the props files it was
+ * originally written for.
+ */
+function assertEveryTierScanned(files, noun) {
+  AUDITED_TIERS.forEach((tier) => {
+    assert.ok(
+      files.some((file) => file.startsWith(`components/${tier}/`)),
+      `no ${noun} found under components/${tier}/ -- the scan is missing a whole tier`,
+    );
+  });
+}
 
 /** A top-level key in a props file -- one Storybook control. */
 const CONTROL_KEY = /^([A-Za-z_][A-Za-z0-9_]*):\s*$/;
@@ -138,13 +173,14 @@ function bodyEnd(start) {
 }
 
 /**
- * The audit's inventory tables, as header-keyed row objects.
+ * Body rows of every audit table whose header carries all of `columns`, as header-keyed
+ * objects.
  *
  * Columns are read by HEADER NAME rather than by position, so that a human reordering or
  * inserting a column does not silently turn this guard into a check on the wrong cells. The
- * document also contains explanatory tables (the column legend, the status legend); only the
- * inventory tables carry both a Control and a Source column, so keying on that pair separates
- * data from prose without hard-coding a heading or a position.
+ * document also contains explanatory tables (the column legend, the status legend) and, at the
+ * end, an exceptions table in a different shape; naming the columns a table must have is what
+ * separates one kind from another without hard-coding a heading or a position.
  *
  * Tables are located by their `---|---` SEPARATOR line, whose predecessor is by definition the
  * header. An earlier version split the document on blank lines instead, which is wrong in a
@@ -157,18 +193,22 @@ function bodyEnd(start) {
  * Note the audit writes any literal pipe inside a cell as `&#124;` precisely so `splitRow`
  * stays correct -- a backslash-escaped pipe is valid Markdown but still splits here.
  */
-const auditRows = auditLines.flatMap((line, i) => {
-  if (i === 0 || !SEPARATOR.test(line.trim())) return [];
-  const header = splitRow(auditLines[i - 1]);
-  if (!header.includes('Control') || !header.includes('Source')) return [];
-  return auditLines
-    .slice(i + 1, bodyEnd(i + 1))
-    .map((row) =>
-      Object.fromEntries(
-        header.map((key, col) => [key, splitRow(row)[col] ?? '']),
-      ),
-    );
-});
+function tablesWithColumns(...columns) {
+  return auditLines.flatMap((line, i) => {
+    if (i === 0 || !SEPARATOR.test(line.trim())) return [];
+    const header = splitRow(auditLines[i - 1]);
+    if (!columns.every((column) => header.includes(column))) return [];
+    return auditLines.slice(i + 1, bodyEnd(i + 1)).map((row) => {
+      const cells = splitRow(row);
+      return Object.fromEntries(
+        header.map((key, col) => [key, cells[col] ?? '']),
+      );
+    });
+  });
+}
+
+/** The inventory tables: one row per Storybook control. */
+const auditRows = tablesWithColumns('Control', 'Source');
 
 /** Strips the backticks the table wraps code-ish cells in. */
 const bare = (cellText) => cellText.replace(/`/g, '').trim();
@@ -265,19 +305,7 @@ test("each row's Label and Twig prop still match its props file", () => {
 });
 
 test('the props files the guard scans are actually found', () => {
-  // Guards the guard: `git ls-files` run from the wrong directory reports nothing and every
-  // assertion above would vacuously pass.
-  //
-  // A bare total is not enough. `01-atoms` is only 8 of the 63 files and 19 of the 281
-  // controls, so if that tier alone dropped out of the scan -- a renamed directory, a moved
-  // component, a path that stops matching AUDITED_TIER -- the totals would still clear any
-  // sensible floor while coverage silently narrowed. So each tier is asserted separately.
-  ['01-atoms', '02-molecules', '03-organisms'].forEach((tier) => {
-    assert.ok(
-      propsFiles.some((file) => file.startsWith(`components/${tier}/`)),
-      `no props files found under components/${tier}/ -- the scan is missing a whole tier`,
-    );
-  });
+  assertEveryTierScanned(propsFiles, 'props files');
   assert.ok(
     propsFiles.length > 50,
     `expected the audited tiers to contain many props files, found ${propsFiles.length}`,
@@ -352,5 +380,109 @@ test('the audit table parses into the columns the guard reads', () => {
     drupalOnlyRows.length > 0,
     'the Drupal-only findings table parsed to zero rows -- it was removed, or its shape ' +
       'changed enough that the parse no longer sees it',
+  );
+});
+
+/** `import x from './a/b.twig';` -- every story imports its markup relatively (asserted below). */
+const TWIG_IMPORT = /from\s+'(\.[^']*\.twig)'/g;
+
+/**
+ * The same thing, but permissive: any quote style, any specifier.
+ *
+ * Exists only to be compared against `TWIG_IMPORT`. A story importing its markup through an
+ * Emulsify namespace (`@organisms/...`) or in double quotes would not match the strict form, so
+ * its directory would quietly never be credited as "rendered by a story" -- the presence check
+ * would keep passing while covering less than it claims. That is the same vacuous-pass failure
+ * `assertEveryTierScanned` guards against, one level down.
+ */
+const ANY_TWIG_IMPORT = /from\s+['"]([^'"]*\.twig)['"]/g;
+
+/**
+ * Component directories some story renders, as audit-style paths (`03-organisms/layout/...`).
+ *
+ * A directory counts as having Storybook presence when a story imports a `.twig` out of it --
+ * which is what "appears in a story" means here, and it correctly credits the parent-story
+ * case the audit relies on (`layout.stories.js` sits one level up from the template it
+ * imports, and `01-atoms/controls/*` are rendered by a story in `01-atoms/controls/`).
+ *
+ * `path.posix` throughout, not `path`: both inputs are already POSIX -- `git ls-files` always
+ * emits forward slashes and the import specifier is source text -- so resolving them through
+ * absolute platform paths and back would only add a separator-normalisation step to undo.
+ */
+const dirsRenderedByAStory = new Set(
+  storyFiles.flatMap((file) =>
+    [
+      ...readFileSync(path.join(projectRoot, file), 'utf8').matchAll(
+        TWIG_IMPORT,
+      ),
+    ].map((match) =>
+      path.posix
+        .join(path.posix.dirname(file), path.posix.dirname(match[1]))
+        .replace(/^components\//, ''),
+    ),
+  ),
+);
+
+/**
+ * The components the audit declares have no Storybook presence at all.
+ *
+ * Its own table, not the inventory tables above: it is keyed by `Component` and `Templates`
+ * and has neither a `Control` nor a `Source` column.
+ */
+const noPresenceRows = tablesWithColumns('Component', 'Templates');
+
+test('nothing the audit calls "no Storybook presence" is actually rendered by a story', () => {
+  // This is the half the inventory tests cannot see. Everything above is driven by props
+  // files, so a component with no props file -- which is exactly what "no Storybook presence"
+  // means -- contributes nothing to iterate over and the whole suite stays green while the
+  // audit's coverage claim goes false. That is not hypothetical: `03-organisms/layout/two-column`
+  // was listed here, and adding its story is what made the claim wrong.
+  //
+  // One direction only, and on purpose. Listing a component that HAS a story is a false
+  // coverage exception and makes the document lie, so it fails here. The reverse -- a
+  // component with no story that is missing from the table -- is a judgement about what
+  // counts as a component worth listing (partials, containers and parent-covered directories
+  // all legitimately never appear), and pinning it would be asserting the human call.
+  const contradicted = noPresenceRows
+    .map((row) => bare(row.Component))
+    .filter((component) => dirsRenderedByAStory.has(component));
+  assert.deepEqual(
+    contradicted,
+    [],
+    `${AUDIT} lists these components as having no Storybook presence, but a story now ` +
+      `renders them -- move them out of that table and into the coverage list above it:\n  ${contradicted.join(
+        '\n  ',
+      )}`,
+  );
+});
+
+test('the story scan the presence check relies on is actually finding stories', () => {
+  assertEveryTierScanned(storyFiles, 'stories');
+  assert.ok(
+    dirsRenderedByAStory.size > 50,
+    `expected stories to render many component directories, found ${dirsRenderedByAStory.size}`,
+  );
+  assert.ok(
+    noPresenceRows.length > 0,
+    'the no-Storybook-presence table parsed to zero rows -- it was removed, or its shape ' +
+      'changed enough that the parse no longer sees it',
+  );
+
+  // And that the strict scan above saw every twig import there is to see. Without this, a
+  // story written with a namespace or double-quoted specifier drops out silently.
+  const missed = storyFiles.flatMap((file) => {
+    const source = readFileSync(path.join(projectRoot, file), 'utf8');
+    const strict = new Set([...source.matchAll(TWIG_IMPORT)].map((m) => m[1]));
+    return [...source.matchAll(ANY_TWIG_IMPORT)]
+      .map((m) => m[1])
+      .filter((spec) => !strict.has(spec))
+      .map((spec) => `${file} -> ${spec}`);
+  });
+  assert.deepEqual(
+    missed,
+    [],
+    'these stories import twig in a form the presence scan does not match, so their ' +
+      'directories are never credited -- make the import relative and single-quoted, or ' +
+      `widen TWIG_IMPORT:\n  ${missed.join('\n  ')}`,
   );
 });
