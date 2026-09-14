@@ -6,6 +6,20 @@ YaleSites site builder can actually produce that state in Drupal.
 Produced for yalesites-org/YaleSites-Internal#1661, part of the Color Surface epic
 (yalesites-org/YaleSites-Internal#1634).
 
+> **Provenance — the Drupal columns are a point-in-time reading of another repository.**
+> **Drupal control**, **Drupal options** and everything derived from them were read on
+> **2026-09-10** from `yalesites-org/yalesites-project` `config/sync` as it stood at commit
+> `137d05918` — the most recent change to that directory at the time, tree
+> `9d292f43a1b6a3253de1bd6bb06a3dd3a78bbd0d` — plus the `atomic/templates/**` and `ys_themes`
+> state on `develop` that same day.
+>
+> This matters because nothing checks those cells. The guard test
+> (`components/_storybook/control-parity-audit-coverage.test.mjs`) verifies only the cells
+> restated from this repo's `*-props.yml`; component-library-twig's CI cannot see
+> `yalesites-project` at all, so the Drupal side can go stale without a single test turning
+> red. If you are reading this well after the date above, re-read the Drupal side rather than
+> trusting the table.
+
 ## Why this exists
 
 Storybook has drifted from what the platform ships. Controls get added to a story or a props
@@ -709,10 +723,18 @@ changes are made in this ticket.
 2. Raise follow-up tickets for whatever is ratified, tagged `color-surface-followup`. This
    ticket deliberately does not create them — the ticket's own acceptance criteria scope them
    to the *agreed* work, and nothing is agreed until the review.
-3. Two items are worth raising regardless of how the dispositions land, because they are bugs
-   rather than drift: the five broken theme CSS custom properties, and the stale
-   `ys_themes/config/install` dial copy.
-4. Decide whether a **Two Column (70/30) section should be themeable** (and get a divider). It
+3. **Delete `components/_storybook/control-parity-audit-coverage.test.mjs`** once 1 and 2 are
+   done. It exists to stop this table going stale *while it is still being completed*; once
+   the dispositions are ratified the document becomes a point-in-time record, and back-filling
+   a newly added control into it would be wrong. The guard enforces its own expiry: fill in
+   **Ratified** for all 77 rows that need a decision and it fails with *"Audit ratified —
+   delete this guard"*, so the deletion cannot be forgotten. Partial progress is fine — it
+   only fires when the last one is filled in.
+4. Two items are worth raising regardless of how the dispositions land, because they are bugs
+   rather than drift: the five broken theme CSS custom properties
+   (yalesites-org/YaleSites-Internal#1666), and the stale `ys_themes/config/install` dial copy
+   (yalesites-org/YaleSites-Internal#1667). **Both are now filed** — do not raise duplicates.
+5. Decide whether a **Two Column (70/30) section should be themeable** (and get a divider). It
    is the only multi-column section that cannot be, and unlike the rows above there is no
    Storybook control to keep or drop — the disposition is either "give it `YSLayoutOptions`
    like the 50/50 and 33/33/33 sections" or "deliberate, leave it". It now has a story to look

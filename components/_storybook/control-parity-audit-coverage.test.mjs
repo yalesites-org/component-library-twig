@@ -27,6 +27,18 @@
  * review decided, and a control added afterwards has no business being back-filled into it --
  * so the guard would be actively wrong, not merely redundant. It guards a document while the
  * document is still being completed; it is not a permanent invariant.
+ *
+ * That instruction does not rely on anyone remembering it: the test below named
+ * `the audit is not ratified yet` FAILS once the audit is ratified, with a message saying to
+ * delete this file. The trigger lives in a markdown table and the action lives here, so
+ * without it the two are connected by nothing but goodwill -- and the most likely outcome is a
+ * stale guard pinning a finished document. The audit's own `## What happens next` step 3
+ * records the same expiry from the document side.
+ *
+ * That expiry check is the one place this file reads a cell that is NOT a restatement of the
+ * props file: `Ratified`. It reads it as a TRIGGER, never as an assertion -- no row is
+ * required to carry any particular disposition, only for the guard to notice when the last
+ * one has been recorded.
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -352,7 +364,10 @@ test('the audit table parses into the columns the guard reads', () => {
   // Guards the guard again: a renamed column would leave the `Source`/`Control` lookups
   // undefined, and the assertions above would report every control as missing rather than the
   // real problem. Failing here says "the table shape changed", which is the useful message.
-  ['Source', 'Control', 'Status'].forEach((key) => {
+  // `Ratified` is in the list for the same reason even though nothing asserts its contents:
+  // the expiry check below calls `bare(row.Ratified)`, which throws a bare TypeError rather
+  // than anything readable if the column is renamed away.
+  ['Source', 'Control', 'Status', 'Ratified'].forEach((key) => {
     assert.ok(
       auditRows.length > 0 && auditRows.every((row) => key in row),
       `every audit table needs a "${key}" column`,
@@ -380,6 +395,100 @@ test('the audit table parses into the columns the guard reads', () => {
     drupalOnlyRows.length > 0,
     'the Drupal-only findings table parsed to zero rows -- it was removed, or its shape ' +
       'changed enough that the parse no longer sees it',
+  );
+});
+
+/**
+ * The statuses whose rows the review exists to settle.
+ *
+ * The audit's own legend: "The rows that need a decision are `Storybook-only`, `Partial` and
+ * `Drupal-only`." `Content`, `Wired` and `Structural` rows are listed for completeness and
+ * are explicitly not part of the ratification, so requiring a Ratified value on all 292 rows
+ * would hold the expiry open forever.
+ */
+const NEEDS_RATIFICATION = ['Storybook-only', 'Partial', 'Drupal-only'];
+
+/**
+ * The audit's whole status vocabulary, as its legend defines it.
+ *
+ * Pinned because `NEEDS_RATIFICATION` is three literals matched against document text, and a
+ * status renamed in the document silently drops its rows out of the trigger set -- so the
+ * expiry below would announce "ratified" while those rows are still undecided. A floor on the
+ * trigger set only catches renaming ALL of them; this catches renaming one.
+ *
+ * Pinning the vocabulary is not the same as pinning a row's status, which this file
+ * deliberately leaves to the review: nothing here says which status any row must carry, only
+ * that the set of statuses in use is the set this guard was written against. Adding or
+ * renaming a status should be accompanied by a look at `NEEDS_RATIFICATION`, and this is what
+ * forces that look.
+ */
+const KNOWN_STATUSES = [
+  ...NEEDS_RATIFICATION,
+  'Wired',
+  'Content',
+  'Structural',
+];
+
+test('the audit is not ratified yet -- this guard expires when it is', () => {
+  // The expiry clause from the docblock above, made mechanical.
+  //
+  // Fires only when the LAST undecided row is filled in, not the first. Firing on the first
+  // would turn CI red for the whole duration of a review that is meant to happen row by row
+  // over more than one sitting, and the obvious way to get green again would be to delete the
+  // guard early -- before the follow-up tickets exist, which is exactly what it is here to
+  // hold open. So partial progress passes and completion fails.
+  //
+  // Reading Status to pick the trigger set is not the same as asserting Status: nothing here
+  // requires a row to have any particular status, only that the rows currently claiming to
+  // need a decision have had one recorded.
+  const unknown = [
+    ...new Set(
+      auditRows
+        .map((row) => bare(row.Status))
+        .filter((status) => !KNOWN_STATUSES.includes(status)),
+    ),
+  ];
+  assert.deepEqual(
+    unknown,
+    [],
+    `${AUDIT} uses statuses this guard does not know: ${unknown.join(
+      ', ',
+    )}.\n` +
+      'A status renamed or added in the document drops its rows out of the expiry trigger ' +
+      'set in silence, so the guard would report the audit ratified while those rows are ' +
+      'still undecided. Update KNOWN_STATUSES, and decide whether the new status belongs in ' +
+      'NEEDS_RATIFICATION.',
+  );
+
+  const needsDecision = auditRows.filter((row) =>
+    NEEDS_RATIFICATION.includes(bare(row.Status)),
+  );
+
+  // The trigger set has to exist before its emptiness means anything. Rename one status and
+  // those rows silently leave `NEEDS_RATIFICATION`, so the guard expires early -- announcing
+  // "ratified" while the renamed rows are still undecided. Rename all three and it expires
+  // immediately, actively pushing someone to delete the file at the wrong moment. A floor
+  // rather than an exact 77: re-statusing rows during the review is legitimate, and pinning
+  // the count would be asserting Status, which this file deliberately does not do.
+  assert.ok(
+    needsDecision.length > 0,
+    `no row in ${AUDIT} carries a status in NEEDS_RATIFICATION (${NEEDS_RATIFICATION.join(
+      ', ',
+    )}) -- the status vocabulary changed, so this guard is reading a trigger set that no ` +
+      'longer exists and would expire against nothing. Update NEEDS_RATIFICATION to match.',
+  );
+
+  const undecided = needsDecision.filter((row) => bare(row.Ratified) === '');
+  assert.ok(
+    undecided.length > 0,
+    'Audit ratified -- delete this guard.\n' +
+      `Every row in ${AUDIT} that needed a disposition now carries a Ratified value, so the ` +
+      "review this guard was protecting is done. Delete this file (and the audit's " +
+      '"What happens next" step 3 that points at it). Leaving it in place would require every ' +
+      'control added from here on to be back-filled into what is now a point-in-time record ' +
+      'of what the review decided.\n' +
+      'If the column was filled in by accident, clear it -- do not delete the guard until the ' +
+      '`color-surface-followup` tickets are raised.',
   );
 });
 
