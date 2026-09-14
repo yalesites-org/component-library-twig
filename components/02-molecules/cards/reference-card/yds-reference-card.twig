@@ -146,7 +146,15 @@
             {# Phone is a free-text field, so only something actually dial-able
                becomes a tel: link. "203-555-0100 ext. 12" or "Main office"
                would otherwise produce a tel: nobody can call; those render as
-               plain text, which is what the directory card has always done. #}
+               plain text, which is what the directory card has always done.
+
+               `matches` is the first use of that operator in this library, so
+               for the next reader: it is supported by Twig.js 1.17.1 (see
+               src/twig.expression.js, where it is a registered binary
+               operator) as well as by Twig/PHP, so Storybook and Drupal agree
+               here. Verified rather than assumed -- this component already
+               pins link__type below for exactly the kind of engine divergence
+               that would otherwise bite. #}
             {% if reference_card__phone_digits matches '/^\\+?[0-9]{5,}$/' %}
               {% include "@atoms/controls/text-link/yds-text-link.twig" with {
                 link__url: 'tel:' ~ reference_card__phone_digits,
