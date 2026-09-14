@@ -9,7 +9,7 @@ pre-SDC baseline on real pages. Update this after every wave with anything new l
 Drupal SDC only discovers components in an installed extension's own `components/` directory — it
 does **not** scan `node_modules/`. So each migrated component gets a small SDC in the `atomic`
 theme that **delegates** to the real template, which stays canonical in `component-library-twig`
-(CLT) and keeps feeding Storybook/Percy unchanged:
+(CLT) and keeps feeding Storybook and visual regression unchanged:
 
 ```
 atomic/components/<name>/
