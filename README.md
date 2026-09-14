@@ -90,6 +90,15 @@ The following components have been fully migrated and serve as reference example
 - **Accordion**: `components/02-molecules/accordion/`
 - **Alert**: `components/02-molecules/alert/`
 
+## Longer-form documentation
+
+`docs/` holds reference documents that are about the library as a whole rather than about one
+component. Per-component documentation stays in that component's `.mdx` page.
+
+- [Storybook / Drupal control parity audit](docs/storybook-drupal-control-parity.md) — every
+  Storybook control in `01-atoms`, `02-molecules` and `03-organisms`, and whether a Drupal
+  editor can actually produce that state.
+
 ## Live Component Library
 
 You can view the latest version of the component library at any time by visiting the [Deployed Storybook](https://yalesites-org.github.io/component-library-twig). All new commits to the `main` branch trigger a rebuild and deploy of the component library, so it will always be up-to-date with the latest released code.
