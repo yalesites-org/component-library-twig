@@ -3,14 +3,14 @@
 Epic [#1351](https://github.com/yalesites-org/YaleSites-Internal/issues/1351), ticket #1361.
 
 **Status: blocked on #1360, plan ready to execute.** Wave 6b adds the behavioral
-tests that Percy is blind to for the Views-driven components — the data-shape edge
+tests that visual regression is blind to for the Views-driven components — the data-shape edge
 cases that break listings. It depends on Wave 6 (#1360) delivering the SDCs to test,
 which is itself blocked on the Views Block Rework epic #1161 (see
 `wave-6-views-driven-plan.md`). This document is the ready-to-execute test design.
 
 ## Why these components need behavioral tests
 
-Percy catches visual regressions on a *populated* listing. It cannot catch the
+Visual regression catches rendering changes on a *populated* listing. It cannot catch the
 failures that happen when the data shape changes: an empty result set that should
 render a friendly empty state (not a crash or a bare heading), a single result that
 should not show pager/collection chrome, a large result set that must paginate, and

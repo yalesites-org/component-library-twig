@@ -37,7 +37,7 @@ atomic/components/<name>/
 ```
 
 - **Markup** stays canonical in `component-library-twig`, still driving Storybook
-  and Percy. The shim's `@atoms`/`@molecules`/`@organisms` includes are permanent
+  and the visual-regression suite. The shim's `@atoms`/`@molecules`/`@organisms` includes are permanent
   by design — that is the thin-wrapper contract, not tech debt.
 - **CSS/JS** keep loading from the existing compiled `dist/` via the current
   `atomic/*` libraries, attached through the SDC's `libraryOverrides`. Nothing is

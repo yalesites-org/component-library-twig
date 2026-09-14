@@ -29,7 +29,7 @@ for a wave's sign-off.
 
 ## 2. Deep behavioral test — interactive components only (Waves 3b, 6b)
 
-Percy catches visual regressions but is blind to keyboard traps, ARIA that stops updating on toggle,
+Visual-regression snapshots catch rendering changes but are blind to keyboard traps, ARIA that stops updating on toggle,
 focus order breaking after a markup change, and (for Views-driven components) data-shape edge cases.
 Those get real behavioral tests.
 
