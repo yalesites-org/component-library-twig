@@ -41,6 +41,13 @@
  * surface has since been converted (delete the entry) or no longer exists.
  * Adding an entry to turn a red build green is not a fix.
  *
+ * The baseline has two sections and the difference matters to the metric, not
+ * to the gate. `pending` is contrast debt that will be converted. `out_of_scope`
+ * is site chrome that paints at a themed scope but cannot sit inside a themed
+ * section, so the leak is unreachable -- listed to keep the invariant total
+ * honest, and it will never burn down. Both are suppressed from `newLeaks` and
+ * both are staleness-checked; only `pending` is the burn-down number.
+ *
  * Print the current state with:
  *
  *   node components/00-tokens/colors/surface-contract.mjs
@@ -57,8 +64,46 @@ import {
 
 const require = createRequire(import.meta.url);
 
-/** Surfaces not yet converted, keyed by repo-relative path. */
-export const { pending: PENDING } = require('./surface-contract-baseline.json');
+/**
+ * The baseline, in its two sections.
+ *
+ * `PENDING` is contrast debt -- surfaces that will be converted, each owned by a ticket, and
+ * the number the burn-down is supposed to measure. `OUT_OF_SCOPE` is site chrome that paints
+ * at a themed scope but cannot be placed inside a themed section, so the leak this contract
+ * exists to close is unreachable there; those entries exist for completeness of the invariant,
+ * not as work. They were counted as pending until #1631's review pointed out that two entries
+ * that will never burn down make the burn-down metric measure the wrong thing.
+ */
+export const {
+  pending: PENDING,
+  out_of_scope: OUT_OF_SCOPE,
+  baselined_on: BASELINED_ON,
+} = require('./surface-contract-baseline.json');
+
+/**
+ * Every baselined path, for the checks that should not care which section it is in.
+ *
+ * The split is about what the numbers mean, not about what is enforced: a surface in either
+ * section is suppressed from `newLeaks`, and both are held to the same two staleness checks. A
+ * stale `out_of_scope` entry is exactly as misleading as a stale `pending` one -- it suppresses
+ * nothing while looking like it suppresses something.
+ */
+export const BASELINED = { ...PENDING, ...OUT_OF_SCOPE };
+
+/**
+ * Whole days since the baseline was created, UTC, so the report does not shift with the local
+ * zone.
+ *
+ * `baselined_on` is one date for the whole file rather than one per entry: every entry arrived
+ * together with the guardrail (`8be7750a`), and a per-entry date would be invented precision.
+ * It lives in the JSON, next to the list it describes, so rebuilding the list wholesale does
+ * not also require remembering to edit a constant in this file. The report prints the age so
+ * "pending: 13" reads as a burn-down with a clock on it rather than a static fact.
+ */
+export function baselineAgeInDays(now = new Date()) {
+  const MS_PER_DAY = 24 * 60 * 60 * 1000;
+  return Math.floor((now - new Date(`${BASELINED_ON}T00:00:00Z`)) / MS_PER_DAY);
+}
 
 /**
  * Paths the invariant does not apply to.
@@ -288,7 +333,7 @@ export function surveySurfaces(files = readComponentScss()) {
       publishes:
         publishesContract(source) &&
         unpublishedPaintingScopes(source).length === 0,
-      pending: path in PENDING,
+      pending: path in BASELINED,
     }));
 
   const paths = new Set(painting.map(({ path }) => path));
@@ -299,7 +344,7 @@ export function surveySurfaces(files = readComponentScss()) {
     converted: select(({ publishes }) => publishes),
     newLeaks: select(({ publishes, pending }) => !publishes && !pending),
     fixedPending: select(({ publishes, pending }) => publishes && pending),
-    stalePending: Object.keys(PENDING).filter((path) => !paths.has(path)),
+    stalePending: Object.keys(BASELINED).filter((path) => !paths.has(path)),
   };
 }
 
@@ -313,7 +358,8 @@ export function formatSurfaceReport(result = surveySurfaces()) {
     '',
     `converted: ${result.converted.length}   pending: ${
       Object.keys(PENDING).length
-    }`,
+    }   out of scope: ${Object.keys(OUT_OF_SCOPE).length}`,
+    `baselined ${BASELINED_ON} (${baselineAgeInDays()} days ago)`,
     ...section(
       'CONVERTED -- publishes --color-section-background/-foreground',
       result.converted,

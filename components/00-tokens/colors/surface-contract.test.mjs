@@ -22,6 +22,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  BASELINED,
+  OUT_OF_SCOPE,
   PENDING,
   paintsThemedBackground,
   publishesContract,
@@ -56,7 +58,8 @@ test('a converted surface is removed from the pending list rather than left in i
     fixedPending,
     [],
     'these stylesheets now publish the contract but are still listed in ' +
-      'surface-contract-baseline.json. Delete their entries, or the guardrail ' +
+      'surface-contract-baseline.json (in either section). Delete their ' +
+      'entries, or the guardrail ' +
       `silently stops enforcing a surface that is already fixed.\n${fixedPending.join(
         '\n',
       )}`,
@@ -69,7 +72,8 @@ test('a pending entry that no longer paints a themed background is stale', () =>
   assert.deepEqual(
     stalePending,
     [],
-    'these paths are listed in surface-contract-baseline.json but no longer ' +
+    'these paths are listed in surface-contract-baseline.json (in either ' +
+      'section) but no longer ' +
       'paint a themed background -- either the file moved or the paint went ' +
       'away. A stale entry suppresses nothing while looking like it suppresses ' +
       `something.\n${stalePending.join('\n')}`,
@@ -96,13 +100,54 @@ test('every pending entry states a reason and the ticket that owns it', () => {
   });
 });
 
+test('every out-of-scope entry states a reason and what would end it', () => {
+  // Held to a standard, but a different one from `pending`. These will never burn down, so a
+  // ticket would be a fiction -- what they need instead is the condition that would move them
+  // back into `pending`. Without it "out of scope" is just an opt-out with better manners, and
+  // a surface that quietly became section-placeable would sit here unnoticed.
+  Object.entries(OUT_OF_SCOPE).forEach(([path, entry]) => {
+    assert.ok(
+      entry.reason && entry.reason.length > 20,
+      `out-of-scope entry ${path} needs a reason explaining why the leak is unreachable there`,
+    );
+    assert.ok(
+      entry.revisit && entry.revisit.length > 20,
+      `out-of-scope entry ${path} needs a "revisit" condition saying what would put it back ` +
+        'into pending -- otherwise nothing distinguishes it from an opt-out',
+    );
+    assert.ok(
+      !('ticket' in entry),
+      `out-of-scope entry ${path} carries a ticket, which means it is contrast debt after ` +
+        'all -- move it to pending, where the burn-down can count it',
+    );
+  });
+});
+
+test('the two baseline sections do not overlap', () => {
+  // The gate reads the union, so a path in both would be suppressed correctly and look fine --
+  // while being counted once as debt and once as not-debt, which is precisely the confusion
+  // the split was made to remove.
+  const both = Object.keys(PENDING).filter((path) => path in OUT_OF_SCOPE);
+
+  assert.deepEqual(
+    both,
+    [],
+    'these paths appear in BOTH pending and out_of_scope in ' +
+      `surface-contract-baseline.json -- pick one:\n${both.join('\n')}`,
+  );
+  assert.equal(
+    Object.keys(BASELINED).length,
+    Object.keys(PENDING).length + Object.keys(OUT_OF_SCOPE).length,
+  );
+});
+
 test('the burn-down is actually burning down', () => {
   const { converted } = surveySurfaces();
 
   // Pinned to the exact list rather than `length > 0`. The loose form claims to
   // be the vacuity guard for the three assertions above but barely is: one
   // surviving detection would satisfy it. (`stalePending` would also catch a
-  // wholly broken detector, since all fifteen baseline paths would fall out --
+  // wholly broken detector, since all fifteen baselined paths would fall out --
   // but that is a guard in a different test, and this one should stand up on
   // its own.)
   assert.deepEqual(converted, [

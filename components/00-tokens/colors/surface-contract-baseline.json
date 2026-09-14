@@ -12,6 +12,23 @@
     "would have been unmergeable; what it does instead is stop a NEW painting",
     "surface arriving unconverted.",
     "",
+    "Two sections, because they are two different things and mixing them made",
+    "the burn-down metric lie. `pending` is contrast debt: surfaces that will",
+    "be converted, each owned by a ticket. `out_of_scope` is site chrome that",
+    "paints at a themed scope but cannot be placed inside a themed section, so",
+    "the leak the contract exists to close is unreachable there -- they are",
+    "listed for completeness of the invariant, not as work. Counting them as",
+    "pending overstated the debt by two and would never have burned down.",
+    "",
+    "The gate treats both identically -- neither is reported as a new leak,",
+    "and both are held to the same staleness checks. The split is about what",
+    "the numbers MEAN, not about what is enforced.",
+    "",
+    "An out_of_scope entry carries `revisit` instead of `ticket`: the",
+    "condition under which it stops being out of scope. If one of these ever",
+    "becomes placeable inside a themed section, move it to `pending` with a",
+    "ticket -- do not delete it.",
+    "",
     "surface-contract.test.mjs enforces both directions: a converted surface",
     "still listed here must have its entry deleted, and an entry whose file no",
     "longer paints a themed background must be deleted too. Adding an entry to",
@@ -20,6 +37,7 @@
     "Regenerate the current state with:",
     "  npm run contrast:surfaces"
   ],
+  "baselined_on": "2026-09-10",
   "pending": {
     "components/02-molecules/banner/grand-hero/_yds-grand-hero.scss": {
       "reason": "Same shape as the action banner converted in this change -- paints --color-grand-hero-background from the block dial and publishes nothing. Deferred only to keep this change reviewable: the grand hero is the page's largest painted surface and its conversion wants its own visual check across all seven global themes.",
@@ -69,17 +87,19 @@
       "reason": "Deliberately deferential rather than merely unconverted: it reads --color-section-accent from the enclosing section on purpose (:88-101) so the quote's accent matches the surface it sits on, and the comment there records a load-bearing specificity constraint against its own theme-five override. Publishing a contract here would change what that deference means and needs the decision on #1627 question 5 first.",
       "ticket": "yalesites-org/YaleSites-Internal#1627"
     },
-    "components/03-organisms/menu/secondary-nav/_yds-secondary-nav.scss": {
-      "reason": "Paints --color-background at a themed scope. Site chrome rather than a Layout Builder block: it is not placeable inside a themed section today, so it cannot exhibit the leak. Listed for completeness of the invariant rather than as pending contrast work.",
-      "ticket": "yalesites-org/YaleSites-Internal#1634"
-    },
-    "components/03-organisms/site-in-this-section/_site-in-this-section.scss": {
-      "reason": "Paints --color-background at a themed scope. Same reasoning as secondary-nav -- site chrome, not section-placeable, so the leak is unreachable. It also declares --color-section-nav-* which is a different namespace and unrelated to this contract.",
-      "ticket": "yalesites-org/YaleSites-Internal#1634"
-    },
     "components/01-atoms/videos/video-background/yds-video-background.scss": {
       "reason": "Paints --color-video-background behind a playing video, so the visible backdrop is the video for almost all of the surface's life and the painted colour is a poster/fallback. What the contract should publish here is a genuine question rather than a mechanical conversion.",
       "ticket": "yalesites-org/YaleSites-Internal#1634"
+    }
+  },
+  "out_of_scope": {
+    "components/03-organisms/menu/secondary-nav/_yds-secondary-nav.scss": {
+      "reason": "Paints --color-background at a themed scope. Site chrome rather than a Layout Builder block: it is not placeable inside a themed section today, so it cannot exhibit the leak. Listed for completeness of the invariant rather than as pending contrast work.",
+      "revisit": "If the secondary nav ever becomes placeable inside a themed Layout Builder section, the leak becomes reachable -- move this to pending with a ticket."
+    },
+    "components/03-organisms/site-in-this-section/_site-in-this-section.scss": {
+      "reason": "Paints --color-background at a themed scope. Same reasoning as secondary-nav -- site chrome, not section-placeable, so the leak is unreachable. It also declares --color-section-nav-* which is a different namespace and unrelated to this contract.",
+      "revisit": "If in-this-section navigation ever becomes placeable inside a themed Layout Builder section, the leak becomes reachable -- move this to pending with a ticket."
     }
   }
 }
