@@ -217,7 +217,7 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
 // Gray-400 layout sections: keep quick-links link/button tokens dark regardless
 // of the inner quick-links component theme dial value.
-.yds-layout[data-component-theme='five'] .quick-links {
+.yds-layout[data-section-theme='five'] .quick-links {
   --color-quick-links-theme-five-foreground: var(--color-gray-800);
   --color-text: var(--color-quick-links-theme-five-foreground);
   --color-heading: var(--color-quick-links-theme-five-foreground);

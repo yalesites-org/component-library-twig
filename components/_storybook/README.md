@@ -99,9 +99,10 @@ export const Playground = ({
 
 #### `createGlobalThemeStories(renderFn, globalThemes, globalThemeLabels)`
 
-Builds one visual-regression story per global theme, keyed by global theme. Every
-`*.visreg.stories.js` file uses this — a visreg story must not stack all the global themes
-into one story, because the result exceeds the visual regression snapshot pixel limit.
+Builds one visual-regression story per global theme, keyed by global theme. Most
+`*.visreg.stories.js` files use this — a visreg story must not stack all the global themes
+into one story, because the result exceeds the visual regression snapshot pixel limit. The
+taller components use `createGlobalThemeSectionStories` below instead.
 
 #### `createGlobalThemeSectionStories(renderFn, globalThemes, sectionThemes, globalThemeLabels)`
 
@@ -112,6 +113,15 @@ Read the `global-theme-stories.mjs` docblock before changing the shape of a visr
 is the canonical explanation, and two of the rules (no destructured exports, static
 `storyName` assignments) are forced by Storybook's static CSF indexer rather than by taste.
 `global-theme-stories.test.mjs` enforces them.
+
+### Visreg pixel budget (`visreg-pixel-budget.mjs`, `measure-visreg-pixels.mjs`)
+
+`npm run visreg:measure` renders every visreg story in headless Chromium at the snapshot
+viewport and fails if any of them exceeds the pixel ceiling, naming the story and its
+size. `visreg-pixel-budget.mjs` holds the pure half (which stories count, what is over
+budget, what the report says) and is unit tested in `visreg-pixel-budget.test.mjs`;
+`measure-visreg-pixels.mjs` is the browser half and explains its wait strategy in its
+docblock. See "The pixel ceiling is checked in CI" in `STORYBOOK.md`.
 
 ### Core Utilities (`playground-utils.js`)
 
@@ -343,12 +353,12 @@ These are **separate concepts** that happen to use similar naming:
 #### Section Themes
 
 ```javascript
-['default', 'one', 'two', 'three', 'four'];
+['default', 'one', 'two', 'three', 'four', 'five', 'six'];
 ```
 
 - Background colors for layout sections
-- Defined in component-library (not in tokens)
-- Used in `data-component-theme` or `data-global-theme`
+- Defined in component-library (not in tokens), in `_yds-layout.scss`
+- Emitted as **`data-section-theme`** — see `theme-constants.js`'s `sectionThemes`
 
 #### Component Themes
 
@@ -359,7 +369,11 @@ These are **separate concepts** that happen to use similar naming:
 - Color accents for individual components
 - Defined in tokens: `tokens['component-themes']`
 - Called "dial" in CMS
-- Used in component-specific theme props
+- Emitted as **`data-component-theme`** — see `theme-constants.js`'s `componentThemes`
+
+The two used to share the `data-component-theme` attribute, which is why they read as "similar
+naming". They were split into two attributes by YaleSites-Internal#1630, because one attribute
+carrying two different slot mappings meant no color reset could be correct for both.
 
 See `components/00-introduction/themes.mdx` for user-facing documentation.
 

@@ -1,0 +1,38 @@
+# Run the unit suite before pushing a feature branch.
+#
+# Why this exists: .github/workflows/test.yml triggers only on pull requests
+# targeting main or develop, so a PR based on any other branch -- an epic or
+# integration branch -- runs no tests in CI at all. For those, this hook is the
+# only check the work gets before review.
+#
+# Skips main and develop, which CI already covers, and skips a detached HEAD,
+# which is the shape a CI checkout takes -- so this stays inert if hooks are
+# ever run in CI rather than affecting pushes to those branches.
+#
+# Skips rather than fails when the local Node major does not match .nvmrc.
+# `npm run test:unit` is `node --test components/`, and directory mode only
+# resolves the way CI expects on Node 20; on newer Node it reports a spurious
+# MODULE_NOT_FOUND against `components` itself. Failing a push for that would
+# be an environmental error, not a test failure, and would teach everyone
+# --no-verify.
+
+branch=$(git rev-parse --abbrev-ref HEAD)
+
+case "$branch" in
+main | develop | HEAD)
+  echo "pre-push: $branch is covered by CI - skipping unit tests"
+  exit 0
+  ;;
+esac
+
+want=$(cut -d. -f1 .nvmrc 2>/dev/null)
+have=$(node --version | sed 's/^v//' | cut -d. -f1)
+
+if [ -n "$want" ] && [ "$want" != "$have" ]; then
+  echo "pre-push: node $have does not match .nvmrc ($want) - skipping unit tests"
+  echo "          run 'nvm use' before pushing if you want them to run"
+  exit 0
+fi
+
+echo "pre-push: running unit tests for $branch"
+npm run test:unit
