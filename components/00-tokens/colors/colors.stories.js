@@ -264,11 +264,6 @@ AccentPrint.tags = ['!dev'];
 // Web accent groups, in the Yale Colors 2025 web reference order. The group keys
 // only set order — the Web Colors page renders one flat grid with no group
 // headings.
-//
-// NOTE: the reference also shows --color-blue-mint and --color-blue-ocean in the
-// Blue group (mint after Deep Teal Blue, ocean last). Those two design tokens
-// don't exist in @yalesites-org/tokens yet, so they're omitted here for now and
-// tracked separately — add 'mint' and 'ocean' to the Blue list once they land.
 const accentWebColors = {
   yale_blue_web: yaleBlueWeb,
   colors: {
@@ -284,8 +279,10 @@ const accentWebColors = {
       'horizon',
       'royal',
       'deep-teal',
+      'mint',
       'oceanic',
       'soft-oceanic',
+      'ocean',
     ]),
     Gray: {
       ...pickVars('gray', ['100', '200', '300', '400', '500']),
