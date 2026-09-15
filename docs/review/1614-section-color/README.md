@@ -6,17 +6,39 @@ actually resolves to inside a Layout Builder section — the failure mode #1614 
 property that resolved only by inheriting from an ancestor, which a token-only computation
 reports as passing.
 
+## Where this evidence lives, and why the scripts are gone
+
+These captures moved here from `components/03-organisms/layout/layout/screenshots/` in
+September 2026. They had been sitting inside a published component directory:
+`package.json` ships everything under `components/`, so 11 MB of review screenshots was
+being downloaded by every consumer of the package. `docs/` is outside that whitelist.
+`components/_storybook/package-weight.test.mjs` now fails the build if a pile of images
+reappears somewhere that ships.
+
 ## How to regenerate
 
-Two fixture builders live in `yalesites-project/scripts/local/`:
+The eight one-off fixture builders and capture scripts that produced these images were
+**deleted** from `yalesites-project/scripts/local/` after the audit — they were named for
+the tickets that wanted them (`1613-*`, `1614-*`), wired into no npm or composer script,
+and unreferenced by CI, whereas every other file in that directory is durable tooling. They
+are recoverable from git if a future audit wants them verbatim:
 
 ```bash
-lando drush php:script scripts/local/1613-section-contrast-fixture.php   # section backgrounds
-lando drush php:script scripts/local/1613-block-contrast-fixture.php     # blocks on those backgrounds
+# in yalesites-project, they existed up to and including:
+git show 9ca3048fa:scripts/local/1613-section-contrast-fixture.php
+git show 9ca3048fa --stat -- scripts/local   # the full set of eight
 ```
 
-Each builds one node per section type holding one section per section-theme option, so a
-single full-page capture per global theme covers every background at once.
+What they did, which is the part worth rebuilding rather than restoring: two Drupal fixture
+builders (`drush php:script`) each created one node per section type, holding one section
+per section-theme option, so a single full-page capture per global theme covered every
+background at once. Two more built the functional-element and divider fixtures. The
+remaining four drove the browser and read computed styles back out of the rendered DOM.
+
+The measured numbers they produced are preserved and are now test-enforced:
+`components/00-tokens/colors/section-background-contrast.txt` and
+`functional-element-contrast.txt`, checked against the tokens on every run by
+`section-background-contrast-report.test.mjs`.
 
 Global theme is a sitewide setting; sweep it with:
 

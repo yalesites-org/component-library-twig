@@ -173,6 +173,24 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // slot-three is a mid-light color on all seven global themes (lightness
   // 57%-69%), so it takes the dark-on-light treatment used by themes two and
   // five, not the white-on-dark one used by one/three/four.
+  // -
+  // DO NOT "tidy" this into the `@each` above. The loop iterates
+  // `map.deep-get(tokens.$tokens, 'component-themes')`, which has five keys
+  // (one-five). Folding `six` in would not add it to the loop -- it would
+  // delete it, silently, because there is no key for the loop to yield. The
+  // failure is invisible: a themed section would simply stop painting.
+  // -
+  // What would let it move inside: a `component-themes.six` entry in the
+  // tokens package (`tokens/base/color.yml`), carrying the same eight slot
+  // values. That is deliberately not done yet -- it changes what renders on
+  // every page already using theme six, so it needs a visual check and a
+  // re-run of the #1634 contrast measurements, which were taken while this
+  // theme was outside the derived path. Tracked on YaleSites-Internal#1634.
+  // -
+  // Note the slot-to-role mapping below is hand-written for ALL six themes,
+  // not just this one -- the `@each` only re-points `--color-slot-*` and the
+  // background/color pair. Moving the role mapping into tokens is a separate,
+  // larger change (also #1634).
   &[data-section-theme='six'] {
     --color-layout-theme: var(--color-slot-three);
     --color-layout-content: var(--color-slot-seven);
