@@ -16,10 +16,13 @@
  */
 
 import assert from 'node:assert/strict';
+
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+
+import { publishesContract, stripComments } from './surface-contract.mjs';
 
 import {
   AA_LARGE_OR_NON_TEXT,
@@ -54,11 +57,9 @@ function themedSectionBlock() {
   // passed on the prose describing the rule instead of on the rule. Proved by
   // deleting `.text-field a` and `.wrapped-callout__callout a` from the SCSS
   // and watching the assertions still pass.
-  const match = layoutScss()
-    .replace(/^\s*\/\/.*$/gm, '')
-    .match(
-      /&\[data-section-theme\]:not\(\[data-section-theme='default'\]\)\s*\{([\s\S]*?)\n {2}\}/,
-    );
+  const match = stripComments(layoutScss()).match(
+    /&\[data-section-theme\]:not\(\[data-section-theme='default'\]\)\s*\{([\s\S]*?)\n {2}\}/,
+  );
   return match ? match[1] : null;
 }
 
@@ -343,9 +344,12 @@ test('a block that paints its own surface shadows the section foreground', () =>
       'content spotlight portrait',
     ],
   ].forEach(([path, name]) => {
-    assert.match(
-      readComponent(path).replace(/^\s*\/\/.*$/gm, ''),
-      /--color-section-foreground:\s*var\(/,
+    // `publishesContract` rather than a literal regex: since
+    // YaleSites-Internal#1631 the contract is normally published through
+    // `tokens.publish-surface(...)`, and one definition of "publishes the
+    // contract" shared with the guardrail is one that cannot drift from it.
+    assert.ok(
+      publishesContract(stripComments(readComponent(path))),
       `${name} paints its own surface, so it must shadow ` +
         '--color-section-foreground with its own foreground -- otherwise the ' +
         "section's foreground inherits through and everything that reads the " +
@@ -370,9 +374,9 @@ test('the link grid heading is never forced to a fixed light colour', () => {
   // Comments stripped first: this file's own explanation of what was removed
   // names the property, and matching that would fail the test for describing
   // the fix.
-  const heading = readComponent('02-molecules/link-grid/_yds-link-grid.scss')
-    .replace(/^\s*\/\/.*$/gm, '')
-    .match(/\.link-grid__heading \{([\s\S]*?)\n\}/);
+  const heading = stripComments(
+    readComponent('02-molecules/link-grid/_yds-link-grid.scss'),
+  ).match(/\.link-grid__heading \{([\s\S]*?)\n\}/);
 
   assert.ok(heading, 'the .link-grid__heading rule is gone');
   assert.doesNotMatch(

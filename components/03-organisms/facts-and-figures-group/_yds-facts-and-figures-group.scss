@@ -34,6 +34,14 @@ $facts-and-figures-group-component-themes: map.deep-get(
       --color-facts-and-figures-theme: var(--color-slot-one);
       --color-facts-and-figures-content: var(--color-slot-eight);
 
+      @include tokens.publish-surface(
+        var(--color-facts-and-figures-theme),
+        var(--color-facts-and-figures-content),
+        // The group's only control is an outline CTA drawn in the copy colour,
+        // which is by definition the approved foreground for what it paints.
+        var(--color-facts-and-figures-content)
+      );
+
       background-color: var(--color-facts-and-figures-theme);
       color: var(--color-facts-and-figures-content);
 
@@ -136,6 +144,14 @@ $facts-and-figures-group-component-themes: map.deep-get(
     --color-facts-and-figures-theme: var(--color-slot-nine);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
+
+    // Theme six is not a `component-themes` key, so the loop above does not
+    // cover it.
+    @include tokens.publish-surface(
+      var(--color-facts-and-figures-theme),
+      var(--color-facts-and-figures-content),
+      var(--color-facts-and-figures-content)
+    );
 
     background-color: var(--color-facts-and-figures-theme);
     color: var(--color-facts-and-figures-content);

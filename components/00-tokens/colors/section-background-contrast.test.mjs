@@ -20,12 +20,19 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync } from 'node:fs';
+
+import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
-import { join } from 'node:path';
+
+import {
+  publishesContract,
+  readComponentScss,
+  stripComments,
+} from './surface-contract.mjs';
 
 import { contrastRatio, parseHsl, AA_NORMAL_TEXT } from './contrast-ratio.mjs';
 import {
+  HARDCODED_CANDIDATES,
   SECTION_THEMES,
   sectionBackgrounds,
 } from './section-background-contrast.mjs';
@@ -208,12 +215,12 @@ test('the shared themed-section rule exists and drives both properties', () => {
   );
 });
 
-test('--color-section-foreground is declared in exactly the expected places', () => {
+test('the surface contract is published in exactly the expected places', () => {
   // The "unthemed rendering is unchanged by construction" argument rests on
-  // this property being unset except where intended, so that each consumer's
-  // `var(--color-section-foreground, <previous colour>)` fallback applies.
-  // Expected: the shared layout rule, plus the self-painting components that
-  // reset it for their own descendants.
+  // the contract being unpublished except where intended, so that each
+  // consumer's `var(--color-section-foreground, <previous colour>)` fallback
+  // applies. Expected: the shared layout rule, plus the self-painting
+  // components that reset it for their own descendants.
   //
   // The count went 3 -> 4 in component-library-twig#714, when the single
   // reference card joined `text-with-image` and `content-spotlight-portrait`.
@@ -229,32 +236,54 @@ test('--color-section-foreground is declared in exactly the expected places', ()
   // `_yds-layout.scss` with TWO `[data-component-theme]:not(default)` blocks,
   // each declaring this property, so the real count was briefly 6 and this
   // assertion was failing. Consolidating those blocks removed one, and the
-  // callout below added one.
+  // callout added one.
   //
-  // The callout joined the list because it paints
-  // its own background from the component-theme dial, so before it reset the
-  // contract its descendants followed the SECTION instead -- a filled Button
-  // Link inside a theme-two callout on a theme-one section rendered
-  // near-white on near-white (the reported invisible button). Resetting
-  // `--color-section-foreground` to the callout's own `--color-text` is what
-  // makes that button, and every other contract reader inside a callout,
-  // follow the surface it is really sitting on.
-  const componentsDir = new URL('../../', import.meta.url);
-  const declarations = readdirSync(componentsDir, {
-    recursive: true,
-    withFileTypes: true,
-  })
-    .filter((entry) => entry.isFile() && entry.name.endsWith('.scss'))
-    .flatMap((entry) => {
-      const dir = entry.parentPath ?? entry.path;
-      const text = readFileSync(join(dir, entry.name), 'utf8');
-      // Declarations, not `var()` reads.
-      return (text.match(/--color-section-foreground:\s*[^;]+;/g) ?? []).map(
-        (decl) => `${entry.name}: ${decl}`,
-      );
-    });
+  // YaleSites-Internal#1631 changed the SHAPE of this assertion, not just the
+  // number. Two things stopped a raw count of `--color-section-foreground:`
+  // declarations meaning what it used to:
+  //
+  //   1. Publishing now normally goes through `tokens.publish-surface(...)`,
+  //      so the literal declaration lives once in `_surface-contract.scss` and
+  //      the call sites do not spell it out.
+  //   2. A component publishes from every block that actually paints -- the
+  //      dial loop AND theme six, which is not a `component-themes` key -- so
+  //      one component contributes more than one site.
+  //
+  // Counting FILES rather than declarations survives both, and says the thing
+  // the test is really for: this set is the list of surfaces that shadow the
+  // section, and nothing should join it silently.
+  // Deliberately NOT `surveySurfaces().converted`, which would look like the
+  // obvious reuse: that list is filtered to files the guardrail detects as
+  // PAINTING, so a file that publishes and later stops painting would silently
+  // drop out of it. This assertion has to notice exactly that, so it asks the
+  // simpler question -- who publishes -- and answers it over every stylesheet.
+  // It is also why the two numbers differ: the guardrail reports 5 converted,
+  // this list has 9, the extra four being `_yds-layout.scss` (the origin of the
+  // contract, which paints via `--color-layout-*` rather than the block dial)
+  // and `_yds-reference-card.scss`, `_yds-event-meta.scss` and
+  // `_yds-publication-detail.scss` (which paint at no themed scope at all).
+  const publishing = readComponentScss()
+    .filter(([, source]) => publishesContract(source))
+    .map(([path]) => path)
+    .sort();
 
-  assert.equal(declarations.length, 5, declarations.join(' | '));
+  assert.deepEqual(publishing, [
+    'components/02-molecules/banner/action/_yds-action-banner.scss',
+    'components/02-molecules/callout/_yds-callout.scss',
+    'components/02-molecules/cards/reference-card/_yds-reference-card.scss',
+    'components/02-molecules/content-spotlight-portrait/_yds-content-spotlight-portrait.scss',
+    // 7 -> 9 with the meta chip conversion (the #1631 "concrete instance of
+    // the guardrail" criterion). Like `_yds-reference-card.scss` above, these
+    // two paint at NO themed scope -- a fixed `--color-gray-100` chip -- so
+    // the guardrail cannot see them and `surveySurfaces()` still reports 5
+    // converted while this list holds 9. `META_CHIP_SURFACES` at the foot of
+    // this file is what actually pins their wiring and their numbers.
+    'components/02-molecules/meta/event-meta/_yds-event-meta.scss',
+    'components/02-molecules/meta/publication-meta/_yds-publication-detail.scss',
+    'components/02-molecules/text-with-image/_yds-text-with-image.scss',
+    'components/03-organisms/facts-and-figures-group/_yds-facts-and-figures-group.scss',
+    'components/03-organisms/layout/layout/_yds-layout.scss',
+  ]);
 });
 
 /**
@@ -271,6 +300,17 @@ test('--color-section-foreground is declared in exactly the expected places', ()
  * it needs no section treatment.
  */
 const SECTION_SURFACE_CONSUMERS = [
+  // Added by YaleSites-Internal#1631. The current-page indicator paints no
+  // background of its own, so its fixed brown-grey was unreachable from the
+  // section it sits on. The pager renders in views blocks that ARE
+  // section-placeable -- post-list, directory, taxonomy_term -- so it is
+  // genuinely exposed, which is why it is here and not deferred with the
+  // components that only ever render in the banner region.
+  {
+    name: 'pager current-page indicator',
+    file: '../../02-molecules/pager/_yds-pager.scss',
+    fallback: '--color-basic-brown-gray',
+  },
   {
     name: 'wrapped-callout border',
     file: '../../02-molecules/wrapped-callout/_yds-wrapped-callout.scss',
@@ -670,24 +710,34 @@ test('meta secondary text: the grays fail and the section foreground passes', ()
 /**
  * Rules that paint a background and pair no foreground, on purpose, for now.
  *
- * `.event-meta__event-types__type` and `.event-meta__event-topics__topic` are
- * the same shape as the publication-detail chip, and they are NOT pinned here.
- * They have no live defect -- `yds-event-meta-localist.twig` wraps every chip's
- * text in an anchor that colours itself, and the non-localist template renders
- * no chips at all -- and pinning them would add two raw palette foregrounds,
- * pushing this file's `foreground-purity-baseline.json` count UP for a purely
- * speculative hardening. That baseline may only fall.
+ * All zero, as of #1631's chip conversion. This entry was `_yds-event-meta.scss: 2`
+ * when #1662 added the check, and the comment it carried is worth keeping as the
+ * record of why:
  *
- * That said, "safe because the template always emits an anchor" is exactly the
- * assumption that failed on the publication-detail chip, and those anchors
- * colour themselves from `var(--color-text)`, which is its own AA failure on a
- * themed section (1.07:1). Both belong to #1631's guardrail work, which should
- * fix the chip and its link together rather than have this PR half-do it. The
- * count is asserted, so a THIRD unpaired background cannot appear unnoticed.
+ * > `.event-meta__event-types__type` and `.event-meta__event-topics__topic` are
+ * > the same shape as the publication-detail chip, and they are NOT pinned here.
+ * > They have no live defect [...] and pinning them would add two raw palette
+ * > foregrounds, pushing this file's `foreground-purity-baseline.json` count UP
+ * > for a purely speculative hardening. [...] "safe because the template always
+ * > emits an anchor" is exactly the assumption that failed on the
+ * > publication-detail chip, and those anchors colour themselves from
+ * > `var(--color-text)`, which is its own AA failure on a themed section
+ * > (1.07:1). Both belong to #1631's guardrail work, which should fix the chip
+ * > and its link together rather than have this PR half-do it.
+ *
+ * #1631 has now done exactly that: both chips publish the surface they paint and
+ * pair its foreground, and their anchors read it instead of `--color-text`. The
+ * palette-foreground objection did not apply in the end -- `chip-surface` pairs
+ * `var(--color-section-foreground)`, a semantic read, so
+ * `foreground-purity-baseline.json` is unchanged and that baseline still only
+ * falls.
+ *
+ * The count stays asserted, so a new unpaired background cannot appear
+ * unnoticed in any of these files.
  */
 const BACKGROUND_WITHOUT_FOREGROUND = {
   '_yds-basic-meta.scss': 0,
-  '_yds-event-meta.scss': 2,
+  '_yds-event-meta.scss': 0,
   '_yds-publication-meta.scss': 0,
   '_yds-publication-detail.scss': 0,
 };
@@ -740,4 +790,221 @@ Object.entries(META_MOLECULES).forEach(([name, { file }]) => {
       )}`,
     );
   });
+});
+
+/**
+ * The meta chip/tag lists (YaleSites-Internal#1631, the "concrete instance of
+ * the guardrail" acceptance criterion; surfaced during review of
+ * component-library-twig#729).
+ *
+ * These three chips are the one shape `surface-contract.mjs` cannot see: they
+ * paint a FIXED `--color-gray-100` at no themed scope at all, so the guardrail
+ * would have to flag every piece of flat chrome in the library to catch them.
+ * They are converted by hand, and this is the table that holds them instead.
+ *
+ * The defect, measured on the background they paint:
+ *
+ * - Resting: the anchors read `var(--color-text)`, which is the ENCLOSING
+ *   surface's foreground, not the chip's. On block dials one to four, and on
+ *   the `gray-700` / `gray-800` / `blue-yale` basic themes, that resolves to
+ *   white -- **1.07:1**, the washed-out chips in the Old Blues visreg story.
+ *   Only block dial five (11.26:1) and the light basic themes were ever legible.
+ * - Visited: a dark themed section re-points `--color-link-visited-base` to
+ *   `--color-link-visited-light` (`_yds-layout.scss:112-147`), which the chip
+ *   inherits -- **1.32:1**. `a:visited` outranks a plain `color:` on the same
+ *   anchor, so fixing only the resting state leaves this one invisible.
+ *
+ * Both states end on the chip's own published foreground. Visited collapsing
+ * into the resting colour is deliberate and not new: `_yds-layout.scss:63-66`
+ * already does exactly this for link-grid ("match section copy -- no default
+ * purple :visited from link mixin"). Pointing it at the dark purple swatch
+ * instead would read a raw palette token in foreground position, which is the
+ * thing `foreground-purity.mjs` exists to stop.
+ *
+ * Hover is deliberately NOT in this table: `plain-link` self-declares
+ * `--color-link-hover: var(--color-slot-two)` on the anchor itself, and a
+ * declaration on the element beats the section's inherited one, so hover
+ * already resolves to the global accent (4.98:1 to 6.84:1, all clearing AA).
+ * That self-declaration is the very thing #1631 wants removed elsewhere; if a
+ * later phase removes it from `plain-link`, hover joins this table.
+ *
+ * `--color-gray-700` is the published foreground because it is not a new
+ * colour: it is exactly what these anchors already resolve to wherever they are
+ * currently legible (it is the `text` value of every light basic theme). So the
+ * light themes render byte-identically and only the failing combinations move.
+ *
+ * `surface` (the rule that paints) and `anchor` (the rule that colours the
+ * link) are carried per row rather than derived from `name`, because the two
+ * files are shaped differently: event-meta writes the chip rules flat at the
+ * top level and delegates both to `chip-surface` / `chip-link` mixins, while
+ * publication-detail nests everything under `.publication-detail` with an `&__`
+ * prefix and declares both inline. Both are asserted PER CHIP rather than per
+ * file, because a file-level match is satisfied by either chip and would let
+ * the other silently revert to painting a bare background.
+ */
+const META_CHIP_SURFACES = [
+  {
+    name: '.event-meta__event-types__type',
+    file: '../../02-molecules/meta/event-meta/_yds-event-meta.scss',
+    surface: '.event-meta__event-types__type',
+    anchor: '.event-meta__event-types__type a',
+  },
+  {
+    name: '.event-meta__event-topics__topic',
+    file: '../../02-molecules/meta/event-meta/_yds-event-meta.scss',
+    surface: '.event-meta__event-topics__topic',
+    anchor: '.event-meta__event-topics__topic a',
+  },
+  {
+    name: '.publication-detail__taxonomy-list__item',
+    file: '../../02-molecules/meta/publication-meta/_yds-publication-detail.scss',
+    surface: '&__taxonomy-list__item',
+    anchor: '&__taxonomy-list__item',
+  },
+];
+
+/**
+ * The chip stylesheets, comment-stripped and whitespace-normalised once each.
+ *
+ * Keyed by unique file, not per row: two of the three chips live in
+ * `_yds-event-meta.scss`, and the assertions below would otherwise read and
+ * normalise it once per row and once per test.
+ *
+ * `stripComments` is not cosmetic. The brace-counting below stops at the first
+ * `}`, and a comment can contain one: merging #1662 brought a comment into the
+ * publication-detail chip rule quoting the Twig `{{ item }}`, which truncated
+ * the captured rule body mid-comment and failed both chip assertions. Reusing
+ * the same helper `foreground-purity.mjs` and `surface-contract.mjs` already
+ * strip with, so all three gates agree on what counts as source.
+ */
+const CHIP_SOURCES = new Map(
+  [...new Set(META_CHIP_SURFACES.map(({ file }) => file))].map((file) => [
+    file,
+    stripComments(readFileSync(new URL(file, import.meta.url), 'utf8')).replace(
+      /\s+/g,
+      ' ',
+    ),
+  ]),
+);
+
+/**
+ * The body that actually carries a rule's declarations, following one `@include`.
+ *
+ * One level of indirection has to be followed or these assertions go vacuous:
+ * `_yds-event-meta.scss` shares both chip rules through `chip-surface` /
+ * `chip-link` mixins, so each rule holds nothing but `@include <mixin>;`, and
+ * matching on the rule alone would happily pass while the mixin set
+ * `--color-text`. Verified by mutation -- reverting a mixin's declaration is
+ * caught only because of this hop.
+ *
+ * Matches `@include <name>;` only, so a `@include tokens.publish-surface(...)`
+ * (dotted, with arguments) is read as a declaration in this body rather than
+ * mistaken for a delegation to follow.
+ *
+ * `[^}]*` stops at the first `}`, which is why publication-detail can use the
+ * same string for `surface` and `anchor`: its captured body happens to run
+ * through the nested `a { ... }` rule. That is incidental, not designed -- if
+ * that nested rule is ever moved ABOVE the chip's own declarations, the
+ * `surface` row stops seeing them and would need its own selector.
+ */
+function declaringBody(source, selector) {
+  const rule = source.match(
+    new RegExp(`${selector.replace(/[.$]/g, '\\$&')} \\{([^}]*)`),
+  );
+  if (!rule) return null;
+
+  const delegated = rule[1].match(/@include ([\w-]+);/);
+  if (!delegated) return rule[1];
+
+  const mixin = source.match(new RegExp(`@mixin ${delegated[1]} \\{([^}]*)`));
+
+  return mixin ? mixin[1] : rule[1];
+}
+
+test('every meta chip publishes the fixed surface it paints', () => {
+  META_CHIP_SURFACES.forEach(({ name, file, surface }) => {
+    const body = declaringBody(CHIP_SOURCES.get(file), surface);
+
+    assert.ok(body, `the ${name} rule is gone`);
+    // Whitespace-normalised, but prettier wraps the argument list only when it
+    // does not fit, so the optional inner spaces are load-bearing: event-meta
+    // fits on one line and publication-detail does not.
+    assert.match(
+      body,
+      /@include tokens\.publish-surface\( ?var\(--color-gray-100\), var\(--color-gray-700\) ?\);/,
+      `${name} must publish the fixed gray-100 surface it paints`,
+    );
+
+    // A dark themed section re-points the visited pair to the near-white
+    // `light` tokens for copy drawn on the SECTION. The chip paints its own
+    // near-white background, so it has to re-point them at the foreground it
+    // publishes -- and it must do so on the CHIP, because `a:visited` outranks
+    // a plain `color:` on the anchor.
+    ['--color-link-visited-base', '--color-link-visited-hover'].forEach(
+      (property) => {
+        assert.match(
+          body,
+          new RegExp(`${property}: var\\(--color-section-foreground\\);`),
+          `${name} must point ${property} at the surface it publishes`,
+        );
+      },
+    );
+  });
+});
+
+test('no meta chip anchor still reads the enclosing surface foreground', () => {
+  // The regression this closes: `color: var(--color-text)` on the anchor is a
+  // read of the surface the chip SITS ON, against the background the chip
+  // PAINTS. Scoped to the chip anchors -- `.event-meta__address` and
+  // `.event-meta__format` read `--color-text` legitimately, because they paint
+  // no background and so genuinely belong to the enclosing surface.
+  META_CHIP_SURFACES.forEach(({ name, file, anchor }) => {
+    const body = declaringBody(CHIP_SOURCES.get(file), anchor);
+
+    assert.ok(body, `the ${name} anchor rule is gone`);
+    // Asserted positively as well, so deleting the declaration outright cannot
+    // pass this test by leaving nothing to match.
+    assert.match(
+      body,
+      /color: var\(--color-section-foreground\)/,
+      `${name} must colour its anchor from the surface it paints`,
+    );
+    assert.doesNotMatch(
+      body,
+      /color: var\(--color-text\)/,
+      `${name} must not read --color-text, the enclosing surface's foreground`,
+    );
+  });
+});
+
+test('the published chip pairing clears AA, and the pairing it replaced does not', () => {
+  // Values come from `HARDCODED_CANDIDATES`, which reads the tokens package, so
+  // a revision to gray-100 or gray-700 upstream is measured here rather than
+  // silently testing a colour the chip no longer paints.
+  const chip = parseHsl(HARDCODED_CANDIDATES['gray-100']);
+  const published = contrastRatio(
+    parseHsl(HARDCODED_CANDIDATES['gray-700']),
+    chip,
+  );
+
+  assert.ok(
+    published >= AA_NORMAL_TEXT,
+    `the published chip foreground is ${published.toFixed(2)}:1, below AA`,
+  );
+
+  // Guards the premise rather than the fix: white is what `--color-text`
+  // resolves to on every dark theme, and inheriting it was the defect. If this
+  // ever clears AA on its own, the conversion has stopped being load-bearing
+  // and this whole table should be revisited rather than quietly kept.
+  const inherited = contrastRatio(
+    parseHsl(HARDCODED_CANDIDATES['basic-white']),
+    chip,
+  );
+
+  assert.ok(
+    inherited < AA_NORMAL_TEXT,
+    `inheriting a dark theme's --color-text now measures ${inherited.toFixed(
+      2,
+    )}:1 -- the defect this table documents no longer exists as described`,
+  );
 });
