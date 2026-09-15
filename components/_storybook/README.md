@@ -99,9 +99,10 @@ export const Playground = ({
 
 #### `createGlobalThemeStories(renderFn, globalThemes, globalThemeLabels)`
 
-Builds one visual-regression story per global theme, keyed by global theme. Every
-`*.visreg.stories.js` file uses this — a visreg story must not stack all the global themes
-into one story, because the result exceeds the visual regression snapshot pixel limit.
+Builds one visual-regression story per global theme, keyed by global theme. Most
+`*.visreg.stories.js` files use this — a visreg story must not stack all the global themes
+into one story, because the result exceeds the visual regression snapshot pixel limit. The
+taller components use `createGlobalThemeSectionStories` below instead.
 
 #### `createGlobalThemeSectionStories(renderFn, globalThemes, sectionThemes, globalThemeLabels)`
 
