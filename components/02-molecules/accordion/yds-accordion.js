@@ -98,11 +98,19 @@ Drupal.behaviors.accordion = {
     // Finds the closest accordion from an item
     const findClosestAccordion = (item) => item.closest(accordion);
     // Finds the closest accordion controls from an item
-    const findClosestAccordionControls = (item) =>
-      findClosestAccordion(item).querySelector(accordionControls);
+    const findClosestAccordionControls = (item) => {
+      const parent = findClosestAccordion(item);
+
+      return parent ? parent.querySelector(accordionControls) : null;
+    };
     // Finds the closest toggle button from an item
-    const findClosestToggleButton = (item) =>
-      findClosestAccordionControls(item).querySelector(accordionToggleAll);
+    const findClosestToggleButton = (item) => {
+      const itemControls = findClosestAccordionControls(item);
+
+      return itemControls
+        ? itemControls.querySelector(accordionToggleAll)
+        : null;
+    };
 
     // Finds the toggler from an item
     const findTogglerFromItem = (item) => {
@@ -141,6 +149,9 @@ Drupal.behaviors.accordion = {
       if (isEmpty(allItems)) return;
 
       const toggler = findTogglerFromItem(allItems[0]);
+
+      // A single-item accordion hides its controls, so there may be none.
+      if (!toggler) return;
 
       if (allItemsExpanded(allItems)) {
         updateToggleButtonToCollapse(toggler);
@@ -225,9 +236,85 @@ Drupal.behaviors.accordion = {
       });
     };
 
+    // Opens, reveals and focuses the item a URL fragment points at.
+    //
+    // Each item's heading carries a stable id derived from its paragraph, so
+    // a link can name one item - an in-page anchor, or a Beacon citation that
+    // cites the answer it drew from. Items start collapsed, so without this
+    // the visitor lands on the page with the cited item shut.
+    const openItemFromHash = (hash, scope) => {
+      const id = hash.replace(/^#/, '');
+
+      if (!id) return;
+
+      const target = document.getElementById(id);
+
+      if (!target || !scope.contains(target)) return;
+
+      const item = target.closest(accordionItem);
+
+      if (!item) return;
+
+      expand(item);
+
+      // expand() pins max-height from scrollHeight, and .accordion-item__content
+      // is `max-height: var(--accordion-item-height); overflow: hidden`. Until
+      // now expand() only ever ran from a click, long after fonts had settled.
+      // Running it at attach time means that on a cold cache the height is
+      // measured with fallback font metrics - and a cold cache is the normal
+      // case for someone arriving on a citation link. When the real webfont
+      // swaps in the answer rewraps taller and the extra lines stay clipped
+      // until the visitor collapses and reopens the item. Re-measure once the
+      // fonts are in, unless they closed it in the meantime.
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+          if (item.getAttribute(itemState) === 'true') {
+            expand(item);
+          }
+        });
+      }
+
+      const parentAccordion = findClosestAccordion(item);
+
+      if (parentAccordion) {
+        updateToggleButtonState(findAllItems(parentAccordion));
+      }
+
+      target.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          ? 'auto'
+          : 'smooth',
+        block: 'start',
+      });
+
+      // Focus the heading itself - the element the fragment names, which
+      // carries tabindex="-1" for exactly this. Focusing the toggle instead
+      // loses a race on first load: the browser finishes its own fragment
+      // navigation after behaviours run and moves focus to the named target,
+      // so whoever wins, focus has to land in the same place. preventScroll
+      // because scrollIntoView above has already placed it.
+      target.focus({ preventScroll: true });
+    };
+
     collapseAllItems(items);
     hideSingleItemToggles(controls);
     attachItemClickEvent(items);
     attachToggleButtonClickEvent(controls);
+    openItemFromHash(window.location.hash, context);
+
+    // A hash can also arrive after load, from an in-page link or the browser
+    // restoring one. Bound once per page rather than once per attach, because
+    // behaviours run again for every AJAX response. The marker is a DOM
+    // attribute rather than core/once, which neither this component's Drupal
+    // library nor the gallery's depends on - taking that dependency for a
+    // single guard would make an undefined `once` break the whole accordion.
+    const root = document.documentElement;
+
+    if (!root.hasAttribute('data-accordion-hash-bound')) {
+      root.setAttribute('data-accordion-hash-bound', 'true');
+      window.addEventListener('hashchange', () => {
+        openItemFromHash(window.location.hash, document);
+      });
+    }
   },
 };
