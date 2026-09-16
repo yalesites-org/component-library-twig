@@ -17,6 +17,21 @@ module.exports = {
   },
   overrides: [
     {
+      // The pixel-ceiling measurement script is a CLI, not story code: it
+      // imports a devDependency (Puppeteer), reports through `console`, and
+      // measures stories one at a time on purpose so a shared browser page can
+      // be reused rather than opening 518 of them at once.
+      files: ['components/_storybook/measure-visreg-pixels.mjs'],
+      rules: {
+        'import/no-extraneous-dependencies': [
+          'error',
+          { devDependencies: true },
+        ],
+        'no-await-in-loop': 'off',
+        'no-console': 'off',
+      },
+    },
+    {
       // Likewise `mjs`: the shared config's devDependency globs don't cover the
       // `.test.mjs` files `node --test` picks up, so a test importing a
       // build-time devDependency (sass, postcss) is flagged as an extraneous

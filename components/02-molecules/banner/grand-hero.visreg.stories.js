@@ -28,20 +28,14 @@ export default {
   },
 };
 
-const heading = bannerData.banner__heading;
-const snippet = bannerData.banner__snippet;
-const linkContent = bannerData.banner__link__content;
-const linkContentTwo = bannerData.banner__link__content_two;
-const overlayVariation = 'full';
-
-const renderGrandHero = (bgColor, overlay = overlayVariation) =>
+const renderGrandHero = (bgColor, overlay = 'full') =>
   grandHeroTwig({
     ...imageData.responsive_images['16x9'],
-    grand_hero__heading: heading,
-    grand_hero__snippet: snippet,
-    grand_hero__link__content: linkContent,
+    grand_hero__heading: bannerData.banner__heading,
+    grand_hero__snippet: bannerData.banner__snippet,
+    grand_hero__link__content: bannerData.banner__link__content,
     grand_hero__link__url: grandHeroData.grand_hero__link__url,
-    grand_hero__link__content_two: linkContentTwo,
+    grand_hero__link__content_two: bannerData.banner__link__content_two,
     grand_hero__link__url_two: grandHeroData.grand_hero__link__url_two,
     grand_hero__content__background: bgColor,
     grand_hero__overlay_variation: overlay,
