@@ -21,12 +21,15 @@ import textData from '../../02-molecules/text/text-field.yml';
  *
  * It is here so the section can be previewed and contrast-checked at all; use the global
  * theme toolbar to see it against each palette, which is the only colour variation it has.
+ * Deliberately carries NO `tags: ['!dev']`, unlike its sibling `layout.stories.js`: `!dev`
+ * takes the entry out of the sidebar, which is only safe when an `*.mdx` supplies one in its
+ * place. This component has no MDX page, so it follows `Molecules/Modal` and
+ * `Organisms/Galleries` -- the repo's other two stories without one -- and stays untagged.
  * See `docs/storybook-drupal-control-parity.md` for the wider audit this came out of
  * (yalesites-org/YaleSites-Internal#1661).
  */
 export default {
   title: 'Templates/Two Column (70/30)',
-  tags: ['!dev'],
   parameters: {
     layout: 'fullscreen',
   },
