@@ -213,6 +213,36 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     [data-collection-type='grid'] & {
       aspect-ratio: 3/2;
 
+      // Hold the image to the ratio just declared, instead of letting the
+      // image decide the card's height (YaleSites-Internal#1730). A photo
+      // whose derivative is not the expected shape -- a phone upload carrying
+      // EXIF rotation is the reported case -- otherwise renders at its own
+      // shape and pushes its card to nearly twice the height of its
+      // neighbours.
+      // -
+      // This constraint used to exist only under `.sb-show-main` in
+      // `01-atoms/images/image/cl-image.scss`, which is not part of the
+      // shipped stylesheet, so Storybook looked correct while every live site
+      // had no constraint at all.
+      // -
+      // Taking the image out of flow is what makes this independent of the
+      // markup depth: the wrapper is `position: relative`, so the image
+      // resolves against the aspect-ratio box no matter how many unstyled
+      // elements Drupal puts between them, and the in-flow siblings collapse
+      // so the wrapper's flex automatic minimum stops overriding the ratio.
+      // Same shape the other image components use.
+      // -
+      // Deliberately inside this media query: below it no aspect-ratio
+      // applies, and an absolutely positioned image collapses the wrapper to
+      // zero height (measured).
+      img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
       // Safari 14 fix for aspect-ratio
       @supports not (aspect-ratio: 3 / 2) {
         &::before {
@@ -227,6 +257,15 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
           clear: both;
         }
       }
+    }
+
+    // Resource thumbnails are scaled to width only (`resource_300` /
+    // `resource_600` are `image_scale` with a null height), so a letter-size
+    // page arrives taller than the 3:2 box above and the crop would take its
+    // middle -- the body text. Anchor it to the top, which is the intent the
+    // `overflow: hidden` rule further down already documents.
+    [data-collection-type='grid'][data-collection-source='resource'] & img {
+      object-position: top;
     }
 
     // List
