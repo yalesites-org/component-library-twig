@@ -372,7 +372,7 @@ const themesHTML = `
                   },
                   {
                     list__item__content:
-                      '<strong>Typography: Heading Fonts</strong> - Changes font pairings (separate from themes)',
+                      '<strong>Typography: Heading Font, Heading Numerals, Body Numerals</strong> - Changes heading font and numeral styles independently (separate from themes)',
                   },
                 ],
               })}
