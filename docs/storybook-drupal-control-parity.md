@@ -97,7 +97,7 @@ resulting work:
 | `Drop from Storybook` | 23 | yalesites-org/YaleSites-Internal#1719 |
 | `Add to Storybook` | 14 | yalesites-org/YaleSites-Internal#1680 |
 | `Migrate to Drupal` | 8 | yalesites-org/YaleSites-Internal#1720 |
-| `Add to Storybook` (Two Column `padding_options`) | 1 | No ticket yet — the row was added 2026-09-12, after the review, and was ratified on yalesites-org/component-library-twig#728. |
+| `Add to Storybook` (Two Column `padding_options`) | 1 | yalesites-org/YaleSites-Internal#1680 — folded in there on 2026-09-18 at the product lead's request, with the other reverse-drift rows. |
 
 The implementation itself is **not** part of this ticket; it lives in those follow-ups, all
 tagged `color-surface-followup`.
@@ -150,7 +150,7 @@ on 2026-09-12 — on yalesites-org/component-library-twig#728. See "What the rev
 | Drop from Storybook | 23 | 2026-09-11 |
 | Add to Storybook | 14 | 2026-09-11 |
 | Migrate to Drupal | 8 | 2026-09-11 |
-| Add to Storybook (Two Column `padding_options`) | 1 | on yalesites-org/component-library-twig#728 |
+| Add to Storybook (Two Column `padding_options`) | 1 | recorded on yalesites-org/component-library-twig#728 |
 
 **21 controls are actively costing the colour effort** — see "What this means for the Color Surface epic" below.
 
@@ -615,7 +615,7 @@ The `Templates/Two Column (70/30)` `padding_options` row below is **not** one of
 | Organism | Organisms/Content Spotlight/Content Spotlight Landscape | `field_heading_level` | Heading Level | `text_with_image__heading_level` | — | `Drupal-only` | block_content.content_spotlight field_heading_level | 2: 1 (H1), 2 (H2) | Keep as-is | Keep as-is — ratified 2026-09-11 | No | block--inline-block--content-spotlight.html.twig:7 passes it and yds-text-with-image.twig:23 consumes it, but the props file exposes no control for it. | — |
 | Organism | Organisms/Content Spotlight/Content Spotlight Landscape | `field_media` | Image | `text_with_image__image` | — | `Drupal-only` | block_content.content_spotlight field_media (media_library widget) | — | Keep as-is | Keep as-is — ratified 2026-09-11 | No | block--inline-block--content-spotlight.html.twig:21,24-26 supplies the image block, but text-with-image-props.yml has no image row (the story always uses imageData 3x2). | — |
 | Organism | Organisms/Tabs | `field_tabs` | Tab items (label + content) | `tabs` | — | `Drupal-only` | block_content.tabs field_tabs -> paragraph.tab field_heading / field_content | — | Keep as-is | Keep as-is — ratified 2026-09-11 | No | atomic field--block-content--field-tabs.html.twig:5-19 builds labels and panels from the tab paragraphs, but tabs-props.yml documents only tabsTheme. | — |
-| Organism | Templates/Two Column (70/30) | `padding_options` | Section padding options | `layout__padding` | — | `Drupal-only` | Layout Builder section setting padding_options (ys_layouts.module:380-386; reaches this layout because the alter is keyed on the form ID and no-`class:` layouts still get core's LayoutDefault section form) | 4: default, no_top, no_bottom, no_padding | Add to Storybook | Add to Storybook — ratified on yalesites-org/component-library-twig#728 (row added 2026-09-12, after the 2026-09-11 review); no follow-up ticket yet | No | ys_layouts_preprocess_layout (ys_layouts.module:434-444) maps it onto settings['padding'] and layout--two-column.html.twig:20 emits data-component-padding, but yds-two-column.twig emits no padding attribute at all, so the story cannot show it. | — |
+| Organism | Templates/Two Column (70/30) | `padding_options` | Section padding options | `layout__padding` | — | `Drupal-only` | Layout Builder section setting padding_options (ys_layouts.module:380-386; reaches this layout because the alter is keyed on the form ID and no-`class:` layouts still get core's LayoutDefault section form) | 4: default, no_top, no_bottom, no_padding | Add to Storybook | Add to Storybook — recorded on yalesites-org/component-library-twig#728 (row added 2026-09-12, after the 2026-09-11 comment); owned by yalesites-org/YaleSites-Internal#1680 | No | ys_layouts_preprocess_layout (ys_layouts.module:434-444) maps it onto settings['padding'] and layout--two-column.html.twig:20 emits data-component-padding, but yds-two-column.twig emits no padding attribute at all, so the story cannot show it. | — |
 
 ## Coverage and scope
 
@@ -754,7 +754,6 @@ changes are made in this ticket.
    like the 50/50 and 33/33/33 sections" or "deliberate, leave it". It now has a story to look
    at. Separately, its **padding is `Drupal-only`**: editors can set it but
    `yds-two-column.twig` emits no `data-component-padding`, so Storybook cannot show it. That
-   row exists now and is ratified `Add to Storybook`, but no follow-up ticket owns it — either
-   fold it into yalesites-org/YaleSites-Internal#1680 with the other reverse-drift rows or give
-   it one of its own.
+   row exists now, is recorded `Add to Storybook`, and is owned by
+   yalesites-org/YaleSites-Internal#1680 alongside the other reverse-drift rows.
 
