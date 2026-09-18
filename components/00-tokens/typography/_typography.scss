@@ -49,72 +49,63 @@ code {
   text-transform: var(--font-text-transform-h6-yale-new);
 }
 
+// Numeral style (old-style vs. lining) is applied independently of font
+// family by the numeral-style block at the end of the heading() mixin below,
+// so these mixins set family/weight/spacing only.
 @mixin h1-mallory-compact-medium {
   font: var(--font-style-heading-h1-mallory-compact-medium);
   letter-spacing: var(--font-letter-spacing-h1-mallory-compact-medium);
-  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h2-mallory-compact-medium {
   font: var(--font-style-heading-h2-mallory-compact-medium);
   letter-spacing: var(--font-letter-spacing-h2-mallory-compact-medium);
-  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h3-mallory-compact-medium {
   font: var(--font-style-heading-h3-mallory-compact-medium);
-  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h4-mallory-compact-medium {
   font: var(--font-style-heading-h4-mallory-compact-medium);
-  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h5-mallory-compact-medium {
   font: var(--font-style-heading-h5-mallory-compact-medium);
-  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h6-mallory-compact-medium {
   font: var(--font-style-heading-h6-mallory-compact-medium);
   letter-spacing: var(--font-letter-spacing-h6-mallory-compact-medium);
   text-transform: var(--font-text-transform-h6-mallory-compact-medium);
-  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h1-mallory-compact-book {
   font: var(--font-style-heading-h1-mallory-compact-book);
   letter-spacing: var(--font-letter-spacing-h1-mallory-compact-book);
-  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h2-mallory-compact-book {
   font: var(--font-style-heading-h2-mallory-compact-book);
   letter-spacing: var(--font-letter-spacing-h2-mallory-compact-book);
-  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h3-mallory-compact-book {
   font: var(--font-style-heading-h3-mallory-compact-book);
-  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h4-mallory-compact-book {
   font: var(--font-style-heading-h4-mallory-compact-book);
-  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h5-mallory-compact-book {
   font: var(--font-style-heading-h5-mallory-compact-book);
-  font-variant-numeric: oldstyle-nums;
 }
 
 @mixin h6-mallory-compact-book {
   font: var(--font-style-heading-h6-mallory-compact-book);
   letter-spacing: var(--font-letter-spacing-h6-mallory-compact-book);
   text-transform: var(--font-text-transform-h6-mallory-compact-book);
-  font-variant-numeric: oldstyle-nums;
 }
 
 // Body mixins
@@ -157,48 +148,8 @@ code {
 }
 
 @mixin heading($level, $style: null) {
-  // Option 1 (default): Yale New + old-style numerals.
-  // font-variant-numeric must come after the mixin include because the
-  // `font` shorthand inside each mixin resets font-variant-numeric to normal.
-  body[data-font-pairing='yalenew'] &,
-  body:not([data-font-pairing]) & {
-    @if $level == 'h1' {
-      @include h1-yale-new;
-    } @else if $level == 'h2' {
-      @include h2-yale-new;
-    } @else if $level == 'h3' {
-      @include h3-yale-new;
-    } @else if $level == 'h4' {
-      @include h4-yale-new;
-    } @else if $level == 'h5' {
-      @include h5-yale-new;
-    } @else if $level == 'h6' {
-      @include h6-yale-new;
-    }
-
-    font-variant-numeric: oldstyle-nums;
-  }
-
-  // Option 3: Yale New + lining (standard) numerals.
-  body[data-font-pairing='yalenew-oldstyle'] & {
-    @if $level == 'h1' {
-      @include h1-yale-new;
-    } @else if $level == 'h2' {
-      @include h2-yale-new;
-    } @else if $level == 'h3' {
-      @include h3-yale-new;
-    } @else if $level == 'h4' {
-      @include h4-yale-new;
-    } @else if $level == 'h5' {
-      @include h5-yale-new;
-    } @else if $level == 'h6' {
-      @include h6-yale-new;
-    }
-
-    font-variant-numeric: normal;
-  }
-
-  body[data-font-pairing='mallory'] & {
+  // Heading font: Mallory.
+  body[data-heading-font='mallory'] & {
     @if $style == 'medium' {
       // Original behavior: Medium weight (500) - now requires explicit 'medium' parameter
       @if $level == 'h1' {
@@ -231,13 +182,44 @@ code {
       }
     }
   }
+
+  // Heading font: Yale New (the default when no choice has been made).
+  body[data-heading-font='yalenew'] &,
+  body:not([data-heading-font]) & {
+    @if $level == 'h1' {
+      @include h1-yale-new;
+    } @else if $level == 'h2' {
+      @include h2-yale-new;
+    } @else if $level == 'h3' {
+      @include h3-yale-new;
+    } @else if $level == 'h4' {
+      @include h4-yale-new;
+    } @else if $level == 'h5' {
+      @include h5-yale-new;
+    } @else if $level == 'h6' {
+      @include h6-yale-new;
+    }
+  }
+
+  // Heading numeral style is an independent choice from the heading font, so
+  // it applies regardless of which font branch matched above. Old-style is
+  // the default; lining is opt-in. This must come after the font-family
+  // blocks because the `font` shorthand inside each one resets
+  // font-variant-numeric to normal.
+  body:not([data-heading-numerals='lining']) & {
+    font-variant-numeric: oldstyle-nums;
+  }
+
+  body[data-heading-numerals='lining'] & {
+    font-variant-numeric: normal;
+  }
 }
 
 // For non-heading text; headings get numeral style from heading().
 @mixin body-oldstyle-nums {
   font-variant-numeric: oldstyle-nums;
 
-  body[data-font-pairing='yalenew-oldstyle'] & {
+  body[data-body-numerals='lining'] & {
     font-variant-numeric: normal;
   }
 }
