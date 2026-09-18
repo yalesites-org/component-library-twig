@@ -7,8 +7,11 @@ import resourceCardData from '../../02-molecules/cards/reference-card/examples/r
 
 import imageData from '../../01-atoms/images/image/image.yml';
 import componentProps from './card-collection-props.yml';
+import longUrlData from './long-url.yml';
 import { toArgTypes, toArgs } from '../../_storybook/component-props';
 import { addTableDefaults } from '../../_storybook/add-table-defaults';
+
+const LONG_URL = longUrlData.long_url;
 
 /**
  * Storybook Definition.
@@ -156,3 +159,46 @@ ResourceCardCollection.argTypes = addTableDefaults(
   resourceCardCollectionArgs,
 );
 ResourceCardCollection.args = resourceCardCollectionArgs;
+
+/**
+ * A grid whose card text is a long unbroken URL.
+ *
+ * Pasting a webcast or registration link into an Event's Teaser Text is routine,
+ * and before YaleSites-Internal#1729 it widened the card past its column, so a
+ * 3-up grid rendered 2-up. This story exists so that break has a baseline.
+ *
+ * It exercises both declarations the reported break needs: `min-width: 0`, which
+ * lets the card shrink to its column, and `overflow-wrap: break-word`, which
+ * wraps the URL inside the card. The fix carries a third,
+ * `.link-purpose-nobreak { white-space: normal }`, that no card grid can
+ * exercise -- it only bites once text has been auto-linked, and card text never
+ * is: every card text field is restricted to the `heading_html` format, which
+ * runs no `filter_url`. That declaration is there for the grid mixins' other
+ * consumers, facts-and-figures and media grid, whose text is `restricted_html`.
+ *
+ * Storybook markup is not Drupal markup, so this is still not a substitute for
+ * checking a real listing page.
+ */
+export const LongUrlInCardText = ({ collectionType, featured, withImages }) => {
+  const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
+
+  return cardCollectionTwig({
+    card_collection__source_type: 'post',
+    card_collection__type: collectionType,
+    card_collection__heading: 'Long URL In Card Text',
+    card_collection__featured: featured ? 'true' : 'false',
+    card_collection__with_images: withImages ? 'true' : 'false',
+    card_collection__cards: items,
+    ...postCardData,
+    reference_card__snippet: LONG_URL,
+    ...imageData.responsive_images['3x2'],
+  });
+};
+
+LongUrlInCardText.storyName = 'Long URL In Card Text';
+LongUrlInCardText.argTypes = {
+  // The heading is fixed by the story, so leaving its control live would offer
+  // an editable field that does nothing.
+  heading: { table: { disable: true } },
+  withOverlay: { table: { disable: true } },
+};
