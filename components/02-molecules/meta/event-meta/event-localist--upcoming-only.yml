@@ -1,3 +1,4 @@
+is_localist_event: true
 event_dates:
   - formatted_start_date: Monday, December 15th, 2025
     formatted_end_date: Monday, December 15th, 2025

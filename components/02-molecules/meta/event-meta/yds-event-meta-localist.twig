@@ -4,6 +4,12 @@
  # - event_meta__date_end
  # - event_meta__format: Multiselect. Options are 'In-person', 'Virtual', or both.
  # - event_meta__address
+ # - is_localist_event: Whether this event is synced from Localist. Gates which location fields render.
+ # - place: Structured Localist location (Localist location taxonomy term). Only rendered when is_localist_event.
+ # - room: Localist room free-text string. Only rendered when is_localist_event.
+ # - event_address: Structured native Address field (address, city, state, postal_code, country_code).
+ #   Only rendered when NOT is_localist_event.
+ # - address_additional_info: WYSIWYG Additional Address Information field. Only rendered when NOT is_localist_event.
  #}
 
 {# Split upcomign and past dates #}
@@ -64,10 +70,10 @@
 {% set latLong = place.latitude ~ ',' ~ place.longitude %}
 {% set get_directions__url = place ? 'https://www.google.com/maps/dir/Current+Location/' ~ latLong : '' %}
 
-{# Set up location display with conditional room #}
+{# Set up location display: place and room are independent, either can be set alone #}
 {% set location_display = place.name %}
 {% if room %}
-  {% set location_display = location_display ~ ', ' ~ room %}
+  {% set location_display = location_display ? location_display ~ ', ' ~ room : room %}
 {% endif %}
 
 {% if event_experience %}
@@ -136,7 +142,7 @@
 {% endset %}
 
 {# Event meta localist component #}
-<div {{ add_attributes(event_meta__attributes) }} data-event-status="{{ event_status }}">
+<div {{ add_attributes(event_meta__attributes) }} data-event-status="{{ event_status }}" itemscope itemtype="https://schema.org/Event">
   {# To get the event_title__prefix to wire properly to the page_title__prefix
   and retain the logic of end_date, we need to include the page-title
   in the same component file #}
@@ -348,7 +354,7 @@
         </div>
 
         {# Start Grid of fields #}
-        {% if ticket_cost or event_types or event_meta__cta_primary__href or place or event_audience or event_topics %}
+        {% if ticket_cost or event_types or event_meta__cta_primary__href or place or room or event_address or address_additional_info or event_audience or event_topics %}
         <div {{ bem('details-wrapper', [], event_meta__base_class) }}>
           {% if ticket_cost %}
             <div {{ bem('cost', [], event_meta__base_class) }}>
@@ -414,35 +420,62 @@
             </div>
           {% endif %}
 
-          {% if place %}
-            <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
-              <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
-              <div {{ bem('location', [], event_meta__base_class) }}>
-                {{ location_display }}<br>
-                {{ place.address }}
-                {{ place.city }}, {{ place.state }} {{ place.postal_code }}
-              </div>
-              <div {{ bem('event-show-map', [], event_meta__base_class) }} is-expanded="false">
-                {% include "@atoms/controls/cta/yds-cta.twig" with {
-                  cta__content: event__show_map__icon,
-                  cta__href: '#',
-                  cta__blockname: event_meta__base_class,
-                  cta__modifiers: ['show-map'],
-                  cta__style: 'outline',
-                } %}
-                <div {{ bem('map', [], event_meta__base_class) }} aria-expanded="false">
-                  <iframe src="https://maps.google.com/maps?q={{ place.latitude }},{{ place.longitude }}&z=15&output=embed" title="Map showing location of {{ location_display|default('event') }}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
+          {% if is_localist_event %}
+            {% if place or room %}
+              <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
+                <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
+                <div {{ bem('location', [], event_meta__base_class) }} itemprop="location" itemscope itemtype="https://schema.org/Place">
+                  <span itemprop="name">{{ location_display }}</span><br>
+                  {% if place %}
+                  <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                    <span itemprop="streetAddress">{{ place.address }}</span>
+                    <span itemprop="addressLocality">{{ place.city }}</span>, <span itemprop="addressRegion">{{ place.state }}</span> <span itemprop="postalCode">{{ place.postal_code }}</span>
+                  </span>
+                  {% endif %}
+                </div>
+                {% if place %}
+                <div {{ bem('event-show-map', [], event_meta__base_class) }} is-expanded="false">
                   {% include "@atoms/controls/cta/yds-cta.twig" with {
-                    cta__content: 'Get Directions',
-                    cta__href: get_directions__url,
+                    cta__content: event__show_map__icon,
+                    cta__href: '#',
                     cta__blockname: event_meta__base_class,
-                    cta__modifiers: ['directions-link'],
+                    cta__modifiers: ['show-map'],
                     cta__style: 'outline',
                   } %}
+                  <div {{ bem('map', [], event_meta__base_class) }} aria-expanded="false">
+                    <iframe src="https://maps.google.com/maps?q={{ place.latitude }},{{ place.longitude }}&z=15&output=embed" title="Map showing location of {{ location_display|default('event') }}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+                    {% include "@atoms/controls/cta/yds-cta.twig" with {
+                      cta__content: 'Get Directions',
+                      cta__href: get_directions__url,
+                      cta__blockname: event_meta__base_class,
+                      cta__modifiers: ['directions-link'],
+                      cta__style: 'outline',
+                    } %}
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% else %}
+            {% if event_address %}
+              <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
+                <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
+                <div {{ bem('location', [], event_meta__base_class) }} itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
+                  <span itemprop="streetAddress">{{ event_address.address }}</span><br>
+                  <span itemprop="addressLocality">{{ event_address.city }}</span>, <span itemprop="addressRegion">{{ event_address.state }}</span> <span itemprop="postalCode">{{ event_address.postal_code }}</span>
                 </div>
               </div>
-            </div>
+            {% endif %}
+
+            {% if address_additional_info %}
+              <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
+                <label {{ bem('event__label', [], event_meta__base_class) }}>{{ event_address ? 'Additional Address Information' : 'Location' }}</label>
+                <div {{ bem('location', [], event_meta__base_class) }}{% if not event_address %} itemprop="location"{% endif %}>
+                  {{ address_additional_info }}
+                </div>
+              </div>
+            {% endif %}
           {% endif %}
 
           {% if event_audience %}
