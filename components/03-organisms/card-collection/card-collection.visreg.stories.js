@@ -220,10 +220,9 @@ ItsYourYaleSectionFive.storyName = 'It’s Your Yale Section Five';
  * the check. The break this guards is a layout break, not a theming one, so one
  * theme is enough either way.
  *
- * Covers two of the three declarations that fix YaleSites-Internal#1729; the
- * third is unreachable in Storybook. `LongUrlInCardText` in
- * `card-collection.stories.js` documents which and why -- the short version is
- * that a green diff here is not evidence the whole fix holds.
+ * Covers both declarations the YaleSites-Internal#1729 break needs. The fix's
+ * third declaration is not exercised by any card grid; `LongUrlInCardText` in
+ * `card-collection.stories.js` documents why.
  */
 const renderLongUrlGrids = () => `
   <div class="wrap-for-screenshot">

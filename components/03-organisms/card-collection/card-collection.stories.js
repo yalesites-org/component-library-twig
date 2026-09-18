@@ -167,13 +167,17 @@ ResourceCardCollection.args = resourceCardCollectionArgs;
  * and before YaleSites-Internal#1729 it widened the card past its column, so a
  * 3-up grid rendered 2-up. This story exists so that break has a baseline.
  *
- * It covers two of the three declarations that fix: `min-width: 0`, which lets
- * the card shrink to its column, and `overflow-wrap: break-word`, which wraps
- * the URL inside the card. **It cannot cover the third.** On a real site Drupal
- * auto-links a bare URL and link-treatment wraps it in a `white-space: nowrap`
- * span, which defeats `overflow-wrap` entirely -- and that is the form the bug
- * actually took. Storybook never auto-links, so a green diff here is not proof
- * the whole fix holds; the Drupal half has to be checked on a real site.
+ * It exercises both declarations the reported break needs: `min-width: 0`, which
+ * lets the card shrink to its column, and `overflow-wrap: break-word`, which
+ * wraps the URL inside the card. The fix carries a third,
+ * `.link-purpose-nobreak { white-space: normal }`, that no card grid can
+ * exercise -- it only bites once text has been auto-linked, and card text never
+ * is: every card text field is restricted to the `heading_html` format, which
+ * runs no `filter_url`. That declaration is there for the grid mixins' other
+ * consumers, facts-and-figures and media grid, whose text is `restricted_html`.
+ *
+ * Storybook markup is not Drupal markup, so this is still not a substitute for
+ * checking a real listing page.
  */
 export const LongUrlInCardText = ({ collectionType, featured, withImages }) => {
   const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
