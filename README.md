@@ -55,6 +55,39 @@ Any time something is pushed to the `main` branch on GitHub, a [GitHub Action](.
 
 This is an entirely automated process, so whether changes are pushed directly to `main` or if they go through the preferred PR workflow the release process will be run. Merges into `main` should be performed using a merge commit.
 
+## The contrast gate
+
+Colour contrast is a measurable property of the tokens, not a matter of judgement, so it is checked by the build rather than by whoever happens to review the PR. Two checks run as part of `npm run test` and therefore gate every pull request.
+
+### 1. The pairing gate
+
+`components/00-tokens/colors/contrast-gate.test.mjs` computes the WCAG 2.1 contrast ratio for every **approved pairing** — every surface the token package declares together with the foreground meant to sit on it — across all seven global themes, and fails below **4.5:1 for text** (SC 1.4.3) and **3:1 for non-text**, currently section borders (SC 1.4.11). It also enforces the #1539 convention that slot one, slot six and slot seven are safe foregrounds.
+
+See the report, including the pairings that are measured but deliberately not gated:
+
+```sh
+node components/00-tokens/colors/contrast-gate.mjs   # or: npm run contrast:gate
+```
+
+**Adding an approved pairing.** Surfaces are enumerated in `approved-pairings.mjs`, derived from the token package rather than listed by hand, so adding a global theme, a section theme or a component theme brings its pairings in automatically — and if one of them fails, the build tells you before it reaches a site. Add a *new kind* of surface by adding a function there and its name to `PAIRING_KINDS`; the tests will fail until it produces pairings, which is deliberate.
+
+**When the gate fails.** Fix the colours. `contrast-gate-baseline.json` is a burn-down list of the failures that already existed when the gate landed, each with a reason and an owning ticket — it is not an opt-out, and the tests enforce that: an entry that starts passing must be deleted, an entry naming a pairing that no longer exists must be deleted, and an entry with no reason or no ticket fails.
+
+### 2. The foreground-purity ratchet
+
+The gate can only check colours that appear in a declared pairing. A component that hardcodes a colour in foreground position is not merely failing — it is unmeasured. That half is caught two ways:
+
+- **Colour literals** (`color: #fff`, `color: white`) — a stylelint rule, see `stylelint.config.js`.
+- **Raw palette tokens** (`color: var(--color-gray-700)`, and the fallback half of `color: var(--color-section-foreground, var(--color-blue-yale))`) — `foreground-purity.test.mjs`, because stylelint's property matching does not reach custom-property declarations in this tree.
+
+A palette token is a fixed swatch: it cannot follow the theme. Read a semantic token instead — `--color-text`, `--color-heading`, `--color-link-base`, or the section contract `--color-section-background` / `--color-section-foreground` / `--color-section-accent`.
+
+```sh
+node components/00-tokens/colors/foreground-purity.mjs   # or: npm run contrast:foregrounds
+```
+
+`foreground-purity-baseline.json` holds the per-file counts as they stood when the ratchet landed. They may only go **down**: no file may gain one, a file that is not listed must have none, and a file that has been cleaned must have its entry deleted. Raising a number to turn a red build green is not a fix.
+
 ## Storybook Documentation Structure
 
 The YaleSites Component Library uses a modern two-page documentation structure for components:

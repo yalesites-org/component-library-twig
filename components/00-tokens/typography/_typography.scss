@@ -13,9 +13,21 @@ code {
   padding: 0 var(--size-spacing-3);
   background-color: var(--color-code-background);
 
-  [data-component-theme='one'] &,
-  [data-component-theme='three'] &,
-  [data-component-theme='four'] &,
+  // Both dials, spelled out. This rule is about the SURFACE being dark, and
+  // `<code>` can sit on a dark section or inside a dark-dialled block -- so
+  // when the two attributes were split (YaleSites-Internal#1630) the honest
+  // translation was to name both rather than pick one. Specificity is
+  // unchanged: `:is()` takes the weight of its heaviest argument, and every
+  // argument here is a single attribute selector.
+  :is(
+      [data-component-theme='one'],
+      [data-component-theme='three'],
+      [data-component-theme='four'],
+      [data-section-theme='one'],
+      [data-section-theme='three'],
+      [data-section-theme='four']
+    )
+    &,
   [data-basic-theme='blue-yale'] &,
   [data-basic-theme='gray-700'] & {
     --color-code-border: var(--color-gray-800);
