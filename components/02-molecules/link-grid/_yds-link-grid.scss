@@ -41,8 +41,21 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
     &[data-component-theme='#{$theme}'] {
       --color-action: var(--color-link-grid-action);
       --color-link-grid-border: var(--color-link-grid-action);
-      --color-heading: var(--color-gray-800);
     }
+  }
+
+  // `00-tokens/colors/_color-component-themes.scss` maps `--color-heading` for
+  // component themes one-five to a token meant for components that paint their
+  // own background. This one paints none, so that ink is picked against a
+  // backdrop never drawn -- white on white (YaleSites-Internal#1734). Defer to
+  // the enclosing section, which is the only thing that knows what is behind
+  // the heading. The explicit fallback is load-bearing, not decoration: an
+  // unthemed section sets no `--color-layout-content`, and `--color-heading`
+  // has no `:root` default, so `inherit` here would resolve to nothing on a
+  // live page. The attribute selector outranks the shared rule whatever the
+  // stylesheet order.
+  &[data-component-theme] {
+    --color-heading: var(--color-layout-content, var(--color-gray-800));
   }
 
   // Component theme overrides: set specific component themes overrides
@@ -69,7 +82,6 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   &[data-component-theme='six'] {
     --color-link-grid-action: var(--color-slot-nine);
-    --color-heading: var(--color-slot-seven);
   }
 
   // if used in the layout component, remove the top margin
@@ -84,19 +96,10 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   flex: 1 0 100%;
   margin-bottom: var(--size-spacing-6);
 
-  // Use token (not inherited section color): gray layout sections can set light
-  // `color` on `.yds-layout`, which would otherwise wash out the main title.
+  // Belt-and-braces over the `h1`-`h6` base rule in `_yds-headings.scss`, which
+  // already applies this: states outright that the heading takes the section's
+  // ink, since this component is where getting that wrong shipped a bug.
   color: var(--color-heading);
-
-  // Light text only on dark link-grid backgrounds. Scope to `.link-grid` so
-  // section layout `[data-component-theme]` on `.yds-layout` does not force
-  // white on theme `six` or other light blocks.
-  .link-grid[data-component-theme='one'] &,
-  .link-grid[data-component-theme='three'] &,
-  .link-grid[data-component-theme='four'] &,
-  .link-grid[data-component-theme='five'] & {
-    color: var(--color-basic-white);
-  }
 }
 
 .link-grid__inner {
