@@ -227,9 +227,21 @@ ItsYourYaleSectionFive.storyName = 'It’s Your Yale Section Five';
  * Every grid mixin the card collection uses is now covered: the three panels
  * from component-library-twig#736 above, plus the content-width grid and both
  * profile directory grids (YaleSites-Internal#1736). That is six panels over
- * five distinct mixins -- the custom card collection is a separate organism
- * that includes `primary` at its own include site, the same mixin the featured
- * grid gets.
+ * six distinct mixins -- the custom card collection is a separate organism, and
+ * its panel renders non-featured (nothing passes
+ * `custom_card_collection__featured`, and the Twig normalises undefined to
+ * `'false'`), so it exercises `base` at `_yds-custom-card-collection.scss:19`,
+ * not the `primary` the featured grid gets.
+ *
+ * The coverage set is not closed. One card-grid include site has no long-URL
+ * baseline: the *featured* custom card collection at
+ * `_yds-custom-card-collection.scss:32`, which includes `primary`. Left that
+ * way deliberately -- `primary` is already exercised by the featured grid panel
+ * here, so the shared fix is under test either way; the only thing with no
+ * long-URL baseline is the `flex-grow: 1` single-card override at `:34`. That
+ * override is not unbaselined outright -- `cards.visreg.stories.js` renders a
+ * lone custom card inside a hardcoded `data-collection-featured='true'`
+ * wrapper, so `> *:first-child:last-child` matches and is captured there.
  *
  * The non-featured directory grid is the one of the three worth knowing about.
  * `directory-primary` is the only grid mixin that pins an explicit `max-width`
