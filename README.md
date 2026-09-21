@@ -51,7 +51,7 @@ npm install @yalesites-org/component-library-twig
 
 ## Single Directory Components (SDC)
 
-YaleSites components are being migrated to Drupal [Single Directory Components](https://www.drupal.org/docs/develop/theming-drupal/using-single-directory-components) (epic [#1351](https://github.com/yalesites-org/YaleSites-Internal/issues/1351)). Each migrated component keeps its canonical Twig, SCSS, and JS in this library — still driving Storybook and Percy — while a thin-wrapper SDC in the `atomic` theme (`atomic/components/<name>/`) carries the schema and delegates rendering back to it. The library remains the single source of truth for markup and styles.
+YaleSites components are being migrated to Drupal [Single Directory Components](https://www.drupal.org/docs/develop/theming-drupal/using-single-directory-components) (epic [#1351](https://github.com/yalesites-org/YaleSites-Internal/issues/1351)). Each migrated component keeps its canonical Twig, SCSS, and JS in this library — still driving Storybook and visual regression — while a thin-wrapper SDC in the `atomic` theme (`atomic/components/<name>/`) carries the schema and delegates rendering back to it. The library remains the single source of truth for markup and styles.
 
 The full documentation set, including a status overview, the conversion recipe, and a guide to building a new block as an SDC, lives in [`docs/sdc/`](docs/sdc/README.md).
 

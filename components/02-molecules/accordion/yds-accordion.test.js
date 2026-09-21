@@ -3,10 +3,10 @@
  *
  * This is the pattern Wave 3b extends to the other interactive components. It
  * exercises the JS behavior directly against a DOM fixture that mirrors the
- * rendered accordion markup, asserting the things Percy cannot see: initial
- * collapsed state, expand/collapse on activation, keyboard operability (the
- * toggles are native <button>s), ARIA state changes, and the Expand/Collapse-all
- * control.
+ * rendered accordion markup, asserting the things visual regression cannot
+ * see: initial collapsed state, expand/collapse on activation, keyboard
+ * operability (the toggles are native <button>s), ARIA state changes, and the
+ * Expand/Collapse-all control.
  */
 import { readFileSync } from 'node:fs';
 import { beforeEach, describe, expect, it } from 'vitest';
