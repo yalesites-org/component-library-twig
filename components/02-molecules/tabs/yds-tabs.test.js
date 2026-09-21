@@ -1,10 +1,11 @@
 /**
  * Behavioral tests for the Tabs (Drupal.behaviors.tabs) — Wave 3b (#1357).
  *
- * Percy can't see this: click/keyboard tab activation and the ARIA/is-active
- * state changes. The overflow logic in the behavior is layout-dependent
- * (getBoundingClientRect), which jsdom reports as zero, so it stays inert here;
- * we exercise the activation path (goToTab) via click and arrow keys.
+ * Visual regression can't see this: click/keyboard tab activation and the
+ * ARIA/is-active state changes. The overflow logic in the behavior is
+ * layout-dependent (getBoundingClientRect), which jsdom reports as zero, so it
+ * stays inert here; we exercise the activation path (goToTab) via click and
+ * arrow keys.
  */
 import { readFileSync } from 'node:fs';
 import { beforeEach, describe, expect, it } from 'vitest';
