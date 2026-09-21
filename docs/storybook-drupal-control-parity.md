@@ -641,16 +641,18 @@ ticket requires. `00-tokens`, `04-page-layouts` and `05-page-examples` are out o
   newly added control into it would be wrong, so the file deletes itself. Its expiry is
   mechanical rather than remembered — one of its tests fails as soon as all 77 rows carry a
   **Ratified** value.
-- **4 components have a story but no props file**, and are covered directly from their story:
+- **6 components have a story but no props file**, and are covered directly from their story:
   `Atoms/Table` (no controls), `Molecules/Modal` (no declared `argTypes`), `Organisms/Galleries`
-  (one control, `gridHeading`), and `Templates/Two Column (70/30)` (no controls — see below).
-- **24 component directories have no story or props file of their own because a parent story
+  (one control, `gridHeading`), `Templates/Two Column (70/30)` (no controls — see below), and
+  `Molecules/Menu Toggle` and `Molecules/In This Section Toggle` (no controls — see below).
+- **26 component directories have no story or props file of their own because a parent story
   covers them** — for example `01-atoms/controls/*` under `Atoms/Controls`, the four
   `02-molecules/banner/*` directories under their respective banner stories, and
   `02-molecules/meta/*` under `Molecules/Meta`. Their controls are inventoried under the parent.
   (Counted as 22 in an earlier draft; recounted 2026-09-21. `03-organisms/layout/two-column`
   joined the set when its story was added, and `02-molecules/cards/reference-card/examples` was
-  missed.)
+  missed. `02-molecules/menu/menu-toggle` and `02-molecules/menu/menu-in-this-section-toggle`
+  joined the same way when this ticket gave them stories, taking 24 to 26.)
 - **5 are container directories** with no template of their own (`01-atoms/controls/button`,
   `01-atoms/typography`, `01-atoms/videos`, `02-molecules/cards`, `03-organisms/menu`). Four
   hold nothing but subdirectories; `02-molecules/cards` also carries
@@ -710,7 +712,61 @@ cost and belongs with the follow-up that implements this row, not with an invent
 component still has no automated contrast coverage, and that gap is recorded here rather than
 closed.
 
-### 6 components have no Storybook presence at all
+### The two menu toggles: stories added, and every pairing measured
+
+This audit also listed `02-molecules/menu/menu-toggle` and
+`02-molecules/menu/menu-in-this-section-toggle` among the components with no Storybook
+presence, and singled them out from the partials around them: both are real interactive UI —
+shipped, visitor-facing, and never rendered in Storybook, so no colour pairing on either had
+ever been measured. Closed under yalesites-org/YaleSites-Internal#1757, following the Two
+Column precedent above: `Molecules/Menu Toggle` and `Molecules/In This Section Toggle`, each
+untagged because neither has an MDX page, and neither declaring any Storybook controls (an
+editor cannot configure either component, so controls would manufacture exactly the
+Storybook-only drift this audit exists to reduce).
+
+**Each story wraps the component in its real parent selector, and that is the point.** Both
+templates paint themselves from custom properties that are defined ONLY inside the themed
+wrapper of the organism that ships them — `--color-text` inside
+`.site-header[data-header-theme]`, `--color-link-base` inside
+`.in-this-section[data-component-theme]`. Rendered bare, both resolve to whatever the
+surrounding page happens to carry and would measure clean while being wrong, which is the same
+class of mistake that let the Link Grid ship white-on-white (yalesites-org/YaleSites-Internal#1680).
+
+**217 pairings were measured** from computed styles in a real browser, across all 7 global
+themes, both states, and every theme of the parent:
+
+| Component | Pairing | Criterion | Range | Result |
+| --- | --- | --- | --- | --- |
+| Menu Toggle | bars vs header background | 1.4.11 non-text, 3:1 | 12.07–16.10:1 | **Pass**, every combination |
+| In This Section | label vs button background | 1.4.3 normal text, 4.5:1 | 4.98–12.07:1 | **Pass**, every combination |
+| In This Section | icon vs button background | 1.4.11 non-text, 3:1 | 4.98–12.07:1 | **Pass**, every combination |
+| In This Section | `::after` divider vs button background | 1.4.11 non-text, 3:1 | 1.07–16.10:1 | **14 of 35 below 3:1** |
+
+Two properties of `menu-toggle` are worth recording because they are unusual, and together
+they are why three rows cover it completely rather than twenty-one. Its `__text` span is
+`visually-hidden`, so 1.4.3 never applies to it — the bars are the only visible ink, under
+1.4.11. And unlike nearly every other component, it is **global-theme independent**: the three
+header themes map text and background to fixed primitives (`--color-gray-800`,
+`--color-basic-white`, `--color-blue-yale`) rather than to palette slots, so the global theme
+lever cannot change its contrast.
+
+**The one finding, and why it is recorded rather than fixed here.** The full-width rule drawn
+under the *closed* In This Section toggle takes its colour from `--color-navigation-border`,
+against a button background that is hardcoded `--color-basic-white`. On component themes
+**three** and **four** that variable resolves to a light accent slot, and the rule is faint to
+invisible under every global theme — 2.19–2.93:1 on theme three, and **1.07–1.90:1 on theme
+four**, where it is imperceptible.
+
+Whether that is a 1.4.11 *failure* is genuinely arguable: the criterion exempts decoration, and
+the toggle's identity and state are carried by its label and its chevron, both of which pass
+comfortably in every combination. What is not arguable is that a divider nobody can see is not
+doing the job it was added to do. The fix is a palette decision — which slot
+`--color-navigation-border` should point at on those two themes — and that variable is shared
+with the section navigation's own borders, so repointing it reaches well beyond these two
+components. Recorded here for design and the Color Surface epic rather than changed under a
+ticket whose job was to make it measurable.
+
+### 4 components have no Storybook presence at all
 
 These ship templates but appear in no story, so they have **zero** controls, no documentation
 page, and — relevant to the colour work — no contrast coverage whatever:
@@ -720,15 +776,12 @@ page, and — relevant to the colour work — no contrast coverage whatever:
 | `01-atoms/controls/base` | 1 | The base control partial the button/CTA/text-link variants build on. |
 | `01-atoms/typography/headings` | 1 | |
 | `01-atoms/typography/text` | 1 | |
-| `02-molecules/menu` | 3 | The menu partials used by the nav organisms. |
-| `02-molecules/menu/menu-toggle` | 1 | Shipped, interactive, and never rendered in Storybook. |
-| `02-molecules/menu/menu-in-this-section-toggle` | 1 | As above. |
+| `02-molecules/menu` | 3 | The three menu partials used by the nav organisms. The two `*.stories.js` files now in this directory belong to its `menu-toggle` and `menu-in-this-section-toggle` subdirectories, not to these partials. |
 
-These are mostly partials rendered through a parent, but **the two menu toggles are real
-interactive UI** — shipped, editor-reachable, and never rendered in Storybook. They are the
-remaining coverage gap after Two Column was closed above, and they carry the same argument in
-miniature: nothing contrast-checks them today.
-yalesites-org/YaleSites-Internal#1757 tracks giving both of them stories.
+All four are partials rendered through a parent, which is why they are recorded as an
+acceptable exception rather than a gap. The two entries that were **not** partials —
+`menu-toggle` and `menu-in-this-section-toggle` — have been closed and moved into the coverage
+list above; see the section immediately above this one.
 
 **This table has its own guard, and unlike the inventory's it does not expire.**
 `components/_storybook/storybook-presence-coverage.test.mjs` fails if a row here names a
@@ -739,9 +792,9 @@ with it.
 
 It deliberately does **not** fail when a component listed here *gains* a story. Closing one of
 these gaps is the outcome the list exists to provoke, and an earlier single-file version failed
-on exactly that — it would have gone red the moment yalesites-org/component-library-twig#741
-merged, which is the PR that gives both menu toggles their stories. A guard that fires on its
-own fix is a tripwire. The stale row left behind is documentation for review to catch, not CI.
+on exactly that — it would have gone red the moment the two menu toggles got their stories
+(yalesites-org/component-library-twig#741), which is this change. A guard that fires on its own
+fix is a tripwire. The stale row left behind is documentation for review to catch, not CI.
 
 ## Documentation impact
 
