@@ -292,3 +292,112 @@ test('the small band stays under the narrowest thirds column, by however little'
     )}rem; it has historically been ~0.26rem, so a jump this large means the measurements were retaken -- update the REGIONS table and this expectation together`,
   );
 });
+
+// ---------------------------------------------------------------------------
+// The viewport floor under the container bands.
+//
+// Column count comes from the container; the card's own internal layout comes
+// from the viewport. Those two only coexist while they cannot disagree, and
+// they disagreed below $break-m: a phone-width full-width region is ~44rem,
+// inside the 34-70rem band, so the grid handed back two or three columns while
+// _yds-reference-card.scss still flipped every card in them to its horizontal
+// image-beside-text layout (that rule runs from $break-s to
+// $break-card-collection-max). The result was narrow columns of horizontal
+// cards. (#1648 QA)
+//
+// The fix confines the container bands to $break-m and up, where the card has
+// no horizontal rule left. These tests pin that separation, because nothing
+// else can: Storybook renders a canvas container narrower than the viewport,
+// so it puts the container under 34rem exactly when the viewport is in the
+// s-to-m band and the conflict never appears there.
+// ---------------------------------------------------------------------------
+
+const REFERENCE_CARD_SCSS = readFileSync(
+  new URL(
+    '../../02-molecules/cards/reference-card/_yds-reference-card.scss',
+    import.meta.url,
+  ),
+  'utf8',
+);
+
+/**
+ * Returns the body of the brace-delimited block that follows `needle`.
+ *
+ * @param {string} source - The stylesheet source.
+ * @param {string} needle - Text immediately preceding the block's `{`.
+ *
+ * @returns {string} the block body, braces excluded.
+ */
+const blockAfter = (source, needle) => {
+  const start = source.indexOf(needle);
+  assert.ok(start !== -1, `expected to find "${needle}"`);
+  const open = source.indexOf('{', start);
+  assert.ok(open !== -1, `expected a block after "${needle}"`);
+
+  let depth = 0;
+  for (let i = open; i < source.length; i += 1) {
+    if (source[i] === '{') {
+      depth += 1;
+    } else if (source[i] === '}') {
+      depth -= 1;
+      if (depth === 0) {
+        return source.slice(open + 1, i);
+      }
+    }
+  }
+  throw new Error(`unbalanced braces after "${needle}"`);
+};
+
+test('the container bands are gated on the viewport, not just the container', () => {
+  // The gate itself. Keyed to $break-m because that is where the card stops
+  // having a horizontal layout, not because 768px is a round number.
+  const gate = blockAfter(scss, '@mixin single-column-below-break-m');
+  assert.match(gate, /@media \(min-width: tokens\.\$break-m\)/);
+});
+
+test('no card-grid container band escapes the viewport gate', () => {
+  // Counted rather than eyeballed: an added band that forgets the wrapper is
+  // exactly how this regression comes back, and it would render fine on a
+  // desktop and in Storybook.
+  ['container-grid(', 'container-grid-small'].forEach((name) => {
+    const body = blockAfter(scss, `@mixin ${name}`);
+    const gated = blockAfter(body, '@include single-column-below-break-m');
+
+    const count = (text) =>
+      (text.match(/@container \(min-width:/g) || []).length;
+
+    assert.ok(count(gated) > 0, `${name} declares no bands inside the gate`);
+    assert.equal(
+      count(body),
+      count(gated),
+      `${name} has a @container band outside @include single-column-below-break-m; below $break-m it would give multiple columns of horizontal cards`,
+    );
+  });
+});
+
+test('the grid is single-column across the whole band where cards go horizontal', () => {
+  // The invariant the gate exists to hold, stated as a relationship between
+  // the two files rather than as two constants that happen to line up today.
+  // If either side moves, this is what should fail.
+  const horizontalRuleMax = REFERENCE_CARD_SCSS.match(
+    /\$break-card-collection-max:\s*tokens\.\$break-m\s*-\s*([\d.]+)/,
+  );
+  assert.ok(
+    horizontalRuleMax,
+    'expected $break-card-collection-max to still be derived from $break-m',
+  );
+  assert.ok(
+    Number(horizontalRuleMax[1]) > 0,
+    'the card horizontal layout must stop strictly below $break-m, which is where the container bands start',
+  );
+
+  // And that the bound is still spent on a real horizontal-layout rule, rather
+  // than left declared with nothing reading it. Matched on the media query
+  // alone, not on the selector block around it, so reformatting the selectors
+  // does not fail a test about breakpoints.
+  assert.match(
+    REFERENCE_CARD_SCSS,
+    /@media \(min-width: tokens\.\$break-s\) and \(max-width: \$break-card-collection-max\)/,
+    'the horizontal card rule moved; re-check it against the container bands in _grid-mixins.scss',
+  );
+});
