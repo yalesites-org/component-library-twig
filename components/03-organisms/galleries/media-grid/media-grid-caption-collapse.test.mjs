@@ -12,7 +12,8 @@
  *
  * The fixtures mirror the Interactive Grid story in `media-grid.yml`: items 6
  * (heading, no caption), 10 (short caption, no heading), 11 (heading plus short
- * caption) and 1 (heading plus a long caption containing a link).
+ * caption), 1 (heading plus a long caption containing a link) and 3 (a long
+ * caption containing a link, no heading).
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -52,6 +53,16 @@ class FakeElement {
 
   set textContent(value) {
     this.html = value;
+  }
+
+  // Child nodes are modelled as one markup string: enough to tell whether the
+  // nodes handed back to `replaceChildren` still carry their links.
+  get childNodes() {
+    return [this.html];
+  }
+
+  replaceChildren(...nodes) {
+    this.html = nodes.join('');
   }
 
   get classList() {
@@ -151,7 +162,7 @@ const hasExpandButton = (item) =>
 
 const longCaption = `<p>${'Optional caption. '.repeat(12)}</p>`;
 
-/** The four story items the collapsed state behaves differently for. */
+/** The story items the collapsed state behaves differently for. */
 const storyItems = () => ({
   headingOnly: buildCaption({
     heading: 'Optional heading for the sixth image (with no text)',
@@ -166,6 +177,9 @@ const storyItems = () => ({
   }),
   headingAndLink: buildCaption({
     heading: 'Optional heading for the first image',
+    caption: `<p>Caption with a <a href="/target">real link</a>. ${longCaption}</p>`,
+  }),
+  longCaptionAndLink: buildCaption({
     caption: `<p>Caption with a <a href="/target">real link</a>. ${longCaption}</p>`,
   }),
 });
@@ -252,4 +266,29 @@ test('a caption with a heading still expands and collapses', () => {
   assert.equal(headingAndCaption.content.getAttribute('is-expanded'), 'false');
   assert.equal(headingAndCaption.toggle.getAttribute('aria-expanded'), 'false');
   assert.equal(headingAndCaption.toggle.getAttribute('aria-label'), 'expand');
+});
+
+test('a long caption with no heading gets its links back when expanded', () => {
+  const { longCaptionAndLink } = storyItems();
+
+  attachBehaviour([longCaptionAndLink]);
+
+  assert.ok(hasExpandButton(longCaptionAndLink), 'no expand button was shown');
+
+  const link = /<a href="\/target">real link<\/a>/;
+
+  // Twice, so a collapse in between cannot lose the link for good.
+  for (let round = 0; round < 2; round += 1) {
+    longCaptionAndLink.toggle.click();
+    assert.match(
+      longCaptionAndLink.text.html,
+      link,
+      'the expanded caption is plain text, so its link is no longer clickable',
+    );
+    longCaptionAndLink.toggle.click();
+    assert.equal(
+      longCaptionAndLink.content.getAttribute('is-expanded'),
+      'false',
+    );
+  }
 });

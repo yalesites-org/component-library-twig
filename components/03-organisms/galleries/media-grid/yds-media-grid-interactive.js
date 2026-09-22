@@ -197,6 +197,7 @@ Drupal.behaviors.mediaGridInteractive = {
 
           if (toggleCaption && hasHiddenContent) {
             let truncatedCaption;
+            let fullCaptionNodes;
 
             // The SCSS one-line clamp keys off this, so it has to be set here
             // with the toggle — a caption with no way to expand must never clamp.
@@ -208,11 +209,10 @@ Drupal.behaviors.mediaGridInteractive = {
                 maxLength,
               );
 
-              // Known limitation: this path still flattens the caption, so a
-              // link in a headingless caption over maxLength is lost for good
-              // (expanding restores `fullCaption`, which is plain text too).
-              // A string slice cannot preserve markup — fixing it needs a DOM
-              // Range or a CSS line-clamp instead, which is its own ticket.
+              // The collapsed preview is plain text, since a string slice cannot
+              // preserve markup. Keep the original nodes so expanding puts the
+              // editor's links back instead of more plain text.
+              fullCaptionNodes = [...captionContent.childNodes];
               captionContent.textContent = `${truncatedCaption}...`;
             }
 
@@ -234,7 +234,7 @@ Drupal.behaviors.mediaGridInteractive = {
                   toggleCaption.setAttribute('aria-expanded', 'true');
                   toggleCaption.setAttribute('aria-label', 'collapse');
                   if (!hasHeading) {
-                    captionContent.textContent = fullCaption;
+                    captionContent.replaceChildren(...fullCaptionNodes);
                   }
                   imageCaption.setAttribute('is-expanded', 'true');
                   imageCaption.style.setProperty(
