@@ -159,6 +159,22 @@ test('the two known --color-layout-border failures are still exactly two', () =>
   // count: it fails if a palette change makes the problem WORSE, and it fails
   // if someone fixes them without updating this comment -- either way the next
   // person finds out rather than inheriting a stale claim.
+  //
+  // YaleSites-Internal#1641 re-pointed the two consumers that painted this
+  // token directly as a line with no paired foreground -- `.yds-layout__divider`
+  // (which ALSO carried an undocumented `opacity: 0.5` that independently
+  // defeated the first attempt at this fix; see `divider-opacity-composited.test.mjs`)
+  // and the divider ATOM (`_yds-divider.scss`) -- to `--color-section-foreground`.
+  // Both are confirmed fixed by real render, not just token math: opaque,
+  // pixel-sampled `.yds-layout__divider` measured 4.63:1 / 5.72:1 on the two
+  // Whitney cells this test names, matching the composited-ratio test exactly.
+  // `--color-layout-border` itself is unchanged and still resolves to
+  // slot-four here, still failing 3:1 in the abstract, because the
+  // CTA/Tabs-action/pull-quote-accent chain that reaches it through
+  // `--color-section-accent` is deliberately left alone (see the comment in
+  // `_yds-pull-quote.scss` for why pull-quote specifically is a design call,
+  // not an oversight) -- this test measures that token, not either fixed
+  // consumer, so the count stays two.
   const NON_TEXT_MINIMUM = 3;
 
   const failing = sectionBackgrounds()
@@ -479,6 +495,56 @@ const SECTION_SURFACE_CONSUMERS = [
     name: '.publication-detail__field__label',
     file: '../../02-molecules/meta/publication-meta/_yds-publication-detail.scss',
     fallback: '--color-gray-800',
+  },
+  // Added by YaleSites-Internal#1641. Inside a themed section
+  // `--color-tabs-background` and `--color-tabs-selected` are BOTH driven
+  // from `--color-section-background` (the themed-section rule a few lines
+  // above `--color-selected`'s consumers below), so the active tab's
+  // indicator painted the section's own background colour on top of itself --
+  // measured via `getComputedStyle` on the rendered Storybook stories,
+  // `border-bottom-color` equalled the active tab's `background-color` in all
+  // six section themes and all seven global themes (a 1.00:1 ratio, i.e. no
+  // visible indicator). The fix touches only the indicator, not the active
+  // tab's own background fill -- that background staying flush with the
+  // resting tabs is the existing themed-section design, and `color: inherit`
+  // on the tab text resolves from the section's content colour, so repointing
+  // the FILL to the foreground too would have painted the text the same
+  // colour as its own new background.
+  {
+    name: 'tabs active-tab indicator',
+    file: '../../02-molecules/tabs/_yds-tabs.scss',
+    fallback: '--color-selected',
+  },
+  // Added by YaleSites-Internal#1641. `.yds-layout__divider` paints
+  // `--color-layout-border` directly as a line with no paired foreground --
+  // unlike the CTA fill/border, Tabs action colour and pull-quote accent,
+  // which reach it through `--color-section-accent` and are not touched by
+  // this fix (see the pull-quote comment for why that one specifically is
+  // left alone). See the "the two known --color-layout-border failures" test
+  // below for why the token itself stays baselined, and
+  // `divider-opacity-composited.test.mjs` for why this source-presence check
+  // alone does not prove the fix actually clears 3:1 -- this element also
+  // carried an `opacity` that independently defeated it.
+  {
+    name: 'layout divider',
+    file: '../../03-organisms/layout/layout/_yds-layout.scss',
+    fallback: '--color-layout-border',
+  },
+  // Added by YaleSites-Internal#1641. The divider ATOM (a separate,
+  // editor-placed component from the layout's own column separator above)
+  // had the same shape of defect: `background: var(--color-section-accent,
+  // var(--color-divider))` reached `--color-layout-border` one hop away,
+  // still 2.42:1 / 2.99:1 on Whitney section themes three/four. Re-pointed to
+  // `--color-section-foreground`, which the component's own docs
+  // (`divider.mdx`) already describe as its colour model
+  // (`--color-divider`) -- see the comment in `_yds-divider.scss` for why
+  // that is the more correct property, not just a safe substitute. No
+  // opacity on this element, so the source-presence check here is sufficient
+  // -- no composited test needed, unlike the layout divider above.
+  {
+    name: 'divider atom',
+    file: '../../01-atoms/divider/_yds-divider.scss',
+    fallback: '--color-divider',
   },
 ];
 

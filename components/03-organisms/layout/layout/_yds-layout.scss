@@ -543,9 +543,47 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
 .yds-layout__divider {
   display: flex;
   align-self: stretch;
-  background-color: var(--color-layout-border);
+
+  // The column separator for a fifty-fifty / thirty-thirty-thirty layout --
+  // a plain line with no paired foreground of its own, so it has to clear
+  // 3:1 (WCAG 1.4.11) against the section background unaided. It reaches
+  // `--color-layout-border` directly rather than through
+  // `--color-section-accent` (CTA fill/border, Tabs action colour, pull-quote
+  // accent) -- so re-pointing it here cannot touch any of those.
+  // `--color-layout-border` itself is untouched: it still resolves to
+  // slot-four (a gold/tan brand accent in four of the seven global themes)
+  // for section themes one, three and four, which is exactly why #1613 left
+  // it alone for the shared roles.
+  // -
+  // `--color-section-foreground` clears 4.5:1 -- stricter than this
+  // element's own 3:1 -- against every section background in all 7 global
+  // themes (section-background-contrast.txt, section 1, "content" row), so
+  // it is always visible here. It is unset outside a themed section, so the
+  // fallback reproduces today's colour exactly there (YaleSites-Internal#1641).
+  // -
+  // This does not retire the two baselined `section/*/border` gate entries
+  // in contrast-gate-baseline.json: those measure `--color-layout-border`
+  // itself, which is unchanged and still fails 3:1 on Whitney section themes
+  // three and four in the abstract -- they track the shared brand-accent
+  // token, not this one consumer.
+  background-color: var(--color-section-foreground, var(--color-layout-border));
   width: var(--border-thickness-2);
-  opacity: 0.5;
+
+  // No `opacity` here. It was added in component-library-twig commit
+  // 57e08eec ("add opacity to divider") with no stated rationale beyond the
+  // commit subject, and no test or comment ties it to anything functional --
+  // it is a 50% alpha blend of the line colour with the section background it
+  // sits on. That blend independently defeats ANY foreground fix: measured
+  // (sRGB alpha compositing, the same maths `contrast-ratio.mjs` uses)
+  // against the safe `--color-section-foreground` value above, opacity 0.5
+  // still leaves 5 of 6 section themes below 3:1 -- Whitney sections three
+  // and four included, at 2.38:1 and 2.69:1. The sibling separator this same
+  // organism draws for a seventy-thirty layout (`border-top`/`border-left`,
+  // further down, driven by `--color-divider`) has never had an opacity, so
+  // full opacity here is the established pattern, not a new one
+  // (YaleSites-Internal#1641). See
+  // `divider-opacity-composited.test.mjs` for the per-cell proof.
+  opacity: 1;
 
   [data-component-padding='no-top'] &,
   [data-component-padding='no-padding'] & {
