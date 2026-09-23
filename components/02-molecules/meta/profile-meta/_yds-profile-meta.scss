@@ -46,14 +46,12 @@ $break-profile-banner-max: $break-profile-banner - 0.05;
       );
       --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
       --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
 
       @if $globalTheme == 'four' {
         // Switch colors slot in order to have the selected background colors per component theme.
         --color-slot-two: var(--global-themes-four-colors-slot-five);
         --color-slot-five: var(--global-themes-four-colors-slot-two);
-
-        // Set color slot for the text on light background.
-        --color-slot-seven: var(--global-themes-four-colors-slot-six);
       }
     }
   }
@@ -91,13 +89,6 @@ $break-profile-banner-max: $break-profile-banner - 0.05;
     --color-text-shadow: var(--color-slot-one);
     --color-text: var(--color-basic-white);
     --color-heading: var(--color-basic-white);
-
-    [data-global-theme='four'] & {
-      --color-profile-background: var(--component-themes-five-background);
-      --color-text: var(--component-themes-five-text);
-      --color-text-shadow: var(--component-themes-five-text);
-      --color-heading: var(--component-themes-five-heading);
-    }
   }
 
   &[data-component-theme='five'] {
@@ -105,6 +96,13 @@ $break-profile-banner-max: $break-profile-banner - 0.05;
     --color-text-shadow: var(--color-slot-one);
     --color-text: var(--color-gray-800);
     --color-heading: var(--color-gray-800);
+  }
+
+  &[data-component-theme='six'] {
+    --color-profile-background: var(--color-slot-nine);
+    --color-text: var(--color-slot-seven);
+    --color-text-shadow: var(--color-slot-seven);
+    --color-heading: var(--color-slot-seven);
   }
 
   @media (max-width: tokens.$break-mobile-max) {

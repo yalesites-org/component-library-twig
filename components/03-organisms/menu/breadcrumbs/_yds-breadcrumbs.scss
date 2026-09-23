@@ -19,6 +19,7 @@
   @include molecules.menu-link;
 
   display: none;
+  cursor: pointer;
 
   @media (max-width: tokens.$break-mobile-max) {
     .breadcrumbs__wrapper--collapsible[data-breadcrumbs-overflow='hidden'] & {
@@ -57,6 +58,7 @@
   width: var(--size-click-target-minimum);
   background-color: var(--color-background);
   opacity: 0;
+  cursor: pointer;
 
   // Don't show controls on small screens when the items are hidden behind the
   // "expand" button.
@@ -76,7 +78,7 @@
       z-index: 0;
     }
 
-    [data-scroll-indicator='none'],
+    [data-scroll-indicator='none'] &,
     [data-scroll-indicator='right'] & {
       @include tokens.animate-hidden;
     }

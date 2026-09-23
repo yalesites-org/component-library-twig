@@ -81,14 +81,12 @@ $break-grand-hero-banner: tokens.$break-m;
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
 
       @if $globalTheme == 'four' {
         // Switch colors slot in order to have the selected background colors per component theme.
         --color-slot-two: var(--global-themes-four-colors-slot-five);
         --color-slot-five: var(--global-themes-four-colors-slot-two);
-
-        // Switch color slot for the text on light background.
-        --color-slot-seven: var(--global-themes-four-colors-slot-six);
       }
     }
   }
@@ -107,18 +105,20 @@ $break-grand-hero-banner: tokens.$break-m;
     --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 
-  &[data-component-theme='two'] {
-    --color-grand-hero-background: var(--color-slot-four);
+  &[data-component-theme='two'],
+  &[data-component-theme='six'] {
     --color-grand-hero-text: var(--color-slot-seven);
     --color-grand-hero-heading: var(--color-slot-seven);
     --color-grand-hero-action: var(--color-slot-seven);
     --color-grand-hero-action-secondary: var(--color-slot-eight);
-    --color-link-base: var(--color-grand-hero-text);
-    --color-link-hover: var(--color-grand-hero-text);
+    --color-link-base: var(--color-grand-hero-heading);
+    --color-link-hover: var(--color-grand-hero-heading);
+    --color-link-visited-base: var(--color-slot-seven);
+    --color-link-visited-hover: var(--color-slot-seven);
+  }
 
-    p > a {
-      color: var(--color-slot-seven);
-    }
+  &[data-component-theme='two'] {
+    --color-grand-hero-background: var(--color-slot-four);
   }
 
   &[data-component-theme='three'] {
@@ -147,6 +147,8 @@ $break-grand-hero-banner: tokens.$break-m;
     --color-grand-hero-action-secondary: var(--color-slot-eight);
     --color-link-base: var(--color-grand-hero-heading);
     --color-link-hover: var(--color-grand-hero-heading);
+    --color-link-visited-base: var(--color-slot-seven);
+    --color-link-visited-hover: var(--color-slot-seven);
   }
 
   &[data-component-theme='five'] {
@@ -159,16 +161,10 @@ $break-grand-hero-banner: tokens.$break-m;
     --color-link-hover: var(--color-grand-hero-heading);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
+  }
 
-    [data-global-theme='four'] & {
-      --color-grand-hero-background: var(--component-themes-five-background);
-      --color-grand-hero-text: var(--component-themes-five-text);
-      --color-grand-hero-heading: var(--component-themes-five-heading);
-      --color-grand-hero-action: var(--color-slot-seven);
-      --color-grand-hero-action-secondary: var(--color-slot-eight);
-      --color-link-visited-base: var(--color-purple-visited);
-      --color-link-visited-hover: var(--color-purple-visited-hover);
-    }
+  &[data-component-theme='six'] {
+    --color-grand-hero-background: var(--color-slot-nine);
   }
 }
 
@@ -338,6 +334,24 @@ $break-grand-hero-banner: tokens.$break-m;
   }
 }
 
+// Global `.link[data-link-style]` sets `--color-link-hover` from slot-two via
+// the plain-link mixin with higher specificity than `.grand-hero-banner__link`
+// alone. Pin link tokens to hero copy color for CTAs and WYSIWYG links.
+.grand-hero-banner .grand-hero-banner__content-inner .link[data-link-style] {
+  --color-link-base: var(--color-grand-hero-text);
+  --color-link-hover: var(--color-grand-hero-text);
+}
+
+.grand-hero-banner .grand-hero-banner__content-inner .text a {
+  color: var(--color-grand-hero-text);
+
+  &:hover,
+  &:focus,
+  &:visited {
+    color: var(--color-grand-hero-text);
+  }
+}
+
 .grand-hero-banner__heading {
   @include tokens.heading(h2);
 }
@@ -346,10 +360,6 @@ $break-grand-hero-banner: tokens.$break-m;
   @include atoms.plain-link;
 
   width: fit-content;
-
-  [data-component-theme] & {
-    --color-link-hover: var(--color-grand-hero-text);
-  }
 }
 
 .grand-hero-banner__button-group {

@@ -13,12 +13,13 @@ import './cl-site-in-this-section.scss';
 
 import {
   componentThemes,
+  globalThemeLabels,
   globalThemes,
   sectionThemes,
   siteHeaderThemes,
 } from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
-  createGlobalThemeVariations,
   createSectionWrapper,
   createThemeVariations,
 } from '../../_storybook/playground-utils';
@@ -52,15 +53,14 @@ const renderSiteHeader = (theme) =>
     primary_nav__items: primaryNavData.items,
   });
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const renderSiteSection = (componentTheme) =>
     siteSectionTwig({
       site_section_wrap__theme: componentTheme,
       secondary_nav__items: secondaryNavData.items,
     });
 
-  return createGlobalThemeVariations(
-    () => `
+  return `
       ${createThemeVariations(
         (theme) =>
           createSectionWrapper(theme, renderSiteSection('one'), {
@@ -90,8 +90,21 @@ export const Visreg = () => {
         'Collection navigation displayed within the site header.',
         'Header Theme',
       )}
-    `,
-    globalThemes,
-    'All Global Theme Variations',
-  );
+    `;
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

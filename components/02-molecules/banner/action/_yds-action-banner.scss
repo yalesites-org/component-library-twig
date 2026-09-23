@@ -51,14 +51,12 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
 
       @if $globalTheme == 'four' {
         // Switch colors slot in order to have the selected background colors per component theme.
         --color-slot-two: var(--global-themes-four-colors-slot-five);
         --color-slot-five: var(--global-themes-four-colors-slot-two);
-
-        // Switch color slot for the text on light background.
-        --color-slot-seven: var(--global-themes-four-colors-slot-six);
       }
     }
   }
@@ -92,14 +90,18 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     --color-link-visited-hover: var(--color-link-visited-light-hover);
   }
 
-  &[data-component-theme='two'] {
-    --color-banner-background: var(--color-slot-four);
+  &[data-component-theme='two'],
+  &[data-component-theme='six'] {
     --color-banner-text: var(--color-slot-seven);
     --color-banner-heading: var(--color-slot-seven);
     --color-banner-action: var(--color-slot-seven);
     --color-banner-action-secondary: var(--color-slot-eight);
     --color-link-base: var(--color-banner-heading);
     --color-link-hover: var(--color-banner-heading);
+  }
+
+  &[data-component-theme='two'] {
+    --color-banner-background: var(--color-slot-four);
   }
 
   &[data-component-theme='three'] {
@@ -140,14 +142,15 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
     --color-link-hover: var(--color-banner-heading);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
+  }
 
-    [data-global-theme='four'] & {
-      --color-banner-background: var(--component-themes-five-background);
-      --color-banner-text: var(--component-themes-five-text);
-      --color-banner-heading: var(--component-themes-five-heading);
-      --color-banner-action: var(--color-slot-seven);
-      --color-banner-action-secondary: var(--color-slot-eight);
-    }
+  &[data-component-theme='six'] {
+    --color-banner-background: var(--color-slot-nine);
+    --color-text-shadow: transparent;
+
+    // Theme six keeps visited link state dark to match base and hover links.
+    --color-link-visited-base: var(--color-slot-seven);
+    --color-link-visited-hover: var(--color-slot-seven);
   }
 }
 
@@ -401,6 +404,14 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
 }
 
 .cta-banner__cta {
+  // Ensure CTA always resolves actionable colors even when banner-specific
+  // tokens are not present on the current theme/context.
+  --color-action: var(--color-banner-action, var(--color-slot-seven));
+  --color-action-secondary: var(
+    --color-banner-action-secondary,
+    var(--color-slot-eight)
+  );
+
   @include atoms.cta;
 
   flex: 0 0 auto;

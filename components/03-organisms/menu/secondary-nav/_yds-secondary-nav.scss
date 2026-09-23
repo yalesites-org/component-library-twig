@@ -598,6 +598,7 @@ $secondary-menu-sub-max-width: 19rem;
   align-items: center;
   width: 100%;
   gap: var(--size-spacing-3);
+  cursor: pointer;
 
   &:focus-visible {
     outline-offset: -2px;

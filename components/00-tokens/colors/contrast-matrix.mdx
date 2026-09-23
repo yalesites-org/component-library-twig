@@ -1,0 +1,55 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as ColorsStories from './colors.stories';
+
+<Meta title="Tokens/Colors/Contrast Matrix" />
+
+# Contrast Matrix
+
+Every global theme defines a set of color slots, and components pair those slots together — text on a background, a border against a surface, a button on a banner. Whether a given pairing is readable is a measurable property, not a matter of judgement, so this page measures it.
+
+For each theme, the grid below computes the WCAG 2.1 contrast ratio between every slot and every other slot in that theme, and states which contrast thresholds each pairing meets. A second section runs the identical calculation on colors you type in, which is the quickest way to sanity-check a proposed custom palette before anyone builds it.
+
+Ratios and verdicts are computed from the `global-themes` values in `@yalesites-org/tokens` at render time. Nothing on this page is a stored result, so a theme or slot added upstream appears here automatically.
+
+**Testing colors of your own?** Skip the built-in themes and go straight to [Check your own colors](#check-your-own-colors).
+
+## What contrast ratio means
+
+A contrast ratio compares the relative luminance of two colors. It runs from 1:1 (identical colors, invisible) to 21:1 (black on white). WCAG 2.1 sets minimums by content type:
+
+- **1.4.3 Contrast (Minimum), Level AA** — 4.5:1 for normal text, 3:1 for large text (roughly 24px, or 19px bold).
+- **1.4.11 Non-text Contrast, Level AA** — 3:1 for user interface components and meaningful graphics.
+- **1.4.6 Contrast (Enhanced), Level AAA** — 7:1 for normal text, 4.5:1 for large text.
+
+Level A contains no contrast success criterion at all, so there is no "Level A contrast" to pass or fail. AAA is shown here as useful secondary information, not as a platform target.
+
+Those five criteria use only **three distinct minimums** — 3:1, 4.5:1 and 7:1 — which is why each grid is preceded by a three-row breakdown rather than a single headline figure. Whether a palette works depends on what it is for: an icon needs 3:1, body text 4.5:1, body text at AAA 7:1. Each cell's verdict says which of those three boundaries the pairing clears, so no control is needed to switch between them.
+
+The ratio is symmetrical: it does not matter which of the two colors is the text and which is the background. The grid is therefore mirrored across its diagonal, and is shown in full so a single row reads as "this slot against everything else".
+
+## Ratios by global theme
+
+<div className="sb-contained-canvas">
+  <Canvas of={ColorsStories.ThemeContrastMatrix} />
+</div>
+
+## Check your own colors
+
+Use this when someone proposes a custom palette. Replace any of the editable values below with the hex colors under consideration and the same calculation runs against them — including Yale's fixed brand colors (slots six, seven and eight), shown for reference but not editable, since a proposed palette has to work alongside them regardless. Empty editable fields are left out of the comparison, and an unreadable value is flagged rather than silently ignored.
+
+The results can be downloaded as a plain-text file — the colors, the coverage table and every pairing — to send to whoever proposed the palette.
+
+<div className="sb-contained-canvas">
+  <Canvas of={ColorsStories.CustomPaletteContrastChecker} />
+</div>
+
+## Reading the results
+
+A pairing that fails is not automatically a problem — two slots may never be placed against each other by any component. What matters is that a pairing you intend to use clears the threshold for how you intend to use it. Use the grid to check a specific combination rather than as a scorecard for the theme as a whole.
+
+A slot with **no passing partner** is a different matter. It means no color in the palette can carry normal text against that slot, so it can only be used for decorative fills and large graphics, where 1.4.3 does not apply.
+
+## Related
+
+- [Color Palettes (Theme)](?path=/docs/tokens-colors-color-palettes-theme--docs) — what each slot is for.
+- [Theming Reference](?path=/docs/tokens-colors-theming-reference--docs) — which components expose which dials.

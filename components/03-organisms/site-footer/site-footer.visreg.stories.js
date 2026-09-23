@@ -4,9 +4,12 @@ import linkGroupData from '../../02-molecules/link-group/link-group.yml';
 import siteFooterConfigData from './site-footer-config.yml';
 import vrtData from '../../_storybook/vrt-combinations.yml';
 
-import { globalThemes } from '../../_storybook/theme-constants';
 import {
-  createGlobalThemeVariations,
+  globalThemeLabels,
+  globalThemes,
+} from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
+import {
   createThemeAccentCombinations,
   createVariations,
 } from '../../_storybook/playground-utils';
@@ -20,7 +23,7 @@ export default {
   },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   // Base footer configuration from extracted YML and other data sources
   const baseConfig = {
     ...socialLinksData,
@@ -37,8 +40,7 @@ export const Visreg = () => {
       ...config,
     });
 
-  return createGlobalThemeVariations(
-    () => `
+  return `
       ${createThemeAccentCombinations(
         (theme, accent) =>
           renderFooter({
@@ -79,8 +81,21 @@ export const Visreg = () => {
         'Footer with different border thickness values.',
         'Border Thickness',
       )}
-    `,
-    globalThemes,
-    'All Global Theme Variations',
-  );
+    `;
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

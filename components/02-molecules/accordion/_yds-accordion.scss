@@ -49,6 +49,7 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
       --color-accordion-accent: var(--color-slot-two);
     }
   }
@@ -71,6 +72,10 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   &[data-component-theme='five'] {
     --color-accordion-accent: var(--color-slot-five);
+  }
+
+  &[data-component-theme='six'] {
+    --color-accordion-accent: var(--color-slot-nine);
   }
 }
 

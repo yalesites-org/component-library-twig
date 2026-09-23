@@ -57,6 +57,7 @@ $component-inline-message-themes: map.deep-get(
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
     }
   }
 
@@ -116,6 +117,18 @@ $component-inline-message-themes: map.deep-get(
     --color-link-hover: var(--color-slot-eight);
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
+  }
+
+  &[data-component-theme='six'] {
+    --color-inline-message-background: var(--color-slot-nine);
+    --color-inline-message-text: var(--color-slot-seven);
+    --color-link-base: var(--color-slot-seven);
+    --color-link-hover: var(--color-slot-seven);
+    --color-link-visited-base: var(--color-slot-seven);
+    --color-link-visited-hover: var(--color-slot-seven);
+
+    background-color: var(--color-inline-message-background);
+    color: var(--color-inline-message-text);
   }
 }
 

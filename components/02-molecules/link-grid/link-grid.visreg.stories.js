@@ -3,12 +3,13 @@ import linkGridTwig from './yds-link-grid.twig';
 import linkGridData from './link-grid.yml';
 
 import {
+  globalThemeLabels,
   globalThemes,
   sectionThemes,
   componentThemes,
 } from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
-  createGlobalThemeVariations,
   createThemeVariations,
   createSectionWrapper,
   createVariations,
@@ -23,7 +24,7 @@ export default {
   parameters: { controls: { disable: true } },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const lineTreatments = [
     'default',
     'all_strong_lines',
@@ -38,8 +39,7 @@ export const Visreg = () => {
       ...linkGridData,
     });
 
-  return createGlobalThemeVariations(
-    () => `
+  return `
       ${createThemeVariations(
         (theme) =>
           createSectionWrapper(theme, renderLinkGrid('one'), {
@@ -73,8 +73,21 @@ export const Visreg = () => {
         '',
         'Line Treatment',
       )}
-    `,
-    globalThemes,
-    'All Global Theme Variations',
-  );
+    `;
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

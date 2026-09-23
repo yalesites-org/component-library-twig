@@ -265,48 +265,6 @@ export const createMultiColumnLayout = (
 `;
 
 /**
- * Creates global theme variation sections for visual regression testing
- *
- * Wraps component content in each of the six global themes by applying
- * data-global-theme on a wrapper element. Since the CSS selector
- * [data-global-theme] works on any element (not just body), this allows
- * multiple global themes to be tested on a single Storybook story page.
- *
- * @param {Function} renderFn - Function that renders the content for each global theme, receives theme as parameter
- * @param {string[]} globalThemes - Array of global theme values (e.g. ['one','two','three','four','five','six'])
- * @param {string} title - Section heading text
- * @returns {string} HTML string with all global theme variations
- *
- * @example
- * import { globalThemes } from '../_storybook/theme-constants';
- *
- * return createGlobalThemeVariations(
- *   () => `
- *     ${createThemeVariations(renderFn, sectionThemes, 'Section Themes', '', 'Section Theme')}
- *     ${createThemeVariations(renderFn2, componentThemes, 'Component Themes', '', 'Component Theme')}
- *   `,
- *   globalThemes,
- *   'All Global Theme Variations',
- * );
- */
-export const createGlobalThemeVariations = (renderFn, globalThemes, title) => `
-  <h2 class="sb-section__heading">${title}</h2>
-  <hr class="sb-section__divider">
-  ${globalThemes
-    .map(
-      (theme) => `
-    <div class="sb-section__container">
-      <h3 class="sb-section__subheading">Global Theme: ${theme}</h3>
-      <div data-global-theme="${theme}">
-        ${renderFn(theme)}
-      </div>
-    </div>
-  `,
-    )
-    .join('')}
-`;
-
-/**
  * Gets section theme array
  *
  * Simple getter function that returns the section themes array.

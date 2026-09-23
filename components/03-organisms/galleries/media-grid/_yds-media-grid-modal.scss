@@ -179,6 +179,12 @@ $modal-speed: var(--animation-speed-slow);
   min-height: var(--size-click-target-minimum);
   min-width: var(--size-click-target-minimum);
 
+  // `--total` is a static count label, not a control -- the click handler
+  // excludes it with the same selector.
+  &:not(.media-grid-modal__pager-item--total) {
+    cursor: pointer;
+  }
+
   // Fix to keep the focus indicator visible. Needed because of the
   // `overflow: auto` above, which would otherwise cut off the outline.
   outline-offset: calc(var(--size-thickness-2) * -1);
@@ -335,6 +341,7 @@ $modal-speed: var(--animation-speed-slow);
   height: 100%;
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   &:hover {
     color: var(--color-link-hover);

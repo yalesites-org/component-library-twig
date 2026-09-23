@@ -4,12 +4,13 @@ import accordionData from './accordion.yml';
 import './yds-accordion';
 
 import {
+  globalThemeLabels,
   globalThemes,
   sectionThemes,
   componentThemes,
 } from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
-  createGlobalThemeVariations,
   createThemeVariations,
   createSectionWrapper,
 } from '../../_storybook/playground-utils';
@@ -22,7 +23,7 @@ export default {
   },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const accordionHeading = accordionData.accordion__heading;
   const accordionItems = Array.from({ length: 3 }, () => ({
     accordion__item__heading: accordionData.accordion__item__heading,
@@ -36,8 +37,7 @@ export const Visreg = () => {
       accordion__items: accordionItems,
     });
 
-  return createGlobalThemeVariations(
-    () => `
+  return `
       ${createThemeVariations(
         (theme) =>
           createSectionWrapper(theme, renderAccordion('one'), {
@@ -60,8 +60,21 @@ export const Visreg = () => {
         '',
         'Accordion Theme',
       )}
-    `,
-    globalThemes,
-    'All Global Theme Variations',
-  );
+    `;
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

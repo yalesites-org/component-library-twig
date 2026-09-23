@@ -13,7 +13,10 @@
       </div>
       <div {{ bem('content', [], modal__base_class) }}>
         {% if id == 'calendar-modal' %}
-          <ul {{ bem('calendar-events', [], modal__base_class) }}></ul>
+          {# Ships hidden and is revealed by yds-calendar.js once it holds events.
+             It cannot be omitted when empty: the script resolves it once, at
+             attach time, and would get null for every later day click. #}
+          <ul hidden {{ bem('calendar-events', [], modal__base_class) }}></ul>
         {% endif %}
         {{ content }}
       </div>

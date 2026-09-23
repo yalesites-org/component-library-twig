@@ -74,6 +74,40 @@
   padding: 0.75rem;
 }
 
+/**
+ * Scrollable documentation tables
+ *
+ * Docs tables are routinely wider than the narrow content column on mobile.
+ * `00-tokens/layout/_layout.scss` sets `overflow-x: hidden` on html/body below
+ * the mobile breakpoint -- correct for site layout, but on a docs page it clips
+ * the overflow with no way to reach the cut-off columns.
+ *
+ * The scroll lives on a wrapper rather than on the table itself: changing a
+ * table's `display` can drop its rows and cells out of the accessibility tree in
+ * some browsers. This follows the site-side `.table-wrapper` pattern in
+ * `01-atoms/tables/_table.scss`, which is scoped to `.layout` and so cannot be
+ * reused directly here.
+ *
+ * In MDX, wrap the table so keyboard users can reach and scroll it:
+ *
+ *   <div className="sb-table-scroll" role="region" aria-label="Foo" tabIndex={0}>
+ *     <table>...</table>
+ *   </div>
+ *
+ * The focus ring is inherited from the global `focus` mixin in
+ * `00-tokens/utility` -- do not restate it here.
+ *
+ * The second selector catches Storybook's generated args table
+ * (`<Controls />`), which already sits alone inside a wrapper div we do not
+ * author. That one needs no `tabindex`: the args table's own form controls are
+ * focusable, so tabbing to them scrolls the cut-off column into view.
+ */
+.sb-table-scroll,
+.sbdocs div:has(> table.docblock-argstable) {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 /* Code blocks */
 .sbdocs code {
   font-size: 14px;

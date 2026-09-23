@@ -5,13 +5,14 @@ import imageData from '../../01-atoms/images/image/image.yml';
 
 import '../../02-molecules/accordion/yds-accordion';
 
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
   componentThemes,
+  globalThemeLabels,
   globalThemes,
   sectionThemes,
 } from '../../_storybook/theme-constants';
 import {
-  createGlobalThemeVariations,
   createSectionWrapper,
   createThemeVariations,
   createVariations,
@@ -29,117 +30,97 @@ export default {
   },
 };
 
-export const Visreg = () => {
-  const defaultComponentTheme = 'one';
-  const layoutOption = 'fifty-fifty';
-  const layoutPadding = 'default';
-  const divider = false;
+const layoutOptions = ['fifty-fifty', 'thirty-thirty-thirty', 'seventy-thirty'];
 
-  const layoutOptions = [
-    'fifty-fifty',
-    'thirty-thirty-thirty',
-    'seventy-thirty',
-  ];
+const paddingOptions = ['default', 'no-top', 'no-bottom', 'no-padding'];
 
-  const paddingOptions = ['default', 'no-top', 'no-bottom', 'no-padding'];
+/**
+ * Every story here renders the same example layout and varies exactly one of
+ * its options, so they all share this one argument set.
+ */
+const renderLayout = ({
+  layout = 'fifty-fifty',
+  padding = 'default',
+  theme = 'one',
+  hasDivider = false,
+} = {}) =>
+  layoutTwig({
+    ...textData,
+    ...accordionData,
+    ...imageData.responsive_images['4x3'],
+    layout__divider: hasDivider ? 'true' : 'false',
+    layout__padding: padding,
+    component__theme: theme,
+    component__layout: layout,
+  });
 
-  // Render function for layout variations
-  const renderLayouts = (layout) =>
-    layoutTwig({
-      ...textData,
-      ...accordionData,
-      ...imageData.responsive_images['4x3'],
-      layout__divider: divider ? 'true' : 'false',
-      layout__padding: layoutPadding,
-      component__theme: defaultComponentTheme,
-      component__layout: layout,
-    });
+/**
+ * Layout, padding and divider options do not vary by global theme, so they get
+ * one story of their own rather than being repeated in every global theme story.
+ */
+export const LayoutVariations = () => `
+  ${createVariations(
+    (layout) => renderLayout({ layout }),
+    layoutOptions,
+    'All Layout Variations',
+    '',
+    'Layout Configuration',
+  )}
 
-  // Render function for theme variations
-  const renderThemes = (theme) =>
-    layoutTwig({
-      ...textData,
-      ...accordionData,
-      ...imageData.responsive_images['4x3'],
-      layout__divider: divider ? 'true' : 'false',
-      layout__padding: layoutPadding,
-      component__theme: theme,
-      component__layout: layoutOption,
-    });
+  ${createVariations(
+    (padding) => renderLayout({ padding }),
+    paddingOptions,
+    'All Padding Variations',
+    '',
+    'Padding Option',
+  )}
 
-  // Render function for padding variations
-  const renderPadding = (padding) =>
-    layoutTwig({
-      ...textData,
-      ...accordionData,
-      ...imageData.responsive_images['4x3'],
-      layout__divider: divider ? 'true' : 'false',
-      layout__padding: padding,
-      component__theme: defaultComponentTheme,
-      component__layout: layoutOption,
-    });
+  ${createVariations(
+    () => renderLayout({ hasDivider: true }),
+    ['enabled'],
+    'With Divider Enabled',
+    '',
+    'Divider',
+  )}
+`;
 
-  return `
-    ${createVariations(
-      renderLayouts,
-      layoutOptions,
-      'All Layout Variations',
-      '',
-      'Layout Configuration',
-    )}
+const renderGlobalTheme = () => `
+  ${createThemeVariations(
+    (theme) =>
+      createSectionWrapper(theme, renderLayout(), {
+        width: 'site',
+        primaryWidth: '100%',
+      }),
+    sectionThemes,
+    'All Section Theme Variations',
+    '',
+    'Section Theme',
+  )}
+  ${createThemeVariations(
+    (theme) =>
+      createSectionWrapper('one', renderLayout({ theme }), {
+        width: 'site',
+        primaryWidth: '100%',
+      }),
+    componentThemes,
+    'All Layout Theme Variations',
+    '',
+    'Layout Theme',
+  )}
+`;
 
-    ${createVariations(
-      renderPadding,
-      paddingOptions,
-      'All Padding Variations',
-      '',
-      'Padding Option',
-    )}
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
 
-    ${createVariations(
-      () =>
-        layoutTwig({
-          ...textData,
-          ...accordionData,
-          ...imageData.responsive_images['4x3'],
-          layout__divider: 'true',
-          layout__padding: 'default',
-          component__theme: defaultComponentTheme,
-          component__layout: layoutOption,
-        }),
-      ['enabled'],
-      'With Divider Enabled',
-      '',
-      'Divider',
-    )}
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
 
-    ${createGlobalThemeVariations(
-      () => `
-        ${createThemeVariations(
-          (theme) =>
-            createSectionWrapper(theme, renderThemes(defaultComponentTheme), {
-              width: 'site',
-              primaryWidth: '100%',
-            }),
-          sectionThemes,
-          'All Section Theme Variations',
-          '',
-          'Section Theme',
-        )}
-        ${createThemeVariations(
-          (theme) =>
-            createSectionWrapper('one', renderThemes(theme), {
-              width: 'site',
-              primaryWidth: '100%',
-            }),
-          componentThemes,
-          'All Layout Theme Variations',
-          '',
-          'Layout Theme',
-        )}
-      `,
-      globalThemes,
-      'All Global Theme Variations',
-    )}
-  `;
-};
+ItsYourYale.storyName = 'It’s Your Yale';

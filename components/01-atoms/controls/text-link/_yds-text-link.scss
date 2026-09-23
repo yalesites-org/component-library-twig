@@ -45,6 +45,11 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   font-weight: var(--font-weights-#{$family-weight});
   line-height: normal;
 
+  // Theme six surfaces should not render descender text-shadow halos.
+  [data-component-theme='six'] & {
+    --color-text-shadow: transparent;
+  }
+
   // Global themes: set color slots for each theme
   // This establishes `--color-slot-` variables name-spaced to the selector
   // in which it is used. We can map component-level variables to global-level
@@ -206,6 +211,11 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
     // adjust position so the text-shadow aligns nicely with the text.
     --position: 0 1.05em;
+
+    // Theme six surfaces should not render descender text-shadow halos.
+    [data-component-theme='six'] & {
+      --color-text-shadow: transparent;
+    }
 
     // This text shadow will make the animated underline appear to avoid
     // descenders in content.

@@ -151,13 +151,19 @@ $alert-fade-speed: var(--animation-speed-slow);
   }
 }
 
-// Emergency: `atoms.link` sets `--color-link-hover` from global `--color-slot-two`
-// (e.g. Yale blue). On the red emergency background that pairing is ~2.3:1 —
-// below WCAG 2.1 AA for normal text. Pin hover (and visited-hover) to the
-// alert text token so contrast matches body copy (~5.2:1 with white on red).
-.alert[data-alert-type='emergency'] .alert__link {
-  --color-link-hover: var(--color-alert-text);
-  --color-link-visited-hover: var(--color-alert-text);
+// `.alert` above asks for `--color-link-hover: currentcolor`, but `atoms.link`
+// re-declares it as the global `--color-slot-two` (Yale blue) inside a
+// `[data-global-theme='…'] &` block, which outranks a value `.alert` can only
+// pass down by inheritance. Yale blue misses WCAG 2.1 AA (1.4.3) on every alert
+// background: ~2.3:1 on emergency red, 3.97:1 on announcement yellow, 4.04:1 on
+// marketing light blue. Reassert the component's intent at a winning
+// specificity, for all variants — hover then matches the colour the alert body
+// already renders (measured 5.18:1 / 6.59:1 / 6.71:1). Use `currentcolor`, not
+// `var(--color-alert-text)`: only emergency has an alert text token, so that
+// var is invalid for announcement and marketing, which inherit `--color-text`.
+.alert[data-alert-type] .alert__link {
+  --color-link-hover: currentcolor;
+  --color-link-visited-hover: currentcolor;
 }
 
 .alert__toggle {
@@ -168,6 +174,15 @@ $alert-fade-speed: var(--animation-speed-slow);
   flex: 0 0 var(--size-icon);
   display: flex;
   transform: rotate(180deg);
+  cursor: pointer;
+
+  // `button-reset` zeroes padding, leaving the 20px icon as the whole tap target
+  // below $break-mobile -- under WCAG 2.2 SC 2.5.8's 24px minimum. 2px of
+  // transparent padding reaches 24px without touching the icon. Deliberately not
+  // `--size-click-target-minimum` (44px): that reflows the mobile text column,
+  // which YaleSites-Internal#1529 rules out. Width comes from the flex automatic
+  // minimum, so `min-width: 0` or `overflow` here would silently undo it.
+  padding: var(--size-spacing-1);
 
   [data-alert-state='collapsed'] & {
     transform: rotate(0deg);

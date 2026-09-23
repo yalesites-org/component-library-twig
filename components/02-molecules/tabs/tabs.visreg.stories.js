@@ -3,12 +3,13 @@ import tabData from './tabs.yml';
 import './yds-tabs';
 
 import {
+  globalThemeLabels,
   globalThemes,
   sectionThemes,
   componentThemes,
 } from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
-  createGlobalThemeVariations,
   createThemeVariations,
   createSectionWrapper,
 } from '../../_storybook/playground-utils';
@@ -20,7 +21,7 @@ export default {
 };
 
 // *** VRT: Tabs with All Section Theme Variations ***
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const renderTabs = (dialTheme, idSuffix = '') =>
     tabs({
       ...tabData,
@@ -28,8 +29,7 @@ export const Visreg = () => {
       tabs__theme: dialTheme,
     });
 
-  return createGlobalThemeVariations(
-    () => `
+  return `
       ${createThemeVariations(
         (theme) =>
           createSectionWrapper(theme, renderTabs('one', `-${theme}`), {
@@ -52,8 +52,21 @@ export const Visreg = () => {
         '',
         'Tabs Theme',
       )}
-    `,
-    globalThemes,
-    'All Global Theme Variations',
-  );
+    `;
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

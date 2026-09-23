@@ -62,295 +62,337 @@ The following controls are available in the Storybook Controls panel and affect 
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>cta__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Button text content</td>
-    </tr>
-    <tr>
-      <td>
-        <code>cta__href</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Link URL</td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="CTA Properties — Required Properties"
+  tabIndex={0}
+>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>cta__content</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>Button text content</td>
+      </tr>
+      <tr>
+        <td>
+          <code>cta__href</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>Link URL</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>cta__component_theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'one'</code>
-      </td>
-      <td>Theme color from dial (one through seven)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>cta__style</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'filled'</code>
-      </td>
-      <td>Button style (filled, outline)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>cta__radius</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'default'</code>
-      </td>
-      <td>Corner radius (default, soft, pill)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>cta__hover_style</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'fade'</code>
-      </td>
-      <td>Hover animation (fade, rise, wipe)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>cta__outline_weight</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'2'</code>
-      </td>
-      <td>Outline thickness for outline style (1, 2, 4)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>cta__control_type</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>-</td>
-      <td>Special control type (dropdown)</td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="CTA Properties — Optional Properties"
+  tabIndex={0}
+>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>cta__component_theme</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>
+          <code>'one'</code>
+        </td>
+        <td>Theme color from dial (one through seven)</td>
+      </tr>
+      <tr>
+        <td>
+          <code>cta__style</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>
+          <code>'filled'</code>
+        </td>
+        <td>Button style (filled, outline)</td>
+      </tr>
+      <tr>
+        <td>
+          <code>cta__radius</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>
+          <code>'default'</code>
+        </td>
+        <td>Corner radius (default, soft, pill)</td>
+      </tr>
+      <tr>
+        <td>
+          <code>cta__hover_style</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>
+          <code>'fade'</code>
+        </td>
+        <td>Hover animation (fade, rise, wipe)</td>
+      </tr>
+      <tr>
+        <td>
+          <code>cta__outline_weight</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>
+          <code>'2'</code>
+        </td>
+        <td>Outline thickness for outline style (1, 2, 4)</td>
+      </tr>
+      <tr>
+        <td>
+          <code>cta__control_type</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>-</td>
+        <td>Special control type (dropdown)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Text Link Properties
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>link__url</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Link destination URL</td>
-    </tr>
-    <tr>
-      <td>
-        <code>link__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Link text content</td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Text Link Properties — Required Properties"
+  tabIndex={0}
+>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>link__url</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>Link destination URL</td>
+      </tr>
+      <tr>
+        <td>
+          <code>link__content</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>Link text content</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>link__style</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'underline'</code>
-      </td>
-      <td>
-        Link styling (underline, no-underline, underline-with-icon,
-        no-underline-animation)
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>link__type</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'normal'</code>
-      </td>
-      <td>
-        Link type (normal, external, target-blank, download, with-chevron)
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>link__url_type</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>-</td>
-      <td>URL type indicator (chevron)</td>
-    </tr>
-    <tr>
-      <td>
-        <code>link__attributes</code>
-      </td>
-      <td>
-        <code>object</code>
-      </td>
-      <td>-</td>
-      <td>Additional HTML attributes (e.g., target)</td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Text Link Properties — Optional Properties"
+  tabIndex={0}
+>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>link__style</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>
+          <code>'underline'</code>
+        </td>
+        <td>
+          Link styling (underline, no-underline, underline-with-icon,
+          no-underline-animation)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <code>link__type</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>
+          <code>'normal'</code>
+        </td>
+        <td>
+          Link type (normal, external, target-blank, download, with-chevron)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <code>link__url_type</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>-</td>
+        <td>URL type indicator (chevron)</td>
+      </tr>
+      <tr>
+        <td>
+          <code>link__attributes</code>
+        </td>
+        <td>
+          <code>object</code>
+        </td>
+        <td>-</td>
+        <td>Additional HTML attributes (e.g., target)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Text Copy Button Properties
 
 ### Required Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>text_copy_button__pre_text</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Text to be copied to clipboard</td>
-    </tr>
-    <tr>
-      <td>
-        <code>text_copy_button__content</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>Button label text</td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Text Copy Button Properties — Required Properties"
+  tabIndex={0}
+>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>text_copy_button__pre_text</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>Text to be copied to clipboard</td>
+      </tr>
+      <tr>
+        <td>
+          <code>text_copy_button__content</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>Button label text</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ### Optional Properties
 
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>text_copy_button__component_theme</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'two'</code>
-      </td>
-      <td>Theme color from dial</td>
-    </tr>
-    <tr>
-      <td>
-        <code>text_copy_button__pre_text_tag</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'span'</code>
-      </td>
-      <td>
-        HTML tag wrapping the source text. Use <code>'div'</code> (or another
-        block tag) when <code>pre_text</code> contains block-level markup such
-        as paragraphs.
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Text Copy Button Properties — Optional Properties"
+  tabIndex={0}
+>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>text_copy_button__component_theme</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>
+          <code>'two'</code>
+        </td>
+        <td>Theme color from dial</td>
+      </tr>
+      <tr>
+        <td>
+          <code>text_copy_button__pre_text_tag</code>
+        </td>
+        <td>
+          <code>string</code>
+        </td>
+        <td>
+          <code>'span'</code>
+        </td>
+        <td>
+          HTML tag wrapping the source text. Use <code>'div'</code> (or another
+          block tag) when <code>pre_text</code> contains block-level markup such
+          as paragraphs.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## CTA Variations
 

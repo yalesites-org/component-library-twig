@@ -22,7 +22,7 @@ import tokens from '@yalesites-org/tokens/build/json/tokens.json';
  *
  * @type {string[]}
  */
-export const sectionThemes = ['default', 'one', 'two', 'three', 'four'];
+export const sectionThemes = ['default', 'one', 'two', 'three', 'four', 'five'];
 
 /**
  * Global themes (from tokens)
@@ -32,7 +32,22 @@ export const sectionThemes = ['default', 'one', 'two', 'three', 'four'];
  * @type {string[]}
  */
 export const globalThemes = Object.keys(tokens['global-themes']);
-// Returns: ['one', 'two', 'three', 'four', 'five', 'six']
+// Returns: ['one', 'two', 'three', 'four', 'five', 'six', 'seven']
+
+/**
+ * Global theme labels (from tokens)
+ * The human-readable name of each global theme, keyed by theme
+ * Used to name a theme in the UI rather than referring to it by number
+ *
+ * @type {Object.<string, string>}
+ */
+export const globalThemeLabels = Object.fromEntries(
+  Object.entries(tokens['global-themes']).map(([theme, { label }]) => [
+    theme,
+    label,
+  ]),
+);
+// Returns: { one: 'Old Blues', two: 'New Haven Green', ... }
 
 /**
  * Component themes (from tokens)

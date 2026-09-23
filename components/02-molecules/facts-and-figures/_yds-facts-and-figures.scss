@@ -57,11 +57,6 @@ $facts-and-figures-component-themes: map.deep-get(
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
-
-      @if $globalTheme == 'four' {
-        // Set color slot for the text on light background.
-        --color-slot-seven: var(--global-themes-four-colors-slot-six);
-      }
     }
   }
 

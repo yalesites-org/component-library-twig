@@ -49,6 +49,7 @@ $wrapped-callout-component-themes: map.deep-get(
       --color-slot-eight: var(
         --global-themes-#{$globalTheme}-colors-slot-eight
       );
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
       --color-heading: var(--color-slot-seven);
     }
   }
@@ -73,6 +74,10 @@ $wrapped-callout-component-themes: map.deep-get(
 
   &[data-component-theme='five'] {
     --color-wrapped-callout-theme: var(--color-slot-five);
+  }
+
+  &[data-component-theme='six'] {
+    --color-wrapped-callout-theme: var(--color-slot-nine);
   }
 }
 
