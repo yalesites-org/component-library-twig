@@ -4,12 +4,14 @@
  # - event_meta__date_end
  # - event_meta__format: Multiselect. Options are 'In-person', 'Virtual', or both.
  # - event_meta__address
- # - is_localist_event: Whether this event is synced from Localist. Gates which location fields render.
+ # - is_localist_event: Whether this event is synced from Localist. Gates which structured location renders.
  # - place: Structured Localist location (Localist location taxonomy term). Only rendered when is_localist_event.
  # - room: Localist room free-text string. Only rendered when is_localist_event.
  # - event_address: Structured native Address field (address, city, state, postal_code, country_code).
  #   Only rendered when NOT is_localist_event.
- # - address_additional_info: WYSIWYG Additional Address Information field. Only rendered when NOT is_localist_event.
+ # - address_additional_info: WYSIWYG Additional Address Information field. Rendered whenever populated, on
+ #   Localist and native events alike. Labelled "Location" (with itemprop="location") when no place, room or
+ #   native address rendered above it, otherwise "Additional Address Information".
  #}
 
 {# Split upcomign and past dates #}
@@ -429,7 +431,7 @@
                   {% if place %}
                   <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
                     <span itemprop="streetAddress">{{ place.address }}</span>
-                    <span itemprop="addressLocality">{{ place.city }}</span>, <span itemprop="addressRegion">{{ place.state }}</span> <span itemprop="postalCode">{{ place.postal_code }}</span>
+                    {% include "@molecules/meta/event-meta/_yds-event-meta--locality.twig" with { locality: place } only %}
                   </span>
                   {% endif %}
                 </div>
@@ -463,19 +465,21 @@
                 <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
                 <div {{ bem('location', [], event_meta__base_class) }} itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
                   <span itemprop="streetAddress">{{ event_address.address }}</span><br>
-                  <span itemprop="addressLocality">{{ event_address.city }}</span>, <span itemprop="addressRegion">{{ event_address.state }}</span> <span itemprop="postalCode">{{ event_address.postal_code }}</span>
+                  {% include "@molecules/meta/event-meta/_yds-event-meta--locality.twig" with { locality: event_address } only %}
                 </div>
               </div>
             {% endif %}
+          {% endif %}
 
-            {% if address_additional_info %}
-              <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
-                <label {{ bem('event__label', [], event_meta__base_class) }}>{{ event_address ? 'Additional Address Information' : 'Location' }}</label>
-                <div {{ bem('location', [], event_meta__base_class) }}{% if not event_address %} itemprop="location"{% endif %}>
-                  {{ address_additional_info }}
-                </div>
+          {# Additional information renders on every event; it only stands in as the location when nothing above did. #}
+          {% if address_additional_info %}
+            {% set location_rendered = is_localist_event ? (place or room) : event_address %}
+            <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
+              <label {{ bem('event__label', [], event_meta__base_class) }}>{{ location_rendered ? 'Additional Address Information' : 'Location' }}</label>
+              <div {{ bem('location', [], event_meta__base_class) }}{% if not location_rendered %} itemprop="location"{% endif %}>
+                {{ address_additional_info }}
               </div>
-            {% endif %}
+            </div>
           {% endif %}
 
           {% if event_audience %}

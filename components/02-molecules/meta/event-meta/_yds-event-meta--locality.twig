@@ -1,0 +1,9 @@
+{#
+ # City, region and postal code line of an address, e.g. "New Haven, CT 06511".
+ # Each part is optional, so an address without a region (most non-US ones)
+ # renders no empty span and no stray comma or space, e.g. "Brussels 1000".
+ #
+ # Available Variables:
+ # - locality: mapping with optional city, state and postal_code keys.
+ #}
+{% if locality.city %}<span itemprop="addressLocality">{{ locality.city }}</span>{% endif %}{% if locality.state %}{% if locality.city %}, {% endif %}<span itemprop="addressRegion">{{ locality.state }}</span>{% endif %}{% if locality.postal_code %}{% if locality.city or locality.state %} {% endif %}<span itemprop="postalCode">{{ locality.postal_code }}</span>{% endif %}
