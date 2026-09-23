@@ -4,7 +4,10 @@ import eventCardData from '../../02-molecules/cards/reference-card/examples/even
 import profileCardData from '../../02-molecules/cards/reference-card/examples/profile-card.yml';
 import resourceCardData from '../../02-molecules/cards/reference-card/examples/resource-card.yml';
 import directoryCardData from '../../02-molecules/cards/directory-listing-card/yds-directory-listing-card.yml';
+import customCardCollectionTwig from '../custom-card-collection/yds-custom-card-collection.twig';
+import customCardData from '../../02-molecules/cards/custom-card/custom-card.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
+import longUrlData from './long-url.yml';
 
 import {
   sectionThemes,
@@ -32,6 +35,7 @@ export default {
 const collectionTypes = ['grid', 'list', 'condensed'];
 const collectionType = 'grid';
 const withImages = true;
+const LONG_URL = longUrlData.long_url;
 
 // Render function for all card types
 const renderAllCardTypes = () => `
@@ -216,3 +220,139 @@ ItsYourYaleSectionTwo.storyName = 'It’s Your Yale Section Two';
 ItsYourYaleSectionThree.storyName = 'It’s Your Yale Section Three';
 ItsYourYaleSectionFour.storyName = 'It’s Your Yale Section Four';
 ItsYourYaleSectionFive.storyName = 'It’s Your Yale Section Five';
+
+/**
+ * Card grids whose card text is a long unbroken URL.
+ *
+ * Deliberately a single standalone story rather than another block inside
+ * `renderAllContent()`: that function is rendered once per global theme per
+ * section theme, so anything added to it makes *every* story in the matrix
+ * above taller. The pixel ceiling `visreg:measure` enforces is per story, not
+ * cumulative, so an extra story is cheap -- but the tallest stories in the repo
+ * already measure at 97% of it, and growing one of those is what would break
+ * the check. The break this guards is a layout break, not a theming one, so one
+ * theme is enough either way.
+ *
+ * Covers both declarations the YaleSites-Internal#1729 break needs. The fix's
+ * third declaration is not exercised by any card grid; `LongUrlInCardText` in
+ * `card-collection.stories.js` documents why.
+ *
+ * Every grid mixin the card collection uses is now covered: the three panels
+ * from component-library-twig#736 above, plus the content-width grid and both
+ * profile directory grids (YaleSites-Internal#1736). That is six panels over
+ * six distinct mixins -- the custom card collection is a separate organism, and
+ * its panel renders non-featured (nothing passes
+ * `custom_card_collection__featured`, and the Twig normalises undefined to
+ * `'false'`), so it exercises `base` at `_yds-custom-card-collection.scss:19`,
+ * not the `primary` the featured grid gets.
+ *
+ * The coverage set is not closed. One card-grid include site has no long-URL
+ * baseline: the *featured* custom card collection at
+ * `_yds-custom-card-collection.scss:32`, which includes `primary`. Left that
+ * way deliberately -- `primary` is already exercised by the featured grid panel
+ * here, so the shared fix is under test either way; the only thing with no
+ * long-URL baseline is the `flex-grow: 1` single-card override at `:34`. That
+ * override is not unbaselined outright -- `cards.visreg.stories.js` renders a
+ * lone custom card inside a hardcoded `data-collection-featured='true'`
+ * wrapper, so `> *:first-child:last-child` matches and is captured there.
+ *
+ * The non-featured directory grid is the one of the three worth knowing about.
+ * `directory-primary` is the only grid mixin that pins an explicit `max-width`
+ * alongside `flex`, which is why #1729 expected the directory grids to react
+ * differently to a shared change. It does, and not in the form the others take:
+ * with the fix removed it keeps its column count (five at the 1200px viewport
+ * `visreg:measure` uses), because the `max-width` stops a wide item claiming
+ * more room, and the URL paints outside the card instead -- 247px past it, and
+ * off the page. Still a visual difference a baseline catches, just not the
+ * changed column count the others show.
+ *
+ * The two-up grid is selected by `card_collection__width: 'content'` -- the
+ * collection's own `data-component-width`, not the section wrapper's, which
+ * also narrows `.card-collection__inner` so the columns measured are the real
+ * ones. The non-featured rule matches that collection as well, but the
+ * content-width rule is declared after it and wins.
+ */
+const renderLongUrlGrids = () => `
+  <div class="wrap-for-screenshot">
+    <h3>Featured Grid (3-up)</h3>
+    ${cardCollectionTwig({
+      card_collection__source_type: 'post',
+      card_collection__type: 'grid',
+      card_collection__heading: 'Featured Grid, Long URL',
+      card_collection__featured: 'true',
+      card_collection__with_images: withImages ? 'true' : 'false',
+      card_collection__cards: [1, 2, 3],
+      ...postCardData,
+      reference_card__snippet: LONG_URL,
+      ...imageData.responsive_images['3x2'],
+    })}
+
+    <h3>Non-Featured Grid (4-up)</h3>
+    ${cardCollectionTwig({
+      card_collection__source_type: 'post',
+      card_collection__type: 'grid',
+      card_collection__heading: 'Non-Featured Grid, Long URL',
+      card_collection__featured: 'false',
+      card_collection__with_images: withImages ? 'true' : 'false',
+      card_collection__cards: [1, 2, 3, 4],
+      ...postCardData,
+      reference_card__snippet: LONG_URL,
+      ...imageData.responsive_images['3x2'],
+    })}
+
+    <h3>Custom Card Collection</h3>
+    ${customCardCollectionTwig({
+      custom_card_collection__heading: 'Custom Card Collection, Long URL',
+      custom_card_collection__cards: [1, 2, 3],
+      ...customCardData,
+      custom_card__snippet: `<p>${LONG_URL}</p>`,
+      ...imageData.responsive_images['3x2'],
+    })}
+
+    <h3>Content-Width Grid (2-up)</h3>
+    ${cardCollectionTwig({
+      card_collection__source_type: 'post',
+      card_collection__type: 'grid',
+      card_collection__width: 'content',
+      card_collection__heading: 'Content-Width Grid, Long URL',
+      card_collection__featured: 'false',
+      card_collection__with_images: withImages ? 'true' : 'false',
+      card_collection__cards: [1, 2],
+      ...postCardData,
+      reference_card__snippet: LONG_URL,
+      ...imageData.responsive_images['3x2'],
+    })}
+
+    <h3>Profile Directory, Not Featured (5-up)</h3>
+    ${cardCollectionTwig({
+      card_collection__source_type: 'directory-listing',
+      card_collection__type: 'profile-directory',
+      card_collection__heading: 'Profile Directory, Long URL',
+      card_collection__featured: 'false',
+      card_collection__cards: [1, 2, 3, 4, 5],
+      ...directoryCardData,
+      directory_listing_card__snippet: LONG_URL,
+      ...imageData.responsive_images['1x1'],
+    })}
+
+    <h3>Profile Directory, Featured (4-up)</h3>
+    ${cardCollectionTwig({
+      card_collection__source_type: 'directory-listing',
+      card_collection__type: 'profile-directory',
+      card_collection__heading: 'Profile Directory Featured, Long URL',
+      card_collection__featured: 'true',
+      card_collection__cards: [1, 2, 3, 4],
+      ...directoryCardData,
+      directory_listing_card__snippet: LONG_URL,
+      ...imageData.responsive_images['1x1'],
+    })}
+  </div>
+`;
+
+export const LongUrlInCardText = () =>
+  createSectionWrapper(sectionThemes[0], renderLongUrlGrids(), {
+    width: 'site',
+    primaryWidth: '100%',
+  });
+
+LongUrlInCardText.storyName = 'Long URL In Card Text';
