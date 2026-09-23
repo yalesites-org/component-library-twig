@@ -43,8 +43,21 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
     &[data-component-theme='#{$theme}'] {
       --color-action: var(--color-link-grid-action);
       --color-link-grid-border: var(--color-link-grid-action);
-      --color-heading: var(--color-gray-800);
     }
+  }
+
+  // `00-tokens/colors/_color-component-themes.scss` maps `--color-heading` for
+  // component themes one-five to a token meant for components that paint their
+  // own background. This one paints none, so that ink is picked against a
+  // backdrop never drawn -- white on white (YaleSites-Internal#1734). Defer to
+  // the enclosing section, which is the only thing that knows what is behind
+  // the heading. The explicit fallback is load-bearing, not decoration: an
+  // unthemed section sets no `--color-section-foreground`, and
+  // `--color-heading` has no `:root` default, so `inherit` here would resolve
+  // to nothing on a live page. The attribute selector outranks the shared rule
+  // whatever the stylesheet order.
+  &[data-component-theme] {
+    --color-heading: var(--color-section-foreground, var(--color-gray-800));
   }
 
   // Component theme overrides: set specific component themes overrides
@@ -71,12 +84,10 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   // The action color is drawn as the column rule, so it has to clear 3:1
   // against the page on its own, with no paired foreground to help it. That
-  // rules out slot-nine, the light background tint this used to be; slot-seven
-  // also matches the heading below. See
+  // rules out slot-nine, the light background tint this used to be. See
   // 00-tokens/colors/border-accent-contrast.test.mjs for the measurement.
   &[data-component-theme='six'] {
     --color-link-grid-action: var(--color-slot-seven);
-    --color-heading: var(--color-slot-seven);
   }
 
   // if used in the layout component, remove the top margin
@@ -91,23 +102,10 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   flex: 1 0 100%;
   margin-bottom: var(--size-spacing-6);
 
-  // Use token (not inherited section color): gray layout sections can set light
-  // `color` on `.yds-layout`, which would otherwise wash out the main title.
-  // -
-  // Dials one/three/four/five used to be carved out to a fixed light colour
-  // here, on the stated grounds of "light text only on dark link-grid
-  // backgrounds". There is no such background: a link grid paints none of its
-  // own -- the same premise `.link-grid__inner` relies on just below, where the
-  // column rule has to be supplied by the enclosing surface.
-  // -
-  // So the carve-out was dead where it was overridden and wrong where it was
-  // not. Inside a themed section, `_yds-layout.scss`'s shared
-  // `.link-grid .link-grid__heading` rule already outbids it and re-points the
-  // heading to the section foreground. On an UNTHEMED section nothing outbids
-  // it, and it resolved to white on the white page: 1.00:1 in all 7 global
-  // themes, an entirely invisible block heading. Removed rather than narrowed,
-  // so `--color-heading` is the single answer here
-  // (component-library-twig#714).
+  // Takes the section's ink via `--color-heading` (see the
+  // `&[data-component-theme]` rule above). No per-dial colour here: a link
+  // grid paints no background, so a fixed ink is white on white on an
+  // unthemed section (YaleSites-Internal#1734, component-library-twig#714).
   color: var(--color-heading);
 }
 
