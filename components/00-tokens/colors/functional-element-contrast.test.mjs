@@ -229,41 +229,10 @@ test('decorative rows are reported but never given a verdict', () => {
   assert.match(report, /None\. Every functional element clears its minimum/);
 });
 
-test('the link grid heading rule covers every section theme, not just the light ones', () => {
-  const block = themedSectionBlock();
-
-  assert.ok(
-    block,
-    'the shared themed-section rule should exist in _yds-layout.scss',
-  );
-  assert.match(
-    block.replace(/\s+/g, ' '),
-    /\.link-grid \.link-grid__heading, \.link-grid \.link-group__heading \{ color: var\(--color-section-foreground\); \}/,
-    'link grid headings must be re-pointed for every themed section, not only two/five/six',
-  );
-});
-
-test('no rule in the layout pins a link-grid heading to a fixed slot', () => {
-  // The light-only carve-out this REPLACED. Not merely redundant now: leaving
-  // it beside the general rule would re-fix the same three section themes at
-  // lower specificity and invite the next reader to add a dark-only twin
-  // rather than notice the general one already exists.
-  // -
-  // Asserted on MEANING rather than on the exact text that used to be here.
-  // Pinning the old rule's whitespace and brace placement would let it back in
-  // reformatted, joined onto one line, or with a comment after the brace.
-  const rules = layoutScss()
-    .replace(/\s+/g, ' ')
-    .match(/[^{}]*\.link-grid__heading[^{}]*\{[^{}]*\}/g);
-
-  (rules || []).forEach((rule) => {
-    assert.doesNotMatch(
-      rule,
-      /--color-slot-/,
-      `link-grid heading rules must follow the section foreground, not a fixed slot: ${rule.trim()}`,
-    );
-  });
-});
+// The link grid heading is no longer coloured from the layout: it defers to
+// `--color-section-foreground` in `_yds-link-grid.scss` (YaleSites-Internal#1734).
+// `02-molecules/link-grid/link-grid-heading-contrast.test.mjs` guards that and
+// forbids any layout rule targeting the heading.
 
 test('a themed section re-points link hover, not just resting', () => {
   // The defect the :hover pass found (component-library-twig#714). A themed
@@ -292,8 +261,8 @@ test('a themed section re-points link hover, not just resting', () => {
   assert.equal(
     hoverRule[2],
     '--color-section-foreground',
-    'hover must follow the section foreground, the same property the heading ' +
-      'fixes use -- not a fixed slot and not a new colour value',
+    'hover must follow the section foreground, the same property the link grid ' +
+      'heading defers to -- not a fixed slot and not a new colour value',
   );
 
   // Every kind of link inside a section, not just the ones that happened to be
@@ -363,7 +332,7 @@ test('the link grid heading is never forced to a fixed light colour', () => {
   // dials one/three/four/five, on the stated grounds of "light text only on
   // dark link-grid backgrounds". A link grid paints NO background of its own,
   // so there is no dark surface for that to be true of: inside a themed section
-  // the shared rule above already overrides it, and on an UNTHEMED section it
+  // a layout rule used to override it, and on an UNTHEMED section it
   // resolved to white on the white page -- 1.00:1, an entirely invisible block
   // heading in all 7 global themes. Dead where it was overridden and wrong
   // where it was not (component-library-twig#714).

@@ -299,7 +299,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   //    A component that paints its OWN surface shadows it with its own
   //    foreground so the section's does not inherit through -- `text-with-image`,
   //    `content-spotlight-portrait` and `reference-card`'s single collection all
-  //    do, and that shadowing is what keeps rule 5 below safe inside them.
+  //    do, and that shadowing is what keeps rule 4 below safe inside them.
   //    Components that paint a foreground on a surface they do
   //    not own -- a small-caps overline, an eyebrow, a hairline card border --
   //    read it with their existing colour as the CSS fallback:
@@ -385,42 +385,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     // remaps `--color-background` for its own panel gets a matching halo.
     --color-text-shadow: var(--color-background);
 
-    // 4. The link grid's headings, which cannot use the fallback pattern
-    //    above. A link grid paints no background of its own, so its headings
-    //    sit directly on the section surface -- but unlike the overlines and
-    //    hairlines in (2), `_yds-link-grid.scss` sets their colour from
-    //    higher-specificity selectors of its own
-    //    (`.link-grid[data-component-theme='one'] .link-grid__heading`), so a
-    //    `var(--color-section-foreground, ...)` fallback written there would
-    //    lose to them. Overriding from the section side is what wins.
-    //    -
-    //    #1613 covered only the three LIGHT section themes (two, five, six)
-    //    with a fixed slot-seven, because those are the ones a white link-grid
-    //    heading disappears on. That left the dark ones: the white is forced
-    //    only for dials one, three, four and five, so a grid dialled `two` or
-    //    `six` kept a dark heading and rendered it on the dark section
-    //    background -- 1.00:1 to 3.70:1 across the 42 (global theme x dial x
-    //    section) pairings measured for #1614.
-    //    -
-    //    One rule over all six section themes REPLACES that light-only
-    //    carve-out rather than sitting beside it. It is a strict
-    //    generalisation, not a behaviour change on the light ones:
-    //    `--color-section-foreground` is `--color-layout-content`, which IS
-    //    slot-seven on themes two, five and six, so those cells keep the exact
-    //    colour #1613 gave them.
-    //    -
-    //    `.link-group__heading` is carried over from the #1613 rule. Its own
-    //    `color: var(--color-site-footer-text-color)` is invalid at
-    //    computed-value time outside the footer, so it inherits today and this
-    //    declaration makes the same value explicit. The site footer's own link
-    //    groups are unreachable from here: this needs a `.link-grid` ancestor
-    //    and the footer contains none.
-    .link-grid .link-grid__heading,
-    .link-grid .link-group__heading {
-      color: var(--color-section-foreground);
-    }
-
-    // 5. Link HOVER. A themed section already declares its own
+    // 4. Link HOVER. A themed section already declares its own
     //    `--color-link-hover` at the section root (`slot-eight` on the dark
     //    themes, `slot-seven` on the light ones) -- values chosen to be legible
     //    on what the section paints. None of them ever reached a link.
