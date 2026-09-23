@@ -265,3 +265,66 @@ test('resting link colour clears 4.5:1 in every section theme x global theme pai
     } (section theme x global theme) pairings fail AA:\n${failures.join('\n')}`,
   );
 });
+
+/**
+ * Label and separator TEXT on the `default` dial (YaleSites-Internal#1641,
+ * second review round). The link pins above left the box's plain text alone:
+ * the "Audience:" labels and the `,` separators set no colour, so they
+ * inherited the section's own `color` -- white on section themes one, three
+ * and four -- and vanished on this box's gray-100 (1.07:1, 21 of 42 cells).
+ * The dial now pins `--color-text` to the white basic theme's text role and
+ * applies it. That role resolves to the same value as the tokens.css root
+ * `--color-text`, so rendering outside a section is unchanged.
+ */
+const TEXT_PIN = '--basic-themes-white-text';
+const APPLIES_TEXT = /(?:^|[\s;{])color:\s*var\(\s*--color-text\s*\)/;
+
+test('the default dial pins --color-text to a theme-independent role and applies it', () => {
+  assert.match(
+    dialBody,
+    new RegExp(`--color-text:\\s*var\\(\\s*${TEXT_PIN}\\s*\\)`),
+    `--color-text is not pinned to ${TEXT_PIN} inside ` +
+      "&[data-component-theme='default'] -- the box's labels and separators inherit the section's text colour.",
+  );
+  assert.match(
+    dialBody,
+    APPLIES_TEXT,
+    'the default dial must apply `color: var(--color-text)`, or the pin never reaches the labels',
+  );
+});
+
+test('the text pin resolves to the tokens.css root --color-text (unchanged outside a section)', () => {
+  assert.equal(
+    tokens['basic-themes'].white.text,
+    paletteValue(rootDefaultVar('--color-text')),
+  );
+});
+
+test('resting label text clears 4.5:1 in every section theme x global theme pairing', () => {
+  const pinned =
+    new RegExp(`--color-text:\\s*var\\(\\s*${TEXT_PIN}\\s*\\)`).test(
+      dialBody ?? '',
+    ) && APPLIES_TEXT.test(dialBody ?? '');
+  const globalThemes = Object.keys(tokens['global-themes']);
+
+  const failures = Object.keys(SECTION_THEMES)
+    .flatMap((sectionTheme) =>
+      globalThemes.map((globalTheme) => {
+        const slots = resolveGlobalTheme(globalTheme, tokens['global-themes']);
+        const value = pinned
+          ? tokens['basic-themes'].white.text
+          : slots[SECTION_THEMES[sectionTheme].content];
+        const ratio = contrastRatio(parseHsl(GRAY_100), parseHsl(value));
+        return { sectionTheme, globalTheme, value, ratio };
+      }),
+    )
+    .filter(({ ratio }) => ratio < AA_NORMAL_TEXT)
+    .map(
+      ({ sectionTheme, globalTheme, value, ratio }) =>
+        `section ${sectionTheme} x global ${globalTheme}: ${value} on gray-100 = ${formatRatio(
+          ratio,
+        )}:1`,
+    );
+
+  assert.deepEqual(failures, [], failures.join('\n'));
+});

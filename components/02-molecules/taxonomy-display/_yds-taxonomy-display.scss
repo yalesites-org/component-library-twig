@@ -43,6 +43,15 @@ $component-taxonomy-display-port-themes: map.deep-get(
     --color-link-hover: var(--color-gray-700);
     --color-link-visited-base: var(--color-purple-visited);
     --color-link-visited-hover: var(--color-purple-visited-hover);
+
+    // Same leak for the box's plain text: the "Audience:" labels and the `,`
+    // separators inherit the section's `color` (white on section themes one,
+    // three and four). Pinned to the white basic theme's text role, which is
+    // the same gray-700 tokens.css uses at :root, so nothing changes outside
+    // a section, and no theme reassigns it.
+    --color-text: var(--basic-themes-white-text);
+
+    color: var(--color-text);
   }
 
   // If we're using a component theme, add padding and set background-color and color;
