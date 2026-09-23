@@ -6,29 +6,59 @@
   padding: 0;
 }
 
-ul {
+// :not([type]) lets an explicit type="a"/"i"/etc. attribute (set via the
+// CKEditor5 List Style dropdown) take precedence over these depth-based
+// defaults, instead of this CSS unconditionally overriding it.
+ul:not([type]) {
   list-style-type: disc;
 
-  ul {
+  ul:not([type]) {
     list-style-type: circle;
 
-    ul {
+    ul:not([type]) {
       list-style-type: square;
     }
   }
 }
 
-ol {
+ol:not([type]) {
   list-style-type: decimal;
 
-  ol {
+  ol:not([type]) {
     list-style-type: lower-alpha;
 
-    ol {
+    ol:not([type]) {
       list-style-type: lower-roman;
     }
   }
 }
+
+// When a list's style came from an explicit choice in the CKEditor5 List
+// Style dropdown (a `type` attribute) rather than from the depth-based
+// defaults above, an untyped sub-item's ancestor no longer matches
+// `:not([type])`, so it would otherwise fall back to the browser default
+// instead of continuing the outline sequence (decimal -> lower-alpha ->
+// lower-roman / disc -> circle -> square). These intentionally have lower
+// specificity than the 3-levels-deep default rules above, since they only
+// ever match a different (explicitly-typed) ancestor, never the same
+// element those rules do.
+/* stylelint-disable no-descending-specificity */
+ol[type='1'] ol:not([type]) {
+  list-style-type: lower-alpha;
+}
+
+ol[type='a'] ol:not([type]) {
+  list-style-type: lower-roman;
+}
+
+ul[type='disc'] ul:not([type]) {
+  list-style-type: circle;
+}
+
+ul[type='circle'] ul:not([type]) {
+  list-style-type: square;
+}
+/* stylelint-enable no-descending-specificity */
 
 .text-field {
   li {
