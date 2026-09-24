@@ -195,6 +195,13 @@ Drupal.behaviors.eventsCalendar = {
             moreEventsContainer.appendChild(clonedEvent);
           });
 
+          // The list ships `hidden` so an unopened modal leaves no empty list
+          // container in the DOM. Reveal it only once it holds events: the
+          // clear above runs first, so a day click that produced none has to
+          // stay hidden rather than expose an empty list.
+          moreEventsContainer.hidden =
+            moreEventsContainer.children.length === 0;
+
           // Manually open the modal after content is populated.
           MicroModal.show('calendar-modal');
         });

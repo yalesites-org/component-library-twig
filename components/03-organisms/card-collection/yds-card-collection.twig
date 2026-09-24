@@ -10,7 +10,9 @@
  # - card_collection__heading
  #
  # Available Blocks:
- # - card_collection__cards
+ # - card_collection__cards: when this renders nothing, the whole component is
+ #   omitted rather than leaving an empty <ul> behind.
+ # - card_collection__filters
  #}
 
 {% set card_collection__base_class = 'card-collection' %}
@@ -33,25 +35,38 @@
   'data-animate-item': animate__item|default('enabled'),
 }) %}
 
-<div {{ add_attributes(card_collection__attributes) }}>
-  <div {{ bem('inner', [], card_collection__base_class) }}>
-    {% if card_collection__heading is not empty %}
-      {% include "@atoms/typography/headings/yds-heading.twig" with {
-        heading__level: '2',
-        heading__blockname: card_collection__base_class,
-        heading: card_collection__heading,
+{#
+ # An empty `<ul>` is invalid markup -- SiteImprove: "Container element is empty".
+ #
+ # Guard the *rendered* cards, not card_collection__cards: Drupal consumers pass
+ # cards as a block override, so that variable is undefined there and guarding on
+ # it would hide every real collection. See card-collection-empty-wrapper.test.mjs.
+ #}
+{% set card_collection__cards__content %}
+  {% block card_collection__cards %}
+    {% for card in card_collection__cards %}
+      {% include "@molecules/cards/reference-card/examples/_card--examples.twig" with {
+        reference_card__image: card_collection__with_images,
       } %}
-    {% endif %}
-    {% block card_collection__filters %}
-    {% endblock %}
-    <ul {{ bem('cards', [], card_collection__base_class) }}>
-      {% block card_collection__cards %}
-        {% for card in card_collection__cards %}
-          {% include "@molecules/cards/reference-card/examples/_card--examples.twig" with {
-            reference_card__image: card_collection__with_images,
-          } %}
-        {% endfor %}
+    {% endfor %}
+  {% endblock %}
+{% endset %}
+
+{% if card_collection__cards__content|trim is not empty %}
+  <div {{ add_attributes(card_collection__attributes) }}>
+    <div {{ bem('inner', [], card_collection__base_class) }}>
+      {% if card_collection__heading is not empty %}
+        {% include "@atoms/typography/headings/yds-heading.twig" with {
+          heading__level: '2',
+          heading__blockname: card_collection__base_class,
+          heading: card_collection__heading,
+        } %}
+      {% endif %}
+      {% block card_collection__filters %}
       {% endblock %}
-    </ul>
+      <ul {{ bem('cards', [], card_collection__base_class) }}>
+        {{ card_collection__cards__content }}
+      </ul>
+    </div>
   </div>
-</div>
+{% endif %}
