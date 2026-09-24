@@ -96,6 +96,21 @@ blockquote {
   // therefore wins on source order. Tightening this to
   // `.yds-layout[data-section-theme]:not(...)` reads better but would make it
   // (0,4,0) and silently beat that override.
+  // -
+  // KNOWN, NOT FIXED by YaleSites-Internal#1641: `--color-section-accent`
+  // still resolves to `--color-layout-border`, which is 2.42:1 / 2.99:1 on
+  // Whitney section themes three and four -- the same two cells #1613
+  // baselined and #1641 left alone for `--color-layout-border` itself. This
+  // is deliberately NOT re-pointed to `--color-section-foreground` the way
+  // the layout divider and the divider atom were: unlike those two, "accent"
+  // is this component's own explicit design intent (see the comment above --
+  // the bar and quote-mark are meant to match the section's action/CTA
+  // colour, not to be a neutral separator), so swapping it for a neutral
+  // foreground would be a visual design call for whoever owns that intent,
+  // not an accessibility fix this PR should make unilaterally. No test gates
+  // this pairing today (grep `approved-pairings.mjs` / `contrast-gate.mjs` --
+  // pull-quote appears in neither), so nothing needs to change there; this
+  // comment is the record.
   .yds-layout:not([data-section-theme='default']) & {
     --color-pull-quote-accent: var(--color-section-accent);
   }
