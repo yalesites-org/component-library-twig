@@ -266,9 +266,12 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
     outline-offset: -2px;
   }
 
-  // Active tab.
+  // Active tab. The top border is the active-tab indicator. On a themed
+  // section `--color-action` is the section accent, which fails 3:1 on
+  // Whitney section themes three and four, so on every themed section it
+  // takes the section foreground instead (YaleSites-Internal#1641).
   &[aria-selected='true'] {
-    border-color: var(--color-action);
+    border-color: var(--color-section-foreground, var(--color-action));
     background-color: var(--color-selected);
 
     &::before {
@@ -279,26 +282,9 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
       right: 0;
       bottom: 0;
 
-      // The active-tab indicator. Outside a themed section this stays
-      // `--color-selected` exactly as before -- unchanged, so an unthemed
-      // page renders byte-identical. Inside one, `--color-selected` is
-      // `--color-tabs-background` verbatim: the themed-section rule above
-      // sets both `--color-tabs-background` and `--color-tabs-selected` to
-      // `--color-section-background`, so this line painted the section's own
-      // background colour on top of itself. Measured via `getComputedStyle`
-      // on the rendered Storybook stories: `border-bottom-color` equalled the
-      // active tab's own `background-color` in all six section themes and
-      // all seven global themes -- a 1.00:1 ratio, i.e. no visible indicator
-      // at all (YaleSites-Internal#1641).
-      // -
-      // `--color-section-foreground` is the section's content colour, proven
-      // by `section-background-contrast.txt` (section 1) to clear 4.5:1
-      // against its own section background in all 210 (global theme x
-      // section theme) pairings -- well past this element's own 3:1 non-text
-      // minimum (WCAG 1.4.11) -- and it is unset outside a themed section, so
-      // the fallback is what applies there.
-      border-bottom: var(--size-spacing-3) solid
-        var(--color-section-foreground, var(--color-selected));
+      // A mask, not an indicator: it matches the tab background so the
+      // active tab reads as joined to its panel.
+      border-bottom: var(--size-spacing-3) solid var(--color-selected);
       z-index: 1;
     }
   }

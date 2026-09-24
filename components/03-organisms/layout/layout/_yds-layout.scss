@@ -524,7 +524,9 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // element's own 3:1 -- against every section background in all 7 global
   // themes (section-background-contrast.txt, section 1, "content" row), so
   // it is always visible here. It is unset outside a themed section, so the
-  // fallback reproduces today's colour exactly there (YaleSites-Internal#1641).
+  // fallback keeps the same colour there -- but the `opacity` change below
+  // applies everywhere, so an unthemed divider also renders at full strength
+  // now instead of 50% faded (accepted in review, YaleSites-Internal#1641).
   // -
   // This does not retire the two baselined `section/*/border` gate entries
   // in contrast-gate-baseline.json: those measure `--color-layout-border`
