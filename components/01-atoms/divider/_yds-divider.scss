@@ -26,7 +26,13 @@ $divider-positions: left, center;
 }
 
 .divider {
-  background: var(--color-divider);
+  // Inside a themed section this resolves to the section's accent; anywhere
+  // else `--color-section-accent` is unset and the `:root` default applies.
+  // Replaces a `[data-component-theme] &` reach-back that read
+  // `--color-layout-border` -- which is declared only on `.yds-layout`, so
+  // inside any OTHER themed element (a callout, an accordion) the property did
+  // not exist and the divider vanished entirely (YaleSites-Internal#1628).
+  background: var(--color-section-accent, var(--color-divider));
   width: var(--width-divider);
   height: var(--thickness-divider);
 
@@ -39,9 +45,5 @@ $divider-positions: left, center;
       );
       @include tokens.expand-out;
     }
-  }
-
-  [data-component-theme]:not([data-component-theme='default']) & {
-    --color-divider: var(--color-layout-border);
   }
 }

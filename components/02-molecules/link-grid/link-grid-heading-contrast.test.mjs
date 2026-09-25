@@ -55,13 +55,13 @@ const LARGE_TEXT_AA = WCAG_LEVELS.find(
 ).minimum;
 
 /**
- * Reads each `&[data-component-theme='x']` block in `_yds-layout.scss` and
+ * Reads each `&[data-section-theme='x']` block in `_yds-layout.scss` and
  * returns its `{ background, heading }` slot names -- `--color-layout-theme` is
  * what the section paints, `--color-heading` the ink it publishes.
  */
 function sectionThemeSlots(scss) {
   const blocks = [
-    ...scss.matchAll(/&\[data-component-theme='(\w+)'\]\s*\{([^}]*)\}/g),
+    ...scss.matchAll(/&\[data-section-theme='(\w+)'\]\s*\{([^}]*)\}/g),
   ];
 
   return blocks.reduce((slots, [, theme, body]) => {
@@ -110,13 +110,13 @@ test('--color-heading tracks the section, never a fixed color', () => {
   );
 
   const offenders = assignments.filter(
-    (line) => !line.includes('--color-layout-content'),
+    (line) => !line.includes('--color-section-foreground'),
   );
 
   assert.deepEqual(
     offenders,
     [],
-    'Heading ink must come from the section (--color-layout-content), not a fixed token.',
+    'Heading ink must come from the section (--color-section-foreground), not a fixed token.',
   );
 });
 

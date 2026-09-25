@@ -7,7 +7,7 @@
 # Edit descriptions and details freely - changes appear in Storybook on reload.
 
 sectionTheme:
-  twigProp: data-component-theme
+  twigProp: data-section-theme
   name: Section Theme
   type: select
   required: false

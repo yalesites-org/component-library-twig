@@ -1,7 +1,35 @@
 name: Test
 on:
   pull_request:
-    branches: ['main', 'develop']
+    # `1616-section-color-parity` is a long-lived integration branch: the Color
+    # Surface stack (#1613, #1614, #1628, ...) targets it rather than `develop`,
+    # so without it here every PR in that stack merges ungated and the stack
+    # reaches `develop` as a single untested merge.
+    #
+    # `1628-color-system-defects` is Phase 0 of that stack, and Phase 0b (#1629)
+    # is stacked on top of it rather than on the integration branch, because the
+    # two phases edit the same three files. Without this entry that PR is
+    # ungated too. It stops being needed the moment #721 merges and GitHub
+    # retargets Phase 0b at `1616-section-color-parity`.
+    #
+    # `1629-color-property-cycles` is Phase 0b, and Phase 3 (#1632) is stacked on
+    # top of *it* rather than on the integration branch, because Phase 3 extends
+    # the test and lint infrastructure Phase 0 introduced. Same story as the
+    # entry above: without it that PR is ungated.
+    #
+    # Three temporary entries is two more than this list should ever carry -- it
+    # reinforces the recommendation in #721 to move to
+    # `branches-ignore: ['master']`, as `yalesites-project` already does, and
+    # delete the list. That is a repo-wide CI policy change and wants its own
+    # ticket; all three entries come out together when the stack is retired.
+    branches:
+      [
+        'main',
+        'develop',
+        '1616-section-color-parity',
+        '1628-color-system-defects',
+        '1629-color-property-cycles',
+      ]
 jobs:
   test:
     runs-on: ubuntu-latest

@@ -15,14 +15,16 @@ import {
   globalThemes,
   sectionThemes,
 } from '../../_storybook/theme-constants';
-import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
-import {
-  createSectionWrapper,
-  createThemeVariations,
-} from '../../_storybook/playground-utils';
+import { createGlobalThemeSectionStories } from '../../_storybook/global-theme-stories.mjs';
+import { createSectionWrapper } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
+ *
+ * This component splits on section theme as well as global theme: all four
+ * meta types stacked across every section theme measured 1,200 x 23,542 =
+ * 28,250,400px, past the snapshot ceiling. One section theme per story is
+ * roughly a seventh of that. See `global-theme-stories.mjs`.
  */
 export default {
   tags: ['visreg'],
@@ -30,59 +32,55 @@ export default {
   parameters: { controls: { disable: true } },
 };
 
-const renderGlobalTheme = () => {
-  const allDayEvent = false;
+const allDayEvent = false;
 
-  // Modify event dates to add is_all_day property and adjust timestamps
-  // For all-day events, Drupal sets start to 00:00 and end to 23:59
-  const eventDatesWithAllDay = eventLocalistData.event_dates.map((date) => {
-    if (!allDayEvent) {
-      return {
-        ...date,
-        is_all_day: false,
-      };
-    }
-    // For all-day, set times to midnight (start) and 23:59 (end)
-    const startDate = new Date(date.original_start * 1000);
-    const endDate = new Date(date.original_end * 1000);
-    startDate.setHours(0, 0, 0, 0);
-    endDate.setHours(23, 59, 0, 0);
+// Modify event dates to add is_all_day property and adjust timestamps
+// For all-day events, Drupal sets start to 00:00 and end to 23:59
+const eventDatesWithAllDay = eventLocalistData.event_dates.map((date) => {
+  if (!allDayEvent) {
     return {
       ...date,
-      original_start: Math.floor(startDate.getTime() / 1000),
-      original_end: Math.floor(endDate.getTime() / 1000),
-      is_all_day: true,
+      is_all_day: false,
     };
-  });
+  }
+  // For all-day, set times to midnight (start) and 23:59 (end)
+  const startDate = new Date(date.original_start * 1000);
+  const endDate = new Date(date.original_end * 1000);
+  startDate.setHours(0, 0, 0, 0);
+  endDate.setHours(23, 59, 0, 0);
+  return {
+    ...date,
+    original_start: Math.floor(startDate.getTime() / 1000),
+    original_end: Math.floor(endDate.getTime() / 1000),
+    is_all_day: true,
+  };
+});
 
-  const eventFeaturedDateWithAllDay = (() => {
-    if (!allDayEvent) {
-      return {
-        ...eventLocalistData.event_featured_date,
-        is_all_day: false,
-      };
-    }
-    const startDate = new Date(
-      eventLocalistData.event_featured_date.original_start * 1000,
-    );
-    const endDate = new Date(
-      eventLocalistData.event_featured_date.original_end * 1000,
-    );
-    startDate.setHours(0, 0, 0, 0);
-    endDate.setHours(23, 59, 0, 0);
+const eventFeaturedDateWithAllDay = (() => {
+  if (!allDayEvent) {
     return {
       ...eventLocalistData.event_featured_date,
-      original_start: Math.floor(startDate.getTime() / 1000),
-      original_end: Math.floor(endDate.getTime() / 1000),
-      is_all_day: true,
+      is_all_day: false,
     };
-  })();
+  }
+  const startDate = new Date(
+    eventLocalistData.event_featured_date.original_start * 1000,
+  );
+  const endDate = new Date(
+    eventLocalistData.event_featured_date.original_end * 1000,
+  );
+  startDate.setHours(0, 0, 0, 0);
+  endDate.setHours(23, 59, 0, 0);
+  return {
+    ...eventLocalistData.event_featured_date,
+    original_start: Math.floor(startDate.getTime() / 1000),
+    original_end: Math.floor(endDate.getTime() / 1000),
+    is_all_day: true,
+  };
+})();
 
-  // Render function for all meta types
-  const renderAllMetaTypes = (theme) =>
-    createSectionWrapper(
-      theme,
-      `
+// Render function for all meta types
+const renderAllMetaTypes = () => `
           <h4>Basic Meta</h4>
           ${basicMetaTwig({
             basic_meta: `<span>By Charlyn Paradis</span>${dateTimeTwig({
@@ -146,30 +144,78 @@ const renderGlobalTheme = () => {
             image__src__1: imageData.responsive_images['2x3'].image__src,
             video_embed__content__1: videoEmbedData.video_embed__content,
           })}
-        `,
-    );
+        `;
 
-  return createThemeVariations(
-    renderAllMetaTypes,
-    sectionThemes,
-    'All Section Theme Variations',
-    'Below are all theme variations with all 4 meta types for visual regression testing.',
-    'Section Theme',
-  );
-};
+const renderSection = (sectionTheme) =>
+  createSectionWrapper(sectionTheme, renderAllMetaTypes());
 
-const themeStories = createGlobalThemeStories(
-  renderGlobalTheme,
+const themeStories = createGlobalThemeSectionStories(
+  renderSection,
   globalThemes,
+  sectionThemes,
   globalThemeLabels,
 );
 
-export const OldBlues = themeStories.one;
-export const NewHavenGreen = themeStories.two;
-export const ShorelineSummer = themeStories.three;
-export const Onha = themeStories.four;
-export const ItsYourYale = themeStories.five;
-export const AI = themeStories.six;
-export const WhitneyHumanitiesCenter = themeStories.seven;
+export const OldBluesSectionDefault = themeStories.one.default;
+export const OldBluesSectionOne = themeStories.one.one;
+export const OldBluesSectionTwo = themeStories.one.two;
+export const OldBluesSectionThree = themeStories.one.three;
+export const OldBluesSectionFour = themeStories.one.four;
+export const OldBluesSectionFive = themeStories.one.five;
+export const OldBluesSectionSix = themeStories.one.six;
 
-ItsYourYale.storyName = 'It’s Your Yale';
+export const NewHavenGreenSectionDefault = themeStories.two.default;
+export const NewHavenGreenSectionOne = themeStories.two.one;
+export const NewHavenGreenSectionTwo = themeStories.two.two;
+export const NewHavenGreenSectionThree = themeStories.two.three;
+export const NewHavenGreenSectionFour = themeStories.two.four;
+export const NewHavenGreenSectionFive = themeStories.two.five;
+export const NewHavenGreenSectionSix = themeStories.two.six;
+
+export const ShorelineSummerSectionDefault = themeStories.three.default;
+export const ShorelineSummerSectionOne = themeStories.three.one;
+export const ShorelineSummerSectionTwo = themeStories.three.two;
+export const ShorelineSummerSectionThree = themeStories.three.three;
+export const ShorelineSummerSectionFour = themeStories.three.four;
+export const ShorelineSummerSectionFive = themeStories.three.five;
+export const ShorelineSummerSectionSix = themeStories.three.six;
+
+export const OnhaSectionDefault = themeStories.four.default;
+export const OnhaSectionOne = themeStories.four.one;
+export const OnhaSectionTwo = themeStories.four.two;
+export const OnhaSectionThree = themeStories.four.three;
+export const OnhaSectionFour = themeStories.four.four;
+export const OnhaSectionFive = themeStories.four.five;
+export const OnhaSectionSix = themeStories.four.six;
+
+export const ItsYourYaleSectionDefault = themeStories.five.default;
+export const ItsYourYaleSectionOne = themeStories.five.one;
+export const ItsYourYaleSectionTwo = themeStories.five.two;
+export const ItsYourYaleSectionThree = themeStories.five.three;
+export const ItsYourYaleSectionFour = themeStories.five.four;
+export const ItsYourYaleSectionFive = themeStories.five.five;
+export const ItsYourYaleSectionSix = themeStories.five.six;
+
+export const AISectionDefault = themeStories.six.default;
+export const AISectionOne = themeStories.six.one;
+export const AISectionTwo = themeStories.six.two;
+export const AISectionThree = themeStories.six.three;
+export const AISectionFour = themeStories.six.four;
+export const AISectionFive = themeStories.six.five;
+export const AISectionSix = themeStories.six.six;
+
+export const WhitneyHumanitiesCenterSectionDefault = themeStories.seven.default;
+export const WhitneyHumanitiesCenterSectionOne = themeStories.seven.one;
+export const WhitneyHumanitiesCenterSectionTwo = themeStories.seven.two;
+export const WhitneyHumanitiesCenterSectionThree = themeStories.seven.three;
+export const WhitneyHumanitiesCenterSectionFour = themeStories.seven.four;
+export const WhitneyHumanitiesCenterSectionFive = themeStories.seven.five;
+export const WhitneyHumanitiesCenterSectionSix = themeStories.seven.six;
+
+ItsYourYaleSectionDefault.storyName = 'It’s Your Yale Section Default';
+ItsYourYaleSectionOne.storyName = 'It’s Your Yale Section One';
+ItsYourYaleSectionTwo.storyName = 'It’s Your Yale Section Two';
+ItsYourYaleSectionThree.storyName = 'It’s Your Yale Section Three';
+ItsYourYaleSectionFour.storyName = 'It’s Your Yale Section Four';
+ItsYourYaleSectionFive.storyName = 'It’s Your Yale Section Five';
+ItsYourYaleSectionSix.storyName = 'It’s Your Yale Section Six';

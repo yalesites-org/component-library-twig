@@ -90,7 +90,10 @@ $secondary-menu-sub-max-width: 19rem;
       .link,
       a {
         --color-text-shadow: var(--color-background);
-        --color-link-hover: var(--color-link-hover);
+
+        // Inherited copy colour on hover, declared rather than simulated by a
+        // var() cycle (YaleSites-Internal#1629).
+        --color-link-hover: currentcolor;
       }
 
       a:not([data-link-style]) {
