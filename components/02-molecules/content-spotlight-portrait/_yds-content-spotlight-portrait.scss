@@ -27,6 +27,13 @@ $component-content-spotlight-port-themes: map.deep-get(
   &:not([data-component-theme='default']) {
     padding-block-start: var(--size-spacing-10);
     padding-block-end: var(--size-spacing-10);
+
+    // Paints its own surface, so it publishes the contract. Same shape and
+    // same reason as `_yds-text-with-image.scss`, where the rationale --
+    // including why the accent must not be left to the section -- is written
+    // out.
+    @include tokens.publish-surface(var(--color-background), var(--color-text));
+
     background-color: var(--color-background);
     color: var(--color-text);
   }
@@ -49,7 +56,10 @@ $component-content-spotlight-port-themes: map.deep-get(
       .link,
       .content-spotlight-portrait__text {
         --color-text-shadow: var(--color-spotlight-text-shadow);
-        --color-link-hover: var(--color-link-hover);
+
+        // Inherited copy colour on hover, declared rather than simulated by a
+        // var() cycle (YaleSites-Internal#1629).
+        --color-link-hover: currentcolor;
       }
     }
   }
@@ -250,7 +260,7 @@ $component-content-spotlight-port-themes: map.deep-get(
 .content-spotlight-portrait__overline {
   @include tokens.heading(h6, 'book');
 
-  color: var(--color-text);
+  color: var(--color-section-foreground, var(--color-text));
 }
 
 .content-spotlight-portrait__heading {
@@ -260,11 +270,11 @@ $component-content-spotlight-port-themes: map.deep-get(
 .content-spotlight-portrait__subheading {
   @include tokens.heading(h5, 'book');
 
-  color: var(--color-text);
+  color: var(--color-section-foreground, var(--color-text));
 }
 
 .content-spotlight-portrait__text {
-  color: var(--color-text);
+  color: var(--color-section-foreground, var(--color-text));
 
   a {
     @include atoms.link;

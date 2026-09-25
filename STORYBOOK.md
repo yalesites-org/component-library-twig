@@ -152,9 +152,12 @@ viewport, multiplies `scrollWidth` by `scrollHeight`, and **exits non-zero namin
 the ceiling and by how much**.
 
 A clean run reports the largest story and its headroom, which is the number worth watching — as
-of writing, `Molecules/Meta` sits at 24,286,800px, **97% of the ceiling**, so that component has
-almost none left. `VISREG_MEASUREMENTS_OUT=sizes.json npm run visreg:measure` writes every
-story's measurement if you need to see where a component stands.
+of writing, `Atoms/Images` sits at 22,519,200px, **90% of the ceiling**, so that component has
+little left. `Molecules/Meta` and `Organisms/Calendar` held that spot until a seventh section
+theme pushed both past the ceiling; they now split on section theme as well, which is the move
+to reach for when a component runs out of headroom.
+`VISREG_MEASUREMENTS_OUT=sizes.json npm run visreg:measure` writes every story's measurement if
+you need to see where a component stands.
 
 It runs in CI in `Test`, on every push to a PR, so a story that grows past the ceiling fails
 while you are still working on it rather than at snapshot time.

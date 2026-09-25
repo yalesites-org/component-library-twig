@@ -1,0 +1,83 @@
+{
+  "$comment": [
+    "Pairings that already failed the contrast gate when it landed",
+    "(YaleSites-Internal#1632). The gate ignores exactly these and nothing else,",
+    "so any NEW failure breaks the build immediately.",
+    "",
+    "This is a burn-down list, not an opt-out. contrast-gate.test.mjs enforces",
+    "both directions: an entry that starts passing must be deleted, and an entry",
+    "whose pairing no longer exists must be deleted. Adding an entry to turn a",
+    "red build green is not a fix -- fix the colors.",
+    "",
+    "Regenerate the measured ratios with:",
+    "  node components/00-tokens/colors/contrast-gate.mjs"
+  ],
+  "leakCase": {
+    "failing": 105,
+    "total": 210,
+    "reason": "A section's foreground inheriting onto a block's background, for every (global theme x section theme x block theme) combination. NOT an approved pairing and NOT gated per-pairing -- it is what happens when a component paints a background without publishing a foreground, and Phase 2 owns the surface contract that fixes it. What IS enforced is that the number cannot get worse: a palette or theme change that pushed more combinations below AA would otherwise go unnoticed until #1631 got there.",
+    "ticket": "yalesites-org/YaleSites-Internal#1631"
+  },
+  "knownFailures": {
+    "section/seven/three/border": {
+      "ratio": "2.42",
+      "minimum": 3,
+      "reason": "--color-layout-border was deliberately left alone by the #1613 audit: it is not only a border colour, the CTA atom draws its filled-button background from it, so re-pointing it changes buttons as well as borders.",
+      "ticket": "yalesites-org/YaleSites-Internal#1613"
+    },
+    "section/seven/four/border": {
+      "ratio": "2.99",
+      "minimum": 3,
+      "reason": "Same --color-layout-border exclusion as section/seven/three/border, and the closest of the two to the line -- 2.99:1 against a 3:1 minimum.",
+      "ticket": "yalesites-org/YaleSites-Internal#1613"
+    },
+    "cta/any/three/text": {
+      "ratio": "2.45",
+      "minimum": 4.5,
+      "reason": "button-cta-themes.three publishes its own background/text pair and that pair fails AA normal text. Fixing it is a palette decision for a designer, not something this gate should make unilaterally, so it lands baselined and flagged rather than silently unchecked.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "cta/any/four/text": {
+      "ratio": "1.73",
+      "minimum": 4.5,
+      "reason": "Same as cta/any/three/text and considerably worse -- 1.73:1 is close to invisible. Needs a designer to re-pick either the background or the text colour for button-cta-themes.four.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "safe-slot/two/slot-three/slot-one": {
+      "ratio": "3.17",
+      "minimum": 4.5,
+      "reason": "#1539's safe-foreground rule was derived against slot-nine only, so it does not hold on section theme six's slot-three background. #1613's audit already said as much in prose; the gate is where it becomes visible.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "safe-slot/two/slot-three/slot-six": {
+      "ratio": "4.32",
+      "minimum": 4.5,
+      "reason": "As safe-slot/two/slot-three/slot-one, and only just short at 4.32:1 -- a small palette adjustment would clear it.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "safe-slot/five/slot-three/slot-one": {
+      "ratio": "4.11",
+      "minimum": 4.5,
+      "reason": "As safe-slot/two/slot-three/slot-one, in global theme five. slot-one and slot-six are the same colour in this theme, so the two entries move together.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "safe-slot/five/slot-three/slot-six": {
+      "ratio": "4.11",
+      "minimum": 4.5,
+      "reason": "As safe-slot/five/slot-three/slot-one -- same measured ratio because the theme points both slots at the same colour.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "safe-slot/seven/slot-three/slot-one": {
+      "ratio": "4.04",
+      "minimum": 4.5,
+      "reason": "As safe-slot/two/slot-three/slot-one, in global theme seven.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "safe-slot/seven/slot-four/slot-one": {
+      "ratio": "3.72",
+      "minimum": 4.5,
+      "reason": "The only #1539 failure on a background other than slot-three: global theme seven pairs a pale slot-four with a slot-one that is not dark enough to carry normal text on it.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    }
+  }
+}

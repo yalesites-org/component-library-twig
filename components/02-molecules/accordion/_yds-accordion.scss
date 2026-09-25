@@ -74,8 +74,12 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-accordion-accent: var(--color-slot-five);
   }
 
+  // The accent is drawn as a border, so it has to clear 3:1 against the
+  // gray-100 item background on its own, with no paired foreground to help
+  // it. That rules out slot-nine, the light background tint this used to be.
+  // See 00-tokens/colors/border-accent-contrast.test.mjs for the measurement.
   &[data-component-theme='six'] {
-    --color-accordion-accent: var(--color-slot-nine);
+    --color-accordion-accent: var(--color-slot-seven);
   }
 }
 
@@ -84,13 +88,16 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
   margin-bottom: var(--size-spacing-5);
 
-  [data-component-theme]:not(
-      [data-component-theme='default'],
-      [data-component-theme='two']
-    )
-    .accordion
-    & {
-    color: var(--color-basic-white);
+  // The group heading sits on the SECTION's surface: the accordion items below
+  // paint their own gray-100 fill, but this heading paints nothing, so it has
+  // to take the section's own foreground. Hard-coded white was right for the
+  // dark section themes and wrong for the light ones -- which is why theme
+  // 'two' had to be carved out, and why themes five (a near-white tint) and
+  // six (mid-light) still rendered a white heading on a light background.
+  // Reading the section foreground is correct for all of them by construction,
+  // so the carve-out is no longer needed (YaleSites-Internal#1613).
+  [data-section-theme]:not([data-section-theme='default']) .accordion & {
+    color: var(--color-section-foreground, var(--color-basic-white));
   }
 }
 
@@ -161,8 +168,8 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     }
   }
 
-  [data-global-theme='one'] [data-component-theme='two'] .accordion &,
-  [data-global-theme='five'] [data-component-theme='two'] .accordion & {
+  [data-global-theme='one'] [data-section-theme='two'] .accordion &,
+  [data-global-theme='five'] [data-section-theme='two'] .accordion & {
     background-color: var(--color-basic-white);
   }
 }
@@ -170,12 +177,22 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 .accordion-item__heading {
   @include tokens.body-l;
 
+  // The ACCORDION's own dial, deliberately left on `data-component-theme` when
+  // the section dial was split out (YaleSites-Internal#1630). `.accordion`
+  // carries the attribute and defaults it to `'default'`, so an undialled
+  // accordion is what this is spacing.
+  // -
+  // It is a bare ancestor selector, so before the split it also matched via an
+  // unthemed SECTION -- meaning a dialled accordion inside an unthemed 50/50,
+  // 70/30 or 33/33/33 section picked this margin up too. It no longer does.
+  // That was incidental: the sibling rule below deliberately names `.accordion`
+  // in its path when it means the section, and this one does not.
   [data-component-theme='default'] & {
     margin-bottom: var(--size-spacing-5);
   }
 
   // Add left padding to the heading for non-default themes
-  [data-component-theme]:not([data-component-theme='default']) .accordion & {
+  [data-section-theme]:not([data-section-theme='default']) .accordion & {
     padding-inline-start: var(--size-spacing-5);
   }
 }
@@ -235,7 +252,15 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     max-height: 0;
   }
 
-  // for accordions using themes, the content needs top margin
+  // For accordions using themes, the content needs top margin -- the
+  // ACCORDION's own dial, as the comment says, so left on
+  // `data-component-theme` when the section dial was split out
+  // (YaleSites-Internal#1630). A dialled accordion paints its own gray-100
+  // fill, and this is the padding inside that fill.
+  // -
+  // Bare ancestor selector, so before the split it also matched via a themed
+  // SECTION, giving an UNDIALLED accordion in a themed section a top margin it
+  // paints no fill to justify. It no longer does.
   [data-component-theme]:not([data-component-theme='default']) & {
     > *:first-child {
       margin-top: var(--size-spacing-5);
@@ -282,6 +307,28 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   overflow: visible;
 }
 
+// Same fix as above for the seventy-thirty layout, which switched from its
+// own yds-two-column organism to this shared one. Not extended to
+// fifty-fifty/thirty-thirty-thirty: those already render through yds-layout
+// today, so if their narrower columns needed this, it would already be
+// showing up as a live bug -- extending it there without that evidence would
+// be an unverified behavior change.
+.yds-layout[data-component-layout='seventy-thirty']
+  .yds-layout__primary
+  .layout-builder-block
+  .accordion,
+.yds-layout[data-component-layout='seventy-thirty']
+  .yds-layout__secondary
+  .layout-builder-block
+  .accordion {
+  overflow: visible;
+
+  .accordion__inner,
+  .accordion__controls {
+    overflow: visible;
+  }
+}
+
 // Toggle color follows section background (matches layout-builder.css pattern for
 // .layout-builder__link--add). Nested so base + :hover output before section overrides.
 .layout-builder-block .accordion__toggle-all {
@@ -292,25 +339,25 @@ $accordion-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 
   // All theme base overrides first (same specificity), then all :hover overrides.
-  .yds-layout.layout-builder__layout[data-component-theme='two'] &,
-  .yds-layout.layout-builder__layout[data-component-theme='default'] & {
+  .yds-layout.layout-builder__layout[data-section-theme='two'] &,
+  .yds-layout.layout-builder__layout[data-section-theme='default'] & {
     color: var(--color-gray-800);
   }
 
-  .yds-layout.layout-builder__layout[data-component-theme='one'] &,
-  .yds-layout.layout-builder__layout[data-component-theme='three'] &,
-  .yds-layout.layout-builder__layout[data-component-theme='four'] & {
+  .yds-layout.layout-builder__layout[data-section-theme='one'] &,
+  .yds-layout.layout-builder__layout[data-section-theme='three'] &,
+  .yds-layout.layout-builder__layout[data-section-theme='four'] & {
     color: var(--color-basic-white);
   }
 
-  .yds-layout.layout-builder__layout[data-component-theme='two'] &:hover,
-  .yds-layout.layout-builder__layout[data-component-theme='default'] &:hover {
+  .yds-layout.layout-builder__layout[data-section-theme='two'] &:hover,
+  .yds-layout.layout-builder__layout[data-section-theme='default'] &:hover {
     color: var(--color-link-base);
   }
 
-  .yds-layout.layout-builder__layout[data-component-theme='one'] &:hover,
-  .yds-layout.layout-builder__layout[data-component-theme='three'] &:hover,
-  .yds-layout.layout-builder__layout[data-component-theme='four'] &:hover {
+  .yds-layout.layout-builder__layout[data-section-theme='one'] &:hover,
+  .yds-layout.layout-builder__layout[data-section-theme='three'] &:hover,
+  .yds-layout.layout-builder__layout[data-section-theme='four'] &:hover {
     color: var(--color-basic-white);
     opacity: 0.9;
   }

@@ -48,7 +48,10 @@ $component-taxonomy-display-port-themes: map.deep-get(
       // override text-shadow color for links in component themes
       .taxonomy-display__link {
         --color-text-shadow: var(--color-spotlight-text-shadow);
-        --color-link-hover: var(--color-link-hover);
+
+        // Inherited copy colour on hover, declared rather than simulated by a
+        // var() cycle (YaleSites-Internal#1629).
+        --color-link-hover: currentcolor;
       }
     }
   }
