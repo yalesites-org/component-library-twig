@@ -10,12 +10,13 @@
  * `menu-in-this-section-toggle`, are real interactive UI that editors reach on every page
  * (yalesites-org/YaleSites-Internal#1757 tracks giving them stories).
  *
- * THIS FILE HAS NO EXPIRY, unlike its sibling `control-parity-audit-coverage.test.mjs`. That
- * one guards the inventory while the inventory is being completed and deletes itself once the
- * dispositions are ratified. This one guards a list that stays true afterwards, so the two
- * were split apart on 2026-09-21: a single file cannot both delete itself on ratification and
- * live forever, and welding the two lifetimes together is what turned CI red when the file was
- * restored with the column filled (yalesites-org/component-library-twig#728).
+ * THIS FILE HAS NO EXPIRY, unlike its former sibling `control-parity-audit-coverage.test.mjs`.
+ * That one guarded the inventory while the inventory was being completed, and was deleted when
+ * the dispositions were ratified on 2026-09-25. This one guards a list that stays true
+ * afterwards, so the two were split apart on 2026-09-21: a single file cannot both delete
+ * itself on ratification and live forever, and welding the two lifetimes together is what
+ * turned CI red when the file was restored with the column filled
+ * (yalesites-org/component-library-twig#728).
  *
  * WHAT IT DOES NOT DO, deliberately: it does not fail when a listed component GAINS a story.
  * Closing one of these gaps is the outcome the list exists to provoke, and the previous
