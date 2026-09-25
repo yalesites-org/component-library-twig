@@ -35,7 +35,7 @@
  * layout -- the audio player draws its own controls and video is sized by CSS
  * -- and fetching them made the run depend on a third-party host's mood.
  * Images are deliberately *not* blocked: stories source them from the
- * committed `images/placeholders/` set and those do change the height.
+ * committed `assets/images/placeholders/` set and those do change the height.
  *
  * Which is also why the settle step is time-boxed. `load` has already waited
  * for every image in the initial markup, so the budget only covers the ones
@@ -147,7 +147,7 @@ const BLOCKED_MEDIA = [
 /**
  * Serves the built Storybook over loopback HTTP.
  *
- * Storybook 8's `iframe.html` does not render reliably from `file://`, and the
+ * Storybook's `iframe.html` does not render reliably from `file://`, and the
  * repo has no static-server dependency, so this is Node's own http module
  * rather than a new package.
  *

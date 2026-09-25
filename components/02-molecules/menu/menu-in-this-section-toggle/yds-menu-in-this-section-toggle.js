@@ -1,5 +1,14 @@
 Drupal.behaviors.secondaryMenuToggle = {
   attach(context) {
+    const [secondaryMenuToggleAnchor] = once(
+      'secondary-menu-toggle',
+      '.secondary-menu-toggle',
+      context,
+    );
+    if (!secondaryMenuToggleAnchor) {
+      return;
+    }
+
     const toggleMenu = (ctx) => {
       // Selectors.
       const secondaryMenuToggle = ctx.querySelector('.secondary-menu-toggle');

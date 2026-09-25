@@ -1,0 +1,17 @@
+{
+  "project": {
+    "platform": "drupal",
+    "name": "component-library-twig",
+    "machineName": "component_library_twig"
+  },
+  "variant": {
+    "structureImplementations": [
+      { "name": "tokens", "directory": "./components/00-tokens/" },
+      { "name": "atoms", "directory": "./components/01-atoms/" },
+      { "name": "molecules", "directory": "./components/02-molecules/" },
+      { "name": "organisms", "directory": "./components/03-organisms/" },
+      { "name": "page-layouts", "directory": "./components/04-page-layouts/" },
+      { "name": "page-examples", "directory": "./components/05-page-examples/" }
+    ]
+  }
+}

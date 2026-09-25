@@ -298,16 +298,16 @@ Drupal.behaviors.accordion = {
 
     collapseAllItems(items);
     hideSingleItemToggles(controls);
-    attachItemClickEvent(items);
-    attachToggleButtonClickEvent(controls);
+    attachItemClickEvent(once('accordion-item', accordionItem, context));
+    attachToggleButtonClickEvent(
+      once('accordion-controls', accordionControls, context),
+    );
     openItemFromHash(window.location.hash, context);
 
     // A hash can also arrive after load, from an in-page link or the browser
     // restoring one. Bound once per page rather than once per attach, because
-    // behaviours run again for every AJAX response. The marker is a DOM
-    // attribute rather than core/once, which neither this component's Drupal
-    // library nor the gallery's depends on - taking that dependency for a
-    // single guard would make an undefined `once` break the whole accordion.
+    // behaviours run again for every AJAX response, so a marker on the root
+    // element keeps the window listener from stacking.
     const root = document.documentElement;
 
     if (!root.hasAttribute('data-accordion-hash-bound')) {

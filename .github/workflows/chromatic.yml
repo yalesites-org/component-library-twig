@@ -1,0 +1,90 @@
+name: Chromatic
+
+# Baseline branch strategy.
+#
+# Chromatic baselines are per-branch and are resolved by walking git ancestry, so the
+# trigger set decides whether a run has anything to diff against.
+#
+# Feature PRs target `develop`; `develop` -> `main` cuts the release. That means:
+#   - Chromatic has to run on PUSHES to `develop`, not just on pull requests. Without a
+#     build on the `develop` commit itself, a PR into `develop` has no ancestor baseline
+#     and reports every snapshot as new.
+#   - `main` is a promotion of state that was already reviewed on `develop`, so changes
+#     are auto-accepted there (`autoAcceptChanges` in chromatic.config.json). That
+#     applies to the PUSH build on `main`, whose baseline is the previous release -
+#     without it, that build re-presents hundreds of already-approved snapshots. It does
+#     not apply to the `develop` -> `main` pull request: on a pull_request event
+#     Chromatic takes the branch from the HEAD ref, so a release PR builds as `develop`
+#     and diffs against develop's own baseline.
+#
+# So `develop` is where visual review actually happens.
+#
+# `exitZeroOnChanges` is on to start with (also in chromatic.config.json), so an
+# unreviewed visual diff reports without failing the build while the team calibrates on
+# its first few review cycles. It comes off once baselines exist on `develop` and `main`,
+# the masks from YaleSites-Internal#1603 are in place so known-unstable regions stop
+# producing noise, and the team is ready for an unreviewed diff to block a merge.
+#
+# The `pull_request` list is filtered rather than left open on purpose. An unfiltered
+# `pull_request` trigger fires for a PR into ANY base branch, so stacked branches inside
+# an epic would publish real Chromatic builds and set baselines on branches nobody
+# intends to review.
+#
+# `ready_for_review` is in the types list because it is not one of the defaults
+# (`opened`, `synchronize`, `reopened`). Without it, a PR that was skipped while it was a
+# draft would keep that skipped-but-green check until someone happened to push again -
+# a passing visual check that never ran.
+#
+# TEMPORARY: `1435-emulsify-vite-migration` is in the PUSH list because that epic branch
+# is where the first baseline is taken (YaleSites-Internal#1606) and none of its commits
+# match `develop` or `main`. It is deliberately NOT in the pull_request list: the stacked
+# PRs inside the epic target it, and they must not publish a build before #1606 has taken
+# the baseline. Remove it once yalesites-org/component-library-twig#672 merges.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: ['main', 'develop']
+  push:
+    branches: ['main', 'develop', '1435-emulsify-vite-migration']
+  workflow_dispatch:
+
+jobs:
+  chromatic:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Chromatic resolves baselines by walking git ancestry. The default shallow
+          # clone hides that history, so every snapshot comes back as new.
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          # `.nvmrc` is the single source of truth for the Node version. The other
+          # workflows in this repo hardcode it, which is how versions drift apart.
+          node-version-file: '.nvmrc'
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          # `.npmrc` reads this for the @yalesites-org GitHub Packages registry.
+          YALESITES_BUILD_TOKEN: ${{ secrets.YALESITES_BUILD_TOKEN }}
+
+      - name: Build Storybook
+        # Built here rather than through Chromatic's `buildScriptName` so the build and
+        # the publish stay separate, legible steps and a build failure is not reported as
+        # a Chromatic failure. `storybook:build` already carries the raised heap the Vite
+        # build needs and writes to `.out`.
+        run: npm run storybook:build
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@v18
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          # Draft PRs are still in flux; snapshotting them burns the snapshot budget.
+          skip: ${{ github.event.pull_request.draft == true }}
+          # Everything else - storybookBuildDir, autoAcceptChanges, exitZeroOnChanges -
+          # lives in chromatic.config.json so it is stated once rather than duplicated
+          # between this workflow and local runs.

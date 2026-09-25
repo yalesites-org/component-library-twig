@@ -5,7 +5,7 @@ Drupal.behaviors.textLink = {
     const links = context.querySelectorAll('a');
 
     // Add click event listener for clicking the text
-    const elems = document.querySelectorAll('.copy-trigger');
+    const elems = once('text-link-copy-trigger', '.copy-trigger', document);
     elems.forEach((elem) => {
       elem.addEventListener(
         'click',

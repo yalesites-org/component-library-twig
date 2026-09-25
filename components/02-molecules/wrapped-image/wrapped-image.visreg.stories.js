@@ -22,6 +22,7 @@ export default {
   tags: ['visreg'],
   title: 'Molecules/Wrapped Image/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },
