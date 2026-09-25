@@ -90,3 +90,17 @@ export const AI = themeStories.six;
 export const WhitneyHumanitiesCenter = themeStories.seven;
 
 ItsYourYale.storyName = 'It’s Your Yale';
+
+// Excluded from Chromatic snapshots: every embed here loads live third-party
+// content (Microsoft Forms, SoundCloud, Google Maps) that changes between
+// loads, so it would diff on every run. Set on each story rather than the meta
+// so this file still meets the opt-in rule in chromatic-snapshot-scope.test.mjs.
+// See yalesites-org/YaleSites-Internal#1787.
+const skipSnapshot = { chromatic: { disableSnapshot: true } };
+OldBlues.parameters = skipSnapshot;
+NewHavenGreen.parameters = skipSnapshot;
+ShorelineSummer.parameters = skipSnapshot;
+Onha.parameters = skipSnapshot;
+ItsYourYale.parameters = skipSnapshot;
+AI.parameters = skipSnapshot;
+WhitneyHumanitiesCenter.parameters = skipSnapshot;
