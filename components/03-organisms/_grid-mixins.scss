@@ -1,5 +1,42 @@
+@use 'sass:math';
 @use '../00-tokens/tokens';
 @use '../01-atoms/atoms';
+
+// Container inline-size thresholds for the card grid, derived from the 84rem
+// site width. Named rather than repeated so the card-size dial (#1648) can
+// shift the bands without restating the breakpoints.
+$container-grid-two-up: 34rem;
+$container-grid-widest: 70rem;
+
+// The extra, narrower band small cards get (#1648): two abreast in a region
+// large cards render one-up in. Set from *rendered* region widths, measured in a
+// browser rather than derived from the flex bases, because those bases overflow
+// their row and shrink. Measured (no divider / with divider): fifty-fifty
+// 41 / 39.94rem, seventy-thirty primary 56 / 56rem, thirty-thirty-thirty
+// 26.67 / 25.26rem, seventy-thirty secondary 26 / 23.89rem. 25rem sits below
+// both thirty-thirty-thirty widths, so a thirds column fits two small cards
+// whether or not the section shows dividers.
+// Note the two narrow regions OVERLAP rather than sorting cleanly: with dividers
+// on, a thirty-thirty-thirty column (25.26rem) is narrower than a seventy-thirty
+// sidebar (26rem). No single width threshold can therefore mean "two up in
+// thirds, one up in the sidebar" — that would need the grid to know which region
+// it sits in, which is exactly the ancestor-markup coupling container-grid exists
+// to avoid. So a seventy-thirty sidebar also takes two small cards when the
+// section has no divider. Raising this above 26rem to change that would cost
+// thirds its second column in both divider states, and thirds is the region this
+// band was added for.
+$container-grid-small-two-up: 25rem;
+
+// Flex basis for $columns evenly spaced columns separated by --grid-gutter.
+// Rounded to two decimals so three columns still emits the 33.33% this file
+// has always used.
+@function column-basis($columns) {
+  $percent: math.div(math.round(math.div(100%, $columns) * 100), 100);
+
+  @return calc(
+    #{$percent} - calc(var(--grid-gutter) * #{$columns - 1} / #{$columns})
+  );
+}
 
 @mixin base {
   @include atoms.list-reset;
@@ -41,6 +78,120 @@
     .link-purpose-nobreak {
       white-space: normal;
     }
+  }
+}
+
+// Container-query driven grid for card collections.
+// Card collections sit inside layout regions of varying inline width
+// (full-width, fifty-fifty, thirty-thirty-thirty, seventy-thirty sidebar). The
+// desired column count is a function of the *available* inline width, not the
+// viewport: full-width = 3, half = 2, thirds / sidebar = 1. Rather than couple
+// this file to ancestor layout markup (the `data-component-layout` /
+// `data-component-width` attributes are set in the Drupal layout templates,
+// which live outside this package), we make the cards wrapper a query
+// container and size the cards against its own inline width.
+// Breakpoints (container inline-size, derived from the 84rem site width), all
+// of them from $break-m up:
+//   >= 70rem  -> 3 columns  (full-width region)
+//   34-70rem  -> 2 columns  (fifty-fifty region ~41rem, content width 56rem)
+//   < 34rem   -> 1 column   (thirty-thirty-thirty ~26rem, sidebar ~26rem)
+// Below $break-m the bands do not apply at all and the grid stays one column;
+// see the `single-column-below-break-m` mixin for why.
+@mixin container-grid($gutter: var(--spacing-component-gutter)) {
+  --grid-gutter: #{$gutter};
+
+  @include base;
+
+  container-type: inline-size;
+
+  @include single-column-below-break-m {
+    @container (min-width: #{$container-grid-two-up}) {
+      > * {
+        flex: 0 1 calc(50% - calc(var(--grid-gutter) / 2));
+      }
+    }
+
+    @include container-grid-columns(3);
+  }
+}
+
+// Confines the container bands to $break-m and up, leaving `base`'s 100%
+// flex-basis to hold every card full width below it.
+// -
+// The container bands describe how much room a *layout region* has, which is
+// only a meaningful question once the layout has regions — from $break-m up.
+// Below that the platform has always rendered card grids one column: `primary`,
+// `secondary`, `directory-primary` and `directory-secondary` in this file all
+// start their first column rule at `min-width: $break-m`, and the reference
+// card switches to its horizontal image-beside-text layout between $break-s and
+// $break-m precisely because it can assume it is alone on its row there.
+// -
+// Running the container bands below $break-m broke that assumption: a
+// phone-width full-width region is ~44rem, which is inside the 34-70rem band,
+// so the grid handed back two or three columns while every card in them was
+// still laid out horizontally — narrow columns of thumbnail-sized images.
+// -
+// Storybook cannot show this. Its canvas container is narrower than the
+// viewport, so narrowing the window drops the container under 34rem and yields
+// one column while the viewport is still in the s-to-m band, which looks
+// correct. Only a real page, where the container tracks the viewport, puts the
+// two rules in conflict. (#1648 QA)
+// -
+// Note this cannot be solved by moving the card's rules onto container queries
+// against THIS container: a one-up card on a phone and a fifty-fifty region are
+// both around 41rem of `.card-collection__cards`, so no threshold on that
+// wrapper separates them. It could be solved by querying a different container
+// (making each card's own slot a query container, where the same two cases are
+// about 41rem and about 20rem, or naming a page-width ancestor) - but that
+// rewrites the sizing contract of every rule in _yds-reference-card.scss, and
+// the grid's own bands would still need this floor. The viewport is what
+// distinguishes them most cheaply here, not the only thing that could.
+@mixin single-column-below-break-m {
+  @media (min-width: tokens.$break-m) {
+    @content;
+  }
+}
+
+// The widest band of container-grid on its own, so a card-size variant (#1648)
+// can raise the column count of just that band without re-emitting the grid.
+@mixin container-grid-columns($columns) {
+  @container (min-width: #{$container-grid-widest}) {
+    > * {
+      flex: 0 1 column-basis($columns);
+    }
+  }
+}
+
+// The small end of the card-size dial (#1648): one more column in every band of
+// container-grid, plus the extra narrow band above, because a smaller card fits
+// in less room.
+// Breakpoints (container inline-size):
+//   >= 70rem  -> 4 columns  (full-width region)
+//   34-70rem  -> 3 columns  (fifty-fifty ~41rem, seventy-thirty primary 56rem)
+//   25-34rem  -> 2 columns  (thirty-thirty-thirty ~26rem, sidebar ~26rem)
+//   < 25rem   -> 1 column   (sidebar with a divider ~24rem)
+// As with container-grid, all of these apply from $break-m up only.
+// Still driven by the container's own inline size, so a size is a request for
+// cards of that size and not a column count: an author who picks "small" and
+// then moves the block into a narrower region gets whatever fits there, with no
+// stale stored value to reconcile and nothing to warn about. Emitted in
+// ascending min-width order so the widest matching band wins on source order —
+// every band here has the same specificity.
+@mixin container-grid-small {
+  @include single-column-below-break-m {
+    @container (min-width: #{$container-grid-small-two-up}) {
+      > * {
+        flex: 0 1 column-basis(2);
+      }
+    }
+
+    @container (min-width: #{$container-grid-two-up}) {
+      > * {
+        flex: 0 1 column-basis(3);
+      }
+    }
+
+    @include container-grid-columns(4);
   }
 }
 
@@ -89,18 +240,6 @@
   > * {
     // Media-only grids are always two-up
     flex: 0 1 calc(50% - calc(var(--grid-gutter) / 2));
-  }
-}
-
-@mixin quaternary {
-  --grid-gutter: var(--spacing-component-gutter-secondary);
-
-  @include base;
-
-  > * {
-    @media (min-width: tokens.$break-m) {
-      flex: 0 1 calc(50% - calc(var(--grid-gutter) / 2));
-    }
   }
 }
 
