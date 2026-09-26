@@ -246,8 +246,8 @@ test('the surface contract is published in exactly the expected places', () => {
   //      so the literal declaration lives once in `_surface-contract.scss` and
   //      the call sites do not spell it out.
   //   2. A component publishes from every block that actually paints -- the
-  //      dial loop AND theme six, which is not a `component-themes` key -- so
-  //      one component contributes more than one site.
+  //      dial loop AND its hand-written theme six block -- so one component
+  //      contributes more than one site.
   //
   // Counting FILES rather than declarations survives both, and says the thing
   // the test is really for: this set is the list of surfaces that shadow the
