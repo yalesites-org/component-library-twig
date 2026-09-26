@@ -64,10 +64,10 @@
 {% set latLong = place.latitude ~ ',' ~ place.longitude %}
 {% set get_directions__url = place ? 'https://www.google.com/maps/dir/Current+Location/' ~ latLong : '' %}
 
-{# Set up location display with conditional room #}
+{# Set up location display: place name, then room, either may be missing #}
 {% set location_display = place.name %}
 {% if room %}
-  {% set location_display = location_display ~ ', ' ~ room %}
+  {% set location_display = location_display ? location_display ~ ', ' ~ room : room %}
 {% endif %}
 
 {% if event_experience %}
@@ -348,7 +348,7 @@
         </div>
 
         {# Start Grid of fields #}
-        {% if ticket_cost or event_types or event_meta__cta_primary__href or place or event_audience or event_topics %}
+        {% if ticket_cost or event_types or event_meta__cta_primary__href or place or room or location_details or event_audience or event_topics %}
         <div {{ bem('details-wrapper', [], event_meta__base_class) }}>
           {% if ticket_cost %}
             <div {{ bem('cost', [], event_meta__base_class) }}>
@@ -414,14 +414,25 @@
             </div>
           {% endif %}
 
-          {% if place %}
+          {% if place or room or location_details %}
             <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
               <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
-              <div {{ bem('location', [], event_meta__base_class) }}>
-                {{ location_display }}<br>
-                {{ place.address }}
-                {{ place.city }}, {{ place.state }} {{ place.postal_code }}
-              </div>
+              {% if place or room %}
+                <div {{ bem('location', [], event_meta__base_class) }}>
+                  {{ location_display }}
+                  {% if place %}
+                    <br>
+                    {{ place.address }}
+                    {{ place.city }}, {{ place.state }} {{ place.postal_code }}
+                  {% endif %}
+                </div>
+              {% endif %}
+              {% if location_details %}
+                <div {{ bem('location-details', [], event_meta__base_class) }}>
+                  {{ location_details }}
+                </div>
+              {% endif %}
+              {% if place %}
               <div {{ bem('event-show-map', [], event_meta__base_class) }} is-expanded="false">
                 {% include "@atoms/controls/cta/yds-cta.twig" with {
                   cta__content: event__show_map__icon,
@@ -442,6 +453,7 @@
                   } %}
                 </div>
               </div>
+              {% endif %}
             </div>
           {% endif %}
 

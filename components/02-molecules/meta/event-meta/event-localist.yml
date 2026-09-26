@@ -36,12 +36,15 @@ event_types:
   - name: Music
   - name: Lecture
 place:
+  name: Example Hall
   address: 1120 East Fort Avenue
   city: Baltimore
   state: MD
   postal_code: 21230
   latitude: 39.2704
   longitude: -76.6122
+room: Room 101
+location_details: '<p>Enter from the courtyard on the east side. <a href="https://www.example.com">Accessibility information</a></p>'
 event_audience:
   - name: Audience Name one
   - name: Audience Name two
