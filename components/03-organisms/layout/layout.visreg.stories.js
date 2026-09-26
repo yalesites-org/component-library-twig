@@ -1,4 +1,5 @@
 import layoutTwig from './layout/_layout--example.twig';
+import layoutDividerTwig from './layout/_layout--divider-example.twig';
 import textData from '../../02-molecules/text/text-field.yml';
 import accordionData from '../../02-molecules/accordion/accordion.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
@@ -124,3 +125,43 @@ export const AI = themeStories.six;
 export const WhitneyHumanitiesCenter = themeStories.seven;
 
 ItsYourYale.storyName = 'It’s Your Yale';
+
+/**
+ * The divider takes its colour from the section theme, so it gets its own
+ * sweep of every section theme per layout. Separate stories keep the theme
+ * stories above from growing toward the snapshot pixel limit, and the short
+ * columns in `_layout--divider-example.twig` keep these under it. 70/30 draws
+ * its divider in CSS rather than as an element, so it is covered here too.
+ */
+const renderDivider = (layout, theme) =>
+  layoutDividerTwig({
+    layout__divider: 'true',
+    component__theme: theme,
+    component__layout: layout,
+  });
+
+const renderDividers = () =>
+  createThemeVariations(
+    (theme) =>
+      layoutOptions.map((layout) => renderDivider(layout, theme)).join(''),
+    sectionThemes,
+    'Divider in Every Section Theme',
+    '',
+    'Section Theme',
+  );
+
+const dividerStories = createGlobalThemeStories(
+  renderDividers,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBluesDivider = dividerStories.one;
+export const NewHavenGreenDivider = dividerStories.two;
+export const ShorelineSummerDivider = dividerStories.three;
+export const OnhaDivider = dividerStories.four;
+export const ItsYourYaleDivider = dividerStories.five;
+export const AIDivider = dividerStories.six;
+export const WhitneyHumanitiesCenterDivider = dividerStories.seven;
+
+ItsYourYaleDivider.storyName = 'It’s Your Yale Divider';
