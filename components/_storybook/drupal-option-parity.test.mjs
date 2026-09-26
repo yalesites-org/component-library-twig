@@ -205,3 +205,28 @@ TOKEN_DRIVEN_STORIES.forEach((file) => {
     );
   });
 });
+
+/**
+ * Visreg stories whose component has no `six` in Drupal, so they must loop
+ * over `componentThemesOneToFive`. Reading the full token map would snapshot
+ * a Theme six no editor can produce.
+ */
+const ONE_TO_FIVE_THEME_STORIES = [
+  '01-atoms/videos/video-background/video-background.visreg.stories.js',
+  '02-molecules/banner/image-banner.visreg.stories.js',
+  '02-molecules/pull-quote/pull-quote.visreg.stories.js',
+  '02-molecules/quick-links/quick-links.visreg.stories.js',
+  '02-molecules/tabs/tabs.visreg.stories.js',
+  '02-molecules/taxonomy-display/taxonomy-display.visreg.stories.js',
+  '03-organisms/menu/secondary-nav/secondary-nav.visreg.stories.js',
+  '03-organisms/site-in-this-section/site-in-this-section.visreg.stories.js',
+];
+
+ONE_TO_FIVE_THEME_STORIES.forEach((file) => {
+  test(`${file} shows no component theme Drupal does not offer`, () => {
+    const source = storyFiles.get(file) ?? '';
+
+    assert.match(source, /\bcomponentThemesOneToFive\b/);
+    assert.doesNotMatch(source, /\bcomponentThemes\b/);
+  });
+});

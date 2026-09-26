@@ -3,7 +3,7 @@ import imageData from '../../01-atoms/images/image/image.yml';
 
 import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
-  componentThemes,
+  componentThemesOneToFive,
   globalThemeLabels,
   globalThemes,
   sectionThemes,
@@ -67,7 +67,7 @@ const renderGlobalTheme = () => `
         width: 'site',
         primaryWidth: '100%',
       }),
-    componentThemes,
+    componentThemesOneToFive,
     'All Image Banner Theme Variations',
     '',
     'Image Banner Theme',

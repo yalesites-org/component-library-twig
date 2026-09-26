@@ -69,9 +69,11 @@ export const componentThemes = Object.keys(tokens['component-themes']);
 /**
  * Component themes one to five, for stories whose Drupal control has no `six`
  * Used by In This Section and Secondary Nav (Drupal's `book_navigation`
- * theme setting offers one to five) and Video Background (Drupal exposes no
- * control for it at all; its variations were ratified keep-as-is). Everything
- * else Drupal dials offers `six` (YaleSites-Internal#1680).
+ * theme setting offers one to five), and by Video Background, Image Banner,
+ * Pull Quote, Quick Links, Tabs and Taxonomy Display (Drupal exposes no colour
+ * control for any of them; Video Background's variations were ratified
+ * keep-as-is). Everything else Drupal dials offers `six`
+ * (YaleSites-Internal#1680).
  *
  * @type {string[]}
  */
