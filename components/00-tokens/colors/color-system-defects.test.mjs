@@ -318,6 +318,13 @@ test('themeable colors are not baked in as Sass literals', () => {
  * exclusion list -- a theme excluded on one branch and not the other is the
  * regression the split could most easily smuggle in, and it is invisible in a
  * diff that only reads one branch.
+ *
+ * YaleSites-Internal#1680 removed the section branch: the base asterisk colour
+ * now reads `--color-section-foreground`, which is already white on the dark
+ * sections and dark on the light ones, and the branch measured redundant on
+ * every (global x section) cross. So the section side is now asserted as
+ * "the base rule follows the section foreground", and a section branch, if
+ * one comes back, must still carry the full exclusion list.
  */
 test('light section themes are excluded from white-on-dark form styling', () => {
   const textfields = readFileSync(
@@ -347,6 +354,13 @@ test('light section themes are excluded from white-on-dark form styling', () => 
       'light-theme exclusion guards in _yds-textfields.scss',
   );
 
+  assert.match(
+    flat,
+    /&--required::after \{[^}]*color: var\(--color-section-foreground, var\(--color-gray-600\)\);/,
+    'the base required asterisk must follow the section foreground, which is ' +
+      'what keeps it legible on every section theme without a section branch',
+  );
+
   ['component', 'section'].forEach((dial) => {
     const guard = rule[1].match(
       new RegExp(
@@ -354,13 +368,15 @@ test('light section themes are excluded from white-on-dark form styling', () => 
       ),
     );
 
+    if (dial === 'section' && !guard) return;
+
     assert.ok(
       guard,
       `expected a data-${dial}-theme branch on the white required-asterisk ` +
         `rule; selector list is: ${rule[1].trim()}`,
     );
 
-    ['default', 'two', 'five'].forEach((theme) => {
+    ['default', 'two', 'five', 'six'].forEach((theme) => {
       assert.ok(
         guard[1].includes(`[data-${dial}-theme='${theme}']`),
         `theme '${theme}' has a light background and must be excluded from ` +

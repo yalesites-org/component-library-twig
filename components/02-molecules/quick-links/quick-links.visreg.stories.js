@@ -5,7 +5,7 @@ import quickLinksData from './quick-links.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
 import {
-  componentThemes,
+  componentThemesOneToFive,
   globalThemeLabels,
   globalThemes,
   sectionThemes,
@@ -63,7 +63,7 @@ const renderGlobalTheme = () => {
             width: 'site',
             primaryWidth: '100%',
           }),
-        componentThemes,
+        componentThemesOneToFive,
         'All Quick Links Theme Variations',
         '',
         'Quick Links Theme',

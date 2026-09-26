@@ -8,10 +8,11 @@
  *
  *  1. The link-scoped `--color-text-shadow` block. Themes one-five receive it
  *     from the `@each $theme` loop because they are keys in the
- *     `component-themes` token map. Theme six is not a key in that map, so it
- *     is hand-written -- and a root-only declaration does NOT beat the link
- *     atom's own value for `.text-field a` and heading links. `default` is
- *     absent from that map too, and a block's own colour dial leaks a halo in
+ *     `component-themes` token map. Theme six became a key in
+ *     YaleSites-Internal#1680, but its block stays hand-written so it holds
+ *     against an older tokens release -- and a root-only declaration does NOT
+ *     beat the link atom's own value for `.text-field a` and heading links.
+ *     `default` is not a key, and a block's own colour dial leaks a halo in
  *     a colour nothing paints when the section re-point is missing.
  *  2. One signature for every layout. `yds-layout.twig` is the single place
  *     that emits `class="yds-layout layout"` plus the `data-component-*`
@@ -97,8 +98,9 @@ test('themes one-five get their link-scoped text-shadow from the @each loop', ()
 });
 
 test('section theme six scopes --color-text-shadow to links, not just the root', () => {
-  // Theme six is absent from the `component-themes` token map, so the @each
-  // loop above never emits its link block. Declaring --color-text-shadow only
+  // The @each loop emits a link block for six only when the installed tokens
+  // include the key (YaleSites-Internal#1680), so the hand-written copy is
+  // what guarantees it. Declaring --color-text-shadow only
   // on the section root loses to the link atom's own value for `.text-field a`
   // and heading links, which renders the light descender halo on the
   // slot-three background. Reported on component-library-twig#707.

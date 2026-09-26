@@ -151,8 +151,10 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-link-visited-base: var(--color-slot-seven);
     --color-link-visited-hover: var(--color-slot-seven);
 
-    // Theme six is not a `component-themes` key, so the loop above does not
-    // cover it.
+    // The loop above publishes for six too now that it is a `component-themes`
+    // key (YaleSites-Internal#1680), with the same values, since the
+    // properties it names are re-pointed in this block. Kept so the contract
+    // still holds when a build's installed tokens predate the key.
     @include tokens.publish-surface(
       var(--color-callouts-background),
       var(--color-text),

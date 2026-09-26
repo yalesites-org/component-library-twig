@@ -35,7 +35,12 @@ $form-item-icon-size: 1.7rem;
   font-weight: 500;
 
   &--required::after {
-    color: var(--color-gray-600);
+    // On a light themed section gray-600 is not enough: 2.21-4.63:1 on
+    // section six's slot-three across the seven global themes. The section
+    // foreground clears 4.5:1 on every section background (the safe set
+    // component-library-twig#743 uses), and is unset off a themed section, so
+    // unthemed forms keep gray-600 (YaleSites-Internal#1680).
+    color: var(--color-section-foreground, var(--color-gray-600));
     margin: calc(var(--size-spacing-4) * 1) 0 0 0.2em;
     content: '*';
   }
@@ -43,27 +48,21 @@ $form-item-icon-size: 1.7rem;
   // Light backgrounds must keep the dark asterisk; the marker only turns white
   // because the surface behind it is dark. `five` paints slot-nine (a very
   // light teal) and was missing from this list, so the required-field marker
-  // went white and disappeared (YaleSites-Internal#1628).
+  // went white and disappeared (YaleSites-Internal#1628). `six` paints
+  // slot-nine too and was missing for the same reason (YaleSites-Internal#1680).
   // -
-  // Both dials, spelled out -- see the note in `00-tokens/typography`. A form
-  // can sit on a dark section or inside a dark-dialled block (accordion
-  // content, for one), so the section/block dial split
-  // (YaleSites-Internal#1630) must not silently drop either case.
-  // -
-  // The exclusion list is deliberately IDENTICAL on both branches. This
-  // replaced one bare `[data-component-theme]` selector that matched a section
-  // and a block alike, so anything excluded on one branch and not the other
-  // would be a behaviour change smuggled in by the rename.
+  // Block dial only. A themed SECTION needs no rule here: the base colour above
+  // already reads `--color-section-foreground`, which is white on the dark
+  // sections and dark on the light ones. The section branch this list used to
+  // carry was measured redundant across all 7 x 7 (global x section) crosses
+  // and removed (YaleSites-Internal#1680). A form inside a dark-dialled block
+  // (accordion content, for one) still needs this branch, because not every
+  // block publishes a foreground.
   [data-component-theme]:not(
       [data-component-theme='default'],
       [data-component-theme='two'],
-      [data-component-theme='five']
-    )
-    &,
-  [data-section-theme]:not(
-      [data-section-theme='default'],
-      [data-section-theme='two'],
-      [data-section-theme='five']
+      [data-component-theme='five'],
+      [data-component-theme='six']
     )
     & {
     &::after {
@@ -73,7 +72,15 @@ $form-item-icon-size: 1.7rem;
 }
 
 .form-item__textfield {
-  border: var(--border-thickness-1) solid var(--color-form-item-border);
+  // On a themed section the field's white fill cannot be told apart from the
+  // light section backgrounds (two, five, six), so the border is the only
+  // boundary and gray-400 is 1.0-2.6:1 there. The section foreground clears
+  // 4.5:1 on every section background in all seven global themes, the same
+  // safe set component-library-twig#743 uses for the layout divider. It is
+  // unset outside a themed section, so unthemed fields keep gray-400
+  // (YaleSites-Internal#1680).
+  border: var(--border-thickness-1) solid
+    var(--color-section-foreground, var(--color-form-item-border));
   padding: var(--size-spacing-4);
   width: 100%;
   max-width: 100%;

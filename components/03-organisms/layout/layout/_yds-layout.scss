@@ -166,31 +166,32 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
 
   // Section theme six maps to slot-three, the one palette slot sections did
   // not previously offer (added for parity with the block pickers in #1518).
-  // Unlike themes one-five it is not a key in the `component-themes` token
-  // map, so the `@each` above never emits its `background-color`/`color` --
-  // they are declared here instead. This mirrors `_yds-callout.scss`, whose
-  // `six` theme is handled the same way.
   // slot-three is a mid-light color on all seven global themes (lightness
   // 57%-69%), so it takes the dark-on-light treatment used by themes two and
   // five, not the white-on-dark one used by one/three/four.
   // -
-  // DO NOT "tidy" this into the `@each` above. The loop iterates
-  // `map.deep-get(tokens.$tokens, 'component-themes')`, which has five keys
-  // (one-five). Folding `six` in would not add it to the loop -- it would
-  // delete it, silently, because there is no key for the loop to yield. The
-  // failure is invisible: a themed section would simply stop painting.
+  // `six` is a key in the `component-themes` token map since
+  // YaleSites-Internal#1680, so the `@each` above now emits a block for it too.
+  // What that block covers and what it does not:
   // -
-  // What would let it move inside: a `component-themes.six` entry in the
-  // tokens package (`tokens/base/color.yml`), carrying the same eight slot
-  // values. That is deliberately not done yet -- it changes what renders on
-  // every page already using theme six, so it needs a visual check and a
-  // re-run of the #1634 contrast measurements, which were taken while this
-  // theme was outside the derived path. Tracked on YaleSites-Internal#1634.
+  //   - The slot-to-role mapping below is still REQUIRED. The loop maps every
+  //     theme to slot-one / slot-eight / slot-four; six paints slot-three with
+  //     slot-seven. This block comes after the loop, so it wins. The mapping is
+  //     hand-written for ALL six themes, not just this one -- moving it into
+  //     tokens is a separate, larger change (#1634).
+  //   - `background-color`/`color` and the two link-scoped blocks further down
+  //     are now duplicates of what the loop emits for six, with the same
+  //     values. They are kept on purpose: the loop only yields `six` when the
+  //     installed @yalesites-org/tokens includes it, and a build against an
+  //     older tokens release would otherwise stop painting themed-six sections
+  //     with no error anywhere. Delete them once the minimum tokens version
+  //     guarantees the key.
   // -
-  // Note the slot-to-role mapping below is hand-written for ALL six themes,
-  // not just this one -- the `@each` only re-points `--color-slot-*` and the
-  // background/color pair. Moving the role mapping into tokens is a separate,
-  // larger change (also #1634).
+  // Adding the key changed what the `@each` emits for every page using theme
+  // six, so it was checked as this comment used to ask: every block with a
+  // `six` dial was rendered in all 49 (global x section) crosses before and
+  // after the token change, and the #1634 contrast gate re-run
+  // (YaleSites-Internal#1680). No measured pairing got worse.
   &[data-section-theme='six'] {
     --color-layout-theme: var(--color-slot-three);
     --color-layout-content: var(--color-slot-seven);
@@ -206,10 +207,11 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     background-color: var(--color-layout-theme);
     color: var(--color-layout-content);
 
-    // Themes one-five receive these two link-scoped blocks from the `@each`
-    // loop above, because they are keys in the `component-themes` token map.
-    // Theme six is not, so it needs its own copy -- and the root-level
-    // `--color-text-shadow` declared above is NOT enough on its own:
+    // The `@each` loop above emits these two link-scoped blocks for every
+    // `component-themes` key, which includes six once the installed tokens
+    // have it (YaleSites-Internal#1680). This copy is kept so an older tokens
+    // release still gets them -- and the root-level `--color-text-shadow`
+    // declared above is NOT enough on its own:
     // `_yds-text-field.scss` declares `--color-text-shadow` white on
     // `.text-field` itself, and that intermediate element's own declaration
     // beats the value inherited from this section, so `.text-field a` and
@@ -224,7 +226,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     }
 
     // Same reasoning for link-grid's own link, which the `@each` loop also
-    // covers for themes one-five.
+    // covers.
     .link-grid__link {
       --color-text-shadow: var(--color-layout-theme);
       --color-link-visited-base: var(--color-layout-content);
@@ -245,12 +247,11 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // section that drew a dark halo around every link on the white page.
   // -
   // Themes one-five get this re-point from the `@each` loop above and theme
-  // six from its hand-written copy; `default` is absent from the
-  // `component-themes` token map for the same reason theme six is, so it needs
-  // its own. `--color-basic-white` is the page surface as the rest of the
-  // library states it (`02-molecules/text/_yds-text-field.scss` declares
-  // exactly this for the same halo, on the same grounds), so no new value is
-  // introduced. Scoped to the link element because a declaration on the
+  // six from both the loop and its hand-written copy; `default` is not a
+  // `component-themes` key, so it needs its own. `--color-basic-white` is the
+  // page surface as the rest of the library states it
+  // (`02-molecules/text/_yds-text-field.scss` declares exactly this for the
+  // same halo, on the same grounds), so no new value is introduced. Scoped to the link element because a declaration on the
   // element beats one inherited from an ancestor, which is what the dial's is
   // (component-library-twig#707, extended by #714).
   &[data-section-theme='default'] {

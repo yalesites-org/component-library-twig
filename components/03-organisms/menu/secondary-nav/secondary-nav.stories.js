@@ -1,5 +1,3 @@
-import tokens from '@yalesites-org/tokens/build/json/tokens.json';
-
 // Markup.
 import secondaryNavTwig from './yds-secondary-nav.twig';
 
@@ -11,13 +9,11 @@ import { toArgTypes, toArgs } from '../../../_storybook/component-props';
 // JavaScript
 import './yds-secondary-nav';
 
-const colorPairingsData = Object.keys(tokens['component-themes']);
-
+// Theme options come from secondary-nav-props.yml, not the component-themes
+// token map. Drupal only renders this nav inside In This Section, whose
+// `book_navigation` theme setting offers one to five, while the token map
+// also has `six` (YaleSites-Internal#1680).
 const argTypes = toArgTypes(componentProps);
-argTypes.themeColor = {
-  ...argTypes.themeColor,
-  options: colorPairingsData,
-};
 
 /**
  * Storybook Definition.

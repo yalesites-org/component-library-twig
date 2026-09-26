@@ -29,8 +29,13 @@ export default {
   args: toArgs(componentProps),
 };
 
+// `data-component-layout` is on every section Drupal renders
+// (`yds-layout.twig`), and the caption only follows the section foreground
+// inside one. Without it the caption kept its brown-grey and failed contrast
+// on section themes one, three, four and six -- a failure Drupal never shows
+// (YaleSites-Internal#1680).
 export const Interactive = ({ sectionTheme, aspectRatio }) => `
-  <div class="yds-layout" data-section-theme="${sectionTheme}" data-component-width="site">
+  <div class="yds-layout" data-section-theme="${sectionTheme}" data-component-layout="one-column" data-component-width="site">
     <div class="yds-layout__inner">
       <div class="yds-layout__primary">
         <h3>Responsive Image - ${aspectRatio}</h3>

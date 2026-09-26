@@ -29,7 +29,8 @@ siteSectionTheme:
   description: Color theme applied to the site-in-this-section component (visible when displayed in content)
   detail: >
     Applies a color theme when the component is displayed in content position.
-    Options are derived from the component-themes design tokens.
+    Lists one to five, matching Drupal's book_navigation theme setting, rather
+    than every component-themes token.
   default: one
   options:
     - one

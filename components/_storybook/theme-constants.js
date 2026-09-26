@@ -64,7 +64,22 @@ export const globalThemeLabels = Object.fromEntries(
  * @type {string[]}
  */
 export const componentThemes = Object.keys(tokens['component-themes']);
-// Returns: ['one', 'two', 'three', 'four', 'five']
+// Returns: ['one', 'two', 'three', 'four', 'five', 'six']
+
+/**
+ * Component themes one to five, for stories whose Drupal control has no `six`
+ * Used by In This Section and Secondary Nav (Drupal's `book_navigation`
+ * theme setting offers one to five), and by Video Background, Image Banner,
+ * Pull Quote, Quick Links, Tabs and Taxonomy Display (Drupal exposes no colour
+ * control for any of them; Video Background's variations were ratified
+ * keep-as-is). Everything else Drupal dials offers `six`
+ * (YaleSites-Internal#1680).
+ *
+ * @type {string[]}
+ */
+export const componentThemesOneToFive = componentThemes.filter(
+  (theme) => theme !== 'six',
+);
 
 /**
  * Site header themes (from tokens)

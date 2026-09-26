@@ -58,6 +58,7 @@ accentTheme:
     - three
     - four
     - five
+    - six
   control: select
 
 quoteImage:

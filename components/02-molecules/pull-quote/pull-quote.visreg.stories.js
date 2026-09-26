@@ -6,7 +6,7 @@ import {
   globalThemeLabels,
   globalThemes,
   sectionThemes,
-  componentThemes,
+  componentThemesOneToFive,
 } from '../../_storybook/theme-constants';
 import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
@@ -51,7 +51,7 @@ const renderGlobalTheme = () => {
       )}
       ${createThemeVariations(
         (theme) => renderPullQuote('one', theme),
-        componentThemes,
+        componentThemesOneToFive,
         'All Pull Quote Theme Variations',
         '',
         'Pull Quote Theme',
