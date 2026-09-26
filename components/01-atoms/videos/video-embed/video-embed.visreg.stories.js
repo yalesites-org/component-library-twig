@@ -1,6 +1,6 @@
 import videoEmbedTwig from './yds-video-embed.twig';
 
-import videoEmbedData from './video-embed.yml';
+import STATIC_VIDEO_EMBED from '../../../_storybook/static-video-embed.mjs';
 
 import {
   globalThemeLabels,
@@ -25,7 +25,10 @@ export default {
 const renderGlobalTheme = () => {
   // Render function for video embed variations
   const renderVideoEmbed = (theme) =>
-    createSectionWrapper(theme, videoEmbedTwig(videoEmbedData));
+    createSectionWrapper(
+      theme,
+      videoEmbedTwig({ video_embed__content: STATIC_VIDEO_EMBED }),
+    );
 
   return createThemeVariations(
     renderVideoEmbed,

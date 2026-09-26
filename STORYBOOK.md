@@ -284,6 +284,16 @@ directory there and mounts nothing at a bare `/images/`, so `/images/placeholder
 drifts back to a remote host, and `components/_storybook/fixture-asset-urls.test.mjs` fails
 it if a fixture points at an asset URL no static mount serves.
 
+#### Video embeds
+
+The video fixtures (`video-embed.yml`, `video.yml`) embed a live YouTube player, which paints
+differently on every load. Visreg stories pass `STATIC_VIDEO_EMBED` from
+`components/_storybook/static-video-embed.mjs` as the embed content instead: an iframe in the
+same slot, so the embed's sizing CSS still applies, filled with an inline black page. The player's
+own controls are not covered; that UI is YouTube's. Non-visreg stories keep the live player.
+`components/_storybook/visreg-video-embed.test.mjs` fails the unit suite if a visreg story
+renders the live player.
+
 ## Visual Testing Addon
 
 `@chromatic-com/storybook` is registered in the project's addon list
