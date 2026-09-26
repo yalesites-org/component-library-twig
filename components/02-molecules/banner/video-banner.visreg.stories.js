@@ -1,5 +1,5 @@
 import videoBannerTwig from './video/yds-video-banner.twig';
-import videoBannerData from '../../01-atoms/videos/video-embed/video-embed.yml';
+import STATIC_VIDEO_EMBED from '../../_storybook/static-video-embed.mjs';
 
 import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
@@ -28,7 +28,7 @@ export default {
 
 const renderVideoBanner = (width = 'max') =>
   videoBannerTwig({
-    video_banner__content: videoBannerData.video_embed__content,
+    video_banner__content: STATIC_VIDEO_EMBED,
     video_banner__width: width,
   });
 

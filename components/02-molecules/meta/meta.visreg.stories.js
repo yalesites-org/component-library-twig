@@ -3,7 +3,7 @@ import profileMetaTwig from './profile-meta/yds-profile-meta.twig';
 import resourceMetaTwig from './resource-meta/yds-resource-meta.twig';
 import dateTimeTwig from '../../01-atoms/date-time/yds-date-time.twig';
 import imageData from '../../01-atoms/images/image/image.yml';
-import videoEmbedData from '../../01-atoms/videos/video-embed/video-embed.yml';
+import STATIC_VIDEO_EMBED from '../../_storybook/static-video-embed.mjs';
 import resourceMetaData from './resource-meta/resource-meta.yml';
 
 import {
@@ -70,7 +70,7 @@ const renderSectionThemedMeta = (theme) =>
       image__sizes__1: imageData.responsive_images['2x3'].image__sizes,
       image__alt__1: imageData.responsive_images['2x3'].image__alt,
       image__src__1: imageData.responsive_images['2x3'].image__src,
-      video_embed__content__1: videoEmbedData.video_embed__content,
+      video_embed__content__1: STATIC_VIDEO_EMBED,
     })}
   `,
   );
