@@ -145,7 +145,12 @@ function attachBehaviour(items) {
   });
   const sandbox = {
     Drupal: { behaviors: {} },
-    document: { querySelector: () => new FakeElement() },
+    document: {
+      querySelector: () => new FakeElement(),
+      documentElement: new FakeElement(),
+    },
+    // No hash, so the deep-link opener returns before touching the grid.
+    window: { location: { hash: '' }, addEventListener: () => {} },
   };
 
   vm.createContext(sandbox);
