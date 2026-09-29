@@ -29,6 +29,9 @@ const renderGlobalTheme = () => {
   const renderVideoBackground = (theme) =>
     videoBackgroundTwig({
       ...videoBackgroundData,
+      // A looping video lands on a different frame in every snapshot; this one
+      // shows the same frame for its whole length. See assets/videos/README.md.
+      video_background__content: '/assets/videos/placeholder-static.mp4',
       video_background__button__background_color: theme,
     });
 

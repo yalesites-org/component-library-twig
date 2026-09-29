@@ -43,3 +43,25 @@ ffmpeg -f lavfi -i "gradients=s=1280x720:c0=0x0A2138:c1=0x2A5C8A:c2=0x0A2138:nb_
   -t 10 -r 24 -c:v libx264 -pix_fmt yuv420p -crf 36 -preset slow -movflags +faststart -an \
   assets/videos/placeholder-loop.mp4 -y
 ```
+
+## The static variant
+
+`placeholder-static.mp4` -- 1280x720, 10s at 1 fps, H.264, every frame an intra frame,
+no audio track, 13 KB. It shows one still of the same gradient for its whole length, so
+every frame decodes to identical pixels.
+
+Visual regression stories use this one. A looping video lands on a different frame in
+every snapshot, which reports a diff when nothing changed.
+`components/_storybook/visreg-static-video.test.mjs` fails the unit suite if a visreg
+story can play `placeholder-loop.mp4`, either by importing the fixture or by turning on
+a banner's video. Everything else keeps the looping video so the demos still show motion.
+
+Every-frame-intra and a constant `-qp` are what make the frames identical. With the
+default settings the encoder drifts between frames of a still image.
+
+```bash
+ffmpeg -f lavfi -i "gradients=s=1280x720:c0=0x0A2138:c1=0x2A5C8A:c2=0x0A2138:nb_colors=3:speed=0:d=1" \
+  -frames:v 1 still.png -y
+ffmpeg -loop 1 -i still.png -vf format=yuv420p -t 10 -r 1 -c:v libx264 -g 1 -qp 36 \
+  -preset slow -movflags +faststart -an assets/videos/placeholder-static.mp4 -y
+```
