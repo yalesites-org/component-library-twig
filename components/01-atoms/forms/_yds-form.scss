@@ -289,6 +289,15 @@
     }
   }
 
+  // Keep empty containers out of the page and the accessibility tree: Chosen
+  // fills .chosen-results only on first open, and the message is blank until
+  // something is selected. Only while empty, so Chosen can still measure a
+  // filled list when deciding whether to open upward.
+  .chosen-results:empty,
+  .ys-select-message:empty {
+    display: none;
+  }
+
   @media (max-width: tokens.$break-mobile) {
     .chosen-container {
       border: 1px solid var(--color-basic-black);
