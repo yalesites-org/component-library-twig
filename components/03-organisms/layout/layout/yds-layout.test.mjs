@@ -311,19 +311,22 @@ test('one column is excluded from the default-theme section margins', () => {
 });
 
 /**
- * Body of a nested rule inside `.yds-layout__secondary`, by its selector.
+ * Body of a nested rule inside `.yds-layout__<region>` (secondary unless
+ * given), by its selector.
  *
  * Terminates on a closing brace at the nested rule's own indentation, so the
  * media queries inside it are included rather than cutting the match short.
  */
-function secondaryRule(selector) {
-  const secondary = scss().match(/\.yds-layout__secondary \{([\s\S]*?)\n\}/);
-  assert.ok(secondary, 'the .yds-layout__secondary rule is gone');
+function regionRule(selector, region = 'secondary') {
+  const body = scss().match(
+    new RegExp(`\\.yds-layout__${region} \\{([\\s\\S]*?)\\n\\}`),
+  );
+  assert.ok(body, `the .yds-layout__${region} rule is gone`);
 
   // `\s*` before the `&`: prettier wraps a selector over 80 characters onto
   // the next line, which the compound gated selector is.
   const escaped = selector.replace(/[[\]']/g, (c) => `\\${c}`);
-  const match = secondary[1].match(
+  const match = body[1].match(
     new RegExp(`\\n {2}${escaped}\\s*& \\{([\\s\\S]*?)\\n {2}\\}`),
   );
   return match ? match[1] : null;
@@ -346,7 +349,7 @@ test('the 70/30 separator is drawn only when the Divider toggle is on', () => {
   // which `yds-layout.twig` already emits, compounded onto the layout
   // attribute -- both live on the same element, so a descendant combinator
   // between them would never match.
-  const gated = secondaryRule(SEVENTY_THIRTY_WITH_DIVIDER);
+  const gated = regionRule(SEVENTY_THIRTY_WITH_DIVIDER);
 
   assert.ok(
     gated,
@@ -367,7 +370,7 @@ test('the 70/30 separator is drawn only when the Divider toggle is on', () => {
   // The ungated rule keeps the column sizing and gutter, which a 70/30 needs
   // whether or not a line is drawn -- but it must draw no border, or the gate
   // above is decorative.
-  const ungated = secondaryRule(SEVENTY_THIRTY);
+  const ungated = regionRule(SEVENTY_THIRTY);
   assert.ok(ungated, 'the seventy-thirty secondary rule is gone');
   assert.doesNotMatch(
     ungated,
@@ -387,12 +390,109 @@ test('the 70/30 separator spans the full section height', () => {
   // It sits in the gated rule, alongside the border it exists for: with no
   // separator to span there is nothing to stretch, and leaving it ungated
   // would change the column's height for sections that draw no line.
-  const gated = secondaryRule(SEVENTY_THIRTY_WITH_DIVIDER);
+  const gated = regionRule(SEVENTY_THIRTY_WITH_DIVIDER);
 
   assert.ok(gated, 'the gated seventy-thirty secondary rule is gone');
   assert.match(
     gated,
     /align-self: stretch/,
     'the seventy-thirty separator must stretch, or it stops at the short column',
+  );
+});
+
+/** The flipped 70/30: the narrow column is `__primary`, on the left. */
+const THIRTY_SEVENTY = "[data-component-layout='thirty-seventy']";
+const THIRTY_SEVENTY_WITH_DIVIDER = `${THIRTY_SEVENTY}[data-component-has-divider='true']`;
+
+test('the 30/70 separator is drawn once, not twice', () => {
+  // Same border-drawn separator as 70/30, so the element must stay excluded.
+  const guard = twig().match(/\{%\s*set layout__show_divider =([\s\S]*?)%\}/);
+
+  assert.ok(guard, 'the layout__show_divider guard is gone');
+  assert.match(
+    guard[1],
+    /component__layout != 'thirty-seventy'/,
+    "the .yds-layout__divider element must not render for 'thirty-seventy'",
+  );
+});
+
+test('the 30/70 separator is drawn only when the Divider toggle is on', () => {
+  // Desktop: border-right on the narrow __primary. Mobile: border-top on
+  // __secondary, which follows the narrow column once stacked.
+  const primary = regionRule(THIRTY_SEVENTY_WITH_DIVIDER, 'primary');
+  assert.ok(primary, 'no gated thirty-seventy __primary rule');
+  assert.match(
+    primary,
+    /border-right: var\(--thickness-divider\) solid var\(--color-divider\)/,
+    'the wide-viewport separator must be a border-right on __primary',
+  );
+
+  const secondary = regionRule(THIRTY_SEVENTY_WITH_DIVIDER);
+  assert.ok(secondary, 'no gated thirty-seventy __secondary rule');
+  assert.match(
+    secondary,
+    /border-top: var\(--thickness-divider\) solid var\(--color-divider\)/,
+    'the stacked-viewport separator must be a border-top on __secondary',
+  );
+
+  [regionRule(THIRTY_SEVENTY, 'primary'), regionRule(THIRTY_SEVENTY)].forEach(
+    (ungated) => {
+      assert.ok(ungated, 'an ungated thirty-seventy column rule is gone');
+      assert.doesNotMatch(
+        ungated,
+        /border-(top|right|left):/,
+        'a border outside the data-component-has-divider gate ignores the toggle',
+      );
+    },
+  );
+});
+
+test('the 30/70 separator spans the full section height', () => {
+  const gated = regionRule(THIRTY_SEVENTY_WITH_DIVIDER, 'primary');
+
+  assert.ok(gated, 'the gated thirty-seventy __primary rule is gone');
+  assert.match(
+    gated,
+    /align-self: stretch/,
+    'the thirty-seventy separator must stretch, or it stops at the short column',
+  );
+});
+
+test('the link grid treats the 30/70 narrow column like the 70/30 one', () => {
+  // The narrow column is __secondary on 70/30 and __primary on 30/70.
+  const linkGrid = readFileSync(
+    new URL(
+      '../../../02-molecules/link-grid/_yds-link-grid.scss',
+      import.meta.url,
+    ),
+    'utf8',
+  );
+
+  assert.match(
+    linkGrid,
+    /\.yds-layout\[data-component-layout='thirty-seventy'\] \.yds-layout__primary &/,
+    'the narrow-column link grid rule must cover thirty-seventy __primary',
+  );
+});
+
+test('each 30/70 column has the display type of its 70/30 counterpart', () => {
+  // `.yds-layout__secondary` is a flex column and `.yds-layout__primary` is a
+  // block, so on 70/30 the narrow column is flex and the wide one is block.
+  // 30/70 swaps which region is narrow, so it must swap display too, or
+  // margin collapsing and auto-margin widths differ from 70/30.
+  const narrow = regionRule(THIRTY_SEVENTY, 'primary');
+  assert.ok(narrow, 'the thirty-seventy __primary rule is gone');
+  assert.match(
+    narrow,
+    /^\s*display: flex;/m,
+    'the 30/70 narrow __primary must be flex, like the 70/30 narrow column',
+  );
+
+  const wide = regionRule(THIRTY_SEVENTY);
+  assert.ok(wide, 'the thirty-seventy __secondary rule is gone');
+  assert.match(
+    wide,
+    /^\s*display: block;/m,
+    'the 30/70 wide __secondary must be block, like the 70/30 wide column',
   );
 });
