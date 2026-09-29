@@ -118,14 +118,14 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 
     // slot-three and slot-four are too light for the toggle's divider on its
     // white button (yalesites-org/YaleSites-Internal#1797).
-    --color-in-this-section-toggle-divider: var(--color-slot-two);
+    --color-in-this-section-toggle-divider: var(--color-slot-one);
   }
 
   &[data-component-theme='four'] {
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
     --color-navigation-border: var(--color-slot-four);
-    --color-in-this-section-toggle-divider: var(--color-slot-two);
+    --color-in-this-section-toggle-divider: var(--color-slot-one);
   }
 
   &[data-component-theme='five'] {
