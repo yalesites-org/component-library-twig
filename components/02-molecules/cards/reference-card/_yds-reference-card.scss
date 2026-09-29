@@ -572,10 +572,20 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 }
 
 .reference-card__overline {
+  margin-top: var(--size-spacing-3);
+}
+
+// The department sits above the name, as on the old directory card (#1682),
+// so it takes the overline treatment with the spacing below it instead.
+.reference-card__department {
+  margin-bottom: var(--size-spacing-3);
+}
+
+.reference-card__overline,
+.reference-card__department {
   @include tokens.body-s;
   @include tokens.body-oldstyle-nums;
 
-  margin-top: var(--size-spacing-3);
   color: var(--color-gray-500);
   font-variant-caps: small-caps;
   text-transform: lowercase;
@@ -725,12 +735,6 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   [data-component-theme] & {
     color: var(--color-layout-content, var(--color-gray-500));
   }
-}
-
-.reference-card__department {
-  @include tokens.body-default-condensed;
-
-  margin-top: var(--size-spacing-3);
 }
 
 .reference-card__contact {
