@@ -30,7 +30,12 @@ export default {
   },
 };
 
-const layoutOptions = ['fifty-fifty', 'thirty-thirty-thirty', 'seventy-thirty'];
+const layoutOptions = [
+  'fifty-fifty',
+  'thirty-thirty-thirty',
+  'seventy-thirty',
+  'thirty-seventy',
+];
 
 const paddingOptions = ['default', 'no-top', 'no-bottom', 'no-padding'];
 

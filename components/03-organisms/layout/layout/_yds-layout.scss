@@ -559,6 +559,28 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       margin-top: 0;
     }
   }
+
+  // A 30/70 is a 70/30 flipped: __primary is the narrow column, so it takes
+  // the 70/30 __secondary display and sizing, with the gutter on its right.
+  [data-component-layout='thirty-seventy'] & {
+    display: flex;
+
+    @media (min-width: $break-layout-layout) {
+      flex: 0 1 calc(37.5rem + var(--spacing-component-gutter));
+      margin-right: calc(var(--spacing-component-gutter) * 2);
+      padding-right: var(--spacing-component-gutter);
+    }
+  }
+
+  // The 30/70 separator, gated like the 70/30 one (see __secondary below).
+  // Stacked, it is the border-top on __secondary instead.
+  [data-component-layout='thirty-seventy'][data-component-has-divider='true']
+    & {
+    @media (min-width: $break-layout-layout) {
+      align-self: stretch;
+      border-right: var(--thickness-divider) solid var(--color-divider);
+    }
+  }
 }
 
 .yds-layout__secondary {
@@ -592,6 +614,27 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     }
   }
 
+  // The wide column of a 30/70: the 70/30 __primary display (block) and
+  // sizing, plus the stacked spacing 70/30 gives the column that follows the
+  // other one on mobile.
+  [data-component-layout='thirty-seventy'] & {
+    display: block;
+
+    @media (max-width: $break-layout-layout-max) {
+      padding-top: var(--spacing-page-inner);
+    }
+
+    // Desktop only: stacked, this column comes second, so its first block
+    // keeps the margin that separates it from the narrow column.
+    @media (min-width: $break-layout-layout) {
+      flex: 1 0 var(--size-component-layout-width-content);
+
+      > *:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+
   // The separator, gated on the editor's Divider toggle. fifty-fifty and
   // thirty-thirty-thirty render the `.yds-layout__divider` element, which
   // `yds-layout.twig` only outputs when the toggle is on. A seventy-thirty
@@ -622,6 +665,13 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       border-left: var(--thickness-divider) solid var(--color-divider);
     }
   }
+
+  [data-component-layout='thirty-seventy'][data-component-has-divider='true']
+    & {
+    @media (max-width: $break-layout-layout-max) {
+      border-top: var(--thickness-divider) solid var(--color-divider);
+    }
+  }
 }
 
 .yds-layout__tertiary {
@@ -638,6 +688,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
 // Update font-size for headings based on layout
 h2 {
   [data-component-layout='seventy-thirty'] &,
+  [data-component-layout='thirty-seventy'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
     @include tokens.heading(h3);
   }
@@ -645,6 +696,7 @@ h2 {
 
 h3 {
   [data-component-layout='seventy-thirty'] &,
+  [data-component-layout='thirty-seventy'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
     @include tokens.heading(h4);
   }
@@ -652,6 +704,7 @@ h3 {
 
 h4 {
   [data-component-layout='seventy-thirty'] &,
+  [data-component-layout='thirty-seventy'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
     @include tokens.heading(h5);
   }
