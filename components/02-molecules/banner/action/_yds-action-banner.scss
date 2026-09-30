@@ -158,14 +158,14 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   &[data-component-theme='six'] {
     --color-banner-background: var(--color-slot-nine);
 
-    // Theme six is not a `component-themes` key, so the dial loop above does
-    // not remap `--color-background` for it either. Harmless because the halo
-    // is switched off here outright, but the asymmetry is deliberate rather
-    // than an oversight.
+    // Since YaleSites-Internal#1680 the dial loop above also remaps
+    // `--color-background` for six. The halo is switched off here outright
+    // either way, so that does not change what renders.
     --color-text-shadow: transparent;
 
-    // Theme six is not a `component-themes` key, so the loop above does not
-    // cover it.
+    // The loop above publishes for six too now that it is a `component-themes`
+    // key (YaleSites-Internal#1680), with the same values. Kept so the
+    // contract still holds when a build's installed tokens predate the key.
     @include tokens.publish-surface(
       var(--color-banner-background),
       var(--color-banner-text),

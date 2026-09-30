@@ -254,9 +254,10 @@ test('prose describing the contract is not mistaken for declaring it', () => {
 
 test('a painting block is caught even when another block in the file publishes', () => {
   // The file-level check alone says "this file publishes" and moves on. But
-  // theme six is not a `component-themes` key, so every converted component
-  // needs a SECOND, hand-written publish for it -- and forgetting that one is
-  // the most likely way to get this wrong. Verified against the real tree:
+  // theme six has a hand-written block in every converted component (it paints
+  // slot-nine, not the dial loop's colours), so each of those needs a SECOND
+  // publish -- and forgetting that one is the most likely way to get this
+  // wrong. Verified against the real tree:
   // deleting only the theme-six publish from
   // `_yds-facts-and-figures-group.scss` turns the gate red.
   const source = `

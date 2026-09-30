@@ -24,8 +24,10 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 // rule's specificity — silently breaking every one of those ancestor-level
 // overrides (including ones this mixin has no visibility into, e.g.
 // .site-footer, .reference-card). The only exception that belongs here is
-// theme six, which isn't in the generated component-themes token map and so
-// has no ancestor-level --color-text-shadow to inherit in the first place.
+// theme six, whose blocks paint slot-nine rather than the component-themes
+// background, so the ancestor-level halo from the shared dial rule would be
+// the wrong colour. (Six was not in the token map at all before
+// YaleSites-Internal#1680; the exception predates that and still applies.)
 @mixin descender-halo-defaults {
   // Theme six surfaces should not render descender text-shadow halos.
   // -

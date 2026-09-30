@@ -11,8 +11,9 @@ themeColor:
   required: false
   description: Color theme applied to the secondary navigation component
   detail: >
-    Applies a color theme to the secondary nav. Options are derived from the
-    component-themes design tokens. Maps to menu_theme in the Twig template.
+    Applies a color theme to the secondary nav. Maps to menu_theme in the Twig
+    template. Lists one to five, matching Drupal's book_navigation theme
+    setting, rather than every component-themes token.
   default: one
   options:
     - one
