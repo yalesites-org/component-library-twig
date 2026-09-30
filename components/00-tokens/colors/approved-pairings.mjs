@@ -3,8 +3,8 @@
  * (YaleSites-Internal#1632).
  *
  * A *surface* is anything that publishes a background together with the
- * foreground meant to sit on it. The token package already expresses four of
- * them, in two vocabularies:
+ * foreground meant to sit on it. The token package already expresses five of
+ * them, in three vocabularies:
  *
  * - `component-themes`, `basic-themes` and `button-cta-themes` say it directly,
  *   as `background` / `text` / `heading` on the same object.
@@ -16,6 +16,10 @@
  *   time. The data module is imported rather than the audit script that
  *   re-exports it: that script computes and formats three full reports at module
  *   scope, which the gate has no use for.
+ * - `site-header-themes` and `site-footer-themes` use their own keys: the
+ *   header paints `yale-branding` / `site-branding` on `background`, the footer
+ *   paints `text-color` / `yale-branding` on `background-color`.
+ *   `HEADER_FOOTER_TEXT` is the exact list.
  *
  * This module is only the enumeration. `contrast-gate.mjs` does the arithmetic
  * and owns the pass/fail verdict.
@@ -30,13 +34,10 @@
  * Phase 2's not-yet-agreed surface model into a build failure, and #1631 owns
  * tracking that burn-down as it converts components.
  *
- * `site-header-themes` and `site-footer-themes` are also out, for a different
- * reason: they use a third key vocabulary (`background-color` / `text-color` /
- * `yale-branding`), and `yale-branding` is a wordmark asset rather than a
- * token-painted foreground. Their measured numbers are in the CLI report so the
- * omission is visible rather than silent -- header themes two and three pair the
- * branding colour with their background at 2.19:1 and 1.64:1, which is worth its
- * own ticket and a designer, not a unilateral gate.
+ * The header and footer *accent* borders are not approved pairings either: they
+ * are gated as a ratcheted count by `accentSurvey()` in `contrast-gate.mjs`,
+ * for the same reason as the leak case -- about half of them fail today and the
+ * fix is a design change.
  */
 
 import { createRequire } from 'node:module';
@@ -69,7 +70,15 @@ export const AA_NON_TEXT = WCAG_LEVELS.find(
 ).minimum;
 
 /** The surface families the gate enumerates. Used to detect one going silent. */
-export const PAIRING_KINDS = ['section', 'block', 'basic', 'cta', 'safe-slot'];
+export const PAIRING_KINDS = [
+  'section',
+  'block',
+  'basic',
+  'cta',
+  'safe-slot',
+  'site-header',
+  'site-footer',
+];
 
 /** How many global themes the section pairings must cover. */
 export const GLOBAL_THEME_COUNT = Object.keys(tokens['global-themes']).length;
@@ -196,6 +205,48 @@ function declaredPairings(kind, family) {
   );
 }
 
+/**
+ * Header and footer text, per component theme.
+ *
+ * Neither family declares a foreground next to its background the way the
+ * `component-themes` family does, and they disagree on key names, so each lists
+ * its own `background` key and the keys that paint text on it. They sit outside
+ * `.yds-layout`, so the global theme never changes these values.
+ */
+export const HEADER_FOOTER_TEXT = {
+  'site-header': {
+    family: 'site-header-themes',
+    background: 'background',
+    roles: ['yale-branding', 'site-branding'],
+  },
+  'site-footer': {
+    family: 'site-footer-themes',
+    background: 'background-color',
+    roles: ['text-color', 'yale-branding'],
+  },
+};
+
+function headerFooterPairings() {
+  return Object.entries(HEADER_FOOTER_TEXT).flatMap(
+    ([kind, { family, background, roles }]) =>
+      Object.entries(tokens[family]).flatMap(([surface, theme]) =>
+        roles.map((role) =>
+          pairing({
+            kind,
+            surface,
+            role,
+            background: {
+              name: `${surface}.${background}`,
+              value: theme[background],
+            },
+            foreground: { name: `${surface}.${role}`, value: theme[role] },
+            minimum: AA_NORMAL_TEXT,
+          }),
+        ),
+      ),
+  );
+}
+
 /** The #1539 safe-foreground convention, as an invariant instead of a memo. */
 function safeSlotPairings() {
   const backgrounds = safeForegroundBackgrounds();
@@ -227,5 +278,6 @@ export function approvedPairings() {
     ...declaredPairings('basic', 'basic-themes'),
     ...declaredPairings('cta', 'button-cta-themes'),
     ...safeSlotPairings(),
+    ...headerFooterPairings(),
   ];
 }

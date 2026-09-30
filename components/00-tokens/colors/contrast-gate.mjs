@@ -29,7 +29,11 @@
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 
-import { approvedPairings, AA_NON_TEXT } from './approved-pairings.mjs';
+import {
+  approvedPairings,
+  AA_NON_TEXT,
+  HEADER_FOOTER_TEXT,
+} from './approved-pairings.mjs';
 import {
   SECTION_THEMES,
   resolveGlobalTheme as resolveSlots,
@@ -52,6 +56,7 @@ const resolveGlobalTheme = (themeName) =>
 export const {
   knownFailures: KNOWN_FAILURES,
   leakCase: LEAK_BASELINE,
+  accentBorderCase: ACCENT_BASELINE,
 } = require('./contrast-gate-baseline.json');
 
 /** Attach the measured ratio and verdict to each pairing. */
@@ -129,16 +134,55 @@ export function leakSurvey() {
   return { failing, total };
 }
 
-/** Surfaces the gate does not cover, measured so the gap is visible. */
-function uncoveredSurvey() {
-  return Object.entries(tokens['site-header-themes']).map(([name, theme]) => ({
-    name: `site-header-themes.${name}`,
-    role: 'yale-branding',
-    ratio: contrastRatio(
-      parseHsl(theme.background),
-      parseHsl(theme['yale-branding']),
-    ),
-  }));
+/** The accent dial options, in the order the components name them. */
+const ACCENTS = [
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+];
+
+/**
+ * How many header and footer accent borders fall below 3:1 today, as a number to
+ * watch (YaleSites-Internal#1792).
+ *
+ * The rendered border is always `--color-slot-<accent>` over the component
+ * theme's background. The slot comes from the *global* theme, unswapped: the
+ * header and footer sit outside `.yds-layout`, so `resolveGlobalTheme` does not
+ * apply. Roughly half the combinations fail and cannot be fixed without a
+ * visible design change, so they are a ratcheted count rather than per-pairing
+ * baseline entries -- the same shape as `leakSurvey()`.
+ */
+export function accentSurvey() {
+  return Object.fromEntries(
+    Object.entries(HEADER_FOOTER_TEXT).map(([kind, { family, background }]) => {
+      const failures = [];
+      let total = 0;
+
+      Object.entries(tokens['global-themes']).forEach(
+        ([globalTheme, { colors }]) => {
+          Object.entries(tokens[family]).forEach(([theme, themeTokens]) => {
+            ACCENTS.forEach((accent) => {
+              total += 1;
+              const ratio = contrastRatio(
+                parseHsl(themeTokens[background]),
+                parseHsl(colors[`slot-${accent}`]),
+              );
+              if (ratio === null || ratio < AA_NON_TEXT) {
+                failures.push(`${globalTheme}/${theme}/${accent}`);
+              }
+            });
+          });
+        },
+      );
+
+      return [kind, { failing: failures.length, total, failures }];
+    }),
+  );
 }
 
 const line = (pairing) =>
@@ -148,6 +192,7 @@ const line = (pairing) =>
 /** The human-readable report. Also what the CLI prints. */
 export function formatGateReport(result = gateResult()) {
   const leak = leakSurvey();
+  const accents = accentSurvey();
 
   return [
     'YaleSites contrast gate (YaleSites-Internal#1632)',
@@ -193,17 +238,17 @@ export function formatGateReport(result = gateResult()) {
     `  ${leak.failing} of ${leak.total} below ${AA_NORMAL_TEXT}:1. This number should fall as`,
     '  #1631 converts components to the surface contract.',
     '',
-    'NOT GATED -- site header branding',
+    'NOT GATED PER-PAIRING -- header and footer accent borders',
     '',
-    '  A wordmark asset rather than a token-painted foreground, and stated in a',
-    `  different key vocabulary. Measured here so the gap is visible (${AA_NON_TEXT}:1 would`,
-    '  apply if it were treated as a graphic):',
+    '  --color-slot-<accent> from the global theme over the component theme',
+    `  background, for every (global theme x theme x accent), at ${AA_NON_TEXT}:1. Pre-existing`,
+    '  accent choices; fixing one is a design change. Ratcheted like the leak case.',
     '',
-    ...uncoveredSurvey().map(
-      (entry) =>
-        `  ${entry.name.padEnd(28)} ${formatRatio(entry.ratio).padStart(6)}:1`,
-    ),
-    '',
+    ...Object.entries(accents).flatMap(([kind, survey]) => [
+      `  ${kind}: ${survey.failing} of ${survey.total} below ${AA_NON_TEXT}:1 (global/theme/accent):`,
+      `    ${survey.failures.join(' ')}`,
+      '',
+    ]),
   ]
     .filter((section) => section !== null)
     .join('\n');
