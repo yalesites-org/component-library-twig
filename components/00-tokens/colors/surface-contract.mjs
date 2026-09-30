@@ -10,7 +10,7 @@
  * *it* just painted. Neither palette is wrong on its own; the pairing that
  * reaches the screen is one nobody chose. That is the root cause the Color
  * Surface epic exists to close. `contrast-gate.mjs`'s `leakSurvey()` puts a
- * ceiling on it -- 105 of 210 (global theme x section theme x block theme)
+ * ceiling on it -- 126 of 252 (global theme x section theme x block theme)
  * combinations land below AA. Note that figure is pure token arithmetic: it is
  * the theoretical worst case, and converting components does not move it.
  *

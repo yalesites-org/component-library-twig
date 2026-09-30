@@ -13,8 +13,8 @@
     "  node components/00-tokens/colors/contrast-gate.mjs"
   ],
   "leakCase": {
-    "failing": 105,
-    "total": 210,
+    "failing": 126,
+    "total": 252,
     "reason": "A section's foreground inheriting onto a block's background, for every (global theme x section theme x block theme) combination. NOT an approved pairing and NOT gated per-pairing -- it is what happens when a component paints a background without publishing a foreground, and Phase 2 owns the surface contract that fixes it. What IS enforced is that the number cannot get worse: a palette or theme change that pushed more combinations below AA would otherwise go unnoticed until #1631 got there.",
     "ticket": "yalesites-org/YaleSites-Internal#1631"
   },
