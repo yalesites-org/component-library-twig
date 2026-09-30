@@ -227,6 +227,45 @@
     }
   }
 
+  // A filter with no terms keeps its box, shown as disabled. Stock Chosen
+  // dims it to 0.5 opacity, which would drop the text below WCAG AA contrast.
+  .chosen-container.chosen-disabled {
+    --color-dropdown-border-hover: var(--color-dropdown-border);
+
+    background-color: var(--color-gray-100);
+    cursor: not-allowed;
+    opacity: 1 !important;
+
+    // Match the left padding; the default reserves room for a chevron.
+    padding-right: var(--size-spacing-5);
+
+    // The placeholder must not drive the box width: Chosen sets an inline
+    // width on the input to fit it, so override that and truncate instead.
+    .chosen-choices {
+      background: transparent;
+      min-width: 0;
+    }
+
+    .chosen-choices li.search-field {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .chosen-choices li.search-field input[type='text'] {
+      -webkit-text-fill-color: var(--color-gray-700);
+      background: transparent;
+      color: var(--color-gray-700);
+      cursor: not-allowed;
+      font-size: inherit;
+      min-width: 0;
+      opacity: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100% !important;
+    }
+  }
+
   .search-choice {
     display: none; // Hide selected items as a text message is displayed, when the select is closed.
   }
