@@ -4,7 +4,7 @@ import secondaryNavData from './secondary-nav.yml';
 import './yds-secondary-nav';
 
 import {
-  componentThemes,
+  componentThemesOneToFive,
   sectionThemes,
   globalThemeLabels,
   globalThemes,
@@ -52,7 +52,7 @@ const renderGlobalTheme = () => {
             width: 'site',
             primaryWidth: '100%',
           }),
-        componentThemes,
+        componentThemesOneToFive,
         'All Secondary Nav Theme Variations',
         '',
         'Secondary Nav Theme',

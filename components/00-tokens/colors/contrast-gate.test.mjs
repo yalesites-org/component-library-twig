@@ -158,8 +158,8 @@ test('every surface family still produces the number of pairings it should', () 
   assert.deepEqual(perKind, {
     // 7 global themes x 6 section themes x (content, heading, link, border).
     section: 168,
-    // 5 component themes x (text, heading).
-    block: 10,
+    // 6 component themes x (text, heading).
+    block: 12,
     // 6 basic themes x (text, heading).
     basic: 12,
     // 7 CTA themes x text; button-cta-themes declares no heading.

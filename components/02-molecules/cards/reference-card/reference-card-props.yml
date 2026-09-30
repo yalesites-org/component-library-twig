@@ -28,13 +28,14 @@ collectionType:
   name: Collection Type
   type: select
   required: false
-  description: 'Layout type for the card collection: grid, list, condensed, or single'
+  description: 'Layout type for the card collection: grid, list, condensed, single, or profile-directory'
   default: grid
   options:
     - grid
     - list
     - condensed
     - single
+    - profile-directory
   control: select
 
 featured:

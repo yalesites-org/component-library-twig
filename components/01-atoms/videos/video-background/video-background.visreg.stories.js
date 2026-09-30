@@ -8,7 +8,6 @@ import {
   globalThemeLabels,
   globalThemes,
   sectionThemes,
-  componentThemes,
 } from '../../../_storybook/theme-constants';
 import { createGlobalThemeStories } from '../../../_storybook/global-theme-stories.mjs';
 import {
@@ -40,17 +39,6 @@ const renderGlobalTheme = () => {
         'All Section Theme Variations',
         '',
         'Section Theme',
-      )}
-      ${createThemeVariations(
-        (theme) =>
-          createSectionWrapper('one', renderVideoBackground(theme), {
-            width: 'site',
-            primaryWidth: '100%',
-          }),
-        componentThemes,
-        'All Video Background Theme Variations',
-        '',
-        'Video Background Theme',
       )}
     `;
 };

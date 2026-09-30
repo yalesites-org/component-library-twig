@@ -64,7 +64,19 @@ export const globalThemeLabels = Object.fromEntries(
  * @type {string[]}
  */
 export const componentThemes = Object.keys(tokens['component-themes']);
-// Returns: ['one', 'two', 'three', 'four', 'five']
+// Returns: ['one', 'two', 'three', 'four', 'five', 'six']
+
+/**
+ * Component themes one to five, for stories whose Drupal control has no `six`
+ * Used by In This Section and Secondary Nav only (Drupal's
+ * `book_navigation` theme setting offers one to five). Everything else
+ * Drupal dials offers `six` (YaleSites-Internal#1680).
+ *
+ * @type {string[]}
+ */
+export const componentThemesOneToFive = componentThemes.filter(
+  (theme) => theme !== 'six',
+);
 
 /**
  * Site header themes (from tokens)

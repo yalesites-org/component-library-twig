@@ -311,7 +311,7 @@ export const getGlobalThemes = () => {
  *
  * @example
  * const themes = getComponentThemes();
- * // Returns: ['one', 'two', 'three', 'four', 'five']
+ * // Returns: ['one', 'two', 'three', 'four', 'five', 'six']
  */
 export const getComponentThemes = () => {
   // Import tokens locally to avoid top-level import issues

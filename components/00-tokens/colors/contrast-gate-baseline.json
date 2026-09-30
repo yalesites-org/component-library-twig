@@ -13,9 +13,9 @@
     "  node components/00-tokens/colors/contrast-gate.mjs"
   ],
   "leakCase": {
-    "failing": 105,
-    "total": 210,
-    "reason": "A section's foreground inheriting onto a block's background, for every (global theme x section theme x block theme) combination. NOT an approved pairing and NOT gated per-pairing -- it is what happens when a component paints a background without publishing a foreground, and Phase 2 owns the surface contract that fixes it. What IS enforced is that the number cannot get worse: a palette or theme change that pushed more combinations below AA would otherwise go unnoticed until #1631 got there.",
+    "failing": 126,
+    "total": 252,
+    "reason": "A section's foreground inheriting onto a block's background, for every (global theme x section theme x block theme) combination. NOT an approved pairing and NOT gated per-pairing -- it is what happens when a component paints a background without publishing a foreground, and Phase 2 owns the surface contract that fixes it. What IS enforced is that the number cannot get worse: a palette or theme change that pushed more combinations below AA would otherwise go unnoticed until #1631 got there. Re-measured at 126 of 252 (was 105 of 210) when YaleSites-Internal#1680 added component theme six to the token map: that adds 42 combinations and 21 of them fail, the same half as before. The 21 are the three white-foreground sections (one, three, four) over six's light gray background in each global theme. No existing combination changed. This is an approximation: the survey reads each block theme's token background, and six's is a fixed gray-200, while six blocks actually paint --color-slot-nine, which differs by global theme (gray-200 on one and five, gray-100 on two, three, six and seven, soft-oceanic on four). Measured against the real slot-nine per global theme, the count is the same, 21 failing, in the same three sections, so the figure is left on the survey's existing token-background model rather than special-casing one theme.",
     "ticket": "yalesites-org/YaleSites-Internal#1631"
   },
   "knownFailures": {

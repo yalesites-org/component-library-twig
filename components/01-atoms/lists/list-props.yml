@@ -42,4 +42,6 @@ sectionTheme:
     - two
     - three
     - four
+    - five
+    - six
   control: select

@@ -145,8 +145,11 @@ $facts-and-figures-group-component-themes: map.deep-get(
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
 
-    // Theme six is not a `component-themes` key, so the loop above does not
-    // cover it.
+    // The loop above publishes and paints for six too now that it is a
+    // `component-themes` key (YaleSites-Internal#1680), with the same values,
+    // since the properties it names are re-pointed in this block. This
+    // publish and the two declarations below are kept so six still paints
+    // when a build's installed tokens predate the key.
     @include tokens.publish-surface(
       var(--color-facts-and-figures-theme),
       var(--color-facts-and-figures-content),
