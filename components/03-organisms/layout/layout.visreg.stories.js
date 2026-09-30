@@ -93,7 +93,7 @@ export const LayoutVariations = () => `
 const renderGlobalTheme = () => `
   ${createThemeVariations(
     (theme) =>
-      createSectionWrapper(theme, renderLayout(), {
+      createSectionWrapper(theme, renderLayout({ theme }), {
         width: 'site',
         primaryWidth: '100%',
       }),
