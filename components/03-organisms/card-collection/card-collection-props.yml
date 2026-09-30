@@ -17,6 +17,25 @@ collectionType:
     - condensed
   control: select
 
+cardSize:
+  twigProp: card_collection__card_size
+  name: Card Size
+  type: select
+  required: false
+  description: How big each card in the grid is
+  detail: >
+    A size choice rather than a column count. The grid sizes itself against the
+    inline width of the region it sits in and fits as many cards of the chosen
+    size as will go: large gives 3 across a full-width region, 2 in a
+    fifty-fifty and 1 in anything narrower; small gives 4, then 3, then 2, then
+    1 across the same progression. Every value therefore stays valid when a
+    block moves between regions. Only applies to the grid collection type.
+  default: large
+  options:
+    - large
+    - small
+  control: select
+
 featured:
   twigProp: card_collection__featured
   name: Featured

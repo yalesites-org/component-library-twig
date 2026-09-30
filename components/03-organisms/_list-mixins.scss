@@ -14,7 +14,12 @@
     @include tokens.animate(box-shadow);
 
     padding-bottom: var(--card-collection-spacing);
-    border-bottom: var(--border-thickness-1) solid var(--color-divider-subtle);
+
+    // Use the section's on-theme border so the between-results separator meets
+    // contrast on themed section backgrounds (slots 2/4/5); falls back to the
+    // default subtle divider outside a themed layout.
+    border-bottom: var(--border-thickness-1) solid
+      var(--color-layout-border, var(--color-divider-subtle));
 
     &:hover {
       box-shadow: var(--drop-shadow-level-1-bottom-shadow-only);
