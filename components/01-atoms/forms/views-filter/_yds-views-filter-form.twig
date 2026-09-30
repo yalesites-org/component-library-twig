@@ -1,0 +1,77 @@
+{#
+  Static copy of a Views filter form after Drupal's Chosen library has run, for
+  the visual regression stories. Chosen is a Drupal library and is not loaded
+  in Storybook, so this reproduces its output rather than running it. The
+  "(N) items selected" text is what yds-select.js writes into
+  .ys-select-message.
+
+  - calendar: render the Events calendar wrapper (form#event-calendar-filter-form).
+  - search: placeholder for the Search field.
+  - fields: list of { id, label, options, selected, open }.
+#}
+{% set filter_classes = 'views-exposed-form ys-filter-form ys-filter-form--scaffold' %}
+{% if calendar %}
+<form class="event-calendar-filter-form" id="event-calendar-filter-form">
+  <div class="{{ filter_classes }}">
+{% else %}
+<form class="{{ filter_classes }}">
+{% endif %}
+  <div class="form-item form-item-search">
+    <label class="form-item__label" for="{{ id }}-search">Search</label>
+    <input class="form-text form-item__textfield" type="text" id="{{ id }}-search" placeholder="{{ search }}">
+  </div>
+  {% for field in fields %}
+    {% set count = field.selected|length %}
+    <div class="form-item form-item-select">
+      <label class="form-item__label" for="{{ id }}-{{ field.id }}">{{ field.label }}</label>
+      <div class="form-item__dropdown">
+        <select multiple id="{{ id }}-{{ field.id }}" class="form-select chosen-enable form-item__select" tabindex="-1" style="position: absolute; width: 0; height: 0; clip: rect(0, 0, 0, 0);">
+          {% for option in field.options %}
+            <option{% if option in field.selected %} selected{% endif %}>{{ option }}</option>
+          {% endfor %}
+        </select>
+        <div class="chosen-container chosen-container-multi form-select chosen-enable form-item__select{% if field.open %} chosen-with-drop chosen-container-active{% endif %}" style="width: 100%;">
+          <ul class="chosen-choices">
+            <span class="ys-select-message">{% if count %}({{ count }}) items selected{% endif %}</span>
+            {% for option in field.options %}
+              {% if option in field.selected %}
+                <li class="search-choice"><span>{{ option }}</span><button type="button" tabindex="-1" class="search-choice-close"></button></li>
+              {% endif %}
+            {% endfor %}
+            <li class="search-field">
+              <input class="chosen-search-input{% if not count %} default{% endif %}" type="text" autocomplete="off" placeholder="{% if not count %}Choose some options{% endif %}" style="width: {{ count ? 25 : 211 }}px;">
+            </li>
+          </ul>
+          <div class="chosen-drop">
+            <ul class="chosen-results">
+              {# Chosen highlights the first selectable result when the list opens. #}
+              {% set highlighted = false %}
+              {% if field.open %}
+                {% for option in field.options %}
+                  {% if option in field.selected %}
+                    <li class="result-selected">{{ option }}</li>
+                  {% else %}
+                    <li class="active-result{% if not highlighted %} highlighted{% endif %}">{{ option }}</li>
+                    {% set highlighted = true %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  <div class="form-actions">
+    {% if calendar %}
+      <input class="button button--primary form-submit form-item__textfield" type="submit" value="Apply">
+    {% else %}
+      <input data-cta-theme="one" data-cta-radius="none" data-cta-style="filled" data-cta-outline-weight="2" data-cta-hover-style="fade" class="cta button form-submit form-item__textfield" type="submit" value="Apply">
+    {% endif %}
+  </div>
+{% if calendar %}
+  </div>
+</form>
+{% else %}
+</form>
+{% endif %}

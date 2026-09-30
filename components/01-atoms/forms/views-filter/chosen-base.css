@@ -1,0 +1,138 @@
+/*
+ * The layout rules of Chosen 2.2.1 (web/libraries/chosen/docs/chosen.css on a
+ * Drupal site) that the Views filter stories need. Drupal loads the real
+ * library; Storybook does not, so without these the closed list would show,
+ * the chips would stack as bullets, and the story would not match a site.
+ *
+ * On a site Chosen's stylesheet loads before the theme, so the theme wins a
+ * tie. Storybook loads this file after the theme, so it leaves out the
+ * properties the theme sets on the same selectors: the choices border and
+ * padding, the chip background, the text input padding, the font size, and
+ * the highlighted row's background (only its text color is here). Every other
+ * rule here is copied from Chosen as it is. Left out because the stories do
+ * not use them: single select, drop-up, disabled and group results, the
+ * close icon's hover state, and the active-state colors of the choices.
+ */
+.chosen-container {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  user-select: none;
+}
+
+.chosen-container * {
+  box-sizing: border-box;
+}
+
+.chosen-container .chosen-drop {
+  position: absolute;
+  top: 100%;
+  z-index: 1011;
+  width: 100%;
+  border: 1px solid #aaa;
+  border-top-width: 0;
+  background: #fff;
+  clip-path: inset(100% 100%);
+  margin-top: -1px;
+  border-radius: 0 0 4px 4px;
+  background-clip: padding-box;
+}
+
+.chosen-container.chosen-with-drop .chosen-drop {
+  clip-path: none;
+}
+
+.chosen-container .chosen-results {
+  color: #444;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0 4px 4px 0;
+  padding: 0 0 0 4px;
+  max-height: 240px;
+}
+
+.chosen-container .chosen-results li {
+  display: none;
+  margin: 0;
+  padding: 5px 6px;
+  list-style: none;
+  line-height: 15px;
+  word-wrap: break-word;
+}
+
+.chosen-container .chosen-results li.highlighted {
+  color: #fff;
+}
+
+.chosen-container .chosen-results li.active-result,
+.chosen-container-multi .chosen-drop .result-selected {
+  display: list-item;
+}
+
+.chosen-container-multi .chosen-choices {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  cursor: text;
+}
+
+.chosen-container-multi .chosen-choices li {
+  float: left;
+  list-style: none;
+}
+
+.chosen-container-multi .chosen-choices li.search-field {
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.chosen-container-multi .chosen-choices li.search-field input[type='text'] {
+  margin: 0 3px;
+  outline: none;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  font-size: 100%;
+  line-height: normal;
+  width: 25px;
+}
+
+.chosen-container-multi .chosen-choices li.search-choice {
+  position: relative;
+  margin: 3px 5px 3px 0;
+  padding: 4px 20px 4px 5px;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  max-width: 100%;
+  color: #333;
+  line-height: 12px;
+}
+
+.chosen-container .search-choice-close {
+  position: absolute;
+  right: 3px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border: none;
+  display: block;
+  width: 15px;
+  height: 15px;
+  background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSI1NiIgdmlld0JveD0iMCAwIDU2IDU2Ij48cGF0aCBmaWxsPSIjODg4IiBkPSJNIDI3Ljk5OTkgNTEuOTA2MyBDIDQxLjA1NDYgNTEuOTA2MyA1MS45MDYzIDQxLjA3ODEgNTEuOTA2MyAyOCBDIDUxLjkwNjMgMTQuOTQ1MyA0MS4wMzEyIDQuMDkzNyAyNy45NzY1IDQuMDkzNyBDIDE0Ljg5ODMgNC4wOTM3IDQuMDkzNyAxNC45NDUzIDQuMDkzNyAyOCBDIDQuMDkzNyA0MS4wNzgxIDE0LjkyMTggNTEuOTA2MyAyNy45OTk5IDUxLjkwNjMgWiBNIDE5LjU4NTggMzguNDA2MyBDIDE4LjQ4NDMgMzguNDA2MyAxNy41OTM2IDM3LjUxNTYgMTcuNTkzNiAzNi40MTQxIEMgMTcuNTkzNiAzNS44NzUwIDE3LjgyODAgMzUuNDA2MyAxOC4yMDMwIDM1LjA1NDcgTCAyNS4xODc0IDI4LjAyMzQgTCAxOC4yMDMwIDIwLjk5MjIgQyAxNy44MjgwIDIwLjY2NDEgMTcuNTkzNiAyMC4xNzE5IDE3LjU5MzYgMTkuNjMyOCBDIDE3LjU5MzYgMTguNTU0NyAxOC40ODQzIDE3LjY4NzUgMTkuNTg1OCAxNy42ODc1IEMgMjAuMTI0OSAxNy42ODc1IDIwLjU5MzYgMTcuODk4NCAyMC45NDUyIDE4LjI3MzQgTCAyNy45NzY1IDI1LjI4MTIgTCAzNS4wNTQ2IDE4LjI1IEMgMzUuNDUzMCAxNy44MjgxIDM1Ljg3NDkgMTcuNjQwNiAzNi4zOTA1IDE3LjY0MDYgQyAzNy40OTIxIDE3LjY0MDYgMzguMzgyNyAxOC41MzEyIDM4LjM4MjcgMTkuNjA5NCBDIDM4LjM4MjcgMjAuMTQ4NCAzOC4xOTUyIDIwLjU5MzcgMzcuNzk2OCAyMC45Njg4IEwgMzAuNzY1NSAyOC4wMjM0IEwgMzcuNzczMyAzNS4wMDc4IEMgMzguMTI0OSAzNS4zODI4IDM4LjM1OTMgMzUuODUxNiAzOC4zNTkzIDM2LjQxNDEgQyAzOC4zNTkzIDM3LjUxNTYgMzcuNDY4NyAzOC40MDYzIDM2LjM2NzEgMzguNDA2MyBDIDM1LjgwNDYgMzguNDA2MyAzNS4zMzU4IDM4LjE3MTkgMzQuOTg0MyAzNy44MjAzIEwgMjcuOTc2NSAzMC43ODkwIEwgMjAuOTkyMSAzNy44MjAzIEMgMjAuNjQwNSAzOC4xOTUzIDIwLjEyNDkgMzguNDA2MyAxOS41ODU4IDM4LjQwNjMgWiIvPjwvc3ZnPg==')
+    no-repeat right 0 top 50%;
+  background-size: 15px 15px;
+}
+
+.chosen-container-active .chosen-drop {
+  border-color: #5897fb;
+}
+
+.chosen-container-multi .chosen-choices li.search-choice span {
+  font-size: 95%;
+  word-wrap: break-word;
+}
