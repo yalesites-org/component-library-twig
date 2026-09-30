@@ -68,7 +68,11 @@ test('the toggle divider reads a divider property with a fallback', () => {
 test(`the toggle divider clears ${NON_TEXT_MINIMUM}:1 against white on every component theme in every global theme`, () => {
   const divider = declaredOptions(dividerProperty);
   const fallback = declaredOptions(fallbackProperty);
-  const themes = Object.keys(tokens['component-themes']);
+  // In This Section offers one to five only (Drupal's book_navigation
+  // setting), like `componentThemesOneToFive` in theme-constants.js.
+  const themes = Object.keys(tokens['component-themes']).filter(
+    (theme) => theme !== 'six',
+  );
   const white = parseHsl(tokens.color.basic.white);
 
   // Prove the scrape found every theme before trusting what it did not find.
