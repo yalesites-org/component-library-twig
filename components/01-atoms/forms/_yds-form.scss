@@ -391,6 +391,12 @@ $filter-control-height: 3.125rem; // 50px
       overflow: visible;
     }
 
+    // Size the search field by its typed text again, so it wraps to a new
+    // line instead of shrinking to nothing beside a full chip line.
+    li.search-field {
+      flex-basis: auto;
+    }
+
     li.search-choice {
       max-width: none;
 
