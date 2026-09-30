@@ -30,9 +30,11 @@ import {
 import {
   KNOWN_FAILURES,
   LEAK_BASELINE,
+  ACCENT_BASELINE,
   evaluatePairings,
   gateResult,
   leakSurvey,
+  accentSurvey,
 } from './contrast-gate.mjs';
 
 const evaluated = evaluatePairings(approvedPairings());
@@ -166,6 +168,10 @@ test('every surface family still produces the number of pairings it should', () 
     cta: 7,
     // 7 global themes x 3 safe-foreground backgrounds x 3 safe slots.
     'safe-slot': 63,
+    // 3 header themes x (yale-branding, site-branding).
+    'site-header': 6,
+    // 3 footer themes x (text-color, yale-branding).
+    'site-footer': 6,
   });
 });
 
@@ -226,6 +232,49 @@ test('a fixed leak case lowers the baseline rather than leaving slack', () => {
       '`leakCase.failing` figure in contrast-gate-baseline.json to match, or ' +
       'the ratchet leaves room to slip back to the old number unnoticed.',
   );
+});
+
+// --- Header and footer accent borders: not gated, but ratcheted ----------
+
+test('the header and footer accent borders do not get worse than baseline', () => {
+  Object.entries(accentSurvey()).forEach(([kind, survey]) => {
+    assert.equal(
+      survey.total,
+      ACCENT_BASELINE[kind].total,
+      `the ${kind} accent survey is measuring a different number of ` +
+        'combinations than the baseline recorded. Adding a global theme, ' +
+        'component theme or accent changes this legitimately -- re-measure ' +
+        'with `npm run contrast:gate` and update both numbers together.',
+    );
+
+    assert.ok(
+      survey.failing <= ACCENT_BASELINE[kind].failing,
+      `${kind} accent borders worsened: ${survey.failing} of ${survey.total} ` +
+        `are now below 3:1, against a baseline of ${ACCENT_BASELINE[kind].failing}.`,
+    );
+  });
+});
+
+test('a fixed accent border lowers the baseline rather than leaving slack', () => {
+  Object.entries(accentSurvey()).forEach(([kind, survey]) => {
+    assert.equal(
+      survey.failing,
+      ACCENT_BASELINE[kind].failing,
+      `${kind} accent borders improved to ${survey.failing} of ${survey.total}. ` +
+        `Lower \`accentBorderCase.${kind}.failing\` in ` +
+        'contrast-gate-baseline.json to match, or the ratchet leaves room to slip back to the old number unnoticed.',
+    );
+  });
+});
+
+test('every accent baseline entry documents why it is there and who owns it', () => {
+  Object.entries(ACCENT_BASELINE).forEach(([kind, entry]) => {
+    assert.ok(
+      entry.reason && entry.reason.length > 20,
+      `accent baseline ${kind} needs a reason explaining why it is not fixed`,
+    );
+    assert.match(entry.ticket, /^yalesites-org\/[\w-]+#\d+$/);
+  });
 });
 
 // --- The classifier itself, on synthetic input ---------------------------
