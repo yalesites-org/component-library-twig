@@ -221,6 +221,11 @@ $filter-control-height: 3.125rem; // 50px
     // reads as a doubled edge. Set to 0 to override the base .form-item__dropdown
     // border in _yds-select.scss. (#1366)
     border: 0;
+
+    // The open list has its own search field; the arrow would overlap it.
+    &:has(.chosen-with-drop)::after {
+      display: none;
+    }
   }
 
   .chosen-container {
@@ -256,9 +261,7 @@ $filter-control-height: 3.125rem; // 50px
     // mobile rule further down already borders `.form-item__select` for it.
     // Keying on .chosen-container confines this to the generated div.
     // Only the block padding goes: the inline padding is the gutter before the
-    // first chip. (It is not an arrow gutter — _yds-select.scss sets
-    // `content: none` on .form-item__dropdown::after inside this scaffold, and
-    // .chosen-container-multi has no caret of its own.)
+    // first chip. The arrow's room is reserved on .chosen-choices below.
     padding-block: 0;
 
     &:hover,
@@ -275,6 +278,7 @@ $filter-control-height: 3.125rem; // 50px
   .chosen-choices {
     border: 0;
     padding: 0;
+    padding-right: var(--size-spacing-8); // Keep text clear of the arrow.
 
     // Fill the container's content box so the flex centring below has the whole
     // control height to centre the chip row in, rather than centring inside a
