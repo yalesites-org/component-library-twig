@@ -212,12 +212,6 @@ TOKEN_DRIVEN_STORIES.forEach((file) => {
  * a Theme six no editor can produce.
  */
 const ONE_TO_FIVE_THEME_STORIES = [
-  '01-atoms/videos/video-background/video-background.visreg.stories.js',
-  '02-molecules/banner/image-banner.visreg.stories.js',
-  '02-molecules/pull-quote/pull-quote.visreg.stories.js',
-  '02-molecules/quick-links/quick-links.visreg.stories.js',
-  '02-molecules/tabs/tabs.visreg.stories.js',
-  '02-molecules/taxonomy-display/taxonomy-display.visreg.stories.js',
   '03-organisms/menu/secondary-nav/secondary-nav.visreg.stories.js',
   '03-organisms/site-in-this-section/site-in-this-section.visreg.stories.js',
 ];
@@ -229,4 +223,41 @@ ONE_TO_FIVE_THEME_STORIES.forEach((file) => {
     assert.match(source, /\bcomponentThemesOneToFive\b/);
     assert.doesNotMatch(source, /\bcomponentThemes\b/);
   });
+});
+
+/**
+ * Visreg stories whose component has no color control in Drupal, so the story
+ * must loop over no component theme list at all. It renders at the default
+ * theme and visreg covers only what editors can choose.
+ */
+const NO_COMPONENT_THEME_STORIES = [
+  '01-atoms/videos/video-background/video-background.visreg.stories.js',
+  '02-molecules/banner/image-banner.visreg.stories.js',
+  '02-molecules/pull-quote/pull-quote.visreg.stories.js',
+  '02-molecules/quick-links/quick-links.visreg.stories.js',
+  '02-molecules/tabs/tabs.visreg.stories.js',
+];
+
+NO_COMPONENT_THEME_STORIES.forEach((file) => {
+  test(`${file} loops over no component theme list`, () => {
+    assert.ok(storyFiles.has(file), `${file} not found`);
+    const source = storyFiles.get(file);
+
+    assert.match(source, /\bsectionThemes\b/);
+    assert.doesNotMatch(source, /componentThemes|component-themes/);
+  });
+});
+
+/**
+ * Taxonomy Display's `theme_selection` (TaxonomyDisplayBlock) offers one to
+ * six, so its story loops over the full `componentThemes`.
+ */
+test('taxonomy-display story loops over all six component themes', () => {
+  const file =
+    '02-molecules/taxonomy-display/taxonomy-display.visreg.stories.js';
+  assert.ok(storyFiles.has(file), `${file} not found`);
+  const source = storyFiles.get(file);
+
+  assert.match(source, /\bcomponentThemes\b/);
+  assert.doesNotMatch(source, /\bcomponentThemesOneToFive\b/);
 });
