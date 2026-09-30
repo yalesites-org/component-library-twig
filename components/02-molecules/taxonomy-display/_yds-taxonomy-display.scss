@@ -22,6 +22,36 @@ $component-taxonomy-display-port-themes: map.deep-get(
   &[data-component-theme='default'] {
     padding-block: var(--size-spacing-6);
     background-color: var(--color-gray-100);
+
+    // This variant paints its own gray-100 box but sets no foreground, so
+    // `.taxonomy-display__link` below falls through to `--color-link-base`
+    // from whichever ancestor last set it. Outside a themed section that is
+    // harmless -- nothing above sets it, so it resolves to the tokens.css
+    // root default (blue-medium/gray-700/purple-visited), which already
+    // clears 4.5:1 on gray-100. Inside a themed section, `_yds-layout.scss`
+    // sets `--color-link-base` for the SECTION's background (e.g. white, for
+    // section themes one/three/four), and that value leaks straight through
+    // this box: white links on a near-white box (YaleSites-Internal#1641).
+    // -
+    // Pinning to the same raw palette values the root default already uses
+    // fixes the leak and changes nothing outside a section, because those
+    // are the values already in effect there. Raw palette custom properties
+    // (`--color-blue-medium` etc.) are never reassigned by any theme, so
+    // this holds in all 6 section themes x 7 global themes, unlike the
+    // section-supplied slots it replaces.
+    --color-link-base: var(--color-blue-medium);
+    --color-link-hover: var(--color-gray-700);
+    --color-link-visited-base: var(--color-purple-visited);
+    --color-link-visited-hover: var(--color-purple-visited-hover);
+
+    // Same leak for the box's plain text: the "Audience:" labels and the `,`
+    // separators inherit the section's `color` (white on section themes one,
+    // three and four). Pinned to the white basic theme's text role, which is
+    // the same gray-700 tokens.css uses at :root, so nothing changes outside
+    // a section, and no theme reassigns it.
+    --color-text: var(--basic-themes-white-text);
+
+    color: var(--color-text);
   }
 
   // If we're using a component theme, add padding and set background-color and color;

@@ -159,6 +159,23 @@ test('the two known --color-layout-border failures are still exactly two', () =>
   // count: it fails if a palette change makes the problem WORSE, and it fails
   // if someone fixes them without updating this comment -- either way the next
   // person finds out rather than inheriting a stale claim.
+  //
+  // YaleSites-Internal#1641 re-pointed the two consumers that painted this
+  // token directly as a line with no paired foreground -- `.yds-layout__divider`
+  // (which ALSO carried an undocumented `opacity: 0.5` that independently
+  // defeated the first attempt at this fix; see `divider-opacity-composited.test.mjs`)
+  // and the divider ATOM (`_yds-divider.scss`) -- to `--color-section-foreground`.
+  // Both are confirmed fixed by real render, not just token math: opaque,
+  // pixel-sampled `.yds-layout__divider` measured 4.63:1 / 5.72:1 on the two
+  // Whitney cells this test names, matching the composited-ratio test exactly.
+  // `--color-layout-border` itself is unchanged and still resolves to
+  // slot-four here, still failing 3:1 in the abstract, because the
+  // CTA/pull-quote-accent chain that reaches it through
+  // `--color-section-accent` is deliberately left alone (see the comment in
+  // `_yds-pull-quote.scss` for why pull-quote specifically is a design call,
+  // not an oversight). The active tab's top border no longer reads it on a
+  // themed section; see the tabs row below. This test measures that token,
+  // not any fixed consumer, so the count stays two.
   const NON_TEXT_MINIMUM = 3;
 
   const failing = sectionBackgrounds()
@@ -480,6 +497,48 @@ const SECTION_SURFACE_CONSUMERS = [
     file: '../../02-molecules/meta/publication-meta/_yds-publication-detail.scss',
     fallback: '--color-gray-800',
   },
+  // Added by YaleSites-Internal#1641. The active tab's indicator is its TOP
+  // border. Inside a themed section it painted `--color-section-accent`
+  // (`--color-layout-border`), which measures 2.43:1 and 2.997:1 against the
+  // tab on Whitney section themes three and four -- the same two cells the
+  // "known --color-layout-border failures" test above counts. The section
+  // foreground clears 4.5:1 in every pairing. The bottom `::before` strip is
+  // NOT an indicator; see the mask test below.
+  {
+    name: 'tabs active-tab top border',
+    file: '../../02-molecules/tabs/_yds-tabs.scss',
+    fallback: '--color-action',
+  },
+  // Added by YaleSites-Internal#1641. `.yds-layout__divider` paints
+  // `--color-layout-border` directly as a line with no paired foreground --
+  // unlike the CTA fill/border and pull-quote accent, which reach it
+  // through `--color-section-accent` and are not touched by this fix (see the pull-quote comment for why that one specifically is
+  // left alone). See the "the two known --color-layout-border failures" test
+  // above for why the token itself stays baselined, and
+  // `divider-opacity-composited.test.mjs` for why this source-presence check
+  // alone does not prove the fix actually clears 3:1 -- this element also
+  // carried an `opacity` that independently defeated it.
+  {
+    name: 'layout divider',
+    file: '../../03-organisms/layout/layout/_yds-layout.scss',
+    fallback: '--color-layout-border',
+  },
+  // Added by YaleSites-Internal#1641. The divider ATOM (a separate,
+  // editor-placed component from the layout's own column separator above)
+  // had the same shape of defect: `background: var(--color-section-accent,
+  // var(--color-divider))` reached `--color-layout-border` one hop away,
+  // still 2.42:1 / 2.99:1 on Whitney section themes three/four. Re-pointed to
+  // `--color-section-foreground`, which the component's own docs
+  // (`divider.mdx`) already describe as its colour model
+  // (`--color-divider`) -- see the comment in `_yds-divider.scss` for why
+  // that is the more correct property, not just a safe substitute. No
+  // opacity on this element, so the source-presence check here is sufficient
+  // -- no composited test needed, unlike the layout divider above.
+  {
+    name: 'divider atom',
+    file: '../../01-atoms/divider/_yds-divider.scss',
+    fallback: '--color-divider',
+  },
 ];
 
 SECTION_SURFACE_CONSUMERS.forEach(({ name, file, fallback }) => {
@@ -552,6 +611,25 @@ test('no tab border role is left on a flat colour', () => {
       );
     });
   });
+});
+
+test('the active tab bottom strip stays a mask in the tab background colour', () => {
+  // The `::before` strip covers the tab list's bottom rule so the active tab
+  // reads as joined to its panel. It is meant to match the tab and measure
+  // 1.00:1. Recolouring it adds a bar under the active tab on themed sections
+  // only (YaleSites-Internal#1641 review).
+  const source = readFileSync(
+    new URL('../../02-molecules/tabs/_yds-tabs.scss', import.meta.url),
+    'utf8',
+  ).replace(/\s+/g, ' ');
+  const mask = source.match(/&::before \{([^}]*)\}/);
+
+  assert.ok(mask, 'the active tab ::before mask is gone');
+  assert.match(
+    mask[1],
+    /border-bottom: var\(--size-spacing-3\) solid var\(--color-selected\);/,
+    'the mask must paint --color-selected, the active tab background',
+  );
 });
 
 /**

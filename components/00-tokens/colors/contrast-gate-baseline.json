@@ -22,13 +22,13 @@
     "section/seven/three/border": {
       "ratio": "2.42",
       "minimum": 3,
-      "reason": "--color-layout-border was deliberately left alone by the #1613 audit: it is not only a border colour, the CTA atom draws its filled-button background from it, so re-pointing it changes buttons as well as borders.",
+      "reason": "--color-layout-border was deliberately left alone by the #1613 audit: it is not only a border colour, the CTA atom draws its filled-button background from it, so re-pointing it changes buttons as well as borders. #1641 re-pointed the two consumers that painted this token directly as a line with no paired foreground (.yds-layout__divider in _yds-layout.scss, and the divider atom in _yds-divider.scss) to --color-section-foreground instead. .yds-layout__divider also carried an undocumented opacity: 0.5 that independently defeated the first attempt at this fix by blending the line colour with the section background -- removed, since nothing ties it to anything functional (see divider-opacity-composited.test.mjs). Both consumers are confirmed fixed by real pixel-sampled render, not just token math. --color-layout-border itself is unchanged, and this entry measures the token -- still reached by CTA/Tabs-action/pull-quote-accent through --color-section-accent, deliberately left alone -- not either fixed consumer, so it stays baselined.",
       "ticket": "yalesites-org/YaleSites-Internal#1613"
     },
     "section/seven/four/border": {
       "ratio": "2.99",
       "minimum": 3,
-      "reason": "Same --color-layout-border exclusion as section/seven/three/border, and the closest of the two to the line -- 2.99:1 against a 3:1 minimum.",
+      "reason": "Same --color-layout-border exclusion as section/seven/three/border, and the closest of the two to the line -- 2.99:1 against a 3:1 minimum. Same #1641 divider/divider-atom re-point and opacity removal applies here too.",
       "ticket": "yalesites-org/YaleSites-Internal#1613"
     },
     "cta/any/three/text": {
