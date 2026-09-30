@@ -6,7 +6,7 @@
 
 menuVariation:
   twigProp: menu__variation
-  name: Menu Variation
+  name: Header Variation
   type: select
   required: false
   description: Navigation menu variation controlling the display style
@@ -16,3 +16,7 @@ menuVariation:
     - mega
     - focus
   control: select
+  labels:
+    basic: 'Basic Nav'
+    mega: 'Mega Nav'
+    focus: 'Focus Nav'

@@ -19,10 +19,17 @@ bgColor:
     - five
     - six
   control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
 
 size:
   twigProp: image_banner__size
-  name: Image Size
+  name: Media Size
   type: select
   required: false
   description: 'Image height variation: tall, short, or mini'
@@ -32,6 +39,10 @@ size:
     - short
     - mini
   control: select
+  labels:
+    tall: 'Tall'
+    short: 'Short'
+    mini: 'Mini'
 
 withVideo:
   twigProp: image_banner__video
@@ -61,3 +72,6 @@ width:
     - site
     - full
   control: select
+  labels:
+    site: 'Contained'
+    full: 'Full Width'

@@ -53,7 +53,7 @@ breadcrumbsItems:
 
 isCas:
   twigProp: is_cas
-  name: Is CAS
+  name: CAS Login Required
   type: boolean
   required: false
   description: Whether the content requires CAS authentication

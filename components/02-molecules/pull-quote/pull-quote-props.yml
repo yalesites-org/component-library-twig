@@ -34,6 +34,10 @@ style:
     - bar-right
     - quote-left
   control: select
+  labels:
+    bar-left: 'Bar Left'
+    bar-right: 'Bar Right'
+    quote-left: 'Quote Left'
 
 accentTheme:
   twigProp: pull_quote__accent_theme

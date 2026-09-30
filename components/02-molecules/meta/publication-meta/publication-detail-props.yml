@@ -33,6 +33,10 @@ dateFormat:
     - monthYear
     - full
   control: select
+  labels:
+    year: 'Year'
+    monthYear: 'Month/Year'
+    full: 'Month/Day/Year'
 
 showDescription:
   twigProp: publication_detail__description
