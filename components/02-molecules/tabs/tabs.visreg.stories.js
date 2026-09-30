@@ -6,7 +6,6 @@ import {
   globalThemeLabels,
   globalThemes,
   sectionThemes,
-  componentThemesOneToFive,
 } from '../../_storybook/theme-constants';
 import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
@@ -40,17 +39,6 @@ const renderGlobalTheme = () => {
         'All Section Theme Variations',
         '',
         'Section Theme',
-      )}
-      ${createThemeVariations(
-        (theme) =>
-          createSectionWrapper('one', renderTabs(theme, `-${theme}`), {
-            width: 'site',
-            primaryWidth: '100%',
-          }),
-        componentThemesOneToFive,
-        'All Tabs Theme Variations',
-        '',
-        'Tabs Theme',
       )}
     `;
 };
