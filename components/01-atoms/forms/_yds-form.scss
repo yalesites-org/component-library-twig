@@ -341,12 +341,18 @@ $filter-control-height: 3.125rem; // 50px
       }
     }
 
+    // Chosen pins an inline width on the input to fit its placeholder. Let the
+    // field take only the room left in the row, so the placeholder ends in
+    // "..." before the arrow instead of running under it.
     li.search-field {
+      flex: 1 1 0;
       min-width: 0;
 
       input[type='text'] {
         font-family: inherit;
+        max-width: 100%;
         padding: 0;
+        text-overflow: ellipsis;
       }
     }
   }
