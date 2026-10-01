@@ -52,7 +52,7 @@ featured:
 
 withImage:
   twigProp: reference_card__image
-  name: With Image
+  name: Show Teaser Image
   type: boolean
   required: false
   description: Whether to display an image with the card
@@ -60,7 +60,7 @@ withImage:
   control: boolean
 
 showEyebrow:
-  name: Show Eyebrow
+  name: Show Teaser Lead-in
   type: boolean
   required: false
   description: Whether to display the eyebrow text above the heading

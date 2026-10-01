@@ -20,3 +20,9 @@ tabsTheme:
     - four
     - five
   control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'

@@ -25,6 +25,13 @@ themeColor:
     - five
     - six
   control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
 
 lineTreatment:
   twigProp: link_grid__line_treatment
@@ -39,3 +46,8 @@ lineTreatment:
     - all_light_lines
     - no_lines
   control: select
+  labels:
+    default: 'Default'
+    all_strong_lines: 'All Strong Lines'
+    all_light_lines: 'All Light Lines'
+    no_lines: 'No Lines'

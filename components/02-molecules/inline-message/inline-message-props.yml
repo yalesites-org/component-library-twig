@@ -62,6 +62,13 @@ themeColor:
     - five
     - six
   control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
 
 linkContent:
   twigProp: inline_message__link__content

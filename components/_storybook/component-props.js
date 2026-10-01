@@ -1,8 +1,12 @@
 /**
  * Converts a componentProps YAML definition to Storybook argTypes.
  *
- * Handles: name, description, options, control type, table.category
- * (Required/Optional), table.defaultValue, and table.type.
+ * Handles: name, description, options, control type, labels,
+ * table.category (Required/Optional), table.defaultValue, and table.type.
+ *
+ * `labels` is an optional map of option value to display label. It becomes
+ * `control.labels`, so the Controls panel shows the words editors see in
+ * Drupal while the stored option values stay unchanged. It needs `control`.
  *
  * @param {Object} props - Parsed YAML componentProps object
  * @returns {Object} Storybook-compatible argTypes
@@ -23,7 +27,14 @@ export function toArgTypes(props) {
       name: prop.name,
       description: prop.description,
       ...(prop.options ? { options: prop.options } : {}),
-      ...(prop.control ? { control: { type: prop.control } } : {}),
+      ...(prop.control
+        ? {
+            control: {
+              type: prop.control,
+              ...(prop.labels ? { labels: prop.labels } : {}),
+            },
+          }
+        : {}),
       table: {
         category: prop.required ? 'Required' : 'Optional',
         defaultValue:

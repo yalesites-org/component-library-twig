@@ -50,16 +50,22 @@ layoutOption:
     - seventy-thirty
     - thirty-seventy
   control: select
+  labels:
+    one-column: 'One column'
+    fifty-fifty: 'Two column (50/50)'
+    thirty-thirty-thirty: 'Three column (33/33/33)'
+    seventy-thirty: 'Two column (70/30)'
+    thirty-seventy: 'Two column (30/70)'
 
 layoutPadding:
   twigProp: layout__padding
-  name: Padding
+  name: Section Padding Options
   type: select
   required: false
   description: Vertical padding configuration for the layout component
   default: default
   options:
-    Default (current padding): default
+    Default: default
     No top padding: no-top
     No bottom padding: no-bottom
     No padding (top and bottom): no-padding
@@ -85,3 +91,11 @@ theme:
     - five
     - six
   control: select
+  labels:
+    default: 'Default - No Color'
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'

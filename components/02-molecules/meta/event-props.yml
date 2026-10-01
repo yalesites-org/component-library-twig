@@ -41,7 +41,7 @@ withImage:
 
 format:
   twigProp: event_meta__format
-  name: Format
+  name: Event Experience
   type: select
   required: false
   description: 'Event format: In-person, Online, or Hybrid'
@@ -51,6 +51,10 @@ format:
     - Online
     - Hybrid
   control: select
+  labels:
+    In-person: 'In-Person'
+    Online: 'Virtual'
+    Hybrid: 'Hybrid'
 
 address:
   twigProp: event_meta__address

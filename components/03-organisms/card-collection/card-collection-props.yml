@@ -33,7 +33,7 @@ featured:
 
 withOverlay:
   twigProp: reference_card__overlay
-  name: Overlay
+  name: Show Pinned Label
   type: boolean
   required: false
   description: Show an overlay label on reference cards (e.g., Pinned)

@@ -39,7 +39,7 @@ dividerColor:
 
 width:
   twigProp: divider__width
-  name: Divider width
+  name: Divider Width
   type: select
   required: false
   description: Width of the divider as a percentage
@@ -56,7 +56,7 @@ width:
 
 position:
   twigProp: divider__position
-  name: Divider position
+  name: Divider Position
   type: select
   required: false
   description: Horizontal alignment of the divider
@@ -68,6 +68,9 @@ position:
     - left
     - center
   control: select
+  labels:
+    left: 'Left'
+    center: 'Center'
 
 sectionTheme:
   twigProp: data-section-theme
@@ -85,3 +88,11 @@ sectionTheme:
     - five
     - six
   control: select
+  labels:
+    default: 'Default - No Color'
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'

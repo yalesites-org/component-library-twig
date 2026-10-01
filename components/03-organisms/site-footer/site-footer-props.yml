@@ -27,6 +27,10 @@ siteFooterTheme:
     site-footer-themes design tokens.
   default: one
   control: select
+  labels:
+    one: 'Base & White'
+    two: 'Action & Dark Gray'
+    three: 'Highlight & Yale Blue'
 
 siteFooterAccent:
   twigProp: site_footer__accent
@@ -45,6 +49,15 @@ siteFooterAccent:
     - seven
     - eight
   control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
+    seven: 'Seven'
+    eight: 'Eight'
 
 siteFooterVariation:
   twigProp: site_footer__variation
@@ -57,3 +70,6 @@ siteFooterVariation:
     - basic
     - mega
   control: select
+  labels:
+    basic: 'Basic'
+    mega: 'Mega'

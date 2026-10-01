@@ -28,10 +28,14 @@ primaryNavPosition:
     - center
     - right
   control: select
+  labels:
+    left: 'Left'
+    center: 'Center'
+    right: 'Right'
 
 menuVariation:
   twigProp: site_header__menu__variation
-  name: Menu Variation
+  name: Header Variation
   type: select
   required: false
   description: Display style for the primary navigation menu
@@ -41,6 +45,10 @@ menuVariation:
     - mega
     - focus
   control: select
+  labels:
+    basic: 'Basic Nav'
+    mega: 'Mega Nav'
+    focus: 'Focus Nav'
 
 siteHeaderImage:
   twigProp: site_header__background_image
@@ -74,6 +82,10 @@ siteHeaderTheme:
     site-header-themes design tokens.
   default: one
   control: select
+  labels:
+    one: 'Base & White'
+    two: 'Action & Dark Gray'
+    three: 'Highlight & Yale Blue'
 
 siteHeaderAccent:
   twigProp: site_header__accent
@@ -92,6 +104,15 @@ siteHeaderAccent:
     - seven
     - eight
   control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
+    seven: 'Seven'
+    eight: 'Eight'
 
 siteWideHeaderName:
   twigProp: site_header__branding_name

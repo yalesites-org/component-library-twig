@@ -22,10 +22,18 @@ sectionTheme:
     - five
     - six
   control: select
+  labels:
+    default: 'Default - No Color'
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
 
 componentTheme:
   twigProp: cta__component_theme
-  name: Component Theme (dial)
+  name: 'Button Theme (dial)'
   type: select
   required: false
   description: Theme color for the CTA button from the design system dial
@@ -42,3 +50,11 @@ componentTheme:
     - six
     - seven
   control: select
+  labels:
+    one: 'Base'
+    two: 'Action'
+    three: 'Highlight'
+    four: 'Subtle'
+    five: 'Deep'
+    six: 'Yale Blue'
+    seven: 'Gray 800'
