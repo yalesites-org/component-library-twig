@@ -222,8 +222,10 @@ $filter-control-height: 3.125rem; // 50px
     // border in _yds-select.scss. (#1366)
     border: 0;
 
-    // The open list has its own search field; the arrow would overlap it.
-    &:has(.chosen-with-drop)::after {
+    // Hide the arrow while the list is open (its search field would sit under
+    // it) and on a disabled filter, which has nothing to open.
+    &:has(.chosen-with-drop)::after,
+    &:has(.chosen-disabled)::after {
       display: none;
     }
   }
@@ -452,6 +454,47 @@ $filter-control-height: 3.125rem; // 50px
         background-color: var(--color-gray-700);
         color: var(--color-basic-white);
       }
+    }
+  }
+
+  // A filter with no terms keeps its box, shown as disabled. Stock Chosen
+  // dims it to 0.5 opacity, which would drop the text below WCAG AA contrast.
+  .chosen-container.chosen-disabled {
+    --color-dropdown-border-hover: var(--color-dropdown-border);
+
+    background-color: var(--color-gray-100);
+    cursor: not-allowed;
+    opacity: 1 !important;
+
+    // Match the left padding; the default reserves room for a chevron.
+    padding-right: var(--size-spacing-5);
+
+    // The placeholder must not drive the box width: Chosen sets an inline
+    // width on the input to fit it, so override that and truncate instead.
+    // No arrow here, so drop the room .chosen-choices keeps for it.
+    .chosen-choices {
+      background: transparent;
+      min-width: 0;
+      padding-right: 0;
+    }
+
+    .chosen-choices li.search-field {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .chosen-choices li.search-field input[type='text'] {
+      -webkit-text-fill-color: var(--color-gray-700);
+      background: transparent;
+      color: var(--color-gray-700);
+      cursor: not-allowed;
+      font-size: inherit;
+      min-width: 0;
+      opacity: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100% !important;
     }
   }
 
