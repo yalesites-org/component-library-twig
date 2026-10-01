@@ -507,7 +507,7 @@ test('70/30 and 30/70 separators match the 50/50 divider element', () => {
   const source = scss();
 
   assert.match(
-    source,
+    readFileSync(new URL('../_layout-divider.scss', import.meta.url), 'utf8'),
     /^\$layout-divider-border: var\(--border-thickness-2\) solid\s+var\(--color-section-foreground, var\(--color-layout-border\)\);$/m,
     '$layout-divider-border must be thickness-2 in the section foreground',
   );

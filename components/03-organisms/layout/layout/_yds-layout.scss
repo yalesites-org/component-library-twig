@@ -2,17 +2,12 @@
 @use '../../../00-tokens/functions/map';
 @use '../../../01-atoms/atoms';
 @use '../../grid-mixins' as grid;
+@use '../layout-divider' as *;
 
 $global-layout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $layout-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 $break-layout-layout: tokens.$break-2xl;
 $break-layout-layout-max: $break-layout-layout - 0.05;
-
-// The 70/30 and 30/70 column separator, drawn as a border. Same colour and
-// thickness as the `.yds-layout__divider` element 50/50 and 33/33/33 render,
-// so every multi-column section draws the same line (YaleSites-Internal#1830).
-$layout-divider-border: var(--border-thickness-2) solid
-  var(--color-section-foreground, var(--color-layout-border));
 
 .yds-layout {
   --color-layout-border: var(--color-slot-one);
