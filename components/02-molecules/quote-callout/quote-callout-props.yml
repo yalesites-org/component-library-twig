@@ -32,6 +32,10 @@ style:
     - quote
     - image
   control: select
+  labels:
+    bar: 'Bar'
+    quote: 'Quote'
+    image: 'Image'
 
 quoteAlignment:
   twigProp: quote_callout__quote_alignment
@@ -44,6 +48,9 @@ quoteAlignment:
     - left
     - right
   control: select
+  labels:
+    left: 'Left'
+    right: 'Right'
 
 accentTheme:
   twigProp: quote_callout__accent_theme
@@ -58,7 +65,15 @@ accentTheme:
     - three
     - four
     - five
+    - six
   control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
 
 quoteImage:
   twigProp: quote_callout__quote_image

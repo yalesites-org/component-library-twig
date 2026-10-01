@@ -40,7 +40,7 @@ export const Interactive = ({
   });
 
   return `
-    <div class="yds-layout" data-component-theme="${sectionTheme}">
+    <div class="yds-layout" data-section-theme="${sectionTheme}">
       <div class="yds-layout__inner" data-component-width="site" style="
         --color-divider: var(--color-${dividerColor});
         --width-theme-divider: var(--layout-width-${width});
@@ -99,7 +99,7 @@ export const DividersPosition = () => `
 DividersPosition.tags = ['!dev'];
 
 export const DividersColor = () => `
-  <div class="yds-layout" data-component-theme="one">
+  <div class="yds-layout" data-section-theme="one">
     <div class="yds-layout__inner" data-component-width="site" style="--color-divider: var(--color-gray-500);">
       <div class="yds-layout__primary" style="width: 100%">
         <p>Gray divider</p>
@@ -109,7 +109,7 @@ export const DividersColor = () => `
       </div>
     </div>
   </div>
-  <div class="yds-layout" data-component-theme="two">
+  <div class="yds-layout" data-section-theme="two">
     <div class="yds-layout__inner" data-component-width="site" style="--color-divider: var(--color-blue-yale);">
       <div class="yds-layout__primary" style="width: 100%">
         <p>Blue Yale divider</p>
@@ -119,7 +119,7 @@ export const DividersColor = () => `
       </div>
     </div>
   </div>
-  <div class="yds-layout" data-component-theme="three">
+  <div class="yds-layout" data-section-theme="three">
     <div class="yds-layout__inner" data-component-width="site" style="--color-divider: var(--color-basic-brown-gray);">
       <div class="yds-layout__primary" style="width: 100%">
         <p>Brown-gray divider</p>

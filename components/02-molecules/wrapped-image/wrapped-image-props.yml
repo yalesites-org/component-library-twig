@@ -16,7 +16,7 @@ caption:
 
 imageAlignment:
   twigProp: wrapped_image__alignment
-  name: Image Alignment
+  name: Image Position
   type: select
   required: false
   description: Position of the image within the text content flow
@@ -25,6 +25,9 @@ imageAlignment:
     - left
     - right
   control: select
+  labels:
+    left: 'Image Left'
+    right: 'Image Right'
 
 imageStyle:
   twigProp: wrapped_image__style
@@ -37,3 +40,6 @@ imageStyle:
     - floated
     - offset
   control: select
+  labels:
+    floated: 'Inline'
+    offset: 'Offset'

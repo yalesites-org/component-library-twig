@@ -9,7 +9,16 @@ $form-item-icon-size: 1.7rem;
   --color-form-item-border-focus: var(--color-gray-800);
   --color-form-item-placeholder: var(--color-gray-600);
   --color-form-item-error: var(--color-alert-emergency-background-color);
-  --color-form-item-description: var(--color-gray-500);
+
+  // Help text under a field is drawn on the enclosing surface, not on the
+  // white input, so a flat neutral measured 2.62:1 on a section themed `one`
+  // (component-library-twig#721 review). Same fallback pattern as everything
+  // else in this phase: unchanged off a themed section, follows the section on
+  // one (YaleSites-Internal#1628).
+  --color-form-item-description: var(
+    --color-section-foreground,
+    var(--color-gray-500)
+  );
 
   margin-bottom: var(--size-spacing-7);
   max-width: $form-item-max-width;
@@ -26,14 +35,34 @@ $form-item-icon-size: 1.7rem;
   font-weight: 500;
 
   &--required::after {
-    color: var(--color-gray-600);
+    // On a light themed section gray-600 is not enough: 2.21-4.63:1 on
+    // section six's slot-three across the seven global themes. The section
+    // foreground clears 4.5:1 on every section background (the safe set
+    // component-library-twig#743 uses), and is unset off a themed section, so
+    // unthemed forms keep gray-600 (YaleSites-Internal#1680).
+    color: var(--color-section-foreground, var(--color-gray-600));
     margin: calc(var(--size-spacing-4) * 1) 0 0 0.2em;
     content: '*';
   }
 
+  // Light backgrounds must keep the dark asterisk; the marker only turns white
+  // because the surface behind it is dark. `five` paints slot-nine (a very
+  // light teal) and was missing from this list, so the required-field marker
+  // went white and disappeared (YaleSites-Internal#1628). `six` paints
+  // slot-nine too and was missing for the same reason (YaleSites-Internal#1680).
+  // -
+  // Block dial only. A themed SECTION needs no rule here: the base colour above
+  // already reads `--color-section-foreground`, which is white on the dark
+  // sections and dark on the light ones. The section branch this list used to
+  // carry was measured redundant across all 7 x 7 (global x section) crosses
+  // and removed (YaleSites-Internal#1680). A form inside a dark-dialled block
+  // (accordion content, for one) still needs this branch, because not every
+  // block publishes a foreground.
   [data-component-theme]:not(
       [data-component-theme='default'],
-      [data-component-theme='two']
+      [data-component-theme='two'],
+      [data-component-theme='five'],
+      [data-component-theme='six']
     )
     & {
     &::after {
@@ -43,7 +72,15 @@ $form-item-icon-size: 1.7rem;
 }
 
 .form-item__textfield {
-  border: var(--border-thickness-1) solid var(--color-form-item-border);
+  // On a themed section the field's white fill cannot be told apart from the
+  // light section backgrounds (two, five, six), so the border is the only
+  // boundary and gray-400 is 1.0-2.6:1 there. The section foreground clears
+  // 4.5:1 on every section background in all seven global themes, the same
+  // safe set component-library-twig#743 uses for the layout divider. It is
+  // unset outside a themed section, so unthemed fields keep gray-400
+  // (YaleSites-Internal#1680).
+  border: var(--border-thickness-1) solid
+    var(--color-section-foreground, var(--color-form-item-border));
   padding: var(--size-spacing-4);
   width: 100%;
   max-width: 100%;

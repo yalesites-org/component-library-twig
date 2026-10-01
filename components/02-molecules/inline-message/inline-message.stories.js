@@ -14,6 +14,14 @@ const iconOptions = ['_none', ...Object.keys(iconsConfig.icons || {})];
 const argTypes = toArgTypes(componentProps);
 if (argTypes.iconName) {
   argTypes.iconName.options = iconOptions;
+  // Show the same human labels Drupal does; the stored value stays the key.
+  argTypes.iconName.control = {
+    ...argTypes.iconName.control,
+    labels: {
+      _none: iconsConfig.config?.none_label || '- None -',
+      ...iconsConfig.icons,
+    },
+  };
 }
 
 /**

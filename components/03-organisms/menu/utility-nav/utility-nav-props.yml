@@ -33,7 +33,7 @@ linkUrl:
 
 search:
   twigProp: utility_nav__search
-  name: Search
+  name: Enable Search Form
   type: boolean
   required: false
   description: Whether to display the search input field

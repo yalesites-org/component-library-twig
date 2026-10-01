@@ -31,6 +31,12 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
       --color-slot-six: var(--component-themes-#{$theme}-slot-six);
       --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
       --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
+
+      @include tokens.publish-surface(
+        var(--color-callouts-background),
+        var(--color-text),
+        var(--color-action)
+      );
     }
   }
 
@@ -73,7 +79,7 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-action-secondary: var(--color-slot-one);
     --color-text: var(--color-basic-white);
     --color-heading: var(--color-basic-white);
-    --color-link-base: var(--color-slot-white);
+    --color-link-base: var(--color-basic-white);
     --color-link-visited-hover: var(--color-basic-white);
     --color-link-visited-base: var(--color-basic-white);
   }
@@ -144,6 +150,16 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-link-hover: var(--color-slot-seven);
     --color-link-visited-base: var(--color-slot-seven);
     --color-link-visited-hover: var(--color-slot-seven);
+
+    // The loop above publishes for six too now that it is a `component-themes`
+    // key (YaleSites-Internal#1680), with the same values, since the
+    // properties it names are re-pointed in this block. Kept so the contract
+    // still holds when a build's installed tokens predate the key.
+    @include tokens.publish-surface(
+      var(--color-callouts-background),
+      var(--color-text),
+      var(--color-action)
+    );
   }
 }
 

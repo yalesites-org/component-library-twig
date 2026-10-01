@@ -71,6 +71,9 @@ profileImageOrientation:
     - landscape
     - portrait
   control: select
+  labels:
+    landscape: 'Landscape'
+    portrait: 'Portrait'
 
 profileImageAlignment:
   twigProp: profile_meta__image_alignment
@@ -83,6 +86,9 @@ profileImageAlignment:
     - left
     - right
   control: select
+  labels:
+    left: 'Left'
+    right: 'Right'
 
 profileImageStyle:
   twigProp: profile_meta__image_style
@@ -95,3 +101,6 @@ profileImageStyle:
     - inline
     - outdent
   control: select
+  labels:
+    inline: 'Inline'
+    outdent: 'Outdent'

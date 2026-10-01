@@ -51,6 +51,13 @@ bgColor:
     - five
     - six
   control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
 
 linkStyle:
   twigProp: banner__link__style
@@ -77,6 +84,10 @@ contentLayout:
     - left
     - right
   control: select
+  labels:
+    bottom: 'Bottom'
+    left: 'Left'
+    right: 'Right'
 
 buttonAlignment:
   twigProp: banner__button__alignment
@@ -90,6 +101,10 @@ buttonAlignment:
     - center
     - right
   control: select
+  labels:
+    left: 'Left'
+    center: 'Center'
+    right: 'Right'
 
 buttonStyleConsistency:
   twigProp: banner__button__style__consistency
@@ -124,3 +139,6 @@ width:
     - site
     - full
   control: select
+  labels:
+    site: 'Contained'
+    full: 'Full Width'

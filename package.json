@@ -10,6 +10,9 @@
     "build": "webpack --config ./webpack/webpack.prod.js",
     "build-storybook": "npm run storybook:build",
     "chromatic": "chromatic --storybook-build-dir .out",
+    "contrast:foregrounds": "node components/00-tokens/colors/foreground-purity.mjs",
+    "contrast:gate": "node components/00-tokens/colors/contrast-gate.mjs",
+    "contrast:surfaces": "node components/00-tokens/colors/surface-contract.mjs",
     "develop": "concurrently --raw 'npm run webpack' 'npm run storybook'",
     "husky:commit-msg": "commitlint --edit $1",
     "husky:pre-commit": "lint-staged",
@@ -67,7 +70,7 @@
   "dependencies": {
     "@drupal/once": "^1.0.1",
     "@storybook/storybook-deployer": "^2.8.16",
-    "@yalesites-org/tokens": "^1.31.0",
+    "@yalesites-org/tokens": "^1.40.1",
     "add-attributes-twig-extension": "^0.1.0",
     "bem-twig-extension": "^0.1.1",
     "clean-webpack-plugin": "^4.0.0",
