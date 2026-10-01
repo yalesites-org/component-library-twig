@@ -19,6 +19,7 @@ export default {
   tags: ['visreg'],
   title: 'Molecules/Accordion/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     controls: { disable: true },
   },
 };

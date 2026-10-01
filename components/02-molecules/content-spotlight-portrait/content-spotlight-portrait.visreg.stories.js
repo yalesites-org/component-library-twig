@@ -23,6 +23,7 @@ export default {
   tags: ['visreg'],
   title: 'Organisms/Content Spotlight/Content Spotlight Portrait/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },

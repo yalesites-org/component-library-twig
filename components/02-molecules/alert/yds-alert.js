@@ -1,7 +1,7 @@
 Drupal.behaviors.alert = {
   attach(context) {
     // Selectors
-    const alerts = context.querySelectorAll('.alert');
+    const alerts = once('alert', '.alert', context);
     const alertToggle = '.alert__toggle';
     // Classes and States
     const alertId = 'data-alert-id';

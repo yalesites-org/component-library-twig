@@ -1,5 +1,5 @@
 // Libraries.
-@use '~normalize.css/normalize';
+@use 'normalize.css/normalize';
 
 // Global Config.
 @use 'global-config';
@@ -11,7 +11,7 @@
 @use '04-page-layouts/page-layouts';
 
 // Tokens.
-@import '~@yalesites-org/tokens/build/css/tokens.css';
+@import '@yalesites-org/tokens/build/css/tokens.css';
 
 // ys_links
 @import '../lib/ys_link/css/ys-link.css';

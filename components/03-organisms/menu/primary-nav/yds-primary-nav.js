@@ -1,7 +1,10 @@
 Drupal.behaviors.primaryNav = {
   attach(context) {
     // Selectors
-    const primaryNav = context.querySelector('.primary-nav');
+    const [primaryNav] = once('primary-nav', '.primary-nav', context);
+    if (!primaryNav) {
+      return;
+    }
     const primaryNavToggles = context.querySelectorAll(
       '.primary-nav__toggle--level-0',
     );

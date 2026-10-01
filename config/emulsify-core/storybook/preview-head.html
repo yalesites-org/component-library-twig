@@ -1,0 +1,25 @@
+<!-- Load the Yale fonts in StoryBook -->
+<link rel="stylesheet" href="https://yale-webfonts.yalespace.org/fonts.min.css" />
+
+<!-- Font Awesome, served by Core's /assets staticDir mount rather than imported
+     from preview.js: that mount serves anything under assets/ as text/css, which
+     a JS module import rejects. Relative hrefs keep a Storybook build served
+     from a subpath working. -->
+<link rel="stylesheet" href="assets/fonts/fontawesome/css/fontawesome.min.css" />
+<link rel="stylesheet" href="assets/fonts/fontawesome/css/regular.min.css" />
+<link rel="stylesheet" href="assets/fonts/fontawesome/css/solid.min.css" />
+
+<!-- Drupal core adds a `js` class to <html> as soon as JS runs, and components
+     use it to reveal content that only makes sense once JS can populate it --
+     read-time is hidden outright without it, because its value is computed at
+     runtime. Storybook has no Drupal bootstrap to add the class, so read-time
+     rendered `display: none` here and the component looked empty. Setting it in
+     the head, the same place and timing Drupal does, keeps that CSS contract
+     honest without inventing a Storybook-only selector.
+
+     Deliberately NOT `yds-storybook-cl`: that class is the other half of the
+     read-time selector, but it also drives a `.yds-layout { margin-block: 0 }`
+     branch, so enabling it would shift layout spacing across many stories. -->
+<script>
+  document.documentElement.classList.add('js');
+</script>

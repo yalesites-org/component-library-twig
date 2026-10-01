@@ -56,10 +56,10 @@ const selfEntry = path.relative(projectRoot, selfPath);
 /**
  * Tracked files that can carry prose, config, or code. Binaries and fonts cannot.
  *
- * `.cjs` currently matches nothing -- on this branch the root configs are `.js`
- * (`release.config.js`). It is here because the Vite migration renames them
- * (`release.config.cjs`, `.eslintrc.cjs`, `commitlint.config.cjs`, ...), and holding the line
- * as that chain merges forward is this guard's whole job.
+ * `.cjs` is live on this branch: the Vite migration renamed every root config to it
+ * (`.eslintrc.cjs`, `release.config.cjs`, `commitlint.config.cjs`, `stylelint.config.cjs`,
+ * `.prettierrc.cjs`). `.js` is kept alongside it because develop still uses that form, and
+ * holding the line across both shapes as they merge together is this guard's whole job.
  */
 const TEXT_FILE = /\.(yml|yaml|twig|js|mjs|cjs|json|mdx|md|scss|css|html)$/;
 

@@ -1,6 +1,6 @@
 import videoEmbedTwig from './yds-video-embed.twig';
 
-import videoEmbedData from './video-embed.yml';
+import STATIC_VIDEO_EMBED from '../../../_storybook/static-video-embed.mjs';
 
 import {
   globalThemeLabels,
@@ -16,13 +16,19 @@ import {
 export default {
   tags: ['visreg'],
   title: 'Atoms/Videos/Video Embed/Visreg',
-  parameters: { controls: { disable: true } },
+  parameters: {
+    chromatic: { disableSnapshot: false },
+    controls: { disable: true },
+  },
 };
 
 const renderGlobalTheme = () => {
   // Render function for video embed variations
   const renderVideoEmbed = (theme) =>
-    createSectionWrapper(theme, videoEmbedTwig(videoEmbedData));
+    createSectionWrapper(
+      theme,
+      videoEmbedTwig({ video_embed__content: STATIC_VIDEO_EMBED }),
+    );
 
   return createThemeVariations(
     renderVideoEmbed,

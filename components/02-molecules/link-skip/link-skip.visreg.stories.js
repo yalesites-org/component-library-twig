@@ -19,7 +19,10 @@ import {
 export default {
   tags: ['visreg'],
   title: 'Atoms/Link Skip/Visreg',
-  parameters: { controls: { disable: true } },
+  parameters: {
+    chromatic: { disableSnapshot: false },
+    controls: { disable: true },
+  },
 };
 
 const renderGlobalTheme = () => {

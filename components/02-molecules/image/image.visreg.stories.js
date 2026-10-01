@@ -13,7 +13,10 @@ import { createThemeVariations } from '../../_storybook/playground-utils';
 export default {
   tags: ['visreg'],
   title: 'Molecules/Image/Visreg',
-  parameters: { controls: { disable: true } },
+  parameters: {
+    chromatic: { disableSnapshot: false },
+    controls: { disable: true },
+  },
 };
 
 const renderGlobalTheme = () => {

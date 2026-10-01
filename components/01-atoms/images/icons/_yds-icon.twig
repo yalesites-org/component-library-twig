@@ -9,9 +9,13 @@
 
 {% set icon__base_class = icon__base_class|default('icon') %}
 {# If `directory` is defined, set the path relative for Drupal.
- # Otherwise, set the path relative to the Component Library. #}
-{% set icon__url = directory ? '/' ~ directory ~ '/node_modules/@yalesites-org/component-library-twig/dist/' %}
-{# Get versioned asset path from manifest if directory is provided. #}
+ # Otherwise, set the path relative to the Component Library.
+ # The sprite lives in dist/assets/ -- Emulsify Core's Vite build emits it
+ # there, unlike the webpack build, which wrote it to the dist/ root. #}
+{% set icon__url = directory ? '/' ~ directory ~ '/node_modules/@yalesites-org/component-library-twig/dist/assets/' %}
+{# getAssetPath() looks the filename up in the build manifest. The Vite build
+ # emits no manifest, so this currently returns 'icons.svg' unchanged -- the
+ # sprite is served unhashed until hashing is restored. #}
 {% set icons_svg_filename = directory ? getAssetPath('icons.svg', directory) : 'icons.svg' %}
 
 {% set unique_name = icon__name ~ '-' ~ random() %}
