@@ -60,3 +60,16 @@ media_grid__items:
     image__sizes: '100vw'
     image__src: ''
     image__alt: 'No image'
+  - media_grid__modal__text: '<p>Optional tenth caption. A short caption with no heading.</p>'
+    output_image_tag: true
+    image__srcset: '/images/placeholders/placeholder-6x1.png 320w, /images/placeholders/placeholder-6x1.png 480w, /images/placeholders/placeholder-6x1.png 640w, /images/placeholders/placeholder-6x1.png 800w, /images/placeholders/placeholder-6x1.png 960w, /images/placeholders/placeholder-6x1.png 1120w, /images/placeholders/placeholder-6x1.png 1280w, /images/placeholders/placeholder-6x1.png 1440w, /images/placeholders/placeholder-6x1.png 1600w, /images/placeholders/placeholder-6x1.png 1760w, /images/placeholders/placeholder-6x1.png 1920w, /images/placeholders/placeholder-6x1.png 2080w, /images/placeholders/placeholder-6x1.png 2240w, /images/placeholders/placeholder-6x1.png 2400w'
+    image__sizes: '100vw'
+    image__src: '/images/placeholders/placeholder-6x1.png'
+    image__alt: 'A 6 by 1 image'
+  - media_grid__modal__heading: 'Optional heading for the eleventh image'
+    media_grid__modal__text: '<p>Optional eleventh caption. A short caption with a heading.</p>'
+    output_image_tag: true
+    image__srcset: '/images/placeholders/placeholder-2x3.png 320w, /images/placeholders/placeholder-2x3.png 480w, /images/placeholders/placeholder-2x3.png 640w, /images/placeholders/placeholder-2x3.png 800w, /images/placeholders/placeholder-2x3.png 960w, /images/placeholders/placeholder-2x3.png 1120w, /images/placeholders/placeholder-2x3.png 1280w, /images/placeholders/placeholder-2x3.png 1440w, /images/placeholders/placeholder-2x3.png 1600w, /images/placeholders/placeholder-2x3.png 1760w, /images/placeholders/placeholder-2x3.png 1920w, /images/placeholders/placeholder-2x3.png 2080w, /images/placeholders/placeholder-2x3.png 2240w, /images/placeholders/placeholder-2x3.png 2400w'
+    image__sizes: '100vw'
+    image__src: '/images/placeholders/placeholder-2x3.png'
+    image__alt: 'A 2 by 3 image'

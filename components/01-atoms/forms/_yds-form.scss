@@ -187,6 +187,11 @@
   .form-item__dropdown {
     height: 3.125rem;
     border: var(--border-thickness-1) solid var(--color-gray-400);
+
+    // The open list has its own search field; the arrow would overlap it.
+    &:has(.chosen-with-drop)::after {
+      display: none;
+    }
   }
 
   .chosen-container {
@@ -214,6 +219,7 @@
   .chosen-choices {
     border: 0;
     padding: 0;
+    padding-right: var(--size-spacing-8); // Keep text clear of the arrow.
 
     li.search-choice {
       background-color: hsl(210deg 100% 21% / 10%);
@@ -287,6 +293,15 @@
         color: var(--color-basic-white);
       }
     }
+  }
+
+  // Keep empty containers out of the page and the accessibility tree: Chosen
+  // fills .chosen-results only on first open, and the message is blank until
+  // something is selected. Only while empty, so Chosen can still measure a
+  // filled list when deciding whether to open upward.
+  .chosen-results:empty,
+  .ys-select-message:empty {
+    display: none;
   }
 
   @media (max-width: tokens.$break-mobile) {
