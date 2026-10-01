@@ -55,7 +55,10 @@ ol {
   @include tokens.body-s;
   @include tokens.body-oldstyle-nums;
 
-  color: var(--color-gray-500);
+  // Use the section's on-theme foreground so category labels stay legible on
+  // themed section backgrounds (slots 2/4/5); falls back to the default gray
+  // outside a themed layout, leaving the default appearance unchanged.
+  color: var(--color-layout-content, var(--color-gray-500));
   font-variant-caps: small-caps;
   text-transform: lowercase;
   letter-spacing: 0.5px;
@@ -64,7 +67,9 @@ ol {
 .taxonomy-list--tags {
   @include tokens.body-s;
 
-  color: tokens.$color-blue-yale;
+  // Yale blue on the default background, but the on-theme foreground on themed
+  // section backgrounds where the fixed blue fails contrast (slots 2/4/5).
+  color: var(--color-layout-content, #{tokens.$color-blue-yale});
   font-weight: var(--font-weights-mallory-medium);
   margin-top: var(--size-spacing-4);
   text-transform: capitalize;
