@@ -94,4 +94,8 @@
   --color-section-background: #{$background};
   --color-section-foreground: #{$foreground};
   --color-section-accent: #{$accent};
+
+  // Drop the outer section's CTA accent swap (YaleSites-Internal#1840); CTAs
+  // here fall back to the accent above.
+  --cta-section-accent: initial;
 }
