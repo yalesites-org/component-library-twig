@@ -35,8 +35,7 @@
  *   so it was deliberately left alone. It still fails 3:1 on two pairings; see
  *   the report.
  * - `divider` is `--color-divider`, which #1613 re-points to the section's
- *   content colour. It drives the always-on 70/30 column separator and the
- *   divider atom.
+ *   content colour. It drives the divider atom.
  */
 export const SECTION_THEMES = {
   one: {

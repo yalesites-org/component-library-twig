@@ -8,6 +8,12 @@ $layout-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 $break-layout-layout: tokens.$break-2xl;
 $break-layout-layout-max: $break-layout-layout - 0.05;
 
+// The 70/30 and 30/70 column separator, drawn as a border. Same colour and
+// thickness as the `.yds-layout__divider` element 50/50 and 33/33/33 render,
+// so every multi-column section draws the same line (YaleSites-Internal#1830).
+$layout-divider-border: var(--border-thickness-2) solid
+  var(--color-section-foreground, var(--color-layout-border));
+
 .yds-layout {
   --color-layout-border: var(--color-slot-one);
 
@@ -284,9 +290,9 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // -
   // 1. `--color-divider`. `_global-config.scss` defaults it to
   //    `--color-theme-divider, --color-gray-500` and nothing in the section
-  //    cascade re-declared it, so the always-on 70/30 column separator below,
-  //    and every component border drawn from it, stayed mid-grey on every
-  //    section background. Driven from `--color-layout-content` rather than
+  //    cascade re-declared it, so every component border drawn from it
+  //    stayed mid-grey on every section background. Driven from
+  //    `--color-layout-content` rather than
   //    from `--color-layout-border`, which would have looked tidier but is not
   //    only a border colour -- the CTA atom paints `--color-cta-bg` from it,
   //    and it resolves to slot-four, a gold or tan brand accent rather than a
@@ -510,9 +516,11 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   display: flex;
   align-self: stretch;
 
-  // The column separator for a fifty-fifty / thirty-thirty-thirty layout --
-  // a plain line with no paired foreground of its own, so it has to clear
-  // 3:1 (WCAG 1.4.11) against the section background unaided. It reaches
+  // The column separator for a fifty-fifty / thirty-thirty-thirty layout. The
+  // seventy-thirty and thirty-seventy border separators use the same colour
+  // and thickness via `$layout-divider-border`. It is a plain line with no
+  // paired foreground of its own, so it has to clear 3:1 (WCAG 1.4.11)
+  // against the section background unaided. It reaches
   // `--color-layout-border` directly rather than through
   // `--color-section-accent` (CTA fill/border, Tabs action colour, pull-quote
   // accent) -- so re-pointing it here cannot touch any of those.
@@ -547,7 +555,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // still leaves 5 of 6 section themes below 3:1 -- Whitney sections three
   // and four included, at 2.38:1 and 2.69:1. The sibling separator this same
   // organism draws for a seventy-thirty layout (`border-top`/`border-left`,
-  // further down, driven by `--color-divider`) has never had an opacity, so
+  // further down, `$layout-divider-border`) has never had an opacity, so
   // full opacity here is the established pattern, not a new one
   // (YaleSites-Internal#1641). See
   // `divider-opacity-composited.test.mjs` for the per-cell proof.
@@ -619,7 +627,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     & {
     @media (min-width: $break-layout-layout) {
       align-self: stretch;
-      border-right: var(--thickness-divider) solid var(--color-divider);
+      border-right: $layout-divider-border;
     }
   }
 }
@@ -689,7 +697,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   [data-component-layout='seventy-thirty'][data-component-has-divider='true']
     & {
     @media (max-width: $break-layout-layout-max) {
-      border-top: var(--thickness-divider) solid var(--color-divider);
+      border-top: $layout-divider-border;
     }
 
     @media (min-width: $break-layout-layout) {
@@ -703,14 +711,14 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       // thirty-thirty-thirty. It belongs with the border it exists for: with
       // no separator there is nothing to span.
       align-self: stretch;
-      border-left: var(--thickness-divider) solid var(--color-divider);
+      border-left: $layout-divider-border;
     }
   }
 
   [data-component-layout='thirty-seventy'][data-component-has-divider='true']
     & {
     @media (max-width: $break-layout-layout-max) {
-      border-top: var(--thickness-divider) solid var(--color-divider);
+      border-top: $layout-divider-border;
     }
   }
 }
