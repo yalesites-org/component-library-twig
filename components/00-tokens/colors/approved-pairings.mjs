@@ -46,7 +46,12 @@ import {
   SECTION_THEMES,
   resolveGlobalTheme as resolveSlots,
 } from './section-themes.mjs';
-import { AA_NORMAL_TEXT, WCAG_LEVELS } from './contrast-ratio.mjs';
+import {
+  AA_NORMAL_TEXT,
+  WCAG_LEVELS,
+  contrastRatio,
+  parseHsl,
+} from './contrast-ratio.mjs';
 
 // `createRequire` rather than an import attribute, for the same reason
 // `section-background-contrast.mjs` gives: prettier -- which `npm run test`
@@ -73,6 +78,8 @@ export const AA_NON_TEXT = WCAG_LEVELS.find(
 export const PAIRING_KINDS = [
   'section',
   'section-outline-hover',
+  'section-cta-rest',
+  'section-cta-focus-ring',
   'block',
   'basic',
   'cta',
@@ -206,6 +213,81 @@ function sectionOutlineHoverPairings() {
 }
 
 /**
+ * The (global theme, section theme) combinations where the section accent
+ * (`border` role) fails 4.5:1 on the section background, as `'<global>/<section>'`
+ * (YaleSites-Internal#1840).
+ *
+ * `_yds-cta.scss` swaps the accent for the section foreground in exactly these
+ * combinations; `functional-element-contrast.test.mjs` asserts its Sass map
+ * equals this computed set, so the list cannot drift from the tokens.
+ */
+export function ctaAccentSwapSet() {
+  return Object.keys(tokens['global-themes']).flatMap((globalTheme) => {
+    const slots = resolveGlobalTheme(globalTheme);
+
+    return Object.entries(SECTION_THEMES)
+      .filter(
+        ([, roles]) =>
+          contrastRatio(
+            parseHsl(slots[roles.background]),
+            parseHsl(slots[roles.border]),
+          ) < AA_NORMAL_TEXT,
+      )
+      .map(([surface]) => `${globalTheme}/${surface}`);
+  });
+}
+
+/**
+ * Resting CTA accent inside a themed section (YaleSites-Internal#1840): the
+ * section accent, or the section foreground where the accent fails 4.5:1.
+ */
+function sectionCtaRestPairings() {
+  const swapped = new Set(ctaAccentSwapSet());
+
+  return Object.keys(tokens['global-themes']).flatMap((globalTheme) => {
+    const slots = resolveGlobalTheme(globalTheme);
+
+    return Object.entries(SECTION_THEMES).map(([surface, roles]) => {
+      const slot = swapped.has(`${globalTheme}/${surface}`)
+        ? roles.content
+        : roles.border;
+
+      return pairing({
+        kind: 'section-cta-rest',
+        surface,
+        globalTheme,
+        role: 'cta-rest',
+        background: { name: roles.background, value: slots[roles.background] },
+        foreground: { name: slot, value: slots[slot] },
+        minimum: AA_NORMAL_TEXT,
+      });
+    });
+  });
+}
+
+/**
+ * CTA focus ring inside a themed section (YaleSites-Internal#1840): the ring
+ * is `--color-link-base`, which `_yds-cta.scss` points at the section foreground.
+ */
+function sectionCtaFocusRingPairings() {
+  return Object.keys(tokens['global-themes']).flatMap((globalTheme) => {
+    const slots = resolveGlobalTheme(globalTheme);
+
+    return Object.entries(SECTION_THEMES).map(([surface, roles]) =>
+      pairing({
+        kind: 'section-cta-focus-ring',
+        surface,
+        globalTheme,
+        role: 'cta-focus-ring',
+        background: { name: roles.background, value: slots[roles.background] },
+        foreground: { name: roles.content, value: slots[roles.content] },
+        minimum: AA_NON_TEXT,
+      }),
+    );
+  });
+}
+
+/**
  * Surfaces that state `background` / `text` / `heading` on the object itself.
  *
  * `component-themes` (the block dial), `basic-themes` and `button-cta-themes`
@@ -303,6 +385,8 @@ export function approvedPairings() {
   return [
     ...sectionPairings(),
     ...sectionOutlineHoverPairings(),
+    ...sectionCtaRestPairings(),
+    ...sectionCtaFocusRingPairings(),
     ...declaredPairings('block', 'component-themes'),
     ...declaredPairings('basic', 'basic-themes'),
     ...declaredPairings('cta', 'button-cta-themes'),
