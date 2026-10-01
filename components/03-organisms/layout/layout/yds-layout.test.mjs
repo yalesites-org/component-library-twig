@@ -360,13 +360,13 @@ test('the 70/30 separator is drawn only when the Divider toggle is on', () => {
   );
   assert.match(
     gated,
-    /border-left: var\(--thickness-divider\) solid var\(--color-divider\)/,
-    'the wide-viewport separator must be drawn from --color-divider',
+    /border-left: \$layout-divider-border;/,
+    'the wide-viewport separator must use $layout-divider-border',
   );
   assert.match(
     gated,
-    /border-top: var\(--thickness-divider\) solid var\(--color-divider\)/,
-    'the stacked-viewport separator must be drawn from --color-divider',
+    /border-top: \$layout-divider-border;/,
+    'the stacked-viewport separator must use $layout-divider-border',
   );
 
   // The ungated rule keeps the column sizing and gutter, which a 70/30 needs
@@ -425,16 +425,16 @@ test('the 30/70 separator is drawn only when the Divider toggle is on', () => {
   assert.ok(primary, 'no gated thirty-seventy __primary rule');
   assert.match(
     primary,
-    /border-right: var\(--thickness-divider\) solid var\(--color-divider\)/,
-    'the wide-viewport separator must be a border-right on __primary',
+    /border-right: \$layout-divider-border;/,
+    'the wide-viewport separator must be a border-right on __primary, drawn from $layout-divider-border',
   );
 
   const secondary = regionRule(THIRTY_SEVENTY_WITH_DIVIDER);
   assert.ok(secondary, 'no gated thirty-seventy __secondary rule');
   assert.match(
     secondary,
-    /border-top: var\(--thickness-divider\) solid var\(--color-divider\)/,
-    'the stacked-viewport separator must be a border-top on __secondary',
+    /border-top: \$layout-divider-border;/,
+    'the stacked-viewport separator must be a border-top on __secondary, drawn from $layout-divider-border',
   );
 
   [regionRule(THIRTY_SEVENTY, 'primary'), regionRule(THIRTY_SEVENTY)].forEach(
@@ -496,5 +496,34 @@ test('each 30/70 column has the display type of its 70/30 counterpart', () => {
     wide,
     /^\s*display: block;/m,
     'the 30/70 wide __secondary must be block, like the 70/30 wide column',
+  );
+});
+
+test('70/30 and 30/70 separators match the 50/50 divider element', () => {
+  // YaleSites-Internal#1830: the border-drawn separators used
+  // `--color-divider` at `--thickness-divider` (grey, 1px in an uncolored
+  // section) while `.yds-layout__divider` uses the section foreground at
+  // `--border-thickness-2`. One shared variable keeps all four in step.
+  const source = scss();
+
+  assert.match(
+    readFileSync(new URL('../_layout-divider.scss', import.meta.url), 'utf8'),
+    /^\$layout-divider-border: var\(--border-thickness-2\) solid\s+var\(--color-section-foreground, var\(--color-layout-border\)\);$/m,
+    '$layout-divider-border must be thickness-2 in the section foreground',
+  );
+  assert.equal(
+    source.match(/border-(left|right|top): \$layout-divider-border;/g)?.length,
+    4,
+    'four separators (70/30 left + top, 30/70 right + top) must use it',
+  );
+  assert.doesNotMatch(
+    source,
+    /border-(left|right|top): var\(--thickness-divider\)/,
+    'no column separator may still use --thickness-divider',
+  );
+  assert.doesNotMatch(
+    source,
+    /border-(left|right|top):[^;]*--color-divider/,
+    'no column separator may still be drawn from --color-divider',
   );
 });

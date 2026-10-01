@@ -127,7 +127,7 @@ test('every section theme foreground clears its own background at AA', () => {
 
 test('the section-driven line colours clear the non-text minimum everywhere', () => {
   // #1613 re-points `--color-divider` to the section's content colour, which
-  // is what drives the always-on 70/30 column separator and the divider atom.
+  // is what drives the divider atom.
   // #1628 re-points Tabs' `--color-border` and `--color-border-selected` at
   // `--color-section-foreground`, which is that same content colour -- so one
   // measurement covers every line this contract draws on a section surface.
