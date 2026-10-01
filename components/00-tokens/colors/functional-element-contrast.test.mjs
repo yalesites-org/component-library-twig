@@ -276,12 +276,33 @@ test('a themed section re-points link hover, not just resting', () => {
     "[class*='__heading-link']",
     '.link-grid__link',
     '.wrapped-callout__callout a',
+    // Event details `plain-link` anchors (YaleSites-Internal#1836). The map
+    // selector also covers the directions link, which sits inside it.
+    '.event-meta__more-dates-link a',
+    '.event-meta__event-website-link a',
+    '.event-meta__event-show-map a',
   ].forEach((selector) => {
     assert.ok(
       hoverRule[1].includes(selector),
       `${selector} is not covered by the themed-section hover re-point`,
     );
   });
+});
+
+test('outline CTA hover in a themed section fills with the section foreground', () => {
+  // The accent (border slot) failed 4.5:1 as the hover fill under
+  // section-background text in 8 of 42 combinations (YaleSites-Internal#1836).
+  const outline = stripComments(
+    readComponent('01-atoms/controls/cta/_yds-cta.scss'),
+  ).match(
+    /\[data-section-theme\]:not\(\[data-section-theme='default'\]\) & \{[\s\S]*?\[data-cta-style='outline'\] \{([^}]*)\}/,
+  );
+
+  assert.ok(outline, 'the themed-section outline CTA rule is gone');
+  assert.match(
+    outline[1],
+    /--color-cta-text-hover: var\(--color-section-background\);[\s\S]*--color-cta-bg-hover: var\(--color-section-foreground\);/,
+  );
 });
 
 test('a block that paints its own surface shadows the section foreground', () => {

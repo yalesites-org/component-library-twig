@@ -336,6 +336,11 @@ $cta-outline-weights: (
   // the section accent and `--color-action-secondary` by the section
   // background, which is why the values line up one for one.
   // -
+  // One exception: the outline HOVER fill is the section foreground, not the
+  // accent. The accent is the 3:1 border slot and fails 4.5:1 under the hover
+  // text in 8 of 42 theme combinations (YaleSites-Internal#1836). Filled buttons
+  // keep the accent (YaleSites-Internal#1613).
+  // -
   // The win: `--color-section-*` is inherited, so a block that paints its own
   // surface between the section and this button resets it and the button is
   // drawn against the surface it is actually on. `--color-layout-*` could
@@ -367,7 +372,7 @@ $cta-outline-weights: (
       --color-cta-text: var(--color-section-accent);
       --color-cta-text-hover: var(--color-section-background);
       --color-cta-border: var(--color-section-accent);
-      --color-cta-bg-hover: var(--color-section-accent);
+      --color-cta-bg-hover: var(--color-section-foreground);
     }
   }
 }

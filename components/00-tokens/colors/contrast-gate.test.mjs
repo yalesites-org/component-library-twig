@@ -172,6 +172,8 @@ test('every surface family still produces the number of pairings it should', () 
     'site-header': 6,
     // 3 footer themes x (text-color, yale-branding).
     'site-footer': 6,
+    // 7 global themes x 6 section themes x outline hover (YaleSites-Internal#1836).
+    'section-outline-hover': 42,
   });
 });
 
