@@ -72,6 +72,7 @@ export const AA_NON_TEXT = WCAG_LEVELS.find(
 /** The surface families the gate enumerates. Used to detect one going silent. */
 export const PAIRING_KINDS = [
   'section',
+  'section-outline-hover',
   'block',
   'basic',
   'cta',
@@ -178,6 +179,33 @@ function sectionPairings() {
 }
 
 /**
+ * Outline button hover inside a themed section (YaleSites-Internal#1836).
+ *
+ * `_yds-cta.scss` fills the hovered button with `--color-section-foreground`
+ * (the `content` slot) and sets its text to `--color-section-background`.
+ */
+function sectionOutlineHoverPairings() {
+  return Object.keys(tokens['global-themes']).flatMap((globalTheme) => {
+    const slots = resolveGlobalTheme(globalTheme);
+
+    return Object.entries(SECTION_THEMES).map(([surface, roles]) =>
+      pairing({
+        kind: 'section-outline-hover',
+        surface,
+        globalTheme,
+        role: 'outline-hover',
+        background: { name: roles.content, value: slots[roles.content] },
+        foreground: {
+          name: roles.background,
+          value: slots[roles.background],
+        },
+        minimum: AA_NORMAL_TEXT,
+      }),
+    );
+  });
+}
+
+/**
  * Surfaces that state `background` / `text` / `heading` on the object itself.
  *
  * `component-themes` (the block dial), `basic-themes` and `button-cta-themes`
@@ -274,6 +302,7 @@ function safeSlotPairings() {
 export function approvedPairings() {
   return [
     ...sectionPairings(),
+    ...sectionOutlineHoverPairings(),
     ...declaredPairings('block', 'component-themes'),
     ...declaredPairings('basic', 'basic-themes'),
     ...declaredPairings('cta', 'button-cta-themes'),
