@@ -455,6 +455,19 @@ $filter-control-height: 3.125rem; // 50px
     }
   }
 
+  // A lone visible chip (the next chip is collapsed into the badge) may
+  // shrink so a long label truncates with its tail ellipsis and leaves room
+  // for "+N more" instead of pushing the badge under the arrow. Only this
+  // chip: if every chip could shrink, the JS fit test (scrollWidth <=
+  // clientWidth) would pass at once and squeeze all chips rather than
+  // collapse them into the badge. The JS always keeps one chip, so the
+  // lone-chip state is safe. Placed after the open-state rules to keep
+  // selector specificity ascending. (#1366)
+  .chosen-choices
+    li.search-choice:first-child:has(+ .ys-search-choice--overflow) {
+    flex-shrink: 1;
+  }
+
   @media (max-width: tokens.$break-mobile) {
     // Show a visible box for every filter on mobile. When Chosen renders, the
     // container carries the border; when it falls back to the native select
