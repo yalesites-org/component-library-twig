@@ -6,9 +6,10 @@
  *
  * On a site Chosen's stylesheet loads before the theme, so the theme wins a
  * tie. Storybook loads this file after the theme, so it leaves out the
- * properties the theme sets on the same selectors: the choices border and
- * padding, the chip background, the text input padding, the font size, and
- * the highlighted row's background (only its text color is here). Every other
+ * properties the theme sets on the same selectors: the choices border,
+ * padding and overflow, the chip background, max-width and line-height, the
+ * text input padding, the font size, and the highlighted row's background
+ * (only its text color is here). Every other
  * rule here is copied from Chosen as it is. Left out because the stories do
  * not use them: single select, drop-up, disabled and group results, the
  * close icon's hover state, and the active-state colors of the choices.
@@ -72,7 +73,6 @@
 
 .chosen-container-multi .chosen-choices {
   position: relative;
-  overflow: hidden;
   margin: 0;
   width: 100%;
   height: auto;
@@ -108,9 +108,7 @@
   padding: 4px 20px 4px 5px;
   border: 1px solid #aaa;
   border-radius: 3px;
-  max-width: 100%;
   color: #333;
-  line-height: 12px;
 }
 
 .chosen-container .search-choice-close {

@@ -87,14 +87,27 @@ const heading = (text) => `<h3>${text}</h3>`;
 // The open list is absolutely positioned; leave room so it is not cut off.
 const room = (markup) => `<div style="padding-bottom: 18rem">${markup}</div>`;
 
-// Closed with no selection (Category) and closed with two selections (Audience).
+// Closed with no selection (Category) and closed with two chips (Audience),
+// then five chips (Category) where only the first fits on the row. The rest
+// collapse into the "+4 more" badge. yds-select.js does that measuring on a
+// site; visible: 1 was measured at the four-column, ~233px track of the grid.
 export const ViewsFiltersClosed = () =>
   createSectionWrapper(
     'default',
-    heading('Closed: none selected, then (2) items selected') +
+    heading('Closed: none selected, then two chips, then "+4 more"') +
       form({
         id: 'closed',
         fields: [category(), audience({ selected: ['Faculty', 'Staff'] })],
+      }) +
+      form({
+        id: 'closed-more',
+        fields: [
+          category({
+            selected: ['Featured', 'About', 'Research', 'Academics', 'Contact'],
+            visible: 1,
+          }),
+          audience(),
+        ],
       }),
   );
 
@@ -119,12 +132,15 @@ export const ViewsFiltersOpenWithTwoSelected = () =>
 export const ViewsFiltersLongVocabularyName = () =>
   createSectionWrapper(
     'default',
-    heading('Long vocabulary name: closed with selections, then open') +
+    heading(
+      'Long vocabulary name: closed with one chip and "+1 more", then open',
+    ) +
       room(
         form({
           id: 'long',
           fields: [
-            longVocabulary({ selected: longTerms.slice(0, 2) }),
+            // Two long terms overflow the row; the real JS keeps one chip.
+            longVocabulary({ selected: longTerms.slice(0, 2), visible: 1 }),
             longVocabulary({
               id: 'long-open',
               open: true,
@@ -153,14 +169,15 @@ export const ViewsFiltersEventsCalendar = () =>
       }),
   );
 
-// Below $break-mobile (992px), a media query, only the Events calendar form
-// stacks; the plain Views form keeps its row and overflows sideways, as it
-// does on a site. A narrow wrapper would not trigger the query, so this story
+// Both forms are a CSS grid whose columns are at least 13rem wide, so at 375px
+// they collapse to one column. Below $break-mobile (992px) the Events calendar
+// form also forces its items to 100% width, and Chosen containers get a black
+// border. A narrow wrapper would not trigger the media query, so this story
 // needs a phone-width snapshot.
 export const ViewsFiltersPhoneWidth = () =>
   createSectionWrapper(
     'default',
-    heading('Views filters at 375px (row, overflows sideways)') +
+    heading('Views filters at 375px (one column)') +
       form({
         id: 'phone',
         fields: [
