@@ -47,12 +47,11 @@ export const Interactive = ({
 };
 
 export const DividersThickness = () => `
-  <div style="--thickness-divider: var(--size-thickness-hairline)">${dividerTwig()}</div>
-  <div style="--thickness-divider: var(--size-thickness-1)">${dividerTwig()}</div>
-  <div style="--thickness-divider: var(--size-thickness-2)">${dividerTwig()}</div>
-  <div style="--thickness-divider: var(--size-thickness-4)">${dividerTwig()}</div>
-  <div style="--thickness-divider: var(--size-thickness-6)">${dividerTwig()}</div>
-  <div style="--thickness-divider: var(--size-thickness-8)">${dividerTwig()}</div>
+  ${dividerTwig({ divider__thickness: '1' })}
+  ${dividerTwig({ divider__thickness: '2' })}
+  ${dividerTwig({ divider__thickness: '4' })}
+  ${dividerTwig({ divider__thickness: '8' })}
+  ${dividerTwig({ divider__thickness: '16' })}
   <div class="padding-to-see-dividers-above">&nbsp;</div>
 `;
 DividersThickness.tags = ['!dev'];
