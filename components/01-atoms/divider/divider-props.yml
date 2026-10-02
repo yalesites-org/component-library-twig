@@ -7,21 +7,22 @@
 # Edit descriptions and details freely - changes appear in Storybook on reload.
 
 thickness:
-  twigProp: --thickness-divider
+  twigProp: divider__thickness
   name: Line thickness
   type: select
   required: false
-  description: Controls the divider line thickness via CSS custom property
-  default: hairline
+  description: Thickness of the divider line
+  detail: >
+    Maps to the divider__thickness Twig prop, which sets --thickness-divider
+    on the divider from the --size-thickness-* tokens. 16 is twice the 8 step.
+    When the prop is not passed, the divider keeps the inherited thickness.
+  default: '1'
   options:
-    - hairline
     - '1'
     - '2'
     - '4'
     - '8'
     - '16'
-    - '24'
-    - '32'
   control: select
 
 dividerColor:
