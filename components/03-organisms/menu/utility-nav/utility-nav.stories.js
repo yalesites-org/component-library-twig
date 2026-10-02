@@ -20,9 +20,7 @@ export default {
     linkContent: utilityNavData.utility_nav__link__content,
     linkUrl: utilityNavData.utility_nav__link__url,
     search: utilityNavData.utility_nav__search,
-    ctaTheme: utilityNavData.utility_nav__cta__theme,
     dropdownLinkContent: utilityNavData.utility_nav__dropdown_link__content,
-    dropdownLinkUrl: utilityNavData.utility_nav__dropdown_link__url,
   },
 };
 

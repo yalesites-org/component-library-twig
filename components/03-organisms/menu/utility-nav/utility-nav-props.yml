@@ -47,7 +47,7 @@ ctaTheme:
   required: false
   description: Theme variant for the call-to-action button styling
   default: none
-  control: text
+  fixed: Set by the site header theme and global theme. See Organisms/Site Header.
 
 dropdownLinkContent:
   twigProp: utility_nav__dropdown_link__content
@@ -62,8 +62,9 @@ dropdownLinkUrl:
   name: Dropdown Link URL
   type: string
   required: false
-  description: URL destination for the dropdown menu trigger button
-  control: text
+  description: URL destination for the dropdown menu trigger button. Fixed in Drupal.
+  default: '#'
+  fixed: true
 
 dropdownItems:
   twigProp: utility_nav__dropdown__items
