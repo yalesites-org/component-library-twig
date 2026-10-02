@@ -5,15 +5,13 @@
 # and MDX documentation tables.
 
 componentWidth:
-  twigProp: component_width
+  twigProp: component_wrapper__width
   name: Component Width
   type: select
   required: false
   description: Maximum width constraint for the component content area
-  default: content
+  default: site
   options:
     - content
-    - highlight
     - site
-    - max
   control: select
