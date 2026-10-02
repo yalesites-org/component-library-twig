@@ -367,9 +367,43 @@ Local runs draw on the same snapshot allowance as CI, so reach for `--dry-run` o
 
 **Watch what the visual tests panel writes back.** Connecting the panel to a Chromatic project
 rewrites `chromatic.config.json`, and as well as the `projectId` it adds any setting the file
-does not already carry — including `onlyChanged: true`, which turns TurboSnap on. TurboSnap is
-its own piece of work with its own trade-offs; if the panel adds `onlyChanged` or `zip` to the
-file, drop those lines before committing and leave them to that ticket.
+does not already carry, including `onlyChanged: true`, which turns TurboSnap on. If the panel
+adds `onlyChanged` or `zip` to the file, drop those lines before committing. TurboSnap is turned
+on in the workflow for pull requests only (see [TurboSnap](#turbosnap)); in the config file it
+would also apply to pushes and local runs.
+
+### TurboSnap
+
+TurboSnap snapshots only the stories a change can reach and inherits the rest from the
+baseline. It is on for pull requests only (`onlyChanged` in `.github/workflows/chromatic.yml`).
+Pushes to `develop` and `main` stay full builds, so the baselines stay complete and catch
+anything TurboSnap missed.
+
+Its Vite dependency graph can trace `*.stories.js`, `*.mdx`, `*.yml` data files, and JS imported
+directly by a story. It cannot see, and would silently map to zero stories:
+
+| Change                                                                     | Why it is invisible                                                                                                       |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `.scss` / `.css`                                                           | Vite stats omit CSS, even files `preview.js` imports                                                                      |
+| `.twig`                                                                    | Includes resolve through Twig namespaces at runtime                                                                       |
+| `components/**/*.js` behavior files                                        | They reach Storybook through the built `dist`                                                                             |
+| `lib/**`, `assets/**`                                                      | Used by Twig or served through `staticDirs`                                                                               |
+| `config/**`, `scripts/**`, `patches/**`, `*.emulsify.json`, `package.json` | Storybook and Vite setup, build-time patches and the build script; none are in the story graph except `preview.js` itself |
+
+`externals` on the PR publish step in `.github/workflows/chromatic.yml` lists these, and a PR that
+changes any matching file gets a full build instead. It lives there, not in
+`chromatic.config.json`, because the Chromatic CLI rejects `externals` without `onlyChanged`,
+which would break push builds and local runs. So most CSS and Twig PRs still run in full; the
+savings come from PRs that only touch stories, docs, or data.
+
+To check what a change reaches locally:
+
+```bash
+npm run storybook:build
+npx chromatic trace -s .out/preview-stats.json -c node_modules/@emulsify/core/.storybook -m compact <changed files>
+```
+
+If a new kind of file can reach stories outside the import graph, add it to `externals` in the workflow.
 
 ## Adding a New Component
 
