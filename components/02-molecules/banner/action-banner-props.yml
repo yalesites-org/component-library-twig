@@ -59,19 +59,6 @@ bgColor:
     five: 'Five'
     six: 'Six'
 
-linkStyle:
-  twigProp: banner__link__style
-  name: Link Style
-  type: select
-  required: false
-  description: 'Style for the call-to-action links: cta, text-link, or none'
-  default: cta
-  options:
-    - cta
-    - text-link
-    - none
-  control: select
-
 contentLayout:
   twigProp: banner__content__layout
   name: Content Layout
@@ -87,23 +74,6 @@ contentLayout:
   labels:
     bottom: 'Bottom'
     left: 'Left'
-    right: 'Right'
-
-buttonAlignment:
-  twigProp: banner__button__alignment
-  name: Button Alignment
-  type: select
-  required: false
-  description: 'Alignment for the action buttons: left, center, or right'
-  default: right
-  options:
-    - left
-    - center
-    - right
-  control: select
-  labels:
-    left: 'Left'
-    center: 'Center'
     right: 'Right'
 
 buttonStyleConsistency:
