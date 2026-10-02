@@ -51,7 +51,6 @@ export const DividersThickness = () => `
   ${dividerTwig({ divider__thickness: '2' })}
   ${dividerTwig({ divider__thickness: '4' })}
   ${dividerTwig({ divider__thickness: '8' })}
-  ${dividerTwig({ divider__thickness: '16' })}
   <div class="padding-to-see-dividers-above">&nbsp;</div>
 `;
 DividersThickness.tags = ['!dev'];

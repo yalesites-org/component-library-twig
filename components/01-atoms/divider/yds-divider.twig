@@ -4,8 +4,8 @@
  #
  # Available Variables:
  # - divider__width: available options are 100% (default), 75%, 50%, and 25%
- # - divider__thickness: optional, one of 1, 2, 4, 8, 16 (px-ish steps from the
- #   --size-thickness-* tokens; 16 is twice 8). When unset, the divider uses the
+ # - divider__thickness: optional, one of 1, 2, 4, 8 (px-ish steps from the
+ #   --size-thickness-* tokens). When unset, the divider uses the
  #   inherited --thickness-divider (1 by default).
  # - divider__position: available options are center (default), left, and right
  #}
@@ -35,13 +35,11 @@
   'data-divider-width': divider__width,
 }) %}
 
-{# There is no --size-thickness-16 token, so 16 is two of the 8 step. #}
 {% set divider__thickness_values = {
   '1': 'var(--size-thickness-1)',
   '2': 'var(--size-thickness-2)',
   '4': 'var(--size-thickness-4)',
   '8': 'var(--size-thickness-8)',
-  '16': 'calc(var(--size-thickness-8) * 2)',
 } %}
 {% if divider__thickness and divider__thickness_values[divider__thickness|trim] is defined %}
   {% set divider__attributes = divider__attributes|merge({
