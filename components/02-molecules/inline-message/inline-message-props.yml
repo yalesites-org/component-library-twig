@@ -6,18 +6,6 @@
 #
 # Edit descriptions and details freely - changes appear in Storybook on reload.
 
-type:
-  twigProp: inline_message__type
-  name: Type
-  type: select
-  required: false
-  description: Message type affecting visual style and semantic meaning
-  default: general
-  options:
-    - general
-    - marketing
-  control: select
-
 iconName:
   twigProp: inline_message__icon_name
   name: Icon
