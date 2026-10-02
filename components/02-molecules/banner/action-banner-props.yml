@@ -111,12 +111,13 @@ buttonStyleConsistency:
   name: Button Style Consistency
   type: select
   required: false
-  description: 'Visual style consistency for multiple buttons: mixed, both_primary, or both_secondary'
-  default: mixed
+  description: 'Visual style consistency for multiple buttons: which style each button gets, first then second'
+  default: filled_outline
   options:
-    - mixed
-    - both_primary
-    - both_secondary
+    - both_filled
+    - both_outline
+    - filled_outline
+    - outline_filled
   control: select
 
 overlayBackgroundImage:
