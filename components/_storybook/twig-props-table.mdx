@@ -1,3 +1,5 @@
+import { shownDefault } from './component-props';
+
 export function renderPropsTable(entries, showDefault, label) {
   if (entries.length === 0) return null;
 
@@ -23,7 +25,9 @@ return (
           {showDefault ? (
             <td>
               <code>
-                {prop.default !== undefined ? String(prop.default) : '—'}
+                {shownDefault(prop) !== undefined
+                  ? String(shownDefault(prop))
+                  : '—'}
               </code>
             </td>
           ) : null}

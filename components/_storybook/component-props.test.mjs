@@ -36,3 +36,38 @@ test('no labels leaves control unchanged', async () => {
   assert.deepEqual(a.control, { type: 'text' });
   assert.equal('control' in b, false);
 });
+
+test('fixed disables the control and shows the fixed text as the default', async () => {
+  const { toArgTypes, toArgs } = await loaded;
+  const props = {
+    border: {
+      name: 'Border',
+      type: 'select',
+      default: '8',
+      fixed: 'Set by Drupal',
+      control: 'select',
+    },
+  };
+  const { border } = toArgTypes(props);
+  assert.equal(border.control, false);
+  assert.deepEqual(border.table.defaultValue, { summary: 'Set by Drupal' });
+  assert.deepEqual(toArgs(props), { border: '8' });
+});
+
+test('no fixed leaves default summary and control unchanged', async () => {
+  const { toArgTypes } = await loaded;
+  const { a } = toArgTypes({
+    a: { name: 'A', default: 'x', control: 'text' },
+  });
+  assert.deepEqual(a.control, { type: 'text' });
+  assert.deepEqual(a.table.defaultValue, { summary: 'x' });
+});
+
+test('fixed: true shows the default as the fixed value', async () => {
+  const { toArgTypes } = await loaded;
+  const { border } = toArgTypes({
+    border: { name: 'Border', default: '8', fixed: true, control: 'select' },
+  });
+  assert.equal(border.control, false);
+  assert.deepEqual(border.table.defaultValue, { summary: '8' });
+});
