@@ -38,10 +38,9 @@ ol:not([type]) {
 // defaults above, an untyped sub-item's ancestor no longer matches
 // `:not([type])`, so it would otherwise fall back to the browser default
 // instead of continuing the outline sequence (decimal -> lower-alpha ->
-// lower-roman / disc -> circle -> square). These intentionally have lower
-// specificity than the 3-levels-deep default rules above, since they only
-// ever match a different (explicitly-typed) ancestor, never the same
-// element those rules do.
+// lower-roman / disc -> circle -> square). These tie the 2-levels-deep
+// default rules above at equal specificity (both select two `ol`/`ul`
+// steps) and only lose to the 3-levels-deep ones.
 /* stylelint-disable no-descending-specificity */
 ol[type='1'] ol:not([type]) {
   list-style-type: lower-alpha;
@@ -56,6 +55,19 @@ ul[type='disc'] ul:not([type]) {
 }
 
 ul[type='circle'] ul:not([type]) {
+  list-style-type: square;
+}
+
+// A plain descendant combinator doesn't distinguish "one level down" from
+// "two levels down", so without these, a grandchild under an explicit
+// type="1"/"disc" top level would match the same rules as its parent above
+// and incorrectly stop at lower-alpha/circle instead of continuing to
+// lower-roman/square.
+ol[type='1'] ol:not([type]) ol:not([type]) {
+  list-style-type: lower-roman;
+}
+
+ul[type='disc'] ul:not([type]) ul:not([type]) {
   list-style-type: square;
 }
 /* stylelint-enable no-descending-specificity */
