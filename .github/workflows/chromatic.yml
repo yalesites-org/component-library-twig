@@ -35,6 +35,12 @@ name: Chromatic
 # draft would keep that skipped-but-green check until someone happened to push again -
 # a passing visual check that never ran.
 #
+# TurboSnap (`onlyChanged`) is on for pull requests only. Pushes to `develop` and `main`
+# stay full builds so the baselines stay complete and catch anything TurboSnap missed.
+# Files its dependency graph cannot see are listed as `externals` on the PR publish step
+# (not in chromatic.config.json: the CLI rejects `externals` without `onlyChanged`, which
+# would break push builds and local runs); see the TurboSnap section of STORYBOOK.md.
+#
 # TEMPORARY: `1435-emulsify-vite-migration` is in the PUSH list because that epic branch
 # is where the first baseline is taken (YaleSites-Internal#1606) and none of its commits
 # match `develop` or `main`. It is deliberately NOT in the pull_request list: the stacked
@@ -79,12 +85,56 @@ jobs:
         # build needs and writes to `.out`.
         run: npm run storybook:build
 
-      - name: Publish to Chromatic
+      - name: Publish to Chromatic (TurboSnap)
+        id: chromatic-pr
+        if: github.event_name == 'pull_request'
         uses: chromaui/action@v18
         with:
+          onlyChanged: true
+          # Files the TurboSnap dependency graph cannot see; a PR touching any of them
+          # gets a full build. See the top-of-file comment for why this is not in
+          # chromatic.config.json.
+          externals: |
+            **/*.scss
+            **/*.css
+            **/*.twig
+            components/**/!(*.stories).js
+            lib/**
+            assets/**
+            config/**
+            scripts/**
+            patches/**
+            *.emulsify.json
+            package.json
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           # Draft PRs are still in flux; snapshotting them burns the snapshot budget.
           skip: ${{ github.event.pull_request.draft == true }}
-          # Everything else - storybookBuildDir, autoAcceptChanges, exitZeroOnChanges -
-          # lives in chromatic.config.json so it is stated once rather than duplicated
-          # between this workflow and local runs.
+          # Everything else - storybookBuildDir, autoAcceptChanges, exitZeroOnChanges,
+          # storybookConfigDir - lives in chromatic.config.json so it is stated once
+          # rather than duplicated between this workflow and local runs.
+
+      # Pushes and manual runs stay full builds. No `skip` here: there is no draft state.
+      - name: Publish to Chromatic
+        id: chromatic
+        if: github.event_name != 'pull_request'
+        uses: chromaui/action@v18
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+      - name: Summarize Chromatic build
+        if: ${{ !cancelled() }}
+        env:
+          BUILD_URL: ${{ steps.chromatic-pr.outputs.buildUrl || steps.chromatic.outputs.buildUrl }}
+          CHANGE_COUNT: ${{ steps.chromatic-pr.outputs.changeCount || steps.chromatic.outputs.changeCount }}
+          CAPTURED: ${{ steps.chromatic-pr.outputs.actualCaptureCount || steps.chromatic.outputs.actualCaptureCount }}
+          INHERITED: ${{ steps.chromatic-pr.outputs.inheritedCaptureCount || steps.chromatic.outputs.inheritedCaptureCount }}
+        run: |
+          # A skipped (draft) or failed publish leaves the outputs empty or "undefined".
+          if [ -z "$BUILD_URL" ] || [ "$BUILD_URL" = "undefined" ]; then exit 0; fi
+          {
+            echo "### Chromatic"
+            echo "- Build: $BUILD_URL"
+            echo "- Changes: $CHANGE_COUNT"
+            echo "- Snapshots taken: $CAPTURED"
+            echo "- Snapshots inherited by TurboSnap: $INHERITED"
+          } >> "$GITHUB_STEP_SUMMARY"
