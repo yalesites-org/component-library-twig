@@ -163,7 +163,7 @@ Define `atomic/<name>` in `atomic.libraries.yml` pointing at the compiled
 - Render the block on a page and confirm it looks right. Render **twice on a fresh
   `drush cr`** — a single render can be cache-served and hide a prop-validation
   500 for a NULL prop.
-- Confirm the component's JS attaches (grep the page for its `dist/js/*.js`).
+- Confirm the component's JS attaches (grep the page for its `dist/js/components/<tier>/<name>/yds-<name>.js`).
 
 ## 7. Ship it
 

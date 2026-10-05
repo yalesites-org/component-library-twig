@@ -9,6 +9,8 @@
  * Expand/Collapse-all control.
  */
 import { readFileSync } from 'node:fs';
+// eslint-disable-next-line import/no-unresolved -- package uses an exports map the resolver can't read
+import once from '@drupal/once';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 const behaviorSrc = readFileSync(
@@ -49,7 +51,7 @@ function attachBehavior(context) {
   // yds-accordion.js assigns Drupal.behaviors.accordion using a global Drupal.
   global.Drupal = { behaviors: {} };
   // eslint-disable-next-line no-new-func
-  new Function('Drupal', behaviorSrc)(global.Drupal);
+  new Function('Drupal', 'once', behaviorSrc)(global.Drupal, once);
   global.Drupal.behaviors.accordion.attach(context);
 }
 

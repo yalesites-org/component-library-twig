@@ -159,7 +159,7 @@ definitive first:
   boundary around the block (the leading emoji varies per component — grep the stable text
   `Component start: atomic:<name>`).
 - **Attached asset / BEM classes (any environment, including the multidev where debug is off).**
-  Grep the rendered page for the component's `dist/js/<name>.js` library or the CLT template's unique
+  Grep the rendered page for the component's `dist/js/components/<tier>/<name>/yds-<name>.js` library or the CLT template's unique
   BEM classes.
 - **Registered components:**
   `lando drush ev 'print_r(array_keys(\Drupal::service("plugin.manager.sdc")->getDefinitions()));'`
@@ -172,7 +172,7 @@ definitive first:
   restore, render again, and diff — stripping the `Component start`/`Component end` comments (Twig
   debug only), and, for a self-contained SDC, the `data-component-id` attribute (a thin-wrapper shim
   emits none). Confirm byte-identical output.
-- Confirm the JS attaches on a real page (grep the page for the component's `dist/js/*.js`).
+- Confirm the JS attaches on a real page (grep the page for the component's `dist/js/components/<tier>/<name>/yds-<name>.js`).
 - Run the schema-validation test (`lando composer test:sdc`) and any behavioral tests
   (`npm run test:unit` in CLT).
 
