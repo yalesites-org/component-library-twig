@@ -41,7 +41,6 @@ export default {
 };
 
 export const InlineMessage = ({
-  type,
   iconName,
   heading,
   content,
@@ -52,7 +51,6 @@ export const InlineMessage = ({
   inlineMessageTwig({
     inline_message__heading: heading,
     inline_message__content: content,
-    inline_message__type: type,
     inline_message__icon_name: iconName,
     inline_message__theme: themeColor,
     inline_message__link__content: linkContent,

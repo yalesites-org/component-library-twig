@@ -20,17 +20,10 @@ export default {
   args: toArgs(componentProps),
 };
 
-export const Interactive = ({
-  position,
-  thickness,
-  dividerColor,
-  width,
-  sectionTheme,
-}) => {
+export const Interactive = ({ position, thickness, width, sectionTheme }) => {
   return `
     <div class="yds-layout" data-section-theme="${sectionTheme}">
       <div class="yds-layout__inner" data-component-width="site" style="
-        --color-divider: var(--color-${dividerColor});
         --width-theme-divider: var(--layout-width-${width});
       ">
         <div class="yds-layout__primary" style="width: 100%">
@@ -82,38 +75,3 @@ export const DividersPosition = () => `
   <div class="padding-to-see-dividers-above">&nbsp;</div>
 `;
 DividersPosition.tags = ['!dev'];
-
-export const DividersColor = () => `
-  <div class="yds-layout" data-section-theme="one">
-    <div class="yds-layout__inner" data-component-width="site" style="--color-divider: var(--color-gray-500);">
-      <div class="yds-layout__primary" style="width: 100%">
-        <p>Gray divider</p>
-        <div style="--thickness-divider: var(--size-thickness-8)">
-          ${dividerTwig({ divider__width: '100', divider__position: 'center' })}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="yds-layout" data-section-theme="two">
-    <div class="yds-layout__inner" data-component-width="site" style="--color-divider: var(--color-blue-yale);">
-      <div class="yds-layout__primary" style="width: 100%">
-        <p>Blue Yale divider</p>
-        <div style="--thickness-divider: var(--size-thickness-8)">
-          ${dividerTwig({ divider__width: '100', divider__position: 'center' })}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="yds-layout" data-section-theme="three">
-    <div class="yds-layout__inner" data-component-width="site" style="--color-divider: var(--color-basic-brown-gray);">
-      <div class="yds-layout__primary" style="width: 100%">
-        <p>Brown-gray divider</p>
-        <div style="--thickness-divider: var(--size-thickness-8)">
-          ${dividerTwig({ divider__width: '100', divider__position: 'center' })}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="padding-to-see-dividers-above">&nbsp;</div>
-`;
-DividersColor.tags = ['!dev'];

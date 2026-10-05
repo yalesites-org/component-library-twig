@@ -4,29 +4,6 @@
 # This file is the single source of truth for both Storybook controls
 # and MDX documentation tables.
 
-bgColor:
-  twigProp: image_banner__content__background
-  name: Component Theme (dial)
-  type: select
-  required: false
-  description: Component theme color
-  default: one
-  options:
-    - one
-    - two
-    - three
-    - four
-    - five
-    - six
-  control: select
-  labels:
-    one: 'One'
-    two: 'Two'
-    three: 'Three'
-    four: 'Four'
-    five: 'Five'
-    six: 'Six'
-
 size:
   twigProp: image_banner__size
   name: Media Size

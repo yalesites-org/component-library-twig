@@ -24,19 +24,6 @@ thickness:
     - '8'
   control: select
 
-dividerColor:
-  twigProp: --color-divider
-  name: Line Color
-  type: select
-  required: false
-  description: Controls the divider line color via CSS custom property
-  default: gray-500
-  options:
-    - gray-500
-    - blue-yale
-    - basic-brown-gray
-  control: select
-
 width:
   twigProp: divider__width
   name: Divider Width

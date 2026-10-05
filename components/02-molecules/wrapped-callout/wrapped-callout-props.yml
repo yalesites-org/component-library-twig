@@ -45,7 +45,6 @@ themeColor:
   description: Color theme applied to the callout box from the CMS color dial
   default: one
   options:
-    - default
     - one
     - two
     - three
@@ -54,7 +53,6 @@ themeColor:
     - six
   control: select
   labels:
-    default: 'Default - No Color'
     one: 'One'
     two: 'Two'
     three: 'Three'

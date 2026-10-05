@@ -46,14 +46,6 @@ factsAndFiguresGroupContent:
   description: Optional introductory content text for the group
   control: text
 
-factsAndFiguresGroupLink:
-  twigProp: facts_and_figures__group__link__content
-  name: Infographic Group Link
-  type: string
-  required: false
-  description: Link text for the optional call-to-action below the group
-  control: text
-
 image:
   twigProp: facts_and_figures__group__bg_image
   name: With image
