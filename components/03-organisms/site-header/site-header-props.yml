@@ -9,12 +9,9 @@ borderThickness:
   name: Navigation Border Thickness
   type: select
   required: false
-  description: Border thickness for the navigation area (from design tokens)
-  detail: >
-    Controls the thickness of the decorative border on the navigation.
-    Options are derived from the border.thickness design tokens.
+  description: Border thickness for the navigation area. Fixed in Drupal.
   default: '8'
-  control: select
+  fixed: true
 
 primaryNavPosition:
   twigProp: site_header__nav_position

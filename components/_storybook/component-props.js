@@ -1,12 +1,17 @@
 /**
  * Converts a componentProps YAML definition to Storybook argTypes.
  *
- * Handles: name, description, options, control type, labels,
+ * Handles: name, description, options, control type, labels, fixed,
  * table.category (Required/Optional), table.defaultValue, and table.type.
  *
  * `labels` is an optional map of option value to display label. It becomes
  * `control.labels`, so the Controls panel shows the words editors see in
  * Drupal while the stored option values stay unchanged. It needs `control`.
+ *
+ * `fixed` marks a value Drupal hardcodes. It disables the control and shows
+ * the fixed value as the docs-table default: the text itself, or `default`
+ * when `fixed: true`. `default` still seeds the story arg, so the story
+ * renders the production value.
  *
  * @param {Object} props - Parsed YAML componentProps object
  * @returns {Object} Storybook-compatible argTypes
@@ -20,6 +25,18 @@
  *   argTypes: toArgTypes(componentProps),
  * };
  */
+/**
+ * The default a docs table shows for a prop: its `fixed` text, else `default`.
+ *
+ * @param {Object} prop - One componentProps YAML entry
+ * @returns {*} The value to display, or undefined
+ */
+export function shownDefault(prop) {
+  return prop.fixed !== undefined && prop.fixed !== true
+    ? prop.fixed
+    : prop.default;
+}
+
 export function toArgTypes(props) {
   return Object.entries(props).reduce((acc, [key, prop]) => {
     if (prop.twigOnly) return acc;
@@ -27,7 +44,8 @@ export function toArgTypes(props) {
       name: prop.name,
       description: prop.description,
       ...(prop.options ? { options: prop.options } : {}),
-      ...(prop.control
+      ...(prop.fixed ? { control: false } : {}),
+      ...(prop.control && !prop.fixed
         ? {
             control: {
               type: prop.control,
@@ -38,8 +56,8 @@ export function toArgTypes(props) {
       table: {
         category: prop.required ? 'Required' : 'Optional',
         defaultValue:
-          prop.default !== undefined
-            ? { summary: String(prop.default) }
+          shownDefault(prop) !== undefined
+            ? { summary: String(shownDefault(prop)) }
             : undefined,
         type: prop.type ? { summary: prop.type } : undefined,
       },

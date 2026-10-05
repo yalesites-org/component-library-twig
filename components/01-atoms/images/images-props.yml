@@ -36,15 +36,10 @@ aspectRatio:
   name: Aspect Ratio
   type: select
   required: false
-  description: Aspect ratio for responsive image display
+  description: Aspect ratio for responsive image display, set by each component's image style
   detail: >
     The aspect ratio used for programmatic image cropping. Maps to the
-    image__aspect_ratio Twig variable. Five standard ratios are available.
+    image__aspect_ratio Twig variable. It is not editable here; each
+    component's image style sets it. The story previews 16x9.
   default: 16x9
-  options:
-    - 16x9
-    - 3x2
-    - 1x1
-    - 1x1.6
-    - 4x3
-  control: select
+  fixed: Set by each component's image style
