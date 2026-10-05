@@ -22,6 +22,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
+import { ctaAccentSwapSet } from './approved-pairings.mjs';
 import { publishesContract, stripComments } from './surface-contract.mjs';
 
 import {
@@ -289,12 +290,13 @@ test('a themed section re-points link hover, not just resting', () => {
   });
 });
 
+const ctaScss = () =>
+  stripComments(readComponent('01-atoms/controls/cta/_yds-cta.scss'));
+
 test('outline CTA hover in a themed section fills with the section foreground', () => {
   // The accent (border slot) failed 4.5:1 as the hover fill under
   // section-background text in 8 of 42 combinations (YaleSites-Internal#1836).
-  const outline = stripComments(
-    readComponent('01-atoms/controls/cta/_yds-cta.scss'),
-  ).match(
+  const outline = ctaScss().match(
     /\[data-section-theme\]:not\(\[data-section-theme='default'\]\) & \{[\s\S]*?\[data-cta-style='outline'\] \{([^}]*)\}/,
   );
 
@@ -302,6 +304,60 @@ test('outline CTA hover in a themed section fills with the section foreground', 
   assert.match(
     outline[1],
     /--color-cta-text-hover: var\(--color-section-background\);[\s\S]*--color-cta-bg-hover: var\(--color-section-foreground\);/,
+  );
+});
+
+test('a themed-section CTA focus ring follows the section foreground', () => {
+  // `--color-link-base` feeds the focus-styles outline; the button theme sets it
+  // to slot-two, which failed 3:1 in 26 of 42 combinations
+  // (YaleSites-Internal#1840).
+  const block = ctaScss().match(
+    /\.yds-layout\[data-section-theme\]:not\(\[data-section-theme='default'\]\) & \{([\s\S]*?)\n {2}\}/,
+  );
+
+  assert.ok(block, 'the themed-section CTA block is gone');
+  assert.match(
+    block[1],
+    /--color-link-base: var\(--color-section-foreground\);/,
+  );
+});
+
+test('the CTA accent swap map equals the combinations where the accent fails 4.5:1', () => {
+  const source = ctaScss();
+  const map = source.match(/\$cta-section-accent-swap: \(([\s\S]*?)\n\);/);
+
+  assert.ok(map, '$cta-section-accent-swap is gone from _yds-cta.scss');
+
+  const declared = [...map[1].matchAll(/(\w+):\s*\(([^)]*)\)/g)].flatMap(
+    ([, globalTheme, sections]) =>
+      sections
+        .split(',')
+        .filter((section) => section.trim())
+        .map((section) => `${globalTheme}/${section.trim()}`),
+  );
+
+  assert.deepEqual(declared.sort(), ctaAccentSwapSet().sort());
+
+  // The loop sets the accent on the SECTION (not the button) from that map.
+  assert.match(
+    source,
+    /@each \$globalTheme, \$sectionThemes in \$cta-section-accent-swap\s*\{[\s\S]*?\[data-global-theme='#\{\$globalTheme\}'\]\s*\.yds-layout\[data-section-theme='#\{\$sectionTheme\}'\]\s*\{\s*--cta-section-accent:\s*var\(--color-section-foreground\);/,
+  );
+  // The CTA rules consume it, falling back to the section accent.
+  assert.match(
+    source,
+    /--color-cta-bg:\s*var\(--cta-section-accent, var\(--color-section-accent\)\);/,
+  );
+  assert.match(
+    source,
+    /--color-cta-text:\s*var\(--cta-section-accent, var\(--color-section-accent\)\);/,
+  );
+});
+
+test('publish-surface resets the CTA accent swap so inner surfaces keep their own', () => {
+  assert.match(
+    stripComments(readComponent('00-tokens/colors/_surface-contract.scss')),
+    /@mixin publish-surface\([^)]*\)\s*\{[\s\S]*?--cta-section-accent:\s*initial;/,
   );
 });
 

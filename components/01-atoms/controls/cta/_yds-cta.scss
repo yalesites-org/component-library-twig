@@ -16,6 +16,29 @@ $cta-outline-weights: (
   '4': var(--border-thickness-4),
 );
 
+// Global theme -> section themes where the section accent fails 4.5:1 on the
+// section background (yalesites-org/YaleSites-Internal#1840).
+$cta-section-accent-swap: (
+  two: (
+    four,
+  ),
+  three: (
+    three,
+    four,
+  ),
+  four: (
+    four,
+  ),
+  six: (
+    four,
+  ),
+  seven: (
+    one,
+    three,
+    four,
+  ),
+);
+
 @mixin cta {
   // prettier-ignore
   border: var(--border-thickness-cta, var(--border-thickness-2)) solid var(--color-cta-border);
@@ -336,10 +359,19 @@ $cta-outline-weights: (
   // the section accent and `--color-action-secondary` by the section
   // background, which is why the values line up one for one.
   // -
-  // One exception: the outline HOVER fill is the section foreground, not the
-  // accent. The accent is the 3:1 border slot and fails 4.5:1 under the hover
-  // text in 8 of 42 theme combinations (YaleSites-Internal#1836). Filled buttons
-  // keep the accent (YaleSites-Internal#1613).
+  // Three exceptions, all so the button clears contrast in a themed section:
+  // - The outline HOVER fill is the section foreground, not the accent. The
+  //   accent is the 3:1 border slot and fails 4.5:1 under the hover text in 8 of
+  //   42 theme combinations (YaleSites-Internal#1836).
+  // - `--cta-section-accent` is the button's resting accent: the section
+  //   accent unless the section sets it. The rule after this mixin sets it to
+  //   the section foreground in the 8 combinations where the accent fails 4.5:1
+  //   on the section background (yalesites-org/YaleSites-Internal#1839, #1840).
+  //   It sits on the section, not the button, so a block that publishes its own
+  //   surface (which resets the property) keeps its own accent.
+  // - The focus ring is `--color-link-base`, which the button theme points at its
+  //   own slot-two; here it follows the section foreground, which clears 3:1
+  //   everywhere (26 of 42 failed before).
   // -
   // The win: `--color-section-*` is inherited, so a block that paints its own
   // surface between the section and this button resets it and the button is
@@ -360,19 +392,40 @@ $cta-outline-weights: (
   // not change which buttons the rule reaches, so the platform-wide restyle
   // above is still exactly what deleting it would cause.
   .yds-layout[data-section-theme]:not([data-section-theme='default']) & {
+    --color-link-base: var(--color-section-foreground);
+
     &[data-cta-style='filled'] {
       --color-cta-text: var(--color-section-background);
-      --color-cta-text-hover: var(--color-section-accent);
-      --color-cta-bg: var(--color-section-accent);
+      --color-cta-text-hover: var(
+        --cta-section-accent,
+        var(--color-section-accent)
+      );
+      --color-cta-bg: var(--cta-section-accent, var(--color-section-accent));
       --color-cta-bg-hover: transparent;
-      --color-cta-border: var(--color-section-accent);
+      --color-cta-border: var(
+        --cta-section-accent,
+        var(--color-section-accent)
+      );
     }
 
     &[data-cta-style='outline'] {
-      --color-cta-text: var(--color-section-accent);
+      --color-cta-text: var(--cta-section-accent, var(--color-section-accent));
       --color-cta-text-hover: var(--color-section-background);
-      --color-cta-border: var(--color-section-accent);
+      --color-cta-border: var(
+        --cta-section-accent,
+        var(--color-section-accent)
+      );
       --color-cta-bg-hover: var(--color-section-foreground);
+    }
+  }
+}
+
+// Set on the section, not the button; see the comment in the mixin above.
+@each $globalTheme, $sectionThemes in $cta-section-accent-swap {
+  @each $sectionTheme in $sectionThemes {
+    [data-global-theme='#{$globalTheme}']
+      .yds-layout[data-section-theme='#{$sectionTheme}'] {
+      --cta-section-accent: var(--color-section-foreground);
     }
   }
 }
