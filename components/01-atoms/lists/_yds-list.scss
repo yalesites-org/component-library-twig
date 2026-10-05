@@ -6,76 +6,80 @@
   padding: 0;
 }
 
-// :not([type]) lets an explicit type="a"/"i"/etc. attribute (set via the
-// CKEditor5 List Style dropdown) take precedence over these depth-based
-// defaults, instead of this CSS unconditionally overriding it.
-ul:not([type]) {
-  list-style-type: disc;
-
-  ul:not([type]) {
-    list-style-type: circle;
-
-    ul:not([type]) {
-      list-style-type: square;
-    }
-  }
-}
-
-ol:not([type]) {
-  list-style-type: decimal;
-
-  ol:not([type]) {
-    list-style-type: lower-alpha;
-
-    ol:not([type]) {
-      list-style-type: lower-roman;
-    }
-  }
-}
-
-// When a list's style came from an explicit choice in the CKEditor5 List
-// Style dropdown (a `type` attribute) rather than from the depth-based
-// defaults above, an untyped sub-item's ancestor no longer matches
-// `:not([type])`, so it would otherwise fall back to the browser default
-// instead of continuing the outline sequence (decimal -> lower-alpha ->
-// lower-roman / disc -> circle -> square). These tie the 2-levels-deep
-// default rules above at equal specificity (both select two `ol`/`ul`
-// steps) and only lose to the 3-levels-deep ones.
-/* stylelint-disable no-descending-specificity */
-ol[type='1'] ol:not([type]) {
-  list-style-type: lower-alpha;
-}
-
-ol[type='a'] ol:not([type]) {
-  list-style-type: lower-roman;
-}
-
-ul[type='disc'] ul:not([type]) {
-  list-style-type: circle;
-}
-
-ul[type='circle'] ul:not([type]) {
-  list-style-type: square;
-}
-
-// A plain descendant combinator doesn't distinguish "one level down" from
-// "two levels down", so without these, a grandchild under an explicit
-// type="1"/"disc" top level would match the same rules as its parent above
-// and incorrectly stop at lower-alpha/circle instead of continuing to
-// lower-roman/square.
-ol[type='1'] ol:not([type]) ol:not([type]) {
-  list-style-type: lower-roman;
-}
-
-ul[type='disc'] ul:not([type]) ul:not([type]) {
-  list-style-type: square;
-}
-/* stylelint-enable no-descending-specificity */
-
+// Scoped to .text-field (the wrapper every rendered WYSIWYG/filtered text
+// field uses) so these list-style defaults only ever apply to editor
+// content, not to every <ul>/<ol> on the site (navigation menus, etc. set
+// their own list-style separately and should never be touched here).
 .text-field {
   li {
     padding-left: var(--size-spacing-1);
   }
+
+  // :not([type]) lets an explicit type="a"/"i"/etc. attribute (set via the
+  // CKEditor5 List Style dropdown) take precedence over these depth-based
+  // defaults, instead of this CSS unconditionally overriding it.
+  ul:not([type]) {
+    list-style-type: disc;
+
+    ul:not([type]) {
+      list-style-type: circle;
+
+      ul:not([type]) {
+        list-style-type: square;
+      }
+    }
+  }
+
+  ol:not([type]) {
+    list-style-type: decimal;
+
+    ol:not([type]) {
+      list-style-type: lower-alpha;
+
+      ol:not([type]) {
+        list-style-type: lower-roman;
+      }
+    }
+  }
+
+  // When a list's style came from an explicit choice in the CKEditor5 List
+  // Style dropdown (a `type` attribute) rather than from the depth-based
+  // defaults above, an untyped sub-item's ancestor no longer matches
+  // `:not([type])`, so it would otherwise fall back to the browser default
+  // instead of continuing the outline sequence (decimal -> lower-alpha ->
+  // lower-roman / disc -> circle -> square). These tie the 2-levels-deep
+  // default rules above at equal specificity (both select two `ol`/`ul`
+  // steps) and only lose to the 3-levels-deep ones.
+  /* stylelint-disable no-descending-specificity */
+  ol[type='1'] ol:not([type]) {
+    list-style-type: lower-alpha;
+  }
+
+  ol[type='a'] ol:not([type]) {
+    list-style-type: lower-roman;
+  }
+
+  ul[type='disc'] ul:not([type]) {
+    list-style-type: circle;
+  }
+
+  ul[type='circle'] ul:not([type]) {
+    list-style-type: square;
+  }
+
+  // A plain descendant combinator doesn't distinguish "one level down" from
+  // "two levels down", so without these, a grandchild under an explicit
+  // type="1"/"disc" top level would match the same rules as its parent above
+  // and incorrectly stop at lower-alpha/circle instead of continuing to
+  // lower-roman/square.
+  ol[type='1'] ol:not([type]) ol:not([type]) {
+    list-style-type: lower-roman;
+  }
+
+  ul[type='disc'] ul:not([type]) ul:not([type]) {
+    list-style-type: square;
+  }
+  /* stylelint-enable no-descending-specificity */
 }
 
 .taxonomy-list {
