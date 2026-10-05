@@ -17,6 +17,6 @@ export default {
 
 export const ComponentWrapper = ({ componentWidth }) => {
   return componentWrapperTwig({
-    component_width: componentWidth,
+    component_wrapper__width: componentWidth,
   });
 };
