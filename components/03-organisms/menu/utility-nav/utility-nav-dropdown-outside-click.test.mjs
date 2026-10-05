@@ -48,6 +48,22 @@ const behaviorSource = fs.readFileSync(
 );
 
 /**
+ * Stand-in for Drupal's `core/once`, which the behavior reads as a global.
+ * The real `@drupal/once` needs `Element`/`document` globals the hand-rolled
+ * harness elements cannot satisfy, so this keeps its contract: return the
+ * matches not yet marked with the id in `data-once`, and mark them.
+ */
+const once = (id, selector, context) =>
+  [...context.querySelectorAll(selector)].filter((element) => {
+    const marks = (element.getAttribute('data-once') ?? '')
+      .split(' ')
+      .filter(Boolean);
+    if (marks.includes(id)) return false;
+    element.setAttribute('data-once', [...marks, id].join(' '));
+    return true;
+  });
+
+/**
  * Matches the `.class` and `.class[attr="value"]` selectors the behavior uses.
  *
  * @param {string} selector - The selector to split.
@@ -222,13 +238,16 @@ const attachBehavior = () => {
 
   const sandbox = {
     Drupal: { behaviors: {} },
+    once,
     document,
     window,
     setTimeout,
     clearTimeout,
   };
 
-  vm.runInNewContext(behaviorSource, sandbox, { filename: 'utility-nav.js' });
+  vm.runInNewContext(behaviorSource, sandbox, {
+    filename: 'utility-nav-dropdown-menu.js',
+  });
 
   assert.ok(
     sandbox.Drupal.behaviors.utilityDropdownNav,

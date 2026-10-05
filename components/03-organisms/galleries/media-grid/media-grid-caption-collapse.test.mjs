@@ -29,6 +29,22 @@ const source = readFileSync(
 );
 
 /**
+ * Stand-in for Drupal's `core/once`, which the behavior reads as a global.
+ * The real `@drupal/once` needs `Element`/`document` globals the hand-rolled
+ * harness elements cannot satisfy, so this keeps its contract: return the
+ * matches not yet marked with the id in `data-once`, and mark them.
+ */
+const once = (id, selector, context) =>
+  [...context.querySelectorAll(selector)].filter((element) => {
+    const marks = (element.getAttribute('data-once') ?? '')
+      .split(' ')
+      .filter(Boolean);
+    if (marks.includes(id)) return false;
+    element.setAttribute('data-once', [...marks, id].join(' '));
+    return true;
+  });
+
+/**
  * The slice of the DOM the caption loop touches, and nothing more.
  *
  * `children` maps a selector straight to the element it should return, so no
@@ -145,6 +161,7 @@ function attachBehaviour(items) {
   });
   const sandbox = {
     Drupal: { behaviors: {} },
+    once,
     document: {
       querySelector: () => new FakeElement(),
       documentElement: new FakeElement(),
