@@ -26,17 +26,14 @@ export default {
   },
 };
 
-const size = 'tall';
-const imageCaption = 'Image Banner Caption';
-
-const renderImageBanner = (bgColor, imgSize = size) =>
+const renderImageBanner = (bgColor, imgSize = 'tall') =>
   imageBannerTwig({
     ...imageData.responsive_images['16x9'],
     image_banner__content__background: bgColor,
     image_banner__overlay_variation: 'full',
     image_banner__size: imgSize,
     image_banner__video: 'false',
-    image_banner__caption: imageCaption,
+    image_banner__caption: 'Image Banner Caption',
   });
 
 /**

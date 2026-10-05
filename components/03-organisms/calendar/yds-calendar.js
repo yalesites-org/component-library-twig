@@ -195,6 +195,13 @@ Drupal.behaviors.eventsCalendar = {
             moreEventsContainer.appendChild(clonedEvent);
           });
 
+          // The list ships `hidden` so an unopened modal leaves no empty list
+          // container in the DOM. Reveal it only once it holds events: the
+          // clear above runs first, so a day click that produced none has to
+          // stay hidden rather than expose an empty list.
+          moreEventsContainer.hidden =
+            moreEventsContainer.children.length === 0;
+
           // Manually open the modal after content is populated.
           MicroModal.show('calendar-modal');
         });
@@ -241,6 +248,7 @@ Drupal.behaviors.eventsCalendar = {
               '#edit-custom-vocab-included-terms',
             ),
             searchInput: form.querySelector('#edit-search'),
+            parentTermsInput: form.querySelector('[name="parent_terms"]'),
             termsIncludeInput: form.querySelector('[name="terms_include"]'),
             termsExcludeInput: form.querySelector('[name="terms_exclude"]'),
             termOperatorInput: form.querySelector('[name="term_operator"]'),
@@ -266,6 +274,7 @@ Drupal.behaviors.eventsCalendar = {
                 ? getSelectedValues(formElements.customVocabSelect)
                 : [],
             ),
+            parent_terms: formElements.parentTermsInput?.value || '',
             terms_include: formElements.termsIncludeInput?.value || '',
             terms_exclude: formElements.termsExcludeInput?.value || '',
             term_operator: formElements.termOperatorInput?.value || '+',
