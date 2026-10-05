@@ -62,6 +62,19 @@ const renderGlobalTheme = () => {
         '',
         'Link Grid Theme',
       )}
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper('default', renderLinkGrid(theme), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        componentThemes,
+        'All Link Grid Theme Variations on an Unthemed Section',
+        'The section themes above all paint a background; an unthemed section ' +
+          'paints none, so the heading lands on the page itself. Every heading ' +
+          'here must stay readable.',
+        'Link Grid Theme',
+      )}
       ${createVariations(
         (lineTreatment) =>
           createSectionWrapper('one', renderLinkGrid('one', lineTreatment), {
