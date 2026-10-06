@@ -1,6 +1,6 @@
 Drupal.behaviors.siteHeader = {
   attach(context) {
-    const body = context.querySelector('body');
+    const { body } = document;
     const [header] = once('site-header', '.site-header', context);
     if (!header) {
       return;
