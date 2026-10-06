@@ -178,4 +178,17 @@
     font-weight: var(--font-weights-mallory-book);
     cursor: default;
   }
+
+  // Brown-gray fails on dark section backgrounds (YaleSites-Internal#1837).
+  [data-section-theme]:not([data-section-theme='default'])
+    &[aria-current='page'] {
+    color: var(--color-section-foreground);
+  }
+}
+
+// Link and button hover read `--menu-link-color`, which resolves at `:root`
+// and ignores the section, so re-point it inside a themed section
+// (YaleSites-Internal#1837).
+[data-section-theme]:not([data-section-theme='default']) .breadcrumbs__wrapper {
+  --menu-link-color: var(--color-section-foreground);
 }

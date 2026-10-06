@@ -78,6 +78,7 @@ export const AA_NON_TEXT = WCAG_LEVELS.find(
 export const PAIRING_KINDS = [
   'section',
   'section-outline-hover',
+  'section-breadcrumb',
   'section-cta-rest',
   'section-cta-focus-ring',
   'block',
@@ -208,6 +209,34 @@ function sectionOutlineHoverPairings() {
         },
         minimum: AA_NORMAL_TEXT,
       }),
+    );
+  });
+}
+
+/**
+ * Breadcrumb current-page text and link hover on the section background
+ * (YaleSites-Internal#1837). `_yds-breadcrumbs.scss` paints both with
+ * `--color-section-foreground`, the `content` slot, in a themed section.
+ */
+function sectionBreadcrumbPairings() {
+  return Object.keys(tokens['global-themes']).flatMap((globalTheme) => {
+    const slots = resolveGlobalTheme(globalTheme);
+
+    return Object.entries(SECTION_THEMES).flatMap(([surface, roles]) =>
+      ['current-page', 'hover'].map((role) =>
+        pairing({
+          kind: 'section-breadcrumb',
+          surface,
+          globalTheme,
+          role,
+          background: {
+            name: roles.background,
+            value: slots[roles.background],
+          },
+          foreground: { name: roles.content, value: slots[roles.content] },
+          minimum: AA_NORMAL_TEXT,
+        }),
+      ),
     );
   });
 }
@@ -385,6 +414,7 @@ export function approvedPairings() {
   return [
     ...sectionPairings(),
     ...sectionOutlineHoverPairings(),
+    ...sectionBreadcrumbPairings(),
     ...sectionCtaRestPairings(),
     ...sectionCtaFocusRingPairings(),
     ...declaredPairings('block', 'component-themes'),

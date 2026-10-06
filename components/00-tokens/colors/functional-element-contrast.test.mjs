@@ -361,6 +361,22 @@ test('publish-surface resets the CTA accent swap so inner surfaces keep their ow
   );
 });
 
+test('breadcrumb hover and current page read the section foreground in a themed section', () => {
+  // Gated as `section-breadcrumb` (YaleSites-Internal#1837). Brown-gray and the
+  // root-level `--menu-link-color` ignore the section and fail on dark ones.
+  const scss = stripComments(
+    readComponent('03-organisms/menu/breadcrumbs/_yds-breadcrumbs.scss'),
+  );
+  assert.match(
+    scss,
+    /\[data-section-theme\]:not\(\[data-section-theme='default'\]\)\s+&\[aria-current='page'\] \{\s*color: var\(--color-section-foreground\);/,
+  );
+  assert.match(
+    scss,
+    /\[data-section-theme\]:not\(\[data-section-theme='default'\]\) \.breadcrumbs__wrapper \{\s*--menu-link-color: var\(--color-section-foreground\);/,
+  );
+});
+
 test('a block that paints its own surface shadows the section foreground', () => {
   // The regression the hover fix above would otherwise cause, and it is invisible
   // to the generated table because the #1614 fixture only builds accordion,
