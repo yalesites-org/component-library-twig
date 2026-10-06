@@ -542,15 +542,22 @@ test('a themed section contains its children margins', () => {
   assert.equal(source.match(/display: flow-root;/g)?.length, 1);
 });
 
-test('a themed Page Meta drops the top margin above its color band', () => {
-  // The margin that spaces an unthemed title from the header would show as a
-  // white strip between header and color (YaleSites-Internal#1837).
-  const source = readFileSync(
+test('a themed Page Meta zeroes the margins around its color band', () => {
+  // The band carries its own padding, so the top margin would show as a white
+  // strip under the header, and the title's and the region's last-child bottom
+  // margins would stack on the padding (YaleSites-Internal#1837). `.layout` on
+  // the compound keeps the last-child rule above atomic's 0,6,0.
+  const block = readFileSync(
     new URL('../../../04-page-layouts/page-layouts.scss', import.meta.url),
     'utf8',
+  ).match(
+    /\.main-content\s+\.page-meta\.layout\[data-section-theme\]:not\(\[data-section-theme='default'\]\) \{([\s\S]*?)\n\}/,
   );
+  assert.ok(block, 'themed Page Meta block not found');
+  assert.match(block[1], /^\s{2}margin-top: 0;$/m);
+  assert.match(block[1], /\.page-title\s*\{\s*margin-bottom: 0;\s*\}/);
   assert.match(
-    source,
-    /\.main-content\s+\.page-meta\[data-section-theme\]:not\(\[data-section-theme='default'\]\) \{\s*margin-top: 0;\s*\}/,
+    block[1],
+    /\.layout__region--content\s*>\s*:last-child\s*\{\s*margin-bottom: 0;\s*\}/,
   );
 });

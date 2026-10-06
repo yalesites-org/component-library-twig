@@ -72,11 +72,21 @@ body[data-body-frozen] {
 }
 
 // A themed Page Meta paints its own color band with its own padding, so the
-// margin above would show as a white strip under the site header
-// (YaleSites-Internal#1837).
+// margin above would show as a white strip under the site header, and the
+// title's bottom margin and the region's last-child margin (set by atomic at
+// 0,6,0) would stack on that padding inside the band (YaleSites-Internal#1837).
+// `.layout` on the compound makes the last-child rule 0,7,0.
 .main-content
-  .page-meta[data-section-theme]:not([data-section-theme='default']) {
+  .page-meta.layout[data-section-theme]:not([data-section-theme='default']) {
   margin-top: 0;
+
+  .page-title {
+    margin-bottom: 0;
+  }
+
+  .layout__region--content > :last-child {
+    margin-bottom: 0;
+  }
 }
 
 body {
