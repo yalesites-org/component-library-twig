@@ -355,6 +355,12 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   //    recorded: `00-tokens/colors/section-background-contrast.txt` shows no
   //    single slot is legible on all six section backgrounds.
   &[data-section-theme]:not([data-section-theme='default']) {
+    // Contain child margins. With No padding, a first or last child's margin
+    // would otherwise collapse through and show as a white strip between two
+    // colored sections (YaleSites-Internal#1837). Padded sections never
+    // collapse, so only the no-padding variants change.
+    display: flow-root;
+
     // The `--color-section-*` contract (YaleSites-Internal#1628). `-background`
     // and `-accent` extend the `--color-section-foreground` name #1613
     // introduced rather than inventing a parallel family. See the preamble

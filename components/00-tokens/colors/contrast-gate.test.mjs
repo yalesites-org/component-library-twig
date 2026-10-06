@@ -176,6 +176,8 @@ test('every surface family still produces the number of pairings it should', () 
     'section-outline-hover': 42,
     // 7 global themes x 6 section themes x (current-page, hover) (YaleSites-Internal#1837).
     'section-breadcrumb': 84,
+    // 7 global themes x 6 section themes x (link, border) (YaleSites-Internal#1837).
+    'section-book-nav': 84,
     // 7 global themes x 6 section themes, resting accent and focus ring (YaleSites-Internal#1840).
     'section-cta-rest': 42,
     'section-cta-focus-ring': 42,

@@ -156,6 +156,31 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 }
 
+// In a colored section, book nav reads the section colors (gated as
+// `section-book-nav`). `.secondary-nav` re-declares these per theme, so set them there too.
+.yds-layout[data-section-theme]:not([data-section-theme='default'])
+  .in-this-section {
+  margin-block-end: var(--size-spacing-6);
+
+  &,
+  .secondary-nav {
+    --color-background: var(--color-section-background);
+    --color-heading: var(--color-section-foreground);
+    --color-muted: var(--color-section-foreground);
+    --color-link-base: var(--color-section-foreground);
+    --menu-link-color: var(--color-section-foreground);
+    --color-navigation-border: var(--color-section-foreground);
+    --color-navigation-expanded-item: var(--color-section-foreground);
+    --color-in-this-section-toggle-divider: var(--color-section-foreground);
+  }
+
+  &,
+  .secondary-nav,
+  .secondary-menu-toggle {
+    background-color: var(--color-section-background);
+  }
+}
+
 .in-this-section__inner {
   // the secondary menu submenu items are positioned absolutely based on the relative position of this container.
   // No other wrapping element has position: relative set so that the submenu items are positioned relative to the entire menu.

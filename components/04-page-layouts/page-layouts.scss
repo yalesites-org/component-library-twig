@@ -71,6 +71,14 @@ body[data-body-frozen] {
   }
 }
 
+// A themed Page Meta paints its own color band with its own padding, so the
+// margin above would show as a white strip under the site header
+// (YaleSites-Internal#1837).
+.main-content
+  .page-meta[data-section-theme]:not([data-section-theme='default']) {
+  margin-top: 0;
+}
+
 body {
   --site-header-height: 4.8125rem; // 77px / 16
 }

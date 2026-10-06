@@ -527,3 +527,30 @@ test('70/30 and 30/70 separators match the 50/50 divider element', () => {
     'no column separator may still be drawn from --color-divider',
   );
 });
+
+test('a themed section contains its children margins', () => {
+  // A No padding section otherwise lets its first child's margin collapse
+  // through, showing as a white strip between two colored sections
+  // (YaleSites-Internal#1837). Scoped to themed sections so unthemed layout is
+  // unchanged.
+  const source = scss().replace(/\/\/.*$/gm, '');
+  const themed = source.match(
+    /&\[data-section-theme\]:not\(\[data-section-theme='default'\]\)\s*\{([\s\S]*?)\n {2}\}/,
+  );
+  assert.ok(themed, 'themed section block not found');
+  assert.match(themed[1], /^\s{4}display: flow-root;$/m);
+  assert.equal(source.match(/display: flow-root;/g)?.length, 1);
+});
+
+test('a themed Page Meta drops the top margin above its color band', () => {
+  // The margin that spaces an unthemed title from the header would show as a
+  // white strip between header and color (YaleSites-Internal#1837).
+  const source = readFileSync(
+    new URL('../../../04-page-layouts/page-layouts.scss', import.meta.url),
+    'utf8',
+  );
+  assert.match(
+    source,
+    /\.main-content\s+\.page-meta\[data-section-theme\]:not\(\[data-section-theme='default'\]\) \{\s*margin-top: 0;\s*\}/,
+  );
+});
