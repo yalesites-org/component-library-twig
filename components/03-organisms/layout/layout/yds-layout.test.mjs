@@ -529,10 +529,10 @@ test('70/30 and 30/70 separators match the 50/50 divider element', () => {
 });
 
 test('a themed section contains its children margins', () => {
-  // A No padding section otherwise lets its first child's margin collapse
-  // through, showing as a white strip between two colored sections
-  // (YaleSites-Internal#1837). Scoped to themed sections so unthemed layout is
-  // unchanged.
+  // An unpadded themed section (No padding, or Page Meta) otherwise lets its
+  // first child's margin collapse through, showing as a white strip around the
+  // color (YaleSites-Internal#1837). Scoped to themed sections so unthemed
+  // layout is unchanged.
   const source = scss().replace(/\/\/.*$/gm, '');
   const themed = source.match(
     /&\[data-section-theme\]:not\(\[data-section-theme='default'\]\)\s*\{([\s\S]*?)\n {2}\}/,
@@ -542,22 +542,18 @@ test('a themed section contains its children margins', () => {
   assert.equal(source.match(/display: flow-root;/g)?.length, 1);
 });
 
-test('a themed Page Meta zeroes the margins around its color band', () => {
-  // The band carries its own padding, so the top margin would show as a white
-  // strip under the header, and the title's and the region's last-child bottom
-  // margins would stack on the padding (YaleSites-Internal#1837). `.layout` on
-  // the compound keeps the last-child rule above atomic's 0,6,0.
-  const block = readFileSync(
+test('a themed Page Meta without breadcrumbs paints its top spacing', () => {
+  // flow-root stops the top margin collapsing with the first child's, so the
+  // margin must become padding inside the band (YaleSites-Internal#1837).
+  const source = readFileSync(
     new URL('../../../04-page-layouts/page-layouts.scss', import.meta.url),
     'utf8',
-  ).match(
-    /\.main-content\s+\.page-meta\.layout\[data-section-theme\]:not\(\[data-section-theme='default'\]\) \{([\s\S]*?)\n\}/,
+  ).replace(/\/\/.*$/gm, '');
+  const block = source.match(
+    /\.page-meta:not\(:has\(\.breadcrumbs__wrapper\)\)\[data-section-theme\]:not\(\s*\[data-section-theme='default'\]\s*\) \{([\s\S]*?)\n\}/,
   );
-  assert.ok(block, 'themed Page Meta block not found');
+  assert.ok(block, 'themed Page Meta without breadcrumbs block not found');
   assert.match(block[1], /^\s{2}margin-top: 0;$/m);
-  assert.match(block[1], /\.page-title\s*\{\s*margin-bottom: 0;\s*\}/);
-  assert.match(
-    block[1],
-    /\.layout__region--content\s*>\s*:last-child\s*\{\s*margin-bottom: 0;\s*\}/,
-  );
+  assert.match(block[1], /^\s{2}padding-top: /m);
+  assert.match(block[1], /:first-child \.page-title\s*\{\s*margin-top: 0;/);
 });

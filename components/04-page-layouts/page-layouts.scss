@@ -60,32 +60,35 @@ body[data-body-frozen] {
 // .main-conent .page-meta that does not contain a .breadcrumbs__wrapper div
 // should have a top padding.
 .main-content .page-meta:not(:has(.breadcrumbs__wrapper)) {
-  margin-top: var(--main-content-top-margin, var(--size-spacing-6));
+  --page-meta-top-space: var(--main-content-top-margin, var(--size-spacing-6));
+
+  margin-top: var(--page-meta-top-space);
 
   @media (max-width: tokens.$break-l) {
-    margin-top: var(--size-spacing-8); // 2.5rem large breakpoints
+    --page-meta-top-space: var(--size-spacing-8); // 2.5rem large breakpoints
   }
 
   @media (max-width: tokens.$break-s) {
-    margin-top: var(--size-spacing-7); // 2rem small breakpoints
+    --page-meta-top-space: var(--size-spacing-7); // 2rem small breakpoints
   }
 }
 
-// A themed Page Meta paints its own color band with its own padding, so the
-// margin above would show as a white strip under the site header, and the
-// title's bottom margin and the region's last-child margin (set by atomic at
-// 0,6,0) would stack on that padding inside the band (YaleSites-Internal#1837).
-// `.layout` on the compound makes the last-child rule 0,7,0.
+// A themed Page Meta is `display: flow-root` (_yds-layout.scss), so unlike the
+// uncolored block its top margin no longer collapses with its first child's
+// and would show as a white strip above the color band. Paint that space
+// instead: the margin becomes padding, and the first child's margin, which the
+// uncolored block absorbs into the collapse, is dropped so the offset stays the
+// same at every breakpoint (YaleSites-Internal#1837).
 .main-content
-  .page-meta.layout[data-section-theme]:not([data-section-theme='default']) {
+  .page-meta:not(:has(.breadcrumbs__wrapper))[data-section-theme]:not(
+    [data-section-theme='default']
+  ) {
   margin-top: 0;
+  padding-top: var(--page-meta-top-space);
 
-  .page-title {
-    margin-bottom: 0;
-  }
-
-  .layout__region--content > :last-child {
-    margin-bottom: 0;
+  .layout__region--content > :first-child,
+  .layout__region--content > :first-child .page-title {
+    margin-top: 0;
   }
 }
 

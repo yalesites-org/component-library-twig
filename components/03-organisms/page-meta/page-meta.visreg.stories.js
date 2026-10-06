@@ -35,9 +35,9 @@ export default {
 };
 
 const renderGlobalTheme = () => {
-  // Mirrors Drupal's layout--page-meta.html.twig output. The themed vertical
-  // padding lives in Drupal (ys_layouts onecol.css), not in the component
-  // library, so spacing here is not identical to the live page.
+  // Mirrors Drupal's layout--page-meta.html.twig output. A color adds only
+  // the section signature; spacing matches the uncolored block
+  // (YaleSites-Internal#1837).
   const renderPageMeta = (theme) => {
     const content = `<div class="layout__region layout__region--content">
       ${breadcrumbsTwig({ ...breadcrumbsData })}
@@ -51,9 +51,7 @@ const renderGlobalTheme = () => {
     </div>`;
 
     const themed =
-      theme === 'default'
-        ? ''
-        : ` yds-layout" data-section-theme="${theme}" data-component-layout="one-column" data-component-padding="default`;
+      theme === 'default' ? '' : ` yds-layout" data-section-theme="${theme}`;
 
     return `<div class="layout layout--onecol page-meta${themed}">${content}</div>`;
   };

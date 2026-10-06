@@ -160,8 +160,6 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
 // `section-book-nav`). `.secondary-nav` re-declares these per theme, so set them there too.
 .yds-layout[data-section-theme]:not([data-section-theme='default'])
   .in-this-section {
-  margin-block-end: var(--size-spacing-6);
-
   &,
   .secondary-nav {
     --color-background: var(--color-section-background);
