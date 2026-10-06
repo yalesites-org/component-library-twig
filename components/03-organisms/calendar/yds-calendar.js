@@ -248,6 +248,7 @@ Drupal.behaviors.eventsCalendar = {
               '#edit-custom-vocab-included-terms',
             ),
             searchInput: form.querySelector('#edit-search'),
+            parentTermsInput: form.querySelector('[name="parent_terms"]'),
             termsIncludeInput: form.querySelector('[name="terms_include"]'),
             termsExcludeInput: form.querySelector('[name="terms_exclude"]'),
             termOperatorInput: form.querySelector('[name="term_operator"]'),
@@ -273,6 +274,7 @@ Drupal.behaviors.eventsCalendar = {
                 ? getSelectedValues(formElements.customVocabSelect)
                 : [],
             ),
+            parent_terms: formElements.parentTermsInput?.value || '',
             terms_include: formElements.termsIncludeInput?.value || '',
             terms_exclude: formElements.termsExcludeInput?.value || '',
             term_operator: formElements.termOperatorInput?.value || '+',
