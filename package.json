@@ -37,7 +37,9 @@
     "storybook:build": "npm run build && NODE_OPTIONS=--max-old-space-size=8192 storybook build --config-dir node_modules/@emulsify/core/.storybook -o .out --stats-json && node scripts/sort-storybook-index.mjs",
     "storybook:deploy": "storybook-to-ghpages -o .out",
     "test": "npm run test:unit && npm run lint:js && npm run lint:styles && npm run prettier && npm run storybook:build && npm run test:dist",
-    "test:unit": "node --test 'components/**/*.test.mjs'",
+    "test:unit": "npm run test:unit:node && npm run test:unit:vitest",
+    "test:unit:node": "node --test 'components/**/*.test.mjs'",
+    "test:unit:vitest": "vitest run",
     "test:dist": "node --test 'scripts/*.test.mjs'",
     "visreg:measure": "node components/_storybook/measure-visreg-pixels.mjs",
     "audit": "sh -c 'node_modules/@emulsify/core/scripts/audit.js \"$@\"; status=$?; printf \"\\nAudit docs: https://github.com/emulsify-ds/emulsify-core/blob/4.x/docs/migration-4x.md#storybook-migration\\n\"; exit $status' --",
@@ -56,6 +58,7 @@
     "@yalesites-org/eslint-config-and-other-formatting": "^1.20.0",
     "concurrently": "^10.0.4",
     "husky": "^9.0.11",
+    "jsdom": "^25.0.1",
     "lint-staged": "^15.2.7",
     "postcss": "^8.4.29",
     "puppeteer": "^24.43.1",
@@ -64,7 +67,8 @@
     "sass": "^1.47.0",
     "semantic-release": "^25.0.8",
     "storybook": "^10.5.10",
-    "twig": "^3.0.0"
+    "twig": "^3.0.0",
+    "vitest": "^2.1.9"
   },
   "dependencies": {
     "@drupal/once": "^1.0.1",

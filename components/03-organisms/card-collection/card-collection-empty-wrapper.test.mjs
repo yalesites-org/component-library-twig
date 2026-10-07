@@ -22,15 +22,38 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+// eslint-disable-next-line import/no-unresolved -- package uses an exports map the resolver can't read
+import { registerTwigExtensions } from '@emulsify/core/extensions/twig';
 
-// twig.js, the extensions these templates rely on (bem(), add_attributes()),
-// and the namespace map all come from the Storybook setup, so this test cannot
-// drift from how the templates are really compiled.
+// twig.js, the extensions these templates rely on (bem(), add_attributes(),
+// plus YaleSites' patched-in functions), and the namespace map come from the
+// same sources Storybook uses (Emulsify Core and project.emulsify.json), so
+// this test cannot drift from how the templates are really compiled. Core's
+// full Storybook setup needs Vite virtual modules, so only its Twig
+// extensions are registered here.
 const require = createRequire(import.meta.url);
 const Twig = require('twig');
-const { setupTwig, namespaces } = require('../../../.storybook/setupTwig');
+const twigDrupal = require('twig-drupal-filters');
 
-setupTwig(Twig);
+const root = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  '../../..',
+);
+const namespaces = Object.fromEntries(
+  JSON.parse(
+    readFileSync(path.join(root, 'project.emulsify.json'), 'utf8'),
+  ).variant.structureImplementations.map(({ name, directory }) => [
+    name,
+    path.resolve(root, directory),
+  ]),
+);
+
+Twig.cache();
+twigDrupal(Twig);
+registerTwigExtensions(Twig);
 
 /**
  * Renders Twig source, resolving the `@organisms` namespace.
