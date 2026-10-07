@@ -17,7 +17,10 @@ import {
 export default {
   tags: ['visreg'],
   title: 'Organisms/Tabs/Visreg',
-  parameters: { controls: { disable: true } },
+  parameters: {
+    chromatic: { disableSnapshot: false },
+    controls: { disable: true },
+  },
 };
 
 // *** VRT: Tabs with All Section Theme Variations ***

@@ -1,3 +1,6 @@
+// React is Storybook's own renderer here, never shipped in dist/.
+// eslint-disable-next-line import/no-extraneous-dependencies
+import React, { useEffect, useRef } from 'react';
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import getGlobalThemes from './color-global-themes';
 import {
@@ -1245,7 +1248,10 @@ ThemeContrastMatrix.tags = ['!dev'];
 // ---------------------------------------------------------------------------
 const HEX_HINT = 'Enter a 3- or 6-digit hex color, for example #00356b.';
 
-export const CustomPaletteContrastChecker = () => {
+// The checker is built as a live DOM tree with its own listeners. Storybook 10
+// renders through React, which rejects a raw element returned from a story
+// (error #31), so the story hands that tree to a React host that mounts it.
+const buildCustomPaletteContrastChecker = () => {
   const root = document.createElement('div');
   root.className = 'cl-contrast';
 
@@ -1475,5 +1481,20 @@ export const CustomPaletteContrastChecker = () => {
 
   return root;
 };
+
+const MountedDom = ({ build }) => {
+  const hostRef = useRef(null);
+
+  useEffect(() => {
+    const host = hostRef.current;
+    host.replaceChildren(build());
+    return () => host.replaceChildren();
+  }, [build]);
+
+  return React.createElement('div', { ref: hostRef });
+};
+
+export const CustomPaletteContrastChecker = () =>
+  React.createElement(MountedDom, { build: buildCustomPaletteContrastChecker });
 CustomPaletteContrastChecker.storyName = 'Custom Palette Contrast Checker';
 CustomPaletteContrastChecker.tags = ['!dev'];

@@ -19,6 +19,7 @@ export default {
   tags: ['visreg'],
   title: 'Templates/Block Wrapper/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },
