@@ -21,10 +21,9 @@ Drupal.behaviors.eventsCalendar = {
 
     // Query elements.
     const calendars = once('calendar', calendar, context);
-    const eventsToggle = context.querySelectorAll(eventToggle);
 
-    // Environment check.
-    const isStorybook = !!context.querySelector(storybook);
+    // Environment check. The marker class is on <body>, outside any story root.
+    const isStorybook = !!document.querySelector(storybook);
 
     // Media query for responsive behavior.
     const mql = window.matchMedia(`(min-width: 1200px )`);
@@ -32,7 +31,14 @@ Drupal.behaviors.eventsCalendar = {
     // Temporary div for HTML parsing.
     const tempDiv = document.createElement('div');
 
-    // Initialize MicroModal.
+    // MicroModal 0.7 caches one instance per modal id, bound to the element
+    // that existed when it was first created. A month change replaces the whole
+    // calendar, modal included, so a cached instance would open the detached
+    // old modal. When this attach found a new calendar, drop the stale instance
+    // (a no-op if none is registered) so init() binds to the current element.
+    // Done here, not per click: closing on every click would race the
+    // data-micromodal-trigger listener that init() registers on each toggle.
+    if (calendars.length) MicroModal.removeModal('calendar-modal');
     MicroModal.init();
 
     // Debounce utility.
@@ -173,8 +179,10 @@ Drupal.behaviors.eventsCalendar = {
 
       installFormSubmitGuard();
 
-      // Handle "More events" modal.
-      eventsToggle.forEach((toggle) => {
+      // Handle "More events" modal. Scoped to this calendar: it is bound once
+      // per calendar (see `once` above), so toggles outside it must not be
+      // bound here too.
+      calendarElement.querySelectorAll(eventToggle).forEach((toggle) => {
         toggle.addEventListener('click', (clickEvent) => {
           // Prevent default behavior to avoid conflicts with MicroModal auto-trigger.
           clickEvent.preventDefault();

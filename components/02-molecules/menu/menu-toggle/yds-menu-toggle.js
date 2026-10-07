@@ -7,7 +7,9 @@ Drupal.behaviors.menuToggle = {
       return;
     }
     const headerOverlay = context.querySelector('.site-header__overlay');
-    const body = context.querySelector('body');
+    // `context` may be a fragment or a Storybook story root, neither of which
+    // contains <body>.
+    const { body } = document;
     const focusableElements =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     // Classes.

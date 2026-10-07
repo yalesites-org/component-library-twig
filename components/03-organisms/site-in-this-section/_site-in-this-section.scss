@@ -169,10 +169,11 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     border-bottom: var(--border-thickness-1) solid
       var(--color-navigation-border);
     padding-left: var(--size-spacing-5);
-  }
 
-  & .secondary-nav__menu--level-0:first-of-type {
-    margin-left: calc(var(--size-spacing-5) * -1);
+    // Cancel the padding-left above so the first item lines up with the border.
+    & .secondary-nav__menu--level-0:first-of-type {
+      margin-left: calc(var(--size-spacing-5) * -1);
+    }
   }
 
   // Handle dropdown positioning within the scrolling container

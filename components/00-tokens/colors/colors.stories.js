@@ -1,3 +1,6 @@
+// React is Storybook's own renderer here, never shipped in dist/.
+// eslint-disable-next-line import/no-extraneous-dependencies
+import React, { useEffect, useRef } from 'react';
 import tokens from '@yalesites-org/tokens/build/json/tokens.json';
 import getGlobalThemes from './color-global-themes';
 import {
@@ -591,31 +594,28 @@ export const Colors = () => colorsTwig(colorsData);
 Colors.tags = ['!dev'];
 
 // ---------------------------------------------------------------------------
-// Web Colors — HEX values only (for digital use).
-// ---------------------------------------------------------------------------
-export const WebColors = () =>
-  webColorsTwig({ ...colorsData, print_colors: printColorsMeta });
-WebColors.storyName = 'Identity Colors';
-WebColors.tags = ['!dev'];
-
-// ---------------------------------------------------------------------------
-// Section stories — used by web-colors.mdx Canvas blocks.
+// Section stories — used by the Core/Print/Web Colors doc Canvas blocks.
 // ---------------------------------------------------------------------------
 const printData = { print_colors: printColorsMeta };
 
-// Restructure web accent colors to match PDF groupings (Cyan, Green, Yellow, Red/Orange, Gray).
-// Each color carries its own css_var so the twig template can reference the correct token
-// even when the group key no longer matches the token group name.
-function withVar(tokenGroup, entries) {
+const c = colorsData.colors;
+
+// Restructure the web accent colors to match the order Yale publishes on the
+// Yale Colors 2025 web reference: Yellow, Orange, Green, Blue, Gray. Each color
+// carries its own css_var so the twig template references the right token even
+// though the group key no longer matches the token group name. Keys are
+// prefixed (e.g. "blue-slate") so a numeric-looking key like "100" can't make
+// JS reorder the Gray group, where Slate Blue sits between Gray 500 and Gray 600.
+function pickVars(tokenGroup, keys) {
   return Object.fromEntries(
-    entries.map(([key, color]) => [
-      key,
-      { ...color, css_var: `--color-${tokenGroup}-${key}` },
-    ]),
+    keys
+      .filter((key) => c[tokenGroup]?.[key])
+      .map((key) => [
+        `${tokenGroup}-${key}`,
+        { ...c[tokenGroup][key], css_var: `--color-${tokenGroup}-${key}` },
+      ]),
   );
 }
-
-const c = colorsData.colors;
 
 // Yale Blue web hex — passed separately so Yale Blue section can show both web + print values.
 const yaleBlueWeb = c.blue?.yale
@@ -641,31 +641,34 @@ export const AccentPrint = () =>
 AccentPrint.storyName = 'Accent Colors for Print';
 AccentPrint.tags = ['!dev'];
 
+// Web accent groups, in the Yale Colors 2025 web reference order. The group keys
+// only set order — the Web Colors page renders one flat grid with no group
+// headings.
 const accentWebColors = {
   yale_blue_web: yaleBlueWeb,
   colors: {
-    // Cyan = our blue tokens (minus yale, which has its own section)
-    Cyan: withVar(
-      'blue',
-      Object.entries(c.blue || {}).filter(([key]) => key !== 'yale'),
-    ),
-    // Green = our green tokens
-    Green: withVar('green', Object.entries(c.green || {})),
-    // Yellow = yellow tokens + orange.peach (PDF groups peach under Yellow)
-    Yellow: {
-      ...withVar('yellow', Object.entries(c.yellow || {})),
-      ...(c.orange?.peach
-        ? { peach: { ...c.orange.peach, css_var: '--color-orange-peach' } }
-        : {}),
+    Yellow: pickVars('yellow', ['umbrella', 'yale-gold']),
+    Orange: pickVars('orange', ['peach', 'coral']),
+    Green: pickVars('green', ['fog', 'ground', 'basil', 'pine']),
+    Blue: pickVars('blue', [
+      'soft',
+      'pewter',
+      'shale',
+      'light',
+      'medium',
+      'horizon',
+      'royal',
+      'deep-teal',
+      'mint',
+      'oceanic',
+      'soft-oceanic',
+      'ocean',
+    ]),
+    Gray: {
+      ...pickVars('gray', ['100', '200', '300', '400', '500']),
+      ...pickVars('blue', ['slate']),
+      ...pickVars('gray', ['600', '700', 'hale', '800', '900']),
     },
-    // Red/Orange = orange.coral is the closest token we have
-    'Red/Orange': {
-      ...(c.orange?.coral
-        ? { coral: { ...c.orange.coral, css_var: '--color-orange-coral' } }
-        : {}),
-    },
-    // Gray = our gray tokens
-    Gray: withVar('gray', Object.entries(c.gray || {})),
   },
 };
 
@@ -1245,7 +1248,10 @@ ThemeContrastMatrix.tags = ['!dev'];
 // ---------------------------------------------------------------------------
 const HEX_HINT = 'Enter a 3- or 6-digit hex color, for example #00356b.';
 
-export const CustomPaletteContrastChecker = () => {
+// The checker is built as a live DOM tree with its own listeners. Storybook 10
+// renders through React, which rejects a raw element returned from a story
+// (error #31), so the story hands that tree to a React host that mounts it.
+const buildCustomPaletteContrastChecker = () => {
   const root = document.createElement('div');
   root.className = 'cl-contrast';
 
@@ -1475,5 +1481,20 @@ export const CustomPaletteContrastChecker = () => {
 
   return root;
 };
+
+const MountedDom = ({ build }) => {
+  const hostRef = useRef(null);
+
+  useEffect(() => {
+    const host = hostRef.current;
+    host.replaceChildren(build());
+    return () => host.replaceChildren();
+  }, [build]);
+
+  return React.createElement('div', { ref: hostRef });
+};
+
+export const CustomPaletteContrastChecker = () =>
+  React.createElement(MountedDom, { build: buildCustomPaletteContrastChecker });
 CustomPaletteContrastChecker.storyName = 'Custom Palette Contrast Checker';
 CustomPaletteContrastChecker.tags = ['!dev'];
