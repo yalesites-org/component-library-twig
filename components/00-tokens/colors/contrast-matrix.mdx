@@ -33,6 +33,18 @@ The ratio is symmetrical: it does not matter which of the two colors is the text
   <Canvas of={ColorsStories.ThemeContrastMatrix} />
 </div>
 
+## Nesting: a block inside a themed section
+
+The grid above pairs slots within a single palette, which answers "may these two colors sit together". It does not describe how a page is actually built. On a real page a block carries its own theme and is placed _inside_ a section carrying its own theme, and unless the block re-declares its foreground it inherits the section's text color — against the background the block painted. Neither palette is wrong on its own; the pairing that reaches the screen is one nobody chose.
+
+Rows are section themes (swatch = the section background, hex = the text color it hands down). Columns are block themes (swatch = the block background). Each cell is the section's text color measured against that block's background. Unlike the grid above, this one is **not** symmetrical — it is directional, because inheritance is.
+
+<div className="sb-contained-canvas">
+  <Canvas of={ColorsStories.NestedSurfaceContrastMatrix} />
+</div>
+
+A failing cell is not a bug in either theme. It is what happens when a component paints a background without publishing the foreground that goes with it, and it is what the Color Surface work is closing: see `components/00-tokens/colors/contrast-gate.mjs`, which computes the same grid headlessly and reports the failing count so the burn-down can be watched.
+
 ## Check your own colors
 
 Use this when someone proposes a custom palette. Replace any of the editable values below with the hex colors under consideration and the same calculation runs against them — including Yale's fixed brand colors (slots six, seven and eight), shown for reference but not editable, since a proposed palette has to work alongside them regardless. Empty editable fields are left out of the comparison, and an unreadable value is flagged rather than silently ignored.

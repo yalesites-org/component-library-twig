@@ -99,8 +99,14 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &[data-component-theme='three'] {
     --color-tile-item-theme: var(--color-slot-three);
     --color-tile-item-content: var(--color-slot-seven);
-    --color-link-visited-base: var(--color-link-visited);
-    --color-link-visited-hover: var(--color-link-visited-hover);
+
+    // Visited links keep the tile's own copy colour rather than the global
+    // purple. Was `var(--color-link-visited)` (a property declared nowhere) and
+    // a var() cycle: both invalid, so the `color:` that reads them fell through
+    // to `unset`, i.e. inherit. `currentcolor` is that same result, declared on
+    // purpose instead of arrived at by accident (YaleSites-Internal#1629).
+    --color-link-visited-base: currentcolor;
+    --color-link-visited-hover: currentcolor;
     --color-tile-animation-border: var(--color-slot-two);
 
     [data-global-theme='three'] & {
@@ -111,8 +117,14 @@ $tile-item-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   &[data-component-theme='four'] {
     --color-tile-item-theme: var(--color-slot-four);
     --color-tile-item-content: var(--color-slot-seven);
-    --color-link-visited-base: var(--color-link-visited);
-    --color-link-visited-hover: var(--color-link-visited-hover);
+
+    // Visited links keep the tile's own copy colour rather than the global
+    // purple. Was `var(--color-link-visited)` (a property declared nowhere) and
+    // a var() cycle: both invalid, so the `color:` that reads them fell through
+    // to `unset`, i.e. inherit. `currentcolor` is that same result, declared on
+    // purpose instead of arrived at by accident (YaleSites-Internal#1629).
+    --color-link-visited-base: currentcolor;
+    --color-link-visited-hover: currentcolor;
     --color-tile-animation-border: var(--color-slot-five);
   }
 

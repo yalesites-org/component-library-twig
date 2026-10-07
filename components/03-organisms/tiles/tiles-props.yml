@@ -29,10 +29,14 @@ alignment:
     - center
     - right
   control: select
+  labels:
+    left: 'Left'
+    center: 'Center'
+    right: 'Right'
 
 verticalAlignment:
   twigProp: tiles__vertical_alignment
-  name: Vertical Alignment
+  name: Content Position
   type: select
   required: false
   description: Vertical positioning of content within tiles
@@ -41,10 +45,13 @@ verticalAlignment:
     - top
     - bottom
   control: select
+  labels:
+    top: 'Top'
+    bottom: 'Bottom'
 
 columnCount:
   twigProp: tiles__grid_count
-  name: Column Count
+  name: Columns
   type: select
   required: false
   description: Number of columns in the tiles grid
@@ -54,6 +61,10 @@ columnCount:
     - three
     - four
   control: select
+  labels:
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
 
 image:
   twigProp: tiles__with__image
@@ -69,7 +80,7 @@ image:
 
 withAnimation:
   twigProp: tiles__with__animation
-  name: With Animation
+  name: Enable Animation
   type: boolean
   required: false
   description: Enable entrance animation effects on tiles

@@ -43,7 +43,10 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
       .link,
       a {
         --color-text-shadow: var(--color-background);
-        --color-link-hover: var(--color-link-hover);
+
+        // Inherited copy colour on hover, declared rather than simulated by a
+        // var() cycle (YaleSites-Internal#1629).
+        --color-link-hover: currentcolor;
       }
 
       a:not([data-link-style]) {
@@ -112,12 +115,17 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
     --color-link-base: var(--color-slot-one);
     --color-link-hover: var(--color-slot-eight);
     --color-navigation-border: var(--color-slot-three);
+
+    // slot-three and slot-four are too light for the toggle's divider on its
+    // white button (yalesites-org/YaleSites-Internal#1797).
+    --color-in-this-section-toggle-divider: var(--color-slot-one);
   }
 
   &[data-component-theme='four'] {
     --color-link-visited-base: var(--color-link-visited-light);
     --color-link-visited-hover: var(--color-link-visited-light-hover);
     --color-navigation-border: var(--color-slot-four);
+    --color-in-this-section-toggle-divider: var(--color-slot-one);
   }
 
   &[data-component-theme='five'] {

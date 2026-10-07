@@ -14,7 +14,7 @@ blockContent:
 
 paddingModifier:
   twigProp: block_wrapper__extra_classes
-  name: Padding Modifier
+  name: Padding Options
   type: select
   required: false
   description: Padding configuration applied via CSS class on the block wrapper
@@ -24,8 +24,8 @@ paddingModifier:
     of the block_wrapper__extra_classes array in the Twig template.
   default: padding-default
   options:
-    Default Padding: padding-default
-    No Top Padding: padding-no-top
-    No Bottom Padding: padding-no-bottom
-    No Padding: padding-no-padding
+    Padding on both top and bottom: padding-default
+    No top padding: padding-no-top
+    No bottom padding: padding-no-bottom
+    No padding (removes both top and bottom padding): padding-no-padding
   control: select

@@ -24,7 +24,7 @@ text:
 
 placement:
   twigProp: video__alignment
-  name: Video Placement
+  name: Alignment
   type: select
   required: false
   description: Alignment of the video within its container
@@ -33,3 +33,6 @@ placement:
     - left
     - center
   control: select
+  labels:
+    left: 'Left'
+    center: 'Center'

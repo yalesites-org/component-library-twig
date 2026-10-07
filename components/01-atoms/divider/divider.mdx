@@ -7,7 +7,7 @@ import componentProps from './divider-props.yml';
 
 # Divider
 
-Horizontal rules with customizable thickness, width, color, and positioning. Uses CSS custom properties for flexible theming.
+Horizontal rules with customizable thickness, width, and positioning. Uses CSS custom properties for flexible theming.
 
 ## Interactive Preview
 
@@ -22,7 +22,7 @@ Horizontal rules with customizable thickness, width, color, and positioning. Use
 
 ## Thickness Variations
 
-Six thickness options from hairline to 8px.
+Four thickness options: 1, 2, 4 and 8px.
 
 <div className="sb-contained-canvas">
   <Canvas of={DividerStories.DividersThickness} />
@@ -43,9 +43,3 @@ Left and center positions at 50% width.
 <div className="sb-contained-canvas">
   <Canvas of={DividerStories.DividersPosition} />
 </div>
-
-## Color Variations
-
-Available line colors shown on themed backgrounds. Use design token values via `--color-divider`.
-
-<Canvas of={DividerStories.DividersColor} />

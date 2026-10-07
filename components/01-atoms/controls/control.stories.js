@@ -34,7 +34,7 @@ export default {
 };
 
 const Section = (sectionTheme, component) => `
-  <div class="yds-layout" data-component-theme="${sectionTheme}" data-component-width="site">
+  <div class="yds-layout" data-section-theme="${sectionTheme}" data-component-width="site">
     <div class="yds-layout__inner">
       <div class="yds-layout__primary">
         ${component}

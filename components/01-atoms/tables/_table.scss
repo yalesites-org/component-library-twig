@@ -21,7 +21,22 @@
     --header-cell-bg: var(--color-gray-200);
     --header-row-bg: var(--color-gray-200);
 
-    [data-component-theme='two'] & {
+    // Darker header rules for section theme two, whose background is a
+    // near-white tint the default gray-700/gray-300 pair washes out against.
+    // -
+    // Re-keyed onto the section dial with YaleSites-Internal#1630 because that
+    // is unambiguously what it means -- section `two` is the light tint, block
+    // `two` is a dark gray these colours would disappear on.
+    // -
+    // **It is unreachable as written, and was equally unreachable before the
+    // re-key.** `&` here is `.yds-layout table`, so this compiles to
+    // `[data-section-theme='two'] .yds-layout table` -- it wants a dialled
+    // ancestor OF the section, and nothing emits one. Left as-is rather than
+    // repaired: making it live would change how tables look on section theme
+    // two, which is a design change this accessibility fix has no business
+    // making. To repair it, hoist it out of this nesting to
+    // `.yds-layout[data-section-theme='two'] table`.
+    [data-section-theme='two'] & {
       --header-cell-border: var(--color-gray-600);
       --header-row-border: var(--color-gray-500);
     }

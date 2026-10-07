@@ -15,7 +15,7 @@ export default {
 
 const themesHTML = `
   <div class="wrap-for-global-theme">
-    <div data-component-theme="default" data-component-width="site" data-component-padding="no-padding" class="yds-layout">
+    <div data-section-theme="default" data-component-width="site" data-component-padding="no-padding" class="yds-layout">
       <div class="yds-layout__inner">
         <div class="yds-layout__primary">
 

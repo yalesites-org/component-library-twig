@@ -15,9 +15,7 @@ width:
   detail: Controls the embed container width. Maps to the embed__width Twig variable.
   default: site
   options:
-    - max
     - site
-    - highlight
     - content
   control: select
 
@@ -34,16 +32,5 @@ type:
     - audio
     - map
     - calendar
-  control: select
-
-loading:
-  twigProp: embed__loading
-  name: Loading
-  type: select
-  required: false
-  description: Loading strategy for the embedded iframe
-  default: lazy
-  options:
-    - lazy
-    - eager
+    - video
   control: select

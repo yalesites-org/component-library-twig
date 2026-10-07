@@ -45,15 +45,22 @@ blockquote {
       --color-slot-six: var(--component-themes-#{$theme}-slot-six);
       --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
       --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
-      --color-quote-callout-accent: var(--color-quote-callout-accent);
-      --color-quote-callout-background: var(--color-quote-callout-background);
 
+      // The accent and background used to be declared here from themselves,
+      // which is a var() cycle and therefore computed to the guaranteed-invalid
+      // value. Unlike pull-quote, every dial this loop emits (one..five) has an
+      // explicit override below, so those two declarations were dead code and
+      // removing them changes nothing -- verified by measuring both properties
+      // on all five dials before and after (YaleSites-Internal#1629).
       background-color: var(--color-quote-callout-background);
 
       .link,
       .quote-callout__quote {
         --color-text-shadow: var(--color-quote-callout-background);
-        --color-link-hover: var(--color-link-hover);
+
+        // Inherited copy colour on hover, declared rather than simulated by a
+        // var() cycle (YaleSites-Internal#1629).
+        --color-link-hover: currentcolor;
       }
 
       a:not([data-link-style]) {
@@ -120,7 +127,18 @@ blockquote {
 
   &[data-component-theme='two'] {
     --color-quote-callout-background: var(--color-slot-three);
-    --color-link-base: var(--color-quote-callout);
+
+    // `--color-quote-callout` is not a property that exists anywhere; this was
+    // a truncated `--color-quote-callout-accent`, which is what dial three uses
+    // two blocks down. Being undeclared it was dropped at computed-value time,
+    // so the link colour inherited the quote copy colour -- which for this dial
+    // is slot seven, the same value the accent resolves to. Link colour is
+    // therefore unchanged. The FOCUS RING is not: `_utility.scss` reads
+    // `--color-link-base` through the `outline` shorthand, so a focused link in
+    // a dial-two quote callout had no ring at all. Measured `3px none` before,
+    // `2px solid` after -- the same SC 2.4.7 defect as the layout organism, in
+    // a second place (YaleSites-Internal#1629).
+    --color-link-base: var(--color-quote-callout-accent);
     --color-link-hover: var(--color-link-base);
   }
 
