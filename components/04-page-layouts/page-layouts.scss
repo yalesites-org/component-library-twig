@@ -92,6 +92,25 @@ body[data-body-frozen] {
   }
 }
 
+// flow-root likewise keeps the title's bottom margin inside the band, so the
+// next section's first top margin (a paragraph's, say) stops collapsing into
+// it and the content below lands lower than on an uncolored page. Move the
+// margin onto the band, where it collapses with the next section as before,
+// and paint it with a shadow so the color still runs to the next section. The
+// collapsed gap is never smaller than this margin, so the shadow never reaches
+// under the next section (YaleSites-Internal#1837).
+.main-content
+  .page-meta[data-section-theme]:not([data-section-theme='default']):has(
+    .page-title:not(.visually-hidden)
+  ) {
+  margin-bottom: var(--spacing-page-inner);
+  box-shadow: 0 var(--spacing-page-inner) 0 var(--color-section-background);
+
+  .layout__region--content .page-title {
+    margin-bottom: 0;
+  }
+}
+
 body {
   --site-header-height: 4.8125rem; // 77px / 16
 }

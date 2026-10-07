@@ -557,3 +557,27 @@ test('a themed Page Meta without breadcrumbs paints its top spacing', () => {
   assert.match(block[1], /^\s{2}padding-top: /m);
   assert.match(block[1], /:first-child \.page-title\s*\{\s*margin-top: 0;/);
 });
+
+test('a themed Page Meta moves the title margin onto the band', () => {
+  // flow-root would keep the title's bottom margin inside the band, so the
+  // next section's first top margin stops collapsing into it and content below
+  // drops 17-20px (YaleSites-Internal#1837). The margin must sit on the band,
+  // painted by a shadow of the same size.
+  const source = readFileSync(
+    new URL('../../../04-page-layouts/page-layouts.scss', import.meta.url),
+    'utf8',
+  ).replace(/\/\/.*$/gm, '');
+  const block = source.match(
+    /\.page-meta\[data-section-theme\]:not\(\[data-section-theme='default'\]\):has\(\s*\.page-title:not\(\.visually-hidden\)\s*\) \{([\s\S]*?)\n\}/,
+  );
+  assert.ok(block, 'themed Page Meta title-margin block not found');
+  assert.match(block[1], /^\s{2}margin-bottom: var\(--spacing-page-inner\);$/m);
+  assert.match(
+    block[1],
+    /^\s{2}box-shadow: 0 var\(--spacing-page-inner\) 0 var\(--color-section-background\);$/m,
+  );
+  assert.match(
+    block[1],
+    /\.layout__region--content \.page-title\s*\{\s*margin-bottom: 0;/,
+  );
+});
