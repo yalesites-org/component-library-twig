@@ -151,6 +151,18 @@ const renderSection = (theme) => `
                   referenceProfileCardData.reference_card__categories,
                 reference_card__tags:
                   referenceProfileCardData.reference_card__tags,
+                reference_card__pronouns:
+                  referenceProfileCardData.reference_card__pronouns,
+                show_pronouns: true,
+                reference_card__department:
+                  referenceProfileCardData.reference_card__department,
+                show_department: true,
+                reference_card__email:
+                  referenceProfileCardData.reference_card__email,
+                show_email: true,
+                reference_card__phone:
+                  referenceProfileCardData.reference_card__phone,
+                show_phone: true,
               })}
             </ul>
           </div>

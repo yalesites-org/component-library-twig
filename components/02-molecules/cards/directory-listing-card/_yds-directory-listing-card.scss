@@ -86,6 +86,16 @@ $break-directory-card-collection-list-image-max: tokens.$break-s - 0.05;
   font-weight: inherit;
 }
 
+// On a component-themed section the `link` mixin sets the hover color to
+// `--color-slot-two`, which can fail contrast against the section background
+// — or vanish when the background uses the same slot. Pin it to the section's
+// on-theme foreground (`--color-layout-content`, AA on every theme), keeping
+// the directory name legible on hover; the underline-slide remains the hover
+// affordance. Scoped to themed sections so default link hover is unchanged.
+[data-component-theme] .directory-listing-card__heading-link {
+  --color-link-hover: var(--color-layout-content, var(--color-slot-two));
+}
+
 .directory-listing-card__subheading {
   display: flex;
   flex-wrap: wrap;
