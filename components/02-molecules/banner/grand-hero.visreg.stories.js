@@ -28,7 +28,7 @@ export default {
   },
 };
 
-const renderGrandHero = (bgColor, overlay = 'full', videoPlayback = null) =>
+const renderGrandHero = (bgColor, overlay = 'full') =>
   grandHeroTwig({
     ...imageData.responsive_images['16x9'],
     grand_hero__heading: bannerData.banner__heading,
@@ -40,8 +40,7 @@ const renderGrandHero = (bgColor, overlay = 'full', videoPlayback = null) =>
     grand_hero__content__background: bgColor,
     grand_hero__overlay_variation: overlay,
     grand_hero__size: 'full',
-    grand_hero__video: videoPlayback ? 'true' : 'false',
-    grand_hero__video_playback: videoPlayback,
+    grand_hero__video: 'false',
   });
 
 /**
@@ -55,19 +54,6 @@ export const OverlayVariations = () =>
     'Overlay Variations',
     '',
     'Overlay Variation',
-  );
-
-/**
- * Video playback does not vary by global theme, so it gets one story of its
- * own rather than being repeated in every global theme story.
- */
-export const VideoPlaybackVariations = () =>
-  createVariations(
-    (videoPlayback) => renderGrandHero('one', 'full', videoPlayback),
-    ['loop', 'once'],
-    'Video Playback Variations',
-    '',
-    'Video Playback',
   );
 
 const renderGlobalTheme = () => `
