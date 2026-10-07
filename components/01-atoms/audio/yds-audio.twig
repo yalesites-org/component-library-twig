@@ -4,12 +4,22 @@
  #   the "|raw" filter is applied so that the iframe is rendered instead
  #   of simply passing the iframe as plain text.
  #
+ # - audio_embed__id - optional id prefix for this instance. Defaults to a
+ #   unique value so that several players on one page do not collide.
+ #
  # Available blocks:
  # - audio_embed__content - used to replace the content of the audio with something other than the typical iframe
  #   for example: to insert an html5 audio component
 #}
 
 {% set audio_embed__base_class = audio_embed__base_class|default('audio-embed') %}
+
+{# The label/input pairs below associate by id, and the browser resolves those
+ # against the whole page, so each id has to be unique per instance or the
+ # second player onward loses its labels. Callers may pass audio_embed__id
+ # (e.g. a Drupal Html::getUniqueId value); otherwise generate one the same way
+ # @atoms/images/icons and @molecules/tabs do. #}
+{% set audio_embed__id = audio_embed__id|default(audio_embed__base_class ~ '-' ~ random()) %}
 
 {% set audio_embed__attibutes = {
   'data-component-width': audio_embed__width|default('content'),
@@ -62,16 +72,16 @@
         {# audio embed progress bar #}
         <div {{ bem('progress', [], audio_embed__base_class) }}>
           <div {{ bem('progress-bar', [], audio_embed__base_class) }}>
-            <label class="visually-hidden">{{ 'Progress bar for audio file playback'|t }}</label>
-            <input type="range" id="progress-bar" min="0" max="100" step="0.1" value="0" aria-label="Audio Playback Progress Bar" />
+            <label class="visually-hidden" for="{{ audio_embed__id }}-progress-bar">{{ 'Progress bar for audio file playback'|t }}</label>
+            <input type="range" id="{{ audio_embed__id }}-progress-bar" {{ bem('progress-bar-input', [], audio_embed__base_class) }} min="0" max="100" step="0.1" value="0" />
           </div>
         </div>
 
         {# audio embed time #}
         <div {{ bem('time', [], audio_embed__base_class) }}>
-          <div {{ bem('time--current', [], audio_embed__base_class) }} id='time-current'>0:00</div>
+          <div {{ bem('time--current', [], audio_embed__base_class) }} id="{{ audio_embed__id }}-time-current">0:00</div>
           <span {{ bem('time--separator', [], audio_embed__base_class) }}> / </span>
-          <div {{ bem('time--total', [], audio_embed__base_class) }} id='time-total'>0:00</div>
+          <div {{ bem('time--total', [], audio_embed__base_class) }} id="{{ audio_embed__id }}-time-total">0:00</div>
         </div>
 
         {# audio embed speed control #}
@@ -95,7 +105,7 @@
         {# audio embed volume control #}
         <div {{ bem('volume', [], audio_embed__base_class) }}>
           <button {{ bem('volume-control-option', [], audio_embed__base_class) }} aria-pressed="false">
-            <label class="visually-hidden" for="volume-control">{{ 'Volume'|t }}</label>
+            <span {{ bem('visually-hidden') }}>{{ 'Mute the Audio File'|t }}</span>
             {% include "@atoms/images/icons/_yds-icon.twig" with {
               icon__name: 'volume-high-solid',
               icon__decorative: true,
@@ -109,7 +119,8 @@
               icon__modifiers: ['volume-muted'],
             } %}
           </button>
-          <input type="range" id="volume-control" min="0" max="1" step="0.01" value="0.5" />
+          <label class="visually-hidden" for="{{ audio_embed__id }}-volume-control">{{ 'Volume'|t }}</label>
+          <input type="range" id="{{ audio_embed__id }}-volume-control" {{ bem('volume-control', [], audio_embed__base_class) }} min="0" max="1" step="0.01" value="0.5" />
         </div>
       </div>
     </div>

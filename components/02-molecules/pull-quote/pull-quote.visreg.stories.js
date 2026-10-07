@@ -3,12 +3,13 @@ import pullQuoteTwig from './yds-pull-quote.twig';
 import pullQuoteData from './pull-quote.yml';
 
 import {
+  globalThemeLabels,
   globalThemes,
   sectionThemes,
   componentThemes,
 } from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
-  createGlobalThemeVariations,
   createSectionWrapper,
   createThemeVariations,
   createVariations,
@@ -20,7 +21,7 @@ export default {
   parameters: { controls: { disable: true } },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const quote = pullQuoteData.pull_quote__quote;
   const attribution = pullQuoteData.pull_quote__attribution;
   const styles = ['bar-left', 'bar-right', 'quote-left'];
@@ -40,8 +41,7 @@ export const Visreg = () => {
       },
     );
 
-  return createGlobalThemeVariations(
-    () => `
+  return `
       ${createThemeVariations(
         (theme) => renderPullQuote(theme, 'one'),
         sectionThemes,
@@ -63,8 +63,21 @@ export const Visreg = () => {
         '',
         'Style',
       )}
-    `,
-    globalThemes,
-    'All Global Theme Variations',
-  );
+    `;
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

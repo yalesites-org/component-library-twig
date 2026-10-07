@@ -7,11 +7,12 @@ import contentSpotlightPortraitData from '../content-spotlight-portrait/content-
 
 import {
   componentThemes,
+  globalThemeLabels,
   globalThemes,
   sectionThemes,
 } from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
-  createGlobalThemeVariations,
   createSectionWrapper,
   createThemeVariations,
   createVariations,
@@ -29,18 +30,17 @@ export default {
   },
 };
 
-export const Visreg = () => {
-  const width = 'site';
-  const contentVerticalAlignment = 'top';
-  const focus = 'equal';
-  const positions = ['image-left', 'image-right'];
-  const imageStyles = ['inline', 'offset'];
+const width = 'site';
+const contentVerticalAlignment = 'top';
+const focus = 'equal';
+const positions = ['image-left', 'image-right'];
+const imageStyles = ['inline', 'offset'];
 
-  const renderContentSpotlights = (
-    componentTheme,
-    position = 'image-left',
-    imageStyle = 'inline',
-  ) => `
+const renderContentSpotlights = (
+  componentTheme,
+  position = 'image-left',
+  imageStyle = 'inline',
+) => `
     <h3>Content Spotlight Landscape (3x2) — ${position} / ${imageStyle}</h3>
     ${textWithImageTwig({
       ...imageData.responsive_images['3x2'],
@@ -90,56 +90,73 @@ export const Visreg = () => {
     })}
   `;
 
-  return createGlobalThemeVariations(
-    () => `
-      ${createThemeVariations(
-        (theme) =>
-          createSectionWrapper(theme, renderContentSpotlights('one'), {
-            width: 'site',
-            primaryWidth: '100%',
-          }),
-        sectionThemes,
-        'All Section Theme Variations',
-        '',
-        'Section Theme',
-      )}
-      ${createThemeVariations(
-        (theme) =>
-          createSectionWrapper('one', renderContentSpotlights(theme), {
-            width: 'site',
-            primaryWidth: '100%',
-          }),
-        componentThemes,
-        'All Content Spotlight Theme Variations',
-        '',
-        'Content Spotlight Theme',
-      )}
-      ${createVariations(
-        (position) =>
-          createSectionWrapper(
-            'one',
-            renderContentSpotlights('one', position),
-            { width: 'site', primaryWidth: '100%' },
-          ),
-        positions,
-        'All Position Variations',
-        '',
-        'Position',
-      )}
-      ${createVariations(
-        (imageStyle) =>
-          createSectionWrapper(
-            'one',
-            renderContentSpotlights('one', 'image-left', imageStyle),
-            { width: 'site', primaryWidth: '100%' },
-          ),
-        imageStyles,
-        'All Image Style Variations',
-        '',
-        'Image Style',
-      )}
-    `,
-    globalThemes,
-    'All Global Theme Variations',
-  );
-};
+/**
+ * Positions and image styles do not vary by global theme, so they get one story
+ * of their own rather than being repeated in every global theme story.
+ */
+export const PositionAndImageStyleVariations = () => `
+  ${createVariations(
+    (position) =>
+      createSectionWrapper('one', renderContentSpotlights('one', position), {
+        width: 'site',
+        primaryWidth: '100%',
+      }),
+    positions,
+    'All Position Variations',
+    '',
+    'Position',
+  )}
+  ${createVariations(
+    (imageStyle) =>
+      createSectionWrapper(
+        'one',
+        renderContentSpotlights('one', 'image-left', imageStyle),
+        { width: 'site', primaryWidth: '100%' },
+      ),
+    imageStyles,
+    'All Image Style Variations',
+    '',
+    'Image Style',
+  )}
+`;
+
+const renderGlobalTheme = () => `
+  ${createThemeVariations(
+    (theme) =>
+      createSectionWrapper(theme, renderContentSpotlights('one'), {
+        width: 'site',
+        primaryWidth: '100%',
+      }),
+    sectionThemes,
+    'All Section Theme Variations',
+    '',
+    'Section Theme',
+  )}
+  ${createThemeVariations(
+    (theme) =>
+      createSectionWrapper('one', renderContentSpotlights(theme), {
+        width: 'site',
+        primaryWidth: '100%',
+      }),
+    componentThemes,
+    'All Content Spotlight Theme Variations',
+    '',
+    'Content Spotlight Theme',
+  )}
+`;
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

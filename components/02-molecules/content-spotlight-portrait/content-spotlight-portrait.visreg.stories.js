@@ -5,11 +5,12 @@ import contentSpotlightPortraitData from './content-spotlight-portrait.yml';
 
 import {
   componentThemes,
+  globalThemeLabels,
   globalThemes,
   sectionThemes,
 } from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
-  createGlobalThemeVariations,
   createSectionWrapper,
   createThemeVariations,
   createVariations,
@@ -27,7 +28,7 @@ export default {
   },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const positions = ['image-left', 'image-right'];
   const imageStyles = ['inline', 'offset'];
   const contentVerticalAlignment = 'middle';
@@ -61,8 +62,7 @@ export const Visreg = () => {
         contentSpotlightPortraitData.content_spotlight_portrait__caption,
     });
 
-  return createGlobalThemeVariations(
-    () => `
+  return `
       ${createThemeVariations(
         (theme) =>
           createSectionWrapper(theme, renderContentSpotlightPortrait('one'), {
@@ -109,8 +109,21 @@ export const Visreg = () => {
         '',
         'Image Style',
       )}
-    `,
-    globalThemes,
-    'All Global Theme Variations',
-  );
+    `;
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

@@ -1,12 +1,13 @@
 import inlineMessageTwig from './yds-inline-message.twig';
 
 import {
+  globalThemeLabels,
   globalThemes,
   sectionThemes,
   componentThemes,
 } from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
-  createGlobalThemeVariations,
   createThemeVariations,
   createSectionWrapper,
   createVariations,
@@ -23,7 +24,7 @@ export default {
   },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const types = ['general', 'marketing'];
   const heading = 'This is a message heading';
   const content = 'This is a message content';
@@ -40,8 +41,7 @@ export const Visreg = () => {
       inline_message__link__url: linkUrl,
     });
 
-  return createGlobalThemeVariations(
-    () => `
+  return `
       ${createThemeVariations(
         (theme) =>
           createSectionWrapper(theme, renderInlineMessage('one'), {
@@ -75,8 +75,21 @@ export const Visreg = () => {
         '',
         'Type',
       )}
-    `,
-    globalThemes,
-    'All Global Theme Variations',
-  );
+    `;
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

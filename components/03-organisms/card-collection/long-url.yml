@@ -1,0 +1,8 @@
+# long-url.yml
+#
+# A realistic pasted URL: long, and with almost nowhere a browser may break it.
+# Shared by the LongUrlInCardText stories in card-collection.stories.js and
+# card-collection.visreg.stories.js, which use it as card text to hold the
+# YaleSites-Internal#1729 grid break to a baseline.
+
+long_url: 'https://yale.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=8f3c1d2e-4b5a-6789-abcd-ef0123456789'

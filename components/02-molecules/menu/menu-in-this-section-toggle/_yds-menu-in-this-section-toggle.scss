@@ -11,6 +11,7 @@
   padding: var(--size-spacing-4);
   width: 100%;
   gap: var(--size-spacing-4);
+  cursor: pointer;
 
   &[aria-expanded='false']::after {
     content: '';

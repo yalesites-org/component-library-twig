@@ -4,12 +4,11 @@ import './utility-nav-dropdown-menu';
 
 import {
   siteHeaderThemes,
+  globalThemeLabels,
   globalThemes,
 } from '../../../_storybook/theme-constants';
-import {
-  createGlobalThemeVariations,
-  createThemeVariations,
-} from '../../../_storybook/playground-utils';
+import { createGlobalThemeStories } from '../../../_storybook/global-theme-stories.mjs';
+import { createThemeVariations } from '../../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -23,9 +22,7 @@ export default {
   },
 };
 
-export const Visreg = () => {
-  return createGlobalThemeVariations(
-    () => `
+const renderGlobalTheme = () => `
       <div class="utility-nav--examples">
         ${createThemeVariations(
           (theme) =>
@@ -38,8 +35,20 @@ export const Visreg = () => {
           'Header Theme',
         )}
       </div>
-    `,
-    globalThemes,
-    'All Global Theme Variations',
-  );
-};
+    `;
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

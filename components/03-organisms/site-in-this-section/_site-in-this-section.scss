@@ -199,6 +199,7 @@ $section-nav-component-themes: map.deep-get(tokens.$tokens, 'component-themes');
   width: var(--in-this-section-control-width);
   background-color: var(--color-background);
   opacity: 0;
+  cursor: pointer;
 
   // Don't show controls on small screens when the items are hidden behind the
   // "expand" button.

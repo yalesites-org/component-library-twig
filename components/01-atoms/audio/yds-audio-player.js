@@ -12,13 +12,24 @@ Drupal.behaviors.audioPlayer = {
       );
 
       const volumeElement = audioPlayer.querySelector('.audio-embed__volume');
-      const volumeControl = audioPlayer.querySelector('#volume-control');
+      // Selected by class, not id: ids are unique per instance so the template
+      // cannot expose a fixed one, and these lookups are already scoped to a
+      // single player's container.
+      const volumeControl = audioPlayer.querySelector(
+        '.audio-embed__volume-control',
+      );
       const volumeControlButton = audioPlayer.querySelector(
         '.audio-embed__volume-control-option',
       );
-      const progressBar = audioPlayer.querySelector('#progress-bar');
-      const currentTimeDisplay = audioPlayer.querySelector('#time-current');
-      const totalTimeDisplay = audioPlayer.querySelector('#time-total');
+      const progressBar = audioPlayer.querySelector(
+        '.audio-embed__progress-bar-input',
+      );
+      const currentTimeDisplay = audioPlayer.querySelector(
+        '.audio-embed__time--current',
+      );
+      const totalTimeDisplay = audioPlayer.querySelector(
+        '.audio-embed__time--total',
+      );
       const speedControl = audioPlayer.querySelector('.audio-embed__speed');
       const speedControlOptions = audioPlayer.querySelector(
         '.audio-embed__speed-options-control',
@@ -101,13 +112,28 @@ Drupal.behaviors.audioPlayer = {
             const fileId = btoa(audioSrc);
             const { duration } = audio;
 
+            // localStorage is only a cache for the duration between page loads:
+            // a cookie-blocking setting, extension or policy makes access throw,
+            // and a full store makes writes throw. Neither must stop the player
+            // showing a duration, so each access is guarded on its own.
             if (duration && duration !== Infinity) {
-              localStorage.setItem(`audioDuration_${fileId}`, duration);
+              try {
+                localStorage.setItem(`audioDuration_${fileId}`, duration);
+              } catch (e) {
+                // Caching failed; the duration below is still correct.
+              }
               resolve(duration);
             } else {
-              const storedDuration = localStorage.getItem(
-                `audioDuration_${fileId}`,
-              );
+              let storedDuration = null;
+
+              try {
+                storedDuration = localStorage.getItem(
+                  `audioDuration_${fileId}`,
+                );
+              } catch (e) {
+                // Nothing cached is readable, so fall back to 0 below.
+              }
+
               resolve(storedDuration || 0);
             }
           } else {

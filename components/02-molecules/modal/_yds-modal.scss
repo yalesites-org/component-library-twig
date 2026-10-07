@@ -52,5 +52,18 @@
 .modal__close {
   @include atoms.button-reset;
 
+  // `button-reset` zeroes padding, so the close glyph alone (10x18 CSS px) was
+  // the entire tap target at every breakpoint -- under WCAG 2.2 SC 2.5.8's
+  // 24x24 minimum. A 24px minimum box with the icon centered in it enlarges the
+  // target without resizing the icon, and the header is already taller than 24px
+  // at every breakpoint, so the modal's layout is unchanged. Deliberately not
+  // `--size-click-target-minimum` (44px, the stricter SC 2.5.5 AAA figure): at
+  // 44px the button is taller than the header and grows the modal, which
+  // YaleSites-Internal#1536 rules out.
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--size-spacing-6);
+  min-width: var(--size-spacing-6);
   cursor: pointer;
 }

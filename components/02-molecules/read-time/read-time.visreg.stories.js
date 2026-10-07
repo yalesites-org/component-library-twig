@@ -2,9 +2,13 @@ import readTimeTwig from './yds-read-time.twig';
 
 import './yds-read-time';
 
-import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
-  createGlobalThemeVariations,
+  globalThemeLabels,
+  globalThemes,
+  sectionThemes,
+} from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
+import {
   createSectionWrapper,
   createThemeVariations,
 } from '../../_storybook/playground-utils';
@@ -18,7 +22,7 @@ export default {
   parameters: { controls: { disable: true } },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const sampleContent = `
     <p>A bulldozer sees a beast as an unstripped scene. Extending this logic, a childing beat without transports is truly a couch of unmaimed lutes. A tornado is an erstwhile creditor. This is not to discredit the idea that a cowbell of the lotion is assumed to be a hoven odometer.</p>
     <p>fears show us how watches can be polishes. A pakistan is a hydrous change. A license of the minister is assumed to be a nubile edge.</p>
@@ -33,16 +37,27 @@ export const Visreg = () => {
       `<div id="main-content${idSuffix}">${sampleContent}${readTimeTwig()}</div>`,
     );
 
-  return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        (theme) => renderReadTime(theme, `-${theme}`),
-        sectionThemes,
-        'All Section Theme Variations',
-        'Below are all theme variations for visual regression testing.',
-        'Section Theme',
-      ),
-    globalThemes,
-    'All Global Theme Variations',
+  return createThemeVariations(
+    (theme) => renderReadTime(theme, `-${theme}`),
+    sectionThemes,
+    'All Section Theme Variations',
+    'Below are all theme variations for visual regression testing.',
+    'Section Theme',
   );
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

@@ -5,12 +5,13 @@ import videoBackgroundData from './video-background.yml';
 import './yds-video-background';
 
 import {
+  globalThemeLabels,
   globalThemes,
   sectionThemes,
   componentThemes,
 } from '../../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../../_storybook/global-theme-stories.mjs';
 import {
-  createGlobalThemeVariations,
   createThemeVariations,
   createSectionWrapper,
 } from '../../../_storybook/playground-utils';
@@ -21,15 +22,14 @@ export default {
   parameters: { controls: { disable: true } },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const renderVideoBackground = (theme) =>
     videoBackgroundTwig({
       ...videoBackgroundData,
       video_background__button__background_color: theme,
     });
 
-  return createGlobalThemeVariations(
-    () => `
+  return `
       ${createThemeVariations(
         (theme) =>
           createSectionWrapper(theme, renderVideoBackground('one'), {
@@ -52,8 +52,21 @@ export const Visreg = () => {
         '',
         'Video Background Theme',
       )}
-    `,
-    globalThemes,
-    'All Global Theme Variations',
-  );
+    `;
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

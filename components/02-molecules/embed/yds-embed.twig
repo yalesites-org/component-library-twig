@@ -24,7 +24,9 @@
   {% endblock %}
   <div {{ bem('inner', [], embed__base_class) }}>
     {% block embed__block %}
-      <iframe {{ bem('iframe', [], embed__base_class) }} title="{{ embed__title }}" src="{{ embed__src }}" height="100%" width="100%" loading="{{ embed__loading }}" allowfullscreen="{{ embed__allowfullscreen }}" data-embed-type="{{ embed__type }}">
+      {# Chrome and Firefox block clipboard writes inside a cross-origin iframe
+       # unless `allow` delegates the permission. See embed.mdx. #}
+      <iframe {{ bem('iframe', [], embed__base_class) }} title="{{ embed__title }}" src="{{ embed__src }}" height="100%" width="100%" loading="{{ embed__loading }}" allow="clipboard-write" allowfullscreen="{{ embed__allowfullscreen }}" data-embed-type="{{ embed__type }}">
       </iframe>
     {% endblock %}
   </div>

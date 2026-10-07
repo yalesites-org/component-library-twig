@@ -5,12 +5,11 @@ import './yds-primary-nav';
 
 import {
   siteHeaderThemes,
+  globalThemeLabels,
   globalThemes,
 } from '../../../_storybook/theme-constants';
-import {
-  createGlobalThemeVariations,
-  createThemeVariations,
-} from '../../../_storybook/playground-utils';
+import { createGlobalThemeStories } from '../../../_storybook/global-theme-stories.mjs';
+import { createThemeVariations } from '../../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -24,7 +23,7 @@ export default {
   },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const variations = ['basic', 'mega', 'focus'];
 
   // Render function for primary nav with theme/variation combinations
@@ -40,16 +39,27 @@ export const Visreg = () => {
       )
       .join('');
 
-  return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        renderPrimaryNav,
-        siteHeaderThemes,
-        'All Header Theme Variations',
-        'Below are all combinations of site header themes and menu variations for visual regression testing.',
-        'Header Theme',
-      ),
-    globalThemes,
-    'All Global Theme Variations',
+  return createThemeVariations(
+    renderPrimaryNav,
+    siteHeaderThemes,
+    'All Header Theme Variations',
+    'Below are all combinations of site header themes and menu variations for visual regression testing.',
+    'Header Theme',
   );
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

@@ -2,11 +2,12 @@ import factsAndFiguresTwig from './yds-facts-and-figures.twig';
 import factsAndFiguresData from './facts-and-figures.yml';
 import {
   componentThemes,
+  globalThemeLabels,
   globalThemes,
   sectionThemes,
 } from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
-  createGlobalThemeVariations,
   createSectionWrapper,
   createThemeVariations,
   createVariations,
@@ -18,7 +19,7 @@ export default {
   parameters: { controls: { disable: true } },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const factsAndFigures = factsAndFiguresData.facts_and_figures__stat;
   const content = factsAndFiguresData.facts_and_figures__content;
   const presentationStyles = ['basic', 'with-icon', 'icon-only'];
@@ -41,8 +42,7 @@ export const Visreg = () => {
     </ul>
   `;
 
-  return createGlobalThemeVariations(
-    () => `
+  return `
       ${createThemeVariations(
         (theme) =>
           createSectionWrapper(theme, renderFactsAndFigures('one'), {
@@ -77,8 +77,21 @@ export const Visreg = () => {
         '',
         'Presentation Style',
       )}
-    `,
-    globalThemes,
-    'All Global Theme Variations',
-  );
+    `;
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

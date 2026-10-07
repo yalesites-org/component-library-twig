@@ -3,11 +3,13 @@ import dividerTwig from './yds-divider.twig';
 import './cl-dividers.scss';
 import '../../00-tokens/effects/yds-animate';
 
-import { globalThemes, sectionThemes } from '../../_storybook/theme-constants';
 import {
-  createGlobalThemeVariations,
-  createThemeVariations,
-} from '../../_storybook/playground-utils';
+  globalThemeLabels,
+  globalThemes,
+  sectionThemes,
+} from '../../_storybook/theme-constants';
+import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
+import { createThemeVariations } from '../../_storybook/playground-utils';
 
 export default {
   tags: ['visreg'],
@@ -15,7 +17,7 @@ export default {
   parameters: { controls: { disable: true } },
 };
 
-export const Visreg = () => {
+const renderGlobalTheme = () => {
   const thickness = 'hairline';
   const dividerColor = 'gray-500';
 
@@ -58,16 +60,27 @@ export const Visreg = () => {
     `;
   };
 
-  return createGlobalThemeVariations(
-    () =>
-      createThemeVariations(
-        renderThemeWidthVariations,
-        sectionThemes,
-        'All Section Theme Variations',
-        'Below are all theme variations with width samples for visual regression testing.',
-        'Section Theme',
-      ),
-    globalThemes,
-    'All Global Theme Variations',
+  return createThemeVariations(
+    renderThemeWidthVariations,
+    sectionThemes,
+    'All Section Theme Variations',
+    'Below are all theme variations with width samples for visual regression testing.',
+    'Section Theme',
   );
 };
+
+const themeStories = createGlobalThemeStories(
+  renderGlobalTheme,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBlues = themeStories.one;
+export const NewHavenGreen = themeStories.two;
+export const ShorelineSummer = themeStories.three;
+export const Onha = themeStories.four;
+export const ItsYourYale = themeStories.five;
+export const AI = themeStories.six;
+export const WhitneyHumanitiesCenter = themeStories.seven;
+
+ItsYourYale.storyName = 'It’s Your Yale';

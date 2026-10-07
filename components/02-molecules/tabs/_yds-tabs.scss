@@ -144,6 +144,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
     [data-overflow='left'] &,
     [data-overflow='both'] & {
       opacity: 1;
+      cursor: pointer;
     }
 
     [data-overflow='right'] & {
@@ -159,6 +160,7 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
     [data-overflow='right'] &,
     [data-overflow='both'] & {
       opacity: 1;
+      cursor: pointer;
     }
 
     [data-overflow='left'] & {
