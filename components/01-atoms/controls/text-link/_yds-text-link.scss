@@ -245,7 +245,7 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
     }
 
     // The underline effect was too close to the text on Mallory, so adjust it.
-    [data-font-pairing='mallory'] & {
+    [data-heading-font='mallory'] & {
       --position: 0 1.15em;
     }
   }
@@ -272,8 +272,8 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
   }
 }
 
-// Override for Mallory font pairing - separate from mixin to avoid specificity issues
-body[data-font-pairing='mallory'] {
+// Override for Mallory heading font - separate from mixin to avoid specificity issues
+body[data-heading-font='mallory'] {
   [class*='__heading-link'] {
     font-weight: var(--font-weights-mallory-book);
     letter-spacing: normal;
