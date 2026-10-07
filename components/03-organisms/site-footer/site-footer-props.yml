@@ -57,3 +57,16 @@ siteFooterVariation:
     - basic
     - mega
   control: select
+
+cookieSettings:
+  twigProp: site_footer__cookie_settings
+  name: Cookie Settings Link
+  type: boolean
+  required: false
+  description: Show a "Cookie settings" link next to the privacy policy link
+  detail: >
+    Turn on only when the site asks visitors for cookie consent. The link has
+    rel="open-consent-manager", which the consent library uses to open its
+    preferences dialog.
+  default: false
+  control: boolean
