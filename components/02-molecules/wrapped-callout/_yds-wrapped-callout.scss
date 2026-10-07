@@ -10,6 +10,11 @@ $wrapped-callout-component-themes: map.deep-get(
 );
 
 .wrapped-callout {
+  // Used by the `a` element for the animated hover underline. The main text
+  // sits directly on the page background, so white is the default; themed
+  // sections override this in `_yds-layout.scss`.
+  --color-text-shadow: var(--color-basic-white);
+
   // Component themes defaults: iterate over each component theme to establish
   // default variables.
   @each $theme, $value in $wrapped-callout-component-themes {
@@ -114,5 +119,18 @@ $wrapped-callout-component-themes: map.deep-get(
 
   a {
     @include link.plain-link;
+  }
+}
+
+.wrapped-callout__content {
+  a {
+    @include atoms.link;
+
+    // `data-component-theme` on this component picks the callout outline color
+    // only - it does not darken the surface behind the main text - so keep the
+    // descender halo that `atoms.link` drops for theme six.
+    [data-component-theme='six'] & {
+      --color-text-shadow: var(--color-basic-white);
+    }
   }
 }
