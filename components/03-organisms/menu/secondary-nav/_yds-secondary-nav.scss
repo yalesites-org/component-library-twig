@@ -227,7 +227,7 @@ $secondary-menu-sub-max-width: 19rem;
       border-left: var(--border-thickness-1) solid var(--color-navigation-border);
       max-height: var(--open-nav-height);
       margin-left: var(--size-spacing-6);
-      max-width: calc(100% - var(--size-spacing-6));
+      width: auto;
 
       [aria-expanded='true'] ~ & {
         margin-bottom: var(--size-spacing-6);
