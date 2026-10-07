@@ -159,6 +159,23 @@ Map embeds benefit from:
 - Wider width options for better geographic context
 - Appropriate loading strategy based on page position
 
+## Cookie consent
+
+Embeds that load content from a third party can be held until the visitor has
+agreed to it. Pass the Klaro consent service (app) id as `embed__klaro_service`
+and the iframe renders `data-src` and `data-name` in place of `src`, so the
+browser makes no request until consent is given. Klaro restores the `src` on
+consent and, until then, inserts a click-to-load placeholder immediately before
+the iframe.
+
+Leave the prop unset for content that may always load - a Yale-run system, or
+anything already covered by a strictly-necessary service. Only the iframe
+carries `data-name`; Klaro inserts a placeholder before every matching element,
+so tagging the wrapper as well would build a second, hidden one.
+
+The decision about which sources are gated is made in Drupal, by the `ys_embed`
+module, not here - this component only renders whichever form it is asked for.
+
 ## Related Components
 
 - **Video**: For video-specific embeds with additional features
