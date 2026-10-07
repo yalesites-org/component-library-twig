@@ -31,3 +31,21 @@ sectionTheme:
     - three
     - four
   control: select
+
+playback:
+  twigProp: video_background__playback
+  name: Playback
+  type: select
+  required: false
+  description: 'Whether the video loops continuously or plays once and stops'
+  detail: >
+    "loop" (default) repeats the video until the visitor pauses it. "once"
+    plays it one time and holds on the last frame; the play button restarts
+    it. In Drupal this is the **Video Playback** field on the Image Banner and
+    Grand Hero blocks, which banners pass down as a data-video-playback
+    attribute.
+  default: loop
+  options:
+    - loop
+    - once
+  control: select

@@ -14,6 +14,13 @@ Drupal.behaviors.videoBG = {
       const playVideo = item.querySelector(playControl);
       const allowAutoPlay = video.play();
 
+      // editors can set a banner's video to play once and stop; the setting
+      // sits on the video background or on the banner that wraps it
+      const playbackSetting = item.closest('[data-video-playback]');
+      const playOnce =
+        playbackSetting !== null &&
+        playbackSetting.getAttribute('data-video-playback') === 'once';
+
       // set the background video to autoplay if reduceMotion (os-level) is false
       // AND if the browser's built-in autoplay is undefined
       if (allowAutoPlay !== undefined && reduceMotion.matches === false) {
@@ -21,7 +28,9 @@ Drupal.behaviors.videoBG = {
           .then(() => {
             item.setAttribute('is-playing', true);
             video.setAttribute('autoplay', '');
-            video.setAttribute('loop', '');
+            if (!playOnce) {
+              video.setAttribute('loop', '');
+            }
           })
           .catch(() => {
             item.setAttribute('is-playing', false);
@@ -45,13 +54,27 @@ Drupal.behaviors.videoBG = {
       });
 
       // play, add playing attributes
+      // (play() on a finished video restarts it from the beginning)
       playVideo.addEventListener('click', () => {
         video.play();
         video.setAttribute('autoplay', '');
-        video.setAttribute('loop', '');
+        if (!playOnce) {
+          video.setAttribute('loop', '');
+        }
         pauseVideo
           .closest('.video-background')
           .setAttribute('is-playing', true);
+      });
+
+      // a play-once video holds on its last frame when it ends; swap the
+      // pause button for the play button, keeping keyboard focus on the control
+      video.addEventListener('ended', () => {
+        const pauseHadFocus = document.activeElement === pauseVideo;
+        video.removeAttribute('autoplay');
+        item.setAttribute('is-playing', false);
+        if (pauseHadFocus) {
+          playVideo.focus();
+        }
       });
     });
   },
