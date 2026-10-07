@@ -207,3 +207,31 @@
   overflow: hidden !important;
   margin-left: 0 !important;
 }
+
+/**
+ * Single scroll region for the Identity color embeds.
+ *
+ * Storybook sizes each docs story from an early height measurement, then wraps
+ * it in `.docs-story` > ChildrenContainer > Zoom wrapper, the middle one with
+ * `overflow: auto`. The Identity color stories render their Twig and the
+ * copy-button web component a beat later, so those wrappers keep the stale short
+ * height and scroll internally. That nested scroll region has no keyboard focus
+ * target and stacks inside the embed iframe's own scrollbar (2 to 3 scrollbars
+ * on small screens).
+ *
+ * Releasing the height on that wrapper chain (but not on the story content
+ * itself, so the copy-button icons keep their fixed size) lets each block grow
+ * to its natural height, leaving the embed with one honest scrollbar. Scoped to
+ * `.cl-colors-embed` (set on the Canvas wrappers in
+ * components/00-tokens/colors/identity/*.mdx) so no other docs page is affected.
+ */
+/* stylelint-disable-next-line no-descending-specificity -- targets Storybook's own wrapper chain, not the docs-table rules above */
+.cl-colors-embed .docs-story,
+.cl-colors-embed .docs-story > div,
+.cl-colors-embed .docs-story > div > div,
+.cl-colors-embed .innerZoomElementWrapper {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
