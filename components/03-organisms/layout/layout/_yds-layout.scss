@@ -56,6 +56,7 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
       // override text-shadow color for links in component themes
       .link,
       .text-field a,
+      .wrapped-callout__content a,
       .caption a,
       [class*='__heading-link'] {
         --color-text-shadow: var(--color-layout-theme);
