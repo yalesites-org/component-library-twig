@@ -2,6 +2,7 @@
  # Available Props:
  # - image_banner__content__background
  # - image_banner__overlay_variation: contained (default), full
+ # - image_banner__video_playback: loop (default), once
  #
  # Available Variables:
  # - video_background__button__background_color
@@ -21,6 +22,12 @@
   'data-component-theme': image_banner__content__background,
   class: bem(image_banner__base_class),
 } %}
+
+{% if image_banner__video_playback %}
+  {% set image_banner__attributes = image_banner__attributes|merge({
+    'data-video-playback': image_banner__video_playback,
+  }) %}
+{% endif %}
 
 {% if image_banner__width %}
   {% set image_banner__attributes = image_banner__attributes|merge({

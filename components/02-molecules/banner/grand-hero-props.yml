@@ -98,3 +98,15 @@ width:
     - site
     - full
   control: select
+
+videoPlayback:
+  twigProp: grand_hero__video_playback
+  name: Video Playback
+  type: select
+  required: false
+  description: 'Background video playback: loop (repeats until paused) or once (plays one time and holds on the last frame). Only applies with video.'
+  default: loop
+  options:
+    - loop
+    - once
+  control: select

@@ -17,14 +17,24 @@ export default {
   args: toArgs(componentProps),
 };
 
-export const Interactive = ({ sectionTheme }) => `
+export const Interactive = ({ sectionTheme, playback }) => `
   <div class="yds-layout" data-component-theme="${sectionTheme}" data-component-width="site">
     <div class="yds-layout__inner">
       <div class="yds-layout__primary">
-        ${videoBackgroundTwig(videoBackgroundData)}
+        ${videoBackgroundTwig({
+          ...videoBackgroundData,
+          video_background__playback: playback,
+        })}
       </div>
     </div>
   </div>
 `;
 
 export const videoBackground = () => videoBackgroundTwig(videoBackgroundData);
+
+export const PlayOnce = () =>
+  videoBackgroundTwig({
+    ...videoBackgroundData,
+    video_background__playback: 'once',
+  });
+PlayOnce.storyName = 'Play Once';

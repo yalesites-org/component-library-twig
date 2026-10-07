@@ -3,6 +3,9 @@
  # - video_background__content - the content of the video (typically an iframe)
  #   the "|raw" filter is applied so that the iframe is rendered instead
  #   of simply passing the iframe as plain text.
+ # - video_background__playback - loop (default), once
+ #   "once" plays the video one time and holds on its last frame. Banners can
+ #   set this with a data-video-playback attribute on a wrapping element instead.
  #
  # Available blocks:
  # - video_background__content - used to replace the content of the video with something other than the typical iframe
@@ -12,7 +15,7 @@
 {% set video_background__base_class = video_background__base_class|default('video-background') %}
 {% set video_background__button__background_color = video_background__button__background_color|default('one') %}
 
-<div {{ bem(video_background__base_class, video_background__modifiers, video_background__blockname) }} data-component-theme={{ video_background__button__background_color }}>
+<div {{ bem(video_background__base_class, video_background__modifiers, video_background__blockname) }} data-component-theme={{ video_background__button__background_color }}{% if video_background__playback %} data-video-playback="{{ video_background__playback }}"{% endif %}>
   {% block video_background__content %}
     <video muted playsinline>
       <source src="{{ video_background__content }}" type="video/mp4">

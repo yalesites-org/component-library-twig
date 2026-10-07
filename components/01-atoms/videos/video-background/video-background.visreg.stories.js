@@ -14,6 +14,7 @@ import { createGlobalThemeStories } from '../../../_storybook/global-theme-stori
 import {
   createThemeVariations,
   createSectionWrapper,
+  createVariations,
 } from '../../../_storybook/playground-utils';
 
 export default {
@@ -21,6 +22,27 @@ export default {
   title: 'Atoms/Videos/Video Background/Visreg',
   parameters: { controls: { disable: true } },
 };
+
+/**
+ * Playback does not vary by global theme, so it gets one story of its own
+ * rather than being repeated in every global theme story.
+ */
+export const PlaybackVariations = () =>
+  createVariations(
+    (playback) =>
+      createSectionWrapper(
+        'one',
+        videoBackgroundTwig({
+          ...videoBackgroundData,
+          video_background__playback: playback,
+        }),
+        { width: 'site', primaryWidth: '100%' },
+      ),
+    ['loop', 'once'],
+    'Playback Variations',
+    '',
+    'Playback',
+  );
 
 const renderGlobalTheme = () => {
   const renderVideoBackground = (theme) =>

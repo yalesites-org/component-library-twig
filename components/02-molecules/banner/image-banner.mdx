@@ -66,6 +66,19 @@ Existing banners default to `site` so there is no visual change unless authors e
   <Canvas of={ImageBannerStories.ImageBannerFullWidth} />
 </div>
 
+## Video Playback
+
+When the Image Banner uses a background video, the `image_banner__video_playback` property controls what happens when it ends. In Drupal, this is exposed as the **Video Playback** field on the block form, next to Media.
+
+- **`loop`** (default): The video repeats until the visitor pauses it.
+- **`once`**: The video plays one time and holds on its last frame. The play button then restarts it from the beginning.
+
+Existing banners default to `loop`, so nothing changes unless editors choose Play once and stop. The play/pause button and reduced-motion behavior are the same in both modes. See the [Video Background](?path=/docs/atoms-videos-video-background--overview) docs for details.
+
+<div className="sb-full-bleed-canvas">
+  <Canvas of={ImageBannerStories.ImageBannerPlayOnce} />
+</div>
+
 ## Technical Specifications
 
 - **Atomic Level**: Molecule

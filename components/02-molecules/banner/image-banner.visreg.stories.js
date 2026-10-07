@@ -26,13 +26,14 @@ export default {
   },
 };
 
-const renderImageBanner = (bgColor, imgSize = 'tall') =>
+const renderImageBanner = (bgColor, imgSize = 'tall', videoPlayback = null) =>
   imageBannerTwig({
     ...imageData.responsive_images['16x9'],
     image_banner__content__background: bgColor,
     image_banner__overlay_variation: 'full',
     image_banner__size: imgSize,
-    image_banner__video: 'false',
+    image_banner__video: videoPlayback ? 'true' : 'false',
+    image_banner__video_playback: videoPlayback,
     image_banner__caption: 'Image Banner Caption',
   });
 
@@ -47,6 +48,19 @@ export const SizeVariations = () =>
     'Size Variations',
     '',
     'Size',
+  );
+
+/**
+ * Video playback does not vary by global theme, so it gets one story of its
+ * own rather than being repeated in every global theme story.
+ */
+export const VideoPlaybackVariations = () =>
+  createVariations(
+    (videoPlayback) => renderImageBanner('one', 'tall', videoPlayback),
+    ['loop', 'once'],
+    'Video Playback Variations',
+    '',
+    'Video Playback',
   );
 
 const renderGlobalTheme = () => `
