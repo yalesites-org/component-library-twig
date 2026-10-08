@@ -78,3 +78,11 @@ test('leading cells from the previous year keep their own month and year', () =>
     '1 February, 2027',
   ]);
 });
+
+test('zero-padded days from Drupal are announced without the leading zero', () => {
+  const labels = renderLabels([
+    [cell('01', '10', 2026), cell('09', '10', 2026)],
+  ]);
+
+  assert.deepEqual(labels, ['1 October, 2026', '9 October, 2026']);
+});
