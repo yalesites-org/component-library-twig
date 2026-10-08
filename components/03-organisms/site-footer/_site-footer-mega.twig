@@ -79,6 +79,20 @@
       link__style: 'no-underline',
       link__modifiers: ['footer-link'],
     } %}
+    {# Opens the consent dialog: the consent library binds rel="open-consent-manager". #}
+    {% if site_footer__cookie_settings %}
+      <span {{ bem('divider', [], site_footer__base_class) }}>|</span>
+      {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+        link__content: 'Cookie Settings',
+        link__url: '#',
+        link__style: 'no-underline',
+        link__modifiers: ['footer-link'],
+        link__attributes: {
+          rel: 'open-consent-manager',
+          'aria-haspopup': 'dialog',
+        },
+      } %}
+    {% endif %}
     <span {{ bem('divider', [], site_footer__base_class) }}>|</span>
     <span>Copyright © {{ 'now'|date('Y') }} Yale University. All rights reserved.</span>
   </div>
