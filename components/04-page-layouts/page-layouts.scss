@@ -92,8 +92,10 @@ body[data-body-frozen] {
   }
 }
 
-// flow-root likewise keeps the title's bottom margin inside the band, so the
-// next section's first top margin (a paragraph's, say) stops collapsing into
+// flow-root likewise keeps the band's last margin inside it: the title's
+// bottom margin, or, with the title hidden or visually hidden, the top margin
+// _yds-page-title.scss gives the empty block after the breadcrumbs. The next
+// section's first top margin (a paragraph's, say) then stops collapsing into
 // it and the content below lands lower than on an uncolored page. Move the
 // margin onto the band, where it collapses with the next section as before,
 // and paint it with a shadow so the color still runs to the next section. The
@@ -101,13 +103,47 @@ body[data-body-frozen] {
 // under the next section (YaleSites-Internal#1837).
 .main-content
   .page-meta[data-section-theme]:not([data-section-theme='default']):has(
-    .page-title:not(.visually-hidden)
+    .page-title:not(.visually-hidden),
+    .breadcrumbs__wrapper
   ) {
-  margin-bottom: var(--spacing-page-inner);
-  box-shadow: 0 var(--spacing-page-inner) 0 var(--color-section-background);
+  --page-meta-bottom-space: var(--spacing-page-inner);
+
+  margin-bottom: var(--page-meta-bottom-space);
+  box-shadow: 0 var(--page-meta-bottom-space) 0 var(--color-section-background);
 
   .layout__region--content .page-title {
     margin-bottom: 0;
+  }
+
+  &:not(:has(.page-title:not(.visually-hidden))) {
+    --page-meta-bottom-space: var(--size-spacing-0);
+
+    @media (max-width: tokens.$break-l) {
+      --page-meta-bottom-space: var(--size-spacing-8);
+    }
+
+    @media (max-width: tokens.$break-s) {
+      --page-meta-bottom-space: var(--size-spacing-7);
+    }
+
+    .breadcrumbs__wrapper + :not(.page-title) {
+      margin-top: 0;
+    }
+
+    // That margin is 0 on wide screens, so the gap is only the next section's
+    // own first margin, which the band cannot know. Paint at least
+    // --spacing-page-inner, as a visible title does, and give an uncolored
+    // next section the page background so any overrun is hidden under it, the
+    // way a colored next section already hides it under its own.
+    &:has(+ *) {
+      box-shadow: 0
+        max(var(--page-meta-bottom-space), var(--spacing-page-inner)) 0
+        var(--color-section-background);
+    }
+
+    + :is(:not([data-section-theme]), [data-section-theme='default']) {
+      background-color: var(--color-background);
+    }
   }
 }
 
