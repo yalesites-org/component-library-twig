@@ -13,7 +13,7 @@
     <time datetime="{{ year ~ '-' ~ month ~ '-' ~ day }}">
       <span {{ bem('day-name', [], 'calendar') }} aria-hidden="true" >{{ data_day }}</span>
       <span {{ bem('day-date', [], 'calendar') }} aria-hidden="true">{{ day }}</span>
-      <span {{ bem('dialog-title', [], 'calendar', ['sr-only']) }}>{{ day }} {{ month_name }}, {{ year }}</span></time>
+      <span {{ bem('dialog-title', [], 'calendar', ['sr-only']) }}>{{ day + 0 }} {{ month_name }}, {{ year }}</span></time>
   {% endif %}
   {% if events is not empty %}
     <ul {{ bem('day-events', [], 'calendar') }}>
