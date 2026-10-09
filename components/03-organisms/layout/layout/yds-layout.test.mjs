@@ -73,10 +73,13 @@ function eachThemeLoop() {
 /**
  * Does this rule body scope `--color-text-shadow` to the link selectors,
  * rather than only declaring it at the section root?
+ *
+ * The @each loop also lists `.wrapped-callout__content a` (YaleSites-Internal#1403);
+ * section theme six does not, so it is optional here.
  */
 function hasLinkScopedTextShadow(body) {
   const linkRule = body.match(
-    /\.link,\s*\.text-field a,\s*\.caption a,\s*\[class\*='__heading-link'\]\s*\{([\s\S]*?)\}/,
+    /\.link,\s*\.text-field a,\s*(?:\.wrapped-callout__content a,\s*)?\.caption a,\s*\[class\*='__heading-link'\]\s*\{([\s\S]*?)\}/,
   );
   return Boolean(linkRule) && /--color-text-shadow:\s*var\(/.test(linkRule[1]);
 }
@@ -85,7 +88,7 @@ test('themes one-five get their link-scoped text-shadow from the @each loop', ()
   const loop = eachThemeLoop();
 
   assert.ok(loop, 'the @each $layout-component-themes loop is gone');
-  LINK_SELECTORS.forEach((selector) => {
+  [...LINK_SELECTORS, '.wrapped-callout__content a'].forEach((selector) => {
     assert.ok(
       loop.includes(selector),
       `the @each loop no longer scopes to ${selector}`,
