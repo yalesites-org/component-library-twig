@@ -178,4 +178,28 @@
     font-weight: var(--font-weights-mallory-book);
     cursor: default;
   }
+
+  // Brown-gray fails on dark section backgrounds (YaleSites-Internal#1837).
+  [data-section-theme]:not([data-section-theme='default'])
+    &[aria-current='page'] {
+    color: var(--color-section-foreground);
+  }
+}
+
+// Link and button hover read `--menu-link-color`, which resolves at `:root`
+// and ignores the section, so re-point it inside a themed section
+// (YaleSites-Internal#1837).
+[data-section-theme]:not([data-section-theme='default']) .breadcrumbs__wrapper {
+  --menu-link-color: var(--color-section-foreground);
+}
+
+// Resting and hover are both the section foreground in a themed section, so
+// hover needs an underline to be visible, matching the secondary nav's links
+// (YaleSites-Internal#1837).
+[data-section-theme]:not([data-section-theme='default'])
+  :is(.breadcrumbs__link:not([aria-current='page']), .breadcrumbs__button) {
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
 }

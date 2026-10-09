@@ -527,3 +527,92 @@ test('70/30 and 30/70 separators match the 50/50 divider element', () => {
     'no column separator may still be drawn from --color-divider',
   );
 });
+
+test('a themed section contains its children margins', () => {
+  // An unpadded themed section (No padding, or Page Meta) otherwise lets its
+  // first child's margin collapse through, showing as a white strip around the
+  // color (YaleSites-Internal#1837). Scoped to themed sections so unthemed
+  // layout is unchanged.
+  const source = scss().replace(/\/\/.*$/gm, '');
+  const themed = source.match(
+    /&\[data-section-theme\]:not\(\[data-section-theme='default'\]\)\s*\{([\s\S]*?)\n {2}\}/,
+  );
+  assert.ok(themed, 'themed section block not found');
+  assert.match(themed[1], /^\s{4}display: flow-root;$/m);
+  assert.equal(source.match(/display: flow-root;/g)?.length, 1);
+});
+
+test('a themed Page Meta without breadcrumbs paints its top spacing', () => {
+  // flow-root stops the top margin collapsing with the first child's, so the
+  // margin must become padding inside the band (YaleSites-Internal#1837).
+  const source = readFileSync(
+    new URL('../../../04-page-layouts/page-layouts.scss', import.meta.url),
+    'utf8',
+  ).replace(/\/\/.*$/gm, '');
+  const block = source.match(
+    /\.page-meta:not\(:has\(\.breadcrumbs__wrapper\)\)\[data-section-theme\]:not\(\s*\[data-section-theme='default'\]\s*\) \{([\s\S]*?)\n\}/,
+  );
+  assert.ok(block, 'themed Page Meta without breadcrumbs block not found');
+  assert.match(block[1], /^\s{2}margin-top: 0;$/m);
+  assert.match(block[1], /^\s{2}padding-top: /m);
+  assert.match(block[1], /:first-child \.page-title\s*\{\s*margin-top: 0;/);
+});
+
+test('a themed Page Meta moves its last margin onto the band', () => {
+  // flow-root would keep the band's last margin inside it (the title's bottom
+  // margin, or with the title hidden the top margin of the empty block after
+  // the breadcrumbs), so the next section's first top margin stops collapsing
+  // into it and content below drops 17-20px (YaleSites-Internal#1837). The
+  // margin must sit on the band, painted by a shadow of the same size.
+  const source = readFileSync(
+    new URL('../../../04-page-layouts/page-layouts.scss', import.meta.url),
+    'utf8',
+  ).replace(/\/\/.*$/gm, '');
+  const block = source.match(
+    /\.page-meta\[data-section-theme\]:not\(\[data-section-theme='default'\]\):has\(\s*\.page-title:not\(\.visually-hidden\),\s*\.breadcrumbs__wrapper\s*\) \{([\s\S]*?)\n\}/,
+  );
+  assert.ok(block, 'themed Page Meta bottom-margin block not found');
+  assert.match(
+    block[1],
+    /^\s{2}--page-meta-bottom-space: var\(--spacing-page-inner\);$/m,
+  );
+  assert.match(
+    block[1],
+    /^\s{2}margin-bottom: var\(--page-meta-bottom-space\);$/m,
+  );
+  assert.match(
+    block[1],
+    /^\s{2}box-shadow: 0 var\(--page-meta-bottom-space\) 0 var\(--color-section-background\);$/m,
+  );
+  assert.match(
+    block[1],
+    /\.layout__region--content \.page-title\s*\{\s*margin-bottom: 0;/,
+  );
+  // Hidden or visually hidden title: the spacer's top margin moves instead.
+  assert.match(
+    block[1],
+    /&:not\(:has\(\.page-title:not\(\.visually-hidden\)\)\) \{[\s\S]*\.breadcrumbs__wrapper \+ :not\(\.page-title\) \{\s*margin-top: 0;/,
+  );
+  // Only when the title block directly follows the breadcrumbs: with the book
+  // nav between them there is no spacer margin to move, so the band must not
+  // add one (the media queries sit inside the :has(), never outside it).
+  assert.match(
+    block[1],
+    /&:has\(\.breadcrumbs__wrapper \+ :last-child\) \{\s*@media \(max-width: tokens\.\$break-l\) \{\s*--page-meta-bottom-space: var\(--size-spacing-8\);\s*\}\s*@media \(max-width: tokens\.\$break-s\) \{\s*--page-meta-bottom-space: var\(--size-spacing-7\);/,
+  );
+  assert.doesNotMatch(
+    block[1],
+    /&:not\(:has\(\.page-title:not\(\.visually-hidden\)\)\) \{\s*--page-meta-bottom-space: var\(--size-spacing-0\);\s*@media/,
+  );
+  // That margin is 0 on wide screens, so the shadow paints at least
+  // --spacing-page-inner, and an uncolored next section covers any overrun
+  // with the page background.
+  assert.match(
+    block[1],
+    /&:has\(\+ \*\) \{\s*box-shadow: 0\s+max\(var\(--page-meta-bottom-space\), var\(--spacing-page-inner\)\) 0\s+var\(--color-section-background\);/,
+  );
+  assert.match(
+    block[1],
+    /\+ :is\(:not\(\[data-section-theme\]\), \[data-section-theme='default'\]\) \{\s*background-color: var\(--color-background\);/,
+  );
+});

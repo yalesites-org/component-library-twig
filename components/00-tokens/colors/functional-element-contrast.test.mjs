@@ -361,6 +361,79 @@ test('publish-surface resets the CTA accent swap so inner surfaces keep their ow
   );
 });
 
+test('breadcrumb hover and current page read the section foreground in a themed section', () => {
+  // Gated as `section-breadcrumb` (YaleSites-Internal#1837). Brown-gray and the
+  // root-level `--menu-link-color` ignore the section and fail on dark ones.
+  const scss = stripComments(
+    readComponent('03-organisms/menu/breadcrumbs/_yds-breadcrumbs.scss'),
+  );
+  assert.match(
+    scss,
+    /\[data-section-theme\]:not\(\[data-section-theme='default'\]\)\s+&\[aria-current='page'\] \{\s*color: var\(--color-section-foreground\);/,
+  );
+  assert.match(
+    scss,
+    /\[data-section-theme\]:not\(\[data-section-theme='default'\]\) \.breadcrumbs__wrapper \{\s*--menu-link-color: var\(--color-section-foreground\);/,
+  );
+});
+
+test('breadcrumb links underline on hover and focus in a themed section', () => {
+  // Resting and hover are both the section foreground there, so without an
+  // underline hover has no visible change (YaleSites-Internal#1837).
+  const scss = stripComments(
+    readComponent('03-organisms/menu/breadcrumbs/_yds-breadcrumbs.scss'),
+  );
+  const rule = scss.match(
+    /\[data-section-theme\]:not\(\[data-section-theme='default'\]\)\s+:is\(\.breadcrumbs__link:not\(\[aria-current='page'\]\), \.breadcrumbs__button\) \{([\s\S]*?)\n\}/,
+  );
+  assert.ok(rule, 'themed breadcrumb hover rule is missing');
+  assert.match(
+    rule[1],
+    /&:hover,\s*&:focus-visible \{\s*text-decoration: underline;\s*\}/,
+  );
+});
+
+test('book navigation reads the section contract in a themed section', () => {
+  // Gated as `section-book-nav` (YaleSites-Internal#1837). Without this the
+  // nav paints its own white band inside a colored Page Meta section.
+  const scss = stripComments(
+    readComponent(
+      '03-organisms/site-in-this-section/_site-in-this-section.scss',
+    ),
+  );
+  const rule = scss.match(
+    /\.yds-layout\[data-section-theme\]:not\(\[data-section-theme='default'\]\)\s+\.in-this-section \{([\s\S]*?)\n\}/,
+  );
+  assert.ok(rule, 'themed book navigation rule is missing');
+  const body = rule[1];
+
+  [
+    ['--color-background', '--color-section-background'],
+    ['--color-heading', '--color-section-foreground'],
+    ['--color-muted', '--color-section-foreground'],
+    ['--color-link-base', '--color-section-foreground'],
+    ['--menu-link-color', '--color-section-foreground'],
+    ['--color-navigation-border', '--color-section-foreground'],
+    ['--color-navigation-expanded-item', '--color-section-foreground'],
+    ['--color-in-this-section-toggle-divider', '--color-section-foreground'],
+  ].forEach(([property, value]) => {
+    assert.match(
+      body,
+      new RegExp(`${property}: var\\(${value}\\);`),
+      `${property} must read ${value}`,
+    );
+  });
+
+  // The nested .secondary-nav re-declares these on itself, so the set has to
+  // land there too, and every white band has to take the section background.
+  assert.match(body, /&,\s*\.secondary-nav \{/);
+  assert.match(
+    body,
+    /&,\s*\.secondary-nav,\s*\.secondary-menu-toggle \{\s*background-color: var\(--color-section-background\);/,
+  );
+  assert.doesNotMatch(body, /--color-basic-white|--color-gray-/);
+});
+
 test('a block that paints its own surface shadows the section foreground', () => {
   // The regression the hover fix above would otherwise cause, and it is invisible
   // to the generated table because the #1614 fixture only builds accordion,
