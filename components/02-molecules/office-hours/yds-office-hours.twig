@@ -1,0 +1,171 @@
+{#
+ # Office Hours: a weekly schedule table, an optional "Upcoming changes" table
+ # and a live Open now / Closed now status.
+ #
+ # Available Variables:
+ # - office_hours__heading: optional visible title.
+ # - office_hours__heading_level: heading level for the title (default 2).
+ # - office_hours__name: what the hours belong to, used in the table captions.
+ # - office_hours__days: weekly rows, in display order. Each row:
+ #     - label: the day name, e.g. 'Tuesday'.
+ #     - weekday: 0 (Sunday) to 6. Lets the status script find today.
+ #     - today: TRUE to mark the row as today on first paint.
+ #     - closed: TRUE when the day is marked Closed.
+ #     - all_day: TRUE when the day is open around the clock.
+ #     - slots: list of {start, end}, 24-hour HHMM integers (1000, 1730).
+ #     - comment: optional note shown under the hours.
+ #     - exception: TRUE when this date's hours replace the usual ones; the
+ #       comment is then the exception's label.
+ #     - date: ISO date (Y-m-d) of an exception row. Dated rows are re-picked
+ #       by the script on load, so a cached page still shows the right week.
+ #     - hidden: TRUE to render the row hidden (an exception outside this
+ #       week, or a weekday row an exception replaces).
+ # - office_hours__upcoming: later exceptions, same row shape, with the date as
+ #     the label.
+ # - office_hours__status: show the Open now / Closed now line (default TRUE).
+ #     It is computed by yds-office-hours.js and stays hidden without it.
+ # - office_hours__timezone: IANA time zone the hours are in. The status is
+ #     computed in this zone, not the visitor's.
+ # - office_hours__empty_message: shown when there are no rows at all. Leave
+ #     unset to render nothing in that case.
+ #}
+
+{% import _self as office_hours %}
+
+{#
+ # Formats a 24-hour HHMM integer as '10 a.m.' / '5:30 p.m.'. Pass
+ # with_meridiem FALSE for the first half of a same-half range ('2–8 p.m.').
+ #}
+{% macro time(value, with_meridiem) -%}
+  {%- set hour = (value / 100)|round(0, 'floor') % 24 -%}
+  {%- set minute = value % 100 -%}
+  {{- hour % 12 == 0 ? 12 : hour % 12 -}}
+  {{- minute ? ':' ~ (minute < 10 ? '0' ~ minute : minute) -}}
+  {{- with_meridiem ? (hour < 12 ? ' a.m.' : ' p.m.') -}}
+{%- endmacro %}
+
+{% macro range(slot) -%}
+  {%- import _self as office_hours -%}
+  {%- set start_pm = ((slot.start / 100)|round(0, 'floor') % 24) >= 12 -%}
+  {%- set end_pm = ((slot.end / 100)|round(0, 'floor') % 24) >= 12 -%}
+  {{- office_hours.time(slot.start, start_pm != end_pm) -}}–{{- office_hours.time(slot.end, true) -}}
+{%- endmacro %}
+
+{# The day's hours as one machine-readable string for the status script. #}
+{% macro data_hours(row) -%}
+  {%- if row.all_day -%}
+    all-day
+  {%- elseif not row.closed -%}
+    {%- for slot in row.slots|default([]) -%}
+      {{- slot.start }}-{{ slot.end }}{{ not loop.last ? ',' -}}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endmacro %}
+
+{% set office_hours__base_class = 'office-hours' %}
+{% set office_hours__days = office_hours__days|default([]) %}
+{% set office_hours__upcoming = office_hours__upcoming|default([]) %}
+{% set office_hours__name = office_hours__name|default(office_hours__heading|default('Hours')) %}
+
+{% if office_hours__days or office_hours__upcoming %}
+  <div {{ bem(office_hours__base_class) }}{% if office_hours__timezone %} data-office-hours-timezone="{{ office_hours__timezone }}"{% endif %}>
+    {% if office_hours__heading %}
+      <h{{ office_hours__heading_level|default(2) }} {{ bem('heading', [], office_hours__base_class) }}>{{ office_hours__heading }}</h{{ office_hours__heading_level|default(2) }}>
+    {% endif %}
+
+    {% if office_hours__status is not defined or office_hours__status %}
+      {# Hidden until the script computes it, so there is never a wrong status
+       # on first paint, and never one at all without JavaScript. #}
+      <div {{ bem('status', [], office_hours__base_class) }} role="status" hidden>
+        <span {{ bem('pill', [], office_hours__base_class) }}>
+          <svg {{ bem('icon', ['open'], office_hours__base_class) }} viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="8" fill="currentColor"/><path d="M4.6 8.3l2.3 2.3 4.5-4.7" fill="none" stroke="var(--office-hours-fg)" stroke-width="1.8" stroke-linecap="square"/></svg>
+          <svg {{ bem('icon', ['closed'], office_hours__base_class) }} viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4.8 8h6.4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          <span {{ bem('pill-label', [], office_hours__base_class) }}></span>
+        </span>
+        <span {{ bem('status-detail', [], office_hours__base_class) }}></span>
+      </div>
+    {% endif %}
+
+    {% if office_hours__days %}
+      {# Explicit roles keep the table semantics when the narrow layout sets
+       # display: block, which Safari and older Chrome otherwise drop. #}
+      <table {{ bem('table', [], office_hours__base_class) }} role="table">
+        <caption {{ bem('caption', [], office_hours__base_class) }}>Weekly hours for {{ office_hours__name }}</caption>
+        <thead {{ bem('head', [], office_hours__base_class) }} role="rowgroup">
+          <tr role="row">
+            <th {{ bem('col', ['day'], office_hours__base_class) }} scope="col" role="columnheader">Day</th>
+            <th {{ bem('col', ['hours'], office_hours__base_class) }} scope="col" role="columnheader">Hours</th>
+          </tr>
+        </thead>
+        <tbody role="rowgroup">
+          {% for row in office_hours__days %}
+            <tr {{ bem('row', row.today ? ['today'] : [], office_hours__base_class) }} role="row"{% if row.weekday is defined and row.weekday is not same as(null) %} data-weekday="{{ row.weekday }}"{% endif %} data-hours="{{ office_hours.data_hours(row) }}"{% if row.date %} data-date="{{ row.date }}"{% endif %}{% if row.exception %} data-exception="{{ row.comment }}"{% endif %}{% if row.hidden %} hidden{% endif %}>
+              <th {{ bem('day', [], office_hours__base_class) }} scope="row" role="rowheader"{% if row.today %} aria-current="date"{% endif %}>
+                <span {{ bem('day-name', [], office_hours__base_class) }}>{{ row.label }}</span>
+                {% if row.today %}
+                  <span {{ bem('today', [], office_hours__base_class) }}>Today</span>
+                {% endif %}
+              </th>
+              <td {{ bem('hours', [], office_hours__base_class) }} role="cell">
+                {% if row.all_day %}
+                  <div {{ bem('slot', [], office_hours__base_class) }}>Open all day</div>
+                {% elseif row.closed or not row.slots %}
+                  <div {{ bem('slot', [], office_hours__base_class) }}>Closed</div>
+                {% else %}
+                  {% for slot in row.slots %}
+                    <div {{ bem('slot', [], office_hours__base_class) }}>{{ office_hours.range(slot) }}</div>
+                  {% endfor %}
+                {% endif %}
+                {% if row.comment or row.exception %}
+                  <div {{ bem('note', [], office_hours__base_class) }}>
+                    {% if row.exception %}
+                      <span {{ bem('tag', [], office_hours__base_class) }}>Exception</span>
+                    {% endif %}
+                    {{ row.comment }}
+                  </div>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+
+    {% if office_hours__upcoming %}
+      {# Rows can arrive hidden: the script re-picks the next three on load. #}
+      {% set office_hours__upcoming_shown = false %}
+      {% for row in office_hours__upcoming %}
+        {% set office_hours__upcoming_shown = office_hours__upcoming_shown or not row.hidden %}
+      {% endfor %}
+      <h{{ office_hours__heading_level|default(2) + 1 }} {{ bem('upcoming-heading', [], office_hours__base_class) }}{{ office_hours__upcoming_shown ? '' : ' hidden' }}>Upcoming changes</h{{ office_hours__heading_level|default(2) + 1 }}>
+      <table {{ bem('table', ['upcoming'], office_hours__base_class) }} role="table"{{ office_hours__upcoming_shown ? '' : ' hidden' }}>
+        <caption {{ bem('caption', [], office_hours__base_class) }}>Upcoming schedule changes for {{ office_hours__name }}</caption>
+        <tbody role="rowgroup">
+          {% for row in office_hours__upcoming %}
+            <tr {{ bem('row', [], office_hours__base_class) }} role="row"{% if row.date %} data-date="{{ row.date }}"{% endif %}{% if row.hidden %} hidden{% endif %}>
+              <th {{ bem('day', [], office_hours__base_class) }} scope="row" role="rowheader">
+                <span {{ bem('day-name', [], office_hours__base_class) }}>{{ row.label }}</span>
+              </th>
+              <td {{ bem('hours', [], office_hours__base_class) }} role="cell">
+                <div {{ bem('slot', [], office_hours__base_class) }}>
+                  {%- if row.all_day -%}
+                    Open all day
+                  {%- elseif row.closed or not row.slots -%}
+                    Closed
+                  {%- else -%}
+                    {%- for slot in row.slots -%}
+                      {{ office_hours.range(slot) }}{{ not loop.last ? ', ' }}
+                    {%- endfor -%}
+                  {%- endif -%}
+                  {{- row.comment ? ' · ' ~ row.comment -}}
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  </div>
+{% elseif office_hours__empty_message %}
+  <p {{ bem('empty', [], 'office-hours') }}>{{ office_hours__empty_message }}</p>
+{% endif %}
