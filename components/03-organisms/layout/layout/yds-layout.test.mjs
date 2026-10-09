@@ -593,6 +593,17 @@ test('a themed Page Meta moves its last margin onto the band', () => {
     block[1],
     /&:not\(:has\(\.page-title:not\(\.visually-hidden\)\)\) \{[\s\S]*\.breadcrumbs__wrapper \+ :not\(\.page-title\) \{\s*margin-top: 0;/,
   );
+  // Only when the title block directly follows the breadcrumbs: with the book
+  // nav between them there is no spacer margin to move, so the band must not
+  // add one (the media queries sit inside the :has(), never outside it).
+  assert.match(
+    block[1],
+    /&:has\(\.breadcrumbs__wrapper \+ :last-child\) \{\s*@media \(max-width: tokens\.\$break-l\) \{\s*--page-meta-bottom-space: var\(--size-spacing-8\);\s*\}\s*@media \(max-width: tokens\.\$break-s\) \{\s*--page-meta-bottom-space: var\(--size-spacing-7\);/,
+  );
+  assert.doesNotMatch(
+    block[1],
+    /&:not\(:has\(\.page-title:not\(\.visually-hidden\)\)\) \{\s*--page-meta-bottom-space: var\(--size-spacing-0\);\s*@media/,
+  );
   // That margin is 0 on wide screens, so the shadow paints at least
   // --spacing-page-inner, and an uncolored next section covers any overrun
   // with the page background.

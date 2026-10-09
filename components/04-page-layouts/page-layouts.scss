@@ -118,20 +118,12 @@ body[data-body-frozen] {
   &:not(:has(.page-title:not(.visually-hidden))) {
     --page-meta-bottom-space: var(--size-spacing-0);
 
-    @media (max-width: tokens.$break-l) {
-      --page-meta-bottom-space: var(--size-spacing-8);
-    }
-
-    @media (max-width: tokens.$break-s) {
-      --page-meta-bottom-space: var(--size-spacing-7);
-    }
-
     .breadcrumbs__wrapper + :not(.page-title) {
       margin-top: 0;
     }
 
-    // That margin is 0 on wide screens, so the gap is only the next section's
-    // own first margin, which the band cannot know. Paint at least
+    // The spacer margin is 0 on wide screens, so the gap is only the next
+    // section's own first margin, which the band cannot know. Paint at least
     // --spacing-page-inner, as a visible title does, and give an uncolored
     // next section the page background so any overrun is hidden under it, the
     // way a colored next section already hides it under its own.
@@ -143,6 +135,20 @@ body[data-body-frozen] {
 
     + :is(:not([data-section-theme]), [data-section-theme='default']) {
       background-color: var(--color-background);
+    }
+
+    // Below wide screens the spacer margin is 2.5rem / 2rem, but only when the
+    // title block directly follows the breadcrumbs. With the book nav between
+    // them, the spacer margin lands on the book nav (atomic overrides it by
+    // id) and the title block never had one, so there is no margin to move.
+    &:has(.breadcrumbs__wrapper + :last-child) {
+      @media (max-width: tokens.$break-l) {
+        --page-meta-bottom-space: var(--size-spacing-8);
+      }
+
+      @media (max-width: tokens.$break-s) {
+        --page-meta-bottom-space: var(--size-spacing-7);
+      }
     }
   }
 }
