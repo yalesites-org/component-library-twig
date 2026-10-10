@@ -1,0 +1,114 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as OfficeHoursStories from './office-hours.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './office-hours-props.yml';
+
+<Meta of={OfficeHoursStories} name="Overview" />
+
+# Office Hours
+
+The Office Hours component shows when a place is open: a weekly schedule table, a live Open now or Closed now status line, one-off exceptions, and a short list of upcoming changes. It is the front end of the Office Hours block in Layout Builder.
+
+## Interactive Preview
+
+Use the controls panel below to change the section theme, the block's own theme, and its width.
+
+<Canvas of={OfficeHoursStories.FullWeek} />
+<Controls of={OfficeHoursStories.FullWeek} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## What It Shows
+
+### Weekly Table
+
+One row per day, in the order given. A day shows its time ranges ("10 a.m.–5 p.m."), "Closed", or "Open all day". A day can have more than one range, and an optional note under the hours. Today's row is tinted and tagged "Today".
+
+### Status Line
+
+The line above the table says "Open now" or "Closed now", with detail such as "Closes at 5 p.m." or "Closed today · Opens Tuesday at 10 a.m.". The pill uses a shape and a word, never color alone.
+
+The status is worked out in the browser from the current time in the block's time zone (`office_hours__timezone`, America/New_York on the platform), not the visitor's. It stays hidden until it is computed, so a cached page never shows a stale status and a page without JavaScript shows none. The script also re-picks today's row and this week's exceptions on load, so a page served from cache days later is still right.
+
+<Canvas of={OfficeHoursStories.LiveStatus} />
+
+### Exceptions
+
+An exception replaces one date's usual hours, for example an early close for Homecoming. When its date falls in the next seven days, it takes the place of that weekday's row and shows an "Exception" tag with its label.
+
+<Canvas of={OfficeHoursStories.ExceptionRow} />
+
+### Upcoming Changes
+
+Exceptions after this week are listed under an "Upcoming changes" heading, the next three at most, each with its date, hours, and label. The heading and table are hidden when there are none.
+
+<Canvas of={OfficeHoursStories.UpcomingChanges} />
+
+### Empty State
+
+With no days entered, the public page renders nothing at all: no heading, no empty table. In Layout Builder the block shows a placeholder instead, "Hours: no days filled in yet.", so editors can find and edit it.
+
+<Canvas of={OfficeHoursStories.Empty} />
+
+## Theme Options
+
+This component supports the following theme variations:
+
+- **Default**: Follows the section's colors
+- **One through Six**: The block paints its own component theme instead of the section's colors. The today tint, the today bar, the Exception tag and the status pill all follow it.
+
+Use the `office_hours__theme` property to apply a theme.
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-office-hours.twig`
+- **Styles**: `_yds-office-hours.scss`
+- **JavaScript**: `yds-office-hours.js`
+
+### Accessibility
+
+- A real table with a caption, column headers and row headers
+- Explicit table roles keep the table semantics in the narrow layout, where the cells are set to `display: block`
+- Today's row header carries `aria-current="date"`
+- The status line is a `role="status"` region
+- Times are written out the platform way ("5:30 p.m.") rather than as a 24-hour clock
+
+### Behavior
+
+- Rows stack when the block is under 340px wide: day, then hours, then the note. This is a container query on the block, not the viewport, so it also applies in a narrow sidebar column on a wide screen.
+
+<Canvas of={OfficeHoursStories.Narrow} />
+
+## Usage Guidelines
+
+### Best Practices
+
+- Keep notes short; they sit under the hours in a narrow column
+- Use an exception for a one-off date rather than editing the weekly hours
+- Give the block a heading so the table captions name what the hours are for
+
+### Things to Avoid
+
+- Don't put hours in a note; the status line cannot read them
+
+## Testing
+
+For visual regression testing with the layouts, empty state and every theme option, see the [Visreg page](?path=/story/molecules-office-hours-visreg--old-blues). Those stories show a fixed status, so their snapshots do not change with the clock.
+
+## Related Components
+
+- **Accordion**: Shares the themed box treatment the One through Six themes use
+- **Tables**: The general table atom, for tabular content that is not a schedule
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.
