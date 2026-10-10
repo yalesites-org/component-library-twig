@@ -1,4 +1,11 @@
 @use '../../00-tokens/tokens';
+@use '../../00-tokens/functions/map';
+
+$office-hours-global-themes: map.deep-get(tokens.$tokens, 'global-themes');
+$office-hours-component-themes: map.deep-get(
+  tokens.$tokens,
+  'component-themes'
+);
 
 // Office Hours: a two-column schedule table that takes its colors from the
 // section it sits in. It paints no background of its own, so every ink is the
@@ -41,9 +48,6 @@
     var(--office-hours-bg)
   );
 
-  // The stack rule below measures this box, not the viewport: the same block
-  // is 305px wide in a 70/30 sidebar on a 1440px screen.
-  container-type: inline-size;
   color: var(--office-hours-fg);
 
   // White-text sections: darken the background 20% toward black instead, so
@@ -57,6 +61,107 @@
       var(--office-hours-bg)
     );
   }
+
+  // Own theme (One to Six): the block paints the chosen component theme
+  // instead of inheriting the section. One to Five map 1:1 to slots one to
+  // five and Six to slot nine: the base mapping ys_themes' ColorTokenResolver
+  // gives the dial's swatches (and accordion, facts and wrapped callout use),
+  // so each option renders the color its swatch shows. Default sets nothing.
+  // The fill and padding go on the inner wrapper (below), not here, so the
+  // root keeps its site gutter.
+  &[data-component-theme]:not([data-component-theme='default']) {
+    --color-heading: var(--office-hours-fg);
+  }
+
+  @each $theme, $value in $office-hours-component-themes {
+    &[data-component-theme='#{$theme}'] {
+      --color-slot-one: var(--component-themes-#{$theme}-slot-one);
+      --color-slot-two: var(--component-themes-#{$theme}-slot-two);
+      --color-slot-three: var(--component-themes-#{$theme}-slot-three);
+      --color-slot-four: var(--component-themes-#{$theme}-slot-four);
+      --color-slot-five: var(--component-themes-#{$theme}-slot-five);
+      --color-slot-six: var(--component-themes-#{$theme}-slot-six);
+      --color-slot-seven: var(--component-themes-#{$theme}-slot-seven);
+      --color-slot-eight: var(--component-themes-#{$theme}-slot-eight);
+    }
+  }
+
+  @each $globalTheme, $value in $office-hours-global-themes {
+    [data-global-theme='#{$globalTheme}']
+      &[data-component-theme]:not([data-component-theme='default']) {
+      --color-slot-one: var(--global-themes-#{$globalTheme}-colors-slot-one);
+      --color-slot-two: var(--global-themes-#{$globalTheme}-colors-slot-two);
+      --color-slot-three: var(
+        --global-themes-#{$globalTheme}-colors-slot-three
+      );
+      --color-slot-four: var(--global-themes-#{$globalTheme}-colors-slot-four);
+      --color-slot-five: var(--global-themes-#{$globalTheme}-colors-slot-five);
+      --color-slot-six: var(--global-themes-#{$globalTheme}-colors-slot-six);
+      --color-slot-seven: var(
+        --global-themes-#{$globalTheme}-colors-slot-seven
+      );
+      --color-slot-eight: var(
+        --global-themes-#{$globalTheme}-colors-slot-eight
+      );
+      --color-slot-nine: var(--global-themes-#{$globalTheme}-colors-slot-nine);
+    }
+  }
+
+  // White-text themes take the darkened Today tint, dark-text themes the
+  // text-color tint. Declared after the section rules above, at the same
+  // specificity, so the block's own theme wins over its section's.
+  &[data-component-theme='one'],
+  &[data-component-theme='two'],
+  &[data-component-theme='five'] {
+    --office-hours-fg: var(--color-slot-eight);
+    --office-hours-today: color-mix(
+      in srgb,
+      var(--color-basic-black) 20%,
+      var(--office-hours-bg)
+    );
+  }
+
+  &[data-component-theme='three'],
+  &[data-component-theme='four'],
+  &[data-component-theme='six'] {
+    --office-hours-fg: var(--color-slot-seven);
+    --office-hours-today: color-mix(
+      in srgb,
+      var(--office-hours-fg) 14%,
+      var(--office-hours-bg)
+    );
+  }
+
+  &[data-component-theme='one'] {
+    --office-hours-bg: var(--color-slot-one);
+  }
+
+  &[data-component-theme='two'] {
+    --office-hours-bg: var(--color-slot-two);
+  }
+
+  &[data-component-theme='three'] {
+    --office-hours-bg: var(--color-slot-three);
+  }
+
+  &[data-component-theme='four'] {
+    --office-hours-bg: var(--color-slot-four);
+  }
+
+  &[data-component-theme='five'] {
+    --office-hours-bg: var(--color-slot-five);
+  }
+
+  &[data-component-theme='six'] {
+    --office-hours-bg: var(--color-slot-nine);
+  }
+}
+
+// The stack rule below measures this box, not the viewport: the same block
+// is 305px wide in a 70/30 sidebar on a 1440px screen. It sits inside the
+// theme padding, so the stack point tracks the space the table really has.
+.office-hours__inner {
+  container-type: inline-size;
 }
 
 // The site gutter comes from `data-component-width` on the root (see the
@@ -66,6 +171,28 @@
 // narrower than this, so the block still fills its region.
 .office-hours__inner > * {
   max-width: var(--size-component-layout-width-content);
+}
+
+// Own theme (One to Six): a filled box like a themed Accordion item. It starts
+// inside the site gutter, stops at the content width and stays left-aligned in
+// the site-width column (the margin is that column's centering offset; zero in
+// a layout column). Inline padding follows the themed Accordion content.
+.office-hours[data-component-theme]:not([data-component-theme='default'])
+  .office-hours__inner {
+  max-width: var(--size-component-layout-width-content);
+  margin-inline-start: max(
+    0px,
+    (100% - var(--size-component-layout-width-site)) / 2
+  );
+  background-color: var(--office-hours-bg);
+
+  @media (max-width: tokens.$break-mobile-max) {
+    padding: var(--size-spacing-6);
+  }
+
+  @media (min-width: tokens.$break-mobile) {
+    padding: var(--size-spacing-8);
+  }
 }
 
 // The doubled root class outranks the font-pairing heading rules a layout

@@ -72,7 +72,7 @@
    # section, like Text and Accordion; inside a column layout the layout's
    # data-embedded-components switches that padding off. The inner wrapper
    # is centered at the site width by the shared `__inner` rule. #}
-  <div {{ bem(office_hours__base_class) }} data-component-width="site"{% if office_hours__timezone %} data-office-hours-timezone="{{ office_hours__timezone }}"{% endif %}>
+  <div {{ bem(office_hours__base_class) }} data-component-width="site" data-component-theme="{{ office_hours__theme|default('default') }}"{% if office_hours__timezone %} data-office-hours-timezone="{{ office_hours__timezone }}"{% endif %}>
     <div {{ bem('inner', [], office_hours__base_class) }}>
       {% if office_hours__heading %}
         <h{{ office_hours__heading_level|default(2) }} {{ bem('heading', [], office_hours__base_class) }}>{{ office_hours__heading }}</h{{ office_hours__heading_level|default(2) }}>
