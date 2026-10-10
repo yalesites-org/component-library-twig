@@ -59,6 +59,15 @@
   }
 }
 
+// The site gutter comes from `data-component-width` on the root (see the
+// template), and the inner wrapper is centered at the site width, so the block
+// starts where Text and Accordion do. Inside that, the schedule stops at the
+// content width, left-aligned, like Text's own copy. In a column the column is
+// narrower than this, so the block still fills its region.
+.office-hours__inner > * {
+  max-width: var(--size-component-layout-width-content);
+}
+
 // The doubled root class outranks the font-pairing heading rules a layout
 // applies to every h2/h3 in a column (up to (0,2,2)), which would otherwise
 // turn these into 30px serif headings.
