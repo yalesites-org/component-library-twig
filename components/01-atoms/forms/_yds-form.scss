@@ -692,7 +692,7 @@ $filter-control-height: 3.125rem; // 50px
     // this is inert while Chosen is active. (#1299 QA)
     .chosen-container,
     .form-item__select {
-      border: 1px solid var(--color-basic-black);
+      border: 1px solid var(--color-dropdown-border);
     }
 
     // Force the calendar filter form to a single column on mobile.
