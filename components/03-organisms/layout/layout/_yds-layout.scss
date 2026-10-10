@@ -427,12 +427,17 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     //    The event-meta `plain-link` anchors are hijacked the same way: hover
     //    resolved to slot-two and failed 4.5:1 in 36 of 42 combinations
     //    (YaleSites-Internal#1836). The map selector also covers directions.
+    //    -
+    //    `.wrapped-callout__content a` is the Wrapped Callout body link. It
+    //    uses the link atom, so hover resolved to slot-two on every themed
+    //    section: 1.00:1 on section four (YaleSites-Internal#1899).
     .link,
     .text-field a,
     .caption a,
     [class*='__heading-link'],
     .link-grid__link,
     .wrapped-callout__callout a,
+    .wrapped-callout__content a,
     .event-meta__more-dates-link a,
     .event-meta__event-website-link a,
     .event-meta__event-show-map a {
