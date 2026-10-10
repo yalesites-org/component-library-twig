@@ -115,6 +115,25 @@ test('section theme six scopes --color-text-shadow to links, not just the root',
   );
 });
 
+test('the Wrapped Callout body link gets the section hover colour', () => {
+  // `.wrapped-callout__content a` uses the link atom, which declares
+  // `--color-link-hover: var(--color-slot-two)` on the link itself, so on a
+  // themed section hover resolved to slot-two: 1.00:1 on section four. Only a
+  // rule on the link element beats it (YaleSites-Internal#1899).
+  // Comments stripped so a mention in prose cannot satisfy the check.
+  const hoverRule = scss()
+    .replace(/\/\/.*$/gm, '')
+    .match(
+      /([^{};]*)\{\s*--color-link-hover:\s*var\(--color-section-foreground\);/,
+    );
+
+  assert.ok(hoverRule, 'the colored-section link hover rule is gone');
+  assert.ok(
+    hoverRule[1].includes('.wrapped-callout__content a'),
+    'the colored-section hover list no longer covers .wrapped-callout__content a',
+  );
+});
+
 test("an unthemed section re-points the link grid's descender halo", () => {
   // A section left on "Default - No Color" paints no background at all, so a
   // block inside it sits on the page surface. Link grid paints no background
