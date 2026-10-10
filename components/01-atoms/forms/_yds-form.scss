@@ -178,6 +178,20 @@ $filter-control-height: 3.125rem; // 50px
   // to a single column. (#1299 QA)
   display: grid;
 
+  // Focus ring for the filter fields: blue-medium on light sections; on dark
+  // ones, the section foreground (white). Light themes are the same list the
+  // required-asterisk rule in _yds-textfields.scss excludes. (#1897)
+  --ys-filter-focus: var(--color-blue-medium);
+
+  [data-component-theme]:not(
+      [data-component-theme='default'],
+      [data-component-theme='two'],
+      [data-component-theme='five']
+    )
+    & {
+    --ys-filter-focus: var(--color-layout-content);
+  }
+
   // auto-fit fills the available width, and the max(13rem, (100% - gaps)/4)
   // track floor caps the row at four columns (three 1rem column-gaps between
   // four tracks), so a wide section no longer packs every filter onto one row.
@@ -240,6 +254,9 @@ $filter-control-height: 3.125rem; // 50px
     border: var(--border-thickness-1) solid var(--color-dropdown-border);
     width: 100% !important;
 
+    // Fields stay white on every section theme, so pin their text. (#1897)
+    color: var(--color-gray-700);
+
     // The open state releases `height` (.chosen-with-drop below sets
     // height: auto so wrapped chips can grow the box), so `height` alone is not
     // enough — min-height is what keeps an open filter from becoming shorter
@@ -268,8 +285,14 @@ $filter-control-height: 3.125rem; // 50px
 
     &:hover,
     &:focus,
-    &:focus-visible {
+    &:focus-visible,
+    &:focus-within {
       border-color: var(--color-dropdown-border-hover);
+    }
+
+    &:focus-within {
+      outline: var(--border-thickness-2) solid var(--ys-filter-focus);
+      outline-offset: var(--size-spacing-1);
     }
 
     :focus {
@@ -303,12 +326,13 @@ $filter-control-height: 3.125rem; // 50px
     // different justification, so any clip lands at the tail, not the head. (#1299 QA)
     justify-content: flex-start;
     overflow: hidden;
+    white-space: nowrap;
 
     li.search-choice {
-      background-color: hsl(210deg 100% 21% / 10%);
+      background: hsl(210deg 100% 21% / 10%);
       flex: none;
       min-width: 0;
-      max-width: 100%;
+      max-width: min(12rem, 100%);
 
       // Chosen's vendor CSS pins line-height: 12px on the chip. Its own
       // font-size: 14px on .chosen-container is overridden here, so the label
@@ -326,6 +350,21 @@ $filter-control-height: 3.125rem; // 50px
       // unchanged. (#1299 QA)
       font: var(--font-style-body-xs);
 
+      // Pill per the #1897 spec: Yale Blue Mallory Medium 14px on a 2rem
+      // pill, with the remove control laid out inline after the label.
+      display: inline-flex;
+      align-items: center;
+      gap: var(--size-spacing-2);
+      height: 2rem;
+      margin: 0 var(--size-spacing-2) 0 0;
+      padding: 0 var(--size-spacing-2) 0 var(--size-spacing-4);
+      border: 0;
+      border-radius: 100vmax;
+      box-shadow: none;
+      color: var(--color-blue-yale);
+      font-size: var(--font-size-14);
+      font-weight: var(--font-weights-mallory-medium);
+
       // Chosen renders the chip label in a plain inline span, so make it an
       // inline-block box bounded by the chip width: only then do overflow +
       // text-overflow engage and truncate the label at the TAIL (e.g.
@@ -334,10 +373,45 @@ $filter-control-height: 3.125rem; // 50px
       // absolutely-positioned remove control. (#1299 QA)
       span {
         display: inline-block;
+        min-width: 0;
         max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+      }
+
+      // Remove control: a 20px circle that fills Yale Blue on hover. The x is
+      // a mask so it takes the current text color. (#1897)
+      .search-choice-close {
+        position: static;
+        flex: none;
+        width: 1.25rem;
+        height: 1.25rem;
+        border-radius: 50%;
+        background: none;
+        color: var(--color-blue-yale);
+        cursor: pointer;
+
+        &::before {
+          content: '';
+          display: block;
+          width: 100%;
+          height: 100%;
+          background-color: currentcolor;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1 1l8 8M9 1L1 9' stroke='%23000' stroke-width='1.6'/%3E%3C/svg%3E")
+            center / 0.625rem no-repeat;
+        }
+
+        &:hover,
+        &:focus-visible {
+          background-color: var(--color-blue-yale);
+          color: var(--color-basic-white);
+        }
+
+        &:focus-visible {
+          outline: var(--border-thickness-2) solid var(--ys-filter-focus);
+          outline-offset: var(--size-spacing-1);
+        }
       }
     }
 
@@ -358,7 +432,8 @@ $filter-control-height: 3.125rem; // 50px
   }
 
   // Chips that don't fit on the closed single line are collapsed into the badge. (#1366)
-  .ys-search-choice--overflow {
+  // Matches the pill rule's specificity so it beats its display. (#1897)
+  .chosen-choices li.ys-search-choice--overflow {
     display: none;
   }
 
@@ -374,9 +449,51 @@ $filter-control-height: 3.125rem; // 50px
     // which the token above shrank. Declared before font-weight so the
     // shorthand does not reset the medium weight below. (#1299 QA)
     font: var(--font-style-body-xs);
-    color: var(--color-gray-700);
+    color: var(--color-blue-yale);
+    font-size: var(--font-size-14);
     font-weight: var(--font-weights-mallory-medium);
     list-style: none;
+    height: 2rem;
+    border: var(--border-thickness-1) solid var(--color-blue-yale);
+    border-radius: 100vmax;
+  }
+
+  // Footer injected into the open panel by yds-select.js. Hidden with the
+  // closed panel so Tab cannot land on an invisible "Clear all". (#1897)
+  .ys-select-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--size-spacing-4);
+    border-top: var(--border-thickness-1) solid var(--color-gray-300);
+    background-color: var(--color-basic-white);
+    color: var(--color-gray-700);
+    font: var(--font-style-body-xs);
+
+    .chosen-container:not(.chosen-with-drop) & {
+      visibility: hidden;
+    }
+  }
+
+  .ys-select-clear {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-blue-yale);
+    font: inherit;
+    font-weight: var(--font-weights-mallory-medium);
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:disabled {
+      color: var(--color-gray-500);
+      text-decoration: none;
+      cursor: default;
+    }
+
+    &:focus-visible {
+      outline: var(--border-thickness-2) solid var(--color-blue-medium);
+    }
   }
 
   .chosen-with-drop {
@@ -386,11 +503,16 @@ $filter-control-height: 3.125rem; // 50px
     // above cascade to the open state rather than duplicating it. (#1299 QA)
     height: auto;
 
+    // The open head grows past the 50px row; lift it above the listing below
+    // (card images are positioned with z-index 0). (#1897)
+    z-index: 1;
+
     // Open state: the dropdown expands to full height, so show every chip
     // (wrapping across lines) and hide the "+N more" badge. (#1366)
     .chosen-choices {
       flex-wrap: wrap;
       overflow: visible;
+      white-space: normal;
     }
 
     // Size the search field by its typed text again, so it wraps to a new
@@ -401,14 +523,16 @@ $filter-control-height: 3.125rem; // 50px
 
     li.search-choice {
       max-width: none;
+      height: auto;
+      min-height: 2rem;
 
       span {
         white-space: normal;
       }
     }
 
-    .ys-search-choice--overflow {
-      display: block;
+    .chosen-choices li.ys-search-choice--overflow {
+      display: inline-flex;
     }
 
     .ys-select-more {
@@ -418,12 +542,16 @@ $filter-control-height: 3.125rem; // 50px
     .chosen-drop {
       left: -1px;
       width: calc(100% + 2px); // Consider chosen container borders width.
+      border: var(--border-thickness-1) solid var(--color-blue-horizon);
+      box-shadow: var(--drop-shadow-level-2);
     }
 
     .chosen-results {
       color: var(--color-gray-700);
       margin: 0;
       padding: 0;
+      max-height: 15rem;
+      overflow-y: auto;
 
       li {
         padding: var(--size-spacing-4);
@@ -436,6 +564,20 @@ $filter-control-height: 3.125rem; // 50px
       li.active-result,
       li.result-selected {
         display: flex;
+        align-items: center;
+        gap: var(--size-spacing-3);
+
+        // Chosen's 15px line-height overlaps a label that wraps beside the box.
+        line-height: 1.2;
+
+        // Checkbox. currentColor keeps it visible on the highlighted row.
+        &::before {
+          content: '';
+          flex: none;
+          width: 1.25rem;
+          height: 1.25rem;
+          border: var(--border-thickness-1) solid currentcolor;
+        }
       }
 
       li.no-results {
@@ -450,9 +592,28 @@ $filter-control-height: 3.125rem; // 50px
         font-weight: var(--font-weights-mallory-medium);
       }
 
+      // Picked rows: a filled Yale Blue check instead of a dark row fill.
+      // Clicking one unchecks it (yds-select.js). (#1897)
       .result-selected {
-        background-color: var(--color-gray-700);
-        color: var(--color-basic-white);
+        color: var(--color-blue-yale);
+        cursor: pointer;
+
+        &::before {
+          background-color: var(--color-blue-yale);
+          border-color: var(--color-blue-yale);
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          left: calc(var(--size-spacing-4) + 0.4375rem);
+          top: 50%;
+          width: 0.375rem;
+          height: 0.75rem;
+          border: solid var(--color-basic-white);
+          border-width: 0 var(--border-thickness-2) var(--border-thickness-2) 0;
+          transform: translateY(-60%) rotate(45deg);
+        }
       }
     }
   }
@@ -511,6 +672,17 @@ $filter-control-height: 3.125rem; // 50px
     flex-shrink: 1;
   }
 
+  // Closed with terms picked: collapse the search field to zero width so the
+  // row is all pills. It stays focusable, so Tab still reaches the field and
+  // typing still opens it. Last, to keep specificity ascending. (#1897)
+  .chosen-container:not(.chosen-with-drop)
+    .chosen-choices:has(li.search-choice)
+    li.search-field {
+    flex: 0 0 0;
+    width: 0;
+    overflow: hidden;
+  }
+
   @media (max-width: tokens.$break-mobile) {
     // Show a visible box for every filter on mobile. When Chosen renders, the
     // container carries the border; when it falls back to the native select
@@ -520,7 +692,7 @@ $filter-control-height: 3.125rem; // 50px
     // this is inert while Chosen is active. (#1299 QA)
     .chosen-container,
     .form-item__select {
-      border: 1px solid var(--color-basic-black);
+      border: 1px solid var(--color-dropdown-border);
     }
 
     // Force the calendar filter form to a single column on mobile.

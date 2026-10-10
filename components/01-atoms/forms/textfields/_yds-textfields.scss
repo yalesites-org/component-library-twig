@@ -33,7 +33,8 @@ $form-item-icon-size: 1.7rem;
 
   [data-component-theme]:not(
       [data-component-theme='default'],
-      [data-component-theme='two']
+      [data-component-theme='two'],
+      [data-component-theme='five']
     )
     & {
     &::after {
