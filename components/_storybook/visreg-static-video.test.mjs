@@ -23,7 +23,7 @@ import {
   VISREG_STORY_FILE,
 } from './component-files.mjs';
 
-const STATIC_VIDEO = '/assets/videos/placeholder-static.mp4';
+const STATIC_VIDEO = 'assets/videos/placeholder-static.mp4';
 const LOOP_SOURCES = [
   /placeholder-loop\.mp4/,
   /video-background\.yml/,
