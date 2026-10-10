@@ -31,10 +31,12 @@ static Storybook build.
 Reference it by URL, the same way the placeholder images are:
 
 ```yaml
-video_background__content: '/assets/videos/placeholder-loop.mp4'
+video_background__content: 'assets/videos/placeholder-loop.mp4'
 ```
 
-That resolves because Emulsify Core mounts the project's `assets/` directory at `/assets`.
+That resolves because Emulsify Core mounts the project's `assets/` directory at `assets/`
+beside `iframe.html`. Keep it relative: a leading slash 404s on GitHub Pages, which serves
+the Storybook under `/component-library-twig/`.
 
 ## Regenerating
 

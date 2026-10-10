@@ -277,9 +277,11 @@ depend on a third-party host and change every snapshot of an image-bearing story
 `assets/images/placeholders/README.md` has the available aspect ratios, how to reference
 them, and the full rationale.
 
-Reference them by URL under `/assets/` — Emulsify Core mounts the project's `assets/`
-directory there and mounts nothing at a bare `/images/`, so `/images/placeholders/x.png`
-404s while `/assets/images/placeholders/x.png` resolves. Two tests keep this honest:
+Reference them by relative URL, `assets/images/placeholders/x.png`, with no leading slash.
+Emulsify Core mounts the project's `assets/` directory at `assets/` beside `iframe.html` and
+mounts nothing at a bare `images/`. The published Storybook lives under
+`/component-library-twig/` on GitHub Pages, so a root-absolute `/assets/...` URL works in dev
+and on Netlify but 404s there; the relative form resolves in all three. Two tests keep this honest:
 `components/_storybook/no-third-party-images.test.mjs` fails the unit suite if a fixture
 drifts back to a remote host, and `components/_storybook/fixture-asset-urls.test.mjs` fails
 it if a fixture points at an asset URL no static mount serves.
