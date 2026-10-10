@@ -28,6 +28,8 @@
  #     computed in this zone, not the visitor's.
  # - office_hours__empty_message: shown when there are no rows at all. Leave
  #     unset to render nothing in that case.
+ # - office_hours__theme: 'default' (inherit the section's colors) or a
+ #     component theme 'one' to 'six', which paints the block in that theme.
  #}
 
 {% import _self as office_hours %}
@@ -68,7 +70,7 @@
 {% set office_hours__name = office_hours__name|default(office_hours__heading|default('Hours')) %}
 
 {% if office_hours__days or office_hours__upcoming %}
-  <div {{ bem(office_hours__base_class) }}{% if office_hours__timezone %} data-office-hours-timezone="{{ office_hours__timezone }}"{% endif %}>
+  <div {{ bem(office_hours__base_class) }} data-component-theme="{{ office_hours__theme|default('default') }}"{% if office_hours__timezone %} data-office-hours-timezone="{{ office_hours__timezone }}"{% endif %}>
     {% if office_hours__heading %}
       <h{{ office_hours__heading_level|default(2) }} {{ bem('heading', [], office_hours__base_class) }}>{{ office_hours__heading }}</h{{ office_hours__heading_level|default(2) }}>
     {% endif %}

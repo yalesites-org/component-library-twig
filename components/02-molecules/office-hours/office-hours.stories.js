@@ -16,6 +16,11 @@ export default {
       options: sectionThemes,
       control: 'select',
     },
+    componentTheme: {
+      name: 'Theme (block dial)',
+      options: ['default', 'one', 'two', 'three', 'four', 'five', 'six'],
+      control: 'select',
+    },
     width: {
       name: 'Block width (px)',
       control: { type: 'number', min: 280, max: 1200 },
@@ -23,6 +28,7 @@ export default {
   },
   args: {
     sectionTheme: 'default',
+    componentTheme: 'default',
     width: 760,
   },
 };
@@ -30,12 +36,13 @@ export default {
 const days = (...labels) =>
   data.office_hours__days.filter((day) => labels.includes(day.label));
 
-const render = (props, { sectionTheme, width }) =>
+const render = (props, { sectionTheme, componentTheme, width }) =>
   createSectionWrapper(
     sectionTheme,
     `<div style="max-width: ${width}px">${officeHoursTwig({
       ...data,
       office_hours__upcoming: [],
+      office_hours__theme: componentTheme,
       ...props,
     })}</div>`,
   );
@@ -72,6 +79,25 @@ export const UpcomingChanges = (args) =>
     },
     args,
   );
+
+/**
+ * A theme other than Default paints the block in that component theme instead
+ * of the section's colors. Today tint, bar, Exception tag and status pill all
+ * follow it.
+ */
+export const ComponentTheme = (args) =>
+  render(
+    {
+      office_hours__days: data.office_hours__days.map((day, weekday) => ({
+        ...day,
+        weekday,
+      })),
+      office_hours__upcoming: data.office_hours__upcoming,
+      office_hours__timezone: 'America/New_York',
+    },
+    args,
+  );
+ComponentTheme.args = { componentTheme: 'one' };
 
 /**
  * Under a 340px content box each row stacks: day, hours, then the note.
