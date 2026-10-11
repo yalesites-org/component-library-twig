@@ -20,6 +20,9 @@
 // on stylesheet order.
 
 .office-hours {
+  // Bottom spacing between blocks, like Text and Image.
+  @include tokens.spacing-page-inner;
+
   --office-hours-fg: var(
     --color-layout-content,
     var(--color-text, var(--color-gray-800))

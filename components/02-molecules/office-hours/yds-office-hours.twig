@@ -173,5 +173,10 @@
     </div>
   </div>
 {% elseif office_hours__empty_message %}
-  <p {{ bem('empty', [], 'office-hours') }}>{{ office_hours__empty_message }}</p>
+  {# Same wrapper as a filled block so the placeholder sits on its gutter. #}
+  <div {{ bem(office_hours__base_class) }} data-component-width="site">
+    <div {{ bem('inner', [], office_hours__base_class) }}>
+      <p {{ bem('empty', [], office_hours__base_class) }}>{{ office_hours__empty_message }}</p>
+    </div>
+  </div>
 {% endif %}
