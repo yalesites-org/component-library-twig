@@ -297,6 +297,10 @@ body[data-font-pairing='mallory'] {
 
     // set default --color-text-shadow
     --color-text-shadow: var(--color-basic-white);
+
+    .site-footer__secondary & {
+      --color-text-shadow: var(--color-site-footer-background-color);
+    }
   }
 
   &[data-link-style='underline-with-icon'] {

@@ -42,6 +42,7 @@ export const Footer = ({
   siteFooterTheme,
   siteFooterVariation,
   siteFooterAccent,
+  cookieSettings,
 }) =>
   siteFooterTwig({
     ...socialLinksData,
@@ -50,6 +51,7 @@ export const Footer = ({
     site_footer__theme: siteFooterTheme,
     site_footer__accent: siteFooterAccent,
     site_footer__variation: siteFooterVariation,
+    site_footer__cookie_settings: cookieSettings,
     site_footer__content_text:
       'This is <a href="https://example.com">example text</a> for footer content <a href="https://example.com/blah">with a link</a>.',
   });
