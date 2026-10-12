@@ -7,7 +7,7 @@
 # Edit descriptions and details freely - changes appear in Storybook on reload.
 
 sectionTheme:
-  twigProp: data-component-theme
+  twigProp: data-section-theme
   name: Section Theme
   type: select
   required: false
@@ -19,7 +19,17 @@ sectionTheme:
     - two
     - three
     - four
+    - five
+    - six
   control: select
+  labels:
+    default: 'Default - No Color'
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
 
 buttonTheme:
   twigProp: buttonTheme
@@ -40,3 +50,11 @@ buttonTheme:
     - six
     - seven
   control: select
+  labels:
+    one: 'Base'
+    two: 'Action'
+    three: 'Highlight'
+    four: 'Subtle'
+    five: 'Deep'
+    six: 'Yale Blue'
+    seven: 'Gray 800'

@@ -1,0 +1,97 @@
+{
+  "$comment": [
+    "Pairings that already failed the contrast gate when it landed",
+    "(YaleSites-Internal#1632). The gate ignores exactly these and nothing else,",
+    "so any NEW failure breaks the build immediately.",
+    "",
+    "This is a burn-down list, not an opt-out. contrast-gate.test.mjs enforces",
+    "both directions: an entry that starts passing must be deleted, and an entry",
+    "whose pairing no longer exists must be deleted. Adding an entry to turn a",
+    "red build green is not a fix -- fix the colors.",
+    "",
+    "Regenerate the measured ratios with:",
+    "  node components/00-tokens/colors/contrast-gate.mjs"
+  ],
+  "leakCase": {
+    "failing": 126,
+    "total": 252,
+    "reason": "A section's foreground inheriting onto a block's background, for every (global theme x section theme x block theme) combination. NOT an approved pairing and NOT gated per-pairing -- it is what happens when a component paints a background without publishing a foreground, and Phase 2 owns the surface contract that fixes it. What IS enforced is that the number cannot get worse: a palette or theme change that pushed more combinations below AA would otherwise go unnoticed until #1631 got there. Re-measured at 126 of 252 (was 105 of 210) when YaleSites-Internal#1680 added component theme six to the token map: that adds 42 combinations and 21 of them fail, the same half as before. The 21 are the three white-foreground sections (one, three, four) over six's light gray background in each global theme. No existing combination changed. This is an approximation: the survey reads each block theme's token background, and six's is a fixed gray-200, while six blocks actually paint --color-slot-nine, which differs by global theme (gray-200 on one and five, gray-100 on two, three, six and seven, soft-oceanic on four). Measured against the real slot-nine per global theme, the count is the same, 21 failing, in the same three sections, so the figure is left on the survey's existing token-background model rather than special-casing one theme.",
+    "ticket": "yalesites-org/YaleSites-Internal#1631"
+  },
+  "accentBorderCase": {
+    "site-header": {
+      "failing": 86,
+      "total": 168,
+      "reason": "Header accent borders are --color-slot-<accent> from the global theme over the header theme background. These are pre-existing accent choices; fixing one changes how the header looks, so it is a design decision. What IS enforced is that the number cannot get worse, and must be lowered when it improves.",
+      "ticket": "yalesites-org/YaleSites-Internal#1792"
+    },
+    "site-footer": {
+      "failing": 86,
+      "total": 168,
+      "reason": "Footer accent borders are --color-slot-<accent> from the global theme over the footer theme background. These are pre-existing accent choices; fixing one changes how the footer looks, so it is a design decision. What IS enforced is that the number cannot get worse, and must be lowered when it improves.",
+      "ticket": "yalesites-org/YaleSites-Internal#1792"
+    }
+  },
+  "knownFailures": {
+    "section/seven/three/border": {
+      "ratio": "2.42",
+      "minimum": 3,
+      "reason": "--color-layout-border was deliberately left alone by the #1613 audit: it is not only a border colour, the CTA atom draws its filled-button background from it, so re-pointing it changes buttons as well as borders. #1641 re-pointed the two consumers that painted this token directly as a line with no paired foreground (.yds-layout__divider in _yds-layout.scss, and the divider atom in _yds-divider.scss) to --color-section-foreground instead. .yds-layout__divider also carried an undocumented opacity: 0.5 that independently defeated the first attempt at this fix by blending the line colour with the section background -- removed, since nothing ties it to anything functional (see divider-opacity-composited.test.mjs). Both consumers are confirmed fixed by real pixel-sampled render, not just token math. --color-layout-border itself is unchanged, and this entry measures the token -- still reached by Tabs-action/pull-quote-accent through --color-section-accent, deliberately left alone (the CTA swaps to --color-section-foreground in this combination, YaleSites-Internal#1840) -- not either fixed consumer, so it stays baselined.",
+      "ticket": "yalesites-org/YaleSites-Internal#1613"
+    },
+    "section/seven/four/border": {
+      "ratio": "2.99",
+      "minimum": 3,
+      "reason": "Same --color-layout-border exclusion as section/seven/three/border, and the closest of the two to the line -- 2.99:1 against a 3:1 minimum. Same #1641 divider/divider-atom re-point and opacity removal applies here too.",
+      "ticket": "yalesites-org/YaleSites-Internal#1613"
+    },
+    "cta/any/three/text": {
+      "ratio": "2.45",
+      "minimum": 4.5,
+      "reason": "button-cta-themes.three publishes its own background/text pair and that pair fails AA normal text. Fixing it is a palette decision for a designer, not something this gate should make unilaterally, so it lands baselined and flagged rather than silently unchecked.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "cta/any/four/text": {
+      "ratio": "1.73",
+      "minimum": 4.5,
+      "reason": "Same as cta/any/three/text and considerably worse -- 1.73:1 is close to invisible. Needs a designer to re-pick either the background or the text colour for button-cta-themes.four.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "safe-slot/two/slot-three/slot-one": {
+      "ratio": "3.17",
+      "minimum": 4.5,
+      "reason": "#1539's safe-foreground rule was derived against slot-nine only, so it does not hold on section theme six's slot-three background. #1613's audit already said as much in prose; the gate is where it becomes visible.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "safe-slot/two/slot-three/slot-six": {
+      "ratio": "4.32",
+      "minimum": 4.5,
+      "reason": "As safe-slot/two/slot-three/slot-one, and only just short at 4.32:1 -- a small palette adjustment would clear it.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "safe-slot/five/slot-three/slot-one": {
+      "ratio": "4.11",
+      "minimum": 4.5,
+      "reason": "As safe-slot/two/slot-three/slot-one, in global theme five. slot-one and slot-six are the same colour in this theme, so the two entries move together.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "safe-slot/five/slot-three/slot-six": {
+      "ratio": "4.11",
+      "minimum": 4.5,
+      "reason": "As safe-slot/five/slot-three/slot-one -- same measured ratio because the theme points both slots at the same colour.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "safe-slot/seven/slot-three/slot-one": {
+      "ratio": "4.04",
+      "minimum": 4.5,
+      "reason": "As safe-slot/two/slot-three/slot-one, in global theme seven.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    },
+    "safe-slot/seven/slot-four/slot-one": {
+      "ratio": "3.72",
+      "minimum": 4.5,
+      "reason": "The only #1539 failure on a background other than slot-three: global theme seven pairs a pale slot-four with a slot-one that is not dark enough to carry normal text on it.",
+      "ticket": "yalesites-org/YaleSites-Internal#1634"
+    }
+  }
+}

@@ -117,7 +117,7 @@
 .search-result__content-type {
   @include tokens.body-s;
 
-  color: tokens.$color-blue-yale;
+  color: var(--color-blue-yale);
   font-size: 1rem;
   font-weight: var(--font-weights-mallory-medium);
   text-transform: capitalize;

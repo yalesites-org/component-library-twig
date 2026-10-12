@@ -9,11 +9,9 @@ const renderBanner = ({
   snippet,
   linkContent,
   linkContentTwo,
-  linkStyle,
   contentLayout,
   bgColor,
   overlayBackgroundImage,
-  buttonAlignment,
   buttonStyleConsistency,
   width,
 }) =>
@@ -22,14 +20,11 @@ const renderBanner = ({
     banner__heading: heading,
     banner__snippet: snippet,
     banner__link__content: linkContent,
-    banner__link__url: linkStyle !== 'none' ? bannerData.banner__link__url : '',
-    banner__link__content_two: linkStyle !== 'none' ? linkContentTwo : '',
-    banner__link__url_two:
-      linkStyle !== 'none' ? bannerData.banner__link__url_two : '',
-    banner__link__style: linkStyle,
+    banner__link__url: bannerData.banner__link__url,
+    banner__link__content_two: linkContentTwo,
+    banner__link__url_two: bannerData.banner__link__url_two,
     banner__content__layout: contentLayout,
     banner__content__background: bgColor,
-    banner__button__alignment: buttonAlignment,
     banner__button__style__consistency: buttonStyleConsistency,
     banner__overlay_background_image: overlayBackgroundImage
       ? imageData.responsive_images.pattern

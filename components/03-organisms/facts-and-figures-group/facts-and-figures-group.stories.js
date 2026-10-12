@@ -66,8 +66,6 @@ export default {
       factsAndFiguresGroupData.facts_and_figures__group__heading,
     factsAndFiguresGroupContent:
       factsAndFiguresGroupData.facts_and_figures__group__content,
-    factsAndFiguresGroupLink:
-      factsAndFiguresGroupData.facts_and_figures__group__link__content,
     columnCount: 'three',
     alignment: 'left',
     image: true,
