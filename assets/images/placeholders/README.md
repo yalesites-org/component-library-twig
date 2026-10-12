@@ -37,25 +37,27 @@ URL it replaced exactly, and swapping them in leaves measured story heights unch
 | `placeholder-4x3.png`  | 2400x1800  | `4x3`             | `image.yml`, `media-grid.yml`                   |
 | `placeholder-3x2.png`  | 2400x1600  | `3x2`             | `image.yml`, `media-grid.yml`, `post-grid.twig` |
 | `placeholder-16x9.png` | 2400x1350  | `16x9`            | `image.yml`                                     |
-| `placeholder-2x3.png`  | 1600x2400  | `2x3`             | `image.yml`                                     |
+| `placeholder-2x3.png`  | 1600x2400  | `2x3`             | `image.yml`, `media-grid.yml`                   |
 | `placeholder-5x8.png`  | 2400x3840  | `1x1.6`           | `image.yml`, `media-grid.yml`                   |
-| `placeholder-6x1.png`  | 1200x200   | —                 | `figure.yml`                                    |
+| `placeholder-6x1.png`  | 1200x200   | —                 | `figure.yml`, `media-grid.yml`                  |
 
 `placeholder-5x8.png` is the `1x1.6` fixture ratio written as whole numbers, so the
 filenames read consistently.
 
-Reference them by URL, the same way `assets/images/patterns/wavy.png` is referenced:
+Reference them by relative URL, the same way `assets/images/patterns/wavy.png` is referenced:
 
 ```yaml
-image__src: '/assets/images/placeholders/placeholder-3x2.png'
+image__src: 'assets/images/placeholders/placeholder-3x2.png'
 ```
 
 That path resolves because Emulsify Core mounts the project's `assets/` directory at
-`/assets` as a Storybook static directory — see `buildAssetStaticDirs()` in
-`@emulsify/core/.storybook/main-static-assets.js`. **The `/assets` prefix is load-bearing:
-nothing mounts a bare `images/` at the site root, so a URL written as
-`/images/placeholders/...` returns a 404.** Anything new that stories need to fetch by URL
-therefore belongs under `assets/`, and no build config has to change to serve it.
+`assets/` beside `iframe.html` as a Storybook static directory — see
+`buildAssetStaticDirs()` in `@emulsify/core/.storybook/main-static-assets.js`. **The
+`assets/` prefix is load-bearing:** nothing mounts a bare `images/`, so
+`images/placeholders/...` returns a 404. **So is the missing leading slash:** the published
+Storybook is served under `/component-library-twig/` on GitHub Pages, where
+`/assets/...` points at the domain root and 404s. Anything new that stories need to fetch by
+URL therefore belongs under `assets/`, and no build config has to change to serve it.
 
 ## Regenerating
 
