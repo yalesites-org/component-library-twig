@@ -218,15 +218,23 @@ viewport, multiplies `scrollWidth` by `scrollHeight`, and **exits non-zero namin
 the ceiling and by how much**.
 
 A clean run reports the largest story and its headroom, which is the number worth watching — as
-of writing, `Organisms/Calendar/Visreg` is the largest at 1,200 x 18,577 = 22,292,400px,
-**89% of the ceiling**, in all seven of its global-theme stories. `Templates/Layout/Visreg`
-follows at 1,200 x 17,832 = 21,398,400px (86%). Both are close enough that the next variation
-added to either is worth measuring before it lands.
+of writing, `Atoms/Images/Visreg` is the largest at 1,200 x 18,766 = 22,519,200px, **90% of the
+ceiling**, in all seven of its global-theme stories. It is close enough that the next variation
+added to it is worth measuring before it lands.
+
+Section theme six took the section theme sweeps from six themes to seven, which pushed two
+stories over the ceiling. `Organisms/Calendar/Visreg` now splits on section theme as well as
+global theme (`createGlobalThemeSectionStories`), so each story is one section theme, at most
+1,200 x 3,145 = 3,774,000px (15%). `Templates/Layout/Visreg` measured 25,166,400px with both
+its sweeps in one story, so its layout theme sweep now has its own story per global theme, like
+its divider sweep: the largest Layout story is the divider at 1,200 x 12,863 = 15,435,600px
+(62%).
 
 `Molecules/Meta/Visreg` used to hold this spot; yalesites-org/YaleSites-Internal#1601 split Event
-Meta out and stopped repeating Profile Meta per section theme, putting them at 10,336,800px (41%)
-and 12,218,400px (49%). See "When a story is getting too tall" below for what it did and when to
-do the same.
+Meta out and stopped repeating Profile Meta per section theme. With seven section themes they
+measure 1,200 x 9,815 = 11,778,000px (47%) and, for `Molecules/Meta/Event Meta/Visreg`,
+1,200 x 12,223 = 14,667,600px (59%). See "When a story is getting too tall" below for what it
+did and when to do the same.
 
 Measured on this branch's Vite build; develop's webpack build put the pre-split Meta story at
 24,286,800px against Vite's 24,277,200px, so the two pipelines agree to within 0.04% and the
