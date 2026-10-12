@@ -25,7 +25,7 @@
  * The check is a co-occurrence *across a rule block* -- see a background being
  * painted, then look for sibling custom-property declarations. stylelint 14's
  * property rules do not apply to custom properties at all (see the note at
- * `stylelint.config.js:26-40`), and this repo has no custom-plugin
+ * `stylelint.config.cjs:26-40`), and this repo has no custom-plugin
  * infrastructure to build one on. Structural invariants over SCSS source are
  * asserted with `node --test` here -- `color-system-defects.test.mjs` and
  * `section-dial-split.test.mjs` are the precedents.
@@ -109,7 +109,7 @@ export function baselineAgeInDays(now = new Date()) {
  * Paths the invariant does not apply to.
  *
  * `EXEMPT_PATHS` is READ from `foreground-purity.mjs` rather than restated --
- * which in turn reads the documentation-chrome half out of `stylelint.config.js`
+ * which in turn reads the documentation-chrome half out of `stylelint.config.cjs`
  * -- because three lists of untheme-exempt paths drifting apart is exactly the
  * kind of thing nothing else would catch. Only the entry that is genuinely new
  * to this gate is added here.
