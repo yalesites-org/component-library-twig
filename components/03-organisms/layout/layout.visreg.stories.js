@@ -91,8 +91,8 @@ export const LayoutVariations = () => `
   )}
 `;
 
-const renderGlobalTheme = () => `
-  ${createThemeVariations(
+const renderGlobalTheme = () =>
+  createThemeVariations(
     (theme) =>
       createSectionWrapper(theme, renderLayout({ theme }), {
         width: 'site',
@@ -102,19 +102,7 @@ const renderGlobalTheme = () => `
     'All Section Theme Variations',
     '',
     'Section Theme',
-  )}
-  ${createThemeVariations(
-    (theme) =>
-      createSectionWrapper('one', renderLayout({ theme }), {
-        width: 'site',
-        primaryWidth: '100%',
-      }),
-    componentThemes,
-    'All Layout Theme Variations',
-    '',
-    'Layout Theme',
-  )}
-`;
+  );
 
 const themeStories = createGlobalThemeStories(
   renderGlobalTheme,
@@ -131,6 +119,41 @@ export const AI = themeStories.six;
 export const WhitneyHumanitiesCenter = themeStories.seven;
 
 ItsYourYale.storyName = 'It’s Your Yale';
+
+/**
+ * The layout theme sweep has its own stories, like the divider below. With
+ * section theme six and component theme six both added, the two sweeps
+ * together reached 1,200 x ~20,970px per global theme, over the 25,000,000px
+ * snapshot ceiling; apart, each stays well under it.
+ */
+const renderLayoutThemes = () =>
+  createThemeVariations(
+    (theme) =>
+      createSectionWrapper('one', renderLayout({ theme }), {
+        width: 'site',
+        primaryWidth: '100%',
+      }),
+    componentThemes,
+    'All Layout Theme Variations',
+    '',
+    'Layout Theme',
+  );
+
+const layoutThemeStories = createGlobalThemeStories(
+  renderLayoutThemes,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBluesLayoutTheme = layoutThemeStories.one;
+export const NewHavenGreenLayoutTheme = layoutThemeStories.two;
+export const ShorelineSummerLayoutTheme = layoutThemeStories.three;
+export const OnhaLayoutTheme = layoutThemeStories.four;
+export const ItsYourYaleLayoutTheme = layoutThemeStories.five;
+export const AILayoutTheme = layoutThemeStories.six;
+export const WhitneyHumanitiesCenterLayoutTheme = layoutThemeStories.seven;
+
+ItsYourYaleLayoutTheme.storyName = 'It’s Your Yale Layout Theme';
 
 /**
  * The divider takes its colour from the section theme, so it gets its own
