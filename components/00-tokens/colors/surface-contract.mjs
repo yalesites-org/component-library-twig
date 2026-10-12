@@ -248,7 +248,7 @@ export function themedProperties(source) {
  * `section-background-contrast.test.mjs` instead -- which pins their wiring and
  * the measured ratios, so an accidental revert fails there rather than here.
  * They therefore do NOT appear in the `converted` count below, which is why it
- * reads 5 while that file's publisher list holds 9.
+ * reads 6 while that file's publisher list holds 10.
  */
 export function paintsThemedBackground(source) {
   const paints = backgroundPaints(source);

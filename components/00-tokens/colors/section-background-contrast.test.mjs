@@ -274,8 +274,8 @@ test('the surface contract is published in exactly the expected places', () => {
   // PAINTING, so a file that publishes and later stops painting would silently
   // drop out of it. This assertion has to notice exactly that, so it asks the
   // simpler question -- who publishes -- and answers it over every stylesheet.
-  // It is also why the two numbers differ: the guardrail reports 5 converted,
-  // this list has 9, the extra four being `_yds-layout.scss` (the origin of the
+  // It is also why the two numbers differ: the guardrail reports 6 converted,
+  // this list has 10, the extra four being `_yds-layout.scss` (the origin of the
   // contract, which paints via `--color-layout-*` rather than the block dial)
   // and `_yds-reference-card.scss`, `_yds-event-meta.scss` and
   // `_yds-publication-detail.scss` (which paint at no themed scope at all).
@@ -292,11 +292,15 @@ test('the surface contract is published in exactly the expected places', () => {
     // 7 -> 9 with the meta chip conversion (the #1631 "concrete instance of
     // the guardrail" criterion). Like `_yds-reference-card.scss` above, these
     // two paint at NO themed scope -- a fixed `--color-gray-100` chip -- so
-    // the guardrail cannot see them and `surveySurfaces()` still reports 5
-    // converted while this list holds 9. `META_CHIP_SURFACES` at the foot of
+    // the guardrail cannot see them and `surveySurfaces()` still reports 6
+    // converted while this list holds 10. `META_CHIP_SURFACES` at the foot of
     // this file is what actually pins their wiring and their numbers.
     'components/02-molecules/meta/event-meta/_yds-event-meta.scss',
     'components/02-molecules/meta/publication-meta/_yds-publication-detail.scss',
+    // 9 -> 10 when Office Hours (YaleSites-Internal#1707) met this contract on
+    // merge: its own-theme dial paints the inner box, so it publishes what it
+    // painted for the schedule inside.
+    'components/02-molecules/office-hours/_yds-office-hours.scss',
     'components/02-molecules/text-with-image/_yds-text-with-image.scss',
     'components/03-organisms/facts-and-figures-group/_yds-facts-and-figures-group.scss',
     'components/03-organisms/layout/layout/_yds-layout.scss',
