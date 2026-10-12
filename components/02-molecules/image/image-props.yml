@@ -33,13 +33,11 @@ width:
   name: Width
   type: select
   required: false
-  description: "Width constraint: 'content', 'highlight', 'site', or 'max'"
+  description: "Width constraint: 'content' or 'site'"
   default: content
   options:
     - content
-    - highlight
     - site
-    - max
   control: select
 
 srcset:

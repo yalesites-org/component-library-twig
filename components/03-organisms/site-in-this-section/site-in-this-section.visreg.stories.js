@@ -12,7 +12,7 @@ import './yds-site-in-this-section';
 import './cl-site-in-this-section.scss';
 
 import {
-  componentThemes,
+  componentThemesOneToFive,
   globalThemeLabels,
   globalThemes,
   sectionThemes,
@@ -78,7 +78,7 @@ const renderGlobalTheme = () => {
             width: 'site',
             primaryWidth: '100%',
           }),
-        componentThemes,
+        componentThemesOneToFive,
         'All In This Section Theme Variations',
         '',
         'In This Section Theme',

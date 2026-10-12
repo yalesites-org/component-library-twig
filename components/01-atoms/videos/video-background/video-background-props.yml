@@ -18,7 +18,7 @@ videoContent:
     demo data and is not directly editable in the Controls panel.
 
 sectionTheme:
-  twigProp: data-component-theme
+  twigProp: data-section-theme
   name: Section Theme
   type: select
   required: false
@@ -31,3 +31,9 @@ sectionTheme:
     - three
     - four
   control: select
+  labels:
+    default: 'Default - No Color'
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
