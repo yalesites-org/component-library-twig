@@ -7,7 +7,7 @@
  * read "30 September, 2026". Each cell must name its own month.
  *
  * This renders the real calendar template with twig.js, using the same
- * extensions and namespaces as Storybook (`.storybook/setupTwig.js`).
+ * extensions and namespaces as Storybook (`components/_storybook/setup-twig.mjs`).
  *
  * Run with the Node test runner (no extra dependency):
  *   node --test components/03-organisms/calendar/calendar-cell-month-label.test.mjs
@@ -15,12 +15,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
-import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
-
-const require = createRequire(import.meta.url);
-const Twig = require('twig');
-const { setupTwig, namespaces } = require('../../../.storybook/setupTwig');
+import Twig from 'twig';
+import { setupTwig, namespaces } from '../../_storybook/setup-twig.mjs';
 
 const componentDir = path.dirname(fileURLToPath(import.meta.url));
 
