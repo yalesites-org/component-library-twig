@@ -7,6 +7,7 @@ import STATIC_VIDEO_EMBED from '../../_storybook/static-video-embed.mjs';
 import resourceMetaData from './resource-meta/resource-meta.yml';
 
 import {
+  componentThemes,
   globalThemeLabels,
   globalThemes,
   sectionThemes,
@@ -15,7 +16,6 @@ import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.
 import {
   createSectionWrapper,
   createThemeVariations,
-  createVariations,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -28,8 +28,8 @@ import {
  * differs per section theme -- and at 27px it is nearly free to keep.
  *
  * Event Meta lives in `Molecules/Meta/Event Meta/Visreg` rather than being
- * stacked here; see that file for why. Profile Meta is below, rendered once;
- * see there for why.
+ * stacked here; see that file for why. Profile Meta is below, swept the way
+ * the other own-theme components are; see there for why.
  */
 export default {
   tags: ['visreg'],
@@ -76,22 +76,22 @@ const renderSectionThemedMeta = (theme) =>
   );
 
 /**
- * Profile Meta, rendered once per global theme rather than once per section
- * theme.
+ * Profile Meta, in the two sweeps the other own-theme components use (callout,
+ * quote callout, wrapped callout, accordion, action banner): every section
+ * theme with the background fixed at `one`, then every component-theme
+ * background on section `one`.
  *
  * `yds-profile-meta.twig` puts its own `data-component-theme` on itself, taken
  * from `profile_meta__background`, and `_yds-profile-meta.scss` keys off that --
- * so the component redefines the color slots for its own subtree and paints its
- * own background over the section behind it. The section theme reaches none of
- * it: iterating all six produced six pixel-identical 441px renders. It still
- * varies by global theme, which is what each story here covers.
- *
- * It is still wrapped in the neutral `default` layout so it sits in the same
- * page chrome as the section-themed block above rather than rendering bare.
+ * so the component paints its own background over the section behind it, and
+ * the section sweep is expected to render the same block each time.
+ * YaleSites-Internal#1601 dropped that sweep for that reason; it is back for
+ * consistency with the other own-theme components, so a section theme that
+ * ever does reach the block shows up here the same way it would there.
  */
-const renderProfileMeta = (background) =>
+const renderProfileMeta = (section, background) =>
   createSectionWrapper(
-    'default',
+    section,
     profileMetaTwig({
       ...imageData.responsive_images['3x2'],
       profile_meta__heading: 'Person Namerton',
@@ -118,11 +118,18 @@ const renderGlobalTheme = () => `
     'Basic Meta and Resource Meta against every section theme.',
     'Section Theme',
   )}
-  ${createVariations(
-    renderProfileMeta,
-    ['one'],
-    'Profile Meta',
-    'Rendered once, not per section theme: Profile Meta sets its own component theme and background, so the section theme does not reach it. Only background one is snapshotted -- the other component-theme backgrounds have never been covered here.',
+  ${createThemeVariations(
+    (theme) => renderProfileMeta(theme, 'one'),
+    sectionThemes,
+    'Profile Meta: All Section Theme Variations',
+    '',
+    'Section Theme',
+  )}
+  ${createThemeVariations(
+    (theme) => renderProfileMeta('one', theme),
+    componentThemes,
+    'Profile Meta: All Background Variations',
+    '',
     'Background',
   )}
 `;
