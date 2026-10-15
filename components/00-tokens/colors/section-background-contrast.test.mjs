@@ -292,13 +292,14 @@ test('the surface contract is published in exactly the expected places', () => {
     // 7 -> 9 with the meta chip conversion (the #1631 "concrete instance of
     // the guardrail" criterion). Like `_yds-reference-card.scss` above, these
     // two paint at NO themed scope -- a fixed `--color-gray-100` chip -- so
-    // the guardrail cannot see them and `surveySurfaces()` still reports 5
-    // converted while this list holds 9. `META_CHIP_SURFACES` at the foot of
+    // the guardrail cannot see them and `surveySurfaces()` still reports 6
+    // converted while this list holds 10. `META_CHIP_SURFACES` at the foot of
     // this file is what actually pins their wiring and their numbers.
     'components/02-molecules/meta/event-meta/_yds-event-meta.scss',
     'components/02-molecules/meta/publication-meta/_yds-publication-detail.scss',
-    // 9 -> 10: office hours paints its own fill when the block dial is set, so
-    // it shadows the section for the schedule inside it.
+    // 9 -> 10 when Office Hours (YaleSites-Internal#1707) met this contract on
+    // merge: its own-theme dial paints the inner box, so it publishes what it
+    // painted for the schedule inside.
     'components/02-molecules/office-hours/_yds-office-hours.scss',
     'components/02-molecules/text-with-image/_yds-text-with-image.scss',
     'components/03-organisms/facts-and-figures-group/_yds-facts-and-figures-group.scss',

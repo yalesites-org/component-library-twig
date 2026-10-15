@@ -1,7 +1,7 @@
 Drupal.behaviors.videoBG = {
   attach(context) {
     // Selectors
-    const items = context.querySelectorAll('.video-background');
+    const items = once('video-background', '.video-background', context);
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     // Classes

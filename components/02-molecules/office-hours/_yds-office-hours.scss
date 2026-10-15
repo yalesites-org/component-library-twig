@@ -12,12 +12,13 @@ $office-hours-component-themes: map.deep-get(
 // section's own text color and every fill is derived from the section's own
 // text/background pair, which keeps the contrast the section already has.
 // -
-// The section pair: a themed section publishes `--color-section-foreground` /
-// `--color-section-background` (the surface contract, see
-// `00-tokens/colors/_surface-contract.scss`) from the active global theme's
-// slots. `--color-text` / `--color-background` are only the fallback. An
-// unthemed (Default) section publishes neither and a live page has no
-// `data-basic-theme`, so the last fallback is load-bearing there.
+// The section pair: the surface contract (`_surface-contract.scss`).
+// A themed section publishes `--color-section-foreground` /
+// `--color-section-background` from the active global theme's slots, and any
+// painted surface in between re-publishes its own. `--color-text` /
+// `--color-background` are only the fallback. Neither pair has a `:root`
+// default and a live page has no `data-basic-theme`, so the last fallback is
+// load-bearing on an unthemed (Default) section.
 // -
 // Selectors are three classes deep on purpose: the table atom styles every
 // `.layout table` / `.yds-layout table` cell (gray header fills, zebra rows,
@@ -135,26 +136,56 @@ $office-hours-component-themes: map.deep-get(
 
   &[data-component-theme='one'] {
     --office-hours-bg: var(--color-slot-one);
+
+    @include tokens.publish-surface(
+      var(--office-hours-bg),
+      var(--office-hours-fg)
+    );
   }
 
   &[data-component-theme='two'] {
     --office-hours-bg: var(--color-slot-two);
+
+    @include tokens.publish-surface(
+      var(--office-hours-bg),
+      var(--office-hours-fg)
+    );
   }
 
   &[data-component-theme='three'] {
     --office-hours-bg: var(--color-slot-three);
+
+    @include tokens.publish-surface(
+      var(--office-hours-bg),
+      var(--office-hours-fg)
+    );
   }
 
   &[data-component-theme='four'] {
     --office-hours-bg: var(--color-slot-four);
+
+    @include tokens.publish-surface(
+      var(--office-hours-bg),
+      var(--office-hours-fg)
+    );
   }
 
   &[data-component-theme='five'] {
     --office-hours-bg: var(--color-slot-five);
+
+    @include tokens.publish-surface(
+      var(--office-hours-bg),
+      var(--office-hours-fg)
+    );
   }
 
   &[data-component-theme='six'] {
     --office-hours-bg: var(--color-slot-nine);
+
+    @include tokens.publish-surface(
+      var(--office-hours-bg),
+      var(--office-hours-fg)
+    );
   }
 }
 
@@ -186,11 +217,6 @@ $office-hours-component-themes: map.deep-get(
     (100% - var(--size-component-layout-width-site)) / 2
   );
   background-color: var(--office-hours-bg);
-
-  @include tokens.publish-surface(
-    var(--office-hours-bg),
-    var(--office-hours-fg)
-  );
 
   @media (max-width: tokens.$break-mobile-max) {
     padding: var(--size-spacing-6);
