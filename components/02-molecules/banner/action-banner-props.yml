@@ -51,19 +51,13 @@ bgColor:
     - five
     - six
   control: select
-
-linkStyle:
-  twigProp: banner__link__style
-  name: Link Style
-  type: select
-  required: false
-  description: 'Style for the call-to-action links: cta, text-link, or none'
-  default: cta
-  options:
-    - cta
-    - text-link
-    - none
-  control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
 
 contentLayout:
   twigProp: banner__content__layout
@@ -77,31 +71,23 @@ contentLayout:
     - left
     - right
   control: select
-
-buttonAlignment:
-  twigProp: banner__button__alignment
-  name: Button Alignment
-  type: select
-  required: false
-  description: 'Alignment for the action buttons: left, center, or right'
-  default: right
-  options:
-    - left
-    - center
-    - right
-  control: select
+  labels:
+    bottom: 'Bottom'
+    left: 'Left'
+    right: 'Right'
 
 buttonStyleConsistency:
   twigProp: banner__button__style__consistency
   name: Button Style Consistency
   type: select
   required: false
-  description: 'Visual style consistency for multiple buttons: mixed, both_primary, or both_secondary'
-  default: mixed
+  description: 'Visual style consistency for multiple buttons: which style each button gets, first then second'
+  default: filled_outline
   options:
-    - mixed
-    - both_primary
-    - both_secondary
+    - both_filled
+    - both_outline
+    - filled_outline
+    - outline_filled
   control: select
 
 overlayBackgroundImage:
@@ -124,3 +110,6 @@ width:
     - site
     - full
   control: select
+  labels:
+    site: 'Contained'
+    full: 'Full Width'

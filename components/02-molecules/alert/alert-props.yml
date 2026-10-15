@@ -39,7 +39,11 @@ type:
     notices, and 'marketing' for promotional content.
   default: announcement
   options:
-    - emergency
     - announcement
     - marketing
+    - emergency
   control: select
+  labels:
+    announcement: 'Announcement'
+    marketing: 'Marketing'
+    emergency: 'Emergency'

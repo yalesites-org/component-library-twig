@@ -16,6 +16,7 @@ import {
   sectionThemes,
 } from '../../_storybook/theme-constants';
 import { createGlobalThemeSectionStories } from '../../_storybook/global-theme-stories.mjs';
+import { createSectionWrapper } from '../../_storybook/playground-utils';
 
 /**
  * Storybook Definition.
@@ -30,8 +31,19 @@ export default {
 };
 
 // *** VRT: All 7 Card Types with All Section Theme Variations ***
-const renderSection = (theme) => `
-      <div data-component-theme="${theme}">
+//
+// Wrapped with `createSectionWrapper`, which emits the real section signature
+// (`class="yds-layout"` + `data-section-theme`). This grid crosses global theme
+// with `sectionThemes`, but it used to hand-roll `<div data-component-theme="…">`
+// -- no `yds-layout` class, so none of `_yds-layout.scss` applied and it was
+// rendering the BLOCK colour map instead (and nothing at all for `default` and
+// `six`, which the block map does not define). Corrected with the dial split,
+// YaleSites-Internal#1630, since visual regression is the net for exactly that
+// class of bug.
+const renderSection = (theme) =>
+  createSectionWrapper(
+    theme,
+    `
         <h3>1. Custom Card</h3>
         <div class='custom-card-collection' data-component-width='site' data-collection-featured="true">
           <div class='custom-card-collection__inner'>
@@ -209,8 +221,8 @@ const renderSection = (theme) => `
             </ul>
           </div>
         </div>
-      </div>
-      `;
+      `,
+  );
 
 const themeStories = createGlobalThemeSectionStories(
   renderSection,
