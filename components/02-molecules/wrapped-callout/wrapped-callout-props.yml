@@ -8,7 +8,7 @@
 
 calloutAlignment:
   twigProp: wrapped_callout__alignment
-  name: Callout Alignment
+  name: Callout Position
   type: select
   required: false
   description: Position of the callout box within the content flow
@@ -17,6 +17,9 @@ calloutAlignment:
     - left
     - right
   control: select
+  labels:
+    left: 'Left'
+    right: 'Right'
 
 calloutContent:
   twigProp: wrapped_callout__content
@@ -42,7 +45,6 @@ themeColor:
   description: Color theme applied to the callout box from the CMS color dial
   default: one
   options:
-    - default
     - one
     - two
     - three
@@ -50,3 +52,10 @@ themeColor:
     - five
     - six
   control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'

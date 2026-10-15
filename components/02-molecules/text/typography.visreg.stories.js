@@ -21,7 +21,10 @@ import {
 export default {
   tags: ['visreg'],
   title: 'Atoms/Text/Visreg',
-  parameters: { controls: { disable: true } },
+  parameters: {
+    chromatic: { disableSnapshot: false },
+    controls: { disable: true },
+  },
 };
 
 // *** VRT: Text Field with All Section Theme Variations ***

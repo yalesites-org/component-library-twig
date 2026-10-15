@@ -2,9 +2,14 @@ Drupal.behaviors.menuToggle = {
   attach(context) {
     // Selectors.
     const menuToggle = context.querySelector('.menu-toggle');
-    const header = context.querySelector('.site-header');
+    const [header] = once('menu-toggle', '.site-header', context);
+    if (!header) {
+      return;
+    }
     const headerOverlay = context.querySelector('.site-header__overlay');
-    const body = context.querySelector('body');
+    // `context` may be a fragment or a Storybook story root, neither of which
+    // contains <body>.
+    const { body } = document;
     const focusableElements =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     // Classes.

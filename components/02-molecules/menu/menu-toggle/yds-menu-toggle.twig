@@ -12,6 +12,6 @@
 {% include "@atoms/controls/base/yds-control.twig" with {
   control__base_class: main_menu_toggle__base_class,
   control__blockname: main_menu_toggle__blockname,
-  aria_expanded: 'false',
+  aria_expanded: main_menu_toggle__aria_expanded|default('false'),
   control__content: menu_toggle__content
 } %}

@@ -1,8 +1,10 @@
 Drupal.behaviors.breadcrumbs = {
   attach(context) {
     // Selectors.
-    const breadcrumbsWrapper = context.querySelector(
+    const [breadcrumbsWrapper] = once(
+      'breadcrumbs',
       '.breadcrumbs__wrapper--collapsible',
+      context,
     );
     if (!breadcrumbsWrapper) {
       return;

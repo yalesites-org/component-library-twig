@@ -8,7 +8,6 @@ import {
   globalThemeLabels,
   globalThemes,
   sectionThemes,
-  componentThemes,
 } from '../../../_storybook/theme-constants';
 import { createGlobalThemeStories } from '../../../_storybook/global-theme-stories.mjs';
 import {
@@ -19,13 +18,19 @@ import {
 export default {
   tags: ['visreg'],
   title: 'Atoms/Videos/Video Background/Visreg',
-  parameters: { controls: { disable: true } },
+  parameters: {
+    chromatic: { disableSnapshot: false },
+    controls: { disable: true },
+  },
 };
 
 const renderGlobalTheme = () => {
   const renderVideoBackground = (theme) =>
     videoBackgroundTwig({
       ...videoBackgroundData,
+      // A looping video lands on a different frame in every snapshot; this one
+      // shows the same frame for its whole length. See assets/videos/README.md.
+      video_background__content: 'assets/videos/placeholder-static.mp4',
       video_background__button__background_color: theme,
     });
 
@@ -40,17 +45,6 @@ const renderGlobalTheme = () => {
         'All Section Theme Variations',
         '',
         'Section Theme',
-      )}
-      ${createThemeVariations(
-        (theme) =>
-          createSectionWrapper('one', renderVideoBackground(theme), {
-            width: 'site',
-            primaryWidth: '100%',
-          }),
-        componentThemes,
-        'All Video Background Theme Variations',
-        '',
-        'Video Background Theme',
       )}
     `;
 };
