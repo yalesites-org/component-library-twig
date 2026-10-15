@@ -274,8 +274,8 @@ test('the surface contract is published in exactly the expected places', () => {
   // PAINTING, so a file that publishes and later stops painting would silently
   // drop out of it. This assertion has to notice exactly that, so it asks the
   // simpler question -- who publishes -- and answers it over every stylesheet.
-  // It is also why the two numbers differ: the guardrail reports 5 converted,
-  // this list has 9, the extra four being `_yds-layout.scss` (the origin of the
+  // It is also why the two numbers differ: the guardrail reports 6 converted,
+  // this list has 10, the extra four being `_yds-layout.scss` (the origin of the
   // contract, which paints via `--color-layout-*` rather than the block dial)
   // and `_yds-reference-card.scss`, `_yds-event-meta.scss` and
   // `_yds-publication-detail.scss` (which paint at no themed scope at all).
@@ -297,6 +297,9 @@ test('the surface contract is published in exactly the expected places', () => {
     // this file is what actually pins their wiring and their numbers.
     'components/02-molecules/meta/event-meta/_yds-event-meta.scss',
     'components/02-molecules/meta/publication-meta/_yds-publication-detail.scss',
+    // 9 -> 10: office hours paints its own fill when the block dial is set, so
+    // it shadows the section for the schedule inside it.
+    'components/02-molecules/office-hours/_yds-office-hours.scss',
     'components/02-molecules/text-with-image/_yds-text-with-image.scss',
     'components/03-organisms/facts-and-figures-group/_yds-facts-and-figures-group.scss',
     'components/03-organisms/layout/layout/_yds-layout.scss',
