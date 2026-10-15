@@ -1,0 +1,10 @@
+import{t as n,a as r}from"./component-props-De-d7Djp.js";import{O as l}from"../iframe.js";import{l as s}from"./link-grid-BHgT2epy.js";const t={themeColor:{twigProp:"link_grid__theme",name:"Component Theme (dial)",type:"select",required:!1,description:"Color theme applied to the link grid component",detail:`Applies a color theme to the link grid component. The options listed below are the available ones. Maps to the link_grid__theme Twig variable.
+`,default:"one",options:["one","two","three","four","five","six"],control:"select",labels:{one:"One",two:"Two",three:"Three",four:"Four",five:"Five",six:"Six"}},lineTreatment:{twigProp:"link_grid__line_treatment",name:"Line Treatment",type:"select",required:!1,description:"Visual style of dividers between link grid items",default:"default",options:["default","all_strong_lines","all_light_lines","no_lines"],control:"select",labels:{default:"Default",all_strong_lines:"All Strong Lines",all_light_lines:"All Light Lines",no_lines:"No Lines"}}},a={title:"Molecules/Link grid",tags:["!dev"],argTypes:r(t),args:n(t),parameters:{docs:{description:{component:"Storybook Definition.\n\nThe color options come from `link-grid-props.yml`, the stated source of\ntruth. They used to be overridden with the keys of the `component-themes`\ntoken set, which stops at `five` and so hid the neutral `six` option this\ncomponent has offered in the CMS color dial all along."}}}},e=({themeColor:o,lineTreatment:i})=>l({link_grid__theme:o,link_grid__line_treatment:i,...s});e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:`({
+  themeColor,
+  lineTreatment
+}) => linkGridTwig({
+  link_grid__theme: themeColor,
+  link_grid__line_treatment: lineTreatment,
+  ...linkGridData
+})`,...e.parameters?.docs?.source}}};const d=["linkGrid"],c=Object.freeze(Object.defineProperty({__proto__:null,__namedExportsOrder:d,default:a,linkGrid:e},Symbol.toStringTag,{value:"Module"}));export{c as L,t as c,e as l};
+//# sourceMappingURL=link-grid.stories-DWn4ON4H.js.map

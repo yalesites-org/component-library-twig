@@ -1,0 +1,27 @@
+# post-meta-props.yml
+#
+# Post Meta component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+author:
+  twigProp: basic_meta
+  name: Author
+  type: string
+  required: true
+  description: Author name for the post byline
+  detail: >
+    The author name is combined with the date in the render function to
+    produce the basic_meta HTML string. This is a Storybook convenience prop.
+  control: text
+
+date:
+  twigProp: basic_meta
+  name: Date
+  type: string
+  required: true
+  description: Publication date in YYYY-MM-DD format
+  detail: >
+    The date is formatted via the date-time atom and combined with the
+    author to produce the basic_meta HTML string.
+  control: text

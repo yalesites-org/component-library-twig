@@ -1,0 +1,61 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as MetaStories from '../meta.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from '../event-props.yml';
+
+<Meta title="Molecules/Meta/Event Meta" />
+
+# Event Meta
+
+A comprehensive metadata component for displaying event information from Localist, including dates, times, location, and registration options.
+
+## Interactive Preview
+
+<Canvas of={MetaStories.Event} />
+<Controls of={MetaStories.Event} />
+
+## When to use it
+
+Use Event Meta on event detail pages and calendar entries sourced from Localist. The component handles all Localist event shapes: single-date, multi-date, virtual, and in-person.
+
+## Date Scenarios
+
+The **Data Variant** control switches between four date configurations that mirror what Localist sends:
+
+- **Mixed (Past & Upcoming)** — recurring event with some past and some upcoming occurrences
+- **Upcoming Only** — all occurrences are in the future
+- **Past Only** — all occurrences are in the past
+- **Single Date** — one-off event with a single date
+
+## All-Day Events
+
+Toggle **All Day** in the controls to simulate events where Drupal sets start to 00:00 and end to 23:59. Event Meta detects this range and displays "All day" text in place of specific times, removing the small-caps time formatting.
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-event-meta-localist.twig`
+- **Styles**: `_yds-event-meta.scss`
+- **JavaScript**: `event-meta-localist.js` handles date parsing and all-day detection
+
+### Accessibility
+
+- ARIA labels on calendar and registration buttons
+- Screen reader friendly date/time formatting
+- Timezone-aware date display
+- Proper heading hierarchy within the event detail layout
+
+## Related Components
+
+- **Date Time**: Atom used for date and time display
+- **Image**: Optional event image rendered within the meta block

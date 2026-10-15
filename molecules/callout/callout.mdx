@@ -1,0 +1,34 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as CalloutStories from './callout.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './callout-props.yml';
+
+<Meta of={CalloutStories} name="Overview" />
+
+# Callout
+
+A highlighted content block for emphasizing important information — programs, services, key announcements. Supports single or multiple callouts, different themes, alignments, and optional background images.
+
+## Single Callout
+
+<Canvas of={CalloutStories.CalloutSingle} />
+<Controls of={CalloutStories.CalloutSingle} />
+
+## Two Callouts
+
+Two callouts display side-by-side. On mobile they stack vertically.
+
+<Canvas of={CalloutStories.CalloutDouble} />
+
+## Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Usage
+
+- Use callouts to highlight 2–3 key programs, services, or initiatives
+- Keep headings concise (3–5 words) and body text to 1–2 sentences
+- Use button links for primary actions, text links for secondary
+- Choose center alignment for short content, left for longer text
+- Avoid more than 3–4 callouts in one container
+- Don't use callouts for critical navigation or lengthy content

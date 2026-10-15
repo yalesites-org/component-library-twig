@@ -1,0 +1,497 @@
+{#
+ # Available Variables:
+ # - event_meta__date_start
+ # - event_meta__date_end
+ # - event_meta__format: Multiselect. Options are 'In-person', 'Virtual', or both.
+ # - event_meta__address
+ #}
+
+{# Split upcomign and past dates #}
+{% set upcoming_dates = [] %}
+{% set past_dates = [] %}
+
+{% for date in event_dates %}
+  {% if date.is_past_event %}
+    {% set past_dates = past_dates|merge([date]) %}
+  {% else %}
+    {% set upcoming_dates = upcoming_dates|merge([date]) %}
+  {% endif %}
+{% endfor %}
+
+{% set upcoming_date_count = upcoming_dates|length %}
+{% set past_date_count = past_dates|length %}
+
+{% set featured_date_label = '' %}
+{% set past_events_label = 'Past Events: ' %}
+{% set upcoming_events_label = 'Upcoming Events: ' %}
+{% set reoccuring_label = '' %}
+
+{# Use a variable to ensure emdash is properly placed consistently #}
+{% set em_dash = '—' %}
+
+{% set event_meta__base_class = 'event-meta' %}
+{% set event_meta__attributes = event_meta__attributes|default({}) %}
+
+{% set event_meta__attributes = event_meta__attributes|merge({
+  'data-event-meta-style': event_meta__style|default('localist'),
+  class: bem(event_meta__base_class, event_meta__modifiers, event_meta__blockname, event_meta__extra_class),
+}) %}
+
+{% if localist_image_url or teaser_media %}
+  {% set event_meta__image = 'true' %}
+{% endif %}
+
+{% if event_meta__image %}
+  {% set event_meta__attributes = event_meta__attributes|merge({
+      'data-event-meta-image': 'true',
+  })%}
+{% endif %}
+
+{# Set secondary CTA content #}
+{% set event_meta__cta_secondary__content = 'Add to Calendar' %}
+{% set event_meta__with_calendar = event_meta__with_calendar ?? TRUE %}
+
+{# Check if event has passed - if passed in localist, the event_dates array will be empty #}
+{# But in the event the featured date has already passed, we should already know about it as well #}
+{% set event_has_passed = event_dates is empty or (event_featured_date and event_featured_date.is_past_event) %}
+
+{# Set the event status based on event_has_passed variable #}
+{% set event_status = event_has_passed ? 'passed' : 'current' %}
+
+{# Set the event title prefix based on event status #}
+{% set event_title__prefix = '' %}
+
+{% set latLong = place.latitude ~ ',' ~ place.longitude %}
+{% set get_directions__url = place ? 'https://www.google.com/maps/dir/Current+Location/' ~ latLong : '' %}
+
+{# Set up location display: place name, then room, either may be missing #}
+{% set location_display = place.name %}
+{% if room %}
+  {% set location_display = location_display ? location_display ~ ', ' ~ room : room %}
+{% endif %}
+
+{% if event_experience %}
+  {% set event_meta__format = event_experience.0.name %}
+{% endif %}
+
+{% set event__upcoming_dates_link__icon %}
+  {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'circle-plus',
+    icon__decorative: true,
+    icon__blockname: event_meta__base_class,
+    icon__modifiers: ['expand-more-dates'],
+    icon__visual_title: upcoming_events_label ~ ' (' ~ upcoming_date_count ~ ')',
+    icon__visual_title__modifiers: ['show-more-dates'],
+  } %}
+  {# collapse minus #}
+    {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'circle-minus',
+    icon__decorative: true,
+    icon__blockname: event_meta__base_class,
+    icon__modifiers: ['collapse-more-dates'],
+    icon__visual_title: upcoming_events_label ~ ' (' ~ upcoming_date_count ~ ')',
+    icon__visual_title__modifiers: ['hide-more-dates'],
+  } %}
+{% endset %}
+
+{% set event__past_dates_link__icon %}
+  {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'circle-plus',
+    icon__decorative: true,
+    icon__blockname: event_meta__base_class,
+    icon__modifiers: ['expand-more-dates'],
+    icon__visual_title: past_events_label ~ ' (' ~ past_date_count ~ ')',
+    icon__visual_title__modifiers: ['show-more-dates'],
+  } %}
+  {# collapse minus #}
+    {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'circle-minus',
+    icon__decorative: true,
+    icon__blockname: event_meta__base_class,
+    icon__modifiers: ['collapse-more-dates'],
+    icon__visual_title: past_events_label ~ ' (' ~ past_date_count ~ ')',
+    icon__visual_title__modifiers: ['hide-more-dates'],
+  } %}
+{% endset %}
+
+{# Use in event-show-map #}
+{% set event__show_map__icon %}
+  {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'angle-down',
+    icon__decorative: true,
+    icon__blockname: event_meta__base_class,
+    icon__modifiers: ['expand-show-map'],
+    icon__visual_title: 'Show Map',
+    icon__visual_title__modifiers: ['show-map'],
+  } %}
+  {# collapse minus #}
+  {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'angle-down',
+    icon__decorative: true,
+    icon__blockname: event_meta__base_class,
+    icon__modifiers: ['collapse-show-map'],
+    icon__visual_title: 'Hide Map',
+    icon__visual_title__modifiers: ['hide-map'],
+  } %}
+{% endset %}
+
+{# Event meta localist component #}
+<div {{ add_attributes(event_meta__attributes) }} data-event-status="{{ event_status }}">
+  {# To get the event_title__prefix to wire properly to the page_title__prefix
+  and retain the logic of end_date, we need to include the page-title
+  in the same component file #}
+  {# instead of passing the page-title component into a template separately
+  and embedding the meta into it, we need to do that here. #}
+
+  {% embed "@molecules/page-title/yds-page-title.twig" with {
+    page_title__heading: event_title__heading,
+    page_title__width: 'content',
+    page_title__variation: 'event',
+  }%}
+
+    {# Image #}
+    {% block page_title__image %}
+      {% if event_meta__image == 'true' %}
+        <div {{ bem('image', [], event_meta__base_class) }}>
+          {% if localist_image_url %}
+            {% include "@atoms/images/image/_responsive-image.twig" with {
+              image__src: localist_image_url,
+              image__alt: localist_image_alt,
+            }%}
+          {% elseif teaser_media %}
+            {{ teaser_media }}
+          {% else %}
+            {% include "@atoms/images/image/_responsive-image.twig" %}
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endblock %}
+
+    {# Overline #}
+    {% block page_title__overline %}
+      {% if event_meta__format.0 or event_meta__format %}
+        <div {{ bem('overline-wrap', [], event_meta__base_class) }}>
+          <p {{ bem('format', ['overline'], event_meta__base_class) }}>
+            {% include "@molecules/cards/reference-card/event/_yds-event-format.twig" with {
+              format: event_meta__format,
+            } %}
+          </p>
+        </div>
+      {% endif %}
+    {% endblock %}
+
+    {% block page_title__extra %}
+      {# Date #}
+      {% if event_dates %}
+        <div {{ bem('date', [], event_meta__base_class) }}>
+          {{ featured_date_label }}
+          {# Fallback to old way of rendering if not passed #}
+          {% set event_featured_date = event_featured_date|default(event_dates.0) %}
+
+          <div {{ bem('day', [], event_meta__base_class) }}>
+            {% if event_has_passed %}
+              <span class="past-event-icon">
+                {% include "@atoms/images/icons/_yds-icon.twig" with {
+                  icon__name: 'clock-rotate-left',
+                  icon__decorative: true,
+                } %}
+              </span>
+            {% endif %}
+
+          {% if event_featured_date.is_all_day %}
+            {% include "@atoms/date-time/yds-date-time.twig" with {
+              date_time__start: event_featured_date.original_start,
+              date_time__end: event_featured_date.original_end,
+              date_time__format: 'localist_all_day',
+            } %}
+          {% elseif event_featured_date.formatted_start_date == event_featured_date.formatted_end_date %}
+            {% include "@atoms/date-time/yds-date-time.twig" with {
+              date_time__start: event_featured_date.original_start,
+              date_time__end: event_featured_date.original_end,
+              date_time__format: 'localist_same_day',
+            } %}
+          {% else %}
+            {% include "@atoms/date-time/yds-date-time.twig" with {
+              date_time__start: event_featured_date.original_start,
+              date_time__end: event_featured_date.original_end,
+              date_time__format: 'date_time_multiple_days',
+            } %}
+          {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endblock %}
+
+    {# Meta #}
+    {% block page_title__meta %}
+      {% if event_has_passed or event_dates is empty  %}
+        <p {{ bem('past-event', [], event_meta__base_class) }}>
+          This event has passed.
+        </p>
+      {% endif %}
+
+      {# Inner #}
+      <div {{ bem('inner', ['localist'], event_meta__base_class) }}>
+        {# Event Dates #}
+        {% if event_dates|length > 1 %}
+          <div {{ bem('all-dates', [], event_meta__base_class) }} is-expanded="false">
+            <div {{ bem('multiple-dates-label', [], event_meta__base_class) }}>
+              {{ reoccuring_label }} Event {{ event_featured_index + 1 }} of {{ event_dates|length }}
+            </div>
+            {% if upcoming_dates|length %}
+              <div {{ bem('more-dates-link', [], event_meta__base_class) }}>
+                {% set upcoming_id = 'upcoming-dates-' ~ random() %}
+                {% include "@atoms/controls/cta/yds-cta.twig" with {
+                  cta__content: event__upcoming_dates_link__icon,
+                  cta__href: '#',
+                  cta__blockname: event_meta__base_class,
+                  cta__modifiers: ['show-more-dates'],
+                  cta__style: 'outline',
+                  cta__attributes: {
+                      'data-show-more-dates': '#' ~ upcoming_id
+                    }
+                } %}
+              </div>
+              <ul id="{{ upcoming_id }}" {{ bem('multiple-dates', [], event_meta__base_class) }} aria-expanded="false">
+                {% for event_date in upcoming_dates %}
+                  <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
+                    {% if event_date.is_all_day %}
+                      {% include "@atoms/date-time/yds-date-time.twig" with {
+                        date_time__start: event_date.original_start,
+                        date_time__end: event_date.original_end,
+                        date_time__format: 'localist_all_day',
+                      } %}
+                    {% elseif event_date.formatted_start_date == event_date.formatted_end_date %}
+                      {% include "@atoms/date-time/yds-date-time.twig" with {
+                        date_time__start: event_date.original_start,
+                        date_time__end: event_date.original_end,
+                        date_time__format: 'localist_same_day',
+                      } %}
+                    {% else %}
+                      {% include "@atoms/date-time/yds-date-time.twig" with {
+                        date_time__start: event_date.original_start,
+                        date_time__end: event_date.original_end,
+                        date_time__format: 'date_time_multiple_days',
+                      } %}
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+            {% if past_dates|length %}
+              {% if event_dates|length > 1 %}
+                {% set past_id = 'past-dates-' ~ random() %}
+                <div {{ bem('more-dates-link', [], event_meta__base_class) }}>
+                  {% include "@atoms/controls/cta/yds-cta.twig" with {
+                    cta__content: event__past_dates_link__icon,
+                    cta__href: '#',
+                    cta__blockname: event_meta__base_class,
+                    cta__modifiers: ['show-more-dates'],
+                    cta__style: 'outline',
+                    cta__attributes: {
+                        'data-show-more-dates': '#' ~ past_id
+                      }
+                  } %}
+                </div>
+              {% endif %}
+              <ul id="{{ past_id }}" {{ bem('multiple-dates', [], event_meta__base_class) }} aria-expanded="false">
+                {% for event_date in past_dates %}
+                  <li {{ bem('multiple-dates__date', [], event_meta__base_class) }}>
+                    {% if event_date.is_all_day %}
+                      {% include "@atoms/date-time/yds-date-time.twig" with {
+                        date_time__start: event_date.original_start,
+                        date_time__end: event_date.original_end,
+                        date_time__format: 'localist_all_day',
+                      } %}
+                    {% elseif event_date.formatted_start_date == event_date.formatted_end_date %}
+                      {% include "@atoms/date-time/yds-date-time.twig" with {
+                        date_time__start: event_date.original_start,
+                        date_time__end: event_date.original_end,
+                        date_time__format: 'localist_same_day',
+                      } %}
+                    {% else %}
+                      {% include "@atoms/date-time/yds-date-time.twig" with {
+                        date_time__start: event_date.original_start,
+                        date_time__end: event_date.original_end,
+                        date_time__format: 'date_time_multiple_days',
+                      } %}
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {# Event Details #}
+        <div {{ bem('details', [], event_meta__base_class) }}>
+          {# CTAs #}
+          <div {{ bem('ctas', [], event_meta__base_class) }}>
+            {# Primary CTA #}
+            {% if ticket_url %}
+              {% include "@atoms/controls/cta/yds-cta.twig" with {
+                cta__content: cost_button_text,
+                cta__href: ticket_url,
+                cta__component_theme: cta__component_theme|default('one'),
+              } %}
+            {% endif %}
+            {# Add to calendar #}
+            {% if event_meta__with_calendar and event_meta__cta_secondary__content and not event_has_passed %}
+              {% include "@atoms/controls/cta/yds-cta.twig" with {
+                cta__content: event_meta__cta_secondary__content,
+                cta__href: ics_url ? ics_url : event_meta__cta_secondary__href,
+                cta__style: 'outline',
+                cta__component_theme: cta__component_theme|default('one'),
+              } %}
+            {% endif %}
+          </div>
+        </div>
+
+        {# Start Grid of fields #}
+        {% if ticket_cost or event_types or event_meta__cta_primary__href or place or room or location_details or event_audience or event_topics %}
+        <div {{ bem('details-wrapper', [], event_meta__base_class) }}>
+          {% if ticket_cost %}
+            <div {{ bem('cost', [], event_meta__base_class) }}>
+              <label {{ bem('event__label', [], event_meta__base_class) }}>
+                Cost
+              </label>
+              {% if has_register %}
+                <ul>
+                  {% for cost in ticket_cost %}
+                    <li>{{ cost }}</li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                {{ ticket_cost }}
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if event_meta__cta_primary__href or external_website_url %}
+            <div {{ bem('website', [], event_meta__base_class) }}>
+              <label {{ bem('event__label', [], event_meta__base_class) }}>Event Website</label>
+              <div {{ bem('event-website-link', [], event_meta__base_class) }}>
+                {% include "@atoms/controls/cta/yds-cta.twig" with {
+                  cta__content: event_meta__cta_primary__content ? event_meta__cta_primary__content : external_website_title|default('Event Website'),
+                  cta__href: event_meta__cta_primary__href ? event_meta__cta_primary__href : external_website_url,
+                  cta__blockname: event_meta__base_class,
+                  cta__style: 'outline',
+                } %}
+              </div>
+            </div>
+          {% endif %}
+          {% if event_types %}
+            <div {{ bem('event-types-wrapper', [], event_meta__base_class) }}>
+              <label {{ bem('event__label', [], event_meta__base_class) }}>Event Type</label>
+              <ul {{ bem('event-types', [], event_meta__base_class) }}>
+                {% for event_type in event_types %}
+                  <li {{ bem('event-types__type', [], event_meta__base_class) }}>
+                    <a href="{{ event_type.url }}">
+                      {{ event_type.name }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          {% if stream_url %}
+            <div {{ bem('event-stream-wrapper', [], event_meta__base_class) }}>
+              <label {{ bem('event__label', [], event_meta__base_class) }}>Event Streaming URL</label>
+              <div {{ bem('event-website-link', [], event_meta__base_class) }}>
+                {% include "@atoms/controls/cta/yds-cta.twig" with {
+                  cta__content: stream_url,
+                  cta__href: stream_url,
+                  cta__blockname: event_meta__base_class,
+                  cta__style: 'outline',
+                } %}
+                {% if stream_embed_code %}
+                <div {{ bem('embed-code', [], event_meta__base_class) }}>
+                  {{stream_embed_code}}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if place or room or location_details %}
+            <div {{ bem('location-wrapper', [], event_meta__base_class) }}>
+              <label {{ bem('event__label', [], event_meta__base_class) }}>Location</label>
+              {% if place or room %}
+                <div {{ bem('location', [], event_meta__base_class) }}>
+                  {{ location_display }}
+                  {% if place %}
+                    <br>
+                    {{ place.address }}
+                    {{ place.city }}, {{ place.state }} {{ place.postal_code }}
+                  {% endif %}
+                </div>
+              {% endif %}
+              {% if location_details %}
+                <div {{ bem('location-details', [], event_meta__base_class) }}>
+                  {{ location_details }}
+                </div>
+              {% endif %}
+              {% if place %}
+              <div {{ bem('event-show-map', [], event_meta__base_class) }} is-expanded="false">
+                {% include "@atoms/controls/cta/yds-cta.twig" with {
+                  cta__content: event__show_map__icon,
+                  cta__href: '#',
+                  cta__blockname: event_meta__base_class,
+                  cta__modifiers: ['show-map'],
+                  cta__style: 'outline',
+                } %}
+                <div {{ bem('map', [], event_meta__base_class) }} aria-expanded="false">
+                  <iframe src="https://maps.google.com/maps?q={{ place.latitude }},{{ place.longitude }}&z=15&output=embed" title="Map showing location of {{ location_display|default('event') }}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+                  {% include "@atoms/controls/cta/yds-cta.twig" with {
+                    cta__content: 'Get Directions',
+                    cta__href: get_directions__url,
+                    cta__blockname: event_meta__base_class,
+                    cta__modifiers: ['directions-link'],
+                    cta__style: 'outline',
+                  } %}
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if event_audience %}
+            <div {{ bem('audience-wrapper', [], event_meta__base_class) }}>
+              <label {{ bem('event__label', [], event_meta__base_class) }}>Audience</label>
+              <ul {{ bem('audience', [], event_meta__base_class) }}>
+              {% for audience in event_audience %}
+                <li {{ bem('audience-item', [], event_meta__base_class) }}>
+                  {{ audience.name }}
+                </li>
+              {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          {% if event_topics %}
+            <div {{ bem('event-topics-wrapper', [], event_meta__base_class) }}>
+              <label {{ bem('event__label', [], event_meta__base_class) }}>Event Topic</label>
+              <ul {{ bem('event-topics', [], event_meta__base_class) }}>
+                {% for event_topic in event_topics %}
+                  <li {{ bem('event-topics__topic', [], event_meta__base_class) }}>
+                    <a href="{{ event_topic.url }}">
+                      {{ event_topic.name }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+        </div> {# end details-wrapper #}
+      {% endif %}
+        {% if description %}
+          <div {{ bem('description', [], event_meta__base_class) }}>
+            {{ description }}
+          </div>
+        {% endif %}
+      </div> {# end inner #}
+    {% endblock %}
+  {% endembed %}
+</div>

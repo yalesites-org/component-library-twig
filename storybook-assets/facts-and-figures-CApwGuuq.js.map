@@ -1,0 +1,1 @@
+{"version":3,"file":"facts-and-figures-CApwGuuq.js","sources":["../../components/02-molecules/facts-and-figures/facts-and-figures.yml"],"sourcesContent":["facts_and_figures__stat: $52,000\nfacts_and_figures__content: Annual grant of Undergraduate students\n"],"names":["factsAndFiguresData"],"mappings":"AAEA,MAAAA,EAAe,CAAC,wBAA0B,UAAU,2BAA6B,wCAAwC"}
