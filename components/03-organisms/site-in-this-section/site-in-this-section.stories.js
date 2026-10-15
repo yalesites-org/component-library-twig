@@ -15,13 +15,14 @@ import '../site-header/yds-site-header';
 import './yds-site-in-this-section';
 import './cl-site-in-this-section.scss';
 
-const colorPairingsData = Object.keys(tokens['component-themes']);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 
 const argTypes = toArgTypes(componentProps);
+// Options come from site-in-this-section-props.yml, not the component-themes
+// token map: Drupal's `book_navigation` theme setting offers one to five, and
+// the token map also has `six` (YaleSites-Internal#1680).
 argTypes.siteSectionTheme = {
   ...argTypes.siteSectionTheme,
-  options: colorPairingsData,
   if: { arg: 'collectionNavDisplay', eq: 'in_content' },
 };
 argTypes.siteHeaderTheme = {

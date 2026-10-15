@@ -60,6 +60,17 @@ const renderGlobalTheme = () => {
         '',
         'Taxonomy Display Theme',
       )}
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper(theme, renderTaxonomyDisplay('default'), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        sectionThemes,
+        'Default Dial Across All Section Theme Variations',
+        'The default dial paints its own gray-100 box (YaleSites-Internal#1641) rather than inheriting the section background, so it needs its own sweep -- the two above only ever render it against section theme one.',
+        'Section Theme',
+      )}
     `;
 };
 

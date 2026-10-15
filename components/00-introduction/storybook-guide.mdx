@@ -138,19 +138,19 @@ This is the most important convention in this Storybook.
 **Do this:**
 
 ```mdx
-## Color Variations
+## Position Variations
 
-The divider supports three line colors, shown below on themed backgrounds.
+The divider supports left and center positions, shown below at 50% width.
 
-<Canvas of={DividerStories.DividersColor} />
+<Canvas of={DividerStories.DividersPosition} />
 ```
 
 **Not this (text baked into the story):**
 
 ```js
-export const DividersColor = () => `
-  <h2>Color Variations</h2>
-  <p>The divider supports three line colors...</p>
+export const DividersPosition = () => `
+  <h2>Position Variations</h2>
+  <p>The divider supports left and center positions...</p>
   ${dividerTwig(...)}
 `;
 ```

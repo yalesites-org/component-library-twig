@@ -22,6 +22,14 @@ componentTheme:
     - five
     - six
   control: select
+  labels:
+    default: 'Default - No Color'
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
 
 showTaxonomy:
   name: Show Taxonomy

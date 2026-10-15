@@ -90,7 +90,10 @@ $secondary-menu-sub-max-width: 19rem;
       .link,
       a {
         --color-text-shadow: var(--color-background);
-        --color-link-hover: var(--color-link-hover);
+
+        // Inherited copy colour on hover, declared rather than simulated by a
+        // var() cycle (YaleSites-Internal#1629).
+        --color-link-hover: currentcolor;
       }
 
       a:not([data-link-style]) {
@@ -227,7 +230,7 @@ $secondary-menu-sub-max-width: 19rem;
       border-left: var(--border-thickness-1) solid var(--color-navigation-border);
       max-height: var(--open-nav-height);
       margin-left: var(--size-spacing-6);
-      max-width: calc(100% - var(--size-spacing-6));
+      width: auto;
 
       [aria-expanded='true'] ~ & {
         margin-bottom: var(--size-spacing-6);

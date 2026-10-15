@@ -61,6 +61,13 @@ backgroundColor:
     - five
     - six
   control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
 
 calloutAlignment:
   twigProp: callout__alignment
@@ -73,6 +80,9 @@ calloutAlignment:
     - left
     - center
   control: select
+  labels:
+    left: 'Left'
+    center: 'Center'
 
 overlayBackgroundImage:
   twigProp: callout__overlay_background_image
