@@ -154,6 +154,7 @@ test('the burn-down is actually burning down', () => {
     'components/02-molecules/banner/action/_yds-action-banner.scss',
     'components/02-molecules/callout/_yds-callout.scss',
     'components/02-molecules/content-spotlight-portrait/_yds-content-spotlight-portrait.scss',
+    'components/02-molecules/office-hours/_yds-office-hours.scss',
     'components/02-molecules/text-with-image/_yds-text-with-image.scss',
     'components/03-organisms/facts-and-figures-group/_yds-facts-and-figures-group.scss',
   ]);
