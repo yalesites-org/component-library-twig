@@ -4,7 +4,7 @@ import secondaryNavData from './secondary-nav.yml';
 import './yds-secondary-nav';
 
 import {
-  componentThemes,
+  componentThemesOneToFive,
   sectionThemes,
   globalThemeLabels,
   globalThemes,
@@ -22,6 +22,7 @@ export default {
   tags: ['visreg'],
   title: 'Organisms/Menu/Content Collection/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },
@@ -52,7 +53,7 @@ const renderGlobalTheme = () => {
             width: 'site',
             primaryWidth: '100%',
           }),
-        componentThemes,
+        componentThemesOneToFive,
         'All Secondary Nav Theme Variations',
         '',
         'Secondary Nav Theme',

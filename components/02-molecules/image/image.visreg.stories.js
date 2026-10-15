@@ -13,7 +13,10 @@ import { createThemeVariations } from '../../_storybook/playground-utils';
 export default {
   tags: ['visreg'],
   title: 'Molecules/Image/Visreg',
-  parameters: { controls: { disable: true } },
+  parameters: {
+    chromatic: { disableSnapshot: false },
+    controls: { disable: true },
+  },
 };
 
 const renderGlobalTheme = () => {
@@ -56,7 +59,7 @@ const renderGlobalTheme = () => {
     });
 
     return `
-      <div data-component-has-divider="false" data-component-theme="${theme}" data-component-width="site" data-component-layout="${layout}" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
+      <div data-component-has-divider="false" data-section-theme="${theme}" data-component-width="site" data-component-layout="${layout}" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
         <div class="yds-layout__inner">
           <div class="yds-layout__primary" style="width: 100%">
             ${primaryImage}

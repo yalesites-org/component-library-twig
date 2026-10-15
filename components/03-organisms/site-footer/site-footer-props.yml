@@ -9,12 +9,9 @@ borderThickness:
   name: Border Thickness
   type: select
   required: false
-  description: Top border thickness for the site footer (from design tokens)
-  detail: >
-    Controls the thickness of the decorative top border on the footer.
-    Options are derived from the border.thickness design tokens.
-  default: '0'
-  control: select
+  description: Top border thickness for the site footer. Fixed in Drupal.
+  default: '8'
+  fixed: true
 
 siteFooterTheme:
   twigProp: site_footer__theme
@@ -27,6 +24,10 @@ siteFooterTheme:
     site-footer-themes design tokens.
   default: one
   control: select
+  labels:
+    one: 'Base & White'
+    two: 'Action & Dark Gray'
+    three: 'Highlight & Yale Blue'
 
 siteFooterAccent:
   twigProp: site_footer__accent
@@ -45,6 +46,15 @@ siteFooterAccent:
     - seven
     - eight
   control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
+    seven: 'Seven'
+    eight: 'Eight'
 
 siteFooterVariation:
   twigProp: site_footer__variation
@@ -57,3 +67,6 @@ siteFooterVariation:
     - basic
     - mega
   control: select
+  labels:
+    basic: 'Basic'
+    mega: 'Mega'

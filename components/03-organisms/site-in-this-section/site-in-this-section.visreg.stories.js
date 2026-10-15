@@ -12,7 +12,7 @@ import './yds-site-in-this-section';
 import './cl-site-in-this-section.scss';
 
 import {
-  componentThemes,
+  componentThemesOneToFive,
   globalThemeLabels,
   globalThemes,
   sectionThemes,
@@ -31,6 +31,7 @@ export default {
   tags: ['visreg'],
   title: 'Organisms/Global Elements/In This Section/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },
@@ -78,7 +79,7 @@ const renderGlobalTheme = () => {
             width: 'site',
             primaryWidth: '100%',
           }),
-        componentThemes,
+        componentThemesOneToFive,
         'All In This Section Theme Variations',
         '',
         'In This Section Theme',

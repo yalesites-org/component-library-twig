@@ -18,6 +18,7 @@ export default {
   tags: ['visreg'],
   title: 'Organisms/Global Elements/Footer/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },

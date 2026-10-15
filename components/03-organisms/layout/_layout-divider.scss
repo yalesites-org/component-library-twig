@@ -1,0 +1,10 @@
+// Shared by `layout/_yds-layout.scss` and `two-column/_yds-two-column.scss`.
+// Selector-free so `@use` emits no CSS.
+// -
+// The column separator drawn as a border (70/30, 30/70, and the legacy Two
+// Column). Same colour and thickness as the `.yds-layout__divider` element
+// 50/50 and 33/33/33 render, so every multi-column section draws the same
+// line (YaleSites-Internal#1830). The consumer must define
+// `--color-layout-border`.
+$layout-divider-border: var(--border-thickness-2) solid
+  var(--color-section-foreground, var(--color-layout-border));
