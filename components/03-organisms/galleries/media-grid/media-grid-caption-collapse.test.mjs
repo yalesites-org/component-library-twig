@@ -21,28 +21,16 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import {
+  installOnce,
+  matchesOnceSelector,
+} from '../../../_storybook/drupal-once.mjs';
 
 const componentDir = path.dirname(fileURLToPath(import.meta.url));
 const source = readFileSync(
   path.join(componentDir, 'yds-media-grid-interactive.js'),
   'utf8',
 );
-
-/**
- * Stand-in for Drupal's `core/once`, which the behavior reads as a global.
- * The real `@drupal/once` needs `Element`/`document` globals the hand-rolled
- * harness elements cannot satisfy, so this keeps its contract: return the
- * matches not yet marked with the id in `data-once`, and mark them.
- */
-const once = (id, selector, context) =>
-  [...context.querySelectorAll(selector)].filter((element) => {
-    const marks = (element.getAttribute('data-once') ?? '')
-      .split(' ')
-      .filter(Boolean);
-    if (marks.includes(id)) return false;
-    element.setAttribute('data-once', [...marks, id].join(' '));
-    return true;
-  });
 
 /**
  * The slice of the DOM the caption loop touches, and nothing more.
@@ -115,6 +103,18 @@ class FakeElement {
     return this.attributes.has(name);
   }
 
+  removeAttribute(name) {
+    this.attributes.delete(name);
+  }
+
+  // Only the selectors `once()` builds; the caption loop never calls this.
+  matches(selector) {
+    const processed = matchesOnceSelector(selector, this);
+    assert.notEqual(processed, undefined, `cannot match "${selector}"`);
+
+    return processed;
+  }
+
   addEventListener(type, handler) {
     this.listeners.set(type, handler);
   }
@@ -161,7 +161,7 @@ function attachBehaviour(items) {
   });
   const sandbox = {
     Drupal: { behaviors: {} },
-    once,
+    Element: FakeElement,
     document: {
       querySelector: () => new FakeElement(),
       documentElement: new FakeElement(),
@@ -171,6 +171,8 @@ function attachBehaviour(items) {
   };
 
   vm.createContext(sandbox);
+  // The behavior calls the global `once()`, as on a Drupal page (core/once).
+  installOnce(sandbox);
   vm.runInContext(source, sandbox);
   sandbox.Drupal.behaviors.mediaGridInteractive.attach(context);
 

@@ -3,10 +3,9 @@ import componentProps from './image-banner-props.yml';
 import { toArgTypes, toArgs } from '../../_storybook/component-props';
 import imageData from '../../01-atoms/images/image/image.yml';
 
-const renderBanner = ({ bgColor, size, withVideo, imageCaption, width }) =>
+const renderBanner = ({ size, withVideo, imageCaption, width }) =>
   imageBannerTwig({
     ...imageData.responsive_images['16x9'],
-    image_banner__content__background: bgColor,
     image_banner__overlay_variation: 'full',
     image_banner__size: size,
     image_banner__video: withVideo ? 'true' : 'false',

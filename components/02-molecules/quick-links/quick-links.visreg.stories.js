@@ -5,7 +5,6 @@ import quickLinksData from './quick-links.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 
 import {
-  componentThemes,
   globalThemeLabels,
   globalThemes,
   sectionThemes,
@@ -57,17 +56,6 @@ const renderGlobalTheme = () => {
         'All Section Theme Variations',
         '',
         'Section Theme',
-      )}
-      ${createThemeVariations(
-        (theme) =>
-          createSectionWrapper('one', renderQuickLinks(theme), {
-            width: 'site',
-            primaryWidth: '100%',
-          }),
-        componentThemes,
-        'All Quick Links Theme Variations',
-        '',
-        'Quick Links Theme',
       )}
       ${createVariations(
         (withImage) =>

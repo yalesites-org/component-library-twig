@@ -41,12 +41,14 @@ const ASSET_EXTENSIONS = 'png|jpe?g|gif|svg|webp|avif|mp4|webm';
 /**
  * Root-absolute URLs and `assets/`-relative URLs, as they appear inside a
  * quoted fixture value, a `src`/`href` attribute, or one candidate of a `srcset`
- * list. The leading guard keeps protocol-relative third-party URLs
- * (`//embed.example.com/x.svg`) and module imports (`../../assets/x.svg`) out,
- * since those are not fetched from a static mount.
+ * list. The leading guard keeps module imports (`../../assets/x.svg`) out, and
+ * the `(?!/)` after a leading slash keeps protocol-relative and absolute
+ * third-party URLs (`//embed.example.com/x.svg`, `https://x.test/a.png`) out:
+ * without it the first slash of `//` matched as a root-absolute path whenever
+ * a quote, `(` or `:` preceded it. Neither is fetched from a static mount.
  */
 const ASSET_URL = new RegExp(
-  `(?:^|[^/A-Za-z0-9_.-])((?:/|assets/)[A-Za-z0-9_./@-]+\\.(?:${ASSET_EXTENSIONS}))`,
+  `(?:^|[^/A-Za-z0-9_.-])((?:/(?!/)|assets/)[A-Za-z0-9_./@-]+\\.(?:${ASSET_EXTENSIONS}))`,
   'g',
 );
 
@@ -97,6 +99,15 @@ test('every asset URL in a fixture or template is relative and served by a stati
       'runtime. Move the file under assets/ and reference it as assets/... with no ' +
       'leading slash, so it also resolves under the GitHub Pages subpath.',
   );
+});
+
+test('third-party URLs are skipped, root-absolute and assets/ URLs are not', () => {
+  const found = (text) => [...text.matchAll(ASSET_URL)].map(([, url]) => url);
+
+  assert.deepEqual(found("'//embed.example.com/x.svg'"), []);
+  assert.deepEqual(found('url(https://x.test/a.png)'), []);
+  assert.deepEqual(found("'/images/a.png'"), ['/images/a.png']);
+  assert.deepEqual(found('src="assets/x.png"'), ['assets/x.png']);
 });
 
 test('the static mount table points at directories that exist', () => {

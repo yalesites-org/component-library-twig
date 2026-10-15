@@ -1,5 +1,4 @@
 import basicMetaTwig from './basic-meta/yds-basic-meta.twig';
-import profileMetaTwig from './profile-meta/yds-profile-meta.twig';
 import resourceMetaTwig from './resource-meta/yds-resource-meta.twig';
 import dateTimeTwig from '../../01-atoms/date-time/yds-date-time.twig';
 import imageData from '../../01-atoms/images/image/image.yml';
@@ -15,7 +14,6 @@ import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.
 import {
   createSectionWrapper,
   createThemeVariations,
-  createVariations,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -28,8 +26,8 @@ import {
  * differs per section theme -- and at 27px it is nearly free to keep.
  *
  * Event Meta lives in `Molecules/Meta/Event Meta/Visreg` rather than being
- * stacked here; see that file for why. Profile Meta is below, rendered once;
- * see there for why.
+ * stacked here, and Profile Meta in `Molecules/Meta/Profile Meta/Visreg`;
+ * see those files for why.
  */
 export default {
   tags: ['visreg'],
@@ -75,57 +73,14 @@ const renderSectionThemedMeta = (theme) =>
   `,
   );
 
-/**
- * Profile Meta, rendered once per global theme rather than once per section
- * theme.
- *
- * `yds-profile-meta.twig` puts its own `data-component-theme` on itself, taken
- * from `profile_meta__background`, and `_yds-profile-meta.scss` keys off that --
- * so the component redefines the color slots for its own subtree and paints its
- * own background over the section behind it. The section theme reaches none of
- * it: iterating all six produced six pixel-identical 441px renders. It still
- * varies by global theme, which is what each story here covers.
- *
- * It is still wrapped in the neutral `default` layout so it sits in the same
- * page chrome as the section-themed block above rather than rendering bare.
- */
-const renderProfileMeta = (background) =>
-  createSectionWrapper(
-    'default',
-    profileMetaTwig({
-      ...imageData.responsive_images['3x2'],
-      profile_meta__heading: 'Person Namerton',
-      profile_meta__title_line: 'Professional Title',
-      profile_meta__subtitle_line: 'Subtitle',
-      profile_meta__department: 'Department name',
-      profile_meta__pronouns: 'They/They/Them',
-      profile_meta__background: background,
-      profile_meta__image_orientation: 'landscape',
-      image__srcset__1: imageData.responsive_images['2x3'].image__srcset,
-      image__sizes__1: imageData.responsive_images['2x3'].image__sizes,
-      image__alt__1: imageData.responsive_images['2x3'].image__alt,
-      image__src__1: imageData.responsive_images['2x3'].image__src,
-      profile_meta__image_style: 'inline',
-      profile_meta__image_alignment: 'right',
-    }),
-  );
-
-const renderGlobalTheme = () => `
-  ${createThemeVariations(
+const renderGlobalTheme = () =>
+  createThemeVariations(
     renderSectionThemedMeta,
     sectionThemes,
     'All Section Theme Variations',
     'Basic Meta and Resource Meta against every section theme.',
     'Section Theme',
-  )}
-  ${createVariations(
-    renderProfileMeta,
-    ['one'],
-    'Profile Meta',
-    'Rendered once, not per section theme: Profile Meta sets its own component theme and background, so the section theme does not reach it. Only background one is snapshotted -- the other component-theme backgrounds have never been covered here.',
-    'Background',
-  )}
-`;
+  );
 
 const themeStories = createGlobalThemeStories(
   renderGlobalTheme,

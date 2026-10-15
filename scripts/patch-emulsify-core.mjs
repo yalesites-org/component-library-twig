@@ -15,7 +15,7 @@ import fs from 'fs';
  *
  * Idempotent: a file already containing `marker` is left alone.
  *
- * Two of the three patch scripts share this; patch-emulsify-core-storybook-story-sort
+ * All patch scripts but patch-emulsify-core-storybook-story-sort share this; it
  * keeps its own mechanics because it needs a pristine-or-sentinel re-patch path.
  *
  * @param {object} options

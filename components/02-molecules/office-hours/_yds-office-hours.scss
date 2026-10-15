@@ -12,14 +12,13 @@ $office-hours-component-themes: map.deep-get(
 // section's own text color and every fill is derived from the section's own
 // text/background pair, which keeps the contrast the section already has.
 // -
-// The section pair: `.yds-layout[data-component-theme]` sets
-// `--color-layout-content` / `--color-layout-theme` from the active global
-// theme's slots. The shared `[data-component-theme]` rule also sets
-// `--color-text` / `--color-background`, but from fixed component-theme
-// tokens that do not follow the global theme, so they are only the fallback.
-// Neither pair has a `:root` default and a live page has no
-// `data-basic-theme`, so the last fallback is load-bearing on an unthemed
-// (Default) section.
+// The section pair: the surface contract (`_surface-contract.scss`).
+// A themed section publishes `--color-section-foreground` /
+// `--color-section-background` from the active global theme's slots, and any
+// painted surface in between re-publishes its own. `--color-text` /
+// `--color-background` are only the fallback. Neither pair has a `:root`
+// default and a live page has no `data-basic-theme`, so the last fallback is
+// load-bearing on an unthemed (Default) section.
 // -
 // Selectors are three classes deep on purpose: the table atom styles every
 // `.layout table` / `.yds-layout table` cell (gray header fills, zebra rows,
@@ -31,11 +30,11 @@ $office-hours-component-themes: map.deep-get(
   @include tokens.spacing-page-inner;
 
   --office-hours-fg: var(
-    --color-layout-content,
+    --color-section-foreground,
     var(--color-text, var(--color-gray-800))
   );
   --office-hours-bg: var(
-    --color-layout-theme,
+    --color-section-background,
     var(--color-background, var(--color-basic-white))
   );
   --office-hours-rule: color-mix(
@@ -55,9 +54,9 @@ $office-hours-component-themes: map.deep-get(
 
   // White-text sections: darken the background 20% toward black instead, so
   // the white row text keeps (and gains) contrast.
-  [data-component-theme='one'] &,
-  [data-component-theme='three'] &,
-  [data-component-theme='four'] & {
+  [data-section-theme='one'] &,
+  [data-section-theme='three'] &,
+  [data-section-theme='four'] & {
     --office-hours-today: color-mix(
       in srgb,
       var(--color-basic-black) 20%,
@@ -137,26 +136,56 @@ $office-hours-component-themes: map.deep-get(
 
   &[data-component-theme='one'] {
     --office-hours-bg: var(--color-slot-one);
+
+    @include tokens.publish-surface(
+      var(--office-hours-bg),
+      var(--office-hours-fg)
+    );
   }
 
   &[data-component-theme='two'] {
     --office-hours-bg: var(--color-slot-two);
+
+    @include tokens.publish-surface(
+      var(--office-hours-bg),
+      var(--office-hours-fg)
+    );
   }
 
   &[data-component-theme='three'] {
     --office-hours-bg: var(--color-slot-three);
+
+    @include tokens.publish-surface(
+      var(--office-hours-bg),
+      var(--office-hours-fg)
+    );
   }
 
   &[data-component-theme='four'] {
     --office-hours-bg: var(--color-slot-four);
+
+    @include tokens.publish-surface(
+      var(--office-hours-bg),
+      var(--office-hours-fg)
+    );
   }
 
   &[data-component-theme='five'] {
     --office-hours-bg: var(--color-slot-five);
+
+    @include tokens.publish-surface(
+      var(--office-hours-bg),
+      var(--office-hours-fg)
+    );
   }
 
   &[data-component-theme='six'] {
     --office-hours-bg: var(--color-slot-nine);
+
+    @include tokens.publish-surface(
+      var(--office-hours-bg),
+      var(--office-hours-fg)
+    );
   }
 }
 
