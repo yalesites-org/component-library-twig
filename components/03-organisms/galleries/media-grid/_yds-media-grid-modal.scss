@@ -245,6 +245,10 @@ $modal-speed: var(--animation-speed-slow);
 }
 
 .media-grid-modal__content {
+  // The caption band's colour. Named once because the link halo below has to
+  // match it exactly -- if the two drift apart the halo swallows the link text.
+  --modal-caption-surface: var(--color-gray-800);
+
   overflow: hidden;
   grid-area: content;
   position: relative;
@@ -262,8 +266,21 @@ $modal-speed: var(--animation-speed-slow);
     gap: var(--size-spacing-5);
   }
 
-  &[is-expanded] {
-    background-color: var(--color-gray-800);
+  // Every captioned item gets the band — it is what keeps the caption legible
+  // over a light photo, and `is-expanded` is now set only on captions that have
+  // an expand toggle. Keying off the markup rather than that attribute also
+  // means the band survives JS being off or the behaviour failing to attach.
+  // -
+  // In Storybook this is a true "only if captioned" test: an item with neither
+  // heading nor caption emits no wrapper and gets no band. On Drupal it is not
+  // — `paragraph--gallery-item--gallery-modal-content.html.twig` passes the whole
+  // `content.field_text` render array, which carries `#cache` and so is never
+  // `empty` in Twig, meaning every item emits a wrapper and every item gets the
+  // band. That matches the old `[is-expanded]` behaviour exactly, so it is not a
+  // regression — but do not build a new rule on the assumption that this only
+  // matches captioned items on the site.
+  &:has(.media-grid-modal__content-wrapper) {
+    background-color: var(--modal-caption-surface);
   }
 
   &[is-expanded='true'] {
@@ -280,6 +297,15 @@ $modal-speed: var(--animation-speed-slow);
 
   a {
     @include atoms.plain-link;
+
+    // `.text-field a` (which also matches this element) draws a halo in
+    // `--color-text-shadow` to fake descender skip-ink, and `_yds-text-field.scss`
+    // hardcodes that variable to white -- clobbering the dark value this modal's
+    // `data-basic-theme` already sets. White halo behind white link text blooms
+    // every glyph shut, so point it back at the band the caption actually sits on.
+    // Fixing it at the source belongs in a follow-up: that file is shared by
+    // every text component, so it carries platform-wide visual-regression risk.
+    --color-text-shadow: var(--modal-caption-surface);
 
     &:hover {
       color: var(--color-gray-300);

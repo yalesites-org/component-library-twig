@@ -4,7 +4,9 @@
  #
  # Available Variables:
  # - divider__width: available options are 100% (default), 75%, 50%, and 25%
- # - divider__thickness: available options are 1 (default), 2, 3, 4, 5, and 6
+ # - divider__thickness: optional, one of 1, 2, 4, 8 (px-ish steps from the
+ #   --size-thickness-* tokens). When unset, the divider uses the
+ #   inherited --thickness-divider (1 by default).
  # - divider__position: available options are center (default), left, and right
  #}
 
@@ -32,6 +34,18 @@
   class: bem(divider__base_class),
   'data-divider-width': divider__width,
 }) %}
+
+{% set divider__thickness_values = {
+  '1': 'var(--size-thickness-1)',
+  '2': 'var(--size-thickness-2)',
+  '4': 'var(--size-thickness-4)',
+  '8': 'var(--size-thickness-8)',
+} %}
+{% if divider__thickness and divider__thickness_values[divider__thickness|trim] is defined %}
+  {% set divider__attributes = divider__attributes|merge({
+    style: '--thickness-divider: ' ~ divider__thickness_values[divider__thickness|trim],
+  }) %}
+{% endif %}
 
 <div {{ add_attributes(divider__wrapper__attributes) }}> {% block prefix_suffix %}{% endblock %}
 	<div {{ add_attributes(divider__inner__attributes) }}>

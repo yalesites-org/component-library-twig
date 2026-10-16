@@ -1,7 +1,5 @@
-import { Meta, Canvas, Controls } from '@storybook/blocks';
+import { Meta, Canvas } from '@storybook/blocks';
 import * as TabsStories from './tabs.stories';
-import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
-import componentProps from './tabs-props.yml';
 
 <Meta of={TabsStories} name="Overview" />
 
@@ -11,16 +9,9 @@ The tabs component provides an interactive tabbed interface for organizing relat
 
 ## Interactive Preview
 
-Use the controls panel below to experiment with the tabs' properties in real-time. Click on tab labels to switch between content panels.
+Click on tab labels to switch between content panels.
 
 <Canvas of={TabsStories.Interactive} />
-<Controls of={TabsStories.Interactive} />
-
-## Properties
-
-### Optional Properties
-
-{twigPropsTable(componentProps, 'optional')}
 
 ## Technical Specifications
 
@@ -49,7 +40,6 @@ Use the controls panel below to experiment with the tabs' properties in real-tim
 - **Visual Feedback**: Active tab has distinct styling to indicate selection
 - **Keyboard Navigation**: Full keyboard support for accessible interaction
 - **Responsive**: Tabs adapt to available space, may scroll horizontally on narrow screens
-- **Theme Support**: Tabs respect the component theme dial for color accents
 - **Content Management**: Only the active tab's content is visible at a time
 
 ## Usage Guidelines
@@ -91,16 +81,6 @@ Use the controls panel below to experiment with the tabs' properties in real-tim
 - Consider using consistent content structures (e.g., all tabs have headings and paragraphs)
 - Rich content including images, lists, and links is supported
 
-## Theming
-
-The tabs component supports Yale's color dial system through the `tabs__theme` property. This applies accent colors to:
-
-- Active tab indicator (underline or background)
-- Tab focus states
-- Interactive hover states
-
-Available theme values: one, two, three, four, five, six, seven, eight
-
 ## Examples and Use Cases
 
 ### Registration Information
@@ -136,7 +116,6 @@ Break down event information into digestible sections:
 ```javascript
 {
   tabs__id: "unique-id-123",
-  tabs__theme: "one",
   tabs: [
     {
       tab__label: "Overview",
@@ -163,7 +142,7 @@ The tabs JavaScript handles:
 
 ## Testing
 
-For comprehensive visual regression testing with all theme variations, see the [Visreg page](?path=/story/molecules-tabs-visreg).
+For comprehensive visual regression testing see the [Visreg page](?path=/story/molecules-tabs-visreg).
 
 ### Testing Considerations
 
@@ -172,7 +151,6 @@ For comprehensive visual regression testing with all theme variations, see the [
 - Test keyboard navigation thoroughly
 - Test with screen readers to verify ARIA implementation
 - Test responsive behavior on narrow screens
-- Verify theme variations apply correctly
 
 ## Related Components
 

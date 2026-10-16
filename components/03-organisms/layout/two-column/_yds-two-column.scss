@@ -1,9 +1,16 @@
 @use '../../../00-tokens/tokens';
+@use '../layout-divider' as *;
 
 $break-layout-two-column: tokens.$break-2xl;
 $break-layout-two-column-max: $break-layout-two-column - 0.05;
 
 .yds-two-column {
+  // Not inside `.yds-layout`, so nothing else defines this. `--color-slot-one`
+  // is inherited from the global theme wrapper, giving the same default an
+  // uncolored `.yds-layout` gets, which the separator below reads through
+  // `$layout-divider-border`.
+  --color-layout-border: var(--color-slot-one);
+
   @include tokens.spacing-page-section;
 
   &[data-component-padding='no-top'],
@@ -55,13 +62,13 @@ $break-layout-two-column-max: $break-layout-two-column - 0.05;
 
 .yds-two-column__secondary {
   @media (max-width: $break-layout-two-column-max) {
-    border-top: var(--thickness-divider) solid var(--color-divider);
+    border-top: $layout-divider-border;
     padding-top: var(--spacing-page-inner);
   }
 
   @media (min-width: $break-layout-two-column) {
     flex: 0 1 calc(37.5rem + var(--spacing-component-gutter));
-    border-left: var(--thickness-divider) solid var(--color-divider);
+    border-left: $layout-divider-border;
     margin-left: calc(var(--spacing-component-gutter) * 2);
     padding-left: var(--spacing-component-gutter);
   }

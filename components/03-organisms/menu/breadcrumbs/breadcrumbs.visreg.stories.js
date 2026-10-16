@@ -21,6 +21,7 @@ export default {
   tags: ['visreg'],
   title: 'Organisms/Menu/Breadcrumbs/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     controls: { disable: true },
   },
 };
