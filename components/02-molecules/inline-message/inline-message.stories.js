@@ -14,6 +14,14 @@ const iconOptions = ['_none', ...Object.keys(iconsConfig.icons || {})];
 const argTypes = toArgTypes(componentProps);
 if (argTypes.iconName) {
   argTypes.iconName.options = iconOptions;
+  // Show the same human labels Drupal does; the stored value stays the key.
+  argTypes.iconName.control = {
+    ...argTypes.iconName.control,
+    labels: {
+      _none: iconsConfig.config?.none_label || '- None -',
+      ...iconsConfig.icons,
+    },
+  };
 }
 
 /**
@@ -33,7 +41,6 @@ export default {
 };
 
 export const InlineMessage = ({
-  type,
   iconName,
   heading,
   content,
@@ -44,7 +51,6 @@ export const InlineMessage = ({
   inlineMessageTwig({
     inline_message__heading: heading,
     inline_message__content: content,
-    inline_message__type: type,
     inline_message__icon_name: iconName,
     inline_message__theme: themeColor,
     inline_message__link__content: linkContent,

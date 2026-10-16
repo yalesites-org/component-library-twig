@@ -19,7 +19,7 @@
     // contrast on themed section backgrounds (slots 2/4/5); falls back to the
     // default subtle divider outside a themed layout.
     border-bottom: var(--border-thickness-1) solid
-      var(--color-layout-border, var(--color-divider-subtle));
+      var(--color-section-accent, var(--color-divider-subtle));
 
     &:hover {
       box-shadow: var(--drop-shadow-level-1-bottom-shadow-only);

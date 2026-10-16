@@ -14,14 +14,9 @@ import '../../02-molecules/menu/menu-toggle/yds-menu-toggle';
 // JavaScript to handle size
 import './yds-site-header';
 
-const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const siteHeaderThemeOptions = Object.keys(tokens['site-header-themes']);
 
 const argTypes = toArgTypes(componentProps);
-argTypes.borderThickness = {
-  ...argTypes.borderThickness,
-  options: borderThicknessOptions,
-};
 argTypes.siteHeaderTheme = {
   ...argTypes.siteHeaderTheme,
   options: siteHeaderThemeOptions,

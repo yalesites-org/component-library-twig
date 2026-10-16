@@ -51,32 +51,47 @@ bgColor:
     - five
     - six
   control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
 
 overlayVariation:
   twigProp: grand_hero__overlay_variation
-  name: Content Overlay
+  name: Overlay Position
   type: select
   required: false
   description: 'Content overlay style: full, contained, or contained-narrow'
   default: contained
   options:
+    - full
     - contained
     - contained-narrow
-    - full
   control: select
+  labels:
+    full: 'Full'
+    contained: 'Floating Box'
+    contained-narrow: 'Floating Box Narrow'
 
 size:
   twigProp: grand_hero__size
-  name: Content Size
+  name: Media Size
   type: select
   required: false
   description: 'Content size variation: reduced, full, or mini'
   default: full
   options:
-    - reduced
     - full
+    - reduced
     - mini
   control: select
+  labels:
+    full: 'Tall'
+    reduced: 'Short'
+    mini: 'Mini'
 
 withVideo:
   twigProp: grand_hero__video
@@ -98,3 +113,6 @@ width:
     - site
     - full
   control: select
+  labels:
+    site: 'Contained'
+    full: 'Full Width'

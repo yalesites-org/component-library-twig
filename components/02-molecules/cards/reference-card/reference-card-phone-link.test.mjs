@@ -28,12 +28,9 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createRequire } from 'node:module';
+import Twig from 'twig';
 import { readFileSync } from 'node:fs';
-
-const require = createRequire(import.meta.url);
-const Twig = require('twig');
-const { setupTwig, namespaces } = require('../../../../.storybook/setupTwig');
+import { setupTwig, namespaces } from '../../../_storybook/setup-twig.mjs';
 
 setupTwig(Twig);
 

@@ -186,10 +186,11 @@ $filter-control-height: 3.125rem; // 50px
   [data-component-theme]:not(
       [data-component-theme='default'],
       [data-component-theme='two'],
-      [data-component-theme='five']
+      [data-component-theme='five'],
+      [data-component-theme='six']
     )
     & {
-    --ys-filter-focus: var(--color-layout-content);
+    --ys-filter-focus: var(--color-section-foreground);
   }
 
   // auto-fit fills the available width, and the max(13rem, (100% - gaps)/4)
@@ -616,6 +617,14 @@ $filter-control-height: 3.125rem; // 50px
         }
       }
     }
+  }
+
+  // Keep the empty results list out of the page and the accessibility tree:
+  // Chosen fills .chosen-results only on first open. Only while empty, so
+  // Chosen can still measure a filled list when deciding whether to open
+  // upward.
+  .chosen-results:empty {
+    display: none;
   }
 
   // A filter with no terms keeps its box, shown as disabled. Stock Chosen
