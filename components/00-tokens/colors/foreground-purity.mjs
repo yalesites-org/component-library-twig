@@ -30,7 +30,7 @@
  * ## Why regex over SCSS rather than a stylelint rule
  *
  * Same split, and the same reason, as Phase 0's `--color-layout-*` rule (see
- * the comment at the top of `stylelint.config.js`): stylelint's property lists
+ * the comment at the top of `stylelint.config.cjs`): stylelint's property lists
  * do not apply to custom properties, and `custom-property-pattern` is off
  * repo-wide because Sass interpolation in property names defeats it. The half
  * stylelint *can* do -- color literals in `color:` -- is a stylelint rule; this
@@ -69,12 +69,12 @@ export const {
 } = require('./foreground-purity-baseline.json');
 
 /** The stylelint half of this rule, read for the paths it already exempts. */
-export const STYLELINT_CONFIG = require('../../../stylelint.config');
+export const STYLELINT_CONFIG = require('../../../stylelint.config.cjs');
 
 /**
  * Repo-relative paths where a palette token in foreground position is fine.
  *
- * The documentation-chrome entries are READ FROM `stylelint.config.js` rather
+ * The documentation-chrome entries are READ FROM `stylelint.config.cjs` rather
  * than restated, because the two halves of this rule exempting different files
  * is exactly the kind of drift nothing else would catch. `_global-config.scss`
  * is on top of that list and only here: it declares the semantic tokens

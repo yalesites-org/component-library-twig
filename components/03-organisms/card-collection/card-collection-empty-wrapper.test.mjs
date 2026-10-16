@@ -21,14 +21,12 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createRequire } from 'node:module';
+import Twig from 'twig';
 
-// twig.js, the extensions these templates rely on (bem(), add_attributes()),
-// and the namespace map all come from the Storybook setup, so this test cannot
+// The extensions these templates rely on (bem(), add_attributes()) and the
+// namespace map come from the same sources Storybook uses, so this test cannot
 // drift from how the templates are really compiled.
-const require = createRequire(import.meta.url);
-const Twig = require('twig');
-const { setupTwig, namespaces } = require('../../../.storybook/setupTwig');
+import { setupTwig, namespaces } from '../../_storybook/setup-twig.mjs';
 
 setupTwig(Twig);
 

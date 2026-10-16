@@ -1,6 +1,7 @@
 import videoTwig from './yds-video.twig';
 
 import videoData from './video.yml';
+import STATIC_VIDEO_EMBED from '../../_storybook/static-video-embed.mjs';
 
 import {
   globalThemeLabels,
@@ -20,6 +21,7 @@ export default {
   tags: ['visreg'],
   title: 'Molecules/Video/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },
@@ -46,6 +48,7 @@ const renderGlobalTheme = () => {
       theme,
       videoTwig({
         ...videoData,
+        video_embed__content: STATIC_VIDEO_EMBED,
         video__heading: heading,
         video__text: text,
         video__alignment: placement,
