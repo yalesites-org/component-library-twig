@@ -148,6 +148,10 @@ every open pull request across component-library-twig, atomic, yalesites-project
 | Repoint | 1 | yalesites-org/YaleSites-Internal#1802 |
 | Owned elsewhere | 1 | yalesites-org/YaleSites-Internal#1682 |
 
+The counts in this document are as ratified. yalesites-org/YaleSites-Internal#1907 later
+removed the dead Page Title `prefix` control and its row, so the tables below have one row
+fewer than these totals.
+
 **How the column got here.** It was filled in once before, on 2026-09-16, from a comment on
 yalesites-org/YaleSites-Internal#1661 declaring the dispositions ratified. That comment was
 written by the audit's own author, so it recorded a joint decision that had not happened, and
@@ -246,8 +250,8 @@ differs for 28 rows; see "Ratification" above.
 4. **Some "controls" are inert on both sides.** `component-wrapper` declares `component_width`
    while its Twig reads `component_wrapper__width`; `secondary-nav` declares `menu_theme` while
    its Twig reads `menu__theme`; `event_meta__address` is never read by the template both
-   Drupal and the story actually render; `page_title__prefix` is passed by nobody. These are
-   not parity problems, they are broken props that look like features.
+   Drupal and the story actually render. These are not parity problems, they are broken props
+   that look like features.
 
 5. **Nearly half the rows (129 of 291) are `Content` or `Structural` and need no decision.**
    Most of what Storybook exposes is a content slot Drupal fills from field data. Separating
@@ -485,7 +489,6 @@ to rediscover:
 | Molecule | Molecules/Meta/Resource Meta | `heading` | Heading | `resource_meta__heading` | — | `Content` | node.resource title | — | — |   | No | ResourceMetaBlock.php:178,380 passes the node title. | `components/02-molecules/meta/resource-props.yml` |
 | Molecule | Molecules/Meta/Resource Meta | `publishDate` | Publish Date | `resource_meta__publish_date` | — | `Content` | node.resource field_publish_date (formatted per field_date_format) | — | — |   | No | ResourceMetaBlock.php:179,191-194,382 formats field_publish_date server-side and hands the molecule a finished string. | `components/02-molecules/meta/resource-props.yml` |
 | Molecule | Molecules/Page Title | `meta` | Meta | `page_title__meta` | — | `Content` | node.post field_author/field_authors + field_publish_date via ys_layouts post_meta_block | — | — |   | No | ys-post-meta-block.html.twig:62-69 concatenates the author markup and formatted date and passes the result as page_title__meta; yds-profile-meta.twig:41-48 overrides the same block with pronouns. | `components/02-molecules/page-title/page-title-props.yml` |
-| Molecule | Molecules/Page Title | `prefix` | Page Title Prefix | `page_title__prefix` | — | `Storybook-only` | — | — | Drop from Storybook | Deferred to Page Title scoping (yalesites-org/YaleSites-Internal#1804) | No | Nothing in atomic/templates or ys_layouts ever sets page_title__prefix (atomic/templates/content/page-title.html.twig:3-5 passes only the heading), and yds-event-meta-localist.twig:140-143 carries a comment about wiring event_title__prefix that was never completed, so yds-page-title.twig:37 always receives null. | `components/02-molecules/page-title/page-title-props.yml` |
 | Molecule | Molecules/Page Title | `socialLinks` | Social Links | `page_title__show_social_media_sharing_links` | — | `Wired` | node.post field_show_social_media_sharing | 2: on, off | — |   | No | PostMetaBlock.php:120,134 reads field_show_social_media_sharing and ys-post-meta-block.html.twig:71 maps it to the twig prop; the field is visible at core.entity_form_display.node.post.default.yml:209. | `components/02-molecules/page-title/page-title-props.yml` |
 | Molecule | Molecules/Pager | `currentPage` | Current page | `current` | — | `Structural` | Drupal core pager render array via atomic/templates/navigation/pager.html.twig | — | — |   | No | atomic/templates/navigation/pager.html.twig:1 includes the molecule with the whole core pager context, so `current` is runtime request state (page query arg), never an editor control. | `components/02-molecules/pager/pager-props.yml` |
 | Molecule | Molecules/Pager | `totalPages` | Total pages | `items.pages` | — | `Structural` | Drupal core pager render array (result count / views items-per-page) | — | — |   | No | yds-pager.twig:9 derives total_pages from pager['#total_pages'] or items.pages supplied by core through the same include, so it is computed, not configured. | `components/02-molecules/pager/pager-props.yml` |
