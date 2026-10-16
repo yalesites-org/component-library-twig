@@ -9,6 +9,6 @@ label:
   name: Label
   type: string
   required: false
-  description: Label text displayed before the calculated time
+  description: Label text displayed before the calculated time. Fixed in Drupal.
   default: Estimated read time
-  control: text
+  fixed: true

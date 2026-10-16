@@ -8,14 +8,9 @@ import linkGroupData from '../../02-molecules/link-group/link-group.yml';
 import componentProps from './site-footer-props.yml';
 import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
-const borderThicknessOptions = Object.keys(tokens.border.thickness);
 const siteFooterThemeOptions = Object.keys(tokens['site-footer-themes']);
 
 const argTypes = toArgTypes(componentProps);
-argTypes.borderThickness = {
-  ...argTypes.borderThickness,
-  options: borderThicknessOptions,
-};
 argTypes.siteFooterTheme = {
   ...argTypes.siteFooterTheme,
   options: siteFooterThemeOptions,
@@ -31,10 +26,7 @@ export default {
     layout: 'fullscreen',
   },
   argTypes,
-  args: {
-    ...toArgs(componentProps),
-    borderThickness: '8',
-  },
+  args: toArgs(componentProps),
 };
 
 export const Footer = ({

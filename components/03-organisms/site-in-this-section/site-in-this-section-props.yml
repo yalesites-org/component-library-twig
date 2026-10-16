@@ -29,7 +29,8 @@ siteSectionTheme:
   description: Color theme applied to the site-in-this-section component (visible when displayed in content)
   detail: >
     Applies a color theme when the component is displayed in content position.
-    Options are derived from the component-themes design tokens.
+    Lists one to five, matching Drupal's book_navigation theme setting, rather
+    than every component-themes token.
   default: one
   options:
     - one
@@ -38,6 +39,12 @@ siteSectionTheme:
     - four
     - five
   control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
 
 siteHeaderTheme:
   twigProp: site_header__theme
@@ -50,3 +57,7 @@ siteHeaderTheme:
     in the header. Options are derived from the site-header-themes design tokens.
   default: one
   control: select
+  labels:
+    one: 'Base & White'
+    two: 'Action & Dark Gray'
+    three: 'Highlight & Yale Blue'

@@ -146,7 +146,7 @@
               {% include "@organisms/calendar/_yds-calendar-cell.twig" with {
                 day: datum.date.day,
                 month: datum.date.month,
-                month_name: monthMap[current_month - 1],
+                month_name: monthMap[datum.date.month - 1],
                 year: datum.date.year,
                 events: datum.events,
                 is_today: is_today,

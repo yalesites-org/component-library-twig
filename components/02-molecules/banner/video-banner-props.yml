@@ -15,3 +15,6 @@ width:
     - max
     - full
   control: select
+  labels:
+    max: 'Contained'
+    full: 'Full Width'

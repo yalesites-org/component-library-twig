@@ -20,7 +20,10 @@
     left: 0;
     bottom: var(--size-spacing-5);
     border-bottom: var(--border-thickness-4) solid
-      var(--color-navigation-border);
+      var(
+        --color-in-this-section-toggle-divider,
+        var(--color-navigation-border)
+      );
     width: 100%;
     z-index: 0;
   }

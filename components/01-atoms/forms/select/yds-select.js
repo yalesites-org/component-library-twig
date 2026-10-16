@@ -5,10 +5,11 @@
   Drupal.behaviors.chosenSelect = {
     attach(context) {
       const ysChosenReady = (e) => {
+        // An li, not a span: ul.chosen-choices may only hold li children.
         $(e.target)
           .next()
           .find('.chosen-choices')
-          .prepend(`<span class=${selectMessageClass}></span>`);
+          .prepend(`<li class="${selectMessageClass}"></li>`);
       };
       const ysSelectChange = (e) => {
         const selectedNr = $(e.target).val().length;

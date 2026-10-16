@@ -2,7 +2,11 @@
 
 .basic-meta {
   display: flex;
-  color: var(--color-gray-600);
+
+  // Sits on the enclosing section's surface, not one this component paints
+  // (YaleSites-Internal#1662). The grey stays as the CSS fallback so an
+  // unthemed page renders identically.
+  color: var(--color-section-foreground, var(--color-gray-600));
   margin-top: var(--size-spacing-4);
 
   @media (max-width: tokens.$break-mobile-max) {

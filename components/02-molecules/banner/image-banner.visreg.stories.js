@@ -3,7 +3,6 @@ import imageData from '../../01-atoms/images/image/image.yml';
 
 import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
-  componentThemes,
   globalThemeLabels,
   globalThemes,
   sectionThemes,
@@ -21,6 +20,7 @@ export default {
   tags: ['visreg'],
   title: 'Organisms/Banners/Image Banner/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },
@@ -60,17 +60,6 @@ const renderGlobalTheme = () => `
     'All Section Theme Variations',
     '',
     'Section Theme',
-  )}
-  ${createThemeVariations(
-    (theme) =>
-      createSectionWrapper('one', renderImageBanner(theme), {
-        width: 'site',
-        primaryWidth: '100%',
-      }),
-    componentThemes,
-    'All Image Banner Theme Variations',
-    '',
-    'Image Banner Theme',
   )}
 `;
 
