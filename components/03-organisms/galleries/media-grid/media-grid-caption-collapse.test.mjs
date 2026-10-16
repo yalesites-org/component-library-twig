@@ -21,6 +21,10 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import {
+  installOnce,
+  matchesOnceSelector,
+} from '../../../_storybook/drupal-once.mjs';
 
 const componentDir = path.dirname(fileURLToPath(import.meta.url));
 const source = readFileSync(
@@ -99,6 +103,18 @@ class FakeElement {
     return this.attributes.has(name);
   }
 
+  removeAttribute(name) {
+    this.attributes.delete(name);
+  }
+
+  // Only the selectors `once()` builds; the caption loop never calls this.
+  matches(selector) {
+    const processed = matchesOnceSelector(selector, this);
+    assert.notEqual(processed, undefined, `cannot match "${selector}"`);
+
+    return processed;
+  }
+
   addEventListener(type, handler) {
     this.listeners.set(type, handler);
   }
@@ -145,6 +161,7 @@ function attachBehaviour(items) {
   });
   const sandbox = {
     Drupal: { behaviors: {} },
+    Element: FakeElement,
     document: {
       querySelector: () => new FakeElement(),
       documentElement: new FakeElement(),
@@ -154,6 +171,8 @@ function attachBehaviour(items) {
   };
 
   vm.createContext(sandbox);
+  // The behavior calls the global `once()`, as on a Drupal page (core/once).
+  installOnce(sandbox);
   vm.runInContext(source, sandbox);
   sandbox.Drupal.behaviors.mediaGridInteractive.attach(context);
 

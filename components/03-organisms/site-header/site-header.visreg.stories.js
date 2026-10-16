@@ -22,6 +22,7 @@ export default {
   tags: ['visreg'],
   title: 'Organisms/Global Elements/Header/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },

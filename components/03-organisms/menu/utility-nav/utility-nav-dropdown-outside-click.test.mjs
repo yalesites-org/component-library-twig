@@ -40,6 +40,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
+import {
+  installOnce,
+  matchesOnceSelector,
+} from '../../../_storybook/drupal-once.mjs';
 
 const componentDir = path.dirname(fileURLToPath(import.meta.url));
 const behaviorSource = fs.readFileSync(
@@ -100,7 +104,18 @@ class HarnessElement {
     return this.attributes.has(name) ? this.attributes.get(name) : null;
   }
 
+  hasAttribute(name) {
+    return this.attributes.has(name);
+  }
+
+  removeAttribute(name) {
+    this.attributes.delete(name);
+  }
+
   matches(selector) {
+    const processed = matchesOnceSelector(selector, this);
+    if (processed !== undefined) return processed;
+
     const { className, attribute, value } = parseSelector(selector);
 
     return (
@@ -220,15 +235,18 @@ const attachBehavior = () => {
     querySelectorAll: (selector) => body.querySelectorAll(selector),
   };
 
-  const sandbox = {
+  const sandbox = vm.createContext({
     Drupal: { behaviors: {} },
+    Element: HarnessElement,
     document,
     window,
     setTimeout,
     clearTimeout,
-  };
+  });
 
-  vm.runInNewContext(behaviorSource, sandbox, { filename: 'utility-nav.js' });
+  // The behavior calls the global `once()`, as on a Drupal page (core/once).
+  installOnce(sandbox);
+  vm.runInContext(behaviorSource, sandbox, { filename: 'utility-nav.js' });
 
   assert.ok(
     sandbox.Drupal.behaviors.utilityDropdownNav,

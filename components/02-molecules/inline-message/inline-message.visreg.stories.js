@@ -20,6 +20,7 @@ export default {
   tags: ['visreg'],
   title: 'Molecules/Inline Message/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     controls: { disable: true },
   },
 };

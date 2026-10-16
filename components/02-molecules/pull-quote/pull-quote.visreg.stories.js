@@ -17,7 +17,10 @@ import {
 export default {
   tags: ['visreg'],
   title: 'Molecules/Quotes/Pull Quote/Visreg',
-  parameters: { controls: { disable: true } },
+  parameters: {
+    chromatic: { disableSnapshot: false },
+    controls: { disable: true },
+  },
 };
 
 const renderGlobalTheme = () => {
