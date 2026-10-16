@@ -13,8 +13,16 @@ export const decorators = [
         context.globals.globalTheme,
       );
       document.body.setAttribute(
-        'data-font-pairing',
-        context.globals.headingTypography || 'yalenew',
+        'data-heading-font',
+        context.globals.headingFont || 'yalenew',
+      );
+      document.body.setAttribute(
+        'data-heading-numerals',
+        context.globals.headingNumerals || 'oldstyle',
+      );
+      document.body.setAttribute(
+        'data-body-numerals',
+        context.globals.bodyNumerals || 'oldstyle',
       );
 
       // Core's decorator calls Drupal.attachBehaviors() but never detaches on cleanup.
@@ -49,22 +57,48 @@ export const globalTypes = {
     },
   },
 
-  headingTypography: {
-    name: 'Typography: Heading Fonts',
-    description: 'Choose a heading font pairing.',
+  headingFont: {
+    name: 'Typography: Heading Font',
+    description: 'Choose the heading font.',
     defaultValue: 'yalenew',
     toolbar: {
       icon: 'paragraph',
       items: [
-        { value: 'yalenew', title: 'Headings: YaleNew (Old-Style Numerals)' },
-        { value: 'mallory', title: 'Headings: Mallory' },
-        {
-          value: 'yalenew-oldstyle',
-          title: 'Headings: YaleNew (Lining Numerals)',
-        },
+        { value: 'yalenew', title: 'Heading font: Yale New' },
+        { value: 'mallory', title: 'Heading font: Mallory' },
       ],
       dynamicTitle: true,
-      title: 'Typography: Heading Fonts',
+      title: 'Typography: Heading Font',
+    },
+  },
+
+  headingNumerals: {
+    name: 'Typography: Heading Numerals',
+    description: 'Choose the numeral style used in headings.',
+    defaultValue: 'oldstyle',
+    toolbar: {
+      icon: 'paragraph',
+      items: [
+        { value: 'oldstyle', title: 'Heading numerals: Old-Style' },
+        { value: 'lining', title: 'Heading numerals: Lining' },
+      ],
+      dynamicTitle: true,
+      title: 'Typography: Heading Numerals',
+    },
+  },
+
+  bodyNumerals: {
+    name: 'Typography: Body Numerals',
+    description: 'Choose the numeral style used in body text (always Mallory).',
+    defaultValue: 'oldstyle',
+    toolbar: {
+      icon: 'paragraph',
+      items: [
+        { value: 'oldstyle', title: 'Body numerals: Old-Style' },
+        { value: 'lining', title: 'Body numerals: Lining' },
+      ],
+      dynamicTitle: true,
+      title: 'Typography: Body Numerals',
     },
   },
 };
