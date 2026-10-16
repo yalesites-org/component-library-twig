@@ -7,39 +7,26 @@
 # Edit descriptions and details freely - changes appear in Storybook on reload.
 
 thickness:
-  twigProp: --thickness-divider
+  twigProp: divider__thickness
   name: Line thickness
   type: select
   required: false
-  description: Controls the divider line thickness via CSS custom property
-  default: hairline
+  description: Thickness of the divider line
+  detail: >
+    Maps to the divider__thickness Twig prop, which sets --thickness-divider
+    on the divider from the --size-thickness-* tokens.
+    When the prop is not passed, the divider keeps the inherited thickness.
+  default: '1'
   options:
-    - hairline
     - '1'
     - '2'
     - '4'
     - '8'
-    - '16'
-    - '24'
-    - '32'
-  control: select
-
-dividerColor:
-  twigProp: --color-divider
-  name: Line Color
-  type: select
-  required: false
-  description: Controls the divider line color via CSS custom property
-  default: gray-500
-  options:
-    - gray-500
-    - blue-yale
-    - basic-brown-gray
   control: select
 
 width:
   twigProp: divider__width
-  name: Divider width
+  name: Divider Width
   type: select
   required: false
   description: Width of the divider as a percentage
@@ -56,7 +43,7 @@ width:
 
 position:
   twigProp: divider__position
-  name: Divider position
+  name: Divider Position
   type: select
   required: false
   description: Horizontal alignment of the divider
@@ -68,9 +55,12 @@ position:
     - left
     - center
   control: select
+  labels:
+    left: 'Left'
+    center: 'Center'
 
 sectionTheme:
-  twigProp: data-component-theme
+  twigProp: data-section-theme
   name: Section Theme
   type: select
   required: false
@@ -82,4 +72,14 @@ sectionTheme:
     - two
     - three
     - four
+    - five
+    - six
   control: select
+  labels:
+    default: 'Default - No Color'
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'

@@ -55,10 +55,14 @@ alignment:
     - center
     - right
   control: select
+  labels:
+    left: 'Left'
+    center: 'Center'
+    right: 'Right'
 
 verticalAlignment:
   twigProp: tile__item__vertical_alignment
-  name: Vertical Alignment
+  name: Content Position
   type: select
   required: false
   description: "Vertical content position: 'top' or 'bottom'"
@@ -67,6 +71,9 @@ verticalAlignment:
     - top
     - bottom
   control: select
+  labels:
+    top: 'Top'
+    bottom: 'Bottom'
 
 themeColor:
   twigProp: tile__item__theme
@@ -84,7 +91,15 @@ themeColor:
     - three
     - four
     - five
+    - six
   control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
 
 image:
   twigProp: tile__item__bg_image
@@ -100,7 +115,7 @@ image:
 
 withAnimation:
   twigProp: tile__item__animation
-  name: With Animation
+  name: Enable Animation
   type: boolean
   required: false
   description: Enable hover animation on the tile

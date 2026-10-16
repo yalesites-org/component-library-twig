@@ -20,6 +20,14 @@ componentTheme:
     - five
     - six
   control: select
+  labels:
+    default: 'Default - No Color'
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
 
 position:
   twigProp: content_spotlight_portrait__position
@@ -32,6 +40,9 @@ position:
     - image-left
     - image-right
   control: select
+  labels:
+    image-left: 'Image Left'
+    image-right: 'Image Right'
 
 contentVerticalAlignment:
   twigProp: content_spotlight_portrait__vertical_align
@@ -45,6 +56,10 @@ contentVerticalAlignment:
     - middle
     - bottom
   control: select
+  labels:
+    top: 'Top'
+    middle: 'Middle'
+    bottom: 'Bottom'
 
 imageStyle:
   twigProp: content_spotlight_portrait__style
@@ -57,6 +72,9 @@ imageStyle:
     - inline
     - offset
   control: select
+  labels:
+    inline: 'Inline'
+    offset: 'Offset'
 
 overline:
   twigProp: content_spotlight_portrait__overline

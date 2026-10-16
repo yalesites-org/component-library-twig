@@ -6,7 +6,6 @@ import {
   globalThemeLabels,
   globalThemes,
   sectionThemes,
-  componentThemes,
 } from '../../_storybook/theme-constants';
 import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.mjs';
 import {
@@ -18,7 +17,10 @@ import {
 export default {
   tags: ['visreg'],
   title: 'Molecules/Quotes/Pull Quote/Visreg',
-  parameters: { controls: { disable: true } },
+  parameters: {
+    chromatic: { disableSnapshot: false },
+    controls: { disable: true },
+  },
 };
 
 const renderGlobalTheme = () => {
@@ -48,13 +50,6 @@ const renderGlobalTheme = () => {
         'All Section Theme Variations',
         '',
         'Section Theme',
-      )}
-      ${createThemeVariations(
-        (theme) => renderPullQuote('one', theme),
-        componentThemes,
-        'All Pull Quote Theme Variations',
-        '',
-        'Pull Quote Theme',
       )}
       ${createVariations(
         (style) => renderPullQuote('one', 'one', style),

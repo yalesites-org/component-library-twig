@@ -21,7 +21,10 @@ import {
 export default {
   tags: ['visreg'],
   title: 'Molecules/Link grid/Visreg',
-  parameters: { controls: { disable: true } },
+  parameters: {
+    chromatic: { disableSnapshot: false },
+    controls: { disable: true },
+  },
 };
 
 const renderGlobalTheme = () => {
@@ -60,6 +63,19 @@ const renderGlobalTheme = () => {
         componentThemes,
         'All Link Grid Theme Variations',
         '',
+        'Link Grid Theme',
+      )}
+      ${createThemeVariations(
+        (theme) =>
+          createSectionWrapper('default', renderLinkGrid(theme), {
+            width: 'site',
+            primaryWidth: '100%',
+          }),
+        componentThemes,
+        'All Link Grid Theme Variations on an Unthemed Section',
+        'The section themes above all paint a background; an unthemed section ' +
+          'paints none, so the heading lands on the page itself. Every heading ' +
+          'here must stay readable.',
         'Link Grid Theme',
       )}
       ${createVariations(

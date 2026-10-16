@@ -48,6 +48,17 @@ Cards for downloadable resources, documents, or external links. Supports icons, 
 <Canvas of={CardCollectionStories.ResourceCardCollection} />
 <Controls of={CardCollectionStories.ResourceCardCollection} />
 
+## Content Edge Cases
+
+### Long URL In Card Text
+
+A pasted webcast or registration link in a card's teaser text is routine content, and an unbroken URL is the widest single "word" a card ever has to hold. This section is the baseline for that case: the URL wraps inside its card and the grid keeps its column count.
+
+Both declarations that fix this break are exercised here — `min-width: 0`, which lets a card shrink to its column, and `overflow-wrap: break-word`, which wraps the URL. The fix carries a third declaration that no card grid exercises: it applies only to auto-linked text, and card text is never auto-linked. Storybook markup is not Drupal markup, so a correct render here is not a substitute for checking a real listing page.
+
+<Canvas of={CardCollectionStories.LongUrlInCardText} />
+<Controls of={CardCollectionStories.LongUrlInCardText} />
+
 ## Properties
 
 ### Required Properties

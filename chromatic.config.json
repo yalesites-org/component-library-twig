@@ -1,0 +1,8 @@
+{
+  "$schema": "https://www.chromatic.com/config-file.schema.json",
+  "projectId": "Project:6a7f46a894195f6a78359448",
+  "storybookBuildDir": ".out",
+  "autoAcceptChanges": "main",
+  "exitZeroOnChanges": true,
+  "storybookConfigDir": "node_modules/@emulsify/core/.storybook"
+}

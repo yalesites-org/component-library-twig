@@ -37,6 +37,7 @@ layoutVariations:
   - 'fifty-fifty'
   - 'thirty-thirty-thirty'
   - 'seventy-thirty'
+  - 'thirty-seventy'
   - 'full-width'
 
 # Navigation position variations

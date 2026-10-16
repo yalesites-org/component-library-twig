@@ -23,6 +23,7 @@ export default {
   tags: ['visreg'],
   title: 'Organisms/Banners/Grand Hero/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },

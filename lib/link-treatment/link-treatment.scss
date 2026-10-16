@@ -7,6 +7,11 @@ a.link-purpose {
     padding-left: var(--size-spacing-2);
   }
 
+  // Careful adding `white-space` here: `components/03-organisms/_grid-mixins.scss`
+  // relaxes linkpurpose's `nowrap` on this class for grid items, so a pasted URL
+  // can wrap inside a card (YaleSites-Internal#1729). This selector is (0,2,1)
+  // and outranks that one wherever the grid include site adds no attribute
+  // selectors, so setting it here would silently undo the fix.
   & .link-purpose-nobreak {
     margin-right: 0.25em;
 

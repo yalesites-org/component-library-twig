@@ -1,4 +1,5 @@
 import layoutTwig from './layout/_layout--example.twig';
+import layoutDividerTwig from './layout/_layout--divider-example.twig';
 import textData from '../../02-molecules/text/text-field.yml';
 import accordionData from '../../02-molecules/accordion/accordion.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
@@ -25,12 +26,18 @@ export default {
   tags: ['visreg'],
   title: 'Templates/Layout/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },
 };
 
-const layoutOptions = ['fifty-fifty', 'thirty-thirty-thirty', 'seventy-thirty'];
+const layoutOptions = [
+  'fifty-fifty',
+  'thirty-thirty-thirty',
+  'seventy-thirty',
+  'thirty-seventy',
+];
 
 const paddingOptions = ['default', 'no-top', 'no-bottom', 'no-padding'];
 
@@ -84,10 +91,10 @@ export const LayoutVariations = () => `
   )}
 `;
 
-const renderGlobalTheme = () => `
-  ${createThemeVariations(
+const renderGlobalTheme = () =>
+  createThemeVariations(
     (theme) =>
-      createSectionWrapper(theme, renderLayout(), {
+      createSectionWrapper(theme, renderLayout({ theme }), {
         width: 'site',
         primaryWidth: '100%',
       }),
@@ -95,19 +102,7 @@ const renderGlobalTheme = () => `
     'All Section Theme Variations',
     '',
     'Section Theme',
-  )}
-  ${createThemeVariations(
-    (theme) =>
-      createSectionWrapper('one', renderLayout({ theme }), {
-        width: 'site',
-        primaryWidth: '100%',
-      }),
-    componentThemes,
-    'All Layout Theme Variations',
-    '',
-    'Layout Theme',
-  )}
-`;
+  );
 
 const themeStories = createGlobalThemeStories(
   renderGlobalTheme,
@@ -124,3 +119,78 @@ export const AI = themeStories.six;
 export const WhitneyHumanitiesCenter = themeStories.seven;
 
 ItsYourYale.storyName = 'It’s Your Yale';
+
+/**
+ * The layout theme sweep has its own stories, like the divider below. With
+ * section theme six and component theme six both added, the two sweeps
+ * together reached 1,200 x ~20,970px per global theme, over the 25,000,000px
+ * snapshot ceiling; apart, each stays well under it.
+ */
+const renderLayoutThemes = () =>
+  createThemeVariations(
+    (theme) =>
+      createSectionWrapper('one', renderLayout({ theme }), {
+        width: 'site',
+        primaryWidth: '100%',
+      }),
+    componentThemes,
+    'All Layout Theme Variations',
+    '',
+    'Layout Theme',
+  );
+
+const layoutThemeStories = createGlobalThemeStories(
+  renderLayoutThemes,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBluesLayoutTheme = layoutThemeStories.one;
+export const NewHavenGreenLayoutTheme = layoutThemeStories.two;
+export const ShorelineSummerLayoutTheme = layoutThemeStories.three;
+export const OnhaLayoutTheme = layoutThemeStories.four;
+export const ItsYourYaleLayoutTheme = layoutThemeStories.five;
+export const AILayoutTheme = layoutThemeStories.six;
+export const WhitneyHumanitiesCenterLayoutTheme = layoutThemeStories.seven;
+
+ItsYourYaleLayoutTheme.storyName = 'It’s Your Yale Layout Theme';
+
+/**
+ * The divider takes its colour from the section theme, so it gets its own
+ * sweep of every section theme per layout. Separate stories keep the theme
+ * stories above from growing toward the snapshot pixel limit, and the short
+ * columns in `_layout--divider-example.twig` keep these under it. 70/30 draws
+ * its divider in CSS rather than as an element, so it is covered here too.
+ */
+const renderDivider = (layout, theme) =>
+  layoutDividerTwig({
+    layout__divider: 'true',
+    component__theme: theme,
+    component__layout: layout,
+  });
+
+const renderDividers = () =>
+  createThemeVariations(
+    (theme) =>
+      layoutOptions.map((layout) => renderDivider(layout, theme)).join(''),
+    sectionThemes,
+    'Divider in Every Section Theme',
+    '',
+    'Section Theme',
+  );
+
+const dividerStories = createGlobalThemeStories(
+  renderDividers,
+  globalThemes,
+  globalThemeLabels,
+);
+
+export const OldBluesDivider = dividerStories.one;
+export const NewHavenGreenDivider = dividerStories.two;
+export const ShorelineSummerDivider = dividerStories.three;
+export const OnhaDivider = dividerStories.four;
+export const ItsYourYaleDivider = dividerStories.five;
+export const AIDivider = dividerStories.six;
+export const WhitneyHumanitiesCenterDivider = dividerStories.seven;
+
+ItsYourYaleDivider.storyName = 'It’s Your Yale Divider';

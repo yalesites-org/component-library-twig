@@ -18,7 +18,7 @@ videoContent:
     demo data and is not directly editable in the Controls panel.
 
 sectionTheme:
-  twigProp: data-component-theme
+  twigProp: data-section-theme
   name: Section Theme
   type: select
   required: false
@@ -31,10 +31,16 @@ sectionTheme:
     - three
     - four
   control: select
+  labels:
+    default: 'Default - No Color'
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
 
 playback:
   twigProp: video_background__playback
-  name: Playback
+  name: Video Playback
   type: select
   required: false
   description: 'Whether the video loops continuously or plays once and stops'
@@ -49,3 +55,6 @@ playback:
     - loop
     - once
   control: select
+  labels:
+    loop: 'Loop continuously'
+    once: 'Play once and stop'
