@@ -2,8 +2,9 @@
  * Taxonomy Display, `default` dial: link contrast inside a themed section
  * (YaleSites-Internal#1641).
  *
- * The `default` component-theme paints its own flat `--color-gray-100` box
- * (`_yds-taxonomy-display.scss:22-45`) but, before this fix, set no link
+ * The `default` component-theme paints its own flat box (gray-100 at the
+ * time of #1641, white since yalesites-org/yalesites-project#1634) but,
+ * before this fix, set no link
  * colour of its own. `.taxonomy-display__link` reads `color:
  * var(--color-link-base)`, which it then inherited from whichever ancestor
  * last set it. Outside a themed section nothing sets it, so it fell through
@@ -11,7 +12,7 @@
  * `_yds-layout.scss` sets `--color-link-base` (and `-hover`) to suit the
  * SECTION's own background -- white (`slot-eight`) on section themes one,
  * three and four -- and that leaked straight onto this box: white links on a
- * near-white background, 1.07:1, on 21 of 42 (section theme x global theme)
+ * near-white (then gray-100) background, 1.07:1, on 21 of 42 (section theme x global theme)
  * pairings.
  *
  * The fix pins `--color-link-base` / `-hover` / `-visited-base` /
@@ -42,7 +43,7 @@
  *   but is not what renders outside a section" -- a plausible-looking wrong
  *   fix that would not be caught by the ratio checks alone.
  * - The pinned values clear 4.5:1 (WCAG 1.4.3 normal text) against
- *   `--color-gray-100`, computed from the real token values via
+ *   the box's own background, computed from the real token values via
  *   `contrast-ratio.mjs`, not asserted as a constant.
  * - The RESTING link colour clears 4.5:1 in the full 42-cell (section theme
  *   x global theme) sweep the ticket asks for. Modelled with the same
@@ -90,7 +91,13 @@ const SCSS_PATH = new URL(
   import.meta.url,
 );
 
-const GRAY_100 = tokens.color.gray['100'];
+/**
+ * The `default` dial ("Default - No Color" in the editor) paints a white box,
+ * matching the editor's #ffffff swatch, so editors get no visible colour band
+ * (yalesites-org/yalesites-project#1634). It used to paint gray-100. The
+ * contrast checks below measure against whatever the dial actually paints.
+ */
+const EXPECTED_BOX_BG = '--color-basic-white';
 
 /** The four link states the `default` dial is expected to pin. */
 const LINK_PROPERTIES = [
@@ -160,12 +167,27 @@ function paletteValue(varName) {
 
 const source = stripComments(readFileSync(SCSS_PATH, 'utf8'));
 const dialBody = defaultDialBody(source);
+const boxBgVar = dialBody?.match(
+  /(?:^|[\s;{])background-color:\s*var\(\s*(--color-[\w-]+)\s*\)/,
+)?.[1];
+const BOX_BG = boxBgVar ? paletteValue(boxBgVar) : null;
 
 test('the default dial exists in the SCSS as this file expects', () => {
   assert.ok(
     dialBody,
     "could not find &[data-component-theme='default'] { ... } in _yds-taxonomy-display.scss -- has the selector changed?",
   );
+});
+
+test('the default dial paints a white box (Default - No Color)', () => {
+  assert.equal(
+    boxBgVar,
+    EXPECTED_BOX_BG,
+    "&[data-component-theme='default'] must paint var(--color-basic-white): " +
+      'the editor labels it "Default - No Color" with a #ffffff swatch ' +
+      '(yalesites-org/yalesites-project#1634).',
+  );
+  assert.ok(BOX_BG, `could not resolve ${boxBgVar} to a token value`);
 });
 
 test('the default dial pins all four link states to a raw palette token', () => {
@@ -176,7 +198,7 @@ test('the default dial pins all four link states to a raw palette token', () => 
       `${property} is not pinned to a raw var(--color-*) token inside ` +
         "&[data-component-theme='default'] -- without it, this box's links " +
         'read whatever the enclosing themed section last set, which is sized ' +
-        "for the SECTION's background, not this box's fixed gray-100 (YaleSites-Internal#1641).",
+        "for the SECTION's background, not this box's fixed background (YaleSites-Internal#1641).",
     );
   });
 });
@@ -200,16 +222,16 @@ test('each pin matches the tokens.css root default for the same property (unchan
   });
 });
 
-test('every pinned link state clears 4.5:1 (AA normal text) on gray-100', () => {
+test('every pinned link state clears 4.5:1 (AA normal text) on the box background', () => {
   LINK_PROPERTIES.forEach((property) => {
     const pin = pinnedVar(dialBody, property);
     const value = pin && paletteValue(pin);
     assert.ok(value, `could not resolve ${pin} to a token value`);
 
-    const ratio = contrastRatio(parseHsl(GRAY_100), parseHsl(value));
+    const ratio = contrastRatio(parseHsl(BOX_BG), parseHsl(value));
     assert.ok(
       ratio >= AA_NORMAL_TEXT,
-      `${property} (${pin} = ${value}) on gray-100 measures ${formatRatio(
+      `${property} (${pin} = ${value}) on the box background measures ${formatRatio(
         ratio,
       )}:1, below the ${AA_NORMAL_TEXT}:1 AA minimum for normal text.`,
     );
@@ -244,7 +266,7 @@ test('resting link colour clears 4.5:1 in every section theme x global theme pai
     .flatMap((sectionTheme) =>
       globalThemes.map((globalTheme) => {
         const value = resolveRestingLinkColor(sectionTheme, globalTheme, pin);
-        const ratio = contrastRatio(parseHsl(GRAY_100), parseHsl(value));
+        const ratio = contrastRatio(parseHsl(BOX_BG), parseHsl(value));
 
         return { sectionTheme, globalTheme, value, ratio };
       }),
@@ -252,7 +274,7 @@ test('resting link colour clears 4.5:1 in every section theme x global theme pai
     .filter(({ ratio }) => ratio < AA_NORMAL_TEXT)
     .map(
       ({ sectionTheme, globalTheme, value, ratio }) =>
-        `section ${sectionTheme} x global ${globalTheme}: ${value} on gray-100 = ${formatRatio(
+        `section ${sectionTheme} x global ${globalTheme}: ${value} on the box background = ${formatRatio(
           ratio,
         )}:1`,
     );
@@ -271,7 +293,7 @@ test('resting link colour clears 4.5:1 in every section theme x global theme pai
  * second review round). The link pins above left the box's plain text alone:
  * the "Audience:" labels and the `,` separators set no colour, so they
  * inherited the section's own `color` -- white on section themes one, three
- * and four -- and vanished on this box's gray-100 (1.07:1, 21 of 42 cells).
+ * and four -- and vanished on this box's then gray-100 (1.07:1, 21 of 42 cells).
  * The dial now pins `--color-text` to the white basic theme's text role and
  * applies it. That role resolves to the same value as the tokens.css root
  * `--color-text`, so rendering outside a section is unchanged.
@@ -314,14 +336,14 @@ test('resting label text clears 4.5:1 in every section theme x global theme pair
         const value = pinned
           ? tokens['basic-themes'].white.text
           : slots[SECTION_THEMES[sectionTheme].content];
-        const ratio = contrastRatio(parseHsl(GRAY_100), parseHsl(value));
+        const ratio = contrastRatio(parseHsl(BOX_BG), parseHsl(value));
         return { sectionTheme, globalTheme, value, ratio };
       }),
     )
     .filter(({ ratio }) => ratio < AA_NORMAL_TEXT)
     .map(
       ({ sectionTheme, globalTheme, value, ratio }) =>
-        `section ${sectionTheme} x global ${globalTheme}: ${value} on gray-100 = ${formatRatio(
+        `section ${sectionTheme} x global ${globalTheme}: ${value} on the box background = ${formatRatio(
           ratio,
         )}:1`,
     );
