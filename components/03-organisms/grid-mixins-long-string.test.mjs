@@ -42,12 +42,22 @@ const repoRoot = path.resolve(componentDir, '../..');
  * container would fail these assertions -- that is deliberate: failing loudly is
  * the point, and the fix is to give it the same treatment or exclude it here.
  */
+// Column-band helpers from #1648, not grids themselves: each only layers bands
+// onto a grid that already includes `base`, so they carry none of its rules.
+const HELPERS = new Set([
+  'single-column-below-break-m',
+  'container-grid-columns',
+  'container-grid-small',
+]);
+
 const MIXINS = [
   ...readFileSync(
     path.join(componentDir, '_grid-mixins.scss'),
     'utf8',
   ).matchAll(/^@mixin\s+([\w-]+)/gm),
-].map(([, name]) => name);
+]
+  .map(([, name]) => name)
+  .filter((name) => !HELPERS.has(name));
 
 // Compiled from a synthetic consumer rather than a real organism: the contract
 // belongs to the mixins, and a real file would also drag in that component's
