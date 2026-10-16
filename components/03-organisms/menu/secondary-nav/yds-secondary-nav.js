@@ -1,7 +1,10 @@
 Drupal.behaviors.secondaryNav = {
   attach(context) {
     // Selectors
-    const secondaryNav = context.querySelector('.secondary-nav');
+    const [secondaryNav] = once('secondary-nav', '.secondary-nav', context);
+    if (!secondaryNav) {
+      return;
+    }
     const secondaryNavToggles = context.querySelectorAll(
       '.secondary-nav__toggle--level-0',
     );

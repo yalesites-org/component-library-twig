@@ -30,6 +30,7 @@ export default {
   tags: ['visreg'],
   title: 'Organisms/Page Meta/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     controls: { disable: true },
   },
 };
