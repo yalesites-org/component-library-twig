@@ -118,3 +118,13 @@ test('required asterisk stays dark on light sections default, two, five', () => 
     ),
   );
 });
+
+test('search spans the whole first row of the filter grid', () => {
+  const search = decls(form, (s) => s === `${scaffold} .form-item-search`);
+  assert.ok(
+    search.some(
+      ([p, v]) => p === 'grid-column' && v.replace(/\s/g, '') === '1/-1',
+    ),
+    'search must span every grid column (YaleSites-Internal#1923)',
+  );
+});
