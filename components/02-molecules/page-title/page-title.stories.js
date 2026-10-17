@@ -38,9 +38,10 @@ export const Default = ({ meta, socialLinks }) =>
   });
 
 // The page header on a post: byline, date, read time and social links at
-// content width. The read-time script counts words inside #main-content.
+// content width. The read-time script counts words inside #main-content, and
+// the yds-storybook-cl class lets the read time show outside Drupal.
 export const Post = ({ meta, socialLinks }) =>
-  `<div id="main-content">${pageTitlePostTwig({
+  `<div id="main-content" class="yds-storybook-cl">${pageTitlePostTwig({
     page_title__heading: 'Davis Team Project Wins Award for Research',
     page_title__meta: meta,
     page_title__show_social_media_sharing_links: socialLinks ? 'true' : 'false',
