@@ -39,15 +39,15 @@ export default {
   tags: ['!dev'],
 };
 
-export const PostMeta = ({ author, date }) =>
+export const Byline = ({ author, date }) =>
   basicMetaTwig({
     basic_meta: `<span>By ${author}</span>${dateTimeTwig({
       date_time__start: date,
       date_time__format: 'day__full',
     })}`,
   });
-PostMeta.argTypes = toArgTypes(postMetaProps);
-PostMeta.args = {
+Byline.argTypes = toArgTypes(postMetaProps);
+Byline.args = {
   ...toArgs(postMetaProps),
   author: 'Charlyn Paradis',
   date: '2022-01-25',
