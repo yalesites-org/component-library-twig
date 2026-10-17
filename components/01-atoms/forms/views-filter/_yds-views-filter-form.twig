@@ -2,7 +2,7 @@
   Static copy of a Views filter form after Drupal's Chosen library has run, for
   the visual regression stories. Chosen is a Drupal library and is not loaded
   in Storybook, so this reproduces its output rather than running it. It also
-  reproduces what yds-select.js adds in the closed state: chips that do not fit
+  reproduces what yds-select.js adds, open or closed: chips that do not fit
   on the one-line row get .ys-search-choice--overflow, and a
   <li class="ys-select-more"> "+N more" badge goes before li.search-field.
 
@@ -53,15 +53,13 @@
           </ul>
           <div class="chosen-drop">
             <ul class="chosen-results">
-              {# Chosen highlights the first selectable result when the list opens. #}
-              {% set highlighted = false %}
+              {# No highlighted row: a mouse open highlights none, only the keyboard does (#1930). #}
               {% if field.open %}
                 {% for option in field.options %}
                   {% if option in field.selected %}
                     <li class="result-selected">{{ option }}</li>
                   {% else %}
-                    <li class="active-result{% if not highlighted %} highlighted{% endif %}">{{ option }}</li>
-                    {% set highlighted = true %}
+                    <li class="active-result">{{ option }}</li>
                   {% endif %}
                 {% endfor %}
               {% endif %}

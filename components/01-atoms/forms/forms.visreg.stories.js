@@ -135,9 +135,7 @@ export const ViewsFiltersOpenWithTwoSelected = () =>
 export const ViewsFiltersLongVocabularyName = () =>
   createSectionWrapper(
     'default',
-    heading(
-      'Long vocabulary name: closed with one chip and "+1 more", then open',
-    ) +
+    heading('Long vocabulary name: one chip and "+1 more", closed and open') +
       room(
         form({
           id: 'long',
@@ -148,6 +146,8 @@ export const ViewsFiltersLongVocabularyName = () =>
               id: 'long-open',
               open: true,
               selected: longTerms.slice(0, 2),
+              // Open keeps the closed one-line row and badge. (#1930)
+              visible: 1,
             }),
           ],
         }),

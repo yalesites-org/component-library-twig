@@ -10,12 +10,13 @@
     return $clone.text().trim();
   };
 
-  // In the closed (summary) state the filter row height is fixed, so keep as many
+  // The filter row height is fixed, open or closed, so keep as many
   // selected-term chips as fit on one line and collapse the remainder into an
   // accessible "+N more" badge — instead of the old "(X) items selected" count.
   // Chips are hidden from the end until the row (visible chips + badge + Chosen's
   // search input) measurably fits, so neither the layout nor the badge text
-  // breaks; the open state (see SCSS) re-reveals every chip. (#1366)
+  // breaks (#1366). While open, the search input sits in the panel (see SCSS)
+  // and the checked rows there list every pick. (#1930)
   const updateChoiceSummary = (select) => {
     const $choices = $(select)
       .next('.chosen-container')
@@ -34,16 +35,22 @@
 
     const total = $chips.length;
     const fits = () => $choices[0].scrollWidth <= $choices[0].clientWidth;
+    // Chosen marks the pill the next Backspace removes. Unless every chip
+    // fits, show that one alone (it may truncate, see SCSS). (#1930)
+    const pinned = $chips.index($chips.filter('.search-choice-focus'));
+    const pinnedOnly = (visible) => pinned >= 0 && visible < total;
+    const shown = (index, visible) =>
+      pinnedOnly(visible) ? index === pinned : index < visible;
 
     // Show the largest number of leading chips that fits; always keep at least one.
     for (let visible = total; visible >= 1; visible -= 1) {
       $chips.each((index, chip) => {
-        $(chip).toggleClass(overflowChoiceClass, index >= visible);
+        $(chip).toggleClass(overflowChoiceClass, !shown(index, visible));
       });
       $choices.find(`.${moreBadgeClass}`).remove();
 
       const hidden = $chips
-        .slice(visible)
+        .filter(`.${overflowChoiceClass}`)
         .map((i, chip) => choiceLabel(chip))
         .get();
       if (hidden.length) {
@@ -61,7 +68,7 @@
         }
       }
 
-      if (visible === 1 || fits()) {
+      if (visible === 1 || fits() || pinnedOnly(visible)) {
         break;
       }
     }
@@ -112,9 +119,8 @@
       updateFooter(select, $container);
       const chosen = $(select).data('chosen');
       if (chosen && chosen.results_showing) {
+        // In the panel the input is full width (SCSS), so no re-measure.
         chosen.search_field.attr('placeholder', Drupal.t('Type to filter'));
-        // Chosen sizes the input to its placeholder; re-measure.
-        chosen.search_field_scale();
       }
     });
   };
@@ -141,6 +147,104 @@
     // every pick, so setting it on the instance is enough, and leaves the
     // global Chosen config (shared with the admin forms) alone.
     Object.assign(chosen, { hide_results_on_select: false });
+
+    // Chosen highlights the first term whenever it redraws the list, so a
+    // mouse open looked like a hover. Only the keyboard moves that cursor:
+    // arrow keys or typing turn it on, a click or closing the list turns it
+    // off. Hover still highlights the term under the mouse (Chosen's own
+    // handler). Clearing the highlight also clears aria-activedescendant,
+    // which Chosen leaves pointing at the old term. Down or Up with no
+    // highlight starts at the first or last term; Chosen's Down would re-run
+    // results_show instead (re-checking drop-up, re-firing its event). (#1930)
+    let keyboardCursor = false;
+    const setHighlight = chosen.winnow_results_set_highlight;
+    const clearHighlight = chosen.result_clear_highlight;
+    const keyUp = chosen.keyup_arrow;
+    const keyDown = chosen.keydown_arrow;
+    const backstroke = chosen.keydown_backstroke;
+    const clearBackstroke = chosen.clear_backstroke;
+    Object.assign(chosen, {
+      keydown_arrow(...args) {
+        if (this.results_showing && !this.result_highlight) {
+          return this.result_do_highlight(
+            this.search_results.find('li.active-result').first(),
+          );
+        }
+        return keyDown.apply(this, args);
+      },
+      // Backspace on an empty input removes the last pill at once. If that
+      // pill is collapsed into "+ n more", show and mark it first, so the
+      // next Backspace does not remove a term the visitor cannot see.
+      keydown_backstroke(...args) {
+        const $last = this.search_container.siblings('li.search-choice').last();
+        if (
+          !this.pending_backstroke &&
+          $last.hasClass(overflowChoiceClass) &&
+          !$last.hasClass('search-choice-disabled')
+        ) {
+          this.pending_backstroke = $last.addClass('search-choice-focus');
+          updateChoiceSummary(select);
+          return undefined;
+        }
+        return backstroke.apply(this, args);
+      },
+      clear_backstroke(...args) {
+        const pending = this.pending_backstroke;
+        const result = clearBackstroke.apply(this, args);
+        if (pending) {
+          updateChoiceSummary(select);
+        }
+        return result;
+      },
+      // Chosen measures the panel with height(), which leaves out the
+      // padding that holds the search row, so a panel near the bottom of
+      // the window opened downward with its footer off screen.
+      should_dropup() {
+        const $window = $(window);
+        const top =
+          this.container.offset().top +
+          this.container.height() -
+          $window.scrollTop();
+        return this.dropdown.outerHeight() + top > $window.height();
+      },
+      winnow_results_set_highlight(...args) {
+        return keyboardCursor ? setHighlight.apply(this, args) : undefined;
+      },
+      result_clear_highlight(...args) {
+        this.search_field.removeAttr('aria-activedescendant');
+        return clearHighlight.apply(this, args);
+      },
+      keyup_arrow(...args) {
+        if (this.results_showing && !this.result_highlight) {
+          return this.result_do_highlight(
+            this.search_results.find('li.active-result').last(),
+          );
+        }
+        return keyUp.apply(this, args);
+      },
+    });
+    const notCursorKeys = ['Tab', 'Shift', 'Control', 'Alt', 'Meta', 'Escape'];
+    $container[0].addEventListener(
+      'keydown',
+      (e) => {
+        if (!notCursorKeys.includes(e.key)) {
+          keyboardCursor = true;
+        }
+      },
+      true,
+    );
+    ['mousedown', 'touchstart'].forEach((type) =>
+      $container[0].addEventListener(
+        type,
+        () => {
+          keyboardCursor = false;
+        },
+        { capture: true, passive: true },
+      ),
+    );
+    $(select).on('chosen:hiding_dropdown', () => {
+      keyboardCursor = false;
+    });
 
     // Footer with the picked count and "Clear all".
     const $clear = $('<button>', {
@@ -343,8 +447,7 @@
         );
         $select.each((index, select) => setUp(select));
         // Re-measure after Chosen rebuilds the pills or the list opens or
-        // closes. The closed row is measured a frame after hiding, once
-        // `.chosen-with-drop` is gone; while open every chip shows. (#1366)
+        // closes, a frame later, once Chosen has moved the classes. (#1366)
         $select.on(
           'chosen:updated change chosen:showing_dropdown chosen:hiding_dropdown',
           (e) => refresh(e.target),
