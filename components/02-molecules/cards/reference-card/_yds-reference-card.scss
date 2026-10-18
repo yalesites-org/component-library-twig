@@ -793,6 +793,32 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   + .reference-card__contact-item {
     margin-top: var(--size-spacing-2);
   }
+
+  // The email and phone links (YaleSites-Internal#1924). The text-link atom
+  // drops its own `.link` class when given a blockname, so without this they
+  // rendered in the browser's default blue. The mixin brings the site's link
+  // styling, and with it the section's link colours on themed sections.
+  .reference-card__link {
+    @include atoms.link;
+
+    // On a themed Layout Builder section (which carries data-section-theme,
+    // not the data-component-theme the card rules above key on):
+    // - the mixin pins hover to `--color-slot-two`, which fails contrast on
+    //   most themes and matches theme four's background outright, so hover in
+    //   the section's on-theme foreground; the underline slide stays the cue;
+    // - the descender halo would fall back to white and smear white link text,
+    //   so paint it in the section background, as the card does above.
+    [data-section-theme] & {
+      --color-link-hover: var(
+        --color-section-foreground,
+        var(--color-slot-two)
+      );
+      --color-text-shadow: var(
+        --color-section-background,
+        var(--color-background)
+      );
+    }
+  }
 }
 
 .reference-card__ctas {
