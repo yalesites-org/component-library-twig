@@ -11,6 +11,9 @@
 // you change this, change that literal too. (#1299 QA)
 $filter-control-height: 3.125rem; // 50px
 
+// Height of the "Type to filter" row at the top of an open filter panel. (#1930)
+$filter-panel-search-height: 3.5rem;
+
 // the button-submit mixin to emulate yds-button without the HTML attributes.
 // use case is specific to submit inputs in Drupal.
 // for all other use cases yds-button should be used.
@@ -241,8 +244,8 @@ $filter-control-height: 3.125rem; // 50px
     // border in _yds-select.scss. (#1366)
     border: 0;
 
-    // Hide the arrow while the list is open (its search field would sit under
-    // it) and on a disabled filter, which has nothing to open.
+    // Hide the arrow while the list is open and on a disabled filter, which
+    // has nothing to open.
     &:has(.chosen-with-drop)::after,
     &:has(.chosen-disabled)::after {
       display: none;
@@ -262,10 +265,7 @@ $filter-control-height: 3.125rem; // 50px
     // Fields stay white on every section theme, so pin their text. (#1897)
     color: var(--color-gray-700);
 
-    // The open state releases `height` (.chosen-with-drop below sets
-    // height: auto so wrapped chips can grow the box), so `height` alone is not
-    // enough — min-height is what keeps an open filter from becoming shorter
-    // than its closed self.
+    // One line tall, open or closed. (#1930)
     height: $filter-control-height;
     min-height: $filter-control-height;
 
@@ -312,17 +312,13 @@ $filter-control-height: 3.125rem; // 50px
 
     // Fill the container's content box so the flex centring below has the whole
     // control height to centre the chip row in, rather than centring inside a
-    // shrink-to-fit row that sits at the top of the box. Deliberately
-    // min-height and not height: a percentage resolves only against the
-    // container's definite closed height, so in the open state (where
-    // .chosen-with-drop sets height: auto) this is inert and wrapped chips
-    // still grow the box freely. (#1299 QA)
+    // shrink-to-fit row that sits at the top of the box. (#1299 QA)
     min-height: 100%;
 
-    // Closed (summary) state: lay the selected-term chips on a single line and clip
-    // anything past the width. JS marks the overflow chips and appends a "+N more"
-    // badge so the fixed-height filter row never wraps; the open state below
-    // re-enables wrapping to reveal every chip. (#1366)
+    // Lay the selected-term chips on a single line and clip anything past the
+    // width. JS marks the overflow chips and appends a "+N more" badge so the
+    // fixed-height filter row never wraps (#1366), open or closed; the open
+    // panel's checked rows list every pick. (#1930)
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
@@ -418,6 +414,15 @@ $filter-control-height: 3.125rem; // 50px
           outline-offset: var(--size-spacing-1);
         }
       }
+
+      // The pill the next Backspace removes. It shows alone (yds-select.js),
+      // so it may shrink to truncate a long label. Inset outline: the row
+      // clips. (#1930)
+      &.search-choice-focus {
+        flex-shrink: 1;
+        outline: var(--border-thickness-2) solid var(--ys-filter-focus);
+        outline-offset: calc(-1 * var(--border-thickness-2));
+      }
     }
 
     // Chosen pins an inline width on the input to fit its placeholder. Let the
@@ -436,7 +441,7 @@ $filter-control-height: 3.125rem; // 50px
     }
   }
 
-  // Chips that don't fit on the closed single line are collapsed into the badge. (#1366)
+  // Chips that don't fit on the single line are collapsed into the badge. (#1366)
   // Matches the pill rule's specificity so it beats its display. (#1897)
   .chosen-choices li.ys-search-choice--overflow {
     display: none;
@@ -501,47 +506,66 @@ $filter-control-height: 3.125rem; // 50px
     }
   }
 
+  // Room for the "Type to filter" row at the top of the panel. Set closed
+  // too, so Chosen's drop-up check, which measures the panel before it
+  // opens, counts the row (yds-select.js reads the outer height). (#1930)
+  .chosen-drop {
+    padding-top: $filter-panel-search-height;
+  }
+
   .chosen-with-drop {
     // Do not re-declare a border here. The old `border: 1px` (no style)
     // resolved to no border, so the whole box vanished when a filter was
     // focused/open. Removing the override lets the .chosen-container border
     // above cascade to the open state rather than duplicating it. (#1299 QA)
-    height: auto;
+    // The open head keeps its closed height: the pills stay on one line with
+    // the "+N more" badge, and the search input moves into the panel. (#1930)
 
-    // The open head grows past the 50px row; lift it above the listing below
-    // (card images are positioned with z-index 0). (#1897)
+    // Lift the open panel above the listing below (card images are
+    // positioned with z-index 0). (#1897)
     z-index: 1;
 
-    // Open state: the dropdown expands to full height, so show every chip
-    // (wrapping across lines) and hide the "+N more" badge. (#1366)
+    // Not the search field's containing block, so its overflow clip does not
+    // hide the field lifted into the panel below. (#1930)
     .chosen-choices {
-      flex-wrap: wrap;
-      overflow: visible;
-      white-space: normal;
+      position: static;
     }
 
-    // Size the search field by its typed text again, so it wraps to a new
-    // line instead of shrinking to nothing beside a full chip line.
+    // "Type to filter" sits at the top of the open panel, above the results:
+    // positioned against the container so it lands where the panel's
+    // padding-top leaves room. Moved with CSS rather than in the DOM, because
+    // Chosen inserts new pills before this li and reads the last pill from
+    // its siblings (Backspace). Opening upward, it sits at the panel's bottom
+    // edge instead, still next to the field. (#1930)
     li.search-field {
-      flex-basis: auto;
-    }
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      z-index: 1012; // Above .chosen-drop (Chosen: 1011).
+      height: $filter-panel-search-height;
+      padding: var(--size-spacing-2) var(--size-spacing-4);
+      background-color: var(--color-basic-white);
 
-    li.search-choice {
-      max-width: none;
-      height: auto;
-      min-height: 2rem;
+      // Chosen pins an inline width on the input to fit its text.
+      input[type='text'] {
+        width: 100% !important;
+        height: 100%;
+        margin: 0;
+        padding: 0 var(--size-spacing-3);
+        border: var(--border-thickness-1) solid var(--color-gray-400);
+        color: inherit;
 
-      span {
-        white-space: normal;
+        &:focus-visible {
+          outline: var(--border-thickness-2) solid var(--ys-filter-focus);
+          outline-offset: calc(-1 * var(--border-thickness-2));
+        }
       }
     }
 
-    .chosen-choices li.ys-search-choice--overflow {
-      display: inline-flex;
-    }
-
-    .ys-select-more {
-      display: none;
+    &.chosen-dropup li.search-field {
+      top: auto;
+      bottom: 100%;
     }
 
     .chosen-drop {
@@ -549,6 +573,11 @@ $filter-control-height: 3.125rem; // 50px
       width: calc(100% + 2px); // Consider chosen container borders width.
       border: var(--border-thickness-1) solid var(--color-blue-horizon);
       box-shadow: var(--drop-shadow-level-2);
+    }
+
+    &.chosen-dropup .chosen-drop {
+      padding-top: 0;
+      padding-bottom: $filter-panel-search-height;
     }
 
     .chosen-results {
