@@ -262,8 +262,18 @@ $filter-panel-search-height: 3.5rem;
     border: var(--border-thickness-1) solid var(--color-dropdown-border);
     width: 100% !important;
 
-    // Fields stay white on every section theme, so pin their text. (#1897)
-    color: var(--color-gray-700);
+    // Fields stay white on every section theme, so the field is its own
+    // surface: it publishes what it paints, gray-700 text and Yale Blue
+    // controls, and the chips, badge, panel and footer inside read that
+    // contract rather than naming palette colors (YaleSites-Internal#1632).
+    // Same flat-surface shape as the event-meta chips. (#1897)
+    @include tokens.publish-surface(
+      var(--color-basic-white),
+      var(--color-gray-700),
+      var(--color-blue-yale)
+    );
+
+    color: var(--color-section-foreground);
 
     // One line tall, open or closed. (#1930)
     height: $filter-control-height;
@@ -301,7 +311,7 @@ $filter-panel-search-height: 3.5rem;
     }
 
     :focus {
-      color: var(--color-gray-700);
+      color: var(--color-section-foreground);
     }
   }
 
@@ -362,7 +372,7 @@ $filter-panel-search-height: 3.5rem;
       border: 0;
       border-radius: 100vmax;
       box-shadow: none;
-      color: var(--color-blue-yale);
+      color: var(--color-section-accent);
       font-size: var(--font-size-14);
       font-weight: var(--font-weights-mallory-medium);
 
@@ -390,7 +400,7 @@ $filter-panel-search-height: 3.5rem;
         height: 1.25rem;
         border-radius: 50%;
         background: none;
-        color: var(--color-blue-yale);
+        color: var(--color-section-accent);
         cursor: pointer;
 
         &::before {
@@ -406,7 +416,7 @@ $filter-panel-search-height: 3.5rem;
         &:hover,
         &:focus-visible {
           background-color: var(--color-blue-yale);
-          color: var(--color-basic-white);
+          color: var(--color-section-background);
         }
 
         &:focus-visible {
@@ -459,7 +469,7 @@ $filter-panel-search-height: 3.5rem;
     // which the token above shrank. Declared before font-weight so the
     // shorthand does not reset the medium weight below. (#1299 QA)
     font: var(--font-style-body-xs);
-    color: var(--color-blue-yale);
+    color: var(--color-section-accent);
     font-size: var(--font-size-14);
     font-weight: var(--font-weights-mallory-medium);
     list-style: none;
@@ -477,7 +487,7 @@ $filter-panel-search-height: 3.5rem;
     padding: var(--size-spacing-4);
     border-top: var(--border-thickness-1) solid var(--color-gray-300);
     background-color: var(--color-basic-white);
-    color: var(--color-gray-700);
+    color: var(--color-section-foreground);
     font: var(--font-style-body-xs);
 
     .chosen-container:not(.chosen-with-drop) & {
@@ -489,7 +499,7 @@ $filter-panel-search-height: 3.5rem;
     padding: 0;
     border: 0;
     background: none;
-    color: var(--color-blue-yale);
+    color: var(--color-section-accent);
     font: inherit;
     font-weight: var(--font-weights-mallory-medium);
     text-decoration: underline;
@@ -581,7 +591,7 @@ $filter-panel-search-height: 3.5rem;
     }
 
     .chosen-results {
-      color: var(--color-gray-700);
+      color: var(--color-section-foreground);
       margin: 0;
       padding: 0;
       max-height: 15rem;
@@ -629,7 +639,7 @@ $filter-panel-search-height: 3.5rem;
       // Picked rows: a filled Yale Blue check instead of a dark row fill.
       // Clicking one unchecks it (yds-select.js). (#1897)
       .result-selected {
-        color: var(--color-blue-yale);
+        color: var(--color-section-accent);
         cursor: pointer;
 
         &::before {
@@ -666,6 +676,14 @@ $filter-panel-search-height: 3.5rem;
     --color-dropdown-border-hover: var(--color-dropdown-border);
 
     background-color: var(--color-gray-100);
+
+    // A different paint, so publish it; the text stays gray-700.
+    @include tokens.publish-surface(
+      var(--color-gray-100),
+      var(--color-gray-700),
+      var(--color-blue-yale)
+    );
+
     cursor: not-allowed;
     opacity: 1 !important;
 
@@ -687,9 +705,9 @@ $filter-panel-search-height: 3.5rem;
     }
 
     .chosen-choices li.search-field input[type='text'] {
-      -webkit-text-fill-color: var(--color-gray-700);
+      -webkit-text-fill-color: var(--color-section-foreground);
       background: transparent;
-      color: var(--color-gray-700);
+      color: var(--color-section-foreground);
       cursor: not-allowed;
       font-size: inherit;
       min-width: 0;

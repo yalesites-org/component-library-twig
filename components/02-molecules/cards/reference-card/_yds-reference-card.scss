@@ -632,12 +632,22 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
   margin-bottom: var(--size-spacing-3);
 }
 
+// One declaration for the three gray captions, so the palette fallback is
+// named once (foreground-purity ratchet, YaleSites-Internal#1632).
+// `--color-gray-500` fails WCAG AA on the themed section backgrounds, so read
+// the section contract and keep the gray only where no themed section is
+// painted.
+.reference-card__overline,
+.reference-card__department,
+.reference-card__pronouns {
+  color: var(--color-section-foreground, var(--color-gray-500));
+}
+
 .reference-card__overline,
 .reference-card__department {
   @include tokens.body-s;
   @include tokens.body-oldstyle-nums;
 
-  color: var(--color-section-foreground, var(--color-gray-500));
   font-variant-caps: small-caps;
   text-transform: lowercase;
   letter-spacing: 0.5px;
@@ -771,10 +781,7 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
 
   margin-top: var(--size-spacing-2);
 
-  // Same reasoning as .reference-card__overline: `--color-gray-500` fails
-  // WCAG AA on the themed section backgrounds, so read the section contract
-  // and keep the gray only where no themed section is painted.
-  color: var(--color-section-foreground, var(--color-gray-500));
+  // Color: shared with .reference-card__overline above.
 }
 
 .reference-card__contact {
