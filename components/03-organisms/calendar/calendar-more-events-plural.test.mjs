@@ -13,12 +13,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
-import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 
-const require = createRequire(import.meta.url);
-const Twig = require('twig');
-const { namespaces, setupTwig } = require('../../../.storybook/setupTwig');
+import Twig from 'twig';
+import { setupTwig, namespaces } from '../../_storybook/setup-twig.mjs';
 
 // The event card's getUrlType() reads the page hostname; Node has no document.
 globalThis.document = { location: { hostname: 'localhost' } };
