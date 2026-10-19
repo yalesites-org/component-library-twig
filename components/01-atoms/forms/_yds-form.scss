@@ -174,8 +174,8 @@ $filter-control-height: 3.125rem; // 50px
   // section column it sits in — so every dropdown and the search field share a
   // width and the row wraps gracefully inside constrained sections (50/50,
   // 70/30) instead of overflowing. Capped at four columns; the search field
-  // takes the first full-width row; a container narrower than one unit collapses
-  // to a single column. (#1299 QA)
+  // spans the first row on its own (.form-item-search below); a container
+  // narrower than one unit collapses to a single column. (#1299 QA, #1923)
   display: grid;
 
   // Focus ring for the filter fields: blue-medium on light sections; on dark
@@ -216,10 +216,14 @@ $filter-control-height: 3.125rem; // 50px
   // selects; Chosen reads that width at init and pins it as an inline width on
   // the .chosen-container it generates, overflowing the grid cell. Reset it here
   // so the native select and the Chosen container both track the column width.
-  // Search stays a normal grid item (first in source order), inline with the
-  // filters rather than on its own row. (#1299 QA)
   .form-item__select {
     min-width: 0;
+  }
+
+  // Search sits alone on the first row at full width, so it reads as the main
+  // way to narrow results; the filters wrap below it, up to four per row. (#1923)
+  .form-item-search {
+    grid-column: 1 / -1;
   }
 
   // Keep the Apply button on its own full-width row below the filter row (shown
