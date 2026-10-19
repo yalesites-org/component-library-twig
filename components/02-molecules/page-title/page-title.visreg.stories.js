@@ -20,7 +20,7 @@ import {
  */
 export default {
   tags: ['visreg'],
-  title: 'Molecules/Page Title/Visreg',
+  title: 'Molecules/Page Header/Visreg',
   parameters: { controls: { disable: true } },
 };
 
