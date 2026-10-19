@@ -1,0 +1,2 @@
+const t={callout__heading:"Degree Programs",callout__text:"<p>Designed for those who intend to pursue graduate and those who wish to immediately enter a career in which broad scientific training is beneficial.</p>",callout__link__content:"Programs",callout__link__url:"https://google.com",callout__link__type:"cta"};export{t as c};
+//# sourceMappingURL=callout-DOxxCQ-N.js.map

@@ -1,0 +1,33 @@
+related_content__heading: 'Related Content'
+# In Storybook the `related_content__view` variable is built per-story from
+# this list. In Drupal the variable arrives pre-rendered from the embedded
+# entity_reference_for_fields view (embed_related_content display) which
+# uses row plugin entity:node + view_mode related_content_card. Each row
+# renders through node--related-content-card.html.twig in atomic.
+#
+# `category` is optional — Profile bundle has no field_category, so its
+# eyebrow shows only the bundle label. Storybook fixture mirrors that
+# variation so the no-category branch is visible in preview.
+related_content__sample_items:
+  - type: 'Resource'
+    category: 'Video'
+    url: '#'
+    title: 'Voter ID Laws and the Erosion of Equal Access'
+  - type: 'Event'
+    category: 'Paper Discussion'
+    url: '#'
+    title: "Discuss George Heimel's Amazing Paper"
+  - type: 'Post'
+    category: 'Announcement'
+    url: '#'
+    title: "Good Things Come in Threes ... Citizens' Assemblies Too!"
+  - type: 'Resource'
+    category: 'Student Paper'
+    url: '#'
+    title: 'Swiss Voter Turnout Patterns and Public Attitudes Toward Digital Voting Infrastructure'
+  - type: 'Page'
+    url: '#'
+    title: 'Center for Empirical Research in the Law'
+  - type: 'Profile'
+    url: '#'
+    title: 'Dr. Jane Smith'

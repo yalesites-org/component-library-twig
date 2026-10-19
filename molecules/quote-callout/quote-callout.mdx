@@ -1,0 +1,126 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as QuoteCalloutStories from './quote-callout.stories';
+import {
+  twigPropsTable,
+  twigOnlyPropsTable,
+} from '../../_storybook/twig-props-table.mdx';
+import componentProps from './quote-callout-props.yml';
+
+<Meta of={QuoteCalloutStories} name="Overview" />
+
+# Quote Callout
+
+The quote callout component displays impactful quotations in a visually prominent way. It supports multiple style variations (bar, quote mark, or with image), flexible alignment options, and theme customization through the color dial system. This component is ideal for highlighting testimonials, important statements, or key insights.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the quote callout's properties in real-time. Test different styles, alignments, accent colors, and image options.
+
+<Canvas of={QuoteCalloutStories.QuoteCallout} />
+<Controls of={QuoteCalloutStories.QuoteCallout} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+### Image Properties (when quote_callout\_\_quote_image is 'with-image')
+
+When using the image style, include responsive image properties:
+
+{twigOnlyPropsTable(componentProps)}
+
+## Component Variations
+
+### Style Options
+
+The quote callout supports three distinct visual styles:
+
+- **Bar**: Features a vertical accent bar on the left or right side of the quote, providing a clean, modern look
+- **Quote**: Uses decorative quotation marks to frame the text, offering a more traditional quote presentation
+- **Image**: Combines the quote with an accompanying image, ideal for testimonials with a photo of the quoted person
+
+### Alignment Options
+
+- **Left**: Quote and attribution align to the left, with accent elements (bar or quote marks) positioned accordingly
+- **Right**: Quote and attribution align to the right, with accent elements mirrored to the opposite side
+
+### Accent Theming
+
+The component uses the color dial system to apply theme-specific accent colors:
+
+- Works with all theme dials (one through eight)
+- Accent color applies to the bar, quote marks, or other decorative elements
+- Automatically adjusts based on the parent section's theme for optimal contrast
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-quote-callout.twig`
+- **Styles**: `_yds-quote-callout.scss`
+
+### Accessibility
+
+- Semantic HTML structure with proper quote semantics
+- Color contrast meets WCAG 2.1 AA standards for all theme combinations
+- Images include required alternative text for screen readers
+- Keyboard accessible with clear focus indicators
+- Attribution is properly associated with the quote
+
+### Responsive Behavior
+
+- Layout adapts to available space on all screen sizes
+- Text scales appropriately for readability on mobile devices
+- Images use responsive image techniques for optimal performance
+- Alignment adjusts gracefully on smaller viewports
+- Maintains proper spacing and proportions across breakpoints
+
+## Usage Guidelines
+
+### Best Practices
+
+- Keep quotes concise and impactful (1-3 sentences ideal)
+- Always provide attribution when the source is known
+- Use the bar style for a modern, minimalist aesthetic
+- Use the quote style for traditional or formal contexts
+- Use the image style for testimonials or when a visual connection to the speaker is important
+- Choose alignment based on the surrounding layout and content flow
+- Select accent colors that complement the overall page design
+- Ensure images are high quality and properly cropped (1:1 aspect ratio works best)
+
+### Things to Avoid
+
+- Don't use excessively long quotes (consider breaking into multiple quote callouts or using a different component)
+- Avoid using quote callouts without attribution unless the quote is anonymous by design
+- Don't mix multiple quote callout styles in close proximity (creates visual inconsistency)
+- Avoid low-contrast accent color combinations that reduce readability
+- Don't use decorative or irrelevant images (images should relate to the quote or speaker)
+- Avoid using quote callouts too frequently on a single page (reduces impact)
+
+### When to Use Quote Callouts
+
+- Highlighting testimonials from students, alumni, faculty, or stakeholders
+- Featuring impactful statements from leadership or notable figures
+- Drawing attention to key insights or findings from research
+- Breaking up long-form content with relevant quotations
+- Adding human interest and credibility to program or initiative descriptions
+- Showcasing feedback or reactions to events, programs, or services
+
+## Testing
+
+For comprehensive visual regression testing with all theme variations and configurations, see the [Visreg page](?path=/story/molecules-quotes-quote-callout-visreg--old-blues).
+
+## Related Components
+
+- **Pull Quote**: Use for quotes pulled from body text within articles
+- **Callout**: Consider for highlighted content that isn't a quotation
+- **Text Field**: Use for longer-form quoted content or multi-paragraph testimonials
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

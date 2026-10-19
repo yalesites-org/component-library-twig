@@ -1,0 +1,34 @@
+{#
+ # Related Content
+ #
+ # Renders a heading + an embedded Views render output. Used at the bottom
+ # of nodes that have a `field_related_content` reference list, where the
+ # block plugin (ys_layouts/related_content_block) hands us:
+ #
+ #   - related_content__heading  (string)        Editor-set heading.
+ #   - related_content__view     (rendered HTML) Pre-rendered Views markup
+ #                                               whose rows show content
+ #                                               type + linked title.
+ #
+ # The heading mirrors the visual treatment of the card-collection
+ # "related" variant (h3 size, semantic h2). View output is inserted
+ # verbatim with `|raw` since it arrives as already-rendered HTML — same
+ # pattern used by yds-publication-detail / yds-image / yds-video-embed.
+ #
+ # Available Variables:
+ # - related_content__heading     (string)
+ # - related_content__heading_id  (string, optional) Override the id placed
+ #                                on the <h2> and referenced by
+ #                                aria-labelledby on the <section>. Use when
+ #                                more than one instance renders on the same
+ #                                page. Defaults to `related-content-heading`.
+ # - related_content__view        (rendered HTML)
+ # - related_content__width       (string)  site (default), or content
+ #}
+
+{% include "@molecules/related-content/_yds-related-content.twig" with {
+  related_content__heading: related_content__heading,
+  related_content__heading_id: related_content__heading_id,
+  related_content__view: related_content__view,
+  related_content__width: related_content__width|default('site'),
+} %}

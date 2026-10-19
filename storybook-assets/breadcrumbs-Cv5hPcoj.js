@@ -1,0 +1,2 @@
+const e={items:[{title:"Home",url:"#"},{title:"Academic Programs",url:"#"},{title:"Undergraduate Chemistry",url:"#"},{title:"Another Level",url:"#"},{title:"Still more levels",url:"#"},{title:"This is a really long breadcrumb",url:"#"},{title:"This one is six levels deep",url:"#"},{title:"Davis Team Project Wins Award for Research",url:"#",is_active:!0}]};export{e as b};
+//# sourceMappingURL=breadcrumbs-Cv5hPcoj.js.map

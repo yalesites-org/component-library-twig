@@ -1,0 +1,86 @@
+# office-hours-props.yml
+#
+# Office Hours property definitions, for the MDX documentation tables.
+# The full row shape is documented at the top of yds-office-hours.twig.
+
+days:
+  twigProp: office_hours__days
+  name: Days
+  type: array
+  required: true
+  description: The weekly rows, in display order
+  detail: >
+    Each row has a label (the day name), weekday (0 for Sunday to 6), and
+    either slots (start and end as 24-hour HHMM numbers), closed, or all_day.
+    Optional: comment (a note under the hours), today, and exception with a
+    date, which replaces that weekday's usual hours for that one week.
+
+heading:
+  twigProp: office_hours__heading
+  name: Heading
+  type: string
+  required: false
+  description: Optional visible title above the schedule
+
+headingLevel:
+  twigProp: office_hours__heading_level
+  name: Heading level
+  type: number
+  required: false
+  default: 2
+  description: Heading level for the title. Upcoming changes uses one level lower.
+
+name:
+  twigProp: office_hours__name
+  name: Name
+  type: string
+  required: false
+  description: What the hours belong to, used in the table captions
+  detail: Falls back to the heading, then to "Hours".
+
+upcoming:
+  twigProp: office_hours__upcoming
+  name: Upcoming changes
+  type: array
+  required: false
+  description: Later exceptions, shown in an Upcoming changes table
+  detail: >
+    Same row shape as days, with the date as the label. The script shows the
+    next three that fall after this week.
+
+status:
+  twigProp: office_hours__status
+  name: Status line
+  type: boolean
+  required: false
+  default: true
+  description: Show the Open now / Closed now line
+  detail: >
+    Computed in the browser by yds-office-hours.js. Hidden until computed, so
+    without JavaScript there is no status at all.
+
+timezone:
+  twigProp: office_hours__timezone
+  name: Time zone
+  type: string
+  required: false
+  description: IANA time zone the hours are in, e.g. America/New_York
+  detail: The status is computed in this zone, not the visitor's.
+
+theme:
+  twigProp: office_hours__theme
+  name: Theme
+  type: string
+  required: false
+  default: default
+  description: Default, or a component theme from one to six
+
+emptyMessage:
+  twigProp: office_hours__empty_message
+  name: Empty message
+  type: string
+  required: false
+  description: Shown when there are no rows at all
+  detail: >
+    Drupal passes a placeholder here in Layout Builder only. Leave it unset
+    and an empty block renders nothing.
