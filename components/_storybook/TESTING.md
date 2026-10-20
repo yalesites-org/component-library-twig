@@ -220,7 +220,19 @@ positioned pseudo-element's geometry cannot be read, it is assumed to cover the 
 States are forced through the Chrome DevTools Protocol (`CSS.forcePseudoState`), on the link and on
 its ancestors (`:hover`, and `:focus-within` for focus), so `.card:hover .card__link` rules apply.
 Every worker first proves forcing works on a probe page and stops the run if it does not. All links
-in a story are forced at once; each is still judged against what is behind it.
+on a page are forced at once; each is still judged against what is behind it. Only links that draw
+a `text-shadow` at rest are forced, with their ancestors: the halo mixins set the shadow at rest and
+only recolour it in other states, and a link with no shadow is never judged. Forcing every link
+gave the same 8,959 failures and the same halo sample count, and took about a third longer.
+
+Forcing everything at once was checked against a real mouse hover and a real keyboard focus on one
+link at a time, on link grid, taxonomy display, wrapped callout and the footer: 2,828 links, 1,988 of
+them failing, with identical colours, halo and verdict for every one.
+
+A link counts as visible only if its whole first line box is on screen when it is hit-tested; the
+check scrolls it to the middle otherwise. A centre within a pixel of the viewport edge hit-tests as
+nothing, and whether a link landed there depended on where the previous one had scrolled to, which
+made a few card links visible in one run and hidden in the next.
 
 ### Running it locally
 
@@ -235,22 +247,25 @@ the pixel check, and this check is Chromium-only by nature.
 
 Environment overrides:
 
-| Variable                    | Default | Effect                                                                          |
-| --------------------------- | ------- | ------------------------------------------------------------------------------- |
-| `LINK_HALO_STORIES`         | all     | Only visit stories whose id matches this regex, e.g. `link-grid`                |
-| `LINK_HALO_CONCURRENCY`     | 4       | Stories rendered in parallel                                                    |
-| `LINK_HALO_STORY_TIMEOUT`   | 60000   | Per-story timeout in ms                                                         |
-| `LINK_HALO_RESULTS_OUT`     | none    | Write every failure, skip, render error and per-render timing to this JSON file |
-| `LINK_HALO_UPDATE_BASELINE` | none    | `1` is the same as `--update-baseline`                                          |
+| Variable                    | Default  | Effect                                                                          |
+| --------------------------- | -------- | ------------------------------------------------------------------------------- |
+| `LINK_HALO_STORIES`         | all      | Only visit stories whose id matches this regex, e.g. `link-grid`                |
+| `LINK_HALO_CONCURRENCY`     | CPUs, ≤4 | Pages working in parallel (`os.availableParallelism()`, at most 4)              |
+| `LINK_HALO_STORY_TIMEOUT`   | 60000    | Per-story timeout in ms                                                         |
+| `LINK_HALO_RESULTS_OUT`     | none     | Write every failure, skip, render error and per-render timing to this JSON file |
+| `LINK_HALO_UPDATE_BASELINE` | none     | `1` is the same as `--update-baseline`                                          |
 
 A new failure prints the check, link text, state, story title and id, the theme combination
-(`global=... section=... component=...`, plus any component-specific `data-*-theme`), where in the
-story the link sits, the variation heading it is under and the two colours, for example:
+(`global=... section=... component=...`, plus any component-specific `data-*-theme`; no `section=`
+means the copy outside any section), the theme controls the story was rendered with (`args:`,
+non-visreg stories only, never the section theme), where in the story the
+link sits, the variation heading it is under and the two colours, for example:
 
 ```text
   halo | "This is a very long link that will wrap lines" | rest
     story:  Molecules/Link grid > Link Grid (molecules-link-grid--link-grid)
     themes: global=five component=one
+    args:   themeColor=one
     where:  link-grid a.link-grid__link #2
     halo #00366b on background #ffffff
 ```
@@ -259,8 +274,11 @@ story the link sits, the variation heading it is under and the two colours, for 
 
 `components/_storybook/link-halo-baseline.json` lists the failures that existed when the check
 landed. Exactly those are tolerated; any failure not listed fails the run. Entries are keyed by
-story id, theme combination, state, check, `where` and link text, with no measured colours, so a
-colour that drifts while still failing does not churn the file.
+story id, theme combination, theme controls (`args`, only when the story has any), state, check,
+`where` and link text, with no measured colours, so a colour that drifts while still failing does
+not churn the file. `args` is in the key because not every control shows up as a `data-*-theme`
+attribute (the header accent is `data-header-accent`): without it, two accents of one header would
+share a key and one could hide the other.
 
 `where` is there because link text alone is not an identity: a visreg story renders several
 components on each section theme, and two of them can carry the same text (the Post and Event
@@ -282,46 +300,125 @@ key differ between two runs of one build.
 - It is a burn-down list. Adding an entry to turn a red build green is not a fix; it is for a
   failure that is known and ticketed.
 
+### Scope: which components are checked
+
+Only components whose links draw the halo, or that pick its colour for the links inside them:
+
+- a stylesheet that includes `link`, `descender-halo-defaults` or `clickable-component-heading-link`
+  from `01-atoms/controls/text-link/_yds-text-link.scss`: bare, namespaced (`atoms.link`), through
+  any mixin that wraps one (resolved transitively), or under a prefix a module is forwarded with
+  (`@forward './button/yds-button' as button-*` makes `atoms.button-<mixin>` count);
+- a `text-shadow` that carries `--color-text-shadow`, directly or through an SCSS variable or custom
+  property that does (`$halo: 0.03em 0 var(--color-text-shadow)` then `text-shadow: $halo`),
+  resolved across files by name;
+- a stylesheet that sets `--color-text-shadow` itself. The footer, header, accordion, skip link and
+  gallery modal do this for links that another component styles, so a link can be wrong there even
+  though its own SCSS is fine.
+
+Comments are ignored. They are listed in `HALO_COMPONENTS` in
+`components/_storybook/link-halo-scope.mjs`, as `<tier>/<component>`; the check plans only stories
+whose file is under one of those directories, regular and visreg alike. Token documentation
+(`00-tokens`), introduction pages and page examples (`05-page-examples`) are never visited, which a
+unit test pins. Within a page, a link whose computed `text-shadow` has no halo shadow in that state
+is counted and left alone, contrast included.
+
+`NO_HALO_LINKS` in the same file lists the in-scope components whose stories have no halo link to
+judge, each with its reason, and the run fails if that list is wrong in either direction (see "When
+the run fails"). Two kinds are on it today. Page chrome and navigation (header, in this section,
+secondary nav, skip link, gallery modal) set the halo colour, but every link they render is a nav,
+branding or CTA link with no halo; most of their links also read as not visible, because closed
+submenus, mobile-only header parts and parent links the desktop menu replaces with a toggle are
+`display: none`. The rest (image captions, action banner, callout, quick links, quote callout,
+wrapped image) style rich-text or text links with the halo that no story renders: a gap in the story
+data, recorded rather than hidden.
+
+**The scope guard.** `link-halo-scope.test.mjs` runs in `npm run test:unit`. It scans every
+stylesheet the build ships, `components/` and `lib/` (the link-treatment styles in `lib/` load with
+every story), and fails if:
+
+- a component draws the halo or sets its colour but is not in `HALO_COMPONENTS`. Fix: add the
+  `<tier>/<component>` it names to `HALO_COMPONENTS`;
+- a stylesheet outside any component (`lib/`) draws the halo or sets its colour. No story is known
+  to cover it. Fix: move the rule into the component under `components/` whose links it styles;
+- a listed component has no `*.stories.js`. Fix: add a story;
+- a listed component no longer draws the halo or sets its colour. Fix: remove it from
+  `HALO_COMPONENTS`;
+- a halo user sits in an excluded tier. Fix: move the styles into a component. The token tier
+  defining each theme's `--color-text-shadow` is expected and allowed.
+
 ### The matrix
 
-The check reads how this Storybook applies themes rather than inventing its own:
+Rendering a story is the slow part, and a global or section theme is only an attribute on an
+ancestor. So the check renders each story once and copies it, on one page, into every theme
+combination (`planPages` in `link-halo.mjs`; `cloneMarkup` and `mountMatrix` in
+`check-link-halo.mjs`):
 
-- **Every `visreg`-tagged story, once.** Those already render the matrix: one story per global
-  theme (`global-theme-stories.mjs`), each showing the component on every section theme and with
-  every component dial. That is global x section x component theme for every component that has a
-  `*.visreg.stories.js`, at no extra rendering cost.
-- **Every other story, in every global theme**, set through the `globalTheme` Storybook global (the
-  same thing the toolbar does), with whatever section and component themes its default args render.
-  These cannot be left to the visreg stories: the visreg stories always wrap the component in a
-  section, and the Link Grid regression only shows with no section around it.
+- **Every regular story** is rendered once per combination of its theme controls other than the
+  section theme (a component dial, a header theme and accent; the check reads the controls from the
+  preview and keeps those that choose a theme, `themeArgs`). Each render is copied into all seven
+  global themes, crossed with:
+  - no section and each of the seven section themes, in the section wrapper the visreg stories use
+    (`createSectionWrapper`). No section is kept because the Link Grid regression only showed there;
+  - or, for a story with its own "Section Theme" control (the controls stories), each value of it,
+    set on the section the story already renders;
+  - or no section at all for page chrome, `SECTIONLESS_COMPONENTS`: the site alert and skip link
+    sit above the header, and the header and footer are siblings of `<main>`, which holds the
+    sections (`04-page-layouts/_yds-base.twig`). No site can put them in a section theme.
+- **Every visreg story** is rendered once per set of stories that differ only in global theme
+  (`OldBluesSectionTwo`, `NewHavenGreenSectionTwo`...) and copied into all seven, each copy keyed by
+  the story that shows that theme, so its baseline keys are the same as rendering each one.
+
+The global theme wrapper is a `data-global-theme` element, as on the real page's
+`.layout-container`. Each page is a new container, removed once it is sampled. Before copying, the
+check waits for the story's fonts and images and two frames, with no fixed delay. It also opens what
+a visitor would open to read the links: the accordion's own "Expand All" control
+(`OPEN_BEFORE_COPY` in `check-link-halo.mjs`), without which every accordion link was hidden and
+none was judged. Every planned page is rendered; none is skipped because of another page's result,
+so the set of pages never depends on timing.
+
+That copying gives exactly what one render per combination gives was checked on link grid, taxonomy
+display, wrapped callout and the footer (16,044 of 16,044 halo samples identical, including all
+2,814 failing ones), on the controls stories' section control (7,203 of 7,203), and against the
+visreg stories' own sections (7,245 identical).
+
+A full run is 314 renders copied into 12,152 theme combinations, about 102,000 links. Two runs of
+one build give identical failures and identical hidden-link counts.
+
+### When the run fails
+
+- **A new failure**: a halo or contrast failure not in the baseline.
+- **A render error** that a one-at-a-time retry does not clear.
+- **It judged nothing**: no halo link sample at all, whatever the filter.
+- **A component went quiet**: a component the run rendered had no halo link judged and is not in
+  `NO_HALO_LINKS`, or one in `NO_HALO_LINKS` had some. Either its links stopped being visible or
+  drawing the halo, or the list needs updating.
+- **Too much of the baseline is stale**: an unfiltered run that no longer reproduces more than 10%
+  of the baseline entries (`STALE_SHARE_LIMIT` in `link-halo.mjs`). A fix retires a handful of
+  entries, or one component's worth; losing a tenth of every known failure at once far more likely
+  means the check stopped seeing links. If the fixes are real, `--update-baseline` records them.
+  Below the limit, stale entries are a warning.
+
+`--update-baseline` refuses to write when the run judged nothing or a component went quiet, as it
+does when a render failed.
 
 Reduced, and why:
 
-- **A non-visreg story with no links is rendered in the first global theme only.** A global theme is
-  an attribute on `<body>`; no template branches on it, so it cannot add or remove a link. About
-  half the non-visreg stories (token tables, layout shells, image atoms) have none, and rendering
-  them seven times was a quarter of the run. On the build this landed against, link counts agreed
-  across all seven global themes for every non-visreg story, so this skips nothing with a link.
+- **Over 64 combinations, theme controls are varied one at a time** rather than crossed. No
+  in-scope story reaches that today; the run names any that do.
+- **Quick links and tabs render at their default component theme.** Their SCSS styles every
+  component theme, but neither their stories nor Drupal offer a dial for it.
 - **One viewport**, the 1200px visreg width. Links that only exist in the mobile menu are not
   checked.
-- **Non-visreg stories get only their default args.** Section and component themes for those come
-  from the visreg stories; a combination neither renders is not checked.
 - **Menus opened by script stay closed.** Forcing `:hover` opens what CSS opens, but a dropdown
   toggled by a behaviour (`aria-expanded`) is not clicked, so its links are hidden and not checked.
-  The primary nav's active second-level item is the known case: its pseudo-element tint is handled
-  (forcing its dropdown open in a scratch run composites it correctly and passes), but no story
-  renders it open.
-- **Remote requests are blocked** (everything `https://`). The build is served over loopback
-  `http://`, so this only removes webfonts and third-party embed scripts: links lay out in the
-  fallback font, which can move them but not recolour them, and links inside a third-party iframe
-  were never reachable.
+- **Remote requests are blocked** (everything `https://`). This only removes webfonts and
+  third-party embed scripts: links lay out in the fallback font, which can move them but not
+  recolour them.
 
-As of landing, a full run is 1,304 renders of 776 stories (510 link-less renders skipped), about
-65,000 link samples across 3,600 story/theme combinations, in about 3m40s locally at the default
-concurrency of 4. Each worker gets its own browser context: four pages in one context shared a
-renderer process and took turns, which made the same run take 9 to 11 minutes. If CI gets close to its
-10-minute budget, `LINK_HALO_RESULTS_OUT` records each render's time (`renders[].ms`), which is
-where to look first.
+Run time: a full run takes 85 to 130 seconds locally at the default four workers (10-core laptop;
+10 workers took 184s and 20 took 191s, so the pool is capped at four). `LINK_HALO_RESULTS_OUT`
+records each render's time (`renders[].ms`, and `renders[].renderMs` for the part spent rendering
+rather than copying and sampling).
 
 ## Questions?
 

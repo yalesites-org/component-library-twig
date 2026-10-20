@@ -1,7 +1,8 @@
 /**
- * Checks every link in the built Storybook for a halo that does not match the
- * background behind it, and for text below WCAG AA contrast, in every theme
- * combination and interaction state (YaleSites-Internal#1939).
+ * Checks every link of the components that draw the link halo for a halo that
+ * does not match the background behind it, and for text below WCAG AA
+ * contrast, in every global x section x component theme combination and
+ * interaction state (YaleSites-Internal#1939).
  *
  * Usage (needs a built Storybook, so run `npm run storybook:build` first):
  *   npm run test:link-halo
@@ -14,7 +15,8 @@
  *
  * Environment overrides:
  *   LINK_HALO_STORIES          only visit stories whose id matches this regex
- *   LINK_HALO_CONCURRENCY      stories rendered in parallel (default 4)
+ *   LINK_HALO_CONCURRENCY      pages working in parallel (default: CPUs, at
+ *                              most 4)
  *   LINK_HALO_STORY_TIMEOUT    per-story timeout in ms (default 60,000)
  *   LINK_HALO_UPDATE_BASELINE  set to 1 to rewrite the baseline (same as the
  *                              --update-baseline flag)
@@ -58,6 +60,8 @@
  * otherwise `.card:hover .card__link` rules would never apply. All links in a
  * story are forced at once, which is the one way this differs from a person
  * hovering one link: every menu that opens on hover is open at the same time.
+ * Only links that draw a text-shadow at rest, and their ancestors, are forced
+ * (`tagLinks`); a link with none is never judged.
  * Each link is still judged against what is behind *it*, so that only
  * matters where one opened panel covers another link, which then reads as
  * hidden for that state. Before any story is checked, each worker proves
@@ -67,11 +71,26 @@
  * Transitions and animations are cut to zero so a forced state is read at
  * its end value rather than partway through the underline slide.
  *
+ * ## The matrix: render once, copy into every theme
+ *
+ * Rendering is the slow part, and a global or section theme is only an
+ * attribute on an ancestor. So each story is rendered once per combination of
+ * its other theme controls (component dial, header accent...; read from the
+ * preview by `discoverStories`, since the built index carries no argTypes, and
+ * set through `updateStoryArgs` as the Controls panel does), and its markup is
+ * then copied, on the same page, into a wrapper for every global theme and
+ * section theme it supports (`planPages`, `cloneMarkup`, `mountMatrix`). The
+ * wrappers are the ones the visreg stories and the real page use, and the
+ * copies were shown to give exactly the samples one render per combination
+ * gives (see "Link halo check" in TESTING.md). Each matrix is a new container,
+ * removed once sampled, so copies never pile up across renders.
+ *
  * @see link-halo.mjs
  * @see serve-storybook-build.mjs
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
+import os from 'node:os';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
@@ -80,15 +99,28 @@ import puppeteer from 'puppeteer';
 
 import {
   STATES,
-  deferredToRender,
+  THEME_CROSS_LIMIT,
+  coverageProblems,
+  componentsChecked,
   diffBaseline,
   evaluateSamples,
   formatReport,
+  orderPages,
+  planPages,
   plural,
-  selectVisits,
-  splitVisits,
   updatedBaseline,
+  visitKey,
 } from './link-halo.mjs';
+import {
+  HALO_COMPONENTS,
+  NO_HALO_LINKS,
+  componentOf,
+  storyInScope,
+  storySectionless,
+} from './link-halo-scope.mjs';
+// Node needs the extension; Storybook's bundler is what lets stories omit it.
+// eslint-disable-next-line import/extensions
+import { createSectionWrapper } from './playground-utils.js';
 import {
   BLOCKED_MEDIA,
   serveDirectory,
@@ -108,21 +140,32 @@ const tokens = require('@yalesites-org/tokens/build/json/tokens.json');
  *
  * The first is the theme the Storybook toolbar starts on
  * (`globalTypes.globalTheme.defaultValue` in
- * `config/emulsify-core/storybook/preview-decorators.js`), the one visreg
- * stories are shown under (they set their own theme on a wrapper, so it only
- * keeps `<body>` predictable), and the one `splitVisits` uses for the first
- * pass.
+ * `config/emulsify-core/storybook/preview-decorators.js`) and the one every
+ * story is rendered in: visreg stories set their own theme on wrappers, so it
+ * only keeps `<body>` predictable, and every other story is then spread
+ * across all of them (`spreadGlobalThemes`).
  */
 const globalThemes = Object.keys(tokens['global-themes']);
+const globalThemeLabels = Object.fromEntries(
+  Object.entries(tokens['global-themes']).map(([theme, { label }]) => [
+    theme,
+    label,
+  ]),
+);
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const buildDir = path.resolve(here, '../..', '.out');
 const baselinePath = path.join(here, 'link-halo-baseline.json');
 
+// One page per CPU, at most four: the work is the browser's, and each
+// worker's page runs in its own renderer process. GitHub's ubuntu runner has
+// 4. On a 10-core laptop 4 workers finished in 138s, 10 in 184s and 20 in
+// 191s: past four, the renderers and the browser process contend for more
+// than the pool gains.
 const concurrency = requirePositiveNumber(
   'LINK_HALO_CONCURRENCY',
   process.env.LINK_HALO_CONCURRENCY,
-  4,
+  Math.min(os.availableParallelism(), 4),
 );
 const storyTimeout = requirePositiveNumber(
   'LINK_HALO_STORY_TIMEOUT',
@@ -184,26 +227,43 @@ const FORCED = {
 };
 
 /**
- * Tags every link in the story, and every ancestor of one, for forcing.
+ * Tags every link in the matrix, and marks the ones whose states are forced.
  *
  * Runs in the page. Links are `a[href]` -- the only element the halo mixins
- * are applied to. Ancestors stop at the Storybook root, so `<body>` never
- * matches `:hover` and nothing outside the story is disturbed.
+ * are applied to. Every link gets `data-link-halo` (its index), which is what
+ * `collectSamples` reads. Only links that draw a text-shadow somewhere in
+ * their text at rest also get `data-link-halo-forced`, and only their
+ * ancestors `data-link-halo-ancestor`: a link with no shadow is never judged
+ * (`evaluateSamples`), so forcing its states and its ancestors' was most of
+ * the devtools traffic for nothing. The halo mixins set the shadow on the
+ * resting link and only recolour it in other states, so this drops no link
+ * that has a halo in some state; `TESTING.md` records the run that showed the
+ * failure set and halo sample count unchanged. Ancestors stop at the root, so
+ * `<body>` never matches `:hover`.
  *
+ * @param {string} rootSelector
+ *   The element holding the links: the matrix (`mountMatrix`).
  * @return {number}
  *   How many links were tagged.
  */
-function tagLinks() {
-  const root = document.querySelector('#storybook-root') ?? document.body;
+function tagLinks(rootSelector) {
+  const root = document.querySelector(rootSelector);
   const links = [...root.querySelectorAll('a[href]')];
+  const shadowed = (link) =>
+    [link, ...link.querySelectorAll('*')].some(
+      (element) => getComputedStyle(element).textShadow !== 'none',
+    );
 
   links.forEach((link, index) => {
     link.setAttribute('data-link-halo', String(index));
+    if (!shadowed(link)) return;
+    link.setAttribute('data-link-halo-forced', '');
     for (
       let node = link.parentElement;
       node && node !== root.parentElement;
       node = node.parentElement
     ) {
+      if (node.hasAttribute('data-link-halo-ancestor')) break;
       if (!node.hasAttribute('data-link-halo')) {
         node.setAttribute('data-link-halo-ancestor', '');
       }
@@ -222,10 +282,12 @@ function tagLinks() {
  * make itself is whether the link is visible at all, because that needs the
  * live layout.
  *
+ * @param {string} rootSelector
+ *   The element holding the links: the matrix (`mountMatrix`).
  * @return {{samples: Array<object>, hidden: number}}
  *   One sample per visible link, and how many links were not visible.
  */
-function collectSamples() {
+function collectSamples(rootSelector) {
   const links = [...document.querySelectorAll('[data-link-halo]')];
   const samples = [];
   let hidden = 0;
@@ -299,7 +361,7 @@ function collectSamples() {
   // `card-collection reference-card a.reference-card__heading-link`. Built
   // from template class names only, so it is the same on every run of an
   // unchanged build.
-  const storyRoot = document.querySelector('#storybook-root');
+  const storyRoot = document.querySelector(rootSelector);
   const whereOf = (link) => {
     const blocks = [];
     for (
@@ -476,6 +538,21 @@ function collectSamples() {
       return null;
     }
 
+    // Text with no shadow at all draws no halo in this state, so it is never
+    // judged (`evaluateSamples`): skip the hit-test and pseudo-element reads,
+    // which are nearly all the cost of a sample.
+    const holderStyle = getComputedStyle(holder);
+    if (holderStyle.textShadow === 'none') {
+      return {
+        index: Number(link.getAttribute('data-link-halo')),
+        text,
+        where,
+        themes: themesOf(link),
+        textShadow: 'none',
+        layers: [],
+      };
+    }
+
     const range = document.createRange();
     range.selectNodeContents(node);
     let box = firstLineBox(range);
@@ -483,7 +560,16 @@ function collectSamples() {
 
     let x = box.left + box.width / 2;
     let y = box.top + box.height / 2;
-    if (!inViewport(x, y)) {
+    // The whole line box must be on screen, not just its centre: a centre
+    // within a pixel of the viewport edge hit-tests as nothing, and whether a
+    // link landed there depended on where the previous link had scrolled to,
+    // which made the same link visible in one run and hidden in the next.
+    const onScreen = (rect) =>
+      rect.left >= 0 &&
+      rect.top >= 0 &&
+      rect.right <= window.innerWidth &&
+      rect.bottom <= window.innerHeight;
+    if (!onScreen(box)) {
       window.scrollBy(
         x < 0 || x >= window.innerWidth ? x - window.innerWidth / 2 : 0,
         y - window.innerHeight / 2,
@@ -577,6 +663,9 @@ function collectSamples() {
     }
 
     if (sample) {
+      sample.story = link
+        .closest('[data-link-halo-clone]')
+        ?.getAttribute('data-link-halo-story');
       samples.push(sample);
     } else {
       hidden += 1;
@@ -618,7 +707,7 @@ async function forceState(session, state) {
     );
   const targets = await Promise.all(
     [
-      ['[data-link-halo]', forced.link],
+      ['[data-link-halo-forced]', forced.link],
       ['[data-link-halo-ancestor]', forced.ancestor],
     ].map(async ([selector, pseudoClasses]) => {
       const { nodeIds } = await session.send('DOM.querySelectorAll', {
@@ -653,7 +742,11 @@ async function forceState(session, state) {
 async function proveForcedStates(page, session) {
   await page.setContent(`
     <style>
-      a { color: rgb(0, 0, 0); border: 1px solid rgb(0, 0, 0); }
+      a {
+        color: rgb(0, 0, 0);
+        border: 1px solid rgb(0, 0, 0);
+        text-shadow: 1px 0 rgb(0, 0, 0);
+      }
       a:hover { color: rgb(1, 2, 3); }
       a:focus-visible { color: rgb(4, 5, 6); }
       div:hover > a { border-color: rgb(7, 8, 9); }
@@ -661,7 +754,7 @@ async function proveForcedStates(page, session) {
     </style>
     <div id="storybook-root"><a href="#probe">probe</a></div>
   `);
-  await page.evaluate(tagLinks);
+  await page.evaluate(tagLinks, '#storybook-root');
 
   const expected = {
     hover: 'rgb(1, 2, 3) rgb(7, 8, 9)',
@@ -762,55 +855,252 @@ function showStory({ id, globals, timeout }) {
 }
 
 /**
- * How long to let fonts and the last layout pass settle before sampling.
+ * Sets a story's theme args, the way the Controls panel does, and waits for
+ * the re-render.
  *
- * Bounded, because only one of the workers' pages is the browser's front
- * tab: a background tab gets no animation frames at all, so an unbounded
- * `requestAnimationFrame` (or `document.fonts.ready` behind a stalled font
- * load) held a worker until the 4-minute protocol timeout. The reads that
- * follow -- computed styles and `elementsFromPoint` -- force a synchronous
- * layout anyway, so a frame is a nicety rather than a requirement.
+ * Runs in the page, after the story has rendered. Storybook re-renders on
+ * every `updateStoryArgs`, even when nothing changed, so there is always a
+ * `storyRendered` to wait for. Args are kept per story for the life of the
+ * page, so every visit of a story with theme args sets all of them, defaults
+ * included, rather than trusting what an earlier visit left behind.
+ *
+ * @param {{id: string, args: Object<string, string>, timeout: number}} request
+ *   The story and the args to set.
+ * @return {Promise<void>}
+ *   Resolves once the story has re-rendered; rejects if it errors or times
+ *   out.
  */
-const SETTLE_MS = 250;
+function applyArgs({ id, args, timeout }) {
+  // eslint-disable-next-line no-underscore-dangle
+  const channel = window.__STORYBOOK_ADDONS_CHANNEL__;
+  if (!channel) {
+    return Promise.reject(new Error('The Storybook channel is not available.'));
+  }
+
+  return new Promise((resolve, reject) => {
+    const failures = ['storyErrored', 'storyThrewException'];
+    let timer;
+    let onRendered;
+    let onFailure;
+    const finish = (error) => {
+      clearTimeout(timer);
+      channel.off('storyRendered', onRendered);
+      failures.forEach((event) => channel.off(event, onFailure));
+      if (error) reject(error);
+      else resolve();
+    };
+    onRendered = (renderedId) => {
+      if (renderedId === id) finish();
+    };
+    onFailure = (detail) => {
+      finish(
+        new Error(
+          `Story failed to render with its theme args: ${
+            detail?.title ?? detail?.message ?? String(detail)
+          }`,
+        ),
+      );
+    };
+
+    timer = setTimeout(
+      () =>
+        finish(
+          new Error(`Timed out after ${timeout}ms setting args on ${id}.`),
+        ),
+      timeout,
+    );
+    channel.on('storyRendered', onRendered);
+    failures.forEach((event) => channel.on(event, onFailure));
+    channel.emit('updateStoryArgs', { storyId: id, updatedArgs: args });
+  });
+}
 
 /**
- * Brings a story up on the page, in the given global theme.
+ * Reads every story's argTypes and initial args from the preview.
+ *
+ * Runs in the page. The built `index.json` has no argTypes, so the only
+ * place to learn which controls a story has is the preview's own story
+ * store, after it has loaded every CSF file. Only options and labels are
+ * kept: that is all `themeArgs` looks at, and the rest does not serialize.
+ *
+ * @return {Promise<Object<string, {argTypes: object, initialArgs: object}>>}
+ *   Story id to its argTypes and initial args.
+ */
+async function readStories() {
+  // eslint-disable-next-line no-underscore-dangle
+  const store = window.__STORYBOOK_PREVIEW__?.storyStoreValue;
+  if (!store?.cacheAllCSFFiles || !store?.extract) {
+    throw new Error(
+      'The Storybook preview has no story store to read argTypes from.',
+    );
+  }
+  await store.cacheAllCSFFiles();
+  return Object.fromEntries(
+    Object.entries(store.extract()).map(([id, story]) => [
+      id,
+      {
+        initialArgs: Object.fromEntries(
+          Object.entries(story.initialArgs ?? {}).filter(
+            ([, value]) => typeof value === 'string',
+          ),
+        ),
+        argTypes: Object.fromEntries(
+          Object.entries(story.argTypes ?? {})
+            .filter(([, argType]) => Array.isArray(argType.options))
+            .map(([name, argType]) => [
+              name,
+              {
+                name: argType.name,
+                options: argType.options.filter(
+                  (option) => typeof option === 'string',
+                ),
+              },
+            ]),
+        ),
+      },
+    ]),
+  );
+}
+
+/**
+ * Loads the preview once and reads every story's controls from it.
+ *
+ * @param {import('puppeteer').Browser} browser
+ *   The launched browser.
+ * @param {string} origin
+ *   Origin serving the built Storybook.
+ * @param {string} id
+ *   Any story id, to load the preview with.
+ * @return {Promise<Object<string, {argTypes: object, initialArgs: object}>>}
+ *   From `readStories`.
+ */
+async function discoverStories(browser, origin, id) {
+  const context = await browser.createBrowserContext();
+  try {
+    const page = await context.newPage();
+    const session = await page.createCDPSession();
+    await session.send('Network.enable');
+    await session.send('Network.setBlockedURLs', {
+      urls: [...BLOCKED_MEDIA, ...BLOCKED_REMOTE],
+    });
+    await page.goto(storyUrl(origin, id), {
+      waitUntil: 'load',
+      timeout: storyTimeout,
+    });
+    await page.waitForFunction(
+      // eslint-disable-next-line no-underscore-dangle
+      () => window.__STORYBOOK_PREVIEW__?.storyStoreValue,
+      { timeout: storyTimeout, polling: 50 },
+    );
+    return await page.evaluate(readStories);
+  } finally {
+    await context.close();
+  }
+}
+
+/**
+ * Chrome switches that keep every worker's page running at full speed.
+ *
+ * Only one page is the front tab. Without these, the others get no animation
+ * frames and throttled timers, and `layoutReady` waits for two frames.
+ */
+const UNTHROTTLED = [
+  '--disable-background-timer-throttling',
+  '--disable-backgrounding-occluded-windows',
+  '--disable-renderer-backgrounding',
+];
+
+/**
+ * Waits until an element is laid out for good: fonts loaded, every image in
+ * it loaded or failed (an image arriving late moves everything below it), and
+ * two frames drawn. No fixed delay: under load a fixed one let the story be
+ * copied, or the matrix sampled, before that, which changed which links were
+ * visible from run to run.
+ *
+ * Lazy images are switched to eager first. Left lazy, one loads only when
+ * sampling scrolls near it, so whether it has pushed the next link down by
+ * the time that link is hit-tested was a race.
+ *
+ * Runs in the page.
+ *
+ * @param {{selector: string, timeout: number}} request
+ *   The element, and how long to wait at most before failing the render.
+ * @return {Promise<void>}
+ */
+function layoutReady({ selector, timeout }) {
+  const all = [...document.querySelectorAll(`${selector} img`)];
+  all.forEach((image) => {
+    if (image.loading === 'lazy') image.setAttribute('loading', 'eager');
+  });
+  const images = all.filter((image) => !image.complete);
+  const settled = Promise.all([
+    document.fonts?.ready,
+    ...images.map(
+      (image) =>
+        new Promise((resolve) => {
+          image.addEventListener('load', resolve, { once: true });
+          image.addEventListener('error', resolve, { once: true });
+        }),
+    ),
+  ]).then(
+    () =>
+      new Promise((resolve) => {
+        requestAnimationFrame(() => requestAnimationFrame(resolve));
+      }),
+  );
+  let timer;
+  return Promise.race([
+    settled,
+    new Promise((resolve, reject) => {
+      timer = setTimeout(
+        () => reject(new Error(`The matrix was not ready after ${timeout}ms.`)),
+        timeout,
+      );
+    }),
+  ]).finally(() => clearTimeout(timer));
+}
+
+/**
+ * Brings a story up on the page, in the given global theme and theme args.
  *
  * @param {import('puppeteer').Page} page
  *   The worker's page.
  * @param {string} origin
  *   Origin serving the built Storybook.
- * @param {string} id
- *   Story id.
+ * @param {{id: string, args: ?Object<string, string>}} visit
+ *   The story, and the theme args to set on it (null for none).
  * @param {string} theme
  *   Global theme key.
- * @param {boolean} inPlace
- *   Switch the already loaded preview rather than loading `iframe.html`.
+ * @param {?{id: string, theme: string}} current
+ *   What the page is already showing, to switch in place from; null to load
+ *   `iframe.html`. If it is this very story in this global theme, there is
+ *   nothing to switch -- the switch would never re-render, and so never
+ *   finish -- and only the args are set.
  * @return {Promise<void>}
  */
-async function renderVisit(page, origin, id, theme, inPlace) {
-  if (inPlace) {
-    await page.evaluate(showStory, {
-      id,
-      globals: { globalTheme: theme },
-      timeout: storyTimeout,
-    });
+async function renderVisit(page, origin, visit, theme, current) {
+  const { id, args } = visit;
+  if (current) {
+    if (current.id !== id || current.theme !== theme) {
+      await page.evaluate(showStory, {
+        id,
+        globals: { globalTheme: theme },
+        timeout: storyTimeout,
+      });
+    }
   } else {
     await page.goto(storyUrl(origin, id, { globalTheme: theme }), {
       waitUntil: 'load',
       timeout: storyTimeout,
     });
     // Inserted directly rather than through `page.addStyleTag`, which waits
-    // for the style element's load event -- one more thing a background tab
-    // can sit on.
+    // for the style element's load event.
     await page.evaluate((css) => {
       const style = document.createElement('style');
       style.textContent = css;
       document.head.append(style);
     }, FREEZE_MOTION);
   }
-  // Polled on a timer: the default polls on animation frames, which a
-  // background tab never gets (see SETTLE_MS).
   await page.waitForFunction(
     () => document.querySelector('#storybook-root')?.childElementCount > 0,
     { timeout: storyTimeout, polling: 50 },
@@ -821,31 +1111,154 @@ async function renderVisit(page, origin, id, theme, inPlace) {
     { timeout: storyTimeout, polling: 50 },
     theme,
   );
-  await page.evaluate(
-    (budget) =>
-      Promise.race([
-        Promise.all([
-          document.fonts?.ready,
-          new Promise((resolve) => {
-            requestAnimationFrame(() => requestAnimationFrame(resolve));
-          }),
-        ]),
-        new Promise((resolve) => {
-          setTimeout(resolve, budget);
-        }),
-      ]),
-    SETTLE_MS,
-  );
+  if (args) {
+    await page.evaluate(applyArgs, { id, args, timeout: storyTimeout });
+  }
+  // Behaviours and images settle after the render event; the markup is
+  // copied from here, so it must be final.
+  await page.evaluate(layoutReady, {
+    selector: '#storybook-root',
+    timeout: storyTimeout,
+  });
+}
+
+/** Where the matrix of copies lives on the page while it is sampled. */
+const MATRIX = '#link-halo-matrix';
+
+/**
+ * The markup of one copy of a render: the story's markup in a global theme
+ * wrapper, and in a section if the copy has one.
+ *
+ * The global theme wrapper is the one the visreg stories use
+ * (`renderThemeSection` in `global-theme-stories.mjs`), the section the one
+ * they wrap components in (`createSectionWrapper`, with the options every
+ * visreg story passes). A story with its own section control already renders
+ * a section; its copies get no second one, and `mountMatrix` sets the theme
+ * on the story's own instead.
+ *
+ * @param {object} plan
+ *   A page from `planPages`.
+ * @param {{story: string, global: string, section: ?string}} clone
+ *   The copy.
+ * @param {number} index
+ *   Its position on the page.
+ * @param {string} html
+ *   The rendered story.
+ * @return {string}
+ *   The copy's markup.
+ */
+const cloneMarkup = (plan, clone, index, html) => {
+  const content =
+    clone.section && !plan.sectionArg
+      ? createSectionWrapper(clone.section, html, {
+          width: 'site',
+          primaryWidth: '100%',
+        })
+      : html;
+  const ownSection =
+    clone.section && plan.sectionArg
+      ? ` data-link-halo-section="${clone.section}"`
+      : '';
+  return `<div data-global-theme="${clone.global}" data-link-halo-clone="${index}" data-link-halo-story="${clone.story}"${ownSection}>${content}</div>`;
+};
+
+/**
+ * Puts the matrix of copies on the page, in a new container, with the
+ * story's own render hidden.
+ *
+ * Runs in the page. The container is always new: a page whose last matrix is
+ * still there is a bug that would multiply links on every render, so it
+ * throws instead of reusing it. Theme attributes that the markup carries
+ * itself are set to the copy's: a visreg story's own global theme wrapper,
+ * and a story's own section.
+ *
+ * @param {{markup: string, visreg: boolean, selector: string}} request
+ *   The copies, whether they are of a visreg story, and the container's id
+ *   as a selector.
+ * @return {number}
+ *   Links in the matrix.
+ */
+function mountMatrix({ markup, visreg, selector }) {
+  if (document.querySelector(selector)) {
+    throw new Error('The previous matrix is still on the page.');
+  }
+  const root = document.querySelector('#storybook-root');
+  const container = document.createElement('div');
+  container.id = selector.slice(1);
+  container.innerHTML = markup;
+  root.style.display = 'none';
+  root.after(container);
+
+  container.querySelectorAll('[data-link-halo-clone]').forEach((clone) => {
+    const section = clone.getAttribute('data-link-halo-section');
+    if (section) {
+      const own = clone.querySelector('[data-section-theme]');
+      if (!own) {
+        throw new Error(
+          'The story has a section theme control but renders no section.',
+        );
+      }
+      own.setAttribute('data-section-theme', section);
+    }
+    if (visreg) {
+      const global = clone.getAttribute('data-global-theme');
+      clone.querySelectorAll('[data-global-theme]').forEach((element) => {
+        element.setAttribute('data-global-theme', global);
+      });
+    }
+  });
+
+  return container.querySelectorAll('a[href]').length;
 }
 
 /**
- * Renders one story and samples every link in it, in every state.
+ * Takes the matrix off the page and shows the story again.
  *
- * The first visit on a page loads `iframe.html`; later visits switch in
- * place (`showStory`), falling back to a full load once if the switch fails.
- * Any error that survives that drops back to a full load for the next visit,
- * so one broken story cannot leave the next one rendering into a confused
- * preview.
+ * Runs in the page.
+ *
+ * @param {string} selector
+ *   The container's id as a selector.
+ */
+function unmountMatrix(selector) {
+  document.querySelectorAll(selector).forEach((element) => element.remove());
+  document.querySelector('#storybook-root')?.style.removeProperty('display');
+}
+
+/**
+ * Disclosure controls the check opens before it copies a story, so the links
+ * they hide are judged rather than counted as hidden. The accordion renders
+ * every item closed, which left all of its links unjudged; its own
+ * "Expand All" control opens them the way a visitor would, and the measured
+ * heights it sets travel with the copied markup.
+ */
+const OPEN_BEFORE_COPY = ['.accordion__toggle-all[aria-expanded="false"]'];
+
+/**
+ * Clicks every control in `OPEN_BEFORE_COPY` in the rendered story.
+ *
+ * Runs in the page.
+ *
+ * @param {string[]} selectors
+ *   The controls.
+ * @return {number}
+ *   How many were clicked.
+ */
+function openDisclosures(selectors) {
+  const root = document.querySelector('#storybook-root');
+  const controls = selectors.flatMap((selector) => [
+    ...root.querySelectorAll(selector),
+  ]);
+  controls.forEach((control) => control.click());
+  return controls.length;
+}
+
+/**
+ * Renders one story once, copies it into every theme combination of its
+ * page, and samples every link in every copy, in every state.
+ *
+ * The first render on a page loads `iframe.html`; later ones switch in place
+ * (`showStory`), falling back to a full load once if the switch fails. Any
+ * error that survives that drops back to a full load for the next page.
  *
  * @param {import('puppeteer').Page} page
  *   A page sized to the check viewport.
@@ -853,49 +1266,73 @@ async function renderVisit(page, origin, id, theme, inPlace) {
  *   Its devtools session.
  * @param {string} origin
  *   Origin serving the built Storybook.
- * @param {object} visit
- *   From `selectVisits`.
- * @param {boolean} loaded
- *   Whether the page already has a working preview loaded.
- * @return {Promise<{result: object, loaded: boolean}>}
- *   The visit with `samples`, `links`, `hidden` and `ms`, or with `error`;
- *   and whether the page now has a working preview, for the next visit.
+ * @param {object} plan
+ *   A page from `planPages`.
+ * @param {?{id: string, theme: string}} current
+ *   What the page is showing if it has a working preview, else null.
+ * @return {Promise<{result: object, current: ?{id: string, theme: string}}>}
+ *   The page's result -- `links`, `hidden`, `samples`, `ms`, `renderMs` --
+ *   or `error`; and what the browser page now shows.
  */
-async function checkVisit(page, session, origin, visit, loaded) {
-  const { id, title, name, importPath, globalTheme } = visit;
-  const result = { id, title, name, importPath, globalTheme };
-  const theme = globalTheme ?? globalThemes[0];
+async function checkPage(page, session, origin, plan, current) {
+  const { id, title, name, importPath, args } = plan;
+  const result = { id, title, name, importPath, args, clones: plan.clones };
+  const theme = globalThemes[0];
   const started = Date.now();
   let fallback;
 
   try {
     try {
-      await renderVisit(page, origin, id, theme, loaded);
+      await renderVisit(page, origin, { id, args }, theme, current);
     } catch (error) {
-      // An in-place switch can still turn into a real navigation (a story
-      // whose embed script reloads the frame does this), which destroys the
-      // page's context under the switch. One full load of the same story
-      // recovers that without spending a retry on it.
-      if (!loaded) throw error;
+      if (!current) throw error;
       fallback = error.message;
-      await renderVisit(page, origin, id, theme, false);
+      await renderVisit(page, origin, { id, args }, theme, null);
     }
+    if ((await page.evaluate(openDisclosures, OPEN_BEFORE_COPY)) > 0) {
+      await page.evaluate(layoutReady, {
+        selector: '#storybook-root',
+        timeout: storyTimeout,
+      });
+    }
+    const renderedAt = Date.now();
 
-    const links = await page.evaluate(tagLinks);
+    const html = await page.evaluate(
+      () => document.querySelector('#storybook-root').innerHTML,
+    );
     const samples = [];
+    let links = 0;
     let hidden = 0;
 
-    if (links > 0) {
-      // One state at a time: they are forced on the same nodes.
-      for (let index = 0; index < STATES.length; index += 1) {
-        const state = STATES[index];
-        const release = await forceState(session, state);
-        const collected = await page.evaluate(collectSamples);
-        await release();
-        hidden += collected.hidden;
-        collected.samples.forEach((sample) => {
-          samples.push({ ...sample, story: id, title, name, state });
+    if (/<a\s[^>]*href/i.test(html)) {
+      const markup = plan.clones
+        .map((clone, index) => cloneMarkup(plan, clone, index, html))
+        .join('');
+      try {
+        links = await page.evaluate(mountMatrix, {
+          markup,
+          visreg: plan.visreg,
+          selector: MATRIX,
         });
+        await page.evaluate(layoutReady, {
+          selector: MATRIX,
+          timeout: storyTimeout,
+        });
+        await page.evaluate(tagLinks, MATRIX);
+
+        // One state at a time: they are forced on the same nodes.
+        for (let index = 0; index < STATES.length; index += 1) {
+          const state = STATES[index];
+          const release = await forceState(session, state);
+          const collected = await page.evaluate(collectSamples, MATRIX);
+          await release();
+          hidden += collected.hidden;
+          collected.samples.forEach((sample) => {
+            samples.push({ ...sample, title, name, state, args });
+          });
+        }
+      } finally {
+        await page.evaluate(unmountMatrix, MATRIX);
       }
     }
 
@@ -906,13 +1343,14 @@ async function checkVisit(page, session, origin, visit, loaded) {
         hidden,
         samples,
         ms: Date.now() - started,
+        renderMs: renderedAt - started,
         ...(fallback ? { fallback } : {}),
       },
-      loaded: true,
+      current: { id, theme },
     };
   } catch (error) {
     return {
-      loaded: false,
+      current: null,
       result: {
         ...result,
         links: 0,
@@ -925,29 +1363,33 @@ async function checkVisit(page, session, origin, visit, loaded) {
 }
 
 /**
- * Checks every visit, a few at a time, one page per worker.
+ * Checks every page, one browser page per worker, each worker taking the next
+ * from the front of the queue (`orderPages`).
+ *
+ * Every page is checked; none is skipped on the strength of another page's
+ * result, because which page finishes first depends on timing.
  *
  * @param {import('puppeteer').Browser} browser
  *   The launched browser.
  * @param {string} origin
  *   Origin serving the built Storybook.
- * @param {Array<object>} visits
- *   What to render.
+ * @param {Array<object>} plans
+ *   What to check, in order.
  * @param {number} workers
  *   Pages to run in parallel.
- * @return {Promise<Array<object>>}
- *   One result per visit, in order.
+ * @return {Promise<{results: Array<object>}>}
+ *   One result per page.
  */
-async function checkAll(browser, origin, visits, workers) {
-  const results = new Array(visits.length);
-  const progressEvery = Math.max(1, Math.ceil(visits.length / 10));
+async function checkAll(browser, origin, plans, workers) {
+  const results = [];
+  const progressEvery = Math.max(1, Math.ceil(plans.length / 10));
   let next = 0;
   let done = 0;
 
   const worker = async () => {
     // A browser context per worker, not just a page: pages of one origin in
-    // one context can share a renderer process, and then "four at a time"
-    // is four pages taking turns on one main thread.
+    // one context can share a renderer process, and then the pool is pages
+    // taking turns on one main thread.
     const context = await browser.createBrowserContext();
     const page = await context.newPage();
 
@@ -965,23 +1407,17 @@ async function checkAll(browser, origin, visits, workers) {
       await session.send('DOM.enable');
       await session.send('CSS.enable');
       await proveForcedStates(page, session);
-      let loaded = false;
+      let current = null;
 
-      while (next < visits.length) {
-        const index = next;
+      while (next < plans.length) {
+        const plan = plans[next];
         next += 1;
-        const checked = await checkVisit(
-          page,
-          session,
-          origin,
-          visits[index],
-          loaded,
-        );
-        results[index] = checked.result;
-        loaded = checked.loaded;
+        const checked = await checkPage(page, session, origin, plan, current);
+        results.push(checked.result);
+        ({ current } = checked);
         done += 1;
-        if (done % progressEvery === 0 || done === visits.length) {
-          console.log(`  rendered ${done}/${visits.length}`);
+        if (done % progressEvery === 0 || done === plans.length) {
+          console.log(`  ${done}/${plans.length} pages`);
         }
       }
     } finally {
@@ -990,14 +1426,14 @@ async function checkAll(browser, origin, visits, workers) {
   };
 
   await Promise.all(
-    Array.from({ length: Math.min(workers, visits.length) }, worker),
+    Array.from({ length: Math.min(workers, plans.length) }, worker),
   );
 
-  return results;
+  return { results };
 }
 
 /**
- * Re-renders anything that failed, one at a time.
+ * Re-checks any page that failed, one at a time.
  *
  * Same reasoning as the pixel check: the largest stories can miss a timeout
  * while competing for the CPU, and one that fails alone is genuinely broken
@@ -1009,44 +1445,29 @@ async function checkAll(browser, origin, visits, workers) {
  *   Origin serving the built Storybook.
  * @param {Array<object>} results
  *   Results from the parallel pass.
+ * @param {Array<object>} plans
+ *   The pages they came from.
  * @return {Promise<Array<object>>}
  *   The same results, with retried entries replaced.
  */
-async function retryFailures(browser, origin, results) {
-  const failed = results.filter((entry) => entry.error);
-  if (failed.length === 0) return results;
+async function retryFailures(browser, origin, results, plans) {
+  const failed = new Set(results.filter((entry) => entry.error).map(visitKey));
+  if (failed.size === 0) return results;
 
-  console.log(`\nRetrying ${plural(failed.length, 'render')} one at a time.`);
-  const key = ({ id, globalTheme }) => `${id}|${globalTheme}`;
+  console.log(`\nRetrying ${plural(failed.size, 'page')} one at a time.`);
   const retried = new Map(
-    (await checkAll(browser, origin, failed, 1)).map((entry) => [
-      key(entry),
-      entry,
-    ]),
+    (
+      await checkAll(
+        browser,
+        origin,
+        plans.filter((plan) => failed.has(visitKey(plan))),
+        1,
+      )
+    ).results.map((entry) => [visitKey(entry), entry]),
   );
 
   return results.map((entry) =>
-    entry.error ? retried.get(key(entry)) : entry,
-  );
-}
-
-/**
- * Renders a set of visits in parallel, then retries what failed.
- *
- * @param {import('puppeteer').Browser} browser
- *   The launched browser.
- * @param {string} origin
- *   Origin serving the built Storybook.
- * @param {Array<object>} visits
- *   What to render.
- * @return {Promise<Array<object>>}
- *   One result per visit, in order.
- */
-async function renderAll(browser, origin, visits) {
-  return retryFailures(
-    browser,
-    origin,
-    await checkAll(browser, origin, visits, concurrency),
+    entry.error ? retried.get(visitKey(entry)) : entry,
   );
 }
 
@@ -1094,79 +1515,123 @@ const baselineFile = (failures) =>
 
 async function main() {
   const indexPath = path.join(buildDir, 'index.json');
-  let visits;
-  // Every story in the index, so an unfiltered run can retire baseline
-  // entries for stories that no longer exist. A filtered run cannot tell a
-  // deleted story from one it was told to leave out, so it gets null.
-  let indexedStories = null;
+  let index;
 
   try {
-    const index = JSON.parse(await readFile(indexPath, 'utf8'));
-    visits = selectVisits(index, globalThemes, storyFilter);
-    if (!storyFilter) {
-      indexedStories = new Set(storyEntries(index).map((entry) => entry.id));
+    index = JSON.parse(await readFile(indexPath, 'utf8'));
+    if (storyEntries(index).length === 0) {
+      throw new Error('The index has no stories.');
     }
   } catch (error) {
-    console.error(`Could not select stories from ${indexPath}.`);
+    console.error(`Could not read stories from ${indexPath}.`);
     console.error(error.message);
     process.exitCode = 1;
     return;
   }
 
-  const visitedStories = new Set(visits.map((visit) => visit.id));
   const baseline = await readBaseline();
   const started = Date.now();
-
-  const { first, deferred } = splitVisits(visits, globalThemes);
-
-  console.log(
-    `Checking links in up to ${plural(visits.length, 'render')} of ` +
-      `${plural(visitedStories.size, 'story', 'stories')} at ` +
-      `${VIEWPORT_WIDTH}px wide, ${concurrency} at a time.`,
-  );
+  let plans;
+  let results;
 
   // Both closed on every path, for the reason given in the pixel check: a
   // leaked server keeps the event loop alive and hangs CI.
   const server = await serveDirectory(buildDir);
-  let results;
 
   try {
     const browser = await puppeteer.launch({
-      args: ['--no-sandbox', '--disable-dev-shm-usage', '--hide-scrollbars'],
+      args: [
+        '--no-sandbox',
+        '--disable-dev-shm-usage',
+        '--hide-scrollbars',
+        ...UNTHROTTLED,
+      ],
       protocolTimeout: storyTimeout * 4,
     });
 
     try {
-      // Two passes: every visreg story and every other story in the first
-      // global theme, then the other global themes of the stories that
-      // turned out to have links (see `splitVisits`).
-      console.log(`First pass: ${plural(first.length, 'render')}.`);
-      const firstResults = await renderAll(browser, server.origin, first);
-      const rest = deferredToRender(deferred, firstResults);
-      console.log(
-        `Second pass: ${plural(rest.length, 'render')} in the other global ` +
-          `themes; ${plural(deferred.length - rest.length, 'render')} of ` +
-          'stories with no links skipped.',
+      const stories = await discoverStories(
+        browser,
+        server.origin,
+        storyEntries(index)[0].id,
       );
-      results = [
-        ...firstResults,
-        ...(await renderAll(browser, server.origin, rest)),
+      plans = planPages(index, {
+        globalThemes,
+        labels: globalThemeLabels,
+        filter: storyFilter,
+        stories,
+        inScope: storyInScope,
+        sectionless: storySectionless,
+      });
+
+      const oneAtATime = [
+        ...new Set(
+          plans.filter((plan) => !plan.crossed).map((plan) => plan.id),
+        ),
       ];
+      const copies = plans.reduce((sum, plan) => sum + plan.clones.length, 0);
+      console.log(
+        `Checking links in ${plural(plans.length, 'render')} of the ` +
+          `${HALO_COMPONENTS.length} components that draw the halo, copied ` +
+          `into ${plural(
+            copies,
+            'theme combination',
+          )}, at ${VIEWPORT_WIDTH}px ` +
+          `wide, ${concurrency} at a time.`,
+      );
+      if (oneAtATime.length > 0) {
+        console.log(
+          `Theme controls varied one at a time rather than crossed (over ` +
+            `${THEME_CROSS_LIMIT} combinations): ${oneAtATime.join(', ')}.`,
+        );
+      }
+
+      const checked = await checkAll(
+        browser,
+        server.origin,
+        orderPages(plans),
+        concurrency,
+      );
+      results = await retryFailures(
+        browser,
+        server.origin,
+        checked.results,
+        plans,
+      );
     } finally {
       await browser.close();
     }
+  } catch (error) {
+    console.error(error.message);
+    process.exitCode = 1;
+    return;
   } finally {
     await server.close();
   }
 
+  // Every planned page is rendered: nothing is skipped on another page's
+  // result, so the set of pages never depends on timing.
+  if (results.length !== plans.length) {
+    console.error(
+      `Checked ${results.length} of ${plans.length} planned pages; every ` +
+        'page must be checked.',
+    );
+    process.exitCode = 1;
+    return;
+  }
+
+  const visits = plans.flatMap((plan) =>
+    plan.clones.map((clone) => ({ id: clone.story, args: plan.args })),
+  );
+  const visitedStories = new Set(visits.map((visit) => visit.id));
+  const storyPaths = new Map(
+    storyEntries(index).map((entry) => [entry.id, entry.importPath]),
+  );
+  const visited = new Set(visits.map(visitKey));
+  const complete = !storyFilter;
   const errors = results.filter((entry) => entry.error);
   const evaluation = evaluateSamples(results.flatMap((entry) => entry.samples));
-  const diff = diffBaseline(
-    evaluation.failures,
-    baseline,
-    visitedStories,
-    indexedStories,
-  );
+  const diff = diffBaseline(evaluation.failures, baseline, visited, complete);
   const links = results.reduce((sum, entry) => sum + entry.links, 0);
   const hidden = results.reduce((sum, entry) => sum + entry.hidden, 0);
   const withLinks = new Set(
@@ -1192,7 +1657,10 @@ async function main() {
           errors,
           // Per render: links found, links hidden, and how long it took --
           // what to look at when the run gets slow.
-          renders: results.map(({ samples, ...render }) => render),
+          renders: results.map(({ samples, clones, ...render }) => ({
+            ...render,
+            clones: clones.length,
+          })),
         },
         null,
         2,
@@ -1209,7 +1677,36 @@ async function main() {
     errors,
   })}`;
 
+  // A run that judged nothing, or stopped judging a component, or no longer
+  // reproduces much of the baseline, has most likely stopped seeing links
+  // rather than found them all fixed, so it fails instead of passing quietly.
+  const problems = coverageProblems({
+    checkedByComponent: componentsChecked(evaluation.checkedByStory, (id) =>
+      componentOf(storyPaths.get(id) ?? id),
+    ),
+    components: [
+      ...new Set(plans.map((plan) => componentOf(plan.importPath))),
+    ].sort(),
+    expectedEmpty: NO_HALO_LINKS,
+    // An update rewrites the baseline, so only an ordinary run can leave it
+    // stale.
+    stale: updateBaseline ? 0 : diff.stale.length,
+    baselineSize: baseline.length,
+    complete,
+  });
+  const untrusted =
+    problems.length > 0
+      ? `\nThe run cannot be trusted:\n${problems
+          .map((problem) => `  ${problem}`)
+          .join('\n')}`
+      : '';
+
   if (updateBaseline) {
+    if (untrusted) {
+      console.error(`${untrusted}\n\nSo the baseline was not updated.`);
+      process.exitCode = 1;
+      return;
+    }
     if (errors.length > 0) {
       console.error(
         `\n${plural(
@@ -1225,8 +1722,8 @@ async function main() {
     const entries = updatedBaseline(
       evaluation.failures,
       baseline,
-      visitedStories,
-      indexedStories,
+      visited,
+      complete,
     );
     await writeFile(baselinePath, baselineFile(entries));
     console.log(
@@ -1239,8 +1736,9 @@ async function main() {
   }
 
   console.log(report);
+  if (untrusted) console.log(untrusted);
 
-  if (diff.newFailures.length > 0 || errors.length > 0) {
+  if (diff.newFailures.length > 0 || errors.length > 0 || problems.length > 0) {
     process.exitCode = 1;
   }
 }

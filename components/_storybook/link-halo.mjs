@@ -529,125 +529,420 @@ export function normaliseLinkText(text) {
  * link has its own entry. The variation heading is still left out: it is
  * report context, and a reworded heading should not invalidate the file.
  *
- * @param {{story: string, themes: string, state: string, check: string, where?: string, link: string}} failure
+ * `args` are the theme args the story was rendered with (`formatArgs`), for a
+ * non-visreg story that has any. Most of them also show up in `themes`, as
+ * the `data-*-theme` attribute they set, but not all do -- a header accent is
+ * `data-header-accent` -- and without them two accents of one header would
+ * share a key, so one could hide the other. A render with no theme args
+ * leaves the key exactly as it was before args existed.
+ *
+ * @param {{story: string, themes: string, args?: string, state: string, check: string, where?: string, link: string}} failure
  *   A failure, or a baseline entry.
  * @return {string}
  *   The key.
  */
-export const failureKey = ({ story, themes, state, check, where = '', link }) =>
-  [story, themes, state, check, where, link].join(' | ');
+export const failureKey = ({
+  story,
+  themes,
+  args = '',
+  state,
+  check,
+  where = '',
+  link,
+}) =>
+  [story, themes, ...(args ? [args] : []), state, check, where, link].join(
+    ' | ',
+  );
 
 /**
- * Picks the stories to visit, and the global themes to visit them in.
+ * Option values a theme dial can take.
  *
- * Two kinds of story are visited:
- *
- * - Every `visreg`-tagged story, once. These already render the theme matrix:
- *   one story per global theme (`global-theme-stories.mjs`), each showing the
- *   component on every section theme and with every component dial. That is
- *   the global x section x component matrix for every component that has a
- *   `*.visreg.stories.js`, with no extra rendering work from this check.
- * - Every other story, once per global theme, set through the `globalTheme`
- *   Storybook global. These get every global theme, and whatever section and
- *   component themes their default args render. They cannot be left to the
- *   visreg stories even where a component has one: the visreg stories always
- *   wrap the component in a section, and the Link Grid regression this check
- *   was written for (YaleSites-Internal#1938) only shows with no section
- *   around it -- which is exactly how the interactive story renders it.
- *
- * Not every one of those renders is made: `splitVisits` and
- * `deferredToRender` skip the extra global themes of a story that turned out
- * to have no links.
- *
- * @param {object} index
- *   The parsed `index.json` of a built Storybook.
- * @param {string[]} globalThemes
- *   Global theme keys, from tokens.
- * @param {RegExp} [filter]
- *   Only keep stories whose id matches.
- * @return {Array<{id: string, title: string, name: string, importPath: string, globalTheme: ?string}>}
- *   One visit per story and global theme, ordered by id then theme. A
- *   `globalTheme` of null means the story sets its own.
+ * Every theme set in tokens and `theme-constants.js` -- global, section,
+ * component, header, footer, accent -- is keyed by these words, so an arg
+ * whose options are all from this list is choosing a theme rather than a
+ * layout (`basic`/`mega`) or a count (a `Columns` control also offers `two`
+ * and `three`, which is why the label has to say so too; see `themeArgs`).
  */
-export function selectVisits(index, globalThemes, filter) {
-  const visits = [];
-  storyEntries(index)
-    .filter((entry) => !filter || filter.test(entry.id))
-    .forEach(({ id, title, name, importPath, tags }) => {
-      const story = { id, title, name, importPath };
-      if ((tags ?? []).includes('visreg')) {
-        visits.push({ ...story, globalTheme: null });
-      } else {
-        globalThemes.forEach((globalTheme) => {
-          visits.push({ ...story, globalTheme });
-        });
-      }
-    });
+const THEME_VALUES = new Set([
+  'default',
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+]);
 
-  if (visits.length === 0) {
-    throw new Error(
-      filter
-        ? `No stories match ${filter}.`
-        : 'No stories to visit in the Storybook index -- checking nothing is not a pass.',
-    );
-  }
+/**
+ * How many theme combinations a story may be crossed into before its theme
+ * args are varied one at a time instead.
+ *
+ * The largest real cross is 49 (a section theme arg and a seven-way dial on
+ * one story). The two token colour-pairing showcases expose eleven dials,
+ * one per example component, which crossed would be several million renders;
+ * each of those dials drives a different component, so varying one at a time
+ * still renders every link in every theme its own dial offers. `planPages`
+ * marks those pages, and the run names the stories, so the reduction is
+ * never silent.
+ */
+export const THEME_CROSS_LIMIT = 64;
 
-  return visits;
+/**
+ * The args of a story that choose a theme, from its `argTypes`.
+ *
+ * An arg counts when its control offers at least two options, every option is
+ * a theme key (`THEME_VALUES`), and its label says it is a theme or a dial --
+ * the repo's own convention for these controls ("Callout Theme (dial)",
+ * "Section Theme", "Header Accent Color (dial)"). Both conditions are needed:
+ * "Footer Variation (dial)" offers `basic`/`mega`, and "Columns" offers theme
+ * words but is not a theme.
+ *
+ * @param {Object<string, {name?: string, options?: Array}>} [argTypes]
+ *   The story's argTypes, as Storybook's preview resolves them.
+ * @return {Array<{name: string, options: string[]}>}
+ *   The theme args, sorted by name.
+ */
+export function themeArgs(argTypes = {}) {
+  return Object.entries(argTypes ?? {})
+    .filter(
+      ([key, argType]) =>
+        Array.isArray(argType?.options) &&
+        argType.options.length > 1 &&
+        argType.options.every(
+          (option) => typeof option === 'string' && THEME_VALUES.has(option),
+        ) &&
+        /theme|dial/i.test(argType.name ?? key),
+    )
+    .map(([name, argType]) => ({ name, options: [...argType.options] }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 /**
- * Splits the visits into a first pass and the renders that can wait on it.
+ * Every combination of a story's theme args to render it in.
  *
- * About half the non-visreg stories have no links at all (token tables,
- * layout shells, image atoms), and rendering each of them in all seven
- * global themes was a quarter of the run time for nothing. A global theme is
- * a `data-global-theme` attribute on `<body>`; no template branches on it, so
- * it cannot add or remove a link. The first pass is therefore every visreg
- * story plus every other story in the first global theme, and the remaining
- * global themes of a story are only rendered if that first render found a
- * link (`deferredToRender`). On the build this was written against, link
- * counts agreed across all seven global themes for every one of the 173
- * non-visreg stories, so the pruning skips nothing that has a link.
+ * The story's own initial values come first, so the first pass renders what
+ * the story shows by default. Up to `THEME_CROSS_LIMIT` combinations the args
+ * are crossed in full: a section theme with every dial value, a header theme
+ * with every accent. Past it, each arg is varied on its own with the others
+ * left at their initial values, and `crossed` is false so the caller can say
+ * so.
  *
- * @param {Array<object>} visits
- *   From `selectVisits`.
- * @param {string[]} globalThemes
- *   Global theme keys, the first being the one the first pass uses.
- * @return {{first: Array<object>, deferred: Array<object>}}
- *   Both in `selectVisits` order.
+ * @param {Array<{name: string, options: string[]}>} args
+ *   From `themeArgs`.
+ * @param {Object<string, *>} [initialArgs]
+ *   The story's initial args. A value that is not one of the options (unset,
+ *   say) falls back to the first option.
+ * @param {number} [limit]
+ *   Most combinations to cross in full.
+ * @return {{combinations: Array<Object<string, string>>, crossed: boolean}}
+ *   One args object per combination, initial values first. A story with no
+ *   theme args gets no combinations.
  */
-export function splitVisits(visits, globalThemes) {
-  const [firstTheme] = globalThemes;
-  const isFirst = (visit) =>
-    visit.globalTheme === null || visit.globalTheme === firstTheme;
+export function themeArgCombinations(
+  args,
+  initialArgs = {},
+  limit = THEME_CROSS_LIMIT,
+) {
+  if (args.length === 0) return { combinations: [], crossed: true };
+
+  const initial = Object.fromEntries(
+    args.map(({ name, options }) => [
+      name,
+      options.includes(initialArgs?.[name]) ? initialArgs[name] : options[0],
+    ]),
+  );
+  const size = args.reduce((product, arg) => product * arg.options.length, 1);
+
+  if (size > limit) {
+    return {
+      crossed: false,
+      combinations: [
+        initial,
+        ...args.flatMap(({ name, options }) =>
+          options
+            .filter((option) => option !== initial[name])
+            .map((option) => ({ ...initial, [name]: option })),
+        ),
+      ],
+    };
+  }
+
+  // Each arg's options with the initial value moved to the front, so the
+  // first combination of the cross is the initial one.
+  const ordered = args.map(({ name, options }) => ({
+    name,
+    options: [initial[name], ...options.filter((o) => o !== initial[name])],
+  }));
   return {
-    first: visits.filter(isFirst),
-    deferred: visits.filter((visit) => !isFirst(visit)),
+    crossed: true,
+    combinations: ordered.reduce(
+      (combinations, { name, options }) =>
+        combinations.flatMap((combination) =>
+          options.map((option) => ({ ...combination, [name]: option })),
+        ),
+      [{}],
+    ),
   };
 }
 
 /**
- * The deferred visits still worth rendering after the first pass.
+ * Args as the report, the baseline and a render key quote them.
  *
- * A story is dropped only when its first render succeeded and found no link.
- * One that failed to render is kept: it already fails the run, and its other
- * global themes say whether the failure is the story or the theme.
- *
- * @param {Array<object>} deferred
- *   From `splitVisits`.
- * @param {Array<{id: string, links: number, error?: string}>} firstResults
- *   Results of the first pass.
- * @return {Array<object>}
- *   The deferred visits to render.
+ * @param {?Object<string, string>} args
+ *   Theme args of a visit, or null.
+ * @return {string}
+ *   E.g. `bgColor=two sectionTheme=four`, or '' for none.
  */
-export function deferredToRender(deferred, firstResults) {
-  const linkless = new Set(
-    firstResults
-      .filter((result) => !result.error && result.links === 0)
-      .map((result) => result.id),
-  );
-  return deferred.filter((visit) => !linkless.has(visit.id));
+export const formatArgs = (args) =>
+  Object.keys(args ?? {})
+    .sort()
+    .map((name) => `${name}=${args[name]}`)
+    .join(' ');
+
+/**
+ * Identifies a render group: a story with one set of theme args, in every
+ * global theme.
+ *
+ * Also what a baseline entry traces back to (`groupOfEntry`): an entry
+ * carries its story and its args, and its global theme is in its `themes`.
+ *
+ * @param {{id: string, args?: ?Object}} visit
+ *   A visit, or a render result.
+ * @return {string}
+ *   The key.
+ */
+export const visitKey = ({ id, args }) => `${id}|${formatArgs(args)}`;
+
+/** The render group a baseline entry or failure came from (`visitKey`). */
+export const groupOfEntry = ({ story, args = '' }) => `${story}|${args}`;
+
+/**
+ * Section themes a component can sit in, `theme-constants.js`'s
+ * `sectionThemes` (which plain Node cannot import, as it loads `tokens.json`
+ * without an import attribute; `link-halo.test.mjs` pins the two together).
+ */
+export const SECTION_THEMES = [
+  'default',
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+];
+
+/**
+ * Whether an arg is the story's own section theme control.
+ *
+ * @param {{name?: string}} argType
+ *   The arg's argType, as Storybook resolves it.
+ * @return {boolean}
+ *   True for a control labelled "Section Theme".
+ */
+const isSectionArg = (argType) => /^section theme\b/i.test(argType?.name ?? '');
+
+/**
+ * Splits a visreg story's name into its global theme and the rest.
+ *
+ * Visreg files export one story per global theme, named for the theme's label
+ * (`OldBlues`, `OldBluesSectionTwo`; see `global-theme-stories.mjs`), and
+ * Storybook turns that into "Old Blues Section Two".
+ *
+ * @param {string} name
+ *   The story's display name.
+ * @param {Object<string, string>} labels
+ *   Global theme key to label.
+ * @return {{global: ?string, rest: string}}
+ *   The global theme the name starts with (null if none) and what follows.
+ */
+export function splitGlobalThemeName(name, labels) {
+  const match = Object.entries(labels)
+    .filter(([, label]) => name === label || name.startsWith(`${label} `))
+    .sort((a, b) => b[1].length - a[1].length)[0];
+  return match
+    ? { global: match[0], rest: name.slice(match[1].length).trim() }
+    : { global: null, rest: name };
 }
+
+/**
+ * Plans the pages the check builds: one per story and set of theme args,
+ * each holding a copy of that one render in every combination of global theme
+ * and section theme the component supports (YaleSites-Internal#1939).
+ *
+ * Rendering a story is the slow part, and a global or section theme is only an
+ * attribute on an ancestor, so the check renders each story once and then
+ * copies the markup into a wrapper per combination on a single page
+ * (`check-link-halo.mjs`). A page here is the plan for that:
+ *
+ * - A non-visreg story, once per combination of its theme args other than
+ *   the section theme (`themeArgs`, `themeArgCombinations`): a component dial,
+ *   a header accent. Each is copied into every global theme, crossed with:
+ *   - every value of the story's own "Section Theme" control, if it has one,
+ *     set on the section the story renders (`sectionArg`);
+ *   - no section, for a component that only ever sits outside one
+ *     (`sectionless`: the header, the footer);
+ *   - otherwise no section *and* each section theme, in the section wrapper
+ *     the visreg stories use. No section is kept because the Link Grid
+ *     regression (YaleSites-Internal#1938) only showed there.
+ * - A visreg story, once per set of stories that differ only in global theme
+ *   (`OldBluesSectionTwo`, `NewHavenGreenSectionTwo`...): the first is
+ *   rendered and copied into every global theme, each copy keyed by the story
+ *   that shows that theme. A visreg story with no global theme in its name is
+ *   copied into every global theme too, all under its own id.
+ *
+ * @param {object} index
+ *   The parsed `index.json` of a built Storybook.
+ * @param {object} options
+ * @param {string[]} options.globalThemes
+ *   Global theme keys, from tokens; the first is the one stories render in.
+ * @param {Object<string, string>} options.labels
+ *   Global theme key to label.
+ * @param {RegExp} [options.filter]
+ *   Only keep stories whose id matches.
+ * @param {Object<string, {argTypes?: object, initialArgs?: object}>} [options.stories]
+ *   Each story's argTypes and initial args, read from the preview.
+ * @param {function(object): boolean} [options.inScope]
+ *   Only keep index entries this accepts.
+ * @param {function(object): boolean} [options.sectionless]
+ *   True for an index entry whose component never sits in a section.
+ * @param {string[]} [options.sectionThemes]
+ *   Section theme keys.
+ * @return {Array<object>}
+ *   Pages, `{id, title, name, importPath, visreg, args, crossed, sectionArg,
+ *   clones}`, where `id` is the story rendered, `args` the theme args it is
+ *   rendered with (null for none; the section arg is never among them), and
+ *   each clone is `{story, global, section}` -- `section` null for none.
+ */
+export function planPages(
+  index,
+  {
+    globalThemes,
+    labels,
+    filter,
+    stories = {},
+    inScope = () => true,
+    sectionless = () => false,
+    sectionThemes = SECTION_THEMES,
+  },
+) {
+  const pages = [];
+  const visregGroups = new Map();
+  const entries = storyEntries(index)
+    .filter((entry) => inScope(entry))
+    .filter((entry) => !filter || filter.test(entry.id));
+
+  entries.forEach((entry) => {
+    const { id, title, name, importPath, tags } = entry;
+    const story = { id, title, name, importPath };
+
+    if ((tags ?? []).includes('visreg')) {
+      const { global, rest } = splitGlobalThemeName(name, labels);
+      if (!global) {
+        pages.push({
+          ...story,
+          visreg: true,
+          args: null,
+          crossed: true,
+          sectionArg: null,
+          clones: globalThemes.map((theme) => ({
+            story: id,
+            global: theme,
+            section: null,
+          })),
+        });
+        return;
+      }
+      const key = `${importPath}|${rest}`;
+      if (!visregGroups.has(key)) {
+        visregGroups.set(key, { members: new Map(), pages: pages.length });
+        pages.push(null);
+      }
+      visregGroups.get(key).members.set(global, story);
+      return;
+    }
+
+    const argTypes = stories[id]?.argTypes ?? {};
+    const sectionArg =
+      Object.entries(argTypes).find(
+        ([, argType]) =>
+          isSectionArg(argType) &&
+          (argType.options ?? []).length > 0 &&
+          argType.options.every((option) => sectionThemes.includes(option)),
+      )?.[0] ?? null;
+    const otherArgTypes = Object.fromEntries(
+      Object.entries(argTypes).filter(([arg]) => arg !== sectionArg),
+    );
+    let sections = [null, ...sectionThemes];
+    if (sectionArg) sections = [...argTypes[sectionArg].options];
+    else if (sectionless(entry)) sections = [null];
+
+    const { combinations, crossed } = themeArgCombinations(
+      themeArgs(otherArgTypes),
+      stories[id]?.initialArgs,
+    );
+    (combinations.length > 0 ? combinations : [null]).forEach((args) => {
+      pages.push({
+        ...story,
+        visreg: false,
+        args,
+        crossed,
+        sectionArg,
+        clones: globalThemes.flatMap((global) =>
+          sections.map((section) => ({ story: id, global, section })),
+        ),
+      });
+    });
+  });
+
+  visregGroups.forEach(({ members, pages: at }) => {
+    const first =
+      members.get(globalThemes.find((theme) => members.has(theme))) ??
+      [...members.values()][0];
+    pages[at] = {
+      ...first,
+      visreg: true,
+      args: null,
+      crossed: true,
+      sectionArg: null,
+      clones: globalThemes
+        .filter((theme) => members.has(theme))
+        .map((theme) => ({
+          story: members.get(theme).id,
+          global: theme,
+          section: null,
+        })),
+    };
+  });
+
+  if (pages.length === 0) {
+    throw new Error(
+      filter
+        ? `No stories in scope match ${filter}.`
+        : 'No stories to visit in the Storybook index -- checking nothing is not a pass.',
+    );
+  }
+  return pages;
+}
+
+/**
+ * Orders pages for the worker pool, most copies first (longest processing
+ * time first), keeping plan order among equals so the run is repeatable.
+ *
+ * @param {Array<object>} pages
+ *   From `planPages`.
+ * @return {Array<object>}
+ *   The same pages, reordered.
+ */
+export const orderPages = (pages) =>
+  pages
+    .map((page, position) => ({ page, position }))
+    .sort(
+      (a, b) =>
+        b.page.clones.length - a.page.clones.length || a.position - b.position,
+    )
+    .map(({ page }) => page);
 
 /**
  * Turns the raw per-link samples from every visit into results.
@@ -659,18 +954,32 @@ export function deferredToRender(deferred, firstResults) {
  * @param {Array<{story: string, title: string, name: string, state: string, themes: Object<string, string>, variant: string, text: string}>} samples
  *   One per visible link per state, each carrying the fields
  *   `evaluateSample` reads.
- * @return {{checked: number, skipped: Array<object>, failures: Array<object>, combinations: number}}
- *   `failures` sorted by key; `combinations` counts distinct
- *   (story, theme combination) pairs that had a link checked.
+ * @return {{checked: number, checkedByStory: Map<string, number>, notHalo: number, skipped: Array<object>, failures: Array<object>, combinations: number}}
+ *   `failures` sorted by key; `notHalo` counts samples of links that draw no
+ *   halo in that state, which are not judged; `combinations` counts distinct
+ *   (story, theme combination, theme args) triples that had a link checked.
  */
 export function evaluateSamples(samples) {
   const failures = new Map();
   const skipped = [];
   const combinations = new Set();
+  const checkedByStory = new Map();
   let checked = 0;
+  let notHalo = 0;
 
   samples.forEach((sample) => {
+    // Only links that draw the halo are this check's business: a link with
+    // no halo shadow in this state (a CTA button, a plain nav link) is
+    // counted and left alone, contrast included.
+    if (
+      haloShadows(parseTextShadow(sample.textShadow), sample.fontSize)
+        .length === 0
+    ) {
+      notHalo += 1;
+      return;
+    }
     const themes = formatThemes(sample.themes ?? {});
+    const args = formatArgs(sample.args);
     const link = normaliseLinkText(sample.text);
     const verdict = evaluateSample(sample);
 
@@ -678,6 +987,7 @@ export function evaluateSamples(samples) {
       skipped.push({
         story: sample.story,
         themes,
+        args,
         state: sample.state,
         link,
         reason: verdict.skip,
@@ -686,12 +996,17 @@ export function evaluateSamples(samples) {
     }
 
     checked += 1;
-    combinations.add(`${sample.story} | ${themes}`);
+    checkedByStory.set(
+      sample.story,
+      (checkedByStory.get(sample.story) ?? 0) + 1,
+    );
+    combinations.add(`${sample.story} | ${themes} | ${args}`);
 
     verdict.problems.forEach(({ check, detail }) => {
       const failure = {
         story: sample.story,
         themes,
+        ...(args ? { args } : {}),
         state: sample.state,
         check,
         where: sample.where ?? '',
@@ -715,6 +1030,8 @@ export function evaluateSamples(samples) {
 
   return {
     checked,
+    checkedByStory,
+    notHalo,
     skipped,
     combinations: combinations.size,
     failures: [...failures.values()].sort((a, b) =>
@@ -724,50 +1041,159 @@ export function evaluateSamples(samples) {
 }
 
 /**
- * Whether this run can judge a baseline entry: its story was rendered, or the
- * run covered the whole index and the story is no longer in it.
+ * The most of the baseline an unfiltered run may leave stale before it fails.
+ *
+ * A fix retires a handful of entries, or one component's worth; a run that
+ * stopped reproducing a tenth of every known failure has far more likely
+ * stopped seeing the links (a render that silently came out empty, a broken
+ * selector) than had them all fixed. Past this share the run fails and says
+ * so; if the fixes are real, `--update-baseline` records them.
+ */
+export const STALE_SHARE_LIMIT = 0.1;
+
+/**
+ * Judged halo samples per component, from per-story counts.
+ *
+ * @param {Map<string, number>} checkedByStory
+ *   From `evaluateSamples`.
+ * @param {function(string): string} componentOfStory
+ *   Story id to `<tier>/<component>`.
+ * @return {Map<string, number>}
+ *   Component to judged samples.
+ */
+export function componentsChecked(checkedByStory, componentOfStory) {
+  const counts = new Map();
+  checkedByStory.forEach((count, story) => {
+    const component = componentOfStory(story);
+    counts.set(component, (counts.get(component) ?? 0) + count);
+  });
+  return counts;
+}
+
+/**
+ * Reasons a run cannot be trusted even though it found nothing new.
+ *
+ * - It judged no halo link at all.
+ * - A component it rendered had no halo link judged, unless that component
+ *   is expected to have none (`NO_HALO_LINKS` in `link-halo-scope.mjs`); and
+ *   one expected to have none that now has some, so the exemption cannot go
+ *   stale.
+ * - An unfiltered run left more than `STALE_SHARE_LIMIT` of the baseline
+ *   stale.
+ *
+ * @param {object} input
+ * @param {Map<string, number>} input.checkedByComponent
+ *   From `componentsChecked`.
+ * @param {string[]} input.components
+ *   The components the run rendered.
+ * @param {Object<string, string>} [input.expectedEmpty]
+ *   Components expected to have no halo link, with the reason.
+ * @param {number} input.stale
+ *   Stale baseline entries.
+ * @param {number} input.baselineSize
+ *   Baseline entries.
+ * @param {boolean} input.complete
+ *   True for an unfiltered run.
+ * @return {string[]}
+ *   One message per problem; none is a pass.
+ */
+export function coverageProblems({
+  checkedByComponent,
+  components,
+  expectedEmpty = {},
+  stale,
+  baselineSize,
+  complete,
+}) {
+  const problems = [];
+  const total = [...checkedByComponent.values()].reduce(
+    (sum, count) => sum + count,
+    0,
+  );
+  if (total === 0) {
+    problems.push(
+      'No halo link was judged at all. Checking nothing is not a pass: the ' +
+        'stories rendered no link with a halo, or the check could not see ' +
+        'them (a filter that matches no halo story, an empty render).',
+    );
+  }
+  components.forEach((component) => {
+    const count = checkedByComponent.get(component) ?? 0;
+    if (count === 0 && !(component in expectedEmpty)) {
+      problems.push(
+        `${component} is in scope, but no halo link in its stories was ` +
+          'judged. Its links are hidden, gone, or no longer draw the halo. ' +
+          'Fix the story or the styles; if it really has no halo link, add ' +
+          'it to NO_HALO_LINKS in link-halo-scope.mjs with the reason.',
+      );
+    }
+    if (count > 0 && component in expectedEmpty) {
+      problems.push(
+        `${component} is in NO_HALO_LINKS, but ${plural(
+          count,
+          'halo link sample',
+        )} in its stories were judged. Remove it from NO_HALO_LINKS.`,
+      );
+    }
+  });
+  if (
+    complete &&
+    baselineSize > 0 &&
+    stale / baselineSize > STALE_SHARE_LIMIT
+  ) {
+    problems.push(
+      `${stale} of ${baselineSize} baseline entries ` +
+        `(${Math.round((stale / baselineSize) * 100)}%) were not reproduced, ` +
+        `over the ${STALE_SHARE_LIMIT * 100}% limit. The check has most ` +
+        'likely stopped seeing links rather than found them fixed; if the ' +
+        'fixes are real, run with --update-baseline.',
+    );
+  }
+  return problems;
+}
+
+/**
+ * Whether this run can judge a baseline entry.
+ *
+ * A run with no story filter judges every entry: anything it did not render
+ * no longer exists -- the story was deleted or renamed, or the dial option was
+ * taken away -- so its entries can only be stale. A filtered run cannot tell
+ * a render that is gone from one it was told to leave out, so it judges only
+ * the renders it selected (`groupOfEntry`, `visitKey`).
  *
  * @param {object} entry
  *   A baseline entry.
- * @param {Set<string>} visitedStories
- *   Story ids this run rendered.
- * @param {?Set<string>} indexedStories
- *   Every story id in the index, or null for a filtered run.
+ * @param {Set<string>} visited
+ *   `visitKey`s of the renders this run selected.
+ * @param {boolean} complete
+ *   True for a run with no story filter.
  * @return {boolean}
  *   True if the run speaks for this entry.
  */
-const judged = (entry, visitedStories, indexedStories) =>
-  visitedStories.has(entry.story) ||
-  (indexedStories !== null && !indexedStories.has(entry.story));
+const judged = (entry, visited, complete) =>
+  complete || visited.has(groupOfEntry(entry));
 
 /**
  * Compares this run's failures with the baseline.
  *
- * An entry is stale when the run could have reproduced it and did not. With a
- * story filter in force, only the stories that were rendered say anything:
- * an entry for one that was filtered out is neither confirmed nor stale. An
- * unfiltered run (`indexedStories` given) also judges entries for stories
- * that are no longer in the index at all -- a deleted or renamed story --
- * which would otherwise sit in the file forever.
+ * An entry is stale when the run could have reproduced it and did not (see
+ * `judged`). With a story filter in force, only the renders that were made
+ * say anything: an entry for one that was filtered out is neither confirmed
+ * nor stale. An unfiltered run also retires entries for renders that no
+ * longer exist, which would otherwise sit in the file forever.
  *
  * @param {Array<object>} failures
  *   `evaluateSamples(...).failures`.
  * @param {Array<object>} baseline
  *   The baseline file's `failures`.
- * @param {Set<string>} visitedStories
- *   Story ids this run rendered.
- * @param {?Set<string>} [indexedStories]
- *   Every story id in the index, for an unfiltered run; null (the default)
- *   for a filtered one.
+ * @param {Set<string>} visited
+ *   `visitKey`s of the renders this run selected.
+ * @param {boolean} [complete]
+ *   True for a run with no story filter.
  * @return {{newFailures: Array<object>, known: Array<object>, stale: Array<object>}}
  *   `newFailures` is what fails the run.
  */
-export function diffBaseline(
-  failures,
-  baseline,
-  visitedStories,
-  indexedStories = null,
-) {
+export function diffBaseline(failures, baseline, visited, complete = false) {
   const baselineKeys = new Set(baseline.map(failureKey));
   const currentKeys = new Set(failures.map(failureKey));
 
@@ -778,16 +1204,27 @@ export function diffBaseline(
     known: failures.filter((failure) => baselineKeys.has(failureKey(failure))),
     stale: baseline.filter(
       (entry) =>
-        judged(entry, visitedStories, indexedStories) &&
-        !currentKeys.has(failureKey(entry)),
+        judged(entry, visited, complete) && !currentKeys.has(failureKey(entry)),
     ),
   };
 }
 
-/** Only the identifying fields, in a fixed order, for the baseline file. */
-const baselineEntry = ({ story, themes, state, check, where = '', link }) => ({
+/**
+ * Only the identifying fields, in a fixed order, for the baseline file.
+ * `args` is left out when there are none, like it is left out of the key.
+ */
+const baselineEntry = ({
   story,
   themes,
+  args = '',
+  state,
+  check,
+  where = '',
+  link,
+}) => ({
+  story,
+  themes,
+  ...(args ? { args } : {}),
   state,
   check,
   where,
@@ -798,32 +1235,24 @@ const baselineEntry = ({ story, themes, state, check, where = '', link }) => ({
  * The baseline file's `failures` after an update.
  *
  * This run's failures replace every entry the run can judge (see
- * `diffBaseline`): those for the stories it visited and, in an unfiltered
- * run, those for stories no longer in the index. Entries for stories a
- * filter left out are kept, so updating from a partial run cannot silently
- * drop the rest of the file.
+ * `judged`): all of them in an unfiltered run, only those for the renders it
+ * made in a filtered one. Entries for renders a filter left out are kept, so
+ * updating from a partial run cannot silently drop the rest of the file.
  *
  * @param {Array<object>} failures
  *   This run's failures.
  * @param {Array<object>} baseline
  *   The current baseline's `failures`.
- * @param {Set<string>} visitedStories
- *   Story ids this run rendered.
- * @param {?Set<string>} [indexedStories]
+ * @param {Set<string>} visited
+ *   As for `diffBaseline`.
+ * @param {boolean} [complete]
  *   As for `diffBaseline`.
  * @return {Array<object>}
  *   The new entries, sorted by key.
  */
-export function updatedBaseline(
-  failures,
-  baseline,
-  visitedStories,
-  indexedStories = null,
-) {
+export function updatedBaseline(failures, baseline, visited, complete = false) {
   return [
-    ...baseline.filter(
-      (entry) => !judged(entry, visitedStories, indexedStories),
-    ),
+    ...baseline.filter((entry) => !judged(entry, visited, complete)),
     ...failures,
   ]
     .map(baselineEntry)
@@ -836,6 +1265,7 @@ const describeFailure = (failure) =>
     `  ${failure.check} | "${failure.link}" | ${failure.state}`,
     `    story:  ${failure.title} (${failure.story})`,
     `    themes: ${failure.themes}`,
+    ...(failure.args ? [`    args:   ${failure.args}`] : []),
     ...(failure.where ? [`    where:  ${failure.where}`] : []),
     ...(failure.variant ? [`    under:  ${failure.variant}`] : []),
     `    ${failure.detail}${
@@ -848,7 +1278,8 @@ const describeFailure = (failure) =>
  *
  * @param {object} report
  * @param {number} report.visits
- *   Story renders, counting each global theme of a non-visreg story.
+ *   Renders, counting each global theme and theme combination of a
+ *   non-visreg story.
  * @param {number} report.stories
  *   Distinct stories rendered.
  * @param {object} report.evaluation
@@ -856,7 +1287,7 @@ const describeFailure = (failure) =>
  * @param {object} report.diff
  *   `diffBaseline` output.
  * @param {Array<object>} report.errors
- *   Visits that would not render, `{id, globalTheme, error}`.
+ *   Visits that would not render, `{id, globalTheme, args, error}`.
  * @param {number} [report.limit]
  *   How many new failures to print in full.
  * @return {string}
@@ -870,7 +1301,7 @@ export function formatReport({
   errors,
   limit = 50,
 }) {
-  const { checked, skipped, combinations, failures } = evaluation;
+  const { checked, notHalo = 0, skipped, combinations, failures } = evaluation;
   const sections = [
     `Checked ${plural(checked, 'link sample')} (each link once per state: ` +
       `${STATES.join(', ')}) across ${plural(
@@ -881,7 +1312,7 @@ export function formatReport({
         stories,
         'story',
         'stories',
-      )}.`,
+      )}; ${plural(notHalo, 'link sample')} without a halo left alone.`,
     `${plural(failures.length, 'distinct failure')}: ` +
       `${diff.known.length} in the baseline, ${diff.newFailures.length} new. ` +
       `${plural(
@@ -934,7 +1365,14 @@ export function formatReport({
         .map(
           (entry) =>
             `  ${entry.id}${
-              entry.globalTheme ? ` (global=${entry.globalTheme})` : ''
+              entry.globalTheme || entry.args
+                ? ` (${[
+                    entry.globalTheme && `global=${entry.globalTheme}`,
+                    formatArgs(entry.args),
+                  ]
+                    .filter(Boolean)
+                    .join(' ')})`
+                : ''
             }: ${entry.error}`,
         )
         .join('\n'),

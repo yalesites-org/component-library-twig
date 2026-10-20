@@ -12,27 +12,37 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 import {
   CHANNEL_TOLERANCE,
   STATES,
+  THEME_CROSS_LIMIT,
   composite,
-  deferredToRender,
   diffBaseline,
   evaluateSample,
   evaluateSamples,
   failureKey,
+  formatArgs,
   formatReport,
   formatThemes,
+  groupOfEntry,
   haloShadows,
   isLargeText,
   normaliseLinkText,
   parseColor,
   parseTextShadow,
   resolveBackground,
-  selectVisits,
+  SECTION_THEMES,
+  STALE_SHARE_LIMIT,
+  componentsChecked,
+  coverageProblems,
+  orderPages,
+  planPages,
+  splitGlobalThemeName,
   splitTopLevel,
-  splitVisits,
+  themeArgCombinations,
+  themeArgs,
   updatedBaseline,
 } from './link-halo.mjs';
 
@@ -373,7 +383,7 @@ test('diffBaseline splits new, known and stale failures', () => {
     entry('a', 'fixed'),
     entry('b', 'unvisited'),
   ];
-  const diff = diffBaseline(failures, baseline, new Set(['a']));
+  const diff = diffBaseline(failures, baseline, new Set(['a|']));
   assert.deepEqual(
     diff.newFailures.map((f) => f.link),
     ['new'],
@@ -393,7 +403,7 @@ test('updatedBaseline replaces visited stories and keeps the rest', () => {
   const updated = updatedBaseline(
     [{ ...entry('a', 'new'), detail: 'x', count: 3, title: 't', variant: 'v' }],
     [entry('a', 'fixed'), entry('b', 'unvisited')],
-    new Set(['a']),
+    new Set(['a|']),
   );
   assert.deepEqual(updated, [entry('a', 'new'), entry('b', 'unvisited')]);
 });
@@ -412,7 +422,7 @@ test('a link sharing text with a baselined one in another component is still new
   const diff = diffBaseline(
     failures,
     [{ ...entry(failures[0].story, 'Foo', post), themes: failures[0].themes }],
-    new Set([failures[0].story]),
+    new Set([`${failures[0].story}|`]),
   );
   assert.deepEqual(
     diff.newFailures.map((failure) => failure.where),
@@ -430,38 +440,36 @@ test('a link sharing text with a baselined one in another component is still new
   );
 });
 
-test('an unfiltered run reports entries for deleted stories as stale', () => {
+test('an unfiltered run reports entries for renders that no longer exist as stale', () => {
   const baseline = [entry('a', 'kept'), entry('gone', 'old')];
   const failures = [entry('a', 'kept')];
-  const visited = new Set(['a']);
+  const visited = new Set(['a|']);
 
   // Filtered: `gone` might just have been filtered out, so it says nothing.
   assert.deepEqual(diffBaseline(failures, baseline, visited).stale, []);
 
-  // Unfiltered: `gone` is not in the index at all.
-  const indexed = new Set(['a']);
+  // Unfiltered: `gone` was not rendered, so it no longer exists.
   assert.deepEqual(
-    diffBaseline(failures, baseline, visited, indexed).stale.map(
+    diffBaseline(failures, baseline, visited, true).stale.map(
       (stale) => stale.story,
     ),
     ['gone'],
   );
   // A stale entry warns; it is never a new failure.
   assert.deepEqual(
-    diffBaseline(failures, baseline, visited, indexed).newFailures,
+    diffBaseline(failures, baseline, visited, true).newFailures,
     [],
   );
 });
 
-test('an unfiltered update drops entries for deleted stories, a filtered one keeps them', () => {
+test('an unfiltered update drops entries for renders that are gone, a filtered one keeps them', () => {
   const baseline = [entry('a', 'kept'), entry('gone', 'old')];
   const failures = [entry('a', 'kept')];
-  const visited = new Set(['a']);
+  const visited = new Set(['a|']);
 
-  assert.deepEqual(
-    updatedBaseline(failures, baseline, visited, new Set(['a'])),
-    [entry('a', 'kept')],
-  );
+  assert.deepEqual(updatedBaseline(failures, baseline, visited, true), [
+    entry('a', 'kept'),
+  ]);
   assert.deepEqual(updatedBaseline(failures, baseline, visited), [
     entry('a', 'kept'),
     entry('gone', 'old'),
@@ -497,60 +505,17 @@ const indexFixture = {
   },
 };
 
-test('selectVisits renders visreg stories once and every other story per global theme', () => {
-  const visits = selectVisits(indexFixture, ['one', 'two']);
-  assert.deepEqual(
-    visits.map((visit) => `${visit.id}:${visit.globalTheme}`),
-    [
-      'molecules-link-grid--link-grid:one',
-      'molecules-link-grid--link-grid:two',
-      'molecules-link-grid-visreg--old-blues:null',
-    ],
+test('planPages honours a filter and refuses to plan nothing', () => {
+  const options = { globalThemes: ['one'], labels: { one: 'Old Blues' } };
+  assert.equal(
+    planPages(indexFixture, { ...options, filter: /visreg/ }).length,
+    1,
   );
-});
-
-test('selectVisits honours a filter and refuses to select nothing', () => {
-  assert.equal(selectVisits(indexFixture, ['one'], /visreg/).length, 1);
   assert.throws(
-    () => selectVisits(indexFixture, ['one'], /nope/),
-    /No stories match/,
+    () => planPages(indexFixture, { ...options, filter: /nope/ }),
+    /No stories in scope match/,
   );
-  assert.throws(() => selectVisits({}, ['one']), /storybook:build/);
-});
-
-test('splitVisits puts visreg stories and the first global theme in the first pass', () => {
-  const { first, deferred } = splitVisits(
-    selectVisits(indexFixture, ['one', 'two']),
-    ['one', 'two'],
-  );
-  assert.deepEqual(
-    first.map((visit) => `${visit.id}:${visit.globalTheme}`),
-    [
-      'molecules-link-grid--link-grid:one',
-      'molecules-link-grid-visreg--old-blues:null',
-    ],
-  );
-  assert.deepEqual(
-    deferred.map((visit) => `${visit.id}:${visit.globalTheme}`),
-    ['molecules-link-grid--link-grid:two'],
-  );
-});
-
-test('deferredToRender drops only stories whose first render had no link', () => {
-  const deferred = [
-    { id: 'has-links', globalTheme: 'two' },
-    { id: 'no-links', globalTheme: 'two' },
-    { id: 'broken', globalTheme: 'two' },
-  ];
-  const kept = deferredToRender(deferred, [
-    { id: 'has-links', links: 3 },
-    { id: 'no-links', links: 0 },
-    { id: 'broken', links: 0, error: 'Timed out' },
-  ]);
-  assert.deepEqual(
-    kept.map((visit) => visit.id),
-    ['has-links', 'broken'],
-  );
+  assert.throws(() => planPages({}, options), /storybook:build/);
 });
 
 test('the report names story, themes, state and link text for a new failure', () => {
@@ -588,4 +553,381 @@ test('the report warns about stale entries and failed renders', () => {
 
 test('every state is checked, resting first', () => {
   assert.deepEqual(STATES, ['rest', 'hover', 'focus-visible']);
+});
+
+/** argTypes the way `readStories` hands them over. */
+const calloutArgTypes = {
+  backgroundColor: {
+    name: 'Callout Theme (dial)',
+    options: ['one', 'two', 'three'],
+  },
+  sectionTheme: { name: 'Section Theme', options: ['default', 'one'] },
+  linkType: { name: 'Link Type', options: ['cta', 'link'] },
+  columnCount: { name: 'Columns', options: ['two', 'three', 'four'] },
+  footerVariation: {
+    name: 'Footer Variation (dial)',
+    options: ['basic', 'mega'],
+  },
+  single: { name: 'Lonely Theme (dial)', options: ['one'] },
+};
+
+test('themeArgs keeps controls that choose a theme and nothing else', () => {
+  assert.deepEqual(themeArgs(calloutArgTypes), [
+    { name: 'backgroundColor', options: ['one', 'two', 'three'] },
+    { name: 'sectionTheme', options: ['default', 'one'] },
+  ]);
+  // A label that says theme is not enough when the options are not themes,
+  // and theme words are not enough when the label does not say theme.
+  assert.deepEqual(themeArgs({ columnCount: calloutArgTypes.columnCount }), []);
+  assert.deepEqual(themeArgs(undefined), []);
+});
+
+test('themeArgCombinations crosses every theme control, initial values first', () => {
+  const { combinations, crossed } = themeArgCombinations(
+    themeArgs(calloutArgTypes),
+    { backgroundColor: 'two', sectionTheme: 'default' },
+  );
+  assert.equal(crossed, true);
+  assert.equal(combinations.length, 6);
+  assert.deepEqual(combinations[0], {
+    backgroundColor: 'two',
+    sectionTheme: 'default',
+  });
+  assert.equal(
+    new Set(combinations.map((combination) => formatArgs(combination))).size,
+    6,
+    'every combination once',
+  );
+});
+
+test('themeArgCombinations falls back to one control at a time past the limit', () => {
+  const args = [
+    { name: 'a', options: ['one', 'two', 'three'] },
+    { name: 'b', options: ['one', 'two', 'three'] },
+  ];
+  const { combinations, crossed } = themeArgCombinations(args, {}, 8);
+  assert.equal(crossed, false);
+  // The initial combination, then each other value of each control alone.
+  assert.deepEqual(combinations.map(formatArgs), [
+    'a=one b=one',
+    'a=two b=one',
+    'a=three b=one',
+    'a=one b=two',
+    'a=one b=three',
+  ]);
+  assert.ok(THEME_CROSS_LIMIT >= 49, 'the largest real cross is 49');
+  assert.deepEqual(themeArgCombinations([], {}).combinations, []);
+});
+
+test('a link that draws no halo is left alone, contrast included', () => {
+  const result = evaluateSamples([
+    sample({ textShadow: 'none', color: 'rgb(250, 250, 250)' }),
+  ]);
+  assert.equal(result.checked, 0);
+  assert.equal(result.notHalo, 1);
+  assert.deepEqual(result.failures, []);
+});
+
+test('theme args are part of a failure key, and absent when there are none', () => {
+  const plain = { ...entry('a', 'x') };
+  assert.equal(failureKey(plain), 'a | global=one | rest | halo |  | x');
+  assert.equal(
+    failureKey({ ...plain, args: 'siteHeaderAccent=two' }),
+    'a | global=one | siteHeaderAccent=two | rest | halo |  | x',
+  );
+
+  // Two accents of one header render the same data-*-theme attributes; the
+  // args are what keep one from hiding the other.
+  const { failures } = evaluateSamples([
+    sample({ textShadow: halo(NAVY), args: { siteHeaderAccent: 'one' } }),
+    sample({ textShadow: halo(NAVY), args: { siteHeaderAccent: 'two' } }),
+  ]);
+  assert.deepEqual(
+    failures.map((failure) => failure.args),
+    ['siteHeaderAccent=one', 'siteHeaderAccent=two'],
+  );
+  const updated = updatedBaseline(
+    failures,
+    [],
+    new Set(failures.map(groupOfEntry)),
+  );
+  assert.equal(updated[0].args, 'siteHeaderAccent=one');
+  assert.equal(
+    'args' in updatedBaseline([plain], [], new Set(['a|']))[0],
+    false,
+  );
+});
+
+test('the report names the theme args of a failure and of a failed render', () => {
+  const evaluation = evaluateSamples([
+    sample({ textShadow: halo(NAVY), args: { bgColor: 'three' } }),
+  ]);
+  const report = formatReport({
+    visits: 1,
+    stories: 1,
+    evaluation,
+    diff: diffBaseline(evaluation.failures, [], new Set()),
+    errors: [
+      { id: 'b', globalTheme: 'two', args: { bgColor: 'four' }, error: 'x' },
+    ],
+  });
+  assert.match(report, /args: {3}bgColor=three/);
+  assert.match(report, /b \(global=two bgColor=four\): x/);
+});
+
+const labels = {
+  one: 'Old Blues',
+  two: 'New Haven Green',
+  five: 'It’s Your Yale',
+};
+const planIndex = {
+  entries: {
+    story: {
+      type: 'story',
+      id: 'molecules-callout--callout',
+      title: 'Molecules/Callout',
+      name: 'Callout',
+      importPath: './components/02-molecules/callout/callout.stories.js',
+    },
+    sectioned: {
+      type: 'story',
+      id: 'atoms-controls--cta',
+      title: 'Atoms/Controls',
+      name: 'CTA',
+      importPath: './components/01-atoms/controls/controls.stories.js',
+    },
+    footer: {
+      type: 'story',
+      id: 'organisms-footer--footer',
+      title: 'Organisms/Footer',
+      name: 'Footer',
+      importPath:
+        './components/03-organisms/site-footer/site-footer.stories.js',
+    },
+    ...Object.fromEntries(
+      [
+        'Old Blues Section Two',
+        'New Haven Green Section Two',
+        'Old Blues',
+        'Extras',
+      ].map((name) => [
+        name,
+        {
+          type: 'story',
+          id: `molecules-callout-visreg--${name
+            .toLowerCase()
+            .replace(/ /g, '-')}`,
+          title: 'Molecules/Callout/Visreg',
+          name,
+          importPath:
+            './components/02-molecules/callout/callout.visreg.stories.js',
+          tags: ['visreg'],
+        },
+      ]),
+    ),
+  },
+};
+const planStories = {
+  'molecules-callout--callout': {
+    argTypes: {
+      backgroundColor: {
+        name: 'Callout Theme (dial)',
+        options: ['one', 'two'],
+      },
+    },
+    initialArgs: { backgroundColor: 'two' },
+  },
+  'atoms-controls--cta': {
+    argTypes: {
+      sectionTheme: { name: 'Section Theme', options: ['default', 'one'] },
+      componentTheme: { name: 'Button Theme (dial)', options: ['one', 'two'] },
+    },
+    initialArgs: {},
+  },
+};
+
+test('splitGlobalThemeName finds the global theme a visreg story is named for', () => {
+  assert.deepEqual(splitGlobalThemeName('Old Blues Section Two', labels), {
+    global: 'one',
+    rest: 'Section Two',
+  });
+  assert.deepEqual(splitGlobalThemeName('It’s Your Yale', labels), {
+    global: 'five',
+    rest: '',
+  });
+  assert.deepEqual(splitGlobalThemeName('Old Bluesy', labels), {
+    global: null,
+    rest: 'Old Bluesy',
+  });
+});
+
+test('planPages renders each story once per dial value and copies it into every theme combination', () => {
+  const pages = planPages(planIndex, {
+    globalThemes: ['one', 'two'],
+    labels,
+    stories: planStories,
+    sectionless: ({ importPath }) => importPath.includes('site-footer'),
+    sectionThemes: ['default', 'one'],
+  });
+  const byId = (id) => pages.filter((page) => page.id === id);
+
+  // A dial is rendered once per value, initial value first; each render is
+  // copied into no section and every section theme, in every global theme.
+  const callout = byId('molecules-callout--callout');
+  assert.deepEqual(
+    callout.map((page) => page.args),
+    [{ backgroundColor: 'two' }, { backgroundColor: 'one' }],
+  );
+  assert.deepEqual(
+    callout[0].clones.map(({ global, section }) => `${global}/${section}`),
+    [
+      'one/null',
+      'one/default',
+      'one/one',
+      'two/null',
+      'two/default',
+      'two/one',
+    ],
+  );
+
+  // The story's own section control is never rendered per value: the copies
+  // set it, and there is no sectionless copy because the story always renders
+  // a section.
+  const cta = byId('atoms-controls--cta');
+  assert.equal(cta.length, 2);
+  assert.equal(cta[0].sectionArg, 'sectionTheme');
+  assert.deepEqual(cta[0].args, { componentTheme: 'one' });
+  assert.deepEqual(
+    cta[0].clones.map(({ section }) => section),
+    ['default', 'one', 'default', 'one'],
+  );
+
+  // Page chrome is never put in a section.
+  assert.deepEqual(
+    byId('organisms-footer--footer')[0].clones.map(({ section }) => section),
+    [null, null],
+  );
+
+  // Visreg stories that differ only in global theme are rendered once, each
+  // copy keyed by the story that shows its theme; one with no theme in its
+  // name is copied into every global theme under its own id.
+  const visreg = pages.filter((page) => page.visreg);
+  assert.deepEqual(
+    visreg.map((page) => [
+      page.id,
+      page.clones.map((clone) => `${clone.global}:${clone.story}`),
+    ]),
+    [
+      [
+        'molecules-callout-visreg--extras',
+        [
+          'one:molecules-callout-visreg--extras',
+          'two:molecules-callout-visreg--extras',
+        ],
+      ],
+      [
+        'molecules-callout-visreg--old-blues-section-two',
+        [
+          'one:molecules-callout-visreg--old-blues-section-two',
+          'two:molecules-callout-visreg--new-haven-green-section-two',
+        ],
+      ],
+      [
+        'molecules-callout-visreg--old-blues',
+        ['one:molecules-callout-visreg--old-blues'],
+      ],
+    ],
+  );
+
+  assert.equal(orderPages(pages)[0].clones.length, 6);
+  assert.throws(
+    () =>
+      planPages(planIndex, { globalThemes: ['one'], labels, filter: /nope/ }),
+    /No stories in scope/,
+  );
+});
+
+test('SECTION_THEMES matches theme-constants.js', () => {
+  const source = readFileSync(
+    new URL('./theme-constants.js', import.meta.url),
+    'utf8',
+  );
+  const declared = source
+    .match(/export const sectionThemes = \[([^\]]*)\]/)[1]
+    .match(/'([^']+)'/g)
+    .map((value) => value.slice(1, -1));
+  assert.deepEqual(SECTION_THEMES, declared);
+});
+
+test('a run that judged nothing, or nothing of a component, cannot pass', () => {
+  const run = (overrides) =>
+    coverageProblems({
+      checkedByComponent: new Map([
+        ['02-molecules/link-grid', 10],
+        ['03-organisms/site-header', 0],
+      ]),
+      components: ['02-molecules/link-grid', '03-organisms/site-header'],
+      expectedEmpty: { '03-organisms/site-header': 'nav links only' },
+      stale: 0,
+      baselineSize: 100,
+      complete: true,
+      ...overrides,
+    });
+
+  assert.deepEqual(run({}), []);
+
+  const nothing = run({ checkedByComponent: new Map() });
+  assert.equal(nothing.length, 2);
+  assert.match(nothing[0], /No halo link was judged at all/);
+  assert.match(nothing[1], /link-grid is in scope, but no halo link/);
+
+  assert.match(
+    run({ expectedEmpty: {} }).join('\n'),
+    /site-header is in scope, but no halo link in its stories was judged.*NO_HALO_LINKS/,
+  );
+  assert.match(
+    run({
+      checkedByComponent: new Map([
+        ['02-molecules/link-grid', 10],
+        ['03-organisms/site-header', 3],
+      ]),
+    }).join('\n'),
+    /site-header is in NO_HALO_LINKS, but 3 halo link samples .* Remove it/,
+  );
+});
+
+test('an unfiltered run that leaves too much of the baseline stale fails', () => {
+  const run = (stale, complete = true) =>
+    coverageProblems({
+      checkedByComponent: new Map([['02-molecules/link-grid', 10]]),
+      components: ['02-molecules/link-grid'],
+      stale,
+      baselineSize: 100,
+      complete,
+    });
+  assert.equal(STALE_SHARE_LIMIT, 0.1);
+  assert.deepEqual(run(10), []);
+  assert.match(
+    run(11).join(''),
+    /11 of 100 baseline entries \(11%\).*10% limit/,
+  );
+  // A filtered run cannot tell a fix from a story it left out.
+  assert.deepEqual(run(50, false), []);
+});
+
+test('judged samples are summed per component', () => {
+  assert.deepEqual(
+    componentsChecked(
+      new Map([
+        ['molecules-callout--a', 2],
+        ['molecules-callout-visreg--b', 3],
+        ['molecules-meta--c', 1],
+      ]),
+      (story) => (story.startsWith('molecules-callout') ? 'callout' : 'meta'),
+    ),
+    new Map([
+      ['callout', 5],
+      ['meta', 1],
+    ]),
+  );
 });
