@@ -62,3 +62,11 @@ jobs:
       # `npm run test` runs `storybook:build` before `test:dist`, so .out is already there.
       - name: Check visreg pixel ceiling
         run: npm run visreg:measure
+      # Renders every story that has links, in every theme combination and in
+      # the resting, hover and focus-visible states, and fails on a link halo
+      # that does not match its background or link text under WCAG AA. Known
+      # failures live in components/_storybook/link-halo-baseline.json; only a
+      # new one fails the build. Needs .out and Chrome, both already present.
+      # See "Link halo check" in components/_storybook/TESTING.md.
+      - name: Check link halos and contrast
+        run: npm run test:link-halo
