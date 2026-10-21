@@ -125,9 +125,62 @@ test('the page script installs working copies of every helper', async () => {
   new Function('window', pageHelpersScript())(window);
   const helpers = window[PAGE_HELPERS];
   assert.deepEqual(Object.keys(helpers).sort(), [
+    'pickSample',
     'pseudoElementBox',
+    'revealLineBox',
     'waitForRender',
   ]);
+  // pickSample uses the halo test `evaluateSamples` uses, so the shadow
+  // parsing it rests on has to come along: a blurred drop shadow and a
+  // transparent one are passed over for the halo behind them.
+  const halo = 'rgb(255, 255, 255) 0.48px 0px 0px';
+  assert.equal(
+    helpers.pickSample(
+      (index) =>
+        [
+          { text: 'none', textShadow: 'none' },
+          { text: 'blurred', textShadow: 'rgba(0, 0, 0, 0.5) 0px 2px 4px' },
+          { text: 'transparent', textShadow: 'rgba(0, 0, 0, 0) 1px 0px 0px' },
+          { text: 'title', textShadow: halo, fontSize: 16 },
+        ][index],
+    ).text,
+    'title',
+  );
+  assert.equal(
+    helpers.pickSample(
+      (index) =>
+        [{ text: 'blurred', textShadow: 'rgba(0, 0, 0, 0.5) 0px 2px 4px' }][
+          index
+        ],
+    ).text,
+    'blurred',
+  );
+  // revealLineBox clips to the ancestors, then scrolls once if it must.
+  const scrolls = [];
+  const view = { width: 1200, height: 800 };
+  assert.deepEqual(
+    helpers.revealLineBox(
+      () => ({
+        rect: { left: 1000, top: 300, right: 1600, bottom: 320 },
+        clips: [{ left: 980, top: 290, right: 1180, bottom: 330 }],
+        viewport: view,
+      }),
+      (x, y) => scrolls.push([x, y]),
+    ),
+    { left: 1000, top: 300, right: 1180, bottom: 320 },
+  );
+  assert.equal(
+    helpers.revealLineBox(
+      () => ({
+        rect: { left: 100, top: 900, right: 180, bottom: 920 },
+        clips: [],
+        viewport: view,
+      }),
+      (x, y) => scrolls.push([x, y]),
+    ),
+    null,
+  );
+  assert.deepEqual(scrolls, [[0, 510]]);
 
   const style = {
     top: '0px',

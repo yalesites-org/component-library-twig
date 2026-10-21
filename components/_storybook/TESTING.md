@@ -199,7 +199,13 @@ For every visible `a[href]` in every story it renders, in the resting, `:hover` 
   when the same token arrives by two routes; a visible halo is typically 150 or more). No `text-shadow`, a fully transparent one, or
   a blurred or far-offset drop shadow is not a halo, so it is not judged.
 - **Contrast**: the link text against the same background must reach WCAG AA, 4.5:1, or 3:1 for
-  large text (24px, or 18.66px at weight 700).
+  large text (24px, or 18.66px at weight 700). The large-text allowance differs from the functional
+  element contrast gate (`00-tokens/colors/functional-element-contrast.mjs`), which holds all text
+  to 4.5:1 per YaleSites-Internal#1614. It is kept so the baseline's pass/fail is unchanged, but
+  never silently: the report lists every link that passes only through it (between 3:1 and 4.5:1),
+  and `LINK_HALO_RESULTS_OUT` writes them as `largeTextAllowance`. A large-text contrast failure
+  says "needs 3:1 (WCAG large text)". Neither affects the baseline: entries are keyed by story,
+  themes, args, state, check, place and link text, never by the detail or the flag.
 
 "The background behind the link" is the hit-test stack at the centre of the link text's first line
 (`document.elementsFromPoint`), translucent layers composited down to the first opaque one, white
@@ -229,8 +235,18 @@ Forcing everything at once was checked against a real mouse hover and a real key
 link at a time, on link grid, taxonomy display, wrapped callout and the footer: 2,828 links, 1,988 of
 them failing, with identical colours, halo and verdict for every one.
 
-A link counts as visible only if its whole first line box is on screen when it is hit-tested; the
-check scrolls it to the middle otherwise. A centre within a pixel of the viewport edge hit-tests as
+A link counts as visible only if the painted part of its first line box is wholly on screen when it
+is hit-tested. "Painted" means the line box cut down to every ancestor whose `overflow-x` or
+`overflow-y` is not `visible` (on that axis), so a link truncated with an ellipsis, or in a container
+wider than a page with `overflow-x: hidden`, is judged by what shows rather than skipped; the root's
+or body's overflow clips to the viewport where it is `hidden` or `clip`. `clip` and `clip-path` are
+not read (the hit-test still drops text they hide). A box clipped to less than a pixel is hidden.
+Otherwise the check scrolls the painted box to the middle once, horizontally too if a side is off
+screen, and skips the link if it is still not fully on screen after that one re-check. The text node
+that speaks for a link is the first visible one that draws a halo, by the same test the judging uses,
+so an eyebrow or icon label ahead of the title, with no shadow or an ordinary blurred or transparent
+one, does not make the link read as having no halo; only if no visible text node draws one is the
+link counted as drawing no halo. A centre within a pixel of the viewport edge hit-tests as
 nothing, and whether a link landed there depended on where the previous one had scrolled to, which
 made a few card links visible in one run and hidden in the next.
 

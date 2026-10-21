@@ -38,6 +38,14 @@
  * numbers, so a colour that drifts while still failing does not churn the
  * file.
  *
+ * ## Large text
+ *
+ * Contrast uses the WCAG large-text 3:1 minimum for large text, where the
+ * repo's functional element contrast gate holds all text to 4.5:1
+ * (YaleSites-Internal#1614). The allowance stays, so pass/fail matches the
+ * baseline, but the report lists every link that passes only because of it.
+ * See `LARGE_TEXT_ALLOWANCE` below.
+ *
  * @see link-halo.test.mjs
  * @see check-link-halo.mjs
  * @see link-halo-baseline.json
@@ -73,6 +81,14 @@ export const CHANNEL_TOLERANCE = 3;
  * holding a 32px card title to the body-text minimum would report failures no
  * auditor would. Both thresholds are AA, read from the token contrast
  * tables rather than restated.
+ *
+ * LARGE_TEXT_ALLOWANCE: this differs from the functional element contrast
+ * gate (`00-tokens/colors/functional-element-contrast.mjs`, `minimumFor`),
+ * which holds all text to 4.5:1 per YaleSites-Internal#1614. The allowance
+ * is kept so the baseline's pass/fail is unchanged, but it is never applied
+ * silently: every pass that relies on it is listed in the report
+ * (`evaluateSample`, `formatReport`), so whoever owns #1614 can decide which
+ * rule wins with the cases in front of them.
  */
 const CONTRAST_MINIMUM = AA_NORMAL_TEXT;
 const LARGE_TEXT_CONTRAST_MINIMUM = WCAG_LEVELS.find(
@@ -151,8 +167,6 @@ export function splitTopLevel(value) {
   return items.map((item) => item.trim()).filter(Boolean);
 }
 
-const clamp255 = (value) => Math.min(255, Math.max(0, value));
-
 /**
  * Parses a computed colour into 8-bit RGB and an alpha from 0 to 1.
  *
@@ -166,6 +180,9 @@ const clamp255 = (value) => Math.min(255, Math.max(0, value));
  * fractional channels, and rounding before the comparison is what would make
  * the tolerance necessary in the first place.
  *
+ * Runs in the page as well as here (`link-halo-page.mjs`, through
+ * `drawsHalo`), so it refers to nothing outside itself.
+ *
  * @param {string} value
  *   A computed colour.
  * @return {?{r: number, g: number, b: number, a: number}}
@@ -174,6 +191,7 @@ const clamp255 = (value) => Math.min(255, Math.max(0, value));
 export function parseColor(value) {
   if (typeof value !== 'string') return null;
 
+  const clamp255 = (channel) => Math.min(255, Math.max(0, channel));
   const text = value.trim().toLowerCase();
 
   if (text === 'transparent') {
@@ -327,6 +345,27 @@ export function haloShadows(shadows, fontSize) {
       Math.abs(shadow.x) <= reach &&
       Math.abs(shadow.y) <= reach &&
       !(shadow.color && shadow.color.a === 0),
+  );
+}
+
+/**
+ * Whether a sample's text draws a halo in its state.
+ *
+ * The one test both `evaluateSamples` (which judges only halo-drawing links)
+ * and `pickSample` (which picks the text node that speaks for a link) use, so
+ * the node picked is never one the judging then counts as drawing no halo.
+ * Runs in the page as well as here (`link-halo-page.mjs`), with
+ * `parseTextShadow`, `haloShadows`, `splitTopLevel` and `parseColor`
+ * installed beside it.
+ *
+ * @param {{textShadow: string, fontSize?: number}} sample
+ *   The computed `text-shadow` and font size in px.
+ * @return {boolean}
+ *   True if at least one of its shadows is part of a halo.
+ */
+export function drawsHalo(sample) {
+  return (
+    haloShadows(parseTextShadow(sample.textShadow), sample.fontSize).length > 0
   );
 }
 
@@ -501,6 +540,146 @@ export function pseudoElementBox(style, block) {
 }
 
 /**
+ * Picks which of a link's text nodes speaks for the link.
+ *
+ * `check-link-halo.mjs` tries a link's text nodes in document order, up to
+ * `limit`; each try gives a sample, null when that text is not visible, or
+ * undefined when the link has no more text. The first visible node that
+ * draws a halo (`drawsHalo`, the test `evaluateSamples` judges by) wins and
+ * stops the search, so an eyebrow or icon span ahead of a halo-drawing title,
+ * with no shadow or with an ordinary drop shadow, does not make the whole
+ * link read as having no halo. Only when no visible node draws one does the
+ * first visible node decide (it is then counted as drawing no halo). Tries
+ * run one at a time and stop early, because each scrolls the page and
+ * hit-tests it.
+ *
+ * Runs in the page as well as here (`link-halo-page.mjs`), so it refers to
+ * nothing outside itself but `drawsHalo`, installed beside it.
+ *
+ * @param {function(number): (?object|undefined)} attempt
+ *   Samples the text node at that position; null if it is not visible,
+ *   undefined if there is none.
+ * @param {number} [limit]
+ *   Most text nodes to try.
+ * @return {?object}
+ *   The sample that speaks for the link, or null if no text is visible.
+ */
+export function pickSample(attempt, limit = 6) {
+  let fallback = null;
+  for (let index = 0; index < limit; index += 1) {
+    const sample = attempt(index);
+    if (sample === undefined) break;
+    if (sample && drawsHalo(sample)) return sample;
+    if (sample && !fallback) fallback = sample;
+  }
+  return fallback;
+}
+
+/**
+ * The scroll that brings a line box fully on screen, or null if it already
+ * is.
+ *
+ * Every edge must be inside the viewport, not just the centre: a centre
+ * within a pixel of the edge hit-tests as nothing, and whether a link landed
+ * there depended on where the previous link had scrolled to. The scroll
+ * centres the box vertically, and horizontally too when a side is off
+ * screen.
+ *
+ * Runs in the page as well as here (`link-halo-page.mjs`), so it must not
+ * refer to anything outside itself.
+ *
+ * @param {{left: number, top: number, right: number, bottom: number}} rect
+ *   The line box, in viewport coordinates.
+ * @param {{width: number, height: number}} viewport
+ *   The viewport size.
+ * @return {?{x: number, y: number}}
+ *   Pixels to `scrollBy`, or null when the box is fully visible.
+ */
+export function scrollToReveal(rect, viewport) {
+  const horizontal = rect.left < 0 || rect.right > viewport.width;
+  if (!horizontal && rect.top >= 0 && rect.bottom <= viewport.height) {
+    return null;
+  }
+  return {
+    x: horizontal ? (rect.left + rect.right) / 2 - viewport.width / 2 : 0,
+    y: (rect.top + rect.bottom) / 2 - viewport.height / 2,
+  };
+}
+
+/**
+ * What of a line box is painted, and whether it can be judged where it is.
+ *
+ * `Range.getClientRects()` gives the text's whole extent, including any part
+ * an ancestor clips away: an ellipsis box, or a container wider than the
+ * viewport on a page with `overflow-x: hidden`, which no scroll reaches past.
+ * So the box is first cut down to every clip rect (each overflow-clipping
+ * ancestor's padding box, `collectSamples`), and that painted part is what
+ * has to be on screen (`scrollToReveal`).
+ *
+ * Runs in the page as well as here (`link-halo-page.mjs`), so it refers to
+ * nothing outside itself but `scrollToReveal`, installed beside it.
+ *
+ * @param {{left: number, top: number, right: number, bottom: number}} rect
+ *   The line box, in viewport coordinates.
+ * @param {Array<{left: number, top: number, right: number, bottom: number}>} clips
+ *   The rects it is clipped to, in viewport coordinates; an axis an ancestor
+ *   does not clip runs to plus or minus Infinity.
+ * @param {{width: number, height: number}} viewport
+ *   The viewport size.
+ * @return {{hidden: true}|{scroll: {x: number, y: number}}|{box: {left: number, top: number, right: number, bottom: number}}}
+ *   `hidden` when less than a pixel of it is painted on either axis;
+ *   otherwise the painted box when it is fully on screen, or the scroll that
+ *   centres it.
+ */
+export function visibleLineBox(rect, clips, viewport) {
+  const box = clips.reduce(
+    (painted, clip) => ({
+      left: Math.max(painted.left, clip.left),
+      top: Math.max(painted.top, clip.top),
+      right: Math.min(painted.right, clip.right),
+      bottom: Math.min(painted.bottom, clip.bottom),
+    }),
+    { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom },
+  );
+  if (box.right - box.left < 1 || box.bottom - box.top < 1) {
+    return { hidden: true };
+  }
+  const scroll = scrollToReveal(box, viewport);
+  return scroll ? { scroll } : { box };
+}
+
+/**
+ * Brings a line box's painted part fully on screen, or gives up.
+ *
+ * At most one scroll and one re-check: a box that one scroll does not
+ * reveal (the page cannot scroll that far, or the box is taller than the
+ * viewport) is skipped rather than chased.
+ *
+ * Runs in the page as well as here (`link-halo-page.mjs`), so it refers to
+ * nothing outside itself but `visibleLineBox`, installed beside it.
+ *
+ * @param {function(): ?{rect: object, clips: Array<object>, viewport: object}} measure
+ *   Reads the line box, its clip rects and the viewport as they are now
+ *   (`visibleLineBox`); null if the text has no line box.
+ * @param {function(number, number): void} scrollBy
+ *   Scrolls the page.
+ * @return {?{left: number, top: number, right: number, bottom: number}}
+ *   The painted box to hit-test, or null if it is not visible.
+ */
+export function revealLineBox(measure, scrollBy) {
+  const first = measure();
+  if (!first) return null;
+  const before = visibleLineBox(first.rect, first.clips, first.viewport);
+  if (before.box) return before.box;
+  if (before.hidden) return null;
+
+  scrollBy(before.scroll.x, before.scroll.y);
+  const second = measure();
+  if (!second) return null;
+  return visibleLineBox(second.rect, second.clips, second.viewport).box ?? null;
+}
+
+/**
  * Judges one link in one state.
  *
  * @param {{color: string, textShadow: string, fontSize: number, fontWeight: number, layers: Array<object>}} sample
@@ -510,7 +689,13 @@ export function pseudoElementBox(style, block) {
  *   A skip reason, or the background and any problems found. An empty
  *   `problems` is a pass. A colour that cannot be read leaves its part
  *   unjudged: problems found in the other parts are still returned, and the
- *   sample is a skip only when nothing was found.
+ *   sample is a skip only when nothing was found. Wherever the WCAG
+ *   large-text 3:1 minimum is applied instead of 4.5:1 it is said so
+ *   (`LARGE_TEXT_ALLOWANCE`): a contrast problem under it carries
+ *   `largeTextAllowance: true`, and so does a verdict whose contrast passes
+ *   only because of it (between 3:1 and 4.5:1), with the measurement in
+ *   `contrast`. Large text that clears 4.5:1 is not flagged: the allowance
+ *   made no difference to it.
  */
 export function evaluateSample(sample) {
   const resolved = resolveBackground(sample.layers);
@@ -547,20 +732,26 @@ export function evaluateSample(sample) {
   }
 
   const text = parseColor(sample.color);
+  let allowance = null;
   if (text) {
     const painted = composite(text, background);
     const ratio = contrastRatio(painted, background);
-    const minimum = isLargeText(sample.fontSize, sample.fontWeight)
-      ? LARGE_TEXT_CONTRAST_MINIMUM
-      : CONTRAST_MINIMUM;
+    const large = isLargeText(sample.fontSize, sample.fontWeight);
+    const minimum = large ? LARGE_TEXT_CONTRAST_MINIMUM : CONTRAST_MINIMUM;
+    const measured =
+      `text ${toHex(painted)} on ${toHex(background)} is ` +
+      `${formatRatio(ratio)}:1`;
 
     if (ratio < minimum) {
       problems.push({
         check: 'contrast',
-        detail:
-          `text ${toHex(painted)} on ${toHex(background)} is ` +
-          `${formatRatio(ratio)}:1, needs ${minimum}:1`,
+        detail: `${measured}, needs ${minimum}:1${
+          large ? ' (WCAG large text)' : ''
+        }`,
+        ...(large ? { largeTextAllowance: true } : {}),
       });
+    } else if (large && ratio < CONTRAST_MINIMUM) {
+      allowance = `${measured}: passes the ${minimum}:1 large-text minimum, not ${CONTRAST_MINIMUM}:1`;
     }
   } else {
     unjudged.push(`unreadable text colour "${sample.color}"`);
@@ -569,7 +760,11 @@ export function evaluateSample(sample) {
   if (problems.length === 0 && unjudged.length > 0) {
     return { skip: unjudged.join('; ') };
   }
-  return { background: toHex(background), problems };
+  return {
+    background: toHex(background),
+    problems,
+    ...(allowance ? { largeTextAllowance: true, contrast: allowance } : {}),
+  };
 }
 
 /**
@@ -1071,13 +1266,16 @@ export const orderPages = (pages) =>
  * @param {Array<{story: string, title: string, name: string, state: string, themes: Object<string, string>, variant: string, text: string}>} samples
  *   One per visible link per state, each carrying the fields
  *   `evaluateSample` reads.
- * @return {{checked: number, checkedByStory: Map<string, number>, notHalo: number, skipped: Array<object>, failures: Array<object>, combinations: number}}
- *   `failures` sorted by key; `notHalo` counts samples of links that draw no
+ * @return {{checked: number, checkedByStory: Map<string, number>, notHalo: number, skipped: Array<object>, failures: Array<object>, largeTextAllowance: Array<object>, combinations: number}}
+ *   `failures` sorted by key; `largeTextAllowance` the links whose contrast
+ *   passes only through the large-text 3:1 minimum, collapsed and sorted the
+ *   same way; `notHalo` counts samples of links that draw no
  *   halo in that state, which are not judged; `combinations` counts distinct
  *   (story, theme combination, theme args) triples that had a link checked.
  */
 export function evaluateSamples(samples) {
   const failures = new Map();
+  const allowances = new Map();
   const skipped = [];
   const combinations = new Set();
   const checkedByStory = new Map();
@@ -1088,10 +1286,7 @@ export function evaluateSamples(samples) {
     // Only links that draw the halo are this check's business: a link with
     // no halo shadow in this state (a CTA button, a plain nav link) is
     // counted and left alone, contrast included.
-    if (
-      haloShadows(parseTextShadow(sample.textShadow), sample.fontSize)
-        .length === 0
-    ) {
+    if (!drawsHalo(sample)) {
       notHalo += 1;
       return;
     }
@@ -1119,7 +1314,32 @@ export function evaluateSamples(samples) {
     );
     combinations.add(`${sample.story} | ${themes} | ${args}`);
 
-    verdict.problems.forEach(({ check, detail }) => {
+    if (verdict.largeTextAllowance) {
+      const entry = {
+        story: sample.story,
+        themes,
+        ...(args ? { args } : {}),
+        state: sample.state,
+        check: 'contrast',
+        where: sample.where ?? '',
+        link,
+      };
+      const key = failureKey(entry);
+      const existing = allowances.get(key);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        allowances.set(key, {
+          ...entry,
+          title: `${sample.title} > ${sample.name}`,
+          variant: sample.variant ?? '',
+          detail: verdict.contrast,
+          count: 1,
+        });
+      }
+    }
+
+    verdict.problems.forEach(({ check, detail, largeTextAllowance }) => {
       const failure = {
         story: sample.story,
         themes,
@@ -1139,6 +1359,9 @@ export function evaluateSamples(samples) {
           title: `${sample.title} > ${sample.name}`,
           variant: sample.variant ?? '',
           detail,
+          // Report context, like `detail`: not part of the key, so the
+          // baseline matches a flagged failure exactly as an unflagged one.
+          ...(largeTextAllowance ? { largeTextAllowance: true } : {}),
           count: 1,
         });
       }
@@ -1152,6 +1375,9 @@ export function evaluateSamples(samples) {
     skipped,
     combinations: combinations.size,
     failures: [...failures.values()].sort((a, b) =>
+      failureKey(a).localeCompare(failureKey(b)),
+    ),
+    largeTextAllowance: [...allowances.values()].sort((a, b) =>
       failureKey(a).localeCompare(failureKey(b)),
     ),
   };
@@ -1461,6 +1687,26 @@ export function formatReport({
         '"contrast" failure is the link text itself. If a failure is known and ' +
         'ticketed, `npm run test:link-halo -- --update-baseline` records it -- ' +
         'see "Link halo check" in components/_storybook/TESTING.md.',
+    );
+  }
+
+  const allowance = evaluation.largeTextAllowance ?? [];
+  if (allowance.length > 0) {
+    const shown = allowance.slice(0, limit);
+    sections.push(
+      `${plural(allowance.length, 'link')} ${
+        allowance.length === 1 ? 'passes' : 'pass'
+      } contrast only through the WCAG large-text 3:1 minimum. ` +
+        'Not a failure here, but the functional element contrast gate ' +
+        '(00-tokens/colors/functional-element-contrast.mjs, ' +
+        'YaleSites-Internal#1614) holds all text to 4.5:1:',
+      shown.map(describeFailure).join('\n\n'),
+      ...(allowance.length > shown.length
+        ? [
+            `...and ${allowance.length - shown.length} more ` +
+              '(LINK_HALO_RESULTS_OUT lists them all).',
+          ]
+        : []),
     );
   }
 

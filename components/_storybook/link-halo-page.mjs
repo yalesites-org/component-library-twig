@@ -7,16 +7,29 @@
  * code shares are therefore installed on the page once per document, from
  * their own source, by `check-link-halo.mjs`
  * (`page.evaluateOnNewDocument(pageHelpersScript())`), and the in-page code
- * reads them from `window[PAGE_HELPERS]`. Each helper must refer to nothing
- * outside itself; `link-halo-page.test.mjs` evaluates the script with nothing
- * else in scope to prove it.
+ * reads them from `window[PAGE_HELPERS]`. The script declares every helper,
+ * and the ones they call (the `text-shadow` parsing behind `drawsHalo`), in
+ * one function scope, so a helper may call another by name but must refer to
+ * nothing outside that set; `link-halo-page.test.mjs` evaluates the script
+ * with nothing else in scope to prove it.
  *
  * Kept free of Puppeteer so the tests can import it without a browser.
  *
  * @see link-halo-page.test.mjs
  * @see check-link-halo.mjs
  */
-import { pseudoElementBox } from './link-halo.mjs';
+import {
+  drawsHalo,
+  haloShadows,
+  parseColor,
+  parseTextShadow,
+  pickSample,
+  pseudoElementBox,
+  revealLineBox,
+  scrollToReveal,
+  splitTopLevel,
+  visibleLineBox,
+} from './link-halo.mjs';
 
 /** The `window` property the helpers are installed under. */
 export const PAGE_HELPERS = 'linkHaloHelpers';
@@ -112,7 +125,21 @@ export function waitForRender(
  *   Source for `page.evaluateOnNewDocument`.
  */
 export const pageHelpersScript = () =>
-  `window[${JSON.stringify(PAGE_HELPERS)}] = {
-  pseudoElementBox: ${pseudoElementBox.toString()},
-  waitForRender: ${waitForRender.toString()},
-};`;
+  `window[${JSON.stringify(PAGE_HELPERS)}] = (() => {
+${[
+  splitTopLevel,
+  parseColor,
+  parseTextShadow,
+  haloShadows,
+  drawsHalo,
+  pickSample,
+  pseudoElementBox,
+  scrollToReveal,
+  visibleLineBox,
+  revealLineBox,
+  waitForRender,
+]
+  .map((helper) => helper.toString())
+  .join('\n')}
+return { pickSample, pseudoElementBox, revealLineBox, waitForRender };
+})();`;

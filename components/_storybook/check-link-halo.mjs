@@ -38,8 +38,10 @@
  * ## What "behind the link" means
  *
  * For each visible link, the check finds the first text node that actually
- * renders, scrolls it into view, and asks the browser what is painted at the
- * centre of its first line box (`document.elementsFromPoint`). That stack --
+ * renders and draws a halo (or, if none does, the first that renders;
+ * `pickSample`), scrolls the painted part of its first line box fully into
+ * view (`revealLineBox`), and asks the browser what is painted at the centre
+ * of that part (`document.elementsFromPoint`). That stack --
  * the element holding the text and every box beneath it -- is what the halo
  * has to match. Using the hit-test stack rather than walking `parentElement`
  * is what catches text that is positioned over something other than its
@@ -306,8 +308,12 @@ function tagLinks(rootSelector) {
  *   One sample per visible link, and how many links were not visible.
  */
 function collectSamples({ rootSelector, helpers }) {
-  const { pseudoElementBox } = window[helpers] ?? {};
-  if (typeof pseudoElementBox !== 'function') {
+  const { pickSample, pseudoElementBox, revealLineBox } = window[helpers] ?? {};
+  if (
+    ![pickSample, pseudoElementBox, revealLineBox].every(
+      (helper) => typeof helper === 'function',
+    )
+  ) {
     throw new Error(`The page helpers (window.${helpers}) are not installed.`);
   }
   const links = [...document.querySelectorAll('[data-link-halo]')];
@@ -482,13 +488,75 @@ function collectSamples({ rootSelector, helpers }) {
       ];
     });
 
-  const inViewport = (x, y) =>
-    x >= 0 && y >= 0 && x < window.innerWidth && y < window.innerHeight;
-
   const firstLineBox = (range) =>
     [...range.getClientRects()].find(
       (rect) => rect.width >= 2 && rect.height >= 2,
     );
+
+  // The rects that clip what an element paints: the padding box of every
+  // ancestor (the element included) whose computed `overflow-x` or
+  // `overflow-y` is not `visible`, on that axis only. The root's overflow,
+  // and the body's when the root's is `visible`, applies to the viewport
+  // instead, so it clips to the viewport, and only where it is `hidden` or
+  // `clip` (where it scrolls, the page scroll reaches past it). An
+  // absolutely positioned box escapes the static ancestors between it and
+  // its containing block, and a fixed one every ancestor above it. Inline
+  // and `display: contents` boxes report an overflow they do not apply.
+  // `clip` and `clip-path` are not read: the hit-test still drops text they
+  // hide.
+  const clipRects = (holder) => {
+    const root = document.documentElement;
+    const rootStyle = getComputedStyle(root);
+    const rootVisible =
+      rootStyle.overflowX === 'visible' && rootStyle.overflowY === 'visible';
+    const fixed = (value) => value === 'hidden' || value === 'clip';
+    const clips = [];
+    let escaping = false;
+
+    for (let element = holder; element; element = element.parentElement) {
+      const style = getComputedStyle(element);
+      const clipsX = style.overflowX !== 'visible';
+      const clipsY = style.overflowY !== 'visible';
+      const applies =
+        (clipsX || clipsY) &&
+        !['inline', 'contents'].includes(style.display) &&
+        !(
+          escaping &&
+          style.position === 'static' &&
+          style.transform === 'none'
+        );
+
+      if (
+        applies &&
+        (element === root || (element === document.body && rootVisible))
+      ) {
+        clips.push({
+          left: fixed(style.overflowX) ? 0 : -Infinity,
+          right: fixed(style.overflowX) ? window.innerWidth : Infinity,
+          top: fixed(style.overflowY) ? 0 : -Infinity,
+          bottom: fixed(style.overflowY) ? window.innerHeight : Infinity,
+        });
+      } else if (applies) {
+        const rect = element.getBoundingClientRect();
+        const left = rect.left + element.clientLeft;
+        const top = rect.top + element.clientTop;
+        clips.push({
+          left: clipsX ? left : -Infinity,
+          right: clipsX ? left + element.clientWidth : Infinity,
+          top: clipsY ? top : -Infinity,
+          bottom: clipsY ? top + element.clientHeight : Infinity,
+        });
+      }
+
+      if (style.position === 'fixed') break;
+      if (style.position === 'absolute') {
+        escaping = true;
+      } else if (style.position !== 'static' || style.transform !== 'none') {
+        escaping = false;
+      }
+    }
+    return clips;
+  };
 
   // Samples one text node of a link, or returns null if that text is not
   // visible where it sits.
@@ -521,31 +589,35 @@ function collectSamples({ rootSelector, helpers }) {
 
     const range = document.createRange();
     range.selectNodeContents(node);
-    let box = firstLineBox(range);
-    if (!box) return null;
 
-    let x = box.left + box.width / 2;
-    let y = box.top + box.height / 2;
-    // The whole line box must be on screen, not just its centre: a centre
-    // within a pixel of the viewport edge hit-tests as nothing, and whether a
-    // link landed there depended on where the previous link had scrolled to,
-    // which made the same link visible in one run and hidden in the next.
-    const onScreen = (rect) =>
-      rect.left >= 0 &&
-      rect.top >= 0 &&
-      rect.right <= window.innerWidth &&
-      rect.bottom <= window.innerHeight;
-    if (!onScreen(box)) {
-      window.scrollBy(
-        x < 0 || x >= window.innerWidth ? x - window.innerWidth / 2 : 0,
-        y - window.innerHeight / 2,
-      );
-      box = firstLineBox(range);
-      if (!box) return null;
-      x = box.left + box.width / 2;
-      y = box.top + box.height / 2;
-      if (!inViewport(x, y)) return null;
-    }
+    // The whole painted line box must be on screen, not just its centre: a
+    // centre within a pixel of the viewport edge hit-tests as nothing, and
+    // whether a link landed there depended on where the previous link had
+    // scrolled to, which made the same link visible in one run and hidden in
+    // the next. "Painted" is the line box cut down to its clipping ancestors
+    // (`clipRects`): the range's rect runs on past an ellipsis or an
+    // `overflow-x: hidden` page edge. A box with any painted edge off screen
+    // is scrolled to the middle once, and only sampled if it is then fully
+    // on screen (`revealLineBox`).
+    const box = revealLineBox(
+      () => {
+        const rect = firstLineBox(range);
+        return rect
+          ? {
+              rect,
+              clips: clipRects(holder),
+              viewport: {
+                width: window.innerWidth,
+                height: window.innerHeight,
+              },
+            }
+          : null;
+      },
+      (x, y) => window.scrollBy(x, y),
+    );
+    if (!box) return null;
+    const x = (box.left + box.right) / 2;
+    const y = (box.top + box.bottom) / 2;
 
     const stack = document.elementsFromPoint(x, y);
     // The text counts as visible only if the hit-test reaches the element
@@ -616,17 +688,14 @@ function collectSamples({ rootSelector, helpers }) {
           ? NodeFilter.FILTER_ACCEPT
           : NodeFilter.FILTER_SKIP,
     });
-    let sample = null;
-
-    // A few text nodes at most: the first visible one decides, and a link
-    // whose first several are all hidden is not worth hunting through.
-    for (
-      let node = walker.nextNode(), tries = 0;
-      node && tries < 6 && !sample;
-      node = walker.nextNode(), tries += 1
-    ) {
-      sample = sampleTextNode(link, node, text, where);
-    }
+    // A few text nodes at most, and the first visible one that draws a halo
+    // decides; one that draws none (an eyebrow, an icon label, a soft drop
+    // shadow) only decides if no visible node draws one (`pickSample`). A link whose
+    // first several are all hidden is not worth hunting through.
+    const sample = pickSample(() => {
+      const node = walker.nextNode();
+      return node ? sampleTextNode(link, node, text, where) : undefined;
+    });
 
     if (sample) {
       sample.story = link
@@ -1568,6 +1637,7 @@ async function main() {
         {
           failures: evaluation.failures,
           skipped: evaluation.skipped,
+          largeTextAllowance: evaluation.largeTextAllowance,
           errors,
           // Per render: links found, links hidden, and how long it took --
           // what to look at when the run gets slow.

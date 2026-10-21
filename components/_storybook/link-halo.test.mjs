@@ -39,8 +39,12 @@ import {
   componentsChecked,
   coverageProblems,
   orderPages,
+  pickSample,
   planPages,
   pseudoElementBox,
+  revealLineBox,
+  scrollToReveal,
+  visibleLineBox,
   splitGlobalThemeName,
   splitTopLevel,
   themeArgCombinations,
@@ -318,6 +322,328 @@ test('large text is held to 3:1, per WCAG', () => {
     0,
   );
   assert.equal(isLargeText(19, 400), false);
+});
+
+const GREY_3_5 = 'rgb(136, 136, 136)'; // 3.54:1 on white
+const GREY_5 = 'rgb(110, 110, 110)'; // 5.10:1 on white
+
+test('a large-text pass between 3:1 and 4.5:1 is flagged as relying on the allowance', () => {
+  const verdict = evaluateSample(sample({ color: GREY_3_5, fontSize: 24 }));
+  assert.deepEqual(verdict.problems, []);
+  assert.equal(verdict.largeTextAllowance, true);
+  assert.match(verdict.contrast, /3\.54:1/);
+});
+
+test('normal text at 3.5:1 fails and is not flagged', () => {
+  const verdict = evaluateSample(sample({ color: GREY_3_5 }));
+  assert.equal(verdict.largeTextAllowance, undefined);
+  assert.deepEqual(
+    verdict.problems.map(({ check, largeTextAllowance }) => [
+      check,
+      largeTextAllowance,
+    ]),
+    [['contrast', undefined]],
+  );
+});
+
+test('large text that clears 4.5:1 needs no allowance and is not flagged', () => {
+  const verdict = evaluateSample(sample({ color: GREY_5, fontSize: 24 }));
+  assert.deepEqual(verdict.problems, []);
+  assert.equal(verdict.largeTextAllowance, undefined);
+});
+
+test('a large-text contrast failure says it was held to the 3:1 allowance', () => {
+  const [problem] = evaluateSample(
+    sample({ color: 'rgb(200, 200, 200)', fontSize: 24 }),
+  ).problems;
+  assert.equal(problem.largeTextAllowance, true);
+  assert.match(problem.detail, /needs 3:1 \(WCAG large text\)/);
+});
+
+test('allowance passes are listed and reported, and leave failure keys alone', () => {
+  const relying = sample({ color: GREY_3_5, fontSize: 24 });
+  const evaluation = evaluateSamples([
+    relying,
+    relying,
+    sample({ color: GREY_5, fontSize: 24 }),
+  ]);
+  assert.equal(evaluation.failures.length, 0);
+  assert.equal(evaluation.largeTextAllowance.length, 1);
+  assert.equal(evaluation.largeTextAllowance[0].count, 2);
+  assert.match(evaluation.largeTextAllowance[0].detail, /3\.54:1/);
+
+  const report = formatReport({
+    visits: 1,
+    stories: 1,
+    evaluation,
+    diff: { newFailures: [], known: [], stale: [] },
+    errors: [],
+  });
+  assert.match(report, /1 link passes contrast only through/);
+  assert.match(report, /functional-element-contrast\.mjs/);
+  assert.match(report, /"This is a link"/);
+
+  // A large-text failure carries the flag, but its key is the same as it
+  // would be without it, so the baseline matches it as before.
+  const failing = evaluateSamples([
+    sample({ color: 'rgb(200, 200, 200)', fontSize: 24 }),
+  ]).failures[0];
+  assert.equal(failing.largeTextAllowance, true);
+  const { largeTextAllowance, ...unflagged } = failing;
+  assert.equal(failureKey(failing), failureKey(unflagged));
+});
+
+// A halo the way Chrome serializes one shadow of it, and a text node's sample.
+const HALO_SHADOW = 'rgb(255, 255, 255) 0.48px 0px 0px';
+const node = (text, textShadow, fontSize = 16) => ({
+  text,
+  textShadow,
+  fontSize,
+});
+
+const pickFrom = (attempts) => {
+  const tried = [];
+  const picked = pickSample((index) => {
+    tried.push(index);
+    return attempts[index];
+  });
+  return { picked, tried };
+};
+
+test('pickSample prefers a visible text node that draws a halo', () => {
+  const { picked, tried } = pickFrom([
+    null,
+    node('eyebrow', 'none'),
+    node('title', HALO_SHADOW),
+    node('never reached', 'rgb(0, 0, 0) 1px 0px 0px'),
+  ]);
+  assert.equal(picked.text, 'title');
+  assert.deepEqual(tried, [0, 1, 2], 'stops at the first halo sample');
+});
+
+test('pickSample passes over a blurred drop shadow to reach the halo', () => {
+  // A shadow is not a halo just because it is there (`haloShadows`): this
+  // eyebrow's soft drop shadow would make the link read as drawing none.
+  const { picked } = pickFrom([
+    node('eyebrow', 'rgba(0, 0, 0, 0.5) 0px 2px 4px'),
+    node('title', HALO_SHADOW, 32),
+  ]);
+  assert.equal(picked.text, 'title');
+});
+
+test('pickSample passes over a transparent shadow to reach the halo', () => {
+  const { picked } = pickFrom([
+    node('eyebrow', 'rgba(0, 0, 0, 0) 1px 0px 0px'),
+    node('title', HALO_SHADOW),
+  ]);
+  assert.equal(picked.text, 'title');
+});
+
+test('pickSample takes the first visible node when all share one halo', () => {
+  const { picked, tried } = pickFrom([
+    null,
+    node('first', HALO_SHADOW),
+    node('second', HALO_SHADOW),
+  ]);
+  assert.equal(picked.text, 'first');
+  assert.deepEqual(tried, [0, 1]);
+});
+
+test('pickSample falls back to the first visible node when none draws a halo', () => {
+  const { picked, tried } = pickFrom([
+    null,
+    node('blurred', 'rgba(0, 0, 0, 0.5) 0px 2px 4px'),
+    node('plain', 'none'),
+  ]);
+  assert.equal(picked.text, 'blurred');
+  assert.deepEqual(tried, [0, 1, 2, 3], 'tries every node before falling back');
+  assert.equal(
+    pickSample((index) => [null, node('a', 'none'), node('b', 'none')][index])
+      .text,
+    'a',
+  );
+  assert.equal(
+    pickSample(() => null),
+    null,
+  );
+  assert.equal(
+    pickSample(() => undefined),
+    null,
+  );
+});
+
+test('pickSample tries at most the limit', () => {
+  const tried = [];
+  pickSample((index) => {
+    tried.push(index);
+    return null;
+  }, 3);
+  assert.deepEqual(tried, [0, 1, 2]);
+});
+
+const VIEW = { width: 1200, height: 800 };
+const rect = (left, top, width, height) => ({
+  left,
+  top,
+  right: left + width,
+  bottom: top + height,
+});
+
+test('scrollToReveal leaves a rect that is fully on screen alone', () => {
+  assert.equal(scrollToReveal(rect(0, 0, 1200, 800), VIEW), null);
+  assert.equal(scrollToReveal(rect(100, 300, 80, 20), VIEW), null);
+});
+
+test('scrollToReveal centres a rect that has any edge off screen', () => {
+  // Below the fold: vertical scroll only.
+  assert.deepEqual(scrollToReveal(rect(100, 900, 80, 20), VIEW), {
+    x: 0,
+    y: 510,
+  });
+  // Bottom edge a pixel past the viewport, centre well inside.
+  assert.deepEqual(scrollToReveal(rect(100, 790, 80, 20), VIEW), {
+    x: 0,
+    y: 400,
+  });
+  // Right edge off screen though the centre is not: horizontal too.
+  assert.deepEqual(scrollToReveal(rect(1150, 300, 80, 20), VIEW), {
+    x: 590,
+    y: -90,
+  });
+  // Left edge off screen.
+  assert.deepEqual(scrollToReveal(rect(-30, 300, 80, 20), VIEW), {
+    x: -590,
+    y: -90,
+  });
+});
+
+test('scrollToReveal survives serialization on its own', () => {
+  // eslint-disable-next-line no-new-func
+  const copy = (fn) => new Function(`return ${fn.toString()};`)();
+  assert.deepEqual(
+    copy(scrollToReveal)(rect(1150, 300, 80, 20), VIEW),
+    scrollToReveal(rect(1150, 300, 80, 20), VIEW),
+  );
+});
+
+// A clip on one axis only, the way an `overflow-x: hidden` box clips.
+const clipX = (left, right) => ({
+  left,
+  right,
+  top: -Infinity,
+  bottom: Infinity,
+});
+
+test('visibleLineBox judges an ellipsis box near the right edge in place', () => {
+  // The text runs to 1600px, past the viewport, but its `overflow: hidden`
+  // box stops at 1180px: what is painted is all on screen.
+  assert.deepEqual(
+    visibleLineBox(rect(1000, 300, 600, 20), [rect(980, 290, 200, 40)], VIEW),
+    { box: rect(1000, 300, 180, 20) },
+  );
+  // A container wider than the viewport on a page with `overflow-x:
+  // hidden`, which no horizontal scroll can reach past.
+  assert.deepEqual(
+    visibleLineBox(rect(900, 300, 600, 20), [clipX(0, 1200)], VIEW),
+    { box: rect(900, 300, 300, 20) },
+  );
+});
+
+test('visibleLineBox judges a box fully on screen without scrolling', () => {
+  assert.deepEqual(visibleLineBox(rect(100, 300, 80, 20), [], VIEW), {
+    box: rect(100, 300, 80, 20),
+  });
+  assert.deepEqual(
+    visibleLineBox(rect(100, 300, 80, 20), [clipX(0, 1200)], VIEW),
+    { box: rect(100, 300, 80, 20) },
+  );
+});
+
+test('visibleLineBox scrolls a box below the fold to the middle', () => {
+  assert.deepEqual(visibleLineBox(rect(100, 900, 80, 20), [], VIEW), {
+    scroll: { x: 0, y: 510 },
+  });
+  // The scroll centres what is painted, not the unclipped text.
+  assert.deepEqual(
+    visibleLineBox(rect(1000, 900, 600, 20), [rect(980, 0, 200, 2000)], VIEW),
+    { scroll: { x: 0, y: 510 } },
+  );
+});
+
+test('visibleLineBox calls a box its ancestors clip away hidden', () => {
+  // A collapsed panel: zero height.
+  assert.deepEqual(
+    visibleLineBox(rect(100, 300, 80, 20), [rect(0, 290, 1200, 0)], VIEW),
+    { hidden: true },
+  );
+  // Clipped off to the side by one ancestor, though another would show it.
+  assert.deepEqual(
+    visibleLineBox(
+      rect(100, 300, 80, 20),
+      [rect(0, 0, 1200, 800), clipX(500, 900)],
+      VIEW,
+    ),
+    { hidden: true },
+  );
+  // Less than a pixel showing.
+  assert.deepEqual(
+    visibleLineBox(rect(100, 300, 80, 20), [clipX(179.5, 400)], VIEW),
+    { hidden: true },
+  );
+});
+
+test('revealLineBox scrolls at most once and re-checks once', () => {
+  const run = (layouts) => {
+    const scrolls = [];
+    let measured = 0;
+    const box = revealLineBox(
+      () => {
+        measured += 1;
+        return layouts[measured - 1] ?? layouts[layouts.length - 1];
+      },
+      (x, y) => scrolls.push({ x, y }),
+    );
+    return { box, scrolls, measured };
+  };
+  const at = (top) => ({
+    rect: rect(100, top, 80, 20),
+    clips: [],
+    viewport: VIEW,
+  });
+
+  // On screen: judged where it is.
+  assert.deepEqual(run([at(300)]), {
+    box: rect(100, 300, 80, 20),
+    scrolls: [],
+    measured: 1,
+  });
+  // Below the fold: one scroll, then judged where it landed.
+  assert.deepEqual(run([at(900), at(390)]), {
+    box: rect(100, 390, 80, 20),
+    scrolls: [{ x: 0, y: 510 }],
+    measured: 2,
+  });
+  // A scroll that does not bring it on screen (the page cannot scroll that
+  // far) is not retried: skipped after the one re-check.
+  assert.deepEqual(run([at(900)]), {
+    box: null,
+    scrolls: [{ x: 0, y: 510 }],
+    measured: 2,
+  });
+  // Clipped away, or no line box at all: skipped without scrolling.
+  assert.deepEqual(
+    run([
+      { rect: rect(100, 300, 80, 20), clips: [clipX(0, 0)], viewport: VIEW },
+    ]),
+    { box: null, scrolls: [], measured: 1 },
+  );
+  assert.deepEqual(run([null]), { box: null, scrolls: [], measured: 1 });
+  // The line box gone after the scroll.
+  assert.deepEqual(run([at(900), null]), {
+    box: null,
+    scrolls: [{ x: 0, y: 510 }],
+    measured: 2,
+  });
 });
 
 test('an unresolvable background is a skip, not a failure', () => {
