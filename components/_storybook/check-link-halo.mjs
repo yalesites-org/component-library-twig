@@ -100,6 +100,7 @@ import puppeteer from 'puppeteer';
 import {
   STATES,
   THEME_CROSS_LIMIT,
+  bootStoryId,
   coverageProblems,
   componentsChecked,
   diffBaseline,
@@ -111,6 +112,7 @@ import {
   updatedBaseline,
   visitKey,
 } from './link-halo.mjs';
+import { PAGE_HELPERS, pageHelpersScript } from './link-halo-page.mjs';
 import {
   HALO_COMPONENTS,
   NO_HALO_LINKS,
@@ -142,8 +144,8 @@ const tokens = require('@yalesites-org/tokens/build/json/tokens.json');
  * (`globalTypes.globalTheme.defaultValue` in
  * `config/emulsify-core/storybook/preview-decorators.js`) and the one every
  * story is rendered in: visreg stories set their own theme on wrappers, so it
- * only keeps `<body>` predictable, and every other story is then spread
- * across all of them (`spreadGlobalThemes`).
+ * only keeps `<body>` predictable, and each render is then copied into a
+ * wrapper for every global theme (`planPages`, `cloneMarkup`, `mountMatrix`).
  */
 const globalThemes = Object.keys(tokens['global-themes']);
 const globalThemeLabels = Object.fromEntries(
@@ -180,12 +182,23 @@ const updateBaseline =
   process.env.LINK_HALO_UPDATE_BASELINE === '1';
 const resultsOut = process.env.LINK_HALO_RESULTS_OUT;
 
+/** Where the matrix of copies lives on the page while it is sampled. */
+const MATRIX = '#link-halo-matrix';
+
 /**
- * Freezes every transition and animation at its end value.
+ * Freezes every transition and animation at its end value, and makes every
+ * box in the matrix hit-testable.
  *
  * Zero duration rather than `none`: an element that animates in from
  * `opacity: 0` would stay invisible with no animation at all, whereas a
  * zero-length one lands on its final frame.
+ *
+ * `document.elementsFromPoint` skips `pointer-events: none` boxes, and the
+ * decorative overlays behind some link text set exactly that
+ * (`.callouts__overlay_image`, `.cta-banner__overlay_image`), so without this
+ * a link over one would be judged against whatever is beneath the overlay.
+ * Nothing in the check relies on pointer events: states are forced through
+ * the devtools protocol, never by moving a mouse.
  */
 const FREEZE_MOTION = `
   *, *::before, *::after {
@@ -193,6 +206,9 @@ const FREEZE_MOTION = `
     animation-duration: 0s !important;
     transition-delay: 0s !important;
     transition-duration: 0s !important;
+  }
+  ${MATRIX}, ${MATRIX} * {
+    pointer-events: auto !important;
   }
 `;
 
@@ -280,14 +296,20 @@ function tagLinks(rootSelector) {
  * Runs in the page, so it cannot import anything: every decision is left to
  * `link-halo.mjs` and this only gathers facts. The one judgement it has to
  * make itself is whether the link is visible at all, because that needs the
- * live layout.
+ * live layout. The pseudo-element box maths it needs comes from the helpers
+ * `pageHelpersScript` installed on the page.
  *
- * @param {string} rootSelector
- *   The element holding the links: the matrix (`mountMatrix`).
+ * @param {{rootSelector: string, helpers: string}} request
+ *   The element holding the links (the matrix, `mountMatrix`), and the
+ *   `window` property the page helpers are under (`PAGE_HELPERS`).
  * @return {{samples: Array<object>, hidden: number}}
  *   One sample per visible link, and how many links were not visible.
  */
-function collectSamples(rootSelector) {
+function collectSamples({ rootSelector, helpers }) {
+  const { pseudoElementBox } = window[helpers] ?? {};
+  if (typeof pseudoElementBox !== 'function') {
+    throw new Error(`The page helpers (window.${helpers}) are not installed.`);
+  }
   const links = [...document.querySelectorAll('[data-link-halo]')];
   const samples = [];
   let hidden = 0;
@@ -383,8 +405,9 @@ function collectSamples(rootSelector) {
   // of them paints behind the text (an active nav item's tint, a card's
   // overlay) would otherwise be invisible to the check. Its offsets resolve
   // against the containing block -- the nearest positioned or transformed
-  // ancestor's padding box, or the viewport for `fixed` -- which is all
-  // computed styles can tell. Transforms on the pseudo itself are ignored.
+  // ancestor's padding box, or the viewport for `fixed` -- which is found
+  // here from the live layout; the box maths is `pseudoElementBox` in
+  // `link-halo.mjs`, installed on the page by `pageHelpersScript`.
   const pseudoBox = (element, style) => {
     let block;
     if (style.position === 'fixed') {
@@ -416,64 +439,7 @@ function collectSamples(rootSelector) {
       };
     }
 
-    // A pseudo-element's computed geometry is the specified value (`100%`,
-    // `auto`), not a used length, so percentages are resolved here against
-    // the containing block. `auto` stays NaN and is solved from the opposite
-    // inset where it can be.
-    const length = (value, base) => {
-      if (value.endsWith('px')) return parseFloat(value);
-      if (value.endsWith('%')) return (parseFloat(value) / 100) * base;
-      return value === '0' ? 0 : NaN;
-    };
-    const axis = (start, end, size, before, after, base) => {
-      const startInset = length(style[start], base);
-      const endInset = length(style[end], base);
-      const marginStart = length(style[`margin${before}`], block.width) || 0;
-      const marginEnd = length(style[`margin${after}`], block.width) || 0;
-      const extras =
-        style.boxSizing === 'border-box'
-          ? 0
-          : [`padding${before}`, `padding${after}`]
-              .map((name) => length(style[name], block.width) || 0)
-              .concat(
-                [`border${before}Width`, `border${after}Width`].map(
-                  (name) => parseFloat(style[name]) || 0,
-                ),
-              )
-              .reduce((sum, value) => sum + value, 0);
-      let outer = length(style[size], base) + extras;
-      if (!Number.isFinite(outer)) {
-        outer = base - startInset - endInset - marginStart - marginEnd;
-      }
-      const offset = Number.isFinite(startInset)
-        ? startInset + marginStart
-        : base - endInset - marginEnd - outer;
-      return [offset, outer];
-    };
-
-    const [left, width] = axis(
-      'left',
-      'right',
-      'width',
-      'Left',
-      'Right',
-      block.width,
-    );
-    const [top, height] = axis(
-      'top',
-      'bottom',
-      'height',
-      'Top',
-      'Bottom',
-      block.height,
-    );
-    if (![left, top, width, height].every(Number.isFinite)) return null;
-    return {
-      left: block.left + left,
-      top: block.top + top,
-      right: block.left + left + width,
-      bottom: block.top + top + height,
-    };
+    return pseudoElementBox(style, block);
   };
 
   // Layers for whatever `element`'s pseudo-elements paint at (x, y),
@@ -800,58 +766,28 @@ async function proveForcedStates(page, session) {
  *
  * Globals are sent first. If the story is already showing, that re-render
  * is the one awaited; otherwise the preview re-renders the old story, which
- * is ignored, then renders the new one with the new globals.
+ * is ignored, then renders the new one with the new globals. The waiting is
+ * `waitForRender` in `link-halo-page.mjs`, shared with `applyArgs`.
  *
- * @param {{id: string, globals: Object<string, string>, timeout: number}} request
- *   What to show.
+ * @param {{id: string, globals: Object<string, string>, timeout: number, helpers: string}} request
+ *   What to show, and the `window` property of the page helpers.
  * @return {Promise<void>}
  *   Resolves once the story has rendered; rejects if it errors or times out.
  */
-function showStory({ id, globals, timeout }) {
+function showStory({ id, globals, timeout, helpers }) {
   // Storybook's own name for the preview's channel.
   // eslint-disable-next-line no-underscore-dangle
   const channel = window.__STORYBOOK_ADDONS_CHANNEL__;
-  if (!channel) {
-    return Promise.reject(new Error('The Storybook channel is not available.'));
-  }
-
-  return new Promise((resolve, reject) => {
-    const failures = ['storyErrored', 'storyMissing', 'storyThrewException'];
-    // Declared first and assigned below: the listeners and `finish` refer to
-    // each other.
-    let timer;
-    let onRendered;
-    let onFailure;
-    const finish = (error) => {
-      clearTimeout(timer);
-      channel.off('storyRendered', onRendered);
-      failures.forEach((event) => channel.off(event, onFailure));
-      if (error) reject(error);
-      else resolve();
-    };
-    onRendered = (renderedId) => {
-      if (renderedId === id) finish();
-    };
-    onFailure = (detail) => {
-      finish(
-        new Error(
-          `Story failed to render: ${
-            detail?.title ?? detail?.message ?? String(detail)
-          }`,
-        ),
-      );
-    };
-
-    timer = setTimeout(
-      () =>
-        finish(new Error(`Timed out after ${timeout}ms switching to ${id}.`)),
-      timeout,
-    );
-    channel.on('storyRendered', onRendered);
-    failures.forEach((event) => channel.on(event, onFailure));
-    channel.emit('updateGlobals', { globals });
-    channel.emit('setCurrentStory', { storyId: id, viewMode: 'story' });
-  });
+  return window[helpers].waitForRender(
+    channel,
+    id,
+    timeout,
+    () => {
+      channel.emit('updateGlobals', { globals });
+      channel.emit('setCurrentStory', { storyId: id, viewMode: 'story' });
+    },
+    'switching to',
+  );
 }
 
 /**
@@ -864,55 +800,23 @@ function showStory({ id, globals, timeout }) {
  * page, so every visit of a story with theme args sets all of them, defaults
  * included, rather than trusting what an earlier visit left behind.
  *
- * @param {{id: string, args: Object<string, string>, timeout: number}} request
- *   The story and the args to set.
+ * @param {{id: string, args: Object<string, string>, timeout: number, helpers: string}} request
+ *   The story and the args to set, and the `window` property of the page
+ *   helpers.
  * @return {Promise<void>}
  *   Resolves once the story has re-rendered; rejects if it errors or times
  *   out.
  */
-function applyArgs({ id, args, timeout }) {
+function applyArgs({ id, args, timeout, helpers }) {
   // eslint-disable-next-line no-underscore-dangle
   const channel = window.__STORYBOOK_ADDONS_CHANNEL__;
-  if (!channel) {
-    return Promise.reject(new Error('The Storybook channel is not available.'));
-  }
-
-  return new Promise((resolve, reject) => {
-    const failures = ['storyErrored', 'storyThrewException'];
-    let timer;
-    let onRendered;
-    let onFailure;
-    const finish = (error) => {
-      clearTimeout(timer);
-      channel.off('storyRendered', onRendered);
-      failures.forEach((event) => channel.off(event, onFailure));
-      if (error) reject(error);
-      else resolve();
-    };
-    onRendered = (renderedId) => {
-      if (renderedId === id) finish();
-    };
-    onFailure = (detail) => {
-      finish(
-        new Error(
-          `Story failed to render with its theme args: ${
-            detail?.title ?? detail?.message ?? String(detail)
-          }`,
-        ),
-      );
-    };
-
-    timer = setTimeout(
-      () =>
-        finish(
-          new Error(`Timed out after ${timeout}ms setting args on ${id}.`),
-        ),
-      timeout,
-    );
-    channel.on('storyRendered', onRendered);
-    failures.forEach((event) => channel.on(event, onFailure));
-    channel.emit('updateStoryArgs', { storyId: id, updatedArgs: args });
-  });
+  return window[helpers].waitForRender(
+    channel,
+    id,
+    timeout,
+    () => channel.emit('updateStoryArgs', { storyId: id, updatedArgs: args }),
+    'setting args on',
+  );
 }
 
 /**
@@ -970,7 +874,8 @@ async function readStories() {
  * @param {string} origin
  *   Origin serving the built Storybook.
  * @param {string} id
- *   Any story id, to load the preview with.
+ *   A story id to load the preview with: one the run will visit, so the
+ *   preview boots on a story that is known to be in scope.
  * @return {Promise<Object<string, {argTypes: object, initialArgs: object}>>}
  *   From `readStories`.
  */
@@ -1086,6 +991,7 @@ async function renderVisit(page, origin, visit, theme, current) {
         id,
         globals: { globalTheme: theme },
         timeout: storyTimeout,
+        helpers: PAGE_HELPERS,
       });
     }
   } else {
@@ -1112,7 +1018,12 @@ async function renderVisit(page, origin, visit, theme, current) {
     theme,
   );
   if (args) {
-    await page.evaluate(applyArgs, { id, args, timeout: storyTimeout });
+    await page.evaluate(applyArgs, {
+      id,
+      args,
+      timeout: storyTimeout,
+      helpers: PAGE_HELPERS,
+    });
   }
   // Behaviours and images settle after the render event; the markup is
   // copied from here, so it must be final.
@@ -1121,9 +1032,6 @@ async function renderVisit(page, origin, visit, theme, current) {
     timeout: storyTimeout,
   });
 }
-
-/** Where the matrix of copies lives on the page while it is sampled. */
-const MATRIX = '#link-halo-matrix';
 
 /**
  * The markup of one copy of a render: the story's markup in a global theme
@@ -1324,7 +1232,10 @@ async function checkPage(page, session, origin, plan, current) {
         for (let index = 0; index < STATES.length; index += 1) {
           const state = STATES[index];
           const release = await forceState(session, state);
-          const collected = await page.evaluate(collectSamples, MATRIX);
+          const collected = await page.evaluate(collectSamples, {
+            rootSelector: MATRIX,
+            helpers: PAGE_HELPERS,
+          });
           await release();
           hidden += collected.hidden;
           collected.samples.forEach((sample) => {
@@ -1399,6 +1310,10 @@ async function checkAll(browser, origin, plans, workers) {
         height: 800,
         deviceScaleFactor: 1,
       });
+      // Every document this page loads gets the helpers the in-page code
+      // shares (`link-halo-page.mjs`); switching stories in place keeps the
+      // document, and with it the helpers.
+      await page.evaluateOnNewDocument(pageHelpersScript());
       const session = await page.createCDPSession();
       await session.send('Network.enable');
       await session.send('Network.setBlockedURLs', {
@@ -1539,6 +1454,16 @@ async function main() {
   const server = await serveDirectory(buildDir);
 
   try {
+    const scope = {
+      globalThemes,
+      labels: globalThemeLabels,
+      filter: storyFilter,
+      inScope: storyInScope,
+      sectionless: storySectionless,
+    };
+    // Chosen before the browser starts, so a filter that matches no in-scope
+    // story stops the run with `planPages`'s message straight away.
+    const bootId = bootStoryId(index, scope);
     const browser = await puppeteer.launch({
       args: [
         '--no-sandbox',
@@ -1550,19 +1475,8 @@ async function main() {
     });
 
     try {
-      const stories = await discoverStories(
-        browser,
-        server.origin,
-        storyEntries(index)[0].id,
-      );
-      plans = planPages(index, {
-        globalThemes,
-        labels: globalThemeLabels,
-        filter: storyFilter,
-        stories,
-        inScope: storyInScope,
-        sectionless: storySectionless,
-      });
+      const stories = await discoverStories(browser, server.origin, bootId);
+      plans = planPages(index, { ...scope, stories });
 
       const oneAtATime = [
         ...new Set(
@@ -1702,6 +1616,9 @@ async function main() {
       : '';
 
   if (updateBaseline) {
+    // Printed whichever way the update goes, so a refusal still shows the
+    // failed renders and the failures behind it.
+    console.log(report);
     if (untrusted) {
       console.error(`${untrusted}\n\nSo the baseline was not updated.`);
       process.exitCode = 1;
@@ -1715,7 +1632,6 @@ async function main() {
         )} failed, so the baseline was not ` +
           'updated -- it would drop entries for stories that were never checked.',
       );
-      console.log(report);
       process.exitCode = 1;
       return;
     }

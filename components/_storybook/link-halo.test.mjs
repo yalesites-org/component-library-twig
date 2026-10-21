@@ -18,6 +18,7 @@ import {
   CHANNEL_TOLERANCE,
   STATES,
   THEME_CROSS_LIMIT,
+  bootStoryId,
   composite,
   diffBaseline,
   evaluateSample,
@@ -39,6 +40,7 @@ import {
   coverageProblems,
   orderPages,
   planPages,
+  pseudoElementBox,
   splitGlobalThemeName,
   splitTopLevel,
   themeArgCombinations,
@@ -328,6 +330,52 @@ test('an unresolvable background is a skip, not a failure', () => {
   assert.equal(verdict.problems, undefined);
 });
 
+test('an unreadable text colour keeps the halo problem already found', () => {
+  const verdict = evaluateSample(
+    sample({ color: 'oklab(0.5 0.1 0.1)', textShadow: halo(NAVY) }),
+  );
+  assert.equal(verdict.skip, undefined);
+  assert.deepEqual(
+    verdict.problems.map(({ check }) => check),
+    ['halo'],
+  );
+});
+
+test('an unreadable text colour with a matching halo is still a skip', () => {
+  const verdict = evaluateSample(sample({ color: 'oklab(0.5 0.1 0.1)' }));
+  assert.match(verdict.skip, /unreadable text colour "oklab\(0.5 0.1 0.1\)"/);
+  assert.equal(verdict.problems, undefined);
+});
+
+test('an unreadable halo colour still judges contrast and the readable halos', () => {
+  const unreadable = 'oklab(1 0 0) 0.48px 0px 0px';
+  const grey = { color: 'rgb(170, 170, 170)' };
+
+  const contrast = evaluateSample(
+    sample({ ...grey, textShadow: `${halo(WHITE)}, ${unreadable}` }),
+  );
+  assert.equal(contrast.skip, undefined);
+  assert.deepEqual(
+    contrast.problems.map(({ check }) => check),
+    ['contrast'],
+  );
+
+  const both = evaluateSample(
+    sample({ ...grey, textShadow: `${halo(NAVY)}, ${unreadable}` }),
+  );
+  assert.deepEqual(
+    both.problems.map(({ check }) => check),
+    ['halo', 'contrast'],
+  );
+
+  // Nothing found, but the halo was not fully judged: not a pass.
+  const clean = evaluateSample(
+    sample({ textShadow: `${halo(WHITE)}, ${unreadable}` }),
+  );
+  assert.match(clean.skip, /unreadable text-shadow/);
+  assert.equal(clean.problems, undefined);
+});
+
 test('formatThemes leads with global, section and component', () => {
   assert.equal(
     formatThemes({
@@ -516,6 +564,30 @@ test('planPages honours a filter and refuses to plan nothing', () => {
     /No stories in scope match/,
   );
   assert.throws(() => planPages({}, options), /storybook:build/);
+});
+
+test('bootStoryId is the first planned story, and an empty plan says why', () => {
+  const options = { globalThemes: ['one'], labels: { one: 'Old Blues' } };
+  assert.equal(
+    bootStoryId(indexFixture, options),
+    planPages(indexFixture, options)[0].id,
+  );
+  assert.equal(
+    bootStoryId(indexFixture, { ...options, filter: /visreg/ }),
+    planPages(indexFixture, { ...options, filter: /visreg/ })[0].id,
+  );
+  // A filter that matches no in-scope story: the plan's own message, not a
+  // TypeError from indexing an empty plan.
+  assert.throws(
+    () => bootStoryId(indexFixture, { ...options, filter: /nope/ }),
+    (error) =>
+      !(error instanceof TypeError) &&
+      /No stories in scope match \/nope\//.test(error.message),
+  );
+  assert.throws(
+    () => bootStoryId(indexFixture, { ...options, inScope: () => false }),
+    /No stories to visit/,
+  );
 });
 
 test('the report names story, themes, state and link text for a new failure', () => {
@@ -913,6 +985,154 @@ test('an unfiltered run that leaves too much of the baseline stale fails', () =>
   );
   // A filtered run cannot tell a fix from a story it left out.
   assert.deepEqual(run(50, false), []);
+});
+
+test('a filtered run does not demand halo links from every component it rendered', () => {
+  const run = (complete) =>
+    coverageProblems({
+      checkedByComponent: new Map([
+        ['02-molecules/link-grid', 4],
+        ['02-molecules/meta', 0],
+        ['03-organisms/site-header', 2],
+      ]),
+      components: [
+        '02-molecules/link-grid',
+        '02-molecules/meta',
+        '03-organisms/site-header',
+      ],
+      expectedEmpty: { '03-organisms/site-header': 'nav links only' },
+      stale: 0,
+      baselineSize: 100,
+      complete,
+    });
+
+  assert.equal(run(true).length, 2);
+  assert.deepEqual(run(false), []);
+  // Judging nothing at all fails a filtered run too.
+  assert.match(
+    coverageProblems({
+      checkedByComponent: new Map(),
+      components: ['02-molecules/meta'],
+      stale: 0,
+      baselineSize: 100,
+      complete: false,
+    }).join('\n'),
+    /No halo link was judged at all/,
+  );
+});
+
+/** Computed styles of an absolutely positioned pseudo-element. */
+const pseudoStyle = (overrides = {}) => ({
+  top: 'auto',
+  right: 'auto',
+  bottom: 'auto',
+  left: 'auto',
+  width: 'auto',
+  height: 'auto',
+  marginTop: '0px',
+  marginRight: '0px',
+  marginBottom: '0px',
+  marginLeft: '0px',
+  paddingTop: '0px',
+  paddingRight: '0px',
+  paddingBottom: '0px',
+  paddingLeft: '0px',
+  borderTopWidth: '0px',
+  borderRightWidth: '0px',
+  borderBottomWidth: '0px',
+  borderLeftWidth: '0px',
+  boxSizing: 'content-box',
+  ...overrides,
+});
+const BLOCK = { left: 10, top: 20, width: 200, height: 100 };
+
+test('pseudoElementBox: inset 0 covers the containing block', () => {
+  assert.deepEqual(
+    pseudoElementBox(
+      pseudoStyle({ top: '0px', right: '0px', bottom: '0px', left: '0px' }),
+      BLOCK,
+    ),
+    { left: 10, top: 20, right: 210, bottom: 120 },
+  );
+});
+
+test('pseudoElementBox: width 100% adds padding and border under content-box only', () => {
+  const style = {
+    top: '0px',
+    left: '0px',
+    width: '100%',
+    height: '50%',
+    paddingLeft: '5%',
+    paddingRight: '4px',
+    borderLeftWidth: '1px',
+  };
+  // 200 + 5% of the block width (10) + 4 + 1.
+  assert.deepEqual(pseudoElementBox(pseudoStyle(style), BLOCK), {
+    left: 10,
+    top: 20,
+    right: 225,
+    bottom: 70,
+  });
+  assert.deepEqual(
+    pseudoElementBox(pseudoStyle({ ...style, boxSizing: 'border-box' }), BLOCK),
+    { left: 10, top: 20, right: 210, bottom: 70 },
+  );
+});
+
+test('pseudoElementBox: an auto inset is solved from the opposite one', () => {
+  assert.deepEqual(
+    pseudoElementBox(
+      pseudoStyle({
+        right: '10px',
+        bottom: '0',
+        width: '50px',
+        height: '10%',
+        marginRight: '5px',
+      }),
+      BLOCK,
+    ),
+    // left = 200 - 10 - 5 - 50; top = 100 - 0 - 10.
+    { left: 145, top: 110, right: 195, bottom: 120 },
+  );
+  // Width and height auto, both insets set: the size fills the gap.
+  assert.deepEqual(
+    pseudoElementBox(
+      pseudoStyle({
+        top: '10%',
+        bottom: '20px',
+        left: '15px',
+        right: '25px',
+        marginLeft: '5px',
+      }),
+      BLOCK,
+    ),
+    { left: 30, top: 30, right: 185, bottom: 100 },
+  );
+});
+
+test('pseudoElementBox: geometry it cannot resolve is null', () => {
+  assert.equal(pseudoElementBox(pseudoStyle({ top: '0px' }), BLOCK), null);
+  assert.equal(
+    pseudoElementBox(
+      pseudoStyle({ top: 'calc(1px + 2%)', left: '0px' }),
+      BLOCK,
+    ),
+    null,
+  );
+});
+
+test('pseudoElementBox survives being serialized into the page', () => {
+  // The check sends its source to the browser, so it must close over
+  // nothing from this module.
+  // eslint-disable-next-line no-new-func
+  const copy = new Function(`return ${pseudoElementBox.toString()};`)();
+  const style = pseudoStyle({
+    right: '10px',
+    bottom: '0',
+    width: '50px',
+    height: '10%',
+  });
+  assert.deepEqual(copy(style, BLOCK), pseudoElementBox(style, BLOCK));
 });
 
 test('judged samples are summed per component', () => {

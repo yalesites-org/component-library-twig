@@ -355,6 +355,34 @@ test('a text-shadow that carries no halo colour, or one in a comment, is not a h
   );
 });
 
+test('a line comment containing /* does not swallow the code after it', () => {
+  assert.deepEqual(
+    haloUsers([
+      {
+        path: '02-molecules/x/_x.scss',
+        source: '// see tokens/*.scss\n.card a { @include link; }\n/* end */\n',
+      },
+    ]),
+    [{ path: '02-molecules/x/_x.scss', found: ['@include link'] }],
+  );
+});
+
+test('a protocol-relative url() is not a comment', () => {
+  assert.deepEqual(
+    haloUsers([
+      fixture(
+        '.x { background: url(//cdn.example.com/a.png); --color-text-shadow: red; }',
+      ),
+    ]),
+    [
+      {
+        path: '02-molecules/new-thing/_yds-new-thing.scss',
+        found: ['--color-text-shadow: ...'],
+      },
+    ],
+  );
+});
+
 test('every NO_HALO_LINKS entry is an in-scope component with a reason', () => {
   Object.entries(NO_HALO_LINKS).forEach(([component, reason]) => {
     assert.ok(HALO_COMPONENTS.includes(component), component);

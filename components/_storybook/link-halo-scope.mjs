@@ -27,6 +27,8 @@
  */
 import { posix } from 'node:path';
 
+import { stripComments } from '../00-tokens/colors/strip-comments.mjs';
+
 /**
  * The components the check covers, as `<tier>/<component>` under
  * `components/`. Every story under one of these directories is visited.
@@ -95,19 +97,6 @@ const SETTER_FOUND = '--color-text-shadow: ...';
 
 /** How `haloUsers` names a `text-shadow` that carries the halo colour. */
 const SHADOW_FOUND = 'text-shadow: ... var(--color-text-shadow)';
-
-/**
- * A source with its comments removed, so a comment that mentions a mixin or
- * `--color-text-shadow` is not mistaken for a use. A `//` straight after a
- * colon is a URL scheme, not a comment.
- *
- * @param {string} source
- *   SCSS or CSS.
- * @return {string}
- *   The source without comments.
- */
-const stripComments = (source) =>
-  source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/.*$/gm, '$1');
 
 /** Escapes a string for use inside a regular expression. */
 const escape = (text) => text.replace(/[$-]/g, '\\$&');
@@ -220,16 +209,34 @@ const haloCarrier = (sources) => {
       (match) => ({ name: match[1], value: match[2] }),
     ),
   );
-  const carries = (value) =>
-    /--color-text-shadow(?![\w-])/.test(value) ||
-    [...variables].some((name) =>
-      new RegExp(`(?:^|[^\\w-])(?:[\\w-]+\\.)?${escape(name)}(?![\\w-])`).test(
-        value,
-      ),
-    ) ||
-    [...properties].some((name) =>
-      new RegExp(`var\\(\\s*${escape(name)}\\s*[,)]`).test(value),
-    );
+  // One regex for every carrier known so far, rebuilt only when the sets
+  // grow: `--color-text-shadow` itself, a variable named bare or through a
+  // module (`tokens.$halo`), or a custom property read with `var()`.
+  let pattern = null;
+  let patternSize = -1;
+  const carrierPattern = () => {
+    if (variables.size + properties.size !== patternSize) {
+      const alternation = (names) => [...names].map(escape).join('|');
+      pattern = new RegExp(
+        [
+          '--color-text-shadow(?![\\w-])',
+          ...(variables.size > 0
+            ? [
+                `(?:^|[^\\w-])(?:[\\w-]+\\.)?(?:${alternation(
+                  variables,
+                )})(?![\\w-])`,
+              ]
+            : []),
+          ...(properties.size > 0
+            ? [`var\\(\\s*(?:${alternation(properties)})\\s*[,)]`]
+            : []),
+        ].join('|'),
+      );
+      patternSize = variables.size + properties.size;
+    }
+    return pattern;
+  };
+  const carries = (value) => carrierPattern().test(value);
 
   // Until nothing new carries it: each pass can only add, so this ends.
   const grow = () =>
@@ -261,19 +268,16 @@ const drawsHaloShadow = (source, carries) =>
   );
 
 /**
- * The names of every mixin that draws the halo: the three in `HALO_MIXINS`,
- * plus any mixin, in any file, that includes one of them or sets a
- * `text-shadow` carrying `--color-text-shadow` -- resolved transitively, so a
- * wrapper around a wrapper is still a halo mixin. A module forwarded with a
- * prefix (`@forward './button' as button-*`) exposes its halo mixins under
- * the prefixed name too, so `@include atoms.button-my-link` is caught.
+ * The halo mixins and the halo carrier of a set of files, worked out once
+ * from the comment-stripped sources, which are returned too so `haloUsers`
+ * does not strip them again.
  *
  * @param {Array<{path: string, source: string}>} files
  *   Every scanned file.
- * @return {Set<string>}
- *   Mixin names, prefixed aliases included.
+ * @return {{names: Set<string>, carries: function(string): boolean, sources: Array<{path: string, source: string}>}}
+ *   `names` as `haloMixins` returns them, `carries` from `haloCarrier`.
  */
-export function haloMixins(files) {
+function analyse(files) {
   const sources = files.map((file) => ({
     path: file.path,
     source: stripComments(file.source),
@@ -333,8 +337,23 @@ export function haloMixins(files) {
     return added.length > 0;
   };
   while (grow());
-  return names;
+  return { names, carries, sources };
 }
+
+/**
+ * The names of every mixin that draws the halo: the three in `HALO_MIXINS`,
+ * plus any mixin, in any file, that includes one of them or sets a
+ * `text-shadow` carrying `--color-text-shadow` -- resolved transitively, so a
+ * wrapper around a wrapper is still a halo mixin. A module forwarded with a
+ * prefix (`@forward './button' as button-*`) exposes its halo mixins under
+ * the prefixed name too, so `@include atoms.button-my-link` is caught.
+ *
+ * @param {Array<{path: string, source: string}>} files
+ *   Every scanned file.
+ * @return {Set<string>}
+ *   Mixin names, prefixed aliases included.
+ */
+export const haloMixins = (files) => analyse(files).names;
 
 /**
  * The files that apply the halo, and what in each does it.
@@ -347,11 +366,10 @@ export function haloMixins(files) {
  *   declaration.
  */
 export function haloUsers(files) {
-  const include = includeOf(haloMixins(files));
-  const carries = haloCarrier(files.map((file) => stripComments(file.source)));
-  return files
-    .map(({ path, source: raw }) => {
-      const source = stripComments(raw);
+  const { names, carries, sources } = analyse(files);
+  const include = includeOf(names);
+  return sources
+    .map(({ path, source }) => {
       const found = new Set(
         [...source.matchAll(include)].map((match) => `@include ${match[1]}`),
       );

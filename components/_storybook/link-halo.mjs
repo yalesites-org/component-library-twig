@@ -27,9 +27,13 @@
  * The check landed against a library that already fails it, so
  * `link-halo-baseline.json` lists the failures that existed at that point.
  * Exactly those are tolerated: a failure that is not listed fails the run. An
- * entry that stops failing is reported as stale -- a warning, not a failure,
- * so fixing a bug never breaks the build -- and should be deleted, which
- * `--update-baseline` does for you. Entries are keyed by story, theme
+ * entry that stops failing is reported as stale and should be deleted, which
+ * `--update-baseline` does for you. A few stale entries are a warning, not a
+ * failure, so fixing a bug does not break the build; but an unfiltered run
+ * that leaves more than `STALE_SHARE_LIMIT` (10%) of the baseline stale fails,
+ * because that is more likely a check that stopped seeing links than a wave
+ * of fixes. After a fix that retires that many, run `--update-baseline` in
+ * the same change. Entries are keyed by story, theme
  * combination, state, check and link text, and deliberately carry no measured
  * numbers, so a colour that drifts while still failing does not churn the
  * file.
@@ -414,6 +418,89 @@ export const isLargeText = (fontSize, fontWeight) =>
   (fontSize >= LARGE_BOLD_TEXT_PX && fontWeight >= BOLD_WEIGHT);
 
 /**
+ * An absolutely positioned pseudo-element's border box, from its computed
+ * styles and its containing block.
+ *
+ * `elementsFromPoint` never returns `::before`/`::after`, so
+ * `check-link-halo.mjs` reads a pseudo-element's geometry itself to tell
+ * whether it covers a link's text. A pseudo-element's computed geometry is
+ * the specified value (`100%`, `auto`), not a used length, so percentages are
+ * resolved here against the containing block -- margins and padding against
+ * its width on both axes, as CSS does. `auto` is solved from the opposite
+ * inset where it can be. Padding and border are added to the size unless
+ * `box-sizing` is `border-box`. Transforms are ignored.
+ *
+ * Runs in the page as well as here: the check sends this function's source
+ * to the browser, so it must not refer to anything outside itself.
+ *
+ * @param {Object<string, string>} style
+ *   The pseudo-element's computed style (a `CSSStyleDeclaration` in the
+ *   page): insets, `width`/`height`, margins, padding, border widths and
+ *   `boxSizing`.
+ * @param {{left: number, top: number, width: number, height: number}} block
+ *   The containing block's padding box, in viewport coordinates.
+ * @return {?{left: number, top: number, right: number, bottom: number}}
+ *   The box in viewport coordinates, or null when a value cannot be
+ *   resolved (`calc()`, say, or `auto` on both sides).
+ */
+export function pseudoElementBox(style, block) {
+  const length = (value, base) => {
+    if (value.endsWith('px')) return parseFloat(value);
+    if (value.endsWith('%')) return (parseFloat(value) / 100) * base;
+    return value === '0' ? 0 : NaN;
+  };
+  const axis = (start, end, size, before, after, base) => {
+    const startInset = length(style[start], base);
+    const endInset = length(style[end], base);
+    const marginStart = length(style[`margin${before}`], block.width) || 0;
+    const marginEnd = length(style[`margin${after}`], block.width) || 0;
+    const extras =
+      style.boxSizing === 'border-box'
+        ? 0
+        : [`padding${before}`, `padding${after}`]
+            .map((name) => length(style[name], block.width) || 0)
+            .concat(
+              [`border${before}Width`, `border${after}Width`].map(
+                (name) => parseFloat(style[name]) || 0,
+              ),
+            )
+            .reduce((sum, value) => sum + value, 0);
+    let outer = length(style[size], base) + extras;
+    if (!Number.isFinite(outer)) {
+      outer = base - startInset - endInset - marginStart - marginEnd;
+    }
+    const offset = Number.isFinite(startInset)
+      ? startInset + marginStart
+      : base - endInset - marginEnd - outer;
+    return [offset, outer];
+  };
+
+  const [left, width] = axis(
+    'left',
+    'right',
+    'width',
+    'Left',
+    'Right',
+    block.width,
+  );
+  const [top, height] = axis(
+    'top',
+    'bottom',
+    'height',
+    'Top',
+    'Bottom',
+    block.height,
+  );
+  if (![left, top, width, height].every(Number.isFinite)) return null;
+  return {
+    left: block.left + left,
+    top: block.top + top,
+    right: block.left + left + width,
+    bottom: block.top + top + height,
+  };
+}
+
+/**
  * Judges one link in one state.
  *
  * @param {{color: string, textShadow: string, fontSize: number, fontWeight: number, layers: Array<object>}} sample
@@ -421,7 +508,9 @@ export const isLargeText = (fontSize, fontWeight) =>
  *   boxes behind it (see `resolveBackground`).
  * @return {{skip: string}|{background: string, problems: Array<{check: string, detail: string}>}}
  *   A skip reason, or the background and any problems found. An empty
- *   `problems` is a pass.
+ *   `problems` is a pass. A colour that cannot be read leaves its part
+ *   unjudged: problems found in the other parts are still returned, and the
+ *   sample is a skip only when nothing was found.
  */
 export function evaluateSample(sample) {
   const resolved = resolveBackground(sample.layers);
@@ -429,17 +518,21 @@ export function evaluateSample(sample) {
 
   const background = resolved.color;
   const problems = [];
+  // Parts of the sample that could not be judged. Whatever could be judged
+  // still is, so one unreadable colour does not hide a problem found in the
+  // rest; the sample only passes if every part was judged.
+  const unjudged = [];
 
   const shadows = haloShadows(
     parseTextShadow(sample.textShadow),
     sample.fontSize,
   );
-  const unreadable = shadows.find((shadow) => !shadow.color);
-  if (unreadable) {
-    return { skip: `unreadable text-shadow "${sample.textShadow}"` };
+  if (shadows.some((shadow) => !shadow.color)) {
+    unjudged.push(`unreadable text-shadow "${sample.textShadow}"`);
   }
 
   const worst = shadows
+    .filter((shadow) => shadow.color)
     .map((shadow) => {
       const painted = composite(shadow.color, background);
       return { painted, distance: channelDistance(painted, background) };
@@ -454,24 +547,28 @@ export function evaluateSample(sample) {
   }
 
   const text = parseColor(sample.color);
-  if (!text) {
-    return { skip: `unreadable text colour "${sample.color}"` };
-  }
-  const painted = composite(text, background);
-  const ratio = contrastRatio(painted, background);
-  const minimum = isLargeText(sample.fontSize, sample.fontWeight)
-    ? LARGE_TEXT_CONTRAST_MINIMUM
-    : CONTRAST_MINIMUM;
+  if (text) {
+    const painted = composite(text, background);
+    const ratio = contrastRatio(painted, background);
+    const minimum = isLargeText(sample.fontSize, sample.fontWeight)
+      ? LARGE_TEXT_CONTRAST_MINIMUM
+      : CONTRAST_MINIMUM;
 
-  if (ratio < minimum) {
-    problems.push({
-      check: 'contrast',
-      detail:
-        `text ${toHex(painted)} on ${toHex(background)} is ` +
-        `${formatRatio(ratio)}:1, needs ${minimum}:1`,
-    });
+    if (ratio < minimum) {
+      problems.push({
+        check: 'contrast',
+        detail:
+          `text ${toHex(painted)} on ${toHex(background)} is ` +
+          `${formatRatio(ratio)}:1, needs ${minimum}:1`,
+      });
+    }
+  } else {
+    unjudged.push(`unreadable text colour "${sample.color}"`);
   }
 
+  if (problems.length === 0 && unjudged.length > 0) {
+    return { skip: unjudged.join('; ') };
+  }
   return { background: toHex(background), problems };
 }
 
@@ -579,11 +676,11 @@ const THEME_VALUES = new Set([
  * How many theme combinations a story may be crossed into before its theme
  * args are varied one at a time instead.
  *
- * The largest real cross is 49 (a section theme arg and a seven-way dial on
- * one story). The two token colour-pairing showcases expose eleven dials,
- * one per example component, which crossed would be several million renders;
- * each of those dials drives a different component, so varying one at a time
- * still renders every link in every theme its own dial offers. `planPages`
+ * No in-scope story comes near it today: the largest real cross is 49 (a
+ * section theme arg and a seven-way dial on one story). It is a safety valve
+ * for a future story with many independent dials, whose full cross would
+ * multiply into far more renders than it is worth; varying each dial on its
+ * own still renders every link in every theme that dial offers. `planPages`
  * marks those pages, and the run names the stories, so the reduction is
  * never silent.
  */
@@ -927,6 +1024,26 @@ export function planPages(
 }
 
 /**
+ * The story to boot the preview with while discovering every story's
+ * controls: the first one the run will visit.
+ *
+ * Planned without the stories' argTypes, which are what the boot is for.
+ * Theme args only multiply a story's pages, so the first page is the same
+ * story either way. An empty plan throws `planPages`'s own error (a filter
+ * that matches no in-scope story, or an index with nothing to visit), so the
+ * run stops with that message before a browser is started.
+ *
+ * @param {object} index
+ *   The parsed `index.json` of a built Storybook.
+ * @param {object} options
+ *   As for `planPages`, without `stories`.
+ * @return {string}
+ *   A story id.
+ */
+export const bootStoryId = (index, options) =>
+  planPages(index, { ...options, stories: {} })[0].id;
+
+/**
  * Orders pages for the worker pool, most copies first (longest processing
  * time first), keeping plan order among equals so the run is repeatable.
  *
@@ -1074,10 +1191,12 @@ export function componentsChecked(checkedByStory, componentOfStory) {
  * Reasons a run cannot be trusted even though it found nothing new.
  *
  * - It judged no halo link at all.
- * - A component it rendered had no halo link judged, unless that component
- *   is expected to have none (`NO_HALO_LINKS` in `link-halo-scope.mjs`); and
- *   one expected to have none that now has some, so the exemption cannot go
- *   stale.
+ * - In an unfiltered run, a component it rendered had no halo link judged,
+ *   unless that component is expected to have none (`NO_HALO_LINKS` in
+ *   `link-halo-scope.mjs`); and one expected to have none that now has some,
+ *   so the exemption cannot go stale. A filtered run (`LINK_HALO_STORIES`)
+ *   may select only the stories of a component that have no halo link, so
+ *   like the stale check this only speaks for a complete run.
  * - An unfiltered run left more than `STALE_SHARE_LIMIT` of the baseline
  *   stale.
  *
@@ -1117,7 +1236,7 @@ export function coverageProblems({
         'them (a filter that matches no halo story, an empty render).',
     );
   }
-  components.forEach((component) => {
+  (complete ? components : []).forEach((component) => {
     const count = checkedByComponent.get(component) ?? 0;
     if (count === 0 && !(component in expectedEmpty)) {
       problems.push(

@@ -71,9 +71,18 @@ export const BLOCKED_MEDIA = [
  */
 export async function serveDirectory(root) {
   const server = createServer(async (request, response) => {
-    const requested = decodeURIComponent(
-      new URL(request.url, 'http://localhost').pathname,
-    );
+    // A malformed escape (`%E0%A4%A`) makes `decodeURIComponent` throw, and
+    // a throw here would be an unhandled rejection that takes the process
+    // down, so it is answered as the bad request it is.
+    let requested;
+    try {
+      requested = decodeURIComponent(
+        new URL(request.url, 'http://localhost').pathname,
+      );
+    } catch {
+      response.writeHead(400).end('Bad request');
+      return;
+    }
     const filePath = path.join(
       root,
       requested === '/' ? 'index.html' : requested,

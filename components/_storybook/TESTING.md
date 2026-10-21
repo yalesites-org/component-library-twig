@@ -288,9 +288,11 @@ it, counted in document order. Only `block__element` classes are used: behaviour
 (`link`, `external-link`, `link-purpose-*`) after render, and reading those made the same link's
 key differ between two runs of one build.
 
-- **An entry that stops failing** is reported as stale, a warning and not a failure, so a fix never
-  breaks the build. Delete it, or update the baseline. An unfiltered run also reports entries for
-  stories that are no longer in the index (deleted or renamed) as stale.
+- **An entry that stops failing** is reported as stale, a warning and not a failure, so a fix does
+  not break the build, up to a limit: an unfiltered run that leaves more than 10% of the baseline
+  stale fails (see "When the run fails"), so after a fix that retires that many, update the
+  baseline in the same change. Delete stale entries, or update the baseline. An unfiltered run also
+  reports entries for stories that are no longer in the index (deleted or renamed) as stale.
 - **To update it**: `npm run test:link-halo -- --update-baseline`. It rewrites the entries for every
   story the run visited, drops entries for stories no longer in the index, and keeps the rest, so a
   filtered run (`LINK_HALO_STORIES=link-grid npm run test:link-halo -- --update-baseline`) only
@@ -389,9 +391,10 @@ one build give identical failures and identical hidden-link counts.
 - **A new failure**: a halo or contrast failure not in the baseline.
 - **A render error** that a one-at-a-time retry does not clear.
 - **It judged nothing**: no halo link sample at all, whatever the filter.
-- **A component went quiet**: a component the run rendered had no halo link judged and is not in
-  `NO_HALO_LINKS`, or one in `NO_HALO_LINKS` had some. Either its links stopped being visible or
-  drawing the halo, or the list needs updating.
+- **A component went quiet**: in an unfiltered run, a component the run rendered had no halo link
+  judged and is not in `NO_HALO_LINKS`, or one in `NO_HALO_LINKS` had some. Either its links
+  stopped being visible or drawing the halo, or the list needs updating. A filtered run skips this
+  check, since its filter may select only a component's stories without halo links.
 - **Too much of the baseline is stale**: an unfiltered run that no longer reproduces more than 10%
   of the baseline entries (`STALE_SHARE_LIMIT` in `link-halo.mjs`). A fix retires a handful of
   entries, or one component's worth; losing a tenth of every known failure at once far more likely
@@ -405,8 +408,8 @@ Reduced, and why:
 
 - **Over 64 combinations, theme controls are varied one at a time** rather than crossed. No
   in-scope story reaches that today; the run names any that do.
-- **Quick links and tabs render at their default component theme.** Their SCSS styles every
-  component theme, but neither their stories nor Drupal offer a dial for it.
+- **Quick links renders at its default component theme.** Its SCSS styles every component
+  theme, but neither its stories nor Drupal offer a dial for it.
 - **One viewport**, the 1200px visreg width. Links that only exist in the mobile menu are not
   checked.
 - **Menus opened by script stay closed.** Forcing `:hover` opens what CSS opens, but a dropdown
