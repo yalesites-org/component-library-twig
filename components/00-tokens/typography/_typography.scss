@@ -132,33 +132,55 @@ code {
   text-transform: var(--font-text-transform-h6-mallory-compact-book);
 }
 
-// Body mixins
+// For non-heading text. Defined before the body mixins below because each one
+// includes it - Sass requires a mixin to be defined before its first use in a
+// file.
+@mixin body-oldstyle-nums {
+  font-variant-numeric: oldstyle-nums;
+
+  body[data-body-numerals='lining'] & {
+    font-variant-numeric: normal;
+  }
+}
+
+// Body mixins. Numeral style is included after the `font` shorthand in each
+// one, since that shorthand resets font-variant-numeric to normal - without
+// this, every component using these mixins (the standard way to set body
+// text across the design system) would silently ignore the body numeral
+// style setting.
 @mixin body-xl {
   font: var(--font-style-body-xl);
+  @include body-oldstyle-nums;
 }
 
 @mixin body-l {
   font: var(--font-style-body-l);
+  @include body-oldstyle-nums;
 }
 
 @mixin body-default {
   font: var(--font-style-body-default);
+  @include body-oldstyle-nums;
 }
 
 @mixin body-default-condensed {
   font: var(--font-style-body-default-condensed);
+  @include body-oldstyle-nums;
 }
 
 @mixin body-s {
   font: var(--font-style-body-s);
+  @include body-oldstyle-nums;
 }
 
 @mixin body-s-condensed {
   font: var(--font-style-body-s-condensed);
+  @include body-oldstyle-nums;
 }
 
 @mixin body-xs {
   font: var(--font-style-body-xs);
+  @include body-oldstyle-nums;
 }
 
 @mixin truncate-text($lines: 1) {
@@ -235,15 +257,6 @@ code {
   }
 
   body[data-heading-numerals='lining'] & {
-    font-variant-numeric: normal;
-  }
-}
-
-// For non-heading text; headings get numeral style from heading().
-@mixin body-oldstyle-nums {
-  font-variant-numeric: oldstyle-nums;
-
-  body[data-body-numerals='lining'] & {
     font-variant-numeric: normal;
   }
 }

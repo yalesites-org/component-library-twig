@@ -253,7 +253,8 @@ blockquote {
 }
 
 .pull-quote__quote {
-  font: var(--font-style-body-xl);
+  @include tokens.body-xl;
+
   color: var(--color-pull-quote-quote);
 
   > *:last-child {
@@ -262,7 +263,8 @@ blockquote {
 }
 
 .pull-quote__attribution {
-  font: var(--font-style-body-default);
+  @include tokens.body-default;
+
   color: var(--color-pull-quote-attribution);
   margin-top: 0.4em;
 }
