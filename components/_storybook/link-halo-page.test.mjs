@@ -125,8 +125,10 @@ test('the page script installs working copies of every helper', async () => {
   new Function('window', pageHelpersScript())(window);
   const helpers = window[PAGE_HELPERS];
   assert.deepEqual(Object.keys(helpers).sort(), [
+    'parkGlobalThemes',
     'pickSample',
     'pseudoElementBox',
+    'restoreGlobalThemes',
     'revealLineBox',
     'waitForRender',
   ]);

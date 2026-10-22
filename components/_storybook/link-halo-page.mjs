@@ -21,10 +21,12 @@
 import {
   drawsHalo,
   haloShadows,
+  parkGlobalThemes,
   parseColor,
   parseTextShadow,
   pickSample,
   pseudoElementBox,
+  restoreGlobalThemes,
   revealLineBox,
   scrollToReveal,
   splitTopLevel,
@@ -137,9 +139,18 @@ ${[
   scrollToReveal,
   visibleLineBox,
   revealLineBox,
+  parkGlobalThemes,
+  restoreGlobalThemes,
   waitForRender,
 ]
   .map((helper) => helper.toString())
   .join('\n')}
-return { pickSample, pseudoElementBox, revealLineBox, waitForRender };
+return {
+  pickSample,
+  pseudoElementBox,
+  revealLineBox,
+  parkGlobalThemes,
+  restoreGlobalThemes,
+  waitForRender,
+};
 })();`;

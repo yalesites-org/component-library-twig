@@ -342,13 +342,16 @@ is counted and left alone, contrast included.
 
 `NO_HALO_LINKS` in the same file lists the in-scope components whose stories have no halo link to
 judge, each with its reason, and the run fails if that list is wrong in either direction (see "When
-the run fails"). Two kinds are on it today. Page chrome and navigation (header, in this section,
-secondary nav, skip link, gallery modal) set the halo colour, but every link they render is a nav,
-branding or CTA link with no halo; most of their links also read as not visible, because closed
-submenus, mobile-only header parts and parent links the desktop menu replaces with a toggle are
-`display: none`. The rest (image captions, action banner, callout, quick links, quote callout,
-wrapped image) style rich-text or text links with the halo that no story renders: a gap in the story
-data, recorded rather than hidden.
+the run fails"). Two kinds are on it today. Page chrome (header, skip link) and the gallery modal set
+the halo colour, but every link they render is a nav, branding or CTA link with no halo, or, for the
+modal, is only built when a visitor opens an image. The rest style a halo link the check cannot
+judge. Quick links, the secondary nav (`menu`) and In This Section have no way to render one: quick
+links renders every link as a CTA button, and the two navs render only menu items, which carry
+`data-link-style` and so are excluded from their `a:not([data-link-style])` halo rule. Their templates
+would have to change before a story could show one. The action banner's "Text Links" story does
+render `.cta-banner__link`, but at the check's 1200px width the banner text sits over its image in
+every layout, so the link is skipped as over an image. Image captions, the callout, the quote callout
+and the wrapped image carry a link in their story data and are judged.
 
 **The scope guard.** `link-halo-scope.test.mjs` runs in `npm run test:unit`. It scans every
 stylesheet the build ships, `components/` and `lib/` (the link-treatment styles in `lib/` load with
@@ -387,7 +390,13 @@ combination (`planPages` in `link-halo.mjs`; `cloneMarkup` and `mountMatrix` in
   the story that shows that theme, so its baseline keys are the same as rendering each one.
 
 The global theme wrapper is a `data-global-theme` element, as on the real page's
-`.layout-container`. Each page is a new container, removed once it is sampled. Before copying, the
+`.layout-container`. The preview also puts the toolbar's global theme on `<body>`, and the global
+theme rules are descendant selectors (`[data-global-theme='one'] [data-section-theme='two']
+.accordion &`), so left there it would style every copy as theme one as well as its own. While the
+matrix is on the page, `data-global-theme` is taken off `<body>` and every other ancestor of it and
+put back afterwards (`parkGlobalThemes` and `restoreGlobalThemes` in `link-halo.mjs`), so each copy
+is styled by its own wrapper only. A story's own `data-global-theme` wrappers inside the copied
+markup are set to the copy's theme. Each page is a new container, removed once it is sampled. Before copying, the
 check waits for the story's fonts and images and two frames, with no fixed delay. It also opens what
 a visitor would open to read the links: the accordion's own "Expand All" control
 (`OPEN_BEFORE_COPY` in `check-link-halo.mjs`), without which every accordion link was hidden and
@@ -399,7 +408,7 @@ display, wrapped callout and the footer (16,044 of 16,044 halo samples identical
 2,814 failing ones), on the controls stories' section control (7,203 of 7,203), and against the
 visreg stories' own sections (7,245 identical).
 
-A full run is 314 renders copied into 12,152 theme combinations, about 102,000 links. Two runs of
+A full run is 326 renders copied into 12,824 theme combinations, about 105,000 links. Two runs of
 one build give identical failures and identical hidden-link counts.
 
 ### When the run fails

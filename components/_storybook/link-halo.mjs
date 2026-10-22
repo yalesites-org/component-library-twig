@@ -680,6 +680,80 @@ export function revealLineBox(measure, scrollBy) {
 }
 
 /**
+ * Takes the global theme off an element and every ancestor of it, keeping
+ * each value aside so `restoreGlobalThemes` can put it back.
+ *
+ * The global theme rules are descendant selectors
+ * (`[data-global-theme='one'] [data-section-theme='two'] .accordion &`), so
+ * they match a `data-global-theme` on any ancestor, not just the nearest.
+ * The preview's decorator puts the toolbar's theme on `<body>`, which is an
+ * ancestor of every copy in the matrix: left there, a copy meant to show
+ * global theme three would also get every theme one rule the nearer wrapper
+ * does not override. Parking it leaves each copy's own wrapper as the only
+ * global theme above its links. Nothing supplies a theme when no ancestor
+ * has the attribute (the slot colours are set only under
+ * `[data-global-theme]`), so parking does not fall back to theme one.
+ *
+ * The parked value goes in `data-link-halo-parked-global`, a name that does
+ * not end in `-theme`: every `data-*-theme` on a link's ancestors is read
+ * into its theme combination, and so into its baseline key.
+ *
+ * Runs in the page as well as here (`link-halo-page.mjs`), so it refers to
+ * nothing outside itself.
+ *
+ * @param {?{parentElement: ?object, hasAttribute: function, getAttribute: function, setAttribute: function, removeAttribute: function}} element
+ *   Where to start; it is included.
+ * @return {number}
+ *   How many elements had a global theme parked.
+ */
+export function parkGlobalThemes(element) {
+  let parked = 0;
+  for (let node = element; node; node = node.parentElement) {
+    if (node.hasAttribute('data-global-theme')) {
+      node.setAttribute(
+        'data-link-halo-parked-global',
+        node.getAttribute('data-global-theme'),
+      );
+      node.removeAttribute('data-global-theme');
+      parked += 1;
+    }
+  }
+  return parked;
+}
+
+/**
+ * Puts back the global themes `parkGlobalThemes` took off an element and its
+ * ancestors.
+ *
+ * A theme set again while it was parked (the decorator re-rendering) is the
+ * newer value and is kept; the parked one is just dropped.
+ *
+ * Runs in the page as well as here (`link-halo-page.mjs`), so it refers to
+ * nothing outside itself.
+ *
+ * @param {?object} element
+ *   Where to start; it is included.
+ * @return {number}
+ *   How many parked themes were cleared.
+ */
+export function restoreGlobalThemes(element) {
+  let restored = 0;
+  for (let node = element; node; node = node.parentElement) {
+    if (node.hasAttribute('data-link-halo-parked-global')) {
+      if (!node.hasAttribute('data-global-theme')) {
+        node.setAttribute(
+          'data-global-theme',
+          node.getAttribute('data-link-halo-parked-global'),
+        );
+      }
+      node.removeAttribute('data-link-halo-parked-global');
+      restored += 1;
+    }
+  }
+  return restored;
+}
+
+/**
  * Judges one link in one state.
  *
  * @param {{color: string, textShadow: string, fontSize: number, fontWeight: number, layers: Array<object>}} sample

@@ -1146,16 +1146,23 @@ const cloneMarkup = (plan, clone, index, html) => {
  * Runs in the page. The container is always new: a page whose last matrix is
  * still there is a bug that would multiply links on every render, so it
  * throws instead of reusing it. Theme attributes that the markup carries
- * itself are set to the copy's: a visreg story's own global theme wrapper,
- * and a story's own section.
+ * itself are set to the copy's: a story's own global theme wrapper (every
+ * visreg story has one), and a story's own section.
  *
- * @param {{markup: string, visreg: boolean, selector: string}} request
- *   The copies, whether they are of a visreg story, and the container's id
- *   as a selector.
+ * Each copy must be styled by its own global theme only, so the global theme
+ * the preview puts on `<body>` (and any other ancestor of the container) is
+ * parked while the matrix is on the page (`parkGlobalThemes`) and put back by
+ * `unmountMatrix`. Without that, every copy also matched the descendant rules
+ * of the toolbar's theme, one, and half the matrix judged the wrong
+ * background.
+ *
+ * @param {{markup: string, selector: string, helpers: string}} request
+ *   The copies, the container's id as a selector, and the `window` property
+ *   of the page helpers.
  * @return {number}
  *   Links in the matrix.
  */
-function mountMatrix({ markup, visreg, selector }) {
+function mountMatrix({ markup, selector, helpers }) {
   if (document.querySelector(selector)) {
     throw new Error('The previous matrix is still on the page.');
   }
@@ -1165,6 +1172,7 @@ function mountMatrix({ markup, visreg, selector }) {
   container.innerHTML = markup;
   root.style.display = 'none';
   root.after(container);
+  window[helpers].parkGlobalThemes(container.parentElement);
 
   container.querySelectorAll('[data-link-halo-clone]').forEach((clone) => {
     const section = clone.getAttribute('data-link-halo-section');
@@ -1177,28 +1185,56 @@ function mountMatrix({ markup, visreg, selector }) {
       }
       own.setAttribute('data-section-theme', section);
     }
-    if (visreg) {
-      const global = clone.getAttribute('data-global-theme');
-      clone.querySelectorAll('[data-global-theme]').forEach((element) => {
-        element.setAttribute('data-global-theme', global);
-      });
-    }
+    const global = clone.getAttribute('data-global-theme');
+    clone.querySelectorAll('[data-global-theme]').forEach((element) => {
+      element.setAttribute('data-global-theme', global);
+    });
   });
 
   return container.querySelectorAll('a[href]').length;
 }
 
 /**
- * Takes the matrix off the page and shows the story again.
+ * Takes the matrix off the page, puts back the global themes `mountMatrix`
+ * parked, and shows the story again.
  *
  * Runs in the page.
+ *
+ * @param {{selector: string, helpers: string}} request
+ *   The container's id as a selector, and the `window` property of the page
+ *   helpers.
+ */
+function unmountMatrix({ selector, helpers }) {
+  const root = document.querySelector('#storybook-root');
+  // Removing the matrix and showing the story come first, so a restore that
+  // throws still leaves the story on the page.
+  document.querySelectorAll(selector).forEach((element) => element.remove());
+  root?.style.removeProperty('display');
+  window[helpers].restoreGlobalThemes(root?.parentElement ?? document.body);
+}
+
+/**
+ * Throws if a global theme is back on an ancestor of the matrix.
+ *
+ * Runs in the page, before each state is sampled. `mountMatrix` parks the
+ * preview's global theme; if the decorator set it again on a re-render, every
+ * copy would match that theme's descendant rules too, and the samples would
+ * judge the wrong background without any sign of it.
  *
  * @param {string} selector
  *   The container's id as a selector.
  */
-function unmountMatrix(selector) {
-  document.querySelectorAll(selector).forEach((element) => element.remove());
-  document.querySelector('#storybook-root')?.style.removeProperty('display');
+function assertThemesParked(selector) {
+  const container = document.querySelector(selector);
+  for (let node = container?.parentElement; node; node = node.parentElement) {
+    if (node.hasAttribute('data-global-theme')) {
+      throw new Error(
+        `<${node.tagName.toLowerCase()}> has data-global-theme="${node.getAttribute(
+          'data-global-theme',
+        )}" again while the matrix is mounted, so every copy would also get that theme.`,
+      );
+    }
+  }
 }
 
 /**
@@ -1285,11 +1321,12 @@ async function checkPage(page, session, origin, plan, current) {
       const markup = plan.clones
         .map((clone, index) => cloneMarkup(plan, clone, index, html))
         .join('');
+      let failure;
       try {
         links = await page.evaluate(mountMatrix, {
           markup,
-          visreg: plan.visreg,
           selector: MATRIX,
+          helpers: PAGE_HELPERS,
         });
         await page.evaluate(layoutReady, {
           selector: MATRIX,
@@ -1300,6 +1337,7 @@ async function checkPage(page, session, origin, plan, current) {
         // One state at a time: they are forced on the same nodes.
         for (let index = 0; index < STATES.length; index += 1) {
           const state = STATES[index];
+          await page.evaluate(assertThemesParked, MATRIX);
           const release = await forceState(session, state);
           const collected = await page.evaluate(collectSamples, {
             rootSelector: MATRIX,
@@ -1311,9 +1349,20 @@ async function checkPage(page, session, origin, plan, current) {
             samples.push({ ...sample, title, name, state, args });
           });
         }
-      } finally {
-        await page.evaluate(unmountMatrix, MATRIX);
+      } catch (error) {
+        failure = error;
       }
+      // Always unmount; if sampling failed, report that error rather than
+      // one from cleaning up after it.
+      try {
+        await page.evaluate(unmountMatrix, {
+          selector: MATRIX,
+          helpers: PAGE_HELPERS,
+        });
+      } catch (error) {
+        failure ??= error;
+      }
+      if (failure) throw failure;
     }
 
     return {

@@ -450,35 +450,32 @@ export const storySectionless = ({ importPath }) =>
  * renders has none judged, and when one listed here does have some, so this
  * list cannot quietly go stale.
  *
- * Two kinds. Page chrome and navigation set `--color-text-shadow` for links
- * nested in them, but every link they render is a nav or CTA link with no
- * halo. The rest style rich-text or text links with the halo, but no story
- * renders such a link -- a coverage gap in the story data, recorded here
- * rather than hidden.
+ * A component is listed for one of three reasons:
+ *
+ * - It only sets the halo colour for links inside it, and none of the links
+ *   it renders draws a halo (the skip link, the site header), or the element
+ *   that holds them is never built in a story (the gallery modal).
+ * - It styles a halo link that its template cannot render (quick links, the
+ *   secondary nav, In This Section). The template would have to change
+ *   before a story could show one.
+ * - Its story renders the link, but the check cannot judge it at its width
+ *   (the action banner, whose text always sits over its image at 1200px).
  */
 export const NO_HALO_LINKS = {
-  '01-atoms/images':
-    'styles links in image captions with the halo; no story has a caption link',
   '02-molecules/banner':
-    'styles `.cta-banner__link` with the halo; the stories render only CTA buttons',
-  '02-molecules/callout':
-    'styles links in callout text and `.callout__link`; the stories render only CTA buttons',
+    'the Text Links story renders `.cta-banner__link`, but at the 1200px check width the banner text sits over its image (behind an 85% opaque panel) in every layout, so the link is skipped as over an image rather than judged',
   '02-molecules/link-skip':
     'sets the halo colour; the skip link itself draws no halo',
   '02-molecules/quick-links':
-    'styles `.quick-links__link`; the stories render only `.quick-links__cta` buttons',
-  '02-molecules/quote-callout':
-    'styles links in the quote text; no story has a link',
-  '02-molecules/wrapped-image':
-    'styles links in `.wrapped-image__text`; no story has a link',
+    'styles `.quick-links__link`, but the template renders every link as a `.quick-links__cta` button and has no text link option',
   '03-organisms/galleries':
     'sets the halo colour in the media grid modal, which is only built when a visitor opens an image',
   '03-organisms/menu':
-    'secondary nav styles rich-text links with the halo; every link in the menu stories is a nav link with no halo',
+    'secondary nav styles `a:not([data-link-style])` with the halo, but the template renders only menu items, which are text-link atoms carrying `data-link-style`, and has no rich-text slot',
   '03-organisms/site-header':
     'sets the halo colour; every header link is a nav or branding link with no halo',
   '03-organisms/site-in-this-section':
-    'styles rich-text links with the halo; every link in its stories is a nav link with no halo',
+    'styles `a:not([data-link-style])` with the halo, but the template renders only the secondary nav, whose menu items carry `data-link-style`, and has no rich-text slot',
 };
 
 /**

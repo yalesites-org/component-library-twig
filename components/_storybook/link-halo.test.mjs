@@ -39,9 +39,11 @@ import {
   componentsChecked,
   coverageProblems,
   orderPages,
+  parkGlobalThemes,
   pickSample,
   planPages,
   pseudoElementBox,
+  restoreGlobalThemes,
   revealLineBox,
   scrollToReveal,
   visibleLineBox,
@@ -1476,4 +1478,83 @@ test('judged samples are summed per component', () => {
       ['meta', 1],
     ]),
   );
+});
+
+/**
+ * Just enough of an element for the global theme parking: attributes and a
+ * parent.
+ */
+const fakeElement = (attributes = {}, parentElement = null) => {
+  const values = new Map(Object.entries(attributes));
+  return {
+    parentElement,
+    values,
+    hasAttribute: (name) => values.has(name),
+    getAttribute: (name) => values.get(name) ?? null,
+    setAttribute: (name, value) => values.set(name, String(value)),
+    removeAttribute: (name) => values.delete(name),
+  };
+};
+
+test('the global theme on every ancestor of the matrix is parked, then restored', () => {
+  // <html> has none, <body> has the toolbar's, and a wrapper in between
+  // carries one too: all of them would reach the copies.
+  const html = fakeElement();
+  const body = fakeElement(
+    { 'data-global-theme': 'one', 'data-font-pairing': 'yalenew' },
+    html,
+  );
+  const wrapper = fakeElement({ 'data-global-theme': 'five' }, body);
+
+  assert.equal(parkGlobalThemes(wrapper), 2);
+  [html, body, wrapper].forEach((element) =>
+    assert.equal(element.hasAttribute('data-global-theme'), false),
+  );
+  // Unrelated attributes are left alone.
+  assert.equal(body.getAttribute('data-font-pairing'), 'yalenew');
+
+  assert.equal(restoreGlobalThemes(wrapper), 2);
+  assert.deepEqual(Object.fromEntries(body.values), {
+    'data-global-theme': 'one',
+    'data-font-pairing': 'yalenew',
+  });
+  assert.deepEqual(Object.fromEntries(wrapper.values), {
+    'data-global-theme': 'five',
+  });
+  assert.equal(html.values.size, 0);
+});
+
+test('parking twice keeps the original theme, and a theme set while parked wins', () => {
+  const body = fakeElement({ 'data-global-theme': 'one' });
+  assert.equal(parkGlobalThemes(body), 1);
+  // Nothing left to park: the parked value is not overwritten.
+  assert.equal(parkGlobalThemes(body), 0);
+  assert.equal(body.getAttribute('data-link-halo-parked-global'), 'one');
+  // The check reads every `data-*-theme` on a link's ancestors into its
+  // theme combination; the parked value must not be one of them.
+  [...body.values.keys()].forEach((name) =>
+    assert.doesNotMatch(name, /^data-(.+)-theme$/),
+  );
+
+  // The decorator set the toolbar's theme again while it was parked.
+  body.setAttribute('data-global-theme', 'three');
+  assert.equal(restoreGlobalThemes(body), 1);
+  assert.deepEqual(Object.fromEntries(body.values), {
+    'data-global-theme': 'three',
+  });
+  // Restoring with nothing parked is a no-op.
+  assert.equal(restoreGlobalThemes(body), 0);
+  assert.equal(parkGlobalThemes(null), 0);
+});
+
+test('parking survives being serialized into the page', () => {
+  // eslint-disable-next-line no-new-func
+  const park = new Function(`return ${parkGlobalThemes.toString()};`)();
+  // eslint-disable-next-line no-new-func
+  const restore = new Function(`return ${restoreGlobalThemes.toString()};`)();
+  const body = fakeElement({ 'data-global-theme': 'two' });
+  assert.equal(park(body), 1);
+  assert.equal(body.hasAttribute('data-global-theme'), false);
+  assert.equal(restore(body), 1);
+  assert.equal(body.getAttribute('data-global-theme'), 'two');
 });
