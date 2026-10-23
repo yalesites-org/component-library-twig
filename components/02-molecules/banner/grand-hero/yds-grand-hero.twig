@@ -2,6 +2,7 @@
  # Available Props:
  # - grand_hero__content__background
  # - grand_hero__overlay_variation: contained (default), contained-narrow, full
+ # - grand_hero__video_playback: loop (default), once
  #
  # Available Variables:
  # - grand_hero__heading
@@ -28,6 +29,12 @@
   'data-component-theme' : grand_hero__content__background,
   class: bem(grand_hero__base_class),
 } %}
+
+{% if grand_hero__video_playback %}
+  {% set grand_hero__attributes = grand_hero__attributes|merge({
+    'data-video-playback': grand_hero__video_playback,
+  }) %}
+{% endif %}
 
 {% if grand_hero__width %}
   {% set grand_hero__attributes = grand_hero__attributes|merge({
