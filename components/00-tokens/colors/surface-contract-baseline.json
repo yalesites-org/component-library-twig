@@ -72,7 +72,7 @@
       "ticket": "yalesites-org/YaleSites-Internal#1634"
     },
     "components/02-molecules/taxonomy-display/_yds-taxonomy-display.scss": {
-      "reason": "Paints --color-gray-100 flat on the `default` dial and --color-background on every other, so it needs a foreground for two different surfaces rather than one. The flat-grey half is the same shape as the meta chip lists tracked at #1662.",
+      "reason": "Paints --color-basic-white flat on the `default` dial and --color-background on every other, so it needs a foreground for two different surfaces rather than one. The flat half is the same shape as the meta chip lists tracked at #1662.",
       "ticket": "yalesites-org/YaleSites-Internal#1634"
     },
     "components/02-molecules/accordion/_yds-accordion.scss": {
