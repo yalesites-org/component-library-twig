@@ -1,0 +1,18 @@
+<style>
+  /* Increase brand title size and use Mallory font */
+  .sidebar-header a,
+  .css-1wa3eu0-Heading,
+  [class*="sidebar-header"] a {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    font-family: Mallory, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  }
+
+  /* Overrides Core's [role="main"]:not(:nth-child(3)) top/height offset —
+     that :nth-child(3) exclusion doesn't match this DOM's 2-child structure,
+     so the offset was applying unconditionally and leaving a gap. */
+  [role="main"]:not(:nth-child(3)) {
+    top: 0 !important;
+    height: 100% !important;
+  }
+</style>

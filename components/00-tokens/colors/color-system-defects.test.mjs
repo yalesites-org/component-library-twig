@@ -161,7 +161,7 @@ test('scss files were found (guards the walker itself)', () => {
  * not, the read resolves to nothing.
  *
  * This is the enforcement half of the ratchet described in the ticket. The
- * containment is also expressed as a stylelint rule (see stylelint.config.js);
+ * containment is also expressed as a stylelint rule (see stylelint.config.cjs);
  * keeping the assertion here too means it still fails loudly if that lint rule
  * is ever relaxed.
  */

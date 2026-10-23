@@ -24,6 +24,7 @@ export default {
   tags: ['visreg'],
   title: 'Organisms/Calendar/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     controls: { disable: true },
   },
 };

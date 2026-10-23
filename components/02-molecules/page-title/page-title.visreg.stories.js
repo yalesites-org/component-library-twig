@@ -21,7 +21,10 @@ import {
 export default {
   tags: ['visreg'],
   title: 'Molecules/Page Header/Visreg',
-  parameters: { controls: { disable: true } },
+  parameters: {
+    chromatic: { disableSnapshot: false },
+    controls: { disable: true },
+  },
 };
 
 const renderGlobalTheme = () => {

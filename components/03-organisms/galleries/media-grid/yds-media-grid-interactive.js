@@ -1,7 +1,9 @@
 Drupal.behaviors.mediaGridInteractive = {
   attach(context) {
-    const mediaGrids = context.querySelectorAll(
+    const mediaGrids = once(
+      'media-grid-interactive',
       '.media-grid[data-media-grid-variation="interactive"]',
+      context,
     );
     const focusableElements =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -10,6 +12,16 @@ Drupal.behaviors.mediaGridInteractive = {
     const ariaCurrent = 'aria-current';
 
     mediaGrids.forEach((grid) => {
+      // Drupal re-runs attach when part of the page reloads (Layout Builder
+      // after an edit). A second run would bind every listener again, so one
+      // click on a caption toggle would open and then close it, and would
+      // truncate an already-truncated caption. Set a grid up once only.
+      if (grid.hasAttribute('data-media-grid-bound')) {
+        return;
+      }
+
+      grid.setAttribute('data-media-grid-bound', 'true');
+
       const items = grid.querySelectorAll('.media-grid__image');
       const maximizeIcons = grid.querySelectorAll('.media-grid__maximize');
       const modal = grid.querySelector('.media-grid__modal');
@@ -224,37 +236,35 @@ Drupal.behaviors.mediaGridInteractive = {
             collapsibleCaptions.push(imageCaption);
 
             // Toggle the full caption when the "circle plus" toggle is clicked
-            if (!body.hasAttribute('gallery-has-click-event')) {
-              toggleCaption.addEventListener('click', function _(e) {
-                e.preventDefault();
-                const isCurrentlyExpanded =
-                  imageCaption.getAttribute('is-expanded') === 'true';
+            toggleCaption.addEventListener('click', function _(e) {
+              e.preventDefault();
+              const isCurrentlyExpanded =
+                imageCaption.getAttribute('is-expanded') === 'true';
 
-                if (!isCurrentlyExpanded) {
-                  toggleCaption.setAttribute('aria-expanded', 'true');
-                  toggleCaption.setAttribute('aria-label', 'collapse');
-                  if (!hasHeading) {
-                    captionContent.replaceChildren(...fullCaptionNodes);
-                  }
-                  imageCaption.setAttribute('is-expanded', 'true');
-                  imageCaption.style.setProperty(
-                    '--modal-content-item-height',
-                    `${imageCaption.scrollHeight}px`,
-                  );
-                } else {
-                  toggleCaption.setAttribute('aria-expanded', 'false');
-                  toggleCaption.setAttribute('aria-label', 'expand');
-                  if (!hasHeading) {
-                    captionContent.textContent = `${truncatedCaption}...`;
-                  }
-                  imageCaption.setAttribute('is-expanded', 'false');
-                  imageCaption.style.setProperty(
-                    '--modal-content-item-height',
-                    `${imageCaption.offsetHeight}px`,
-                  );
+              if (!isCurrentlyExpanded) {
+                toggleCaption.setAttribute('aria-expanded', 'true');
+                toggleCaption.setAttribute('aria-label', 'collapse');
+                if (!hasHeading) {
+                  captionContent.replaceChildren(...fullCaptionNodes);
                 }
-              });
-            }
+                imageCaption.setAttribute('is-expanded', 'true');
+                imageCaption.style.setProperty(
+                  '--modal-content-item-height',
+                  `${imageCaption.scrollHeight}px`,
+                );
+              } else {
+                toggleCaption.setAttribute('aria-expanded', 'false');
+                toggleCaption.setAttribute('aria-label', 'expand');
+                if (!hasHeading) {
+                  captionContent.textContent = `${truncatedCaption}...`;
+                }
+                imageCaption.setAttribute('is-expanded', 'false');
+                imageCaption.style.setProperty(
+                  '--modal-content-item-height',
+                  `${imageCaption.offsetHeight}px`,
+                );
+              }
+            });
           }
         }
       });

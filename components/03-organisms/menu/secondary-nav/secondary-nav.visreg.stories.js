@@ -22,6 +22,7 @@ export default {
   tags: ['visreg'],
   title: 'Organisms/Menu/Content Collection/Visreg',
   parameters: {
+    chromatic: { disableSnapshot: false },
     layout: 'fullscreen',
     controls: { disable: true },
   },

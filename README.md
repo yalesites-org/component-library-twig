@@ -28,10 +28,12 @@ If you want to work directly on the component library locally, you can clone thi
 
 1. Clone the repository `git clone git@github.com:yalesites-org/component-library-twig.git`
 2. Change directories into the repo `cd component-library-twig`
-3. Verify you're using the correct version of node `nvm use`
+3. Verify you're using the correct version of node: `nvm use`, or `mise install` / `asdf install` (requires Node 24.13.0+, per [Emulsify Core 4](https://github.com/emulsify-ds/emulsify-core)). The version is pinned in both `.nvmrc` and `.tool-versions`; change them together.
 4. Install dependencies `npm install`
 5. Run the develop script `npm run develop`
 6. Make your changes and commit them!
+
+This project's Storybook build runs on [Emulsify Core 4](https://github.com/emulsify-ds/emulsify-core) (Vite instead of Webpack). `npm run storybook`/`storybook:build` point Storybook's `--config-dir` at Emulsify Core's shared config in `node_modules/@emulsify/core/.storybook`; project-specific overrides live under `config/emulsify-core/`.
 
 ### Installing the package in another project
 
@@ -112,6 +114,8 @@ Comprehensive testing page with all component variations:
 - Visual regression testing coverage
 
 **Files**: `[component].visreg.stories.js`
+
+These pages remain as a documentation pattern independent of any visual-diffing tool.
 
 ### Migration Guide
 

@@ -21,6 +21,10 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import {
+  installOnce,
+  matchesOnceSelector,
+} from '../../../_storybook/drupal-once.mjs';
 
 const componentDir = path.dirname(fileURLToPath(import.meta.url));
 const source = readFileSync(
@@ -99,12 +103,27 @@ class FakeElement {
     return this.attributes.has(name);
   }
 
+  removeAttribute(name) {
+    this.attributes.delete(name);
+  }
+
+  // Only the selectors `once()` builds; the caption loop never calls this.
+  matches(selector) {
+    const processed = matchesOnceSelector(selector, this);
+    assert.notEqual(processed, undefined, `cannot match "${selector}"`);
+
+    return processed;
+  }
+
+  // Every handler is kept, as the real DOM does, so a double bind shows up.
   addEventListener(type, handler) {
-    this.listeners.set(type, handler);
+    this.listeners.set(type, [...(this.listeners.get(type) ?? []), handler]);
   }
 
   click() {
-    this.listeners.get('click')({ preventDefault: () => {} });
+    (this.listeners.get('click') ?? []).forEach((handler) =>
+      handler({ preventDefault: () => {} }),
+    );
   }
 }
 
@@ -130,8 +149,13 @@ function buildCaption({ heading = null, caption = null }) {
   };
 }
 
-/** Runs the real behaviour against the fixtures and hands them back. */
-function attachBehaviour(items) {
+/**
+ * Runs the real behaviour against the fixtures and hands them back.
+ *
+ * `times` re-runs attach on the same DOM, as Drupal does when part of the page
+ * reloads (Layout Builder after an edit).
+ */
+function attachBehaviour(items, times = 1) {
   const grid = new FakeElement({
     children: {
       '.media-grid__modal': new FakeElement(),
@@ -145,6 +169,7 @@ function attachBehaviour(items) {
   });
   const sandbox = {
     Drupal: { behaviors: {} },
+    Element: FakeElement,
     document: {
       querySelector: () => new FakeElement(),
       documentElement: new FakeElement(),
@@ -154,8 +179,12 @@ function attachBehaviour(items) {
   };
 
   vm.createContext(sandbox);
+  // The behavior calls the global `once()`, as on a Drupal page (core/once).
+  installOnce(sandbox);
   vm.runInContext(source, sandbox);
-  sandbox.Drupal.behaviors.mediaGridInteractive.attach(context);
+  for (let run = 0; run < times; run += 1) {
+    sandbox.Drupal.behaviors.mediaGridInteractive.attach(context);
+  }
 
   return items;
 }
@@ -296,4 +325,34 @@ test('a long caption with no heading gets its links back when expanded', () => {
       'false',
     );
   }
+});
+
+test('a second attach does not bind the caption toggle twice', () => {
+  const { headingAndCaption, longCaptionAndLink } = storyItems();
+
+  attachBehaviour([headingAndCaption, longCaptionAndLink], 2);
+
+  [headingAndCaption, longCaptionAndLink].forEach((item) => {
+    // A double-bound toggle opens and then closes again on one click.
+    item.toggle.click();
+    assert.equal(
+      item.content.getAttribute('is-expanded'),
+      'true',
+      'one click left the caption collapsed, so the toggle is bound twice',
+    );
+    assert.equal(item.toggle.getAttribute('aria-expanded'), 'true');
+
+    item.toggle.click();
+    assert.equal(item.content.getAttribute('is-expanded'), 'false');
+    assert.equal(item.toggle.getAttribute('aria-expanded'), 'false');
+  });
+
+  // A second caption setup would truncate the already-truncated text, so
+  // expanding would bring back only the preview and lose the link.
+  longCaptionAndLink.toggle.click();
+  assert.match(
+    longCaptionAndLink.text.html,
+    /<a href="\/target">real link<\/a>/,
+    'the caption was truncated twice, so expanding no longer restores it',
+  );
 });
