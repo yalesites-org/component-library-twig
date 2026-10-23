@@ -334,7 +334,8 @@ blockquote {
 }
 
 .quote-callout__quote {
-  font: var(--font-style-body-xl);
+  @include tokens.body-xl;
+
   color: var(--color-quote-callout-quote);
 
   > *:last-child {
@@ -344,7 +345,8 @@ blockquote {
 }
 
 .quote-callout__attribution {
-  font: var(--font-style-body-default);
+  @include tokens.body-default;
+
   color: var(--color-quote-callout-attribution);
   margin-top: var(--size-spacing-3);
   display: inline-flex;

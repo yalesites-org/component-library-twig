@@ -9,6 +9,12 @@
   table {
     @include tokens.body-s-condensed;
 
+    // Table digits stay lining regardless of the sitewide body numeral
+    // setting: lining digits are uniform width and line up in columns, while
+    // old-style digits vary in width and dip below the baseline. !important
+    // is needed because body-s-condensed's data-body-numerals toggle (from
+    // body-oldstyle-nums) outscopes a plain override at this specificity.
+    font-variant-numeric: normal !important;
     width: 100%;
     max-width: 100%;
     overflow: hidden;
