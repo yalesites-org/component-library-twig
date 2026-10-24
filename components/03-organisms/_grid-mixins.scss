@@ -20,27 +20,16 @@
 
     // Letting the item shrink instead leaves that string overflowing the card.
     // `break-word` rather than `anywhere`: it breaks only a string that would
-    // otherwise overflow, leaving ordinary prose to wrap on its spaces.
-    overflow-wrap: break-word;
-
-    // Drupal auto-links a bare URL, and link-treatment then wraps the link's
-    // trailing word together with its external-link icon in a
-    // `white-space: nowrap` span so the icon cannot orphan onto its own line.
-    // For a pasted URL that "trailing word" is the entire link, so the nowrap
-    // overrides the wrapping above and the URL spills out of the card and off
-    // the page -- which is the form the bug actually takes in Drupal, and not
-    // reproducible in Storybook, where the text is not auto-linked. At worst
-    // this drops the icon to the next line; that beats a horizontal scrollbar.
+    // otherwise overflow, leaving ordinary prose to wrap on its spaces. The
+    // body sets the same value for the whole page (YaleSites-Internal#1953);
+    // it is repeated here so a card grid does not depend on what its
+    // ancestors set.
     // -
-    // Scoped to grid items rather than fixed in `lib/link-treatment`, where the
-    // other linkpurpose overrides live, to keep a hotfix off every link on the
-    // platform. Note that puts the two in different bundles: if that file ever
-    // sets `white-space` on `a.link-purpose .link-purpose-nobreak` (0,2,1) it
-    // outranks this rule at the include sites that add no attribute selectors,
-    // and the fix silently stops working. There is a pointer comment there.
-    .link-purpose-nobreak {
-      white-space: normal;
-    }
+    // An auto-linked URL used to need one more rule here, relaxing
+    // link-treatment's `nowrap` last-word span. That span is now cut down to
+    // a few characters in `lib/link-treatment/link-treatment.js`, so relaxing
+    // it would only let the external-link icon wrap onto a line by itself.
+    overflow-wrap: break-word;
   }
 }
 
