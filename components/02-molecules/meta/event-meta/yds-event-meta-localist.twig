@@ -58,9 +58,6 @@
 {# Set the event status based on event_has_passed variable #}
 {% set event_status = event_has_passed ? 'passed' : 'current' %}
 
-{# Set the event title prefix based on event status #}
-{% set event_title__prefix = '' %}
-
 {% set latLong = place.latitude ~ ',' ~ place.longitude %}
 {% set get_directions__url = place ? 'https://www.google.com/maps/dir/Current+Location/' ~ latLong : '' %}
 
@@ -137,9 +134,6 @@
 
 {# Event meta localist component #}
 <div {{ add_attributes(event_meta__attributes) }} data-event-status="{{ event_status }}">
-  {# To get the event_title__prefix to wire properly to the page_title__prefix
-  and retain the logic of end_date, we need to include the page-title
-  in the same component file #}
   {# instead of passing the page-title component into a template separately
   and embedding the meta into it, we need to do that here. #}
 
