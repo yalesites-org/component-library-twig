@@ -32,8 +32,12 @@
   </ul>
   {% endif %}
   {% if events|length > 1 %}
+    {# Two whole strings, not {% plural %}: Twig.js (Storybook) has no trans tag. #}
+    {% set hidden_count = events|length - 1 %}
     {% include "@atoms/controls/base/yds-control.twig" with {
-      control__content: (events|length - 1) ~ ' more events'|t,
+      control__content: hidden_count == 1
+        ? '1 more event'|t
+        : '@count more events'|t|replace({'@count': hidden_count}),
       control__base_class: 'toggle',
       control__blockname: 'calendar-event',
       control__attributes: {'data-micromodal-trigger': 'calendar-modal'},
