@@ -83,8 +83,8 @@ The `data-collection-featured` attribute controls the visual treatment of the ca
 
 - Heading level automatically adjusts based on context (h2 or h3 depending on collection heading presence)
 - Image links include proper `aria-label` attributes using the card heading text
-- Image links are marked `aria-hidden="true"` to avoid duplicate link announcements for screen readers
-- All links are keyboard accessible with visible focus indicators
+- Image links are marked `aria-hidden="true"` and `tabindex="-1"` to avoid duplicate link announcements and an extra tab stop; mouse clicks on the image still follow the link
+- The heading link is the card's single keyboard stop, with a visible focus indicator
 - Maintains proper semantic HTML structure
 
 ### Responsive Behavior

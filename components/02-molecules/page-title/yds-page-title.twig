@@ -1,7 +1,6 @@
 {#
  # Available Variables:
  # - page_title__heading
- # - page_title__prefix
  # - page_title__meta (optional. Will fill in the `basic-meta` meta type.)
  # - page_title__display (optional. 'display', 'hidden', or 'visually-hidden')
  # - page_title__show_social_media_sharing_links (optional. 'true' or 'false')
@@ -34,8 +33,6 @@
             heading__level: '1',
             heading: page_title__heading,
             heading__blockname: page_title__base_class,
-            heading__prefix: page_title__prefix,
-            heading__prefix__base_class: page_title__base_class,
           } %}
           {% block page_title__extra %}{% endblock %}
         </div>
