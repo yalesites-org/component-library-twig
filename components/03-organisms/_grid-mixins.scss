@@ -21,14 +21,10 @@
     // Letting the item shrink instead leaves that string overflowing the card.
     // `break-word` rather than `anywhere`: it breaks only a string that would
     // otherwise overflow, leaving ordinary prose to wrap on its spaces. The
-    // body sets the same value for the whole page (YaleSites-Internal#1953);
-    // it is repeated here so a card grid does not depend on what its
-    // ancestors set.
-    // -
-    // An auto-linked URL used to need one more rule here, relaxing
-    // link-treatment's `nowrap` last-word span. That span is now cut down to
-    // a few characters in `lib/link-treatment/link-treatment.js`, so relaxing
-    // it would only let the external-link icon wrap onto a line by itself.
+    // body sets it too (YaleSites-Internal#1953); repeated so a grid does not
+    // depend on its ancestors. Do not relax link-treatment's nowrap span here:
+    // link-treatment.js already lets long URLs wrap, and relaxing it only
+    // lets the icon wrap onto a line by itself.
     overflow-wrap: break-word;
   }
 }

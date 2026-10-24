@@ -95,8 +95,7 @@ test('the body lets a long unbroken string break instead of overflowing', () => 
       '`normal` and a pasted URL runs past its column',
   );
   values.forEach(({ value }) => {
-    // `anywhere` would also shrink min-content, which squeezes table columns
-    // and shrink-to-fit boxes until ordinary words break mid-word.
+    // Why not `anywhere`: see the comment beside the rule.
     assert.equal(
       value,
       'break-word',

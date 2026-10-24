@@ -72,23 +72,11 @@ export const WhitneyHumanitiesCenter = themeStories.seven;
 ItsYourYale.storyName = 'It’s Your Yale';
 
 /**
- * Body text holding long pasted URLs (YaleSites-Internal#1953).
- *
- * Editors paste full addresses as link text, and Drupal auto-links bare ones,
- * so a URL far wider than its column is ordinary content -- migrated D7 sites
- * are full of them. Before the fix nothing let such a URL break: it ran past
- * its column, off the right edge of a phone, and across the divider of a
- * banner into its image.
- *
- * Each sample below puts the same text where the platform narrows it: a full
- * text field, a 320px column (the WCAG 1.4.10 reflow width), both columns of
- * a 70/30 section, and an action banner's text beside its image. A URL must
- * wrap inside each one, ordinary prose must still wrap only between words,
- * and the external-link icon must stay on the line with the end of its link.
- *
- * The long URL is longer than linkpurpose's 30-character "last word" limit,
- * so it carries no `.link-purpose-nobreak` wrapper; the short one is under it,
- * so it does. Both forms are here because they reach the icon differently.
+ * Long pasted URLs in body text (YaleSites-Internal#1953), in each place the
+ * platform narrows text. Every URL should wrap inside its column with the
+ * icon on the line with its end, and prose should still wrap only between
+ * words. The long URL is past linkpurpose's 30-character last-word limit and
+ * the short one is under it, so the two reach the icon differently.
  */
 const SHORT_URL = 'https://yale.edu/about-yale';
 const longUrlContent = `

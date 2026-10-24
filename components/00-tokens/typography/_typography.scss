@@ -3,15 +3,10 @@ body {
   color: var(--color-text);
   font: var(--font-style-body-default);
 
-  // Lets a long unbroken string, such as a pasted URL, break inside its column
-  // instead of running past it and off a phone screen (YaleSites-Internal#1953,
-  // WCAG 1.4.10). Inherited, so it reaches every text container on the page.
-  // `break-word` rather than `anywhere`: it only breaks a string that would
-  // otherwise overflow, so ordinary prose still wraps between words, and it
-  // does not shrink min-content, so table columns and shrink-to-fit boxes keep
-  // their widths. The flip side is that a flex or grid child still needs
-  // `min-width: 0` to shrink below the URL; the layout columns and the grid
-  // mixins set it.
+  // A pasted URL breaks inside its column instead of running off a phone
+  // screen (YaleSites-Internal#1953). `break-word`, not `anywhere`: it leaves
+  // ordinary words whole and min-content unchanged, so tables keep their
+  // widths; flex and grid children still need `min-width: 0`.
   overflow-wrap: break-word;
 }
 
