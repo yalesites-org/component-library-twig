@@ -2,6 +2,12 @@ body {
   background-color: var(--color-background);
   color: var(--color-text);
   font: var(--font-style-body-default);
+
+  // A pasted URL breaks inside its column instead of running off a phone
+  // screen (YaleSites-Internal#1953). `break-word`, not `anywhere`: it leaves
+  // ordinary words whole and min-content unchanged, so tables keep their
+  // widths; flex and grid children still need `min-width: 0`.
+  overflow-wrap: break-word;
 }
 
 code {
