@@ -52,16 +52,20 @@
  * lower it if a story ever lands close enough for that to matter.
  *
  * @see visreg-pixel-budget.mjs
+ * @see serve-storybook-build.mjs
  */
-import { createReadStream } from 'node:fs';
-import { readFile, stat, writeFile } from 'node:fs/promises';
-import { createServer } from 'node:http';
+import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 import puppeteer from 'puppeteer';
 
+import {
+  BLOCKED_MEDIA,
+  serveDirectory,
+  storyUrl,
+} from './serve-storybook-build.mjs';
 import {
   PIXEL_CEILING,
   VIEWPORT_WIDTH,
@@ -103,117 +107,6 @@ const settleTimeout = requirePositiveNumber(
 const measurementsOut = process.env.VISREG_MEASUREMENTS_OUT;
 
 /**
- * Mime types for the built Storybook.
- *
- * Broader than what a build emits today on purpose -- a component adding a
- * `.jpg` should not start being served as a byte stream. Media is absent
- * because `BLOCKED_MEDIA` stops it being requested at all.
- */
-const MIME_TYPES = {
-  '.css': 'text/css',
-  '.gif': 'image/gif',
-  '.html': 'text/html; charset=utf-8',
-  '.ico': 'image/x-icon',
-  '.jpeg': 'image/jpeg',
-  '.jpg': 'image/jpeg',
-  '.js': 'text/javascript',
-  '.json': 'application/json',
-  '.map': 'application/json',
-  '.mjs': 'text/javascript',
-  '.png': 'image/png',
-  '.svg': 'image/svg+xml',
-  '.ttf': 'font/ttf',
-  '.txt': 'text/plain; charset=utf-8',
-  '.webp': 'image/webp',
-  '.woff': 'font/woff',
-  '.woff2': 'font/woff2',
-};
-
-/**
- * Media URLs to block, by extension.
- *
- * Wildcarded on both sides so a query string does not slip past.
- */
-const BLOCKED_MEDIA = [
-  '*.m4a*',
-  '*.mov*',
-  '*.mp3*',
-  '*.mp4*',
-  '*.ogg*',
-  '*.wav*',
-  '*.webm*',
-];
-
-/**
- * Serves the built Storybook over loopback HTTP.
- *
- * Storybook's `iframe.html` does not render reliably from `file://`, and the
- * repo has no static-server dependency, so this is Node's own http module
- * rather than a new package.
- *
- * @param {string} root
- *   Directory to serve.
- * @return {Promise<{origin: string, close: function(): Promise<void>}>}
- *   The server's origin and a shutdown function.
- */
-async function serveDirectory(root) {
-  const server = createServer(async (request, response) => {
-    const requested = decodeURIComponent(
-      new URL(request.url, 'http://localhost').pathname,
-    );
-    const filePath = path.join(
-      root,
-      requested === '/' ? 'index.html' : requested,
-    );
-
-    // Refuse anything that escapes the served directory. Compared on path
-    // segments, so a legitimate name that merely starts with dots is served.
-    const relative = path.relative(root, filePath);
-    if (
-      relative === '..' ||
-      relative.startsWith(`..${path.sep}`) ||
-      path.isAbsolute(relative)
-    ) {
-      response.writeHead(403).end('Forbidden');
-      return;
-    }
-
-    try {
-      const stats = await stat(filePath);
-      if (!stats.isFile()) {
-        response.writeHead(404).end('Not found');
-        return;
-      }
-      response.writeHead(200, {
-        'Content-Type':
-          MIME_TYPES[path.extname(filePath)] ?? 'application/octet-stream',
-        'Content-Length': stats.size,
-      });
-      // Headers are already sent by now, so the surrounding catch cannot
-      // recover -- but an unhandled stream error would take the process down.
-      createReadStream(filePath)
-        .on('error', () => response.destroy())
-        .pipe(response);
-    } catch {
-      response.writeHead(404).end('Not found');
-    }
-  });
-
-  await new Promise((resolve, reject) => {
-    server.once('error', reject);
-    server.listen(0, '127.0.0.1', resolve);
-  });
-
-  return {
-    origin: `http://127.0.0.1:${server.address().port}`,
-    close: () =>
-      new Promise((resolve) => {
-        server.close(resolve);
-      }),
-  };
-}
-
-/**
  * The story's own fields, without any measurement from a previous attempt.
  *
  * A retried story arrives carrying the `error` from its first attempt, and
@@ -240,9 +133,7 @@ const storyFields = ({ id, name, title, importPath }) => ({
  *   The story with `width`/`height`, or with `error` if it would not render.
  */
 async function measureStory(page, origin, story) {
-  const url = `${origin}/iframe.html?id=${encodeURIComponent(
-    story.id,
-  )}&viewMode=story`;
+  const url = storyUrl(origin, story.id);
 
   try {
     await page.goto(url, { waitUntil: 'load', timeout: storyTimeout });
