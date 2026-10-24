@@ -20,7 +20,7 @@ import {
  */
 export default {
   tags: ['visreg'],
-  title: 'Molecules/Page Title/Visreg',
+  title: 'Molecules/Page Header/Visreg',
   parameters: {
     chromatic: { disableSnapshot: false },
     controls: { disable: true },
@@ -28,9 +28,6 @@ export default {
 };
 
 const renderGlobalTheme = () => {
-  const prefix = '';
-  const socialLinks = false;
-
   const meta = `<span>By Charlyn Paradis</span>${dateTimeTwig({
     date_time__start: '2022-01-25',
     date_time__format: 'date',
@@ -43,8 +40,7 @@ const renderGlobalTheme = () => {
       pageTitleTwig({
         page_title__heading: 'Davis Team Project Wins Award for Research',
         page_title__meta: meta,
-        page_title__prefix: prefix,
-        page_title__show_social_links: socialLinks ? 'true' : 'false',
+        page_title__show_social_media_sharing_links: 'true',
         ...socialLinksData,
       }),
     );
