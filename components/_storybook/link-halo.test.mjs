@@ -52,6 +52,7 @@ import {
   themeArgCombinations,
   themeArgs,
   updatedBaseline,
+  visitKey,
 } from './link-halo.mjs';
 
 const WHITE = 'rgb(255, 255, 255)';
@@ -1075,6 +1076,89 @@ test('the report names the theme args of a failure and of a failed render', () =
   assert.match(report, /b \(global=two bgColor=four\): x/);
 });
 
+test('a narrow viewport is part of a failure key, and absent at the default width', () => {
+  const plain = { ...entry('a', 'x') };
+  assert.equal(
+    failureKey({ ...plain, viewport: 768 }),
+    'a | global=one | 768px | rest | halo |  | x',
+  );
+  assert.equal(
+    failureKey({ ...plain, args: 'bgColor=two', viewport: 768 }),
+    'a | global=one | bgColor=two | 768px | rest | halo |  | x',
+  );
+
+  // The same link failing at both widths is two failures, so fixing one
+  // width cannot hide behind the other's baseline entry.
+  const { failures, combinations } = evaluateSamples([
+    sample({ textShadow: halo(NAVY) }),
+    sample({ textShadow: halo(NAVY), viewport: 768 }),
+  ]);
+  assert.equal(combinations, 2);
+  assert.equal(failures.length, 2);
+  const wide = failures.find((failure) => !('viewport' in failure));
+  const narrow = failures.find((failure) => failure.viewport === 768);
+  assert.ok(wide && narrow);
+  assert.notEqual(failureKey(wide), failureKey(narrow));
+
+  // A baseline entry only knows the render it came from.
+  assert.equal(visitKey({ id: 'a', args: null }), 'a|');
+  assert.equal(visitKey({ id: 'a', args: null, viewport: 768 }), 'a||768px');
+  assert.equal(groupOfEntry(wide), visitKey({ id: wide.story, args: null }));
+  assert.equal(
+    groupOfEntry(narrow),
+    visitKey({ id: narrow.story, args: null, viewport: 768 }),
+  );
+  const wideOnly = new Set([groupOfEntry(wide)]);
+  assert.deepEqual(
+    diffBaseline([wide], failures, wideOnly).stale,
+    [],
+    'a filtered run that rendered only the wide page does not call the narrow entry stale',
+  );
+  const updated = updatedBaseline(failures, [], new Set());
+  assert.equal(updated.filter((item) => 'viewport' in item).length, 1);
+  assert.equal(updated.find((item) => 'viewport' in item).viewport, 768);
+});
+
+test('the report names the viewport of a narrow failure and of a failed render', () => {
+  const evaluation = evaluateSamples([
+    sample({ textShadow: halo(NAVY), viewport: 768 }),
+  ]);
+  const report = formatReport({
+    visits: 1,
+    stories: 1,
+    evaluation,
+    diff: diffBaseline(evaluation.failures, [], new Set()),
+    errors: [{ id: 'b', args: null, viewport: 768, error: 'x' }],
+  });
+  assert.match(report, /viewport: 768px/);
+  assert.match(report, /b \(768px\): x/);
+});
+
+test('an excluded component judged only at a narrow width still fails the run', () => {
+  // NO_HALO_LINKS is enforced over every viewport together: a judged sample
+  // from the narrow pass counts for the story's component like any other.
+  const evaluation = evaluateSamples([
+    sample({ story: 'organisms-menu--secondary', viewport: 768 }),
+    sample(),
+  ]);
+  const problems = coverageProblems({
+    checkedByComponent: componentsChecked(evaluation.checkedByStory, (story) =>
+      story.startsWith('organisms-menu')
+        ? '03-organisms/menu'
+        : '02-molecules/link-grid',
+    ),
+    components: ['02-molecules/link-grid', '03-organisms/menu'],
+    expectedEmpty: { '03-organisms/menu': 'no rich-text slot' },
+    stale: 0,
+    baselineSize: 0,
+    complete: true,
+  });
+  assert.match(
+    problems.join('\n'),
+    /03-organisms\/menu is in NO_HALO_LINKS, but 1 halo link sample .* Remove it/,
+  );
+});
+
 const labels = {
   one: 'Old Blues',
   two: 'New Haven Green',
@@ -1245,6 +1329,40 @@ test('planPages renders each story once per dial value and copies it into every 
       planPages(planIndex, { globalThemes: ['one'], labels, filter: /nope/ }),
     /No stories in scope/,
   );
+});
+
+test('planPages adds a narrow copy of each page only for the stories that ask for one', () => {
+  const options = {
+    globalThemes: ['one', 'two'],
+    labels,
+    stories: planStories,
+    sectionThemes: ['default', 'one'],
+  };
+  const wide = planPages(planIndex, options);
+  const pages = planPages(planIndex, {
+    ...options,
+    viewports: ({ importPath }) =>
+      importPath.includes('/callout/callout.stories') ? [768] : [],
+  });
+
+  // Every default page is planned exactly as before, at the default width,
+  // and the narrow ones come after all of them.
+  assert.deepEqual(pages.slice(0, wide.length), wide);
+  assert.ok(wide.every((page) => page.viewport === null));
+
+  const narrow = pages.slice(wide.length);
+  assert.deepEqual(
+    narrow.map((page) => [page.id, page.args, page.viewport]),
+    [
+      ['molecules-callout--callout', { backgroundColor: 'two' }, 768],
+      ['molecules-callout--callout', { backgroundColor: 'one' }, 768],
+    ],
+  );
+  const wideCallout = wide.find(
+    (page) => page.id === 'molecules-callout--callout',
+  );
+  assert.deepEqual(narrow[0].clones, wideCallout.clones);
+  assert.notEqual(visitKey(narrow[0]), visitKey(wideCallout));
 });
 
 test('SECTION_THEMES matches theme-constants.js', () => {

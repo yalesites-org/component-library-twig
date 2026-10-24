@@ -445,12 +445,45 @@ export const storySectionless = ({ importPath }) =>
   SECTIONLESS_COMPONENTS.includes(componentOf(importPath));
 
 /**
- * In-scope components whose stories have no halo link the check can judge,
- * with the reason. `npm run test:link-halo` fails when any other component it
- * renders has none judged, and when one listed here does have some, so this
- * list cannot quietly go stale.
+ * The narrower width some components are checked at as well as the default
+ * (`VIEWPORT_WIDTH`, 1200px): `$break-m`, inside the stacked layout every
+ * component switches to below `$break-l` (992px).
+ */
+export const NARROW_VIEWPORT_WIDTH = 768;
+
+/**
+ * In-scope components whose stories are also rendered at
+ * `NARROW_VIEWPORT_WIDTH`, with the reason. Only these, rather than every
+ * story, so the second width costs one component's renders and not the
+ * whole run's.
+ */
+export const NARROW_VIEWPORT_COMPONENTS = {
+  '02-molecules/banner':
+    'at 1200px the action banner text sits over its image in every layout, so `.cta-banner__link` is skipped as over an image; below 992px the text stacks under the image and is judged',
+};
+
+/**
+ * The narrow widths the check renders a story at, besides the default.
  *
- * A component is listed for one of three reasons:
+ * @param {{importPath: string}} entry
+ *   A Storybook index entry, or a planned page.
+ * @return {number[]}
+ *   `[NARROW_VIEWPORT_WIDTH]` for a component in
+ *   `NARROW_VIEWPORT_COMPONENTS`, else none.
+ */
+export const storyViewports = ({ importPath }) =>
+  componentOf(importPath) in NARROW_VIEWPORT_COMPONENTS
+    ? [NARROW_VIEWPORT_WIDTH]
+    : [];
+
+/**
+ * In-scope components whose stories have no halo link the check can judge,
+ * at any width it renders them, with the reason. `npm run test:link-halo`
+ * fails when any other component it renders has none judged, and when one
+ * listed here does have some at any width (`coverageProblems` counts every
+ * viewport together), so this list cannot quietly go stale.
+ *
+ * A component is listed for one of two reasons:
  *
  * - It only sets the halo colour for links inside it, and none of the links
  *   it renders draws a halo (the skip link, the site header), or the element
@@ -458,12 +491,8 @@ export const storySectionless = ({ importPath }) =>
  * - It styles a halo link that its template cannot render (quick links, the
  *   secondary nav, In This Section). The template would have to change
  *   before a story could show one.
- * - Its story renders the link, but the check cannot judge it at its width
- *   (the action banner, whose text always sits over its image at 1200px).
  */
 export const NO_HALO_LINKS = {
-  '02-molecules/banner':
-    'the Text Links story renders `.cta-banner__link`, but at the 1200px check width the banner text sits over its image (behind an 85% opaque panel) in every layout, so the link is skipped as over an image rather than judged',
   '02-molecules/link-skip':
     'sets the halo colour; the skip link itself draws no halo',
   '02-molecules/quick-links':

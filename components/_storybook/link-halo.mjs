@@ -882,6 +882,16 @@ export function normaliseLinkText(text) {
 }
 
 /**
+ * Names a narrow render's viewport the way keys and the report quote it.
+ *
+ * @param {?number} viewport
+ *   The width of a narrow render, or null for the default width.
+ * @return {string}
+ *   E.g. `768px`, or '' for the default width.
+ */
+export const formatViewport = (viewport) => (viewport ? `${viewport}px` : '');
+
+/**
  * The identity of a failure, as stored in the baseline.
  *
  * Built only from things that do not move between runs on an unchanged
@@ -902,7 +912,13 @@ export function normaliseLinkText(text) {
  * share a key, so one could hide the other. A render with no theme args
  * leaves the key exactly as it was before args existed.
  *
- * @param {{story: string, themes: string, args?: string, state: string, check: string, where?: string, link: string}} failure
+ * `viewport` is the width of a narrow render (`formatViewport`), for a
+ * failure found by the narrow pass (`planPages`). The same link failing at
+ * both widths is two entries, so a fix at one width cannot hide behind the
+ * other's. A render at the default width has none, and its key is exactly
+ * what it was before narrow renders existed.
+ *
+ * @param {{story: string, themes: string, args?: string, viewport?: number, state: string, check: string, where?: string, link: string}} failure
  *   A failure, or a baseline entry.
  * @return {string}
  *   The key.
@@ -911,14 +927,22 @@ export const failureKey = ({
   story,
   themes,
   args = '',
+  viewport = null,
   state,
   check,
   where = '',
   link,
 }) =>
-  [story, themes, ...(args ? [args] : []), state, check, where, link].join(
-    ' | ',
-  );
+  [
+    story,
+    themes,
+    ...(args ? [args] : []),
+    ...(viewport ? [formatViewport(viewport)] : []),
+    state,
+    check,
+    where,
+    link,
+  ].join(' | ');
 
 /**
  * Option values a theme dial can take.
@@ -1068,21 +1092,25 @@ export const formatArgs = (args) =>
     .join(' ');
 
 /**
- * Identifies a render group: a story with one set of theme args, in every
- * global theme.
+ * Identifies a render group: a story with one set of theme args, at one
+ * width, in every global theme.
  *
  * Also what a baseline entry traces back to (`groupOfEntry`): an entry
- * carries its story and its args, and its global theme is in its `themes`.
+ * carries its story, its args and its narrow viewport if it has one, and its
+ * global theme is in its `themes`. A render at the default width keys
+ * exactly as it did before narrow renders existed.
  *
- * @param {{id: string, args?: ?Object}} visit
+ * @param {{id: string, args?: ?Object, viewport?: ?number}} visit
  *   A visit, or a render result.
  * @return {string}
  *   The key.
  */
-export const visitKey = ({ id, args }) => `${id}|${formatArgs(args)}`;
+export const visitKey = ({ id, args, viewport = null }) =>
+  `${id}|${formatArgs(args)}${viewport ? `|${formatViewport(viewport)}` : ''}`;
 
 /** The render group a baseline entry or failure came from (`visitKey`). */
-export const groupOfEntry = ({ story, args = '' }) => `${story}|${args}`;
+export const groupOfEntry = ({ story, args = '', viewport = null }) =>
+  `${story}|${args}${viewport ? `|${formatViewport(viewport)}` : ''}`;
 
 /**
  * Section themes a component can sit in, `theme-constants.js`'s
@@ -1158,6 +1186,14 @@ export function splitGlobalThemeName(name, labels) {
  *   that shows that theme. A visreg story with no global theme in its name is
  *   copied into every global theme too, all under its own id.
  *
+ * Every page is planned at the default width (`viewport: null`). A story
+ * whose component also needs a narrower one (`viewports`) gets a second copy
+ * of each of its pages at that width, with the same clones, after every
+ * default page: the action banner only stacks its text below its image under
+ * the 992px breakpoint, so at the default width its link is never judged
+ * (YaleSites-Internal#1955). Only those stories, rather than the whole
+ * matrix, so the extra width costs what it is for.
+ *
  * @param {object} index
  *   The parsed `index.json` of a built Storybook.
  * @param {object} options
@@ -1175,11 +1211,14 @@ export function splitGlobalThemeName(name, labels) {
  *   True for an index entry whose component never sits in a section.
  * @param {string[]} [options.sectionThemes]
  *   Section theme keys.
+ * @param {function(object): number[]} [options.viewports]
+ *   Narrow widths an index entry is also rendered at, besides the default.
  * @return {Array<object>}
  *   Pages, `{id, title, name, importPath, visreg, args, crossed, sectionArg,
- *   clones}`, where `id` is the story rendered, `args` the theme args it is
- *   rendered with (null for none; the section arg is never among them), and
- *   each clone is `{story, global, section}` -- `section` null for none.
+ *   viewport, clones}`, where `id` is the story rendered, `args` the theme
+ *   args it is rendered with (null for none; the section arg is never among
+ *   them), `viewport` the narrow width (null for the default), and each
+ *   clone is `{story, global, section}` -- `section` null for none.
  */
 export function planPages(
   index,
@@ -1191,6 +1230,7 @@ export function planPages(
     inScope = () => true,
     sectionless = () => false,
     sectionThemes = SECTION_THEMES,
+    viewports = () => [],
   },
 ) {
   const pages = [];
@@ -1282,14 +1322,19 @@ export function planPages(
     };
   });
 
-  if (pages.length === 0) {
+  const atDefault = pages.map((page) => ({ ...page, viewport: null }));
+  const narrow = atDefault.flatMap((page) =>
+    viewports(page).map((viewport) => ({ ...page, viewport })),
+  );
+
+  if (atDefault.length === 0) {
     throw new Error(
       filter
         ? `No stories in scope match ${filter}.`
         : 'No stories to visit in the Storybook index -- checking nothing is not a pass.',
     );
   }
-  return pages;
+  return [...atDefault, ...narrow];
 }
 
 /**
@@ -1333,9 +1378,10 @@ export const orderPages = (pages) =>
 /**
  * Turns the raw per-link samples from every visit into results.
  *
- * Samples for the same story, theme combination, state, check and link text
- * collapse into one failure, counting how often it occurred; the first
- * occurrence's detail and variation heading are kept for the report.
+ * Samples for the same story, theme combination, theme args, viewport, state,
+ * check, place and link text collapse into one failure, counting how often it
+ * occurred; the first occurrence's detail and variation heading are kept for
+ * the report.
  *
  * @param {Array<{story: string, title: string, name: string, state: string, themes: Object<string, string>, variant: string, text: string}>} samples
  *   One per visible link per state, each carrying the fields
@@ -1345,7 +1391,8 @@ export const orderPages = (pages) =>
  *   passes only through the large-text 3:1 minimum, collapsed and sorted the
  *   same way; `notHalo` counts samples of links that draw no
  *   halo in that state, which are not judged; `combinations` counts distinct
- *   (story, theme combination, theme args) triples that had a link checked.
+ *   (story, theme combination, theme args, viewport) tuples that had a link
+ *   checked.
  */
 export function evaluateSamples(samples) {
   const failures = new Map();
@@ -1366,6 +1413,7 @@ export function evaluateSamples(samples) {
     }
     const themes = formatThemes(sample.themes ?? {});
     const args = formatArgs(sample.args);
+    const viewport = sample.viewport ?? null;
     const link = normaliseLinkText(sample.text);
     const verdict = evaluateSample(sample);
 
@@ -1374,6 +1422,7 @@ export function evaluateSamples(samples) {
         story: sample.story,
         themes,
         args,
+        ...(viewport ? { viewport } : {}),
         state: sample.state,
         link,
         reason: verdict.skip,
@@ -1386,13 +1435,16 @@ export function evaluateSamples(samples) {
       sample.story,
       (checkedByStory.get(sample.story) ?? 0) + 1,
     );
-    combinations.add(`${sample.story} | ${themes} | ${args}`);
+    combinations.add(
+      `${sample.story} | ${themes} | ${args} | ${formatViewport(viewport)}`,
+    );
 
     if (verdict.largeTextAllowance) {
       const entry = {
         story: sample.story,
         themes,
         ...(args ? { args } : {}),
+        ...(viewport ? { viewport } : {}),
         state: sample.state,
         check: 'contrast',
         where: sample.where ?? '',
@@ -1418,6 +1470,7 @@ export function evaluateSamples(samples) {
         story: sample.story,
         themes,
         ...(args ? { args } : {}),
+        ...(viewport ? { viewport } : {}),
         state: sample.state,
         check,
         where: sample.where ?? '',
@@ -1630,12 +1683,14 @@ export function diffBaseline(failures, baseline, visited, complete = false) {
 
 /**
  * Only the identifying fields, in a fixed order, for the baseline file.
- * `args` is left out when there are none, like it is left out of the key.
+ * `args` and `viewport` are left out when there are none, like they are left
+ * out of the key.
  */
 const baselineEntry = ({
   story,
   themes,
   args = '',
+  viewport = null,
   state,
   check,
   where = '',
@@ -1644,6 +1699,7 @@ const baselineEntry = ({
   story,
   themes,
   ...(args ? { args } : {}),
+  ...(viewport ? { viewport } : {}),
   state,
   check,
   where,
@@ -1685,6 +1741,9 @@ const describeFailure = (failure) =>
     `    story:  ${failure.title} (${failure.story})`,
     `    themes: ${failure.themes}`,
     ...(failure.args ? [`    args:   ${failure.args}`] : []),
+    ...(failure.viewport
+      ? [`    viewport: ${formatViewport(failure.viewport)}`]
+      : []),
     ...(failure.where ? [`    where:  ${failure.where}`] : []),
     ...(failure.variant ? [`    under:  ${failure.variant}`] : []),
     `    ${failure.detail}${
@@ -1706,7 +1765,7 @@ const describeFailure = (failure) =>
  * @param {object} report.diff
  *   `diffBaseline` output.
  * @param {Array<object>} report.errors
- *   Visits that would not render, `{id, globalTheme, args, error}`.
+ *   Visits that would not render, `{id, globalTheme, args, viewport, error}`.
  * @param {number} [report.limit]
  *   How many new failures to print in full.
  * @return {string}
@@ -1804,10 +1863,11 @@ export function formatReport({
         .map(
           (entry) =>
             `  ${entry.id}${
-              entry.globalTheme || entry.args
+              entry.globalTheme || entry.args || entry.viewport
                 ? ` (${[
                     entry.globalTheme && `global=${entry.globalTheme}`,
                     formatArgs(entry.args),
+                    formatViewport(entry.viewport),
                   ]
                     .filter(Boolean)
                     .join(' ')})`

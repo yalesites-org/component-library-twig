@@ -40579,6 +40579,86 @@
       "link": "laboratory of Dr. Brian Dyer"
     },
     {
+      "story": "organisms-banners-action-banner--action-banner-text-links",
+      "themes": "global=one component=five",
+      "args": "bgColor=five",
+      "viewport": 768,
+      "state": "hover",
+      "check": "contrast",
+      "where": "cta-banner a.cta-banner__link",
+      "link": "This is a link"
+    },
+    {
+      "story": "organisms-banners-action-banner--action-banner-text-links",
+      "themes": "global=one component=five",
+      "args": "bgColor=five",
+      "viewport": 768,
+      "state": "hover",
+      "check": "contrast",
+      "where": "cta-banner a.cta-banner__link",
+      "link": "This is another link"
+    },
+    {
+      "story": "organisms-banners-action-banner--action-banner-text-links",
+      "themes": "global=one component=four",
+      "args": "bgColor=four",
+      "viewport": 768,
+      "state": "hover",
+      "check": "contrast",
+      "where": "cta-banner a.cta-banner__link",
+      "link": "This is a link"
+    },
+    {
+      "story": "organisms-banners-action-banner--action-banner-text-links",
+      "themes": "global=one component=four",
+      "args": "bgColor=four",
+      "viewport": 768,
+      "state": "hover",
+      "check": "contrast",
+      "where": "cta-banner a.cta-banner__link",
+      "link": "This is another link"
+    },
+    {
+      "story": "organisms-banners-action-banner--action-banner-text-links",
+      "themes": "global=one component=one",
+      "args": "bgColor=one",
+      "viewport": 768,
+      "state": "hover",
+      "check": "contrast",
+      "where": "cta-banner a.cta-banner__link",
+      "link": "This is a link"
+    },
+    {
+      "story": "organisms-banners-action-banner--action-banner-text-links",
+      "themes": "global=one component=one",
+      "args": "bgColor=one",
+      "viewport": 768,
+      "state": "hover",
+      "check": "contrast",
+      "where": "cta-banner a.cta-banner__link",
+      "link": "This is another link"
+    },
+    {
+      "story": "organisms-banners-action-banner--action-banner-text-links",
+      "themes": "global=one component=three",
+      "args": "bgColor=three",
+      "viewport": 768,
+      "state": "hover",
+      "check": "contrast",
+      "where": "cta-banner a.cta-banner__link",
+      "link": "This is a link"
+    },
+    {
+      "story": "organisms-banners-action-banner--action-banner-text-links",
+      "themes": "global=one component=three",
+      "args": "bgColor=three",
+      "viewport": 768,
+      "state": "hover",
+      "check": "contrast",
+      "where": "cta-banner a.cta-banner__link",
+      "link": "This is another link"
+    },
+    {
       "story": "organisms-content-spotlight-content-spotlight-landscape--content-spotlight-landscape",
       "themes": "global=five component=five",
       "args": "componentTheme=five",
