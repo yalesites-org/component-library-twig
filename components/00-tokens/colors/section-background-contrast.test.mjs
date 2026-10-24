@@ -285,6 +285,13 @@ test('the surface contract is published in exactly the expected places', () => {
     .sort();
 
   assert.deepEqual(publishing, [
+    // 10 -> 11 with the listing filter redesign (component-library-twig#649).
+    // The Chosen filter field stays white on every section theme, so it
+    // publishes that fixed surface for the chips, badge, panel and footer
+    // inside, the same flat-surface shape as the meta chips below. That is
+    // what lets those read the contract instead of raw palette colors
+    // (YaleSites-Internal#1632).
+    'components/01-atoms/forms/_yds-form.scss',
     'components/02-molecules/banner/action/_yds-action-banner.scss',
     'components/02-molecules/callout/_yds-callout.scss',
     'components/02-molecules/cards/reference-card/_yds-reference-card.scss',
