@@ -342,16 +342,16 @@ is counted and left alone, contrast included.
 
 `NO_HALO_LINKS` in the same file lists the in-scope components whose stories have no halo link to
 judge, each with its reason, and the run fails if that list is wrong in either direction (see "When
-the run fails"). Two kinds are on it today. Page chrome (header, skip link) and the gallery modal set
-the halo colour, but every link they render is a nav, branding or CTA link with no halo, or, for the
-modal, is only built when a visitor opens an image. The rest style a halo link the check cannot
+the run fails"). Two kinds are on it today. Page chrome (header, skip link) sets the halo colour, but
+every link it renders is a nav, branding or CTA link with no halo. The rest style a halo link the check cannot
 judge. Quick links, the secondary nav (`menu`) and In This Section have no way to render one: quick
 links renders every link as a CTA button, and the two navs render only menu items, which carry
 `data-link-style` and so are excluded from their `a:not([data-link-style])` halo rule. Their templates
 would have to change before a story could show one. The action banner's "Text Links" story does
 render `.cta-banner__link`, but at the check's 1200px width the banner text sits over its image in
 every layout, so the link is skipped as over an image. Image captions, the callout, the quote callout
-and the wrapped image carry a link in their story data and are judged.
+and the wrapped image carry a link in their story data and are judged, and so is the gallery
+modal caption, which the gallery visreg stories open in a play function.
 
 **The scope guard.** `link-halo-scope.test.mjs` runs in `npm run test:unit`. It scans every
 stylesheet the build ships, `components/` and `lib/` (the link-treatment styles in `lib/` load with
