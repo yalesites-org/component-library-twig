@@ -486,8 +486,7 @@ export const storyViewports = ({ importPath }) =>
  * A component is listed for one of two reasons:
  *
  * - It only sets the halo colour for links inside it, and none of the links
- *   it renders draws a halo (the skip link, the site header), or the element
- *   that holds them is never built in a story (the gallery modal).
+ *   it renders draws a halo (the skip link, the site header).
  * - It styles a halo link that its template cannot render (quick links, the
  *   secondary nav, In This Section). The template would have to change
  *   before a story could show one.
@@ -497,8 +496,6 @@ export const NO_HALO_LINKS = {
     'sets the halo colour; the skip link itself draws no halo',
   '02-molecules/quick-links':
     'styles `.quick-links__link`, but the template renders every link as a `.quick-links__cta` button and has no text link option',
-  '03-organisms/galleries':
-    'sets the halo colour in the media grid modal, which is only built when a visitor opens an image',
   '03-organisms/menu':
     'secondary nav styles `a:not([data-link-style])` with the halo, but the template renders only menu items, which are text-link atoms carrying `data-link-style`, and has no rich-text slot',
   '03-organisms/site-header':
