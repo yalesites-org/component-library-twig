@@ -347,11 +347,19 @@ every link it renders is a nav, branding or CTA link with no halo. The rest styl
 judge. Quick links, the secondary nav (`menu`) and In This Section have no way to render one: quick
 links renders every link as a CTA button, and the two navs render only menu items, which carry
 `data-link-style` and so are excluded from their `a:not([data-link-style])` halo rule. Their templates
-would have to change before a story could show one. The action banner's "Text Links" story does
-render `.cta-banner__link`, but at the check's 1200px width the banner text sits over its image in
-every layout, so the link is skipped as over an image. Image captions, the callout, the quote callout
+would have to change before a story could show one. Image captions, the callout, the quote callout
 and the wrapped image carry a link in their story data and are judged, and so is the gallery
 modal caption, which the gallery visreg stories open in a play function.
+
+**A second, narrower width for some components.** `NARROW_VIEWPORT_COMPONENTS` in the same file
+lists the components whose stories are rendered again at `NARROW_VIEWPORT_WIDTH` (768px), each with
+its reason. Today that is only the banner: at 1200px the action banner's text sits over its image in
+every layout, so the "Text Links" story's `.cta-banner__link` is skipped as over an image, and below
+the 992px breakpoint the text stacks under the image and is judged (YaleSites-Internal#1955). A
+narrow render is an extra page in the same plan, so it adds about 60 renders rather than doubling
+the run, and its failures carry `"viewport": 768` in the baseline, so the same link failing at both
+widths is two entries. `NO_HALO_LINKS` is checked over both widths together: an excluded component
+that has a halo link judged at either width fails the run.
 
 **The scope guard.** `link-halo-scope.test.mjs` runs in `npm run test:unit`. It scans every
 stylesheet the build ships, `components/` and `lib/` (the link-treatment styles in `lib/` load with
@@ -435,8 +443,9 @@ Reduced, and why:
   in-scope story reaches that today; the run names any that do.
 - **Quick links renders at its default component theme.** Its SCSS styles every component
   theme, but neither its stories nor Drupal offer a dial for it.
-- **One viewport**, the 1200px visreg width. Links that only exist in the mobile menu are not
-  checked.
+- **Two viewports at most.** Every story is checked at the 1200px visreg width; only the
+  components in `NARROW_VIEWPORT_COMPONENTS` are checked again at 768px. Links that only exist in
+  the mobile menu are not checked.
 - **Menus opened by script stay closed.** Forcing `:hover` opens what CSS opens, but a dropdown
   toggled by a behaviour (`aria-expanded`) is not clicked, so its links are hidden and not checked.
 - **Remote requests are blocked** (everything `https://`). This only removes webfonts and
@@ -444,7 +453,8 @@ Reduced, and why:
   recolour them.
 
 Run time: a full run takes 85 to 130 seconds locally at the default four workers (10-core laptop;
-10 workers took 184s and 20 took 191s, so the pool is capped at four). `LINK_HALO_RESULTS_OUT`
+10 workers took 184s and 20 took 191s, so the pool is capped at four). The 768px banner pass added
+about 20 seconds (77s without it, 95s and 99s with it, on one laptop). `LINK_HALO_RESULTS_OUT`
 records each render's time (`renders[].ms`, and `renders[].renderMs` for the part spent rendering
 rather than copying and sampling).
 

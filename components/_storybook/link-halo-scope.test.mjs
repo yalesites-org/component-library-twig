@@ -19,6 +19,8 @@ import { planPages } from './link-halo.mjs';
 import {
   EXCLUDED_TIERS,
   HALO_COMPONENTS,
+  NARROW_VIEWPORT_COMPONENTS,
+  NARROW_VIEWPORT_WIDTH,
   NO_HALO_LINKS,
   auditScope,
   componentOf,
@@ -26,6 +28,7 @@ import {
   haloMixins,
   haloUsers,
   storyInScope,
+  storyViewports,
 } from './link-halo-scope.mjs';
 
 const repoDir = path.resolve(
@@ -387,5 +390,42 @@ test('every NO_HALO_LINKS entry is an in-scope component with a reason', () => {
   Object.entries(NO_HALO_LINKS).forEach(([component, reason]) => {
     assert.ok(HALO_COMPONENTS.includes(component), component);
     assert.ok(reason.length > 20, component);
+  });
+});
+
+test('the narrow viewport is below the 992px breakpoint, for in-scope components only', () => {
+  // `$break-l` (992px) is where the action banner stops putting its text
+  // over the image; the narrow pass has to land on the stacked side of it.
+  assert.ok(NARROW_VIEWPORT_WIDTH < 992, String(NARROW_VIEWPORT_WIDTH));
+  Object.entries(NARROW_VIEWPORT_COMPONENTS).forEach(([component, reason]) => {
+    assert.ok(HALO_COMPONENTS.includes(component), component);
+    assert.ok(reason.length > 20, component);
+  });
+  assert.deepEqual(
+    storyViewports({
+      importPath: './components/02-molecules/banner/action-banner.stories.js',
+    }),
+    [NARROW_VIEWPORT_WIDTH],
+  );
+  assert.deepEqual(
+    storyViewports({
+      importPath: './components/03-organisms/menu/menu.stories.js',
+    }),
+    [],
+  );
+});
+
+test('the action banner is judged; the template-bound exclusions stay', () => {
+  // YaleSites-Internal#1955: the action banner's text link is judged at the
+  // narrow width, so it must not be excused. Quick links, the secondary nav
+  // and In This Section cannot render a halo link without a template change.
+  assert.equal('02-molecules/banner' in NO_HALO_LINKS, false);
+  [
+    '02-molecules/quick-links',
+    '03-organisms/menu',
+    '03-organisms/site-in-this-section',
+  ].forEach((component) => {
+    assert.ok(component in NO_HALO_LINKS, component);
+    assert.doesNotMatch(NO_HALO_LINKS[component], /\n/, component);
   });
 });

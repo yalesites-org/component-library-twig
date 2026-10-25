@@ -87,6 +87,19 @@
  * gives (see "Link halo check" in TESTING.md). Each matrix is a new container,
  * removed once sampled, so copies never pile up across renders.
  *
+ * ## Widths
+ *
+ * Every story is checked at `VIEWPORT_WIDTH` (1200px). The stories of the
+ * components in `NARROW_VIEWPORT_COMPONENTS` are checked again at
+ * `NARROW_VIEWPORT_WIDTH`, below the 992px breakpoint, where a layout that
+ * puts link text over an image at 1200px (the action banner) stacks it
+ * instead (YaleSites-Internal#1955). Those are extra pages in the same plan
+ * (`planPages`), each carrying its width; a worker resizes its page and loads
+ * `iframe.html` afresh whenever the next page's width differs, so no story is
+ * ever read at the width the previous one left behind. Failures at the narrow
+ * width carry it in their baseline key, so they never collide with the same
+ * link's at 1200px.
+ *
  * @see link-halo.mjs
  * @see serve-storybook-build.mjs
  */
@@ -117,10 +130,13 @@ import {
 import { PAGE_HELPERS, pageHelpersScript } from './link-halo-page.mjs';
 import {
   HALO_COMPONENTS,
+  NARROW_VIEWPORT_COMPONENTS,
+  NARROW_VIEWPORT_WIDTH,
   NO_HALO_LINKS,
   componentOf,
   storyInScope,
   storySectionless,
+  storyViewports,
 } from './link-halo-scope.mjs';
 // Node needs the extension; Storybook's bundler is what lets stories omit it.
 // eslint-disable-next-line import/extensions
@@ -1274,7 +1290,7 @@ function openDisclosures(selectors) {
  * error that survives that drops back to a full load for the next page.
  *
  * @param {import('puppeteer').Page} page
- *   A page sized to the check viewport.
+ *   A page sized to the plan's viewport (`checkAll`).
  * @param {import('puppeteer').CDPSession} session
  *   Its devtools session.
  * @param {string} origin
@@ -1288,8 +1304,16 @@ function openDisclosures(selectors) {
  *   or `error`; and what the browser page now shows.
  */
 async function checkPage(page, session, origin, plan, current) {
-  const { id, title, name, importPath, args } = plan;
-  const result = { id, title, name, importPath, args, clones: plan.clones };
+  const { id, title, name, importPath, args, viewport } = plan;
+  const result = {
+    id,
+    title,
+    name,
+    importPath,
+    args,
+    viewport,
+    clones: plan.clones,
+  };
   const theme = globalThemes[0];
   const started = Date.now();
   let fallback;
@@ -1346,7 +1370,7 @@ async function checkPage(page, session, origin, plan, current) {
           await release();
           hidden += collected.hidden;
           collected.samples.forEach((sample) => {
-            samples.push({ ...sample, title, name, state, args });
+            samples.push({ ...sample, title, name, state, args, viewport });
           });
         }
       } catch (error) {
@@ -1423,11 +1447,10 @@ async function checkAll(browser, origin, plans, workers) {
     const page = await context.newPage();
 
     try {
-      await page.setViewport({
-        width: VIEWPORT_WIDTH,
-        height: 800,
-        deviceScaleFactor: 1,
-      });
+      const resize = (width) =>
+        page.setViewport({ width, height: 800, deviceScaleFactor: 1 });
+      let width = VIEWPORT_WIDTH;
+      await resize(width);
       // Every document this page loads gets the helpers the in-page code
       // shares (`link-halo-page.mjs`); switching stories in place keeps the
       // document, and with it the helpers.
@@ -1445,6 +1468,15 @@ async function checkAll(browser, origin, plans, workers) {
       while (next < plans.length) {
         const plan = plans[next];
         next += 1;
+        // A narrow page (`planPages`) needs the page at its width. The story
+        // is then loaded afresh rather than switched in place, so behaviours
+        // that read the width when they attach see the new one.
+        const planWidth = plan.viewport ?? VIEWPORT_WIDTH;
+        if (planWidth !== width) {
+          width = planWidth;
+          await resize(width);
+          current = null;
+        }
         const checked = await checkPage(page, session, origin, plan, current);
         results.push(checked.result);
         ({ current } = checked);
@@ -1578,6 +1610,7 @@ async function main() {
       filter: storyFilter,
       inScope: storyInScope,
       sectionless: storySectionless,
+      viewports: storyViewports,
     };
     // Chosen before the browser starts, so a filter that matches no in-scope
     // story stops the run with `planPages`'s message straight away.
@@ -1602,6 +1635,7 @@ async function main() {
         ),
       ];
       const copies = plans.reduce((sum, plan) => sum + plan.clones.length, 0);
+      const narrow = plans.filter((plan) => plan.viewport).length;
       console.log(
         `Checking links in ${plural(plans.length, 'render')} of the ` +
           `${HALO_COMPONENTS.length} components that draw the halo, copied ` +
@@ -1609,7 +1643,13 @@ async function main() {
             copies,
             'theme combination',
           )}, at ${VIEWPORT_WIDTH}px ` +
-          `wide, ${concurrency} at a time.`,
+          `wide${
+            narrow > 0
+              ? ` (${narrow} of them ${Object.keys(
+                  NARROW_VIEWPORT_COMPONENTS,
+                ).join(', ')} again at ${NARROW_VIEWPORT_WIDTH}px)`
+              : ''
+          }, ${concurrency} at a time.`,
       );
       if (oneAtATime.length > 0) {
         console.log(
@@ -1653,7 +1693,11 @@ async function main() {
   }
 
   const visits = plans.flatMap((plan) =>
-    plan.clones.map((clone) => ({ id: clone.story, args: plan.args })),
+    plan.clones.map((clone) => ({
+      id: clone.story,
+      args: plan.args,
+      viewport: plan.viewport,
+    })),
   );
   const visitedStories = new Set(visits.map((visit) => visit.id));
   const storyPaths = new Map(
