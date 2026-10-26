@@ -236,7 +236,10 @@ async function measureAll(browser, origin, storyList, workers) {
         }
       }
     } finally {
-      await page.close();
+      // If the browser crashed, every story this worker had left already
+      // failed as one; a close that throws on the dead page would turn those
+      // retryable failures into an aborted run.
+      await page.close().catch(() => {});
     }
   };
 
@@ -248,6 +251,31 @@ async function measureAll(browser, origin, storyList, workers) {
 }
 
 /**
+ * Runs `task` against a freshly launched browser, then closes it.
+ *
+ * @param {function(import('puppeteer').Browser): Promise<*>} task
+ *   What to do with the browser.
+ * @return {Promise<*>}
+ *   Whatever `task` resolves to.
+ */
+async function withBrowser(task) {
+  const browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-dev-shm-usage', '--hide-scrollbars'],
+    // Bound the devtools protocol too, so a wedged page fails as one story
+    // rather than hanging the run. Generous relative to the per-story
+    // timeout: the tallest stories are slow to lay out, not stuck.
+    protocolTimeout: storyTimeout * 4,
+  });
+
+  try {
+    return await task(browser);
+  } finally {
+    // A browser that crashed mid-run has nothing left to close.
+    await browser.close().catch(() => {});
+  }
+}
+
+/**
  * Re-measures anything that failed, one story at a time.
  *
  * Measuring in parallel is what makes the run tolerable, and it is also what
@@ -256,8 +284,10 @@ async function measureAll(browser, origin, storyList, workers) {
  * with nothing else running, is a story that is genuinely broken -- and it
  * still fails the build, so this only removes false failures.
  *
- * @param {import('puppeteer').Browser} browser
- *   The launched browser.
+ * The retry gets a browser of its own. On CI, Chrome has been seen to crash
+ * outright partway through the parallel pass, which fails every story after
+ * it; retrying those in the same dead browser would fail them all again.
+ *
  * @param {string} origin
  *   Origin serving the built Storybook.
  * @param {Array<object>} measurements
@@ -265,7 +295,7 @@ async function measureAll(browser, origin, storyList, workers) {
  * @return {Promise<Array<object>>}
  *   The same measurements, with retried entries replaced.
  */
-async function retryFailures(browser, origin, measurements) {
+async function retryFailures(origin, measurements) {
   const failed = measurements.filter((entry) => entry.error);
 
   if (failed.length === 0) {
@@ -277,7 +307,9 @@ async function retryFailures(browser, origin, measurements) {
       `${storyWord(failed.length)} one at a time.`,
   );
 
-  const retried = await measureAll(browser, origin, failed, 1);
+  const retried = await withBrowser((browser) =>
+    measureAll(browser, origin, failed, 1),
+  );
   const byId = new Map(retried.map((entry) => [entry.id, entry]));
 
   return measurements.map((entry) => byId.get(entry.id) ?? entry);
@@ -311,25 +343,10 @@ async function main() {
   let measurements;
 
   try {
-    const browser = await puppeteer.launch({
-      args: ['--no-sandbox', '--disable-dev-shm-usage', '--hide-scrollbars'],
-      // Bound the devtools protocol too, so a wedged page fails as one story
-      // rather than hanging the run. Generous relative to the per-story
-      // timeout: the tallest stories are slow to lay out, not stuck.
-      protocolTimeout: storyTimeout * 4,
-    });
-
-    try {
-      measurements = await measureAll(
-        browser,
-        server.origin,
-        storyList,
-        concurrency,
-      );
-      measurements = await retryFailures(browser, server.origin, measurements);
-    } finally {
-      await browser.close();
-    }
+    measurements = await withBrowser((browser) =>
+      measureAll(browser, server.origin, storyList, concurrency),
+    );
+    measurements = await retryFailures(server.origin, measurements);
   } finally {
     await server.close();
   }
