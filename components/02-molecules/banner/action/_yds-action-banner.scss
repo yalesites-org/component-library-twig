@@ -335,6 +335,11 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
   position: relative;
   width: 100%;
 
+  // A flex item of `.cta-banner__content`, so without this it is floored at
+  // the width of the longest unbroken string in the text -- a pasted URL --
+  // and pushes past the banner and across its image (YaleSites-Internal#1953).
+  min-width: 0;
+
   [data-banner-content-layout='left'] &,
   [data-banner-content-layout='right'] & {
     @media (min-width: $break-cta-banner) {
@@ -406,6 +411,12 @@ $break-cta-banner-max: $break-cta-banner - 0.05;
 }
 
 .cta-banner__text {
+  // `.cta-banner__wrap` aligns its children to `flex-start`, which sizes this
+  // to its content, floored at that same longest string. Capping it at the
+  // column lets the body's `overflow-wrap: break-word` wrap the URL instead
+  // (YaleSites-Internal#1953).
+  max-width: 100%;
+
   // Ensure text content stays in position for bottom layout with left button alignment
   [data-banner-content-layout='bottom'][data-banner-button-alignment='left'] & {
     @media (min-width: $break-cta-banner) {
