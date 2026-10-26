@@ -15,6 +15,7 @@
  *   VISREG_CONCURRENCY       stories measured in parallel (default 2)
  *   VISREG_STORY_TIMEOUT     per-story timeout in ms (default 30,000)
  *   VISREG_SETTLE_TIMEOUT    ms to wait for images and fonts (default 10,000)
+ *   VISREG_BATCH_SIZE        stories measured per browser launch (default 50)
  *   VISREG_MEASUREMENTS_OUT  write every story's measurement to this JSON file
  *
  * This file is deliberately only the I/O: serve the build, drive a headless
@@ -103,6 +104,11 @@ const settleTimeout = requirePositiveNumber(
   'VISREG_SETTLE_TIMEOUT',
   process.env.VISREG_SETTLE_TIMEOUT,
   10000,
+);
+const batchSize = requirePositiveNumber(
+  'VISREG_BATCH_SIZE',
+  process.env.VISREG_BATCH_SIZE,
+  50,
 );
 const measurementsOut = process.env.VISREG_MEASUREMENTS_OUT;
 
@@ -196,14 +202,14 @@ async function measureStory(page, origin, story) {
  *   Stories to measure.
  * @param {number} workers
  *   How many pages to measure with in parallel.
+ * @param {function(): void} onMeasured
+ *   Called after each story, for the progress log.
  * @return {Promise<Array<object>>}
  *   One measurement per story, in the order they were given.
  */
-async function measureAll(browser, origin, storyList, workers) {
+async function measureAll(browser, origin, storyList, workers, onMeasured) {
   const measurements = new Array(storyList.length);
-  const progressEvery = Math.max(1, Math.ceil(storyList.length / 10));
   let next = 0;
-  let done = 0;
 
   const worker = async () => {
     const page = await browser.newPage();
@@ -230,10 +236,7 @@ async function measureAll(browser, origin, storyList, workers) {
           origin,
           storyList[index],
         );
-        done += 1;
-        if (done % progressEvery === 0 || done === storyList.length) {
-          console.log(`  measured ${done}/${storyList.length}`);
-        }
+        onMeasured();
       }
     } finally {
       // If the browser crashed, every story this worker had left already
@@ -276,6 +279,47 @@ async function withBrowser(task) {
 }
 
 /**
+ * Measures stories in batches, each batch in a freshly launched browser.
+ *
+ * On CI, a browser that has rendered a couple of hundred stories starts
+ * failing: requests come back `net::ERR_INSUFFICIENT_RESOURCES`, then the page
+ * or the whole browser crashes, and every story after it fails. A fresh
+ * browser per batch keeps each one well short of that, and a crash costs at
+ * most the rest of one batch, which the retry pass then picks up.
+ *
+ * @param {string} origin
+ *   Origin serving the built Storybook.
+ * @param {Array<object>} storyList
+ *   Stories to measure.
+ * @param {number} workers
+ *   How many pages to measure with in parallel.
+ * @return {Promise<Array<object>>}
+ *   One measurement per story, in the order they were given.
+ */
+async function measureInBatches(origin, storyList, workers) {
+  const progressEvery = Math.max(1, Math.ceil(storyList.length / 10));
+  let done = 0;
+  const onMeasured = () => {
+    done += 1;
+    if (done % progressEvery === 0 || done === storyList.length) {
+      console.log(`  measured ${done}/${storyList.length}`);
+    }
+  };
+  const measurements = [];
+
+  for (let start = 0; start < storyList.length; start += batchSize) {
+    const batch = storyList.slice(start, start + batchSize);
+    // Sequential on purpose: one browser at a time.
+    const measured = await withBrowser((browser) =>
+      measureAll(browser, origin, batch, workers, onMeasured),
+    );
+    measurements.push(...measured);
+  }
+
+  return measurements;
+}
+
+/**
  * Re-measures anything that failed, one story at a time.
  *
  * Measuring in parallel is what makes the run tolerable, and it is also what
@@ -284,9 +328,8 @@ async function withBrowser(task) {
  * with nothing else running, is a story that is genuinely broken -- and it
  * still fails the build, so this only removes false failures.
  *
- * The retry gets a browser of its own. On CI, Chrome has been seen to crash
- * outright partway through the parallel pass, which fails every story after
- * it; retrying those in the same dead browser would fail them all again.
+ * The retry launches its own browsers rather than reusing one from the
+ * parallel pass, which may be the browser that crashed.
  *
  * @param {string} origin
  *   Origin serving the built Storybook.
@@ -307,9 +350,7 @@ async function retryFailures(origin, measurements) {
       `${storyWord(failed.length)} one at a time.`,
   );
 
-  const retried = await withBrowser((browser) =>
-    measureAll(browser, origin, failed, 1),
-  );
+  const retried = await measureInBatches(origin, failed, 1);
   const byId = new Map(retried.map((entry) => [entry.id, entry]));
 
   return measurements.map((entry) => byId.get(entry.id) ?? entry);
@@ -343,8 +384,10 @@ async function main() {
   let measurements;
 
   try {
-    measurements = await withBrowser((browser) =>
-      measureAll(browser, server.origin, storyList, concurrency),
+    measurements = await measureInBatches(
+      server.origin,
+      storyList,
+      concurrency,
     );
     measurements = await retryFailures(server.origin, measurements);
   } finally {
