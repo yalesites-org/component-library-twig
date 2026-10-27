@@ -427,6 +427,26 @@ $break-single-card-collection-max: tokens.$break-xl - 0.05;
     }
   }
 
+  // Profile single card non-featured
+  // -
+  // Below xl this slot shrinks to fit its image, so a responsive image shows
+  // at whatever width its `sizes` declares. Featured and non-featured profile
+  // cards share one image style, sized for the much wider featured card, so
+  // hold the non-featured photo to the widths it had before. Only `img[sizes]`:
+  // a profile's main photo renders as the original file without `sizes`, and
+  // already fills the card.
+  [data-collection-source='profile'][data-collection-type='single'][data-collection-featured='false']
+    &
+    img[sizes] {
+    @media (min-width: tokens.$break-m) and (max-width: $break-single-card-collection-max) {
+      max-width: min(100%, 25rem);
+    }
+
+    @media (min-width: tokens.$break-l) and (max-width: $break-single-card-collection-max) {
+      max-width: min(100%, 12.5rem);
+    }
+  }
+
   // Localist default image - enforce 3x2 ratio
   .image--localist-3-2 {
     > * {
