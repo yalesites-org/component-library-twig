@@ -15,6 +15,7 @@
  *   VISREG_CONCURRENCY       stories measured in parallel (default 2)
  *   VISREG_STORY_TIMEOUT     per-story timeout in ms (default 30,000)
  *   VISREG_SETTLE_TIMEOUT    ms to wait for images and fonts (default 10,000)
+ *   VISREG_BATCH_SIZE        stories measured per browser launch (default 50)
  *   VISREG_MEASUREMENTS_OUT  write every story's measurement to this JSON file
  *
  * This file is deliberately only the I/O: serve the build, drive a headless
@@ -52,16 +53,20 @@
  * lower it if a story ever lands close enough for that to matter.
  *
  * @see visreg-pixel-budget.mjs
+ * @see serve-storybook-build.mjs
  */
-import { createReadStream } from 'node:fs';
-import { readFile, stat, writeFile } from 'node:fs/promises';
-import { createServer } from 'node:http';
+import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 import puppeteer from 'puppeteer';
 
+import {
+  BLOCKED_MEDIA,
+  serveDirectory,
+  storyUrl,
+} from './serve-storybook-build.mjs';
 import {
   PIXEL_CEILING,
   VIEWPORT_WIDTH,
@@ -100,118 +105,12 @@ const settleTimeout = requirePositiveNumber(
   process.env.VISREG_SETTLE_TIMEOUT,
   10000,
 );
+const batchSize = requirePositiveNumber(
+  'VISREG_BATCH_SIZE',
+  process.env.VISREG_BATCH_SIZE,
+  50,
+);
 const measurementsOut = process.env.VISREG_MEASUREMENTS_OUT;
-
-/**
- * Mime types for the built Storybook.
- *
- * Broader than what a build emits today on purpose -- a component adding a
- * `.jpg` should not start being served as a byte stream. Media is absent
- * because `BLOCKED_MEDIA` stops it being requested at all.
- */
-const MIME_TYPES = {
-  '.css': 'text/css',
-  '.gif': 'image/gif',
-  '.html': 'text/html; charset=utf-8',
-  '.ico': 'image/x-icon',
-  '.jpeg': 'image/jpeg',
-  '.jpg': 'image/jpeg',
-  '.js': 'text/javascript',
-  '.json': 'application/json',
-  '.map': 'application/json',
-  '.mjs': 'text/javascript',
-  '.png': 'image/png',
-  '.svg': 'image/svg+xml',
-  '.ttf': 'font/ttf',
-  '.txt': 'text/plain; charset=utf-8',
-  '.webp': 'image/webp',
-  '.woff': 'font/woff',
-  '.woff2': 'font/woff2',
-};
-
-/**
- * Media URLs to block, by extension.
- *
- * Wildcarded on both sides so a query string does not slip past.
- */
-const BLOCKED_MEDIA = [
-  '*.m4a*',
-  '*.mov*',
-  '*.mp3*',
-  '*.mp4*',
-  '*.ogg*',
-  '*.wav*',
-  '*.webm*',
-];
-
-/**
- * Serves the built Storybook over loopback HTTP.
- *
- * Storybook's `iframe.html` does not render reliably from `file://`, and the
- * repo has no static-server dependency, so this is Node's own http module
- * rather than a new package.
- *
- * @param {string} root
- *   Directory to serve.
- * @return {Promise<{origin: string, close: function(): Promise<void>}>}
- *   The server's origin and a shutdown function.
- */
-async function serveDirectory(root) {
-  const server = createServer(async (request, response) => {
-    const requested = decodeURIComponent(
-      new URL(request.url, 'http://localhost').pathname,
-    );
-    const filePath = path.join(
-      root,
-      requested === '/' ? 'index.html' : requested,
-    );
-
-    // Refuse anything that escapes the served directory. Compared on path
-    // segments, so a legitimate name that merely starts with dots is served.
-    const relative = path.relative(root, filePath);
-    if (
-      relative === '..' ||
-      relative.startsWith(`..${path.sep}`) ||
-      path.isAbsolute(relative)
-    ) {
-      response.writeHead(403).end('Forbidden');
-      return;
-    }
-
-    try {
-      const stats = await stat(filePath);
-      if (!stats.isFile()) {
-        response.writeHead(404).end('Not found');
-        return;
-      }
-      response.writeHead(200, {
-        'Content-Type':
-          MIME_TYPES[path.extname(filePath)] ?? 'application/octet-stream',
-        'Content-Length': stats.size,
-      });
-      // Headers are already sent by now, so the surrounding catch cannot
-      // recover -- but an unhandled stream error would take the process down.
-      createReadStream(filePath)
-        .on('error', () => response.destroy())
-        .pipe(response);
-    } catch {
-      response.writeHead(404).end('Not found');
-    }
-  });
-
-  await new Promise((resolve, reject) => {
-    server.once('error', reject);
-    server.listen(0, '127.0.0.1', resolve);
-  });
-
-  return {
-    origin: `http://127.0.0.1:${server.address().port}`,
-    close: () =>
-      new Promise((resolve) => {
-        server.close(resolve);
-      }),
-  };
-}
 
 /**
  * The story's own fields, without any measurement from a previous attempt.
@@ -240,9 +139,7 @@ const storyFields = ({ id, name, title, importPath }) => ({
  *   The story with `width`/`height`, or with `error` if it would not render.
  */
 async function measureStory(page, origin, story) {
-  const url = `${origin}/iframe.html?id=${encodeURIComponent(
-    story.id,
-  )}&viewMode=story`;
+  const url = storyUrl(origin, story.id);
 
   try {
     await page.goto(url, { waitUntil: 'load', timeout: storyTimeout });
@@ -305,14 +202,14 @@ async function measureStory(page, origin, story) {
  *   Stories to measure.
  * @param {number} workers
  *   How many pages to measure with in parallel.
+ * @param {function(): void} onMeasured
+ *   Called after each story, for the progress log.
  * @return {Promise<Array<object>>}
  *   One measurement per story, in the order they were given.
  */
-async function measureAll(browser, origin, storyList, workers) {
+async function measureAll(browser, origin, storyList, workers, onMeasured) {
   const measurements = new Array(storyList.length);
-  const progressEvery = Math.max(1, Math.ceil(storyList.length / 10));
   let next = 0;
-  let done = 0;
 
   const worker = async () => {
     const page = await browser.newPage();
@@ -339,19 +236,85 @@ async function measureAll(browser, origin, storyList, workers) {
           origin,
           storyList[index],
         );
-        done += 1;
-        if (done % progressEvery === 0 || done === storyList.length) {
-          console.log(`  measured ${done}/${storyList.length}`);
-        }
+        onMeasured();
       }
     } finally {
-      await page.close();
+      // If the browser crashed, every story this worker had left already
+      // failed as one; a close that throws on the dead page would turn those
+      // retryable failures into an aborted run.
+      await page.close().catch(() => {});
     }
   };
 
   await Promise.all(
     Array.from({ length: Math.min(workers, storyList.length) }, worker),
   );
+
+  return measurements;
+}
+
+/**
+ * Runs `task` against a freshly launched browser, then closes it.
+ *
+ * @param {function(import('puppeteer').Browser): Promise<*>} task
+ *   What to do with the browser.
+ * @return {Promise<*>}
+ *   Whatever `task` resolves to.
+ */
+async function withBrowser(task) {
+  const browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-dev-shm-usage', '--hide-scrollbars'],
+    // Bound the devtools protocol too, so a wedged page fails as one story
+    // rather than hanging the run. Generous relative to the per-story
+    // timeout: the tallest stories are slow to lay out, not stuck.
+    protocolTimeout: storyTimeout * 4,
+  });
+
+  try {
+    return await task(browser);
+  } finally {
+    // A browser that crashed mid-run has nothing left to close.
+    await browser.close().catch(() => {});
+  }
+}
+
+/**
+ * Measures stories in batches, each batch in a freshly launched browser.
+ *
+ * On CI, a browser that has rendered a couple of hundred stories starts
+ * failing: requests come back `net::ERR_INSUFFICIENT_RESOURCES`, then the page
+ * or the whole browser crashes, and every story after it fails. A fresh
+ * browser per batch keeps each one well short of that, and a crash costs at
+ * most the rest of one batch, which the retry pass then picks up.
+ *
+ * @param {string} origin
+ *   Origin serving the built Storybook.
+ * @param {Array<object>} storyList
+ *   Stories to measure.
+ * @param {number} workers
+ *   How many pages to measure with in parallel.
+ * @return {Promise<Array<object>>}
+ *   One measurement per story, in the order they were given.
+ */
+async function measureInBatches(origin, storyList, workers) {
+  const progressEvery = Math.max(1, Math.ceil(storyList.length / 10));
+  let done = 0;
+  const onMeasured = () => {
+    done += 1;
+    if (done % progressEvery === 0 || done === storyList.length) {
+      console.log(`  measured ${done}/${storyList.length}`);
+    }
+  };
+  const measurements = [];
+
+  for (let start = 0; start < storyList.length; start += batchSize) {
+    const batch = storyList.slice(start, start + batchSize);
+    // Sequential on purpose: one browser at a time.
+    const measured = await withBrowser((browser) =>
+      measureAll(browser, origin, batch, workers, onMeasured),
+    );
+    measurements.push(...measured);
+  }
 
   return measurements;
 }
@@ -365,8 +328,9 @@ async function measureAll(browser, origin, storyList, workers) {
  * with nothing else running, is a story that is genuinely broken -- and it
  * still fails the build, so this only removes false failures.
  *
- * @param {import('puppeteer').Browser} browser
- *   The launched browser.
+ * The retry launches its own browsers rather than reusing one from the
+ * parallel pass, which may be the browser that crashed.
+ *
  * @param {string} origin
  *   Origin serving the built Storybook.
  * @param {Array<object>} measurements
@@ -374,7 +338,7 @@ async function measureAll(browser, origin, storyList, workers) {
  * @return {Promise<Array<object>>}
  *   The same measurements, with retried entries replaced.
  */
-async function retryFailures(browser, origin, measurements) {
+async function retryFailures(origin, measurements) {
   const failed = measurements.filter((entry) => entry.error);
 
   if (failed.length === 0) {
@@ -386,7 +350,7 @@ async function retryFailures(browser, origin, measurements) {
       `${storyWord(failed.length)} one at a time.`,
   );
 
-  const retried = await measureAll(browser, origin, failed, 1);
+  const retried = await measureInBatches(origin, failed, 1);
   const byId = new Map(retried.map((entry) => [entry.id, entry]));
 
   return measurements.map((entry) => byId.get(entry.id) ?? entry);
@@ -420,25 +384,12 @@ async function main() {
   let measurements;
 
   try {
-    const browser = await puppeteer.launch({
-      args: ['--no-sandbox', '--disable-dev-shm-usage', '--hide-scrollbars'],
-      // Bound the devtools protocol too, so a wedged page fails as one story
-      // rather than hanging the run. Generous relative to the per-story
-      // timeout: the tallest stories are slow to lay out, not stuck.
-      protocolTimeout: storyTimeout * 4,
-    });
-
-    try {
-      measurements = await measureAll(
-        browser,
-        server.origin,
-        storyList,
-        concurrency,
-      );
-      measurements = await retryFailures(browser, server.origin, measurements);
-    } finally {
-      await browser.close();
-    }
+    measurements = await measureInBatches(
+      server.origin,
+      storyList,
+      concurrency,
+    );
+    measurements = await retryFailures(server.origin, measurements);
   } finally {
     await server.close();
   }
