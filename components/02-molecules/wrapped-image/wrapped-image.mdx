@@ -62,6 +62,22 @@ A more dramatic style where the image extends beyond the text column boundary, c
 - More visual impact than floated style
 - Adds rhythm and variety to the page
 
+## Sizes
+
+On large screens the image takes a share of the block's own width. On phones both sizes stack above the text at full width.
+
+### Large (default)
+
+Half the block width, the size Wrapped Image has always used. Existing blocks that pass no size render Large.
+
+**Use for:** photos at least about 350px wide, which look sharp at this size.
+
+### Small
+
+A quarter of the block width. Text wraps around it the same way it does around Large, for both Inline and Offset styles. Offset keeps the same shift beside the text.
+
+**Use for:** headshots, book covers and other narrow photos that Large would stretch past their natural width and blur.
+
 ## Alignment Options
 
 ### Left Alignment
@@ -102,7 +118,7 @@ The image appears on the right side with text flowing around it on the left.
 
 ### Responsive Behavior
 
-- **Desktop**: Image floats or offsets to the specified side with full text wrapping
+- **Desktop**: Image floats or offsets to the specified side with full text wrapping, at half (Large) or a quarter (Small) of the block width
 - **Tablet**: Image may reduce in size while maintaining layout style
 - **Mobile**: Images typically stack vertically above text on narrow screens for better readability
 
@@ -143,7 +159,7 @@ The image appears on the right side with text flowing around it on the left.
 
 ## Testing
 
-For comprehensive visual regression testing with all alignment, style, and theme combinations, see the [Visreg page](?path=/story/molecules-wrapped-image-visreg--old-blues).
+For comprehensive visual regression testing with all alignment, style, size, and theme combinations, see the [Visreg page](?path=/story/molecules-wrapped-image-visreg--old-blues).
 
 ## Related Components
 
