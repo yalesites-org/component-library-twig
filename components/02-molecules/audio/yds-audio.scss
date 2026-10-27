@@ -107,22 +107,6 @@
   }
 }
 
-// Transcript: page text below the player, styled like the Video description
-// (.video__text) so the two blocks read the same.
-.audio-embed__text {
-  @include tokens.body-s;
-
-  margin-top: var(--size-spacing-5);
-
-  [data-component-alignment='left'] & {
-    max-width: var(--size-component-layout-width-content);
-  }
-
-  > *:last-child {
-    margin-bottom: 0;
-  }
-}
-
 // Player
 .audio-embed__player {
   display: flex;
@@ -309,5 +293,53 @@
   @media (max-width: tokens.$break-mobile-max) {
     height: var(--size-spacing-6);
     width: var(--size-spacing-6);
+  }
+}
+
+// Transcript: a "Transcript" show/hide button, then page text styled like the
+// Video description (.video__text) so the two blocks read the same.
+.audio-embed__transcript {
+  margin-top: var(--size-spacing-5);
+
+  [data-component-alignment='left'] & {
+    max-width: var(--size-component-layout-width-content);
+  }
+}
+
+.audio-embed__transcript-toggle {
+  @include button.reset;
+  @include tokens.body-s;
+
+  display: flex;
+  gap: var(--size-spacing-3);
+  align-items: center;
+  font-weight: var(--font-weights-mallory-medium);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-link-base);
+  }
+}
+
+// After .audio-embed__icon, which sizes the player's icons.
+.audio-embed__icon--transcript-toggle {
+  @include tokens.animate;
+
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+
+  [aria-expanded='true'] > & {
+    transform: rotate(180deg);
+  }
+}
+
+.audio-embed__text {
+  @include tokens.body-s;
+
+  margin-top: var(--size-spacing-3);
+
+  > *:last-child {
+    margin-bottom: 0;
   }
 }

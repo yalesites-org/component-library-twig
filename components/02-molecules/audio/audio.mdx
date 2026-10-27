@@ -18,7 +18,7 @@ Use the controls panel below to see the audio component in action.
 
 ## With Transcript
 
-A transcript renders below the player as ordinary page text, styled like the Video description. It is visible without playing the audio and does not depend on JavaScript, which is what WCAG 2.1 Level A (SC 1.2.1) asks of prerecorded audio.
+A transcript renders below the player as ordinary page text, styled like the Video description, under a visible "Transcript" button that shows and hides it. Once JavaScript runs the transcript starts collapsed, so a long one does not push the rest of the page down; without JavaScript it stays open. Either way it is reachable without playing the audio, which is what WCAG 2.1 Level A (SC 1.2.1) asks of prerecorded audio.
 
 <Canvas of={AudioStories.audioEmbedWithTranscript} />
 
@@ -50,8 +50,8 @@ A transcript renders below the player as ordinary page text, styled like the Vid
 
 - **Keyboard**: All controls (play/pause, progress, speed toggle and options, volume) are native `<button>` / `<input>` elements and are keyboard focusable and operable.
 - **Accessible names**: Each control has a visually-hidden label or `aria-label` (for example "Play the Audio File", "Audio Playback Progress Bar", "Volume").
-- **State**: The speed toggle exposes `aria-expanded`; the volume mute toggle exposes `aria-pressed`.
-- **Transcript**: An optional transcript renders as visible page text after the player (no show/hide toggle), so it is reachable without playing the audio or running JavaScript.
+- **State**: The speed toggle and the transcript toggle expose `aria-expanded`; the volume mute toggle exposes `aria-pressed`.
+- **Transcript**: An optional transcript renders as page text after the player, under a native `<button>` labelled "Transcript" with `aria-expanded` and `aria-controls`. The `audioTranscript` behavior collapses it on load; the markup itself renders it open, so it is reachable without playing the audio or running JavaScript.
 - **Fallback**: Browsers without HTML5 audio support see the message "Your browser does not support the audio element."
 
 ### Responsive Behavior
