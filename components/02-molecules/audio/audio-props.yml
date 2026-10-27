@@ -23,3 +23,15 @@ url:
     URL of the audio file used by the default player source. In Drupal the
     source is supplied by the block's media field instead of this value.
   control: text
+
+transcript:
+  twigProp: audio_embed__transcript
+  name: Transcript
+  type: string
+  required: false
+  description: >
+    Optional transcript of the audio, as rich text. It renders below the
+    player as page text, styled like the Video description, so people who
+    cannot hear the audio can still get its content without playing it. In
+    Drupal it comes from the Audio block's Transcription field.
+  control: text

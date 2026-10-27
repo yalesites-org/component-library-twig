@@ -7,6 +7,12 @@
  # - audio_embed__id - optional id prefix for this instance. Defaults to a
  #   unique value so that several players on one page do not collide.
  #
+ # - audio_embed__transcript - optional transcript of the audio (rich text).
+ #   Rendered below the player as plain page text, styled like the Video
+ #   description, so it can be read without playing the audio. Adds the
+ #   `has-transcript` modifier, which Editoria11y uses to skip its
+ #   "Does this audio have a transcript?" check.
+ #
  # Available blocks:
  # - audio_embed__content - used to replace the content of the audio with something other than the typical iframe
  #   for example: to insert an html5 audio component
@@ -20,6 +26,11 @@
  # (e.g. a Drupal Html::getUniqueId value); otherwise generate one the same way
  # @atoms/images/icons and @molecules/tabs do. #}
 {% set audio_embed__id = audio_embed__id|default(audio_embed__base_class ~ '-' ~ random()) %}
+
+{% set audio_embed__modifiers = audio_embed__modifiers|default([]) %}
+{% if audio_embed__transcript is not empty %}
+  {% set audio_embed__modifiers = audio_embed__modifiers|merge(['has-transcript']) %}
+{% endif %}
 
 {% set audio_embed__attibutes = {
   'data-component-width': audio_embed__width|default('content'),
@@ -124,5 +135,13 @@
         </div>
       </div>
     </div>
+
+    {# audio embed transcript #}
+    {% if audio_embed__transcript is not empty %}
+      {% include "@atoms/typography/text/yds-text.twig" with {
+        text__content: audio_embed__transcript,
+        text__blockname: audio_embed__base_class,
+      } %}
+    {% endif %}
   </div>
 </div>

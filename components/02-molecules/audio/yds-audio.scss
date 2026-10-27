@@ -107,6 +107,22 @@
   }
 }
 
+// Transcript: page text below the player, styled like the Video description
+// (.video__text) so the two blocks read the same.
+.audio-embed__text {
+  @include tokens.body-s;
+
+  margin-top: var(--size-spacing-5);
+
+  [data-component-alignment='left'] & {
+    max-width: var(--size-component-layout-width-content);
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
 // Player
 .audio-embed__player {
   display: flex;
