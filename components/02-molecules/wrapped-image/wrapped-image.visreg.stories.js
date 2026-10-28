@@ -13,6 +13,7 @@ import { createGlobalThemeStories } from '../../_storybook/global-theme-stories.
 import {
   createSectionWrapper,
   createThemeVariations,
+  createVariations,
 } from '../../_storybook/playground-utils';
 
 /**
@@ -27,6 +28,41 @@ export default {
     controls: { disable: true },
   },
 };
+
+/**
+ * Every style and position at one size. Sizes do not vary by global theme, so
+ * each gets one story of its own rather than being repeated in every global
+ * theme story (YaleSites-Internal#1954).
+ */
+const renderSize = (size) =>
+  createVariations(
+    ([style, alignment]) =>
+      wrappedImageTwig({
+        ...imageData.responsive_images['3x2'],
+        wrapped_image__caption: 'This is the caption for the image above.',
+        wrapped_image__alignment: alignment,
+        wrapped_image__style: style,
+        wrapped_image__size: size,
+        wrapped_image__content: WrappedImageData.text_two,
+      }),
+    [
+      ['floated', 'left'],
+      ['floated', 'right'],
+      ['offset', 'left'],
+      ['offset', 'right'],
+    ],
+    `Size: ${size}`,
+    '',
+    'Style',
+    ([style, alignment]) =>
+      `${style === 'floated' ? 'Inline' : 'Offset'}, image ${alignment}`,
+  );
+
+export const SizeLarge = () => renderSize('large');
+export const SizeSmall = () => renderSize('small');
+
+SizeLarge.storyName = 'Size: Large';
+SizeSmall.storyName = 'Size: Small';
 
 const renderGlobalTheme = () => {
   const caption = 'This is the caption for the 16:9 image above.';
