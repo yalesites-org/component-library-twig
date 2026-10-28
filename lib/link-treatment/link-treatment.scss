@@ -7,11 +7,12 @@ a.link-purpose {
     padding-left: var(--size-spacing-2);
   }
 
-  // Careful adding `white-space` here: `components/03-organisms/_grid-mixins.scss`
-  // relaxes linkpurpose's `nowrap` on this class for grid items, so a pasted URL
-  // can wrap inside a card (YaleSites-Internal#1729). This selector is (0,2,1)
-  // and outranks that one wherever the grid include site adds no attribute
-  // selectors, so setting it here would silently undo the fix.
+  // linkpurpose's `nowrap` on this span is what keeps the icon on the line
+  // with the end of its link, so do not relax it, here or per component.
+  // For a URL or an over-long word, `keepIconWithLinkEnd()` in
+  // link-treatment.js keeps only its last few characters in this span, so it
+  // can still wrap (YaleSites-Internal#1953, which replaced the card-grid-only
+  // relaxation added for YaleSites-Internal#1729).
   & .link-purpose-nobreak {
     margin-right: 0.25em;
 
