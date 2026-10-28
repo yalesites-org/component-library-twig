@@ -66,6 +66,11 @@ const DRUPAL_OPTIONS = [
     ONE_TO_SIX,
   ],
   [
+    '02-molecules/wrapped-image/wrapped-image-props.yml',
+    'imageSize',
+    ['large', 'small'],
+  ],
+  [
     '02-molecules/embed/embed-props.yml',
     'type',
     ['form', 'audio', 'map', 'calendar', 'video'],
