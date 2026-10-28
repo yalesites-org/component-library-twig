@@ -1,0 +1,48 @@
+const e=`{% set modifier_classes = [] %}
+{% if is_today %}
+  {% set modifier_classes = modifier_classes|merge(['today']) %}
+{% endif %}
+{% if events is not empty %}
+  {% set modifier_classes = modifier_classes|merge(['events']) %}
+{% endif %}
+{% if is_disabled %}
+  {% set modifier_classes = modifier_classes|merge(['disabled']) %}
+{% endif %}
+<li {{ bem('day', modifier_classes, 'calendar') }} tabindex="-1" data-day="{{ data_day }}">
+  {% if year and month and day %}
+    <time datetime="{{ year ~ '-' ~ month ~ '-' ~ day }}">
+      <span {{ bem('day-name', [], 'calendar') }} aria-hidden="true" >{{ data_day }}</span>
+      <span {{ bem('day-date', [], 'calendar') }} aria-hidden="true">{{ day }}</span>
+      <span {{ bem('dialog-title', [], 'calendar', ['sr-only']) }}>{{ day + 0 }} {{ month_name }}, {{ year }}</span></time>
+  {% endif %}
+  {% if events is not empty %}
+    <ul {{ bem('day-events', [], 'calendar') }}>
+    {% for event in events %}
+      {% include "@molecules/cards/reference-card/event/_yds-calendar-cell-event.twig" with {
+        category: event.category,
+        title: event.title,
+        url: event.url,
+        time: event.time,
+        type: event.type,
+        description: event.description,
+        optional_link__content: event.optional_link__content,
+        optional_link__url: event.optional_link__url,
+      } %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% if events|length > 1 %}
+    {# Two whole strings, not {% plural %}: Twig.js (Storybook) has no trans tag. #}
+    {% set hidden_count = events|length - 1 %}
+    {% include "@atoms/controls/base/yds-control.twig" with {
+      control__content: hidden_count == 1
+        ? '1 more event'|t
+        : '@count more events'|t|replace({'@count': hidden_count}),
+      control__base_class: 'toggle',
+      control__blockname: 'calendar-event',
+      control__attributes: {'data-micromodal-trigger': 'calendar-modal'},
+    } %}
+  {% endif %}
+</li>
+`;export{e as default};
+//# sourceMappingURL=_yds-calendar-cell-TnrJBFEF.js.map

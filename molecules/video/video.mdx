@@ -1,0 +1,260 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as VideoStories from './video.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './video-props.yml';
+
+<Meta of={VideoStories} name="Overview" />
+
+# Video
+
+The video component provides a specialized container for embedding video content with optional headings and captions. It supports various video platforms including YouTube, Vimeo, and native HTML5 video, with controls for placement, alignment, and width constraints. The component enhances accessibility with proper labeling and semantic structure.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the video's properties in real-time. The component adapts to different placements and includes support for headings and descriptive text.
+
+<div className="sb-contained-canvas">
+  <Canvas of={VideoStories.Interactive} />
+</div>
+<Controls of={VideoStories.Interactive} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Video Platforms
+
+The video component supports multiple video platforms and formats:
+
+### YouTube
+
+**Use Case:** Most common video platform for public institutional content
+
+**Format:** YouTube embed iframe code
+
+**Example:**
+
+```html
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/VIDEO_ID"
+  title="Video title"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
+```
+
+**Features:** Supports autoplay controls, captions, quality selection, playback speed
+
+### Vimeo
+
+**Use Case:** High-quality video hosting with advanced privacy controls
+
+**Format:** Vimeo embed iframe code
+
+**Features:** Supports privacy settings, custom player colors, advanced analytics
+
+### HTML5 Video
+
+**Use Case:** Self-hosted videos with maximum control
+
+**Format:** Native HTML5 `<video>` element
+
+**Features:** Full control over playback, styling, and behavior
+
+### Other Platforms
+
+The component can support any video platform that provides iframe embed codes, including Wistia, Kaltura, and custom video players.
+
+## Alignment Options
+
+### Left Alignment
+
+Video aligned to the left with text flowing according to standard reading patterns.
+
+**Use Case:** Standard content presentation, blog posts, article pages
+
+**Best For:** Content-heavy pages where video is supplementary to text
+
+### Center Alignment
+
+Video centered within its container for emphasis and visual impact.
+
+**Use Case:** Hero sections, featured content, standalone video presentations
+
+**Best For:** Highlighting important videos, landing pages, featured media
+
+## Width Options
+
+The video component supports four width options to fit different layout contexts:
+
+- **max**: Maximum width, edge-to-edge in container
+- **site**: Standard site content width (default)
+- **highlight**: Slightly wider than content for emphasis
+- **content**: Standard content column width
+
+**Recommendation:** Use 'site' or 'max' width for most video presentations to maximize visibility while maintaining responsive behavior.
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-video.twig`
+- **Styles**: `_yds-video.scss`
+- **Parameters**: Supports fullscreen layout mode
+
+### Accessibility
+
+- **Video Titles**: All embedded videos should include a title attribute for screen reader context
+- **Captions**: Encourage use of platform-provided captions for video content
+- **Semantic Structure**: Uses appropriate heading and container elements
+- **Keyboard Navigation**: All embedded videos maintain keyboard accessibility
+- **Descriptive Text**: The `video__text` field provides additional context for screen readers
+
+### Behavior
+
+- **Responsive Design**: Videos scale proportionally to maintain aspect ratio across all screen sizes
+- **Aspect Ratio**: Typically 16:9 for modern video content
+- **Iframe Responsiveness**: Embedded iframes automatically adjust to container width
+- **Lazy Loading**: Consider lazy loading for videos below the fold to improve performance
+
+## Usage Guidelines
+
+### Best Practices
+
+- Always include a meaningful `video__heading` that describes the video content
+- Use `video__text` to provide captions, credits, or additional context
+- Choose center alignment for standalone, featured videos
+- Use left alignment when video is part of longer content flow
+- Ensure embedded videos include proper titles for accessibility
+- Enable platform captions/subtitles for all spoken content
+- Choose appropriate width based on video importance and layout context
+- Test video playback across different devices and browsers
+- Consider video file size and loading performance
+- Use platform privacy settings appropriately for institutional content
+
+### Things to Avoid
+
+- Don't embed videos without descriptive headings or context
+- Avoid autoplay with sound (can be disruptive to users)
+- Don't use videos as the only way to present critical information (provide text alternatives)
+- Avoid very large width settings for supplementary videos
+- Don't embed multiple videos on a page without considering performance impact
+- Avoid outdated embed codes or deprecated platform features
+- Don't forget to include captions for accessibility compliance
+- Avoid embedding videos from untrusted sources
+
+## Video Accessibility Requirements
+
+### Caption Requirements
+
+All videos should include captions for:
+
+- Spoken dialogue
+- Important sound effects
+- Speaker identification
+- Music descriptions when relevant
+
+### Transcript Recommendations
+
+For WCAG AAA compliance or complex content, provide:
+
+- Full text transcripts linked near the video
+- Descriptions of important visual content not conveyed through audio
+- Time-stamped navigation for long videos
+
+### Platform Accessibility Features
+
+**YouTube:**
+
+- Automatic caption generation (verify accuracy)
+- Manual caption upload support
+- Transcript display option
+
+**Vimeo:**
+
+- Caption file upload (.srt, .vtt)
+- Interactive transcript option
+- Accessibility player controls
+
+## Performance Considerations
+
+### Loading Strategies
+
+- **Above the fold**: Load immediately for visibility
+- **Below the fold**: Consider lazy loading to improve initial page load
+- **Multiple videos**: Use lazy loading or click-to-play thumbnails
+
+### Optimization Tips
+
+- Use platform thumbnail images for click-to-play implementations
+- Consider video length and quality settings for user experience
+- Use CDN-hosted platform embeds for optimal delivery
+- Test loading performance on slower connections
+
+## Common Use Cases
+
+### Educational Content
+
+**Example:** Lecture recordings, course materials, instructional videos
+
+**Configuration:** Left alignment, site width, include descriptive heading and caption with learning objectives
+
+### Campus Tours & Promotional Videos
+
+**Example:** Virtual tours, recruitment videos, event highlights
+
+**Configuration:** Center alignment, highlight or max width for impact, compelling heading
+
+### News & Updates
+
+**Example:** President's messages, departmental updates, event coverage
+
+**Configuration:** Left alignment, site width, heading with date context, caption with summary
+
+### Research & Presentations
+
+**Example:** Research findings, conference presentations, seminars
+
+**Configuration:** Site or content width, include speaker information and abstract in caption
+
+## Implementation Notes
+
+### Embed Code Formatting
+
+When using platform embed codes:
+
+- Include all recommended iframe attributes (allowfullscreen, allow permissions)
+- Verify that URLs use HTTPS
+- Include appropriate title attributes for accessibility
+- Remove fixed width/height attributes to allow responsive behavior
+
+### Caption/Text Formatting
+
+The `video__text` field supports HTML, allowing for:
+
+- Paragraph tags for formatted text
+- Links to related content or transcripts
+- Lists for video chapter markers
+- Emphasis for important information
+
+### Heading Hierarchy
+
+Choose appropriate heading levels based on page structure:
+
+- Use heading levels consistent with surrounding content
+- Don't skip heading levels
+- Consider heading hierarchy for screen reader navigation
+
+## Related Components
+
+- **Embed**: For general-purpose embedding (forms, maps, audio)
+- **Image**: For static visual content
+- **Media Gallery**: For collections of images and videos
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

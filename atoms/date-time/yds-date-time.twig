@@ -1,0 +1,120 @@
+{# Remove white space caused by all of the new lines in this file. #}
+{% apply spaceless %}
+
+{#
+ # Logic Variables:
+ # - date_time__format: 'time', 'date', 'day__full', or null (default. Returns date and time.)
+ #
+ # Available Variables:
+ # - date_time__all_day
+ # - date_time__start
+ # - date_time__end
+ # - date_time__format_override
+ #}
+
+{# Set the end date to the start date, by default, so that Twig doesn't
+ # erroneously use "today" like it does when no date is provided.
+ # In the logic below we filter for "When start and end are the same, which, in
+ # combination with this, accounts for "no end date provided" as well. #}
+{% set date_time__end = date_time__end|default(date_time__start) %}
+{% set same_start_and_end = date_time__start == date_time__end %}
+{% set date_time__format = date_time__format|default('date_and_time') %}
+
+
+{% if date_time__all_day == true %}
+  {% set date_time__format = "all_day" %}
+{% endif %}
+
+{# Use a variable to ensure emdash is properly placed consistently #}
+{% set em_dash = '—' %}
+
+{# Date/Time formats used in this file
+
+format__iso = 'c' {# 2022-04-01T08:34:42+00:00
+format__html_date = 2022-04-01
+format__date = April 1, 2022
+format__day__full__start = Fri Apr 1
+format__day__full = Fri Apr, 1 2022
+format__time__start = 8:30 pm-
+format__time = 11:30 pm
+format__all_day = All Day
+format__day__long = Thursday, December 3, 2024
+
+#}
+
+{% set formats = {
+  'format__iso': 'c',
+  'format__html_date': 'Y-m-d',
+  'format__date': 'F j, Y',
+  'format__date__start': 'F j, Y' ~ em_dash,
+  'format__day__full__start': "D M j \t\o",
+  'format__day__full': 'D M j, Y',
+  'format__time__start': 'g:i a' ~ em_dash,
+  'format__time': 'g:i a',
+  'format__all_day': "\\A\\l\\l \\D\\a\\y",
+  'format__all_day__start': '',
+  'format__day__long': 'l, F j, Y',
+  'format__day__long__start': 'l, F j, Y' ~ em_dash,
+  'format__month_year': 'F Y',
+  'format__year_only': 'Y',
+  'format__date_and_time__start': 'F j, Y g:i a' ~ em_dash,
+  'format__date_and_time': 'g:i a',
+  'format__date_time_multiple_days__start': 'D M j, Y g:i a' ~ em_dash,
+  'format__date_time_multiple_days': 'D M j, Y g:i a',
+  'format__localist_same_day__start': 'D M j, Y g:i a' ~ em_dash,
+  'format__localist_same_day': 'g:i a',
+} %}
+
+{# easy to name configurations that utilize the above formats _start and regular variants #}
+{% set format_defaults = {
+  "time": "format__time",
+  "date": "format__date",
+  "date_and_time": "format__day__full",
+  "all_day": "format__all_day",
+  "day__full": "format__day__full",
+  "year_only": "format__year_only",
+  "month_year": "format__month_year",
+  "same_day_diff_time": "format__date_and_time",
+  "date_time_multiple_days": "format__date_time_multiple_days",
+  "localist_same_day": "format__localist_same_day",
+  "localist_all_day": "format__localist_all_day",
+} %}
+
+{% set used_format = date_time__format_override|default(format_defaults[date_time__format]) %}
+
+{# Combine start and end date/time into one variable for output #}
+{% if used_format == 'format__localist_all_day' %}
+  {% set start_date_formatted = date_time__start|date(formats['format__day__full']) %}
+  {% set end_date_formatted = date_time__end|date(formats['format__day__full']) %}
+  {% if start_date_formatted == end_date_formatted %}
+    {% set date_time = start_date_formatted ~ ' All day' %}
+  {% else %}
+    {% set date_time = start_date_formatted ~ em_dash ~ end_date_formatted ~ ' All day' %}
+  {% endif %}
+{% elseif used_format == 'format__all_day' %}
+  {# All-day events: show the date(s) without time, followed by "All day". #}
+  {% set start_date_formatted = date_time__start|date(formats['format__date']) %}
+  {% set end_date_formatted = date_time__end|date(formats['format__date']) %}
+  {% if start_date_formatted == end_date_formatted %}
+    {# Single day, e.g. "July 1, 2026 All day". #}
+    {% set date_time = start_date_formatted ~ ' All day' %}
+  {% else %}
+    {# Multi-day, joined with an em dash, e.g. "July 1, 2026—July 5, 2026 All day". #}
+    {% set date_time = start_date_formatted ~ em_dash ~ end_date_formatted ~ ' All day' %}
+  {% endif %}
+{% elseif same_start_and_end %}
+  {% set date_time = date_time__start|date(formats[used_format]) %}
+{% else %}
+  {% set date_time = date_time__start|date(formats[used_format ~ "__start"]) ~ date_time__end|date(formats[used_format]) %}
+{% endif %}
+
+{# Add attributes #}
+{% set date_time__modifiers = used_format == 'format__all_day' ? ['all-day'] : [] %}
+{% set date_time__attribuites = {
+  datetime: date_time__start|date(formats['format__iso']),
+  class: bem('date-time', date_time__modifiers),
+} %}
+
+<time {{ add_attributes(date_time__attribuites) }}>{{ date_time }}</time>
+
+{% endapply %}

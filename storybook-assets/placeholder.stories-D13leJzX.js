@@ -1,0 +1,2 @@
+import{aA as o}from"../iframe.js";import"./preload-helper-PPVm8Dsz.js";import"./_commonjsHelpers-DaWZu8wl.js";const s={title:"Templates/Utility",parameters:{docs:{description:{component:"Storybook Definition."}}}},e=()=>o();e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:"() => placeHolderTwig()",...e.parameters?.docs?.source}}};const p=["placeHolder"];export{p as __namedExportsOrder,s as default,e as placeHolder};
+//# sourceMappingURL=placeholder.stories-D13leJzX.js.map

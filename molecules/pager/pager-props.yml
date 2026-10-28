@@ -1,0 +1,25 @@
+# pager-props.yml
+#
+# Pager component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+currentPage:
+  twigProp: current
+  name: Current page
+  type: number
+  required: false
+  description: Current active page number
+  default: 1
+  control: number
+
+totalPages:
+  twigProp: items.pages
+  name: Total pages
+  type: number
+  required: false
+  description: Total number of pages to display in the pager
+  default: 10
+  control: number

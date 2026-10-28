@@ -1,0 +1,14 @@
+import{g as f,d as w,e as T,M as p}from"../iframe.js";import{i as l}from"./image-CSdbOboU.js";import{c as b}from"./global-theme-stories-BeJELyur.js";import{c as I}from"./playground-utils-DQnyvH8W.js";import"./preload-helper-PPVm8Dsz.js";import"./_commonjsHelpers-DaWZu8wl.js";const B={tags:["visreg"],title:"Molecules/Image/Visreg",parameters:{chromatic:{disableSnapshot:!1},controls:{disable:!0}}},x=()=>{const c='This is the <a href="#">caption</a> for the 16:9 image above.',m="content",h="default",u="fifty-fifty",g=u,_=(d,y=h)=>{const S=p({...l.responsive_images["16x9"],content_image__caption:c,content_image__width:m}),v=p({...l.responsive_images["3x2"],content_image__caption:c,content_image__width:m});return p({...l.responsive_images["4x3"],content_image__caption:c,content_image__width:m}),`
+      <div data-component-has-divider="false" data-section-theme="${y}" data-component-width="site" data-component-layout="${d}" class="yds-layout" data-embedded-components="" data-spotlights-position="first">
+        <div class="yds-layout__inner">
+          <div class="yds-layout__primary" style="width: 100%">
+            ${S}
+          </div>
+          <div class="yds-layout__secondary">
+            ${v}
+          </div>
+          
+        </div>
+      </div>
+    `};return I(d=>_(g,d),T,"All Section Theme Variations",`Below are all section theme variations using your current caption and width settings with ${u} layout.`,"Section Theme")},e=b(x,w,f),s=e.one,a=e.two,o=e.three,r=e.four,t=e.five,i=e.six,n=e.seven;t.storyName="It’s Your Yale";s.parameters={...s.parameters,docs:{...s.parameters?.docs,source:{originalSource:"themeStories.one",...s.parameters?.docs?.source}}};a.parameters={...a.parameters,docs:{...a.parameters?.docs,source:{originalSource:"themeStories.two",...a.parameters?.docs?.source}}};o.parameters={...o.parameters,docs:{...o.parameters?.docs,source:{originalSource:"themeStories.three",...o.parameters?.docs?.source}}};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:"themeStories.four",...r.parameters?.docs?.source}}};t.parameters={...t.parameters,docs:{...t.parameters?.docs,source:{originalSource:"themeStories.five",...t.parameters?.docs?.source}}};i.parameters={...i.parameters,docs:{...i.parameters?.docs,source:{originalSource:"themeStories.six",...i.parameters?.docs?.source}}};n.parameters={...n.parameters,docs:{...n.parameters?.docs,source:{originalSource:"themeStories.seven",...n.parameters?.docs?.source}}};const C=["OldBlues","NewHavenGreen","ShorelineSummer","Onha","ItsYourYale","AI","WhitneyHumanitiesCenter"];export{i as AI,t as ItsYourYale,a as NewHavenGreen,s as OldBlues,r as Onha,o as ShorelineSummer,n as WhitneyHumanitiesCenter,C as __namedExportsOrder,B as default};
+//# sourceMappingURL=image.visreg.stories-At-Sd91r.js.map

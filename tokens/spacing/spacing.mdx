@@ -1,0 +1,20 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as SpacingStories from './spacing.stories';
+
+<Meta of={SpacingStories} name="Overview" />
+
+# Spacing
+
+Spacing tokens define the consistent scale of margins, padding, and gaps used throughout the design system. Building from a shared scale keeps rhythm and proportion predictable across all components and page layouts.
+
+## Spacing Scale
+
+<div className="sb-contained-canvas">
+  <Canvas of={SpacingStories.Spacing} />
+</div>
+
+## How Spacing Is Used
+
+Spacing tokens are applied as SCSS variables across components and page layouts. Like breakpoints, these aren't set directly in Drupal — they're built into each component. Referencing this scale is useful when working with custom CSS or reviewing designs for spacing consistency.
+
+For layout structure, see the [Breakpoints page](?path=/docs/tokens-breakpoints--docs).

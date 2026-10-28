@@ -1,0 +1,49 @@
+# custom-card-collection-props.yml
+#
+# Custom Card Collection component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+globalTheme:
+  twigProp: site_global__theme
+  name: Global Theme (lever)
+  type: select
+  required: false
+  description: Global site theme applied as a data attribute on the wrapper element
+  detail: >
+    Controls the global theme applied via the data-global-theme attribute on
+    the wrapping element. Options are derived from the global-themes design
+    tokens. Maps to site_global__theme in the Twig template.
+  default: one
+  control: select
+
+customCardCollectionHeading:
+  twigProp: custom_card_collection__heading
+  name: Collection Heading
+  type: string
+  required: false
+  description: Optional heading displayed above the custom card collection
+  control: text
+
+featured:
+  twigProp: custom_card_collection__featured
+  name: Featured
+  type: boolean
+  required: false
+  description: Enable featured layout with larger first card
+  detail: >
+    When true, the first card displays larger and more prominently. Passed to
+    Twig as the string 'true' or 'false' via custom_card_collection__featured.
+  default: true
+  control: boolean
+
+withImage:
+  twigProp: custom_card__image
+  name: With Images
+  type: boolean
+  required: false
+  description: Display images on custom cards
+  detail: >
+    Passed to Twig as the string 'true' or 'false' via custom_card__image.
+  default: true
+  control: boolean

@@ -1,0 +1,112 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as PageTitleStories from './page-title.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './page-title-props.yml';
+
+<Meta of={PageTitleStories} name="Overview" />
+
+# Page Header
+
+The page header is the top of every page: the main heading, plus optional metadata and social sharing links. Every content type uses it. Pages and taxonomy term pages show the heading alone; posts add a byline, date, read time and sharing links. The component's code name is still `page-title` (`yds-page-title.twig`, the `page-title` CSS classes and the `page_title__*` variables) until the SDC migration.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the page header's properties in real-time. The default story is the heading alone, the way pages and taxonomy term pages render it.
+
+<Canvas of={PageTitleStories.Default} />
+<Controls of={PageTitleStories.Default} />
+
+## Post
+
+On a post the header sits at content width and shows the byline and date, the estimated read time, and social sharing links. This matches what yalesites-project renders for a post.
+
+<Canvas of={PageTitleStories.Post} />
+<Controls of={PageTitleStories.Post} />
+
+## Other Content Types
+
+Events, profiles and resources render their own header components. See them in Molecules/Meta:
+
+- [Event Meta](?path=/docs/molecules-meta-event-meta--docs)
+- [Profile Meta](?path=/docs/molecules-meta-profile-meta--docs)
+- [Resource Detail](?path=/docs/molecules-meta-resource-detail--overview), the header on a full resource page
+- [Resource Meta](?path=/docs/molecules-meta-resource-meta--docs), the resource header in teaser cards and lists
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-page-title.twig`
+- **Styles**: `_yds-page-title.scss`
+- **JavaScript**: `page-title.js`
+
+### Accessibility
+
+- Semantic HTML structure with proper heading hierarchy (typically `<h1>`)
+- Author and date metadata properly structured for screen readers
+- Social sharing links are keyboard accessible with clear focus indicators
+- ARIA labels provide context for social media icons
+- Proper color contrast ratios maintained for all text elements
+
+### Behavior
+
+- **Responsive Design**: The component adapts to viewport size, stacking elements vertically on smaller screens
+- **Social Links**: When enabled, displays social media sharing buttons for platforms like Facebook, Twitter, LinkedIn, and email
+- **Meta Information**: Flexibly displays author bylines and publication dates when provided
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use a clear, descriptive heading that accurately represents the page content (60 characters or less recommended)
+- Include meta information for news articles, blog posts, and time-sensitive content
+- Enable social sharing links on content that benefits from social distribution
+- Keep meta information concise (author name and publication date)
+- Ensure the heading accurately reflects the page's `<title>` tag for consistency
+
+### Things to Avoid
+
+- Don't use overly long headings that wrap multiple lines excessively
+- Don't include social links on every page type (use selectively for shareable content)
+- Don't use complex HTML in the meta field (keep formatting simple)
+- Don't enable social links on pages with sensitive or private content
+- Avoid inconsistent formatting in meta information across similar content types
+
+### When to Use Social Links
+
+Enable social sharing links for:
+
+- News articles and press releases
+- Blog posts and thought leadership content
+- Research publications and findings
+- Event announcements
+- Public-facing content intended for wider distribution
+
+Consider omitting social links for:
+
+- Administrative pages
+- Internal documentation
+- Forms and utility pages
+- Privacy-sensitive content
+- Landing pages with conversion goals
+
+## Testing
+
+For comprehensive visual regression testing with all page header variations and theme combinations, see the [Visreg page](?path=/story/molecules-page-header-visreg--old-blues).
+
+## Related Components
+
+- **Social Links**: The social sharing functionality used within this component
+- **Date Time**: Atomic component used for formatting dates in meta information
+- **Byline**: The [author and date meta](?path=/docs/molecules-meta-byline--docs) shown on posts
+- **Read Time**: Shown on posts below the byline
+- **Text**: For general content layout below the page header
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

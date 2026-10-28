@@ -1,0 +1,2 @@
+const e={search_result__title:"Page title",search_result__highlighted:"...showing <strong>word</strong> in page result...",search_result__teaser:"<p>Meta text here if available. Lorem ipsum dolor amet four loko distillery typewriter twee prism. Umami pinterest knausgaard four dollar toast occupy.</p>",search_result__content_type:"post"},t={items:[{title:"Home",url:"#",is_active:!0},{title:"Academic Programs",url:"#",is_active:!0},{title:"Undergraduate Chemistry",url:"#",is_active:!0}]};export{t as b,e as s};
+//# sourceMappingURL=breadcrumbs-qxPR8Frx.js.map

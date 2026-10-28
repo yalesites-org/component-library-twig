@@ -1,0 +1,182 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as TableStories from './table.stories';
+
+<Meta of={TableStories} name="Overview" />
+
+# Tables
+
+The table component provides accessible, responsive data tables with consistent styling. Tables automatically adapt to different screen sizes and integrate with the design system's theming.
+
+## Interactive Preview
+
+Use the controls panel below to see how tables adapt to different section themes.
+
+<div className="sb-contained-canvas">
+  <Canvas of={TableStories.Table} />
+</div>
+
+## Properties
+
+Tables are rendered using standard HTML table markup. The component automatically applies appropriate styling based on the section theme context.
+
+### Structure
+
+Tables should include all semantic HTML elements:
+
+- `<table>`: Container element
+- `<thead>`: Table header section
+- `<tbody>`: Table body section
+- `<tfoot>`: Table footer section (optional)
+- `<tr>`: Table rows
+- `<th>`: Header cells
+- `<td>`: Data cells
+
+## Table Features
+
+### Responsive Behavior
+
+Tables automatically become scrollable on small screens to prevent content from becoming truncated or unreadable.
+
+### Striped Rows
+
+Alternating row colors improve readability for long tables.
+
+### Header Styling
+
+Table headers receive distinct styling to clearly separate them from data cells.
+
+### Cell Alignment
+
+- Text content: Left-aligned by default
+- Numeric data: Right-aligned for easy comparison
+- Headers: Can be aligned to match cell content
+
+## Technical Specifications
+
+- **Atomic Level**: Atom
+- **Template**: `example-tables.twig`
+- **Styles**: `cl-table.scss`
+- **JavaScript**: `table.js`
+
+### Accessibility
+
+- **Semantic HTML**: Uses proper table elements (`<table>`, `<thead>`, `<tbody>`, `<th>`, `<td>`)
+- **Header Association**: Column headers use `<th>` with scope attributes
+- **Row Headers**: Use `<th scope="row">` for row headers when applicable
+- **Caption**: Tables should include `<caption>` for context
+- **Summary**: Complex tables include summary attribute or description
+- **Keyboard Navigation**: Full keyboard accessibility for scrollable tables
+- **Screen Readers**: Proper markup allows screen readers to navigate table structure
+
+### Responsive Behavior
+
+- **Small Screens**: Tables become horizontally scrollable
+- **Scroll Indicators**: Visual cues show when table extends beyond viewport
+- **Touch Friendly**: Scrolling works smoothly on touch devices
+- **Sticky Headers**: Optional sticky header behavior for long tables
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use tables for tabular data only, not for layout
+- Include a descriptive caption that summarizes table content
+- Use `<th>` for all header cells with appropriate scope attributes
+- Keep tables simple - avoid nested tables
+- Left-align text, right-align numbers for easy scanning
+- Provide adequate cell padding for readability
+- Sort data in a logical order (alphabetical, chronological, etc.)
+- Highlight important data with bold or background colors
+- For large tables, consider adding filters or search functionality
+
+### Things to Avoid
+
+- Don't use tables for page layout - use CSS Grid or Flexbox
+- Avoid overly wide tables that require excessive horizontal scrolling
+- Don't merge cells unnecessarily - keeps tables accessible
+- Avoid putting too much content in a single cell
+- Don't use color alone to convey meaning
+- Avoid very long tables without pagination or virtual scrolling
+- Don't use tables when a list or other format would be clearer
+
+## Implementation Notes
+
+### Basic Table Structure
+
+```html
+<table>
+  <caption>
+    Student Grade Report
+  </caption>
+  <thead>
+    <tr>
+      <th scope="col">Student Name</th>
+      <th scope="col">Assignment</th>
+      <th scope="col">Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Jane Smith</th>
+      <td>Essay 1</td>
+      <td>95</td>
+    </tr>
+    <tr>
+      <th scope="row">John Doe</th>
+      <td>Essay 1</td>
+      <td>87</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+### Responsive Tables
+
+For tables with many columns, consider these responsive strategies:
+
+1. **Horizontal Scrolling**: Allow table to scroll horizontally (default behavior)
+2. **Priority Columns**: Show most important columns on mobile, hide others
+3. **Stacked Layout**: Transform table rows into cards on mobile (requires custom CSS)
+
+### Table Sorting
+
+Add sorting functionality for enhanced usability:
+
+```html
+<th scope="col" class="sortable">
+  <button type="button" aria-sort="none">Column Name</button>
+</th>
+```
+
+### Theming
+
+Tables inherit colors from the section theme context. Cell backgrounds, borders, and text colors automatically adjust to ensure proper contrast.
+
+## When to Use Tables
+
+Tables are appropriate for:
+
+- Comparing items across multiple dimensions
+- Showing precise numerical data
+- Displaying structured data with clear relationships
+- Financial reports and data analysis
+- Schedules and timetables
+- Product comparison charts
+
+## When Not to Use Tables
+
+Consider alternatives for:
+
+- Layout purposes (use CSS Grid/Flexbox)
+- Lists of items (use `<ul>` or `<ol>`)
+- Simple key-value pairs (use definition lists)
+- Forms (use proper form elements)
+- Navigation menus (use nav elements)
+
+## Testing
+
+For comprehensive visual regression testing with all table variations and theme combinations, see the [Visreg page](?path=/story/atoms-table-visreg).
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

@@ -1,0 +1,17 @@
+const i=`{% if not attributes %}
+<fieldset class="form-item form-item--radio">
+  <legend class="h3">Options as Radio Buttons</legend>
+  <ul class="form-item--radios">
+{% endif %}
+    {% for key, radio in radios %}
+      {% include "@atoms/forms/radio/_yds-radio-item.twig" with {
+        radio_item: radio.title,
+        radio_item_checked: radio.checked
+      } %}
+    {% endfor %}
+{% if not attributes %}
+  </ul>
+</fieldset>
+{% endif %}
+`;export{i as default};
+//# sourceMappingURL=yds-radio-BGct9vLn.js.map
