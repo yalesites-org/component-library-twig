@@ -56,8 +56,20 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
   // `--color-heading` has no `:root` default, so `inherit` here would resolve
   // to nothing on a live page. The attribute selector outranks the shared rule
   // whatever the stylesheet order.
+  // -
+  // The same shared rule also sets `--color-text-shadow` to the dial's
+  // background, so the links drew a halo in a colour the grid never paints:
+  // a dark outline on the white page outside a themed section
+  // (YaleSites-Internal#1938). Match what is actually behind the links: the
+  // section's surface, or the page white (`--color-basic-white`, as the
+  // unthemed-section rule in `_yds-layout.scss` states it) where no themed
+  // section sets one.
   &[data-component-theme] {
     --color-heading: var(--color-section-foreground, var(--color-gray-800));
+    --color-text-shadow: var(
+      --color-section-background,
+      var(--color-basic-white)
+    );
   }
 
   // Component theme overrides: set specific component themes overrides
