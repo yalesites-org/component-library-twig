@@ -30,6 +30,7 @@ const renderAudioPlayer = () =>
   audioEmbedTwig({
     audio_embed__content: audioEmbedData.audio_embed__content,
     audio_embed__url: audioEmbedData.audio_embed__url,
+    audio_embed__transcript: audioEmbedData.audio_embed__transcript,
   });
 
 const renderGlobalTheme = () =>

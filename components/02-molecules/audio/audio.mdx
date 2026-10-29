@@ -7,7 +7,7 @@ import componentProps from './audio-props.yml';
 
 # Audio Player
 
-The audio component wraps an HTML5 `<audio>` element in a custom, keyboard-accessible player with play/pause, a draggable progress bar with elapsed and total time, playback-speed selection, and a volume control. An optional label can be shown above the player. In Drupal the audio source is supplied by the block's media field rather than a URL prop.
+The audio component wraps an HTML5 `<audio>` element in a custom, keyboard-accessible player with play/pause, a draggable progress bar with elapsed and total time, playback-speed selection, and a volume control. An optional label can be shown above the player, and an optional transcript below it. In Drupal the audio source is supplied by the block's media field rather than a URL prop.
 
 ## Interactive Preview
 
@@ -15,6 +15,12 @@ Use the controls panel below to see the audio component in action.
 
 <Canvas of={AudioStories.audioEmbed} />
 <Controls of={AudioStories.audioEmbed} />
+
+## With Transcript
+
+A transcript renders below the player as ordinary page text, styled like the Video description, under a visible "Transcript" button that shows and hides it. Once JavaScript runs the transcript starts collapsed, so a long one does not push the rest of the page down; without JavaScript it stays open. Either way it is reachable without playing the audio, which is what WCAG 2.1 Level A (SC 1.2.1) asks of prerecorded audio.
+
+<Canvas of={AudioStories.audioEmbedWithTranscript} />
 
 ## Properties
 
@@ -35,7 +41,7 @@ Use the controls panel below to see the audio component in action.
 
 ## Technical Specifications
 
-- **Atomic Level**: Atom
+- **Atomic Level**: Molecule
 - **Template**: `yds-audio.twig`
 - **Styles**: `yds-audio.scss`
 - **Behavior**: `yds-audio-player.js` (attached via the `audio-player` asset library in the Atomic theme)
@@ -44,7 +50,8 @@ Use the controls panel below to see the audio component in action.
 
 - **Keyboard**: All controls (play/pause, progress, speed toggle and options, volume) are native `<button>` / `<input>` elements and are keyboard focusable and operable.
 - **Accessible names**: Each control has a visually-hidden label or `aria-label` (for example "Play the Audio File", "Audio Playback Progress Bar", "Volume").
-- **State**: The speed toggle exposes `aria-expanded`; the volume mute toggle exposes `aria-pressed`.
+- **State**: The speed toggle and the transcript toggle expose `aria-expanded`; the volume mute toggle exposes `aria-pressed`.
+- **Transcript**: An optional transcript renders as page text after the player, under a native `<button>` labelled "Transcript" with `aria-expanded` and `aria-controls`. The `audioTranscript` behavior collapses it on load; the markup itself renders it open, so it is reachable without playing the audio or running JavaScript.
 - **Fallback**: Browsers without HTML5 audio support see the message "Your browser does not support the audio element."
 
 ### Responsive Behavior
@@ -62,6 +69,18 @@ Use the controls panel below to see the audio component in action.
   audio_embed__url: 'https://example.com/audio.mp3',
 }) }}
 ```
+
+### With a Transcript
+
+```twig
+{{ include('@molecules/audio/yds-audio.twig', {
+  audio_embed__content: 'Listen to this content',
+  audio_embed__url: 'https://example.com/audio.mp3',
+  audio_embed__transcript: '<p>Full transcript of the audio.</p>',
+}) }}
+```
+
+The transcript is passed through the text atom unescaped, to support Drupal's rich-text field output. In Drupal it comes from the Audio block's Transcription field, and a player with a transcript gets the `audio-embed--has-transcript` modifier, which Editoria11y uses to skip its "Does this audio have a transcript?" check.
 
 In Drupal the audio source is provided by the block's media field, so `audio_embed__url` is used mainly for the Storybook preview and standalone examples.
 
