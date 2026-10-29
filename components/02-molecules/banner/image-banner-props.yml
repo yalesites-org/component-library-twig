@@ -52,3 +52,18 @@ width:
   labels:
     site: 'Contained'
     full: 'Full Width'
+
+videoPlayback:
+  twigProp: image_banner__video_playback
+  name: Video Playback
+  type: select
+  required: false
+  description: 'Background video playback: loop (repeats until paused) or once (plays one time and holds on the last frame). Only applies with video.'
+  default: loop
+  options:
+    - loop
+    - once
+  control: select
+  labels:
+    loop: 'Loop continuously'
+    once: 'Play once and stop'
