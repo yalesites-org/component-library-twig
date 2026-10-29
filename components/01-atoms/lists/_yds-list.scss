@@ -6,11 +6,15 @@
   padding: 0;
 }
 
-// Scoped to .text-field (the wrapper every rendered WYSIWYG/filtered text
-// field uses) so these list-style defaults only ever apply to editor
-// content, not to every <ul>/<ol> on the site (navigation menus, etc. set
-// their own list-style separately and should never be touched here).
-.text-field {
+// Scoped to .text (the class @atoms/typography/text/yds-text.twig puts on
+// every rendered WYSIWYG/filtered text field, whether it's wrapped by the
+// Text Field molecule or embedded directly in Inline Message, Spotlight,
+// Wrapped Image, Image Banner, Wrapped Text Callout, event/place
+// descriptions, etc.) so these list-style defaults reach every place Basic
+// HTML renders, not just Text Field/paragraph/accordion content — while
+// still not touching every <ul>/<ol> on the site (navigation menus, etc.
+// set their own list-style separately and should never be touched here).
+.text {
   li {
     padding-left: var(--size-spacing-1);
   }
