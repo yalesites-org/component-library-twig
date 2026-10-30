@@ -26,6 +26,10 @@
 //   [class$='__snippet'] (checked: the only other __snippet classes in the
 //   component library are card/reference-card text excerpts, so this stays
 //   narrow).
+// - Facts and Figures Group's intro text (yds-facts-and-figures-group.twig)
+//   overrides the base class to 'content' the same way Wrapped Text Callout
+//   does, rendering facts-and-figures__group__content -- same explicit-class
+//   treatment as .wrapped-callout__content below.
 // - Image Banner's caption is the generic image atom (yds-image.twig),
 //   which renders the bare .caption class (not blockname-prefixed) around
 //   raw figcaption content -- the only component using that exact class.
@@ -41,6 +45,7 @@
 [class$='__snippet'],
 .wrapped-callout__callout,
 .wrapped-callout__content,
+.facts-and-figures__group__content,
 .caption,
 .field--type-text-long,
 .field--type-text-with-summary {
