@@ -98,7 +98,7 @@
   }
 
   ol[type='i'] ol:not([type]) {
-    list-style-type: decimal;
+    list-style-type: lower-roman;
   }
 
   ul[type='disc'] ul:not([type]) {
@@ -110,27 +110,29 @@
   }
 
   ul[type='square'] ul:not([type]) {
-    list-style-type: disc;
+    list-style-type: square;
   }
 
   // A plain descendant combinator doesn't distinguish "one level down" from
   // "two levels down", so without these, a grandchild under an explicit
   // type="1"/"disc"/"a"/"circle"/"i"/"square" top level would match the same
   // rule as its parent above and incorrectly repeat that style instead of
-  // continuing the outline sequence. type="1"/"disc" continue to the next
-  // step (lower-roman/square); type="a"/"circle"/"i"/"square" already
-  // started mid-sequence, so their 3rd level wraps back to the next step
-  // after that, cycling the sequence.
+  // continuing the outline sequence. type="1"/"disc" are at the start of the
+  // sequence, so their 3rd level continues to the next step
+  // (lower-roman/square); type="a"/"circle"/"i"/"square" are already at or
+  // past the sequence's last step (lower-roman/square), and there's no
+  // canonical step after that to advance to, so their 3rd level holds at
+  // that same terminal style rather than wrapping back to the start.
   ol[type='1'] ol:not([type]) ol:not([type]) {
     list-style-type: lower-roman;
   }
 
   ol[type='a'] ol:not([type]) ol:not([type]) {
-    list-style-type: decimal;
+    list-style-type: lower-roman;
   }
 
   ol[type='i'] ol:not([type]) ol:not([type]) {
-    list-style-type: lower-alpha;
+    list-style-type: lower-roman;
   }
 
   ul[type='disc'] ul:not([type]) ul:not([type]) {
@@ -138,11 +140,11 @@
   }
 
   ul[type='circle'] ul:not([type]) ul:not([type]) {
-    list-style-type: disc;
+    list-style-type: square;
   }
 
   ul[type='square'] ul:not([type]) ul:not([type]) {
-    list-style-type: circle;
+    list-style-type: square;
   }
   /* stylelint-enable no-descending-specificity */
 }
