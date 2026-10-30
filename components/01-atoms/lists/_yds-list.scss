@@ -16,8 +16,11 @@
 // `text__blockname` and keeps the bare class, hence [class$='__text'].
 // A few callers override the atom's base class too, so the suffix isn't
 // even "text":
-// - Wrapped Text Callout's body (yds-wrapped-callout.twig) renders
-//   wrapped-callout__content, hence that explicit selector.
+// - Wrapped Text Callout has two separate WYSIWYG fields, each overriding
+//   the atom's base class instead of taking the "text" default:
+//   yds-wrapped-callout.twig's "Callout" field renders wrapped-callout__callout
+//   and its "Text" field renders wrapped-callout__content, hence those two
+//   explicit selectors.
 // - Action/CTA Banner and Grand Hero's snippet (yds-action-banner.twig,
 //   yds-grand-hero.twig) render {blockname}__snippet, hence
 //   [class$='__snippet'] (checked: the only other __snippet classes in the
@@ -36,6 +39,7 @@
 .text,
 [class$='__text'],
 [class$='__snippet'],
+.wrapped-callout__callout,
 .wrapped-callout__content,
 .caption,
 .field--type-text-long,
@@ -88,6 +92,10 @@
     list-style-type: lower-roman;
   }
 
+  ol[type='i'] ol:not([type]) {
+    list-style-type: decimal;
+  }
+
   ul[type='disc'] ul:not([type]) {
     list-style-type: circle;
   }
@@ -96,17 +104,40 @@
     list-style-type: square;
   }
 
+  ul[type='square'] ul:not([type]) {
+    list-style-type: disc;
+  }
+
   // A plain descendant combinator doesn't distinguish "one level down" from
   // "two levels down", so without these, a grandchild under an explicit
-  // type="1"/"disc" top level would match the same rules as its parent above
-  // and incorrectly stop at lower-alpha/circle instead of continuing to
-  // lower-roman/square.
+  // type="1"/"disc"/"a"/"circle"/"i"/"square" top level would match the same
+  // rule as its parent above and incorrectly repeat that style instead of
+  // continuing the outline sequence. type="1"/"disc" continue to the next
+  // step (lower-roman/square); type="a"/"circle"/"i"/"square" already
+  // started mid-sequence, so their 3rd level wraps back to the next step
+  // after that, cycling the sequence.
   ol[type='1'] ol:not([type]) ol:not([type]) {
     list-style-type: lower-roman;
   }
 
+  ol[type='a'] ol:not([type]) ol:not([type]) {
+    list-style-type: decimal;
+  }
+
+  ol[type='i'] ol:not([type]) ol:not([type]) {
+    list-style-type: lower-alpha;
+  }
+
   ul[type='disc'] ul:not([type]) ul:not([type]) {
     list-style-type: square;
+  }
+
+  ul[type='circle'] ul:not([type]) ul:not([type]) {
+    list-style-type: disc;
+  }
+
+  ul[type='square'] ul:not([type]) ul:not([type]) {
+    list-style-type: circle;
   }
   /* stylelint-enable no-descending-specificity */
 }
