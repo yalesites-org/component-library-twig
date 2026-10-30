@@ -33,19 +33,45 @@
 // - Image Banner's caption is the generic image atom (yds-image.twig),
 //   which renders the bare .caption class (not blockname-prefixed) around
 //   raw figcaption content -- the only component using that exact class.
-// Event, place, and resource descriptions don't go through any of these
-// atoms at all -- they're plain formatted-text fields rendered by Drupal's
-// default field template, so .field--type-text-long and
-// .field--type-text-with-summary catch those (and any other plain-rendered
-// long-text field) by the field type Drupal itself assigns.
+// - Pull Quote and Quote Callout's quote/attribution fields
+//   (yds-pull-quote.twig, yds-quote-callout.twig), and Tile's content field
+//   (yds-tile-item.twig) don't go through yds-text.twig at all -- they're a
+//   plain bem()-wrapped <div> printing the raw field value directly, hence
+//   [class$='__quote']/[class$='__attribution'] and the explicit
+//   .tile__item__content selector (checked: __quote/__attribution are each
+//   used by exactly these two components, so the wildcards stay narrow).
+// - Search Result's teaser/highlighted fields (yds-search-result.twig) are
+//   the same bare bem()-div pattern, hence [class$='__teaser'] and
+//   [class$='__highlighted'] (also checked narrow).
+// - Event descriptions are the same bare bem()-div pattern one layer
+//   further out: field_event_description never reaches a field render at
+//   all -- ys_localist's MetaFieldsManager::getEventData() reads it
+//   directly off the node and hands it to yds-event-meta-localist.twig,
+//   which prints it in a bare `bem('description', [], event_meta__base_class)`
+//   div, rendering event-meta__description. Resource descriptions
+//   (yds-resource-meta.twig, _yds-resource-meta--video.twig) use the
+//   identical bare-div pattern, rendering resource-meta__description.
+// Place descriptions, by contrast, have no custom template at all -- the
+// Place vocabulary uses Drupal's generic taxonomy term + field rendering,
+// so they (and any other plain-rendered long-text field, like
+// node.resource's field_abstract/field_citation/field_content_description)
+// get .field--type-text-long/.field--type-text-with-summary from the field
+// type Drupal itself assigns.
 // None of this touches every <ul>/<ol> on the site -- navigation menus, etc.
 // set their own list-style separately and should never be touched here.
 .text,
 [class$='__text'],
 [class$='__snippet'],
+[class$='__quote'],
+[class$='__attribution'],
+[class$='__teaser'],
+[class$='__highlighted'],
 .wrapped-callout__callout,
 .wrapped-callout__content,
 .facts-and-figures__group__content,
+.tile__item__content,
+.event-meta__description,
+.resource-meta__description,
 .caption,
 .field--type-text-long,
 .field--type-text-with-summary {
