@@ -6,15 +6,40 @@
   padding: 0;
 }
 
-// Scoped to .text (the class @atoms/typography/text/yds-text.twig puts on
-// every rendered WYSIWYG/filtered text field, whether it's wrapped by the
-// Text Field molecule or embedded directly in Inline Message, Spotlight,
-// Wrapped Image, Image Banner, Wrapped Text Callout, event/place
-// descriptions, etc.) so these list-style defaults reach every place Basic
-// HTML renders, not just Text Field/paragraph/accordion content — while
-// still not touching every <ul>/<ol> on the site (navigation menus, etc.
-// set their own list-style separately and should never be touched here).
-.text {
+// Scoped to every wrapper that can hold filtered/WYSIWYG Basic HTML, not just
+// .text. @atoms/typography/text/yds-text.twig always has a base class of
+// "text", but most callers (Spotlight, Wrapped Image, event/place
+// descriptions, etc.) pass a `text__blockname`, which makes emulsify_twig's
+// bem() emit `{blockname}__text` INSTEAD OF the bare `text` class
+// (BemTwigExtension::bem() replaces, not appends, the base class when a
+// blockname is given) -- only the plain Text Field molecule omits
+// `text__blockname` and keeps the bare class, hence [class$='__text'].
+// A few callers override the atom's base class too, so the suffix isn't
+// even "text":
+// - Wrapped Text Callout's body (yds-wrapped-callout.twig) renders
+//   wrapped-callout__content, hence that explicit selector.
+// - Action/CTA Banner and Grand Hero's snippet (yds-action-banner.twig,
+//   yds-grand-hero.twig) render {blockname}__snippet, hence
+//   [class$='__snippet'] (checked: the only other __snippet classes in the
+//   component library are card/reference-card text excerpts, so this stays
+//   narrow).
+// - Image Banner's caption is the generic image atom (yds-image.twig),
+//   which renders the bare .caption class (not blockname-prefixed) around
+//   raw figcaption content -- the only component using that exact class.
+// Event, place, and resource descriptions don't go through any of these
+// atoms at all -- they're plain formatted-text fields rendered by Drupal's
+// default field template, so .field--type-text-long and
+// .field--type-text-with-summary catch those (and any other plain-rendered
+// long-text field) by the field type Drupal itself assigns.
+// None of this touches every <ul>/<ol> on the site -- navigation menus, etc.
+// set their own list-style separately and should never be touched here.
+.text,
+[class$='__text'],
+[class$='__snippet'],
+.wrapped-callout__content,
+.caption,
+.field--type-text-long,
+.field--type-text-with-summary {
   li {
     padding-left: var(--size-spacing-1);
   }
