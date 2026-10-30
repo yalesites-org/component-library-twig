@@ -9,42 +9,25 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 
 const componentDir = path.dirname(fileURLToPath(import.meta.url));
 const read = (file) => fs.readFileSync(path.join(componentDir, file), 'utf8');
 
-test('the selected-count message goes into ul.chosen-choices as an li', () => {
-  const handlers = {};
-  const prepended = [];
-  // Just enough jQuery for the behavior's chains to resolve.
-  const chain = {
-    find: () => chain,
-    next: () => chain,
-    each: (fn) => fn(0, 'form'),
-    on: (name, fn) => {
-      handlers[name] = fn;
-    },
-    prepend: (html) => prepended.push(html),
-  };
-  const sandbox = {
-    jQuery: () => chain,
-    once: () => [],
-    Drupal: { behaviors: {} },
-  };
-  vm.runInNewContext(read('yds-select.js'), sandbox);
-  sandbox.Drupal.behaviors.chosenSelect.attach({});
-
-  handlers['chosen:ready']({ target: 'select' });
-  assert.deepEqual(prepended, ['<li class="ys-select-message"></li>']);
+// The old "(X) items selected" message li is gone: 1318-views-rework replaced
+// it with the "+N more" badge (#1366), which is the only thing the behavior
+// inserts into ul.chosen-choices. It must stay an li, since a ul may only hold
+// li children.
+test('the "+N more" badge goes into ul.chosen-choices as an li', () => {
+  const source = read('yds-select.js');
+  assert.match(source, /const \$badge = \$\('<li>',/);
+  assert.doesNotMatch(source, /\.prepend\(`<span/);
 });
 
 test('empty Chosen containers are not rendered', () => {
-  // Chosen fills ul.chosen-results only on first open; the message li is blank
-  // until something is selected.
+  // Chosen fills ul.chosen-results only on first open.
   assert.match(
     read('../_yds-form.scss'),
-    /\.chosen-results:empty,\s*\.ys-select-message:empty \{\s*display: none;/,
+    /\.chosen-results:empty \{\s*display: none;/,
   );
 });

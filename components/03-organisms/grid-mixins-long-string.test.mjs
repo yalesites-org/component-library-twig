@@ -5,7 +5,7 @@
  * Run with the Node test runner:
  *   node --test components/03-organisms/grid-mixins-long-string.test.mjs
  *
- * Reported as YaleSites-Internal#1729. The reasoning for each of the three
+ * Reported as YaleSites-Internal#1729. The reasoning for each of the two
  * declarations lives beside it in `_grid-mixins.scss`; what is only true here
  * is why this is asserted against *compiled* CSS: the fix is inherited from a
  * mixin, so the source shows one `base` rule while what ships is one `> *`
@@ -16,11 +16,10 @@
  * not just the card grids -- and a variant added later is caught rather than
  * shipping unprotected.
  *
- * Coupling note: the `.link-purpose-nobreak` assertions pin that override at
- * the *grid* layer. Its better long-term home is
- * `lib/link-treatment/link-treatment.scss`, alongside the other linkpurpose
- * overrides -- moving it there is a deliberate improvement, not a regression,
- * and should move these assertions with it rather than be read as a failure.
+ * The third declaration this once pinned, relaxing link-treatment's
+ * `.link-purpose-nobreak` span, moved out of the grids when
+ * YaleSites-Internal#1953 fixed long URLs platform-wide; its replacement is
+ * pinned in `00-tokens/typography/long-url-wrap.test.mjs`.
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -42,12 +41,22 @@ const repoRoot = path.resolve(componentDir, '../..');
  * container would fail these assertions -- that is deliberate: failing loudly is
  * the point, and the fix is to give it the same treatment or exclude it here.
  */
+// Column-band helpers from #1648, not grids themselves: each only layers bands
+// onto a grid that already includes `base`, so they carry none of its rules.
+const HELPERS = new Set([
+  'single-column-below-break-m',
+  'container-grid-columns',
+  'container-grid-small',
+]);
+
 const MIXINS = [
   ...readFileSync(
     path.join(componentDir, '_grid-mixins.scss'),
     'utf8',
   ).matchAll(/^@mixin\s+([\w-]+)/gm),
-].map(([, name]) => name);
+]
+  .map(([, name]) => name)
+  .filter((name) => !HELPERS.has(name));
 
 // Compiled from a synthetic consumer rather than a real organism: the contract
 // belongs to the mixins, and a real file would also drag in that component's
@@ -89,33 +98,24 @@ const { css } = sass.compileString(source, {
  * assertions below run over the merged set rather than the first match.
  */
 const declarations = new Map(
-  MIXINS.map((mixin) => [
-    mixin,
-    { minWidth: [], overflowWrap: [], nobreak: [] },
-  ]),
+  MIXINS.map((mixin) => [mixin, { minWidth: [], overflowWrap: [] }]),
 );
 
 parse(css).walkRules((rule) => {
   rule.selectors.forEach((raw) => {
-    // The nobreak override is nested inside the `> *` rule, so it compiles to
-    // the same selector plus a descendant -- captured by the trailing group.
-    const [, mixin, descendant] =
+    const [, mixin] =
       raw
         .replace(/\s+/g, ' ')
         .trim()
-        .match(/^\.probe-(\S+) > \*(.*)$/) ?? [];
+        .match(/^\.probe-(\S+) > \*$/) ?? [];
     const found = declarations.get(mixin);
 
     if (!found) {
       return;
     }
 
-    if (descendant === ' .link-purpose-nobreak') {
-      rule.walkDecls('white-space', (d) => found.nobreak.push(d.value));
-    } else if (descendant === '') {
-      rule.walkDecls('min-width', (d) => found.minWidth.push(d.value));
-      rule.walkDecls('overflow-wrap', (d) => found.overflowWrap.push(d.value));
-    }
+    rule.walkDecls('min-width', (d) => found.minWidth.push(d.value));
+    rule.walkDecls('overflow-wrap', (d) => found.overflowWrap.push(d.value));
   });
 });
 
@@ -156,24 +156,6 @@ MIXINS.forEach((mixin) => {
         'normal',
         `grid.${mixin} sets overflow-wrap: normal, which is the default that ` +
           'leaves a URL unbreakable',
-      );
-    });
-  });
-
-  test(`grid.${mixin}: an auto-linked URL is allowed to wrap`, () => {
-    const { nobreak } = declarations.get(mixin);
-
-    assert.ok(
-      nobreak.length > 0,
-      `grid.${mixin} never relaxes .link-purpose-nobreak, so a URL that Drupal ` +
-        'auto-linked keeps `white-space: nowrap` and overflows the card ' +
-        'regardless of overflow-wrap',
-    );
-    nobreak.forEach((value) => {
-      assert.equal(
-        value,
-        'normal',
-        `grid.${mixin} leaves .link-purpose-nobreak at white-space: ${value}`,
       );
     });
   });
