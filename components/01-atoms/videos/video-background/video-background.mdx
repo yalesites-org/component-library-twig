@@ -7,7 +7,7 @@ import componentProps from './video-background-props.yml';
 
 # Video Background
 
-The video background component allows for full-width looping video backgrounds that add visual interest and motion to sections. The video plays automatically, is muted, and loops continuously to create an engaging background effect.
+The video background component allows for full-width video backgrounds that add visual interest and motion to sections. The video plays automatically and is muted. By default it loops continuously; it can instead play once and stop on its last frame.
 
 ## Interactive Preview
 
@@ -26,6 +26,17 @@ Use the controls panel below to experiment with the video background across diff
 
 {twigPropsTable(componentProps, 'optional')}
 
+## Playback
+
+`video_background__playback` controls what happens when the video reaches its end:
+
+- **`loop`** (default): The video repeats until the visitor pauses it.
+- **`once`**: The video plays one time and holds on its last frame. The play button replaces the pause button, and pressing it restarts the video from the beginning.
+
+Existing videos default to `loop`, so nothing changes unless an editor chooses to play once. In Drupal this is the **Video Playback** field on the Image Banner and Grand Hero blocks. Banners set it with a `data-video-playback` attribute on their own wrapper, and the script reads the nearest one.
+
+<Canvas of={VideoBackgroundStories.PlayOnce} />
+
 ## Technical Specifications
 
 - **Atomic Level**: Atom
@@ -38,12 +49,13 @@ Use the controls panel below to experiment with the video background across diff
 - **Motion Preferences**: Respects prefers-reduced-motion media query
 - **No Audio**: Background videos should not include essential audio
 - **Fallback**: Should include a poster image for browsers that don't autoplay
+- **Pause, Stop, Hide (WCAG 2.2.2)**: The play/pause button is always available, in both playback modes. When a play-once video ends, keyboard focus moves from the pause button to the play button so it isn't lost
 
 ### Behavior
 
 - **Autoplay**: Automatically plays on page load
 - **Muted**: No audio to prevent user disruption
-- **Looping**: Continuously loops for seamless background
+- **Looping**: Loops continuously by default; set `video_background__playback` to `once` to play once and hold on the last frame
 - **Responsive**: Scales to fill container while maintaining aspect ratio
 - **Performance**: May pause when not in viewport to improve performance
 
@@ -52,7 +64,7 @@ Use the controls panel below to experiment with the video background across diff
 ### Technical Requirements
 
 - **Format**: MP4 (H.264 codec) for best browser support
-- **Duration**: 5-30 seconds recommended for loop seamlessness
+- **Duration**: 5-30 seconds recommended for loop seamlessness; for play-once videos, choose a last frame that works as a still image
 - **Resolution**: 1920x1080 (Full HD) minimum
 - **File Size**: Optimize for web (under 5MB ideal)
 - **Aspect Ratio**: 16:9 recommended
@@ -60,7 +72,7 @@ Use the controls panel below to experiment with the video background across diff
 ### Content Guidelines
 
 - Use subtle, non-distracting motion
-- Ensure smooth loop points (end matches beginning)
+- Ensure smooth loop points (end matches beginning), or a strong final frame for play-once videos
 - Avoid text or important details that need reading
 - Consider all users see the content, not just those who can play video
 - Ensure sufficient contrast for overlaid text
@@ -84,7 +96,7 @@ Use the controls panel below to experiment with the video background across diff
 - Don't rely solely on video for visual interest
 - Avoid long videos that increase page weight
 - Don't use videos with rapid motion that could cause discomfort
-- Avoid videos that don't loop seamlessly
+- Avoid videos that don't loop seamlessly, unless they are set to play once
 
 ## Performance Considerations
 
@@ -105,7 +117,7 @@ Use the controls panel below to experiment with the video background across diff
 
 ## Reduced Motion
 
-The component respects the `prefers-reduced-motion` media query. Users who have enabled reduced motion in their system settings will see a static frame instead of the playing video.
+The component respects the `prefers-reduced-motion` media query. Users who have enabled reduced motion in their system settings will see a static frame instead of the playing video. This applies in both playback modes.
 
 ## Implementation Notes
 

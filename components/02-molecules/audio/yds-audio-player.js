@@ -4,6 +4,9 @@ Drupal.behaviors.audioPlayer = {
 
     audioPlayers.forEach((audioPlayer) => {
       const audio = audioPlayer.querySelector('audio');
+      // No audio element (the block's media file is missing): nothing to
+      // control. The library can still load for the transcript toggle.
+      if (!audio) return;
       const playButton = audioPlayer.querySelector(
         '.audio-embed__control--play',
       );
@@ -264,6 +267,36 @@ Drupal.behaviors.audioPlayer = {
 
         const progress = (currentTime / duration) * 100;
         progressBar.value = progress;
+      });
+    });
+  },
+};
+
+// Show/hide for the transcript. Kept apart from the player behavior so the
+// toggle still works when there is no audio to play. The
+// markup renders the transcript open, so it stays readable without JavaScript;
+// this collapses it behind its button so a long transcript does not push the
+// rest of the page down.
+Drupal.behaviors.audioTranscript = {
+  attach(context) {
+    once(
+      'audio-transcript',
+      '.audio-embed__transcript-toggle[aria-controls]',
+      context,
+    ).forEach((toggle) => {
+      const text = document.getElementById(
+        toggle.getAttribute('aria-controls'),
+      );
+      if (!text) return;
+
+      const setExpanded = (expanded) => {
+        toggle.setAttribute('aria-expanded', String(expanded));
+        text.hidden = !expanded;
+      };
+
+      setExpanded(false);
+      toggle.addEventListener('click', () => {
+        setExpanded(toggle.getAttribute('aria-expanded') !== 'true');
       });
     });
   },
