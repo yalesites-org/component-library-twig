@@ -79,6 +79,24 @@
     padding-left: var(--size-spacing-1);
   }
 
+  // Wrapped Text Callout's Text field wraps around its floated Callout box,
+  // and Wrapped Image's text wraps around its floated image -- the only two
+  // places a list in this selector set can sit beside a CSS float. Without its
+  // own block formatting context, a <ul>/<ol> next to a float has each LINE's
+  // available width re-measured against the float independently, instead of
+  // being laid out as one block that clears the float once. That collapses
+  // the usual per-level indentation step: a nested list ends up measured
+  // against that same narrow per-line shelf rather than its own parent's
+  // edge, so levels 1/2/3 all but stack on top of each other. Establishing a
+  // BFC here (`flow-root` keeps the outer `display` a normal block, so
+  // nothing else about layout changes) makes every list clear the float as a
+  // single rectangle, so the normal indentation step shows up the same
+  // whether or not the list happens to be floating-adjacent.
+  ul,
+  ol {
+    display: flow-root;
+  }
+
   // :not([type]) lets an explicit type="a"/"i"/etc. attribute (set via the
   // CKEditor5 List Style dropdown) take precedence over these depth-based
   // defaults, instead of this CSS unconditionally overriding it.
