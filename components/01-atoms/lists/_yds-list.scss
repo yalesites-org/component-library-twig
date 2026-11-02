@@ -30,6 +30,12 @@
 //   overrides the base class to 'content' the same way Wrapped Text Callout
 //   does, rendering facts-and-figures__group__content -- same explicit-class
 //   treatment as .wrapped-callout__content below.
+// - The individual Facts and Figures molecule's own content field
+//   (yds-facts-and-figures.twig) is a separate, bare bem()-wrapped <div> one
+//   level down from the group -- facts-and-figures__content, not
+//   facts-and-figures__group__content -- so it needs its own explicit
+//   selector too (confirmed missing by a live audit of every WYSIWYG field on
+//   a test page covering all 17 Layout Builder components, ticket 1450).
 // - Image Banner's caption is the generic image atom (yds-image.twig),
 //   which renders the bare .caption class (not blockname-prefixed) around
 //   raw figcaption content -- the only component using that exact class.
@@ -51,12 +57,28 @@
 //   div, rendering event-meta__description. Resource descriptions
 //   (yds-resource-meta.twig, _yds-resource-meta--video.twig) use the
 //   identical bare-div pattern, rendering resource-meta__description.
-// Place descriptions, by contrast, have no custom template at all -- the
-// Place vocabulary uses Drupal's generic taxonomy term + field rendering,
-// so they (and any other plain-rendered long-text field, like
-// node.resource's field_abstract/field_citation/field_content_description)
-// get .field--type-text-long/.field--type-text-with-summary from the field
-// type Drupal itself assigns.
+// Place descriptions (field_place_description, event_place vocabulary) sat
+// on Drupal's generic taxonomy term + field rendering, which this site's
+// stable9 base theme renders with NO classes at all on any wrapper --
+// stable9 doesn't add field--type-*/field--name-* BEM classes the way the
+// deprecated Classy theme did, so the .field--type-text-long/
+// .field--type-text-with-summary selectors below have likely never matched
+// anything on this site (confirmed by a live audit, ticket 1450; they stay
+// below as a generic fallback in case some other untemplated field ever
+// does render under a theme that adds them). Fixed with a new field
+// template override (field--field-place-description.html.twig) that adds
+// .place-description__value to the field's per-item content wrapper.
+// - node.resource's three long-text fields are NOT plain field renders --
+//   they go through yds-publication-detail.twig's <dl>/<dt>/<dd> layout
+//   (confirmed by a live audit, ticket 1450; an earlier code-only read of
+//   this template had wrongly concluded it was unwired/orphaned). Citation
+//   renders inside the pre-text atom (pre-text__text, already covered by
+//   [class$='__text']), but Abstract and Content Description are bare <dd>s
+//   -- publication-detail__abstract__value and
+//   publication-detail__description__value -- which [class$='__value'] can't
+//   safely cover (collides with cl-colors__value, journal-issue__value,
+//   journal-name__value, publish-date__value, published-on__value), hence
+//   the two explicit selectors.
 // None of this touches every <ul>/<ol> on the site -- navigation menus, etc.
 // set their own list-style separately and should never be touched here.
 .text,
@@ -69,9 +91,13 @@
 .wrapped-callout__callout,
 .wrapped-callout__content,
 .facts-and-figures__group__content,
+.facts-and-figures__content,
 .tile__item__content,
 .event-meta__description,
 .resource-meta__description,
+.publication-detail__abstract__value,
+.publication-detail__description__value,
+.place-description__value,
 .caption,
 .field--type-text-long,
 .field--type-text-with-summary {
