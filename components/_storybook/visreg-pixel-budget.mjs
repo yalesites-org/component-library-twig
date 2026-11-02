@@ -84,14 +84,18 @@ export function requirePositiveNumber(name, raw, fallback) {
 }
 
 /**
- * Picks the visual-regression stories out of a built Storybook index.
+ * Every story entry in a built Storybook index, ordered by id.
+ *
+ * Shared by this module and `link-halo.mjs`, which both start from the same
+ * `index.json` and need the same guard against an unbuilt or stale one.
  *
  * @param {object} index
  *   The parsed contents of `<storybook build dir>/index.json`.
- * @return {Array<{id: string, name: string, title: string, importPath: string}>}
- *   The visreg stories, ordered by id so a report is stable between runs.
+ * @return {Array<object>}
+ *   The raw entries whose `type` is `story` (docs pages dropped), sorted by
+ *   id so anything built from them is stable between runs.
  */
-export function selectVisregStories(index) {
+export function storyEntries(index) {
   const entries = index?.entries;
 
   if (!entries || typeof entries !== 'object') {
@@ -100,13 +104,28 @@ export function selectVisregStories(index) {
     );
   }
 
-  const visreg = Object.values(entries)
-    .filter(
-      (entry) =>
-        entry.type === 'story' && (entry.tags ?? []).includes('visreg'),
-    )
-    .map(({ id, name, title, importPath }) => ({ id, name, title, importPath }))
+  return Object.values(entries)
+    .filter((entry) => entry.type === 'story')
     .sort((a, b) => a.id.localeCompare(b.id));
+}
+
+/**
+ * Picks the visual-regression stories out of a built Storybook index.
+ *
+ * @param {object} index
+ *   The parsed contents of `<storybook build dir>/index.json`.
+ * @return {Array<{id: string, name: string, title: string, importPath: string}>}
+ *   The visreg stories, ordered by id so a report is stable between runs.
+ */
+export function selectVisregStories(index) {
+  const visreg = storyEntries(index)
+    .filter((entry) => (entry.tags ?? []).includes('visreg'))
+    .map(({ id, name, title, importPath }) => ({
+      id,
+      name,
+      title,
+      importPath,
+    }));
 
   if (visreg.length === 0) {
     throw new Error(

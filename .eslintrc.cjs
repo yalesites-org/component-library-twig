@@ -20,8 +20,12 @@ module.exports = {
       // The pixel-ceiling measurement script is a CLI, not story code: it
       // imports a devDependency (Puppeteer), reports through `console`, and
       // measures stories one at a time on purpose so a shared browser page can
-      // be reused rather than opening 518 of them at once.
-      files: ['components/_storybook/measure-visreg-pixels.mjs'],
+      // be reused rather than opening 518 of them at once. The link halo check
+      // is the same kind of CLI for the same reasons.
+      files: [
+        'components/_storybook/measure-visreg-pixels.mjs',
+        'components/_storybook/check-link-halo.mjs',
+      ],
       rules: {
         'import/no-extraneous-dependencies': [
           'error',

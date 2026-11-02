@@ -14,6 +14,7 @@ const renderBanner = ({
   overlayBackgroundImage,
   buttonStyleConsistency,
   width,
+  linkStyle,
 }) =>
   bannerTwig({
     ...imageData.responsive_images['16x9'],
@@ -30,6 +31,7 @@ const renderBanner = ({
       ? imageData.responsive_images.pattern
       : '',
     banner__width: width,
+    banner__link__style: linkStyle,
   });
 
 /**
@@ -64,3 +66,11 @@ ActionBannerRight.storyName = 'Right Layout';
 export const ActionBannerFullWidth = (args) => renderBanner(args);
 ActionBannerFullWidth.args = { width: 'full' };
 ActionBannerFullWidth.storyName = 'Full Width';
+
+// The template's text link option (`banner__link__style: 'text-link'`)
+// renders `.cta-banner__link`, which draws the link halo; without a story
+// using it, the link halo check had no banner link to judge
+// (YaleSites-Internal#1939).
+export const ActionBannerTextLinks = (args) =>
+  renderBanner({ ...args, linkStyle: 'text-link' });
+ActionBannerTextLinks.storyName = 'Text Links';
