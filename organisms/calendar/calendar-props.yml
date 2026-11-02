@@ -1,0 +1,12 @@
+# calendar-props.yml
+#
+# Calendar component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+month:
+  twigProp: month
+  name: Month
+  type: array
+  required: true
+  description: Array of weeks, each containing an array of day objects with date and events data

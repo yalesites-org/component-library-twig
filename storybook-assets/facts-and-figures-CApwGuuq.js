@@ -1,0 +1,2 @@
+const t={facts_and_figures__stat:"$52,000",facts_and_figures__content:"Annual grant of Undergraduate students"};export{t as f};
+//# sourceMappingURL=facts-and-figures-CApwGuuq.js.map

@@ -1,0 +1,42 @@
+# custom-card-props.yml
+#
+# Custom Card component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+heading:
+  twigProp: custom_card__heading
+  name: Heading
+  type: string
+  required: true
+  description: The heading text for the card
+  control: text
+
+snippet:
+  twigProp: custom_card__snippet
+  name: Snippet
+  type: string
+  required: false
+  description: Descriptive text content displayed below the heading (supports HTML)
+  control: text
+
+withImage:
+  twigProp: custom_card__image
+  name: With Image
+  type: boolean
+  required: false
+  description: Whether to display an image with the card
+  default: true
+  control: boolean
+
+featured:
+  name: Featured
+  type: boolean
+  required: false
+  description: Whether the collection displays cards in a featured layout style
+  detail: >
+    Controls the data-collection-featured attribute on the card collection
+    wrapper. This is a Storybook-only UI toggle — it is not a direct Twig
+    prop on the card template itself.
+  default: true
+  control: boolean

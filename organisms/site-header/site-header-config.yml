@@ -1,0 +1,11 @@
+# Base configuration for site header playground stories
+# This provides realistic default content for testing site header variations
+
+baseConfig:
+  site_header__site_name: 'Department of Chemistry'
+  site_header__site_link: '/'
+  site_header__branding_name: 'Yale University'
+  site_header__branding_link: 'https://www.yale.edu'
+  site_header__collection_nav_position: ''
+  site_header__collection_nav_name: ''
+  site_header__collection_nav_link: ''

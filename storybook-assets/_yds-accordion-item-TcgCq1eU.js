@@ -1,0 +1,54 @@
+const n=`{#
+ # Available Variables:
+ # - accordion__item__heading
+ # - accordion__item__heading__level (passed down by \`accordion.twig\`)
+ # - accordion__item__id - (optional) a stable id for the item's heading, so
+ #   the item can be linked to directly. Drupal derives it from the paragraph
+ #   entity; the hash handling in \`yds-accordion.js\` opens the item it names.
+ #
+ # Available Blocks:
+ # - accordion__item__content
+ #}
+
+{% set accordion__item__base_class = 'accordion-item' %}
+
+{% set accordion__item__attributes = {
+  'data-accordion-expanded': 'true',
+  class: bem(accordion__item__base_class),
+} %}
+
+{% set accordion__item__cta__content %}
+  {{ accordion__item__heading }}
+  {% include "@atoms/images/icons/_yds-icon.twig" with {
+    icon__name: 'angle-down',
+    icon__blockname: accordion__item__base_class,
+    icon__decorative: true,
+  } %}
+{% endset %}
+
+{% set accordion__item__heading__content %}
+  {% include "@atoms/controls/base/yds-control.twig" with {
+    control__content: accordion__item__cta__content,
+    control__base_class: 'toggle',
+    control__blockname: accordion__item__base_class,
+    aria_expanded: 'true',
+  } %}
+{% endset %}
+
+<div {{ add_attributes(accordion__item__attributes) }} >
+  {% include "@atoms/typography/headings/yds-heading.twig" with {
+    heading__level: accordion__item__heading__level|default('2'),
+    heading__blockname: accordion__item__base_class,
+    heading: accordion__item__heading__content,
+    heading__id: accordion__item__id,
+  } %}
+  <div {{ bem('content', [], accordion__item__base_class) }}>
+    {% block accordion__item__content %}
+      {% include "@molecules/text/yds-text-field.twig" with {
+        text_field__content: accordion__item__content,
+      } %}
+    {% endblock %}
+  </div>
+</div>
+`;export{n as default};
+//# sourceMappingURL=_yds-accordion-item-TcgCq1eU.js.map

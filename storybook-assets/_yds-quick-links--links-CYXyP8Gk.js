@@ -1,0 +1,12 @@
+const _=`{% set quick_links__base_class = 'quick-links' %}
+
+<li {{ bem('list-item', [], quick_links__base_class) }}>
+  {% include "@atoms/controls/cta/yds-cta.twig" with {
+    cta__content: quick_links__link__content|default(link.quick_links__link__content),
+    cta__href: quick_links__link__url|default(link.quick_links__link__url),
+    cta__blockname: quick_links__base_class,
+    cta__style: 'outline',
+  } %}
+</li>
+`;export{_ as default};
+//# sourceMappingURL=_yds-quick-links--links-CYXyP8Gk.js.map

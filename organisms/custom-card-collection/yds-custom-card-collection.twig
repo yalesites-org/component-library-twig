@@ -1,0 +1,58 @@
+{#
+ # Available Variables:
+ # - custom_card_collection__heading
+ #
+ # Available Blocks:
+ # - custom_card_collection__cards: when this renders nothing, the whole
+ #   component is omitted rather than leaving an empty <ul> behind.
+ # - prefix_suffix
+ #}
+
+{% set custom_card_collection__base_class = 'custom-card-collection' %}
+
+{% set custom_card_collection__featured = custom_card_collection__featured == 'true' ? 'true' : 'false' %}
+{% set custom_card_collection__width = custom_card_collection__width|default('site') %}
+
+{% set custom_card_collection__attributes = {
+  'data-collection-featured': custom_card_collection__featured,
+  'data-component-width': custom_card_collection__width,
+  'class': bem(custom_card_collection__base_class),
+} %}
+
+{#
+ # An empty `<ul>` is invalid markup -- SiteImprove: "Container element is empty".
+ #
+ # Guard the *rendered* cards, not custom_card_collection__cards: Drupal consumers
+ # pass cards as a block override, so that variable is undefined there and guarding
+ # on it would hide every real collection.
+ # See card-collection/card-collection-empty-wrapper.test.mjs.
+ #}
+{% set custom_card_collection__cards__content %}
+  {% block custom_card_collection__cards %}
+    {% for card in custom_card_collection__cards %}
+      {% include "@molecules/cards/custom-card/yds-custom-card.twig" with {
+        custom_card_collection__heading: custom_card_collection__heading,
+        }
+      %}
+    {% endfor %}
+  {% endblock %}
+{% endset %}
+
+{% if custom_card_collection__cards__content|trim is not empty %}
+  <div {{ add_attributes(custom_card_collection__attributes) }}>
+    {% block prefix_suffix %}
+    {% endblock %}
+    <div {{ bem('inner', [], custom_card_collection__base_class) }}>
+      {% if custom_card_collection__heading is not empty %}
+        {% include "@atoms/typography/headings/yds-heading.twig" with {
+          heading__level: '2',
+          heading__blockname: custom_card_collection__base_class,
+          heading: custom_card_collection__heading,
+        } %}
+      {% endif %}
+      <ul {{ bem('cards', [], custom_card_collection__base_class) }}>
+        {{ custom_card_collection__cards__content }}
+      </ul>
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,19 @@
+const e=`{% extends "@page-layouts/yds-full-width.twig" %}
+  {% block page__header %}
+    {% include "@organisms/site-header/yds-site-header.twig" %}
+  {% endblock %}
+  {% block page__content %}
+    {% include "@organisms/menu/breadcrumbs/yds-breadcrumbs.twig" with {
+      breadcrumbs__items: [
+        {title: 'Home', url: '#'},
+        {title: 'Resources', url: '#'},
+        {title: page_title__heading, url: '#', is_active: true},
+      ],
+    } %}
+    {% include "@molecules/page-title/yds-page-title.twig" %}
+    {% include "@page-examples/resources/_resource-collection--example.twig" with {
+      variation: 'list',
+    } %}
+  {% endblock %}
+`;export{e as default};
+//# sourceMappingURL=resource-list-DPexHEhb.js.map

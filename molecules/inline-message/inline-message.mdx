@@ -1,0 +1,93 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as InlineMessageStories from './inline-message.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './inline-message-props.yml';
+
+<Meta of={InlineMessageStories} name="Overview" />
+
+# Inline Message
+
+The inline message component displays important notifications, alerts, or informational messages within page content. It provides visual distinction through theming, making it easy for users to identify and understand the nature of the message.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the inline message's properties in real-time.
+
+<Canvas of={InlineMessageStories.InlineMessage} />
+<Controls of={InlineMessageStories.InlineMessage} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Icons
+
+The inline message can display a decorative icon beside its content, chosen from the shared icon set (the same manifest used by Facts and Figures, so the two components stay in sync).
+
+- Set the <code>inline_message\_\_icon_name</code> property to an icon machine name to display that icon.
+- Use <code>\_none</code> (or an empty value) to render a text-only message with no icon. In Drupal, choosing "- None -" is stored as an empty value, so both behave identically.
+- When the property is not supplied at all (the bare component, outside Drupal), the icon falls back to the type-derived default (<code>circle-info</code> for <strong>general</strong>, <code>circle-exclamation</code> otherwise).
+
+Use the <strong>Icon</strong> control in the interactive preview above to browse every available variant. Icons are purely decorative (rendered with <code>aria-hidden</code>): they must reinforce, never replace, the meaning carried by the text.
+
+## Theme Options
+
+This component supports the following theme variations:
+
+- **One through Five**: Custom theme dials that override global settings with component-specific colors
+
+Use the `inline_message__theme` property to apply different themes. The theme affects background colors, text colors, and link styling to ensure proper contrast and visual hierarchy.
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-inline-message.twig`
+- **Styles**: `_yds-inline-message.scss`
+
+### Accessibility
+
+- Uses semantic HTML with proper heading structure
+- ARIA attributes expose the message as an information region for screen readers
+- Color themes meet WCAG contrast requirements
+- Links within messages have clear focus indicators
+- Keyboard accessible
+
+### Behavior
+
+- Messages are displayed inline with surrounding content
+- Optional links provide contextual actions or additional information
+- Responsive design adapts to container width
+- Works without JavaScript
+
+## Usage Guidelines
+
+### Best Practices
+
+- Use inline messages sparingly to maintain their effectiveness
+- Keep message content concise and actionable (2-3 sentences maximum)
+- Provide a clear, descriptive heading that summarizes the message
+- Use the optional link to provide relevant actions or additional context
+- Select themes that provide sufficient contrast with the page background
+
+### Things to Avoid
+
+- Avoid overly long message content that becomes difficult to scan
+- Don't use inline messages for critical system errors (use dedicated error components)
+- Avoid placing inline messages in locations where they might be overlooked
+- Don't rely solely on color to convey meaning
+
+## Testing
+
+For comprehensive visual regression testing with all inline message variations and theme combinations, see the [Visreg page](?path=/story/molecules-inline-message-visreg).
+
+## Related Components
+
+- **Alert Banner**: Use for page-level or site-wide important announcements
+- **Toast Notification**: Consider for temporary, dismissible messages
+- **Callout**: Alternative for highlighting content without alert semantics
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

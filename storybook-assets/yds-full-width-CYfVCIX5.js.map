@@ -1,0 +1,1 @@
+{"version":3,"file":"yds-full-width-CYfVCIX5.js","sources":["../../components/04-page-layouts/yds-full-width.twig?raw"],"sourcesContent":["export default \"{% extends \\\"@page-layouts/_yds-base.twig\\\" %}\\n\""],"names":["ydsFullWidth"],"mappings":"AAAA,MAAAA,EAAe;"}

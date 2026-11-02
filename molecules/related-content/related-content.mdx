@@ -1,0 +1,83 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as RelatedContentStories from './related-content.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './related-content-props.yml';
+
+<Meta of={RelatedContentStories} name="Overview" />
+
+# Related Content
+
+The Related Content molecule renders an editor-set heading followed by a list of references to other site content. It is rendered by the `related_content_block` Drupal plugin, which embeds the `entity_reference_for_fields:embed_related_content` view and hands the molecule:
+
+- a heading string (configurable per block placement, defaults to "Related Content")
+- the rendered HTML output of the view, where each row shows the referenced content's type and a linked title
+
+The molecule sits at the bottom of nodes that have a `field_related_content` reference list — typically Resources, but the block is reusable across any node bundle that adopts the field.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the heading and the number of sample rows.
+
+<Canvas of={RelatedContentStories.RelatedContent} />
+<Controls of={RelatedContentStories.RelatedContent} />
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-related-content.twig`
+- **Styles**: `_yds-related-content.scss`
+
+### Markup contract
+
+The view markup the molecule expects is the standard Views default style + fields row output:
+
+```html
+<div class="view view-entity-reference-for-fields ...">
+  <div class="view-content">
+    <div class="views-row">
+      <div class="views-field views-field-type">
+        <span class="field-content">Resource</span>
+      </div>
+      <div class="views-field views-field-title">
+        <span class="field-content"><a href="/path">Title</a></span>
+      </div>
+    </div>
+    ...
+  </div>
+</div>
+```
+
+`related_content__view` is rendered into the molecule with the `|raw` filter — the HTML is built upstream (by Drupal in production, by the Storybook fixture builder here) so escaping it would print the markup as text. This matches the pattern used by `yds-publication-detail`, `yds-image`, and `yds-video-embed`.
+
+### Accessibility
+
+- Heading is a semantic `<h2>` styled to h3 size to keep document outline correct underneath the page title.
+- Section element provides a landmark a screen-reader user can skip to.
+- Each row's content type is exposed as plain text above the linked title so the type is announced before the link.
+
+## Usage Guidelines
+
+### When to use
+
+- Below the main content of any node that has a populated `field_related_content` list.
+- Wherever you want a simple "see also" list of typed content references; this molecule does not render images or summaries.
+
+### When not to use
+
+- For curated promotional links — use Callouts.
+- For lists of cards with images and summaries — use the Card Collection organism.
+
+## Related Components
+
+- **Card Collection**: For richer lists of cards with images, summaries, and grid layouts.
+- **Callout**: For editor-curated promotional callouts with CTAs.
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

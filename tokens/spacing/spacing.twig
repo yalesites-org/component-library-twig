@@ -1,0 +1,24 @@
+{% set spacing__base_class = 'cl-table' %}
+
+<div class="sb-table-scroll" role="region" aria-label="Spacing tokens" tabindex="0">
+<table {{ bem(spacing__base_class) }}>
+  <thead>
+    <tr>
+      <th {{ bem('header', [], spacing__base_class) }}>variable</th>
+      <th {{ bem('header', [], spacing__base_class) }}>rem</th>
+      <th {{ bem('header', [], spacing__base_class) }}>px</th>
+      <th {{ bem('header', [], spacing__base_class) }}>example</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for key, value in _context.spacing_options %}
+      <tr>
+        <td>--{{ prefix }}-{{ key }}</td>
+        <td>{{ value|trim('rem') }}</td>
+        <td>{{ value * 16 }}</td>
+        <td><div style="background: var(--color-blue-horizon); height: var(--{{ prefix }}-{{key}}); width: var(--{{ prefix }}-{{key}});"></div></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>

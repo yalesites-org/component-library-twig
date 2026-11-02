@@ -1,0 +1,47 @@
+# social-links-props.yml
+#
+# Social Links component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+icons:
+  twigProp: icons
+  name: Icons
+  type: array
+  required: true
+  description: Array of social media link objects, each containing a url, name, and icon
+  detail: >
+    Array of objects passed to the Twig template. Each item requires url, name,
+    and icon (see the individual icon properties below). This prop is
+    constructed in the story's render function and is not directly editable
+    via the Controls panel.
+
+url:
+  twigProp: url
+  name: URL
+  type: string
+  required: true
+  description: The URL destination for the social media platform
+  detail: >
+    Belongs to each item in the icons array. The URL destination for the
+    social media platform.
+
+name:
+  twigProp: name
+  name: Name
+  type: string
+  required: true
+  description: Visually hidden text for screen readers that identifies the social media platform
+  detail: >
+    Belongs to each item in the icons array. Visually hidden text for screen
+    readers that identifies the social media platform.
+
+icon:
+  twigProp: icon
+  name: Icon
+  type: string
+  required: true
+  description: The icon identifier for the social media platform (e.g., 'facebook', 'x-twitter', 'linkedin')
+  detail: >
+    Belongs to each item in the icons array. The icon identifier for the
+    social media platform (e.g., 'facebook', 'x-twitter', 'linkedin').

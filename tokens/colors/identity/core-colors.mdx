@@ -1,0 +1,16 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as ColorsStories from '../colors.stories';
+
+<Meta title="Tokens/Colors/Identity/Core Colors" />
+
+<div className="sb-contained-canvas cl-colors-embed">
+  <Canvas of={ColorsStories.YaleBlue} sourceState="none" withToolbar={false} />
+</div>
+
+<div className="sb-contained-canvas cl-colors-embed">
+  <Canvas
+    of={ColorsStories.CoreColors}
+    sourceState="none"
+    withToolbar={false}
+  />
+</div>
