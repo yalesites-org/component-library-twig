@@ -275,6 +275,12 @@ $component-content-spotlight-themes: map.deep-get(
   @include tokens.heading(h6, 'book');
 
   color: var(--color-gray-500);
+
+  // Gray only clears AA on the white default surface. On a themed block use
+  // that block's own text color (YaleSites-Internal#2089).
+  [data-component-theme]:not([data-component-theme='default']) & {
+    color: var(--color-text);
+  }
 }
 
 .text-with-image__heading {
