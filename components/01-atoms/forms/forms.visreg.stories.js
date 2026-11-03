@@ -178,8 +178,14 @@ export const ViewsFiltersEventsCalendar = () =>
 // form also forces its items to 100% width, and Chosen containers get a black
 // border. A narrow wrapper would not trigger the media query, so this story
 // needs a phone-width snapshot.
+//
+// The shared styles set `overflow-x: hidden` on html and body (tokens.css,
+// page-layouts.css). That makes overflow-y compute to `auto`, so at narrow
+// widths the body becomes its own scroll box inside Chromatic's 900px window
+// and the snapshot stops partway down. The <style> below lets the page grow to
+// its full height so the whole page, down to the Apply button, is captured.
 export const ViewsFiltersPhoneWidth = () =>
-  createSectionWrapper(
+  `<style>html, body { overflow: visible; }</style>${createSectionWrapper(
     'default',
     heading('Views filters at 375px (one column)') +
       form({
@@ -196,7 +202,7 @@ export const ViewsFiltersPhoneWidth = () =>
         search: 'Search events',
         fields: calendarFields('phone-calendar'),
       }),
-  );
+  )}`;
 ViewsFiltersPhoneWidth.parameters = {
   ...ViewsFiltersPhoneWidth.parameters,
   chromatic: { viewports: [375] },
