@@ -125,6 +125,7 @@ export const ViewsFiltersOpenWithTwoSelected = () =>
             category({
               open: true,
               selected: ['Featured', 'Page Category 1'],
+              visible: 1,
             }),
             audience(),
           ],
