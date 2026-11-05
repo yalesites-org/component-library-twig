@@ -179,6 +179,16 @@ Drupal.behaviors.eventsCalendar = {
 
       installFormSubmitGuard();
 
+      // Put focus on the first event in the open modal, or on Close when the
+      // list is empty, so keyboard focus always lands inside the dialog.
+      const focusModal = () => {
+        const modal = document.getElementById('calendar-modal');
+        const target =
+          modal?.querySelector('.modal__calendar-events a[href]') ||
+          modal?.querySelector('button[data-micromodal-close]');
+        target?.focus();
+      };
+
       // Handle "More events" modal. Scoped to this calendar: it is bound once
       // per calendar (see `once` above), so toggles outside it must not be
       // bound here too.
@@ -212,6 +222,13 @@ Drupal.behaviors.eventsCalendar = {
 
           // Manually open the modal after content is populated.
           MicroModal.show('calendar-modal');
+
+          // The toggle also carries `data-micromodal-trigger`, and init() bound
+          // that listener before this one, so MicroModal already opened the
+          // modal and moved focus to the previous open's event link before the
+          // list above was rebuilt. Rebuilding removed that link and focus fell
+          // back to the page, so move it into the freshly populated modal.
+          focusModal();
         });
       });
 
