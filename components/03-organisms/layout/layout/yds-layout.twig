@@ -81,7 +81,10 @@
   ),
 } %}
 
-<div {{ add_attributes(layout__attributes) }} data-embedded-components>
+{# A single-region (One column) section is not an "embedded components"
+ # container: it hosts full-bleed blocks that must keep their own site gutter
+ # and run edge to edge (YaleSites-Internal#2090). #}
+<div {{ add_attributes(layout__attributes) }}{{ layout__single_region ? '' : ' data-embedded-components' }}>
   {% if layout__single_region %}
     {% block layout__primary %}
       {{ content.primary }}
