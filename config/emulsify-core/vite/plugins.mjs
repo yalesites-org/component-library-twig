@@ -71,7 +71,39 @@ const patchLinkpurpose = () => ({
   },
 });
 
-export default [patchLinkpurpose(), copyStaticDistFiles()];
+// Drupal loads most of dist/js as classic scripts, so any top-level `let`,
+// `const`, `class` or `function` in a chunk becomes a page-wide global. The
+// minifier shortens those to names like `$` and `e`, and a site script that
+// later declares the same name then fails with "Identifier has already been
+// declared". Wrap every chunk that has no import/export (so it cannot be an ES
+// module) in an IIFE. The opening is kept on the first line so existing
+// sourcemap line numbers still line up.
+export const IIFE_OPEN = '(function(){';
+export const IIFE_CLOSE = '\n})();';
+
+export const wrapClassicScript = (code, chunk) => {
+  if (
+    !chunk.isEntry ||
+    chunk.imports.length ||
+    chunk.dynamicImports.length ||
+    chunk.exports.length
+  ) {
+    return null;
+  }
+  return { code: `${IIFE_OPEN}${code}${IIFE_CLOSE}`, map: null };
+};
+
+const wrapClassicScripts = () => ({
+  name: 'yalesites-wrap-classic-scripts',
+  apply: 'build',
+  renderChunk: wrapClassicScript,
+});
+
+export default [
+  patchLinkpurpose(),
+  wrapClassicScripts(),
+  copyStaticDistFiles(),
+];
 
 export const extendConfig = (config, { env }) => ({
   optimizeDeps: {
