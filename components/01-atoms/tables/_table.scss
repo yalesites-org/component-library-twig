@@ -103,8 +103,7 @@
 // inherit the dark cell text; that accident is now stated outright.
 // -
 // Re-point the link variables at the cell's own text colour, on the link, so
-// the declaration beats the one inherited from the section. The halo colour
-// follows the cell background it actually sits on. Sections two, five and six
+// the declaration beats the one inherited from the section. Sections two, five and six
 // are untouched: their link colour is already dark.
 @each $section-theme in ('one', 'three', 'four') {
   .layout[data-section-theme='#{$section-theme}'],
@@ -115,15 +114,6 @@
       --color-link-hover: currentcolor;
       --color-link-visited-base: currentcolor;
       --color-link-visited-hover: currentcolor;
-      --color-text-shadow: var(--color-basic-white);
-    }
-
-    table tr:nth-child(odd) td a {
-      --color-text-shadow: var(--color-gray-100);
-    }
-
-    table tbody th a {
-      --color-text-shadow: var(--header-row-bg);
     }
   }
 }
