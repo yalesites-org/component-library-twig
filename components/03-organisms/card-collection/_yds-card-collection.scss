@@ -61,6 +61,14 @@
     // reclaim the leaked 70% content cap only in the narrow (< 34rem) 30/33
     // column, without affecting the 50/50 or full-width bands. (#1299 QA)
     container-type: inline-size;
+
+    // A query container contains its children's margins, so the last card's
+    // bottom margin no longer collapses into the section spacing and adds a
+    // trailing 16px before the next block. Drop it so the gap matches the
+    // pre-container spacing. (#2106)
+    > :last-child {
+      margin-block-end: 0;
+    }
   }
 
   [data-collection-type='single'] & {
