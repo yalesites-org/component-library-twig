@@ -1,6 +1,9 @@
 {#
  # Available Props:
  # - wrapped_image__width
+ # - wrapped_image__style: floated (Inline) | offset
+ # - wrapped_image__alignment: left | right
+ # - wrapped_image__size: large (default, half the block width) | small (a quarter)
  #
  # Available Variables:
  # - wrapped_image__content
@@ -15,6 +18,7 @@
   'data-component-width': wrapped_image__width|default('site'),
   'data-wrapped-image-style': wrapped_image__style|default('floated'),
   'data-wrapped-image-alignment': wrapped_image__alignment|default('left'),
+  'data-wrapped-image-size': wrapped_image__size|default('large'),
   'class': bem(wrapped_image__base_class),
 } %}
 
