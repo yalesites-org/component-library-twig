@@ -70,9 +70,12 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 [data-component-width] {
   // if a component has nested components, we don't want to apply the padding to the nested components
   // we also don't want to apply the padding to components with the data-full-width-component attribute
+  // or to a One column section, whose blocks keep their own gutter so full-width
+  // backgrounds run edge to edge (YaleSites-Internal#2090)
   &:not(
       [data-embedded-components] [data-component-width],
-      [data-full-width-component]
+      [data-full-width-component],
+      [data-component-layout='one-column']
     ) {
     padding-inline-start: var(--size-spacing-site-gutter);
     padding-inline-end: var(--size-spacing-site-gutter);
