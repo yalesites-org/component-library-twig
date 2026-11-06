@@ -246,6 +246,32 @@
       keyboardCursor = false;
     });
 
+    // A list that opens upward can reach past the top of the window, under
+    // the sticky site header. Cap the results to the room between the header
+    // and the field so every option stays visible; the list scrolls inside.
+    // Downward lists keep the stylesheet's max-height. (#2146)
+    $(select).on('chosen:showing_dropdown', () => {
+      const $results = $container.find('.chosen-results');
+      $results.css('max-height', '');
+      if (!$container.hasClass('chosen-dropup')) {
+        return;
+      }
+      const header =
+        parseFloat(
+          getComputedStyle(document.body).getPropertyValue(
+            '--site-header-height',
+          ),
+        ) || 0;
+      const room =
+        $container[0].getBoundingClientRect().top -
+        header -
+        ($container.find('.chosen-drop').outerHeight() -
+          $results.outerHeight());
+      if (room > 0 && room < $results.outerHeight()) {
+        $results.css('max-height', `${Math.floor(room)}px`);
+      }
+    });
+
     // Footer with the picked count and "Clear all".
     const $clear = $('<button>', {
       type: 'button',
