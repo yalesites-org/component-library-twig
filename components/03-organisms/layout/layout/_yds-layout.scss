@@ -525,10 +525,14 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // An uncolored 70/30 has no inner padding, as on the pre-migration
   // yds-two-column, which had neither padding nor a section margin. The
   // padding stacked on the page title's own spacing and put the first block
-  // 96px under the title instead of 64px (YaleSites-Internal#2100). A themed
+  // 96px under the title instead of 64px (YaleSites-Internal#2100). The old
+  // organism's 64px top margin stays, so the first block sits 64px under the
+  // title (the margins collapse), a profile header keeps its 128px gap to
+  // Contact Info, and two uncolored sections in a row do not touch. A themed
   // one keeps the padding to hold its color band.
   [data-section-theme='default'][data-component-layout='seventy-thirty'] > & {
     padding-block: 0;
+    margin-block-start: var(--size-spacing-10);
   }
 
   // Flex sets `min-width` of children to `auto` by default... but this breaks
