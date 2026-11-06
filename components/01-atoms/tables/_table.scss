@@ -105,9 +105,21 @@
 // Re-point the link variables at the cell's own text colour, on the link, so
 // the declaration beats the one inherited from the section. Sections two, five and six
 // are untouched: their link colour is already dark.
+// -
+// Specificity matters for hover. `_yds-layout.scss` re-declares
+// `--color-link-hover` on `.text-field a`, `.link` and similar under
+// `[data-section-theme]:not([data-section-theme='default'])`, at (0,4,1). A bare
+// `table td a` under one attribute selector is only (0,2,3), so hover stayed
+// light on the light cell (1.07:1). The repeated attribute and the `:not()`
+// below mirror that rule and lift this one to (0,4,3), so it wins for every
+// link kind in a cell, whether or not it sits in `.text-field`.
 @each $section-theme in ('one', 'three', 'four') {
-  .layout[data-section-theme='#{$section-theme}'],
-  .yds-layout[data-section-theme='#{$section-theme}'] {
+  .layout[data-section-theme='#{$section-theme}'][data-section-theme]:not(
+      [data-section-theme='default']
+    ),
+  .yds-layout[data-section-theme='#{$section-theme}'][data-section-theme]:not(
+      [data-section-theme='default']
+    ) {
     table td a,
     table th a {
       --color-link-base: currentcolor;
