@@ -33,3 +33,13 @@ test('focusModal targets the first event link, falling back to the Close button'
   assert.match(helper[0], /modal__calendar-events a\[href\]/);
   assert.match(helper[0], /button\[data-micromodal-close\]/);
 });
+
+test('a month change returns focus to the pressed Next or Previous button', () => {
+  const remember = script.indexOf('pendingNavFocus = button === prevBtn');
+  const refresh = script.indexOf('refreshCalendarData(wrapper, button);');
+  const restore = script.indexOf('restoreTarget?.focus();');
+
+  assert.ok(remember > -1 && refresh > remember, 'remember the button first');
+  assert.ok(restore > -1, 'attach must refocus the pressed button');
+  assert.match(script, /pendingNavFocus === 'prev' \? prevBtn : nextBtn/);
+});

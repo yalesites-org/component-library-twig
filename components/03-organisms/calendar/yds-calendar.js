@@ -1,5 +1,9 @@
 import MicroModal from 'micromodal';
 
+// Which month button was pressed ('prev' or 'next'). A month change replaces
+// the whole calendar, so the next attach reads this to put focus back.
+let pendingNavFocus = null;
+
 Drupal.behaviors.eventsCalendar = {
   attach(context) {
     // Classes and selectors.
@@ -147,6 +151,14 @@ Drupal.behaviors.eventsCalendar = {
       const getNearestForm = () =>
         calendarElement.closest('form') ||
         document.querySelector('form.ys-filter-form');
+
+      // After a month change swaps the grid, return keyboard focus to the
+      // button that was pressed instead of letting it fall back to the page.
+      if (pendingNavFocus) {
+        const restoreTarget = pendingNavFocus === 'prev' ? prevBtn : nextBtn;
+        pendingNavFocus = null;
+        restoreTarget?.focus();
+      }
 
       const handleNoMonthEvents = () => {
         if (!calendarEventsElements.length) {
@@ -324,6 +336,9 @@ Drupal.behaviors.eventsCalendar = {
         navEvent.stopPropagation?.();
 
         const wrapper = getCalendarWrapper(button);
+        if (!isStorybook && wrapper) {
+          pendingNavFocus = button === prevBtn ? 'prev' : 'next';
+        }
         refreshCalendarData(wrapper, button);
         return false;
       };
