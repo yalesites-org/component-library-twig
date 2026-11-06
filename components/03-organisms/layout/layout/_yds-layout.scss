@@ -511,6 +511,26 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     gap: var(--spacing-page-inner);
   }
 
+  // A 70/30 spaces its columns with the narrow column's own margin and
+  // padding (below), carried over from the pre-migration yds-two-column
+  // organism. A row gap on top of that took another 32px out of the narrow
+  // column and left it 288px wide instead of 320px at 1440px and wider
+  // (YaleSites-Internal#2100).
+  [data-component-layout='seventy-thirty'] > & {
+    @media (min-width: $break-layout-layout) {
+      gap: 0;
+    }
+  }
+
+  // An uncolored 70/30 has no inner padding, as on the pre-migration
+  // yds-two-column, which had neither padding nor a section margin. The
+  // padding stacked on the page title's own spacing and put the first block
+  // 96px under the title instead of 64px (YaleSites-Internal#2100). A themed
+  // one keeps the padding to hold its color band.
+  [data-section-theme='default'][data-component-layout='seventy-thirty'] > & {
+    padding-block: 0;
+  }
+
   // Flex sets `min-width` of children to `auto` by default... but this breaks
   // some of our base layout styles (causes horizontal scrolling), so we need to
   // reset it to `0`.
@@ -748,9 +768,13 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   }
 }
 
-// Update font-size for headings based on layout
+// Update font-size for headings based on layout. A 70/30 is left out on
+// purpose: on the pre-migration yds-two-column its headings were never
+// stepped down, and doing it now made block titles (Video, for one) jump from
+// 19.5px sans to 39.3px serif on every existing 70/30 section
+// (YaleSites-Internal#2100). Heading levels in the markup are unchanged, so
+// the reading order for screen readers is too.
 h2 {
-  [data-component-layout='seventy-thirty'] &,
   [data-component-layout='thirty-seventy'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
     @include tokens.heading(h3);
@@ -758,7 +782,6 @@ h2 {
 }
 
 h3 {
-  [data-component-layout='seventy-thirty'] &,
   [data-component-layout='thirty-seventy'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
     @include tokens.heading(h4);
@@ -766,7 +789,6 @@ h3 {
 }
 
 h4 {
-  [data-component-layout='seventy-thirty'] &,
   [data-component-layout='thirty-seventy'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
     @include tokens.heading(h5);
