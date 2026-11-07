@@ -91,3 +91,41 @@
     }
   }
 }
+
+// Table links in dark themed sections (YaleSites-Internal#2113).
+// -
+// Section themes one, three and four set `--color-link-base` (and hover and
+// visited) to a light colour for links sitting on the dark section
+// background. Table cells paint their own light background (gray-100 / white,
+// see above), so a link inside one rendered white on white -- 1:1 contrast,
+// held readable only by its text shadow. Before YaleSites-Internal#1629 the
+// section's self-referencing link variable was invalid and links happened to
+// inherit the dark cell text; that accident is now stated outright.
+// -
+// Re-point the link variables at the cell's own text colour, on the link, so
+// the declaration beats the one inherited from the section. Sections two, five and six
+// are untouched: their link colour is already dark.
+// -
+// Specificity matters for hover. `_yds-layout.scss` re-declares
+// `--color-link-hover` on `.text-field a`, `.link` and similar under
+// `[data-section-theme]:not([data-section-theme='default'])`, at (0,4,1). A bare
+// `table td a` under one attribute selector is only (0,2,3), so hover stayed
+// light on the light cell (1.07:1). The repeated attribute and the `:not()`
+// below mirror that rule and lift this one to (0,4,3), so it wins for every
+// link kind in a cell, whether or not it sits in `.text-field`.
+@each $section-theme in ('one', 'three', 'four') {
+  .layout[data-section-theme='#{$section-theme}'][data-section-theme]:not(
+      [data-section-theme='default']
+    ),
+  .yds-layout[data-section-theme='#{$section-theme}'][data-section-theme]:not(
+      [data-section-theme='default']
+    ) {
+    table td a,
+    table th a {
+      --color-link-base: currentcolor;
+      --color-link-hover: currentcolor;
+      --color-link-visited-base: currentcolor;
+      --color-link-visited-hover: currentcolor;
+    }
+  }
+}
