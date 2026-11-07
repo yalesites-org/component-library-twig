@@ -133,6 +133,17 @@
   // One-time setup per Chosen instance, front-end filter selects only.
   // `chosen` comes from the `chosen:ready` payload: jQuery data is only set
   // after Chosen's constructor, which is what fires `chosen:ready`.
+  // --site-header-height is a rem length, so resolve it to pixels.
+  const siteHeaderHeight = () => {
+    const probe = document.createElement('div');
+    probe.style.cssText =
+      'position:absolute;visibility:hidden;height:var(--site-header-height, 0px)';
+    document.body.appendChild(probe);
+    const { height } = probe.getBoundingClientRect();
+    probe.remove();
+    return height;
+  };
+
   const setUp = (select, chosen = $(select).data('chosen')) => {
     const $container = $(select).next('.chosen-container');
     if (
@@ -205,7 +216,16 @@
           this.container.offset().top +
           this.container.height() -
           $window.scrollTop();
-        return this.dropdown.outerHeight() + top > $window.height();
+        if (this.dropdown.outerHeight() + top <= $window.height()) {
+          return false;
+        }
+        // A list that cannot show about two options between the site
+        // header and the field opens downward instead. (#2146)
+        const optionHeight =
+          this.dropdown.find('.active-result').first().outerHeight() || 40;
+        const roomAbove =
+          this.container[0].getBoundingClientRect().top - siteHeaderHeight();
+        return roomAbove >= optionHeight * 2;
       },
       winnow_results_set_highlight(...args) {
         return keyboardCursor ? setHighlight.apply(this, args) : undefined;
@@ -258,16 +278,9 @@
       if (!chosen.results_showing || !$container.hasClass('chosen-dropup')) {
         return;
       }
-      // --site-header-height is a rem length, so resolve it to pixels.
-      const probe = document.createElement('div');
-      probe.style.cssText =
-        'position:absolute;visibility:hidden;height:var(--site-header-height, 0px)';
-      document.body.appendChild(probe);
-      const header = probe.getBoundingClientRect().height;
-      probe.remove();
       const room =
         $container[0].getBoundingClientRect().top -
-        header -
+        siteHeaderHeight() -
         ($container.find('.chosen-drop').outerHeight() -
           $results.outerHeight());
       if (room > 0 && room < $results.outerHeight()) {
