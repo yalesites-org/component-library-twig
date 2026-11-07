@@ -31,3 +31,11 @@ test('empty Chosen containers are not rendered', () => {
     /\.chosen-results:empty \{\s*display: none;/,
   );
 });
+
+// A drop-up list must not slide under the sticky header. (#2146)
+test('drop-up lists are capped below the sticky site header', () => {
+  const source = read('yds-select.js');
+  assert.match(source, /chosen:showing_dropdown/);
+  assert.match(source, /--site-header-height/);
+  assert.match(source, /chosen-dropup/);
+});

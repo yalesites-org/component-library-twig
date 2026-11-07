@@ -246,6 +246,38 @@
       keyboardCursor = false;
     });
 
+    // A list that opens upward can reach past the top of the window, under
+    // the sticky site header. Cap the results to the room between the header
+    // and the field so every option stays visible; the list scrolls inside.
+    // Downward lists keep the stylesheet's max-height. (#2146)
+    // Chosen adds the drop-up class after it fires the event, so measure a
+    // frame later.
+    const capDropUp = () => {
+      const $results = $container.find('.chosen-results');
+      $results.css('max-height', '');
+      if (!chosen.results_showing || !$container.hasClass('chosen-dropup')) {
+        return;
+      }
+      // --site-header-height is a rem length, so resolve it to pixels.
+      const probe = document.createElement('div');
+      probe.style.cssText =
+        'position:absolute;visibility:hidden;height:var(--site-header-height, 0px)';
+      document.body.appendChild(probe);
+      const header = probe.getBoundingClientRect().height;
+      probe.remove();
+      const room =
+        $container[0].getBoundingClientRect().top -
+        header -
+        ($container.find('.chosen-drop').outerHeight() -
+          $results.outerHeight());
+      if (room > 0 && room < $results.outerHeight()) {
+        $results.css('max-height', `${Math.floor(room)}px`);
+      }
+    };
+    $(select).on('chosen:showing_dropdown', () => {
+      window.requestAnimationFrame(capDropUp);
+    });
+
     // Footer with the picked count and "Clear all".
     const $clear = $('<button>', {
       type: 'button',
