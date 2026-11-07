@@ -678,3 +678,12 @@ test('an uncolored 70/30 has no inner padding, as before the migration', () => {
     /\[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\] > & \{\s*padding-block: 0;/,
   );
 });
+
+test('an uncolored 70/30 top margin switches at 992px through the page-section token', () => {
+  const block = scss().match(
+    /\[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\] > & \{([\s\S]*?)\n {2}\}/,
+  );
+  assert.ok(block, 'uncolored 70/30 rule not found');
+  assert.match(block[1], /margin-block-start: var\(--spacing-page-section\);/);
+  assert.doesNotMatch(block[1], /break-m/);
+});

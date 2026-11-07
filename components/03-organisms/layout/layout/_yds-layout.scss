@@ -526,19 +526,16 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // yds-two-column, which had neither padding nor a section margin. The
   // padding stacked on the page title's own spacing and put the first block
   // 96px under the title instead of 64px (YaleSites-Internal#2100). The old
-  // organism's top margin stays (40px on phones, 64px from 768px up), so the
+  // organism's top margin stays (40px below 992px, 64px from 992px up), so the
   // first block sits 64px under the title on desktop (the margins
   // collapse), a profile header keeps its 128px gap to Contact Info, and two uncolored sections in a row do not touch. A themed
   // one keeps the padding to hold its color band.
   [data-section-theme='default'][data-component-layout='seventy-thirty'] > & {
     padding-block: 0;
 
-    // 40px on phones and 64px from 768px up, as the old yds-two-column did.
-    margin-block-start: var(--size-spacing-8);
-
-    @media (min-width: tokens.$break-m) {
-      margin-block-start: var(--size-spacing-10);
-    }
+    // 40px below 992px and 64px from 992px up, as the old yds-two-column did
+    // through this token.
+    margin-block-start: var(--spacing-page-section);
   }
 
   // Flex sets `min-width` of children to `auto` by default... but this breaks
