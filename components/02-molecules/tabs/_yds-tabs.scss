@@ -111,13 +111,6 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
     );
   }
 
-  // Section Six: the tab dial's gray-700 heading is 3.61:1 on the light
-  // slot-three panel. Follow the section foreground, which is approved for that
-  // surface (YaleSites-Internal#2115). Other section themes are unchanged.
-  .yds-layout[data-section-theme='six'] & {
-    --color-heading: var(--color-section-foreground);
-  }
-
   // Tab chrome follows the section surface. Reads the inheritable section
   // contract rather than the layout's private `--color-layout-*`, so a block
   // that repaints itself between the section and these tabs resets it and the
@@ -144,6 +137,13 @@ $component-tab-themes: map.deep-get(tokens.$tokens, 'component-themes');
     // `--color-action: var(--color-tabs-action)` on `.tabs` itself, which would
     // beat the section-level value inherited from `.yds-layout`.
     --color-action: var(--color-section-accent);
+
+    // The tab dial's gray-700 heading is 3.61:1 on the light slot-three panel
+    // of Section Six (YaleSites-Internal#2115) and 1.2:1 to 1.9:1 on the dark
+    // Section One, Three and Four surfaces (#2120). The panel paints nothing of
+    // its own, so follow the section foreground, which is approved for that
+    // surface. An unthemed page keeps the dial's gray-700.
+    --color-heading: var(--color-section-foreground);
   }
 }
 
