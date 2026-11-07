@@ -469,5 +469,22 @@ test('the drop-up check counts the panel search row', () => {
     value: 350,
   });
   window.jQuery(window).scrollTop(0);
+  // The field sits 300px down, so there is room above for the list.
+  chosen.container[0].getBoundingClientRect = () => ({ top: 300 });
   assert.equal(chosen.should_dropup(), true);
+});
+
+test('a list with no room above opens downward instead', () => {
+  const { window, chosen } = setUpDom();
+  chosen.container.offset = () => ({ top: 0 });
+  chosen.container.height = () => 50;
+  chosen.dropdown.height = () => 280;
+  chosen.dropdown.outerHeight = () => 336;
+  Object.defineProperty(window.document.documentElement, 'clientHeight', {
+    value: 350,
+  });
+  window.jQuery(window).scrollTop(0);
+  // 20px between the header and the field: not enough for two options.
+  chosen.container[0].getBoundingClientRect = () => ({ top: 20 });
+  assert.equal(chosen.should_dropup(), false);
 });
