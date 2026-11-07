@@ -215,9 +215,44 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
   justify-content: center;
 }
 
-// Gray-400 layout sections: keep quick-links link/button tokens dark regardless
-// of the inner quick-links component theme dial value.
-.yds-layout[data-section-theme='five'] .quick-links {
+// Sections Two, Five and Six: the section publishes a surface and a dark
+// slot-seven accent, but a quick-links block paints its own dial surface (navy
+// for the default dial) between the section and its buttons. The generic CTA
+// rule in `_yds-cta.scss` reads the section accent, so the button label,
+// border and focus ring came out dark on the dial's navy fill (1.33:1,
+// YaleSites-Internal#2115, and the same on Two and Five, #2120). Follow the
+// block's own action colours instead, the same pairing the block uses outside
+// any themed section. Scoped to these sections on purpose: other section
+// themes keep their current rendering.
+.yds-layout[data-section-theme='two'] .quick-links,
+.yds-layout[data-section-theme='five'] .quick-links,
+.yds-layout[data-section-theme='six'] .quick-links {
+  .quick-links__cta {
+    --color-link-base: var(--color-action);
+
+    &[data-cta-style='outline'] {
+      --color-cta-text: var(--color-action);
+      --color-cta-border: var(--color-action);
+      --color-cta-text-hover: var(--color-action-secondary);
+      --color-cta-bg-hover: var(--color-action);
+    }
+
+    &[data-cta-style='filled'] {
+      --color-cta-bg: var(--color-action);
+      --color-cta-border: var(--color-action);
+      --color-cta-text: var(--color-action-secondary);
+      --color-cta-text-hover: var(--color-action);
+      --color-cta-bg-hover: transparent;
+    }
+  }
+}
+
+// Gray-400 layout sections: keep quick-links link/button tokens dark when the
+// block paints a LIGHT surface (dial two). Dials one and three paint navy-ish
+// surfaces, and dark tokens on them are the 1.3:1 button labels of
+// YaleSites-Internal#2120, so those dials keep their own light tokens.
+.yds-layout[data-section-theme='five']
+  .quick-links[data-component-theme='two'] {
   --color-quick-links-theme-five-foreground: var(--color-gray-800);
   --color-text: var(--color-quick-links-theme-five-foreground);
   --color-heading: var(--color-quick-links-theme-five-foreground);
@@ -238,35 +273,6 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
   .quick-links__cta {
     --color-action: var(--color-quick-links-theme-five-foreground);
     --color-action-secondary: var(--color-slot-eight);
-  }
-}
-
-// Section Six: the section publishes a light slot-three surface and a dark
-// slot-seven accent, but a quick-links block paints its own dial surface (navy
-// for the default dial) between the section and its buttons. The generic CTA
-// rule in `_yds-cta.scss` reads the section accent, so the button label,
-// border and focus ring came out dark on the dial's navy fill (1.33:1,
-// YaleSites-Internal#2115). Follow the block's own action colours instead, the
-// same pairing the block uses outside any themed section. Scoped to six on
-// purpose: other section themes keep their current rendering.
-.yds-layout[data-section-theme='six'] .quick-links {
-  .quick-links__cta {
-    --color-link-base: var(--color-action);
-
-    &[data-cta-style='outline'] {
-      --color-cta-text: var(--color-action);
-      --color-cta-border: var(--color-action);
-      --color-cta-text-hover: var(--color-action-secondary);
-      --color-cta-bg-hover: var(--color-action);
-    }
-
-    &[data-cta-style='filled'] {
-      --color-cta-bg: var(--color-action);
-      --color-cta-border: var(--color-action);
-      --color-cta-text: var(--color-action-secondary);
-      --color-cta-text-hover: var(--color-action);
-      --color-cta-bg-hover: transparent;
-    }
   }
 }
 
