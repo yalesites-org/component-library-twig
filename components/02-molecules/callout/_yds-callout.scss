@@ -82,6 +82,17 @@ $global-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
     --color-link-base: var(--color-basic-white);
     --color-link-visited-hover: var(--color-basic-white);
     --color-link-visited-base: var(--color-basic-white);
+
+    // A dial-one callout inside a Section One section paints the same navy as
+    // the section, so nothing marks where the callout starts
+    // (YaleSites-Internal#2120). Draw an inset edge in the block's own text
+    // colour, which is approved for this surface. An inset outline adds no
+    // layout size and cannot be clipped. Other section and dial pairings keep
+    // their current rendering.
+    .yds-layout[data-section-theme='one'] & {
+      outline: var(--border-thickness-2) solid var(--color-text);
+      outline-offset: calc(-1 * var(--border-thickness-2));
+    }
   }
 
   &[data-component-theme='two'] {

@@ -129,6 +129,15 @@ blockquote {
     --color-pull-quote-attribution: var(--color-slot-seven);
   }
 
+  // Sections Two and Three: the attribution's brown-gray (and dial two's
+  // slot-seven on the dark Section Three) is 2.5:1 to 4.3:1 on these surfaces,
+  // under AA in every global theme (YaleSites-Internal#2120). The attribution
+  // paints on the section, so follow the section foreground, which is approved
+  // for it. The quote copy itself is untouched.
+  .yds-layout:is([data-section-theme='two'], [data-section-theme='three']) & {
+    --color-pull-quote-attribution: var(--color-section-foreground);
+  }
+
   // Light quote copy on dark layout sections (matches the section foreground: slot-eight).
   // Theme four uses the same light-on-dark treatment as one and three; it was missing here.
   // -
