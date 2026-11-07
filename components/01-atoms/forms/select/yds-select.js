@@ -250,18 +250,21 @@
     // the sticky site header. Cap the results to the room between the header
     // and the field so every option stays visible; the list scrolls inside.
     // Downward lists keep the stylesheet's max-height. (#2146)
-    $(select).on('chosen:showing_dropdown', () => {
+    // Chosen adds the drop-up class after it fires the event, so measure a
+    // frame later.
+    const capDropUp = () => {
       const $results = $container.find('.chosen-results');
       $results.css('max-height', '');
-      if (!$container.hasClass('chosen-dropup')) {
+      if (!chosen.results_showing || !$container.hasClass('chosen-dropup')) {
         return;
       }
-      const header =
-        parseFloat(
-          getComputedStyle(document.body).getPropertyValue(
-            '--site-header-height',
-          ),
-        ) || 0;
+      // --site-header-height is a rem length, so resolve it to pixels.
+      const probe = document.createElement('div');
+      probe.style.cssText =
+        'position:absolute;visibility:hidden;height:var(--site-header-height, 0px)';
+      document.body.appendChild(probe);
+      const header = probe.getBoundingClientRect().height;
+      probe.remove();
       const room =
         $container[0].getBoundingClientRect().top -
         header -
@@ -270,6 +273,9 @@
       if (room > 0 && room < $results.outerHeight()) {
         $results.css('max-height', `${Math.floor(room)}px`);
       }
+    };
+    $(select).on('chosen:showing_dropdown', () => {
+      window.requestAnimationFrame(capDropUp);
     });
 
     // Footer with the picked count and "Clear all".
