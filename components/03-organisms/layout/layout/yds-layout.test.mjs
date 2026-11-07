@@ -638,3 +638,43 @@ test('a themed Page Meta moves its last margin onto the band', () => {
     /\+ :is\(:not\(\[data-section-theme\]\), \[data-section-theme='default'\]\) \{\s*background-color: var\(--color-background\);/,
   );
 });
+
+// YaleSites-Internal#2100: a 70/30 must look like the pre-migration
+// yds-two-column on pages that already exist.
+test('a region marked empty is not drawn', () => {
+  const src = twig();
+  // `|default(true)` returns true for an explicit false, so it must not be used.
+  assert.doesNotMatch(src, /layout__has_(primary|secondary)\|default/);
+  assert.match(
+    src,
+    /\{% if layout__has_primary \?\? true %\}\s*<div \{\{ bem\('primary'/,
+  );
+  assert.match(
+    src,
+    /\{% if layout__has_secondary \?\? true %\}\s*<div \{\{ bem\('secondary'/,
+  );
+});
+
+test('a 70/30 row has no gap on top of the narrow column margin', () => {
+  assert.match(
+    scss(),
+    /\[data-component-layout='seventy-thirty'\] > & \{\s*@media \(min-width: \$break-layout-layout\) \{\s*gap: 0;/,
+  );
+});
+
+test('a 70/30 does not step its headings down', () => {
+  const src = scss();
+  ['h2', 'h3', 'h4'].forEach((tag) => {
+    const block = src.match(new RegExp(`\\n${tag} \\{([^}]*)\\}`));
+    assert.ok(block, `${tag} heading block exists`);
+    assert.doesNotMatch(block[1], /seventy-thirty/);
+    assert.match(block[1], /thirty-seventy/);
+  });
+});
+
+test('an uncolored 70/30 has no inner padding, as before the migration', () => {
+  assert.match(
+    scss(),
+    /\[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\] > & \{\s*padding-block: 0;/,
+  );
+});
