@@ -241,6 +241,35 @@ $component-quick-links-themes: map.deep-get(tokens.$tokens, 'component-themes');
   }
 }
 
+// Section Six: the section publishes a light slot-three surface and a dark
+// slot-seven accent, but a quick-links block paints its own dial surface (navy
+// for the default dial) between the section and its buttons. The generic CTA
+// rule in `_yds-cta.scss` reads the section accent, so the button label,
+// border and focus ring came out dark on the dial's navy fill (1.33:1,
+// YaleSites-Internal#2115). Follow the block's own action colours instead, the
+// same pairing the block uses outside any themed section. Scoped to six on
+// purpose: other section themes keep their current rendering.
+.yds-layout[data-section-theme='six'] .quick-links {
+  .quick-links__cta {
+    --color-link-base: var(--color-action);
+
+    &[data-cta-style='outline'] {
+      --color-cta-text: var(--color-action);
+      --color-cta-border: var(--color-action);
+      --color-cta-text-hover: var(--color-action-secondary);
+      --color-cta-bg-hover: var(--color-action);
+    }
+
+    &[data-cta-style='filled'] {
+      --color-cta-bg: var(--color-action);
+      --color-cta-border: var(--color-action);
+      --color-cta-text: var(--color-action-secondary);
+      --color-cta-text-hover: var(--color-action);
+      --color-cta-bg-hover: transparent;
+    }
+  }
+}
+
 .quick-links__image {
   [data-quick-links-variation='promotional'] & {
     position: absolute;
