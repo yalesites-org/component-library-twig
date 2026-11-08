@@ -46,3 +46,10 @@ test('a list with no room above opens downward', () => {
   assert.match(source, /roomAbove >= optionHeight \* 2/);
   assert.match(source, /const siteHeaderHeight = /);
 });
+
+// The search row and footer count against the room above. (#2146)
+test('room above leaves out the search row and footer', () => {
+  const source = read('yds-select.js');
+  assert.match(source, /const chrome =/);
+  assert.match(source, /siteHeaderHeight\(\) -\s*chrome;/);
+});

@@ -223,8 +223,14 @@
         // header and the field opens downward instead. (#2146)
         const optionHeight =
           this.dropdown.find('.active-result').first().outerHeight() || 40;
+        // The search row and footer take room too, so count them.
+        const chrome =
+          this.dropdown.outerHeight() -
+          (this.search_results.outerHeight() || 0);
         const roomAbove =
-          this.container[0].getBoundingClientRect().top - siteHeaderHeight();
+          this.container[0].getBoundingClientRect().top -
+          siteHeaderHeight() -
+          chrome;
         return roomAbove >= optionHeight * 2;
       },
       winnow_results_set_highlight(...args) {
