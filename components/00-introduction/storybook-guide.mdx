@@ -113,7 +113,7 @@ Every component can have two types of documentation:
 Story files define the interactive previews. They export named stories that Storybook renders in Canvas blocks. Use story files to:
 
 - Define `argTypes` and `args` for interactive controls
-- Export named variants of a component (e.g. `Default`, `WithImage`, `DarkTheme`)
+- Export one sidebar story per component. Put sample-data states in a `select` control, not in separate stories (see [Tags](#tags) for hiding docs-only exports)
 - Set up visual regression exports (see [Visreg Stories](#visreg-stories) below)
 
 ### MDX pages (`*.mdx`)
