@@ -31,18 +31,24 @@ test('quick-links buttons in section six use the block action colours', () => {
   assert.match(rule, /--color-link-base: var\(--color-action\)/);
 });
 
-test('quick-links fix is scoped to section six only', () => {
+test('quick-links fix is scoped to sections two, five and six only', () => {
+  // YaleSites-Internal#2120 widened the #2115 rule from six to two and five on
+  // purpose (CTA labels were 1.3:1 to 3.7:1 there). Any other section theme
+  // appearing in this list is a scope change and must be argued, not added.
   const themed = quickLinks.match(
     /data-section-theme='(\w+)'\] \.quick-links/g,
   );
   assert.deepEqual([...new Set(themed)].sort(), [
     "data-section-theme='five'] .quick-links",
     "data-section-theme='six'] .quick-links",
+    "data-section-theme='two'] .quick-links",
   ]);
 });
 
-test('tabs headings in section six follow the section foreground', () => {
-  const rule = block(tabs, ".yds-layout[data-section-theme='six'] & {");
+test('tabs headings in any themed section follow the section foreground', () => {
+  const rule = block(
+    tabs,
+    ".yds-layout[data-section-theme]:not([data-section-theme='default']) & {",
+  );
   assert.match(rule, /--color-heading: var\(--color-section-foreground\)/);
-  assert.equal(tabs.split("data-section-theme='six']").length - 1, 1);
 });
