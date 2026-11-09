@@ -120,9 +120,6 @@ const renderSection = (theme) =>
                 card_collection__source_type: 'event',
                 card_collection__type: 'grid',
                 ...imageData.responsive_images['3x2'],
-                // Fixed date: without one the card falls back to today, and
-                // visual regression flags a diff every day.
-                reference_card__date: referenceCardData.reference_card__date,
                 format: 'In-person',
                 // Fixed date: without one the card renders today's date and
                 // Chromatic reports a change on every build.
