@@ -5,6 +5,7 @@ import referenceCardTwig from './reference-card/examples/_card--examples.twig';
 import customCardData from './custom-card/custom-card.yml';
 import directoryCardData from './directory-listing-card/yds-directory-listing-card.yml';
 import referenceCardData from './reference-card/examples/post-card.yml';
+import referenceEventCardData from './reference-card/examples/event-card.yml';
 import referenceProfileCardData from './reference-card/examples/profile-card.yml';
 import referencePageCardData from './reference-card/examples/page-card.yml';
 import referenceResourceData from './reference-card/examples/resource-card.yml';
@@ -123,6 +124,10 @@ const renderSection = (theme) =>
                 // visual regression flags a diff every day.
                 reference_card__date: referenceCardData.reference_card__date,
                 format: 'In-person',
+                // Fixed date: without one the card renders today's date and
+                // Chromatic reports a change on every build.
+                reference_card__date:
+                  referenceEventCardData.reference_card__date,
                 reference_card__heading:
                   referenceCardData.reference_card__heading,
                 reference_card__snippet:
