@@ -87,11 +87,17 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
   max-width: var(--component-width);
   margin-inline-start: auto;
   margin-inline-end: auto;
+}
 
-  @each $width, $value in $layout-widths {
-    [data-component-width='#{$width}'] & {
-      --component-width: var(--size-component-layout-width-#{$width});
-    }
+// Set the width on the element that carries `data-component-width` and let
+// `__inner` elements inherit it. Setting it on the `__inner` element itself
+// (as a descendant of the attribute) made an outer section's width beat the
+// width of a block nested inside it, so a max-width block in a One column
+// section stopped at the site width (YaleSites-Internal#2152). Inheriting
+// means the nearest `data-component-width` wins.
+@each $width, $value in $layout-widths {
+  [data-component-width='#{$width}'] {
+    --component-width: var(--size-component-layout-width-#{$width});
   }
 }
 

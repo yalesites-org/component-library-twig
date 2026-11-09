@@ -7,13 +7,7 @@ $break-video-banner: tokens.$break-m;
 .video-banner {
   @include tokens.spacing-page-section($flush-top: true, $flush-bottom: true);
 
-  // The global `[data-component-width='site'] [class*='__inner']` rule sets
-  // --component-width on the inner element itself, so it beats the value set
-  // on this wrapper and a max-width banner inside a site-width One column
-  // section stopped at the site width. Set max on the inner element too, with
-  // enough specificity to win (YaleSites-Internal#2152).
-  &[data-component-width='max'],
-  &[data-component-width='max'] .video-banner__inner {
+  &[data-component-width='max'] {
     --component-width: var(--size-component-layout-width-max);
   }
 }
