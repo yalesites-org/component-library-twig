@@ -1,0 +1,45 @@
+# images-props.yml
+#
+# Images component property definitions (story-level controls).
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+sectionTheme:
+  twigProp: data-section-theme
+  name: Section Theme
+  type: select
+  required: false
+  description: Background color theme for the layout section
+  default: default
+  options:
+    - default
+    - one
+    - two
+    - three
+    - four
+    - five
+    - six
+  control: select
+  labels:
+    default: 'Default - No Color'
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
+
+aspectRatio:
+  twigProp: image__aspect_ratio
+  name: Aspect Ratio
+  type: select
+  required: false
+  description: Aspect ratio for responsive image display, set by each component's image style
+  detail: >
+    The aspect ratio used for programmatic image cropping. Maps to the
+    image__aspect_ratio Twig variable. It is not editable here; each
+    component's image style sets it. The story previews 16x9.
+  default: 16x9
+  fixed: Set by each component's image style

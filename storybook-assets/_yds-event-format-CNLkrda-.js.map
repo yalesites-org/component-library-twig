@@ -1,0 +1,1 @@
+{"version":3,"file":"_yds-event-format-CNLkrda-.js","sources":["../../components/02-molecules/cards/reference-card/event/_yds-event-format.twig?raw"],"sourcesContent":["export default \"{% if format.1 -%}\\n  Hybrid\\n{%- else %}\\n  {{ format.0|default(format) }}\\n{% endif %}\\n\""],"names":["_ydsEventFormat"],"mappings":"AAAA,MAAAA,EAAe;AAAA;AAAA;AAAA;AAAA;"}

@@ -1,0 +1,59 @@
+const e=`{#
+ # Available variables:
+ # - icon__name: the name of the icon
+ # - icon__role: a11y role
+ # - icon__title: a11y title
+ # - icon__desc: a11y description
+ # - icon__decorative: "hide" the icon from screen readers
+ #}
+
+{% set icon__base_class = icon__base_class|default('icon') %}
+{# If \`directory\` is defined, set the path relative for Drupal.
+ # Otherwise, set the path relative to the Component Library.
+ # The sprite lives in dist/assets/ -- Emulsify Core's Vite build emits it
+ # there, unlike the webpack build, which wrote it to the dist/ root. #}
+{% set icon__url = directory ? '/' ~ directory ~ '/node_modules/@yalesites-org/component-library-twig/dist/assets/' %}
+{# getAssetPath() looks the filename up in the build manifest. The Vite build
+ # emits no manifest, so this currently returns 'icons.svg' unchanged -- the
+ # sprite is served unhashed until hashing is restored. #}
+{% set icons_svg_filename = directory ? getAssetPath('icons.svg', directory) : 'icons.svg' %}
+
+{% set unique_name = icon__name ~ '-' ~ random() %}
+
+{% if icon__visual_title %}
+<div {{ bem(icon__base_class, icon__visual_title__modifiers, icon__blockname) }}>
+{% endif %}
+
+<svg {{ bem(icon__base_class, icon__modifiers, icon__blockname, icon__extra_class) }}
+
+  {% if icon__decorative %}
+    aria-hidden="true" role="img"
+  {% elseif icon__role %}
+    role="{{ icon__role }}"
+  {% endif %}
+
+  {% if icon__title %}
+    aria-labelledby="title-{{ unique_name }}"
+  {% endif %}
+
+  {% if icon__desc %}
+    aria-describedby="desc-{{ unique_name }}"
+  {% endif %}
+>
+  {% if icon__title %}
+    <title id="title-{{ unique_name }}">{{ icon__title }}</title>
+  {% endif %}
+  {% if icon__desc %}
+    <desc id="desc-{{ unique_name }}">{{ icon__desc }}</desc>
+  {% endif %}
+  <use xlink:href="{{ icon__url }}{{ icons_svg_filename }}#{{ icon__name }}"></use>
+</svg>
+
+{% if icon__visual_title %}
+  <span {{ bem(icon__base_class, icon__visual_title__modifiers, icon__blockname) }}>{{ icon__visual_title }}</span>
+{% endif %}
+{% if icon__visual_title %}
+</div>
+{% endif %}
+`;export{e as default};
+//# sourceMappingURL=_yds-icon-BG0goE03.js.map

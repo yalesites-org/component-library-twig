@@ -1,0 +1,82 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as PublicationDetailStories from './publication-detail.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './publication-detail-props.yml';
+
+<Meta of={PublicationDetailStories} name="Overview" />
+
+# Resource Detail
+
+The full-page meta header rendered at the top of a Resource node. Both this component and [Resource Meta](?path=/docs/molecules-meta-resource-meta--docs) come from the same Resource content type — this one handles the full node view, while Resource Meta handles teaser cards and list items. These two templates are candidates for future consolidation.
+
+It mirrors the `details-wrapper` grid pattern from `event-meta-localist`: a page-title shell with a category overline plus a meta region containing a 3-up grid of metadata cells, an abstract section, and an optional description section.
+
+The molecule is sourced from a Resource node and renders three structurally different shapes depending on what's set: an ISPS-published policy brief, a journal article republished as a Resource, or a video lecture with an embedded oEmbed player.
+
+## Policy Brief
+
+ISPS-published document with PDF download, a mix of affiliated and non-affiliated authors, abstract, and metadata cells covering Location, Discipline, Areas of Study, and Document Control Number. This is the most common shape — it mirrors `/research/publications/isps18-04` on the live site.
+
+<div className="sb-contained-canvas">
+  <Canvas of={PublicationDetailStories.PolicyBrief} />
+</div>
+<Controls of={PublicationDetailStories.PolicyBrief} />
+
+## Journal Article
+
+Externally published paper with `Publication` and `Issue` cells in the metadata grid, an `External Source` CTA (DOI / publisher link), and a `Description` section in addition to the abstract. The PDF download slot is empty since the canonical version lives on the publisher's site.
+
+<div className="sb-contained-canvas">
+  <Canvas of={PublicationDetailStories.JournalArticle} />
+</div>
+
+## Video Resource
+
+Lecture or talk where the primary media is an oEmbed video. The video block renders above the metadata grid; the document thumbnail and download CTA are suppressed (`atomic_preprocess_node` skips building `responsive_media_thumbnail` for video bundles). The iframe markup is supplied by the `media-oembed-content.html.twig` override so the player is responsive inside the flex column.
+
+<div className="sb-contained-canvas">
+  <Canvas of={PublicationDetailStories.VideoResource} />
+</div>
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Data shape notes
+
+A few of the molecule's twig variables aren't covered by the simple controls above and are worth calling out:
+
+- **`publication_detail__authors`** — array of `{ label, url }` objects. Affiliated authors carry the URL of their profile node; non-affiliated authors come through with `url: null` and render as plain text. The Resource node's preprocess merges `field_authors` (entity refs to profiles) and `field_nonaffiliated_authors` (Double Field rows) into one sorted list via the `ys_layouts.resource_author_builder` service.
+- **`publication_detail__metadata`** — keyed array of `{ label, items }` groups, one per taxonomy field that's been populated on the Resource. Items render as a chip list inside the cell. In Drupal, items are entity-reference link render arrays; in Storybook fixtures they're plain strings for layout simplicity, so the chips appear without anchors.
+- **`publication_detail__publish_date`** — pre-formatted string (year, month-year, or full). The fidelity comes from `field_date_format` on the Resource node; the `Date Format` control in this story switches between three pre-formatted strings to simulate the editor's choice.
+- **`publication_detail__resource_type`** — controls which media branch renders. Only `'video'` triggers the embedded video block; `'document'` and `'image'` route through the page-title image slot.
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-publication-detail.twig`
+- **Styles**: `_yds-publication-detail.scss`, `_yds-publication-meta.scss`
+- **Co-located molecule**: `yds-publication-meta.twig` (used by Resource teaser cards)
+
+### Accessibility
+
+- All metadata cells use `<dl><dt><dd>` for proper term-definition semantics (WCAG 1.3.1 / 2.4.6).
+- The category overline is decorative; the heading is the page's first H1.
+- Author list renders as a `<ul>` with linked or plain entries depending on whether the author is affiliated.
+- Citation copy-control uses the text-copy-button atom, which captures the rendered citation HTML and exposes a "Copy citation" action.
+
+## Related Components
+
+- **Resource Meta** — the lighter-weight meta block used inside teaser cards and list items for the same Resource content type. See note above about potential consolidation.
+- **`event-meta-localist`** — visual sibling using the same `details-wrapper` grid pattern.
+- **`text-copy-button`** atom — embedded inside the Citation cell.
+
+---
+
+**Need help?** Refer to the [Storybook Migration Guide](../../../STORYBOOK-MIGRATION-GUIDE.md) for more information on the documentation structure.

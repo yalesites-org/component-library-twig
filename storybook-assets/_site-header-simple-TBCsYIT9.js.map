@@ -1,0 +1,1 @@
+{"version":3,"file":"_site-header-simple-TBCsYIT9.js","sources":["../../components/03-organisms/site-header/_site-header-simple.twig?raw"],"sourcesContent":["export default \"{{ site_header__primary }}\\n\""],"names":["_siteHeaderSimple"],"mappings":"AAAA,MAAAA,EAAe;"}

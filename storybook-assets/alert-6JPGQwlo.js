@@ -1,0 +1,2 @@
+const t={alert__heading:"This is the heading for the alert",alert__content:"This is an optional text for more information if needed.",alert__link__content:"Optional link",alert__link__url:"https://google.com"};export{t as a};
+//# sourceMappingURL=alert-6JPGQwlo.js.map

@@ -1,0 +1,2 @@
+Drupal.behaviors.animateItems={attach(a){const i=a.querySelector("[data-site-animation]"),o=i?i.getAttribute("data-site-animation")!=="default":!1,t=a.querySelectorAll('[data-animate-item="enabled"]'),n=window.matchMedia("(prefers-reduced-motion: no-preference)").matches,r=new IntersectionObserver(e=>{e.forEach(s=>{const c=s.target;s.isIntersecting&&c.classList.add("animate")})});t&&o&&n&&t.forEach(e=>{r.observe(e)}),n||t.forEach(e=>{e.setAttribute("data-animate-item","disabled")})}};
+//# sourceMappingURL=yds-animate-LJivyE_h.js.map

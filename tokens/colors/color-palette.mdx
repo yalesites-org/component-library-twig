@@ -1,0 +1,12 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as ColorsStories from './colors.stories';
+
+<Meta title="Tokens/Colors/Colors" />
+
+# Colors
+
+The full set of named color tokens available in the YaleSites design system, derived from Yale's brand palette. Each swatch shows the token name, hex value, RGB value, and where available, CMYK and Pantone references. Click any value to copy it to your clipboard.
+
+<div className="sb-contained-canvas">
+  <Canvas of={ColorsStories.Colors} />
+</div>

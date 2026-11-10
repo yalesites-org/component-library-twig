@@ -1,0 +1,16 @@
+const e=`{% set image__base_class = image__base_class|default('image') %}
+
+{% if image__src is empty %}
+  Missing image
+{% else %}
+  <img
+    {{ bem(image__base_class, image__modifiers, image__blockname) }}
+    {% if image__srcset %}srcset="{{ image__srcset }}"{% endif %}
+    {% if image__sizes %}sizes="{{ image__sizes }}"{% endif %}
+    {% if image__alt %}alt="{{ image__alt }}"{% endif %}
+    {% if image__title %}title="{{ image__title }}"{% endif %}
+    src="{{ image__src }}"
+  />
+{% endif %}
+`;export{e as default};
+//# sourceMappingURL=_image-bmiZS2ZO.js.map

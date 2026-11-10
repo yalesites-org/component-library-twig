@@ -1,0 +1,15 @@
+const e=`{% set picture__base_class = picture__base_class|default('picture') %}
+
+<picture {{ bem(picture__base_class, picture__modifiers, picture__blockname) }}>
+  {% if sources %}
+    {% for source_attributes in sources %}
+      <source{{ source_attributes }}/>
+    {% endfor %}
+  {% endif %}
+  {# The controlling image, with the fallback image in srcset. #}
+  {% include "@atoms/images/image/_image.twig" with {
+    image__blockname: picture__image__blockname|default(picture__blockname),
+  } %}
+</picture>
+`;export{e as default};
+//# sourceMappingURL=_picture-hXYh1QeC.js.map

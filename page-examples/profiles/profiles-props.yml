@@ -1,0 +1,40 @@
+# profiles-props.yml
+#
+# Profiles page example property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+profileImageOrientation:
+  twigProp: profile_meta__image_orientation
+  name: Profile Image Orientation
+  type: select
+  required: false
+  description: The orientation of the profile image (landscape or portrait).
+  control: select
+  options:
+    - landscape
+    - portrait
+
+profileImageAlignment:
+  twigProp: profile_meta__image_alignment
+  name: Profile Image Alignment
+  type: select
+  required: false
+  description: The alignment of the profile image within the layout (left or right).
+  control: select
+  options:
+    - left
+    - right
+
+profileImageStyle:
+  twigProp: profile_meta__image_style
+  name: Profile Image Style
+  type: select
+  required: false
+  description: The display style for the profile image (inline or outdent).
+  control: select
+  options:
+    - inline
+    - outdent

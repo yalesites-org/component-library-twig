@@ -1,0 +1,16 @@
+# post-props.yml
+#
+# Post page example property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+showSocialMediaSharingLinks:
+  twigProp: page_title__show_social_media_sharing_links
+  name: Show Social Media Sharing Links
+  type: boolean
+  required: false
+  description: Whether to display social media sharing links on the post article page.
+  control: boolean
+  default: false

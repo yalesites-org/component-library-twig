@@ -1,0 +1,115 @@
+# action-banner-props.yml
+#
+# Action Banner component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+heading:
+  twigProp: banner__heading
+  name: Heading
+  type: string
+  required: true
+  description: The main heading text for the banner
+  control: text
+
+snippet:
+  twigProp: banner__snippet
+  name: Snippet
+  type: string
+  required: false
+  description: Additional descriptive text (supports HTML)
+  control: text
+
+linkContent:
+  twigProp: banner__link__content
+  name: Link Content
+  type: string
+  required: false
+  description: Text for the primary call-to-action button
+  control: text
+
+linkContentTwo:
+  twigProp: banner__link__content_two
+  name: Link Content Two
+  type: string
+  required: false
+  description: Text for the secondary call-to-action button
+  control: text
+
+bgColor:
+  twigProp: banner__content__background
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Component theme color
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+    - six
+  control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'
+
+contentLayout:
+  twigProp: banner__content__layout
+  name: Content Layout
+  type: select
+  required: false
+  description: 'Position of the content overlay: bottom, left, or right'
+  default: bottom
+  options:
+    - bottom
+    - left
+    - right
+  control: select
+  labels:
+    bottom: 'Bottom'
+    left: 'Left'
+    right: 'Right'
+
+buttonStyleConsistency:
+  twigProp: banner__button__style__consistency
+  name: Button Style Consistency
+  type: select
+  required: false
+  description: 'Visual style consistency for multiple buttons: which style each button gets, first then second'
+  default: filled_outline
+  options:
+    - both_filled
+    - both_outline
+    - filled_outline
+    - outline_filled
+  control: select
+
+overlayBackgroundImage:
+  twigProp: banner__overlay_background_image
+  name: Overlay Background Image
+  type: boolean
+  required: false
+  description: Whether to display a pattern overlay on the background image
+  default: false
+  control: boolean
+
+width:
+  twigProp: banner__width
+  name: Banner Width
+  type: select
+  required: false
+  description: 'Banner width: site (contained, with side gutters) or full (edge-to-edge, no gutters)'
+  default: site
+  options:
+    - site
+    - full
+  control: select
+  labels:
+    site: 'Contained'
+    full: 'Full Width'

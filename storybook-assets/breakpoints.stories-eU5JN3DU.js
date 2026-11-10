@@ -1,0 +1,2 @@
+import{b as t,t as o}from"../iframe.js";const r={breakpoints:o.break},s={tags:["!dev"],title:"Tokens/Breakpoints"},e=()=>t(r);e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:"() => breakpointsTwig(breakpointsData)",...e.parameters?.docs?.source}}};const a=["breakpoints"],i=Object.freeze(Object.defineProperty({__proto__:null,__namedExportsOrder:a,breakpoints:e,default:s},Symbol.toStringTag,{value:"Module"}));export{i as B,e as b};
+//# sourceMappingURL=breakpoints.stories-eU5JN3DU.js.map

@@ -1,0 +1,5 @@
+# Base configuration for site footer playground stories
+# This provides realistic default content for testing site footer variations
+
+baseConfig:
+  site_footer__content_text: 'This is <a href="https://example.com">example text</a> for footer content <a href="https://example.com/blah">with a link</a>.'

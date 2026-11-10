@@ -1,0 +1,26 @@
+const n=`{#
+ # Available Variables:
+ # - icons (array)
+ #   - url: url the icon links to
+ #   - name: Visually hidden text (for screen readers)
+ #   - icon: the actual image
+ #}
+
+{% set social_links__baseclass = 'social-links' %}
+
+<div {{ bem(social_links__baseclass) }}>
+  {# list <ul> #}
+  {# social-links__list #}
+  <ul {{ bem('list', [], social_links__baseclass) }}>
+    {# For each loop #}
+    {% for icon in icons %}
+      {# list-items <li> #}
+      {# social-links__item #}
+      <li {{ bem('item', [], social_links__baseclass) }}>
+        {% include "@molecules/social-links/_yds-social-link__content.twig" %}
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+`;export{n as default};
+//# sourceMappingURL=yds-social-links-DozGEIz2.js.map

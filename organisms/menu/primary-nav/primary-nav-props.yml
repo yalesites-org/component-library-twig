@@ -1,0 +1,22 @@
+# primary-nav-props.yml
+#
+# Primary Nav component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+menuVariation:
+  twigProp: menu__variation
+  name: Header Variation
+  type: select
+  required: false
+  description: Navigation menu variation controlling the display style
+  default: basic
+  options:
+    - basic
+    - mega
+    - focus
+  control: select
+  labels:
+    basic: 'Basic Nav'
+    mega: 'Mega Nav'
+    focus: 'Focus Nav'

@@ -1,0 +1,70 @@
+# directory-listing-card-props.yml
+#
+# Directory Listing Card component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+heading:
+  twigProp: directory_listing_card__heading
+  name: Heading
+  type: string
+  required: true
+  description: The heading text for the directory listing card
+  control: text
+
+subheading:
+  twigProp: directory_listing_card__subheading
+  name: Subheading
+  type: string
+  required: false
+  description: Optional subheading text below the main heading
+  control: text
+
+snippet:
+  twigProp: directory_listing_card__snippet
+  name: Snippet
+  type: string
+  required: false
+  description: Descriptive text content for the listing
+  control: text
+
+showEmail:
+  twigProp: directory_listing_card__email
+  name: Show Email
+  type: boolean
+  required: false
+  description: Whether to display the email address
+  detail: >
+    Controls whether the email address from the data file is passed to
+    the Twig template. This is a Storybook-only UI toggle — the actual
+    Twig prop is directory_listing_card__email.
+  default: true
+  control: boolean
+
+phone:
+  twigProp: directory_listing_card__phone
+  name: Phone
+  type: string
+  required: false
+  description: Phone number to display
+  control: text
+
+featured:
+  name: Featured
+  type: boolean
+  required: false
+  description: Whether the collection displays cards in a featured layout style
+  detail: >
+    Controls the data-collection-featured attribute on the card collection
+    wrapper. This is a Storybook-only UI toggle — it is not a direct Twig
+    prop on the card template itself.
+  default: true
+  control: boolean
+
+overline:
+  twigProp: directory_listing_card__overline
+  name: Overline
+  type: string
+  required: false
+  description: Optional overline text displayed above the heading
+  control: text
