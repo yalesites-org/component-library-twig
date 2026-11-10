@@ -47,6 +47,7 @@ const schedules = {
  */
 export default {
   title: 'Molecules/Office Hours',
+  tags: ['!dev'],
   argTypes: {
     sectionTheme: {
       name: 'Section theme',
@@ -79,7 +80,7 @@ export default {
 const render = (props, { sectionTheme, componentTheme, width }) =>
   createSectionWrapper(
     sectionTheme,
-    `<div style="max-width: ${width}px">${officeHoursTwig({
+    `<div style="width: 100%; max-width: ${width}px">${officeHoursTwig({
       ...data,
       office_hours__upcoming: [],
       office_hours__theme: componentTheme,
