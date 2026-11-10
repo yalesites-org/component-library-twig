@@ -86,6 +86,10 @@ const render = (props, { sectionTheme, componentTheme, width }) =>
       office_hours__theme: componentTheme,
       ...props,
     })}</div>`,
+    // The column is a flex child at wide widths and sizes to its content.
+    // Office Hours has no intrinsic width (container-type: inline-size), so
+    // the column needs an explicit width or it collapses to 0.
+    { primaryWidth: '100%' },
   );
 
 /**
