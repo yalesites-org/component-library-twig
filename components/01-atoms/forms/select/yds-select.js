@@ -133,6 +133,17 @@
   // One-time setup per Chosen instance, front-end filter selects only.
   // `chosen` comes from the `chosen:ready` payload: jQuery data is only set
   // after Chosen's constructor, which is what fires `chosen:ready`.
+  // --site-header-height is a rem length, so resolve it to pixels.
+  const siteHeaderHeight = () => {
+    const probe = document.createElement('div');
+    probe.style.cssText =
+      'position:absolute;visibility:hidden;height:var(--site-header-height, 0px)';
+    document.body.appendChild(probe);
+    const { height } = probe.getBoundingClientRect();
+    probe.remove();
+    return height;
+  };
+
   const setUp = (select, chosen = $(select).data('chosen')) => {
     const $container = $(select).next('.chosen-container');
     if (
@@ -205,7 +216,22 @@
           this.container.offset().top +
           this.container.height() -
           $window.scrollTop();
-        return this.dropdown.outerHeight() + top > $window.height();
+        if (this.dropdown.outerHeight() + top <= $window.height()) {
+          return false;
+        }
+        // A list that cannot show about two options between the site
+        // header and the field opens downward instead. (#2146)
+        const optionHeight =
+          this.dropdown.find('.active-result').first().outerHeight() || 40;
+        // The search row and footer take room too, so count them.
+        const chrome =
+          this.dropdown.outerHeight() -
+          (this.search_results.outerHeight() || 0);
+        const roomAbove =
+          this.container[0].getBoundingClientRect().top -
+          siteHeaderHeight() -
+          chrome;
+        return roomAbove >= optionHeight * 2;
       },
       winnow_results_set_highlight(...args) {
         return keyboardCursor ? setHighlight.apply(this, args) : undefined;
@@ -244,6 +270,31 @@
     );
     $(select).on('chosen:hiding_dropdown', () => {
       keyboardCursor = false;
+    });
+
+    // A list that opens upward can reach past the top of the window, under
+    // the sticky site header. Cap the results to the room between the header
+    // and the field so every option stays visible; the list scrolls inside.
+    // Downward lists keep the stylesheet's max-height. (#2146)
+    // Chosen adds the drop-up class after it fires the event, so measure a
+    // frame later.
+    const capDropUp = () => {
+      const $results = $container.find('.chosen-results');
+      $results.css('max-height', '');
+      if (!chosen.results_showing || !$container.hasClass('chosen-dropup')) {
+        return;
+      }
+      const room =
+        $container[0].getBoundingClientRect().top -
+        siteHeaderHeight() -
+        ($container.find('.chosen-drop').outerHeight() -
+          $results.outerHeight());
+      if (room > 0 && room < $results.outerHeight()) {
+        $results.css('max-height', `${Math.floor(room)}px`);
+      }
+    };
+    $(select).on('chosen:showing_dropdown', () => {
+      window.requestAnimationFrame(capDropUp);
     });
 
     // Footer with the picked count and "Clear all".

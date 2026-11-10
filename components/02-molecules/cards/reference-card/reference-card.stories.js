@@ -105,6 +105,9 @@ export const EventCard = ({
         card_collection__source_type: 'event',
         card_collection__type: collectionType,
         ...imageData.responsive_images['3x2'],
+        // Every event instance must pass a fixed date. Without one the card
+        // falls back to today and visual regression changes daily.
+        reference_card__date: referenceCardData.reference_card__date,
         format,
         reference_card__heading: heading,
         reference_card__prefix: headingPrefix,
