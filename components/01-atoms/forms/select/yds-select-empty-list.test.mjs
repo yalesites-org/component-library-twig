@@ -31,3 +31,25 @@ test('empty Chosen containers are not rendered', () => {
     /\.chosen-results:empty \{\s*display: none;/,
   );
 });
+
+// A drop-up list must not slide under the sticky header. (#2146)
+test('drop-up lists are capped below the sticky site header', () => {
+  const source = read('yds-select.js');
+  assert.match(source, /chosen:showing_dropdown/);
+  assert.match(source, /--site-header-height/);
+  assert.match(source, /chosen-dropup/);
+});
+
+// With no room above for about two options, the list opens downward. (#2146)
+test('a list with no room above opens downward', () => {
+  const source = read('yds-select.js');
+  assert.match(source, /roomAbove >= optionHeight \* 2/);
+  assert.match(source, /const siteHeaderHeight = /);
+});
+
+// The search row and footer count against the room above. (#2146)
+test('room above leaves out the search row and footer', () => {
+  const source = read('yds-select.js');
+  assert.match(source, /const chrome =/);
+  assert.match(source, /siteHeaderHeight\(\) -\s*chrome;/);
+});

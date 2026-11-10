@@ -38,6 +38,11 @@
  #   express the same state by whether `.yds-layout__divider` is in the DOM at
  #   all, so for those the attribute is informational only.
  # - layout__padding (string): 'default' by default.
+ # - layout__has_primary (bool): true by default (read with `??`, because
+ #   `|default(true)` would turn an explicit false back into true). Pass false when the primary
+ #   region is empty so its wrapper is not drawn (an empty wrapper still takes
+ #   part in the flex row and leaves a blank band or squeezes its sibling).
+ # - layout__has_secondary (bool): true by default. Same, for the secondary.
  # - component__width (string): 'site' by default
  # - layout__extra_classes (array): extra classes for the section element, for
  #   a layout that must keep a class of its own alongside the shared
@@ -81,27 +86,34 @@
   ),
 } %}
 
-<div {{ add_attributes(layout__attributes) }} data-embedded-components>
+{# A single-region (One column) section is not an "embedded components"
+ # container: it hosts full-bleed blocks that must keep their own site gutter
+ # and run edge to edge (YaleSites-Internal#2090). #}
+<div {{ add_attributes(layout__attributes) }}{{ layout__single_region ? '' : ' data-embedded-components' }}>
   {% if layout__single_region %}
     {% block layout__primary %}
       {{ content.primary }}
     {% endblock %}
   {% else %}
     <div {{ bem('inner', [], layout__base_class) }}>
-      <div {{ bem('primary', [], layout__base_class) }}>
-        {# Defined in the single-region branch above; Twig compiles blocks
-         # independently of where they appear, so it is declared once and
-         # rendered from whichever branch runs. #}
-        {{ block('layout__primary') }}
-      </div>
+      {% if layout__has_primary ?? true %}
+        <div {{ bem('primary', [], layout__base_class) }}>
+          {# Defined in the single-region branch above; Twig compiles blocks
+           # independently of where they appear, so it is declared once and
+           # rendered from whichever branch runs. #}
+          {{ block('layout__primary') }}
+        </div>
+      {% endif %}
       {% if layout__show_divider %}
         <div {{ bem('divider', [], layout__base_class) }}></div>
       {% endif %}
-      <div {{ bem('secondary', [], layout__base_class) }}>
-        {% block layout__secondary %}
-          {{ content.secondary }}
-        {% endblock %}
-      </div>
+      {% if layout__has_secondary ?? true %}
+        <div {{ bem('secondary', [], layout__base_class) }}>
+          {% block layout__secondary %}
+            {{ content.secondary }}
+          {% endblock %}
+        </div>
+      {% endif %}
       {% if layout__show_divider and component__layout == 'thirty-thirty-thirty' %}
         <div {{ bem('divider', [], layout__base_class) }}></div>
       {% endif %}
