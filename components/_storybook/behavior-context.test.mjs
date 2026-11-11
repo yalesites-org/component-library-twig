@@ -54,7 +54,7 @@ test('the calendar binds toggles inside its own calendar element, not the whole 
 
 test('the calendar drops the cached MicroModal instance once per attach, before init', () => {
   const source = behaviors['yds-calendar.js'];
-  const remove = source.indexOf("MicroModal.removeModal('calendar-modal')");
+  const remove = source.indexOf('MicroModal.removeModal(staleId)');
   const init = source.indexOf('MicroModal.init()');
   const click = source.indexOf("addEventListener('click', (clickEvent)");
 

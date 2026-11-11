@@ -42,7 +42,10 @@ Drupal.behaviors.eventsCalendar = {
     // (a no-op if none is registered) so init() binds to the current element.
     // Done here, not per click: closing on every click would race the
     // data-micromodal-trigger listener that init() registers on each toggle.
-    if (calendars.length) MicroModal.removeModal('calendar-modal');
+    calendars.forEach((cal) => {
+      const staleId = cal.querySelector('.modal')?.id;
+      if (staleId) MicroModal.removeModal(staleId);
+    });
     MicroModal.init();
 
     // Debounce utility.
@@ -146,6 +149,8 @@ Drupal.behaviors.eventsCalendar = {
       const calendarEventsElements =
         calendarElement.querySelectorAll(dayEvents);
       const calendarNoEvents = calendarElement.querySelector(noEvents);
+      const modalId =
+        calendarElement.querySelector('.modal')?.id || 'calendar-modal';
 
       // Utility functions.
       const getNearestForm = () =>
@@ -194,7 +199,7 @@ Drupal.behaviors.eventsCalendar = {
       // Put focus on the first event in the open modal, or on Close when the
       // list is empty, so keyboard focus always lands inside the dialog.
       const focusModal = () => {
-        const modal = document.getElementById('calendar-modal');
+        const modal = document.getElementById(modalId);
         const target =
           modal?.querySelector('.modal__calendar-events a[href]') ||
           modal?.querySelector('button[data-micromodal-close]');
@@ -233,7 +238,7 @@ Drupal.behaviors.eventsCalendar = {
             moreEventsContainer.children.length === 0;
 
           // Manually open the modal after content is populated.
-          MicroModal.show('calendar-modal');
+          MicroModal.show(modalId);
 
           // The toggle also carries `data-micromodal-trigger`, and init() bound
           // that listener before this one, so MicroModal already opened the
@@ -245,10 +250,19 @@ Drupal.behaviors.eventsCalendar = {
       });
 
       // Calendar wrapper finder.
-      const getCalendarWrapper = (element) =>
-        element?.closest?.(
-          '#event-calendar-wrapper-static, [id^="event-calendar-wrapper"], [id^="calendar-wrapper"]',
-        );
+      // Month navigation re-renders the grid inside a container that keeps the
+      // original id, and the re-render carries its own id that can match the
+      // first calendar on the page. Take the outermost match so later requests
+      // keep targeting this calendar.
+      const wrapperSelector =
+        '#event-calendar-wrapper-static, [id^="event-calendar-wrapper"], [id^="calendar-wrapper"]';
+      const getCalendarWrapper = (element) => {
+        let wrapper = element?.closest?.(wrapperSelector) || null;
+        while (wrapper?.parentElement?.closest(wrapperSelector)) {
+          wrapper = wrapper.parentElement.closest(wrapperSelector);
+        }
+        return wrapper;
+      };
 
       // AJAX calendar refresh.
       const refreshCalendarData = (wrapper, button) => {
