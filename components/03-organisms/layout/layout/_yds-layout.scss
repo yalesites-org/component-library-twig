@@ -516,7 +516,11 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // organism. A row gap on top of that took another 32px out of the narrow
   // column and left it 288px wide instead of 320px at 1440px and wider
   // (YaleSites-Internal#2100).
-  [data-component-layout='seventy-thirty'] > & {
+  // A 30/70 is the same row flipped and spaces its columns the same way
+  // (margin and padding on the narrow column), so it drops the gap too.
+  // Otherwise its narrow column is 32px narrower than a 70/30 sidebar.
+  [data-component-layout='seventy-thirty'] > &,
+  [data-component-layout='thirty-seventy'] > & {
     @media (min-width: $break-layout-layout) {
       gap: 0;
     }
@@ -536,6 +540,15 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     // 40px below 992px and 64px from 992px up, as the old yds-two-column did
     // through this token.
     margin-block-start: var(--spacing-page-section);
+  }
+
+  // Section Padding still applies to an uncolored 70/30: the zeroed padding
+  // and the top margin above must not swallow the editor's choice.
+  [data-section-theme='default'][data-component-layout='seventy-thirty'][data-component-padding='no-top']
+    > &,
+  [data-section-theme='default'][data-component-layout='seventy-thirty'][data-component-padding='no-padding']
+    > & {
+    margin-block-start: 0;
   }
 
   // Flex sets `min-width` of children to `auto` by default... but this breaks
