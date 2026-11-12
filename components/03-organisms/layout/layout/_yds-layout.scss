@@ -551,6 +551,16 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     margin-block-start: 0;
   }
 
+  // The first uncolored 70/30 directly under the page title area has no top
+  // gap, so the page starts at the same height as live, where the old
+  // yds-two-column had none there. Stacked 70/30 sections keep their 64px
+  // (YaleSites-Internal#2192).
+  .page-meta
+    + [data-section-theme='default'][data-component-layout='seventy-thirty']
+    > & {
+    margin-block-start: 0;
+  }
+
   // Flex sets `min-width` of children to `auto` by default... but this breaks
   // some of our base layout styles (causes horizontal scrolling), so we need to
   // reset it to `0`.

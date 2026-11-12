@@ -695,3 +695,10 @@ test('an uncolored 70/30 top margin switches at 992px through the page-section t
   assert.match(block[1], /margin-block-start: var\(--spacing-page-section\);/);
   assert.doesNotMatch(block[1], /break-m/);
 });
+
+test('the first uncolored 70/30 right after page meta has no top margin', () => {
+  assert.match(
+    scss(),
+    /\.page-meta\s*\+ \[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\]\s*> & \{\s*margin-block-start: 0;/,
+  );
+});
