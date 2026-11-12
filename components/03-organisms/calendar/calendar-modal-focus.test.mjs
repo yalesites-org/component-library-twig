@@ -56,3 +56,25 @@ test('each calendar owns its modal id instead of sharing one', () => {
 test('month navigation targets the outermost calendar wrapper', () => {
   assert.match(script, /wrapper\.parentElement\.closest\(wrapperSelector\)/);
 });
+
+test('duplicate wrapper and modal ids are made unique before MicroModal binds', () => {
+  const dedupe = script.indexOf('const uniqueId =');
+  const wrapperRename = script.indexOf('if (wrapper) uniqueId(wrapper);');
+  const modalRename = script.indexOf('uniqueId(modal)');
+  const init = script.indexOf('MicroModal.init();');
+
+  assert.ok(dedupe > -1, 'uniqueId helper not found');
+  assert.ok(
+    wrapperRename > dedupe && wrapperRename < init,
+    'wrapper renamed before init',
+  );
+  assert.ok(
+    modalRename > dedupe && modalRename < init,
+    'modal renamed before init',
+  );
+  assert.match(
+    script,
+    /data-micromodal-trigger="\$\{oldId\}"/,
+    'triggers follow the renamed modal',
+  );
+});

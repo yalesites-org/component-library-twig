@@ -23,6 +23,9 @@ Drupal.behaviors.eventsCalendar = {
     const noEvents = '.calendar__no-events-message';
     const storybook = '.sb-show-main';
 
+    const wrapperSelector =
+      '#event-calendar-wrapper-static, [id^="event-calendar-wrapper"], [id^="calendar-wrapper"]';
+
     // Query elements.
     const calendars = once('calendar', calendar, context);
 
@@ -42,9 +45,44 @@ Drupal.behaviors.eventsCalendar = {
     // (a no-op if none is registered) so init() binds to the current element.
     // Done here, not per click: closing on every click would race the
     // data-micromodal-trigger listener that init() registers on each toggle.
+    // Drupal renders the same wrapper and modal ids for every calendar, so a
+    // later calendar's copies are renamed to be unique before anything binds
+    // to them. Month navigation targets the wrapper id and MicroModal keys on
+    // the modal id, so both must name exactly one calendar.
+    const uniqueId = (el, base = el.id) => {
+      if (!base) return base;
+      const taken = (id) => document.getElementById(id);
+      if (taken(base) === el) return base;
+      let n = 2;
+      while (taken(`${base}-${n}`)) n += 1;
+      el.setAttribute('id', `${base}-${n}`);
+      return el.id;
+    };
     calendars.forEach((cal) => {
       const staleId = cal.querySelector('.modal')?.id;
       if (staleId) MicroModal.removeModal(staleId);
+    });
+    calendars.forEach((cal) => {
+      // Outermost matching wrapper, the element month navigation replaces.
+      let wrapper = cal.closest(wrapperSelector);
+      while (wrapper?.parentElement?.closest(wrapperSelector)) {
+        wrapper = wrapper.parentElement.closest(wrapperSelector);
+      }
+      if (wrapper) uniqueId(wrapper);
+
+      const modal = cal.querySelector('.modal');
+      if (!modal) return;
+      const oldId = modal.id;
+      // A calendar that kept its id keeps its title id and triggers as is.
+      if (uniqueId(modal) === oldId) return;
+      const title = modal.querySelector(`[id="${oldId}-title"]`);
+      if (title) title.id = `${modal.id}-title`;
+      modal
+        .querySelector('[aria-labelledby]')
+        ?.setAttribute('aria-labelledby', `${modal.id}-title`);
+      cal
+        .querySelectorAll(`[data-micromodal-trigger="${oldId}"]`)
+        .forEach((t) => t.setAttribute('data-micromodal-trigger', modal.id));
     });
     MicroModal.init();
 
@@ -254,8 +292,6 @@ Drupal.behaviors.eventsCalendar = {
       // original id, and the re-render carries its own id that can match the
       // first calendar on the page. Take the outermost match so later requests
       // keep targeting this calendar.
-      const wrapperSelector =
-        '#event-calendar-wrapper-static, [id^="event-calendar-wrapper"], [id^="calendar-wrapper"]';
       const getCalendarWrapper = (element) => {
         let wrapper = element?.closest?.(wrapperSelector) || null;
         while (wrapper?.parentElement?.closest(wrapperSelector)) {
