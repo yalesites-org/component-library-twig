@@ -205,6 +205,16 @@ $office-hours-component-themes: map.deep-get(
   max-width: var(--size-component-layout-width-content);
 }
 
+// Posts and Events keep their title and body at the content width, so a block
+// centered at the site width starts left of them (YaleSites-Internal#2195).
+// Use the content width there. Pages keep the site width.
+.ys-content-type-post,
+.ys-content-type-event {
+  .office-hours {
+    --component-width: var(--size-component-layout-width-content);
+  }
+}
+
 // Own theme (One to Six): a filled box like a themed Accordion item. It starts
 // inside the site gutter, stops at the content width and stays left-aligned in
 // the site-width column (the margin is that column's centering offset; zero in
