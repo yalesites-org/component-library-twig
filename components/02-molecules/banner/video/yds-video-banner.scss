@@ -10,4 +10,11 @@ $break-video-banner: tokens.$break-m;
   &[data-component-width='max'] {
     --component-width: var(--size-component-layout-width-max);
   }
+
+  // There is no `full` width token, so without this the banner inherits the
+  // width of the section around it and ends up narrower than Contained
+  // (YaleSites-Internal#2195).
+  &[data-component-width='full'] {
+    --component-width: none;
+  }
 }
