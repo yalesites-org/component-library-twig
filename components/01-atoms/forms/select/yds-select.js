@@ -8,13 +8,18 @@
   // no "Clear all", no empty-list message. Our filter styles work at phone
   // widths, so for the filter forms only, hide the phone token from Chosen's
   // check while it builds or updates a select. The real user agent is
-  // restored right after. (#2197)
+  // restored right after. On Drupal this script can load before Chosen, so
+  // the wrapper is installed again at attach time, which runs before
+  // Drupal.behaviors.chosen calls the plugin. (#2197)
   const phoneToken =
     'iP(od|hone)|IEMobile|Windows Phone|BlackBerry|BB10|Android(?=.*Mobile)';
   const isPhone = new RegExp(phoneToken, 'i');
   const phoneAgent = new RegExp(phoneToken, 'gi');
-  const chosenPlugin = $.fn.chosen;
-  if (chosenPlugin && !chosenPlugin.ysPhoneAware) {
+  const installPhoneAware = () => {
+    const chosenPlugin = $.fn.chosen;
+    if (!chosenPlugin || chosenPlugin.ysPhoneAware) {
+      return;
+    }
     const phoneAware = function phoneAware(...args) {
       const agent = window.navigator.userAgent;
       if (!isPhone.test(agent) || !$(this).closest(filterForm).length) {
@@ -32,7 +37,8 @@
     };
     phoneAware.ysPhoneAware = true;
     Object.assign($.fn, { chosen: phoneAware });
-  }
+  };
+  installPhoneAware();
 
   // Read the human-readable term label from a Chosen chip, minus its remove control.
   const choiceLabel = (chip) => {
@@ -520,6 +526,7 @@
 
   Drupal.behaviors.chosenSelect = {
     attach(context) {
+      installPhoneAware();
       $(once('ys-chosen-select', filterForm, context)).each((i, elem) => {
         const $select = $(elem).find('select');
         // Drupal.behaviors.chosen may run before or after this behavior, so
