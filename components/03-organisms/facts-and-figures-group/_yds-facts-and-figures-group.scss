@@ -273,3 +273,20 @@ $facts-and-figures-group-component-themes: map.deep-get(
     color: var(--color-facts-and-figures-content);
   }
 }
+
+// In a colored one-column section the group paints its own full-width
+// background, so the section padding and the block wrapper margin around it
+// show as two stripes of section color above and below (YaleSites-Internal#2199).
+// Only when the group is the section's sole block; with sibling blocks the
+// spacing still separates them.
+.yds-layout[data-component-layout='one-column'][data-section-theme]:not(
+    [data-section-theme='default']
+  ):has(
+    > .layout__region > .ys-block-wrapper:only-child > .facts-and-figures__group
+  ) {
+  padding-block: 0;
+
+  > .layout__region > .ys-block-wrapper {
+    margin-block: 0;
+  }
+}
