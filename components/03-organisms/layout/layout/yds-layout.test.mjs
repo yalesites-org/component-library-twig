@@ -655,10 +655,18 @@ test('a region marked empty is not drawn', () => {
   );
 });
 
-test('a 70/30 row has no gap on top of the narrow column margin', () => {
+test('a 70/30 and a 30/70 row have no gap on top of the narrow column margin', () => {
   assert.match(
     scss(),
-    /\[data-component-layout='seventy-thirty'\] > & \{\s*@media \(min-width: \$break-layout-layout\) \{\s*gap: 0;/,
+    /\[data-component-layout='seventy-thirty'\] > &,\s*\[data-component-layout='thirty-seventy'\] > & \{\s*@media \(min-width: \$break-layout-layout\) \{\s*gap: 0;/,
+  );
+});
+
+test('No top and No padding drop the top margin of an uncolored 70/30', () => {
+  const src = scss();
+  assert.match(
+    src,
+    /\[data-component-layout='seventy-thirty'\]\[data-component-padding='no-top'\]\s*> &,\s*\[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\]\[data-component-padding='no-padding'\]\s*> & \{\s*margin-block-start: 0;/,
   );
 });
 
