@@ -186,11 +186,14 @@ $filter-panel-search-height: 3.5rem;
   // required-asterisk rule in _yds-textfields.scss excludes. (#1897)
   --ys-filter-focus: var(--color-blue-medium);
 
-  [data-component-theme]:not(
-      [data-component-theme='default'],
-      [data-component-theme='two'],
-      [data-component-theme='five'],
-      [data-component-theme='six']
+  // Sections emit `data-section-theme` (the block dial `data-component-theme`
+  // belongs to blocks alone), so the rule has to key on the section attribute
+  // or it never applies. (#2194)
+  [data-section-theme]:not(
+      [data-section-theme='default'],
+      [data-section-theme='two'],
+      [data-section-theme='five'],
+      [data-section-theme='six']
     )
     & {
     --ys-filter-focus: var(--color-section-foreground);

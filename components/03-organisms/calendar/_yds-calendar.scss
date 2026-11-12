@@ -302,3 +302,37 @@
     display: block;
   }
 }
+
+// Dark sections: the calendar hard-codes grays and black, which vanish on the
+// dark section colors. Follow the section foreground there. (#2194)
+[data-section-theme]:not(
+    [data-section-theme='default'],
+    [data-section-theme='two'],
+    [data-section-theme='five'],
+    [data-section-theme='six']
+  )
+  .calendar {
+  .calendar__weekdays,
+  .calendar__day,
+  .calendar__nav-time,
+  .calendar__day--disabled,
+  .calendar-event,
+  .calendar-event__category,
+  .calendar-event__type {
+    color: var(--color-section-foreground);
+  }
+
+  .calendar__day--disabled {
+    opacity: 0.7;
+  }
+
+  .calendar__weekdays,
+  .calendar__week {
+    border-bottom-color: var(--color-section-foreground);
+
+    & > li,
+    & > li:focus:not(:focus-visible) {
+      outline-color: var(--color-section-foreground);
+    }
+  }
+}
