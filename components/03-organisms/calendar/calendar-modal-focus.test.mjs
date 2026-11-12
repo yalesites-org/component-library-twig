@@ -78,3 +78,15 @@ test('duplicate wrapper and modal ids are made unique before MicroModal binds', 
     'triggers follow the renamed modal',
   );
 });
+
+test('stale MicroModal instance is dropped under the final renamed id', () => {
+  const rename = script.indexOf('const finalId = uniqueId(modal);');
+  const remove = script.indexOf('MicroModal.removeModal(finalId);');
+  const init = script.indexOf('MicroModal.init();');
+
+  assert.ok(rename > -1, 'final id not captured');
+  assert.ok(
+    remove > rename && remove < init,
+    'removeModal(finalId) runs after the rename and before init',
+  );
+});

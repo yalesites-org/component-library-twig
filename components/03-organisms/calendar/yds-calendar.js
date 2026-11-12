@@ -73,8 +73,12 @@ Drupal.behaviors.eventsCalendar = {
       const modal = cal.querySelector('.modal');
       if (!modal) return;
       const oldId = modal.id;
+      const finalId = uniqueId(modal);
+      // The cached instance under the final id may be bound to a modal that a
+      // month change replaced, so drop it before init() rebinds.
+      MicroModal.removeModal(finalId);
       // A calendar that kept its id keeps its title id and triggers as is.
-      if (uniqueId(modal) === oldId) return;
+      if (finalId === oldId) return;
       const title = modal.querySelector(`[id="${oldId}-title"]`);
       if (title) title.id = `${modal.id}-title`;
       modal
