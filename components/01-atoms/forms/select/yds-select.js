@@ -3,6 +3,37 @@
   const moreBadgeClass = 'ys-select-more';
   const overflowChoiceClass = 'ys-search-choice--overflow';
 
+  // Chosen switches itself off when the user agent names a phone (iPhone,
+  // iPod, Android Mobile and others), so phones got native selects: no pills,
+  // no "Clear all", no empty-list message. Our filter styles work at phone
+  // widths, so for the filter forms only, hide the phone token from Chosen's
+  // check while it builds or updates a select. The real user agent is
+  // restored right after. (#2197)
+  const phoneToken =
+    'iP(od|hone)|IEMobile|Windows Phone|BlackBerry|BB10|Android(?=.*Mobile)';
+  const isPhone = new RegExp(phoneToken, 'i');
+  const phoneAgent = new RegExp(phoneToken, 'gi');
+  const chosenPlugin = $.fn.chosen;
+  if (chosenPlugin && !chosenPlugin.ysPhoneAware) {
+    const phoneAware = function phoneAware(...args) {
+      const agent = window.navigator.userAgent;
+      if (!isPhone.test(agent) || !$(this).closest(filterForm).length) {
+        return chosenPlugin.apply(this, args);
+      }
+      Object.defineProperty(window.navigator, 'userAgent', {
+        configurable: true,
+        get: () => agent.replace(phoneAgent, 'Mobile-filter'),
+      });
+      try {
+        return chosenPlugin.apply(this, args);
+      } finally {
+        delete window.navigator.userAgent;
+      }
+    };
+    phoneAware.ysPhoneAware = true;
+    Object.assign($.fn, { chosen: phoneAware });
+  }
+
   // Read the human-readable term label from a Chosen chip, minus its remove control.
   const choiceLabel = (chip) => {
     const $clone = $(chip).clone();

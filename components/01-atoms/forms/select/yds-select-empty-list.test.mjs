@@ -53,3 +53,13 @@ test('room above leaves out the search row and footer', () => {
   assert.match(source, /const chrome =/);
   assert.match(source, /siteHeaderHeight\(\) -\s*chrome;/);
 });
+
+// Chosen turns itself off for phone user agents; the filter forms opt back
+// in by hiding the phone token while Chosen runs, then restoring it. (#2197)
+test('filter selects still get Chosen on phone user agents', () => {
+  const source = read('yds-select.js');
+  assert.match(source, /iP\(od\|hone\)/);
+  assert.match(source, /chosen: phoneAware/);
+  assert.match(source, /delete window\.navigator\.userAgent/);
+  assert.match(source, /closest\(filterForm\)/);
+});
