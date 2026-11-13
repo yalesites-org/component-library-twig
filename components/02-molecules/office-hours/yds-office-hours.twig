@@ -65,7 +65,7 @@
 {% set office_hours__base_class = 'office-hours' %}
 {% set office_hours__days = office_hours__days|default([]) %}
 {% set office_hours__upcoming = office_hours__upcoming|default([]) %}
-{% set office_hours__name = office_hours__name|default(office_hours__heading|default('Hours')) %}
+{% set office_hours__name = office_hours__name|default(office_hours__heading|default('Office hours')) %}
 
 {% if office_hours__days or office_hours__upcoming %}
   {# data-component-width gives the block the site gutter in a one-column
