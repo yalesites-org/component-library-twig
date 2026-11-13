@@ -6,34 +6,217 @@
   padding: 0;
 }
 
-ul {
-  list-style-type: disc;
-
-  ul {
-    list-style-type: circle;
-
-    ul {
-      list-style-type: square;
-    }
-  }
-}
-
-ol {
-  list-style-type: decimal;
-
-  ol {
-    list-style-type: lower-alpha;
-
-    ol {
-      list-style-type: lower-roman;
-    }
-  }
-}
-
-.text-field {
+// Scoped to every wrapper that can hold filtered/WYSIWYG Basic HTML, not just
+// .text. @atoms/typography/text/yds-text.twig always has a base class of
+// "text", but most callers (Spotlight, Wrapped Image, event/place
+// descriptions, etc.) pass a `text__blockname`, which makes emulsify_twig's
+// bem() emit `{blockname}__text` INSTEAD OF the bare `text` class
+// (BemTwigExtension::bem() replaces, not appends, the base class when a
+// blockname is given) -- only the plain Text Field molecule omits
+// `text__blockname` and keeps the bare class, hence [class$='__text'].
+// A few callers override the atom's base class too, so the suffix isn't
+// even "text":
+// - Wrapped Text Callout has two separate WYSIWYG fields, each overriding
+//   the atom's base class instead of taking the "text" default:
+//   yds-wrapped-callout.twig's "Callout" field renders wrapped-callout__callout
+//   and its "Text" field renders wrapped-callout__content, hence those two
+//   explicit selectors.
+// - Action/CTA Banner and Grand Hero's snippet (yds-action-banner.twig,
+//   yds-grand-hero.twig) render {blockname}__snippet, hence
+//   [class$='__snippet'] (checked: the only other __snippet classes in the
+//   component library are card/reference-card text excerpts, so this stays
+//   narrow).
+// - Facts and Figures Group's intro text (yds-facts-and-figures-group.twig)
+//   overrides the base class to 'content' the same way Wrapped Text Callout
+//   does, rendering facts-and-figures__group__content -- same explicit-class
+//   treatment as .wrapped-callout__content below.
+// - The individual Facts and Figures molecule's own content field
+//   (yds-facts-and-figures.twig) is a separate, bare bem()-wrapped <div> one
+//   level down from the group -- facts-and-figures__content, not
+//   facts-and-figures__group__content -- so it needs its own explicit
+//   selector too (confirmed missing by a live audit of every WYSIWYG field on
+//   a test page covering all 17 Layout Builder components, ticket 1450).
+// - Image Banner's caption is the generic image atom (yds-image.twig),
+//   which renders the bare .caption class (not blockname-prefixed) around
+//   raw figcaption content -- the only component using that exact class.
+// - Pull Quote and Quote Callout's quote/attribution fields
+//   (yds-pull-quote.twig, yds-quote-callout.twig), and Tile's content field
+//   (yds-tile-item.twig) don't go through yds-text.twig at all -- they're a
+//   plain bem()-wrapped <div> printing the raw field value directly, hence
+//   [class$='__quote']/[class$='__attribution'] and the explicit
+//   .tile__item__content selector (checked: __quote/__attribution are each
+//   used by exactly these two components, so the wildcards stay narrow).
+// - Search Result's teaser/highlighted fields (yds-search-result.twig) are
+//   the same bare bem()-div pattern, hence [class$='__teaser'] and
+//   [class$='__highlighted'] (also checked narrow).
+// - Event descriptions are the same bare bem()-div pattern one layer
+//   further out: field_event_description never reaches a field render at
+//   all -- ys_localist's MetaFieldsManager::getEventData() reads it
+//   directly off the node and hands it to yds-event-meta-localist.twig,
+//   which prints it in a bare `bem('description', [], event_meta__base_class)`
+//   div, rendering event-meta__description. Resource descriptions
+//   (yds-resource-meta.twig, _yds-resource-meta--video.twig) use the
+//   identical bare-div pattern, rendering resource-meta__description.
+// Place descriptions (field_place_description, event_place vocabulary) sat
+// on Drupal's generic taxonomy term + field rendering, which this site's
+// stable9 base theme renders with NO classes at all on any wrapper --
+// stable9 doesn't add field--type-*/field--name-* BEM classes the way the
+// deprecated Classy theme did, so the .field--type-text-long/
+// .field--type-text-with-summary selectors below have likely never matched
+// anything on this site (confirmed by a live audit, ticket 1450; they stay
+// below as a generic fallback in case some other untemplated field ever
+// does render under a theme that adds them). Fixed with a new field
+// template override (field--field-place-description.html.twig) that adds
+// .place-description__value to the field's per-item content wrapper.
+// - node.resource's three long-text fields are NOT plain field renders --
+//   they go through yds-publication-detail.twig's <dl>/<dt>/<dd> layout
+//   (confirmed by a live audit, ticket 1450; an earlier code-only read of
+//   this template had wrongly concluded it was unwired/orphaned). Citation
+//   renders inside the pre-text atom (pre-text__text, already covered by
+//   [class$='__text']), but Abstract and Content Description are bare <dd>s
+//   -- publication-detail__abstract__value and
+//   publication-detail__description__value -- which [class$='__value'] can't
+//   safely cover (collides with cl-colors__value, journal-issue__value,
+//   journal-name__value, publish-date__value, published-on__value), hence
+//   the two explicit selectors.
+// None of this touches every <ul>/<ol> on the site -- navigation menus, etc.
+// set their own list-style separately and should never be touched here.
+.text,
+[class$='__text'],
+[class$='__snippet'],
+[class$='__quote'],
+[class$='__attribution'],
+[class$='__teaser'],
+[class$='__highlighted'],
+.wrapped-callout__callout,
+.wrapped-callout__content,
+.facts-and-figures__group__content,
+.facts-and-figures__content,
+.tile__item__content,
+.event-meta__description,
+.resource-meta__description,
+.publication-detail__abstract__value,
+.publication-detail__description__value,
+.place-description__value,
+.caption,
+.field--type-text-long,
+.field--type-text-with-summary {
   li {
     padding-left: var(--size-spacing-1);
   }
+
+  // Wrapped Text Callout's Text field wraps around its floated Callout box,
+  // and Wrapped Image's text wraps around its floated image -- the only two
+  // places a list in this selector set can sit beside a CSS float. Without its
+  // own block formatting context, a <ul>/<ol> next to a float has each LINE's
+  // available width re-measured against the float independently, instead of
+  // being laid out as one block that clears the float once. That collapses
+  // the usual per-level indentation step: a nested list ends up measured
+  // against that same narrow per-line shelf rather than its own parent's
+  // edge, so levels 1/2/3 all but stack on top of each other. Establishing a
+  // BFC here (`flow-root` keeps the outer `display` a normal block, so
+  // nothing else about layout changes) makes every list clear the float as a
+  // single rectangle, so the normal indentation step shows up the same
+  // whether or not the list happens to be floating-adjacent.
+  ul,
+  ol {
+    display: flow-root;
+  }
+
+  // :not([type]) lets an explicit type="a"/"i"/etc. attribute (set via the
+  // CKEditor5 List Style dropdown) take precedence over these depth-based
+  // defaults, instead of this CSS unconditionally overriding it.
+  ul:not([type]) {
+    list-style-type: disc;
+
+    ul:not([type]) {
+      list-style-type: circle;
+
+      ul:not([type]) {
+        list-style-type: square;
+      }
+    }
+  }
+
+  ol:not([type]) {
+    list-style-type: decimal;
+
+    ol:not([type]) {
+      list-style-type: lower-alpha;
+
+      ol:not([type]) {
+        list-style-type: lower-roman;
+      }
+    }
+  }
+
+  // When a list's style came from an explicit choice in the CKEditor5 List
+  // Style dropdown (a `type` attribute) rather than from the depth-based
+  // defaults above, an untyped sub-item's ancestor no longer matches
+  // `:not([type])`, so it would otherwise fall back to the browser default
+  // instead of continuing the outline sequence (decimal -> lower-alpha ->
+  // lower-roman / disc -> circle -> square). These tie the 2-levels-deep
+  // default rules above at equal specificity (both select two `ol`/`ul`
+  // steps) and only lose to the 3-levels-deep ones.
+  /* stylelint-disable no-descending-specificity */
+  ol[type='1'] ol:not([type]) {
+    list-style-type: lower-alpha;
+  }
+
+  ol[type='a'] ol:not([type]) {
+    list-style-type: lower-roman;
+  }
+
+  ol[type='i'] ol:not([type]) {
+    list-style-type: lower-roman;
+  }
+
+  ul[type='disc'] ul:not([type]) {
+    list-style-type: circle;
+  }
+
+  ul[type='circle'] ul:not([type]) {
+    list-style-type: square;
+  }
+
+  ul[type='square'] ul:not([type]) {
+    list-style-type: square;
+  }
+
+  // A plain descendant combinator doesn't distinguish "one level down" from
+  // "two levels down", so without these, a grandchild under an explicit
+  // type="1"/"disc"/"a"/"circle"/"i"/"square" top level would match the same
+  // rule as its parent above and incorrectly repeat that style instead of
+  // continuing the outline sequence. type="1"/"disc" are at the start of the
+  // sequence, so their 3rd level continues to the next step
+  // (lower-roman/square); type="a"/"circle"/"i"/"square" are already at or
+  // past the sequence's last step (lower-roman/square), and there's no
+  // canonical step after that to advance to, so their 3rd level holds at
+  // that same terminal style rather than wrapping back to the start.
+  ol[type='1'] ol:not([type]) ol:not([type]) {
+    list-style-type: lower-roman;
+  }
+
+  ol[type='a'] ol:not([type]) ol:not([type]) {
+    list-style-type: lower-roman;
+  }
+
+  ol[type='i'] ol:not([type]) ol:not([type]) {
+    list-style-type: lower-roman;
+  }
+
+  ul[type='disc'] ul:not([type]) ul:not([type]) {
+    list-style-type: square;
+  }
+
+  ul[type='circle'] ul:not([type]) ul:not([type]) {
+    list-style-type: square;
+  }
+
+  ul[type='square'] ul:not([type]) ul:not([type]) {
+    list-style-type: square;
+  }
+  /* stylelint-enable no-descending-specificity */
 }
 
 .taxonomy-list {
