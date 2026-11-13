@@ -26,48 +26,15 @@ Use the controls panel below to experiment with the custom card collection's pro
 
 {twigPropsTable(componentProps, 'optional')}
 
-## Featured Layout
+## Card Size
 
-When <code>custom_card_collection\_\_featured</code> is set to <code>'true'</code>, the collection displays with a featured layout where the first card appears larger and more prominently than the subsequent cards. This creates visual hierarchy and draws attention to the primary content.
+<code>custom_card_collection\_\_card_size</code> sets how big each card is. It is
+a size choice, the same Small and Large wording the card collection uses.
 
-<div
-  style={{
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    gap: '1.5rem',
-    margin: '2rem 0',
-  }}
->
-  <div
-    style={{
-      padding: '1.5rem',
-      background: '#f0f0f0',
-      borderRadius: '8px',
-    }}
-  >
-    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Featured Layout (3 cards)</h3>
-    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
-      One large featured card on the left, with two smaller cards stacked on
-      the right. Creates strong visual hierarchy and emphasizes the primary
-      content while maintaining context with related items.
-    </p>
-  </div>
+- **Small** (default): the 4-up grid collections have always rendered, with a top bar on cards without images.
+- **Large**: bigger cards in the Large grid of the card collection, 3 across a full-width region.
 
-  <div
-    style={{
-      padding: '1.5rem',
-      background: '#f0f0f0',
-      borderRadius: '8px',
-    }}
-  >
-    <h3 style={{ marginTop: 0, color: '#0053A0' }}>Standard Layout (4 cards)</h3>
-    <p style={{ fontSize: '0.95rem', marginBottom: 0 }}>
-      Equal-sized cards in a responsive grid layout. Provides balanced
-      presentation where all items have equal visual weight. Adapts to
-      viewport size for optimal viewing across devices.
-    </p>
-  </div>
-</div>
+Anything other than <code>'large'</code> renders small, so collections saved before the option existed look the same.
 
 ## Image Display Options
 
@@ -117,9 +84,8 @@ The image display setting applies to all cards in the collection uniformly.
           <strong>Responsive Behavior</strong>
         </td>
         <td>
-          Featured layout stacks vertically on mobile, standard grid adapts
-          columns based on viewport size, maintains readability across all
-          devices
+          Both sizes collapse to one column on small screens and adapt the
+          number of columns to the viewport and region width
         </td>
       </tr>
     </tbody>
@@ -128,16 +94,14 @@ The image display setting applies to all cards in the collection uniformly.
 
 ## Usage Guidelines
 
-### Featured Collections
+### Large Collections
 
-- Use featured layout to highlight the most important or compelling content
-- Optimal with 3 cards (1 featured + 2 supporting)
-- Ensure the first card contains the most engaging content, visuals, and messaging
-- Featured layout creates asymmetric visual interest and natural reading flow
+- Use large cards when each card has strong imagery and a short message
+- Large cards fit 3 across a full-width region
 
-### Standard Collections
+### Small Collections
 
-- Standard layout works best with 4 cards for balanced grid presentation
+- Small cards work best with 4 cards for balanced grid presentation
 - Can accommodate more cards if needed, maintaining responsive grid behavior
 - Use when all items should have equal visual prominence
 - Provides clean, organized content presentation
@@ -164,4 +128,4 @@ The image display setting applies to all cards in the collection uniformly.
 
 ## Visual Regression Testing
 
-For comprehensive testing of all custom card collection variations including featured/standard layouts and image display options, see the [Visreg page](?path=/story/organisms-card-collection-custom-card-collection-visreg--old-blues).
+For comprehensive testing of all custom card collection variations including small and large card sizes and image display options, see the [Visreg page](?path=/story/organisms-card-collection-custom-card-collection-visreg--old-blues).

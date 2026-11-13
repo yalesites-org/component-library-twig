@@ -1,6 +1,7 @@
 {#
  # Available Variables:
  # - custom_card_collection__heading
+ # - custom_card_collection__card_size: 'small' (default) or 'large'.
  #
  # Available Blocks:
  # - custom_card_collection__cards: when this renders nothing, the whole
@@ -10,11 +11,12 @@
 
 {% set custom_card_collection__base_class = 'custom-card-collection' %}
 
-{% set custom_card_collection__featured = custom_card_collection__featured == 'true' ? 'true' : 'false' %}
+{# Small is the 4-up grid every collection rendered before the dial existed, so unset and unknown values fall back to it. #}
+{% set custom_card_collection__card_size = custom_card_collection__card_size == 'large' ? 'large' : 'small' %}
 {% set custom_card_collection__width = custom_card_collection__width|default('site') %}
 
 {% set custom_card_collection__attributes = {
-  'data-collection-featured': custom_card_collection__featured,
+  'data-card-size': custom_card_collection__card_size,
   'data-component-width': custom_card_collection__width,
   'class': bem(custom_card_collection__base_class),
 } %}

@@ -25,17 +25,23 @@ customCardCollectionHeading:
   description: Optional heading displayed above the custom card collection
   control: text
 
-featured:
-  twigProp: custom_card_collection__featured
-  name: Featured
-  type: boolean
+cardSize:
+  twigProp: custom_card_collection__card_size
+  name: Card Size
+  type: select
   required: false
-  description: Enable featured layout with larger first card
+  description: How big each card in the collection is
   detail: >
-    When true, the first card displays larger and more prominently. Passed to
-    Twig as the string 'true' or 'false' via custom_card_collection__featured.
-  default: true
-  control: boolean
+    Small is the 4-up grid collections have always rendered and is the default,
+    so existing collections look the same. Large gives bigger cards, matching
+    the Large size of the card collection. Passed to Twig as the string 'small'
+    or 'large' via custom_card_collection__card_size; anything else renders
+    small.
+  default: small
+  options:
+    - small
+    - large
+  control: select
 
 withImage:
   twigProp: custom_card__image

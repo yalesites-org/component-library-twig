@@ -29,14 +29,17 @@ withImage:
   default: true
   control: boolean
 
-featured:
-  name: Featured
-  type: boolean
+cardSize:
+  name: Card Size
+  type: select
   required: false
-  description: Whether the collection displays cards in a featured layout style
+  description: Size of the collection the card sits in
   detail: >
-    Controls the data-collection-featured attribute on the card collection
-    wrapper. This is a Storybook-only UI toggle — it is not a direct Twig
-    prop on the card template itself.
-  default: true
-  control: boolean
+    Controls the data-card-size attribute on the card collection wrapper. This
+    is a Storybook-only UI toggle, it is not a direct Twig prop on the card
+    template itself.
+  default: small
+  options:
+    - small
+    - large
+  control: select
