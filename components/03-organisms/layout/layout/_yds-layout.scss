@@ -561,6 +561,19 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     margin-block-start: 0;
   }
 
+  // A 30/70 keeps its own 64px bottom padding, so an uncolored 70/30 right
+  // after it must not add its 64px top margin on top (128px). One 64px gap
+  // is kept, as between two stacked 70/30 sections. A 30/70 with no bottom
+  // padding leaves the margin alone (YaleSites-Internal#2192).
+  [data-component-layout='thirty-seventy']:not(
+      [data-component-padding='no-bottom'],
+      [data-component-padding='no-padding']
+    )
+    + [data-section-theme='default'][data-component-layout='seventy-thirty']
+    > & {
+    margin-block-start: 0;
+  }
+
   // Flex sets `min-width` of children to `auto` by default... but this breaks
   // some of our base layout styles (causes horizontal scrolling), so we need to
   // reset it to `0`.

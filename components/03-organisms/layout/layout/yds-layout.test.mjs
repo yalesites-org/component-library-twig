@@ -702,3 +702,10 @@ test('the first uncolored 70/30 right after page meta has no top margin', () => 
     /\.page-meta\s*\+ \[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\]\s*> & \{\s*margin-block-start: 0;/,
   );
 });
+
+test('an uncolored 70/30 right after a padded 30/70 adds no top margin', () => {
+  assert.match(
+    scss(),
+    /\[data-component-layout='thirty-seventy'\]:not\(\s*\[data-component-padding='no-bottom'\],\s*\[data-component-padding='no-padding'\]\s*\)\s*\+ \[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\]\s*> & \{\s*margin-block-start: 0;/,
+  );
+});
