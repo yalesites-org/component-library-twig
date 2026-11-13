@@ -278,12 +278,19 @@ $facts-and-figures-group-component-themes: map.deep-get(
 // background, so the section padding and the block wrapper margin around it
 // show as two stripes of section color above and below (YaleSites-Internal#2199).
 // Only when the group is the section's sole block; with sibling blocks the
-// spacing still separates them.
-.yds-layout[data-component-layout='one-column'][data-section-theme]:not(
-    [data-section-theme='default']
-  ):has(
+// spacing still separates them. Layout Builder adds an "Add block" sibling to
+// the region, so there "sole block" is a first block followed only by that link.
+// (:has() cannot nest, so the two cases are separate selectors.)
+$facts-and-figures-solo-section: '.yds-layout[data-component-layout="one-column"][data-section-theme]:not([data-section-theme="default"])';
+
+#{$facts-and-figures-solo-section}:has(
     > .layout__region > .ys-block-wrapper:only-child > .facts-and-figures__group
-  ) {
+  ),
+#{$facts-and-figures-solo-section}:has(
+    > .layout__region
+      > .ys-block-wrapper:first-child:nth-last-child(2)
+      > .facts-and-figures__group
+  ):has(> .layout__region > .layout-builder__add-block:last-child) {
   padding-block: 0;
 
   > .layout__region > .ys-block-wrapper {
