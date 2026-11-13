@@ -19,6 +19,7 @@ dataVariant:
     - Upcoming Only
     - Past Only
     - Single Date
+    - No End Time
   control: select
 
 withCalendar:
