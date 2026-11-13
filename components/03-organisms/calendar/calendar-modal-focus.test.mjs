@@ -19,7 +19,7 @@ const script = readFileSync(path.join(dir, 'yds-calendar.js'), 'utf8');
 
 test('the click handler focuses the modal after repopulating it', () => {
   const populate = script.indexOf("moreEventsContainer.innerHTML = '';");
-  const show = script.indexOf("MicroModal.show('calendar-modal');");
+  const show = script.indexOf('MicroModal.show(modalId);');
   const focus = script.indexOf('focusModal();', show);
 
   assert.ok(populate > -1 && show > populate, 'populate must precede show');
@@ -42,4 +42,51 @@ test('a month change returns focus to the pressed Next or Previous button', () =
   assert.ok(remember > -1 && refresh > remember, 'remember the button first');
   assert.ok(restore > -1, 'attach must refocus the pressed button');
   assert.match(script, /pendingNavFocus === 'prev' \? prevBtn : nextBtn/);
+});
+
+test('each calendar owns its modal id instead of sharing one', () => {
+  const twig = readFileSync(path.join(dir, 'yds-calendar.twig'), 'utf8');
+  const cell = readFileSync(path.join(dir, '_yds-calendar-cell.twig'), 'utf8');
+
+  assert.match(twig, /id: calendar_modal_id/);
+  assert.doesNotMatch(twig, /id: 'calendar-modal'/);
+  assert.match(cell, /data-micromodal-trigger': modal_id/);
+});
+
+test('month navigation targets the outermost calendar wrapper', () => {
+  assert.match(script, /wrapper\.parentElement\.closest\(wrapperSelector\)/);
+});
+
+test('duplicate wrapper and modal ids are made unique before MicroModal binds', () => {
+  const dedupe = script.indexOf('const uniqueId =');
+  const wrapperRename = script.indexOf('if (wrapper) uniqueId(wrapper);');
+  const modalRename = script.indexOf('uniqueId(modal)');
+  const init = script.indexOf('MicroModal.init();');
+
+  assert.ok(dedupe > -1, 'uniqueId helper not found');
+  assert.ok(
+    wrapperRename > dedupe && wrapperRename < init,
+    'wrapper renamed before init',
+  );
+  assert.ok(
+    modalRename > dedupe && modalRename < init,
+    'modal renamed before init',
+  );
+  assert.match(
+    script,
+    /data-micromodal-trigger="\$\{oldId\}"/,
+    'triggers follow the renamed modal',
+  );
+});
+
+test('stale MicroModal instance is dropped under the final renamed id', () => {
+  const rename = script.indexOf('const finalId = uniqueId(modal);');
+  const remove = script.indexOf('MicroModal.removeModal(finalId);');
+  const init = script.indexOf('MicroModal.init();');
+
+  assert.ok(rename > -1, 'final id not captured');
+  assert.ok(
+    remove > rename && remove < init,
+    'removeModal(finalId) runs after the rename and before init',
+  );
 });
