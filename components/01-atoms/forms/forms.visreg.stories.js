@@ -207,3 +207,40 @@ ViewsFiltersPhoneWidth.parameters = {
   ...ViewsFiltersPhoneWidth.parameters,
   chromatic: { viewports: [375] },
 };
+
+// Filter bar layout by filter count (YaleSites-Internal#2184): search first and
+// at least half the row, no partly empty row. The bar sizes itself to its own
+// width, so each count is shown in a wide, a medium and a narrow wrapper.
+const countedFilters = (id, count) =>
+  Array.from({ length: count }, (_, i) =>
+    category({ id: `${id}-f${i}`, label: `Filter ${i + 1}` }),
+  );
+const counts = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+const countedForms = (prefix, props = {}) =>
+  counts
+    .map(
+      (n) =>
+        heading(`${n} filter${n === 1 ? '' : 's'}`) +
+        form({
+          id: `${prefix}-${n}`,
+          fields: countedFilters(`${prefix}-${n}`, n),
+          ...props,
+        }),
+    )
+    .join('');
+const widthBox = (width, markup) =>
+  `<div style="max-width: ${width}">${markup}</div>`;
+
+export const ViewsFiltersLayoutWide = () =>
+  createSectionWrapper(
+    'default',
+    widthBox('62rem', countedForms('wide')) +
+      heading('Search off, 1 to 8 filters') +
+      widthBox('62rem', countedForms('wide-nosearch', { hide_search: true })),
+  );
+
+export const ViewsFiltersLayoutMedium = () =>
+  createSectionWrapper('default', widthBox('40rem', countedForms('mid')));
+
+export const ViewsFiltersLayoutNarrow = () =>
+  createSectionWrapper('default', widthBox('24rem', countedForms('narrow')));

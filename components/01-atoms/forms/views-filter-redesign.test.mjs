@@ -119,12 +119,53 @@ test('required asterisk stays dark on light sections default, two, five', () => 
   );
 });
 
-test('search spans the whole first row of the filter grid', () => {
-  const search = decls(form, (s) => s === `${scaffold} .form-item-search`);
+test('filter bar sizes itself to its own width on a 12-track grid', () => {
+  const bar = decls(form, (s) => s === scaffold);
+  const get = (prop) => bar.filter(([p]) => p === prop).map(([, v]) => v);
   assert.ok(
-    search.some(
+    get('container-type').includes('inline-size'),
+    'the bar must be its own inline-size container (YaleSites-Internal#2184)',
+  );
+  assert.ok(
+    get('grid-template-columns').some((v) => v.startsWith('repeat(12')),
+    'the bar must use a 12-track grid',
+  );
+});
+
+test('filter bar tiers switch at 54rem and 34rem of the bar width', () => {
+  const queries = [];
+  form.walkAtRules('container', (rule) => queries.push(rule.params));
+  assert.ok(
+    queries.some((q) => q === '(min-width: 54rem)'),
+    'wide tier',
+  );
+  assert.ok(
+    queries.some((q) => q === '(34rem <= width < 54rem)'),
+    'medium tier',
+  );
+});
+
+test('search is a grid item that gets its span from the filter count', () => {
+  const spans = (value) => {
+    let found = false;
+    form.walkRules((rule) => {
+      if (!rule.selector.endsWith('.form-item-search')) return;
+      rule.walkDecls('grid-column', (d) => {
+        if (d.value === value) found = true;
+      });
+    });
+    return found;
+  };
+  ['span 12', 'span 9', 'span 6'].forEach((v) =>
+    assert.ok(spans(v), `no search rule spans ${v}`),
+  );
+});
+
+test('the no-JS Apply row still spans every track', () => {
+  const actions = decls(form, (s) => s === `${scaffold} .form-actions`);
+  assert.ok(
+    actions.some(
       ([p, v]) => p === 'grid-column' && v.replace(/\s/g, '') === '1/-1',
     ),
-    'search must span every grid column (YaleSites-Internal#1923)',
   );
 });

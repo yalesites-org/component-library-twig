@@ -8,6 +8,7 @@
 
   - calendar: render the Events calendar wrapper (form#event-calendar-filter-form).
   - search: placeholder for the Search field.
+  - hide_search: leave the Search field out (a listing with search turned off).
   - fields: list of { id, label, options, selected, open, visible }.
     visible: how many leading chips fit on the closed row (default: all, so no
     badge). The rest are hidden and counted in the "+N more" badge.
@@ -19,10 +20,12 @@
 {% else %}
 <form class="{{ filter_classes }}">
 {% endif %}
+  {% if not hide_search %}
   <div class="form-item form-item-search">
     <label class="form-item__label" for="{{ id }}-search">Search</label>
     <input class="form-text form-item__textfield" type="text" id="{{ id }}-search" placeholder="{{ search }}">
   </div>
+  {% endif %}
   {% for field in fields %}
     {% set count = field.selected|length %}
     {% set visible = field.visible ?? count %}
