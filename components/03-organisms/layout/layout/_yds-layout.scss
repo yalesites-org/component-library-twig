@@ -516,7 +516,11 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // organism. A row gap on top of that took another 32px out of the narrow
   // column and left it 288px wide instead of 320px at 1440px and wider
   // (YaleSites-Internal#2100).
-  [data-component-layout='seventy-thirty'] > & {
+  // A 30/70 is the same row flipped and spaces its columns the same way
+  // (margin and padding on the narrow column), so it drops the gap too.
+  // Otherwise its narrow column is 32px narrower than a 70/30 sidebar.
+  [data-component-layout='seventy-thirty'] > &,
+  [data-component-layout='thirty-seventy'] > & {
     @media (min-width: $break-layout-layout) {
       gap: 0;
     }
@@ -536,6 +540,41 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     // 40px below 992px and 64px from 992px up, as the old yds-two-column did
     // through this token.
     margin-block-start: var(--spacing-page-section);
+  }
+
+  // Section Padding still applies to an uncolored 70/30: the zeroed padding
+  // and the top margin above must not swallow the editor's choice.
+  [data-section-theme='default'][data-component-layout='seventy-thirty'][data-component-padding='no-top']
+    > &,
+  [data-section-theme='default'][data-component-layout='seventy-thirty'][data-component-padding='no-padding']
+    > & {
+    margin-block-start: 0;
+  }
+
+  // The first uncolored 70/30 directly under the page title area has no top
+  // gap, so the page starts at the same height as live, where the old
+  // yds-two-column had none there. Stacked 70/30 sections keep their 64px
+  // (YaleSites-Internal#2192).
+  .page-meta
+    + [data-section-theme='default'][data-component-layout='seventy-thirty']
+    > & {
+    margin-block-start: 0;
+  }
+
+  // A 30/70 keeps its own 64px bottom padding, so an uncolored 70/30 right
+  // after it must not add its 64px top margin on top (128px). One 64px gap
+  // is kept, as between two stacked 70/30 sections. A 30/70 with no bottom
+  // padding leaves the margin alone. Only an uncolored 30/70 qualifies: a
+  // themed one paints its background on the section root, so its padding sits
+  // inside the color band and the next section would touch the band edge
+  // (YaleSites-Internal#2192).
+  [data-section-theme='default'][data-component-layout='thirty-seventy']:not(
+      [data-component-padding='no-bottom'],
+      [data-component-padding='no-padding']
+    )
+    + [data-section-theme='default'][data-component-layout='seventy-thirty']
+    > & {
+    margin-block-start: 0;
   }
 
   // Flex sets `min-width` of children to `auto` by default... but this breaks
