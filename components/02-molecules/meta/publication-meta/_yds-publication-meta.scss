@@ -14,10 +14,7 @@
  * `publication-label` mixin below. New blocks should `@include` it from
  * their own `__label` element to stay consistent.
  *
- * Note: a separate, unrelated `.resource-meta` molecule exists at
- * /02-molecules/meta/resource-meta/ — that one is the heavy "Published /
- * metadata / file-info" block used on full Resource pages. Do not confuse
- * the two.
+ * The full Resource page header is the separate publication-detail molecule.
  */
 
 // Shared values to match `.reference-card__overline` (the discipline slot)
