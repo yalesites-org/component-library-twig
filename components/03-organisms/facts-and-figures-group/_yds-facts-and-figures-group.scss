@@ -273,3 +273,32 @@ $facts-and-figures-group-component-themes: map.deep-get(
     color: var(--color-facts-and-figures-content);
   }
 }
+
+// In a colored one-column section the group paints its own full-width
+// background, so the section padding and the block wrapper margin around it
+// show as two stripes of section color above and below (YaleSites-Internal#2199).
+// Only when the group is the section's sole block; with sibling blocks the
+// spacing still separates them. Layout Builder adds an "Add block" sibling to
+// the region, and core puts a hidden region label before the first block, so
+// there "sole block" is the second child, between the label and that link.
+// (:has() cannot nest, so the two cases are separate selectors.)
+$facts-and-figures-solo-section: '.yds-layout[data-component-layout="one-column"][data-section-theme]:not([data-section-theme="default"])';
+
+#{$facts-and-figures-solo-section}:has(
+    > .layout__region > .ys-block-wrapper:only-child > .facts-and-figures__group
+  ),
+#{$facts-and-figures-solo-section}:has(
+    > .layout__region
+      > .ys-block-wrapper:nth-child(2):nth-last-child(2)
+      > .facts-and-figures__group
+  ):has(
+    > .layout__region
+      > .layout__region-info:first-child
+      ~ .layout-builder__add-block:last-child
+  ) {
+  padding-block: 0;
+
+  > .layout__region > .ys-block-wrapper {
+    margin-block: 0;
+  }
+}
