@@ -44,10 +44,10 @@ export const customCardCollection = ({
   url,
   customCardCollectionHeading,
   withImage,
-  featured,
+  cardSize,
   globalTheme,
 }) => {
-  const items = featured ? [1, 2, 3] : [1, 2, 3, 4];
+  const items = cardSize === 'large' ? [1, 2, 3] : [1, 2, 3, 4];
 
   return `
     <div class="wrap-for-global-theme" data-global-theme="${globalTheme}">
@@ -58,7 +58,7 @@ export const customCardCollection = ({
         custom_card__snippet: snippet,
         custom_card__url: url,
         custom_card__image: withImage ? 'true' : 'false',
-        custom_card_collection__featured: featured ? 'true' : 'false',
+        custom_card_collection__card_size: cardSize,
         custom_card_collection__cards: items,
         ...customCardData,
         ...imageData.responsive_images['3x2'],

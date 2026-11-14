@@ -103,7 +103,7 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
 .custom-card__image {
   grid-area: image;
 
-  [data-collection-featured='false'] & {
+  [data-card-size='small'] & {
     min-height: 0.25rem;
 
     @media (min-width: tokens.$break-m) {
@@ -112,12 +112,12 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
     }
   }
 
-  // if the custom card is not part of a featured card collection
+  // if the custom card is in a small card collection
   // and it doesn't have images
   // show a top bar and animate it.
   // If a global theme is active, the --color-card-bar-long and --color-card-bar-short
   // will change from default colors to color slots.
-  [data-collection-featured='false'] [data-with-image='false'] & {
+  [data-card-size='small'] [data-with-image='false'] & {
     background-color: var(--color-card-bar-long);
     position: relative;
 
@@ -136,7 +136,7 @@ $global-card-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   // change hover background gradient and animate it.
   .custom-card:hover & {
-    [data-collection-featured='false'] & {
+    [data-card-size='small'] & {
       &::before {
         width: 0%;
       }

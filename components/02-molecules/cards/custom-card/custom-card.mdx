@@ -11,7 +11,7 @@ Custom Card displays customizable card content with flexible layouts. It provide
 
 ## Interactive Preview
 
-Use the controls panel below to experiment with the custom card's properties in real-time. Test with and without images, toggle featured status, and adjust content.
+Use the controls panel below to experiment with the custom card's properties in real-time. Test with and without images, switch the card size, and adjust content.
 
 <div className="sb-contained-canvas">
   <Canvas of={CustomCardStories.customCard} />
@@ -68,9 +68,9 @@ Use the controls panel below to experiment with the custom card's properties in 
 - **With Image**: Displays a responsive image alongside the card content, creating a richer visual presentation
 - **Without Image**: Shows only the heading and snippet text for a cleaner, text-focused card
 
-### Featured Collection
+### Card Size
 
-The `data-collection-featured` attribute controls the visual treatment of the card collection, affecting spacing, sizing, and layout presentation.
+The `data-card-size` attribute on the card collection (`small` or `large`) sets the grid and, for small collections, the top bar on cards without images and the image height.
 
 ## Technical Specifications
 
