@@ -160,6 +160,10 @@ Define `atomic/<name>` in `atomic.libraries.yml` pointing at the compiled
   [recipe-test-a-new-sdc.md](recipe-test-a-new-sdc.md).
 - If the component is interactive, add a Vitest behavioral test and prove it is
   meaningful (break the behavior, confirm the test fails, restore).
+- If the component carries a CSS or markup rule a screenshot could miss, pin it with a
+  `node --test` guard.
+- Which of these applies, and how to write each, is in
+  [recipe-test-a-new-sdc.md](recipe-test-a-new-sdc.md).
 - Render the block on a page and confirm it looks right. Render **twice on a fresh
   `drush cr`** — a single render can be cache-served and hide a prop-validation
   500 for a NULL prop.
