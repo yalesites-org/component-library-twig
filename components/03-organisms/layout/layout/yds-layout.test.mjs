@@ -706,6 +706,17 @@ test('the first uncolored 70/30 right after page meta has no top margin', () => 
 test('an uncolored 70/30 right after a padded 30/70 adds no top margin', () => {
   assert.match(
     scss(),
-    /\[data-component-layout='thirty-seventy'\]:not\(\s*\[data-component-padding='no-bottom'\],\s*\[data-component-padding='no-padding'\]\s*\)\s*\+ \[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\]\s*> & \{\s*margin-block-start: 0;/,
+    /\[data-section-theme='default'\]\[data-component-layout='thirty-seventy'\]:not\(\s*\[data-component-padding='no-bottom'\],\s*\[data-component-padding='no-padding'\]\s*\)\s*\+ \[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\]\s*> & \{\s*margin-block-start: 0;/,
+  );
+});
+
+test('the page title bottom margin is dropped above a first uncolored 70/30', () => {
+  const css = readFileSync(
+    new URL('../../../04-page-layouts/page-layouts.scss', import.meta.url),
+    'utf8',
+  );
+  assert.match(
+    css,
+    /\.page-meta:not\(\[data-section-theme\]:not\(\[data-section-theme='default'\]\)\):has\(\s*\+ \[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\]\s*\)\s*\.page-title \{\s*margin-bottom: 0;/,
   );
 });
