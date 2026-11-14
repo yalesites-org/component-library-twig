@@ -304,7 +304,8 @@
 }
 
 // Dark sections: the calendar hard-codes grays and black, which vanish on the
-// dark section colors. Follow the section foreground there. (#2194)
+// dark section colors. Follow the section foreground there. The "More events"
+// popup paints white, so its events keep their own colors. (#2194)
 [data-section-theme]:not(
     [data-section-theme='default'],
     [data-section-theme='two'],
@@ -316,9 +317,12 @@
   .calendar__day,
   .calendar__nav-time,
   .calendar__day--disabled,
-  .calendar-event,
-  .calendar-event__category,
-  .calendar-event__type {
+  .calendar-event:not(.calendar-event--modal),
+  .calendar-event:not(.calendar-event--modal) time,
+  .calendar-event__category:not(
+      .calendar-event--modal .calendar-event__category
+    ),
+  .calendar-event__type:not(.calendar-event--modal .calendar-event__type) {
     color: var(--color-section-foreground);
   }
 
