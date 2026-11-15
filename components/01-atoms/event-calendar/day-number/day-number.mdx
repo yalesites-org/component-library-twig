@@ -1,0 +1,85 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as Stories from './day-number.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './day-number-props.yml';
+
+<Meta of={Stories} name="Overview" />
+
+# Day number
+
+The date inside one calendar day, used by the Full month grid (size 32) and the Compact month and phone days (size 36).
+
+## Playground
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Playground} />
+</div>
+<Controls of={Stories.Playground} />
+
+## States
+
+### NoEvents
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.NoEvents} />
+</div>
+
+### HasEvents
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.HasEvents} />
+</div>
+
+### Today
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Today} />
+</div>
+
+### Selected
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Selected} />
+</div>
+
+### TodayAndSelected
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.TodayAndSelected} />
+</div>
+
+### Past
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Past} />
+</div>
+
+### OtherMonth
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.OtherMonth} />
+</div>
+
+### Size32
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Size32} />
+</div>
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Atom
+- **Template**: `yds-day-number.twig`
+- **Styles**: `_yds-day-number.scss`
+- **Rules**: tokens only, no color props, states are props, the parent sets outer margin and width
+
+### Accessibility
+
+- The hidden label holds the full date, event count and any "today" or "selected" words. The visible number is `aria-hidden`.
+- Today (white on Yale Blue) is 12.2:1. Selected (Yale Blue on Blue Soft) is 10.6:1.
