@@ -1,5 +1,11 @@
 # Storybook Migration Guide
 
+> **Scope.** This guide covers only how a component's Storybook pages are laid out (the MDX doc page
+> and the visual-regression page). It is current for that purpose. It says nothing about how a
+> component is wired into Drupal. For that, SDC is the only pattern for new components: see
+> [docs/sdc/](docs/sdc/README.md), starting with
+> [building-a-new-block-as-sdc.md](docs/sdc/building-a-new-block-as-sdc.md).
+
 This guide explains the new two-page documentation structure for the YaleSites Component Library Storybook and provides instructions for migrating existing components to the new format.
 
 ## Overview

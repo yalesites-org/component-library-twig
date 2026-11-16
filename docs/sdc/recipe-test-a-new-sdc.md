@@ -1,6 +1,15 @@
 # Recipe: test a new SDC
 
-First-draft from the Wave 0 pilot (epic #1351). Two depths of testing, applied at different times.
+How to test a new SDC, drawn from what worked across the migration (epic #1351). Pick the depth
+that matches the component:
+
+| Component | Tests to add |
+|---|---|
+| Any SDC | Schema validation (section 1) |
+| Interactive (JS behavior) | Schema validation plus a Vitest behavioral test (section 2) |
+| Has a CSS or markup contract worth pinning | A `node --test` guard (section 3) |
+
+Visual-regression snapshots stay the baseline for appearance. These tests cover what snapshots cannot.
 
 ## 1. Lightweight schema-validation test — every wave
 
@@ -46,10 +55,22 @@ Those get real behavioral tests.
   fails, then restore. (Verified for Accordion: mutating `expand()` failed 3/5 tests; restoring
   passed all 5.)
 
+## 3. Contract guards — CSS, tokens, template output
+
+For rules that a screenshot can miss (a contrast ratio, a `flex-shrink` that keeps a badge inside
+its box, a token that must not be used), add a Node test next to the code.
+
+- **Runner:** the built-in `node --test`. Run all with `npm run test:unit:node`, or one file with
+  `node --test components/<path>/<name>.test.mjs`.
+- **Location:** co-located `*.test.mjs` (or under `lib/`).
+- **Pattern:** compile the component's SCSS with `sass`, parse it with `postcss`, and assert on the
+  resulting rules. See `components/01-atoms/forms/views-filter-more-badge.test.mjs`.
+- Name the ticket in the file header comment so the next reader knows why the rule exists.
+
 ## CI wiring
 
-- **JS (Vitest):** wired into CLT CI — `npm run test` (run by `.github/workflows/test.yml`) now
-  includes `npm run test:unit`.
+- **JS (Vitest and `node --test`):** wired into CLT CI. `npm run test` (run by
+  `.github/workflows/test.yml`) includes `npm run test:unit`, which runs both runners.
 - **PHP (schema validation):** runs locally via `lando composer test:sdc`. Wiring it into the
   yalesites-project CI needs a CI-compatible PHPUnit bootstrap first — the committed `phpunit.xml`
   hardcodes Lando `/app` paths, so flipping the `unit-test` composer stub blindly would break the
