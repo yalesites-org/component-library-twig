@@ -17,7 +17,7 @@ import {
  * Storybook Definition.
  *
  * Profile Meta has its own visreg file rather than sharing
- * `Molecules/Meta/Visreg` with Basic and Resource Meta, for the same reason
+ * `Molecules/Meta/Visreg` with Basic Meta, for the same reason
  * Event Meta does. With both of its sweeps stacked under the other two, the
  * shared story reached 1,200 x 19,638 = 23,565,600px, 94% of the 25,000,000px
  * snapshot ceiling.
