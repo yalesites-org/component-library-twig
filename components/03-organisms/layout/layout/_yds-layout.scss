@@ -554,8 +554,10 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   // The first uncolored 70/30 directly under the page title area has no top
   // gap, so the page starts at the same height as live, where the old
   // yds-two-column had none there. Stacked 70/30 sections keep their 64px
+  // Only under an uncolored page meta: under a colored title area the 70/30
+  // keeps its 64px so it does not sit flush against the color band
   // (YaleSites-Internal#2192).
-  .page-meta
+  .page-meta:not([data-section-theme]:not([data-section-theme='default']))
     + [data-section-theme='default'][data-component-layout='seventy-thirty']
     > & {
     margin-block-start: 0;
