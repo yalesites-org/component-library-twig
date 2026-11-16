@@ -4,7 +4,7 @@
 // passes props and never restyles it. Sizes: 32px = 2rem, 36px = 2.25rem.
 .day-number {
   --day-number-size: calc(var(--size-spacing-7) + var(--size-spacing-2));
-  --day-number-color: var(--color-gray-700);
+  --day-number-color: var(--color-basic-black);
   --day-number-weight: var(--font-weights-mallory-book);
   --day-number-fill: transparent;
   --day-number-ring: transparent;
@@ -25,7 +25,6 @@
 
   &[data-day-number-size='32'] {
     --day-number-size: var(--size-spacing-7);
-    --day-number-color: var(--color-basic-black);
   }
 
   &[data-day-number-has-events='true'] {
