@@ -229,7 +229,7 @@ const countedForms = (prefix, props = {}) =>
     )
     .join('');
 const widthBox = (width, markup) =>
-  `<div style="max-width: ${width}">${markup}</div>`;
+  `<div style="width: ${width}; max-width: 100%">${markup}</div>`;
 
 export const ViewsFiltersLayoutWide = () =>
   createSectionWrapper(
