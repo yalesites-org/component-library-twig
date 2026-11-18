@@ -1,0 +1,20 @@
+{#
+ # Overflow mark: the "+" after three event dots when a day has four or more events.
+ #
+ # Available Variables:
+ # - overflow_mark__past: gray mark. Default false.
+ #
+ # Decorative: the day's accessible label already counts the events.
+ # The parent sets outer margin and width; this atom never does.
+ #}
+
+{% set overflow_mark__base_class = 'overflow-mark' %}
+{% set overflow_mark__attributes = {
+  'class': bem(overflow_mark__base_class),
+  'aria-hidden': 'true',
+} %}
+{% if overflow_mark__past %}
+  {% set overflow_mark__attributes = overflow_mark__attributes|merge({'data-overflow-mark-past': 'true'}) %}
+{% endif %}
+
+<span {{ add_attributes(overflow_mark__attributes) }}>+</span>

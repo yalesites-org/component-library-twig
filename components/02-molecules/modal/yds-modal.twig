@@ -4,15 +4,15 @@
 } %}
 <div {{ add_attributes(modal__attributes) }} id="{{ id }}" aria-hidden="true">
   <div {{ bem('overlay', [], modal__base_class) }} tabindex="-1" data-micromodal-close>
-    <div {{ bem('container', [], modal__base_class) }} role="dialog" aria-modal="true" aria-labelledby="calendar-modal-title">
+    <div {{ bem('container', [], modal__base_class) }} role="dialog" aria-modal="true" aria-labelledby="{{ id }}-title">
       <div {{ bem('header', [], modal__base_class) }}>
-        <h4 {{ bem('title', [], modal__base_class) }}>{{ title }}</h4>
+        <h4 id="{{ id }}-title" {{ bem('title', [], modal__base_class) }}>{{ title }}</h4>
         <button {{ bem('close', [], modal__base_class) }} aria-label="Close dialog" data-micromodal-close>
           <i class="fa fa-close fa-1x"></i>
         </button>
       </div>
       <div {{ bem('content', [], modal__base_class) }}>
-        {% if id == 'calendar-modal' %}
+        {% if calendar_events %}
           {# Ships hidden and is revealed by yds-calendar.js once it holds events.
              It cannot be omitted when empty: the script resolves it once, at
              attach time, and would get null for every later day click. #}

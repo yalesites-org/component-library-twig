@@ -169,3 +169,19 @@ test('the no-JS Apply row still spans every track', () => {
     ),
   );
 });
+
+test('dark-section filter focus ring keys on the section attribute (#2194)', () => {
+  const rules = [];
+  form.walkRules((rule) => {
+    if (rule.nodes.some((n) => n.prop === '--ys-filter-focus')) {
+      rules.push(rule.selector);
+    }
+  });
+  const dark = rules.find((s) => s.includes(':not('));
+  assert.ok(dark, 'dark-section focus rule not found');
+  assert.ok(dark.includes('[data-section-theme'), 'must key on section attr');
+  assert.ok(
+    !dark.includes('data-component-theme'),
+    'block attribute never lands on a section',
+  );
+});
