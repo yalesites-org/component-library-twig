@@ -40,7 +40,7 @@
         : '@count more events'|t|replace({'@count': hidden_count}),
       control__base_class: 'toggle',
       control__blockname: 'calendar-event',
-      control__attributes: {'data-micromodal-trigger': 'calendar-modal'},
+      control__attributes: {'data-micromodal-trigger': modal_id|default('calendar-modal')},
     } %}
   {% endif %}
 </li>
