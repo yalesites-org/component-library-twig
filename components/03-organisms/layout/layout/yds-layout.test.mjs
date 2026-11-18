@@ -706,7 +706,14 @@ test('the first uncolored 70/30 right after an uncolored page meta has no top ma
 test('an uncolored 70/30 right after a padded 30/70 adds no top margin', () => {
   assert.match(
     scss(),
-    /\[data-section-theme='default'\]\[data-component-layout='thirty-seventy'\]:not\(\s*\[data-component-padding='no-bottom'\],\s*\[data-component-padding='no-padding'\]\s*\)\s*\+ \[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\]\s*> & \{\s*margin-block-start: 0;/,
+    /\[data-section-theme='default'\]\[data-component-layout='thirty-seventy'\]:not\(\s*\[data-component-padding='no-bottom'\],\s*\[data-component-padding='no-padding'\]\s*\)\s*\+ \[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\]\s*> & \{\s*@media \(min-width: \$break-layout-layout\) \{\s*margin-block-start: 0;/,
+  );
+});
+
+test('a padded 30/70 before an uncolored 70/30 drops its bottom padding when stacked', () => {
+  assert.match(
+    scss(),
+    /\[data-component-layout='thirty-seventy'\]:not\(\s*\[data-component-padding='no-bottom'\],\s*\[data-component-padding='no-padding'\]\s*\):has\(\s*\+ \[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\]\s*\)\s*> & \{\s*@media \(max-width: \$break-layout-layout-max\) \{\s*padding-block-end: 0;/,
   );
 });
 
