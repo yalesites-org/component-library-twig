@@ -47,7 +47,7 @@ const renderSection = (theme) =>
     theme,
     `
         <h3>1. Custom Card</h3>
-        <div class='custom-card-collection' data-component-width='site' data-collection-featured="true">
+        <div class='custom-card-collection' data-component-width='site' data-card-size="small">
           <div class='custom-card-collection__inner'>
             <ul class='custom-card-collection__cards'>
               ${customCardTwig({
