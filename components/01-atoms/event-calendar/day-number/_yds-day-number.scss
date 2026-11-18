@@ -1,0 +1,67 @@
+@use '../../../00-tokens/tokens';
+
+// Day number atom. States are data attributes the component owns; a parent
+// passes props and never restyles it. Sizes: 32px = 2rem, 36px = 2.25rem.
+.day-number {
+  --day-number-size: calc(var(--size-spacing-7) + var(--size-spacing-2));
+  --day-number-color: var(--color-basic-black);
+  --day-number-weight: var(--font-weights-mallory-book);
+  --day-number-fill: transparent;
+  --day-number-ring: transparent;
+
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--day-number-size);
+  height: var(--day-number-size);
+  padding: 0 var(--size-spacing-2);
+  color: var(--day-number-color);
+  background-color: var(--day-number-fill);
+  box-shadow: inset 0 0 0 var(--size-thickness-2) var(--day-number-ring);
+  font-size: var(--font-size-16);
+  font-weight: var(--day-number-weight);
+  line-height: 1;
+
+  &[data-day-number-size='32'] {
+    --day-number-size: var(--size-spacing-7);
+  }
+
+  &[data-day-number-has-events='true'] {
+    --day-number-color: var(--color-basic-black);
+    --day-number-weight: var(--font-weights-yalenew-bold);
+  }
+
+  &[data-day-number-past='true'] {
+    --day-number-color: var(--color-gray-600);
+  }
+
+  &[data-day-number-other-month='true'] {
+    --day-number-color: var(--color-gray-600);
+    --day-number-fill: var(--color-gray-100);
+  }
+
+  &[data-day-number-selected='true'] {
+    --day-number-color: var(--color-blue-yale);
+    --day-number-weight: var(--font-weights-yalenew-bold);
+    --day-number-fill: var(--color-blue-soft);
+    --day-number-ring: var(--color-blue-medium);
+  }
+
+  &[data-day-number-today='true'] {
+    --day-number-color: var(--color-basic-white);
+    --day-number-weight: var(--font-weights-yalenew-bold);
+    --day-number-fill: var(--color-blue-yale);
+    --day-number-ring: transparent;
+  }
+
+  &[data-day-number-today='true'][data-day-number-selected='true'] {
+    --day-number-ring: var(--color-blue-light);
+
+    box-shadow: inset 0 0 0 var(--size-thickness-4) var(--day-number-ring);
+  }
+
+  &__label {
+    @include tokens.visually-hidden;
+  }
+}

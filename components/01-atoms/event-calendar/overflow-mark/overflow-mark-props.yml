@@ -1,0 +1,11 @@
+# overflow-mark-props.yml
+#
+# Overflow mark atom property definitions.
+
+past:
+  twigProp: overflow_mark__past
+  name: Past
+  type: boolean
+  required: false
+  description: Gray mark for a past day.
+  default: false
