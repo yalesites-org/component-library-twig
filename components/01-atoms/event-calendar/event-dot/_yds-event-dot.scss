@@ -1,0 +1,22 @@
+@use '../../../00-tokens/tokens';
+
+// Event dot atom: 6px, 8px when pointed at.
+.event-dot {
+  --event-dot-size: var(--size-thickness-6);
+  --event-dot-color: var(--color-blue-yale);
+
+  display: inline-block;
+  flex: none;
+  width: var(--event-dot-size);
+  height: var(--event-dot-size);
+  border-radius: 50%;
+  background-color: var(--event-dot-color);
+
+  &[data-event-dot-past='true'] {
+    --event-dot-color: var(--color-gray-500);
+  }
+
+  &[data-event-dot-pointed-at='true'] {
+    --event-dot-size: var(--size-thickness-8);
+  }
+}

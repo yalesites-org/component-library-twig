@@ -33,23 +33,24 @@ const renderGlobalTheme = () => {
 
   const renderLayoutVariations = () =>
     createVariations(
-      (isFeatured) =>
+      (cardSize) =>
         customCardCollectionTwig({
           custom_card_collection__heading: heading,
           custom_card__heading: customCardData.custom_card__heading,
           custom_card__snippet: customCardData.custom_card__snippet,
           custom_card__url: 'https://google.com',
           custom_card__image: withImage ? 'true' : 'false',
-          custom_card_collection__featured: isFeatured ? 'true' : 'false',
-          custom_card_collection__cards: isFeatured ? [1, 2, 3] : [1, 2, 3, 4],
+          custom_card_collection__card_size: cardSize,
+          custom_card_collection__cards:
+            cardSize === 'large' ? [1, 2, 3] : [1, 2, 3, 4],
           ...customCardData,
           ...imageData.responsive_images['3x2'],
         }),
-      [true, false],
+      ['small', 'large'],
       'All Layout Variations',
       '',
-      'Layout Type',
-      (isFeatured) => (isFeatured ? 'Featured Layout' : 'Standard Layout'),
+      'Card Size',
+      (cardSize) => (cardSize === 'large' ? 'Large Cards' : 'Small Cards'),
     );
 
   return createThemeVariations(
