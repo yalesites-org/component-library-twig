@@ -36,7 +36,7 @@ name:
   type: string
   required: false
   description: What the hours belong to, used in the table captions
-  detail: Falls back to the heading, then to "Hours".
+  detail: Falls back to the heading, then to "Office hours".
 
 upcoming:
   twigProp: office_hours__upcoming

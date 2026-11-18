@@ -1,0 +1,71 @@
+# day-number-props.yml
+#
+# Day number atom property definitions: single source for Storybook controls and docs.
+
+number:
+  twigProp: day_number__number
+  name: Number
+  type: string
+  required: false
+  description: The date shown in the day.
+  default: '28'
+
+label:
+  twigProp: day_number__label
+  name: Accessible label
+  type: string
+  required: false
+  description: Full date for screen readers. Rendered as hidden text; the visible number is hidden from assistive tech.
+  default: Wednesday, October 28, 4 events
+
+size:
+  twigProp: day_number__size
+  name: Size
+  type: select
+  required: false
+  description: 32 for the Full month grid, 36 for Compact month and phone days.
+  default: '36'
+  options:
+    - '32'
+    - '36'
+  control: select
+
+hasEvents:
+  twigProp: day_number__has_events
+  name: Has events
+  type: boolean
+  required: false
+  description: Bold number. A bold number means the day has events.
+  default: false
+
+today:
+  twigProp: day_number__today
+  name: Today
+  type: boolean
+  required: false
+  description: Yale Blue square with a white bold number.
+  default: false
+
+selected:
+  twigProp: day_number__selected
+  name: Selected
+  type: boolean
+  required: false
+  description: Blue Soft fill with a Medium Blue ring. Compact and phone only.
+  default: false
+
+past:
+  twigProp: day_number__past
+  name: Past
+  type: boolean
+  required: false
+  description: Gray number for a day that has passed.
+  default: false
+
+otherMonth:
+  twigProp: day_number__other_month
+  name: Other month
+  type: boolean
+  required: false
+  description: Gray 100 fill with a gray number, for days outside the shown month.
+  default: false
