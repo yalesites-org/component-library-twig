@@ -68,6 +68,18 @@ const renderGlobalTheme = () => {
         '',
         'Wrapped Callout Theme',
       )}
+      ${createThemeVariations(
+        (section) =>
+          createSectionWrapper(
+            section,
+            componentThemes.map((dial) => renderWrappedCallout(dial)).join(''),
+            { width: 'site', primaryWidth: '100%' },
+          ),
+        sectionThemes,
+        'Every Wrapped Callout Theme in Every Section Theme',
+        '',
+        'Section Theme',
+      )}
       ${createVariations(
         (alignment) =>
           createSectionWrapper('one', renderWrappedCallout('one', alignment), {
