@@ -1,6 +1,7 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
 @use '../../00-tokens/functions/map';
+@use '../../00-tokens/functions/contrast';
 @use '../../01-atoms/controls/text-link/yds-text-link' as link;
 
 $global-wrapped-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
@@ -113,15 +114,16 @@ $wrapped-callout-component-themes: map.deep-get(
   padding: var(--size-spacing-8) var(--size-spacing-6);
 
   // This callout paints no background of its own, so its border is drawn
-  // directly on whatever surface encloses it. Inside a themed section the
-  // section supplies the line colour: the backdrop there ranges from Yale Blue
-  // to a near-white tint across the six section backgrounds, and
-  // 00-tokens/colors/section-background-contrast.txt shows no fixed slot clears
-  // 3:1 on all of them (YaleSites-Internal#1613, deferred here from #1614).
-  // Outside a themed section the property is unset and the block's own colour
-  // dial applies exactly as before.
+  // directly on whatever surface encloses it. The block's Theme option is
+  // honoured everywhere it clears 3:1 (WCAG 1.4.11) against the enclosing
+  // section's background. Where it does not -- including a callout whose Theme
+  // is the section's own colour, which would vanish -- the block below the
+  // `@each` loops swaps in `--color-section-foreground`, the one colour every
+  // section guarantees legible (YaleSites-Internal#1613). Outside a themed
+  // section `--color-wrapped-callout-border` stays unset and the Theme option
+  // applies as before. See YaleSites-Internal#2314.
   border: var(--border-thickness-2) solid
-    var(--color-section-foreground, var(--color-wrapped-callout-theme));
+    var(--color-wrapped-callout-border, var(--color-wrapped-callout-theme));
 
   // if callout has left/right alignment and the wrapped callout has content, limit the width of the callout
   @media (min-width: tokens.$break-l) {
@@ -158,6 +160,50 @@ $wrapped-callout-component-themes: map.deep-get(
     // descender halo that `atoms.link` drops for theme six.
     [data-component-theme='six'] & {
       --color-text-shadow: var(--color-basic-white);
+    }
+  }
+}
+
+// Where the chosen Theme cannot be seen against a themed section, fall back to
+// the section's own foreground. Computed at build time from the token palette,
+// so a token shade change moves the result with it. `_section-backgrounds`
+// mirrors SECTION_THEMES in `00-tokens/colors/section-themes.mjs`; the drift
+// test `wrapped-callout-theme-in-section.test.mjs` keeps the two in step.
+$-section-backgrounds: (
+  'one': 'slot-one',
+  'two': 'slot-four',
+  'three': 'slot-five',
+  'four': 'slot-two',
+  'five': 'slot-nine',
+  'six': 'slot-three',
+);
+$-option-slots: (
+  'one': 'slot-one',
+  'two': 'slot-two',
+  'three': 'slot-three',
+  'four': 'slot-four',
+  'five': 'slot-five',
+  'six': 'slot-seven',
+);
+$-non-text-minimum: 3;
+
+@each $global-name, $global in $global-wrapped-callout-themes {
+  @each $section, $bg-slot in $-section-backgrounds {
+    $background: map.deep-get($global, 'colors', $bg-slot);
+
+    @each $option, $slot in $-option-slots {
+      $ratio: contrast.contrast-ratio(
+        map.deep-get($global, 'colors', $slot),
+        $background
+      );
+
+      @if $ratio < $-non-text-minimum {
+        [data-global-theme='#{$global-name}']
+          [data-section-theme='#{$section}']
+          .wrapped-callout[data-component-theme='#{$option}'] {
+          --color-wrapped-callout-border: var(--color-section-foreground);
+        }
+      }
     }
   }
 }

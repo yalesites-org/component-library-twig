@@ -339,11 +339,10 @@ const SECTION_SURFACE_CONSUMERS = [
     file: '../../02-molecules/pager/_yds-pager.scss',
     fallback: '--color-basic-brown-gray',
   },
-  {
-    name: 'wrapped-callout border',
-    file: '../../02-molecules/wrapped-callout/_yds-wrapped-callout.scss',
-    fallback: '--color-wrapped-callout-theme',
-  },
+  // The wrapped-callout border used to be listed here. Since
+  // YaleSites-Internal#2314 it honours its Theme wherever that clears 3:1 and
+  // swaps to the section foreground only where it does not; that is guarded by
+  // `02-molecules/wrapped-callout/wrapped-callout-theme-in-section.test.mjs`.
   {
     name: 'link-grid column rule',
     file: '../../02-molecules/link-grid/_yds-link-grid.scss',
