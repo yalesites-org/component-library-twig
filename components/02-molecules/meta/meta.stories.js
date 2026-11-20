@@ -9,20 +9,14 @@ import eventLocalistMetaTwig from './event-meta/yds-event-meta-localist.twig';
 import dateTimeTwig from '../../01-atoms/date-time/yds-date-time.twig';
 import profileMetaTwig from './profile-meta/yds-profile-meta.twig';
 import imageData from '../../01-atoms/images/image/image.yml';
-import videoEmbedData from '../../01-atoms/videos/video-embed/video-embed.yml';
 import { toArgTypes, toArgs } from '../../_storybook/component-props';
 
 import './event-meta/event-meta-localist';
-
-// Resource Meta files.
-import resourceMetaData from './resource-meta/resource-meta.yml';
-import resourceMetaTwig from './resource-meta/yds-resource-meta.twig';
 
 // Per-story props files.
 import postMetaProps from './post-meta-props.yml';
 import eventProps from './event-props.yml';
 import profileProps from './profile-props.yml';
-import resourceProps from './resource-props.yml';
 
 const eventDataVariants = {
   'Mixed (Past & Upcoming)': eventLocalistData,
@@ -175,34 +169,4 @@ Profile.args = {
   pronouns: 'They/They/Them',
   profileImageAlignment: 'left',
   profileImageOrientation: 'portrait',
-};
-
-export const Resource = ({ heading, category, publishDate, description }) =>
-  resourceMetaTwig({
-    resource_meta__heading: heading,
-    resource_meta__category: category,
-    resource_meta__publish_date_label: 'Published On',
-    resource_meta__publish_date: publishDate,
-    resource_meta__metadata: resourceMetaData.resource_meta__metadata,
-    // Hardcoded to 'video' since the picker has been removed; the visreg
-    // story (Molecules/Meta/Visreg) covers the document and image branches.
-    resource_meta__resource_type: 'video',
-    resource_meta__download_label: 'Download',
-    resource_meta__download_aria_label: 'Download file',
-    resource_meta__download_url: '#.pdf',
-    resource_meta__description: description,
-    image__srcset__1: imageData.responsive_images['2x3'].image__srcset,
-    image__sizes__1: imageData.responsive_images['2x3'].image__sizes,
-    image__alt__1: imageData.responsive_images['2x3'].image__alt,
-    image__src__1: imageData.responsive_images['2x3'].image__src,
-    video_embed__content__1: videoEmbedData.video_embed__content,
-  });
-Resource.argTypes = toArgTypes(resourceProps);
-Resource.args = {
-  ...toArgs(resourceProps),
-  heading: 'Resource Title',
-  category: 'Video',
-  publishDate: 'July 1, 2025',
-  description:
-    'This is a sample resource description that will appear below the media content. It can contain <strong>HTML markup</strong> and provides context about the resource.',
 };
