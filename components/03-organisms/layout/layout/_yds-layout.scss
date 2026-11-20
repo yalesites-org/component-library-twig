@@ -511,6 +511,92 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
     gap: var(--spacing-page-inner);
   }
 
+  // A 70/30 spaces its columns with the narrow column's own margin and
+  // padding (below), carried over from the pre-migration yds-two-column
+  // organism. A row gap on top of that took another 32px out of the narrow
+  // column and left it 288px wide instead of 320px at 1440px and wider
+  // (YaleSites-Internal#2100).
+  // A 30/70 is the same row flipped and spaces its columns the same way
+  // (margin and padding on the narrow column), so it drops the gap too.
+  // Otherwise its narrow column is 32px narrower than a 70/30 sidebar.
+  [data-component-layout='seventy-thirty'] > &,
+  [data-component-layout='thirty-seventy'] > & {
+    @media (min-width: $break-layout-layout) {
+      gap: 0;
+    }
+  }
+
+  // An uncolored 70/30 has no inner padding, as on the pre-migration
+  // yds-two-column, which had neither padding nor a section margin. The
+  // padding stacked on the page title's own spacing and put the first block
+  // 96px under the title instead of 64px (YaleSites-Internal#2100). The old
+  // organism's top margin stays (40px below 992px, 64px from 992px up), so the
+  // first block sits 64px under the title on desktop (the margins
+  // collapse), a profile header keeps its 128px gap to Contact Info, and two uncolored sections in a row do not touch. A themed
+  // one keeps the padding to hold its color band.
+  [data-section-theme='default'][data-component-layout='seventy-thirty'] > & {
+    padding-block: 0;
+
+    // 40px below 992px and 64px from 992px up, as the old yds-two-column did
+    // through this token.
+    margin-block-start: var(--spacing-page-section);
+  }
+
+  // Section Padding still applies to an uncolored 70/30: the zeroed padding
+  // and the top margin above must not swallow the editor's choice.
+  [data-section-theme='default'][data-component-layout='seventy-thirty'][data-component-padding='no-top']
+    > &,
+  [data-section-theme='default'][data-component-layout='seventy-thirty'][data-component-padding='no-padding']
+    > & {
+    margin-block-start: 0;
+  }
+
+  // The first uncolored 70/30 directly under the page title area has no top
+  // gap, so the page starts at the same height as live, where the old
+  // yds-two-column had none there. Stacked 70/30 sections keep their 64px
+  // Only under an uncolored page meta: under a colored title area the 70/30
+  // keeps its 64px so it does not sit flush against the color band
+  // (YaleSites-Internal#2192).
+  .page-meta:not([data-section-theme]:not([data-section-theme='default']))
+    + [data-section-theme='default'][data-component-layout='seventy-thirty']
+    > & {
+    margin-block-start: 0;
+  }
+
+  // With the columns side by side, a 30/70 keeps its own 64px bottom padding,
+  // so an uncolored 70/30 right after it must not add its 64px top margin on
+  // top (128px). One 64px gap is kept, as between two stacked 70/30 sections.
+  // A 30/70 with no bottom padding leaves the margin alone. Only an uncolored
+  // 30/70 qualifies: a themed one paints its background on the section root,
+  // so its padding sits inside the color band and the next section would touch
+  // the band edge (YaleSites-Internal#2192).
+  [data-section-theme='default'][data-component-layout='thirty-seventy']:not(
+      [data-component-padding='no-bottom'],
+      [data-component-padding='no-padding']
+    )
+    + [data-section-theme='default'][data-component-layout='seventy-thirty']
+    > & {
+    @media (min-width: $break-layout-layout) {
+      margin-block-start: 0;
+    }
+  }
+
+  // Stacked, the 70/30 keeps its own top margin (40px below 992px, 64px from
+  // 992px up), the same gap as between two stacked 70/30 sections, so the
+  // 30/70 above it drops its 64px bottom padding instead of adding it on top
+  // (82px at 1000px and 81px at 375px otherwise).
+  [data-section-theme='default'][data-component-layout='thirty-seventy']:not(
+      [data-component-padding='no-bottom'],
+      [data-component-padding='no-padding']
+    ):has(
+      + [data-section-theme='default'][data-component-layout='seventy-thirty']
+    )
+    > & {
+    @media (max-width: $break-layout-layout-max) {
+      padding-block-end: 0;
+    }
+  }
+
   // Flex sets `min-width` of children to `auto` by default... but this breaks
   // some of our base layout styles (causes horizontal scrolling), so we need to
   // reset it to `0`.
@@ -748,9 +834,13 @@ $break-layout-layout-max: $break-layout-layout - 0.05;
   }
 }
 
-// Update font-size for headings based on layout
+// Update font-size for headings based on layout. A 70/30 is left out on
+// purpose: on the pre-migration yds-two-column its headings were never
+// stepped down, and doing it now made block titles (Video, for one) jump from
+// 19.5px sans to 39.3px serif on every existing 70/30 section
+// (YaleSites-Internal#2100). Heading levels in the markup are unchanged, so
+// the reading order for screen readers is too.
 h2 {
-  [data-component-layout='seventy-thirty'] &,
   [data-component-layout='thirty-seventy'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
     @include tokens.heading(h3);
@@ -758,7 +848,6 @@ h2 {
 }
 
 h3 {
-  [data-component-layout='seventy-thirty'] &,
   [data-component-layout='thirty-seventy'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
     @include tokens.heading(h4);
@@ -766,7 +855,6 @@ h3 {
 }
 
 h4 {
-  [data-component-layout='seventy-thirty'] &,
   [data-component-layout='thirty-seventy'] &,
   [data-component-layout='thirty-thirty-thirty'] & {
     @include tokens.heading(h5);

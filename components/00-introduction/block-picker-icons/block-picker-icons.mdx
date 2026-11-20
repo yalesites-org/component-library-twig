@@ -1,0 +1,373 @@
+import { Meta } from '@storybook/blocks';
+import accordion from './svg/accordion.svg';
+import action_banner from './svg/action-banner.svg';
+import audio_player from './svg/audio-player.svg';
+import button_link from './svg/button-link.svg';
+import callout from './svg/callout.svg';
+import custom_cards from './svg/custom-cards.svg';
+import divider from './svg/divider.svg';
+import embed from './svg/embed.svg';
+import event_calendar from './svg/event-calendar.svg';
+import facts_and_figures from './svg/facts-and-figures.svg';
+import gallery from './svg/gallery.svg';
+import grand_hero from './svg/grand-hero.svg';
+import image from './svg/image.svg';
+import image_banner from './svg/image-banner.svg';
+import in_line_message from './svg/in-line-message.svg';
+import link_grid from './svg/link-grid.svg';
+import media_grid from './svg/media-grid.svg';
+import office_hours from './svg/office-hours.svg';
+import page_title_and_breadcrumbs from './svg/page-title-and-breadcrumbs.svg';
+import pre_built_form from './svg/pre-built-form.svg';
+import profile_contact_info from './svg/profile-contact-info.svg';
+import quick_links from './svg/quick-links.svg';
+import quote from './svg/quote.svg';
+import quote_callout from './svg/quote-callout.svg';
+import reference_card from './svg/reference-card.svg';
+import related_content from './svg/related-content.svg';
+import reusable_block_fallback from './svg/reusable-block-fallback.svg';
+import spotlight_landscape from './svg/spotlight-landscape.svg';
+import spotlight_portrait from './svg/spotlight-portrait.svg';
+import tabs from './svg/tabs.svg';
+import taxonomy_display from './svg/taxonomy-display.svg';
+import text from './svg/text.svg';
+import tiles from './svg/tiles.svg';
+import video from './svg/video.svg';
+import video_banner from './svg/video-banner.svg';
+import view from './svg/view.svg';
+import wrapped_image from './svg/wrapped-image.svg';
+import wrapped_text_callout from './svg/wrapped-text-callout.svg';
+import d_accordion_a_two_items from './directions/accordion-a-two-items.svg';
+import d_accordion_b_one_open from './directions/accordion-b-one-open.svg';
+import d_accordion_c_plus_minus from './directions/accordion-c-plus-minus.svg';
+import d_accordion_d_panels from './directions/accordion-d-panels.svg';
+import d_accordion_e_disclosure from './directions/accordion-e-disclosure.svg';
+import d_refcard_a_current from './directions/refcard-a-current.svg';
+import d_refcard_b_source_to_card from './directions/refcard-b-source-to-card.svg';
+import d_refcard_c_link_badge from './directions/refcard-c-link-badge.svg';
+import d_refcard_d_page_glyph from './directions/refcard-d-page-glyph.svg';
+import d_refcard_e_overlap_link from './directions/refcard-e-overlap-link.svg';
+import d_text_a_list from './directions/text-a-list.svg';
+import d_text_b_heading_levels from './directions/text-b-heading-levels.svg';
+import d_text_c_pilcrow from './directions/text-c-pilcrow.svg';
+import d_view_a_rows from './directions/view-a-rows.svg';
+import d_view_b_one_source from './directions/view-b-one-source.svg';
+import d_view_c_filter from './directions/view-c-filter.svg';
+import d_view_d_stack from './directions/view-d-stack.svg';
+import d_view_e_pager from './directions/view-e-pager.svg';
+
+<Meta title="Introduction/Block Picker Icons" />
+
+export const Grid = ({ children }) => (
+  <div
+    style={{
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '20px',
+      margin: '16px 0 32px',
+    }}
+  >
+    {children}
+  </div>
+);
+
+export const Tile = ({ src, name, picked }) => (
+  <figure style={{ margin: 0, width: 150 }}>
+    <img
+      src={src}
+      alt=""
+      width="150"
+      height="78"
+      style={{
+        display: 'block',
+        outline: picked ? '3px solid #00356b' : '1px solid #c8c8c8',
+        outlineOffset: picked ? 2 : 0,
+      }}
+    />
+    <figcaption style={{ fontSize: 13, marginTop: 6 }}>
+      {name}
+      {picked ? ' (picked)' : ''}
+    </figcaption>
+  </figure>
+);
+
+# Block picker icons
+
+Every block in the Layout Builder "Choose a block" panel has a small picture above its name. Editors scan those pictures before they read the names, so the picture has one job: show what makes that block different from the blocks next to it. This page is the reference for that set: the rules, the icons, and how we got here, so the next icon we add fits right in.
+
+The icons are drawn at 501 x 261 and show up at about 125 to 150 px wide in the picker. Everything here is designed for the small size.
+
+## The rules
+
+1. **No real words.** Headings, labels, links and numbers are all bars. The block name already sits under the tile.
+2. **One signature per block.** The thing that makes it that block (the play button on Video, the open panel on Accordion) is drawn large and in Yale Blue.
+3. **Keep the blue small.** Yale Blue covers no more than about 25% of an icon, and most use well under 10%. No solid blue backgrounds. Every tile in a row should carry about the same weight.
+4. **Heavy enough to survive the shrink.** Strokes are 6 px minimum and bars are 14 px minimum at full size. Structure and primary bars are Gray 500 or 600. Gray 300 is only for secondary body bars.
+5. **Width tells contained from full width.** There is no page frame; the picker tile is the border. Contained blocks sit in the center column (x 130 to 371, or a similar inset). Full-width blocks run edge to edge.
+6. **Images are a Gray 200 surface with mountains.** The mountains are Yale Blue only when the image is the block's signature (Image, Image Banner). Otherwise they're Gray 300.
+7. **Links are a blue bar with a 6 px underline.** Link buttons carry a chevron.
+8. **Check at 150 px, sharp and blurred.** Blur the set 1.5 px and make sure each icon is still identifiable next to its look-alikes.
+
+### Palette
+
+{/* Every docs table needs this wrapper so it stays scrollable on mobile. */}
+
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Palette"
+  tabIndex={0}
+>
+  <table>
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Hex</th>
+        <th>Used for</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Yale Blue</td>
+        <td>
+          <code>#00356b</code>
+        </td>
+        <td>The signature only</td>
+      </tr>
+      <tr>
+        <td>Gray 600</td>
+        <td>
+          <code>#5e5e5e</code>
+        </td>
+        <td>Headings, labels, dark strips</td>
+      </tr>
+      <tr>
+        <td>Gray 500</td>
+        <td>
+          <code>#757575</code>
+        </td>
+        <td>Outlines, rules, primary bars</td>
+      </tr>
+      <tr>
+        <td>Gray 300</td>
+        <td>
+          <code>#bababa</code>
+        </td>
+        <td>Secondary body bars, non-signature mountains</td>
+      </tr>
+      <tr>
+        <td>Gray 200</td>
+        <td>
+          <code>#d9d9d9</code>
+        </td>
+        <td>Image, video and banner surfaces</td>
+      </tr>
+      <tr>
+        <td>White</td>
+        <td>
+          <code>#ffffff</code>
+        </td>
+        <td>Background; text bars on blue</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### Canvas
+
+- 501 x 261, white background, square corners.
+- Full width, edge to edge: Image Banner, Video Banner, Grand Hero, Action Banner, Facts and Figures, Quick Links, Callout.
+- Everything else is contained.
+
+## The set
+
+In picker order. Basic reuses the Media Image and Video icons. The reusable block fallback ships as a JPG.
+
+### Text & Content
+
+<Grid>
+  <Tile src={accordion} name="Accordion" />
+  <Tile src={divider} name="Divider" />
+  <Tile src={in_line_message} name="In-Line Message" />
+  <Tile src={office_hours} name="Office Hours" />
+  <Tile src={quote} name="Quote" />
+  <Tile src={tabs} name="Tabs" />
+  <Tile src={text} name="Text" />
+  <Tile src={wrapped_text_callout} name="Wrapped Text Callout" />
+</Grid>
+
+### Calls to Action
+
+<Grid>
+  <Tile src={action_banner} name="Action Banner" />
+  <Tile src={button_link} name="Button Link" />
+  <Tile src={callout} name="Callout" />
+  <Tile src={custom_cards} name="Custom Cards" />
+  <Tile src={link_grid} name="Link Grid" />
+  <Tile src={quick_links} name="Quick Links" />
+  <Tile src={tiles} name="Tiles" />
+</Grid>
+
+### Featured Content
+
+<Grid>
+  <Tile src={facts_and_figures} name="Facts and Figures" />
+  <Tile src={grand_hero} name="Grand Hero" />
+  <Tile src={image_banner} name="Image Banner" />
+  <Tile src={quote_callout} name="Quote Callout" />
+  <Tile src={reference_card} name="Reference Card" />
+  <Tile src={spotlight_landscape} name="Spotlight - Landscape" />
+  <Tile src={spotlight_portrait} name="Spotlight - Portrait" />
+  <Tile src={video_banner} name="Video Banner" />
+</Grid>
+
+### Media
+
+<Grid>
+  <Tile src={audio_player} name="Audio Player" />
+  <Tile src={embed} name="Embed" />
+  <Tile src={gallery} name="Gallery" />
+  <Tile src={image} name="Image" />
+  <Tile src={media_grid} name="Media Grid" />
+  <Tile src={pre_built_form} name="Pre-Built Form" />
+  <Tile src={video} name="Video" />
+  <Tile src={wrapped_image} name="Wrapped Image" />
+</Grid>
+
+### Dynamic Content
+
+<Grid>
+  <Tile src={event_calendar} name="Event Calendar" />
+  <Tile src={profile_contact_info} name="Profile Contact Info" />
+  <Tile src={related_content} name="Related Content" />
+  <Tile src={taxonomy_display} name="Taxonomy Display" />
+  <Tile src={view} name="View" />
+</Grid>
+
+### Basic
+
+<Grid>
+  <Tile src={image} name="Image" />
+  <Tile src={video} name="Video" />
+  <Tile src={page_title_and_breadcrumbs} name="Page Title and Breadcrumbs" />
+</Grid>
+
+### Reusable block fallback
+
+<Grid>
+  <Tile src={reusable_block_fallback} name="Reusable block" />
+</Grid>
+
+## Look-alike groups
+
+These are the sets editors are most likely to mix up. Any change to one icon in a group gets checked against the rest of the group at 150 px.
+
+**Images**
+
+<Grid>
+  <Tile src={image} name="Image" />
+  <Tile src={image_banner} name="Image Banner" />
+  <Tile src={wrapped_image} name="Wrapped Image" />
+  <Tile src={spotlight_landscape} name="Spotlight - Landscape" />
+  <Tile src={spotlight_portrait} name="Spotlight - Portrait" />
+  <Tile src={media_grid} name="Media Grid" />
+  <Tile src={gallery} name="Gallery" />
+</Grid>
+
+**Banners and boxes**
+
+<Grid>
+  <Tile src={callout} name="Callout" />
+  <Tile src={quote_callout} name="Quote Callout" />
+  <Tile src={quick_links} name="Quick Links" />
+  <Tile src={facts_and_figures} name="Facts and Figures" />
+  <Tile src={tiles} name="Tiles" />
+  <Tile src={action_banner} name="Action Banner" />
+</Grid>
+
+**Quotes**
+
+<Grid>
+  <Tile src={quote} name="Quote" />
+  <Tile src={quote_callout} name="Quote Callout" />
+</Grid>
+
+**Video**
+
+<Grid>
+  <Tile src={video} name="Video" />
+  <Tile src={video_banner} name="Video Banner" />
+</Grid>
+
+**Listings**
+
+<Grid>
+  <Tile src={view} name="View" />
+  <Tile src={custom_cards} name="Custom Cards" />
+  <Tile src={related_content} name="Related Content" />
+  <Tile src={event_calendar} name="Event Calendar" />
+</Grid>
+
+## How we got here
+
+The first draft read like documentation wireframes: real words in Yale New and Mallory, a faded page frame around every block, 4 px strokes, and a few blocks drawn as solid blue slabs. At picker size the words turned to noise and the blue blocks overpowered everything around them. Rev 2 replaced those rules with the ones above, and then we worked through the set block by block in Claude Design with comments on each icon.
+
+### Where we explored directions
+
+For four blocks the first redraw didn't say the right thing, so we drew several directions side by side and picked one.
+
+**View.** View replaced the old listing blocks in the Views Rework and can show posts, events, pages, people or resources as a grid, a list or a condensed list. Any one layout would undersell it, so we went with what all of them share: content that's pulled in, searched and filtered, not placed by hand. The results run full width with the filter menu floating over them, so the filter doesn't look like it changes the layout.
+
+<Grid>
+  <Tile src={d_view_a_rows} name="Rows" />
+  <Tile src={d_view_b_one_source} name="One source, three layouts" />
+  <Tile src={d_view_c_filter} name="Search and open filter" picked />
+  <Tile src={d_view_d_stack} name="Stack of items" />
+  <Tile src={d_view_e_pager} name="Rows with a pager" />
+</Grid>
+
+**Text.** The first version didn't read as text. Text holds headings, paragraphs and lists, and the bulleted list (indented the way it actually renders) was the clearest signature.
+
+<Grid>
+  <Tile src={d_text_a_list} name="Heading and a list" picked />
+  <Tile src={d_text_b_heading_levels} name="Heading levels" />
+  <Tile src={d_text_c_pilcrow} name="Pilcrow" />
+</Grid>
+
+**Accordion.** Big chevrons looked silly at this size. The stacked panels, one open between two closed, say "this opens and closes" through shape instead of a glyph.
+
+<Grid>
+  <Tile src={d_accordion_a_two_items} name="Two items" />
+  <Tile src={d_accordion_b_one_open} name="One open item" />
+  <Tile src={d_accordion_c_plus_minus} name="Plus and minus" />
+  <Tile src={d_accordion_d_panels} name="Stacked panels" picked />
+  <Tile src={d_accordion_e_disclosure} name="Disclosure triangles" />
+</Grid>
+
+**Reference Card.** The original drew today's single design option, which tells editors nothing about what the block does and would go stale with a redesign. We kept the familiar overlap layout and added a link badge, since the block points at an existing page.
+
+<Grid>
+  <Tile src={d_refcard_a_current} name="Image with overlapping card" />
+  <Tile src={d_refcard_b_source_to_card} name="Page to card" />
+  <Tile src={d_refcard_c_link_badge} name="Card with a link badge" />
+  <Tile src={d_refcard_d_page_glyph} name="Page glyph" />
+  <Tile src={d_refcard_e_overlap_link} name="Overlap plus link badge" picked />
+</Grid>
+
+### Smaller changes from review
+
+- **Divider:** the rule became a thin line running past the text on both sides, so it doesn't read as one more text bar.
+- **Facts and Figures, Quick Links, Callout:** redrawn as full-width banners on a Gray 200 background, which is how they actually render.
+- **Facts and Figures:** two stats instead of three, so it isn't cramped.
+- **Custom Cards:** cards got images back, with less text and no links.
+- **Link Grid:** three columns with longer links instead of four stubby ones.
+- **Spotlight - Portrait:** a 3:4 image instead of a very tall one.
+- **Grand Hero:** the text panel is centered vertically.
+
+## Adding a new icon
+
+1. Start from the closest existing icon and the rules above.
+2. Pick the one signature and make it blue. If you can't name the signature in a few words, the block probably needs a clearer job.
+3. Check the blue budget and the weight next to its picker category.
+4. Put it in its look-alike group at 150 px, sharp and blurred 1.5 px. If two icons could swap names, keep going.
+5. Export at 501 x 261, named after the block in kebab-case (`office-hours.svg`).

@@ -638,3 +638,92 @@ test('a themed Page Meta moves its last margin onto the band', () => {
     /\+ :is\(:not\(\[data-section-theme\]\), \[data-section-theme='default'\]\) \{\s*background-color: var\(--color-background\);/,
   );
 });
+
+// YaleSites-Internal#2100: a 70/30 must look like the pre-migration
+// yds-two-column on pages that already exist.
+test('a region marked empty is not drawn', () => {
+  const src = twig();
+  // `|default(true)` returns true for an explicit false, so it must not be used.
+  assert.doesNotMatch(src, /layout__has_(primary|secondary)\|default/);
+  assert.match(
+    src,
+    /\{% if layout__has_primary \?\? true %\}\s*<div \{\{ bem\('primary'/,
+  );
+  assert.match(
+    src,
+    /\{% if layout__has_secondary \?\? true %\}\s*<div \{\{ bem\('secondary'/,
+  );
+});
+
+test('a 70/30 and a 30/70 row have no gap on top of the narrow column margin', () => {
+  assert.match(
+    scss(),
+    /\[data-component-layout='seventy-thirty'\] > &,\s*\[data-component-layout='thirty-seventy'\] > & \{\s*@media \(min-width: \$break-layout-layout\) \{\s*gap: 0;/,
+  );
+});
+
+test('No top and No padding drop the top margin of an uncolored 70/30', () => {
+  const src = scss();
+  assert.match(
+    src,
+    /\[data-component-layout='seventy-thirty'\]\[data-component-padding='no-top'\]\s*> &,\s*\[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\]\[data-component-padding='no-padding'\]\s*> & \{\s*margin-block-start: 0;/,
+  );
+});
+
+test('a 70/30 does not step its headings down', () => {
+  const src = scss();
+  ['h2', 'h3', 'h4'].forEach((tag) => {
+    const block = src.match(new RegExp(`\\n${tag} \\{([^}]*)\\}`));
+    assert.ok(block, `${tag} heading block exists`);
+    assert.doesNotMatch(block[1], /seventy-thirty/);
+    assert.match(block[1], /thirty-seventy/);
+  });
+});
+
+test('an uncolored 70/30 has no inner padding, as before the migration', () => {
+  assert.match(
+    scss(),
+    /\[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\] > & \{\s*padding-block: 0;/,
+  );
+});
+
+test('an uncolored 70/30 top margin switches at 992px through the page-section token', () => {
+  const block = scss().match(
+    /\[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\] > & \{([\s\S]*?)\n {2}\}/,
+  );
+  assert.ok(block, 'uncolored 70/30 rule not found');
+  assert.match(block[1], /margin-block-start: var\(--spacing-page-section\);/);
+  assert.doesNotMatch(block[1], /break-m/);
+});
+
+test('the first uncolored 70/30 right after an uncolored page meta has no top margin', () => {
+  assert.match(
+    scss(),
+    /\.page-meta:not\(\[data-section-theme\]:not\(\[data-section-theme='default'\]\)\)\s*\+ \[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\]\s*> & \{\s*margin-block-start: 0;/,
+  );
+});
+
+test('an uncolored 70/30 right after a padded 30/70 adds no top margin', () => {
+  assert.match(
+    scss(),
+    /\[data-section-theme='default'\]\[data-component-layout='thirty-seventy'\]:not\(\s*\[data-component-padding='no-bottom'\],\s*\[data-component-padding='no-padding'\]\s*\)\s*\+ \[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\]\s*> & \{\s*@media \(min-width: \$break-layout-layout\) \{\s*margin-block-start: 0;/,
+  );
+});
+
+test('a padded 30/70 before an uncolored 70/30 drops its bottom padding when stacked', () => {
+  assert.match(
+    scss(),
+    /\[data-component-layout='thirty-seventy'\]:not\(\s*\[data-component-padding='no-bottom'\],\s*\[data-component-padding='no-padding'\]\s*\):has\(\s*\+ \[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\]\s*\)\s*> & \{\s*@media \(max-width: \$break-layout-layout-max\) \{\s*padding-block-end: 0;/,
+  );
+});
+
+test('the page title bottom margin is dropped above a first uncolored 70/30', () => {
+  const css = readFileSync(
+    new URL('../../../04-page-layouts/page-layouts.scss', import.meta.url),
+    'utf8',
+  );
+  assert.match(
+    css,
+    /\.page-meta:not\(\[data-section-theme\]:not\(\[data-section-theme='default'\]\)\):has\(\s*\+ \[data-section-theme='default'\]\[data-component-layout='seventy-thirty'\]\s*\)\s*\.page-title \{\s*margin-bottom: 0;/,
+  );
+});

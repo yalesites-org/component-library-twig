@@ -189,6 +189,11 @@ yalesites-org/YaleSites-Internal#1938), and the token tests in `00-tokens/colors
 the tokens are fine, a selector just forgot one. `npm run test:link-halo`
 (yalesites-org/YaleSites-Internal#1939) checks the rendered output instead.
 
+**Non-blocking for now.** The CI step uses `continue-on-error: true`, so it prints its report on
+every PR but a failure does not fail the required `test` check
+(yalesites-org/YaleSites-Internal#1981). It becomes blocking again once a sample of the baseline
+has been verified by hand.
+
 ### What it checks
 
 For every visible `a[href]` in every story it renders, in the resting, `:hover` and

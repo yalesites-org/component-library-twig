@@ -105,6 +105,12 @@ $wrapped-callout-component-themes: map.deep-get(
 
 .wrapped-callout__content-wrapper {
   max-width: var(--size-component-layout-width-content);
+
+  // Contain the floated callout. A short body leaves the callout taller than
+  // the text beside it, and an uncleared float then hangs out of the section
+  // and pushes the next section (colored or stacked) sideways
+  // (YaleSites-Internal#2276).
+  display: flow-root;
 }
 
 .wrapped-callout__callout {
