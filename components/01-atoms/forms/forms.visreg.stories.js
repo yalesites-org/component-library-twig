@@ -84,6 +84,9 @@ const filterField =
 const category = filterField('category', 'Category', categories);
 const audience = filterField('audience', 'Audience', audiences);
 const longVocabulary = filterField('long', longVocabularyName, longTerms);
+// A filter with no terms: Chosen disables it and shows "No options available."
+const emptyFilter = (extra = {}) =>
+  filterField('empty', 'Topic', [])({ disabled: true, ...extra });
 
 const form = (props) => viewsFilterForm({ search: '', ...props });
 const heading = (text) => `<h3>${text}</h3>`;
@@ -155,6 +158,38 @@ export const ViewsFiltersLongVocabularyName = () =>
       ),
   );
 
+// A filter row with one empty filter between filled ones, to check the empty
+// box matches its neighbors' width, height, and border. (#1832)
+export const ViewsFiltersEmpty = () =>
+  createSectionWrapper(
+    'default',
+    heading('Empty filter next to filled ones') +
+      form({
+        id: 'empty',
+        fields: [
+          category({ selected: ['Featured', 'Page Category 1'] }),
+          emptyFilter(),
+          audience(),
+        ],
+      }),
+  );
+
+// A box about 9rem wide cannot fit "No options available.", so it cuts off
+// with "...". The wrapper narrows the grid column, as a small screen would.
+export const ViewsFiltersEmptyNarrow = () => {
+  const narrowForm = form({
+    id: 'empty-narrow',
+    hide_search: true,
+    fields: [emptyFilter()],
+  });
+  return createSectionWrapper(
+    'default',
+    `${heading(
+      'Empty filter in a narrow box: text cut off with "..."',
+    )}<div style="max-width: 9rem">${narrowForm}</div>`,
+  );
+};
+
 const calendarFields = (id) => [
   category({ id: `${id}-category` }),
   audience({ id: `${id}-audience`, selected: ['Faculty', 'Staff'] }),
@@ -170,6 +205,17 @@ export const ViewsFiltersEventsCalendar = () =>
         calendar: true,
         search: 'Search events',
         fields: calendarFields('calendar'),
+      }) +
+      heading('Events calendar filters with one empty filter') +
+      form({
+        id: 'calendar-empty',
+        calendar: true,
+        search: 'Search events',
+        fields: [
+          category({ id: 'calendar-empty-category' }),
+          emptyFilter({ id: 'calendar-empty-topic' }),
+          audience({ id: 'calendar-empty-audience' }),
+        ],
       }),
   );
 
@@ -192,6 +238,7 @@ export const ViewsFiltersPhoneWidth = () =>
         id: 'phone',
         fields: [
           category({ selected: ['Featured', 'Page Category 1'] }),
+          emptyFilter(),
           audience(),
         ],
       }) +
