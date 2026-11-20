@@ -221,6 +221,17 @@ $break-image-banner: tokens.$break-m;
     background-color: var(--color-basic-white);
     padding: var(--size-spacing-2);
     text-align: center;
+
+    // text-align: center above is tuned for a simple one-line caption. A
+    // list's marker is positioned by list-style-position: outside relative
+    // to the list's own (left-indented) box, not by the centered text flow,
+    // so centering a <ul>/<ol> pulls its text away from its marker instead
+    // of moving them together. Force lists back to a normal left-aligned
+    // flow so the marker stays next to its item text.
+    ul,
+    ol {
+      text-align: left;
+    }
   }
 }
 
