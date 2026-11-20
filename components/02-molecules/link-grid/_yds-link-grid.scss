@@ -133,10 +133,11 @@ $component-link-grid-themes: map.deep-get(tokens.$tokens, 'component-themes');
     var(--color-link-grid-action)
   );
 
-  // set the border color to the color slot one so there is a default set
-  [data-section-theme='default'] & {
-    --color-link-grid-action: var(--color-slot-one);
-  }
+  // No `[data-section-theme='default']` reset of `--color-link-grid-action`
+  // here: set on this child it overrode the dial's value from `.link-grid`, so
+  // dials two to six drew navy in a One column section
+  // (YaleSites-Internal#2099). The twig always emits a dial, and each dial
+  // block above sets the action colour.
 
   display: flex;
   flex-flow: column nowrap;

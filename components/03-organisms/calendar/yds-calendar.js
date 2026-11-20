@@ -1,5 +1,9 @@
 import MicroModal from 'micromodal';
 
+// Which month button was pressed ('prev' or 'next'). A month change replaces
+// the whole calendar, so the next attach reads this to put focus back.
+let pendingNavFocus = null;
+
 Drupal.behaviors.eventsCalendar = {
   attach(context) {
     // Classes and selectors.
@@ -18,6 +22,9 @@ Drupal.behaviors.eventsCalendar = {
     const dayEvents = '.calendar__day--events';
     const noEvents = '.calendar__no-events-message';
     const storybook = '.sb-show-main';
+
+    const wrapperSelector =
+      '#event-calendar-wrapper-static, [id^="event-calendar-wrapper"], [id^="calendar-wrapper"]';
 
     // Query elements.
     const calendars = once('calendar', calendar, context);
@@ -38,7 +45,49 @@ Drupal.behaviors.eventsCalendar = {
     // (a no-op if none is registered) so init() binds to the current element.
     // Done here, not per click: closing on every click would race the
     // data-micromodal-trigger listener that init() registers on each toggle.
-    if (calendars.length) MicroModal.removeModal('calendar-modal');
+    // Drupal renders the same wrapper and modal ids for every calendar, so a
+    // later calendar's copies are renamed to be unique before anything binds
+    // to them. Month navigation targets the wrapper id and MicroModal keys on
+    // the modal id, so both must name exactly one calendar.
+    const uniqueId = (el, base = el.id) => {
+      if (!base) return base;
+      const taken = (id) => document.getElementById(id);
+      if (taken(base) === el) return base;
+      let n = 2;
+      while (taken(`${base}-${n}`)) n += 1;
+      el.setAttribute('id', `${base}-${n}`);
+      return el.id;
+    };
+    calendars.forEach((cal) => {
+      const staleId = cal.querySelector('.modal')?.id;
+      if (staleId) MicroModal.removeModal(staleId);
+    });
+    calendars.forEach((cal) => {
+      // Outermost matching wrapper, the element month navigation replaces.
+      let wrapper = cal.closest(wrapperSelector);
+      while (wrapper?.parentElement?.closest(wrapperSelector)) {
+        wrapper = wrapper.parentElement.closest(wrapperSelector);
+      }
+      if (wrapper) uniqueId(wrapper);
+
+      const modal = cal.querySelector('.modal');
+      if (!modal) return;
+      const oldId = modal.id;
+      const finalId = uniqueId(modal);
+      // The cached instance under the final id may be bound to a modal that a
+      // month change replaced, so drop it before init() rebinds.
+      MicroModal.removeModal(finalId);
+      // A calendar that kept its id keeps its title id and triggers as is.
+      if (finalId === oldId) return;
+      const title = modal.querySelector(`[id="${oldId}-title"]`);
+      if (title) title.id = `${modal.id}-title`;
+      modal
+        .querySelector('[aria-labelledby]')
+        ?.setAttribute('aria-labelledby', `${modal.id}-title`);
+      cal
+        .querySelectorAll(`[data-micromodal-trigger="${oldId}"]`)
+        .forEach((t) => t.setAttribute('data-micromodal-trigger', modal.id));
+    });
     MicroModal.init();
 
     // Debounce utility.
@@ -142,11 +191,21 @@ Drupal.behaviors.eventsCalendar = {
       const calendarEventsElements =
         calendarElement.querySelectorAll(dayEvents);
       const calendarNoEvents = calendarElement.querySelector(noEvents);
+      const modalId =
+        calendarElement.querySelector('.modal')?.id || 'calendar-modal';
 
       // Utility functions.
       const getNearestForm = () =>
         calendarElement.closest('form') ||
         document.querySelector('form.ys-filter-form');
+
+      // After a month change swaps the grid, return keyboard focus to the
+      // button that was pressed instead of letting it fall back to the page.
+      if (pendingNavFocus) {
+        const restoreTarget = pendingNavFocus === 'prev' ? prevBtn : nextBtn;
+        pendingNavFocus = null;
+        restoreTarget?.focus();
+      }
 
       const handleNoMonthEvents = () => {
         if (!calendarEventsElements.length) {
@@ -178,6 +237,16 @@ Drupal.behaviors.eventsCalendar = {
       };
 
       installFormSubmitGuard();
+
+      // Put focus on the first event in the open modal, or on Close when the
+      // list is empty, so keyboard focus always lands inside the dialog.
+      const focusModal = () => {
+        const modal = document.getElementById(modalId);
+        const target =
+          modal?.querySelector('.modal__calendar-events a[href]') ||
+          modal?.querySelector('button[data-micromodal-close]');
+        target?.focus();
+      };
 
       // Handle "More events" modal. Scoped to this calendar: it is bound once
       // per calendar (see `once` above), so toggles outside it must not be
@@ -211,15 +280,29 @@ Drupal.behaviors.eventsCalendar = {
             moreEventsContainer.children.length === 0;
 
           // Manually open the modal after content is populated.
-          MicroModal.show('calendar-modal');
+          MicroModal.show(modalId);
+
+          // The toggle also carries `data-micromodal-trigger`, and init() bound
+          // that listener before this one, so MicroModal already opened the
+          // modal and moved focus to the previous open's event link before the
+          // list above was rebuilt. Rebuilding removed that link and focus fell
+          // back to the page, so move it into the freshly populated modal.
+          focusModal();
         });
       });
 
       // Calendar wrapper finder.
-      const getCalendarWrapper = (element) =>
-        element?.closest?.(
-          '#event-calendar-wrapper-static, [id^="event-calendar-wrapper"], [id^="calendar-wrapper"]',
-        );
+      // Month navigation re-renders the grid inside a container that keeps the
+      // original id, and the re-render carries its own id that can match the
+      // first calendar on the page. Take the outermost match so later requests
+      // keep targeting this calendar.
+      const getCalendarWrapper = (element) => {
+        let wrapper = element?.closest?.(wrapperSelector) || null;
+        while (wrapper?.parentElement?.closest(wrapperSelector)) {
+          wrapper = wrapper.parentElement.closest(wrapperSelector);
+        }
+        return wrapper;
+      };
 
       // AJAX calendar refresh.
       const refreshCalendarData = (wrapper, button) => {
@@ -307,6 +390,9 @@ Drupal.behaviors.eventsCalendar = {
         navEvent.stopPropagation?.();
 
         const wrapper = getCalendarWrapper(button);
+        if (!isStorybook && wrapper) {
+          pendingNavFocus = button === prevBtn ? 'prev' : 'next';
+        }
         refreshCalendarData(wrapper, button);
         return false;
       };

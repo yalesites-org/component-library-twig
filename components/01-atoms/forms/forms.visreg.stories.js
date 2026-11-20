@@ -84,6 +84,9 @@ const filterField =
 const category = filterField('category', 'Category', categories);
 const audience = filterField('audience', 'Audience', audiences);
 const longVocabulary = filterField('long', longVocabularyName, longTerms);
+// A filter with no terms: Chosen disables it and shows "No options available."
+const emptyFilter = (extra = {}) =>
+  filterField('empty', 'Topic', [])({ disabled: true, ...extra });
 
 const form = (props) => viewsFilterForm({ search: '', ...props });
 const heading = (text) => `<h3>${text}</h3>`;
@@ -125,6 +128,7 @@ export const ViewsFiltersOpenWithTwoSelected = () =>
             category({
               open: true,
               selected: ['Featured', 'Page Category 1'],
+              visible: 1,
             }),
             audience(),
           ],
@@ -154,6 +158,38 @@ export const ViewsFiltersLongVocabularyName = () =>
       ),
   );
 
+// A filter row with one empty filter between filled ones, to check the empty
+// box matches its neighbors' width, height, and border. (#1832)
+export const ViewsFiltersEmpty = () =>
+  createSectionWrapper(
+    'default',
+    heading('Empty filter next to filled ones') +
+      form({
+        id: 'empty',
+        fields: [
+          category({ selected: ['Featured', 'Page Category 1'] }),
+          emptyFilter(),
+          audience(),
+        ],
+      }),
+  );
+
+// A box about 9rem wide cannot fit "No options available.", so it cuts off
+// with "...". The wrapper narrows the grid column, as a small screen would.
+export const ViewsFiltersEmptyNarrow = () => {
+  const narrowForm = form({
+    id: 'empty-narrow',
+    hide_search: true,
+    fields: [emptyFilter()],
+  });
+  return createSectionWrapper(
+    'default',
+    `${heading(
+      'Empty filter in a narrow box: text cut off with "..."',
+    )}<div style="max-width: 9rem">${narrowForm}</div>`,
+  );
+};
+
 const calendarFields = (id) => [
   category({ id: `${id}-category` }),
   audience({ id: `${id}-audience`, selected: ['Faculty', 'Staff'] }),
@@ -169,6 +205,17 @@ export const ViewsFiltersEventsCalendar = () =>
         calendar: true,
         search: 'Search events',
         fields: calendarFields('calendar'),
+      }) +
+      heading('Events calendar filters with one empty filter') +
+      form({
+        id: 'calendar-empty',
+        calendar: true,
+        search: 'Search events',
+        fields: [
+          category({ id: 'calendar-empty-category' }),
+          emptyFilter({ id: 'calendar-empty-topic' }),
+          audience({ id: 'calendar-empty-audience' }),
+        ],
       }),
   );
 
@@ -177,14 +224,21 @@ export const ViewsFiltersEventsCalendar = () =>
 // form also forces its items to 100% width, and Chosen containers get a black
 // border. A narrow wrapper would not trigger the media query, so this story
 // needs a phone-width snapshot.
+//
+// The shared styles set `overflow-x: hidden` on html and body (tokens.css,
+// page-layouts.css). That makes overflow-y compute to `auto`, so at narrow
+// widths the body becomes its own scroll box inside Chromatic's 900px window
+// and the snapshot stops partway down. The <style> below lets the page grow to
+// its full height so the whole page, down to the Apply button, is captured.
 export const ViewsFiltersPhoneWidth = () =>
-  createSectionWrapper(
+  `<style>html, body { overflow: visible; }</style>${createSectionWrapper(
     'default',
     heading('Views filters at 375px (one column)') +
       form({
         id: 'phone',
         fields: [
           category({ selected: ['Featured', 'Page Category 1'] }),
+          emptyFilter(),
           audience(),
         ],
       }) +
@@ -195,8 +249,45 @@ export const ViewsFiltersPhoneWidth = () =>
         search: 'Search events',
         fields: calendarFields('phone-calendar'),
       }),
-  );
+  )}`;
 ViewsFiltersPhoneWidth.parameters = {
   ...ViewsFiltersPhoneWidth.parameters,
   chromatic: { viewports: [375] },
 };
+
+// Filter bar layout by filter count (YaleSites-Internal#2184): search first and
+// at least half the row, no partly empty row. The bar sizes itself to its own
+// width, so each count is shown in a wide, a medium and a narrow wrapper.
+const countedFilters = (id, count) =>
+  Array.from({ length: count }, (_, i) =>
+    category({ id: `${id}-f${i}`, label: `Filter ${i + 1}` }),
+  );
+const counts = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+const countedForms = (prefix, props = {}) =>
+  counts
+    .map(
+      (n) =>
+        heading(`${n} filter${n === 1 ? '' : 's'}`) +
+        form({
+          id: `${prefix}-${n}`,
+          fields: countedFilters(`${prefix}-${n}`, n),
+          ...props,
+        }),
+    )
+    .join('');
+const widthBox = (width, markup) =>
+  `<div style="width: ${width}; max-width: 100%">${markup}</div>`;
+
+export const ViewsFiltersLayoutWide = () =>
+  createSectionWrapper(
+    'default',
+    widthBox('62rem', countedForms('wide')) +
+      heading('Search off, 1 to 8 filters') +
+      widthBox('62rem', countedForms('wide-nosearch', { hide_search: true })),
+  );
+
+export const ViewsFiltersLayoutMedium = () =>
+  createSectionWrapper('default', widthBox('40rem', countedForms('mid')));
+
+export const ViewsFiltersLayoutNarrow = () =>
+  createSectionWrapper('default', widthBox('24rem', countedForms('narrow')));

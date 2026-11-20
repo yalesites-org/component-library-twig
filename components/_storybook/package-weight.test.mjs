@@ -17,7 +17,7 @@
  * That is not hypothetical. 84 before/after review screenshots (11 MB) were
  * committed to `components/03-organisms/layout/layout/screenshots/` during the
  * #1613/#1614 contrast audit and shipped in the package until they were moved
- * to `docs/review/` (outside the whitelist). A reviewer cannot see package
+ * out of the package. A reviewer cannot see package
  * weight in a diff, so the only way to catch this class of mistake is to
  * measure it.
  *
@@ -129,8 +129,8 @@ test('no shipped directory carries a pile of review images', () => {
     offenders,
     '',
     `A shipped directory holds more than ${MAX_IMAGES_PER_DIR} raster images:\n${offenders}\n` +
-      `    Review evidence (before/after captures, audit screenshots) belongs in\n` +
-      `    docs/review/, which is outside package.json's files whitelist. Component\n` +
+      `    Review evidence (before/after captures, audit screenshots) does not belong\n` +
+      `    in this repo: attach it to the ticket or PR instead. Component\n` +
       `    assets that genuinely ship are fine -- raise MAX_IMAGES_PER_DIR and say why.`,
   );
 });

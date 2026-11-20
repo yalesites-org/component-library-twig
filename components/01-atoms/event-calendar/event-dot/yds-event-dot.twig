@@ -1,0 +1,24 @@
+{#
+ # Event dot: one marker for one single-day event, shown in Compact month and phone days.
+ #
+ # Available Variables:
+ # - event_dot__past: gray dot. Default false.
+ # - event_dot__pointed_at: 8px dot while its event is pointed at. Default false.
+ #
+ # Decorative: the day's accessible label already counts the events.
+ # The parent sets outer margin and width; this atom never does.
+ #}
+
+{% set event_dot__base_class = 'event-dot' %}
+{% set event_dot__attributes = {
+  'class': bem(event_dot__base_class),
+  'aria-hidden': 'true',
+} %}
+{% if event_dot__past %}
+  {% set event_dot__attributes = event_dot__attributes|merge({'data-event-dot-past': 'true'}) %}
+{% endif %}
+{% if event_dot__pointed_at %}
+  {% set event_dot__attributes = event_dot__attributes|merge({'data-event-dot-pointed-at': 'true'}) %}
+{% endif %}
+
+<span {{ add_attributes(event_dot__attributes) }}></span>

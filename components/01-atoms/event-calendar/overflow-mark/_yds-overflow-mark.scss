@@ -1,0 +1,18 @@
+@use '../../../00-tokens/tokens';
+
+// Overflow mark atom: the "+" that follows three dots.
+.overflow-mark {
+  --overflow-mark-color: var(--color-blue-yale);
+
+  display: inline-block;
+  flex: none;
+  height: var(--size-thickness-6);
+  color: var(--overflow-mark-color);
+  font-size: var(--font-size-13);
+  font-weight: var(--font-weights-yalenew-bold);
+  line-height: var(--size-thickness-6);
+
+  &[data-overflow-mark-past='true'] {
+    --overflow-mark-color: var(--color-gray-500);
+  }
+}

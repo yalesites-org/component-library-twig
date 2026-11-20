@@ -5,6 +5,7 @@ import referenceCardTwig from './reference-card/examples/_card--examples.twig';
 import customCardData from './custom-card/custom-card.yml';
 import directoryCardData from './directory-listing-card/yds-directory-listing-card.yml';
 import referenceCardData from './reference-card/examples/post-card.yml';
+import referenceEventCardData from './reference-card/examples/event-card.yml';
 import referenceProfileCardData from './reference-card/examples/profile-card.yml';
 import referencePageCardData from './reference-card/examples/page-card.yml';
 import referenceResourceData from './reference-card/examples/resource-card.yml';
@@ -46,7 +47,7 @@ const renderSection = (theme) =>
     theme,
     `
         <h3>1. Custom Card</h3>
-        <div class='custom-card-collection' data-component-width='site' data-collection-featured="true">
+        <div class='custom-card-collection' data-component-width='site' data-card-size="small">
           <div class='custom-card-collection__inner'>
             <ul class='custom-card-collection__cards'>
               ${customCardTwig({
@@ -120,6 +121,10 @@ const renderSection = (theme) =>
                 card_collection__type: 'grid',
                 ...imageData.responsive_images['3x2'],
                 format: 'In-person',
+                // Fixed date: without one the card renders today's date and
+                // Chromatic reports a change on every build.
+                reference_card__date:
+                  referenceEventCardData.reference_card__date,
                 reference_card__heading:
                   referenceCardData.reference_card__heading,
                 reference_card__snippet:

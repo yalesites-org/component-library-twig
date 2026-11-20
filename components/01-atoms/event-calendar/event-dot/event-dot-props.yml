@@ -1,0 +1,19 @@
+# event-dot-props.yml
+#
+# Event dot atom property definitions.
+
+past:
+  twigProp: event_dot__past
+  name: Past
+  type: boolean
+  required: false
+  description: Gray dot for a past event.
+  default: false
+
+pointedAt:
+  twigProp: event_dot__pointed_at
+  name: Pointed at
+  type: boolean
+  required: false
+  description: 8px dot while its event is hovered or focused in the list.
+  default: false
