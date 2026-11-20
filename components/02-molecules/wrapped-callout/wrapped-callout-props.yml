@@ -59,3 +59,28 @@ themeColor:
     four: 'Four'
     five: 'Five'
     six: 'Six'
+
+sectionTheme:
+  twigProp: data-section-theme
+  name: Section Theme
+  type: select
+  required: false
+  description: Background color theme of the layout section the callout sits in. A Storybook-only control for testing. The Theme above shows on the border wherever it is readable (3:1) against this background, and the border uses the section's own color where it is not.
+  default: default
+  options:
+    - default
+    - one
+    - two
+    - three
+    - four
+    - five
+    - six
+  control: select
+  labels:
+    default: 'Default (no background)'
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'
+    six: 'Six'

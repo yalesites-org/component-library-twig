@@ -48,16 +48,21 @@ The callout appears on the right side with text flowing around it on the left.
 
 ## Theming
 
-The wrapped callout supports theming through the component theme (dial) system. The theme controls the background color and accent styling of the callout box.
+The wrapped callout supports theming through the component theme (dial) system. The theme sets the color of the callout's border.
 
 **Available themes:**
 
-- **one**: Primary theme (default Yale blue)
-- **two**: Secondary theme
-- **three**: Tertiary theme
-- Additional themes as configured in the design system
+- **one** to **five**: the global theme's first five palette colors
+- **six**: the neutral option (the global theme's dark text color)
 
-The theme ensures the callout visually stands out while maintaining harmony with the overall page design.
+### Inside a colored section
+
+The border sits directly on the section's background, so it has to stay readable (at least 3:1, WCAG 1.4.11).
+
+- Where the chosen theme clears 3:1 against the section background, the border uses the chosen theme.
+- Where it does not, including a theme that matches the section's own color, the border uses the section's foreground color.
+
+The check runs at build time for every global theme, section theme and option, so a change to the palette moves the result with it. Many choices still fall back in colored sections. Use the **Section Theme** control on the Interactive story to see each pairing, and the Visreg story "Every Wrapped Callout Theme in Every Section Theme" for the full grid.
 
 ## Technical Specifications
 

@@ -1,0 +1,30 @@
+@use 'sass:color';
+@use 'sass:math';
+
+/// Linearize one 0-255 sRGB channel (WCAG 2.1 relative luminance).
+@function -linear-channel($value) {
+  $c: math.div($value, 255);
+  @if $c <= math.div(3928, 100000) {
+    @return math.div($c, 12.92);
+  }
+  @return math.pow(math.div($c + 0.055, 1.055), 2.4);
+}
+
+/// WCAG 2.1 relative luminance of a Sass color. Channels are rounded to whole
+/// 0-255 values first, as `contrast-ratio.mjs` does, so a pairing sitting on
+/// the 3:1 line gets the same verdict from the Sass build and the Node audit.
+@function luminance($c) {
+  $r: -linear-channel(math.round(color.channel($c, 'red', $space: rgb)));
+  $g: -linear-channel(math.round(color.channel($c, 'green', $space: rgb)));
+  $b: -linear-channel(math.round(color.channel($c, 'blue', $space: rgb)));
+  @return (0.2126 * $r) + (0.7152 * $g) + (0.0722 * $b);
+}
+
+/// WCAG 2.1 contrast ratio between two Sass colors (1 to 21).
+@function contrast-ratio($a, $b) {
+  $la: luminance($a);
+  $lb: luminance($b);
+  $hi: math.max($la, $lb);
+  $lo: math.min($la, $lb);
+  @return math.div($hi + 0.05, $lo + 0.05);
+}
