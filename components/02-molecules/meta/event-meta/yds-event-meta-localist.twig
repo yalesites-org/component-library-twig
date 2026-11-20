@@ -58,8 +58,13 @@
 {# Set the event status based on event_has_passed variable #}
 {% set event_status = event_has_passed ? 'passed' : 'current' %}
 
+{# A Place always arrives with its name, so `place` alone says nothing about
+   whether it has an address or coordinates. The map is drawn from the
+   coordinates, so it needs both of them. #}
+{% set place_has_address = place.address or place.city or place.state or place.postal_code %}
+{% set place_has_coordinates = place.latitude is not empty and place.longitude is not empty %}
 {% set latLong = place.latitude ~ ',' ~ place.longitude %}
-{% set get_directions__url = place ? 'https://www.google.com/maps/dir/Current+Location/' ~ latLong : '' %}
+{% set get_directions__url = place_has_coordinates ? 'https://www.google.com/maps/dir/Current+Location/' ~ latLong : '' %}
 
 {# Set up location display: place name, then room, either may be missing #}
 {% set location_display = place.name %}
@@ -414,10 +419,10 @@
               {% if place or room %}
                 <div {{ bem('location', [], event_meta__base_class) }}>
                   {{ location_display }}
-                  {% if place %}
+                  {% if place_has_address %}
                     <br>
                     {{ place.address }}
-                    {{ place.city }}, {{ place.state }} {{ place.postal_code }}
+                    {{ place.city }}{% if place.city and place.state %},{% endif %} {{ place.state }} {{ place.postal_code }}
                   {% endif %}
                 </div>
               {% endif %}
@@ -426,7 +431,7 @@
                   {{ location_details }}
                 </div>
               {% endif %}
-              {% if place %}
+              {% if place_has_coordinates %}
               <div {{ bem('event-show-map', [], event_meta__base_class) }} is-expanded="false">
                 {% include "@atoms/controls/cta/yds-cta.twig" with {
                   cta__content: event__show_map__icon,
