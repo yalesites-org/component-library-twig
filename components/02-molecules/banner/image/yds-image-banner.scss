@@ -221,6 +221,12 @@ $break-image-banner: tokens.$break-m;
     background-color: var(--color-basic-white);
     padding: var(--size-spacing-2);
     text-align: center;
+
+    // The caption overlays the image, so a tall caption (several lists in the
+    // WYSIWYG) could cover the whole image, most easily at the mini size.
+    // Cap it at half the banner and scroll the rest (YaleSites-Internal#2213).
+    max-height: 50%;
+    overflow-y: auto;
   }
 }
 
