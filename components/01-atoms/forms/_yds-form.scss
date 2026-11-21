@@ -493,6 +493,34 @@ $filter-panel-search-height: 3.5rem;
     }
   }
 
+  .ys-select-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--size-spacing-4);
+  }
+
+  .ys-select-done {
+    min-height: var(--size-click-target-minimum);
+    padding: var(--size-spacing-2) var(--size-spacing-5);
+    border: var(--border-thickness-2) solid var(--color-section-accent);
+    border-radius: 100vmax;
+    background-color: var(--color-section-accent);
+    color: var(--color-section-background);
+    font: inherit;
+    font-weight: var(--font-weights-mallory-medium);
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-section-background);
+      color: var(--color-section-accent);
+    }
+
+    &:focus-visible {
+      outline: var(--border-thickness-2) solid var(--color-blue-medium);
+      outline-offset: 2px;
+    }
+  }
+
   .ys-select-clear {
     padding: 0;
     border: 0;
