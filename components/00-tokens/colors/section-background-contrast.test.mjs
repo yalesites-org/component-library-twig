@@ -308,6 +308,7 @@ test('the surface contract is published in exactly the expected places', () => {
     // merge: its own-theme dial paints the inner box, so it publishes what it
     // painted for the schedule inside.
     'components/02-molecules/office-hours/_yds-office-hours.scss',
+    'components/02-molecules/quote-callout/_yds-quote-callout.scss',
     'components/02-molecules/text-with-image/_yds-text-with-image.scss',
     'components/03-organisms/facts-and-figures-group/_yds-facts-and-figures-group.scss',
     'components/03-organisms/layout/layout/_yds-layout.scss',
