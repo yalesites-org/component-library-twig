@@ -340,6 +340,17 @@
       class: 'ys-select-clear',
       text: Drupal.t('Clear all'),
     }).on('click', () => unselect(select, select.options));
+    // "Done" closes the list from inside the panel, so a visitor does not
+    // have to know Escape or a click elsewhere does it. Focus goes back to the
+    // field, as Escape from the footer does. (#2313)
+    const $done = $('<button>', {
+      type: 'button',
+      class: 'ys-select-done',
+      text: Drupal.t('Done'),
+    }).on('click', () => {
+      chosen.results_hide();
+      chosen.search_field.trigger('focus');
+    });
     $container.find('.chosen-drop').append(
       $('<div>', { class: 'ys-select-footer' }).append(
         $('<span>', {
@@ -347,7 +358,7 @@
           'aria-live': 'polite',
           tabindex: -1,
         }),
-        $clear,
+        $('<span>', { class: 'ys-select-actions' }).append($clear, $done),
       ),
     );
 
