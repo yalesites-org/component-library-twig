@@ -53,3 +53,16 @@ ImageBannerFullWidth.storyName = 'Full Width';
 export const ImageBannerPlayOnce = (args) => renderBanner(args);
 ImageBannerPlayOnce.args = { withVideo: true, videoPlayback: 'once' };
 ImageBannerPlayOnce.storyName = 'Video: Play Once';
+
+export const ImageBannerLongCaption = (args) => renderBanner(args);
+ImageBannerLongCaption.args = {
+  size: 'mini',
+  imageCaption: Array.from(
+    { length: 12 },
+    (_, i) =>
+      `Caption line ${
+        i + 1
+      }: a long plain-text caption that is tall enough to overflow a mini banner.`,
+  ).join(' '),
+};
+ImageBannerLongCaption.storyName = 'Mini: Long Caption';
