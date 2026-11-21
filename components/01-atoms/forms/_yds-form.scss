@@ -192,6 +192,11 @@ $filter-panel-search-height: 3.5rem;
   // required-asterisk rule in _yds-textfields.scss excludes. (#1897)
   --ys-filter-focus: var(--color-blue-medium);
 
+  // Rings drawn on white surfaces (the search field in the open panel, the
+  // chip remove button) stay dark in every section: the section foreground
+  // above is white in dark sections and would vanish on white. (#2331)
+  --ys-filter-focus-on-surface: var(--color-blue-yale);
+
   // Sections emit `data-section-theme` (the block dial `data-component-theme`
   // belongs to blocks alone), so the rule has to key on the section attribute
   // or it never applies. (#2194)
@@ -418,7 +423,8 @@ $filter-panel-search-height: 3.5rem;
         }
 
         &:focus-visible {
-          outline: var(--border-thickness-2) solid var(--ys-filter-focus);
+          outline: var(--border-thickness-2) solid
+            var(--ys-filter-focus-on-surface);
           outline-offset: var(--size-spacing-1);
         }
       }
@@ -565,7 +571,8 @@ $filter-panel-search-height: 3.5rem;
         color: inherit;
 
         &:focus-visible {
-          outline: var(--border-thickness-2) solid var(--ys-filter-focus);
+          outline: var(--border-thickness-2) solid
+            var(--ys-filter-focus-on-surface);
           outline-offset: calc(-1 * var(--border-thickness-2));
         }
       }
