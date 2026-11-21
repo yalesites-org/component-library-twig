@@ -185,3 +185,41 @@ test('dark-section filter focus ring keys on the section attribute (#2194)', () 
     'block attribute never lands on a section',
   );
 });
+
+test('rings on white surfaces use a dark variable in every section (#2331)', () => {
+  const values = {};
+  form.walkDecls('--ys-filter-focus-on-surface', (d) => {
+    values[d.parent.selector] = d.value;
+  });
+  assert.deepEqual(Object.values(values), ['var(--color-blue-yale)']);
+  assert.ok(
+    !Object.keys(values).some((s) => s.includes('data-section-theme')),
+    'must not be overridden in dark sections',
+  );
+
+  const ringFor = (selectorPart) => {
+    const found = [];
+    form.walkRules((rule) => {
+      if (!rule.selector.includes(selectorPart)) return;
+      rule.walkDecls('outline', (d) => found.push(d.value));
+    });
+    return found;
+  };
+  const onSurface = [
+    ...ringFor('.search-choice-close'),
+    ...ringFor('li.search-field input[type=text]'),
+  ];
+  assert.ok(onSurface.length >= 2, 'chip remove and search field rings');
+  onSurface.forEach((v) =>
+    assert.ok(v.includes('--ys-filter-focus-on-surface'), v),
+  );
+
+  const container = [];
+  form.walkDecls('outline', (d) => {
+    if (d.value.includes('var(--ys-filter-focus)')) container.push(d.value);
+  });
+  assert.ok(
+    container.length > 0,
+    'outer container ring keeps --ys-filter-focus',
+  );
+});
