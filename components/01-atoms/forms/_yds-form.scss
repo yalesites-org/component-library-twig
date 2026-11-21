@@ -499,20 +499,21 @@ $filter-panel-search-height: 3.5rem;
     gap: var(--size-spacing-4);
   }
 
+  // A plain link, lighter than the filled pill it replaced, so it does not
+  // outweigh the rest of the panel. Clear all sits by the count on the left;
+  // Done is alone on the right. (#2313)
   .ys-select-done {
     min-height: var(--size-click-target-minimum);
-    padding: var(--size-spacing-2) var(--size-spacing-5);
-    border: var(--border-thickness-2) solid var(--color-section-accent);
-    border-radius: 100vmax;
-    background-color: var(--color-section-accent);
-    color: var(--color-section-background);
+    padding: 0 var(--size-spacing-2);
+    border: 0;
+    background: none;
+    color: var(--color-section-accent);
     font: inherit;
     font-weight: var(--font-weights-mallory-medium);
     cursor: pointer;
 
     &:hover {
-      background-color: var(--color-section-background);
-      color: var(--color-section-accent);
+      text-decoration: underline;
     }
 
     &:focus-visible {

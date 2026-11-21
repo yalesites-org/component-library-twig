@@ -353,12 +353,15 @@
     });
     $container.find('.chosen-drop').append(
       $('<div>', { class: 'ys-select-footer' }).append(
-        $('<span>', {
-          class: 'ys-select-count',
-          'aria-live': 'polite',
-          tabindex: -1,
-        }),
-        $('<span>', { class: 'ys-select-actions' }).append($clear, $done),
+        $('<span>', { class: 'ys-select-actions' }).append(
+          $('<span>', {
+            class: 'ys-select-count',
+            'aria-live': 'polite',
+            tabindex: -1,
+          }),
+          $clear,
+        ),
+        $done,
       ),
     );
 

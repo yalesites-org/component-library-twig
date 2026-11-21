@@ -52,3 +52,15 @@ test('Done is styled and has a visible focus ring', () => {
   assert.match(scss, /\.ys-select-done \{/);
   assert.match(scss, /\.ys-select-done[\s\S]*?&:focus-visible/);
 });
+
+test('Done is a plain link and Clear all sits by the count, not by Done', () => {
+  const source = read('./yds-select.js');
+  assert.match(
+    source,
+    /ys-select-actions[\s\S]*?ys-select-count[\s\S]*?\$clear,\s*\),\s*\$done,/,
+  );
+  const scss = read('../_yds-form.scss');
+  const rule = scss.match(/\.ys-select-done \{[\s\S]*?\n {2}\}/)[0];
+  assert.match(rule, /background: none;/);
+  assert.doesNotMatch(rule, /border-radius/);
+});
