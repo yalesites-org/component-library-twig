@@ -98,6 +98,31 @@ $container-grid-small-two-up: 25rem;
 
     @include container-grid-columns(3);
   }
+
+  @include container-grid-fallback(2, 3);
+}
+
+// Viewport-based columns for browsers without container queries (Safari 15 and
+// older, which ignore `@container` and would leave `base`'s 100% flex-basis in
+// place, one card per row; YaleSites-Internal#2244). Browsers that support
+// container queries skip this block, so they render exactly as before.
+// Without container queries the grid cannot know how wide its layout region is,
+// so it assumes a full-width region and reads the viewport the way `primary`
+// does: $break-m and up gets $medium columns, $break-l and up gets $large.
+// Narrow regions (thirds, sidebar) get more columns than Chrome gives them here;
+// that is the trade for not coupling this file to ancestor layout markup.
+@mixin container-grid-fallback($medium, $large) {
+  @supports not (container-type: inline-size) {
+    > * {
+      @media (min-width: tokens.$break-m) {
+        flex: 0 1 column-basis($medium);
+      }
+
+      @media (min-width: tokens.$break-l) {
+        flex: 0 1 column-basis($large);
+      }
+    }
+  }
 }
 
 // Confines the container bands to $break-m and up, leaving `base`'s 100%
@@ -178,6 +203,8 @@ $container-grid-small-two-up: 25rem;
 
     @include container-grid-columns(4);
   }
+
+  @include container-grid-fallback(3, 4);
 }
 
 @mixin primary {
