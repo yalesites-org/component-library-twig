@@ -1,4 +1,5 @@
 import imageBannerTwig from './image/yds-image-banner.twig';
+import './image/yds-image-banner';
 import componentProps from './image-banner-props.yml';
 import { toArgTypes, toArgs } from '../../_storybook/component-props';
 import imageData from '../../01-atoms/images/image/image.yml';
