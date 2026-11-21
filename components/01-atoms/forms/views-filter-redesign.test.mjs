@@ -208,8 +208,12 @@ test('rings on white surfaces use a dark variable in every section (#2331)', () 
   const onSurface = [
     ...ringFor('.search-choice-close'),
     ...ringFor('li.search-field input[type=text]'),
+    ...ringFor('.search-choice-focus'),
   ];
-  assert.ok(onSurface.length >= 2, 'chip remove and search field rings');
+  assert.ok(
+    onSurface.length >= 3,
+    'chip remove, search field and highlighted chip rings',
+  );
   onSurface.forEach((v) =>
     assert.ok(v.includes('--ys-filter-focus-on-surface'), v),
   );

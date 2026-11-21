@@ -434,7 +434,8 @@ $filter-panel-search-height: 3.5rem;
       // clips. (#1930)
       &.search-choice-focus {
         flex-shrink: 1;
-        outline: var(--border-thickness-2) solid var(--ys-filter-focus);
+        outline: var(--border-thickness-2) solid
+          var(--ys-filter-focus-on-surface);
         outline-offset: calc(-1 * var(--border-thickness-2));
       }
     }
