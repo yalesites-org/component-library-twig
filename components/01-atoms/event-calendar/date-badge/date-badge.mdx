@@ -1,0 +1,74 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as Stories from './date-badge.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './date-badge-props.yml';
+
+<Meta of={Stories} name="Overview" />
+
+# Date badge
+
+A badge that groups list items by day: the weekday in small caps above the date number, or a date range. Used in Compact month with list and the phone day list.
+
+## Playground
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Playground} />
+</div>
+<Controls of={Stories.Playground} />
+
+## States
+
+### Upcoming
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Upcoming} />
+</div>
+
+### UpcomingRange
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.UpcomingRange} />
+</div>
+
+### Today
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Today} />
+</div>
+
+### TodayRange
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.TodayRange} />
+</div>
+
+### Past
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Past} />
+</div>
+
+### PastRange
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.PastRange} />
+</div>
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Atom
+- **Template**: `yds-date-badge.twig`
+- **Styles**: `_yds-date-badge.scss`
+- **Rules**: tokens only, no color props, states are props, the parent sets outer margin and width
+
+### Accessibility
+
+- The full date is hidden text; the visible weekday and date are hidden from assistive tech.
+- Gray 600 fill with white text is 6.5:1; Yale Blue on Blue Soft clears 4.5:1.
+- Badge size is not in the spec: a 3.75rem square minimum, read from the design.

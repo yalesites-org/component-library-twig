@@ -1,0 +1,55 @@
+# multi-day-bar-props.yml
+#
+# Multi-day bar atom property definitions.
+
+title:
+  twigProp: multi_day_bar__title
+  name: Title
+  type: string
+  required: false
+  description: Event title, shown in medium weight.
+  default: Workshop in arithmetic geometry
+  control: text
+
+dateRange:
+  twigProp: multi_day_bar__date_range
+  name: Date range
+  type: string
+  required: false
+  description: Visible date range after the title.
+  default: Oct 22–24
+  control: text
+
+labelRange:
+  twigProp: multi_day_bar__label_range
+  name: Spoken date range
+  type: string
+  required: false
+  description: Date range as screen readers say it. The accessible name starts "Multi-day event, <range>:".
+  default: October 22 to 24
+  control: text
+
+url:
+  twigProp: multi_day_bar__url
+  name: URL
+  type: string
+  required: false
+  description: Where the bar links.
+  default: '#'
+  control: text
+
+past:
+  twigProp: multi_day_bar__past
+  name: Past
+  type: boolean
+  required: false
+  description: Gray bar for a past event.
+  default: false
+
+pointedAt:
+  twigProp: multi_day_bar__pointed_at
+  name: Pointed at
+  type: boolean
+  required: false
+  description: 2px Yale Blue border while the bar or its Day cell is hovered or focused.
+  default: false
