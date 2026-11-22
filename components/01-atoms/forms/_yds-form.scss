@@ -500,6 +500,35 @@ $filter-panel-search-height: 3.5rem;
     }
   }
 
+  .ys-select-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--size-spacing-4);
+  }
+
+  // A plain link, lighter than the filled pill it replaced, so it does not
+  // outweigh the rest of the panel. Clear all sits by the count on the left;
+  // Done is alone on the right. (#2313)
+  .ys-select-done {
+    min-height: var(--size-click-target-minimum);
+    padding: 0 var(--size-spacing-2);
+    border: 0;
+    background: none;
+    color: var(--color-section-accent);
+    font: inherit;
+    font-weight: var(--font-weights-mallory-medium);
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: var(--border-thickness-2) solid var(--color-blue-medium);
+      outline-offset: 2px;
+    }
+  }
+
   .ys-select-clear {
     padding: 0;
     border: 0;
