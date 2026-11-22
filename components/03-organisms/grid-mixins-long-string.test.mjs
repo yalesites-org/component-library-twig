@@ -47,6 +47,9 @@ const HELPERS = new Set([
   'single-column-below-break-m',
   'container-grid-columns',
   'container-grid-small',
+  // Viewport fallback for browsers without container queries (#2244); layered
+  // onto a grid that already includes `base`, like the helpers above.
+  'container-grid-fallback',
 ]);
 
 const MIXINS = [
