@@ -55,10 +55,6 @@
       "reason": "Remaps --color-background at a themed scope and paints it at the root. Named alongside tabs in _yds-layout.scss:309-317 as the reason --color-text / --color-background could not be re-pointed from the section side before #1630, so it is entangled with that pair specifically and should convert with tabs.",
       "ticket": "yalesites-org/YaleSites-Internal#1634"
     },
-    "components/02-molecules/quote-callout/_yds-quote-callout.scss": {
-      "reason": "Paints --color-quote-callout-background from the dial and at theme six. Straightforward, but three of its custom properties were inert var() cycles removed in #1629 and the file's per-theme blocks re-declare at identical specificity, so the conversion needs the last-one-wins ordering checked rather than assumed.",
-      "ticket": "yalesites-org/YaleSites-Internal#1634"
-    },
     "components/02-molecules/inline-message/_yds-inline-message.scss": {
       "reason": "Paints --color-inline-message-background from the dial and at theme six. Deferred purely for batch size; no known complication.",
       "ticket": "yalesites-org/YaleSites-Internal#1634"
