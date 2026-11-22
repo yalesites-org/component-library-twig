@@ -1,0 +1,60 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as Stories from './multi-day-band.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './multi-day-band-props.yml';
+
+<Meta of={Stories} name="Overview" />
+
+# Multi-day band
+
+A 6px strip under the day number that joins the days of a multi-day event. Compact month and phone days only. One band per day, never stacked; dots stay below it.
+
+## Playground
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Playground} />
+</div>
+<Controls of={Stories.Playground} />
+
+## States
+
+### Upcoming
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Upcoming} />
+</div>
+
+### Past
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Past} />
+</div>
+
+### PointedAt
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.PointedAt} />
+</div>
+
+### Segments
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Segments} />
+</div>
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Atom
+- **Template**: `yds-multi-day-band.twig`
+- **Styles**: `_yds-multi-day-band.scss`
+- **Rules**: tokens only, no color props, states are props, the parent sets outer margin and width
+
+### Accessibility
+
+- Decorative (`aria-hidden`). The day's label from Day number names the multi-day event.

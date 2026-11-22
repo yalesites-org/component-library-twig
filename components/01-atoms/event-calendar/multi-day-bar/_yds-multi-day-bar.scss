@@ -1,0 +1,63 @@
+@use '../../../00-tokens/tokens';
+
+// Multi-day bar atom: 24px tall link, light on purpose so it never outranks
+// single events. The past colors are not stated in the spec: Gray 600 title,
+// Gray 100 fill, Gray 500 border.
+.multi-day-bar {
+  --multi-day-bar-height: var(--size-spacing-6);
+  --multi-day-bar-fill: var(--color-blue-soft);
+  --multi-day-bar-border-color: var(--color-blue-medium);
+  --multi-day-bar-border-width: var(--border-thickness-1);
+  --multi-day-bar-title-color: var(--color-blue-yale);
+  --multi-day-bar-range-color: var(--color-blue-yale);
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--size-spacing-1);
+  height: var(--multi-day-bar-height);
+  padding-inline: var(--size-spacing-3);
+  overflow: hidden;
+  color: var(--multi-day-bar-title-color);
+  background-color: var(--multi-day-bar-fill);
+  border: var(--multi-day-bar-border-width) solid
+    var(--multi-day-bar-border-color);
+  font-size: var(--font-size-14);
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+
+  &__label {
+    @include tokens.visually-hidden;
+  }
+
+  &__title {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: var(--font-weights-mallory-medium);
+  }
+
+  &__separator {
+    flex: none;
+  }
+
+  &__range {
+    flex: none;
+    color: var(--multi-day-bar-range-color);
+    font-weight: var(--font-weights-mallory-book);
+  }
+
+  &[data-multi-day-bar-past='true'] {
+    --multi-day-bar-fill: var(--color-gray-100);
+    --multi-day-bar-border-color: var(--color-gray-500);
+    --multi-day-bar-title-color: var(--color-gray-600);
+    --multi-day-bar-range-color: var(--color-gray-600);
+  }
+
+  &[data-multi-day-bar-pointed-at='true'] {
+    --multi-day-bar-border-color: var(--color-blue-yale);
+    --multi-day-bar-border-width: var(--border-thickness-2);
+  }
+}
