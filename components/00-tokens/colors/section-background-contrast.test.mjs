@@ -340,11 +340,9 @@ const SECTION_SURFACE_CONSUMERS = [
     file: '../../02-molecules/pager/_yds-pager.scss',
     fallback: '--color-basic-brown-gray',
   },
-  {
-    name: 'wrapped-callout border',
-    file: '../../02-molecules/wrapped-callout/_yds-wrapped-callout.scss',
-    fallback: '--color-wrapped-callout-theme',
-  },
+  // The wrapped-callout border is deliberately not listed. It always follows
+  // the block's Theme option, because the callout is decorative
+  // (YaleSites-Internal#2314).
   {
     name: 'link-grid column rule',
     file: '../../02-molecules/link-grid/_yds-link-grid.scss',

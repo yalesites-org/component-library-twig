@@ -192,6 +192,11 @@ $filter-panel-search-height: 3.5rem;
   // required-asterisk rule in _yds-textfields.scss excludes. (#1897)
   --ys-filter-focus: var(--color-blue-medium);
 
+  // Rings drawn on white surfaces (the search field in the open panel, the
+  // chip remove button) stay dark in every section: the section foreground
+  // above is white in dark sections and would vanish on white. (#2331)
+  --ys-filter-focus-on-surface: var(--color-blue-yale);
+
   // Sections emit `data-section-theme` (the block dial `data-component-theme`
   // belongs to blocks alone), so the rule has to key on the section attribute
   // or it never applies. (#2194)
@@ -418,7 +423,8 @@ $filter-panel-search-height: 3.5rem;
         }
 
         &:focus-visible {
-          outline: var(--border-thickness-2) solid var(--ys-filter-focus);
+          outline: var(--border-thickness-2) solid
+            var(--ys-filter-focus-on-surface);
           outline-offset: var(--size-spacing-1);
         }
       }
@@ -428,7 +434,8 @@ $filter-panel-search-height: 3.5rem;
       // clips. (#1930)
       &.search-choice-focus {
         flex-shrink: 1;
-        outline: var(--border-thickness-2) solid var(--ys-filter-focus);
+        outline: var(--border-thickness-2) solid
+          var(--ys-filter-focus-on-surface);
         outline-offset: calc(-1 * var(--border-thickness-2));
       }
     }
@@ -490,6 +497,35 @@ $filter-panel-search-height: 3.5rem;
 
     .chosen-container:not(.chosen-with-drop) & {
       visibility: hidden;
+    }
+  }
+
+  .ys-select-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--size-spacing-4);
+  }
+
+  // A plain link, lighter than the filled pill it replaced, so it does not
+  // outweigh the rest of the panel. Clear all sits by the count on the left;
+  // Done is alone on the right. (#2313)
+  .ys-select-done {
+    min-height: var(--size-click-target-minimum);
+    padding: 0 var(--size-spacing-2);
+    border: 0;
+    background: none;
+    color: var(--color-section-accent);
+    font: inherit;
+    font-weight: var(--font-weights-mallory-medium);
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: var(--border-thickness-2) solid var(--color-blue-medium);
+      outline-offset: 2px;
     }
   }
 
@@ -565,7 +601,8 @@ $filter-panel-search-height: 3.5rem;
         color: inherit;
 
         &:focus-visible {
-          outline: var(--border-thickness-2) solid var(--ys-filter-focus);
+          outline: var(--border-thickness-2) solid
+            var(--ys-filter-focus-on-surface);
           outline-offset: calc(-1 * var(--border-thickness-2));
         }
       }

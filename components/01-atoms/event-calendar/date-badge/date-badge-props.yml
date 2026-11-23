@@ -1,0 +1,54 @@
+# date-badge-props.yml
+#
+# Date badge atom property definitions.
+
+weekday:
+  twigProp: date_badge__weekday
+  name: Weekday
+  type: string
+  required: false
+  description: Weekday in small caps, for example Tue. A range reads Thu–Sat.
+  default: Tue
+  control: text
+
+date:
+  twigProp: date_badge__date
+  name: Date
+  type: string
+  required: false
+  description: Date number, for example 27. A range reads 15–17.
+  default: '27'
+  control: text
+
+label:
+  twigProp: date_badge__label
+  name: Accessible label
+  type: string
+  required: false
+  description: Full date for screen readers. Rendered as hidden text; the visible weekday and date are hidden from assistive tech.
+  default: Tuesday, October 27
+  control: text
+
+range:
+  twigProp: date_badge__range
+  name: Range
+  type: boolean
+  required: false
+  description: A date range instead of a single day. Pass the range in Weekday and Date.
+  default: false
+
+today:
+  twigProp: date_badge__today
+  name: Today
+  type: boolean
+  required: false
+  description: Solid Yale Blue with white text.
+  default: false
+
+past:
+  twigProp: date_badge__past
+  name: Past
+  type: boolean
+  required: false
+  description: Gray 600 fill with white text (6.5:1). Ignored when Today is set.
+  default: false

@@ -4,8 +4,11 @@
 @forward './controls/text-copy-button/yds-text-copy-button';
 @forward './date-time/yds-date-time';
 @forward './divider/yds-divider';
+@forward './event-calendar/date-badge/yds-date-badge';
 @forward './event-calendar/day-number/yds-day-number';
 @forward './event-calendar/event-dot/yds-event-dot';
+@forward './event-calendar/multi-day-band/yds-multi-day-band';
+@forward './event-calendar/multi-day-bar/yds-multi-day-bar';
 @forward './event-calendar/overflow-mark/yds-overflow-mark';
 @forward './forms/yds-form' as forms-*;
 @forward './forms/textfields/yds-textfields';
