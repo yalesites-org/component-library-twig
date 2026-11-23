@@ -1,0 +1,28 @@
+{#
+ # Multi-day band: one strip under a day number, joining the days of a multi-day event.
+ # Shown in Compact month and phone days only. It has no text.
+ #
+ # Available Variables:
+ # - multi_day_band__segment: start, middle, end or single. Default middle.
+ # - multi_day_band__past: gray band. Default false.
+ # - multi_day_band__pointed_at: 8px band while its event is pointed at. Default false.
+ #
+ # Decorative: the day's accessible label already names the multi-day event.
+ # One band per day, never stacked. The parent sets outer margin and width.
+ #}
+
+{% set multi_day_band__base_class = 'multi-day-band' %}
+{% set multi_day_band__segment = multi_day_band__segment in ['start', 'middle', 'end', 'single'] ? multi_day_band__segment : 'middle' %}
+{% set multi_day_band__attributes = {
+  'class': bem(multi_day_band__base_class),
+  'aria-hidden': 'true',
+  'data-multi-day-band-segment': multi_day_band__segment,
+} %}
+{% if multi_day_band__past %}
+  {% set multi_day_band__attributes = multi_day_band__attributes|merge({'data-multi-day-band-past': 'true'}) %}
+{% endif %}
+{% if multi_day_band__pointed_at %}
+  {% set multi_day_band__attributes = multi_day_band__attributes|merge({'data-multi-day-band-pointed-at': 'true'}) %}
+{% endif %}
+
+<span {{ add_attributes(multi_day_band__attributes) }}></span>

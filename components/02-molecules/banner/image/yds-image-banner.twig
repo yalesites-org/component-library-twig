@@ -52,6 +52,7 @@
       {% block image_banner__image %}
         {% embed "@atoms/images/image/yds-image.twig" with {
           figure__caption: image_banner__caption,
+          figure__caption__label: 'Banner caption',
         } %}
         {% endembed %}
       {% endblock %}

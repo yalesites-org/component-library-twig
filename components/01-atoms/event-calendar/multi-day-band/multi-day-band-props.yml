@@ -1,0 +1,33 @@
+# multi-day-band-props.yml
+#
+# Multi-day band atom property definitions.
+
+segment:
+  twigProp: multi_day_band__segment
+  name: Segment
+  type: select
+  options:
+    - start
+    - middle
+    - end
+    - single
+  required: false
+  description: Where this day sits in the event. Start, end and single are rounded and inset 8px; middle is flat.
+  default: middle
+  control: select
+
+past:
+  twigProp: multi_day_band__past
+  name: Past
+  type: boolean
+  required: false
+  description: Gray band for a past event.
+  default: false
+
+pointedAt:
+  twigProp: multi_day_band__pointed_at
+  name: Pointed at
+  type: boolean
+  required: false
+  description: 8px band while its event is hovered or focused.
+  default: false

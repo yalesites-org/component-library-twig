@@ -1,0 +1,49 @@
+@use '../../../00-tokens/tokens';
+
+// Multi-day band atom: a 6px strip joining the days of a multi-day event.
+// Ends are rounded and inset 8px; a segment that continues is flat and runs
+// edge to edge. States are data attributes the component owns.
+.multi-day-band {
+  --multi-day-band-height: var(--size-thickness-6);
+  --multi-day-band-color: var(--color-blue-yale);
+  --multi-day-band-radius: var(--size-spacing-3);
+  --multi-day-band-inset-start: 0;
+  --multi-day-band-inset-end: 0;
+
+  display: block;
+  box-sizing: border-box;
+  height: var(--multi-day-band-height);
+  margin-inline: var(--multi-day-band-inset-start)
+    var(--multi-day-band-inset-end);
+  border-radius: 0;
+  background-color: var(--multi-day-band-color);
+
+  &[data-multi-day-band-segment='start'] {
+    --multi-day-band-inset-start: var(--size-spacing-3);
+
+    border-start-start-radius: var(--multi-day-band-radius);
+    border-end-start-radius: var(--multi-day-band-radius);
+  }
+
+  &[data-multi-day-band-segment='end'] {
+    --multi-day-band-inset-end: var(--size-spacing-3);
+
+    border-start-end-radius: var(--multi-day-band-radius);
+    border-end-end-radius: var(--multi-day-band-radius);
+  }
+
+  &[data-multi-day-band-segment='single'] {
+    --multi-day-band-inset-start: var(--size-spacing-3);
+    --multi-day-band-inset-end: var(--size-spacing-3);
+
+    border-radius: var(--multi-day-band-radius);
+  }
+
+  &[data-multi-day-band-past='true'] {
+    --multi-day-band-color: var(--color-gray-500);
+  }
+
+  &[data-multi-day-band-pointed-at='true'] {
+    --multi-day-band-height: var(--size-thickness-8);
+  }
+}
