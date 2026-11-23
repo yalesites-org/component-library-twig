@@ -79,8 +79,11 @@ export const globalTypes = {
     toolbar: {
       icon: 'paragraph',
       items: [
-        { value: 'oldstyle', title: 'Heading numerals: Old-Style' },
-        { value: 'lining', title: 'Heading numerals: Lining' },
+        {
+          value: 'oldstyle',
+          title: 'Heading numeral style: Old-Style Numerals',
+        },
+        { value: 'lining', title: 'Heading numeral style: Lining Numerals' },
       ],
       dynamicTitle: true,
       title: 'Typography: Heading Numerals',
@@ -94,8 +97,8 @@ export const globalTypes = {
     toolbar: {
       icon: 'paragraph',
       items: [
-        { value: 'oldstyle', title: 'Body numerals: Old-Style' },
-        { value: 'lining', title: 'Body numerals: Lining' },
+        { value: 'oldstyle', title: 'Body numeral style: Old-Style Numerals' },
+        { value: 'lining', title: 'Body numeral style: Lining Numerals' },
       ],
       dynamicTitle: true,
       title: 'Typography: Body Numerals',
