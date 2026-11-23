@@ -8,8 +8,11 @@
 
   - calendar: render the Events calendar wrapper (form#event-calendar-filter-form).
   - search: placeholder for the Search field.
+  - search_value: text already typed in the Search field (default: empty).
   - hide_search: leave the Search field out (a listing with search turned off).
-  - fields: list of { id, label, options, selected, open, visible, disabled }.
+  - hide_actions: leave the Apply button out (live filtering, no Apply).
+  - fields: list of { id, label, options, selected, open, visible, disabled, placeholder }.
+    placeholder: the empty-field text (default "Choose some options").
     disabled: a filter with no terms. Chosen marks it .chosen-disabled and shows
     "No options available." in place of "Choose some options".
     visible: how many leading chips fit on the closed row (default: all, so no
@@ -25,7 +28,7 @@
   {% if not hide_search %}
   <div class="form-item form-item-search">
     <label class="form-item__label" for="{{ id }}-search">Search</label>
-    <input class="form-text form-item__textfield" type="text" id="{{ id }}-search" placeholder="{{ search }}">
+    <input class="form-text form-item__textfield" type="text" id="{{ id }}-search" placeholder="{{ search }}"{% if search_value %} value="{{ search_value }}"{% endif %}>
   </div>
   {% endif %}
   {% for field in fields %}
@@ -53,7 +56,7 @@
               <li class="ys-select-more" aria-label="+{{ hidden|length }} more selected: {{ hidden|join(', ') }}">+{{ hidden|length }} more</li>
             {% endif %}
             <li class="search-field">
-              <input class="chosen-search-input{% if not count %} default{% endif %}" type="text" autocomplete="off"{% if field.disabled %} disabled{% endif %} placeholder="{% if field.disabled %}No options available.{% elseif not count %}Choose some options{% endif %}" style="width: {{ count ? 25 : 211 }}px;">
+              <input class="chosen-search-input{% if not count %} default{% endif %}" type="text" autocomplete="off"{% if field.disabled %} disabled{% endif %} placeholder="{% if field.disabled %}No options available.{% elseif not count %}{{ field.placeholder ?? 'Choose some options' }}{% endif %}" style="width: {{ count ? 25 : 211 }}px;">
             </li>
           </ul>
           <div class="chosen-drop">
@@ -74,9 +77,11 @@
       </div>
     </div>
   {% endfor %}
+  {% if not hide_actions %}
   <div class="form-actions">
     <input data-cta-theme="one" data-cta-radius="none" data-cta-style="filled" data-cta-outline-weight="2" data-cta-hover-style="fade" class="cta button form-submit form-item__textfield" type="submit" value="Apply">
   </div>
+  {% endif %}
 {% if calendar %}
   </div>
 </form>
