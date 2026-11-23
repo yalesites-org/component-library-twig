@@ -66,6 +66,7 @@ test('a story for every state and layout plus a Playground', () => {
     'Playground',
     'Empty',
     'FiltersSet',
+    'FiltersOverflow',
     'SearchActive',
     'LayoutRow',
     'LayoutStacked',

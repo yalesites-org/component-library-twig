@@ -92,7 +92,8 @@ export const Playground = (args) =>
 export const Empty = () =>
   render({ filter_bar__filters: filters({}, { custom: false }) });
 
-// Filters set: removable pills inside the fields, "+N more" when they overflow.
+// Filters set: removable pills inside the fields. Each field shows its two
+// picks, so nothing overflows here (see FiltersOverflow for the "+N more" chip).
 export const FiltersSet = () =>
   render({
     filter_bar__filters: filters(
@@ -103,6 +104,26 @@ export const FiltersSet = () =>
       },
       { custom: false },
     ),
+  });
+
+// Filters overflow: four picks, two fit on the closed row (`visible`), so the
+// rest collapse into the "+ 2 more" chip.
+export const FiltersOverflow = () =>
+  render({
+    filter_bar__filters: [
+      {
+        id: 'category',
+        label: 'Category',
+        options: category,
+        selected: ['Lecture', 'Concert', 'Exhibition', 'Workshop'],
+        visible: 2,
+        show: true,
+      },
+      ...filters({}, { audience: true, experience: true, custom: false }).slice(
+        1,
+        3,
+      ),
+    ],
   });
 
 // Search active: text typed in the search field.
