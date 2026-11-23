@@ -285,6 +285,13 @@ test('the surface contract is published in exactly the expected places', () => {
     .sort();
 
   assert.deepEqual(publishing, [
+    // 10 -> 11 with the listing filter redesign (component-library-twig#649).
+    // The Chosen filter field stays white on every section theme, so it
+    // publishes that fixed surface for the chips, badge, panel and footer
+    // inside, the same flat-surface shape as the meta chips below. That is
+    // what lets those read the contract instead of raw palette colors
+    // (YaleSites-Internal#1632).
+    'components/01-atoms/forms/_yds-form.scss',
     'components/02-molecules/banner/action/_yds-action-banner.scss',
     'components/02-molecules/callout/_yds-callout.scss',
     'components/02-molecules/cards/reference-card/_yds-reference-card.scss',
@@ -301,6 +308,7 @@ test('the surface contract is published in exactly the expected places', () => {
     // merge: its own-theme dial paints the inner box, so it publishes what it
     // painted for the schedule inside.
     'components/02-molecules/office-hours/_yds-office-hours.scss',
+    'components/02-molecules/quote-callout/_yds-quote-callout.scss',
     'components/02-molecules/text-with-image/_yds-text-with-image.scss',
     'components/03-organisms/facts-and-figures-group/_yds-facts-and-figures-group.scss',
     'components/03-organisms/layout/layout/_yds-layout.scss',
@@ -332,11 +340,9 @@ const SECTION_SURFACE_CONSUMERS = [
     file: '../../02-molecules/pager/_yds-pager.scss',
     fallback: '--color-basic-brown-gray',
   },
-  {
-    name: 'wrapped-callout border',
-    file: '../../02-molecules/wrapped-callout/_yds-wrapped-callout.scss',
-    fallback: '--color-wrapped-callout-theme',
-  },
+  // The wrapped-callout border is deliberately not listed. It always follows
+  // the block's Theme option, because the callout is decorative
+  // (YaleSites-Internal#2314).
   {
     name: 'link-grid column rule',
     file: '../../02-molecules/link-grid/_yds-link-grid.scss',

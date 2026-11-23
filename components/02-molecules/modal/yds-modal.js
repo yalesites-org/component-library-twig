@@ -12,7 +12,10 @@ Drupal.behaviors.ysModal = {
       // Initialize MicroModal
       MicroModal.init({
         disableScroll: true,
-        awaitCloseAnimation: true,
+        // The modal has no close animation. Waiting for one leaves is-open set
+        // after Escape or an overlay click, so the next open returns early and
+        // never moves focus into the popup.
+        awaitCloseAnimation: false,
       });
 
       // Manually attach close handlers as a fallback

@@ -28,7 +28,7 @@ If you want to work directly on the component library locally, you can clone thi
 
 1. Clone the repository `git clone git@github.com:yalesites-org/component-library-twig.git`
 2. Change directories into the repo `cd component-library-twig`
-3. Verify you're using the correct version of node `nvm use` (requires Node 24.13.0+, per [Emulsify Core 4](https://github.com/emulsify-ds/emulsify-core))
+3. Verify you're using the correct version of node: `nvm use`, or `mise install` / `asdf install` (requires Node 24.13.0+, per [Emulsify Core 4](https://github.com/emulsify-ds/emulsify-core)). The version is pinned in both `.nvmrc` and `.tool-versions`; change them together.
 4. Install dependencies `npm install`
 5. Run the develop script `npm run develop`
 6. Make your changes and commit them!

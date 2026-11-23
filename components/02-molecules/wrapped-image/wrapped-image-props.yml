@@ -43,3 +43,18 @@ imageStyle:
   labels:
     floated: 'Inline'
     offset: 'Offset'
+
+imageSize:
+  twigProp: wrapped_image__size
+  name: Image Size
+  type: select
+  required: false
+  description: Width of the image on large screens. Large is half the block width; Small is a quarter, for headshots, book covers and other narrow photos. On phones both sizes fill the screen width.
+  default: large
+  options:
+    - large
+    - small
+  control: select
+  labels:
+    large: 'Large'
+    small: 'Small'

@@ -14,6 +14,7 @@ const renderBanner = ({
   overlayVariation,
   size,
   withVideo,
+  videoPlayback,
   width,
 }) =>
   grandHeroTwig({
@@ -28,6 +29,7 @@ const renderBanner = ({
     grand_hero__overlay_variation: overlayVariation,
     grand_hero__size: size,
     grand_hero__video: withVideo ? 'true' : 'false',
+    grand_hero__video_playback: videoPlayback,
     grand_hero__width: width,
   });
 
@@ -60,3 +62,7 @@ GrandHeroBannerContained.storyName = 'Contained Overlay';
 export const GrandHeroBannerFullWidth = (args) => renderBanner(args);
 GrandHeroBannerFullWidth.args = { width: 'full' };
 GrandHeroBannerFullWidth.storyName = 'Full Width';
+
+export const GrandHeroBannerPlayOnce = (args) => renderBanner(args);
+GrandHeroBannerPlayOnce.args = { withVideo: true, videoPlayback: 'once' };
+GrandHeroBannerPlayOnce.storyName = 'Video: Play Once';

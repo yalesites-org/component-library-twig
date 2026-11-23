@@ -57,6 +57,17 @@ body[data-body-frozen] {
   }
 }
 
+// The page title's bottom margin (2rem) collapses out through an uncolored
+// .page-meta and leaves a 32px gap above a first uncolored 70/30, which sits
+// flush against page meta on live. Drop it there only
+// (YaleSites-Internal#2192).
+.page-meta:not([data-section-theme]:not([data-section-theme='default'])):has(
+    + [data-section-theme='default'][data-component-layout='seventy-thirty']
+  )
+  .page-title {
+  margin-bottom: 0;
+}
+
 // .main-conent .page-meta that does not contain a .breadcrumbs__wrapper div
 // should have a top padding.
 .main-content .page-meta:not(:has(.breadcrumbs__wrapper)) {

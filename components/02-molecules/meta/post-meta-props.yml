@@ -1,6 +1,6 @@
 # post-meta-props.yml
 #
-# Post Meta component property definitions.
+# Byline (Post Meta) component property definitions.
 # This file is the single source of truth for both Storybook controls
 # and MDX documentation tables.
 

@@ -10,6 +10,12 @@ body {
   // font-variant-numeric directly on heading elements, which always wins
   // over an inherited value regardless of selector specificity.
   font-variant-numeric: oldstyle-nums;
+
+  // A pasted URL breaks inside its column instead of running off a phone
+  // screen (YaleSites-Internal#1953). `break-word`, not `anywhere`: it leaves
+  // ordinary words whole and min-content unchanged, so tables keep their
+  // widths; flex and grid children still need `min-width: 0`.
+  overflow-wrap: break-word;
 }
 
 body[data-body-numerals='lining'] {

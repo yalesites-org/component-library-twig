@@ -1,0 +1,22 @@
+{#
+ # Storybook-only example of the page header on a post.
+ #
+ # Mirrors ys_layouts/templates/ys-post-meta-block.html.twig in
+ # yalesites-project: content width, byline and date in page_title__meta, and
+ # the read-time molecule in the page_title__meta__extra block.
+ #
+ # Available Variables:
+ # - page_title__heading
+ # - page_title__meta
+ # - page_title__show_social_media_sharing_links
+#}
+
+{% embed "@molecules/page-title/yds-page-title.twig" with {
+  page_title__width: 'content',
+} %}
+  {% block page_title__meta__extra %}
+    {% include "@molecules/read-time/yds-read-time.twig" with {
+      read_time__label: 'Estimated read time',
+    } %}
+  {% endblock %}
+{% endembed %}

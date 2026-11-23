@@ -1,0 +1,49 @@
+{#
+ # Day number: the date inside one calendar day.
+ #
+ # Available Variables:
+ # - day_number__number: the date shown, e.g. 28.
+ # - day_number__label: full accessible date, e.g. "Wednesday, October 28, 4 events".
+ #   Rendered as visually hidden text; the visible number is hidden from screen readers.
+ # - day_number__size: 32 (Full month grid) or 36 (Compact and phone). Default 36.
+ # - day_number__has_events: bold number. Default false.
+ # - day_number__today: Yale Blue square, white bold number. Default false.
+ # - day_number__selected: Blue Soft fill, Medium Blue ring. Default false.
+ # - day_number__past: gray number. Default false.
+ # - day_number__other_month: Gray 100 fill, gray number. Default false.
+ #
+ # The parent sets outer margin and width; this atom never does.
+ #}
+
+{% set day_number__base_class = 'day-number' %}
+{% set day_number__size = day_number__size|default('36') %}
+{% if day_number__size != '32' %}
+  {% set day_number__size = '36' %}
+{% endif %}
+
+{% set day_number__attributes = {
+  'class': bem(day_number__base_class),
+  'data-day-number-size': day_number__size,
+} %}
+{% if day_number__has_events %}
+  {% set day_number__attributes = day_number__attributes|merge({'data-day-number-has-events': 'true'}) %}
+{% endif %}
+{% if day_number__today %}
+  {% set day_number__attributes = day_number__attributes|merge({'data-day-number-today': 'true'}) %}
+{% endif %}
+{% if day_number__selected %}
+  {% set day_number__attributes = day_number__attributes|merge({'data-day-number-selected': 'true'}) %}
+{% endif %}
+{% if day_number__past %}
+  {% set day_number__attributes = day_number__attributes|merge({'data-day-number-past': 'true'}) %}
+{% endif %}
+{% if day_number__other_month %}
+  {% set day_number__attributes = day_number__attributes|merge({'data-day-number-other-month': 'true'}) %}
+{% endif %}
+
+<span {{ add_attributes(day_number__attributes) }}>
+  {% if day_number__label %}
+    <span {{ bem('label', [], day_number__base_class) }}>{{ day_number__label }}</span>
+  {% endif %}
+  <span {{ bem('number', [], day_number__base_class) }}{% if day_number__label %} aria-hidden="true"{% endif %}>{{ day_number__number|default('1') }}</span>
+</span>

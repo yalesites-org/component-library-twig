@@ -565,3 +565,21 @@ test('the report counts global themes from the data, not from a literal', () => 
 
   assert.match(report, /across 2 global themes/);
 });
+
+test('the quote callout publishes its surface for every theme (YaleSites-Internal#2327)', () => {
+  // The text-link rule reads `--color-section-background` for the underline
+  // halo and beats a value set on the block itself, so the block has to publish
+  // the surface it paints. Without it, a quote callout in a coloured section
+  // gets a halo in the section's colour.
+  const source = stripComments(
+    readComponent('02-molecules/quote-callout/_yds-quote-callout.scss'),
+  );
+  const calls = source.match(/@include\s+tokens\.publish-surface\(/g) ?? [];
+
+  // One in the component-theme loop (dials one to five), one for theme six.
+  assert.equal(calls.length, 2);
+  assert.match(
+    source,
+    /publish-surface\(\s*var\(--color-quote-callout-background\)/,
+  );
+});

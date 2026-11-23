@@ -1,28 +1,560 @@
 (($) => {
   const filterForm = '.ys-filter-form--scaffold';
-  const selectMessageClass = 'ys-select-message';
+  const moreBadgeClass = 'ys-select-more';
+  const overflowChoiceClass = 'ys-search-choice--overflow';
+
+  // Chosen switches itself off when the user agent names a phone (iPhone,
+  // iPod, Android Mobile and others), so phones got native selects: no pills,
+  // no "Clear all", no empty-list message. Our filter styles work at phone
+  // widths, so for the filter forms only, hide the phone token from Chosen's
+  // check while it builds or updates a select. The real user agent is
+  // restored right after. On Drupal this script can load before Chosen, so
+  // the wrapper is installed again at attach time, which runs before
+  // Drupal.behaviors.chosen calls the plugin. (#2197)
+  const phoneToken =
+    'iP(od|hone)|IEMobile|Windows Phone|BlackBerry|BB10|Android(?=.*Mobile)';
+  const isPhone = new RegExp(phoneToken, 'i');
+  const phoneAgent = new RegExp(phoneToken, 'gi');
+  const installPhoneAware = () => {
+    const chosenPlugin = $.fn.chosen;
+    if (!chosenPlugin || chosenPlugin.ysPhoneAware) {
+      return;
+    }
+    const phoneAware = function phoneAware(...args) {
+      const agent = window.navigator.userAgent;
+      if (!isPhone.test(agent) || !$(this).closest(filterForm).length) {
+        return chosenPlugin.apply(this, args);
+      }
+      Object.defineProperty(window.navigator, 'userAgent', {
+        configurable: true,
+        get: () => agent.replace(phoneAgent, 'Mobile-filter'),
+      });
+      try {
+        return chosenPlugin.apply(this, args);
+      } finally {
+        delete window.navigator.userAgent;
+      }
+    };
+    phoneAware.ysPhoneAware = true;
+    Object.assign($.fn, { chosen: phoneAware });
+  };
+  installPhoneAware();
+
+  // Read the human-readable term label from a Chosen chip, minus its remove control.
+  const choiceLabel = (chip) => {
+    const $clone = $(chip).clone();
+    $clone.find('.search-choice-close').remove();
+    return $clone.text().trim();
+  };
+
+  // The filter row height is fixed, open or closed, so keep as many
+  // selected-term chips as fit on one line and collapse the remainder into an
+  // accessible "+N more" badge — instead of the old "(X) items selected" count.
+  // Chips are hidden from the end until the row (visible chips + badge + Chosen's
+  // search input) measurably fits, so neither the layout nor the badge text
+  // breaks (#1366). While open, the search input sits in the panel (see SCSS)
+  // and the checked rows there list every pick. (#1930)
+  const updateChoiceSummary = (select) => {
+    const $choices = $(select)
+      .next('.chosen-container')
+      .find('.chosen-choices');
+    if (!$choices.length) {
+      return;
+    }
+
+    const $chips = $choices.children('li.search-choice');
+    const $searchField = $choices.children('li.search-field');
+    $chips.removeClass(overflowChoiceClass);
+    $choices.find(`.${moreBadgeClass}`).remove();
+    if (!$chips.length) {
+      return;
+    }
+
+    const total = $chips.length;
+    const fits = () => $choices[0].scrollWidth <= $choices[0].clientWidth;
+    // Chosen marks the pill the next Backspace removes. Unless every chip
+    // fits, show that one alone (it may truncate, see SCSS). (#1930)
+    const pinned = $chips.index($chips.filter('.search-choice-focus'));
+    const pinnedOnly = (visible) => pinned >= 0 && visible < total;
+    const shown = (index, visible) =>
+      pinnedOnly(visible) ? index === pinned : index < visible;
+
+    // Show the largest number of leading chips that fits; always keep at least one.
+    for (let visible = total; visible >= 1; visible -= 1) {
+      $chips.each((index, chip) => {
+        $(chip).toggleClass(overflowChoiceClass, !shown(index, visible));
+      });
+      $choices.find(`.${moreBadgeClass}`).remove();
+
+      const hidden = $chips
+        .filter(`.${overflowChoiceClass}`)
+        .map((i, chip) => choiceLabel(chip))
+        .get();
+      if (hidden.length) {
+        const $badge = $('<li>', {
+          class: moreBadgeClass,
+          text: `+ ${hidden.length} more`,
+          'aria-label': `+ ${hidden.length} more selected: ${hidden.join(
+            ', ',
+          )}`,
+        });
+        if ($searchField.length) {
+          $searchField.before($badge);
+        } else {
+          $choices.append($badge);
+        }
+      }
+
+      if (visible === 1 || fits() || pinnedOnly(visible)) {
+        break;
+      }
+    }
+  };
+
+  // Pill remove controls: Chosen renders them as unnamed buttons with
+  // tabindex -1. Name them and put them in the tab order. Re-run after every
+  // Chosen rebuild, which replaces them. (#1897)
+  const labelRemoveButtons = ($container) => {
+    $container.find('li.search-choice').each((i, chip) => {
+      $(chip)
+        .find('.search-choice-close')
+        .attr({
+          // `!`: an attribute value, so no HTML escaping ("&" not "&amp;").
+          'aria-label': Drupal.t('Remove !term', {
+            '!term': choiceLabel(chip),
+          }),
+          tabindex: 0,
+        });
+    });
+  };
+
+  const updateFooter = (select, $container) => {
+    const picked = select.selectedOptions.length;
+    $container.find('.ys-select-count').text(
+      Drupal.t('@picked of @total selected', {
+        '@picked': picked,
+        '@total': select.options.length,
+      }),
+    );
+    const $clear = $container.find('.ys-select-clear');
+    // Disabling the focused "Clear all" would drop focus to the page. Move
+    // it to the count, not the search input: the Enter keyup that pressed
+    // the button would land there and pick the highlighted row.
+    if (picked === 0 && $clear.is(document.activeElement)) {
+      $container.find('.ys-select-count').trigger('focus');
+    }
+    $clear.prop('disabled', picked === 0);
+  };
+
+  // Everything that depends on the current picks, after Chosen has finished
+  // its own DOM work for the event (it removes a pill only after `change`).
+  const refresh = (select) => {
+    window.requestAnimationFrame(() => {
+      const $container = $(select).next('.chosen-container');
+      updateChoiceSummary(select);
+      labelRemoveButtons($container);
+      updateFooter(select, $container);
+      const chosen = $(select).data('chosen');
+      if (chosen && chosen.results_showing) {
+        // In the panel the input is full width (SCSS), so no re-measure.
+        chosen.search_field.attr('placeholder', Drupal.t('Type to filter'));
+      }
+    });
+  };
+
+  const unselect = (select, options) => {
+    $(options).prop('selected', false);
+    $(select).trigger('change').trigger('chosen:updated');
+  };
+
+  // One-time setup per Chosen instance, front-end filter selects only.
+  // `chosen` comes from the `chosen:ready` payload: jQuery data is only set
+  // after Chosen's constructor, which is what fires `chosen:ready`.
+  // --site-header-height is a rem length, so resolve it to pixels.
+  const siteHeaderHeight = () => {
+    const probe = document.createElement('div');
+    probe.style.cssText =
+      'position:absolute;visibility:hidden;height:var(--site-header-height, 0px)';
+    document.body.appendChild(probe);
+    const { height } = probe.getBoundingClientRect();
+    probe.remove();
+    return height;
+  };
+
+  const setUp = (select, chosen = $(select).data('chosen')) => {
+    const $container = $(select).next('.chosen-container');
+    if (
+      !chosen ||
+      !$container.length ||
+      !once('ys-chosen-setup', select).length
+    ) {
+      return;
+    }
+
+    // Keep the list open while picking several terms. Chosen reads this on
+    // every pick, so setting it on the instance is enough, and leaves the
+    // global Chosen config (shared with the admin forms) alone.
+    Object.assign(chosen, { hide_results_on_select: false });
+
+    // Chosen highlights the first term whenever it redraws the list, so a
+    // mouse open looked like a hover. Only the keyboard moves that cursor:
+    // arrow keys or typing turn it on, a click or closing the list turns it
+    // off. Hover still highlights the term under the mouse (Chosen's own
+    // handler). Clearing the highlight also clears aria-activedescendant,
+    // which Chosen leaves pointing at the old term. Down or Up with no
+    // highlight starts at the first or last term; Chosen's Down would re-run
+    // results_show instead (re-checking drop-up, re-firing its event). (#1930)
+    let keyboardCursor = false;
+    const setHighlight = chosen.winnow_results_set_highlight;
+    const clearHighlight = chosen.result_clear_highlight;
+    const keyUp = chosen.keyup_arrow;
+    const keyDown = chosen.keydown_arrow;
+    const backstroke = chosen.keydown_backstroke;
+    const clearBackstroke = chosen.clear_backstroke;
+    Object.assign(chosen, {
+      keydown_arrow(...args) {
+        if (this.results_showing && !this.result_highlight) {
+          return this.result_do_highlight(
+            this.search_results.find('li.active-result').first(),
+          );
+        }
+        return keyDown.apply(this, args);
+      },
+      // Backspace on an empty input removes the last pill at once. If that
+      // pill is collapsed into "+ n more", show and mark it first, so the
+      // next Backspace does not remove a term the visitor cannot see.
+      keydown_backstroke(...args) {
+        const $last = this.search_container.siblings('li.search-choice').last();
+        if (
+          !this.pending_backstroke &&
+          $last.hasClass(overflowChoiceClass) &&
+          !$last.hasClass('search-choice-disabled')
+        ) {
+          this.pending_backstroke = $last.addClass('search-choice-focus');
+          updateChoiceSummary(select);
+          return undefined;
+        }
+        return backstroke.apply(this, args);
+      },
+      clear_backstroke(...args) {
+        const pending = this.pending_backstroke;
+        const result = clearBackstroke.apply(this, args);
+        if (pending) {
+          updateChoiceSummary(select);
+        }
+        return result;
+      },
+      // Chosen measures the panel with height(), which leaves out the
+      // padding that holds the search row, so a panel near the bottom of
+      // the window opened downward with its footer off screen.
+      should_dropup() {
+        const $window = $(window);
+        const top =
+          this.container.offset().top +
+          this.container.height() -
+          $window.scrollTop();
+        if (this.dropdown.outerHeight() + top <= $window.height()) {
+          return false;
+        }
+        // A list that cannot show about two options between the site
+        // header and the field opens downward instead. (#2146)
+        const optionHeight =
+          this.dropdown.find('.active-result').first().outerHeight() || 40;
+        // The search row and footer take room too, so count them.
+        const chrome =
+          this.dropdown.outerHeight() -
+          (this.search_results.outerHeight() || 0);
+        const roomAbove =
+          this.container[0].getBoundingClientRect().top -
+          siteHeaderHeight() -
+          chrome;
+        return roomAbove >= optionHeight * 2;
+      },
+      winnow_results_set_highlight(...args) {
+        return keyboardCursor ? setHighlight.apply(this, args) : undefined;
+      },
+      result_clear_highlight(...args) {
+        this.search_field.removeAttr('aria-activedescendant');
+        return clearHighlight.apply(this, args);
+      },
+      keyup_arrow(...args) {
+        if (this.results_showing && !this.result_highlight) {
+          return this.result_do_highlight(
+            this.search_results.find('li.active-result').last(),
+          );
+        }
+        return keyUp.apply(this, args);
+      },
+    });
+    const notCursorKeys = ['Tab', 'Shift', 'Control', 'Alt', 'Meta', 'Escape'];
+    $container[0].addEventListener(
+      'keydown',
+      (e) => {
+        if (!notCursorKeys.includes(e.key)) {
+          keyboardCursor = true;
+        }
+      },
+      true,
+    );
+    ['mousedown', 'touchstart'].forEach((type) =>
+      $container[0].addEventListener(
+        type,
+        () => {
+          keyboardCursor = false;
+        },
+        { capture: true, passive: true },
+      ),
+    );
+    $(select).on('chosen:hiding_dropdown', () => {
+      keyboardCursor = false;
+    });
+
+    // A list that opens upward can reach past the top of the window, under
+    // the sticky site header. Cap the results to the room between the header
+    // and the field so every option stays visible; the list scrolls inside.
+    // Downward lists keep the stylesheet's max-height. (#2146)
+    // Chosen adds the drop-up class after it fires the event, so measure a
+    // frame later.
+    const capDropUp = () => {
+      const $results = $container.find('.chosen-results');
+      $results.css('max-height', '');
+      if (!chosen.results_showing || !$container.hasClass('chosen-dropup')) {
+        return;
+      }
+      const room =
+        $container[0].getBoundingClientRect().top -
+        siteHeaderHeight() -
+        ($container.find('.chosen-drop').outerHeight() -
+          $results.outerHeight());
+      if (room > 0 && room < $results.outerHeight()) {
+        $results.css('max-height', `${Math.floor(room)}px`);
+      }
+    };
+    $(select).on('chosen:showing_dropdown', () => {
+      window.requestAnimationFrame(capDropUp);
+    });
+
+    // Footer with the picked count and "Clear all".
+    const $clear = $('<button>', {
+      type: 'button',
+      class: 'ys-select-clear',
+      text: Drupal.t('Clear all'),
+    }).on('click', () => unselect(select, select.options));
+    // "Done" closes the list from inside the panel, so a visitor does not
+    // have to know Escape or a click elsewhere does it. Focus goes back to the
+    // field, as Escape from the footer does. (#2313)
+    const $done = $('<button>', {
+      type: 'button',
+      class: 'ys-select-done',
+      text: Drupal.t('Done'),
+    }).on('click', () => {
+      chosen.results_hide();
+      chosen.search_field.trigger('focus');
+    });
+    $container.find('.chosen-drop').append(
+      $('<div>', { class: 'ys-select-footer' }).append(
+        $('<span>', { class: 'ys-select-actions' }).append(
+          $('<span>', {
+            class: 'ys-select-count',
+            'aria-live': 'polite',
+            tabindex: -1,
+          }),
+          $clear,
+        ),
+        $done,
+      ),
+    );
+
+    // Chosen ignores clicks on picked rows; uncheck them here.
+    $container.on('mouseup', '.chosen-results li.result-selected', (e) => {
+      if (e.which !== 1) {
+        return;
+      }
+      const item =
+        chosen.results_data[e.currentTarget.dataset.optionArrayIndex];
+      if (item) {
+        unselect(select, select.options[item.options_index]);
+        // Like Chosen after a pick: keep typing and arrow keys working.
+        chosen.search_field.trigger('focus');
+      }
+    });
+
+    // A click on the field head toggles the list. Chosen only does this for
+    // single selects; for a multi select it neither closes on a head click
+    // nor reopens from the box padding once focused. Read the state in the
+    // capture phase, before Chosen's mousedown acts, and act on click, after
+    // Chosen's own click handler on the pills row. The panel, the search
+    // input and the remove buttons keep their own behavior.
+    let closeOnClick = false;
+    $container[0].addEventListener(
+      'mousedown',
+      (e) => {
+        closeOnClick =
+          chosen.results_showing &&
+          !$(e.target).closest(
+            '.chosen-drop, .search-choice-close, li.search-field',
+          ).length;
+      },
+      true,
+    );
+    $container.on('click', (e) => {
+      if (closeOnClick) {
+        chosen.results_hide();
+        // The mousedown on the box padding blurred the input; keep focus.
+        chosen.search_field.trigger('focus');
+      } else if (
+        !chosen.results_showing &&
+        !chosen.is_disabled &&
+        !$(e.target).closest('.chosen-drop, .search-choice-close').length
+      ) {
+        chosen.results_show();
+      }
+      closeOnClick = false;
+    });
+
+    // Keyboard focus on the open panel (the scrollable results list, Clear
+    // all) or a pill's remove button must not count as leaving the field:
+    // Chosen's input blur would close the list and hide the focused control.
+    // Leaving the whole field closes it instead. The native select is not
+    // "leaving": BEF refocuses it after AJAX (handled below).
+    $container.on('focusin', (e) => {
+      if (chosen.results_showing && e.target !== chosen.search_field[0]) {
+        Object.assign(chosen, { active_field: true });
+      }
+    });
+    $container.on('focusout', (e) => {
+      if (
+        chosen.results_showing &&
+        e.target !== chosen.search_field[0] &&
+        e.relatedTarget !== select &&
+        !$container[0].contains(e.relatedTarget)
+      ) {
+        chosen.close_field();
+      }
+    });
+
+    // Removing a pill from the keyboard deletes the focused button. Send focus
+    // to the pill now in its place, else the one before, else the search
+    // input (which opens the list). Kept by position because Chosen rebuilds
+    // the pills; reset when the list opens.
+    let removedAt = null;
+    const focusAfterRemove = () => {
+      // Re-run the overflow first: a pill collapsed into "+ n more" may now
+      // be visible, and hidden ones cannot take focus.
+      updateChoiceSummary(select);
+      const $buttons = $container
+        .find('li.search-choice .search-choice-close')
+        .filter(':visible');
+      const $target = $buttons.length
+        ? $buttons.eq(Math.min(removedAt, $buttons.length - 1))
+        : chosen.search_field;
+      $target.trigger('focus');
+    };
+    // Enter clicks a button on keydown, and Chosen may move focus to its
+    // input before the keyup, where Enter would pick the highlighted row.
+    // Swallow that one keyup. Any keydown resets it (Space clicks on keyup).
+    let swallowEnterKeyup = false;
+    $container[0].addEventListener(
+      'click',
+      (e) => {
+        const button = e.target.closest('.search-choice-close');
+        // detail 0: activated by Enter or Space, not the mouse.
+        if (button && e.detail === 0) {
+          swallowEnterKeyup = true;
+          removedAt = $container
+            .find('li.search-choice')
+            .index(button.closest('li'));
+          window.requestAnimationFrame(focusAfterRemove);
+        }
+      },
+      true,
+    );
+    $container[0].addEventListener(
+      'keydown',
+      () => {
+        swallowEnterKeyup = false;
+      },
+      true,
+    );
+    $container[0].addEventListener(
+      'keyup',
+      (e) => {
+        if (swallowEnterKeyup && e.key === 'Enter') {
+          e.stopPropagation();
+        }
+        // Chosen only handles Escape in its input; also close from a pill
+        // button or the footer.
+        if (
+          e.key === 'Escape' &&
+          chosen.results_showing &&
+          e.target !== chosen.search_field[0]
+        ) {
+          chosen.results_hide();
+          if ($(e.target).closest('.chosen-drop').length) {
+            chosen.search_field.trigger('focus');
+          }
+        }
+        swallowEnterKeyup = false;
+      },
+      true,
+    );
+    $(select).on('chosen:showing_dropdown', () => {
+      removedAt = null;
+    });
+
+    // BEF auto-submit refocuses the (hidden) native select after each AJAX
+    // refresh, which blurs Chosen's input. Hand focus back to the input while
+    // the list is open, or to the pill after a keyboard remove.
+    $(select).on('focus', () => {
+      if (chosen.results_showing) {
+        chosen.search_field.trigger('focus');
+      } else if (removedAt !== null) {
+        focusAfterRemove();
+      }
+    });
+
+    // Recompute when the filter row reflows (section resize).
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(() => updateChoiceSummary(select)).observe(
+        $container[0],
+      );
+    }
+
+    refresh(select);
+  };
+
+  // Viewport resizes, once per frame, for every front-end filter select.
+  let resizeQueued = false;
+  $(window).on('resize.ysChosenSelect', () => {
+    if (resizeQueued) {
+      return;
+    }
+    resizeQueued = true;
+    window.requestAnimationFrame(() => {
+      resizeQueued = false;
+      $(`${filterForm} select`).each((i, select) =>
+        updateChoiceSummary(select),
+      );
+    });
+  });
 
   Drupal.behaviors.chosenSelect = {
     attach(context) {
-      const ysChosenReady = (e) => {
-        // An li, not a span: ul.chosen-choices may only hold li children.
-        $(e.target)
-          .next()
-          .find('.chosen-choices')
-          .prepend(`<li class="${selectMessageClass}"></li>`);
-      };
-      const ysSelectChange = (e) => {
-        const selectedNr = $(e.target).val().length;
-        const selectMessage = selectedNr
-          ? `${`(${selectedNr}) items selected`}`
-          : '';
-
-        $(e.target).next().find(`.${selectMessageClass}`).text(selectMessage);
-      };
+      installPhoneAware();
       $(once('ys-chosen-select', filterForm, context)).each((i, elem) => {
         const $select = $(elem).find('select');
-        $select.on('chosen:ready', ysChosenReady);
-        $select.on('change', ysSelectChange);
+        // Drupal.behaviors.chosen may run before or after this behavior, so
+        // set up on `chosen:ready` and also now for any select already done.
+        $select.on('chosen:ready', (e, params) =>
+          setUp(e.target, params && params.chosen),
+        );
+        $select.each((index, select) => setUp(select));
+        // Re-measure after Chosen rebuilds the pills or the list opens or
+        // closes, a frame later, once Chosen has moved the classes. (#1366)
+        $select.on(
+          'chosen:updated change chosen:showing_dropdown chosen:hiding_dropdown',
+          (e) => refresh(e.target),
+        );
       });
     },
   };

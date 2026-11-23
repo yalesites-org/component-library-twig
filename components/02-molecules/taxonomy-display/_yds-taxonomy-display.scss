@@ -17,21 +17,22 @@ $component-taxonomy-display-port-themes: map.deep-get(
   // used by a element for animated hover underline
   --color-text-shadow: var(--color-basic-white);
 
-  // if we're not using a component theme, add top and bottom margin
-  // Or if the spotlight is the only spotlight on the page
+  // No component theme ("Default - No Color" in the editor): a plain white
+  // box, matching the editor's #ffffff swatch (yalesites-org/yalesites-project#1634). It
+  // stays white inside a themed section so the pinned colours below hold.
   &[data-component-theme='default'] {
     padding-block: var(--size-spacing-6);
-    background-color: var(--color-gray-100);
+    background-color: var(--color-basic-white);
 
-    // This variant paints its own gray-100 box but sets no foreground, so
+    // This variant paints its own white box but sets no foreground, so
     // `.taxonomy-display__link` below falls through to `--color-link-base`
     // from whichever ancestor last set it. Outside a themed section that is
     // harmless -- nothing above sets it, so it resolves to the tokens.css
     // root default (blue-medium/gray-700/purple-visited), which already
-    // clears 4.5:1 on gray-100. Inside a themed section, `_yds-layout.scss`
+    // clears 4.5:1 on white. Inside a themed section, `_yds-layout.scss`
     // sets `--color-link-base` for the SECTION's background (e.g. white, for
     // section themes one/three/four), and that value leaks straight through
-    // this box: white links on a near-white box (YaleSites-Internal#1641).
+    // this box: white links on a white box (YaleSites-Internal#1641).
     // -
     // Pinning to the same raw palette values the root default already uses
     // fixes the leak and changes nothing outside a section, because those

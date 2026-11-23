@@ -95,3 +95,11 @@ export const CalloutDouble = ({
     ],
   });
 CalloutDouble.tags = ['!dev'];
+
+// The text link option (`callout__link__type: 'link'`) renders
+// `.callout__link`, which draws the link halo; no other story renders one,
+// so the link halo check had none to judge (YaleSites-Internal#1939).
+export const CalloutTextLink = CalloutSingle.bind({});
+CalloutTextLink.args = { linkType: 'link' };
+CalloutTextLink.storyName = 'Callout Text Link';
+CalloutTextLink.tags = ['!dev'];

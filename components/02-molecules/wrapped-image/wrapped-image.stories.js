@@ -19,7 +19,12 @@ export default {
   args: toArgs(componentProps),
 };
 
-export const WrappedImage = ({ caption, imageAlignment, imageStyle }) => `
+export const WrappedImage = ({
+  caption,
+  imageAlignment,
+  imageStyle,
+  imageSize,
+}) => `
   ${textFieldTwig({
     text_field__content: WrappedImageData.text_one,
     text_field__width: 'site',
@@ -30,6 +35,7 @@ export const WrappedImage = ({ caption, imageAlignment, imageStyle }) => `
     wrapped_image__caption: caption,
     wrapped_image__alignment: imageAlignment,
     wrapped_image__style: imageStyle,
+    wrapped_image__size: imageSize,
     wrapped_image__content: WrappedImageData.text_two,
   })}
 `;

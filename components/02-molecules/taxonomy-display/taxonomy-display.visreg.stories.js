@@ -69,7 +69,7 @@ const renderGlobalTheme = () => {
           }),
         sectionThemes,
         'Default Dial Across All Section Theme Variations',
-        'The default dial paints its own gray-100 box (YaleSites-Internal#1641) rather than inheriting the section background, so it needs its own sweep -- the two above only ever render it against section theme one.',
+        'The default dial paints its own white box (YaleSites-Internal#1641, yalesites-project#1634) rather than inheriting the section background, so it needs its own sweep -- the two above only ever render it against section theme one.',
         'Section Theme',
       )}
     `;

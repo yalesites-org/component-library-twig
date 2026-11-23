@@ -78,7 +78,18 @@ export const Images = () => `
   </div>
 `;
 
-export const Figures = () => imageTwig(figureData);
+// Rendered in a section like Interactive, so the Section Theme control it
+// shares applies to it too. The caption carries a link, which the link halo
+// check needs a section to judge (YaleSites-Internal#1939).
+export const Figures = ({ sectionTheme }) => `
+  <div class="yds-layout" data-section-theme="${sectionTheme}" data-component-layout="one-column" data-component-width="site">
+    <div class="yds-layout__inner">
+      <div class="yds-layout__primary">
+        ${imageTwig(figureData)}
+      </div>
+    </div>
+  </div>
+`;
 
 export const Icons = () => iconsTwig({ icons });
 

@@ -2,6 +2,13 @@ Drupal.behaviors.ReadTime = {
   attach(context) {
     const mainContent = context.querySelector('#main-content');
     const readTime = context.querySelector('#read_time');
+
+    // Nothing to measure or nowhere to show it: a context without the main
+    // content wrapper or the read-time markup (e.g. a Storybook story).
+    if (!mainContent || !readTime) {
+      return;
+    }
+
     // Average reading speed in words per minute. This is reportedly on the low end of the average reading speed for adults in the US.
     const wordsPerMinute = 200;
 

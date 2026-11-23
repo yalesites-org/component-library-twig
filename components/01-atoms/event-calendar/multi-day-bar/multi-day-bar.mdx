@@ -1,0 +1,55 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as Stories from './multi-day-bar.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './multi-day-bar-props.yml';
+
+<Meta of={Stories} name="Overview" />
+
+# Multi-day bar
+
+A 24px link bar that spans a multi-day event's days within a week in the Full month grid, under the day numbers. It takes one event slot in each day it covers and stays light so it never outranks single events.
+
+## Playground
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Playground} />
+</div>
+<Controls of={Stories.Playground} />
+
+## States
+
+### Default
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Default} />
+</div>
+
+### Past
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Past} />
+</div>
+
+### PointedAt
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.PointedAt} />
+</div>
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Atom
+- **Template**: `yds-multi-day-bar.twig`
+- **Styles**: `_yds-multi-day-bar.scss`
+- **Rules**: tokens only, no color props, states are props, the parent sets outer margin and width
+
+### Accessibility
+
+- A link. Its accessible name starts "Multi-day event, October 22 to 24:" then the title; the visible " | " and date range are hidden from assistive tech to avoid repeating it.
+- Past colors are not in the spec: Gray 600 title, Gray 100 fill, Gray 500 border. Confirm against the design.

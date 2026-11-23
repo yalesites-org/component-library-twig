@@ -105,6 +105,9 @@ export const EventCard = ({
         card_collection__source_type: 'event',
         card_collection__type: collectionType,
         ...imageData.responsive_images['3x2'],
+        // Every event instance must pass a fixed date. Without one the card
+        // falls back to today and visual regression changes daily.
+        reference_card__date: referenceCardData.reference_card__date,
         format,
         reference_card__heading: heading,
         reference_card__prefix: headingPrefix,
@@ -179,6 +182,9 @@ export const ProfileCard = ({
   featured,
   withImage,
   showCategories,
+  showDepartment,
+  showEmail,
+  showPhone,
   showPronouns,
   showTags,
   overlayText,
@@ -204,7 +210,16 @@ export const ProfileCard = ({
         reference_card__categories:
           referenceProfileCardData.reference_card__categories,
         show_categories: showCategories,
+        reference_card__pronouns:
+          referenceProfileCardData.reference_card__pronouns,
         show_pronouns: showPronouns,
+        reference_card__department:
+          referenceProfileCardData.reference_card__department,
+        show_department: showDepartment,
+        reference_card__email: referenceProfileCardData.reference_card__email,
+        show_email: showEmail,
+        reference_card__phone: referenceProfileCardData.reference_card__phone,
+        show_phone: showPhone,
         reference_card__tags: referenceProfileCardData.reference_card__tags,
         show_tags: showTags,
         reference_card__overlay: overlayText,
@@ -215,11 +230,26 @@ export const ProfileCard = ({
 `;
 
 const profileCardArgs = {
-  showPronouns: false,
+  showDepartment: true,
+  showEmail: true,
+  showPhone: true,
+  showPronouns: true,
 };
 
 ProfileCard.argTypes = addTableDefaults(
   {
+    showDepartment: {
+      name: 'Show Department',
+      type: 'boolean',
+    },
+    showEmail: {
+      name: 'Show Email',
+      type: 'boolean',
+    },
+    showPhone: {
+      name: 'Show Phone',
+      type: 'boolean',
+    },
     showPronouns: {
       name: 'Show Pronouns',
       type: 'boolean',

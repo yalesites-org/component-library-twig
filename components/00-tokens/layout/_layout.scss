@@ -70,9 +70,12 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
 [data-component-width] {
   // if a component has nested components, we don't want to apply the padding to the nested components
   // we also don't want to apply the padding to components with the data-full-width-component attribute
+  // or to a One column section, whose blocks keep their own gutter so full-width
+  // backgrounds run edge to edge (YaleSites-Internal#2090)
   &:not(
       [data-embedded-components] [data-component-width],
-      [data-full-width-component]
+      [data-full-width-component],
+      [data-component-layout='one-column']
     ) {
     padding-inline-start: var(--size-spacing-site-gutter);
     padding-inline-end: var(--size-spacing-site-gutter);
@@ -84,11 +87,17 @@ $layout-widths: map.deep-get(tokens.$tokens, size, component-layout, width);
   max-width: var(--component-width);
   margin-inline-start: auto;
   margin-inline-end: auto;
+}
 
-  @each $width, $value in $layout-widths {
-    [data-component-width='#{$width}'] & {
-      --component-width: var(--size-component-layout-width-#{$width});
-    }
+// Set the width on the element that carries `data-component-width` and let
+// `__inner` elements inherit it. Setting it on the `__inner` element itself
+// (as a descendant of the attribute) made an outer section's width beat the
+// width of a block nested inside it, so a max-width block in a One column
+// section stopped at the site width (YaleSites-Internal#2152). Inheriting
+// means the nearest `data-component-width` wins.
+@each $width, $value in $layout-widths {
+  [data-component-width='#{$width}'] {
+    --component-width: var(--size-component-layout-width-#{$width});
   }
 }
 

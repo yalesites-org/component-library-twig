@@ -14,14 +14,6 @@ meta:
   description: Meta information displayed below the page title (supports HTML)
   control: text
 
-prefix:
-  twigProp: page_title__prefix
-  name: Page Title Prefix
-  type: string
-  required: false
-  description: Optional prefix text displayed above the heading
-  control: text
-
 socialLinks:
   twigProp: page_title__show_social_media_sharing_links
   name: Show Social Media Sharing Links

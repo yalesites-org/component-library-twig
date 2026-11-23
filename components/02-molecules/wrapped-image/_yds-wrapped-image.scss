@@ -76,6 +76,12 @@ $wrapped-image-offset-max: 1550px;
     width: 50%;
     margin-bottom: var(--size-spacing-4);
 
+    // Small: for headshots, book covers and other narrow photos, which Large
+    // would stretch past their natural width (YaleSites-Internal#1954).
+    [data-wrapped-image-size='small'] & {
+      width: 25%;
+    }
+
     // Add top magin to image if left or right aligned,
     // so that the top of the image aligns with the top of the text.
     [data-wrapped-image-alignment='left'] &,
@@ -132,6 +138,13 @@ $wrapped-image-offset-max: 1550px;
       & {
       transform: translateX(20%);
       margin-left: -5%;
+    }
+
+    // The 20% shift is of the image's own width, so it scales with Small by
+    // itself. The -5% margin is of the block, though: on a quarter-width image
+    // it would close the gap to the text entirely. 0 keeps Large's 5% gap.
+    [data-wrapped-image-style='offset'][data-wrapped-image-size='small'] & {
+      margin-inline: 0;
     }
   }
 

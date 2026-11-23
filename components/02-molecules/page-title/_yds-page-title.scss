@@ -17,17 +17,6 @@
   margin-top: var(--size-spacing-5);
 }
 
-.page-title__prefix {
-  @include tokens.heading(h2, 'book');
-
-  color: var(--color-basic-brown-gray);
-  text-transform: uppercase;
-}
-
-.prefix {
-  margin-top: var(--size-spacing-7);
-}
-
 .page-title__top {
   [data-component-variation='event'] & {
     display: flex;
