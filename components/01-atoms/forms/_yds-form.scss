@@ -565,9 +565,10 @@ $filter-panel-search-height: 3.5rem;
     // The open head keeps its closed height: the pills stay on one line with
     // the "+N more" badge, and the search input moves into the panel. (#1930)
 
-    // Lift the open panel above the listing below (card images are
-    // positioned with z-index 0). (#1897)
-    z-index: 1;
+    // Lift the open panel above the listing below: card images are
+    // positioned with z-index 0 (#1897) and the card "PINNED" label with
+    // z-index 2 (#2356). Stays under the sticky site header (z-index 10).
+    z-index: 3;
 
     // Not the search field's containing block, so its overflow clip does not
     // hide the field lifted into the panel below. (#1930)
