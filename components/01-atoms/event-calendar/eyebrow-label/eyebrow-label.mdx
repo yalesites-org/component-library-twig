@@ -1,0 +1,56 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as Stories from './eyebrow-label.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './eyebrow-label-props.yml';
+
+<Meta of={Stories} name="Overview" />
+
+# Eyebrow label
+
+A small-caps label above an event title in the list variant of Event item (Compact month with list and phone).
+
+## Playground
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Playground} />
+</div>
+<Controls of={Stories.Playground} />
+
+## States
+
+### Default
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Default} />
+</div>
+
+### Today
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Today} />
+</div>
+
+### Past event
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.PastEvent} />
+</div>
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Atom
+- **Template**: `yds-eyebrow-label.twig`
+- **Styles**: `_yds-eyebrow-label.scss`
+- **Rules**: tokens only, no color props, states are props, the parent sets outer margin and width
+
+### Accessibility
+
+- Plain text; the label names today, a past event, a multi-day event or the category.
+- Gray 600 on white is 6.48:1. Today is Gray 800, darker still.
+- Size and letter spacing follow the handoff design: 14px Medium with 0.5px spacing.

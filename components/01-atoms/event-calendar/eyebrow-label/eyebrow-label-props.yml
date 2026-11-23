@@ -1,0 +1,19 @@
+# eyebrow-label-props.yml
+#
+# Eyebrow label atom property definitions: single source for Storybook controls and docs.
+
+text:
+  twigProp: eyebrow_label__text
+  name: Text
+  type: string
+  required: false
+  description: Today, past event, multi-day, or the event category.
+  default: Algebra seminar
+
+today:
+  twigProp: eyebrow_label__today
+  name: Today
+  type: boolean
+  required: false
+  description: Darker than the default color.
+  default: false

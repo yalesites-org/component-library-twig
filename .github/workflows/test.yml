@@ -26,6 +26,7 @@ on:
       [
         'main',
         'develop',
+        'milestone/**',
         '1616-section-color-parity',
         '1628-color-system-defects',
         '1629-color-property-cycles',
