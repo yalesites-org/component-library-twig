@@ -1,0 +1,35 @@
+{#
+ # Date badge: groups list items by day. A weekday in small caps above the date number.
+ # Shown in Compact month with list and the phone day list.
+ #
+ # Available Variables:
+ # - date_badge__weekday: weekday, e.g. "Tue", or "Thu–Sat" for a range.
+ # - date_badge__date: date number, e.g. "27", or "15–17" for a range.
+ # - date_badge__label: full date for screen readers, e.g. "Tuesday, October 27".
+ # - date_badge__range: true for a date range. Default false.
+ # - date_badge__today: solid Yale Blue, white text. Default false.
+ # - date_badge__past: Gray 600 fill, white text. Default false.
+ #
+ # The parent sets outer margin and width; this atom never does.
+ #}
+
+{% set date_badge__base_class = 'date-badge' %}
+{% set date_badge__attributes = {
+  'class': bem(date_badge__base_class),
+} %}
+{% if date_badge__range %}
+  {% set date_badge__attributes = date_badge__attributes|merge({'data-date-badge-range': 'true'}) %}
+{% endif %}
+{% if date_badge__today %}
+  {% set date_badge__attributes = date_badge__attributes|merge({'data-date-badge-today': 'true'}) %}
+{% elseif date_badge__past %}
+  {% set date_badge__attributes = date_badge__attributes|merge({'data-date-badge-past': 'true'}) %}
+{% endif %}
+
+<span {{ add_attributes(date_badge__attributes) }}>
+  {% if date_badge__label %}
+    <span {{ bem('label', [], date_badge__base_class) }}>{{ date_badge__label }}</span>
+  {% endif %}
+  <span {{ bem('weekday', [], date_badge__base_class) }}{% if date_badge__label %} aria-hidden="true"{% endif %}>{{ date_badge__weekday }}</span>
+  <span {{ bem('date', [], date_badge__base_class) }}{% if date_badge__label %} aria-hidden="true"{% endif %}>{{ date_badge__date }}</span>
+</span>
