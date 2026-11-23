@@ -1,0 +1,21 @@
+{#
+ # Eyebrow label: a small-caps label above an event title in the list variant
+ # of Event item (Compact month with list and phone).
+ #
+ # Available Variables:
+ # - eyebrow_label__text: the label: "today", "past event", a multi-day note,
+ #   or the event category. Past events say "past event" here with no icon.
+ # - eyebrow_label__today: darker than default. Default false.
+ #
+ # The parent sets outer margin and width; this atom never does.
+ #}
+
+{% set eyebrow_label__base_class = 'eyebrow-label' %}
+{% set eyebrow_label__attributes = {
+  'class': bem(eyebrow_label__base_class),
+} %}
+{% if eyebrow_label__today %}
+  {% set eyebrow_label__attributes = eyebrow_label__attributes|merge({'data-eyebrow-label-today': 'true'}) %}
+{% endif %}
+
+<span {{ add_attributes(eyebrow_label__attributes) }}>{{ eyebrow_label__text }}</span>

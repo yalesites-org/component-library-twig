@@ -1,0 +1,33 @@
+{#
+ # Legend key: the small swatch shown next to a legend label. The Legend
+ # molecule places them.
+ #
+ # Available Variables:
+ # - legend_key__swatch: today (Yale Blue square), selected (Blue Soft, 2px
+ #   Medium Blue ring), dots (events that day), band (multi-day), bar (Full
+ #   month multi-day bar), past ("Aa" sample in Gray 600). Default today.
+ # The swatch is decorative and hidden from assistive tech; the Legend molecule's
+ # visible text names it.
+ #
+ # The parent sets outer margin and width; this atom never does.
+ #}
+
+{% set legend_key__base_class = 'legend-key' %}
+{% set legend_key__swatch = legend_key__swatch|default('today') %}
+{% if legend_key__swatch not in ['today', 'selected', 'dots', 'band', 'bar', 'past'] %}
+  {% set legend_key__swatch = 'today' %}
+{% endif %}
+
+<span {{ add_attributes({
+  'class': bem(legend_key__base_class),
+  'data-legend-key-swatch': legend_key__swatch,
+  'aria-hidden': 'true',
+}) }}>
+  {% if legend_key__swatch == 'dots' %}
+    <span {{ bem('dot', [], legend_key__base_class) }}></span>
+    <span {{ bem('dot', [], legend_key__base_class) }}></span>
+    <span {{ bem('dot', [], legend_key__base_class) }}></span>
+  {% elseif legend_key__swatch == 'past' %}
+    Aa
+  {% endif %}
+</span>
