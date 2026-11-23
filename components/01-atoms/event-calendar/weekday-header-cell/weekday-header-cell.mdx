@@ -18,10 +18,20 @@ One cell of the Mon to Sun row (Monday first), used in the Month grid and the Mi
 
 ## States
 
-### Default
+### Full month
+
+Left-aligned in the Month grid.
 
 <div className="sb-contained-canvas">
-  <Canvas of={Stories.Default} />
+  <Canvas of={Stories.FullMonth} />
+</div>
+
+### Mini calendar
+
+Centered in the Mini calendar.
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.MiniCalendar} />
 </div>
 
 ## Properties
@@ -40,5 +50,5 @@ One cell of the Mon to Sun row (Monday first), used in the Month grid and the Mi
 ### Accessibility
 
 - The hidden label holds the full weekday; the short text is `aria-hidden`.
-- Gray 800 on white is well above 4.5:1.
-- Size, weight and color are not in the spec; they follow the Date badge weekday. Confirm against the design.
+- Gray 600 on white is 6.48:1.
+- Type follows the handoff design: 14px Medium, Gray 600, title case as authored.

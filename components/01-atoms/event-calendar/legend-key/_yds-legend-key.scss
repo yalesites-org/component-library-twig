@@ -4,6 +4,10 @@
 // attribute (swatch) picks the look; the Legend molecule places the swatches.
 .legend-key {
   --legend-key-size: var(--size-spacing-5);
+
+  // 28px wide for the band and bar swatches. No 28px token exists, so it is
+  // built from two spacing tokens (24px + 4px).
+  --legend-key-wide-width: calc(var(--size-spacing-6) + var(--size-spacing-2));
   --legend-key-past-color: var(--color-gray-600);
 
   box-sizing: border-box;
@@ -30,13 +34,15 @@
   }
 
   &[data-legend-key-swatch='band'] {
+    width: var(--legend-key-wide-width);
     height: var(--size-thickness-6);
-    border-radius: var(--size-spacing-3);
+    border-radius: var(--radius-4);
     background-color: var(--color-blue-yale);
   }
 
   &[data-legend-key-swatch='bar'] {
-    height: var(--size-spacing-3);
+    width: var(--legend-key-wide-width);
+    height: var(--size-spacing-4);
     background-color: var(--color-blue-soft);
     border: var(--border-thickness-1) solid var(--color-blue-medium);
   }

@@ -14,7 +14,8 @@ import {
 } from '../../../_storybook/playground-utils';
 
 /**
- * Visual regression: every state, side by side, on each section theme.
+ * Visual regression: both alignments, side by side, on each section theme. Each
+ * cell gets a width, the way the grid sets one, so the alignment shows.
  */
 export default {
   tags: ['visreg'],
@@ -25,16 +26,24 @@ export default {
   },
 };
 
-const states = [
-  { weekday_header_cell__text: 'Mon', weekday_header_cell__label: 'Monday' },
-  { weekday_header_cell__text: 'Sun', weekday_header_cell__label: 'Sunday' },
-];
+const states = ['start', 'center'].map((alignment) => ({
+  weekday_header_cell__text: 'Mon',
+  weekday_header_cell__label: 'Monday',
+  weekday_header_cell__alignment: alignment,
+}));
 
 const renderStates = (theme) =>
   createSectionWrapper(
     theme,
     `<div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--size-spacing-5); padding: var(--size-spacing-5)">
-      ${states.map((data) => weekdayHeaderCellTwig(data)).join('')}
+      ${states
+        .map(
+          (data) =>
+            `<div style="width: var(--size-spacing-11)">${weekdayHeaderCellTwig(
+              data,
+            )}</div>`,
+        )
+        .join('')}
     </div>`,
   );
 

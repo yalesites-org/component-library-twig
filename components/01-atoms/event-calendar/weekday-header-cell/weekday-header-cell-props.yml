@@ -1,7 +1,7 @@
 # weekday-header-cell-props.yml
 #
 # Weekday header cell atom property definitions: single source for Storybook controls and docs.
-# The spec lists no state props. These two carry content only.
+# Text and label carry content; alignment picks the Full month (start) or Mini calendar (center) look.
 
 text:
   twigProp: weekday_header_cell__text
@@ -18,3 +18,15 @@ label:
   required: false
   description: Full weekday for screen readers. Rendered as hidden text; the visible text is hidden from assistive tech.
   default: Monday
+
+alignment:
+  twigProp: weekday_header_cell__alignment
+  name: Alignment
+  type: select
+  required: false
+  description: start for the Full month grid, center for the Mini calendar.
+  default: start
+  options:
+    - start
+    - center
+  control: select

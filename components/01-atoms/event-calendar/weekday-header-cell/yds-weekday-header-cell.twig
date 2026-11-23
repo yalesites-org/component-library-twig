@@ -6,13 +6,19 @@
  # - weekday_header_cell__text: the short weekday shown, e.g. "Mon".
  # - weekday_header_cell__label: full weekday for screen readers, e.g. "Monday".
  #   Rendered as visually hidden text; the visible text is hidden from assistive tech.
+ # - weekday_header_cell__alignment: start (Full month) or center (Mini
+ #   calendar). Default start.
  #
  # The parent sets the cell width and outer margin; this atom never does.
  #}
 
 {% set weekday_header_cell__base_class = 'weekday-header-cell' %}
+{% set weekday_header_cell__alignment = weekday_header_cell__alignment == 'center' ? 'center' : 'start' %}
 
-<span {{ add_attributes({'class': bem(weekday_header_cell__base_class)}) }}>
+<span {{ add_attributes({
+  'class': bem(weekday_header_cell__base_class),
+  'data-weekday-header-cell-alignment': weekday_header_cell__alignment,
+}) }}>
   {% if weekday_header_cell__label %}
     <span {{ bem('label', [], weekday_header_cell__base_class) }}>{{ weekday_header_cell__label }}</span>
   {% endif %}

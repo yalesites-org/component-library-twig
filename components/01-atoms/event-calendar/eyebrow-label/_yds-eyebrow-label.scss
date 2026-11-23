@@ -1,18 +1,18 @@
 @use '../../../00-tokens/tokens';
 
-// Eyebrow label atom: a small-caps label above an event title. The spec gives
-// no size, weight or color token: the values below follow the Date badge
-// weekday (13px, Medium, small caps). Default is Gray 600 (6.48:1 on white);
-// today is Gray 800, darker than default.
+// Eyebrow label atom: a small-caps label above an event title. Size and letter
+// spacing follow the handoff design (14px Medium, 0.5px spacing). Default is
+// Gray 600 (6.48:1 on white); today is Gray 800, darker than default.
 .eyebrow-label {
   --eyebrow-label-color: var(--color-gray-600);
 
   display: block;
   color: var(--eyebrow-label-color);
-  font-size: var(--font-size-13);
+  font-size: var(--font-size-14);
   font-weight: var(--font-weights-mallory-medium);
   font-variant-caps: all-small-caps;
   line-height: 1.2;
+  letter-spacing: 0.5px;
   text-transform: lowercase;
 
   &[data-eyebrow-label-today='true'] {

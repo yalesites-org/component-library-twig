@@ -1,21 +1,24 @@
 @use '../../../00-tokens/tokens';
 
-// Weekday header cell atom: one cell of the Mon to Sun row. The spec gives no
-// size, weight or color token: the values below follow the Date badge weekday
-// (13px, Medium, small caps) in Gray 800. The parent sets the cell width.
+// Weekday header cell atom: one cell of the Mon to Sun row. Type follows the
+// handoff design: 14px Medium, Gray 600, title case as authored ("Mon").
+// Alignment is a prop: start (Full month) or center (Mini calendar). The parent
+// sets the cell width.
 .weekday-header-cell {
-  --weekday-header-cell-color: var(--color-gray-800);
+  --weekday-header-cell-color: var(--color-gray-600);
 
   box-sizing: border-box;
   display: block;
   padding-block: var(--size-spacing-2);
   color: var(--weekday-header-cell-color);
-  font-size: var(--font-size-13);
+  font-size: var(--font-size-14);
   font-weight: var(--font-weights-mallory-medium);
-  font-variant-caps: all-small-caps;
   line-height: 1;
-  text-align: center;
-  text-transform: lowercase;
+  text-align: start;
+
+  &[data-weekday-header-cell-alignment='center'] {
+    text-align: center;
+  }
 
   &__label {
     @include tokens.visually-hidden;
