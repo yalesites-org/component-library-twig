@@ -15,7 +15,7 @@
     {{ image__image }}
 
     {% if figure__caption %}
-      <figcaption {{ bem('caption') }}>
+      <figcaption {{ bem('caption') }}{% if figure__caption__label %} role="region" aria-label="{{ figure__caption__label }}"{% endif %}>
         {# We use `|raw` here to accomodate WYSIWYG content #}
         {{- figure__caption|raw -}}
       </figcaption>

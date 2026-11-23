@@ -227,6 +227,13 @@ $break-image-banner: tokens.$break-m;
     // Cap it at half the banner and scroll the rest (YaleSites-Internal#2213).
     max-height: 50%;
     overflow-y: auto;
+
+    // yds-image-banner.js gives an overflowing caption tabindex="0" so
+    // keyboard users can scroll it (YaleSites-Internal#2334).
+    &:focus-visible {
+      outline: 2px solid var(--color-blue-yale);
+      outline-offset: -2px;
+    }
   }
 }
 

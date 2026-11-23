@@ -1,4 +1,5 @@
 import imageBannerTwig from './image/yds-image-banner.twig';
+import './image/yds-image-banner';
 import componentProps from './image-banner-props.yml';
 import { toArgTypes, toArgs } from '../../_storybook/component-props';
 import imageData from '../../01-atoms/images/image/image.yml';
@@ -53,3 +54,16 @@ ImageBannerFullWidth.storyName = 'Full Width';
 export const ImageBannerPlayOnce = (args) => renderBanner(args);
 ImageBannerPlayOnce.args = { withVideo: true, videoPlayback: 'once' };
 ImageBannerPlayOnce.storyName = 'Video: Play Once';
+
+export const ImageBannerLongCaption = (args) => renderBanner(args);
+ImageBannerLongCaption.args = {
+  size: 'mini',
+  imageCaption: Array.from(
+    { length: 12 },
+    (_, i) =>
+      `Caption line ${
+        i + 1
+      }: a long plain-text caption that is tall enough to overflow a mini banner.`,
+  ).join(' '),
+};
+ImageBannerLongCaption.storyName = 'Mini: Long Caption';
