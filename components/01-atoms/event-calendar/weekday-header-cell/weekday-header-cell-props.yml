@@ -1,0 +1,20 @@
+# weekday-header-cell-props.yml
+#
+# Weekday header cell atom property definitions: single source for Storybook controls and docs.
+# The spec lists no state props. These two carry content only.
+
+text:
+  twigProp: weekday_header_cell__text
+  name: Text
+  type: string
+  required: false
+  description: The short weekday shown.
+  default: Mon
+
+label:
+  twigProp: weekday_header_cell__label
+  name: Accessible label
+  type: string
+  required: false
+  description: Full weekday for screen readers. Rendered as hidden text; the visible text is hidden from assistive tech.
+  default: Monday

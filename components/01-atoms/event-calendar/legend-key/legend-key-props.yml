@@ -1,0 +1,19 @@
+# legend-key-props.yml
+#
+# Legend key atom property definitions: single source for Storybook controls and docs.
+
+swatch:
+  twigProp: legend_key__swatch
+  name: Swatch
+  type: select
+  required: false
+  description: Which swatch to show. Each value is its own story.
+  default: today
+  options:
+    - today
+    - selected
+    - dots
+    - band
+    - bar
+    - past
+  control: select

@@ -1,0 +1,58 @@
+@use '../../../00-tokens/tokens';
+
+// Legend key atom: the small swatch next to a legend label. One data
+// attribute (swatch) picks the look; the Legend molecule places the swatches.
+.legend-key {
+  --legend-key-size: var(--size-spacing-5);
+  --legend-key-past-color: var(--color-gray-600);
+
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-thickness-2);
+  width: var(--legend-key-size);
+  height: var(--legend-key-size);
+  line-height: 1;
+
+  &__label {
+    @include tokens.visually-hidden;
+  }
+
+  &[data-legend-key-swatch='today'] {
+    background-color: var(--color-blue-yale);
+  }
+
+  &[data-legend-key-swatch='selected'] {
+    background-color: var(--color-blue-soft);
+    box-shadow: inset 0 0 0 var(--size-thickness-2) var(--color-blue-medium);
+  }
+
+  &[data-legend-key-swatch='band'] {
+    height: var(--size-thickness-6);
+    border-radius: var(--size-spacing-3);
+    background-color: var(--color-blue-yale);
+  }
+
+  &[data-legend-key-swatch='bar'] {
+    height: var(--size-spacing-3);
+    background-color: var(--color-blue-soft);
+    border: var(--border-thickness-1) solid var(--color-blue-medium);
+  }
+
+  &[data-legend-key-swatch='past'] {
+    width: auto;
+    min-width: var(--legend-key-size);
+    color: var(--legend-key-past-color);
+    font-size: var(--font-size-14);
+  }
+
+  &__dot {
+    flex: none;
+    width: var(--size-thickness-6);
+    height: var(--size-thickness-6);
+    border-radius: 50%;
+    background-color: var(--color-blue-yale);
+  }
+}

@@ -1,0 +1,20 @@
+{#
+ # Weekday header cell: one cell of the Mon to Sun row (Monday first). Used in
+ # Month grid (Full month) and Mini calendar (Compact month, phone).
+ #
+ # Available Variables:
+ # - weekday_header_cell__text: the short weekday shown, e.g. "Mon".
+ # - weekday_header_cell__label: full weekday for screen readers, e.g. "Monday".
+ #   Rendered as visually hidden text; the visible text is hidden from assistive tech.
+ #
+ # The parent sets the cell width and outer margin; this atom never does.
+ #}
+
+{% set weekday_header_cell__base_class = 'weekday-header-cell' %}
+
+<span {{ add_attributes({'class': bem(weekday_header_cell__base_class)}) }}>
+  {% if weekday_header_cell__label %}
+    <span {{ bem('label', [], weekday_header_cell__base_class) }}>{{ weekday_header_cell__label }}</span>
+  {% endif %}
+  <span {{ bem('text', [], weekday_header_cell__base_class) }}{% if weekday_header_cell__label %} aria-hidden="true"{% endif %}>{{ weekday_header_cell__text|default('Mon') }}</span>
+</span>
