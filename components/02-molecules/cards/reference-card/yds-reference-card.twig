@@ -28,6 +28,21 @@
 
 {% set reference_card__aria = reference_card__heading[0]['#context'].value|default(reference_card__heading) %}
 
+{# The image block is rendered once, up front, so a card whose block renders
+   nothing (the listing asked for the teaser image but the content has none and
+   the site has no fallback) is treated as having no image. Otherwise the empty
+   wrapper keeps its column in list layouts (#2367). #}
+{% if reference_card__image == 'true' %}
+  {% set reference_card__image_markup %}
+    {% block reference_card__image %}
+      {% include "@atoms/images/image/_responsive-image.twig" %}
+    {% endblock %}
+  {% endset %}
+  {% if reference_card__image_markup|trim is empty %}
+    {% set reference_card__image = 'false' %}
+  {% endif %}
+{% endif %}
+
 {# If stats__item__attributes is not defined, set it to an empty object by default #}
 {% set reference_card__attributes = {
   'data-component-has-image': reference_card__image,
@@ -204,9 +219,7 @@
     <div {{ bem('image', [], reference_card__base_class) }}>
       <a {{ bem('image-link', [], reference_card__base_class) }} href="{{ reference_card__url }}"
                                                                   tabindex="-1" aria-hidden="true">
-        {% block reference_card__image %}
-          {% include "@atoms/images/image/_responsive-image.twig" %}
-        {% endblock %}
+        {{ reference_card__image_markup }}
       </a>
     </div>
   {% endif %}

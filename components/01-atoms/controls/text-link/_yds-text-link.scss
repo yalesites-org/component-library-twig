@@ -77,6 +77,14 @@ $global-link-themes: map.deep-get(tokens.$tokens, 'global-themes');
 
   @include tokens.underline-slide-start($variation: #{$style});
 
+  // The underline sits 1.15em down, which can fall below an inline link's
+  // content area (its background paint area). Then it is clipped away, most
+  // visibly on links that wrap onto a second line (YaleSites-Internal#2145).
+  // Padding grows the paint area only; the negative margin cancels it for
+  // block and flex links so layout does not move. Vertical margin and padding
+  // do not affect the line box of an inline link.
+  padding-bottom: 0.3em;
+  margin-bottom: -0.3em;
   color: var(--color-link-base);
   fill: var(--color-link-base);
   text-decoration: none;

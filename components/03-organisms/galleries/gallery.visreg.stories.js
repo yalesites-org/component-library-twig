@@ -40,6 +40,10 @@ export default {
 // restored with its link when expanded, so both states differ visibly.
 const captionedItem = 3;
 
+// Item 5 has no heading and no caption. Its modal must show no caption band:
+// an empty dark band under the pager was a release bug (YaleSites-Internal#2370).
+const uncaptionedItem = 5;
+
 const renderGallery = () =>
   mediaGridTwig({
     ...mediaGridData,
@@ -84,10 +88,10 @@ const settle = (element) =>
   );
 
 /**
- * Opens the modal on the captioned item the way a visitor would, and returns
- * that item's caption once the modal and its image are fully shown.
+ * Opens the modal on an item the way a visitor would, and returns that item's
+ * caption area once the modal and its image are fully shown.
  */
-const openCaptionedItem = async (canvasElement) => {
+const openItem = async (canvasElement, itemIndex) => {
   // Behaviors attach after render; `once()` marks the grid when they have.
   const grid = await waitFor(
     () =>
@@ -97,16 +101,14 @@ const openCaptionedItem = async (canvasElement) => {
     'the gallery behavior to attach',
   );
 
-  grid
-    .querySelector(`[data-media-grid-item="${captionedItem}"] button`)
-    .click();
+  grid.querySelector(`[data-media-grid-item="${itemIndex}"] button`).click();
 
   const modal = grid.querySelector('.media-grid__modal');
   const caption = modal.querySelector(
-    `.media-grid-modal__content[data-media-grid-modal-item="${captionedItem}"]`,
+    `.media-grid-modal__content[data-media-grid-modal-item="${itemIndex}"]`,
   );
   const image = modal.querySelector(
-    `.media-grid-modal__media[data-media-grid-modal-item="${captionedItem}"] img`,
+    `.media-grid-modal__media[data-media-grid-modal-item="${itemIndex}"] img`,
   );
 
   // Modal images are lazy loaded, so this one only starts loading now, and it
@@ -123,7 +125,7 @@ const openCaptionedItem = async (canvasElement) => {
 };
 
 const openCaptionCollapsed = async ({ canvasElement }) => {
-  const caption = await openCaptionedItem(canvasElement);
+  const caption = await openItem(canvasElement, captionedItem);
 
   await waitFor(
     () => caption.getAttribute('is-expanded') === 'false',
@@ -132,7 +134,7 @@ const openCaptionCollapsed = async ({ canvasElement }) => {
 };
 
 const openCaptionExpanded = async ({ canvasElement }) => {
-  const caption = await openCaptionedItem(canvasElement);
+  const caption = await openItem(canvasElement, captionedItem);
 
   caption.querySelector('.media-grid-modal__toggle-caption').click();
 
@@ -141,6 +143,30 @@ const openCaptionExpanded = async ({ canvasElement }) => {
     'the caption to expand',
   );
   await settle(caption);
+};
+
+/**
+ * Opens the modal on the item with no caption and fails the story if a caption
+ * band is drawn. The snapshot shows the result; the checks make a band that
+ * comes back fail loudly instead of hiding in a pixel diff. The wrapper check
+ * guards the template, the background check guards the stylesheet.
+ */
+const openNoCaption = async ({ canvasElement }) => {
+  const caption = await openItem(canvasElement, uncaptionedItem);
+  const { backgroundColor } = getComputedStyle(caption);
+
+  if (caption.querySelector('.media-grid-modal__content-wrapper')) {
+    throw new Error(
+      `Item ${uncaptionedItem} has no caption but renders a caption wrapper.`,
+    );
+  }
+
+  if (backgroundColor !== 'rgba(0, 0, 0, 0)') {
+    throw new Error(
+      `Item ${uncaptionedItem} has no caption but draws a caption band ` +
+        `(${backgroundColor}).`,
+    );
+  }
 };
 
 const collapsedStories = createGlobalThemeStories(
@@ -171,6 +197,15 @@ export const ItsYourYaleCaptionExpanded = expandedStories.five;
 export const AICaptionExpanded = expandedStories.six;
 export const WhitneyHumanitiesCenterCaptionExpanded = expandedStories.seven;
 
+// One theme is enough here: the band is keyed off the markup and its colour is
+// the same in every global theme, so six more snapshots would add cost and no
+// coverage. The captioned stories above already cover every theme.
+export const NoCaption = createGlobalThemeStories(
+  renderGallery,
+  globalThemes,
+  globalThemeLabels,
+).one;
+
 ItsYourYaleCaptionCollapsed.storyName = 'It’s Your Yale Caption Collapsed';
 ItsYourYaleCaptionExpanded.storyName = 'It’s Your Yale Caption Expanded';
 
@@ -189,3 +224,5 @@ OnhaCaptionExpanded.play = openCaptionExpanded;
 ItsYourYaleCaptionExpanded.play = openCaptionExpanded;
 AICaptionExpanded.play = openCaptionExpanded;
 WhitneyHumanitiesCenterCaptionExpanded.play = openCaptionExpanded;
+
+NoCaption.play = openNoCaption;

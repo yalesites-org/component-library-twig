@@ -97,6 +97,9 @@ button.media-grid__image {
   }
 
   svg {
+    // The badge is always white, so pin the icon dark. Inheriting the section
+    // text color made it white-on-white in dark section themes.
+    fill: var(--color-gray-800);
     height: var(--size-icon);
     aspect-ratio: 1 / 1;
 
