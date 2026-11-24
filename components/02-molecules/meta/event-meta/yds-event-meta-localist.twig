@@ -341,8 +341,9 @@
           </div>
         </div>
 
-        {# Start Grid of fields #}
-        {% if ticket_cost or event_types or event_meta__cta_primary__href or place or room or location_details or event_audience or event_topics %}
+        {# Start Grid of fields. Every field the grid renders must be in this
+           condition, or that field shows only when some other field opens the grid. #}
+        {% if ticket_cost or event_types or event_meta__cta_primary__href or stream_url or place or room or location_details or event_audience or event_topics %}
         <div {{ bem('details-wrapper', [], event_meta__base_class) }}>
           {% if ticket_cost %}
             <div {{ bem('cost', [], event_meta__base_class) }}>
@@ -393,8 +394,10 @@
             <div {{ bem('event-stream-wrapper', [], event_meta__base_class) }}>
               <label {{ bem('event__label', [], event_meta__base_class) }}>Event Streaming URL</label>
               <div {{ bem('event-website-link', [], event_meta__base_class) }}>
+                {# Meeting URLs are long and read aloud character by character,
+                   so the link names its action instead of printing the URL. #}
                 {% include "@atoms/controls/cta/yds-cta.twig" with {
-                  cta__content: stream_url,
+                  cta__content: 'Join Event Online',
                   cta__href: stream_url,
                   cta__blockname: event_meta__base_class,
                   cta__style: 'outline',
