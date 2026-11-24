@@ -244,6 +244,13 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
   color: var(--color-section-foreground, var(--color-gray-800));
 }
 
+// Location details is a WYSIWYG value, so Drupal wraps it in a <p> whose
+// default top margin pushes it ~25px below the label. Drop it so the value
+// sits as close as the other fields (YaleSites-Internal#2209).
+.event-meta__location-details > p:first-child {
+  margin-top: 0;
+}
+
 // event types
 .event-meta__event-types {
   @include atoms.list-reset;
