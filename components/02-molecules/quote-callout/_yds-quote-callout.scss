@@ -54,6 +54,16 @@ blockquote {
       // on all five dials before and after (YaleSites-Internal#1629).
       background-color: var(--color-quote-callout-background);
 
+      // Publish the surface this block painted, so the underline halo on a
+      // link reads the callout background rather than the enclosing section's
+      // (YaleSites-Internal#2327). The source properties are set by the
+      // per-theme overrides below, on this same element.
+      @include tokens.publish-surface(
+        var(--color-quote-callout-background),
+        var(--color-quote-callout-quote),
+        var(--color-quote-callout-accent)
+      );
+
       .link,
       .quote-callout__quote {
         --color-text-shadow: var(--color-quote-callout-background);
@@ -177,6 +187,12 @@ blockquote {
     --color-quote-callout-background: var(--color-slot-nine);
 
     background-color: var(--color-quote-callout-background);
+
+    @include tokens.publish-surface(
+      var(--color-quote-callout-background),
+      var(--color-quote-callout-quote),
+      var(--color-quote-callout-accent)
+    );
   }
 }
 

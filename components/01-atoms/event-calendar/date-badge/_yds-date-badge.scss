@@ -1,0 +1,53 @@
+@use '../../../00-tokens/tokens';
+
+// Date badge atom. The spec gives no size: the design shows a roughly 60px
+// square, so the minimum is 3.75rem square, growing in width for a range.
+.date-badge {
+  --date-badge-fill: var(--color-blue-soft);
+  --date-badge-edge: var(--color-blue-medium);
+  --date-badge-color: var(--color-blue-yale);
+
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-spacing-1);
+  min-width: calc(var(--size-spacing-9) + var(--size-spacing-4));
+  min-height: calc(var(--size-spacing-9) + var(--size-spacing-4));
+  padding: var(--size-spacing-2) var(--size-spacing-3);
+  color: var(--date-badge-color);
+  background-color: var(--date-badge-fill);
+  border: var(--border-thickness-1) solid var(--date-badge-edge);
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+
+  &[data-date-badge-today='true'] {
+    --date-badge-fill: var(--color-blue-yale);
+    --date-badge-edge: var(--color-blue-yale);
+    --date-badge-color: var(--color-basic-white);
+  }
+
+  &[data-date-badge-past='true'] {
+    --date-badge-fill: var(--color-gray-600);
+    --date-badge-edge: var(--color-gray-600);
+    --date-badge-color: var(--color-basic-white);
+  }
+
+  &__label {
+    @include tokens.visually-hidden;
+  }
+
+  &__weekday {
+    font-size: var(--font-size-13);
+    font-weight: var(--font-weights-mallory-medium);
+    text-transform: lowercase;
+    font-variant-caps: all-small-caps;
+  }
+
+  &__date {
+    font-size: var(--font-size-27);
+    font-weight: var(--font-weights-yalenew-bold);
+  }
+}

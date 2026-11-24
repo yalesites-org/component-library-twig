@@ -119,12 +119,111 @@ test('required asterisk stays dark on light sections default, two, five', () => 
   );
 });
 
-test('search spans the whole first row of the filter grid', () => {
-  const search = decls(form, (s) => s === `${scaffold} .form-item-search`);
+test('filter bar sizes itself to its own width on a 12-track grid', () => {
+  const bar = decls(form, (s) => s === scaffold);
+  const get = (prop) => bar.filter(([p]) => p === prop).map(([, v]) => v);
   assert.ok(
-    search.some(
+    get('container-type').includes('inline-size'),
+    'the bar must be its own inline-size container (YaleSites-Internal#2184)',
+  );
+  assert.ok(
+    get('grid-template-columns').some((v) => v.startsWith('repeat(12')),
+    'the bar must use a 12-track grid',
+  );
+});
+
+test('filter bar tiers switch at 54rem and 34rem of the bar width', () => {
+  const queries = [];
+  form.walkAtRules('container', (rule) => queries.push(rule.params));
+  assert.ok(
+    queries.some((q) => q === '(min-width: 54rem)'),
+    'wide tier',
+  );
+  assert.ok(
+    queries.some((q) => q === '(34rem <= width < 54rem)'),
+    'medium tier',
+  );
+});
+
+test('search is a grid item that gets its span from the filter count', () => {
+  const spans = (value) => {
+    let found = false;
+    form.walkRules((rule) => {
+      if (!rule.selector.endsWith('.form-item-search')) return;
+      rule.walkDecls('grid-column', (d) => {
+        if (d.value === value) found = true;
+      });
+    });
+    return found;
+  };
+  ['span 12', 'span 9', 'span 6'].forEach((v) =>
+    assert.ok(spans(v), `no search rule spans ${v}`),
+  );
+});
+
+test('the no-JS Apply row still spans every track', () => {
+  const actions = decls(form, (s) => s === `${scaffold} .form-actions`);
+  assert.ok(
+    actions.some(
       ([p, v]) => p === 'grid-column' && v.replace(/\s/g, '') === '1/-1',
     ),
-    'search must span every grid column (YaleSites-Internal#1923)',
+  );
+});
+
+test('dark-section filter focus ring keys on the section attribute (#2194)', () => {
+  const rules = [];
+  form.walkRules((rule) => {
+    if (rule.nodes.some((n) => n.prop === '--ys-filter-focus')) {
+      rules.push(rule.selector);
+    }
+  });
+  const dark = rules.find((s) => s.includes(':not('));
+  assert.ok(dark, 'dark-section focus rule not found');
+  assert.ok(dark.includes('[data-section-theme'), 'must key on section attr');
+  assert.ok(
+    !dark.includes('data-component-theme'),
+    'block attribute never lands on a section',
+  );
+});
+
+test('rings on white surfaces use a dark variable in every section (#2331)', () => {
+  const values = {};
+  form.walkDecls('--ys-filter-focus-on-surface', (d) => {
+    values[d.parent.selector] = d.value;
+  });
+  assert.deepEqual(Object.values(values), ['var(--color-blue-yale)']);
+  assert.ok(
+    !Object.keys(values).some((s) => s.includes('data-section-theme')),
+    'must not be overridden in dark sections',
+  );
+
+  const ringFor = (selectorPart) => {
+    const found = [];
+    form.walkRules((rule) => {
+      if (!rule.selector.includes(selectorPart)) return;
+      rule.walkDecls('outline', (d) => found.push(d.value));
+    });
+    return found;
+  };
+  const onSurface = [
+    ...ringFor('.search-choice-close'),
+    ...ringFor('li.search-field input[type=text]'),
+    ...ringFor('.search-choice-focus'),
+  ];
+  assert.ok(
+    onSurface.length >= 3,
+    'chip remove, search field and highlighted chip rings',
+  );
+  onSurface.forEach((v) =>
+    assert.ok(v.includes('--ys-filter-focus-on-surface'), v),
+  );
+
+  const container = [];
+  form.walkDecls('outline', (d) => {
+    if (d.value.includes('var(--ys-filter-focus)')) container.push(d.value);
+  });
+  assert.ok(
+    container.length > 0,
+    'outer container ring keeps --ys-filter-focus',
   );
 });

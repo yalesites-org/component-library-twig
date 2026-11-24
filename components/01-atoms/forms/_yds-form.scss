@@ -173,12 +173,18 @@ $filter-panel-search-height: 3.5rem;
 }
 
 .ys-filter-form--scaffold {
-  // Lay the filters on a uniform column grid sized to the form's OWN width — the
-  // section column it sits in — so every dropdown and the search field share a
-  // width and the row wraps gracefully inside constrained sections (50/50,
-  // 70/30) instead of overflowing. Capped at four columns; the search field
-  // spans the first row on its own (.form-item-search below); a container
-  // narrower than one unit collapses to a single column. (#1299 QA, #1923)
+  // Lay the bar out on a 12-track grid and let the bar's OWN width (a container
+  // query on the form, so the section column it sits in, not the browser) pick
+  // how many filters share a row: wide (54rem and up) 4, medium (34rem to 54rem)
+  // 2, narrow (under 34rem) 1, so everything stacks. Search is always first and
+  // never narrower than half the row. The first row holds search plus the
+  // filters left over after filling complete rows; search takes the rest of
+  // that row when that is at least half of it, else it gets the row to itself.
+  // No row is left partly empty: a short last row's filters share it equally.
+  // The filter count is read from the markup with :has() and :nth-child(n of …),
+  // so the templates need no count attribute. DOM order is never changed, so
+  // tab order follows the visual order. (#1299 QA, #1923, #2184)
+  container-type: inline-size;
   display: grid;
 
   // Focus ring for the filter fields: blue-medium on light sections; on dark
@@ -186,30 +192,33 @@ $filter-panel-search-height: 3.5rem;
   // required-asterisk rule in _yds-textfields.scss excludes. (#1897)
   --ys-filter-focus: var(--color-blue-medium);
 
-  [data-component-theme]:not(
-      [data-component-theme='default'],
-      [data-component-theme='two'],
-      [data-component-theme='five'],
-      [data-component-theme='six']
+  // Rings drawn on white surfaces (the search field in the open panel, the
+  // chip remove button) stay dark in every section: the section foreground
+  // above is white in dark sections and would vanish on white. (#2331)
+  --ys-filter-focus-on-surface: var(--color-blue-yale);
+
+  // Sections emit `data-section-theme` (the block dial `data-component-theme`
+  // belongs to blocks alone), so the rule has to key on the section attribute
+  // or it never applies. (#2194)
+  [data-section-theme]:not(
+      [data-section-theme='default'],
+      [data-section-theme='two'],
+      [data-section-theme='five'],
+      [data-section-theme='six']
     )
     & {
     --ys-filter-focus: var(--color-section-foreground);
   }
 
-  // auto-fit fills the available width, and the max(13rem, (100% - gaps)/4)
-  // track floor caps the row at four columns (three 1rem column-gaps between
-  // four tracks), so a wide section no longer packs every filter onto one row.
-  // The outer min(100%, …) lets the track collapse to the container width when
-  // it is narrower than one unit, so an ultra-narrow column never overflows.
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(min(100%, max(13rem, calc((100% - 3rem) / 4))), 1fr)
-  );
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   align-items: end;
   column-gap: 1rem;
   row-gap: 0.5rem;
 
   .form-item {
+    // Every field stacks by default (the narrow tier); the container queries at
+    // the end of this block pair them up as the bar gets wider. (#2184)
+    grid-column: span 12;
     width: auto;
     max-width: none;
     min-width: 0;
@@ -221,12 +230,6 @@ $filter-panel-search-height: 3.5rem;
   // so the native select and the Chosen container both track the column width.
   .form-item__select {
     min-width: 0;
-  }
-
-  // Search sits alone on the first row at full width, so it reads as the main
-  // way to narrow results; the filters wrap below it, up to four per row. (#1923)
-  .form-item-search {
-    grid-column: 1 / -1;
   }
 
   // Keep the Apply button on its own full-width row below the filter row (shown
@@ -420,7 +423,8 @@ $filter-panel-search-height: 3.5rem;
         }
 
         &:focus-visible {
-          outline: var(--border-thickness-2) solid var(--ys-filter-focus);
+          outline: var(--border-thickness-2) solid
+            var(--ys-filter-focus-on-surface);
           outline-offset: var(--size-spacing-1);
         }
       }
@@ -430,7 +434,8 @@ $filter-panel-search-height: 3.5rem;
       // clips. (#1930)
       &.search-choice-focus {
         flex-shrink: 1;
-        outline: var(--border-thickness-2) solid var(--ys-filter-focus);
+        outline: var(--border-thickness-2) solid
+          var(--ys-filter-focus-on-surface);
         outline-offset: calc(-1 * var(--border-thickness-2));
       }
     }
@@ -495,6 +500,35 @@ $filter-panel-search-height: 3.5rem;
     }
   }
 
+  .ys-select-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--size-spacing-4);
+  }
+
+  // A plain link, lighter than the filled pill it replaced, so it does not
+  // outweigh the rest of the panel. Clear all sits by the count on the left;
+  // Done is alone on the right. (#2313)
+  .ys-select-done {
+    min-height: var(--size-click-target-minimum);
+    padding: 0 var(--size-spacing-2);
+    border: 0;
+    background: none;
+    color: var(--color-section-accent);
+    font: inherit;
+    font-weight: var(--font-weights-mallory-medium);
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: var(--border-thickness-2) solid var(--color-blue-medium);
+      outline-offset: 2px;
+    }
+  }
+
   .ys-select-clear {
     padding: 0;
     border: 0;
@@ -531,9 +565,10 @@ $filter-panel-search-height: 3.5rem;
     // The open head keeps its closed height: the pills stay on one line with
     // the "+N more" badge, and the search input moves into the panel. (#1930)
 
-    // Lift the open panel above the listing below (card images are
-    // positioned with z-index 0). (#1897)
-    z-index: 1;
+    // Lift the open panel above the listing below: card images are
+    // positioned with z-index 0 (#1897) and the card "PINNED" label with
+    // z-index 2 (#2356). Stays under the sticky site header (z-index 10).
+    z-index: 3;
 
     // Not the search field's containing block, so its overflow clip does not
     // hide the field lifted into the panel below. (#1930)
@@ -567,7 +602,8 @@ $filter-panel-search-height: 3.5rem;
         color: inherit;
 
         &:focus-visible {
-          outline: var(--border-thickness-2) solid var(--ys-filter-focus);
+          outline: var(--border-thickness-2) solid
+            var(--ys-filter-focus-on-surface);
           outline-offset: calc(-1 * var(--border-thickness-2));
         }
       }
@@ -760,6 +796,139 @@ $filter-panel-search-height: 3.5rem;
       .form-item {
         min-width: 100%;
         width: 100%;
+      }
+    }
+  }
+
+  // Filter-bar tiers (#2184). `$filter` is every field that is not search; the
+  // count mixins match a bar with exactly N of them.
+  $filter: '.form-item:not(.form-item-search)';
+
+  @mixin filter-count($n) {
+    &:has(> :nth-child(#{$n} of #{$filter})):not(
+        :has(> :nth-child(#{$n + 1} of #{$filter}))
+      ) {
+      @content;
+    }
+  }
+
+  // Wide, 54rem and up: four filters per row. Search takes what is left of the
+  // first row (9, 6 or 12 of 12 tracks).
+  @container (min-width: 54rem) {
+    .form-item {
+      grid-column: span 3;
+    }
+
+    .form-item-search {
+      grid-column: span 12;
+    }
+
+    @include filter-count(1) {
+      .form-item-search {
+        grid-column: span 9;
+      }
+    }
+
+    @include filter-count(5) {
+      .form-item-search {
+        grid-column: span 9;
+      }
+    }
+
+    @include filter-count(2) {
+      .form-item-search {
+        grid-column: span 6;
+      }
+    }
+
+    @include filter-count(6) {
+      .form-item-search {
+        grid-column: span 6;
+      }
+    }
+
+    // Three left over would squeeze search to a quarter, so search gets its own
+    // row and the last three filters share theirs at a third each.
+    @include filter-count(3) {
+      #{$filter} {
+        grid-column: span 4;
+      }
+    }
+
+    @include filter-count(7) {
+      #{$filter}:nth-last-child(-n + 3 of #{$filter}) {
+        grid-column: span 4;
+      }
+    }
+
+    // Search off: balanced rows, never a lone filter (5 is 3 + 2, 6 is 3 + 3,
+    // 7 is 4 + 3).
+    &:not(:has(> .form-item-search)) {
+      @include filter-count(1) {
+        #{$filter} {
+          grid-column: span 12;
+        }
+      }
+
+      @include filter-count(2) {
+        #{$filter} {
+          grid-column: span 6;
+        }
+      }
+
+      @include filter-count(3) {
+        #{$filter} {
+          grid-column: span 4;
+        }
+      }
+
+      @include filter-count(5) {
+        #{$filter}:nth-child(-n + 3 of #{$filter}) {
+          grid-column: span 4;
+        }
+
+        #{$filter}:nth-last-child(-n + 2 of #{$filter}) {
+          grid-column: span 6;
+        }
+      }
+
+      @include filter-count(6) {
+        #{$filter} {
+          grid-column: span 4;
+        }
+      }
+
+      @include filter-count(7) {
+        #{$filter}:nth-last-child(-n + 3 of #{$filter}) {
+          grid-column: span 4;
+        }
+      }
+    }
+  }
+
+  // Medium, 34rem to 54rem: two filters per row. An odd count puts search beside
+  // one filter at half width each; an even count gives search its own row.
+  @container (34rem <= width < 54rem) {
+    .form-item {
+      grid-column: span 6;
+    }
+
+    .form-item-search {
+      grid-column: span 12;
+    }
+
+    @each $n in (1, 3, 5, 7) {
+      @include filter-count($n) {
+        .form-item-search {
+          grid-column: span 6;
+        }
+      }
+    }
+
+    // Search off: an odd last filter stretches over the whole row.
+    &:not(:has(> .form-item-search)) {
+      #{$filter}:nth-last-child(1 of #{$filter}):nth-child(odd of #{$filter}) {
+        grid-column: span 12;
       }
     }
   }
