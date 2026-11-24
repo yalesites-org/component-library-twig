@@ -97,4 +97,36 @@ export const ItsYourYale = themeStories.five;
 export const AI = themeStories.six;
 export const WhitneyHumanitiesCenter = themeStories.seven;
 
+/**
+ * An online event with a Stream URL and no other detail.
+ *
+ * The stories above fill in every detail, so none of them can show the details
+ * grid opening for the stream link alone -- the case that rendered no link at
+ * all (YaleSites-Internal#2285). One theme is enough: the stories above already
+ * cover the link and divider colours in every theme, and what this pins is that
+ * the grid renders and how a lone item sits in it.
+ */
+const renderStreamUrlOnly = () =>
+  createSectionWrapper(
+    sectionThemes[0],
+    eventLocalistMetaTwig({
+      event_title__heading: 'Online Event With Only a Stream URL',
+      event_dates: [timedFeaturedDate],
+      event_featured_date: timedFeaturedDate,
+      event_featured_index: 0,
+      event_meta__format: 'Online',
+      event_meta__cta_secondary__href: '#',
+      event_meta__with_calendar: true,
+      stream_url: 'https://www.example.com',
+      description: eventLocalistData.description,
+    }),
+  );
+
+export const StreamUrlOnly = createGlobalThemeStories(
+  renderStreamUrlOnly,
+  globalThemes,
+  globalThemeLabels,
+).one;
+
 ItsYourYale.storyName = 'It’s Your Yale';
+StreamUrlOnly.storyName = 'Online Event, Stream URL Only';

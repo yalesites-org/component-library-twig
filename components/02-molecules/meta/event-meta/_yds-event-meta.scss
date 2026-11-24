@@ -163,9 +163,12 @@ $event-meta-borders-max: tokens.$break-l - 0.5;
           border-bottom: var(--border-thickness-1) solid var(--color-divider);
           flex: 1 0 33.33%;
 
+          // The hairline separates an item from the one to its left. The
+          // stream item has none to its left when it comes first (an online
+          // event with only a Stream URL) or fourth (it wraps to its own row).
           &.event-meta__website,
           &.event-meta__event-types-wrapper,
-          &.event-meta__event-stream-wrapper:not(:nth-child(4)),
+          &.event-meta__event-stream-wrapper:not(:first-child, :nth-child(4)),
           &.event-meta__audience-wrapper + .event-meta__event-topics-wrapper {
             &::before {
               content: '';
