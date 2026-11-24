@@ -1,7 +1,6 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
 @use '../../00-tokens/functions/map';
-@use '../../01-atoms/controls/text-link/yds-text-link' as link;
 
 $global-wrapped-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $wrapped-callout-component-themes: map.deep-get(
@@ -146,8 +145,10 @@ $wrapped-callout-component-themes: map.deep-get(
     @include tokens.heading(h4);
   }
 
+  // Same animated underline as every other body link (YaleSites-Internal#2145),
+  // not the native `plain-link` underline that switched off on hover.
   a {
-    @include link.plain-link;
+    @include atoms.link;
   }
 }
 
