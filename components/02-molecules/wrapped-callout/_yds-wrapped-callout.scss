@@ -1,7 +1,6 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
 @use '../../00-tokens/functions/map';
-@use '../../01-atoms/controls/text-link/yds-text-link' as link;
 
 $global-wrapped-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $wrapped-callout-component-themes: map.deep-get(
@@ -125,6 +124,16 @@ $wrapped-callout-component-themes: map.deep-get(
   // into the section.
   border: var(--border-thickness-2) solid var(--color-wrapped-callout-theme);
 
+  // The box surface is the page (or section) background, not the component
+  // theme color, so its links need that color as their descender halo. Without
+  // this the theme's `--color-text-shadow: var(--color-background)` (same
+  // element as `.wrapped-callout`, declared after the white default) paints a
+  // navy outline around the box link text.
+  --color-text-shadow: var(
+    --color-section-background,
+    var(--color-basic-white)
+  );
+
   // if callout has left/right alignment and the wrapped callout has content, limit the width of the callout
   @media (min-width: tokens.$break-l) {
     [data-wrapped-callout-alignment='left']:has(.wrapped-callout__content) & {
@@ -146,12 +155,22 @@ $wrapped-callout-component-themes: map.deep-get(
     @include tokens.heading(h4);
   }
 
+  // Same animated underline as every other body link (YaleSites-Internal#2145),
+  // not the native `plain-link` underline that switched off on hover.
   a {
-    @include link.plain-link;
+    @include atoms.link;
   }
 }
 
 .wrapped-callout__content {
+  // Same reason as the box above: the body text sits on the page or section
+  // background, not the component theme color. Themed sections still override
+  // this on the link itself in `_yds-layout.scss`.
+  --color-text-shadow: var(
+    --color-section-background,
+    var(--color-basic-white)
+  );
+
   a {
     @include atoms.link;
 

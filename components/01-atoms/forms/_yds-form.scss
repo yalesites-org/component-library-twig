@@ -364,6 +364,9 @@ $filter-panel-search-height: 3.5rem;
       // unchanged. (#1299 QA)
       font: var(--font-style-body-xs);
 
+      // The shorthand resets numerals, so restore the Body numeral setting.
+      @include tokens.body-oldstyle-nums;
+
       // Pill per the #1897 spec: Yale Blue Mallory Medium 14px on a 2rem
       // pill, with the remove control laid out inline after the label.
       display: inline-flex;
@@ -474,6 +477,8 @@ $filter-panel-search-height: 3.5rem;
     // which the token above shrank. Declared before font-weight so the
     // shorthand does not reset the medium weight below. (#1299 QA)
     font: var(--font-style-body-xs);
+    @include tokens.body-oldstyle-nums;
+
     color: var(--color-section-accent);
     font-size: var(--font-size-14);
     font-weight: var(--font-weights-mallory-medium);
@@ -494,6 +499,7 @@ $filter-panel-search-height: 3.5rem;
     background-color: var(--color-basic-white);
     color: var(--color-section-foreground);
     font: var(--font-style-body-xs);
+    @include tokens.body-oldstyle-nums;
 
     .chosen-container:not(.chosen-with-drop) & {
       visibility: hidden;

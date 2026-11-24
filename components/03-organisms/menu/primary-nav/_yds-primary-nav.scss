@@ -30,6 +30,11 @@ $menu-sub-max-width: 19rem;
 
 @mixin primary-nav-item-level-0 {
   font: var(--font-style-nav-primary-0);
+
+  // Nav links are body text, so they follow the Body numeral setting. Every
+  // include of this sits after a `font` shorthand, which resets numerals.
+  @include tokens.body-oldstyle-nums;
+
   color: var(--color-heading);
   text-align: left;
   padding: 0 var(--size-spacing-5);
@@ -331,6 +336,8 @@ $menu-sub-max-width: 19rem;
 
   &--level-1 {
     font: var(--font-style-nav-primary-1);
+    @include tokens.body-oldstyle-nums;
+
     color: var(--color-heading);
     margin-bottom: var(--size-spacing-3);
 
@@ -372,6 +379,8 @@ $menu-sub-max-width: 19rem;
 
   &--level-2 {
     font: var(--font-style-nav-primary-2);
+    @include tokens.body-oldstyle-nums;
+
     color: var(--color-muted);
     padding: var(--size-spacing-2) var(--size-spacing-5) var(--size-spacing-2)
       calc(var(--size-spacing-2) + var(--size-spacing-1));
@@ -381,6 +390,8 @@ $menu-sub-max-width: 19rem;
   &--with-icon.primary-nav__link--explore-bar {
     [data-menu-variation='mega'] & {
       font: var(--font-style-nav-primary-1);
+      @include tokens.body-oldstyle-nums;
+
       color: var(--color-heading);
       text-transform: uppercase;
       margin-bottom: var(--size-spacing-3);
