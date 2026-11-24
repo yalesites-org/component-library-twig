@@ -271,14 +271,11 @@ $modal-speed: var(--animation-speed-slow);
   // an expand toggle. Keying off the markup rather than that attribute also
   // means the band survives JS being off or the behaviour failing to attach.
   // -
-  // In Storybook this is a true "only if captioned" test: an item with neither
-  // heading nor caption emits no wrapper and gets no band. On Drupal it is not
-  // — `paragraph--gallery-item--gallery-modal-content.html.twig` passes the whole
-  // `content.field_text` render array, which carries `#cache` and so is never
-  // `empty` in Twig, meaning every item emits a wrapper and every item gets the
-  // band. That matches the old `[is-expanded]` behaviour exactly, so it is not a
-  // regression — but do not build a new rule on the assumption that this only
-  // matches captioned items on the site.
+  // An item with neither heading nor caption emits no wrapper and gets no
+  // band. On Drupal that relies on atomic's
+  // `paragraph--gallery-item--gallery-modal-content.html.twig` passing the text
+  // only when it has visible content (yalesites-org/atomic#569); the
+  // `*NoCaption` gallery visreg stories guard this side of it.
   &:has(.media-grid-modal__content-wrapper) {
     background-color: var(--modal-caption-surface);
   }
