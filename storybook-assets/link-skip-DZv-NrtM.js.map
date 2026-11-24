@@ -1,0 +1,1 @@
+{"version":3,"file":"link-skip-DZv-NrtM.js","sources":["../../components/02-molecules/link-skip/link-skip.yml"],"sourcesContent":["link_skip__content: 'Skip to main content'\nlink_skip__url: '#main-content'\n"],"names":["linkSkipData"],"mappings":"AAEA,MAAAA,EAAe,CAAC,mBAAqB,uBAAuB,eAAiB,eAAe"}

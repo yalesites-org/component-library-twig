@@ -1,0 +1,18 @@
+# link-group-props.yml
+#
+# Link Group component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+heading:
+  twigProp: link_group__heading_one
+  name: Heading
+  type: string
+  required: false
+  description: Primary heading displayed above the link group
+  detail: >
+    Text for the primary heading of the link group. When only one heading is
+    provided, it spans both columns. Maps to the link_group__heading_one Twig variable.
+  control: text

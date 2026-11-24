@@ -1,0 +1,64 @@
+{% set colors__base_class = "cl-colors" %}
+
+<div {{ bem('wrap', [], colors__base_class) }}>
+  <div class="text-field" data-component-alignment="left" data-component-width="max">
+    <div class="text-field__inner">
+      <div class="text">
+        <h1>All available color options are outlined here.</h1>
+        <p>Each color is defined in the tokens repository: <code>atomic/node_modules/@yalesites-org/tokens/tokens/figma-export/tokens.json</code>.</p>
+        <p>CMYK values are approximate. Pantone values are pending OPAC review. Click any value to copy it to your clipboard.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% for group, colorset in _context.colors %}
+  <div {{ bem(colors__base_class) }}>
+    <h2>{{ group|capitalize }}</h2>
+    <ul {{ bem('list', [], colors__base_class) }}>
+      {% for key, color in colorset %}
+        <li {{ bem('item', [], colors__base_class) }}>
+          <div {{ bem('swatch', [], colors__base_class) }} style="background: var(--color-{{ group }}-{{ key }});"></div>
+          <div {{ bem('info', [], colors__base_class) }}>
+            <h3 {{ bem('name', [], colors__base_class) }}>{{ color.name }}</h3>
+            <span {{ bem('var', [], colors__base_class) }}>--color-{{ group }}-{{ key }}</span>
+
+            {% set value_rows = {
+              'HEX': color.hex,
+              'RGB': color.rgb,
+              'CMYK': color.cmyk,
+              'PANTONE': color.pantone
+            } %}
+
+            {% for label, val in value_rows %}
+              {% set is_placeholder = val == '--' %}
+              <div {{ bem('value-row', [], colors__base_class, is_placeholder ? [] : ['text-copy-button']) }}>
+                <span {{ bem('label', [], colors__base_class) }}>{{ label }}</span>
+                {# pre-text__text class is required by yds-text-copy-button.js to read the copy value #}
+                <code class="cl-colors__value{{ is_placeholder ? '' : ' pre-text__text' }}">{{ val }}</code>
+                {% if not is_placeholder %}
+                  <button
+                    class="cl-colors__copy-btn text-copy-button__button"
+                    type="button"
+                  >
+                    {# Copy icon (shown by default) #}
+                    <svg class="cl-colors__icon-copy" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    {# Check icon (shown when copied, toggled by JS via --copied modifier) #}
+                    <svg class="cl-colors__icon-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    {# Visually-hidden label read by screen readers as the button's accessible name. #}
+                    <span {{ bem('copy-label', [], colors__base_class) }}>Copy {{ label }} {{ val }}</span>
+                  </button>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endfor %}

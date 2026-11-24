@@ -1,0 +1,26 @@
+const e=`{#
+/**
+ * @file
+ * Theme override for a 'textarea' #type form element.
+ *
+ * Available variables
+ * - wrapper_attributes: A list of HTML attributes for the wrapper element.
+ * - attributes: A list of HTML attributes for the textarea element.
+ * - resizable: An indicator for whether the textarea is resizable.
+ * - required: An indicator for whether the textarea is required.
+ * - value: The textarea content.
+ *
+ * @see template_preprocess_textarea()
+ */
+#}
+{%
+  set classes = [
+    'form-item__textfield',
+    'form-item__textarea',
+  ]
+%}
+<div{{ wrapper_attributes }}>
+  <textarea{{ attributes.addClass(classes) }}>{{ value }}</textarea>
+</div>
+`;export{e as default};
+//# sourceMappingURL=_textarea-CkMopm40.js.map

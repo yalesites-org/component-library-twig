@@ -1,0 +1,52 @@
+const n=`{% if variation == 'featured' %}
+  {% include "@organisms/card-collection/yds-card-collection.twig" with {
+    card_collection__source_type: 'event',
+    reference_card__date: '2022-03-30 13:00',
+    card_collection__type: 'grid',
+    animate__item: 'enabled',
+    card_collection__cards: [
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+    ]
+  } %}
+{% elseif variation == 'secondary' %}
+  {% include "@organisms/card-collection/yds-card-collection.twig" with {
+    card_collection__source_type: 'event',
+    reference_card__date: '2022-03-30 13:00',
+    card_collection__type: 'grid',
+    card_collection__featured: 'false',
+    animate__item: 'enabled',
+    card_collection__cards: [
+      {},
+      {},
+      {},
+      {},
+    ]
+  } %}
+{% elseif variation == 'list' %}
+  {% include "@organisms/card-collection/yds-card-collection.twig" with {
+    card_collection__source_type: 'event',
+    reference_card__date: '2022-03-30 13:00',
+    card_collection__type: 'list',
+    animate__item: 'enabled',
+    card_collection__cards: [
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+    ]
+  } %}
+  {% include "@molecules/pager/yds-pager.twig" %}
+{% endif %}
+`;export{n as default};
+//# sourceMappingURL=_event-collection--example-HVCtqHk5.js.map

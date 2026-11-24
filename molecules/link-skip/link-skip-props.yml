@@ -1,0 +1,38 @@
+# link-skip-props.yml
+#
+# Link Skip component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+content:
+  twigProp: link_skip__content
+  name: Content
+  type: string
+  required: true
+  description: The text content displayed in the skip link
+  control: text
+
+url:
+  twigProp: link_skip__url
+  name: URL
+  type: string
+  required: true
+  description: The target anchor link (typically '#main-content' or similar)
+  control: text
+
+baseClass:
+  twigProp: link_skip__base_class
+  name: Base Class
+  type: string
+  required: false
+  description: Base CSS class for the component
+  default: 'link-skip'
+  control: text
+
+extraClass:
+  twigProp: link_skip__extra_class
+  name: Extra Class
+  type: string
+  required: false
+  description: Additional CSS classes for custom styling
+  control: text

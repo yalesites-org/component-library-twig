@@ -1,0 +1,17 @@
+const e=`<div {{ bem('media', [], resource_meta__base_class) }}>
+  <div {{ bem('inner', [], resource_meta__base_class) }}>
+    {% block resource_meta__video %}
+      {% include "@atoms/videos/video-embed/yds-video-embed.twig" with {
+        video_embed__content: video_embed__content__1,
+      } %}
+    {% endblock %}
+  </div>
+
+  {# Description for video resources - appears after video #}
+  {% if resource_meta__description %}
+    <div {{ bem('description', [], resource_meta__base_class) }}>
+      {{ resource_meta__description }}
+    </div>
+  {% endif %}
+</div>`;export{e as default};
+//# sourceMappingURL=_yds-resource-meta--video-Cb2EPoeN.js.map

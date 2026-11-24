@@ -1,0 +1,30 @@
+# secondary-nav-props.yml
+#
+# Secondary Nav component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+themeColor:
+  twigProp: menu_theme
+  name: Component Theme (dial)
+  type: select
+  required: false
+  description: Color theme applied to the secondary navigation component
+  detail: >
+    Applies a color theme to the secondary nav. Maps to menu_theme in the Twig
+    template. Lists one to five, matching Drupal's book_navigation theme
+    setting, rather than every component-themes token.
+  default: one
+  options:
+    - one
+    - two
+    - three
+    - four
+    - five
+  control: select
+  labels:
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+    five: 'Five'

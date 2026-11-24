@@ -1,0 +1,2 @@
+const i={quick_links__heading:"Heading for Quick Links",quick_links__description:"<p>This is a Quick Links description.</p>",quick_links__links:[{quick_links__link__url:"#",quick_links__link__content:"This is a link"},{quick_links__link__url:"https://google.com",quick_links__link__content:"This is another link"},{quick_links__link__url:"https://google.com/download.pdf",quick_links__link__content:"This is a very long link that will wrap lines"},{quick_links__link__url:"#",quick_links__link__content:"Link #4"}]};export{i as q};
+//# sourceMappingURL=quick-links-vBLtUtYH.js.map

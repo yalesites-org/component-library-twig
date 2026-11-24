@@ -1,0 +1,33 @@
+{#
+ # Multi-day bar: one link spanning a multi-day event's days within a week, in the Full month grid.
+ #
+ # Available Variables:
+ # - multi_day_bar__title: event title, medium weight.
+ # - multi_day_bar__date_range: visible date range, for example "Oct 22–24".
+ # - multi_day_bar__label_range: spoken date range, for example "October 22 to 24".
+ # - multi_day_bar__url: link target. Default #.
+ # - multi_day_bar__past: gray bar. Default false.
+ # - multi_day_bar__pointed_at: 2px Yale Blue border while pointed at. Default false.
+ #
+ # The accessible name starts "Multi-day event, <spoken range>:" then the title.
+ # The parent sets outer margin and width; it takes one event slot per day covered.
+ #}
+
+{% set multi_day_bar__base_class = 'multi-day-bar' %}
+{% set multi_day_bar__attributes = {
+  'class': bem(multi_day_bar__base_class),
+  'href': multi_day_bar__url|default('#'),
+} %}
+{% if multi_day_bar__past %}
+  {% set multi_day_bar__attributes = multi_day_bar__attributes|merge({'data-multi-day-bar-past': 'true'}) %}
+{% endif %}
+{% if multi_day_bar__pointed_at %}
+  {% set multi_day_bar__attributes = multi_day_bar__attributes|merge({'data-multi-day-bar-pointed-at': 'true'}) %}
+{% endif %}
+
+<a {{ add_attributes(multi_day_bar__attributes) }}>
+  <span {{ bem('label', [], multi_day_bar__base_class) }}>Multi-day event, {{ multi_day_bar__label_range }}: </span>
+  <span {{ bem('title', [], multi_day_bar__base_class) }}>{{ multi_day_bar__title }}</span>
+  <span {{ bem('separator', [], multi_day_bar__base_class) }} aria-hidden="true"> | </span>
+  <span {{ bem('range', [], multi_day_bar__base_class) }} aria-hidden="true">{{ multi_day_bar__date_range }}</span>
+</a>

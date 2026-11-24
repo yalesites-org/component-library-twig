@@ -1,0 +1,2 @@
+import{c as a,t as e}from"../iframe.js";const t={spacing_options:e.size.spacing,prefix:"size-spacing"},o={tags:["!dev"],title:"Tokens/Spacing"},s=()=>a(t);s.parameters={...s.parameters,docs:{...s.parameters?.docs,source:{originalSource:"() => spacingTwig(spacingData)",...s.parameters?.docs?.source}}};const c=["Spacing"],r=Object.freeze(Object.defineProperty({__proto__:null,Spacing:s,__namedExportsOrder:c,default:o},Symbol.toStringTag,{value:"Module"}));export{r as S,s as a};
+//# sourceMappingURL=spacing.stories-BEq0MhOp.js.map

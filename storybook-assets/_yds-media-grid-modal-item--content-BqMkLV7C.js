@@ -1,0 +1,58 @@
+const e=`{#
+ # Available Variables:
+ # - modal_item__heading
+ # - modal_item__content
+ # - modal_item__id - (optional) a stable id for the caption heading, so the
+ #   gallery item can be linked to directly. Drupal derives it from the
+ #   paragraph entity; the hash handling in \`yds-media-grid-interactive.js\`
+ #   opens the modal on the item it names.
+ #}
+
+{% set modal_item__heading = modal_item__heading|default(item.media_grid__modal__heading) %}
+{% set modal_item__content = modal_item__content|default(item.media_grid__modal__text) %}
+{% set media_grid__modal__base_class = 'media-grid-modal' %}
+
+{% set modal_item__content__attributes = [{}] %}
+
+
+{% if modal_item__heading is not empty or modal_item__content is not empty %}
+	{% set media_grid__item__content %}
+    <button {{ bem('toggle-caption', ['expand-content'], media_grid__modal__base_class) }}>
+      {% include "@atoms/images/icons/_yds-icon.twig" with {
+        icon__name: 'circle-plus',
+        icon__decorative: true,
+        icon__blockname: media_grid__modal__base_class,
+        icon__modifiers: ['expand-content'],
+      } %}
+      {% include "@atoms/images/icons/_yds-icon.twig" with {
+        icon__name: 'circle-minus',
+        icon__decorative: true,
+        icon__blockname: media_grid__modal__base_class,
+        icon__modifiers: ['collapse-content'],
+      } %}
+    </button>
+    <div {{ bem('content-wrapper', [], media_grid__modal__base_class) }}>
+    {# Content Heading #}
+    {% if modal_item__heading is not empty %}
+      {% include "@atoms/typography/headings/yds-heading.twig" with {
+        heading__level: '2',
+        heading: modal_item__heading,
+        heading__blockname: media_grid__modal__base_class,
+        heading__id: modal_item__id,
+      } %}
+    {% endif %}
+    {# Content Text #}
+    {% if modal_item__content %}
+      <div {{ bem('text', [], media_grid__modal__base_class) }}>
+        {{ modal_item__content }}
+      </div>
+    {% endif %}
+    </div>
+	{% endset %}
+	{% include "@molecules/text/yds-text-field.twig" with {
+      text_field__content: media_grid__item__content,
+      text_field__extra_classes: ['no-page-spacing'],
+    } %}
+{% endif %}
+`;export{e as default};
+//# sourceMappingURL=_yds-media-grid-modal-item--content-BqMkLV7C.js.map

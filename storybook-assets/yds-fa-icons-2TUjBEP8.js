@@ -1,0 +1,13 @@
+const i=`<div class="icons-demo fa-icons-demo" id="fa-icons">
+  {% for item in fa_icons %}
+    <div class="icons-demo__item fa-icons-demo__item">
+      {% include "@atoms/images/fa-icons/_yds-fa-icon.twig" with {
+        fa_icon__title: item.fa_icon__name,
+        fa_icon__extra_class: item.fa_icon__extra_class,
+      } %}
+      <pre>{{ item.fa_icon__name }}<br/> {{ item.fa_icon__extra_class }}</pre>
+    </div>
+  {% endfor %}
+</div>
+`;export{i as default};
+//# sourceMappingURL=yds-fa-icons-2TUjBEP8.js.map

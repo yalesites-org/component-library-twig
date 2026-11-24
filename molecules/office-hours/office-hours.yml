@@ -1,0 +1,39 @@
+# Default template data for the Office Hours molecule (Storybook fixtures).
+office_hours__heading: Hours
+office_hours__name: Peabody Museum of Natural History
+office_hours__days:
+  - label: Sunday
+    slots:
+      - { start: 1200, end: 1700 }
+  - label: Monday
+    closed: true
+  - label: Tuesday
+    today: true
+    slots:
+      - { start: 1000, end: 1700 }
+  - label: Wednesday
+    slots:
+      - { start: 930, end: 1730 }
+  - label: Thursday
+    slots:
+      - { start: 1000, end: 1300 }
+      - { start: 1400, end: 2000 }
+    comment: Late night, first Thursday
+  - label: Friday
+    exception: true
+    slots:
+      - { start: 1000, end: 1400 }
+    comment: Homecoming early close
+  - label: Saturday
+    all_day: true
+office_hours__upcoming:
+  - label: Thu, Nov 26
+    closed: true
+    comment: Thanksgiving Day
+  - label: Fri, Nov 27
+    closed: true
+    comment: Thanksgiving break
+  - label: Thu, Dec 24
+    slots:
+      - { start: 1000, end: 1300 }
+    comment: Winter recess

@@ -1,0 +1,5 @@
+import{u as o,j as n,M as i,C as a}from"./blocks-BF-hIz2y.js";import{H as r}from"./typography.stories-D0IfcCd9.js";import"./preload-helper-PPVm8Dsz.js";import"../iframe.js";import"./_commonjsHelpers-DaWZu8wl.js";import"./index-DoCra1Lx.js";function s(t){const e={h1:"h1",p:"p",strong:"strong",...o(),...t.components};return n.jsxs(n.Fragment,{children:[n.jsx(i,{title:"Tokens/Typography/Heading Styles"}),`
+`,n.jsx(e.h1,{id:"heading-styles",children:"Heading Styles"}),`
+`,n.jsxs(e.p,{children:["How the type scale is applied to heading levels H1–H6, including size, weight, and line-height. Use the ",n.jsx(e.strong,{children:"Typography: Heading Font"})," and ",n.jsx(e.strong,{children:"Typography: Heading Numerals"})," toolbar controls to preview each combination."]}),`
+`,n.jsx("div",{className:"sb-contained-canvas",children:n.jsx(a,{of:r})})]})}function m(t={}){const{wrapper:e}={...o(),...t.components};return e?n.jsx(e,{...t,children:n.jsx(s,{...t})}):s(t)}export{m as default};
+//# sourceMappingURL=heading-styles-B8uxJp4H.js.map

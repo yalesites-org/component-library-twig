@@ -1,0 +1,36 @@
+const n=`{% if variation == 'featured' %}
+  {% include "@organisms/card-collection/yds-card-collection.twig" with {
+    card_collection__source_type: 'resource',
+    card_collection__type: 'grid',
+    animate__item: 'enabled',
+    card_collection__cards: [
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+    ]
+  } %}
+{% elseif variation == 'list' %}
+  {% include "@organisms/card-collection/yds-card-collection.twig" with {
+    card_collection__source_type: 'resource',
+    card_collection__type: 'list',
+    animate__item: 'enabled',
+    card_collection__cards: [
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+    ]
+  } %}
+  {% include "@molecules/pager/yds-pager.twig" %}
+{% endif %}
+`;export{n as default};
+//# sourceMappingURL=_resource-collection--example-YPal4qJB.js.map

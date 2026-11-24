@@ -1,0 +1,23 @@
+# events-props.yml
+#
+# Events page example property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+eventPageTitle:
+  twigProp: event_title__heading
+  name: Page Title
+  type: string
+  required: false
+  description: The heading displayed as the event page title.
+  control: text
+
+showBreadcrumbs:
+  twigProp: show_breadcrumbs
+  name: Breadcrumbs
+  type: boolean
+  required: false
+  description: Whether to display breadcrumb navigation on the event page.
+  control: boolean

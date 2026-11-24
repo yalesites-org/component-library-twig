@@ -1,0 +1,18 @@
+const t=`{% extends "@organisms/layout/layout/yds-layout.twig" %}
+  {% block layout__primary %}
+    {% include "@molecules/text/yds-text-field.twig" with {
+      text_field__content: '<h3>Primary Column</h3><p>A short paragraph of column text.</p>',
+    } %}
+  {% endblock %}
+  {% block layout__secondary %}
+    {% include "@molecules/text/yds-text-field.twig" with {
+      text_field__content: '<h3>Secondary Column</h3><p>A short paragraph of column text.</p>',
+    } %}
+  {% endblock %}
+  {% block layout__tertiary %}
+    {% include "@molecules/text/yds-text-field.twig" with {
+      text_field__content: '<h3>Tertiary Column</h3><p>A short paragraph of column text.</p>',
+    } %}
+  {% endblock %}
+`;export{t as default};
+//# sourceMappingURL=_layout--divider-example-BKE0Vp9L.js.map

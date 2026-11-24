@@ -1,0 +1,17 @@
+# component-wrapper-props.yml
+#
+# Component Wrapper component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+
+componentWidth:
+  twigProp: component_wrapper__width
+  name: Component Width
+  type: select
+  required: false
+  description: Maximum width constraint for the component content area
+  default: site
+  options:
+    - content
+    - site
+  control: select

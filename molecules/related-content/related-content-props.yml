@@ -1,0 +1,26 @@
+# related-content-props.yml
+#
+# Related Content molecule property definitions.
+# Single source of truth for both Storybook controls and MDX documentation.
+
+heading:
+  twigProp: related_content__heading
+  name: Heading
+  type: string
+  required: false
+  description: Heading shown above the related content list. Defaults to "Related Content".
+  default: 'Related Content'
+  control: text
+
+itemCount:
+  twigProp: related_content__view
+  name: Number of Items
+  type: number
+  required: false
+  description: Storybook-only control. Generates that many sample rows of "Type — Title" markup matching what the embedded view emits in Drupal.
+  default: 4
+  control:
+    type: number
+    min: 0
+    max: 6
+    step: 1

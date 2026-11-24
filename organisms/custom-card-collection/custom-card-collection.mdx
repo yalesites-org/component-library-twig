@@ -1,0 +1,131 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as CustomCardCollectionStories from './custom-card-collection.stories';
+import { twigPropsTable } from '../../_storybook/twig-props-table.mdx';
+import componentProps from './custom-card-collection-props.yml';
+
+<Meta of={CustomCardCollectionStories} name="Overview" />
+
+# Custom Card Collection
+
+Custom Card Collection displays custom cards with flexible layouts. Unlike standard card collections, custom cards allow for more creative content presentation with customizable snippets, images, and link destinations. This component is ideal for curated content groupings, featured sections, or promotional content that requires a tailored approach.
+
+## Interactive Preview
+
+Use the controls panel below to experiment with the custom card collection's properties in real-time.
+
+<Canvas of={CustomCardCollectionStories.customCardCollection} />
+<Controls of={CustomCardCollectionStories.customCardCollection} />
+
+## Properties
+
+### Required Properties
+
+{twigPropsTable(componentProps, 'required')}
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Card Size
+
+<code>custom_card_collection\_\_card_size</code> sets how big each card is. It is
+a size choice, the same Small and Large wording the card collection uses.
+
+- **Small** (default): the 4-up grid collections have always rendered, with a top bar on cards without images.
+- **Large**: bigger cards in the Large grid of the card collection, 3 across a full-width region.
+
+Anything other than <code>'large'</code> renders small, so collections saved before the option existed look the same.
+
+## Image Display Options
+
+Custom cards support flexible image display:
+
+- **With images enabled**: Full visual presentation with 3x2 aspect ratio images that enhance engagement
+- **With images disabled**: Text-focused presentation that maximizes content density and readability
+
+The image display setting applies to all cards in the collection uniformly.
+
+## Technical Specifications
+
+<div
+  className="sb-table-scroll"
+  role="region"
+  aria-label="Technical Specifications"
+  tabIndex={0}
+>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <strong>Atomic Level</strong>
+        </td>
+        <td>Organism</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Files</strong>
+        </td>
+        <td>
+          <code>yds-custom-card-collection.twig</code>,{' '}
+          <code>_yds-custom-card-collection.scss</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Accessibility</strong>
+        </td>
+        <td>
+          Semantic HTML list structure, proper heading hierarchy, keyboard
+          navigable links, sufficient color contrast, alt text for images
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Responsive Behavior</strong>
+        </td>
+        <td>
+          Both sizes collapse to one column on small screens and adapt the
+          number of columns to the viewport and region width
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## Usage Guidelines
+
+### Large Collections
+
+- Use large cards when each card has strong imagery and a short message
+- Large cards fit 3 across a full-width region
+
+### Small Collections
+
+- Small cards work best with 4 cards for balanced grid presentation
+- Can accommodate more cards if needed, maintaining responsive grid behavior
+- Use when all items should have equal visual prominence
+- Provides clean, organized content presentation
+
+### Content Recommendations
+
+- Keep heading text concise and descriptive (under 70 characters)
+- Limit snippet text to 2-3 sentences for scannable content
+- Ensure custom card content aligns thematically when grouped in a collection
+- Use high-quality images with appropriate aspect ratios (3x2)
+- Verify all URLs are valid and lead to relevant destinations
+
+### When to Use Custom Cards vs Reference Cards
+
+- **Custom Cards**: For curated, promotional, or featured content that needs custom snippets and destinations
+- **Reference Cards**: For automated content feeds from posts, events, profiles, or resources
+
+## Related Components
+
+- **Custom Card** - Individual custom card component
+- **Card Collection** - Collection of automated reference cards for posts, events, profiles, and resources
+- **Grid** - Base grid system used for layout
+- **Heading** - Text component for collection headings
+
+## Visual Regression Testing
+
+For comprehensive testing of all custom card collection variations including small and large card sizes and image display options, see the [Visreg page](?path=/story/organisms-card-collection-custom-card-collection-visreg--old-blues).

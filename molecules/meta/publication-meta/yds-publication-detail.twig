@@ -1,0 +1,252 @@
+{#
+ # Publication Detail meta block
+ #
+ # Heavy meta header used at the top of a Resource (publication) full page.
+ # Mirrors the structure of @molecules/meta/event-meta/yds-event-meta-localist:
+ # a page-title shell with an overline + meta region that contains a
+ # `details-wrapper` grid of fields.
+ #
+ # Available Variables:
+ # - publication_detail__heading                 (string)  Title.
+ # - publication_detail__category                (string)  Category overline.
+ # - publication_detail__publish_date            (string)  Pre-formatted date.
+ # - publication_detail__authors                 (array)   [{ label, url }]
+ # - publication_detail__journal_publication_name  (string)
+ # - publication_detail__journal_publication_issue (string)
+ # - publication_detail__citation                (string)  Rendered HTML.
+ # - publication_detail__description             (string)  Rendered HTML.
+ # - publication_detail__abstract                (string)  Rendered HTML.
+ # - publication_detail__external_source         (object)  { url, title }
+ # - publication_detail__download_url            (string)
+ # - publication_detail__download_label          (string)
+ # - publication_detail__download_aria_label     (string)
+ # - publication_detail__resource_type           (string)  Media bundle.
+ # - publication_detail__media_id                (int)     For video embed.
+ # - publication_detail__document_image          (render)  Thumbnail render array.
+ # - publication_detail__metadata                (array)   Keyed taxonomy data:
+ #     { field_name: { label: 'Audience', items: [{ '#title', '#url' }, ...] } }
+ #}
+
+{% set publication_detail__base_class = 'publication-detail' %}
+
+{% set publication_detail__attributes = {
+  'data-component-width': publication_detail__width|default('site'),
+  class: bem(publication_detail__base_class, [], publication_detail__blockname),
+} %}
+
+{# Anything to show in the grid? #}
+{% set has_grid =
+  publication_detail__authors|length
+  or publication_detail__publish_date
+  or publication_detail__external_source.url
+  or publication_detail__download_url
+  or publication_detail__journal_publication_name
+  or publication_detail__journal_publication_issue
+  or publication_detail__citation
+  or publication_detail__metadata|length
+%}
+
+<div {{ add_attributes(publication_detail__attributes) }} data-embedded-components>
+  {% embed "@molecules/page-title/yds-page-title.twig" with {
+    page_title__heading: publication_detail__heading,
+    page_title__blockname: publication_detail__base_class,
+    page_title__variation: 'event',
+  } %}
+
+    {% block page_title__overline %}
+      {% if publication_detail__category %}
+        {% include "@atoms/typography/text/yds-text.twig" with {
+          text__blockname: publication_detail__base_class,
+          text__content: publication_detail__category,
+          text__base_class: 'category',
+        } %}
+      {% endif %}
+    {% endblock %}
+
+    {% block page_title__image %}
+      {% if publication_detail__document_image or publication_detail__download_url %}
+        <div {{ bem('image-wrap', [], publication_detail__base_class) }}>
+          {% if publication_detail__document_image %}
+            <div {{ bem('image', [], publication_detail__base_class) }}>
+              {# `|raw` matches the pattern used by yds-video-embed and
+                 yds-image — the variable comes through as already-rendered
+                 HTML (a Drupal render array result, or a pre-built img/svg
+                 string in Storybook fixtures). Without it, autoescape
+                 prints the markup as text. #}
+              {{ publication_detail__document_image|raw }}
+            </div>
+          {% endif %}
+          {% if publication_detail__download_url %}
+            <div {{ bem('download', [], publication_detail__base_class) }}>
+              {% include "@atoms/controls/cta/yds-cta.twig" with {
+                cta__content: publication_detail__download_label|default('Download'),
+                cta__href: publication_detail__download_url,
+                cta__component_theme: 'one',
+                cta__attributes: {
+                  'aria-label': publication_detail__download_aria_label,
+                  'download': '',
+                  'data-link-type': 'download',
+                },
+              } %}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endblock %}
+
+    {% block page_title__meta %}
+      <div {{ bem('inner', [], publication_detail__base_class) }}>
+
+        {% if publication_detail__resource_type == 'video' and publication_detail__media_id %}
+          <div {{ bem('video', [], publication_detail__base_class) }}>
+            {# Same `|raw` rationale as above — the iframe HTML is built
+               upstream (atomic's media-oembed-content.html.twig override
+               in Drupal, or a fixture string in Storybook). #}
+            {{ video_embed__content__1|raw }}
+          </div>
+        {% endif %}
+
+        {#
+          Each metadata cell is rendered as <dl><dt><dd> for proper
+          term-definition semantics (WCAG 1.3.1 / 2.4.6). Wrapping each
+          cell in its own dl preserves the existing flex grid: the
+          details-wrapper still has one child per cell, so the 3-up
+          column layout and vertical-separator math are unchanged.
+        #}
+        {% if has_grid %}
+          <div {{ bem('details-wrapper', [], publication_detail__base_class) }}>
+
+            {% if publication_detail__authors|length %}
+              <dl {{ bem('authors', [], publication_detail__base_class) }}>
+                <dt {{ bem('field__label', [], publication_detail__base_class) }}>
+                  {{ publication_detail__authors|length > 1 ? 'Authors' : 'Author' }}
+                </dt>
+                <dd>
+                  <ul {{ bem('authors-list', [], publication_detail__base_class) }}>
+                    {% for author in publication_detail__authors %}
+                      <li {{ bem('authors-list__item', [], publication_detail__base_class) }}>
+                        {% if author.url %}
+                          <a href="{{ author.url }}">{{ author.label }}</a>
+                        {% else %}
+                          {{ author.label }}
+                        {% endif %}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </dd>
+              </dl>
+            {% endif %}
+
+            {% if publication_detail__publish_date %}
+              <dl {{ bem('publish-date', [], publication_detail__base_class) }}>
+                <dt {{ bem('field__label', [], publication_detail__base_class) }}>
+                  Published
+                </dt>
+                <dd {{ bem('publish-date__value', [], publication_detail__base_class) }}>
+                  {{ publication_detail__publish_date }}
+                </dd>
+              </dl>
+            {% endif %}
+
+            {% if publication_detail__journal_publication_name %}
+              <dl {{ bem('journal-name', [], publication_detail__base_class) }}>
+                <dt {{ bem('field__label', [], publication_detail__base_class) }}>
+                  Publication
+                </dt>
+                <dd {{ bem('journal-name__value', [], publication_detail__base_class) }}>
+                  {{ publication_detail__journal_publication_name }}
+                </dd>
+              </dl>
+            {% endif %}
+
+            {% if publication_detail__journal_publication_issue %}
+              <dl {{ bem('journal-issue', [], publication_detail__base_class) }}>
+                <dt {{ bem('field__label', [], publication_detail__base_class) }}>
+                  Issue
+                </dt>
+                <dd {{ bem('journal-issue__value', [], publication_detail__base_class) }}>
+                  {{ publication_detail__journal_publication_issue }}
+                </dd>
+              </dl>
+            {% endif %}
+
+            {% if publication_detail__external_source.url %}
+              <dl {{ bem('external-source', [], publication_detail__base_class) }}>
+                <dt {{ bem('field__label', [], publication_detail__base_class) }}>
+                  External Source
+                </dt>
+                <dd {{ bem('external-source__link', [], publication_detail__base_class) }}>
+                  {% include "@atoms/controls/cta/yds-cta.twig" with {
+                    cta__content: publication_detail__external_source.title|default('Visit Source'),
+                    cta__href: publication_detail__external_source.url,
+                    cta__component_theme: 'one',
+                    cta__style: 'outline',
+                  } %}
+                </dd>
+              </dl>
+            {% endif %}
+
+            {# Generic taxonomy cells from metadata array #}
+            {% for field_name, group in publication_detail__metadata %}
+              {% if group.items|length %}
+                <dl {{ bem('taxonomy', [field_name|replace({'field_': ''})|replace({'_': '-'})], publication_detail__base_class) }}>
+                  <dt {{ bem('field__label', [], publication_detail__base_class) }}>
+                    {{ group.label }}
+                  </dt>
+                  <dd>
+                    <ul {{ bem('taxonomy-list', [], publication_detail__base_class) }}>
+                      {% for item in group.items %}
+                        <li {{ bem('taxonomy-list__item', [], publication_detail__base_class) }}>
+                          {{ item }}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </dd>
+                </dl>
+              {% endif %}
+            {% endfor %}
+
+            {% if publication_detail__citation %}
+              <dl {{ bem('citation', [], publication_detail__base_class) }}>
+                <dt {{ bem('field__label', [], publication_detail__base_class) }}>
+                  Citation
+                </dt>
+                <dd>
+                  {% include '@atoms/controls/text-copy-button/yds-text-copy-button.twig' with {
+                    text_copy_button__pre_text: publication_detail__citation,
+                    text_copy_button__pre_text_tag: 'div',
+                    text_copy_button__content: 'Copy citation',
+                  } %}
+                </dd>
+              </dl>
+            {% endif %}
+
+          </div>
+        {% endif %}
+
+        {% if publication_detail__abstract %}
+          <dl {{ bem('abstract', [], publication_detail__base_class) }}>
+            <dt {{ bem('field__label', [], publication_detail__base_class) }}>
+              Abstract
+            </dt>
+            <dd {{ bem('abstract__value', [], publication_detail__base_class) }}>
+              {{ publication_detail__abstract }}
+            </dd>
+          </dl>
+        {% endif %}
+
+        {% if publication_detail__description %}
+          <dl {{ bem('description', [], publication_detail__base_class) }}>
+            <dt {{ bem('field__label', [], publication_detail__base_class) }}>
+              Description
+            </dt>
+            <dd {{ bem('description__value', [], publication_detail__base_class) }}>
+              {{ publication_detail__description }}
+            </dd>
+          </dl>
+        {% endif %}
+
+      </div>
+    {% endblock %}
+  {% endembed %}
+</div>

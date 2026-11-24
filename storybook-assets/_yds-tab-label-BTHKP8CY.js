@@ -1,0 +1,18 @@
+const a=`{% if key == 0 %}
+  {% set aria_selected = 'aria-selected=true' %}
+{% else %}
+  {% set tab_index = 'tabindex="-1"' %}
+{% endif %}
+<li {{ bem('item', [], tabs__base_class) }} role="presentation">
+  {% set tabs__link__attributes = {
+    'class': bem('link', [], tabs__base_class),
+    'role': 'tab',
+    'aria-controls': 'tab-' ~ tabs__id ~ '-' ~ key,
+    'href': '#tab-' ~ tabs__id ~ '-' ~ key,
+  } %}
+  <a {{ add_attributes(tabs__link__attributes) }} {{ tab_index }} {{ aria_selected }}>
+    {{ tab__label|default(tab.tab__label) }}
+  </a>
+</li>
+`;export{a as default};
+//# sourceMappingURL=_yds-tab-label-BTHKP8CY.js.map

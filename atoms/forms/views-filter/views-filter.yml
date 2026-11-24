@@ -1,0 +1,26 @@
+# Fixture terms for the Views filter stories. Names mirror the local
+# visreg content (Category and Audience on the Views block).
+categories:
+  - Featured
+  - Page Category 1
+  - Page Category 2
+  - Page Category 3
+  - About
+  - Research
+  - Academics
+  - Contact
+  - Landing Page
+
+audiences:
+  - Faculty
+  - Staff
+  - Students
+  - Visitors
+
+# A vocabulary name and terms long enough to reach the dropdown arrow.
+longVocabularyName: Interdisciplinary Research Initiatives and Centers
+longTerms:
+  - Interdisciplinary Research Initiatives and Collaborative Centers
+  - Graduate and Professional School Admissions Outreach
+  - Faculty Development and Academic Leadership Programs
+  - Short Term

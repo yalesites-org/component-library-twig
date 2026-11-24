@@ -1,0 +1,1 @@
+{"version":3,"file":"custom-card-ChKUw6IK.js","sources":["../../components/02-molecules/cards/custom-card/custom-card.yml"],"sourcesContent":["custom_card__heading: 'Card Title'\ncustom_card__snippet: '<p>Content goes here.</p>'\ncustom_card__url: 'https://google.com'\n"],"names":["customCardData"],"mappings":"AAGA,MAAAA,EAAe,CAAC,qBAAuB,aAAa,qBAAuB,4BAA4B,iBAAmB,oBAAoB"}

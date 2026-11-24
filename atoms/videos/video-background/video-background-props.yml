@@ -1,0 +1,60 @@
+# video-background-props.yml
+#
+# Video Background component property definitions.
+# This file is the single source of truth for both Storybook controls
+# and MDX documentation tables.
+#
+# Edit descriptions and details freely - changes appear in Storybook on reload.
+
+videoContent:
+  twigProp: video_background__content
+  name: Video Content
+  type: string
+  required: true
+  description: URL to the video file (MP4 format recommended)
+  detail: >
+    URL to the video file used as the background. MP4 format with H.264 codec
+    is recommended for best browser compatibility. This prop is provided via
+    demo data and is not directly editable in the Controls panel.
+
+sectionTheme:
+  twigProp: data-section-theme
+  name: Section Theme
+  type: select
+  required: false
+  description: Background color theme for the layout section
+  default: default
+  options:
+    - default
+    - one
+    - two
+    - three
+    - four
+  control: select
+  labels:
+    default: 'Default - No Color'
+    one: 'One'
+    two: 'Two'
+    three: 'Three'
+    four: 'Four'
+
+playback:
+  twigProp: video_background__playback
+  name: Video Playback
+  type: select
+  required: false
+  description: 'Whether the video loops continuously or plays once and stops'
+  detail: >
+    "loop" (default) repeats the video until the visitor pauses it. "once"
+    plays it one time and holds on the last frame; the play button restarts
+    it. In Drupal this is the **Video Playback** field on the Image Banner and
+    Grand Hero blocks, which banners pass down as a data-video-playback
+    attribute.
+  default: loop
+  options:
+    - loop
+    - once
+  control: select
+  labels:
+    loop: 'Loop continuously'
+    once: 'Play once and stop'

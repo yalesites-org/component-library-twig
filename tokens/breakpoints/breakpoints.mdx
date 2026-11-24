@@ -1,0 +1,20 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as BreakpointsStories from './breakpoints.stories';
+
+<Meta of={BreakpointsStories} name="Overview" />
+
+# Breakpoints
+
+Breakpoints define the viewport widths at which the layout adapts. All components in the design system are built responsively against these values — they are the foundation for fluid, device-agnostic layouts across Yale sites.
+
+## Breakpoint Scale
+
+<div className="sb-contained-canvas">
+  <Canvas of={BreakpointsStories.breakpoints} />
+</div>
+
+## How Breakpoints Are Used
+
+Breakpoints are consumed as SCSS variables and mixins throughout the component library. You won't set breakpoints directly in Drupal — they're baked into each component's responsive behavior. Understanding the scale helps when reviewing designs or diagnosing layout issues at specific viewport sizes.
+
+For more on layout and spacing, see the [Spacing page](?path=/docs/tokens-spacing--docs).

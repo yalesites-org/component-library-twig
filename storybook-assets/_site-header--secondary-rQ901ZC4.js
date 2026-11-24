@@ -1,0 +1,19 @@
+const n=`<div {{ bem('secondary', [], site_header__base_class) }}>
+  <div {{ bem('yale-branding', [], site_header__base_class) }}>
+    {# Yale Branding #}
+    {% include "@atoms/controls/text-link/yds-text-link.twig" with {
+      link__content: site_header__branding_name|default('Yale University'),
+      link__url: site_header__branding_link|default('https://www.yale.edu'),
+      link__base_class: 'yale-branding',
+      link__blockname: site_header__base_class,
+      link__url_type: 'internal',
+    } %}
+  </div>
+
+  {# Utility Nav #}
+  <div {{ bem('utility-nav', [], site_header__base_class) }}>
+    {% include "@organisms/menu/utility-nav/yds-utility-nav.twig" %}
+  </div>
+</div>
+`;export{n as default};
+//# sourceMappingURL=_site-header--secondary-rQ901ZC4.js.map
