@@ -36,7 +36,7 @@ const renderGlobalTheme = () => {
           ${embedTwig({
             embed__title: 'Example Microsoft Form',
             embed__src:
-              'https://forms.office.com/Pages/ResponsePage.aspx?id=u76M3Tkh-E20EU4-h6vrXJ-OMhrDFtBEifIUjjt2g_xURUVBU1IyUVlTVFFFNjJQQzJXM1pNMVozVi4u&embed=true',
+              'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=u76M3Tkh-E20EU4-h6vrXJ-OMhrDFtBEifIUjjt2g_xUNlNCT1ozT05QT0NBWlpVRkJWNlZSRVdDTS4u&embed=true',
             embed__width: width,
             embed__height: '100%',
             embed__loading: loading,
