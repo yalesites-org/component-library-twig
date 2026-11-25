@@ -1,0 +1,73 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as Stories from './legend-key.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './legend-key-props.yml';
+
+<Meta of={Stories} name="Overview" />
+
+# Legend key
+
+The small swatch shown next to a legend label. The Legend molecule places them.
+
+## Playground
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Playground} />
+</div>
+<Controls of={Stories.Playground} />
+
+## States
+
+### Today
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Today} />
+</div>
+
+### Selected
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Selected} />
+</div>
+
+### Dots
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Dots} />
+</div>
+
+### Band
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Band} />
+</div>
+
+### Bar
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Bar} />
+</div>
+
+### Past
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Past} />
+</div>
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Atom
+- **Template**: `yds-legend-key.twig`
+- **Styles**: `_yds-legend-key.scss`
+- **Rules**: tokens only, no color props, states are props, the parent sets outer margin and width
+
+### Accessibility
+
+- The swatch is decorative and `aria-hidden`; the visible legend text beside it names it.
+- Past sample text is Gray 600 (6.48:1 on white).

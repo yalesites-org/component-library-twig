@@ -1,0 +1,48 @@
+{#
+ # Event Calendar filter bar: Search events, then Category, Audience and
+ # Event experience (and a custom vocabulary) multi-selects.
+ #
+ # Reuses the Views block filter pieces: the search input and the Chosen
+ # multi-select with pills come from @atoms/forms/views-filter. This part adds
+ # no input styles of its own, only the layout.
+ #
+ # Available Variables:
+ # - filter_bar__id: unique id prefix for the field ids. Default "event-calendar".
+ # - filter_bar__layout: "row" (search full width, then the filters in columns)
+ #   or "stacked" (one per row, label above, each full width). A row bar also
+ #   stacks when the block is under 840px wide. Default "row".
+ # - filter_bar__search_placeholder: Default "Search by title, speaker or keyword".
+ # - filter_bar__search_value: text typed in the search field (search active).
+ # - filter_bar__show_search: show the search field. Default true.
+ # - filter_bar__filters: list of { id, label, options, selected, visible,
+ #   open, show }. show false hides that filter. A filter with no options is
+ #   hidden too: the block form does the same.
+ #
+ # Results update as visitors pick, so there is no Apply button.
+ # The parent sets outer margin and width; this part never does.
+ #}
+
+{% set filter_bar__base_class = 'filter-bar' %}
+{% set filter_bar__layout = filter_bar__layout == 'stacked' ? 'stacked' : 'row' %}
+{% set filter_bar__fields = [] %}
+{% for filter in filter_bar__filters|default([]) %}
+  {% if filter.show is not same as(false) and filter.options|length > 0 %}
+    {% set filter_bar__fields = filter_bar__fields|merge([filter|merge({
+      'placeholder': filter.placeholder|default('Select options'),
+    })]) %}
+  {% endif %}
+{% endfor %}
+
+<div {{ add_attributes({
+  'class': bem(filter_bar__base_class),
+  'data-filter-bar-layout': filter_bar__layout,
+}) }}>
+  {% include '@atoms/forms/views-filter/_yds-views-filter-form.twig' with {
+    id: filter_bar__id|default('event-calendar'),
+    search: filter_bar__search_placeholder|default('Search by title, speaker or keyword'),
+    search_value: filter_bar__search_value,
+    hide_search: filter_bar__show_search is same as(false),
+    hide_actions: true,
+    fields: filter_bar__fields,
+  } only %}
+</div>

@@ -1,0 +1,54 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as Stories from './weekday-header-cell.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './weekday-header-cell-props.yml';
+
+<Meta of={Stories} name="Overview" />
+
+# Weekday header cell
+
+One cell of the Mon to Sun row (Monday first), used in the Month grid and the Mini calendar. The parent sets the cell width.
+
+## Playground
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Playground} />
+</div>
+<Controls of={Stories.Playground} />
+
+## States
+
+### Full month
+
+Left-aligned in the Month grid.
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.FullMonth} />
+</div>
+
+### Mini calendar
+
+Centered in the Mini calendar.
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.MiniCalendar} />
+</div>
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+## Technical Specifications
+
+- **Atomic Level**: Atom
+- **Template**: `yds-weekday-header-cell.twig`
+- **Styles**: `_yds-weekday-header-cell.scss`
+- **Rules**: tokens only, no color props, states are props, the parent sets outer margin and width
+
+### Accessibility
+
+- The hidden label holds the full weekday; the short text is `aria-hidden`.
+- Gray 600 on white is 6.48:1.
+- Type follows the handoff design: 14px Medium, Gray 600, title case as authored.
