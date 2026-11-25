@@ -7,7 +7,7 @@ import componentProps from './publication-detail-props.yml';
 
 # Resource Detail
 
-The full-page meta header rendered at the top of a Resource node. Both this component and [Resource Meta](?path=/docs/molecules-meta-resource-meta--docs) come from the same Resource content type — this one handles the full node view, while Resource Meta handles teaser cards and list items. These two templates are candidates for future consolidation.
+The full-page meta header rendered at the top of a Resource node. It handles the full node view; teaser cards and list items use the publication-meta classes instead.
 
 It mirrors the `details-wrapper` grid pattern from `event-meta-localist`: a page-title shell with a category overline plus a meta region containing a 3-up grid of metadata cells, an abstract section, and an optional description section.
 
@@ -73,7 +73,6 @@ A few of the molecule's twig variables aren't covered by the simple controls abo
 
 ## Related Components
 
-- **Resource Meta** — the lighter-weight meta block used inside teaser cards and list items for the same Resource content type. See note above about potential consolidation.
 - **`event-meta-localist`** — visual sibling using the same `details-wrapper` grid pattern.
 - **`text-copy-button`** atom — embedded inside the Citation cell.
 

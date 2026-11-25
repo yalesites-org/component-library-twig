@@ -659,7 +659,6 @@ test('the active tab bottom strip stays a mask in the tab background colour', ()
  * `profile-meta` is deliberately absent: it paints its own background and
  * re-declares `--color-text` / `--color-heading` per theme, which is the
  * pattern the other four are being brought up to, not a defect.
- * `resource-meta` is absent because it has no flat foreground at all.
  *
  * `flatByDesign` is the count each file may still carry, and why. Two survive,
  * both the same shape -- a rule that paints its own background and therefore

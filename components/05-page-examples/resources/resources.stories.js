@@ -7,6 +7,7 @@ import resourceGridPageTwig from './resource-grid.twig';
 import resourceListPageTwig from './resource-list.twig';
 
 // Data files.
+import publicationDetailData from '../../02-molecules/meta/publication-meta/publication-detail.yml';
 import imageData from '../../01-atoms/images/image/image.yml';
 import pagerData from '../../02-molecules/pager/pager-last.yml';
 import socialLinksData from '../../02-molecules/social-links/social-links.yml';
@@ -51,21 +52,11 @@ export const ResourcePage = (args) => {
     ...imageData.responsive_images['2x3'],
     ...socialLinksData,
 
-    resource_meta__heading: 'Resource Page',
-    resource_meta__resource_type: resourceType,
-    resource_meta__publish_date_label: 'Published On',
-    resource_meta__publish_date: 'July 01, 2025',
-
-    // Values for resource type: Document.
-    resource_meta__download_label: 'Download',
-    resource_meta__download_aria_label: 'Download file',
-    resource_meta__download_url: '#.pdf',
-    image__srcset__1: imageData.responsive_images['2x3'].image__srcset,
-    image__sizes__1: imageData.responsive_images['2x3'].image__sizes,
-    image__alt__1: imageData.responsive_images['2x3'].image__alt,
-    image__src__1: imageData.responsive_images['2x3'].image__src,
-
-    // Values for resource type: Video.
+    ...publicationDetailData,
+    publication_detail__heading: 'Resource Page',
+    publication_detail__resource_type: resourceType,
+    publication_detail__media_id: resourceType === 'video' ? 1 : null,
+    // Video embed markup, used when the resource type is video.
     video_embed__content__1: videoEmbedData.video_embed__content,
   });
 };
