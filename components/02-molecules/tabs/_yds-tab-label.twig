@@ -1,8 +1,3 @@
-{% if key == 0 %}
-  {% set aria_selected = 'aria-selected=true' %}
-{% else %}
-  {% set tab_index = 'tabindex="-1"' %}
-{% endif %}
 <li {{ bem('item', [], tabs__base_class) }} role="presentation">
   {% set tabs__link__attributes = {
     'class': bem('link', [], tabs__base_class),
@@ -10,7 +5,10 @@
     'aria-controls': 'tab-' ~ tabs__id ~ '-' ~ key,
     'href': '#tab-' ~ tabs__id ~ '-' ~ key,
   } %}
-  <a {{ add_attributes(tabs__link__attributes) }} {{ tab_index }} {{ aria_selected }}>
+  {# Only the selected tab is a Tab stop; the arrow keys reach the others.
+   # These stay literal markup: printed as a Twig string, Drupal escapes the
+   # quotes and browsers ignore the value. #}
+  <a {{ add_attributes(tabs__link__attributes) }}{% if key == 0 %} aria-selected="true"{% else %} tabindex="-1"{% endif %}>
     {{ tab__label|default(tab.tab__label) }}
   </a>
 </li>
