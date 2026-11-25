@@ -30,7 +30,7 @@ import { fileURLToPath } from 'node:url';
 import {
   WCAG_LEVELS,
   contrastRatio,
-  parseHsl,
+  parseColor,
 } from '../../00-tokens/colors/contrast-ratio.mjs';
 
 const require = createRequire(import.meta.url);
@@ -181,14 +181,14 @@ test('every section theme pairs its foreground with its own background at 3:1', 
 
   check(
     'unthemed section',
-    parseHsl(tokens.color.gray['800']),
-    parseHsl(tokens.color.basic.white),
+    parseColor(tokens.color.gray['800']),
+    parseColor(tokens.color.basic.white),
   );
 
   Object.entries(tokens['global-themes']).forEach(([globalTheme, palette]) => {
     // Global theme four swaps slots two and five inside these components.
     const slot = (name) =>
-      parseHsl(
+      parseColor(
         palette.colors[
           globalTheme === 'four' && swaps[name] ? swaps[name] : name
         ],

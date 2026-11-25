@@ -228,6 +228,13 @@ $break-image-banner: tokens.$break-m;
     max-height: 50%;
     overflow-y: auto;
 
+    // yds-image-banner.js gives an overflowing caption tabindex="0" so
+    // keyboard users can scroll it (YaleSites-Internal#2334).
+    &:focus-visible {
+      outline: 2px solid var(--color-blue-yale);
+      outline-offset: -2px;
+    }
+
     // text-align: center above is tuned for a simple one-line caption. A
     // list's marker is positioned by list-style-position: outside relative
     // to the list's own (left-indented) box, not by the centered text flow,

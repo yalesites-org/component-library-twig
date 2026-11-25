@@ -229,6 +229,14 @@
       top: var(--size-spacing-6);
     }
 
+    // A flex item never shrinks below its longest word by default, so one
+    // unbroken word in an event title stretched the list (and every title in
+    // it) past the screen. Let the list shrink and break such words. (#2132)
+    .calendar__day-events {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
     .calendar-event__title {
       @include tokens.heading(h3);
     }

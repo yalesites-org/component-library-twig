@@ -63,8 +63,8 @@ h6:not([class]) {
   }
 }
 
-// Fix mixed typography issue for Mallory font pairing
-body[data-font-pairing='mallory'] {
+// Fix mixed typography issue for Mallory heading font
+body[data-heading-font='mallory'] {
   h1:not([class]),
   h2:not([class]),
   h3:not([class]),

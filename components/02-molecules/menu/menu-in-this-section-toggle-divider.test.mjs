@@ -15,7 +15,7 @@ import {
   WCAG_LEVELS,
   contrastRatio,
   formatRatio,
-  parseHsl,
+  parseColor,
 } from '../../00-tokens/colors/contrast-ratio.mjs';
 
 const require = createRequire(import.meta.url);
@@ -73,7 +73,7 @@ test(`the toggle divider clears ${NON_TEXT_MINIMUM}:1 against white on every com
   const themes = Object.keys(tokens['component-themes']).filter(
     (theme) => theme !== 'six',
   );
-  const white = parseHsl(tokens.color.basic.white);
+  const white = parseColor(tokens.color.basic.white);
 
   // Prove the scrape found every theme before trusting what it did not find.
   assert.deepEqual(
@@ -88,7 +88,7 @@ test(`the toggle divider clears ${NON_TEXT_MINIMUM}:1 against white on every com
     return Object.entries(tokens['global-themes'])
       .map(([globalTheme, { colors }]) => ({
         globalTheme,
-        ratio: contrastRatio(parseHsl(colors[slot]), white),
+        ratio: contrastRatio(parseColor(colors[slot]), white),
       }))
       .filter(({ ratio }) => ratio < NON_TEXT_MINIMUM)
       .map(

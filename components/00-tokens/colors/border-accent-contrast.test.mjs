@@ -27,7 +27,7 @@ import {
   WCAG_LEVELS,
   contrastRatio,
   formatRatio,
-  parseHsl,
+  parseColor,
 } from './contrast-ratio.mjs';
 
 const require = createRequire(import.meta.url);
@@ -208,12 +208,12 @@ lineRoles.forEach((role) => {
     const slot = declaredOptions(sourceOf(role.file), role.property).get(
       NEUTRAL_OPTION,
     );
-    const surface = parseHsl(role.against);
+    const surface = parseColor(role.against);
 
     const failures = globalThemes
       .map(([, { colors, label }]) => ({
         theme: label,
-        ratio: contrastRatio(parseHsl(colors[slot]), surface),
+        ratio: contrastRatio(parseColor(colors[slot]), surface),
       }))
       .filter(({ ratio }) => ratio < NON_TEXT_MINIMUM)
       .map(({ theme, ratio }) => `${theme} ${formatRatio(ratio)}:1`);

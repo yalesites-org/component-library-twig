@@ -30,7 +30,11 @@ import {
   stripComments,
 } from './surface-contract.mjs';
 
-import { contrastRatio, parseHsl, AA_NORMAL_TEXT } from './contrast-ratio.mjs';
+import {
+  contrastRatio,
+  parseColor,
+  AA_NORMAL_TEXT,
+} from './contrast-ratio.mjs';
 import {
   HARDCODED_CANDIDATES,
   SECTION_THEMES,
@@ -107,8 +111,8 @@ test('every section theme foreground clears its own background at AA', () => {
         bg,
         role,
         ratio: contrastRatio(
-          parseHsl(bg.backgroundValue),
-          parseHsl(bg.slots[bg.roles[role]]),
+          parseColor(bg.backgroundValue),
+          parseColor(bg.slots[bg.roles[role]]),
         ),
       })),
     )
@@ -136,8 +140,8 @@ test('the section-driven line colours clear the non-text minimum everywhere', ()
 
   sectionBackgrounds().forEach((bg) => {
     const ratio = contrastRatio(
-      parseHsl(bg.backgroundValue),
-      parseHsl(bg.slots[bg.roles.content]),
+      parseColor(bg.backgroundValue),
+      parseColor(bg.slots[bg.roles.content]),
     );
 
     assert.ok(
@@ -182,8 +186,8 @@ test('the two known --color-layout-border failures are still exactly two', () =>
     .filter(
       (bg) =>
         contrastRatio(
-          parseHsl(bg.backgroundValue),
-          parseHsl(bg.slots[bg.roles.border]),
+          parseColor(bg.backgroundValue),
+          parseColor(bg.slots[bg.roles.border]),
         ) < NON_TEXT_MINIMUM,
     )
     .map((bg) => `${bg.globalTheme}/${bg.sectionTheme}`);
@@ -308,6 +312,7 @@ test('the surface contract is published in exactly the expected places', () => {
     // merge: its own-theme dial paints the inner box, so it publishes what it
     // painted for the schedule inside.
     'components/02-molecules/office-hours/_yds-office-hours.scss',
+    'components/02-molecules/quote-callout/_yds-quote-callout.scss',
     'components/02-molecules/text-with-image/_yds-text-with-image.scss',
     'components/03-organisms/facts-and-figures-group/_yds-facts-and-figures-group.scss',
     'components/03-organisms/layout/layout/_yds-layout.scss',
@@ -339,11 +344,9 @@ const SECTION_SURFACE_CONSUMERS = [
     file: '../../02-molecules/pager/_yds-pager.scss',
     fallback: '--color-basic-brown-gray',
   },
-  {
-    name: 'wrapped-callout border',
-    file: '../../02-molecules/wrapped-callout/_yds-wrapped-callout.scss',
-    fallback: '--color-wrapped-callout-theme',
-  },
+  // The wrapped-callout border is deliberately not listed. It always follows
+  // the block's Theme option, because the callout is decorative
+  // (YaleSites-Internal#2314).
   {
     name: 'link-grid column rule',
     file: '../../02-molecules/link-grid/_yds-link-grid.scss',
@@ -747,10 +750,10 @@ test('meta secondary text: the grays fail and the section foreground passes', ()
   const backgrounds = sectionBackgrounds();
 
   Object.entries(grays).forEach(([name, value]) => {
-    const gray = parseHsl(value);
+    const gray = parseColor(value);
     const failing = backgrounds.filter(
       (background) =>
-        contrastRatio(parseHsl(background.backgroundValue), gray) <
+        contrastRatio(parseColor(background.backgroundValue), gray) <
         AA_NORMAL_TEXT,
     );
 
@@ -764,8 +767,8 @@ test('meta secondary text: the grays fail and the section foreground passes', ()
   const contractFailures = backgrounds.filter(
     (background) =>
       contrastRatio(
-        parseHsl(background.backgroundValue),
-        parseHsl(background.slots[background.roles.content]),
+        parseColor(background.backgroundValue),
+        parseColor(background.slots[background.roles.content]),
       ) < AA_NORMAL_TEXT,
   );
 
@@ -1070,9 +1073,9 @@ test('the published chip pairing clears AA, and the pairing it replaced does not
   // Values come from `HARDCODED_CANDIDATES`, which reads the tokens package, so
   // a revision to gray-100 or gray-700 upstream is measured here rather than
   // silently testing a colour the chip no longer paints.
-  const chip = parseHsl(HARDCODED_CANDIDATES['gray-100']);
+  const chip = parseColor(HARDCODED_CANDIDATES['gray-100']);
   const published = contrastRatio(
-    parseHsl(HARDCODED_CANDIDATES['gray-700']),
+    parseColor(HARDCODED_CANDIDATES['gray-700']),
     chip,
   );
 
@@ -1086,7 +1089,7 @@ test('the published chip pairing clears AA, and the pairing it replaced does not
   // ever clears AA on its own, the conversion has stopped being load-bearing
   // and this whole table should be revisited rather than quietly kept.
   const inherited = contrastRatio(
-    parseHsl(HARDCODED_CANDIDATES['basic-white']),
+    parseColor(HARDCODED_CANDIDATES['basic-white']),
     chip,
   );
 

@@ -1,7 +1,6 @@
 @use '../../00-tokens/tokens';
 @use '../../01-atoms/atoms';
 @use '../../00-tokens/functions/map';
-@use '../../01-atoms/controls/text-link/yds-text-link' as link;
 
 $global-wrapped-callout-themes: map.deep-get(tokens.$tokens, 'global-themes');
 $wrapped-callout-component-themes: map.deep-get(
@@ -118,16 +117,22 @@ $wrapped-callout-component-themes: map.deep-get(
   max-width: 100%;
   padding: var(--size-spacing-8) var(--size-spacing-6);
 
-  // This callout paints no background of its own, so its border is drawn
-  // directly on whatever surface encloses it. Inside a themed section the
-  // section supplies the line colour: the backdrop there ranges from Yale Blue
-  // to a near-white tint across the six section backgrounds, and
-  // 00-tokens/colors/section-background-contrast.txt shows no fixed slot clears
-  // 3:1 on all of them (YaleSites-Internal#1613, deferred here from #1614).
-  // Outside a themed section the property is unset and the block's own colour
-  // dial applies exactly as before.
-  border: var(--border-thickness-2) solid
-    var(--color-section-foreground, var(--color-wrapped-callout-theme));
+  // The border always follows the block's Theme option, including inside a
+  // themed section. The callout is decorative, so it does not need the strict
+  // contrast rules the section sets for text (YaleSites-Internal#2314,
+  // decided 2026-11-20). A Theme equal to the section's own colour will blend
+  // into the section.
+  border: var(--border-thickness-2) solid var(--color-wrapped-callout-theme);
+
+  // The box surface is the page (or section) background, not the component
+  // theme color, so its links need that color as their descender halo. Without
+  // this the theme's `--color-text-shadow: var(--color-background)` (same
+  // element as `.wrapped-callout`, declared after the white default) paints a
+  // navy outline around the box link text.
+  --color-text-shadow: var(
+    --color-section-background,
+    var(--color-basic-white)
+  );
 
   // if callout has left/right alignment and the wrapped callout has content, limit the width of the callout
   @media (min-width: tokens.$break-l) {
@@ -150,12 +155,22 @@ $wrapped-callout-component-themes: map.deep-get(
     @include tokens.heading(h4);
   }
 
+  // Same animated underline as every other body link (YaleSites-Internal#2145),
+  // not the native `plain-link` underline that switched off on hover.
   a {
-    @include link.plain-link;
+    @include atoms.link;
   }
 }
 
 .wrapped-callout__content {
+  // Same reason as the box above: the body text sits on the page or section
+  // background, not the component theme color. Themed sections still override
+  // this on the link itself in `_yds-layout.scss`.
+  --color-text-shadow: var(
+    --color-section-background,
+    var(--color-basic-white)
+  );
+
   a {
     @include atoms.link;
 

@@ -192,6 +192,11 @@ $filter-panel-search-height: 3.5rem;
   // required-asterisk rule in _yds-textfields.scss excludes. (#1897)
   --ys-filter-focus: var(--color-blue-medium);
 
+  // Rings drawn on white surfaces (the search field in the open panel, the
+  // chip remove button) stay dark in every section: the section foreground
+  // above is white in dark sections and would vanish on white. (#2331)
+  --ys-filter-focus-on-surface: var(--color-blue-yale);
+
   // Sections emit `data-section-theme` (the block dial `data-component-theme`
   // belongs to blocks alone), so the rule has to key on the section attribute
   // or it never applies. (#2194)
@@ -359,6 +364,9 @@ $filter-panel-search-height: 3.5rem;
       // unchanged. (#1299 QA)
       font: var(--font-style-body-xs);
 
+      // The shorthand resets numerals, so restore the Body numeral setting.
+      @include tokens.body-oldstyle-nums;
+
       // Pill per the #1897 spec: Yale Blue Mallory Medium 14px on a 2rem
       // pill, with the remove control laid out inline after the label.
       display: inline-flex;
@@ -418,7 +426,8 @@ $filter-panel-search-height: 3.5rem;
         }
 
         &:focus-visible {
-          outline: var(--border-thickness-2) solid var(--ys-filter-focus);
+          outline: var(--border-thickness-2) solid
+            var(--ys-filter-focus-on-surface);
           outline-offset: var(--size-spacing-1);
         }
       }
@@ -428,7 +437,8 @@ $filter-panel-search-height: 3.5rem;
       // clips. (#1930)
       &.search-choice-focus {
         flex-shrink: 1;
-        outline: var(--border-thickness-2) solid var(--ys-filter-focus);
+        outline: var(--border-thickness-2) solid
+          var(--ys-filter-focus-on-surface);
         outline-offset: calc(-1 * var(--border-thickness-2));
       }
     }
@@ -467,6 +477,8 @@ $filter-panel-search-height: 3.5rem;
     // which the token above shrank. Declared before font-weight so the
     // shorthand does not reset the medium weight below. (#1299 QA)
     font: var(--font-style-body-xs);
+    @include tokens.body-oldstyle-nums;
+
     color: var(--color-section-accent);
     font-size: var(--font-size-14);
     font-weight: var(--font-weights-mallory-medium);
@@ -487,9 +499,39 @@ $filter-panel-search-height: 3.5rem;
     background-color: var(--color-basic-white);
     color: var(--color-section-foreground);
     font: var(--font-style-body-xs);
+    @include tokens.body-oldstyle-nums;
 
     .chosen-container:not(.chosen-with-drop) & {
       visibility: hidden;
+    }
+  }
+
+  .ys-select-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--size-spacing-4);
+  }
+
+  // A plain link, lighter than the filled pill it replaced, so it does not
+  // outweigh the rest of the panel. Clear all sits by the count on the left;
+  // Done is alone on the right. (#2313)
+  .ys-select-done {
+    min-height: var(--size-click-target-minimum);
+    padding: 0 var(--size-spacing-2);
+    border: 0;
+    background: none;
+    color: var(--color-section-accent);
+    font: inherit;
+    font-weight: var(--font-weights-mallory-medium);
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: var(--border-thickness-2) solid var(--color-blue-medium);
+      outline-offset: 2px;
     }
   }
 
@@ -529,9 +571,10 @@ $filter-panel-search-height: 3.5rem;
     // The open head keeps its closed height: the pills stay on one line with
     // the "+N more" badge, and the search input moves into the panel. (#1930)
 
-    // Lift the open panel above the listing below (card images are
-    // positioned with z-index 0). (#1897)
-    z-index: 1;
+    // Lift the open panel above the listing below: card images are
+    // positioned with z-index 0 (#1897) and the card "PINNED" label with
+    // z-index 2 (#2356). Stays under the sticky site header (z-index 10).
+    z-index: 3;
 
     // Not the search field's containing block, so its overflow clip does not
     // hide the field lifted into the panel below. (#1930)
@@ -565,7 +608,8 @@ $filter-panel-search-height: 3.5rem;
         color: inherit;
 
         &:focus-visible {
-          outline: var(--border-thickness-2) solid var(--ys-filter-focus);
+          outline: var(--border-thickness-2) solid
+            var(--ys-filter-focus-on-surface);
           outline-offset: calc(-1 * var(--border-thickness-2));
         }
       }
