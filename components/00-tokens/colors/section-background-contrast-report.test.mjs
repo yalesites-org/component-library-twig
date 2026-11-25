@@ -44,7 +44,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
-import { contrastRatio, parseHsl, formatRatio } from './contrast-ratio.mjs';
+import { contrastRatio, parseColor, formatRatio } from './contrast-ratio.mjs';
 import { sectionBackgrounds } from './section-background-contrast.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -143,7 +143,7 @@ test('every ratio the report records still matches the tokens', () => {
       }
 
       const actual = formatRatio(
-        contrastRatio(parseHsl(bg.backgroundValue), parseHsl(fgValue)),
+        contrastRatio(parseColor(bg.backgroundValue), parseColor(fgValue)),
       );
       return actual === row.ratio
         ? null

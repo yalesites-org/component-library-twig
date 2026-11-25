@@ -71,7 +71,7 @@ import { createRequire } from 'node:module';
 import { stripComments } from './surface-contract.mjs';
 import {
   contrastRatio,
-  parseHsl,
+  parseColor,
   formatRatio,
   AA_NORMAL_TEXT,
 } from './contrast-ratio.mjs';
@@ -228,7 +228,7 @@ test('every pinned link state clears 4.5:1 (AA normal text) on the box backgroun
     const value = pin && paletteValue(pin);
     assert.ok(value, `could not resolve ${pin} to a token value`);
 
-    const ratio = contrastRatio(parseHsl(BOX_BG), parseHsl(value));
+    const ratio = contrastRatio(parseColor(BOX_BG), parseColor(value));
     assert.ok(
       ratio >= AA_NORMAL_TEXT,
       `${property} (${pin} = ${value}) on the box background measures ${formatRatio(
@@ -266,7 +266,7 @@ test('resting link colour clears 4.5:1 in every section theme x global theme pai
     .flatMap((sectionTheme) =>
       globalThemes.map((globalTheme) => {
         const value = resolveRestingLinkColor(sectionTheme, globalTheme, pin);
-        const ratio = contrastRatio(parseHsl(BOX_BG), parseHsl(value));
+        const ratio = contrastRatio(parseColor(BOX_BG), parseColor(value));
 
         return { sectionTheme, globalTheme, value, ratio };
       }),
@@ -336,7 +336,7 @@ test('resting label text clears 4.5:1 in every section theme x global theme pair
         const value = pinned
           ? tokens['basic-themes'].white.text
           : slots[SECTION_THEMES[sectionTheme].content];
-        const ratio = contrastRatio(parseHsl(BOX_BG), parseHsl(value));
+        const ratio = contrastRatio(parseColor(BOX_BG), parseColor(value));
         return { sectionTheme, globalTheme, value, ratio };
       }),
     )

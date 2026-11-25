@@ -32,7 +32,7 @@ import { fileURLToPath } from 'node:url';
 
 import {
   contrastRatio,
-  parseHsl,
+  parseColor,
   AA_NORMAL_TEXT,
 } from '../../../00-tokens/colors/contrast-ratio.mjs';
 import {
@@ -266,8 +266,8 @@ test('inherited --color-text clears every section background at AA', () => {
     .map((bg) => ({
       bg,
       ratio: contrastRatio(
-        parseHsl(bg.backgroundValue),
-        parseHsl(bg.slots[bg.roles[role]]),
+        parseColor(bg.backgroundValue),
+        parseColor(bg.slots[bg.roles[role]]),
       ),
     }))
     .filter(({ ratio }) => ratio < AA_NORMAL_TEXT)

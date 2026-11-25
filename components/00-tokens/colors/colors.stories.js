@@ -12,7 +12,7 @@ import {
   formatContrastReport,
   formatRatio,
   parseHex,
-  parseHsl,
+  parseColor,
   rgbToHex,
   rgbToString,
   thresholdGroups,
@@ -45,8 +45,8 @@ import bannerData from '../../02-molecules/banner/banner.yml';
 
 // The color math lives in contrast-ratio.mjs so these stories and the
 // Contrast Matrix share one implementation, checked by contrast-ratio.test.mjs.
-const hslToHex = (hslStr) => rgbToHex(parseHsl(hslStr));
-const hslToRgb = (hslStr) => rgbToString(parseHsl(hslStr));
+const hslToHex = (hslStr) => rgbToHex(parseColor(hslStr));
+const hslToRgb = (hslStr) => rgbToString(parseColor(hslStr));
 
 function mergeColorData(tokenGroup, metaGroup = {}) {
   return Object.fromEntries(
@@ -296,7 +296,7 @@ function tierFor(ratio) {
 /** Slot name to RGB for one theme. */
 const themePalette = (theme) =>
   Object.fromEntries(
-    Object.entries(theme.colors).map(([slot, hsl]) => [slot, parseHsl(hsl)]),
+    Object.entries(theme.colors).map(([slot, hsl]) => [slot, parseColor(hsl)]),
   );
 
 /** Drop slots with no usable color, so a blank input never reads as a failure. */
@@ -1283,7 +1283,7 @@ const blockThemeNames = Object.keys(tokens['component-themes']);
 const blockBackgrounds = Object.fromEntries(
   blockThemeNames.map((blockTheme) => [
     blockTheme,
-    parseHsl(tokens['component-themes'][blockTheme].background),
+    parseColor(tokens['component-themes'][blockTheme].background),
   ]),
 );
 
@@ -1304,12 +1304,12 @@ function renderNestedTable(globalTheme, caption) {
   const rows = sectionThemeNames
     .map((sectionTheme) => {
       const roles = SECTION_THEMES[sectionTheme];
-      const foreground = parseHsl(slots[roles.content]);
+      const foreground = parseColor(slots[roles.content]);
 
       return `
         <tr>
           <th scope="row" class="cl-contrast__head">
-            ${renderSwatchChip(parseHsl(slots[roles.background]))}
+            ${renderSwatchChip(parseColor(slots[roles.background]))}
             <span>Section ${slotNumber(sectionTheme)}</span>
             <span class="cl-contrast__hex">${rgbToHex(foreground)} text</span>
           </th>
@@ -1370,7 +1370,7 @@ const buildCustomPaletteContrastChecker = () => {
 
   const renderField = (slot) => {
     const id = `cl-contrast-input-${slot}`;
-    const hex = rgbToHex(parseHsl(seed[slot]));
+    const hex = rgbToHex(parseColor(seed[slot]));
 
     // Slots six, seven and eight are Yale's brand colors — read-only, so
     // they still take part in the comparison below but cannot be typed

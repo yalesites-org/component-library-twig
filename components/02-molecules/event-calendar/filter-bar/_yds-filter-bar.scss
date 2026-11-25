@@ -1,0 +1,50 @@
+@use '../../../00-tokens/tokens';
+
+// Event Calendar filter bar. Layout only: the search field, the multi-selects
+// and their pills are the Views block's, styled in 01-atoms/forms. The bar is
+// a container so it answers to the width of the block it sits in, not the
+// browser. 840px = 52.5rem.
+$filter-bar-stack-width: 52.5rem;
+
+@mixin filter-bar-stacked {
+  .ys-filter-form--scaffold {
+    flex-flow: column nowrap;
+    align-items: stretch;
+  }
+
+  .form-item {
+    flex: 0 0 auto;
+  }
+}
+
+.filter-bar {
+  container: filter-bar / inline-size;
+
+  // The shared scaffold is a 12-track grid. The bar swaps it for a wrapping
+  // row: search takes the whole first row, the filters share the next one
+  // equally, so a hidden filter never leaves a gap.
+  .ys-filter-form--scaffold {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+
+  .form-item-search {
+    flex: 1 1 100%;
+  }
+
+  .form-item-select {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  &[data-filter-bar-layout='stacked'] {
+    @include filter-bar-stacked;
+  }
+}
+
+@container filter-bar (width < #{$filter-bar-stack-width}) {
+  .filter-bar[data-filter-bar-layout='row'] {
+    @include filter-bar-stacked;
+  }
+}

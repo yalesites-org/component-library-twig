@@ -47,7 +47,7 @@ const RGB_PATTERN = /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)/;
 /**
  * Parse the `rgb(r, g, b)` form `getComputedStyle` returns.
  *
- * A sibling of `parseHex`/`parseHsl` in contrast-ratio.mjs rather than a
+ * A sibling of `parseHex`/`parseColor` in contrast-ratio.mjs rather than a
  * replacement: those parse the formats colors are AUTHORED in (tokens are
  * `hsl(...)` strings), this parses the format they are READ BACK in. Kept here
  * because the render pipeline is the only consumer.

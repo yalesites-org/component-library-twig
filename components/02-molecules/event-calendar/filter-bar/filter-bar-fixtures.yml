@@ -1,0 +1,22 @@
+# Fixture terms for the Filter bar stories.
+category:
+  - Lecture
+  - Concert
+  - Exhibition
+  - Workshop
+  - Film
+audience:
+  - Students
+  - Faculty
+  - Staff
+  - Public
+experience:
+  - In person
+  - Online
+  - Hybrid
+custom:
+  label: Topic
+  options:
+    - Arts
+    - Science
+    - Policy

@@ -1,0 +1,47 @@
+# filter-bar-props.yml
+#
+# Filter bar property definitions: single source for Storybook controls and docs.
+
+id:
+  twigProp: filter_bar__id
+  name: Id prefix
+  type: string
+  required: false
+  description: Prefix for the field ids, so two bars on a page do not share ids.
+  default: event-calendar
+
+layout:
+  twigProp: filter_bar__layout
+  name: Layout
+  type: select
+  required: false
+  description: Row puts search on its own line, then the filters in columns. Stacked puts one per row, label above. A row bar also stacks under 840px of block width.
+  default: row
+  options:
+    - row
+    - stacked
+  control: select
+
+searchPlaceholder:
+  twigProp: filter_bar__search_placeholder
+  name: Search placeholder
+  type: string
+  required: false
+  description: Text shown in the empty search field.
+  default: Search by title, speaker or keyword
+
+searchValue:
+  twigProp: filter_bar__search_value
+  name: Search value
+  type: string
+  required: false
+  description: Text already typed in the search field (the search active state).
+  default: ''
+
+showSearch:
+  twigProp: filter_bar__show_search
+  name: Show search
+  type: boolean
+  required: false
+  description: Show the Search events field.
+  default: true

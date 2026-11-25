@@ -1,0 +1,100 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as Stories from './filter-bar.stories';
+import { twigPropsTable } from '../../../_storybook/twig-props-table.mdx';
+import componentProps from './filter-bar-props.yml';
+
+<Meta of={Stories} name="Overview" />
+
+# Filter bar
+
+The Event Calendar filter bar: Search events, then Category, Audience and Event experience multi-selects. It is built from the Views block filter pieces (search input, Chosen multi-select with pills) and adds layout only.
+
+Results update as visitors pick, so there is no Apply button. The parent sets outer margin and width.
+
+## Playground
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Playground} />
+</div>
+<Controls of={Stories.Playground} />
+
+## States
+
+### Empty
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.Empty} />
+</div>
+
+### Filters set
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.FiltersSet} />
+</div>
+
+### Search active
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.SearchActive} />
+</div>
+
+## Layouts
+
+Row puts search on its own line and the filters in columns. Stacked puts one per row with the label above. A row bar stacks by itself when the block is under 840px wide.
+
+### Row
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.LayoutRow} />
+</div>
+
+### Stacked
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.LayoutStacked} />
+</div>
+
+### Row in a narrow block
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.NarrowBlock} />
+</div>
+
+## Optional filters
+
+Each filter has a show prop. A filter with no options is hidden, matching the block form.
+
+### With custom vocabulary
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.WithCustomVocabulary} />
+</div>
+
+### Search hidden
+
+<div className="sb-contained-canvas">
+  <Canvas of={Stories.SearchHidden} />
+</div>
+
+## Properties
+
+### Optional Properties
+
+{twigPropsTable(componentProps, 'optional')}
+
+### Filters
+
+`filter_bar__filters` is a list of `{ id, label, options, selected, visible, open, show }`. `show: false` hides a filter. The empty-field text defaults to "Select options".
+
+## Technical Specifications
+
+- **Atomic Level**: Molecule
+- **Template**: `yds-filter-bar.twig`
+- **Styles**: `_yds-filter-bar.scss`
+- **Reuses**: `@atoms/forms/views-filter/_yds-views-filter-form.twig`. No new input styles.
+- **Rules**: tokens only, no color props, states are props, the parent sets outer margin and width
+
+### Accessibility
+
+- Each field keeps the Views block label and keyboard behavior. Tab order is Search, Category, Audience, Event experience.
+- The stacked layout puts the label above each field.

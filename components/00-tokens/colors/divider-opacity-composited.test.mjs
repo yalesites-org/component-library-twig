@@ -33,7 +33,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
-import { contrastRatio, parseHsl, formatRatio } from './contrast-ratio.mjs';
+import { contrastRatio, parseColor, formatRatio } from './contrast-ratio.mjs';
 import { sectionBackgrounds } from './section-background-contrast.mjs';
 
 // Non-text minimum, WCAG 1.4.11 -- matches the constant name and value
@@ -126,8 +126,8 @@ test('.yds-layout__divider clears 3:1, after compositing, in every section theme
 
   const failures = sectionBackgrounds()
     .map((bg) => {
-      const backgroundRgb = parseHsl(bg.backgroundValue);
-      const foregroundRgb = parseHsl(bg.slots[bg.roles[role]]);
+      const backgroundRgb = parseColor(bg.backgroundValue);
+      const foregroundRgb = parseColor(bg.slots[bg.roles[role]]);
       const painted = compositeOver(foregroundRgb, backgroundRgb, opacity);
 
       return {
