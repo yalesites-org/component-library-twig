@@ -50,7 +50,7 @@ import {
   AA_NORMAL_TEXT,
   WCAG_LEVELS,
   contrastRatio,
-  parseHsl,
+  parseColor,
 } from './contrast-ratio.mjs';
 
 // `createRequire` rather than an import attribute, for the same reason
@@ -288,8 +288,8 @@ export function ctaAccentSwapSet() {
       .filter(
         ([, roles]) =>
           contrastRatio(
-            parseHsl(slots[roles.background]),
-            parseHsl(slots[roles.border]),
+            parseColor(slots[roles.background]),
+            parseColor(slots[roles.border]),
           ) < AA_NORMAL_TEXT,
       )
       .map(([surface]) => `${globalTheme}/${surface}`);

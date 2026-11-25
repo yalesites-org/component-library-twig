@@ -134,6 +134,14 @@ export function parseHsl(value) {
   return { r: channel(0), g: channel(8), b: channel(4) };
 }
 
+/**
+ * Parse a token color value in either supported format: `hsl(h, s%, l%)` or
+ * hex. Tokens built with `color/css` ship authored hex; older builds ship hsl.
+ */
+export function parseColor(value) {
+  return parseHsl(value) ?? parseHex(value);
+}
+
 /** Format RGB components as a `#rrggbb` string. Passes null through. */
 export function rgbToHex(rgb) {
   if (!rgb) return null;

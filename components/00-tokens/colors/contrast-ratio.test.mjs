@@ -21,6 +21,7 @@ import {
   formatRatio,
   parseHex,
   parseHsl,
+  parseColor,
   rgbToHex,
   thresholdGroups,
 } from './contrast-ratio.mjs';
@@ -223,4 +224,12 @@ test('findIsolatedSlots reports slots with no partner at the threshold', () => {
   // A slot is never its own partner.
   assert.deepEqual(findIsolatedSlots({ 'slot-one': WHITE }, 4.5), ['slot-one']);
   assert.deepEqual(findIsolatedSlots({}, 4.5), []);
+});
+
+test('parseColor reads hsl and hex token values, and rejects anything else', () => {
+  assert.deepEqual(parseColor('hsl(210, 100%, 21%)'), { r: 0, g: 54, b: 107 });
+  assert.deepEqual(parseColor('#00356b'), { r: 0, g: 53, b: 107 });
+  assert.deepEqual(parseColor('#fff'), WHITE);
+  assert.equal(parseColor('rgba(0, 0, 0, 0.5)'), null);
+  assert.equal(parseColor(undefined), null);
 });

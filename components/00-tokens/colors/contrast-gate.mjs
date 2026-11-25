@@ -42,7 +42,7 @@ import {
   AA_NORMAL_TEXT,
   contrastRatio,
   formatRatio,
-  parseHsl,
+  parseColor,
 } from './contrast-ratio.mjs';
 
 const require = createRequire(import.meta.url);
@@ -63,8 +63,8 @@ export const {
 export function evaluatePairings(pairings = approvedPairings()) {
   return pairings.map((pairing) => {
     const ratio = contrastRatio(
-      parseHsl(pairing.background.value),
-      parseHsl(pairing.foreground.value),
+      parseColor(pairing.background.value),
+      parseColor(pairing.foreground.value),
     );
 
     return {
@@ -123,8 +123,8 @@ export function leakSurvey() {
       Object.values(tokens['component-themes']).forEach((blockTheme) => {
         total += 1;
         const ratio = contrastRatio(
-          parseHsl(blockTheme.background),
-          parseHsl(slots[roles.content]),
+          parseColor(blockTheme.background),
+          parseColor(slots[roles.content]),
         );
         if (ratio === null || ratio < AA_NORMAL_TEXT) failing += 1;
       });
@@ -169,8 +169,8 @@ export function accentSurvey() {
             ACCENTS.forEach((accent) => {
               total += 1;
               const ratio = contrastRatio(
-                parseHsl(themeTokens[background]),
-                parseHsl(colors[`slot-${accent}`]),
+                parseColor(themeTokens[background]),
+                parseColor(colors[`slot-${accent}`]),
               );
               if (ratio === null || ratio < AA_NON_TEXT) {
                 failures.push(`${globalTheme}/${theme}/${accent}`);

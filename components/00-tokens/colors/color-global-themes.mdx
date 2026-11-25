@@ -38,7 +38,7 @@ These slots are what component theme dials (1–5) map to — so a callout set t
 
 Slots 6–8 are fixed across every theme and cannot be changed. They represent the non-negotiable Yale brand colors that must be present on every site regardless of palette:
 
-- **Slot 6** — Yale Blue (`#00356b`). Always present as the official Yale brand anchor color. The token stores this slot as `hsl(210, 100%, 21%)`, a rounded HSL that converts back to `#00366b`, so tools reading the token — including the Contrast Matrix — report that value rather than the exact brand hex.
+- **Slot 6** — Yale Blue (`#00356b`). Always present as the official Yale brand anchor color. Tokens built before the hex-preserving tokens fix store this slot as `hsl(210, 100%, 21%)`, a rounded HSL that converts back to `#00366b`; newer builds store the authored hex. The Contrast Matrix reads both formats.
 - **Slot 7** — Near Black. Used for body text and high-contrast elements.
 - **Slot 8** — White. Used for text on dark backgrounds and primary surface whites.
 

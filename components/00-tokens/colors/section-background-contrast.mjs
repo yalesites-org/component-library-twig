@@ -26,7 +26,7 @@ import { fileURLToPath } from 'node:url';
 import {
   contrastRatio,
   formatRatio,
-  parseHsl,
+  parseColor,
   AA_NORMAL_TEXT,
 } from './contrast-ratio.mjs';
 import {
@@ -88,7 +88,10 @@ export function sectionBackgrounds() {
 
 /** Contrast of an arbitrary color value against a section background. */
 function ratioAgainst(background, value) {
-  return contrastRatio(parseHsl(background.backgroundValue), parseHsl(value));
+  return contrastRatio(
+    parseColor(background.backgroundValue),
+    parseColor(value),
+  );
 }
 
 const verdict = (ratio, minimum) =>
